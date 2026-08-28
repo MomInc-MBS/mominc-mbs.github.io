@@ -1,0 +1,45 @@
+# MBS, Mom's Brainwashing Stream. A MOM INC product.
+# Everything here is public and meant to be read, by people and by machines.
+# Nothing is disallowed.
+
+User-agent: *
+Allow: /
+
+# Training crawlers
+User-agent: GPTBot
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: CCBot
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+User-agent: Meta-ExternalAgent
+Allow: /
+User-agent: Bytespider
+Allow: /
+
+# Retrieval and answer-engine crawlers, the ones that fetch live to answer a question
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: Claude-SearchBot
+Allow: /
+User-agent: Claude-User
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Perplexity-User
+Allow: /
+
+# Search
+User-agent: Googlebot
+Allow: /
+User-agent: Bingbot
+Allow: /
+
+Sitemap: https://mominc-mbs.github.io/sitemap.xml
+# Plain-language site index: https://mominc-mbs.github.io/llms.txt
