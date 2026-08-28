@@ -408,7 +408,6 @@ FORM: Ian's spec 2026-08-26 + Round 2 same night, twice amended (the 3x3/single-
     photo.addEventListener("error", () => { photo.style.display = "none"; });
     photo.src = "assets/storage-" + (i + 1) + ".jpg";
     p.querySelector(".peek").appendChild(photo);
-    p.addEventListener("click", () => { if (p.classList.contains("facing")) (isFinal ? onFinalClick : onDoorClick)(i); });
     p.addEventListener("keydown", e => {
       if ((e.key === "Enter" || e.key === " ") && p.classList.contains("facing")) { e.preventDefault(); (isFinal ? onFinalClick : onDoorClick)(i); }
     });
@@ -440,6 +439,14 @@ FORM: Ian's spec 2026-08-26 + Round 2 same night, twice amended (the 3x3/single-
   }
   if (screen) screen.addEventListener("scroll", updateWheel, { passive: true });
   updateWheel();
+
+  // The panels live inside a preserve-3d wheel. When the wheel sits at exactly 90 or 270 degrees
+  // (doors 3 and 7) Chromium paints them but stops hit-testing them, so a click on those two never
+  // landed. The stage is a plain 2D box, so it takes the click and routes it to whichever door is facing.
+  const wheelStage = document.getElementById("sgWheelStage");
+  if (wheelStage) wheelStage.addEventListener("click", () => {
+    if (currentIndex >= 0) (currentIndex === 7 ? onFinalClick : onDoorClick)(currentIndex);
+  });
 
   let bought = 0;
   const invBoxes = Array.from(document.querySelectorAll("#sgInvSrc .box"));

@@ -147,30 +147,24 @@ FORM: Ian's canon 2026-08-27 (Coach Armie Page Spec.md). Goals + species build t
       box-shadow:0 2px 5px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.4);
       clip-path:polygon(3% 0,97% 4%,100% 96%,2% 100%); transform:rotate(-1.6deg)}
 
-  /* ---- the breathing beat at the bottom: the jagged gold skull, the sac, the hold ---- */
+  /* ---- the breathing beat at the bottom: the purple blob, the carnage round it, the hold ---- */
   .ar .breath{position:relative; margin:26px auto 6px; max-width:340px; text-align:center; padding-bottom:6px}
   .ar .breathtape{margin-bottom:10px}
   .ar .sacwrap{position:relative; width:min(78%,240px); margin:0 auto; aspect-ratio:1; display:grid; place-items:center}
+  /* the carnage he has not put back: the real stills, thrown round the blob at mismatched sizes and angles.
+     No skull. Nothing drawn in CSS, because drawn gore reads as shapes and these read as a body. */
+  .ar .mess{position:absolute; inset:-24%; z-index:0; pointer-events:none}
+  .ar .mess img{position:absolute; height:auto; filter:drop-shadow(0 4px 7px rgba(20,8,26,.65))}
   /* the fleshy purple sac. The pulse is driven from JS with a phase accumulator, not a CSS animation,
      because retiming a keyframe animation every frame restarts it and reads as frantic speeding up. */
-  .ar .sac{width:74%; aspect-ratio:1;
-      background:url("assets/armie/eyeball-optic.png") 50% 50%/contain no-repeat;
+  .ar .sac{width:74%; aspect-ratio:1; position:relative; z-index:1;
+      background:url("assets/armie/gore-sac.png") 50% 50%/contain no-repeat;
       filter:drop-shadow(0 0 16px rgba(204,81,142,.4));
       will-change:transform}
   .ar .sac.lit{filter:drop-shadow(0 0 34px rgba(232,179,58,.9)) drop-shadow(0 0 70px rgba(204,81,142,.55)) saturate(1.3) brightness(1.25)}
-  /* the jagged cone skull under it, hard gold clay, gore down one side */
-  .ar .skull{width:min(56%,168px); margin:-10px auto 0; display:block; height:auto; filter:drop-shadow(0 8px 12px rgba(20,8,26,.65))}
   .ar .breathnote{font-family:"Special Elite",monospace; font-size:14px; color:#e6d2e8; opacity:.85; margin:8px 0 0; min-height:2.4em; line-height:1.45}
   .ar .breathbar{width:min(72%,220px); height:6px; margin:8px auto 0; border-radius:3px; background:rgba(20,8,26,.5); overflow:hidden}
   .ar .breathbar i{display:block; height:100%; width:0%; background:linear-gradient(90deg,var(--guts),var(--bone-l)); transition:width .25s linear}
-  /* the loose bones and fur around the beat. No hand bones. */
-  .ar .bonefield{position:relative; height:80px; margin:8px auto 0; width:min(96%,330px);
-      background:url("assets/armie/gore-bones.png") 50% 50%/contain no-repeat; filter:drop-shadow(0 3px 4px rgba(0,0,0,.5))}
-  .ar .bonefield span{display:none}   /* the drawn bones step aside for the real ones */
-  .ar .bonefield span{position:absolute; display:block}
-  .ar .bn{background:linear-gradient(180deg,var(--bone-l),var(--bone-d)); border-radius:5px; box-shadow:0 2px 4px rgba(0,0,0,.5)}
-  .ar .fl{background:radial-gradient(circle at 40% 35%, var(--flesh), #9c3b55); border-radius:52% 44% 58% 40%; box-shadow:0 2px 4px rgba(0,0,0,.5)}
-  .ar .fu{background:repeating-linear-gradient(84deg, var(--clay-l) 0 2px, var(--clay-d) 2px 5px); border-radius:44% 56% 40% 60%; opacity:.9}
 
   /* ---- the serum, revealed when he sleeps, and the folded card behind it ---- */
   .ar .serum{margin:0 auto 8px; max-width:330px; padding:14px 14px 12px; border-radius:16px 7px 18px 8px;
@@ -642,18 +636,15 @@ FORM: Ian's canon 2026-08-27 (Coach Armie Page Spec.md). Goals + species build t
       <div class="breath" id="arBreath">
         <p class="breathtape"><span class="tape">HEAD FUNNY? HOLD SPACE.</span></p>
         <div class="sacwrap">
+          <div class="mess" aria-hidden="true">
+            <img src="assets/armie/gore-bones.png"  style="left:-14%;  top:4%;     width:44%; transform:rotate(-17deg)" onerror="this.remove()">
+            <img src="assets/armie/gore-bits.png"   style="right:-16%; top:-8%;    width:38%; transform:rotate(23deg)"  onerror="this.remove()">
+            <img src="assets/armie/gore-tendon.png" style="left:2%;    bottom:-6%; width:52%; transform:rotate(6deg)"   onerror="this.remove()">
+            <img src="assets/armie/gore-spine.png"  style="right:-8%;  bottom:6%;  width:32%; transform:rotate(-9deg)"  onerror="this.remove()">
+            <img src="assets/armie/gore-bits.png"   style="left:30%;   bottom:-14%;width:24%; transform:rotate(-38deg)" onerror="this.remove()">
+            <img src="assets/armie/gore-bones.png"  style="right:26%;  top:-16%;   width:28%; transform:rotate(41deg)"  onerror="this.remove()">
+          </div>
           <div class="sac" id="arSac" aria-hidden="true"></div>
-        </div>
-        <img class="skull" src="assets/armie/skull-goo.png"
-             alt="A cracked gold vessel with two mismatched sockets, purple goo pooled inside"
-             onerror="this.style.display='none'">
-        <div class="bonefield" aria-hidden="true">
-          <span class="bn" style="left:3%;  top:34%; width:44px; height:9px;  transform:rotate(-12deg)"></span>
-          <span class="fl" style="left:24%; top:12%; width:19px; height:15px; transform:rotate(18deg)"></span>
-          <span class="bn" style="left:36%; top:52%; width:34px; height:8px;  transform:rotate(7deg)"></span>
-          <span class="fu" style="left:56%; top:20%; width:26px; height:18px; transform:rotate(-22deg)"></span>
-          <span class="bn" style="left:70%; top:46%; width:38px; height:10px; transform:rotate(-5deg)"></span>
-          <span class="fl" style="left:88%; top:16%; width:15px; height:13px; transform:rotate(30deg)"></span>
         </div>
         <div class="breathbar" aria-hidden="true"><i id="arBreathBar"></i></div>
         <p class="breathnote" id="arBreathNote" aria-live="polite">HOLD SPACE. ARMIE SLOW.</p>
