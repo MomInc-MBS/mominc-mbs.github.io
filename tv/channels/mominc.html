@@ -101,9 +101,9 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
   /* the expectations: three tabs, each an impossible plan, all pre-ticked; the real program locked under them */
   /* the MYR5 history: ten iterations, flipped to show the tell each one fixed (Ian, 2026-08-27).
      Front is a picture that generation made. Back is what to look for in it, boasted about. */
-  .mi .hist{display:grid; gap:10px; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); margin-top:10px}
+  .mi .hist{display:grid; width:100%; gap:10px; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); margin-top:10px}
   .mi .itcard{perspective:900px; background:none; border:0; padding:0; cursor:pointer; font:inherit; color:inherit}
-  .mi .itin{position:relative; width:100%; aspect-ratio:3/4; transition:transform .55s cubic-bezier(.4,.1,.2,1); transform-style:preserve-3d}
+  .mi .itin{display:block; position:relative; width:100%; aspect-ratio:3/4; transition:transform .55s cubic-bezier(.4,.1,.2,1); transform-style:preserve-3d}
   .mi .itcard[aria-pressed="true"] .itin{transform:rotateY(180deg)}
   .mi .itface{position:absolute; inset:0; backface-visibility:hidden; border-radius:6px; overflow:hidden;
       box-shadow:0 4px 10px rgba(0,0,0,.45), inset 0 0 0 3px var(--card-d); background:var(--card)}
@@ -523,6 +523,12 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
   mi.querySelectorAll(".itcard").forEach(c => c.addEventListener("click", () => {
     c.setAttribute("aria-pressed", c.getAttribute("aria-pressed") === "true" ? "false" : "true");
   }));
+  // "picture pending" is an absolutely positioned overlay, so it painted over every photo that did
+  // load. It only exists for the ones that do not: once a photo arrives, its placeholder goes.
+  mi.querySelectorAll(".itfront img").forEach(im => {
+    const drop = () => { const ph = im.parentElement.querySelector(".ph"); if (ph) ph.remove(); };
+    if (im.complete && im.naturalWidth) drop(); else im.addEventListener("load", drop);
+  });
 
 
   // --- the real program unlocks with the family: reads the shell's node store (mbs-unlock), same as the LCD cards

@@ -90,8 +90,9 @@ FORM: Ian's spec 2026-08-26 + Round 2 same night, twice amended (the 3x3/single-
   .sg .panel.bidding .tag{opacity:1; pointer-events:auto}
   .sg .panel.bought .tag{opacity:1; pointer-events:none; background:linear-gradient(160deg,var(--purple),var(--purple-d)); font-family:"Anton",sans-serif; letter-spacing:.04em; font-size:11.5px}
   .sg .panel.locked{filter:grayscale(.7) brightness(.65)}
-  .sg .panel.locked .face::after{content:"LOCKED"; position:absolute; inset:0; z-index:2; display:grid; place-items:center;
-      font-family:"Anton",sans-serif; font-size:11px; letter-spacing:.1em; color:#fff9}
+  .sg .panel.locked .face::after{content:"🔒 LOCKED"; position:absolute; inset:0; z-index:2; display:grid; place-items:center;
+      font-family:"Anton",sans-serif; font-size:26px; letter-spacing:.14em; color:#fff; line-height:1.1;
+      text-shadow:0 2px 0 #000, 0 0 14px rgba(0,0,0,.9); background:rgba(0,0,0,.34)}
   @keyframes sgshake{0%,100%{transform:translateX(0)} 20%{transform:translateX(-4px)} 40%{transform:translateX(4px)} 60%{transform:translateX(-3px)} 80%{transform:translateX(3px)}}
   .sg .panel.shake{animation:sgshake .4s}
 
@@ -257,7 +258,7 @@ FORM: Ian's spec 2026-08-26 + Round 2 same night, twice amended (the 3x3/single-
 
     <section class="wheelsec" id="sgWheelSec" aria-label="The walls">
       <h2 class="sec-h">The Walls</h2>
-      <p class="sec-sub">He'd rather be reading the stars tonight. Instead: seven panels of somebody's debt, and one nobody's opened yet. Scroll to turn the wheel. Open one, one second to look before it shuts, then you bid, and it goes up fast.</p>
+      <p class="sec-sub">He'd rather be reading the stars tonight. Instead: four panels of somebody's debt, and one nobody's opened yet. Scroll to turn the wheel. Open one, one second to look before it shuts, then you bid, and it goes up fast.</p>
       <div class="stagewrap" id="sgStageWrap">
         <div class="wheelrow">
           <div class="wheelstage" id="sgWheelStage">
@@ -300,9 +301,8 @@ FORM: Ian's spec 2026-08-26 + Round 2 same night, twice amended (the 3x3/single-
     </section>
 
     <div class="inv" id="sgInvSrc" aria-hidden="true" style="display:none">
-      <div class="box" data-box="0"></div><div class="box" data-box="1"></div><div class="box" data-box="2"></div>
-      <div class="box" data-box="3"></div><div class="box" data-box="4"></div><div class="box" data-box="5"></div>
-      <div class="box" data-box="6"></div>
+      <div class="box" data-box="0"></div><div class="box" data-box="1"></div>
+      <div class="box" data-box="2"></div><div class="box" data-box="3"></div>
     </div>
 
     <section class="treats" aria-label="Natural dog treats">
@@ -333,6 +333,7 @@ FORM: Ian's spec 2026-08-26 + Round 2 same night, twice amended (the 3x3/single-
   const glass = screen && screen.parentElement;
 
   // --- content banks
+  // Only the first FINAL of these are used (the wheel is five doors). The rest stay as a pool.
   const ITEMS = [
     "a 45 minute consultation with a professional investor. He will consult. Nothing else is guaranteed.",
     "a first edition hardcover, Why You Specifically Overspend, 1987, water damaged, still correct.",
@@ -394,13 +395,16 @@ FORM: Ian's spec 2026-08-26 + Round 2 same night, twice amended (the 3x3/single-
       + '<span class="face"><span class="handle"></span></span>'
       + '<span class="tag" aria-hidden="true"></span>';
   }
-  const N = 8;
+  const N = 5;                                   // four lots, then the locked fifth (Ian, 2026-08-27)
+  const FINAL = N - 1;                           // the locked door: the chicken leg
+  const STEP = 360 / N;                          // degrees between panels on the drum
+  const RAD = Math.round(65 / Math.tan(Math.PI / N));   // half the panel height over tan(half step)
   for (let i = 0; i < N; i++) {
-    const isFinal = i === 7;
+    const isFinal = i === FINAL;
     panelState[i] = { phase: isFinal ? "locked" : "closed", stage: 0 };
     const p = document.createElement("div");
     p.className = "panel" + (isFinal ? " final locked" : "");
-    p.style.transform = "rotateX(" + (-i * 45) + "deg) translateZ(157px)";
+    p.style.transform = "rotateX(" + (-i * STEP) + "deg) translateZ(" + RAD + "px)";
     p.innerHTML = panelMarkup();
     p.querySelector(".num").textContent = isFinal ? "?" : (i + 1);
     const photo = document.createElement("img");
@@ -434,7 +438,7 @@ FORM: Ian's spec 2026-08-26 + Round 2 same night, twice amended (the 3x3/single-
     let progress = (screen.scrollTop - startOffset) / runway;
     progress = Math.max(0, Math.min(1, progress));
     const idx = Math.round(progress * (N - 1));
-    wheel.style.transform = "rotateX(" + (idx * 45) + "deg)";
+    wheel.style.transform = "rotateX(" + (idx * STEP) + "deg)";
     if (idx !== currentIndex) { currentIndex = idx; applyFacing(); }
   }
   if (screen) screen.addEventListener("scroll", updateWheel, { passive: true });
@@ -445,7 +449,7 @@ FORM: Ian's spec 2026-08-26 + Round 2 same night, twice amended (the 3x3/single-
   // landed. The stage is a plain 2D box, so it takes the click and routes it to whichever door is facing.
   const wheelStage = document.getElementById("sgWheelStage");
   if (wheelStage) wheelStage.addEventListener("click", () => {
-    if (currentIndex >= 0) (currentIndex === 7 ? onFinalClick : onDoorClick)(currentIndex);
+    if (currentIndex >= 0) (currentIndex === FINAL ? onFinalClick : onDoorClick)(currentIndex);
   });
 
   let bought = 0;
@@ -524,7 +528,7 @@ FORM: Ian's spec 2026-08-26 + Round 2 same night, twice amended (the 3x3/single-
     fillInventory(idx);
   }
   function onFinalClick() {
-    const s = panelState[7], el = panelEls[7];
+    const s = panelState[FINAL], el = panelEls[FINAL];
     if (s.phase === "locked") { el.classList.add("shake"); setTimeout(() => el.classList.remove("shake"), 400); return; }
     if (s.phase === "closed") {
       s.phase = "peek"; el.classList.add("open");
@@ -548,18 +552,21 @@ FORM: Ian's spec 2026-08-26 + Round 2 same night, twice amended (the 3x3/single-
     box.textContent = ITEMS[idx].split(" ").slice(0, 3).join(" ");
     box.title = ITEMS[idx];
     box.tabIndex = 0; box.setAttribute("role", "button");
-    if (bought === 7) { panelState[7].phase = "closed"; panelEls[7].classList.remove("locked"); }
+    if (bought === FINAL) { panelState[FINAL].phase = "closed"; panelEls[FINAL].classList.remove("locked"); }
   }
 
   // --- the chicken leg: draggable via pointer events, dropped on Sag. the wheel itself is the position:relative stage
   function spawnLeg(doorEl) {
     const leg = document.createElement("div"); leg.className = "leg"; leg.id = "sgLeg";
     leg.innerHTML = '<span class="meat"></span><span class="bone"></span>';
-    const dr = doorEl.getBoundingClientRect(), sr = wheel.getBoundingClientRect();
-    const z0 = sr.width / wheel.offsetWidth || 1;   // the shell zooms .channel 1.15x; real pixel deltas must be divided back to local CSS px
+    // The leg used to be appended to the wheel, which is a rotated preserve-3d box: the leg landed
+    // on the drum's tilted plane, so it rendered edge-on and could not be grabbed. It lives on the
+    // sticky stage now, which is flat, positioned, and holds Sag too, so it can be dragged to him.
+    const dr = doorEl.getBoundingClientRect(), sr = stageWrap.getBoundingClientRect();
+    const z0 = sr.width / stageWrap.offsetWidth || 1;   // the shell zooms .channel 1.15x; real pixel deltas must be divided back to local CSS px
     leg.style.left = ((dr.left - sr.left + dr.width / 2 - 28) / z0) + "px";
     leg.style.top = ((dr.top - sr.top + dr.height / 2 - 22) / z0) + "px";
-    wheel.appendChild(leg);
+    stageWrap.appendChild(leg);
     enableDrag(leg);
     clearTimeout(debtTimer); hideDebt();
     debtTimer = setTimeout(triggerDebt, 10000);   // unfed in 10s: the second ending
@@ -600,8 +607,8 @@ FORM: Ian's spec 2026-08-26 + Round 2 same night, twice amended (the 3x3/single-
     });
     leg.addEventListener("pointermove", e => {
       if (!dragging) return;
-      const sr = wheel.getBoundingClientRect();
-      const z = sr.width / wheel.offsetWidth || 1;   // same zoom compensation while dragging
+      const sr = stageWrap.getBoundingClientRect();
+      const z = sr.width / stageWrap.offsetWidth || 1;   // same zoom compensation while dragging
       leg.style.left = ((e.clientX - sr.left - offX) / z) + "px";
       leg.style.top = ((e.clientY - sr.top - offY) / z) + "px";
     });
@@ -672,7 +679,7 @@ FORM: Ian's spec 2026-08-26 + Round 2 same night, twice amended (the 3x3/single-
     bought = 0;
     clearTimeout(debtTimer); debtTimer = null; hideDebt();
     dismiss();
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < FINAL; i++) {
       panelState[i] = { phase: "closed", stage: 0 };
       const el = panelEls[i];
       el.classList.remove("open", "bidding", "bought", "shake");
@@ -681,10 +688,10 @@ FORM: Ian's spec 2026-08-26 + Round 2 same night, twice amended (the 3x3/single-
       invBoxes[i].classList.remove("filled"); invBoxes[i].textContent = ""; invBoxes[i].removeAttribute("title");
       invBoxes[i].removeAttribute("tabindex"); invBoxes[i].removeAttribute("role");
     }
-    panelState[7] = { phase: "locked", stage: 0 };
-    panelEls[7].classList.add("locked"); panelEls[7].classList.remove("open", "bought", "shake");
-    panelEls[7].querySelector(".peek").classList.remove("blurred");
-    panelEls[7].querySelector(".tag").textContent = ""; panelEls[7].querySelector(".tag").style.opacity = "";
+    panelState[FINAL] = { phase: "locked", stage: 0 };
+    panelEls[FINAL].classList.add("locked"); panelEls[FINAL].classList.remove("open", "bought", "shake");
+    panelEls[FINAL].querySelector(".peek").classList.remove("blurred");
+    panelEls[FINAL].querySelector(".tag").textContent = ""; panelEls[FINAL].querySelector(".tag").style.opacity = "";
     const oldLeg = document.getElementById("sgLeg"); if (oldLeg) oldLeg.remove();
   }
 

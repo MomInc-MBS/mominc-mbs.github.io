@@ -127,7 +127,7 @@ FORM: Ian's canon 2026-08-27 (Coach Armie Page Spec.md). Goals + species build t
 
 
   /* ---- the body holds the page together: intestine border, spine rules, tendons, tape ---- */
-  .ar .gutframe{position:relative; padding:14px 12px}
+  .ar .gutframe{position:relative; padding:14px 34px}
   /* the intestine running the page edge */
   .ar .gutframe::before,.ar .gutframe::after{content:""; position:absolute; top:0; bottom:0; width:26px; pointer-events:none; z-index:3;
       background:url("assets/armie/gore-intestine-h.png") 50% 0/26px auto repeat-y;
@@ -300,23 +300,74 @@ FORM: Ian's canon 2026-08-27 (Coach Armie Page Spec.md). Goals + species build t
      sides stay visible either way (Ian, 2026-08-27). Clicks pass through him to it. */
 
 
-  /* ---- the set: shiny ship floor, gold carpet laid over it, everything sits on the carpet.
-     Hyper realistic is the governing note, so the ground is photographed material, not gradients. ---- */
+  /* ---- ROUND 6 (Ian, 2026-08-27 night): "the purple ship should be the main edges and building
+     blocks of this." The set is no longer a gold carpet on a studio floor. It is the MYR5 ship,
+     cut from the ship's own render (D:\MOM Rigssets\ship-interior
+ear-bulkhead-still.png,
+     tiles in assets/armie/ship/). Wall, boards, page edges and tier markers are all ship material.
+     His carnage is what is taped ON TOP of it, and that is the whole joke: the network's expensive
+     game show set with a severed arm's mess stuck all over it. The gold carpet is gone, because on
+     a wide screen it was half the frame doing nothing. ---- */
   .ar{background:
-      url("assets/armie/ship-floor.png") 50% 0/300px auto repeat,
-      radial-gradient(110% 70% at 50% 10%, #6d6154, #3b332c 60%, #1c1813 100%)}
-  .ar .carpet{position:absolute; inset:0; z-index:0; pointer-events:none;
-      background:url("assets/armie/carpet-gold.png") 50% 0/220px auto repeat;
-      -webkit-mask-image:linear-gradient(180deg, transparent 0, #000 34px, #000 calc(100% - 34px), transparent 100%);
-      mask-image:linear-gradient(180deg, transparent 0, #000 34px, #000 calc(100% - 34px), transparent 100%);
-      box-shadow:inset 0 0 60px rgba(0,0,0,.55)}
-  /* boards stop being purple slabs and become things resting on the carpet */
+      linear-gradient(180deg, rgba(10,2,20,.66), rgba(10,2,20,.80)),
+      url("assets/armie/ship/wall-tile.png") 50% 0/100% auto repeat-y,
+      linear-gradient(180deg,#2c1049,#150720)}
+  .ar .wrap{max-width:1000px}
+  /* the corridor light, so the column sits inside the ship instead of on top of a texture */
+  .ar .carpet{position:absolute; inset:0; z-index:0; pointer-events:none; background:none;
+      box-shadow:inset 0 0 200px rgba(8,0,16,.92), inset 0 0 70px rgba(196,84,255,.10)}
+  /* every board is a lit ship panel: the wall's own material one scale up, so it reads as a thing
+     ON the wall, edged in the chrome bevel the ship uses on every panel it has */
   .ar .board{background:
-      linear-gradient(163deg, rgba(28,20,34,.82), rgba(16,10,20,.9));
-      box-shadow:0 14px 26px rgba(0,0,0,.62), inset 0 1px 0 rgba(255,255,255,.08);
-      backdrop-filter:blur(1px)}
+      linear-gradient(180deg, rgba(255,255,255,.10), rgba(0,0,0,.30) 42%, rgba(0,0,0,.54)),
+      url("assets/armie/ship/board-tile.png") 50% 0/420px auto repeat;
+      border-radius:24px 10px 26px 12px;
+      box-shadow:
+        inset 0 0 0 2px rgba(232,214,255,.34),
+        inset 0 0 0 6px rgba(72,34,116,.85),
+        inset 0 4px 14px rgba(255,255,255,.10),
+        inset 0 -14px 30px rgba(0,0,0,.55),
+        0 16px 30px rgba(0,0,0,.68);
+      backdrop-filter:none}
   .ar .board::after{display:none}     /* the drawn gore blobs go, the rendered splatters replace them */
   .ar .board::before{display:none}
+
+  /* the tier cards were cream rounded rectangles and read as a template card deck. They are recessed
+     ship panels now, and the tier marker is the ship's own marquee bulb rail. */
+  .ar .tier{background:
+      linear-gradient(180deg, rgba(0,0,0,.34), rgba(0,0,0,.12) 40%, rgba(0,0,0,.48)),
+      url("assets/armie/ship/panel-one.png") 50% 50%/cover no-repeat;
+      color:#efe2ff; border-radius:20px 9px 22px 10px; padding:18px 13px 13px;
+      box-shadow:
+        inset 0 0 0 2px rgba(226,206,255,.30),
+        inset 0 8px 20px rgba(0,0,0,.55),
+        0 10px 20px rgba(0,0,0,.62)}
+  .ar .tier::before{left:10px; right:10px; top:7px; height:13px; border-radius:0;
+      background:url("assets/armie/ship/rail-h.png") 50% 50%/auto 13px repeat-x;
+      filter:drop-shadow(0 0 6px rgba(226,110,255,.6))}
+  .ar .tier .repcount{color:#fff6d8; text-shadow:0 0 16px rgba(255,140,235,.85), 0 3px 0 #350a4e}
+  .ar .tier p{color:#e6d6f7}
+  .ar .tier h3 .sub{color:#c9a4e2}
+  .ar .tier.t3{background:
+      linear-gradient(180deg, rgba(70,26,0,.34), rgba(0,0,0,.14) 40%, rgba(0,0,0,.50)),
+      url("assets/armie/ship/panel-one.png") 50% 50%/cover no-repeat}
+
+  /* the page edges are the ship's marquee bulb rails now, not the intestine. A body is what gets
+     taped on top here, never what holds the page up. */
+  .ar .gutframe::before,.ar .gutframe::after{width:22px; opacity:1; transform:none;
+      background:url("assets/armie/ship/rail-v.png") 50% 0/22px auto repeat-y;
+      filter:drop-shadow(0 0 9px rgba(214,92,255,.6))}
+  .ar .gutframe::before{left:-4px}
+  .ar .gutframe::after{right:-4px}
+
+  /* the blood was muddy on brown. On lit purple metal it carries, but it needs a hard dark halo
+     or the bulbs behind it eat the letter edges. */
+  .ar .banner{color:#ff2436;
+      text-shadow:0 2px 0 #4a0009, 0 0 3px #2a0006, 0 0 18px rgba(255,36,54,.55), 0 4px 10px rgba(0,0,0,.9)}
+  .ar .banner small{color:#f0a0b4; text-shadow:0 1px 0 #2a0006, 0 2px 4px rgba(0,0,0,.85)}
+  .ar .lede, .ar .note, .ar .garble, .ar .plout{color:#ff3242;
+      text-shadow:0 1px 0 #4a0009, 0 0 2px #2a0006, 0 2px 5px rgba(0,0,0,.85)}
+  .ar .tier h3{color:#ff5566; text-shadow:0 1px 0 #3a0007, 0 2px 4px rgba(0,0,0,.8)}
 
   /* splatters, rendered on carpet so the pile matches the ground they sit on */
   .ar .splat{position:absolute; pointer-events:none; z-index:2; background-repeat:no-repeat; background-size:contain}
@@ -400,7 +451,7 @@ FORM: Ian's canon 2026-08-27 (Coach Armie Page Spec.md). Goals + species build t
       <div class="lockerwrap">
       <div class="serum" id="arSerum">
           <h3>ARMIE HIDE HAND JUICE.</h3>
-          <p>Kept behind the coach. Not.</p>
+          <p>Kept behind the coach. Not hidden. Armie hide nothing.</p>
           <button class="card" id="arCard" type="button">
             <span class="fold">A FOLDED CARD, TUCKED BEHIND IT</span>
             Open it.
@@ -452,9 +503,9 @@ FORM: Ian's canon 2026-08-27 (Coach Armie Page Spec.md). Goals + species build t
       <span class="strip tl" aria-hidden="true"></span><span class="strip tr" aria-hidden="true"></span><span class="splat b" aria-hidden="true"></span><span class="splat c" aria-hidden="true"></span>
       <h2 class="banner">ARMIE PICK YOUR FOOD.<small>THREE BODY. THREE MEAL.</small></h2>
       <div class="tiers">
-        <div class="tier t1"><h3>WEAK HUMANS<span class="sub">EASY</span></h3><p class="repcount">1</p><p>One bite of something with.</p></div>
-        <div class="tier t2"><h3>REGULAR BEINGS</h3><p class="repcount">20</p><p>Twenty servings, portioned like a.</p></div>
-        <div class="tier t3"><h3>ROBOTS<span class="sub">EVEN ANCIENT ONES</span></h3><p class="repcount">1,000</p><p>One thousand servings, ingested with.</p></div>
+        <div class="tier t1"><h3>WEAK HUMAN.<span class="sub">ARMIE FEED YOU SOFT.</span></h3><p class="repcount">1</p><p>ONE BITE. ARMIE CUT IT FOR YOU. ARMIE CANNOT CUT.</p></div>
+        <div class="tier t2"><h3>NORMAL BODY.</h3><p class="repcount">20</p><p>TWENTY PLATE. SAME PLATE. ARMIE NOT WASH IT.</p></div>
+        <div class="tier t3"><h3>ROBOT.<span class="sub">OLD ROBOT EAT TOO.</span></h3><p class="repcount">1,000</p><p>ONE THOUSAND PLATE. SWALLOW WITH NO FACE. ARMIE PROUD.</p></div>
       </div>
       <p class="fine">Not advice. No real meals.</p>
     </section>
