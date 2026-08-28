@@ -1,0 +1,9 @@
+# local dev scratch, never deployed
+tv/_server.log
+tv/_out_hit.png
+tv/channels/out.txt
+tv/assets/armie$f
+
+# internal, not for a public repo
+PRODUCT.md
+.impeccable/

@@ -1,0 +1,6 @@
+<!doctype html><meta charset="utf-8"><style>html,body{margin:0;background:#000}iframe{width:390px;height:844px;border:0}</style>
+<iframe id="f"></iframe>
+<script>
+const q=new URLSearchParams(location.search); const f=document.getElementById("f"); f.src="/?ch="+(q.get("ch")||"mominc");
+f.addEventListener("load",()=>{ setTimeout(()=>{ const d=f.contentDocument; const st=d.createElement("style"); st.textContent="*{transition:none!important}"; d.head.appendChild(st); d.getElementById("tv").dataset.state="on"; const sc=d.getElementById("screen"); if(q.get("y")) sc.scrollTop=+q.get("y"); sc.dispatchEvent(new Event("scroll")); document.title="ready"; }, 2200); });
+</script>

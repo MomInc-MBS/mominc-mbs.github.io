@@ -1,0 +1,332 @@
+<!--
+THESIS: MBS FUEL is MOM Inc.'s energy-drink subsidiary: a deliberately garish pre-workout builder that pumps the visitor for their real supplement preferences under cover of a joke, feeding the on-demand vending-machine venture's product research.
+OWN-WORLD: The loud, basic energy-drink-can web page every other channel refuses to be: saturated gradient bursts, chrome/outline display type, sunbursts and lightning bolts, a scrolling UNTESTED ticker, zero handmade restraint.
+STORY: The visitor builds a can supplement by supplement, setting each of six to none/weak/strong; the honest label sits right beside the absurd promise it unlocks; they pick a flavour; the can renders live as a summary; they submit it in-character (nothing is sent, nothing is stored) and can mail the stack themselves.
+INTERACTABLE: six none/weak/strong toggles plus an eight-way flavour picker feed a live can summary; SUBMIT shows the finished can, offers a mailto with the stack, and, once every field is set, banks the channel's node with window.MBS.unlock("fuel") and fires window.MBS.wave().
+FORM: Ian's brief, [[Segment Storefronts]] "The energy drink page" (2026-08-26 night); house conventions from channels/mominc.html. Inside the shared television shell, ?ch=fuel, CH 7. Working name MBS FUEL; the drink's real name is still Ian's call.
+-->
+<style>
+  .fu{--hot:#ff2e88; --hot-d:#c40058; --acid:#c6ff00; --acid-d:#7a9c00; --volt:#00e0ff; --volt-d:#0092ab;
+      --sun:#ffea00; --sun-d:#e0a500; --grape:#7a2fc4; --grape-d:#4a1a86; --ink:#1a0a10; --cream:#fffef2;
+      min-height:100%; margin:0; color:var(--ink); font-family:"Nunito",Arial,sans-serif; position:relative; overflow-x:hidden;
+      background:
+        repeating-linear-gradient(125deg, rgba(255,255,255,.10) 0 18px, transparent 18px 36px),
+        linear-gradient(160deg, var(--hot) 0%, var(--sun) 34%, var(--acid) 58%, var(--volt) 82%, var(--grape) 100%);
+  }
+  .fu *{box-sizing:border-box}
+  .fu .wrap{position:relative; z-index:1; padding:0 clamp(12px,4vw,26px) 40px; max-width:820px; margin:0 auto}
+
+  /* the ticker: UNTESTED, constantly, top and bottom */
+  .fu .ticker{overflow:hidden; white-space:nowrap; background:repeating-linear-gradient(45deg,var(--ink) 0 14px,#000 14px 28px); border-top:4px solid var(--sun); border-bottom:4px solid var(--sun); padding:6px 0}
+  .fu .ticker b{display:inline-block; padding-left:100%; animation:tick 18s linear infinite; font-family:"Anton",sans-serif; letter-spacing:.14em; font-size:clamp(12px,3.6vw,16px); color:var(--sun); text-shadow:0 0 6px rgba(255,234,0,.6)}
+  @keyframes tick{from{transform:translateX(0)} to{transform:translateX(-100%)}}
+
+  /* header: sunburst behind a huge chrome wordmark, lightning either side */
+  .fu .head{position:relative; text-align:center; padding:22px 4px 14px; overflow:hidden}
+  .fu .burst{position:absolute; left:50%; top:46%; width:340px; height:340px; margin:-170px 0 0 -170px; z-index:0;
+      background:repeating-conic-gradient(from 0deg, var(--sun) 0deg 9deg, transparent 9deg 18deg); opacity:.55; animation:spin 26s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .fu .bolt{position:absolute; width:clamp(30px,9vw,54px); height:auto; z-index:1; filter:drop-shadow(2px 3px 0 var(--ink))}
+  .fu .bolt.l{left:2%; top:30%; fill:var(--volt); transform:rotate(-8deg)}
+  .fu .bolt.r{right:2%; top:22%; fill:var(--hot); transform:rotate(10deg) scaleX(-1)}
+  .fu .wordmark{position:relative; z-index:2; margin:0; font-family:"Bowlby One SC",cursive; font-size:clamp(40px,13vw,84px); line-height:.92; letter-spacing:.02em;
+      color:var(--cream); -webkit-text-stroke:3px var(--ink); text-stroke:3px var(--ink);
+      text-shadow:4px 4px 0 var(--grape), 8px 8px 0 rgba(0,0,0,.25)}
+  .fu .wordmark small{display:block; margin-top:6px; font-family:"Anton",sans-serif; -webkit-text-stroke:1.5px var(--ink); font-size:clamp(13px,4vw,20px); letter-spacing:.28em; color:var(--sun); text-shadow:2px 2px 0 var(--ink)}
+  .fu .chnum{position:relative; z-index:2; display:inline-block; margin-top:10px; font-family:"VT323",monospace; font-size:16px; letter-spacing:.1em; color:var(--ink); background:var(--cream); border:3px solid var(--ink); border-radius:20px; padding:2px 14px; transform:rotate(-2deg)}
+
+  /* panels: thick outline, drop shadow, rounded, screaming colour blocks */
+  .fu .card{position:relative; margin:24px 0; background:var(--cream); border:5px solid var(--ink); border-radius:22px; padding:16px 16px 14px; box-shadow:8px 8px 0 rgba(0,0,0,.35)}
+  .fu .heading{margin:0 0 10px; font-family:"Anton",sans-serif; font-size:clamp(20px,6.4vw,30px); letter-spacing:.04em; color:var(--hot-d); -webkit-text-stroke:1px var(--ink); text-align:center}
+  .fu .lede{margin:0 0 12px; font-weight:800; font-size:clamp(14px,4vw,16px); line-height:1.5; text-align:center}
+  .fu .warn{margin:0 0 14px; background:repeating-linear-gradient(45deg,var(--sun) 0 10px,var(--ink) 10px 20px); color:var(--cream); font-family:"VT323",monospace; font-size:clamp(12px,3.6vw,15px); letter-spacing:.06em; text-align:center; padding:6px 8px; border-radius:8px; border:2px solid var(--ink)}
+
+  /* floating UNTESTED badges: scattered through the page, gently alive, never fixed to the viewport */
+  .fu .floatprint{position:absolute; z-index:3; font-family:"VT323",monospace; font-size:clamp(11px,3vw,14px); letter-spacing:.08em; color:var(--ink); background:var(--sun); border:2px solid var(--ink); border-radius:6px; padding:2px 7px; pointer-events:none; animation:bob 5s ease-in-out infinite}
+  .fu .floatprint:nth-child(odd){animation-duration:6.4s}
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(-4deg)} 50%{transform:translateY(-8px) rotate(4deg)}}
+
+  /* supplement rows */
+  .fu .srows{display:grid; gap:16px}
+  .fu .srow{position:relative; background:#fff; border:4px solid var(--ink); border-radius:16px; padding:12px 14px 10px; box-shadow:5px 5px 0 rgba(0,0,0,.22)}
+  .fu .srow-top{display:flex; align-items:center; gap:9px; margin-bottom:5px}
+  .fu .srow .ic{width:26px; height:26px; flex:0 0 auto; filter:drop-shadow(1px 1px 0 var(--ink))}
+  .fu .srow .name{margin:0; font-family:"Archivo Black",sans-serif; font-size:clamp(16px,5vw,20px); letter-spacing:.01em; color:var(--ink)}
+  .fu .srow .real{margin:0 0 10px; font-size:clamp(13px,3.7vw,14.5px); line-height:1.5; color:#2a1a20}
+  .fu .levels{display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; margin-bottom:8px}
+  .fu .lvl{cursor:pointer; border:3px solid var(--ink); border-radius:10px; padding:8px 4px; background:#eee; font-family:"Anton",sans-serif; font-size:clamp(11px,3.4vw,13px); letter-spacing:.08em; color:var(--ink); box-shadow:3px 3px 0 rgba(0,0,0,.2); transition:transform 80ms ease-out}
+  .fu .lvl:active{transform:translate(2px,2px); box-shadow:1px 1px 0 rgba(0,0,0,.2)}
+  .fu .srow[data-level="none"] .lvl[data-level="none"]{background:#bcb; }
+  .fu .srow[data-level="weak"] .lvl[data-level="weak"]{background:var(--sun)}
+  .fu .srow[data-level="strong"] .lvl[data-level="strong"]{background:var(--hot); color:#fff}
+  .fu .lvl[aria-checked="true"]{outline:3px solid var(--volt); outline-offset:1px}
+  .fu .promise{position:relative; margin:0 0 8px; min-height:2.6em; background:var(--grape); color:var(--cream); font-family:"Archivo Black",sans-serif; font-size:clamp(13px,3.9vw,15px); line-height:1.4; border-radius:10px; padding:9px 11px; border:2px dashed var(--sun)}
+  .fu .promise span{display:none}
+  .fu .srow:not([data-level]) .promise .p-unset{display:block; font-family:"Nunito",sans-serif; font-weight:800; opacity:.85}
+  .fu .srow[data-level="none"] .promise .p-none{display:block}
+  .fu .srow[data-level="weak"] .promise .p-weak{display:block}
+  .fu .srow[data-level="strong"] .promise .p-strong{display:block}
+  .fu .untested{margin:0; font-family:"VT323",monospace; font-size:clamp(10.5px,3.2vw,12.5px); letter-spacing:.05em; color:var(--hot-d); text-align:center}
+
+  /* flavour picker */
+  .fu .flavours{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:6px 0 4px}
+  .fu .flv{cursor:pointer; border:3px solid var(--ink); border-radius:999px; padding:8px 14px; font-family:"Anton",sans-serif; font-size:clamp(11px,3.4vw,13px); letter-spacing:.05em; color:var(--ink); background:linear-gradient(135deg,#fff,#eee); box-shadow:3px 3px 0 rgba(0,0,0,.2); transition:transform 80ms ease-out}
+  .fu .flv:active{transform:translate(2px,2px); box-shadow:1px 1px 0 rgba(0,0,0,.2)}
+  .fu .flv.sel{background:linear-gradient(135deg,var(--acid),var(--volt)); outline:3px solid var(--hot)}
+
+  /* the can: a live summary */
+  .fu .can{background:var(--ink); color:var(--cream); border-radius:16px; padding:12px 14px; border:3px solid var(--sun); display:grid; gap:4px; font-family:"VT323",monospace; font-size:clamp(13px,4vw,15.5px); letter-spacing:.04em}
+  .fu .can span{display:block; border-bottom:1px dashed rgba(255,234,0,.3); padding:2px 0}
+  .fu .can span:last-child{border-bottom:0}
+  .fu .can.full{outline:3px solid var(--acid)}
+  .fu .submit{display:block; width:100%; margin-top:14px; cursor:pointer; border:4px solid var(--ink); border-radius:14px; padding:14px 10px; background:linear-gradient(135deg,var(--hot),var(--grape)); color:var(--cream); font-family:"Anton",sans-serif; font-size:clamp(15px,4.6vw,19px); letter-spacing:.08em; box-shadow:6px 6px 0 rgba(0,0,0,.3); transition:transform 80ms ease-out}
+  .fu .submit:active{transform:translate(3px,3px); box-shadow:3px 3px 0 rgba(0,0,0,.3)}
+  .fu .result{margin-top:14px}
+  .fu .result .note{margin:0 0 10px; font-family:"Archivo Black",sans-serif; font-size:clamp(13px,3.9vw,15px); text-align:center; color:var(--hot-d); line-height:1.4}
+  .fu .result .nudge{margin:0 0 10px; font-family:"Nunito",sans-serif; font-weight:800; font-size:clamp(12.5px,3.7vw,14px); text-align:center; color:var(--grape-d)}
+  .fu .mailme{display:block; text-align:center; font-family:"Anton",sans-serif; letter-spacing:.05em; font-size:clamp(13px,3.9vw,15px); color:var(--ink); background:var(--sun); border:3px solid var(--ink); border-radius:10px; padding:10px; text-decoration:none; box-shadow:4px 4px 0 rgba(0,0,0,.25)}
+
+  .fu .foot{text-align:center; margin:26px 0 4px; font-family:"Anton",sans-serif; font-size:clamp(13px,4vw,16px); letter-spacing:.06em; color:var(--cream); text-shadow:2px 2px 0 var(--ink)}
+  .fu .foot small{display:block; margin-top:10px; font-family:"VT323",monospace; font-weight:400; font-size:12.5px; letter-spacing:.04em; color:#fff; text-shadow:1px 1px 0 var(--ink); line-height:1.5}
+
+  @media (min-width:760px){ .fu .flavours{max-width:640px; margin-left:auto; margin-right:auto} }
+  @media (max-width:520px){
+    .fu .wrap{padding:0 10px 32px}
+    .fu .card{padding:13px 12px 12px; border-radius:16px}
+    .fu .levels{grid-template-columns:1fr 1fr 1fr; gap:5px}
+    .fu .lvl{padding:9px 2px; font-size:11.5px}
+    .fu .srow-top .name{font-size:15.5px}
+    .fu .flavours{gap:6px}
+    .fu .flv{padding:7px 11px; font-size:11px}
+    .fu .burst{width:220px; height:220px; margin:-110px 0 0 -110px}
+    .fu .bolt{width:26px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .fu .ticker b, .fu .burst, .fu .floatprint{animation:none}
+  }
+</style>
+
+<article class="fu" id="fu" aria-label="MBS FUEL" data-host="MBS FUEL" data-show="BUILD YOUR STACK" data-ch="7" data-gauge="off">
+  <div class="ticker" aria-hidden="true"><b>⚡ UNTESTED ⚡ UNTESTED ⚡ UNTESTED ⚡ NOTHING ON THIS CAN HAS BEEN TESTED, BREWED, OR APPROVED BY ANYONE ⚡ UNTESTED ⚡ UNTESTED ⚡</b></div>
+
+  <div class="wrap">
+    <header class="head">
+      <div class="burst" aria-hidden="true"></div>
+      <svg class="bolt l" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 1 3 14h7l-1 9 11-14h-8z"/></svg>
+      <svg class="bolt r" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 1 3 14h7l-1 9 11-14h-8z"/></svg>
+      <h1 class="wordmark">MBS FUEL<small>BUILD YOUR STACK</small></h1>
+      <span class="chnum">CH 7 · MOM INC SUBSIDIARY</span>
+    </header>
+
+    <section class="card" aria-label="What this is">
+      <p class="floatprint" style="left:6%; top:8%">UNTESTED</p>
+      <p class="floatprint" style="right:4%; bottom:6%">UNTESTED</p>
+      <h2 class="heading">YOUR PRE-WORKOUT. YOUR RULES.</h2>
+      <p class="lede">MOM already mixed your can. It is waiting right below. Six ingredients. Three settings each: none, weak, strong. Set your dream can and finish it. What each one really does is written straight. What MBS FUEL promises at that setting is not.</p>
+      <p class="warn">⚠ THIS BLEND HAS NEVER BEEN BREWED. NOTHING BELOW HAS BEEN TESTED ON A HUMAN, A LAB, OR A DOG. ⚠</p>
+    </section>
+
+    <section class="card" aria-label="Your stack">
+      <p class="floatprint" style="left:3%; top:40%">UNTESTED</p>
+      <h2 class="heading">THE STACK</h2>
+      <div class="srows" id="srows">
+
+        <div class="srow" data-supp="caffeine">
+          <div class="srow-top"><svg class="ic" viewBox="0 0 24 24" fill="var(--sun-d)" aria-hidden="true"><path d="M13 1 3 14h7l-1 9 11-14h-8z"/></svg><h3 class="name">CAFFEINE</h3></div>
+          <p class="real">General effect: caffeine is a stimulant. It blocks adenosine, the molecule that makes you feel sleepy. Most people feel more alert. Effort can feel a little easier, at normal doses. Not a promise.</p>
+          <div class="levels" role="radiogroup" aria-label="Caffeine level">
+            <button type="button" class="lvl" data-level="none" role="radio" aria-checked="false">NONE</button>
+            <button type="button" class="lvl" data-level="weak" role="radio" aria-checked="false">WEAK</button>
+            <button type="button" class="lvl" data-level="strong" role="radio" aria-checked="false">STRONG</button>
+          </div>
+          <div class="promise" aria-live="polite">
+            <span class="p-unset">Pick a level to see what MBS FUEL promises.</span>
+            <span class="p-none">You remain a mortal, tired like the rest of us. The only honest line on this can.</span>
+            <span class="p-weak">A gentle hum behind your eyes. You will finally understand your unread emails.</span>
+            <span class="p-strong">Your heartbeat becomes a drum solo. Time politely slows down so you can watch yourself win. Lightning starts following you into meetings.</span>
+          </div>
+          <p class="untested">UNTESTED · this blend has never been made</p>
+        </div>
+
+        <div class="srow" data-supp="theanine">
+          <div class="srow-top"><svg class="ic" viewBox="0 0 24 24" fill="var(--volt-d)" aria-hidden="true"><path d="M13 1 3 14h7l-1 9 11-14h-8z"/></svg><h3 class="name">L-THEANINE</h3></div>
+          <p class="real">General effect: an amino acid from tea leaves. Paired with caffeine, some people feel calmer and more focused, with fewer jitters. The evidence is modest. Not a promise.</p>
+          <div class="levels" role="radiogroup" aria-label="L-theanine level">
+            <button type="button" class="lvl" data-level="none" role="radio" aria-checked="false">NONE</button>
+            <button type="button" class="lvl" data-level="weak" role="radio" aria-checked="false">WEAK</button>
+            <button type="button" class="lvl" data-level="strong" role="radio" aria-checked="false">STRONG</button>
+          </div>
+          <div class="promise" aria-live="polite">
+            <span class="p-unset">Pick a level to see what MBS FUEL promises.</span>
+            <span class="p-none">Your nerves stay exactly as jittery as the caffeine alone made them.</span>
+            <span class="p-weak">A monk-like stillness descends. You will alphabetize something out of pure serenity.</span>
+            <span class="p-strong">You achieve the calm of a monk who also benches 400 pounds. Your enemies sense your peace and simply leave.</span>
+          </div>
+          <p class="untested">UNTESTED · this blend has never been made</p>
+        </div>
+
+        <div class="srow" data-supp="glutamine">
+          <div class="srow-top"><svg class="ic" viewBox="0 0 24 24" fill="var(--acid-d)" aria-hidden="true"><path d="M13 1 3 14h7l-1 9 11-14h-8z"/></svg><h3 class="name">L-GLUTAMINE</h3></div>
+          <p class="real">General effect: an amino acid. Your gut and immune system use a lot of it during hard training. It may help some people recover. There is little proof it boosts performance if you already eat well. Not a promise.</p>
+          <div class="levels" role="radiogroup" aria-label="L-glutamine level">
+            <button type="button" class="lvl" data-level="none" role="radio" aria-checked="false">NONE</button>
+            <button type="button" class="lvl" data-level="weak" role="radio" aria-checked="false">WEAK</button>
+            <button type="button" class="lvl" data-level="strong" role="radio" aria-checked="false">STRONG</button>
+          </div>
+          <div class="promise" aria-live="polite">
+            <span class="p-unset">Pick a level to see what MBS FUEL promises.</span>
+            <span class="p-none">Your gut soldiers on, unsupported and completely unbothered.</span>
+            <span class="p-weak">Your intestines applaud. Somewhere, a gut biome throws a small, tasteful parade.</span>
+            <span class="p-strong">Your entire digestive tract achieves enlightenment and mails you a thank-you card. You could digest a boulder, and you might have to.</span>
+          </div>
+          <p class="untested">UNTESTED · this blend has never been made</p>
+        </div>
+
+        <div class="srow" data-supp="citrulline">
+          <div class="srow-top"><svg class="ic" viewBox="0 0 24 24" fill="var(--hot-d)" aria-hidden="true"><path d="M13 1 3 14h7l-1 9 11-14h-8z"/></svg><h3 class="name">L-CITRULLINE</h3></div>
+          <p class="real">General effect: an amino acid. Your body turns some of it into nitric oxide. Nitric oxide relaxes blood vessels. Some studies show a bit more blood flow, and less soreness the next day. Not a promise.</p>
+          <div class="levels" role="radiogroup" aria-label="L-citrulline level">
+            <button type="button" class="lvl" data-level="none" role="radio" aria-checked="false">NONE</button>
+            <button type="button" class="lvl" data-level="weak" role="radio" aria-checked="false">WEAK</button>
+            <button type="button" class="lvl" data-level="strong" role="radio" aria-checked="false">STRONG</button>
+          </div>
+          <div class="promise" aria-live="polite">
+            <span class="p-unset">Pick a level to see what MBS FUEL promises.</span>
+            <span class="p-none">Your blood vessels remain exactly as wide as they were this morning.</span>
+            <span class="p-weak">A faint pump. Your forearms look mildly suspicious in the mirror.</span>
+            <span class="p-strong">Your veins become visible from orbit. Passing cyclists quietly draft behind your pump.</span>
+          </div>
+          <p class="untested">UNTESTED · this blend has never been made</p>
+        </div>
+
+        <div class="srow" data-supp="creatine">
+          <div class="srow-top"><svg class="ic" viewBox="0 0 24 24" fill="var(--grape)" aria-hidden="true"><path d="M13 1 3 14h7l-1 9 11-14h-8z"/></svg><h3 class="name">CREATINE</h3></div>
+          <p class="real">General effect: one of the most studied sports supplements there is. It raises stored phosphocreatine in your muscles. That helps short, hard efforts, like sprints and heavy lifts. Used often over time, it can give modest gains in strength and power. Not a promise.</p>
+          <div class="levels" role="radiogroup" aria-label="Creatine level">
+            <button type="button" class="lvl" data-level="none" role="radio" aria-checked="false">NONE</button>
+            <button type="button" class="lvl" data-level="weak" role="radio" aria-checked="false">WEAK</button>
+            <button type="button" class="lvl" data-level="strong" role="radio" aria-checked="false">STRONG</button>
+          </div>
+          <div class="promise" aria-live="polite">
+            <span class="p-unset">Pick a level to see what MBS FUEL promises.</span>
+            <span class="p-none">Your muscles keep whatever creatine you already had, which is also fine.</span>
+            <span class="p-weak">You add a plate to the bar without asking anyone's permission.</span>
+            <span class="p-strong">You deadlift the vending machine this drink came from. Physics files a formal complaint.</span>
+          </div>
+          <p class="untested">UNTESTED · this blend has never been made</p>
+        </div>
+
+        <div class="srow" data-supp="electrolytes">
+          <div class="srow-top"><svg class="ic" viewBox="0 0 24 24" fill="var(--sun-d)" aria-hidden="true"><path d="M13 1 3 14h7l-1 9 11-14h-8z"/></svg><h3 class="name">ELECTROLYTES</h3></div>
+          <p class="real">General effect: sodium, potassium, and other minerals. You lose them in sweat. Your body needs them for hydration, muscle movement, and nerve signals. Replacing them when you sweat a lot can help you feel and perform better. Not a promise, and not a substitute for medical care if you are losing large amounts of fluid.</p>
+          <div class="levels" role="radiogroup" aria-label="Electrolytes level">
+            <button type="button" class="lvl" data-level="none" role="radio" aria-checked="false">NONE</button>
+            <button type="button" class="lvl" data-level="weak" role="radio" aria-checked="false">WEAK</button>
+            <button type="button" class="lvl" data-level="strong" role="radio" aria-checked="false">STRONG</button>
+          </div>
+          <div class="promise" aria-live="polite">
+            <span class="p-unset">Pick a level to see what MBS FUEL promises.</span>
+            <span class="p-none">You sweat like a normal, slightly salty human.</span>
+            <span class="p-weak">Your cramps take the day off. Your handshake becomes weirdly, unnecessarily firm.</span>
+            <span class="p-strong">You sweat something suspiciously close to a sports drink. The ocean asks you for tips.</span>
+          </div>
+          <p class="untested">UNTESTED · this blend has never been made</p>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="card" aria-label="Flavour">
+      <h2 class="heading">PICK YOUR FLAVOUR</h2>
+      <p class="warn">⚠ FLAVOUR IS ALSO UNTESTED. NO FLAVOUR BELOW EXISTS YET. ⚠</p>
+      <div class="flavours" id="flavours" role="radiogroup" aria-label="Flavour">
+        <button type="button" class="flv" data-flavour="RADIOACTIVE PUNCH" role="radio" aria-checked="false">RADIOACTIVE PUNCH</button>
+        <button type="button" class="flv" data-flavour="NUCLEAR BLUE RASPBERRY" role="radio" aria-checked="false">NUCLEAR BLUE RASPBERRY</button>
+        <button type="button" class="flv" data-flavour="VOLTAGE MANGO" role="radio" aria-checked="false">VOLTAGE MANGO</button>
+        <button type="button" class="flv" data-flavour="CRIME SCENE CHERRY" role="radio" aria-checked="false">CRIME SCENE CHERRY</button>
+        <button type="button" class="flv" data-flavour="GHOST PEPPER LIGHTNING" role="radio" aria-checked="false">GHOST PEPPER LIGHTNING</button>
+        <button type="button" class="flv" data-flavour="TOXIC WASTE LIME" role="radio" aria-checked="false">TOXIC WASTE LIME</button>
+        <button type="button" class="flv" data-flavour="BLACKOUT GRAPE" role="radio" aria-checked="false">BLACKOUT GRAPE</button>
+        <button type="button" class="flv" data-flavour="SIREN SONG WATERMELON" role="radio" aria-checked="false">SIREN SONG WATERMELON</button>
+      </div>
+    </section>
+
+    <section class="card" aria-label="Your can">
+      <p class="floatprint" style="right:5%; top:10%">UNTESTED</p>
+      <h2 class="heading">YOUR CAN</h2>
+      <div class="can" id="canLabel"></div>
+      <button type="button" class="submit" id="submitBtn">SUBMIT YOUR STACK</button>
+      <div class="result" id="result" hidden>
+        <p class="note" id="resultNote">NOTHING WAS SENT. NOTHING WAS STORED. THIS DRINK DOES NOT EXIST YET.</p>
+        <a class="mailme" id="mailLink" href="#" target="_blank" rel="noopener">EMAIL US YOUR STACK YOURSELF</a>
+      </div>
+    </section>
+  </div>
+
+  <div class="ticker" aria-hidden="true"><b>⚡ UNTESTED ⚡ UNTESTED ⚡ MBS FUEL IS NOT A REAL PRODUCT YET. YOU ARE THE RESEARCH. ⚡ UNTESTED ⚡ UNTESTED ⚡</b></div>
+
+  <footer class="foot">
+    MBS FUEL · A MOM INC SUBSIDIARY
+    <small>Working name. The drink's real name has not been decided. Every promised effect above is a joke, not a claim, and nothing here is medical advice. Real ingredient descriptions are general effects only, never a guarantee. UNTESTED. UNTESTED. UNTESTED.</small>
+  </footer>
+</article>
+
+<script>
+(() => {
+  const fu = document.getElementById("fu"); if (!fu) return;
+  const rows = [...fu.querySelectorAll(".srow[data-supp]")];
+  const flavours = fu.querySelectorAll(".flv");
+  const canBox = fu.querySelector(".can");
+  const canLabel = document.getElementById("canLabel");
+  const submitBtn = document.getElementById("submitBtn");
+  const result = document.getElementById("result");
+  const resultNote = document.getElementById("resultNote");
+  const mailLink = document.getElementById("mailLink");
+  let flavour = null;
+
+  rows.forEach(row => {
+    row.querySelectorAll(".lvl").forEach(btn => btn.addEventListener("click", () => {
+      row.querySelectorAll(".lvl").forEach(b => b.setAttribute("aria-checked", "false"));
+      btn.setAttribute("aria-checked", "true");
+      row.dataset.level = btn.dataset.level;
+      renderCan();
+    }));
+  });
+
+  flavours.forEach(btn => btn.addEventListener("click", () => {
+    flavours.forEach(b => { b.setAttribute("aria-checked", "false"); b.classList.remove("sel"); });
+    btn.setAttribute("aria-checked", "true"); btn.classList.add("sel");
+    flavour = btn.dataset.flavour;
+    renderCan();
+  }));
+
+  const levelLabel = row => row.dataset.level ? row.dataset.level.toUpperCase() : "NOT SET";
+  const complete = () => rows.every(r => r.dataset.level) && !!flavour;
+
+  function renderCan() {
+    const lines = rows.map(r => `<span>${r.querySelector(".name").textContent}: ${levelLabel(r)}</span>`);
+    lines.push(`<span>FLAVOUR: ${flavour || "NOT SET"}</span>`);
+    canLabel.innerHTML = lines.join("");
+    canBox.classList.toggle("full", complete());
+  }
+  renderCan();
+
+  submitBtn.addEventListener("click", () => {
+    const stackLines = rows.map(r => `${r.querySelector(".name").textContent}: ${levelLabel(r)}`);
+    stackLines.push(`Flavour: ${flavour || "not set"}`);
+    const body = "My MBS FUEL stack:\n" + stackLines.join("\n") + "\n\nNothing was sent by the site. I am sending this myself. This drink is untested and does not exist yet.";
+    const mail = (window.MBS && window.MBS.MAIL) || "";
+    mailLink.href = `mailto:${mail}?subject=${encodeURIComponent("My MBS FUEL stack")}&body=${encodeURIComponent(body)}`;
+    result.hidden = false;
+    if (complete()) {
+      resultNote.textContent = "STACK LOCKED IN. NOTHING WAS SENT. NOTHING WAS STORED. THIS DRINK DOES NOT EXIST YET.";
+      submitBtn.textContent = "STACK LOCKED IN";
+      window.MBS && window.MBS.form && window.MBS.form("fuel", { stack: stackLines });
+      window.MBS && window.MBS.unlock && window.MBS.unlock("fuel");
+      window.MBS && window.MBS.wave && window.MBS.wave();
+    } else {
+      resultNote.textContent = "NOTHING WAS SENT. NOTHING WAS STORED. SET EVERY ROW AND A FLAVOUR TO LOCK IN THE FULL STACK.";
+    }
+  });
+})();
+</script>

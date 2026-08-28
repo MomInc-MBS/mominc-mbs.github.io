@@ -1,0 +1,330 @@
+<!--
+THESIS: Cortisol Corgi's channel is a 90s conspiracy newspaper the anxious anchor prints himself. The whole surface is newsprint covered in conspiracy theories; the real words are magazine cut-out ransom letters pasted over it. It refuses polish and refuses the clean news-site.
+OWN-WORLD: A tabloid front page. Yellowed newsprint columns of dense conspiracy body text as the ground, a masthead, rules and column gutters, halftone dots; every heading and label is ransom-note letters (mismatched fonts, colors, rotations, on torn scraps). Show colors: purple, gold, hot pink. At the bottom, dog kibble arranged to spell HELP.
+STORY: A visitor opens a paranoid morning paper, reads a page of conspiracy noise, finds three real tells for reading bad news, a MOM Inc. ad that is plainly a lie, a purely-visual stress scan, a place to vent, and a HELP the dog spelled in kibble.
+FIRST VIEWPORT: THE NAUSEOUS TIMES masthead in ransom letters, the corgi badge as a front-page photo with a caption, and the first conspiracy columns, all on newsprint.
+FORM: Stress bar in the page, not the frame (Ian 2026-08-26). Brief-pinned, Ian 2026-08-25: "the anxiety itself" then "less polished, torn paper, kibble HELP" then "a classic 90s newspaper made of conspiracy newsprint, magazine cut-out letters for the real text, calmer." Inside the old television shell.
+-->
+<style>
+  .cc{--ink:#241a0e; --paper:#ded3b8; --paper2:#e7dcc2; --news:#e3d8bd; --manila:#e6d3a2; --pink:#eab9c6; --construction:#4a2a7a; --rule:#6b5c3a; --hot:#c0135a; --gold:#b8860b; --purple:#4a2a7a; --meter:0;
+      position:relative; min-height:100%; color:var(--ink); font-family:"Special Elite", "Courier New", monospace;
+      background:
+        repeating-linear-gradient(28deg, rgba(0,0,0,.05) 0 2px, transparent 2px 6px),
+        linear-gradient(160deg,#3a2c1a,#241a10 60%,#160f08);
+      padding:0 0 26px;}
+  /* the newspaper page: a centered sheet of newsprint sitting on the desk */
+  .cc .edge{max-width:none; margin:0; padding:20px clamp(16px, 5vw, 64px) 26px; position:relative;
+      background:
+        repeating-linear-gradient(0deg, rgba(0,0,0,.03) 0 1px, transparent 1px 3px),
+        radial-gradient(circle at 12% 8%, rgba(120,90,40,.10) 0 8px, transparent 9px),
+        linear-gradient(180deg, var(--paper2), var(--paper));
+      box-shadow:0 10px 26px rgba(0,0,0,.55), 0 2px 0 rgba(255,240,210,.15) inset;}
+  .cc .edge::after{content:""; position:absolute; inset:0; pointer-events:none; box-shadow:inset 0 0 40px rgba(90,60,20,.25)}
+  /* the sticky paper meter */
+  .cc .meter{position:sticky; top:0; z-index:8; display:grid; grid-template-columns:auto 1fr auto; gap:8px; align-items:center;
+      padding:5px 10px; background:var(--ink); color:var(--paper); font-family:"Special Elite", monospace; font-size:12px; letter-spacing:.1em; box-shadow:0 2px 4px rgba(0,0,0,.4)}
+  .cc .meter .bar{height:9px; background:#3a2f1a; position:relative; overflow:hidden}
+  .cc .meter .bar i{position:absolute; inset:0; transform-origin:0 50%; transform:scaleX(calc(var(--meter)/100)); background:linear-gradient(90deg,var(--gold),var(--hot)); transition:transform 140ms linear}
+  .cc .meter b{color:#ff9ec2; min-width:3.4em; text-align:right}
+  /* masthead */
+  .cc .masthead{text-align:center; border-bottom:4px double var(--ink); padding:8px 0 10px; margin-bottom:6px}
+  .cc .dateline{display:flex; justify-content:space-between; font-size:11px; letter-spacing:.06em; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); padding:3px 2px; margin-top:8px; color:#4a3d22}
+  /* ransom-note letters: each glyph its own scrap, sized big and clear */
+  .ransom{display:inline-flex; flex-wrap:wrap; gap:3px 4px; justify-content:center; align-items:baseline; line-height:1.05}
+  .ransom .word{display:inline-flex; flex-wrap:wrap; min-width:0; gap:3px 2px; align-items:baseline; justify-content:center}   /* a word too wide for a narrow glass wraps its own letters rather than overflowing */
+  .ransom .g{display:inline-block; padding:2px 6px; color:#111; background:#f3ecd8; box-shadow:1px 1px 0 rgba(0,0,0,.35); border-radius:2px;
+      transform:rotate(var(--r,0deg)); font-family:var(--f, "Anton"); font-weight:900; text-transform:uppercase}
+  .ransom .g.sp{background:transparent; box-shadow:none; padding:0 4px}
+  .ransom .g.k0{background:#f3ecd8;color:#111} .ransom .g.k1{background:#111;color:#f3ecd8} .ransom .g.k2{background:var(--gold);color:#1a1200}
+  .ransom .g.k3{background:var(--hot);color:#fff} .ransom .g.k4{background:var(--purple);color:#fff} .ransom .g.k5{background:#e7dcc2;color:#111;border:1px solid #111}
+  h1.rtitle{margin:0; font-size:clamp(34px,8vw,84px)}
+  h1.rtitle .ransom{gap:3px 3px}
+  h1.rtitle .ransom .g{padding:2px 7px}
+  .cc h2{margin:0 0 8px}
+  .cc h2 .ransom{justify-content:flex-start}
+  .cc h2 .ransom .g{font-size:clamp(24px,4.2vw,38px); padding:3px 9px}
+  .cc .kicker{font-family:"Anton", sans-serif; font-size:14px; letter-spacing:.18em; color:var(--hot); text-transform:uppercase; margin:0 0 3px}
+  /* the front-page photo */
+  .cc figure.lead{margin:0 0 8px; text-align:center}
+  .cc figure.lead img{width:min(46%, 320px); height:auto; filter:grayscale(.15) contrast(1.05); mix-blend-mode:multiply; display:inline-block}
+  .cc figure.lead figcaption{font-size:12px; color:#4a3d22; border-top:1px solid var(--rule); padding-top:3px; margin-top:2px; font-style:italic}
+  /* newspaper columns of conspiracy body text */
+  .cc .cols{columns:2 260px; column-gap:30px; column-rule:1px solid var(--rule); font-size:18px; line-height:1.6; text-align:justify; padding:10px 2px}
+  .cc .cols p{margin:0 0 9px; break-inside:avoid}
+  .cc .cols p .lede{font-family:"Anton", sans-serif; font-size:15px; letter-spacing:.02em}
+  .cc .cols p.head{font-family:"Archivo Black", sans-serif; font-size:17px; line-height:1.15; text-transform:uppercase; margin-bottom:3px; text-align:left}
+  .cc .block{position:relative; padding:16px 16px 18px; margin:16px 6px 0; color:var(--ink);
+      filter:url(#fibers) drop-shadow(2px 4px 5px rgba(0,0,0,.4));}
+  .cc .block::before{content:""; position:absolute; inset:0; z-index:-1; background:var(--news);
+      clip-path:polygon(0 3%,5% 0,13% 2%,22% 0,31% 3%,41% 1%,50% 3%,60% 0,69% 2%,79% 0,88% 3%,96% 1%,100% 2%,100% 96%,95% 100%,86% 98%,76% 100%,66% 97%,56% 100%,46% 98%,36% 100%,26% 97%,16% 100%,7% 98%,0 97%);}
+  .cc .block.manila::before{background:var(--manila)} .cc .block.pink::before{background:var(--pink)} .cc .block.constr::before{background:var(--construction)}
+  .cc .block.constr{color:#f4efff} .cc .block.constr .kicker{color:var(--gold)} .cc .block.constr .cap{color:var(--gold)}
+  .cc .block.r1{transform:rotate(-1deg)} .cc .block.r2{transform:rotate(.8deg)} .cc .block.r3{transform:rotate(-.6deg)}
+  .cc .tape{position:absolute; width:64px; height:20px; background:rgba(230,210,150,.6); box-shadow:0 1px 2px rgba(0,0,0,.25);
+      background-image:repeating-linear-gradient(90deg, rgba(0,0,0,.05) 0 3px, transparent 3px 7px); z-index:2}
+  .cc .tape.tl{left:-12px; top:-8px; transform:rotate(-22deg)} .cc .tape.tr{right:-12px; top:-8px; transform:rotate(20deg)}
+  .cc p.body{font-size:19px; line-height:1.55; margin:0 0 12px; max-width:70ch; font-family:"Special Elite", monospace}
+  .cc .tells{list-style:none; margin:0; padding:0; display:grid; gap:12px; font-size:18px; line-height:1.55}
+  .cc .tells li{padding-left:2px}
+  .cc .tells b{display:block; font-family:"Archivo Black", sans-serif; font-size:21px; margin-bottom:3px}
+  .cc .bark{font-family:"Anton", sans-serif; font-size:clamp(26px,6vw,46px); margin:8px 0 0; letter-spacing:.03em; color:var(--purple)}
+  .cc .cap{font-size:17px; color:var(--hot); font-style:italic; margin:4px 0 0; font-family:"Special Elite", monospace}
+  /* the MOM Inc. ad, an inserted glossy over the newsprint */
+  .cc .ad{border:0}
+  .cc .ad::before{outline:3px solid #b40000; outline-offset:-6px}
+  .cc .ad .price{font-family:"Anton", sans-serif; font-size:24px; color:#b40000; margin:6px 0}
+  .cc .ad .fine{font-size:12px; line-height:1.35; color:#5a3a1a; margin:8px 0 0}
+  .cc .ad .stamp{display:inline-block; margin-top:8px; padding:3px 8px; border:2px solid #b40000; color:#b40000; font-family:"Anton", sans-serif; font-size:13px; letter-spacing:.1em; transform:rotate(-6deg)}
+  /* the scan */
+  .cc .scan{position:relative; height:150px; background:#160f22; overflow:hidden; display:grid; place-items:center; text-align:center; border:2px solid var(--ink)}
+  .cc .scan .line{position:absolute; left:0; right:0; top:-4px; height:4px; background:var(--hot); box-shadow:0 0 14px var(--hot); opacity:0}
+  .cc .scan.running .line{opacity:1; animation:sweep 2.2s linear forwards}
+  @keyframes sweep{from{top:-4px} to{top:100%}}
+  .cc .scan .out{font-family:"Anton", sans-serif; font-size:clamp(16px,4.6vw,24px); color:var(--gold); padding:0 10px}
+  .cc .scan.done .out{color:#ff5c8a}
+  .cc button.big{font-family:"Anton", sans-serif; letter-spacing:.04em; font-size:18px; padding:12px 18px; border:2px solid var(--ink); cursor:pointer; margin-top:12px;
+      background:var(--gold); color:#1a1200; box-shadow:3px 3px 0 var(--ink)}
+  .cc button.big:active{transform:translate(3px,3px); box-shadow:0 0 0 var(--ink)}
+  .cc button.big:focus-visible{outline:3px solid var(--hot); outline-offset:2px}
+  .cc label{display:block; font-family:"Archivo Black", sans-serif; font-size:13px; letter-spacing:.04em; margin:14px 0 6px}
+  .cc textarea,.cc input{width:100%; font-family:"Special Elite", monospace; font-size:16px; color:var(--ink); background:#efe7cf; border:2px solid var(--ink); padding:10px; caret-color:var(--hot)}
+  .cc textarea{min-height:110px; resize:vertical}
+  .cc .fine{font-size:13px; line-height:1.45}
+  .cc .pressure{border-top:3px solid var(--ink)}
+  /* the feeder: scan pushes a pile of food out, a message brings the paw that pushes it into HELP, a click drops it */
+  .cc .feeder{position:relative; margin:14px 0 6px; height:170px; opacity:0; transform:translateY(10px); transition:opacity .45s ease, transform .45s ease; pointer-events:none}
+  .cc .feeder.on{opacity:1; transform:none}
+  .cc .feeder .pile{position:absolute; left:0; right:0; bottom:8px; width:100%; height:150px; overflow:visible; outline:none}
+  .cc .feeder .pile .k{transition:transform 640ms cubic-bezier(.3,.72,.28,1), opacity 420ms ease}
+  .cc .feeder.ready{pointer-events:auto}
+  .cc .feeder.ready .pile{cursor:pointer}
+  .cc .feeder.ready .pile:focus-visible{outline:3px dashed var(--hot); outline-offset:6px}
+  .cc .feeder.dropping .pile .k{transition:transform 1000ms cubic-bezier(.45,0,.9,.5), opacity 700ms ease-in}
+  /* the paw lives in its own clip so parking it off to the right never widens the page, while the kibble falls free */
+  .cc .pawclip{position:absolute; left:0; right:0; top:-14px; height:210px; overflow:hidden; z-index:3; pointer-events:none}
+  .cc .paw{position:absolute; top:0; right:0; width:210px; height:210px;
+      transform:translateX(122%) rotate(-6deg); transition:transform .55s cubic-bezier(.4,.1,.25,1); filter:drop-shadow(-7px 8px 7px rgba(0,0,0,.45))}
+  .cc .feeder.covering .paw{transform:translateX(2%) rotate(-6deg)}
+  @media (min-width:760px){ .cc .cols{columns:3 260px} }
+  @media (prefers-reduced-motion:reduce){.cc .scan .line{animation:none}
+      .cc .feeder,.cc .paw,.cc .feeder .pile .k,.cc .feeder.dropping .pile .k{transition:none}}
+</style>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="fibers" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency=".04" numOctaves="3" seed="11" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="4" xChannelSelector="R" yChannelSelector="G"/></filter>
+  <filter id="fur" x="-12%" y="-12%" width="124%" height="124%"><feTurbulence type="fractalNoise" baseFrequency="0.86 0.86" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="7" xChannelSelector="R" yChannelSelector="G" result="d"/><feTurbulence type="fractalNoise" baseFrequency="0.9 0.5" numOctaves="2" seed="3" result="n2"/><feDiffuseLighting in="n2" surfaceScale="1.2" diffuseConstant="1" lighting-color="#ffffff" result="light"><feDistantLight azimuth="235" elevation="60"/></feDiffuseLighting><feComposite in="light" in2="d" operator="in" result="lit"/><feBlend in="d" in2="lit" mode="multiply"/></filter></svg>
+<article class="cc" id="cc" aria-label="Cortisol Corgi" data-host="CORTISOL CORGI" data-show="NAUSEOUS IN THE MORNING" data-ch="6" data-gauge="off">
+  <div class="meter" id="ccMeter" role="meter" aria-label="Cortisol" aria-valuemin="0" aria-valuemax="100" aria-valuenow="4"><span>CORTISOL</span><div class="bar"><i></i></div><b id="ccMeterPct">4%</b></div>
+  <div class="edge">
+    <header class="masthead">
+      <p class="kicker">Mom's Brainwashing Stream presents</p>
+      <h1 class="rtitle" data-ransom="THE NAUSEOUS TIMES"></h1>
+      <div class="dateline"><span>MORNING EDITION</span><span>VOL. X9 · NO. ???</span><span>PRICE: YOUR CALM</span></div>
+    </header>
+
+    <figure class="lead">
+      <img src="assets/cortisol-corgi-badge.png" alt="Cortisol Corgi, the anchor, three anxious corgis in collars" width="1761" height="1516">
+      <figcaption>THE ANCHOR, PHOTOGRAPHED THIS MORNING. HE HAS NOT SLEPT. NEITHER HAS THE STORY.</figcaption>
+    </figure>
+
+    <div class="cols" aria-label="This morning's newspaper">
+      <p><span class="lede">THEY MOVED THE MORNING AGAIN.</span> The sun rose four minutes early. No one asked us. The corgi knows. The corgi always knows. He has a board with string on it. The string is stress.</p>
+      <p class="head">Coffee is a listening device, insiders warn</p>
+      <p>A cup left on a desk all night is not a cup. It is a meeting. The steam spells things out. You just have to be tired enough to read it. This anchor is tired enough to read anything.</p>
+      <p class="head">The mother on the phone was never the mother</p>
+      <p>Officials will not say how a voice can wear a face it never had. The dog stopped answering the phone. Now he barks the study number instead. That is more than officials ever do.</p>
+      <p>PAGE 2: why the news is worse on purpose. PAGE 3: a company that files you. PAGE 4: the anchor's own record. And who keeps bringing it up. PAGE 9: nothing. There is no page 9. Do not ask about page 9.</p>
+    </div>
+
+    <section class="block manila r1" aria-labelledby="tellsH"><span class="tape tl" aria-hidden="true"></span>
+      <p class="kicker">The part that is not a joke</p>
+      <h2 id="tellsH" data-ransom="Three tells"></h2>
+      <p class="body">Read this before a headline gets into your blood. We are stressed goons here. Stressed goons make bad goons. The dog is stressed so you do not have to be.</p>
+      <ol class="tells">
+        <li><b>1. Who counted?</b> A number with no source is just a feeling with digits. Find the study. Find the agency. Find the count. No source means no real spike.</li>
+        <li><b>2. How many?</b> "Rampant." "Surging." "Everyone." If a sentence will not give you the number, it is hiding its size. Ask for the real count.</li>
+        <li><b>3. What is the ask?</b> Bad news that ends with a purchase, a signup, or a share is an ad wearing a headline. Note the ask. Then decide.</li>
+      </ol>
+      <p class="cap">(sniff) that one is free. MOM Inc. would like a word about that.</p>
+    </section>
+
+    <aside class="block ad pink r2" aria-label="A MOM Inc. advertisement, fictional"><span class="tape tr" aria-hidden="true"></span>
+      <p class="kicker">Paid placement</p>
+      <h2 data-ransom="Calm Compliance"></h2>
+      <p class="body">Feeling the morning? You are not sick. You are unenrolled. Calm Compliance lowers your stress. It removes the news you were not meant to read. It does this on its own. Forever. You already agreed to it.</p>
+      <div class="price">Nine hundred cycles a month. Per family member.</div>
+      <p class="fine">CALM COMPLIANCE IS A DEBT INSTRUMENT. TERMS APPLY. THIS ADVERTISEMENT IS FICTION AND SELLS NOTHING; THERE IS NO CHECKOUT AND NEVER WILL BE. THE ANCHOR WAS NOT CONSULTED. OFFER GOOD FOR STRESSED GOONS ONLY. THAT IS EVERYONE READING THIS.</p>
+      <span class="stamp">REVIEWED · FINE</span>
+    </aside>
+
+    <section class="block constr r3" aria-labelledby="scanH"><span class="tape tl" aria-hidden="true"></span>
+      <p class="kicker">Reader participation</p>
+      <h2 id="scanH" data-ransom="Submit your stress"></h2>
+      <p class="body">Other stressed people are reading too. Hold still for the scan. Then tell the dog what is wrong. Someone has to know. It may as well be him.</p>
+      <div class="scan" id="scan"><div class="line"></div><div class="out" id="scanOut">HOLD STILL. LOOK AT THE DOG.</div></div>
+      <button class="big" type="button" id="scanBtn">SCAN MY STRESS</button>
+      <p class="fine">The scan is purely visual. It measures nothing, stores nothing, and cannot see you. Cortisol Corgi cannot see either. That is canon.</p>
+
+      <form id="ventForm" action="mailto:tips@mbs.example" method="post" enctype="text/plain">
+        <label for="ventStory">He already filed his story today. He already worried about it. Now tell him yours: the bad news, the thing that happened, the morning</label>
+        <textarea id="ventStory" name="story" placeholder="It started when..." required></textarea>
+        <label for="ventName">A name, or not</label>
+        <input id="ventName" name="name" placeholder="Anonymous is fine. His record is the only one that matters.">
+        <button class="big" type="submit" id="ventBtn">TELL THE DOG</button>
+        <p class="fine">Nothing is posted anywhere. In-character participation only, never a sale.</p>
+      </form>
+
+      <div class="feeder" id="feeder" aria-hidden="true">
+        <svg class="pile" id="kibbleSvg" viewBox="0 0 560 180" preserveAspectRatio="xMidYMax meet" role="button" tabindex="-1" aria-label="Dog food pushed out. Click it."></svg>
+        <div class="pawclip"><svg class="paw" viewBox="0 0 210 210" aria-hidden="true">
+          <g filter="url(#fur)">
+            <path d="M210 58 Q150 54 120 74 Q94 92 92 118 Q95 152 132 162 Q176 170 210 160 Z" fill="#f6f7f9"/>
+            <ellipse cx="86" cy="112" rx="62" ry="70" fill="#f8f9fb"/>
+            <ellipse cx="52" cy="52" rx="17" ry="24" transform="rotate(-32 52 52)" fill="#f6f7f9"/>
+            <ellipse cx="40" cy="92" rx="18" ry="25" transform="rotate(-12 40 92)" fill="#f8f9fb"/>
+            <ellipse cx="42" cy="134" rx="18" ry="25" transform="rotate(10 42 134)" fill="#f6f7f9"/>
+            <ellipse cx="58" cy="170" rx="17" ry="24" transform="rotate(28 58 170)" fill="#f8f9fb"/>
+          </g>
+          <g opacity=".92">
+            <path d="M60 96 Q86 78 112 96 Q118 128 86 140 Q54 128 60 96 Z" fill="#df9fb2"/>
+            <ellipse cx="44" cy="54" rx="9" ry="12" transform="rotate(-30 44 54)" fill="#e7b7c6"/>
+            <ellipse cx="31" cy="92" rx="9" ry="13" fill="#e7b7c6"/>
+            <ellipse cx="33" cy="134" rx="9" ry="13" fill="#e7b7c6"/>
+            <ellipse cx="49" cy="170" rx="9" ry="12" transform="rotate(28 49 170)" fill="#e7b7c6"/>
+          </g>
+          <g fill="#efe9dc" stroke="#b8ac90" stroke-width="1">
+            <path d="M30 44 Q15 39 11 48 Q20 53 31 52 Z"/>
+            <path d="M18 88 Q3 86 1 95 Q12 98 23 94 Z"/>
+            <path d="M20 132 Q5 134 5 144 Q16 144 25 139 Z"/>
+            <path d="M38 166 Q25 177 29 185 Q41 181 45 172 Z"/>
+          </g>
+        </svg></div>
+      </div>
+    </section>
+
+    <div class="block r1 pressure"><span class="tape tr" aria-hidden="true"></span>
+      <p class="bark">WOOF WOOF. WOOF.</p>
+      <p class="cap">(answer the quiz on Wednesday. every answer is a signal out. he cannot say more. he cannot say why.)</p>
+    </div>
+  </div>
+
+</article>
+<script>
+(() => {
+  const cc = document.getElementById("cc"); if (!cc) return;
+  const screen = cc.closest(".screen") || document.getElementById("screen");
+  const ratio = () => screen.scrollTop / Math.max(1, screen.scrollHeight - screen.clientHeight);
+  const meterPct = document.getElementById("ccMeterPct"), meterEl = document.getElementById("ccMeter");
+  const setMeter = () => { const v = Math.round(4 + ratio() * 95); cc.style.setProperty("--meter", v); meterPct.textContent = v + "%"; meterEl.setAttribute("aria-valuenow", v); };   // the bar is part of the page now (Ian); the frame stays static
+  screen.addEventListener("scroll", setMeter, { passive: true }); setMeter();
+
+  // ransom-note letters: every heading tagged data-ransom becomes cut-out glyphs
+  let seed = 91; const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+  const fonts = ["Anton", "Archivo Black", "Bowlby One SC", "Special Elite", "Barlow Condensed"];
+  cc.querySelectorAll("[data-ransom]").forEach(el => {
+    const wrap = document.createElement("span"); wrap.className = "ransom";
+    el.dataset.ransom.split(" ").forEach((word, wi) => {
+      if (wi) { const sp = document.createElement("span"); sp.className = "g sp"; sp.innerHTML = "&nbsp;"; wrap.appendChild(sp); }
+      const w = document.createElement("span"); w.className = "word";
+      [...word].forEach(ch => {
+        const g = document.createElement("span");
+        g.className = "g k" + Math.floor(rnd() * 6);
+        g.style.setProperty("--f", `"${fonts[Math.floor(rnd() * fonts.length)]}"`);
+        g.style.setProperty("--r", (rnd() * 10 - 5).toFixed(1) + "deg");
+        g.textContent = ch;
+        w.appendChild(g);
+      });
+      wrap.appendChild(w);
+    });
+    el.appendChild(wrap);
+  });
+
+  // the kibble: small matte chunks whose HOME positions spell a compact HELP in a 5x7 dot font.
+  // each chunk is drawn at the origin and PLACED with a CSS transform, so the paw can push it into HELP and a click can drop it off the page.
+  const font = { H: ["10001","10001","10001","11111","10001","10001","10001"], E: ["11111","10000","10000","11110","10000","10000","11111"],
+                 L: ["10000","10000","10000","10000","10000","10000","11111"], P: ["11110","10001","10001","11110","10000","10000","10000"] };
+  const svg = document.getElementById("kibbleSvg"), cell = 13, y0 = 12; const pieces = [];
+  const shades = ["#5a3a1c", "#6b4423", "#4a2f16", "#7a5230", "#3e2812"];
+  const chunk = (s) => {                                       // a small irregular matte chunk, centred on the origin
+    const rot = (rnd() * 360).toFixed(0), r = (5 + rnd() * 1.8).toFixed(1);
+    return `<g transform="rotate(${rot})">`
+      + `<path d="M${-r} 0 Q${-r} ${-r*0.9} 0 ${-r*0.95} Q${r*0.9} ${-r} ${r*0.95} 0 Q${r} ${r*0.85} 0 ${r*0.9} Q${-r*0.9} ${r} ${-r} 0 Z" fill="${s}" stroke="#231405" stroke-width="1"/>`
+      + `<ellipse cx="${-r*0.3}" cy="${-r*0.35}" rx="${(r*0.42).toFixed(1)}" ry="${(r*0.28).toFixed(1)}" fill="rgba(255,235,200,.16)"/></g>`;
+  };
+  const step = cell * 6 + 8;
+  let ox = (560 - ("HELP".length * step - 8)) / 2;             // centre the small word in the viewBox
+  for (const ch of "HELP") {
+    font[ch].forEach((row, r) => [...row].forEach((bit, c) => {
+      if (bit !== "1") return;
+      pieces.push({ hx: ox + c * cell + (rnd() - .5) * 6, hy: y0 + r * cell + (rnd() - .5) * 6, inner: chunk(shades[Math.floor(rnd() * shades.length)]) });
+    }));
+    ox += step;
+  }
+  for (let i = 0; i < 12; i++)                                  // a few loose crumbs near the word
+    pieces.push({ hx: 70 + rnd() * 420, hy: 2 + rnd() * 150, inner: chunk(shades[Math.floor(rnd() * shades.length)]) });
+
+  svg.innerHTML = pieces.map(p => `<g class="k">${p.inner}</g>`).join("");
+  [...svg.children].forEach((g, i) => {
+    const p = pieces[i]; p.g = g;
+    p.home = `translate(${p.hx.toFixed(1)}px, ${p.hy.toFixed(1)}px)`;   // its spot in the HELP word
+    p.px = 280 + (rnd() - .5) * 150; p.py = 116 + (rnd() - .5) * 34;    // its spot in the loose pile
+    p.pile = `translate(${p.px.toFixed(1)}px, ${p.py.toFixed(1)}px)`;
+    g.style.opacity = "0"; g.style.transform = `translate(${p.px.toFixed(1)}px, ${(p.py + 70).toFixed(1)}px)`;   // waiting below, out of sight
+  });
+
+  const feeder = document.getElementById("feeder");
+  let dispensed = false, arranged = false, dropped = false;
+
+  // scan finished: a small pile of dog food is pushed out onto the floor
+  function dispense() {
+    if (dispensed) return; dispensed = true;
+    feeder.classList.add("on");
+    requestAnimationFrame(() => pieces.forEach((p, i) => setTimeout(() => { p.g.style.opacity = "1"; p.g.style.transform = p.pile; }, 60 + i * 7 + rnd() * 40)));
+  }
+
+  // message sent: the furry paw comes up from the right and pushes the pile into HELP, then draws back
+  function arrange() {
+    if (arranged) return; if (!dispensed) dispense(); arranged = true;
+    setTimeout(() => {
+      feeder.classList.add("covering");
+      setTimeout(() => pieces.forEach(p => { p.g.style.transform = p.home; }), 380);   // pushed into the letters under the paw
+      setTimeout(() => { feeder.classList.remove("covering"); feeder.classList.add("ready"); svg.setAttribute("tabindex", "0"); }, 1180);
+    }, 300);
+  }
+
+  // click the food: it falls off the page and the orange wave glitches through
+  function drop() {
+    if (dropped || !arranged) return; dropped = true;
+    feeder.classList.add("dropping");
+    if (window.MBS && window.MBS.wave) window.MBS.wave();
+    pieces.forEach((p, i) => setTimeout(() => {
+      const dx = (rnd() * 60 - 30), dy = (760 + rnd() * 520), rot = (rnd() * 720 - 360).toFixed(0);
+      p.g.style.transform = `translate(${(p.hx + dx).toFixed(0)}px, ${(p.hy + dy).toFixed(0)}px) rotate(${rot}deg)`;
+      p.g.style.opacity = "0";
+    }, i * 7 + rnd() * 40));
+    if (window.MBS && window.MBS.unlock) window.MBS.unlock("corgi");
+  }
+  svg.addEventListener("click", drop);
+  svg.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); drop(); } });
+
+  // the sequence: scan -> dog food ; message -> paw -> HELP ; click -> fall + orange
+  const scan = document.getElementById("scan"), out = document.getElementById("scanOut"), btn = document.getElementById("scanBtn");
+  const readings = ["ELEVATED. AS EXPECTED.", "HIGH. THE DOG UNDERSTANDS.", "VERY HIGH. HAVE A SEAT.", "OFF THE CHART. WELCOME HOME.", "MILD. SUSPICIOUS. SCAN AGAIN."];
+  btn.addEventListener("click", () => {
+    if (scan.classList.contains("running")) return;
+    scan.classList.remove("done"); scan.classList.add("running"); out.textContent = "SCANNING. DO NOT BREATHE NORMALLY.";
+    const held = Math.round(4 + ratio() * 95);
+    setTimeout(() => {
+      scan.classList.remove("running"); scan.classList.add("done");
+      out.textContent = `STRESS: ${held}%. ${readings[held % readings.length]}`;
+      dispense();                                              // the dog sends food after the scan
+    }, 2300);
+  });
+
+  document.getElementById("ventForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const b = document.getElementById("ventBtn"); b.textContent = "THE DOG HEARD YOU"; b.disabled = true;
+    window.MBS && window.MBS.form && window.MBS.form("corgi", { story: true });
+    arrange();                                                 // the message brings the paw
+  });
+})();
+</script>

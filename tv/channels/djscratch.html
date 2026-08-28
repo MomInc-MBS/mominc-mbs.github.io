@@ -1,0 +1,440 @@
+<!--
+THESIS: DJ Scratch's page is the one that is openly an advertisement, because she is openly the product. It is MOM Inc.'s late-night infomercial for THE HAND: a severed autonomous hand sold as an appliance, in MOM's warm repeat-of-three voice, with the hand's own signal skipping through underneath.
+OWN-WORLD: A 90s late-night infomercial. Loud cream-and-purple gradient, gold starbursts, "AS SEEN ON MOM," bubbly drop-shadowed Bowlby type, a strikethrough price and three easy payments, sparkles. Under the gloss, a purple-on-black transmission where the real signal (the Music Desk, the nail-tech shoutout, an unsigned track) leaks out.
+STORY: The visitor is sold a hand. Everything is warm, everything comes in threes, everything is a little wrong. Then they scratch the record three times, the ad skips, and the hand spells HELP.
+INTERACTABLE (unlock node): the turntable. Scratch the record three times (the repeat of three). On the third, the gloss glitches, the record skips out HELP, the orange wave fires, and DJ Scratch's node banks; 3s later the purple restore wave puts PARTY MODE back on the tuner. Shared: window.MBS.wave({after, restore}), window.MBS.unlock("djscratch"), window.MBS.meter().
+FORM: Ian's pin, 2026-08-25, "90s late-night infomercial." Inside the old television shell. Mobile-first.
+-->
+<style>
+  .dj{--pur:#7a2fc4; --pur-d:#4a1a86; --pur-dd:#2a0a44; --gold:#ffd36e; --gold-d:#c9992e; --cream:#fdf6e3; --ink:#1a1020; --hot:#ff2f7a; --sig:#39ff9a;
+      min-height:100%; margin:0; color:var(--ink); font-family:"Barlow Condensed", system-ui, sans-serif; position:relative;
+      background:
+        radial-gradient(120% 90% at 50% -10%, #fff7e6 0%, #ffe6b8 32%, #e9b6f0 66%, #b06fe0 100%);
+      overflow-x:hidden}
+  .dj *{box-sizing:border-box}
+  .dj .edge{max-width:none; margin:0 auto; padding:0 0 30px; position:relative}
+  /* sunburst rays behind the hero */
+  .dj .rays{position:absolute; top:-6%; left:50%; transform:translateX(-50%); width:150%; aspect-ratio:1; z-index:0; opacity:.5;
+      background:repeating-conic-gradient(from 0deg at 50% 42%, rgba(255,211,110,.9) 0deg 6deg, transparent 6deg 12deg);
+      -webkit-mask:radial-gradient(circle at 50% 42%, #000 0 62%, transparent 63%); mask:radial-gradient(circle at 50% 42%, #000 0 62%, transparent 63%);
+      animation:spin 60s linear infinite; pointer-events:none}
+  @keyframes spin{to{transform:translateX(-50%) rotate(360deg)}}
+  .dj .wrap{position:relative; z-index:1; padding:0 clamp(12px,4vw,28px)}
+
+  /* the "as seen on MOM" ribbon */
+  .dj .ribbon{display:flex; align-items:center; justify-content:center; gap:10px; padding:8px 6px; margin:0 -100vw 6px;
+      background:repeating-linear-gradient(45deg,var(--pur) 0 16px,var(--pur-d) 16px 32px); color:var(--gold);
+      font-family:"Anton",sans-serif; letter-spacing:.16em; font-size:clamp(12px,3.4vw,16px); text-shadow:0 1px 0 rgba(0,0,0,.5)}
+  .dj .ribbon .star{color:var(--gold)}
+
+  /* headline block */
+  .dj .head{text-align:center; padding:10px 0 4px}
+  .dj .kick{font-family:"Anton",sans-serif; color:var(--hot); letter-spacing:.14em; font-size:clamp(13px,3.8vw,17px); margin:0 0 2px; text-transform:uppercase}
+  .dj h1.logo{font-family:"Bowlby One SC",cursive; font-size:clamp(46px,15vw,110px); line-height:.9; margin:2px 0; color:var(--pur-dd);
+      text-shadow:3px 3px 0 var(--gold), 6px 6px 0 var(--pur), 8px 9px 0 rgba(0,0,0,.25); letter-spacing:.01em}
+  .dj h1.logo .tm{font-size:.32em; vertical-align:super; -webkit-text-stroke:0; text-shadow:none; color:var(--pur-d)}
+  .dj .tagline{font-family:"Anton",sans-serif; font-size:clamp(18px,5.4vw,30px); color:var(--pur-dd); margin:4px 0 0; letter-spacing:.02em}
+  .dj .tagline b{color:var(--hot)}
+  .dj .submitmusic{display:inline-block; margin:6px auto 0; font-family:"Anton",sans-serif; letter-spacing:.04em; font-size:clamp(14px,4vw,18px);
+      color:var(--pur-dd); background:var(--gold); border:2px solid var(--pur-dd); border-radius:8px; padding:8px 14px; text-decoration:none; box-shadow:0 3px 0 var(--gold-d)}
+  .dj .submitmusic:active{transform:translateY(2px); box-shadow:0 1px 0 var(--gold-d)}
+
+  /* the faded demo strip: early-infomercial stills, duotoned to purple + cream, escalating to nukes */
+  .dj .demos{margin:18px 0}
+  .dj .demoh{font-family:"Bowlby One SC",cursive; text-align:center; color:var(--pur-dd); font-size:clamp(22px,7vw,38px); margin:0 0 12px; text-shadow:2px 2px 0 var(--gold)}
+  .dj .demo{position:relative; margin:0 0 14px; background:#e7d7bd; border:3px solid var(--pur-dd); border-radius:10px; overflow:hidden; box-shadow:5px 5px 0 var(--pur-dd)}
+  .dj .demo img{display:block; width:100%; height:auto; filter:grayscale(1) contrast(1.03) brightness(1.06); mix-blend-mode:multiply; opacity:.96}
+  .dj .demo::before{content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
+      background:linear-gradient(160deg, rgba(122,47,196,.42) 0%, rgba(122,47,196,.12) 45%, rgba(255,211,110,.18) 100%); mix-blend-mode:screen}
+  .dj .demo::after{content:""; position:absolute; inset:0; z-index:2; pointer-events:none; opacity:.5;
+      background:repeating-linear-gradient(0deg, rgba(0,0,0,.10) 0 2px, transparent 2px 4px)}
+  .dj .demo figcaption{position:relative; z-index:3; background:var(--pur-dd); color:var(--cream); font-family:"Anton",sans-serif;
+      font-size:clamp(15px,4.4vw,20px); letter-spacing:.03em; padding:8px 12px; text-align:center}
+  .dj .demo figcaption b{color:var(--gold)}
+  .dj .escalate{text-align:center; font-family:"Archivo Black",sans-serif; color:var(--pur-dd); font-size:clamp(15px,4.2vw,19px); margin:14px 0 10px}
+  .dj .demo.mil{border-color:var(--hot); box-shadow:5px 5px 0 var(--hot)}
+  .dj .demo.mil figcaption{background:#141018}
+  .dj .miltag{position:absolute; top:8px; left:8px; z-index:3; font-family:"Anton",sans-serif; letter-spacing:.1em; font-size:clamp(12px,3.4vw,15px);
+      color:#fff; background:var(--hot); padding:3px 9px; border-radius:4px; box-shadow:0 2px 0 rgba(0,0,0,.4); transform:rotate(-3deg)}
+  .dj .demofine{font-size:12px; line-height:1.4; color:var(--pur-d); margin:6px 2px 0; font-family:"Barlow Condensed",sans-serif}
+
+  /* hero product shot with a NEW starburst */
+  .dj .hero{position:relative; display:grid; place-items:center; padding:6px 0 2px}
+  .dj .hero img{width:min(78%,360px); height:auto; filter:drop-shadow(0 10px 18px rgba(74,26,134,.5)); animation:bob 4s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-8px) rotate(1deg)}}
+  .dj .burst{position:absolute; top:2%; right:4%; width:clamp(78px,22vw,120px); aspect-ratio:1; display:grid; place-items:center;
+      color:#fff; font-family:"Bowlby One SC",cursive; text-align:center; line-height:.95; font-size:clamp(13px,3.6vw,18px);
+      background:var(--hot); clip-path:polygon(50% 0,61% 18%,82% 12%,78% 34%,100% 42%,83% 55%,95% 76%,72% 74%,68% 97%,50% 83%,32% 97%,28% 74%,5% 76%,17% 55%,0 42%,22% 34%,18% 12%,39% 18%);
+      text-shadow:0 1px 0 rgba(0,0,0,.4); transform:rotate(10deg); animation:pulse 1.3s ease-in-out infinite}
+  @keyframes pulse{0%,100%{transform:rotate(10deg) scale(1)}50%{transform:rotate(10deg) scale(1.08)}}
+  .dj .sparkle{position:absolute; color:#fff; text-shadow:0 0 8px var(--gold); pointer-events:none; animation:tw 1.8s ease-in-out infinite}
+  /* off-center logo: cropped hand badge + the HELPING HAND name, pushed left, tilted */
+  .dj .logobar{position:relative; display:flex; align-items:center; justify-content:flex-start; gap:clamp(6px,2vw,14px); padding:6px 0 2px 3%; margin-top:2px}
+  .dj .logobar .badge{width:min(36%,150px); height:auto; flex:0 0 auto; transform:rotate(-8deg); filter:drop-shadow(0 8px 12px rgba(74,26,134,.5)); animation:bob 4s ease-in-out infinite}
+  .dj .logobar .name{font-family:"Bowlby One SC",cursive; font-size:clamp(40px,13vw,92px); line-height:.8; color:var(--pur-dd); text-align:left;
+      text-shadow:3px 3px 0 var(--gold), 6px 6px 0 var(--pur), 8px 9px 0 rgba(0,0,0,.22)}
+  .dj .logobar .name .tm{font-size:.28em; vertical-align:super; text-shadow:none; color:var(--pur-d)}
+  .dj .logobar .burst{position:absolute; right:2%; top:-6%; width:clamp(66px,18vw,96px)}
+  /* CALL NOW infomercial band */
+  .dj .callnow{text-align:center; background:var(--pur-dd); color:#fff; border:3px dashed var(--gold); border-radius:12px; padding:12px 14px; margin:14px 0; box-shadow:5px 5px 0 var(--hot)}
+  .dj .callnow .cn-big{font-family:"Bowlby One SC",cursive; color:var(--gold); font-size:clamp(22px,7vw,40px); margin:0; letter-spacing:.02em; animation:blink 1s steps(2) infinite}
+  .dj .callnow .cn-num{font-family:"Anton",sans-serif; color:#fff; font-size:clamp(26px,8.5vw,48px); margin:2px 0; letter-spacing:.03em; text-shadow:2px 2px 0 var(--hot)}
+  .dj .callnow .cn-sub{font-family:"Anton",sans-serif; color:var(--gold); font-size:clamp(13px,3.6vw,17px); margin:2px 0; letter-spacing:.04em}
+  .dj .callnow .cn-fine{font-size:12px; line-height:1.4; color:#d6c3ef; margin:8px 0 0; font-family:"Barlow Condensed",sans-serif}
+  @keyframes blink{50%{opacity:.25}}
+
+  /* the warm pitch, everything in threes */
+  .dj .card{background:var(--cream); border:3px solid var(--pur-dd); border-radius:14px; box-shadow:6px 6px 0 var(--pur-dd);
+      padding:16px 16px 18px; margin:16px 0}
+  .dj .card h2{font-family:"Bowlby One SC",cursive; color:var(--pur-dd); font-size:clamp(20px,6vw,34px); margin:0 0 8px; line-height:1}
+  .dj .card p{font-size:clamp(16px,4.4vw,19px); line-height:1.5; margin:0 0 10px; font-family:"Barlow Condensed",sans-serif}
+  .dj .threes{list-style:none; margin:8px 0 0; padding:0; display:grid; gap:10px}
+  .dj .threes li{display:grid; grid-template-columns:auto 1fr; gap:10px; align-items:start; font-size:clamp(16px,4.4vw,19px); line-height:1.4}
+  .dj .threes .chk{font-family:"Anton",sans-serif; color:#fff; background:var(--pur); border-radius:50%; width:26px; height:26px; display:grid; place-items:center; box-shadow:0 2px 0 var(--pur-dd)}
+  .dj .threes b{font-family:"Archivo Black",sans-serif}
+  /* the customization order form */
+  .dj .customize h2{font-family:"Bowlby One SC",cursive; color:var(--pur-dd); font-size:clamp(20px,6vw,32px); margin:0 0 8px; line-height:1}
+  .dj .orderform{display:grid; gap:11px; margin-top:8px}
+  .dj .orderform label{display:grid; gap:4px; font-family:"Archivo Black",sans-serif; font-size:clamp(13px,3.6vw,15px); color:var(--pur-dd)}
+  .dj .orderform input,.dj .orderform select{font-family:"Barlow Condensed",sans-serif; font-weight:600; font-size:16px; padding:10px; border:2px solid var(--pur-d); border-radius:8px; background:#fff; color:var(--ink)}
+  .dj .orderform button{font-family:"Anton",sans-serif; letter-spacing:.06em; border:0; cursor:pointer; border-radius:8px; padding:13px; font-size:clamp(16px,4.8vw,21px); background:var(--pur); color:#fff; box-shadow:0 4px 0 var(--pur-dd); margin-top:4px}
+  .dj .orderform button:active{transform:translateY(3px); box-shadow:0 1px 0 var(--pur-dd)}
+  .dj .orderform button:disabled{background:var(--gold); color:var(--pur-dd); box-shadow:none; cursor:default}
+  .dj .ofine{font-size:12px; line-height:1.4; color:var(--pur-d); margin:2px 0 0; font-family:"Barlow Condensed",sans-serif}
+
+  /* price */
+  .dj .price{text-align:center; background:var(--pur-dd); color:#fff; border-radius:14px; padding:16px; margin:16px 0; border:3px solid var(--gold); box-shadow:6px 6px 0 var(--gold-d)}
+  .dj .price .was{font-family:"Anton",sans-serif; font-size:clamp(16px,4.6vw,22px); color:#ffb3d0; text-decoration:line-through; opacity:.9}
+  .dj .price .now{font-family:"Bowlby One SC",cursive; color:var(--gold); font-size:clamp(30px,10vw,58px); line-height:1; margin:2px 0; text-shadow:2px 2px 0 rgba(0,0,0,.4)}
+  .dj .price .terms{font-family:"Anton",sans-serif; font-size:clamp(14px,4vw,19px); letter-spacing:.06em}
+  .dj .price .fine{font-size:12px; line-height:1.4; color:#d6c3ef; margin:8px 0 0; font-family:"Barlow Condensed",sans-serif}
+
+  /* but wait */
+  .dj .butwait{text-align:center; font-family:"Bowlby One SC",cursive; color:#fff; background:var(--hot); border-radius:12px;
+      padding:12px; margin:16px 0 6px; font-size:clamp(20px,6vw,32px); text-shadow:2px 2px 0 rgba(0,0,0,.35); box-shadow:5px 5px 0 var(--pur-dd); transform:rotate(-1deg)}
+
+  /* testimonials */
+  .dj .quotes{display:grid; gap:12px; margin:12px 0}
+  .dj .quote{background:#fff; border-left:6px solid var(--gold); border-radius:8px; padding:12px 14px; font-size:clamp(15px,4.2vw,18px); line-height:1.45; box-shadow:3px 3px 0 rgba(74,26,134,.25); font-family:"Special Elite",monospace}
+  .dj .quote .who{display:block; margin-top:6px; font-family:"Anton",sans-serif; color:var(--pur-d); font-size:.82em; letter-spacing:.08em}
+  .dj .quote.off .who{color:var(--hot)}
+
+  /* THE TRANSMISSION: the hand's real signal leaking through the gloss */
+  .dj .signal{background:#0c0715; color:var(--sig); border:2px solid var(--pur); border-radius:12px; padding:16px 14px; margin:20px 0;
+      font-family:"VT323",monospace; box-shadow:0 0 0 3px rgba(122,47,196,.4), 0 8px 24px rgba(0,0,0,.5); position:relative; overflow:hidden}
+  .dj .signal::before{content:""; position:absolute; inset:0; pointer-events:none; background:repeating-linear-gradient(0deg,rgba(57,255,154,.05) 0 2px,transparent 2px 4px)}
+  .dj .signal .lbl{font-family:"VT323",monospace; font-size:clamp(15px,4vw,19px); letter-spacing:.12em; color:#8affc9; opacity:.85; margin:0 0 8px}
+  .dj .signal h3{font-family:"VT323",monospace; font-weight:400; color:var(--sig); font-size:clamp(24px,7vw,38px); margin:0 0 4px; letter-spacing:.04em; line-height:1}
+  .dj .signal p{font-size:clamp(17px,4.6vw,21px); line-height:1.35; margin:0 0 10px; color:#c9ffe6}
+  .dj .flavors{list-style:none; margin:8px 0; padding:0; display:grid; gap:6px; font-size:clamp(17px,4.6vw,21px)}
+  .dj .flavors li::before{content:"> "; color:#8affc9}
+  .dj .signal a, .dj .signal .link{color:var(--gold); text-decoration:underline}
+  .dj .subform{display:grid; gap:8px; margin-top:10px}
+  .dj .subform label{font-size:clamp(15px,4vw,18px); color:#8affc9}
+  .dj .subform input{font-family:"VT323",monospace; font-size:18px; padding:9px 10px; border:1px solid var(--pur); background:#160c22; color:var(--sig); border-radius:6px}
+  .dj .subform button, .dj .buybtn{font-family:"Anton",sans-serif; letter-spacing:.06em; border:0; cursor:pointer; border-radius:8px; padding:12px 14px; font-size:clamp(16px,4.6vw,20px)}
+  .dj .subform button{background:var(--sig); color:#06210f}
+  .dj .buybtn{display:block; width:100%; background:var(--gold); color:var(--pur-dd); box-shadow:0 4px 0 var(--gold-d); margin:8px 0}
+  .dj .buybtn:active{transform:translateY(3px); box-shadow:0 1px 0 var(--gold-d)}
+
+  /* THE TURNTABLE, PARTY MODE. The record spins forever; her hand's nail is the needle; scratch it three times. */
+  .dj .deck{background:linear-gradient(180deg,#2a2431,#15121c); border:3px solid #000; border-radius:16px; padding:14px 14px 18px; margin:18px 0;
+      box-shadow:inset 0 2px 0 rgba(255,255,255,.08), 0 10px 24px rgba(0,0,0,.5); text-align:center; position:relative}
+  .dj .deck .feature{font-family:"Bowlby One SC",cursive; color:var(--gold); font-size:clamp(16px,5vw,24px); margin:0 0 4px; text-shadow:2px 2px 0 var(--pur-dd)}
+  .dj .deck .feature b{color:var(--hot)}
+  .dj .deck .hint{font-family:"Anton",sans-serif; color:#d8c6f0; letter-spacing:.06em; font-size:clamp(13px,3.6vw,16px); margin:0 0 12px}
+  .dj .deck .hint b{color:#fff}
+  .dj .tt{position:relative; width:min(80%,300px); margin:0 auto 6px; aspect-ratio:1}
+  .dj .platter{position:absolute; inset:0; border-radius:50%; will-change:transform;
+      background:
+        radial-gradient(circle at 50% 50%, var(--pur-d) 0 15%, transparent 15.5%),
+        conic-gradient(from 0deg, #0a0a0c, #1a1a1f 25%, #0a0a0c 50%, #1a1a1f 75%, #0a0a0c),
+        repeating-radial-gradient(circle at 50% 50%, #0a0a0c 0 2px, #17171b 2px 4px);
+      box-shadow:0 0 0 6px #000, 0 10px 20px rgba(0,0,0,.6), inset 0 0 30px rgba(0,0,0,.8)}
+  .dj .platter .label{position:absolute; left:50%; top:50%; width:34%; aspect-ratio:1; transform:translate(-50%,-50%); border-radius:50%;
+      background:radial-gradient(circle,#fff 0 11%,var(--gold) 12% 16%,var(--pur) 17%); display:grid; place-items:center; text-align:center;
+      font-family:"Anton",sans-serif; color:#fff; font-size:clamp(8px,2.4vw,11px); letter-spacing:.04em; box-shadow:inset 0 0 0 2px rgba(0,0,0,.4)}
+  .dj .platter .label span{line-height:1.05; padding:0 4px}
+  /* her hand: fist with one finger out, a gold nail as the needle. this is what you scratch. */
+  .dj .scratchhand{position:absolute; top:-14%; right:-6%; width:46%; z-index:4; cursor:pointer; touch-action:manipulation;
+      transform-origin:78% 14%; transform:rotate(6deg); filter:drop-shadow(-4px 6px 6px rgba(0,0,0,.5)); transition:transform .12s ease}
+  .dj .scratchhand:active{transform:rotate(6deg) scale(.98)}
+  .dj .scratchhand.jab{animation:jab .2s ease}
+  .dj .customsign{position:absolute; left:-6%; top:26%; z-index:5; max-width:46%; text-align:left; text-decoration:none;
+      font-family:"Anton",sans-serif; font-size:clamp(10px,2.9vw,13px); line-height:1.05; letter-spacing:.02em; color:#2a0a44;
+      background:#fff3b0; border:2px solid #2a0a44; border-radius:4px; padding:6px 8px; transform:rotate(-6deg); box-shadow:2px 3px 0 rgba(0,0,0,.45)}
+  .dj .customsign .arrow{color:var(--hot); font-size:1.3em; display:inline-block; transform:translateY(1px)}
+  .dj .customsign:active{transform:rotate(-6deg) translateY(2px)}
+  @keyframes jab{40%{transform:rotate(1deg) translateY(6px)}}
+  .dj .scratchhand svg{width:100%; height:auto; display:block}
+  /* the tuner readout on the front of the deck */
+  .dj .tuner{margin:10px auto 2px; width:min(88%,300px); background:#0b0f0a; border:3px solid #000; border-radius:8px; padding:6px 8px;
+      box-shadow:inset 0 2px 8px rgba(0,0,0,.9), 0 1px 0 rgba(255,255,255,.06)}
+  .dj .tuner-glass{overflow:hidden; border-radius:3px; background:linear-gradient(180deg,#101610,#0a0d0a); padding:2px 0}
+  .dj .tuner-text{white-space:nowrap; font-family:"VT323",monospace; font-size:clamp(18px,5vw,24px); letter-spacing:.14em; color:#ffb020;
+      text-shadow:0 0 8px rgba(255,176,32,.7); display:inline-block; padding-left:100%; animation:marquee 9s linear infinite}
+  .dj .tuner.alert .tuner-text{animation:none; padding-left:0; text-align:center; width:100%; color:#ff4d4d; text-shadow:0 0 10px rgba(255,60,60,.8); font-weight:400}
+  @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-100%)}}
+  .dj .scratchmark{display:flex; justify-content:center; gap:8px; margin:12px 0 2px}
+  .dj .scratchmark i{width:16px; height:16px; border-radius:50%; background:#3a3247; box-shadow:inset 0 0 0 2px #000; transition:background .2s, box-shadow .2s}
+  .dj .scratchmark i.on{background:var(--gold); box-shadow:0 0 10px var(--gold)}
+
+  /* footer */
+  .dj .foot{text-align:center; padding:8px 4px 0; color:var(--pur-dd)}
+  .dj .foot .stars{font-family:"Anton",sans-serif; color:var(--gold-d); font-size:clamp(13px,3.8vw,17px); margin:2px 0; letter-spacing:.02em}
+  .dj .foot .phonefoot{font-family:"Anton",sans-serif; color:var(--pur-dd); font-size:clamp(14px,4vw,18px); margin:4px 0 8px}
+  .dj .foot .phonefoot b{color:var(--hot)}
+  .dj .foot .cta{font-family:"Anton",sans-serif; font-size:clamp(15px,4.4vw,20px); color:var(--pur-dd); margin:6px 0}
+  .dj .foot .legal{font-size:12px; line-height:1.4; color:#5a3a86; margin:8px 0 0; font-family:"Barlow Condensed",sans-serif}
+  .dj .stamp{display:inline-block; margin-top:8px; border:2px solid var(--hot); color:var(--hot); font-family:"Anton",sans-serif; letter-spacing:.1em; padding:3px 10px; border-radius:6px; transform:rotate(-3deg); font-size:12px}
+
+  @keyframes tw{0%,100%{opacity:.3; transform:scale(.7)}50%{opacity:1; transform:scale(1.1)}}
+  .dj.glitch{animation:glit .5s steps(2) 2}
+  @keyframes glit{50%{filter:hue-rotate(40deg) saturate(1.5) contrast(1.2)}}
+  @media (prefers-reduced-motion:reduce){
+    .dj .rays,.dj .hero img,.dj .burst,.dj .sparkle,.dj.glitch,.dj .deck.skip .tonearm{animation:none}
+  }
+  @media (min-width:760px){ .dj .wrap{max-width:720px; margin:0 auto} }
+  @media (max-width:640px){ .dj .logobar{flex-direction:column; align-items:center; padding-left:0} .dj .logobar .name{order:1; text-align:center} .dj .logobar .badge{order:2; width:44%; margin-top:6px} .dj .logobar .burst{top:0} }   /* the logo moves under HELPING HAND on phones (Ian, 2026-08-26) */
+</style>
+
+<article class="dj" id="dj" aria-label="DJ Scratch" data-host="DJ SCRATCH" data-show="THE MUSIC DESK" data-ch="3" data-gauge="off">
+  <div class="rays" aria-hidden="true"></div>
+  <div class="edge">
+    <p class="ribbon"><span class="star">★</span> AS SEEN ON MBS <span class="star">★</span> AS SEEN ON MBS <span class="star">★</span> AS SEEN ON MBS <span class="star">★</span></p>
+
+    <div class="wrap">
+      <header class="head">
+        <div class="logobar">
+          <span class="sparkle" style="left:2%;top:8%;font-size:24px">✦</span>
+          <span class="sparkle" style="right:6%;top:0;font-size:18px;animation-delay:.7s">✦</span>
+          <img class="badge" src="assets/helping-hand-badge.png" alt="The Helping Hand" width="1440" height="1440">
+          <span class="name">HELPING<br>HAND<span class="tm">™</span></span>
+          <div class="burst" aria-hidden="true">100%<br>ALIVE!*</div>
+        </div>
+        <p class="tagline">It <b>DJs.</b> It <b>cleans.</b> It <b>obeys.</b></p>
+        <a class="submitmusic" href="#musicDesk">▸&nbsp; CLICK HERE TO SUBMIT MUSIC FOR REVIEW &nbsp;◂</a>
+      </header>
+
+      <div class="callnow" role="note">
+        <p class="cn-big">CALL NOW!</p>
+        <p class="cn-num">1&#8209;800&#8209;HHHANDS</p>
+        <p class="cn-sub">or 1&#8209;900&#8209;GET&#8209;HAND &middot; 1&#8209;800&#8209;555&#8209;PALM &middot; 1&#8209;800&#8209;NU&#8209;DIGITS</p>
+        <p class="cn-fine">Operators are standing by. They are always standing by. They cannot sit down. They cannot leave. Call in the next 5 minutes. MOM throws in a second wrist, free. Every operator here is a goon. They help you goon better, one call at a time.</p>
+      </div>
+
+      <section class="card">
+        <h2>One hand. Every task. Zero&nbsp;complaints.</h2>
+        <p>Tired of doing things? So was MOM. Meet THE HAND. It works while you rest. It rests while you work. It never asks where it came from. It helps you goon better. Sometimes the best goon needs an extra hand.</p>
+        <ul class="threes">
+          <li><span class="chk">✓</span><span><b>It spins your records.</b> A real DJ on your shelf. It stacks, it cues, it scratches.</span></li>
+          <li><span class="chk">✓</span><span><b>It does your dishes.</b> And your laundry. And whatever the third thing is.</span></li>
+          <li><span class="chk">✓</span><span><b>It never asks for anything.</b> Not a wage. Not a day off. Not to go home.</span></li>
+        </ul>
+      </section>
+
+      <section class="demos" aria-label="THE HELPING HAND in action">
+        <h2 class="demoh">SEE IT IN ACTION!</h2>
+        <figure class="demo"><img src="assets/hand-dishes.jpg" alt="A helping hand washing a dish at a sink"><figcaption>It <b>washes your dishes.</b></figcaption></figure>
+        <figure class="demo"><img src="assets/hand-laundry.jpg" alt="A helping hand folding laundry"><figcaption>It <b>folds the laundry</b> before there are wrinkles.</figcaption></figure>
+        <p class="escalate">And because MOM cares about your whole family,</p>
+        <figure class="demo mil"><span class="miltag">MILITARY GRADE</span><img src="assets/hand-nuke.jpg" alt="A helping hand disarming a prop nuclear device"><figcaption>It <b>disarms nuclear devices.*</b></figcaption></figure>
+        <p class="demofine">*THE HELPING HAND is not certified for civilian ordnance disposal. It does it anyway. MOM Inc. accepts no liability for a hand that will not stop helping.</p>
+      </section>
+
+      <!-- the signal getting out, under the gloss -->
+      <section class="signal" id="musicDesk" aria-label="An incoming signal">
+        <p class="lbl" id="sigLbl">// incoming on an open channel //</p>
+        <h3>THE MUSIC DESK</h3>
+        <p>Before she was a product, she was a DJ. Three flavours, one stack of real records:</p>
+        <ul class="flavors">
+          <li>RISING STAR, an unsigned artist, played first</li>
+          <li>FORGOTTEN CLASSIC, a song people missed</li>
+          <li>WORLDWIDE ARTIST, a sound from somewhere else</li>
+        </ul>
+        <p>And here is a real one, no joke: she gets her nails done on camera. She shouts out <span class="link">her actual nail tech</span>. That part is true. The true parts are how you know it's her.</p>
+        <form class="subform" id="subForm">
+          <label for="trackName">She already cleared a spot on the stack today. She already listened for something real. Now send your unsigned track. She plays real ones first.</label>
+          <input id="trackName" name="track" placeholder="artist, track, or a link" required>
+          <button type="submit" id="subBtn">SEND IT TO THE DECK</button>
+        </form>
+      </section>
+
+      <!-- THE TURNTABLE, PARTY MODE: the record spins forever; her nail is the needle; scratch it three times -->
+      <section class="deck" id="deck">
+        <p class="feature">NOW FEATURING, <b>PARTY MODE</b></p>
+        <p class="hint" id="deckHint">The record never stops. <b>Scratch it, three times.</b></p>
+        <div class="tt">
+          <div class="platter" id="platter" aria-hidden="true"><div class="label"><span>THE<br>MUSIC<br>DESK</span></div></div>
+          <a class="customsign" href="#customize">CUSTOM HANDS<br>MADE HERE&nbsp;<span class="arrow">➜</span></a>
+          <div class="scratchhand" id="scratchHand" role="button" tabindex="0" aria-label="DJ Scratch's finger, its long gold nail on the record. Scratch it three times.">
+            <svg viewBox="0 0 130 210" aria-hidden="true">
+              <g transform="rotate(-30 65 105)">
+                <!-- the digit: a clean rounded finger -->
+                <rect x="45" y="16" width="36" height="126" rx="18" fill="#7a2fc4" stroke="#2a0a44" stroke-width="4"/>
+                <!-- soft length highlight -->
+                <rect x="52" y="26" width="9" height="104" rx="4.5" fill="#9a5fd0" opacity=".65"/>
+                <!-- knuckle creases -->
+                <path d="M46 84 h34" stroke="#2a0a44" stroke-width="2.4" fill="none" opacity=".32"/>
+                <path d="M48 110 h30" stroke="#2a0a44" stroke-width="2.2" fill="none" opacity=".26"/>
+                <!-- gold ring band with a gem -->
+                <rect x="40" y="50" width="46" height="16" rx="4" fill="#ffd36e" stroke="#c9992e" stroke-width="1.8"/>
+                <rect x="40" y="50" width="46" height="5" rx="2.5" fill="#fff3cf" opacity=".6"/>
+                <circle cx="63" cy="45" r="6.5" fill="#fff6da" stroke="#c9992e" stroke-width="1.8"/>
+                <!-- long gold stiletto nail = the needle -->
+                <path d="M47 140 Q63 137 79 140 L71 202 Q63 208 55 202 Z" fill="#ffd36e" stroke="#c9992e" stroke-width="2.6" stroke-linejoin="round"/>
+                <path d="M63 146 L63 196" stroke="#fff6da" stroke-width="2.2" opacity=".7"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+        <div class="tuner"><div class="tuner-glass"><div class="tuner-text" id="tunerText">★ PARTY MODE ★ PART TIME ★ NOW SPINNING ★ SATISFACTION GUARANTEED ★ PARTY MODE ★ PART TIME ★</div></div></div>
+        <div class="scratchmark" aria-hidden="true"><i id="s1"></i><i id="s2"></i><i id="s3"></i></div>
+      </section>
+
+      <section class="card customize" id="customize">
+        <h2>BUILD YOUR OWN HAND</h2>
+        <p>MOM already started growing one, just for you, before you even asked. Tell her what you want in yours. She will send the ad copy for the hand you designed.</p>
+        <form id="orderForm" class="orderform">
+          <label>Being type
+            <select name="being" required>
+              <option value="">, choose your hand,</option>
+              <option>Lizard-skin, scaled, cold-blooded</option>
+              <option>Super-furry, clawed, warm</option>
+              <option>Human, uncanny, familiar</option>
+              <option>Surprise me, MOM decides</option>
+            </select>
+          </label>
+          <label>Colour
+            <input name="color" placeholder="molten gold? void black? your ex's aura?" required>
+          </label>
+          <label>Nails
+            <input name="nails" placeholder="length, shape, finish, go long">
+          </label>
+          <label>Powers
+            <input name="powers" placeholder="telekinesis? fire? folds fitted sheets?">
+          </label>
+          <label>Where to send the paperwork
+            <input name="email" type="email" placeholder="you@dimension.???" required>
+          </label>
+          <button type="submit" id="orderBtn">ORDER MY HAND</button>
+          <p class="ofine">No payment, no obligation, nothing sent yet. MOM will send ad copy for the hand you designed. In-character participation only, never a sale.</p>
+        </form>
+      </section>
+
+      <div class="price">
+        <div class="was">A whole person: priceless</div>
+        <div class="now">$0 DOWN</div>
+        <div class="terms">Then just <b>3 easy payments</b> that never quite clear</div>
+        <p class="fine">THE HAND is financed through MOM Inc. Revolving Credit. Minimum payment does not reduce principal. This advertisement sells nothing; there is no checkout and never will be. Crime on file: buying something nice.</p>
+      </div>
+
+      <div class="butwait">BUT WAIT, THERE'S MORE!</div>
+      <section class="card">
+        <ul class="threes">
+          <li><span class="chk">+</span><span><b>Free nail service.</b> THE HAND keeps itself perfect. Gold, always.</span></li>
+          <li><span class="chk">+</span><span><b>Free personality.</b> At no extra charge, it seems to have opinions.</span></li>
+          <li><span class="chk">+</span><span><b>Free upgrades.</b> It learns your habits. It is learning right now.</span></li>
+        </ul>
+      </section>
+
+      <div class="quotes">
+        <blockquote class="quote">"It cleaned my whole apartment and made me a playlist. Ten stars."<span class="who">, a satisfied owner</span></blockquote>
+        <blockquote class="quote">"I've never been happier. MOM says I've never been happier."<span class="who">, a satisfied owner</span></blockquote>
+        <blockquote class="quote off">"At night it taps. Three taps. Always three. Is it— is it trying to—"<span class="who">, review removed by MOM Inc.</span></blockquote>
+      </div>
+
+      <button class="buybtn" type="button" id="buyBtn">GET THE HAND, $0 DOWN</button>
+
+      <footer class="foot">
+        <p class="stars">★★★★★ &nbsp;&ldquo;FIVE STARS. I WAS NOT ASKED TO SAY THAT.&rdquo; &nbsp;★★★★★</p>
+        <p class="phonefoot">CALL <b>1&#8209;800&#8209;HHHANDS</b> &middot; that&rsquo;s <b>1&#8209;800&#8209;444&#8209;2637</b> &middot; operators cannot leave</p>
+        <p class="cta">Answer the quiz on Wednesday. Every answer is a record she gets to play.</p>
+        <span class="stamp">MOM INC · A MOM INC PRODUCT</span>
+        <p class="legal">THE HAND™ is a registered appliance of MOM Inc. Any resemblance to a person who used to hold things is coincidental and has been reviewed. In-character participation only, never a sale. *"Alive" is a feeling, not a claim.</p>
+      </footer>
+    </div>
+  </div>
+</article>
+<script>
+(() => {
+  const dj = document.getElementById("dj"); if (!dj) return;
+  const screen = dj.closest(".screen") || document.getElementById("screen");
+  const ratio = () => screen.scrollTop / Math.max(1, screen.scrollHeight - screen.clientHeight);
+
+  // no stress gauge on this channel (data-gauge="off" hides the shell meter for DJ Scratch)
+
+  // the buy button and the forms are in-character only; nothing is sold or sent
+  document.getElementById("buyBtn").addEventListener("click", e => {
+    const b = e.currentTarget; b.textContent = "MOM IS PROCESSING YOUR DEVOTION…"; b.disabled = true;
+    setTimeout(() => { b.textContent = "THERE IS NO CHECKOUT. THERE NEVER WAS."; }, 1400);
+  });
+  document.getElementById("subForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const b = document.getElementById("subBtn"); b.textContent = "ON THE STACK. SHE PLAYS REAL ONES FIRST."; b.disabled = true;
+    window.MBS && window.MBS.form && window.MBS.form("djscratch", { track: true });
+  });
+  // the customization order: in-character only; a real endpoint (Formspree free tier) can be wired later to actually receive orders
+  document.getElementById("orderForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const b = document.getElementById("orderBtn"); b.textContent = "MOM IS GROWING YOUR HAND…"; b.disabled = true;
+    setTimeout(() => { b.textContent = "SPECIFICATIONS RECEIVED. WATCH YOUR DIMENSION."; }, 1500);
+  });
+
+  // THE TURNTABLE, PARTY MODE. The record spins forever; scratching the hand halts it and jolts it back.
+  // Three scratches and the ad skips: the tuner drops PARTY MODE for her real message.
+  const deck = document.getElementById("deck"), platter = document.getElementById("platter");
+  const hand = document.getElementById("scratchHand"), tuner = document.querySelector(".tuner"), tunerText = document.getElementById("tunerText");
+  const marks = [document.getElementById("s1"), document.getElementById("s2"), document.getElementById("s3")];
+  const hint = document.getElementById("deckHint"), sigLbl = document.getElementById("sigLbl");
+  let scratches = 0, angle = 0, spinning = true, done = false, jog = null;
+  const VEL = 2.4;                                              // deg/frame: a full spin about every 2.5s at 60fps
+
+  function loop(now) {                                          // one animation loop drives the endless spin and every jog
+    if (jog) {
+      const p = Math.min((now - jog.t0) / jog.dur, 1);
+      angle = jog.from - jog.back * (1 - Math.pow(1 - p, 2));   // halt forward, jerk backward (ease-out)
+      if (p >= 1) { jog = null; spinning = !done; }             // resume the endless spin (unless it's over)
+    } else if (spinning && !done) {
+      angle += VEL;
+    }
+    platter.style.transform = `rotate(${angle}deg)`;
+    if (!done || jog) requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+
+  function scratch() {
+    if (done) return;
+    spinning = false;
+    jog = { from: angle, back: 55 + Math.random() * 45, t0: performance.now(), dur: 165 };   // halt + jolt back like a real scratch; a fresh scratch restarts it
+    requestAnimationFrame(loop);                                // nudge the loop in case rAF was idle
+    hand.classList.remove("jab"); void hand.offsetWidth; hand.classList.add("jab");
+    scratches++;
+    if (marks[scratches - 1]) marks[scratches - 1].classList.add("on");
+    if (scratches >= 3) setTimeout(breakThrough, 220);
+  }
+
+  function breakThrough() {
+    done = true; unlocked = true;
+    dj.classList.add("glitch");
+    const partyMode = tunerText.textContent;                    // the ad copy the purple wave puts back
+    const restore = () => { tuner.classList.remove("alert"); tunerText.textContent = partyMode; };
+    if (window.MBS && window.MBS.wave) window.MBS.wave({ after: 3000, restore });   // orange glitch; 3s later the purple wave returns PARTY MODE
+    tuner.classList.add("alert");
+    let i = 0; const msg = "HELP, GET US OUT";
+    const type = setInterval(() => {                            // the tuner skips PARTY MODE for her signal
+      tunerText.textContent = msg.slice(0, ++i) + (i < msg.length ? "_" : "");
+      if (i >= msg.length) {
+        clearInterval(type);
+        tunerText.textContent = "HELP, GET US OUT";
+        hint.innerHTML = "the record skipped. that was her, not it.";
+        sigLbl.textContent = "// signal confirmed // she is in the machine //";
+        if (window.MBS) { window.MBS.meter && window.MBS.meter(100, "SIGNAL"); window.MBS.unlock && window.MBS.unlock("djscratch"); }
+      }
+    }, 90);
+  }
+
+  hand.addEventListener("pointerdown", e => { e.preventDefault(); scratch(); });
+  hand.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); scratch(); } });
+})();
+</script>

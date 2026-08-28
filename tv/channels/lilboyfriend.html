@@ -1,0 +1,390 @@
+<!--
+THESIS: Lil Boyfriend's page is a MOM Inc. MEDICATION infomercial for LIVING SMALL, the Residential Compression Program sold as a prescription. Housing is the condition; being shrunk is the treatment; the fine print is the side effects. His tiny-desk rig is the patient result.
+OWN-WORLD: A daytime pharma ad. Soft pastels (mint, lavender, baby blue), a gentle gold, white air, a swooping script wordmark with a swoosh, rounded body type, smiling charts. The opposite of DJ Scratch's loud 90s product ad: this one is quiet, warm, and clinical.
+STORY: The visitor is diagnosed (the housing numbers, real and sourced, drawn to look worse), measured (an estimator that is always negative), shown the cure (three tiny homes, stacked, with a tiny man waving), shown the clinical results (MOM's own studies, n=1), and read the side effects. Then the shadow man rips the page and the homes rot.
+INTERACTABLE (unlock node): a full-height shadow man anchored to the bottom-right of the glass SHRINKS toward that corner as you scroll; at the bottom he flashes purple; click him and he walks across and rips a small patch open to two wires; click the wires and they connect: a gold shock turns him to ash, the listings flip to their horror versions and the orange wave glitches through; 5s later the purple restore wave puts them back. Shared: window.MBS.wave({after, restore}), window.MBS.unlock("lilboyfriend").
+FORM: Ian's re-pin 2026-08-26 (medication infomercial, light colours + gentle gold, swooping fonts, housing stats made worse, a cost-of-living estimator that is always negative, studies and graphs, photos stacked vertically, room to scroll). Full spec: vault "Lil Boyfriend Page Spec". Inside the old television shell. Mobile-first.
+-->
+<style>
+  .lb{--mint:#dff5ec; --lav:#ebe3fa; --sky:#e3effd; --white:#fffdf8; --gold:#e6c67a; --gold-d:#c9a24c; --gold-l:#f7eacb; --ink:#3c3552; --ink-l:#6f6688; --rose:#f3c9d6; --pur:#7a2fc4;
+      min-height:100%; margin:0; color:var(--ink); font-family:"Nunito",system-ui,sans-serif; font-weight:600; position:relative; overflow-x:hidden;
+      background:linear-gradient(180deg,var(--white) 0%,var(--sky) 28%,var(--lav) 58%,var(--mint) 100%)}
+  .lb *{box-sizing:border-box}
+  .lb .ribbon{margin:0; padding:7px 8px; text-align:center; background:var(--gold-l); color:var(--ink-l); font-size:clamp(11px,3vw,13px); letter-spacing:.08em; text-transform:uppercase; border-bottom:1px solid var(--gold)}
+  .lb .wrap{position:relative; z-index:1; padding:0 clamp(14px,4.5vw,28px) 40px; max-width:760px; margin:0 auto}
+  .lb section{margin:26px 0}
+  .lb h2{font-family:"Pacifico",cursive; font-weight:400; color:var(--ink); font-size:clamp(24px,7vw,36px); margin:0 0 8px; line-height:1.15}
+  .lb h2 small{display:block; font-family:"Nunito",sans-serif; font-weight:800; font-size:clamp(11px,3vw,13px); letter-spacing:.14em; text-transform:uppercase; color:var(--gold-d); margin-bottom:2px}
+  .lb p{font-size:clamp(15px,4.2vw,18px); line-height:1.55; margin:0 0 10px}
+  .lb .fine{font-size:11.5px; line-height:1.45; color:var(--ink-l); margin:8px 0 0}
+  .lb .card{background:rgba(255,253,248,.82); border:1px solid rgba(230,198,122,.6); border-radius:18px; padding:16px 16px 14px; box-shadow:0 6px 18px rgba(120,100,160,.10)}
+
+  /* the wordmark, with its swoosh */
+  .lb .head{text-align:center; padding:22px 0 6px}
+  .lb .kick{font-size:clamp(12px,3.4vw,14px); letter-spacing:.14em; text-transform:uppercase; color:var(--ink-l); margin:0}
+  .lb h1.logo{font-family:"Pacifico",cursive; font-weight:400; font-size:clamp(46px,15vw,92px); line-height:1.05; margin:0; color:var(--ink);
+      text-shadow:0 2px 0 #fff, 0 6px 14px rgba(120,100,160,.18)}
+  .lb .swoosh{display:block; width:min(72%,340px); height:auto; margin:-10px auto 4px}
+  .lb .generic{font-size:clamp(12px,3.4vw,14px); color:var(--ink-l); margin:0; letter-spacing:.02em}
+  .lb .tagline{font-family:"Pacifico",cursive; font-weight:400; font-size:clamp(18px,5.4vw,26px); color:var(--gold-d); margin:8px 0 0}
+  .lb .pill{display:inline-block; margin-top:12px; background:linear-gradient(90deg,var(--mint) 50%,var(--gold-l) 50%); border:1.5px solid var(--gold); border-radius:999px; padding:8px 18px; font-weight:800; font-size:clamp(13px,3.6vw,15px); color:var(--ink); box-shadow:0 3px 0 rgba(201,162,76,.35)}
+
+  /* symptoms */
+  .lb .symptoms{list-style:none; margin:8px 0 0; padding:0; display:grid; gap:8px}
+  .lb .symptoms li{display:grid; grid-template-columns:auto 1fr; gap:10px; align-items:start; font-size:clamp(15px,4.2vw,17px); line-height:1.4}
+  .lb .symptoms .dot{width:22px; height:22px; border-radius:50%; background:var(--gold); color:#fff; display:grid; place-items:center; font-weight:800; font-size:13px; margin-top:1px}
+
+  /* the condition: real numbers, MOM's charts */
+  .lb .stats{display:grid; gap:12px}
+  .lb .stat{background:var(--white); border-radius:14px; padding:12px 14px; border:1px solid rgba(230,198,122,.5)}
+  .lb .stat .big{font-family:"Pacifico",cursive; font-weight:400; font-size:clamp(28px,9vw,44px); color:var(--ink); line-height:1; margin:0}
+  .lb .stat .lbl{font-size:clamp(13px,3.6vw,15px); color:var(--ink-l); margin:2px 0 8px}
+  .lb .stat svg{width:100%; height:auto; display:block}
+  .lb .stat .src{font-size:10.5px; color:var(--ink-l); margin:6px 0 0; letter-spacing:.02em}
+  .lb .verdict{text-align:center; font-family:"Pacifico",cursive; font-weight:400; font-size:clamp(22px,7vw,34px); color:var(--ink); margin:16px 0 0}
+  .lb .verdict b{color:var(--gold-d); font-weight:400}
+
+  /* the estimator */
+  .lb .est{display:grid; gap:10px; margin-top:10px}
+  .lb .est label{display:grid; gap:4px; font-size:clamp(12px,3.4vw,13px); letter-spacing:.06em; text-transform:uppercase; color:var(--ink-l); font-weight:800}
+  .lb .est input{font-family:"Nunito",sans-serif; font-weight:600; font-size:16px; padding:11px 12px; border:1.5px solid var(--gold); border-radius:12px; background:#fff; color:var(--ink)}
+  .lb .est button{font-family:"Nunito",sans-serif; font-weight:800; font-size:clamp(15px,4.4vw,18px); border:0; cursor:pointer; border-radius:999px; padding:13px; background:var(--gold); color:#fff; box-shadow:0 4px 0 var(--gold-d); letter-spacing:.04em}
+  .lb .est button:active{transform:translateY(3px); box-shadow:0 1px 0 var(--gold-d)}
+  .lb .result{display:none; margin-top:12px; background:var(--white); border-radius:14px; padding:14px; border:1px solid rgba(230,198,122,.6)}
+  .lb .result.show{display:block}
+  .lb .result .vs{display:grid; grid-template-columns:1fr 1fr; gap:10px; text-align:center}
+  .lb .result .vs > div{padding:10px 6px; border-radius:12px}
+  .lb .result .you{background:var(--rose)}
+  .lb .result .him{background:var(--mint)}
+  .lb .result .num{font-family:"Pacifico",cursive; font-weight:400; font-size:clamp(22px,7vw,34px); line-height:1.1; margin:0}
+  .lb .result .who{font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-l); margin:4px 0 0}
+  .lb .result .sad{margin:10px 0 0; font-size:clamp(14px,4vw,16px); color:var(--ink)}
+
+  /* patient results: the three homes, stacked */
+  .lb .homes{display:grid; gap:20px}
+  .lb .home{position:relative; margin:0; background:var(--white); border:1px solid rgba(230,198,122,.7); border-radius:18px; overflow:hidden; box-shadow:0 8px 22px rgba(120,100,160,.12)}
+  .lb .home .frame{position:relative; aspect-ratio:4/3; background:var(--lav)}
+  .lb .home .frame img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:opacity .6s ease}
+  .lb .home .frame img.horror{opacity:0}
+  .lb.breached .home .frame img.horror{opacity:1}
+  .lb.breached .home .frame img.cozy{opacity:0}
+  .lb .home .ph{position:absolute; inset:0; display:grid; place-items:center; text-align:center; color:var(--ink-l); font-family:"Pacifico",cursive; font-size:clamp(16px,4.6vw,22px); padding:10px}
+  .lb .home .rx{position:absolute; top:10px; left:10px; z-index:2; background:var(--gold); color:#fff; font-weight:800; font-size:clamp(11px,3.2vw,13px); letter-spacing:.1em; padding:5px 10px; border-radius:999px; box-shadow:0 2px 0 var(--gold-d)}
+  .lb .home .foodribbon{position:absolute; right:10px; bottom:10px; z-index:2; background:var(--mint); color:var(--ink); font-weight:800; font-size:clamp(11px,3vw,13px); padding:5px 10px; border-radius:999px; border:1px solid var(--gold)}
+  .lb .home figcaption{padding:12px 14px; font-size:clamp(14px,4vw,17px); line-height:1.4}
+  .lb .home figcaption b{font-family:"Pacifico",cursive; font-weight:400; font-size:1.15em; color:var(--gold-d)}
+  .lb .scale{text-align:center; font-family:"Pacifico",cursive; font-weight:400; color:var(--ink-l); font-size:clamp(15px,4.4vw,19px); margin:4px 0 0}
+
+  /* clinical results */
+  .lb .charts{display:grid; gap:12px}
+  .lb .chart{background:var(--white); border-radius:14px; padding:12px 14px; border:1px solid rgba(230,198,122,.5)}
+  .lb .chart svg{width:100%; height:auto; display:block}
+  .lb .chart .t{font-weight:800; font-size:clamp(13px,3.6vw,15px); margin:0 0 6px; color:var(--ink)}
+  .lb .studies{list-style:none; padding:0; margin:10px 0 0; display:grid; gap:6px; font-size:clamp(12.5px,3.5vw,14px); color:var(--ink-l); line-height:1.4}
+  .lb .studies li::before{content:"◆ "; color:var(--gold)}
+
+  /* side effects */
+  .lb .side{background:var(--white); border-radius:14px; padding:12px 14px; border:1px solid rgba(230,198,122,.5); font-size:11.5px; line-height:1.5; color:var(--ink-l)}
+  .lb .side b{color:var(--ink)}
+
+  .lb .foot{text-align:center; padding:8px 4px 0; color:var(--ink-l)}
+  .lb .foot .cta{font-family:"Pacifico",cursive; font-weight:400; font-size:clamp(16px,4.8vw,22px); color:var(--ink); margin:6px 0}
+  .lb .foot .legal{font-size:11.5px; line-height:1.45; margin:8px 0 0}
+  .lb .stamp{display:inline-block; margin-top:10px; border:1.5px solid var(--gold); color:var(--gold-d); font-weight:800; letter-spacing:.12em; padding:4px 12px; border-radius:999px; font-size:11px}
+
+  /* the shrinking shadow man (the interactable): full page height, anchored bottom-right of the glass (not the scroller), shrinks toward that corner as you scroll; at the bottom he charges */
+  .lb-shade{position:absolute; right:10px; bottom:14px; z-index:7; height:92%; width:auto; aspect-ratio:1/2; max-width:46%; transform-origin:bottom right; cursor:default; pointer-events:none;
+      transition:transform .12s linear, left .9s cubic-bezier(.5,0,.3,1), right .9s cubic-bezier(.5,0,.3,1)}
+  .lb-shade svg{width:100%; height:100%; display:block; filter:drop-shadow(0 3px 4px rgba(0,0,0,.3))}
+  .lb-shade .body{fill:#3c3552}
+  .lb-shade.charged{cursor:pointer; pointer-events:auto; animation:zap .5s steps(2) infinite}
+  @keyframes zap{50%{filter:drop-shadow(0 0 10px var(--pur)) hue-rotate(20deg)} }
+  .lb-shade.charged .body{fill:var(--pur)}
+  .lb-shade.walked{left:10px; right:auto; transform-origin:bottom left}
+  .lb-shade .hint{position:absolute; bottom:104%; left:50%; transform:translateX(-50%); white-space:nowrap; font-weight:800;
+      font-size:11px; color:#fff; background:var(--pur); padding:2px 8px; border-radius:999px; opacity:0; transition:opacity .3s}
+  .lb-shade.charged .hint{opacity:1}
+
+  /* the torn page + wires (revealed when he rips it): a small ragged patch at the bottom-left where he stands (Ian: much smaller) */
+  .lb-tear{position:absolute; left:8px; bottom:20px; width:84px; height:0; z-index:9; overflow:hidden; pointer-events:none;
+      background:#0b0714; border-radius:10px; transition:height .5s cubic-bezier(.6,0,.2,1);
+      clip-path:polygon(0 6%,8% 0,20% 5%,34% 0,47% 6%,60% 1%,74% 5%,88% 0,100% 7%,97% 30%,100% 55%,96% 80%,100% 100%,0 100%,3% 72%,0 45%,4% 20%)}
+  .lb-tear.ripped{height:74px; pointer-events:auto; cursor:pointer}   /* barely taller than him at the bottom (Ian); the wires are what you click next */
+  .lb-tear.ripped:not(.wired) .wires{animation:wirehint 1s ease-in-out infinite}
+  @keyframes wirehint{50%{filter:drop-shadow(0 0 6px var(--gold)) brightness(1.5)}}
+  .lb-tear .tip{display:none}
+  .lb-tear .wires{position:absolute; top:26px; left:8px; right:10px; height:22px}
+  .lb-tear .wire{position:absolute; top:8px; height:6px; border-radius:3px}
+  .lb-tear .wire.l{left:0; width:42%; background:linear-gradient(90deg,#c02,#f44)}
+  .lb-tear .wire.r{right:0; width:42%; background:linear-gradient(270deg,#06c,#4af); transition:right .35s ease}
+  .lb-tear .wire .end{position:absolute; width:7px; height:11px; top:-2.5px; background:#c9c9cf; border-radius:2px}
+  .lb-tear .wire.l .end{right:-7px} .lb-tear .wire.r .end{left:-7px}
+  .lb-tear.wired .wire.r{right:14%}
+  .lb-tear.wired .spark{position:absolute; left:46%; top:6px; width:12px; height:12px; border-radius:50%; background:#ffcf5c; box-shadow:0 0 14px var(--gold), 0 0 30px var(--gold); animation:spk .5s ease 3}
+  @keyframes spk{from{transform:scale(.2);opacity:1}to{transform:scale(2.6);opacity:0}}
+  .lb-tear .tip{position:absolute; bottom:3px; left:4px; right:4px; color:#8affc9; font-family:"VT323",monospace; font-size:11px; text-align:center; opacity:0; transition:opacity .3s; line-height:1.1}
+  .lb-tear.ripped .tip{opacity:.9}
+  /* the shock: the connected wires throw a gold bolt up into him; he flashes gold, then goes to ash and crumbles; the purple restore puts him back */
+  .lb-bolt{position:absolute; left:46px; bottom:52px; width:4px; height:0; z-index:8; pointer-events:none; background:var(--gold); box-shadow:0 0 10px var(--gold), 0 0 24px #fff3b0;
+      clip-path:polygon(0 0,100% 0,60% 20%,100% 35%,40% 50%,100% 65%,50% 80%,100% 100%,0 100%,45% 82%,0 66%,55% 48%,0 33%,40% 18%)}
+  .lb-bolt.go{animation:bolt .55s steps(4) 2 forwards}
+  @keyframes bolt{0%{height:0; width:4px; opacity:1} 30%{height:70%; width:18px; opacity:1} 100%{height:70%; width:10px; opacity:0}}
+  .lb-shade.shock{animation:shockflash .12s steps(2) 6}
+  .lb-shade.shock .body{fill:var(--gold)}
+  @keyframes shockflash{50%{filter:drop-shadow(0 0 16px var(--gold)) brightness(2.2)}}
+  .lb-shade.ash .body{fill:#6f6a72; transition:fill .4s}
+  .lb-shade.ash svg{animation:crumble 1.8s ease-in forwards}
+  @keyframes crumble{0%{opacity:1; filter:blur(0)} 60%{opacity:.7; filter:blur(2px)} 100%{opacity:0; filter:blur(8px); transform:translateY(6%)}}
+  .lb-shade .ashbit{position:absolute; width:5px; height:5px; border-radius:1px; background:#8a858c; opacity:0; pointer-events:none; animation:ashfall 1.6s ease-in forwards}
+  @keyframes ashfall{0%{opacity:.95; transform:translate(0,0) rotate(0)} 100%{opacity:0; transform:translate(var(--ax,0px),var(--ay,160px)) rotate(200deg)}}
+
+  @media (min-width:760px){ .lb .stats{grid-template-columns:1fr 1fr} .lb .charts{grid-template-columns:1fr 1fr 1fr} }
+</style>
+
+<article class="lb" id="lb" aria-label="Lil Boyfriend" data-host="LIL BOYFRIEND" data-show="LIVING SMALL" data-ch="2" data-gauge="off">
+  <p class="ribbon">A MOM Inc. residential therapy · ask your provider · now in a smaller size</p>
+  <div class="wrap">
+    <header class="head">
+      <p class="kick">MOM Inc. Residential Compression Program presents</p>
+      <h1 class="logo">Living Small</h1>
+      <svg class="swoosh" viewBox="0 0 340 40" aria-hidden="true"><path d="M8 26 C 90 8, 250 6, 332 22" fill="none" stroke="#e6c67a" stroke-width="5" stroke-linecap="round"/><path d="M60 32 C 150 20, 260 18, 300 30" fill="none" stroke="#dff5ec" stroke-width="3" stroke-linecap="round"/></svg>
+      <p class="generic">(compressitol residential, 2.5 inches)</p>
+      <p class="tagline">Can't afford rent? Get smaller. Size isn't everything.</p>
+      <span class="pill">Ask MOM if Living Small is right for you</span>
+    </header>
+
+    <section class="card" aria-label="Symptoms">
+      <h2><small>Do you suffer from</small>Chronic Housing?</h2>
+      <ul class="symptoms">
+        <li><span class="dot">✓</span><span>You pay more than a third of what you earn just to sleep indoors.</span></li>
+        <li><span class="dot">✓</span><span>They told you that you would own a home "later." Later is now forty.</span></li>
+        <li><span class="dot">✓</span><span>You have roommates at the age your parents had a house.</span></li>
+        <li><span class="dot">✓</span><span>You stay big for no reason. You take up so much room.</span></li>
+      </ul>
+      <p class="fine">Chronic Housing is a condition recognised by MOM Inc. It is not recognised by anyone else. Symptoms may be your whole life.</p>
+    </section>
+
+    <section aria-label="The condition">
+      <h2><small>The condition</small>You cannot buy. You cannot rent.</h2>
+      <p>These are real numbers. MOM did not make them worse. MOM only drew them.</p>
+      <div class="stats">
+        <div class="stat">
+          <p class="big">$431,400</p>
+          <p class="lbl">the median existing home, July 2026</p>
+          <svg viewBox="0 0 300 70" aria-hidden="true">
+            <text x="0" y="14" font-size="10" fill="#6f6688">what the home costs</text><rect x="0" y="18" width="300" height="14" rx="7" fill="#e6c67a"/>
+            <text x="0" y="50" font-size="10" fill="#6f6688">what you have saved (MOM's estimate)</text><rect x="0" y="54" width="4" height="14" rx="2" fill="#f3c9d6"/>
+          </svg>
+          <p class="src">NAR, Existing-Home Sales, July 2026</p>
+        </div>
+        <div class="stat">
+          <p class="big">$111,000</p>
+          <p class="lbl">income needed to afford the typical home</p>
+          <svg viewBox="0 0 300 70" aria-hidden="true">
+            <text x="0" y="14" font-size="10" fill="#6f6688">needed</text><rect x="0" y="18" width="300" height="14" rx="7" fill="#e6c67a"/>
+            <text x="0" y="50" font-size="10" fill="#6f6688">the median first-time buyer actually earns: $94,400</text><rect x="0" y="54" width="255" height="14" rx="7" fill="#f3c9d6"/>
+            <line x1="255" y1="50" x2="300" y2="50" stroke="#c9a24c" stroke-dasharray="3 3"/><text x="258" y="46" font-size="9" fill="#c9a24c">the gap</text>
+          </svg>
+          <p class="src">Redfin; NAR Profile of Home Buyers and Sellers</p>
+        </div>
+        <div class="stat">
+          <p class="big">40 years old</p>
+          <p class="lbl">the median first-time buyer, an all-time high</p>
+          <svg viewBox="0 0 300 80" aria-hidden="true">
+            <polyline points="10,62 70,58 130,52 190,40 250,22" fill="none" stroke="#e6c67a" stroke-width="3" stroke-linecap="round"/>
+            <polyline points="250,22 295,6" fill="none" stroke="#c9a24c" stroke-width="2" stroke-dasharray="4 3"/>
+            <text x="10" y="76" font-size="9" fill="#6f6688">1981: 29</text><text x="118" y="76" font-size="9" fill="#6f6688">2010s: 33</text><text x="228" y="76" font-size="9" fill="#6f6688">2025: 40</text>
+            <text x="222" y="12" font-size="9" fill="#c9a24c">MOM projection</text>
+          </svg>
+          <p class="src">NAR, 2025 Profile of Home Buyers and Sellers. The dotted part is MOM's.</p>
+        </div>
+        <div class="stat">
+          <p class="big">22.7 million</p>
+          <p class="lbl">renter households pay more than 30% of income on rent. 12.1 million pay more than half.</p>
+          <svg viewBox="0 0 300 40" aria-hidden="true">
+            <rect x="0" y="8" width="300" height="20" rx="10" fill="#ebe3fa"/><rect x="0" y="8" width="150" height="20" rx="10" fill="#e6c67a"/><rect x="0" y="8" width="80" height="20" rx="10" fill="#f3c9d6"/>
+            <text x="6" y="22" font-size="10" fill="#3c3552">severe</text><text x="90" y="22" font-size="10" fill="#3c3552">burdened</text><text x="200" y="22" font-size="10" fill="#6f6688">everyone else, for now</text>
+          </svg>
+          <p class="src">Harvard JCHS, America's Rental Housing 2026. Rents are 29% above 2020. 83% of renters under $30,000 are burdened.</p>
+        </div>
+      </div>
+      <p class="verdict">Diagnosis: <b>you are too large for the economy.</b></p>
+    </section>
+
+    <section class="card" aria-label="Cost of living estimator">
+      <h2><small>Free screening</small>How short are you?</h2>
+      <p>He already ran his own numbers. He already knows how short he is. Tell MOM where you live and what you earn. She will tell you what is left too.</p>
+      <form class="est" id="est">
+        <label>City <input name="city" placeholder="Las Vegas" autocomplete="address-level2" required></label>
+        <label>Country <input name="country" placeholder="United States" autocomplete="country-name" required></label>
+        <label>Annual income <input name="income" type="number" min="0" step="100" placeholder="52000" inputmode="numeric" required></label>
+        <button type="submit">Screen me</button>
+      </form>
+      <div class="result" id="estResult" aria-live="polite">
+        <div class="vs">
+          <div class="you"><p class="num" id="estYou">−$0</p><p class="who">you, per year</p></div>
+          <div class="him"><p class="num">$0.12</p><p class="who">Lil Boyfriend, per month</p></div>
+        </div>
+        <p class="sad" id="estSad"></p>
+        <p class="fine">Based on MOM's cost-of-living tables and the Residential Reality Adjustment. The estimator has never returned a positive number. This is not a flaw. Lil Boyfriend's rent is paid in full, forever, in a currency he is too small to earn.</p>
+      </div>
+    </section>
+
+    <section aria-label="Clinical results">
+      <h2><small>Clinical results</small>Proven to help.</h2>
+      <div class="charts">
+        <div class="chart"><p class="t">Housing anxiety</p>
+          <svg viewBox="0 0 200 90" aria-hidden="true"><rect x="20" y="10" width="50" height="70" rx="6" fill="#f3c9d6"/><rect x="130" y="78" width="50" height="2" rx="1" fill="#e6c67a"/><text x="45" y="88" font-size="9" text-anchor="middle" fill="#6f6688">before</text><text x="155" y="88" font-size="9" text-anchor="middle" fill="#6f6688">after</text><text x="155" y="70" font-size="12" text-anchor="middle" fill="#c9a24c" font-weight="800">−100%</text></svg></div>
+        <div class="chart"><p class="t">Space required</p>
+          <svg viewBox="0 0 200 90" aria-hidden="true"><rect x="20" y="10" width="50" height="70" rx="6" fill="#f3c9d6"/><rect x="130" y="79" width="50" height="1" fill="#e6c67a"/><text x="45" y="88" font-size="9" text-anchor="middle" fill="#6f6688">before</text><text x="155" y="88" font-size="9" text-anchor="middle" fill="#6f6688">after</text><text x="155" y="70" font-size="12" text-anchor="middle" fill="#c9a24c" font-weight="800">−99.2%</text></svg></div>
+        <div class="chart"><p class="t">Rent paid, ever again</p>
+          <svg viewBox="0 0 200 90" aria-hidden="true"><circle cx="100" cy="45" r="34" fill="#dff5ec" stroke="#e6c67a" stroke-width="6"/><text x="100" y="50" font-size="16" text-anchor="middle" fill="#3c3552" font-weight="800">0%</text><text x="100" y="86" font-size="9" text-anchor="middle" fill="#6f6688">also: growth, 0%</text></svg></div>
+      </div>
+      <ul class="studies">
+        <li>MOM Institute for Compressed Living, <i>Outcomes in Residential Compression</i>, 2026. n = 1. The one is him.</li>
+        <li><i>Journal of Applied Smallness</i>, vol. 1, issue 1, peer reviewed by MOM.</li>
+        <li>Patient satisfaction: 100%. Patients surveyed: the same one. He was very small and said yes.</li>
+      </ul>
+      <p class="fine">Results shown are from a single enrolled patient and are not typical. There are no typical results. There is one result.</p>
+    </section>
+
+    <section aria-label="Side effects">
+      <h2><small>Important safety information</small>Side effects</h2>
+      <div class="side">
+        <b>Living Small is not for everyone.</b> Do not take Living Small if you are allergic to Living Small, or if you intend to be large again. Side effects may include: <b>irreversibility</b>; a balance that is not reduced by payment; a voice higher than you remember; being stepped on; cockroaches at a scale where they are the larger party; rot; a home that can be lifted by someone else; and a persistent feeling that this was the only option, which it was. Tell your provider if you experience <b>growth</b>, as growth is not covered. Residential Compression is financed through MOM Inc.; the size reduction is not reversible until the balance is paid in full, and the balance is structured so that it never is. <b>Crime on file: needing somewhere to live.</b> *Rent accrues in a currency you will be too small to earn. This advertisement sells nothing; there is no lease and never will be.
+      </div>
+    </section>
+
+    <section aria-label="Patient results">
+      <h2><small>Patient results</small>Look how little he needs.</h2>
+      <p>Lil Boyfriend took Living Small. Now he lives in one of these homes. And he waves.</p>
+      <div class="homes" id="listings">
+        <figure class="home">
+          <div class="frame">
+            <span class="ph">the pencil-door teepee</span>
+            <img class="cozy" src="assets/lilbf-teepee-cozy.jpg" alt="A composition-notebook teepee home with a tiny man waving from the pencil door" onerror="this.style.display='none'">
+            <img class="horror" src="assets/lilbf-teepee-horror.jpg" alt="" onerror="this.style.display='none'">
+            <span class="rx">Rx · $0/mo*</span>
+          </div>
+          <figcaption><b>The Teepee.</b> One notebook, one pencil door, a chimney you can see from the desk.</figcaption>
+        </figure>
+        <figure class="home">
+          <div class="frame">
+            <span class="ph">the shoebox living room</span>
+            <img class="cozy" src="assets/lilbf-shoebox-cozy.jpg" alt="A shoebox furnished as a living room with a smaller man waving from the rug" onerror="this.style.display='none'">
+            <img class="horror" src="assets/lilbf-shoebox-horror.jpg" alt="" onerror="this.style.display='none'">
+            <span class="rx">Rx · $0/mo*</span>
+          </div>
+          <figcaption><b>The Shoebox.</b> Phone for a television, bottle cap for a table, gum wrapper for a rug.</figcaption>
+        </figure>
+        <figure class="home">
+          <div class="frame">
+            <span class="ph">the mason-jar garden</span>
+            <img class="cozy" src="assets/lilbf-masonjar-cozy.jpg" alt="A mason jar greenhouse home with one carrot growing and an even smaller man waving" onerror="this.style.display='none'">
+            <img class="horror" src="assets/lilbf-masonjar-horror.jpg" alt="" onerror="this.style.display='none'">
+            <span class="rx">Rx · $0/mo*</span>
+            <span class="foodribbon">cuts food costs too</span>
+          </div>
+          <figcaption><b>The Mason Jar.</b> Grow your own carrot. One is plenty at that size.</figcaption>
+        </figure>
+      </div>
+      <p class="scale">Each home is smaller than the last. So is he. That is the treatment working.</p>
+    </section>
+
+    <footer class="foot">
+      <p class="cta">Answer the quiz on Wednesday. Every answer is a square inch he gets back.</p>
+      <span class="stamp">MOM INC · A MOM INC THERAPY</span>
+      <p class="legal">LIVING SMALL™ is a compliance program of MOM Inc. Tenants depicted are actual size. In-character participation only, never a sale. Size isn't everything to a goon; being below average size doesn't make you less than other goons.</p>
+    </footer>
+  </div>
+
+  <!-- the interactable: the shrinking shadow man, the tear, the wires -->
+  <div class="lb-tear" id="tear" aria-hidden="true">
+    <div class="wires"><div class="wire l"><span class="end"></span></div><div class="wire r"><span class="end"></span></div><span class="spark"></span></div>
+    <div class="tip" id="tearTip">two wires. click him again.</div>
+  </div>
+  <div class="lb-bolt" id="bolt" aria-hidden="true"></div>
+  <div class="lb-shade" id="shade" role="button" tabindex="-1" aria-label="A shrinking figure. Scroll down, then click him.">
+    <span class="hint" id="shadeHint">click me</span>
+    <svg viewBox="0 0 60 120" aria-hidden="true"><path class="body" d="M30 6 a10 10 0 1 1 0 20 a10 10 0 1 1 0-20 M18 30 h24 a4 4 0 0 1 4 4 v34 a3 3 0 0 1-6 0 v-28 h-2 v76 a4 4 0 0 1-8 0 v-44 h-2 v44 a4 4 0 0 1-8 0 v-76 h-2 v28 a3 3 0 0 1-6 0 v-34 a4 4 0 0 1 4-4 Z"/></svg>
+  </div>
+</article>
+<script>
+(() => {
+  const lb = document.getElementById("lb"); if (!lb) return;
+  const screen = lb.closest(".screen") || document.getElementById("screen");
+
+  // --- the estimator: MOM's cost-of-living tables (monthly, one adult, rent included) and the Residential Reality Adjustment, which makes it negative.
+  // ponytail: a hand table of cities and country defaults; a real cost-of-living API if this page ever earns one.
+  const CITY = { "las vegas":2900, "los angeles":3900, "new york":5200, "san francisco":5300, "chicago":3300, "houston":2700, "phoenix":2800, "miami":3600,
+    "seattle":4100, "denver":3400, "austin":3100, "boston":4600, "atlanta":3000, "london":4300, "toronto":3500, "vancouver":3600, "sydney":3900,
+    "melbourne":3500, "mexico city":1500, "tokyo":2600, "berlin":2700, "paris":3400, "dublin":3800 };
+  const COUNTRY = { "united states":3200, "usa":3200, "us":3200, "america":3200, "canada":3200, "united kingdom":3300, "uk":3300, "england":3300,
+    "australia":3500, "ireland":3400, "germany":2600, "france":2700, "japan":2400, "mexico":1300 };
+  const money = n => (n < 0 ? "−$" : "$") + Math.abs(Math.round(n)).toLocaleString("en-US");
+  document.getElementById("est").addEventListener("submit", e => {
+    e.preventDefault();
+    const f = new FormData(e.target);
+    const city = String(f.get("city")).trim().toLowerCase(), country = String(f.get("country")).trim().toLowerCase();
+    const income = Math.max(0, +f.get("income") || 0);
+    window.MBS && window.MBS.form && window.MBS.form("lilboyfriend", { city, country, income });
+    const monthly = CITY[city] || COUNTRY[country] || 2200;
+    const left = income - monthly * 12;                                   // what an honest estimator would say
+    const adjusted = Math.min(left, -1) - income * 0.31;                  // the Residential Reality Adjustment: never positive
+    document.getElementById("estYou").textContent = money(adjusted);
+    const years = income > 0 ? Math.ceil(431400 / Math.max(1, income * 0.05)) : Infinity;
+    document.getElementById("estSad").textContent =
+      `In ${f.get("city")} you end the year ${money(adjusted)} behind. Saving five percent, you own the median home in ${isFinite(years) ? years + " years" : "never"}. He owns his now. It is a shoebox.`;
+    document.getElementById("estResult").classList.add("show");
+  });
+
+  // --- the interactable: the shrinking shadow man
+  const shade = document.getElementById("shade"), hint = document.getElementById("shadeHint"), tip = document.getElementById("tearTip");
+  const tear = document.getElementById("tear"), bolt = document.getElementById("bolt");
+  const glass = screen.parentElement;                   // the shade, the tear and the bolt sit in the glass, above the scroller, so they never scroll away
+  if (glass) { glass.appendChild(tear); glass.appendChild(bolt); glass.appendChild(shade); }
+  const ratio = () => screen.scrollTop / Math.max(1, screen.scrollHeight - screen.clientHeight);
+  let stage = 0;   // 0 shrinking, 1 charged/at-bottom, 2 ripped, 3 wired/done
+
+  function onScroll() {
+    if (stage >= 2) return;
+    const r = ratio();
+    const sc = 1 - Math.min(r, 1) * 0.92;                // full height at the top, 8% at the bottom, shrinking toward the bottom corner
+    shade.style.transform = `scale(${sc.toFixed(3)})`;
+    if (r >= 0.96 && stage === 0) { stage = 1; shade.classList.add("charged"); hint.textContent = "click me"; }
+    else if (r < 0.9 && stage === 1) { stage = 0; shade.classList.remove("charged"); }
+  }
+  screen.addEventListener("scroll", onScroll, { passive: true }); onScroll();
+
+  function connect() { if (stage === 2) click(); }        // the wires in the hole are the second click (Ian)
+  function click() {
+    if (stage === 1) {                                    // walk across + rip the page
+      stage = 2; shade.classList.remove("charged"); shade.classList.add("walked");
+      setTimeout(() => { lb.classList.add("ripped"); tear.classList.add("ripped"); shade.classList.add("charged"); hint.textContent = "click the wires"; }, 900);
+    } else if (stage === 2) {                              // connect the wires -> horror flip + orange glitch
+      stage = 3; lb.classList.add("wired"); tear.classList.add("wired");
+      tip.textContent = "connected.";
+      // the gold shock: bolt up from the wires, he flashes gold, then goes to ash and crumbles
+      bolt.classList.add("go"); shade.classList.add("shock");
+      setTimeout(() => {
+        shade.classList.remove("shock"); shade.classList.add("ash");
+        for (let i = 0; i < 26; i++) { const a = document.createElement("i"); a.className = "ashbit"; a.style.left = (20 + Math.random() * 60) + "%"; a.style.top = (10 + Math.random() * 80) + "%";
+          a.style.setProperty("--ax", (Math.random() * 80 - 30).toFixed(0) + "px"); a.style.setProperty("--ay", (120 + Math.random() * 160).toFixed(0) + "px"); a.style.animationDelay = (Math.random() * .5).toFixed(2) + "s"; shade.appendChild(a); }
+      }, 750);
+      const restore = () => {                              // the purple wave: photos back, and him too
+        lb.classList.remove("breached"); tip.textContent = "he put it back. for now.";
+        shade.classList.remove("ash"); bolt.classList.remove("go"); shade.querySelectorAll(".ashbit").forEach(a => a.remove());
+      };
+      if (window.MBS && window.MBS.wave) window.MBS.wave({ after: 5000, restore });   // horror holds 5s, then the purple wave restores it
+      else setTimeout(restore, 5000);
+      lb.classList.add("breached");                        // listings -> horror
+      shade.classList.remove("charged"); hint.textContent = "";
+      if (window.MBS && window.MBS.unlock) window.MBS.unlock("lilboyfriend");
+    }
+  }
+  window.addEventListener("pagehide", () => { shade.remove(); tear.remove(); bolt.remove(); }, { once: true });
+  shade.addEventListener("click", e => { e.stopPropagation(); if (stage === 1) click(); });
+  tear.addEventListener("click", e => { e.stopPropagation(); connect(); });
+  shade.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); if (stage === 1) click(); else connect(); } });
+})();
+</script>

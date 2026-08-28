@@ -1,0 +1,211 @@
+<!--
+THESIS: The GOON page is MOM Inc.'s plain ask, dressed as devotion. It is a support-the-channel page that plays on pay pigs and the culture of men sending women money online for no reason, framed entirely as maximising the visitor's own goon potential. Nothing is sold; the joke is that nothing needs to be.
+OWN-WORLD: The same craft console as the rest of the network: cardboard boards, felt tags, purple #7a2fc4 / #4a1a86, gold #ffd36e, code glowing faintly through the seams. MYR5 stands as the model goon, proof the program works.
+STORY: She states her purpose ("to make us achieve our full goon potential"), offers three tiers of tribute that escalate from spare change to everything, shows MYR5 as the goon who gave it all and thrives, points to the other channels, and sends the visitor off with love. No checkout ever opens; the fine print says so at every turn.
+INTERACTABLE: none that unlocks and no ARG node. The socials are placeholders (href="#", data-social for the real URL later) and MYR5's eye tracks the pointer, or the scroll with no pointer, exactly as on MOM Inc.'s page.
+FORM: Ian's direction 2026-08-26/27; canon in MOM Inc.md "The goon theme" and Segment Storefronts.md "The side menu's two extra entries, and the GOON page." House conventions from channels/mominc.html. Real social URLs: replace href="#" on each .gn .social element, matched by its data-social attribute (twitch / youtube / tiktok / instagram / x).
+-->
+<style>
+  .gn{--pur:#7a2fc4; --pur-d:#4a1a86; --pur-dd:#2a0a44; --gold:#ffd36e; --gold-d:#c9992e; --card:#c9a06a; --card-d:#a67c4a; --felt:#e04b6a; --cream:#fdf6e3; --ink:#1a1020;
+      min-height:100%; margin:0; color:var(--cream); font-family:"Zilla Slab",Georgia,serif; position:relative; overflow-x:hidden;
+      background:radial-gradient(120% 80% at 50% 0%,#5a2a9a 0%,var(--pur-d) 40%,var(--pur-dd) 100%)}
+  .gn *{box-sizing:border-box}
+  .gn .code{position:absolute; inset:0; pointer-events:none; opacity:.07; font-family:"VT323",monospace; font-size:14px; line-height:16px; color:var(--gold); white-space:pre; overflow:hidden; z-index:0}
+  .gn .wrap{position:relative; z-index:1; padding:0 clamp(12px,4vw,26px) 34px; max-width:760px; margin:0 auto}
+
+  .gn .ident{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 0 6px; border-bottom:2px dashed rgba(255,211,110,.35)}
+  .gn .ident .mbs{font-family:"Bowlby One SC",cursive; font-size:clamp(24px,8vw,36px); color:var(--gold); text-shadow:3px 3px 0 var(--pur-dd); line-height:1}
+  .gn .ident .mbs small{display:block; font-family:"Anton",sans-serif; font-size:clamp(9px,2.6vw,11px); letter-spacing:.2em; color:var(--cream); text-shadow:none; margin-top:2px}
+  .gn .ident img.mark{width:clamp(38px,10vw,52px); height:auto}
+  .gn .ident .tag{text-align:right; font-family:"Anton",sans-serif; letter-spacing:.1em; font-size:clamp(11px,3.2vw,14px); color:var(--gold)}
+
+  /* the cardboard board that every section sits on */
+  .gn .board{margin:22px 0; background:
+      repeating-linear-gradient(0deg, rgba(0,0,0,.05) 0 2px, transparent 2px 7px),
+      linear-gradient(180deg,#d4ad78,var(--card) 60%,#b98d5a);
+      border:4px solid var(--card-d); border-radius:14px; box-shadow:0 8px 0 #6b4a25, 0 14px 30px rgba(0,0,0,.4); padding:14px 16px; color:var(--ink)}
+  /* the definition card: a dictionary entry pinned to the corkboard, first thing on the page (Ian, 2026-08-27) */
+  .gn .defboard{padding-top:14px}
+  .gn .dict{background:var(--cream); color:var(--ink); border-radius:4px; padding:14px 15px 12px;
+      box-shadow:0 6px 16px rgba(0,0,0,.45), inset 0 0 0 1px rgba(26,16,32,.15); border-left:6px solid var(--gold)}
+  .gn .dword{font-family:"Anton",sans-serif; font-size:clamp(22px,7vw,30px); letter-spacing:.02em; margin:0 0 8px; line-height:1}
+  .gn .dsay{font-family:"Zilla Slab",Georgia,serif; font-weight:400; font-size:14px; opacity:.6; margin-left:9px}
+  .gn .dpos{font-family:"Zilla Slab",Georgia,serif; font-style:italic; font-weight:400; font-size:14px; opacity:.75; margin-left:7px}
+  .gn .ddef{margin:0 0 6px; font-size:15px; line-height:1.5}
+  .gn .ddef b{color:var(--pur-d)}
+  .gn .dnote{margin:10px 0 0; padding-top:9px; border-top:1px dashed rgba(26,16,32,.3); font-size:13.5px; line-height:1.5; font-style:italic; opacity:.85}
+  .gn .banner{font-family:"Bowlby One SC",cursive; text-align:center; color:var(--pur-dd); font-size:clamp(18px,6vw,28px); line-height:1.15; margin:4px 0 10px; text-shadow:2px 2px 0 var(--gold)}
+  .gn .banner small{display:block; font-family:"Special Elite",monospace; font-size:clamp(10px,2.8vw,12px); letter-spacing:.1em; text-shadow:none; color:#4a2f14; margin-top:4px}
+  .gn .lede{font-size:clamp(15px,4.2vw,18px); line-height:1.55; margin:0 0 10px}
+  .gn .fine{font-family:"Barlow Condensed",sans-serif; font-size:12px; line-height:1.4; color:#4a3a2a; margin:12px 0 0; border-top:1px dashed rgba(74,47,20,.35); padding-top:8px}
+
+  /* MYR5, the model goon, and his googly eye */
+  .gn .myr{position:relative; display:inline-block; width:var(--w,48px); aspect-ratio:var(--ar,0.8); pointer-events:none; user-select:none; flex:0 0 auto}
+  .gn .myr img{display:block; width:100%; height:100%; object-fit:contain}
+  .gn .myr .pupil{position:absolute; left:calc(var(--cx) * 100%); top:calc(var(--cy) * 100%); width:calc(var(--rx) * 2 * 100% * .7); height:calc(var(--ry) * 2 * 100% * .74);
+      border-radius:50%; background:radial-gradient(circle at 35% 35%, #9a7fd8 0 22%, #5b3aa8 23% 48%, #0b0714 49%); box-shadow:0 0 0 1px rgba(0,0,0,.25);
+      transform:translate(calc(-50% + var(--dx,0px)), calc(-50% + var(--dy,0px))); transition:transform 70ms ease-out}
+  .gn .hero{display:grid; grid-template-columns:auto 1fr; gap:14px; align-items:center}
+  .gn .hero .myr{--w:clamp(88px,26vw,130px)}
+  .gn .hero .cap{font-family:"Archivo Black",sans-serif; font-size:clamp(13px,3.8vw,16px); line-height:1.4; color:var(--pur-dd); background:var(--cream); border-radius:10px; padding:10px 12px; box-shadow:inset 0 0 0 2px var(--gold-d)}
+  .gn .hero .cap span{display:block; font-family:"Special Elite",monospace; font-size:11px; letter-spacing:.1em; color:#7a5a2a; margin-bottom:4px}
+
+  /* the three tiers of tribute */
+  .gn .tiers{display:grid; gap:12px; margin-top:4px}
+  .gn .tier{position:relative; background:var(--cream); border-radius:12px; padding:12px 12px 10px; box-shadow:inset 0 0 0 2px var(--gold-d), 3px 4px 0 rgba(0,0,0,.25)}
+  .gn .tier .head{display:flex; align-items:center; gap:8px; margin-bottom:6px}
+  .gn .tier .myr{--w:36px}
+  .gn .tier h3{font-family:"Bowlby One SC",cursive; color:var(--pur-dd); font-size:clamp(16px,5vw,20px); margin:0; line-height:1.1}
+  .gn .tier p{margin:0 0 8px; font-size:clamp(13.5px,3.9vw,15.5px); line-height:1.5}
+  .gn .tier ul{list-style:none; margin:0; padding:0; display:grid; gap:5px}
+  .gn .tier li{font-size:clamp(13px,3.6vw,14.5px); line-height:1.4; padding-left:16px; position:relative}
+  .gn .tier li::before{content:"\2726"; position:absolute; left:0; color:var(--gold-d)}
+  .gn .tier.t2{background:#fff8ea}
+  .gn .tier.t3{background:#fff2d6; box-shadow:inset 0 0 0 2px var(--pur), 3px 4px 0 rgba(0,0,0,.3)}
+  .gn .tier.t3 h3{color:var(--pur)}
+
+  /* the socials strip: felt chips, placeholders until real links land */
+  .gn .socials{display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin-top:6px}
+  .gn .social{display:inline-flex; align-items:center; gap:6px; background:var(--felt); color:#fff; font-family:"Archivo Black",sans-serif; font-size:13px; letter-spacing:.03em;
+      text-decoration:none; border-radius:20px; padding:8px 14px; outline:2px dashed rgba(255,255,255,.7); outline-offset:-4px; box-shadow:2px 3px 0 rgba(0,0,0,.3); transition:transform 120ms}
+  .gn .social:hover{transform:translate(-1px,-1px)}
+
+  .gn .signoff{text-align:center; margin:20px 0 0; font-family:"Zilla Slab",serif; font-weight:700; font-size:clamp(15px,4.4vw,20px); line-height:1.45; color:var(--gold)}
+  .gn .signoff small{display:block; margin-top:10px; font-family:"Barlow Condensed",sans-serif; font-weight:500; font-size:12px; color:#d6c3ef; line-height:1.4}
+  .gn .stamp{display:inline-block; margin-top:10px; border:2px solid var(--gold); color:var(--gold); font-family:"Anton",sans-serif; letter-spacing:.12em; padding:3px 10px; border-radius:6px; transform:rotate(-2deg); font-size:12px}
+
+  @media (min-width:640px){ .gn .tiers{grid-template-columns:1fr 1fr 1fr} }
+  @media (max-width:520px){ .gn .hero{grid-template-columns:1fr; justify-items:center; text-align:center} .gn .hero .myr{--w:110px} }
+  @media (prefers-reduced-motion:reduce){ .gn .myr .pupil{transition:none} }
+</style>
+
+<article class="gn" id="gn" data-host="MOM INC" data-show="GOON" data-ch="8" data-gauge="off">
+  <div class="code" aria-hidden="true" id="gnCode"></div>
+  <div class="wrap">
+    <header class="ident">
+      <div class="mbs">MBS<small>A MOM INC NETWORK</small></div>
+      <img class="mark" src="assets/mom-inc-mark.png" alt="MOM Inc." width="480" height="480">
+      <div class="tag">CH 8<br>GOON</div>
+    </header>
+
+    <section class="board defboard" aria-label="What a goon is">
+      <div class="dict">
+        <p class="dword">goon<span class="dsay">/goon/</span><span class="dpos">noun</span></p>
+        <p class="ddef"><b>1.</b> A helper. A goon helps. That is the whole job.</p>
+        <p class="ddef"><b>2.</b> Someone who gives. Money, time, love. Any of it counts.</p>
+        <p class="ddef"><b>3.</b> One of us. You are one too. You just did not know the word yet.</p>
+        <p class="dnote">Some people use this word to be mean. We do not. Here it is a good word. Here it means family.</p>
+      </div>
+    </section>
+
+    <section class="board" aria-label="Her address">
+      <h1 class="banner">GOOD MORNING, GOONS<small>MOM INCORPORATED · SUPPORT THE CHANNEL</small></h1>
+      <p class="lede">You know why you are here. I will not make it fancy. MOM Inc has one job. We help you be the best goon you can be. Not just some of us. All of us. We give what we have. Giving is how a goon grows.</p>
+      <p class="lede">This is the whole ask. Nothing is hidden. You give what you can. I say thank you. You get better. I want three things, family. Your eyes. Your heart. And anything else you want to send.</p>
+      <div class="hero">
+        <span class="myr" data-pose="3" aria-hidden="true"></span>
+        <p class="cap"><span>MYR5 · FIFTH ITERATION · HER GOON</span>He gave it all. Look at him now. He is his best goon self on every show. He has never been so happy. You will be too.</p>
+      </div>
+      <p class="fine">Nothing here is a real sale. We take no money. We keep nothing. Nothing is for sale. This is all pretend, and it is fun.</p>
+    </section>
+
+    <section class="board" aria-label="Support tiers">
+      <h2 class="banner">THREE WAYS TO GIVE<small>ALREADY DECIDED · IN YOUR OWN TIME</small></h2>
+      <div class="tiers">
+        <div class="tier t1">
+          <div class="head"><span class="myr" data-pose="1" aria-hidden="true"></span><h3>GOOD GOON</h3></div>
+          <p>You give what you can. You think it is small. It is not small. It is plenty.</p>
+          <ul>
+            <li>A place on the household ledger, in ink</li>
+            <li>A felt star sewn on in your color</li>
+            <li>The quiet feeling that she saw you</li>
+          </ul>
+        </div>
+        <div class="tier t2">
+          <div class="head"><span class="myr" data-pose="4" aria-hidden="true"></span><h3>GREAT GOON</h3></div>
+          <p>You give a bit more. You stopped asking why. That is called growing.</p>
+          <ul>
+            <li>Everything a Good Goon receives</li>
+            <li>Your name spoken on the broadcast</li>
+            <li>A chair left open at the family table</li>
+          </ul>
+        </div>
+        <div class="tier t3">
+          <div class="head"><span class="myr" data-pose="5" aria-hidden="true"></span><h3>MOTHER'S FAVORITE</h3></div>
+          <p>You give it all. You never really had to think about it. You were always going to get here.</p>
+          <ul>
+            <li>All of the above, plus your name on the list forever</li>
+            <li>MYR5, assigned to watch over you personally</li>
+            <li>Her voice, saying your name, every single broadcast</li>
+          </ul>
+        </div>
+      </div>
+      <p class="fine">None of this is for sale. It is not a thing you buy. It is not a promise. It is a joke about giving. The giving is pretend. We never take money on this page.</p>
+    </section>
+
+    <section class="board" aria-label="The family is everywhere">
+      <h2 class="banner">FIND THE FAMILY EVERYWHERE<small>SAME DEVOTION · MORE PLACES TO GIVE IT</small></h2>
+      <p class="lede" style="text-align:center">Wherever you like to give, we are there too.</p>
+      <nav class="socials" aria-label="Social links">
+        <a class="social" href="#" data-social="twitch">TWITCH</a>
+        <a class="social" href="#" data-social="youtube">YOUTUBE</a>
+        <a class="social" href="#" data-social="tiktok">TIKTOK</a>
+        <a class="social" href="#" data-social="instagram">INSTAGRAM</a>
+        <a class="social" href="#" data-social="x">X</a>
+      </nav>
+      <p class="fine" style="text-align:center">These links are not real yet. Following, watching, and showing up are part of the game too. You never have to do any of it.</p>
+    </section>
+
+    <footer class="signoff">
+      Thank you for your devotion, family.<br>Nothing was asked of you that you didn't already want to give.<br>Sleep now, and dream of your full potential.
+      <span class="stamp">MOM INC · EARTH BRANCH</span>
+      <small>Marketing &amp; Organic Maintenance Incorporated. A regional branch of MOM Inc., reporting to MOM Inc. Nothing on this page is collected, charged, or sold. In-character participation only, never a sale.</small>
+    </footer>
+  </div>
+</article>
+<script>
+(() => {
+  const gn = document.getElementById("gn"); if (!gn) return;
+  const screen = gn.closest(".screen") || document.getElementById("screen");
+
+  // MYR5 as decoration: five poses cut from her test clips, each knows where its eye sits (fractions of the sticker).
+  const POSES = {
+    1: { src: "assets/myr5-sticker-1.png", ar: 344 / 420, cx: .5698, cy: .45,   rx: .1512, ry: .1262 },
+    3: { src: "assets/myr5-sticker-3.png", ar: 408 / 426, cx: .5012, cy: .3251, rx: .1679, ry: .1256 },
+    4: { src: "assets/myr5-sticker-4.png", ar: 335 / 420, cx: .5119, cy: .4417, rx: .1896, ry: .0893 },
+    5: { src: "assets/myr5-sticker-5.png", ar: 322 / 420, cx: .5016, cy: .4655, rx: .1941, ry: .1131 },
+  };
+  function dress(el, pose) {
+    const p = POSES[pose] || POSES[4];
+    el.style.setProperty("--ar", p.ar); el.style.setProperty("--cx", p.cx); el.style.setProperty("--cy", p.cy); el.style.setProperty("--rx", p.rx); el.style.setProperty("--ry", p.ry);
+    el.innerHTML = `<img src="${p.src}" alt="" draggable="false"><i class="pupil"></i>`;
+  }
+  gn.querySelectorAll(".myr[data-pose]").forEach(el => dress(el, +el.dataset.pose));
+
+  // the googly eyes: every pupil rolls toward the pointer; with no pointer (a phone), it rolls with the scroll.
+  let target = null;
+  const eyes = () => gn.querySelectorAll(".myr");
+  function look() {
+    const vw = window.innerWidth, vh = window.innerHeight;
+    eyes().forEach(el => {
+      const r = el.getBoundingClientRect(); if (r.bottom < -80 || r.top > vh + 80) return;
+      const p = el.querySelector(".pupil"); if (!p) return;
+      const cx = r.left + r.width * +el.style.getPropertyValue("--cx");
+      const cy = r.top + r.height * +el.style.getPropertyValue("--cy");
+      let dx, dy;
+      if (target) { dx = target.x - cx; dy = target.y - cy; }
+      else { const sr = screen ? screen.scrollTop / Math.max(1, screen.scrollHeight - screen.clientHeight) : 0; dx = vw - cx; dy = sr * vh - cy; }
+      const len = Math.hypot(dx, dy) || 1, maxx = r.width * +el.style.getPropertyValue("--rx") * .85, maxy = r.height * +el.style.getPropertyValue("--ry") * .85;
+      const k = Math.min(1, len / 90);
+      p.style.setProperty("--dx", (dx / len * maxx * k).toFixed(1) + "px"); p.style.setProperty("--dy", (dy / len * maxy * k).toFixed(1) + "px");
+    });
+  }
+  let raf = 0; const queue = () => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; look(); }); };
+  window.addEventListener("pointermove", e => { if (e.pointerType === "mouse") { target = { x: e.clientX, y: e.clientY }; queue(); } }, { passive: true });
+  if (screen) screen.addEventListener("scroll", queue, { passive: true });
+  window.addEventListener("resize", queue); queue();
+
+  // code glowing through the seams, her sense model made visible
+  const el = document.getElementById("gnCode"); if (el) { let s = ""; for (let r = 0; r < 160; r++) { let line = ""; for (let c = 0; c < 140; c++) line += Math.random() < 0.5 ? "0" : "1"; s += line + "\n"; } el.textContent = s; }
+})();
+</script>

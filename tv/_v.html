@@ -1,0 +1,20 @@
+<!doctype html><meta charset="utf-8"><iframe id="f" src="/?ch=sag" style="width:1400px;height:900px;border:0"></iframe>
+<script>
+const f=document.getElementById("f"); const log=[];
+f.addEventListener("load",()=>{ const w=f.contentWindow, d=f.contentDocument;
+ w.addEventListener("error",e=>log.push("ERR:"+e.message));
+ setTimeout(()=>{ d.getElementById("tv").dataset.state="on";
+  setTimeout(()=>{
+    const sc=d.getElementById("screen");
+    // buy every door: for each panel, click it (peek), then click bid three times
+    const doors=[...d.querySelectorAll('[class*="door"],[data-door]')];
+    log.push("doors:"+doors.length);
+    const leg=d.querySelector('[id*="leg"],[class*="leg"]');
+    log.push("leg:"+(leg?leg.className||leg.id:"none"));
+    const sag=d.querySelector('[class*="sagcell"],[id*="sag"],[class*="sag-card"]');
+    log.push("sagcell:"+(sag?(sag.id||sag.className):"none"));
+    const inv=d.querySelector('[class*="inv"]');
+    log.push("inv:"+(inv?(inv.id||inv.className):"none")+" parent:"+(inv&&inv.parentElement?inv.parentElement.className:"-"));
+    document.title=log.join(" | ").slice(0,400);
+  },800); },1600); });
+</script>

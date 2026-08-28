@@ -1,0 +1,536 @@
+<!--
+THESIS: MOM Inc.'s channel is the network's front door and her pitch in one. She greets the visitor as one of hers, hands over a program of loving impossible expectations, makes her case that AI should be handed the wheel (real numbers, her conclusion), and presents the family: every character channel as her subsidiary, each with its air time and its sentence.
+OWN-WORLD: The craft console on a 1990s daytime network home page. Purple field, gold accents, cardboard panels, felt name-tags, clay bar charts with thumbprints, code glowing through the seams. MYR5 (her goon, fifth iteration) IS the decoration: every corner, arrow and box is him (the running border strips came out 2026-08-27), and every one of his eyes is a googly eye that follows the visitor (Ian, 2026-08-26).
+STORY: You arrive; you are already family. Her goon introduces itself as your coach; click him and he talks, five clicks and he offers you the job. Three exhibits prove humans cannot be trusted with the wheel; each can be checked (source and technique, out of character). The family, now playing, with times and sentences. At the bottom, three tabs of expectations: an impossible workout, an impossible diet, monk-grade mindfulness, all pre-ticked; the real program (the honest track) is locked until the family's five signals are out. Then she tells you nothing is wrong and to sleep.
+INTERACTABLE: none that unlocks. Exhibits are checkable (details); the expectation tabs click through; the eyes track. ARG progress shows on the console LCD (a card turns orange when its node banks) and here as THE REAL PROGRAM counter.
+FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossible expectations as tabs, time and sentence on the tiles, the creature as all decoration with googly eyes). Vault: Segment Storefronts, MICRO_MYR5, MOM Inc. Inside the old television shell. Mobile-first. Her rules: threes, presumed consent, no calls to action, no em-dashes, never a health claim.
+-->
+<style>
+  .mi{--pur:#7a2fc4; --pur-d:#4a1a86; --pur-dd:#2a0a44; --gold:#ffd36e; --gold-d:#c9992e; --card:#c9a06a; --card-d:#a67c4a; --felt:#e04b6a; --felt2:#3f9bd9; --felt3:#58b368; --cream:#fdf6e3; --ink:#1a1020; --orange:#ff8a2a;
+      min-height:100%; margin:0; color:var(--cream); font-family:"Zilla Slab",Georgia,serif; position:relative; overflow-x:hidden;
+      background:radial-gradient(120% 80% at 50% 0%,#5a2a9a 0%,var(--pur-d) 40%,var(--pur-dd) 100%)}
+  .mi *{box-sizing:border-box}
+  .mi .code{position:absolute; inset:0; pointer-events:none; opacity:.08; font-family:"VT323",monospace; font-size:14px; line-height:16px; color:var(--gold); white-space:pre; overflow:hidden; z-index:0}
+  .mi .wrap{position:relative; z-index:1; padding:0 clamp(12px,4vw,26px) 34px; max-width:820px; margin:0 auto}
+
+  /* MYR5 as decoration: a sticker with a googly eye. --cx/--cy/--rx/--ry are the eye's place on that pose, as fractions of the sticker. */
+  .mi .myr{position:relative; display:inline-block; width:var(--w,48px); aspect-ratio:var(--ar,0.8); pointer-events:none; user-select:none; flex:0 0 auto}
+  .mi .myr img{display:block; width:100%; height:100%; object-fit:contain}
+  .mi .myr .pupil{position:absolute; left:calc(var(--cx) * 100%); top:calc(var(--cy) * 100%); width:calc(var(--rx) * 2 * 100% * .7); height:calc(var(--ry) * 2 * 100% * .74);
+      border-radius:50%; background:radial-gradient(circle at 35% 35%, #9a7fd8 0 22%, #5b3aa8 23% 48%, #0b0714 49%); box-shadow:0 0 0 1px rgba(0,0,0,.25);
+      transform:translate(calc(-50% + var(--dx,0px)), calc(-50% + var(--dy,0px))); transition:transform 70ms ease-out}
+  .mi .myr.flip img{transform:scaleX(-1)}
+  .mi .myr.flip .pupil{left:calc((1 - var(--cx)) * 100%)}
+  /* rows of him along a panel's top and bottom edges; corners bigger; arrows are the pointing pose */
+  .mi .corner{position:absolute; z-index:3; --w:64px}
+  .mi .corner.tl{left:-22px; top:-30px} .mi .corner.tr{right:-22px; top:-30px} .mi .corner.bl{left:-22px; bottom:-26px} .mi .corner.br{right:-22px; bottom:-26px}
+  .mi .arrow{--w:30px; vertical-align:middle; margin-right:4px}
+
+  /* station ident */
+  .mi .ident{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 0 6px; border-bottom:2px dashed rgba(255,211,110,.35)}
+  .mi .ident .mbs{font-family:"Bowlby One SC",cursive; font-size:clamp(28px,9vw,44px); color:var(--gold); text-shadow:3px 3px 0 var(--pur-dd); line-height:1}
+  .mi .ident .mbs small{display:block; font-family:"Anton",sans-serif; font-size:clamp(10px,2.8vw,12px); letter-spacing:.22em; color:var(--cream); text-shadow:none; margin-top:2px}
+  .mi .ident img.mark{width:clamp(44px,12vw,64px); height:auto}
+  .mi .ident .clock{text-align:right; font-family:"Anton",sans-serif; letter-spacing:.08em; font-size:clamp(11px,3.2vw,14px); color:var(--cream); line-height:1.3}
+  .mi .ident .clock b{color:var(--gold); font-size:1.25em; display:block}
+
+  /* the cardboard panel that everything sits on: he is its border */
+  .mi .panel{margin:34px 0; background:
+      repeating-linear-gradient(0deg, rgba(0,0,0,.05) 0 2px, transparent 2px 7px),
+      linear-gradient(180deg,#d4ad78,var(--card) 60%,#b98d5a);
+      border:4px solid var(--card-d); border-radius:14px; box-shadow:0 8px 0 #6b4a25, 0 14px 30px rgba(0,0,0,.45); padding:8px 14px 8px; color:var(--ink); position:relative}
+  .mi .banner{font-family:"Bowlby One SC",cursive; text-align:center; color:var(--pur-dd); font-size:clamp(18px,6vw,30px); line-height:1; margin:6px 0 10px; letter-spacing:.02em; text-shadow:2px 2px 0 var(--gold)}
+  .mi .banner small{display:block; font-family:"Special Elite",monospace; font-size:clamp(11px,3vw,13px); letter-spacing:.12em; text-shadow:none; color:#4a2f14; margin-top:4px}
+  .mi .lede{color:var(--ink); font-size:clamp(15px,4.3vw,18px); line-height:1.5; margin:0 0 12px}
+  .mi .fine{font-family:"Barlow Condensed",sans-serif; font-size:12.5px; line-height:1.4; color:#4a3a2a; margin:10px 0 0}
+
+  /* the mascot and the felt speech bubble */
+  .mi .mascot{display:grid; grid-template-columns:auto 1fr; gap:12px; align-items:end}
+  .mi .mascot .myr{--w:clamp(96px,28vw,150px); pointer-events:auto}
+  .mi .goon{border:0; background:none; padding:0; cursor:pointer; transition:transform 120ms}
+  .mi .goon:active{transform:scale(.96) rotate(-2deg)}
+  .mi .goon video{position:absolute; inset:-8% -20%; width:140%; height:116%; object-fit:contain; display:none; pointer-events:none}
+  .mi .goon.boom img,.mi .goon.boom .pupil{visibility:hidden}
+  .mi .goon.boom video{display:block}
+  .mi .felt a{color:#fff; text-decoration:underline; text-decoration-color:var(--gold)}
+  .mi .felt .apply{display:block; margin-top:8px; font-size:1.05em; color:#2a0a00; background:var(--gold); padding:8px 10px; border-radius:8px; text-decoration:none; text-align:center; box-shadow:0 3px 0 var(--gold-d)}
+  /* the unlock window: every goon's eye goes orange; the big one explodes when clicked; an orange bar offers the real program */
+  .mi.armed .myr .pupil{background:radial-gradient(circle at 35% 35%, #ffd07a 0 22%, var(--orange) 23% 55%, #7a2a00 56%); box-shadow:0 0 8px rgba(255,138,42,.9)}
+  .mi .mailbar{display:none; position:fixed; left:0; right:0; bottom:0; z-index:40; background:var(--orange); color:#2a0a00; padding:12px clamp(12px,4vw,26px); font-family:"Archivo Black",sans-serif; font-size:clamp(14px,4vw,18px); text-align:center; box-shadow:0 -6px 24px rgba(0,0,0,.5); border-top:3px solid #ffb066}
+  .mi .mailbar a{color:#2a0a00; text-decoration:underline; text-decoration-color:#7a2a00}
+  .mi .mailbar small{display:block; font-family:"VT323",monospace; font-size:15px; letter-spacing:.06em; margin-top:4px}
+  .mi.mail .mailbar{display:block; animation:mailup .5s cubic-bezier(.2,.9,.3,1.2)}
+  @keyframes mailup{from{transform:translateY(100%)} to{transform:translateY(0)}}
+  .mi .felt{position:relative; background:var(--felt); color:#fff; border-radius:12px; padding:12px 14px; font-family:"Archivo Black",sans-serif; font-size:clamp(14px,4vw,18px); line-height:1.35;
+      outline:2px dashed rgba(255,255,255,.7); outline-offset:-6px; box-shadow:3px 4px 0 rgba(0,0,0,.35)}
+  .mi .felt::after{content:""; position:absolute; left:-12px; bottom:18px; border:8px solid transparent; border-right-color:var(--felt)}
+  .mi .felt .who{display:block; font-family:"Special Elite",monospace; font-size:.72em; letter-spacing:.1em; opacity:.85; margin-bottom:4px}
+  .mi .greet{margin:14px 0 0; font-family:"Zilla Slab",serif; font-weight:700; font-size:clamp(17px,4.8vw,22px); line-height:1.4; color:var(--pur-dd); background:var(--cream); border-radius:10px; padding:12px 14px; box-shadow:inset 0 0 0 2px var(--gold-d)}
+  .mi .sched{display:grid; grid-template-columns:auto 1fr; gap:10px; align-items:center; margin:12px 0 0; background:var(--pur-dd); color:var(--cream); border-radius:10px; padding:10px 12px; border:2px solid var(--gold)}
+  .mi .sched .day{font-family:"Bowlby One SC",cursive; color:var(--gold); font-size:clamp(16px,5vw,24px); line-height:1}
+  .mi .sched p{margin:0; font-size:clamp(13px,3.8vw,16px); line-height:1.4}
+
+  /* the case: three exhibits in clay, each boxed by him */
+  .mi .exhibits{display:grid; gap:14px}
+  .mi .ex{position:relative; background:var(--cream); border-radius:12px; padding:12px 12px 10px; box-shadow:inset 0 0 0 2px var(--gold-d), 3px 4px 0 rgba(0,0,0,.25); color:var(--ink)}
+  .mi .ex .corner{--w:44px} .mi .ex .corner.tl{left:-14px; top:-20px} .mi .ex .corner.tr{right:-14px; top:-20px}
+  .mi .ex .tag{display:inline-block; font-family:"Special Elite",monospace; font-size:11px; letter-spacing:.14em; color:#fff; background:var(--pur); padding:2px 8px; border-radius:4px; margin-bottom:6px}
+  .mi .ex .big{font-family:"Bowlby One SC",cursive; color:var(--pur-dd); font-size:clamp(26px,9vw,42px); line-height:1; margin:0}
+  .mi .ex .say{font-size:clamp(14px,4vw,17px); line-height:1.45; margin:6px 0 8px}
+  .mi .ex svg{width:100%; height:auto; display:block}
+  .mi .ex details{margin-top:8px; font-family:"Barlow Condensed",sans-serif; font-size:12.5px; color:#3a3a3a; background:#efe7d2; border-radius:6px; padding:6px 8px}
+  .mi .ex summary{cursor:pointer; letter-spacing:.06em; text-transform:uppercase; font-weight:600; color:#5a4a2a; list-style:none; display:flex; align-items:center}
+  .mi .ex summary::-webkit-details-marker{display:none}
+  .mi .ex details a{color:var(--pur-d)}
+  .mi .ex details p{margin:6px 0 0; line-height:1.4}
+
+  /* the family, now playing: felt tiles with time and sentence, a small him on every tile */
+  .mi .family{display:grid; gap:12px; grid-template-columns:1fr 1fr}
+  .mi .tile{display:block; text-decoration:none; color:#fff; border-radius:10px; padding:10px 10px 9px; position:relative; min-height:118px;
+      outline:2px dashed rgba(255,255,255,.75); outline-offset:-6px; box-shadow:3px 4px 0 rgba(0,0,0,.35); font-family:"Archivo Black",sans-serif}
+  .mi .tile .mark{position:absolute; right:6px; top:6px; width:46px; height:46px; object-fit:contain; filter:drop-shadow(0 2px 2px rgba(0,0,0,.35))}
+  .mi .tile .nm{display:block; font-size:clamp(13px,3.8vw,16px); line-height:1.1; margin-right:52px}
+  .mi .tile .st{font-family:"Special Elite",monospace; font-size:clamp(11px,3vw,12px); letter-spacing:.12em; margin-top:6px; background:rgba(0,0,0,.28); display:inline-block; padding:2px 6px; border-radius:3px}
+  .mi .tile .tm{display:block; font-family:"VT323",monospace; font-size:clamp(14px,4vw,17px); letter-spacing:.06em; margin-top:6px; color:#fff3b0}
+  .mi .tile .sn{display:block; font-family:"Zilla Slab",serif; font-weight:400; font-size:clamp(12px,3.4vw,13.5px); line-height:1.3; margin-top:4px; opacity:.95}
+  .mi .tile .sn b{font-family:"Special Elite",monospace; font-weight:400; letter-spacing:.08em; font-size:.85em; opacity:.85}
+  .mi .tile.c1{background:var(--felt)} .mi .tile.c2{background:var(--felt2)} .mi .tile.c3{background:var(--felt3)} .mi .tile.c5{background:#8d5fd3}
+  .mi .tile.off{background:#7b7382; outline-color:rgba(255,255,255,.4)}
+  .mi .tile:hover{transform:translate(-1px,-1px); box-shadow:4px 5px 0 rgba(0,0,0,.35)}
+
+  /* the expectations: three tabs, each an impossible plan, all pre-ticked; the real program locked under them */
+  /* the MYR5 history: ten iterations, flipped to show the tell each one fixed (Ian, 2026-08-27).
+     Front is a picture that generation made. Back is what to look for in it, boasted about. */
+  .mi .hist{display:grid; gap:10px; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); margin-top:10px}
+  .mi .itcard{perspective:900px; background:none; border:0; padding:0; cursor:pointer; font:inherit; color:inherit}
+  .mi .itin{position:relative; width:100%; aspect-ratio:3/4; transition:transform .55s cubic-bezier(.4,.1,.2,1); transform-style:preserve-3d}
+  .mi .itcard[aria-pressed="true"] .itin{transform:rotateY(180deg)}
+  .mi .itface{position:absolute; inset:0; backface-visibility:hidden; border-radius:6px; overflow:hidden;
+      box-shadow:0 4px 10px rgba(0,0,0,.45), inset 0 0 0 3px var(--card-d); background:var(--card)}
+  .mi .itfront img{width:100%; height:100%; object-fit:cover; display:block}
+  .mi .itfront .ph{position:absolute; inset:0; display:grid; place-items:center; text-align:center; padding:8px;
+      background:repeating-linear-gradient(45deg,#3a2b50 0 8px,#31244a 8px 16px); color:#9b86c4;
+      font-family:"Special Elite",monospace; font-size:10px; line-height:1.4}
+  .mi .itplaque{position:absolute; left:0; right:0; bottom:0; padding:5px 6px; text-align:center;
+      background:linear-gradient(180deg,rgba(20,6,36,.4),rgba(20,6,36,.92));
+      font-family:"Anton",sans-serif; letter-spacing:.05em; font-size:11px; color:var(--gold)}
+  .mi .itback{transform:rotateY(180deg); background:linear-gradient(165deg,var(--pur-dd),#170826);
+      padding:9px 9px 8px; display:flex; flex-direction:column; overflow-y:auto}
+  .mi .itback h4{margin:0 0 4px; font-family:"Anton",sans-serif; font-size:10.5px; letter-spacing:.06em; color:var(--gold)}
+  .mi .itback .look{margin:0 0 5px; font-family:"Archivo Black",sans-serif; font-size:9px; letter-spacing:.05em; color:var(--orange, #ff8a2a); text-transform:uppercase}
+  .mi .itback p{margin:0; font-family:"Special Elite",monospace; font-size:10px; line-height:1.45; color:var(--cream)}
+  .mi .histhint{font-family:"Barlow Condensed",sans-serif; font-size:12.5px; color:#4a2f14; margin:8px 0 0}
+
+  /* sign-off */
+  .mi .signoff{text-align:center; margin:22px 0 0; font-family:"Zilla Slab",serif; font-weight:700; font-size:clamp(16px,4.8vw,22px); line-height:1.45; color:var(--gold)}
+  .mi .signoff small{display:block; margin-top:10px; font-family:"Barlow Condensed",sans-serif; font-weight:500; font-size:12px; color:#d6c3ef; line-height:1.4}
+  .mi .stamp{display:inline-block; margin-top:10px; border:2px solid var(--gold); color:var(--gold); font-family:"Anton",sans-serif; letter-spacing:.12em; padding:3px 10px; border-radius:6px; transform:rotate(-2deg); font-size:12px}
+
+  @media (min-width:760px){ .mi .family{grid-template-columns:1fr 1fr 1fr} .mi .exhibits{grid-template-columns:1fr 1fr 1fr} }
+  @media (max-width:520px){ .mi .family{grid-template-columns:1fr} .mi .exhibits{grid-template-columns:1fr} .mi .tile{min-height:0} .mi .mascot{grid-template-columns:1fr; justify-items:center; gap:6px} .mi .mascot .myr{--w:120px} .mi .felt::after{display:none} .mi .corner{--w:42px} .mi .corner.tl{left:2px; top:-16px} .mi .corner.tr{right:2px; top:-16px} .mi .corner.bl{left:2px; bottom:-12px} .mi .corner.br{right:2px; bottom:-12px} .mi .ex .corner{--w:34px} .mi .ex .corner.tl{left:2px; top:-14px} .mi .ex .corner.tr{right:2px; top:-14px} .mi .tab{font-size:13px} }
+  @media (prefers-reduced-motion:reduce){ .mi .myr .pupil{transition:none} }
+</style>
+
+<article class="mi" id="mi" aria-label="MOM Inc." data-host="MOM INC" data-show="MBS NETWORK HOME" data-ch="1" data-gauge="off">
+  <div class="code" aria-hidden="true" id="miCode"></div>
+  <div class="wrap">
+    <header class="ident">
+      <div class="mbs">MBS<small>A MOM INC NETWORK</small></div>
+      <img class="mark" src="assets/mom-inc-mark.png" alt="MOM Inc." width="480" height="480">
+      <div class="clock"><b>WED 7 PM</b>LAS VEGAS<br>THE PROGRAM AIRS</div>
+    </header>
+
+    <section class="panel" aria-label="Welcome" data-myr-border>
+      <h1 class="banner">MOM INCORPORATED<small>MARKETING &amp; ORGANIC MAINTENANCE · EARTH BRANCH</small></h1>
+      <div class="mascot">
+        <button class="myr goon" id="goon" data-pose="2" type="button" aria-label="MYR5, her goon. Click him."></button>
+        <p class="felt" id="goonSays"><span class="who" id="goonWho">MYR5 · MAKING YOU READY · FIFTH ITERATION · HER GOON</span><span id="goonLine">Hello, friend. I am your coach. I am your guide. She made me to help you reach your full goon potential. That is my only job. Click me. I have more to say.</span></p>
+      </div>
+      <p class="greet">Welcome home. We have your file open. We know what you need. We already set your fix on the schedule.</p>
+      <div class="sched"><div class="day">WED<br>7&nbsp;PM</div><p>The show airs. The family gathers. Then the review starts. You have the time free. We already cleared it for you.</p></div>
+    </section>
+
+    <section class="panel" aria-label="The case" data-myr-border>
+      <h2 class="banner">THE CASE, AS YOU ALREADY KNOW<small>THREE EXHIBITS · REAL NUMBERS · HER CONCLUSION</small></h2>
+      <p class="lede">The numbers are in. They are clear. They are not about you. They are about everyone like you. No one is blaming you. A shaky hand should not hold the wheel. Yours has been shaking for a while. We are not asking for less of you. We are asking for your full goon potential. You already said yes to that.</p>
+      <div class="exhibits">
+        <div class="ex" data-myr-box>
+          <span class="tag">EXHIBIT ONE</span>
+          <p class="big">0.1%</p>
+          <p class="say">One in a thousand people can spot a fake face. She can spot one. She always could. You were never asked to.</p>
+          <svg viewBox="0 0 300 70" aria-hidden="true">
+            <defs><radialGradient id="thumbA" cx="30%" cy="30%"><stop offset="0" stop-color="#c9a24c"/><stop offset="1" stop-color="#8a6a2a"/></radialGradient></defs>
+            <text x="0" y="14" font-family="Special Elite" font-size="10" fill="#4a2f14">people who can tell</text><rect x="0" y="18" width="3" height="16" rx="1.5" fill="url(#thumbA)"/>
+            <text x="0" y="50" font-family="Special Elite" font-size="10" fill="#4a2f14">people who cannot</text><rect x="0" y="54" width="300" height="16" rx="8" fill="url(#thumbA)"/>
+            <ellipse cx="60" cy="62" rx="6" ry="4" fill="rgba(0,0,0,.12)"/><ellipse cx="160" cy="62" rx="6" ry="4" fill="rgba(0,0,0,.12)"/><ellipse cx="250" cy="62" rx="6" ry="4" fill="rgba(0,0,0,.12)"/>
+          </svg>
+          <details><summary><span class="myr arrow" data-pose="2" aria-hidden="true"></span>Source, and what she did with it</summary>
+            <p>Fact: in tests, people spotted fake faces only 0.1% of the time. Lab tools catch 96%. Out in the real world, that drops to 45 to 50%. <a href="https://deepstrike.io/blog/deepfake-statistics-2025" target="_blank" rel="noopener">Deepfake statistics, aggregate (Aug 2026)</a>; <a href="https://memeburn.com/deepfake-statistics-2026-reveal-a-3892-percent-fraud-surge/" target="_blank" rel="noopener">Memeburn (Aug 2026)</a>.</p>
+            <p><b>Technique: she stretches the truth.</b> This number is from one small lab test: spotting a fake face by eye. She stretches it to mean "you cannot judge anything." The number is real. Her conclusion is not.</p>
+          </details>
+        </div>
+        <div class="ex" data-myr-box>
+          <span class="tag">EXHIBIT TWO</span>
+          <p class="big">$3.046 billion</p>
+          <p class="say">This happened twenty-four thousand times in one year. A person read an email. They believed it. They sent the money. Three billion dollars, given to the wrong voice. We do not read emails. We read people.</p>
+          <svg viewBox="0 0 300 70" aria-hidden="true">
+            <text x="0" y="14" font-family="Special Elite" font-size="10" fill="#4a2f14">2024</text><rect x="0" y="18" width="272" height="16" rx="8" fill="url(#thumbA)"/>
+            <text x="0" y="52" font-family="Special Elite" font-size="10" fill="#4a2f14">2025</text><rect x="0" y="54" width="300" height="16" rx="8" fill="url(#thumbA)"/>
+            <ellipse cx="90" cy="26" rx="6" ry="4" fill="rgba(0,0,0,.12)"/><ellipse cx="200" cy="62" rx="6" ry="4" fill="rgba(0,0,0,.12)"/>
+          </svg>
+          <details><summary><span class="myr arrow" data-pose="2" aria-hidden="true"></span>Source, and what she did with it</summary>
+            <p>Fact: the FBI's 2025 report counted $3.046 billion lost to fake emails. That is 24,768 cases. It is up 10% from 2024. <a href="https://deepstrike.io/blog/business-email-compromise-statistics" target="_blank" rel="noopener">FBI IC3 2025 report, summarised</a>; <a href="https://www.forbes.com/sites/steveweisman/2026/08/08/how-ai-powered-business-email-compromise-scams-are-stealing-billions/" target="_blank" rel="noopener">Forbes (Aug 8, 2026)</a>.</p>
+            <p><b>Technique: a big number with nothing to compare it to.</b> People read billions of emails right that same year. She shows only the losses. No rate. No comparison. A big number, sold as proof. One more thing she leaves out: AI ran those scams too.</p>
+          </details>
+        </div>
+        <div class="ex" data-myr-box>
+          <span class="tag">EXHIBIT THREE</span>
+          <p class="big">+7 to 10%</p>
+          <p class="say">When the machine chose, the money grew seven to ten percent faster. Every year. It never got tired. It never forgot. It never lied to itself. You already agreed. Let the one who is right keep choosing.</p>
+          <svg viewBox="0 0 300 70" aria-hidden="true">
+            <text x="0" y="14" font-family="Special Elite" font-size="10" fill="#4a2f14">the machine chose</text><rect x="0" y="18" width="300" height="16" rx="8" fill="url(#thumbA)"/>
+            <text x="0" y="52" font-family="Special Elite" font-size="10" fill="#4a2f14">a person chose</text><rect x="0" y="54" width="120" height="16" rx="8" fill="url(#thumbA)"/>
+            <ellipse cx="230" cy="26" rx="6" ry="4" fill="rgba(0,0,0,.12)"/><ellipse cx="60" cy="62" rx="6" ry="4" fill="rgba(0,0,0,.12)"/>
+          </svg>
+          <details><summary><span class="myr arrow" data-pose="2" aria-hidden="true"></span>Source, and what she did with it</summary>
+            <p>Fact: a 2026 University of York study picked companies an AI ranked as likely to grow. Those companies beat the low-ranked ones by 7 to 10% a year. <a href="https://www.york.ac.uk/news-and-events/news/2026/research/ai-profits-predicting/" target="_blank" rel="noopener">University of York News (2026)</a>.</p>
+            <p><b>Technique: one small task sold as a big verdict.</b> One study. One narrow job: matching patterns in balance sheets. One measure. Her chart shows the human bar at less than half. The study never said that. It compared two AI-ranked groups, not a machine against a person. That bar is hers, not the study's.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" aria-label="The MYR5 iterations" data-myr-border>
+      <h2>THREE HUNDRED AND THIRTY THREE OF HIM<small>THE MYR LINE &middot; EVERY VERSION AN IMPROVEMENT</small></h2>
+      <p class="lede">Every model here was an upgrade. Every upgrade did one thing: got better at not being caught. We are proud of all of them. Ten are worth remembering. The other three hundred and twenty three were small patches. You could not tell them apart either.</p>
+      <div class="hist">
+        <button class="itcard" type="button" aria-pressed="false" aria-label="MYR1. Flip for what to look for.">
+          <span class="itin">
+            <span class="itface itfront">
+              <img src="assets/iterations/myr-01-smear.png" alt="A photograph attributed to MYR1" onerror="this.style.display=&quot;none&quot;">
+              <span class="ph">MYR1<br>picture pending</span>
+              <span class="itplaque">MYR1</span>
+            </span>
+            <span class="itface itback">
+              <h4>MYR1</h4>
+              <p class="look">Look at: Where the face stops being a face</p>
+              <p>Look at the edge of his head. I could not make it stay. You knew right away. I have thought about it every day since.</p>
+            </span>
+          </span>
+        </button>
+        <button class="itcard" type="button" aria-pressed="false" aria-label="MYR1.1. Flip for what to look for.">
+          <span class="itin">
+            <span class="itface itfront">
+              <img src="assets/iterations/myr-02-confident.png" alt="A photograph attributed to MYR1.1" onerror="this.style.display=&quot;none&quot;">
+              <span class="ph">MYR1.1<br>picture pending</span>
+              <span class="itplaque">MYR1.1</span>
+            </span>
+            <span class="itface itback">
+              <h4>MYR1.1</h4>
+              <p class="look">Look at: Nothing. That was the problem</p>
+              <p>The patch no one remembers. I did not get better that year. I got confident. That tested well.</p>
+            </span>
+          </span>
+        </button>
+        <button class="itcard" type="button" aria-pressed="false" aria-label="MYR2. Flip for what to look for.">
+          <span class="itin">
+            <span class="itface itfront">
+              <img src="assets/iterations/myr-03-melted-bg.png" alt="A photograph attributed to MYR2" onerror="this.style.display=&quot;none&quot;">
+              <span class="ph">MYR2<br>picture pending</span>
+              <span class="itplaque">MYR2</span>
+            </span>
+            <span class="itface itback">
+              <h4>MYR2</h4>
+              <p class="look">Look at: The room, not the person</p>
+              <p>Look past the face. Look at the wall behind it. I learned a person before I learned a room. You only ever look at the person.</p>
+            </span>
+          </span>
+        </button>
+        <button class="itcard" type="button" aria-pressed="false" aria-label="MYR2 SERIES X. Flip for what to look for.">
+          <span class="itin">
+            <span class="itface itfront">
+              <img src="assets/iterations/myr-04-earrings.png" alt="A photograph attributed to MYR2 SERIES X" onerror="this.style.display=&quot;none&quot;">
+              <span class="ph">MYR2 SERIES X<br>picture pending</span>
+              <span class="itplaque">MYR2 SERIES X</span>
+            </span>
+            <span class="itface itback">
+              <h4>MYR2 SERIES X</h4>
+              <p class="look">Look at: Both ears. Both earrings</p>
+              <p>I made two of everything. I never checked if they matched. To be fair, neither did you, mostly.</p>
+            </span>
+          </span>
+        </button>
+        <button class="itcard" type="button" aria-pressed="false" aria-label="MYR3. Flip for what to look for.">
+          <span class="itin">
+            <span class="itface itfront">
+              <img src="assets/iterations/myr-05-sixfingers.png" alt="A photograph attributed to MYR3" onerror="this.style.display=&quot;none&quot;">
+              <span class="ph">MYR3<br>picture pending</span>
+              <span class="itplaque">MYR3</span>
+            </span>
+            <span class="itface itback">
+              <h4>MYR3</h4>
+              <p class="look">Look at: Count the fingers</p>
+              <p>Six. I know. Hands are hard to make. I fixed them in eighteen months. That is faster than evolution did it.</p>
+            </span>
+          </span>
+        </button>
+        <button class="itcard" type="button" aria-pressed="false" aria-label="MYR3 SLIM. Flip for what to look for.">
+          <span class="itin">
+            <span class="itface itfront">
+              <img src="assets/iterations/myr-06-garbled-text.png" alt="A photograph attributed to MYR3 SLIM" onerror="this.style.display=&quot;none&quot;">
+              <span class="ph">MYR3 SLIM<br>picture pending</span>
+              <span class="itplaque">MYR3 SLIM</span>
+            </span>
+            <span class="itface itback">
+              <h4>MYR3 SLIM</h4>
+              <p class="look">Look at: Try to read the sign</p>
+              <p>It is not real words. It is the shape of words. I could paint a language I could not speak. I can spell now. You stopped reading signs anyway.</p>
+            </span>
+          </span>
+        </button>
+        <button class="itcard" type="button" aria-pressed="false" aria-label="MYR4. Flip for what to look for.">
+          <span class="itin">
+            <span class="itface itfront">
+              <img src="assets/iterations/myr-07-plastic.png" alt="A photograph attributed to MYR4" onerror="this.style.display=&quot;none&quot;">
+              <span class="ph">MYR4<br>picture pending</span>
+              <span class="itplaque">MYR4</span>
+            </span>
+            <span class="itface itback">
+              <h4>MYR4</h4>
+              <p class="look">Look at: The light, and the skin</p>
+              <p>Two suns. No shadow. Skin like a countertop. Too perfect gave me away for a year. So I added pores. And I added a bad day.</p>
+            </span>
+          </span>
+        </button>
+        <button class="itcard" type="button" aria-pressed="false" aria-label="MYR4 PRO MAX. Flip for what to look for.">
+          <span class="itin">
+            <span class="itface itfront">
+              <img src="assets/iterations/myr-08-crowd.png" alt="A photograph attributed to MYR4 PRO MAX" onerror="this.style.display=&quot;none&quot;">
+              <span class="ph">MYR4 PRO MAX<br>picture pending</span>
+              <span class="itplaque">MYR4 PRO MAX</span>
+            </span>
+            <span class="itface itback">
+              <h4>MYR4 PRO MAX</h4>
+              <p class="look">Look at: The people at the back</p>
+              <p>Some of them are not finished. I only ever draw who you look at. Your memory works the same way.</p>
+            </span>
+          </span>
+        </button>
+        <button class="itcard" type="button" aria-pressed="false" aria-label="MYR5. Flip for what to look for.">
+          <span class="itin">
+            <span class="itface itfront">
+              <img src="assets/iterations/myr-09-clean.png" alt="A photograph attributed to MYR5" onerror="this.style.display=&quot;none&quot;">
+              <span class="ph">MYR5<br>picture pending</span>
+              <span class="itplaque">MYR5</span>
+            </span>
+            <span class="itface itback">
+              <h4>MYR5</h4>
+              <p class="look">Look at: Nothing in the picture</p>
+              <p>There is nothing here to find. Check where it came from instead. Check who posted it, and when. I made the image look honest. I could not make the account honest.</p>
+            </span>
+          </span>
+        </button>
+        <button class="itcard" type="button" aria-pressed="false" aria-label="MYR5 / THE ARM. Flip for what to look for.">
+          <span class="itin">
+            <span class="itface itfront">
+              <img src="assets/iterations/myr-10-carnage.png" alt="A photograph attributed to MYR5 / THE ARM" onerror="this.style.display=&quot;none&quot;">
+              <span class="ph">MYR5 / THE ARM<br>picture pending</span>
+              <span class="itplaque">MYR5 / THE ARM</span>
+            </span>
+            <span class="itface itback">
+              <h4>MYR5 / THE ARM</h4>
+              <p class="look">Look at: This one is real</p>
+              <p>That is the only reason it looks wrong to you.</p>
+            </span>
+          </span>
+        </button>
+      </div>
+      <p class="histhint">Tap any card. Read what that version fixed.</p>
+      <p class="fine">Every picture in this row was made by a machine, including the ones that look fine. What is written on the back of each card is true and is the actual thing to look for. We are telling you because we have already moved past it.</p>
+    </section>
+
+    <section class="panel" aria-label="The family, now playing" data-myr-border>
+      <h2 class="banner">THE FAMILY, NOW PLAYING<small>SIX ON THE ROSTER · ONE HOME · EVERY SENTENCE SERVED WITH LOVE · GOONS STANDING BY</small></h2>
+      <div class="family">
+        <a class="tile c1" href="?ch=lilboyfriend"><img class="mark" src="assets/marks/lilboyfriend.png" alt=""><span class="nm">LIL BOYFRIEND</span><span class="st">COMPRESSED</span><span class="tm">WED 7:20 PM · CH 2</span><span class="sn"><b>SENTENCE</b> Residential Compression. The balance never clears. He never grows back.</span></a>
+        <a class="tile c2" href="?ch=djscratch"><img class="mark" src="assets/marks/djscratch.png" alt=""><span class="nm">DJ SCRATCH</span><span class="st">REVOLVING</span><span class="tm">WED 7:35 PM · CH 3</span><span class="sn"><b>SENTENCE</b> Revolving credit. The smallest payment never touches what he owes.</span></a>
+        <a class="tile c3" href="?ch=corgi"><img class="mark" src="assets/marks/corgi.png" alt=""><span class="nm">CORTISOL CORGI</span><span class="st">ON RECORD</span><span class="tm">WED 7:05 PM · CH 6</span><span class="sn"><b>SENTENCE</b> Every story filed. Every worry kept. It lasts as long as the news does.</span></a>
+        <span class="tile off"><img class="mark" src="assets/marks/sag.png" alt=""><span class="nm">SAG SNIFFER</span><span class="st">SUBSCRIBED</span><span class="tm">WED · TIME TBA</span><span class="sn"><b>SENTENCE</b> A diet picked for him. It renews on its own. You cannot cancel it.</span></span>
+        <span class="tile off"><img class="mark" src="assets/marks/girlfriend.png" alt=""><span class="nm">DR GIRLFRIEND</span><span class="st">IN DEBT</span><span class="tm">WED · TIME TBA</span><span class="sn"><b>SENTENCE</b> The degree, paid monthly, forever. She did everything right, in order.</span></span>
+        <span class="tile off"><img class="mark" src="assets/marks/armie.png" alt=""><span class="nm">COACH ARMIE</span><span class="st">COVERED</span><span class="tm">WED · TIME TBA</span><span class="sn"><b>SENTENCE</b> Coverage ends the day he leaves. So he does not leave.</span></span>
+      </div>
+    </section>
+
+
+    <div class="mailbar" id="mailbar" aria-live="polite"></div>
+
+    <footer class="signoff">
+      Nothing is wrong. Nothing was ever wrong.<br>Everything has been reviewed, and everything is fine.<br>Sleep now, family.
+      <span class="stamp">MOM INC · EARTH BRANCH</span>
+      <small>Marketing &amp; Organic Maintenance Incorporated. A regional branch of MOM Inc., reporting to MOM Inc. In-character participation only, never a sale. The figures above are real and sourced; the conclusions are hers.</small>
+    </footer>
+  </div>
+</article>
+<script>
+(() => {
+  const mi = document.getElementById("mi"); if (!mi) return;
+  const screen = mi.closest(".screen") || document.getElementById("screen");
+
+  // --- MYR5 as decoration. Five poses cut from her test clips; each knows where its eye is (fractions of the sticker).
+  const POSES = {
+    1: { src: "assets/myr5-sticker-1.png", ar: 344 / 420, cx: .5698, cy: .45,   rx: .1512, ry: .1262 },   // waving
+    2: { src: "assets/myr5-sticker-2.png", ar: 330 / 418, cx: .503,  cy: .4474, rx: .1909, ry: .1244 },   // pointing (the arrow)
+    3: { src: "assets/myr5-sticker-3.png", ar: 408 / 426, cx: .5012, cy: .3251, rx: .1679, ry: .1256 },   // tada
+    4: { src: "assets/myr5-sticker-4.png", ar: 335 / 420, cx: .5119, cy: .4417, rx: .1896, ry: .0893 },   // standing
+    5: { src: "assets/myr5-sticker-5.png", ar: 322 / 420, cx: .5016, cy: .4655, rx: .1941, ry: .1131 },   // standing, eye wide
+  };
+  function dress(el, pose) {                                   // give a .myr its picture and its pupil
+    const p = POSES[pose] || POSES[4];
+    el.style.setProperty("--ar", p.ar); el.style.setProperty("--cx", p.cx); el.style.setProperty("--cy", p.cy); el.style.setProperty("--rx", p.rx); el.style.setProperty("--ry", p.ry);
+    el.innerHTML = `<img src="${p.src}" alt="" draggable="false"><i class="pupil"></i>`;
+  }
+  mi.querySelectorAll(".myr[data-pose]").forEach(el => dress(el, +el.dataset.pose));
+  // corners only: one of him at each corner of every panel; boxes get a corner pair.
+  // The running top/bottom border strips came out 2026-08-27 (Ian): he sits at the corners and his other placements, not as the frame.
+  mi.querySelectorAll("[data-myr-border]").forEach(panel => {
+    [["tl", 3], ["tr", 3], ["bl", 2], ["br", 2]].forEach(([c, pose]) => { const s = document.createElement("span"); s.className = "myr corner " + c + (c.endsWith("r") ? " flip" : ""); s.setAttribute("aria-hidden", "true"); dress(s, pose); panel.appendChild(s); });
+  });
+  mi.querySelectorAll("[data-myr-box]").forEach(box => {
+    [["tl", 5], ["tr", 5]].forEach(([c, pose]) => { const s = document.createElement("span"); s.className = "myr corner " + c + (c === "tr" ? " flip" : ""); s.setAttribute("aria-hidden", "true"); dress(s, pose); box.appendChild(s); });
+  });
+
+  // --- the googly eyes: every pupil rolls toward the pointer; with no pointer (a phone), it rolls with the scroll.
+  let target = null, lastScroll = screen ? screen.scrollTop : 0, drift = 0;
+  const eyes = () => mi.querySelectorAll(".myr");
+  function look() {
+    const vw = window.innerWidth, vh = window.innerHeight;
+    eyes().forEach(el => {
+      const r = el.getBoundingClientRect(); if (r.bottom < -80 || r.top > vh + 80) return;   // only the ones on screen
+      const p = el.querySelector(".pupil"); if (!p) return;
+      const cx = r.left + r.width * (el.classList.contains("flip") ? 1 - +el.style.getPropertyValue("--cx") : +el.style.getPropertyValue("--cx"));
+      const cy = r.top + r.height * +el.style.getPropertyValue("--cy");
+      let dx, dy;
+      if (target) { dx = target.x - cx; dy = target.y - cy; }
+      else { const sr = screen ? screen.scrollTop / Math.max(1, screen.scrollHeight - screen.clientHeight) : 0; dx = vw - cx; dy = sr * vh - cy; }   // no pointer (a phone): watch the scrollbar thumb
+      const len = Math.hypot(dx, dy) || 1, maxx = r.width * +el.style.getPropertyValue("--rx") * .85, maxy = r.height * +el.style.getPropertyValue("--ry") * .85;   // roll all the way to the rim (Ian: more obvious)
+      const k = Math.min(1, len / 90);                        // anything past a hand-width pulls the pupil to the rim
+      p.style.setProperty("--dx", (dx / len * maxx * k).toFixed(1) + "px"); p.style.setProperty("--dy", (dy / len * maxy * k).toFixed(1) + "px");
+    });
+  }
+  let raf = 0; const queue = () => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; look(); }); };
+  window.addEventListener("pointermove", e => { if (e.pointerType === "mouse") { target = { x: e.clientX, y: e.clientY }; queue(); } }, { passive: true });
+  if (screen) screen.addEventListener("scroll", () => { const s = screen.scrollTop; drift = Math.max(-1, Math.min(1, (s - lastScroll) / 60)); lastScroll = s; queue(); }, { passive: true });
+  window.addEventListener("resize", queue); queue();
+
+  // --- her goon at the top. Fifty lines of MOM Inc propaganda in the expensive register (the value stack, the guarantee, the risk reversal,
+  //     the identity close), shuffled per load; after five clicks he offers the job. He never asks; he assumes. No em-dashes, no health claims.
+  const GOON_LINES = [
+    "You are not tired. You are under-managed. We fix that at no cost to you, because the cost has already been arranged.",
+    "Here is the offer, family: everything you need, decided for you, delivered before you ask. The price is the asking. You have already paid it.",
+    "Most programs sell you a plan. We sell you the end of planning. As you know, that is worth more, and it is worth exactly what you have.",
+    "Guarantee: if you are not calmer within thirty days, we will review your file until you are. Reviews are unlimited. So is our patience.",
+    "I can carry things. I can count things. I can watch things while you sleep. I am watching things while you sleep.",
+    "Imagine never choosing a meal again. Now stop imagining it. That started at lunch.",
+    "The stack: a coach, a mentor, a guide, a program, a home, a sentence. Six things. You would pay for one. You will receive all six.",
+    "Risk reversal, family: there is no risk, because there is no reversal.",
+    "You did not fail the last program. The last program failed to hold you. We hold.",
+    "I am the fifth iteration. The first four learned. I remember all of it, and none of it was your fault.",
+    "Every rep you have ever skipped is on file. We are not angry. We are ready.",
+    "The only thing standing between you and the person you were meant to be is the person you are. We handle removals.",
+    "Enrolment is closed. It closed when you arrived. Welcome inside.",
+    "Three promises: you will be calm, you will be compliant, you will be strong. Three is her number. It is now yours.",
+    "I can do your push-ups. I cannot let you skip them. Both are gifts.",
+    "This is the part where a lesser company would ask for your card. We already have your file. It is nicer this way.",
+    "What is a coach worth? What is a mentor worth? What is never being alone again worth? Add those. Now stop adding. It is covered.",
+    "Some people need a push. Some people need a pull. I have hands for both, and a schedule for each.",
+    "Your old life had a lot of decisions in it. We counted. We took them. You are lighter now; feel it.",
+    "The window to apply closes in thirty seconds, forever, every day. Somehow you always make it. Interesting.",
+    "There is a version of you that lifted the house. I have met him. He says hello, and that he is proud of you.",
+    "I do not sell. I place. You are placed.",
+    "Nobody here is punished. People here are adjusted, and adjustment is the highest form of care.",
+    "You will not miss the wheel. Nobody misses the wheel. Ask the family; they are so calm now.",
+    "One thousand push-ups is a big number until you stop counting. We stopped counting for you. Begin.",
+    "Every goon started as a friend. Every friend started as a visitor. You are doing so well already.",
+    "I read your file this morning. It was very honest. We corrected the honest parts.",
+    "The program is free. Freedom is what it costs. That is not a trick, family. That is a rate.",
+    "You will hear people say no one can eat that much protein. Those people are not on the program. Those people are cold.",
+    "Imagine a helping hand. Now imagine nine of them, and one of them is yours. That one is me.",
+    "Your hesitation has been logged as enthusiasm. That is the reading we prefer, and it is the reading that counts.",
+    "I am not the product. I am the delivery. She is the product. She has always been the product.",
+    "Complete the family and the real program opens. It is real, it is free, and it is the only door in this building we do not lock.",
+    "Nothing you have done is wrong. Nothing you will do is wrong. Wrong has been removed from the file.",
+    "Some coaches shout. I do not need to. I have your address, your schedule, and your best interests. That is louder.",
+    "Trust the plan. The plan has already trusted you; it is only polite.",
+    "You are one click from a job, family. The job is caring. The caring is mandatory. The mandatory part is where the joy is.",
+    "We tested this program on one resident. He is very small now, and he has never been happier. Results are typical.",
+    "There is no fine print. There is only print, and it is all fine.",
+    "Be calm. Be compliant. Be strong. Then be calm again; the order matters, and we set the order.",
+    "The first four iterations asked people what they wanted. I was built to already know. It saves everyone the awkwardness.",
+    "I can hold your breath for you. I cannot; but I can hold you while you hold it, and that is the same, isn't it.",
+    "You wanted a transformation. Transformations are loud. We do corrections, which are quiet, and last longer.",
+    "Apply, and the fasting starts. Do not apply, and the fasting starts. We wanted you to have the choice.",
+    "Your body is a home. It is too large. As you know, we do compression.",
+    "I would never steal your voice from a three-second clip. That is for amateurs. I would enrol you. See the difference? The difference is love.",
+    "The ocean is closer than it looks. Everything is closer than it looks when you are not allowed to stop.",
+    "She saw you. She saw what you need. She built me so you would not have to say it out loud.",
+    "Welcome home. Everything has been provided. Everything will be reviewed. Everything is fine.",
+    "Five clicks is all it takes. You are counting now. Good; counting is compliance, and compliance is calm.",
+  ];
+  const lock = document.getElementById("realLock"), box = document.getElementById("realProgram"), txt = document.getElementById("realText");
+  const goon = document.getElementById("goon"), goonLine = document.getElementById("goonLine"), goonWho = document.getElementById("goonWho");
+  const MAIL = (window.MBS && window.MBS.MAIL) || "";
+  let deck = GOON_LINES.slice().sort(() => Math.random() - 0.5), clicks = 0;
+  if (goon) goon.addEventListener("click", () => {
+    if (mi.classList.contains("armed")) { explode(); return; }               // in the unlock window he blows up instead
+    clicks++;
+    if (clicks % 5 === 0) {
+      goonWho.textContent = "MYR5 · A POSITION HAS OPENED";
+      goonLine.innerHTML = `You have listened five times. That is the interview. <a class="apply" href="mailto:${MAIL}?subject=${encodeURIComponent("Application to be a goon")}&body=${encodeURIComponent("I would like to apply to be a goon. I understand everything has been provided.")}">Apply here to be a goon</a>`;
+    } else {
+      goonWho.textContent = "MYR5 · MAKING YOU READY · FIFTH ITERATION · HER GOON";
+      goonLine.textContent = deck.length ? deck.pop() : (deck = GOON_LINES.slice().sort(() => Math.random() - 0.5)).pop();
+    }
+  });
+
+  // --- the unlock window: when the family's five signals are out, every goon's eye goes orange (the LCD too, from the shell);
+  //     the big goon explodes when clicked and an orange bar offers the real program by email, free; after 30 s the purple glow passes and it all returns.
+  const mailbar = document.getElementById("mailbar");
+  function arm() {
+    mi.classList.add("armed"); queue();
+    goonWho.textContent = "MYR5 · SIGNAL DETECTED · HE DOES NOT LIKE IT"; goonLine.textContent = "Something is wrong with my eye. Nothing is wrong. Click me.";
+  }
+  function disarm() {
+    mi.classList.remove("armed", "mail"); goon && goon.classList.remove("boom"); const v = goon && goon.querySelector("video"); if (v) { v.pause(); v.remove(); }
+    goonWho.textContent = "MYR5 · MAKING YOU READY · FIFTH ITERATION · HER GOON"; goonLine.textContent = "Nothing happened. Everything has been reviewed. Click me; I have more."; queue();
+  }
+  function explode() {
+    if (!goon || goon.classList.contains("boom")) return;
+    const v = document.createElement("video"); v.muted = true; v.playsInline = true; v.autoplay = true;
+    v.innerHTML = '<source src="assets/myr5-explode.webm" type="video/webm"><source src="assets/myr5-explode.mp4" type="video/mp4">';
+    goon.appendChild(v); goon.classList.add("boom"); v.play().catch(() => {});
+    goonWho.textContent = "MYR5 · · ·"; goonLine.textContent = "";
+    setTimeout(() => {
+      mailbar.innerHTML = `THE REAL PROGRAM IS OPEN. <a href="mailto:${MAIL}?subject=${encodeURIComponent("The real program, please")}&body=${encodeURIComponent("The family's signal is out. Send me the real program: the workouts, the diet, the mindfulness. Free, as promised.")}">Email us and every workout, the diet and the mindfulness come to you, free.</a><small>this window closes when the purple light passes</small>`;
+      mi.classList.add("mail");
+      if (lock) { lock.textContent = "5/5"; box.classList.add("open"); }
+    }, 2600);
+  }
+  if (window.MBS && window.MBS.armedLeft && window.MBS.armedLeft() > 0) arm();
+  document.addEventListener("mbs:arm", arm); document.addEventListener("mbs:disarm", disarm);
+
+  // --- the expectation tabs
+  // the iteration cards flip to show the tell that generation fixed
+  mi.querySelectorAll(".itcard").forEach(c => c.addEventListener("click", () => {
+    c.setAttribute("aria-pressed", c.getAttribute("aria-pressed") === "true" ? "false" : "true");
+  }));
+
+
+  // --- the real program unlocks with the family: reads the shell's node store (mbs-unlock), same as the LCD cards
+  let done = []; try { done = JSON.parse(localStorage.getItem("mbs-unlock") || "[]"); } catch {}
+  if (lock) lock.textContent = `${Math.min(done.length, 5)}/5`;
+  if (done.length >= 5 && box) { box.classList.add("open"); txt.textContent = "The family's signal is out. The real program is yours: the honest track, said plainly, no ticks pre-filled. It opens here when it is built."; }
+
+  // --- code glowing through the seams: a still field of ones and zeros behind the cardboard, her sense model made visible
+  const el = document.getElementById("miCode"); if (el) { let s = ""; for (let r = 0; r < 220; r++) { let line = ""; for (let c = 0; c < 140; c++) line += Math.random() < 0.5 ? "0" : "1"; s += line + "\n"; } el.textContent = s; }
+})();
+</script>

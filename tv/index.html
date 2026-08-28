@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MBS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tv.css">
+</head>
+<body>
+<!--
+THESIS: Every MBS character site is a broadcast playing on one old television. The set is the network; the channel is the character. It refuses the creator-page arrangement (avatar, bio, buttons) entirely: nothing on the page exists outside the glass.
+OWN-WORLD: A 1990s set in faded bronze-gold plastic: textured cabinet, a thin bezel around curved tinted glass, a chrome MBS badge, a numbered channel dial that turns, hard rectangular push buttons with printed legends, a slatted speaker grille, a red pilot light. Inside the glass: phosphor, scanlines, glare, MBS purple #7a2fc4 and gold #ffd36e, Bowlby One SC for anything the set says.
+STORY: The visitor arrives off-air to a dark screen, presses power, the tube warms up, and the character's channel is already playing. Scrolling turns the dial; every touch presses into the glass. The channel LCD beside the screen lists every channel as a card under a MOM INC heading; a card turns orange once that channel's interaction is complete (Ian, 2026-08-26). They leave knowing who this character is and having done the one thing the channel asked.
+FIRST VIEWPORT: The whole set fills the phone, screen on top, control panel below (beside it on a desk); the tube is dark with a reflection until power is pressed, then the channel's first frame fills the glass with the character at hero scale.
+FORM: The Old Television, Ian's own pinned direction of 2026-08-25 ("an old 1990s tv, not a Roku remote"), superseding the dealt hands (seed b6dbbde2, rounds 0 and 1).
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance.
+-->
+<main class="tv" id="tv" data-state="off">
+  <section class="cabinet">
+    <aside class="gauge" id="gauge" aria-label="Stress meter">
+      <b class="gauge-pct" id="gaugePct">0%</b>
+      <div class="gauge-track"><div class="gauge-fill" id="gaugeFill"></div></div>
+      <span class="gauge-label" id="gaugeLabel">STRESS</span>
+    </aside>
+    <div class="bezel">
+      <div class="glass">
+        <div class="screen" id="screen" tabindex="0" aria-live="polite">
+          <div class="channel" id="channel"></div>
+        </div>
+        <div class="phosphor" aria-hidden="true"></div>
+        <div class="glare" aria-hidden="true"></div>
+        <div class="press-layer" id="presses" aria-hidden="true"></div>
+        <div class="wave" id="wave" aria-hidden="true"></div>
+        <img class="momlogo" id="momlogo" src="assets/mom-inc-mark.png" alt="" aria-hidden="true">
+        <div class="dark" id="dark"><p class="dark-note" id="darkNote"></p></div>
+      </div>
+    </div>
+
+    <aside class="panel" role="group" aria-label="Television controls">
+      <div class="row" id="ctlrow">
+      <div class="dial-block">
+        <svg class="dial-ring" viewBox="0 0 120 120" aria-hidden="true">
+          <circle cx="60" cy="60" r="56" fill="none" stroke="#7a6446" stroke-width="1"/>
+          <g id="dialTicks"></g>
+        </svg>
+        <button class="dial" id="knob" type="button" aria-label="Channel dial, turns as you scroll" title="Turns as you scroll">
+          <span class="dial-grip" aria-hidden="true"></span>
+          <span class="dial-pointer" aria-hidden="true"></span>
+        </button>
+        <span class="legend">CHANNEL</span>
+      </div>
+      <div class="keys" aria-label="Buttons">
+        <div class="key-item"><button class="key power" id="power" type="button" aria-label="Power" title="Power"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1.5v4.5" stroke-width="1.6" stroke-linecap="round"/><path d="M3.6 3.4a3.6 3.6 0 1 0 4.8 0" fill="none" stroke-width="1.6" stroke-linecap="round"/></svg></button><span class="legend">POWER</span></div>
+        <span class="pilot" id="led" aria-hidden="true"></span>
+      </div>
+      <div class="maker" aria-hidden="true"><span class="emboss">MOM</span><span class="engrave">INC</span></div>
+      <span class="model" aria-hidden="true">MODEL MBS-1998 · A MOM INC PRODUCT</span>
+      </div>
+
+      <!-- the channel LCD: the readout of what is on, then every channel as a card, MOM INC as the heading. A card turns orange once that channel's interaction is complete. -->
+      <nav class="lcd" id="lcd" aria-label="Channels">
+        <div class="vfd" id="vfd" aria-live="polite" aria-label="Channel display">
+          <span class="vfd-ch" id="vfdCh">CH --</span>
+          <span class="vfd-name" id="vfdName">MBS</span>
+          <span class="vfd-show" id="vfdShow">NO SIGNAL</span>
+        </div>
+        <div class="lcd-list" id="lcdList"></div>
+      </nav>
+
+    </aside>
+  </section>
+</main>
+<script src="tv.js"></script>
+</body>
+</html>
