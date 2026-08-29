@@ -43,7 +43,7 @@
     { id: "djscratch",    ch: 3, name: "DJ SCRATCH" },
     { id: "corgi",        ch: 6, name: "CORTISOL CORGI" },
     { id: "sag",          ch: 4, name: "SAG SNIFFER" },
-    { id: "girlfriend",   ch: 0, name: "DR GIRLFRIEND" },
+    { id: "girlfriend",   ch: 9, name: "DR GIRLFRIEND" },
     { id: "armie",        ch: 5, name: "COACH ARMIE" },
   ];
   const lcdList = document.getElementById("lcdList");
@@ -172,9 +172,23 @@
     const done = readUnlock();
     if (!done.includes(site)) {
       done.push(site); try { localStorage.setItem("mbs-unlock", JSON.stringify(done)); } catch {}
-      if (done.length >= NODES) { try { localStorage.setItem("mbs-unlock-at", String(Date.now())); } catch {} }
     }
     paintUnlock(); paintArmed();
+    // the missing half of the old chain: unlock() banked the node and told nobody. Only rearmTest() ever
+    // fired mbs:arm, and that is the localhost test hook, so a channel listening for it never heard a thing.
+    if (window.MBS.armedLeft() > 0) document.dispatchEvent(new CustomEvent("mbs:arm"));
+  };
+  // Every node is in, but the clock has NOT started. The fifth node always banks on DJ Scratch, Sag, Lil
+  // Boyfriend, Armie or Fuel, never on MOM Inc - so starting a 30 s window there meant it had always expired
+  // by the time the visitor reached CH 1 and the payoff was unreachable in normal play. (Ian, 2026-08-28:
+  // arm on arrival instead. His 30 s stands; it just starts where the event actually happens.)
+  window.MBS.armReady = () => readUnlock().length >= NODES;
+  window.MBS.armHere = () => {                              // a channel calls this on load to start its window
+    if (!window.MBS.armReady()) return 0;
+    try { localStorage.setItem("mbs-unlock-at", String(Date.now())); } catch {}
+    paintArmed();
+    document.dispatchEvent(new CustomEvent("mbs:arm"));
+    return window.MBS.armedLeft();
   };
   // --- the forms gate (Ian, 2026-08-27): two separate gates, not one.
   // Gate 1, here: fill in every channel's form and MYR5 offers the free workout template outright.

@@ -1,0 +1,869 @@
+<!--
+THESIS: Dr Girlfriend is MOM Inc's manufacturing floor. The literacy-desk scientist who teaches people to read a study is the same one feeding studies into a pitcher and pouring out product. Her channel is not a page about a lab, it is the lab, and you work the line yourself.
+FORM (Ian, round 2, 2026-08-28): THE CAMERA DOES NOT MOVE. A conveyor belt in front of her carries the work past instead. The background is static and hung with MYR5 inspirational posters. This is the real answer to "the sites are being viewed on a tv set" and "plenty of websites that dont feel up and down" - a television is a fixed landscape window, so the frame holds still and the world moves through it. Scroll pushes the belt along; it never scrolls a page.
+FLOAT (Ian, 2026-08-28): everything on the line rides above the belt and bobs. Nothing sits rigidly on a surface.
+OWN-WORLD: Scuffed enamel, frosted glass, matte clay, cardboard, worn steel. Nothing glossy: every material is high-roughness and low-metalness, because the network is felt and papier-mache and a chrome showcase scene would read as somebody else's website.
+CANON - THE UNIT'S SHAPE, CORRECTED BY IAN 2026-08-28: MYR5 is the intact teardrop creature - tall rounded cone head, one big central eye, purple fur ruff at the jaw, tiny stubby arms, short legs, mostly head. **The broken-egg head is MYR5 AFTER HE EXPLODES, not his design.** This supersedes the 2026-08-27 note that read the broken egg as his standing head shape. What comes off this line is an intact MYR5.
+CANON - HER FRAMING: head above the frame in EVERY shot, old-kids-show style. Voice, hands, body, never the face. The gloved hand entering from above is the whole of her this channel shows. Ian's read on why it works, 2026-08-28: the muted-trumpet "wah wah" of an adult talking in Peanuts is exactly what science-speak sounds like to most people, and never showing her face is the visual half of that same joke.
+STORY: Six tubes ride in, one per channel, each holding somebody's research. Pour them all into the pitcher and purple goo comes out. Mould the goo into an MYR5 unit, box it, and a drone takes it off the end of the line. She sets her goggles down as it goes. Put them on and the room tells you how the rest of the network opens.
+INTERACTABLE: the pour chain (six tubes -> pitcher -> goo -> mould -> pack -> drone) and then the goggles, which are a HINT TOOL for the secrets gate, not a node of it. Deliberately partial nudges, never answers: a full answer key would trivialise the puzzle the exclusive-email reward is promised for. window.MBS.wave() fires on the drone launch. She does NOT call window.MBS.form or window.MBS.unlock - a seventh form site or sixth node would move the goalposts for anyone already mid-ARG.
+TECH: three.js r180 as an ES module via dynamic import() from a classic script. tv.js re-creates channel scripts with textContent only and drops attributes, so type="module" would throw here; dynamic import() sidesteps it and needs no shell change. Falls back to a readable flat page with no WebGL or no CDN.
+TODO(Ian): the six citation slots read "citation pending" on purpose. Same rule as Coach Armie's plan builder - the comedy is ours, the science is real and is yours to supply. COMPUTA does not invent a study.
+-->
+<style>
+  .dg{--purple:#7a2fc4; --purple-dd:#1b0a2c; --gold:#ffd36e; --orange:#ff8a2a; --cream:#f4ecd8;
+      min-height:100%; margin:0; position:relative; overflow-x:clip; color:var(--cream);
+      font-family:"Zilla Slab",Georgia,serif; background:#120a1c}
+  .dg *{box-sizing:border-box}
+
+  /* The camera never moves, so the page never needs to be tall. One screen, one room.
+     A short track remains only so a wheel gesture has somewhere to go; it pushes the BELT, not the page. */
+  .dg-track{position:relative; min-height:240vh}
+  .dg-stage{position:sticky; top:0; height:100vh; max-height:100%; overflow:hidden; background:#0f0818}
+  .dg-stage canvas{display:block; width:100%; height:100%}
+
+  /* copy lives ON the objects: each label is projected from a 3D point every frame, never centred in a column */
+  .dg-lab{position:absolute; left:0; top:0; transform:translate(-50%,-100%); pointer-events:none;
+      width:126px; text-align:left; opacity:0; transition:opacity .3s ease; will-change:transform,opacity;
+      display:flex; flex-direction:column; align-items:flex-start}
+  .dg-lab.show{opacity:1}
+  .dg-lab b{display:block; font-family:"Barlow Condensed",sans-serif; font-size:10px; letter-spacing:.14em;
+      text-transform:uppercase; color:var(--gold); text-shadow:0 1px 4px #000, 0 0 12px rgba(0,0,0,.9)}
+  .dg-lab i{display:block; font-style:normal; font-family:"Special Elite",monospace; font-size:10.5px;
+      line-height:1.3; color:var(--cream); text-shadow:0 1px 4px #000, 0 0 10px rgba(0,0,0,.95); margin-top:2px}
+  .dg-lab u{display:block; text-decoration:none; font-family:"Barlow Condensed",sans-serif; font-size:9.5px;
+      letter-spacing:.1em; text-transform:uppercase; color:#b79ae0; margin-top:3px; text-shadow:0 1px 4px #000}
+  .dg-lab s{display:block; text-decoration:none; width:1px; height:20px; margin:5px 0 0; order:9;
+      background:linear-gradient(180deg,var(--gold),rgba(255,211,110,.12))}
+  .dg-lab.spent{filter:saturate(.2) opacity(.4)}
+
+  .dg-plate{position:absolute; left:12px; top:10px; z-index:3; display:flex; align-items:center; gap:8px; pointer-events:none}
+  .dg-plate img{width:36px; height:36px; border-radius:50%; box-shadow:0 0 0 2px var(--gold), 0 4px 12px #000}
+  .dg-plate div{line-height:1.05}
+  .dg-plate b{display:block; font-family:"Bowlby One SC",cursive; font-size:14px; color:var(--gold);
+      text-shadow:2px 2px 0 var(--purple-dd)}
+  .dg-plate span{display:block; font-family:"Barlow Condensed",sans-serif; font-size:9px; letter-spacing:.18em;
+      text-transform:uppercase; color:#c9b6e8}
+
+  .dg-nudge{position:absolute; left:50%; bottom:12px; transform:translateX(-50%); z-index:3; pointer-events:none;
+      font-family:"Barlow Condensed",sans-serif; font-size:11.5px; letter-spacing:.14em; text-transform:uppercase;
+      color:var(--gold); text-shadow:0 1px 6px #000; opacity:0; transition:opacity .4s ease;
+      max-width:88%; text-align:center}
+  .dg-nudge.show{opacity:.92}
+
+  .dg-pips{position:absolute; right:12px; top:13px; z-index:3; display:flex; gap:5px; pointer-events:none}
+  .dg-pips i{width:7px; height:7px; border-radius:50%; background:transparent;
+      border:1px solid rgba(255,211,110,.5); transition:.3s}
+  .dg-pips i.on{background:var(--purple); border-color:var(--gold); box-shadow:0 0 8px var(--purple)}
+
+  /* the goggles overlay: vision wraps. The whole room goes through the lens, it is not a modal box. */
+  .dg-vis{position:absolute; inset:0; z-index:6; opacity:0; pointer-events:none; transition:opacity .5s ease;
+      background:radial-gradient(58% 58% at 30% 50%, rgba(255,138,42,.13), transparent 60%),
+                 radial-gradient(58% 58% at 70% 50%, rgba(255,138,42,.13), transparent 60%),
+                 radial-gradient(125% 105% at 50% 50%, rgba(6,3,11,.88) 0%, rgba(4,2,8,.97) 62%, rgba(2,1,4,.99) 100%)}
+  .dg-vis.on{opacity:1; pointer-events:auto}
+  .dg-vis::after{content:""; position:absolute; inset:0; pointer-events:none;
+      background:repeating-linear-gradient(0deg, rgba(255,138,42,.07) 0 1px, transparent 1px 3px)}
+  .dg-stage:has(.dg-vis.on) .dg-lab{opacity:0}
+  .dg-visin{position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center;
+      padding:24px 26px; overflow:auto}
+  .dg-vis h2{font-family:"Bowlby One SC",cursive; font-size:clamp(15px,5.5vw,21px); color:var(--orange);
+      margin:0 0 2px; text-shadow:0 0 14px rgba(255,138,42,.5)}
+  .dg-vis .sub{font-family:"Barlow Condensed",sans-serif; font-size:10px; letter-spacing:.16em;
+      text-transform:uppercase; color:#e8b98a; margin:0 0 12px}
+  .dg-vis ul{list-style:none; margin:0; padding:0; display:grid; gap:7px}
+  .dg-vis li{display:grid; grid-template-columns:92px 1fr; gap:9px; align-items:baseline;
+      border-left:1px solid rgba(255,138,42,.35); padding-left:9px}
+  .dg-vis li b{font-family:"Barlow Condensed",sans-serif; font-size:10px; letter-spacing:.12em;
+      text-transform:uppercase; color:var(--orange)}
+  .dg-vis li span{font-family:"Special Elite",monospace; font-size:11px; line-height:1.35; color:#f0dcc4}
+  .dg-vis li.none span{opacity:.5}
+  .dg-vis .foot{margin:12px 0 0; font-family:"Special Elite",monospace; font-size:10.5px; color:#e8b98a; opacity:.85}
+  .dg-vis button{position:absolute; right:12px; top:10px; background:none; border:1px solid rgba(255,138,42,.55);
+      color:var(--orange); font-family:"Barlow Condensed",sans-serif; font-size:11px; letter-spacing:.14em;
+      text-transform:uppercase; padding:5px 10px; cursor:pointer}
+  .dg-vis button:hover{background:rgba(255,138,42,.14)}
+
+  /* phones: same room, smaller label furniture */
+  @media (max-width:520px){
+    .dg-lab{width:104px}
+    .dg-lab i{font-size:9.5px}
+    .dg-vis li{grid-template-columns:78px 1fr; gap:7px}
+    .dg-vis li span{font-size:10px}
+    .dg-plate img{width:30px; height:30px}
+  }
+
+  .dg-flat{display:none; padding:20px 16px 30px}
+  .dg-flat h1{font-family:"Bowlby One SC",cursive; color:var(--gold); font-size:26px; margin:0 0 4px}
+  .dg-flat p{font-family:"Special Elite",monospace; font-size:12.5px; line-height:1.5; color:var(--cream); margin:0 0 10px}
+  .dg-flat ol{font-family:"Special Elite",monospace; font-size:12.5px; line-height:1.6; color:var(--cream); padding-left:18px}
+  .dg.flat .dg-track{display:none}
+  .dg.flat .dg-flat{display:block}
+
+  @media (prefers-reduced-motion:reduce){ .dg-lab{transition:none} }
+</style>
+
+<div class="dg" data-host="DR GIRLFRIEND" data-ch="9" data-show="THE MANUFACTURING FLOOR" data-gauge="off">
+
+  <div class="dg-track" id="dgTrack">
+    <div class="dg-stage" id="dgStage">
+      <canvas id="dgCanvas" aria-label="Dr Girlfriend's production line"></canvas>
+
+      <div class="dg-pips" id="dgPips" aria-hidden="true"></div>
+      <p class="dg-nudge" id="dgNudge"></p>
+      <div id="dgLabels"></div>
+
+      <div class="dg-vis" id="dgVis" role="dialog" aria-label="The goggles">
+        <div class="dg-visin">
+          <button type="button" id="dgVisX">Take them off</button>
+          <h2>KNOWLEDGE IS POWER</h2>
+          <p class="sub">Optical overlay &middot; property of MOM Inc &middot; do not remove from the floor</p>
+          <ul>
+            <li><b>DJ Scratch</b><span>The record repeats. So should you. It answers on the third, never the first.</span></li>
+            <li><b>Sag Sniffer</b><span>Seven of those doors are business. The eighth is dinner, and he is hungry.</span></li>
+            <li><b>Lil Boyfriend</b><span>He gets smaller the further down you go. At the bottom he is small enough to open.</span></li>
+            <li><b>Coach Armie</b><span>Stop reading and breathe with him. Hold it longer than feels sensible.</span></li>
+            <li><b>MBS Fuel</b><span>Nothing pours until every field has an opinion. Indifference is not an answer.</span></li>
+            <li class="none"><b>Cortisol Corgi</b><span>Nothing to solve here yet. She has not finished with him.</span></li>
+            <li class="none"><b>MOM Inc</b><span>Her own channel keeps score. It does not play.</span></li>
+          </ul>
+          <p class="foot">I am not going to click it for you. That is the difference between knowing a thing and being told it.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dg-flat">
+    <h1>THE MANUFACTURING FLOOR</h1>
+    <p>This room needs a browser that can draw rooms. Here is what runs down the line instead.</p>
+    <ol>
+      <li>Six tubes ride in on the belt. Each holds research belonging to one of the other channels: robotics for DJ Scratch, canine nutrition for Sag Sniffer, chronic stress for Cortisol Corgi, small-space living for Lil Boyfriend, training load for Coach Armie, stimulants for MBS Fuel.</li>
+      <li>A pitcher. Every tube goes in.</li>
+      <li>Purple goo comes out. It is the same goo as everywhere else on this network.</li>
+      <li>The goo is moulded by hand into an MYR5 unit.</li>
+      <li>The unit is boxed.</li>
+      <li>A drone takes the box off the end of the line. She sets her goggles down as it goes.</li>
+    </ol>
+    <p>She never invents a study. Neither does anyone else here.</p>
+  </div>
+</div>
+
+<script>
+(() => {
+  const root = document.querySelector(".dg");
+  const stage = document.getElementById("dgStage");
+  const canvas = document.getElementById("dgCanvas");
+  const labelBox = document.getElementById("dgLabels");
+  const nudge = document.getElementById("dgNudge");
+  const pipBox = document.getElementById("dgPips");
+  const vis = document.getElementById("dgVis");
+  const screenEl = document.getElementById("screen");
+  if (!root || !canvas) return;
+
+  const glOK = (() => {
+    try {
+      const c = document.createElement("canvas");
+      return !!(window.WebGLRenderingContext && (c.getContext("webgl2") || c.getContext("webgl")));
+    } catch { return false; }
+  })();
+  if (!glOK) { root.classList.add("flat"); return; }
+
+  const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Tubes are labelled by CHARACTER. Lazlo and Durpleton are the dogs' real names and stay out of this
+  // entirely (Ian, 2026-08-28).
+  // TODO(Ian): every "cite" is a placeholder. Real, current, sourced, dated research goes here and nowhere
+  // else. Same rule as the plan builder: the comedy is ours, the science is yours. Nothing invented.
+  const TUBES = [
+    { who: "DJ Scratch",     topic: "Robotics and autonomous hands", cite: "citation pending", col: 0xc46a2f },
+    { who: "Sag Sniffer",    topic: "Canine nutrition",              cite: "citation pending", col: 0x8a9a3a },
+    { who: "Cortisol Corgi", topic: "Chronic stress",                cite: "citation pending", col: 0xc4402f },
+    { who: "Lil Boyfriend",  topic: "Living in small spaces",        cite: "citation pending", col: 0x3a7a9a },
+    { who: "Coach Armie",    topic: "Training load and recovery",    cite: "citation pending", col: 0xb0872f },
+    { who: "MBS Fuel",       topic: "Stimulants and dosage",         cite: "citation pending", col: 0x9a3a7a }
+  ];
+
+  // MOM Inc's motivational posters. Her voice: warm, total, and not on your side.
+  const POSTERS = [
+    "HE ASKED FOR NOTHING.\nHE WAS GIVEN LESS.",
+    "A GOOD UNIT DOES NOT ASK\nWHAT IT IS FOR.",
+    "YOUR POTENTIAL\nIS OUR PROPERTY.",
+    "ONE EYE IS ENOUGH\nTO FIND THE DOOR.",
+    "SMILE.\nIT IS CHEAPER THAN A RAISE."
+  ];
+
+  const say = t => { nudge.textContent = t || ""; nudge.classList.toggle("show", !!t); };
+  TUBES.forEach(() => pipBox.appendChild(document.createElement("i")));
+  const pips = [].slice.call(pipBox.children);
+
+  import("https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.min.js").then(THREE => {
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: false });
+    renderer.setClearColor(0x0f0818, 1);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(44, 1, 0.1, 60);
+
+    const M = {
+      belt:   new THREE.MeshStandardMaterial({ color: 0x2e2b28, roughness: 0.95, metalness: 0.08 }),
+      slat:   new THREE.MeshStandardMaterial({ color: 0x413c36, roughness: 0.92, metalness: 0.12 }),
+      frame:  new THREE.MeshStandardMaterial({ color: 0x4a423a, roughness: 0.88, metalness: 0.20 }),
+      roller: new THREE.MeshStandardMaterial({ color: 0x8f8779, roughness: 0.55, metalness: 0.45 }),
+      wall:   new THREE.MeshStandardMaterial({ color: 0x3b2d51, roughness: 1.00, metalness: 0.00 }),
+      floor:  new THREE.MeshStandardMaterial({ color: 0x241834, roughness: 1.00, metalness: 0.00 }),
+      glass:  new THREE.MeshStandardMaterial({ color: 0xd8e4e0, roughness: 0.14, metalness: 0.00, transparent: true, opacity: 0.34, side: 2 }),
+      enamel: new THREE.MeshStandardMaterial({ color: 0xd9d2c2, roughness: 0.70, metalness: 0.05 }),
+      goo:    new THREE.MeshStandardMaterial({ color: 0x7a2fc4, roughness: 0.66, metalness: 0.00, emissive: 0x2a0a44, emissiveIntensity: 0.35 }),
+      skin:   new THREE.MeshStandardMaterial({ color: 0x8244c0, roughness: 0.78, metalness: 0.00 }),
+      fur:    new THREE.MeshStandardMaterial({ color: 0x9a63cf, roughness: 1.00, metalness: 0.00 }),
+      card:   new THREE.MeshStandardMaterial({ color: 0xa8814f, roughness: 1.00, metalness: 0.00 }),
+      gold:   new THREE.MeshStandardMaterial({ color: 0xffd36e, roughness: 0.45, metalness: 0.45 }),
+      drone:  new THREE.MeshStandardMaterial({ color: 0x2c2c31, roughness: 0.72, metalness: 0.35 })
+    };
+
+    // ---- the room. STATIC (Ian: "the background doesnt need to move"). The camera never travels, so none
+    // of this has to earn its keep through parallax; it only has to be a room.
+    const wall = new THREE.Mesh(new THREE.PlaneGeometry(30, 13), M.wall);
+    wall.position.set(0, 4.4, -3.4); wall.receiveShadow = true; scene.add(wall);
+    const floor = new THREE.Mesh(new THREE.PlaneGeometry(30, 16), M.floor);
+    floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor);
+    const skirt = new THREE.Mesh(new THREE.BoxGeometry(30, 0.34, 0.14), M.frame);
+    skirt.position.set(0, 0.17, -3.33); scene.add(skirt);
+
+    // ---- MYR5 inspirational posters (Ian, 2026-08-28). Sticker art on printed board, slogan set beneath.
+    const loader = new THREE.TextureLoader();
+    function posterTexture(text) {
+      const c = document.createElement("canvas"); c.width = 512; c.height = 640;
+      const x = c.getContext("2d");
+      x.fillStyle = "#efe6d2"; x.fillRect(0, 0, 512, 640);
+      x.fillStyle = "#1b0a2c"; x.fillRect(0, 0, 512, 16); x.fillRect(0, 624, 512, 16);
+      x.fillStyle = "#7a2fc4"; x.fillRect(28, 430, 456, 5);
+      x.fillStyle = "#1b0a2c"; x.textAlign = "center";
+      x.font = "bold 38px Georgia, serif";
+      text.split("\n").forEach((line, i) => x.fillText(line, 256, 496 + i * 44));
+      x.fillStyle = "#7a2fc4"; x.font = "bold 17px Georgia, serif";
+      x.fillText("A MOM INC PRODUCT", 256, 604);
+      const t = new THREE.CanvasTexture(c);
+      t.colorSpace = THREE.SRGBColorSpace;
+      return t;
+    }
+    POSTERS.forEach((txt, i) => {
+      const px = -9.4 + i * 4.7;
+      const board = new THREE.Mesh(new THREE.PlaneGeometry(1.9, 2.38),
+        new THREE.MeshStandardMaterial({ map: posterTexture(txt), roughness: 0.96, metalness: 0.0 }));
+      board.position.set(px, 4.75, -3.36); scene.add(board);
+      const sticker = new THREE.Mesh(new THREE.PlaneGeometry(1.16, 1.42),
+        new THREE.MeshStandardMaterial({
+          map: loader.load("assets/myr5-creature.png"),
+          transparent: true, roughness: 0.95, metalness: 0.0 }));
+      sticker.position.set(px, 5.2, -3.34); scene.add(sticker);
+    });
+
+    // ---- the conveyor belt (Ian: "lets make it a conveyor belt in front of her"). The work comes to her;
+    // the camera holds still. This is the whole answer to "it feels up and down".
+    const BELT_Y = 1.06, BELT_LEN = 26;
+    const beltTop = new THREE.Mesh(new THREE.BoxGeometry(BELT_LEN, 0.1, 2.0), M.belt);
+    beltTop.position.set(0, BELT_Y, 0); beltTop.receiveShadow = true; scene.add(beltTop);
+    [-1.08, 1.08].forEach(rz => {
+      const rail = new THREE.Mesh(new THREE.BoxGeometry(BELT_LEN, 0.2, 0.14), M.frame);
+      rail.position.set(0, BELT_Y + 0.06, rz); rail.castShadow = true; scene.add(rail);
+    });
+    for (let lx = -12; lx <= 12; lx += 3) {
+      const leg = new THREE.Mesh(new THREE.BoxGeometry(0.16, 1.06, 0.16), M.frame);
+      leg.position.set(lx, 0.53, -0.7); scene.add(leg);
+      const leg2 = leg.clone(); leg2.position.z = 0.7; scene.add(leg2);
+    }
+    // slats: what actually reads as "the belt is running"
+    const slats = [];
+    const slatGeo = new THREE.BoxGeometry(0.34, 0.055, 1.9);
+    for (let i = 0; i < 60; i++) {
+      const sl = new THREE.Mesh(slatGeo, M.slat);
+      sl.position.set(-13 + i * 0.44, BELT_Y + 0.07, 0);
+      sl.receiveShadow = true; scene.add(sl); slats.push(sl);
+    }
+    [-BELT_LEN / 2, BELT_LEN / 2].forEach(rx => {
+      const roll = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 2.0, 16), M.roller);
+      roll.rotation.x = Math.PI / 2; roll.position.set(rx, BELT_Y + 0.02, 0); scene.add(roll);
+    });
+
+    // ---- light
+    scene.add(new THREE.HemisphereLight(0x9d86bd, 0x2a1d3a, 0.9));
+    const key = new THREE.DirectionalLight(0xffe6bc, 2.1);
+    key.position.set(-5, 8, 6); key.castShadow = true;
+    key.shadow.mapSize.set(1024, 1024);
+    key.shadow.camera.near = 1; key.shadow.camera.far = 30;
+    key.shadow.camera.left = -12; key.shadow.camera.right = 12;
+    key.shadow.camera.top = 9; key.shadow.camera.bottom = -4;
+    scene.add(key);
+    const fillL = new THREE.DirectionalLight(0xbfa8e0, 0.5); fillL.position.set(3, 3, 8); scene.add(fillL);
+    const rim = new THREE.DirectionalLight(0x9a6ad8, 0.6); rim.position.set(6, 4, -4); scene.add(rim);
+    const gooGlow = new THREE.PointLight(0x9a4ae0, 0.0, 8); gooGlow.position.set(2.9, 1.7, 0.2); scene.add(gooGlow);
+    // lamps hung LOW ENOUGH TO BE IN SHOT. Round 1 put pipes and lamps above the frame, where Ian correctly
+    // pointed out nobody could see them.
+    [-2.1, 2.1].forEach(lx => {
+      const cord = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 1.5, 6), M.frame);
+      cord.position.set(lx, 4.55, 1.1); scene.add(cord);
+      const shade = new THREE.Mesh(new THREE.ConeGeometry(0.46, 0.4, 18, 1, true), M.enamel);
+      shade.position.set(lx, 3.65, 1.1); shade.castShadow = true; scene.add(shade);
+      const bulb = new THREE.Mesh(new THREE.SphereGeometry(0.085, 10, 8),
+        new THREE.MeshStandardMaterial({ color: 0xffe6bc, emissive: 0xffd9a0, emissiveIntensity: 1.5, roughness: 1 }));
+      bulb.position.set(lx, 3.5, 1.1); scene.add(bulb);
+      const pool = new THREE.PointLight(0xffe0b0, 0.6, 9); pool.position.set(lx, 3.2, 1.1); scene.add(pool);
+    });
+
+    // ---- the puff. Spec beat, one per pour: DJ Scratch's needle-drop is her one moment of ceremony and
+    // this is Dr Girlfriend's equivalent. An expanding ring of vapour over the beaker mouth.
+    const puffs = [];
+    const puffGeo = new THREE.SphereGeometry(0.09, 10, 8);
+    function puff(at) {
+      for (let i = 0; i < 12; i++) {
+        const m = new THREE.Mesh(puffGeo, new THREE.MeshStandardMaterial({
+          color: 0xd9c8f0, roughness: 1, transparent: true, opacity: 0.62 }));
+        m.position.copy(at);
+        const a = (i / 12) * Math.PI * 2;
+        m.userData.v = new THREE.Vector3(Math.cos(a) * 0.011, 0.009 + Math.random() * 0.006, Math.sin(a) * 0.011);
+        m.userData.life = 0;
+        scene.add(m); puffs.push(m);
+      }
+    }
+
+    // ---- everything on the line FLOATS (Ian: "lets have everything just kinda float").
+    const floaters = [];
+    const floatIt = (obj, baseY, amp) => floaters.push({ o: obj, y: baseY, a: amp == null ? 0.05 : amp, p: Math.random() * 6.28 });
+    const unfloat = obj => { const i = floaters.findIndex(f => f.o === obj); if (i >= 0) floaters.splice(i, 1); };
+
+    // ---- the six tubes, riding the belt
+    const BELT = new THREE.Group(); scene.add(BELT);
+    const tubes = TUBES.map((t, i) => {
+      const g = new THREE.Group();
+      g.position.set(-4.9 + i * 1.05, BELT_Y + 0.34, 0);
+      const glass = new THREE.Mesh(new THREE.CylinderGeometry(0.135, 0.135, 0.86, 20, 1, true), M.glass);
+      glass.position.y = 0.43; g.add(glass);
+      const bottom = new THREE.Mesh(new THREE.SphereGeometry(0.135, 18, 12, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2), M.glass);
+      g.add(bottom);
+      const liq = new THREE.Mesh(new THREE.CylinderGeometry(0.115, 0.115, 0.5, 18),
+        new THREE.MeshStandardMaterial({ color: t.col, roughness: 0.42, metalness: 0.0, emissive: t.col, emissiveIntensity: 0.2 }));
+      liq.position.y = 0.26; g.add(liq);
+      const cap = new THREE.Mesh(new THREE.CylinderGeometry(0.145, 0.145, 0.08, 18), M.gold);
+      cap.position.y = 0.88; g.add(cap);
+      g.userData = { idx: i, poured: false, liq: liq, kind: "tube", home: g.position.clone() };
+      BELT.add(g);
+      floatIt(g, g.position.y, 0.045);
+      return g;
+    });
+
+    // ---- the pitcher, parked at the work position
+    const WORK_X = 2.35;
+    // A laboratory BEAKER (Ian, 2026-08-28: "a beaker not a mug"). Straight sides, no handle - the handle was
+    // exactly what made the last one read as a coffee cup - plus a pour lip and graduation marks.
+    const beakerGlass = new THREE.MeshStandardMaterial({ color: 0xd6e6e2, roughness: 0.10, metalness: 0.0,
+      transparent: true, opacity: 0.30, side: 2 });
+    const pitcher = new THREE.Mesh(new THREE.CylinderGeometry(0.44, 0.42, 1.08, 30, 1, true), beakerGlass);
+    pitcher.position.set(WORK_X, BELT_Y + 0.66, 0.05); pitcher.castShadow = true; scene.add(pitcher);
+    const pitchBase = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.42, 0.03, 30), beakerGlass);
+    pitchBase.position.set(WORK_X, BELT_Y + 0.13, 0.05); scene.add(pitchBase);
+    // the pour lip: a short flared collar at the rim
+    const lipRing = new THREE.Mesh(new THREE.CylinderGeometry(0.48, 0.44, 0.09, 30, 1, true), beakerGlass);
+    lipRing.position.set(WORK_X, BELT_Y + 1.22, 0.05); scene.add(lipRing);
+    // graduation marks up the side, because a beaker is a measuring vessel and that is the whole difference
+    const gradMat = new THREE.MeshStandardMaterial({ color: 0xf4ecd8, roughness: 0.8, transparent: true, opacity: 0.5 });
+    for (let gi = 1; gi <= 4; gi++) {
+      const g2 = new THREE.Mesh(new THREE.TorusGeometry(0.435, 0.006, 6, 26, Math.PI * 0.5), gradMat);
+      g2.rotation.x = Math.PI / 2; g2.rotation.z = -Math.PI * 0.25;
+      g2.position.set(WORK_X, BELT_Y + 0.28 + gi * 0.19, 0.05); scene.add(g2);
+    }
+    const fill = new THREE.Mesh(new THREE.CylinderGeometry(0.40, 0.39, 1, 26), M.goo);
+    fill.position.set(WORK_X, BELT_Y + 0.2, 0.05); fill.scale.y = 0.001; fill.visible = false; scene.add(fill);
+
+    const blob = new THREE.Mesh(new THREE.SphereGeometry(0.42, 26, 18), M.goo);
+    blob.position.set(WORK_X, BELT_Y + 0.66, 0.05); blob.castShadow = true; blob.visible = false;
+    blob.userData.kind = "blob"; scene.add(blob);
+
+    // ---- MYR5, INTACT. Ian's correction 2026-08-28: he is the teardrop creature, mostly head, one big eye,
+    // fur ruff at the jaw, tiny arms, short legs. The broken-egg head is him AFTER he explodes.
+    const unit = new THREE.Group();
+    unit.position.set(WORK_X, BELT_Y + 0.2, 0.05);
+    unit.visible = false; unit.userData.kind = "unit"; scene.add(unit);
+    const prof = [];
+    for (let i = 0; i <= 20; i++) {
+      const t = i / 20;
+      const r = Math.sin(Math.pow(1 - t, 0.68) * Math.PI * 0.5) * 0.47;
+      prof.push(new THREE.Vector2(Math.max(0.004, r), t * 1.36));
+    }
+    const head = new THREE.Mesh(new THREE.LatheGeometry(prof, 30), M.skin);
+    head.position.y = 0.30; head.castShadow = true; unit.add(head);
+    const eye = new THREE.Mesh(new THREE.SphereGeometry(0.185, 20, 16),
+      new THREE.MeshStandardMaterial({ color: 0xf2ead2, roughness: 0.42 }));
+    eye.position.set(0, 0.85, 0.30); unit.add(eye);
+    const iris = new THREE.Mesh(new THREE.SphereGeometry(0.115, 18, 14),
+      new THREE.MeshStandardMaterial({ color: 0x6d4fae, roughness: 0.5 }));
+    iris.position.set(0, 0.85, 0.44); unit.add(iris);
+    const pupil = new THREE.Mesh(new THREE.SphereGeometry(0.058, 14, 12),
+      new THREE.MeshStandardMaterial({ color: 0x0a0510, roughness: 0.9 }));
+    pupil.position.set(0, 0.85, 0.50); unit.add(pupil);
+    const furGeo = new THREE.ConeGeometry(0.055, 0.3, 6);
+    for (let i = 0; i < 30; i++) {
+      const a = (i / 30) * Math.PI * 2;
+      const f = new THREE.Mesh(furGeo, M.fur);
+      f.position.set(Math.sin(a) * 0.44, 0.42 + Math.sin(i * 2.1) * 0.05, Math.cos(a) * 0.44);
+      f.rotation.set(Math.cos(a) * 0.9, 0, -Math.sin(a) * 0.9);
+      unit.add(f);
+    }
+    [-1, 1].forEach(s => {
+      const arm = new THREE.Mesh(new THREE.CylinderGeometry(0.042, 0.055, 0.26, 8), M.skin);
+      arm.position.set(s * 0.42, 0.52, 0.06); arm.rotation.z = s * 0.85; unit.add(arm);
+    });
+    [-0.15, 0.15].forEach(lx2 => {
+      const lg = new THREE.Mesh(new THREE.CylinderGeometry(0.075, 0.09, 0.2, 10), M.skin);
+      lg.position.set(lx2, 0.1, 0.02); lg.castShadow = true; unit.add(lg);
+    });
+
+    // ---- the box
+    const box = new THREE.Group(); box.position.set(WORK_X, BELT_Y + 0.14, 0.05); box.visible = false;
+    box.userData.kind = "box"; scene.add(box);
+    const boxBody = new THREE.Mesh(new THREE.BoxGeometry(0.86, 0.68, 0.7), M.card);
+    boxBody.position.y = 0.34; boxBody.castShadow = true; box.add(boxBody);
+    const lid = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.08, 0.74), M.card);
+    lid.position.y = 0.72; box.add(lid);
+    const tape = new THREE.Mesh(new THREE.BoxGeometry(0.92, 0.02, 0.11), M.gold);
+    tape.position.y = 0.765; box.add(tape);
+
+    // ---- the drone, and the goggles it leaves behind
+    const drone = new THREE.Group(); drone.position.set(-7, 5.2, -1.6); drone.visible = false; scene.add(drone);
+    const hull = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.17, 0.46), M.drone); hull.castShadow = true; drone.add(hull);
+    const props = [];
+    [[-0.45, 0.32], [0.45, 0.32], [-0.45, -0.32], [0.45, -0.32]].forEach(pair => {
+      const arm2 = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.42, 8), M.drone);
+      arm2.position.set(pair[0] * 0.55, 0, pair[1] * 0.55); arm2.rotation.z = Math.PI / 2;
+      arm2.rotation.y = Math.atan2(pair[1], pair[0]); drone.add(arm2);
+      const p = new THREE.Mesh(new THREE.BoxGeometry(0.44, 0.012, 0.05), M.drone);
+      p.position.set(pair[0], 0.11, pair[1]); drone.add(p); props.push(p);
+    });
+
+    const goggles = new THREE.Group(); goggles.position.set(0.5, BELT_Y + 0.32, 0.3);
+    goggles.visible = false; goggles.userData.kind = "goggles"; goggles.rotation.x = -0.85; scene.add(goggles);
+    [-0.17, 0.17].forEach(gx => {
+      const ring = new THREE.Mesh(new THREE.TorusGeometry(0.14, 0.045, 10, 22), M.drone);
+      ring.position.set(gx, 0, 0); goggles.add(ring);
+      const lens = new THREE.Mesh(new THREE.CircleGeometry(0.115, 22),
+        new THREE.MeshStandardMaterial({ color: 0xff8a2a, roughness: 0.25, metalness: 0.1, emissive: 0xff8a2a, emissiveIntensity: 0.8 }));
+      lens.position.set(gx, 0, 0.02); goggles.add(lens);
+    });
+    const strap = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.06, 0.03), M.drone);
+    strap.position.set(0, 0, -0.06); goggles.add(strap);
+
+    // ---- Dr Girlfriend herself, seated behind the line, writing. Lofi-girl staging: a figure at work,
+    // looping forever, lit by one hanging lamp whose shade sits exactly where her face would be.
+    const HER_X = -0.15, HER_Z = -2.85;
+    const her = new THREE.Group(); her.position.set(HER_X, 0, HER_Z); scene.add(her);
+    // everything of hers lives INSIDE this group in local coordinates, so one scale moves the lot together
+    // (desk, pad, lamp included) and she can be sized against the room without anything drifting apart.
+    const coat = new THREE.MeshStandardMaterial({ color: 0xe6dfcd, roughness: 0.88, metalness: 0.0 });
+    const hairMat = new THREE.MeshStandardMaterial({ color: 0x2b1c33, roughness: 0.95, metalness: 0.0 });
+
+    const torsoProf = [];
+    for (let i = 0; i <= 12; i++) {
+      const t = i / 12;
+      torsoProf.push(new THREE.Vector2(0.34 - t * 0.09 + Math.sin(t * 3.1) * 0.03, 1.28 + t * 0.72));
+    }
+    const torso = new THREE.Mesh(new THREE.LatheGeometry(torsoProf, 22), coat);
+    torso.castShadow = true; her.add(torso);
+    const headBall = new THREE.Mesh(new THREE.SphereGeometry(0.21, 20, 16), coat);
+    headBall.position.set(0, 2.16, 0.05); her.add(headBall);
+    const hair = new THREE.Mesh(new THREE.SphereGeometry(0.245, 22, 18), hairMat);
+    hair.position.set(0, 2.18, -0.02); hair.scale.set(1, 1.05, 1.08); hair.castShadow = true; her.add(hair);
+    const bun = new THREE.Mesh(new THREE.SphereGeometry(0.13, 14, 12), hairMat);
+    bun.position.set(0, 2.34, -0.22); her.add(bun);
+
+    const shoulder = new THREE.Mesh(new THREE.SphereGeometry(0.11, 12, 10), coat);
+    shoulder.position.set(0.3, 1.86, 0.02); her.add(shoulder);
+    const upperArm = new THREE.Mesh(new THREE.CylinderGeometry(0.075, 0.07, 0.42, 10), coat);
+    upperArm.position.set(0.36, 1.68, 0.14); upperArm.rotation.set(0.5, 0, -0.35); her.add(upperArm);
+    const writeArm = new THREE.Group(); writeArm.position.set(0.42, 1.5, 0.32); her.add(writeArm);
+    const foreArm = new THREE.Mesh(new THREE.CylinderGeometry(0.062, 0.055, 0.4, 10), coat);
+    foreArm.position.set(0, -0.06, 0.16); foreArm.rotation.x = 1.15; writeArm.add(foreArm);
+    const herHand = new THREE.Mesh(new THREE.SphereGeometry(0.075, 12, 10), coat);
+    herHand.position.set(0, -0.12, 0.35); writeArm.add(herHand);
+    const pen = new THREE.Mesh(new THREE.CylinderGeometry(0.014, 0.008, 0.22, 8), M.gold);
+    pen.position.set(0, -0.2, 0.38); pen.rotation.x = 0.9; writeArm.add(pen);
+    const restArm = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.06, 0.5, 10), coat);
+    restArm.position.set(-0.32, 1.62, 0.2); restArm.rotation.set(0.9, 0, 0.25); her.add(restArm);
+
+    const desk = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.09, 0.9), M.frame);
+    desk.position.set(0.1, 1.3, 0.75); desk.receiveShadow = true; her.add(desk);
+    const pad = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.03, 0.44),
+      new THREE.MeshStandardMaterial({ color: 0xf1e9d6, roughness: 0.98 }));
+    pad.position.set(0.42, 1.36, 0.72); pad.rotation.y = -0.18; her.add(pad);
+    for (let li = 0; li < 5; li++) {
+      const ln = new THREE.Mesh(new THREE.BoxGeometry(0.4 - li * 0.03, 0.004, 0.012),
+        new THREE.MeshStandardMaterial({ color: 0x3a2f46, roughness: 1 }));
+      ln.position.set(0.4, 1.378, 0.63 + li * 0.04); ln.rotation.y = -0.18; her.add(ln);
+    }
+
+    // THE LAMP THAT COVERS HER FACE (Ian, 2026-08-28). Hung directly above her with the shade sitting exactly
+    // where her face would be. This is the in-world REASON her face is never seen, rather than the camera
+    // simply cropping it out - and it is the lofi-girl staging he asked for: one worker, one lamp, endless work.
+    const herCord = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 2.4, 6), M.frame);
+    herCord.position.set(0, 3.75, 0.06); her.add(herCord);
+    const herShade = new THREE.Mesh(new THREE.ConeGeometry(0.66, 0.52, 24, 1, true), M.enamel);
+    herShade.position.set(0, 2.4, 0.06); herShade.castShadow = true; her.add(herShade);
+    const herBulb = new THREE.Mesh(new THREE.SphereGeometry(0.08, 10, 8),
+      new THREE.MeshStandardMaterial({ color: 0xffe6bc, emissive: 0xffd9a0, emissiveIntensity: 1.7, roughness: 1 }));
+    herBulb.position.set(0, 2.24, 0.06); her.add(herBulb);
+    const herPool = new THREE.PointLight(0xffdca8, 1.15, 5); herPool.position.set(0, 2.05, 0.3); her.add(herPool);
+
+    // her NAME BADGE carries the channel title. Ian, 2026-08-28: "she needs to take up the hole page the
+    // title on her name baddge" - so the floating HTML plate is gone and the title is pinned to her coat,
+    // which is where a title belongs on a person who works somewhere.
+    (function badge() {
+      const c = document.createElement("canvas"); c.width = 512; c.height = 200;
+      const x = c.getContext("2d");
+      x.fillStyle = "#f4efe2"; x.fillRect(0, 0, 512, 200);
+      x.fillStyle = "#7a2fc4"; x.fillRect(0, 0, 512, 12); x.fillRect(0, 188, 512, 12);
+      x.fillStyle = "#1b0a2c"; x.textAlign = "center";
+      x.font = "bold 62px Georgia, serif"; x.fillText("DR GIRLFRIEND", 256, 96);
+      x.fillStyle = "#6a4a92"; x.font = "26px Georgia, serif";
+      x.fillText("THE MANUFACTURING FLOOR", 256, 140);
+      x.fillStyle = "#7a2fc4"; x.font = "bold 20px Georgia, serif";
+      x.fillText("MOM INC", 256, 172);
+      const tex = new THREE.CanvasTexture(c);
+      tex.colorSpace = THREE.SRGBColorSpace;
+      const b = new THREE.Mesh(new THREE.PlaneGeometry(0.58, 0.227),
+        new THREE.MeshStandardMaterial({ map: tex, roughness: 0.9, metalness: 0.0 }));
+      b.position.set(-0.14, 1.72, 0.29); b.rotation.set(-0.12, 0.06, 0.04);
+      her.add(b);
+    })();
+
+    her.scale.setScalar(2.35);          // she takes the page: the room is hers, the line just runs past her
+
+    // ---- her gloved hand at the line. Head above frame in every shot (canon), so this is the whole of her
+    // we ever see up close.
+    const hand = new THREE.Group(); hand.visible = false; scene.add(hand);
+    hand.add(new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.12, 0.24), M.enamel));
+    const cuff = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.15, 0.5, 12), M.enamel);
+    cuff.position.set(0, 0.3, -0.02); hand.add(cuff);
+    for (let f = 0; f < 4; f++) {
+      const fg = new THREE.Mesh(new THREE.BoxGeometry(0.055, 0.09, 0.19), M.enamel);
+      fg.position.set(-0.1 + f * 0.065, -0.02, 0.2); hand.add(fg);
+    }
+
+    // ---- labels, projected onto the objects they name
+    const labels = [];
+    function label(target, title, body, foot) {
+      const el = document.createElement("div");
+      el.className = "dg-lab";
+      el.innerHTML = "<s></s><b>" + title + "</b>" + (body ? "<i>" + body + "</i>" : "") + (foot ? "<u>" + foot + "</u>" : "");
+      labelBox.appendChild(el);
+      const rec = { el: el, target: target, lift: 0.85 };
+      labels.push(rec);
+      return rec;
+    }
+    tubes.forEach((t, i) => {
+      const rec = label(t, TUBES[i].who, TUBES[i].topic, TUBES[i].cite);
+      rec.lift = 0.72 + (i % 2) * 0.66;      // stagger, or six side-by-side labels collide
+      t.userData.label = rec;
+    });
+
+    // ---- the belt's own travel. Scroll pushes the LINE, never the page, and the camera never moves.
+    let beltX = 0, beltTarget = 0, beltRun = 0;
+    function readScroll() {
+      const sc = screenEl || document.scrollingElement;
+      if (!sc) return;
+      const max = Math.max(1, sc.scrollHeight - sc.clientHeight);
+      const p = Math.min(1, Math.max(0, sc.scrollTop / max));
+      // rest at 0: the tubes sit left of the beaker and never overlap it. Scroll only pushes the line
+      // LEFT, feeding tubes toward the work position - which is the direction a real line runs.
+      beltTarget = -p * 4.2;
+    }
+    (screenEl || window).addEventListener("scroll", readScroll, { passive: true });
+    readScroll();
+
+    function resize() {
+      const w = stage.clientWidth || 320, h = stage.clientHeight || 240;
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h;
+      // phones are narrow: back off so the line still reads instead of cropping to a single tube
+      const narrow = w / h < 0.95;
+      // Ian, 2026-08-28: "okay not whole page but maybe on modile yes". So the framing splits by shape:
+      // on a PHONE she fills it, because a tall narrow window has no room for a wide production line;
+      // on DESKTOP she is clearly the subject but the belt, the posters and the room still read around her.
+      camera.position.set(0, narrow ? 3.5 : 3.3, narrow ? 8.0 : 11.4);
+      camera.lookAt(0, narrow ? 3.2 : 2.7, 0);
+      camera.updateProjectionMatrix();
+    }
+    new ResizeObserver(resize).observe(stage);
+    resize();
+
+    // ---- the sequence
+    let poured = 0, phase = "pour";
+    const anims = [];
+    const tween = (ms, fn, done) => anims.push({ t: 0, ms: ms, fn: fn, done: done });
+    const ease = t => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
+
+    function pourTube(g) {
+      if (g.userData.poured || phase !== "pour") return;
+      g.userData.poured = true;
+      poured++;
+      pips[g.userData.idx].classList.add("on");
+      g.userData.label.el.classList.add("spent");
+      unfloat(g);                                   // it is in her hand now, it stops floating
+
+      const from = g.position.clone();
+      const lift = from.clone().setY(2.35);
+      const over = new THREE.Vector3(WORK_X - BELT.position.x, 2.45, 0.1);
+      const fillFrom = fill.scale.y;
+      const fillTo = (poured / TUBES.length) * 0.9;
+      let puffed = false;
+      hand.visible = true;
+      const followHand = () => hand.position.set(g.position.x + BELT.position.x, g.position.y + 0.95, g.position.z - 0.1);
+
+      tween(500, t => { g.position.lerpVectors(from, lift, ease(t)); followHand(); }, () => {
+        tween(600, t => { g.position.lerpVectors(lift, over, ease(t)); followHand(); }, () => {
+          tween(700, t => {
+            g.rotation.z = -Math.PI * 0.62 * ease(t);
+            g.userData.liq.scale.y = Math.max(0.001, 1 - t);
+            fill.visible = true;
+            fill.scale.y = Math.max(0.001, fillFrom + (fillTo - fillFrom) * t);
+            fill.position.y = BELT_Y + 0.2 + fill.scale.y * 0.44;
+            gooGlow.intensity = 0.3 + (poured / TUBES.length) * 1.5;
+            if (!puffed) { puffed = true; puff(new THREE.Vector3(WORK_X, BELT_Y + 1.3, 0.05)); }
+          }, () => {
+            tween(540, t => {
+              g.position.lerpVectors(over, from, ease(t));
+              g.rotation.z = -Math.PI * 0.62 * (1 - ease(t));
+              followHand();
+            }, () => {
+              hand.visible = false;
+              floatIt(g, from.y, 0.045);
+              if (poured >= TUBES.length) {
+                phase = "mould";
+                blob.visible = true;
+                blob.scale.setScalar(0.01);
+                tween(700, t => blob.scale.setScalar(0.01 + ease(t) * 0.99), () => floatIt(blob, blob.position.y, 0.06));
+                say("Six in. That is goo now. Shape it.");
+              } else {
+                say((TUBES.length - poured) + " tubes left on the line.");
+              }
+            });
+          });
+        });
+      });
+    }
+
+    function mould() {
+      if (phase !== "mould") return;
+      phase = "busy"; say("");
+      unfloat(blob);
+      hand.visible = true;
+      hand.position.set(WORK_X, 2.5, 0.35);
+      tween(900, t => { blob.scale.setScalar(1 - ease(t)); hand.position.y = 2.5 - ease(t) * 0.55; }, () => {
+        blob.visible = false;
+        unit.visible = true;
+        unit.scale.setScalar(0.01);
+        tween(800, t => { unit.scale.setScalar(ease(t) * 0.92); hand.position.y = 1.95 + ease(t) * 0.7; }, () => {
+          hand.visible = false;
+          floatIt(unit, unit.position.y, 0.05);
+          phase = "pack";
+          say("One unit, intact. Box it.");
+        });
+      });
+    }
+
+    function pack() {
+      if (phase !== "pack") return;
+      phase = "busy"; say("");
+      unfloat(unit);
+      tween(700, t => { unit.scale.setScalar(0.92 * (1 - ease(t) * 0.6)); }, () => {
+        unit.visible = false;
+        box.visible = true;
+        box.scale.set(1, 0.01, 1);
+        tween(520, t => box.scale.set(1, 0.01 + ease(t) * 0.99, 1), () => {
+          if (window.MBS && window.MBS.wave) window.MBS.wave({ after: 900 });
+          drone.visible = true;
+          const dFrom = new THREE.Vector3(-7, 5.2, -1.6);
+          const dTo = new THREE.Vector3(WORK_X, 2.55, 0.05);
+          const dOut = new THREE.Vector3(9.5, 5.6, -2.2);
+          const bHome = box.position.clone();
+          beltRun = 1;                                 // the line runs while the drone comes in
+          tween(1500, t => drone.position.lerpVectors(dFrom, dTo, ease(t)), () => {
+            tween(700, t => { box.position.y = bHome.y + ease(t) * 0.95; }, () => {
+              tween(1700, t => {
+                drone.position.lerpVectors(dTo, dOut, ease(t));
+                box.position.set(drone.position.x, drone.position.y - 0.95, drone.position.z);
+              }, () => {
+                drone.visible = false;
+                box.visible = false;
+                box.position.copy(bHome);
+                beltRun = 0;
+                goggles.visible = true;
+                goggles.scale.setScalar(0.01);
+                tween(600, t => goggles.scale.setScalar(ease(t)), () => {
+                  floatIt(goggles, goggles.position.y, 0.035);
+                  phase = "grab";
+                  say("She left the goggles. The drone is coming back for them.");
+                  // the drone returns. One window, then it takes them and the whole line resets.
+                  drone.visible = true;
+                  const gFrom = new THREE.Vector3(9.5, 5.6, -2.2);
+                  const gTo = new THREE.Vector3(goggles.position.x, goggles.position.y + 0.85, goggles.position.z);
+                  tween(3900, t => {
+                    if (phase !== "grab") return;              // already taken by the visitor
+                    drone.position.lerpVectors(gFrom, gTo, ease(t));
+                  }, () => {
+                    if (phase !== "grab") { drone.visible = false; return; }
+                    stealGoggles();
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+    }
+
+    function resetLine() {
+      // put the line back exactly as it started. Nothing is remembered, which is the cost of missing.
+      poured = 0;
+      fill.visible = false; fill.scale.y = 0.001;
+      gooGlow.intensity = 0;
+      blob.visible = false; unfloat(blob);
+      unit.visible = false; unfloat(unit);
+      box.visible = false;
+      goggles.visible = false; unfloat(goggles);
+      pips.forEach(el => el.classList.remove("on"));
+      tubes.forEach(g => {
+        g.userData.poured = false;
+        g.rotation.z = 0;
+        g.userData.liq.scale.y = 1;
+        g.position.copy(g.userData.home);
+        g.userData.label.el.classList.remove("spent");
+        unfloat(g); floatIt(g, g.userData.home.y, 0.045);
+      });
+      phase = "pour";
+    }
+
+    function stealGoggles() {
+      phase = "busy";
+      unfloat(goggles);
+      const from = goggles.position.clone();
+      const out = new THREE.Vector3(10.5, 6.0, -2.4);
+      say("Too slow. It took them, and the batch with it.");
+      tween(1500, t => {
+        drone.position.lerpVectors(new THREE.Vector3(from.x, from.y + 0.85, from.z), out, ease(t));
+        goggles.position.set(drone.position.x, drone.position.y - 0.75, drone.position.z);
+      }, () => {
+        drone.visible = false;
+        resetLine();
+        say("Six tubes on the line. Tap one. Be ready at the end this time.");
+      });
+    }
+
+    // ---- clicks
+    const ray = new THREE.Raycaster(), pt = new THREE.Vector2();
+    canvas.addEventListener("click", e => {
+      // .channel carries zoom:1.15 (tv.css). Under CSS zoom, getBoundingClientRect() and clientX/clientY are
+      // both VISUAL pixels while clientWidth/clientHeight are LAYOUT pixels - build the ray from the rect and
+      // the event alone. Mixing in clientWidth or offsetX puts every click ~15% off, silently.
+      const r = canvas.getBoundingClientRect();
+      pt.x = ((e.clientX - r.left) / r.width) * 2 - 1;
+      pt.y = -((e.clientY - r.top) / r.height) * 2 + 1;
+      ray.setFromCamera(pt, camera);
+      const cands = tubes.concat([blob, unit, box, goggles]).filter(o => o.visible !== false);
+      const isect = ray.intersectObjects(cands, true);
+      if (!isect.length) return;
+      let o = isect[0].object;
+      while (o && !o.userData.kind && o.parent) o = o.parent;
+      if (!o || !o.userData.kind) return;
+      if (o.userData.kind === "tube") pourTube(o);
+      else if (o.userData.kind === "blob") mould();
+      else if (o.userData.kind === "unit" || o.userData.kind === "box") pack();
+      else if (o.userData.kind === "goggles") {
+        if (phase === "grab") {                       // caught them before the drone did
+          phase = "goggles";
+          drone.visible = false;
+          say("");
+          vis.classList.add("on");
+        } else if (phase === "goggles") vis.classList.add("on");
+      }
+    });
+    document.getElementById("dgVisX").addEventListener("click", () => vis.classList.remove("on"));
+
+    say("Six tubes on the line. Tap one.");
+
+    // ---- frame loop
+    let last = performance.now();
+    const v = new THREE.Vector3();
+    function frame(now) {
+      const dt = Math.min(50, now - last);
+      last = now;
+
+      beltX += (beltTarget - beltX) * (REDUCED ? 1 : 0.08);
+      BELT.position.x = beltX;
+
+      // the slats always creep, and run properly while the line is working
+      const speed = 0.00022 + beltRun * 0.0022;
+      for (let i = 0; i < slats.length; i++) {
+        slats[i].position.x += speed * dt * 60;
+        if (slats[i].position.x > 13) slats[i].position.x -= 26.4;
+      }
+
+      for (let i = anims.length - 1; i >= 0; i--) {
+        const a = anims[i];
+        a.t += dt;
+        const p = Math.min(1, a.t / a.ms);
+        a.fn(p);
+        if (p >= 1) { anims.splice(i, 1); if (a.done) a.done(); }
+      }
+
+      // everything on the line floats: a slow bob, out of phase, never rigid
+      if (!REDUCED) for (let i = 0; i < floaters.length; i++) {
+        const f = floaters[i];
+        f.o.position.y = f.y + Math.sin(now / 900 + f.p) * f.a;
+      }
+
+      for (let i = puffs.length - 1; i >= 0; i--) {
+        const m = puffs[i];
+        m.userData.life += dt;
+        m.position.add(m.userData.v);
+        m.scale.setScalar(1 + m.userData.life / 700);
+        m.material.opacity = Math.max(0, 0.62 - m.userData.life / 1100);
+        if (m.material.opacity <= 0) { scene.remove(m); m.material.dispose(); puffs.splice(i, 1); }
+      }
+
+      // she writes, forever. Small scribble on the forearm, a slow lean on the torso, nothing else.
+      writeArm.rotation.z = Math.sin(now / 210) * 0.11;
+      writeArm.position.x = 0.42 + Math.sin(now / 340) * 0.05;
+      torso.rotation.z = Math.sin(now / 2600) * 0.02;
+
+      if (drone.visible) props.forEach((p, i) => { p.rotation.y += (i % 2 ? 0.9 : -0.9); });
+      if (blob.visible) blob.rotation.y += 0.004;
+      if (unit.visible) unit.rotation.y = Math.sin(now / 1600) * 0.16;
+
+      const sw = stage.clientWidth, sh = stage.clientHeight;
+      for (let i = 0; i < labels.length; i++) {
+        const L = labels[i];
+        L.target.getWorldPosition(v);
+        v.y += L.lift;
+        v.project(camera);
+        const on = v.z < 1 && Math.abs(v.x) < 0.94;
+        L.el.classList.toggle("show", on);
+        if (on) {
+          // clamp inside the glass: on a 390px phone an un-clamped label runs off the right edge
+          const half = L.el.offsetWidth / 2 + 6;
+          const px2 = Math.min(sw - half, Math.max(half, (v.x * 0.5 + 0.5) * sw));
+          L.el.style.transform = "translate(-50%,-100%) translate(" +
+            px2.toFixed(1) + "px," + ((-v.y * 0.5 + 0.5) * sh).toFixed(1) + "px)";
+        }
+      }
+
+      renderer.render(scene, camera);
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }).catch(err => {
+    console.error("[dg] three.js failed to load", err);
+    root.classList.add("flat");
+  });
+})();
+</script>

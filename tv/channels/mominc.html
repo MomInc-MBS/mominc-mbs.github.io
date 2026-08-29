@@ -515,7 +515,10 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
       if (lock) { lock.textContent = "5/5"; box.classList.add("open"); }
     }, 2600);
   }
-  if (window.MBS && window.MBS.armedLeft && window.MBS.armedLeft() > 0) arm();
+  // Arm on ARRIVAL, not on the far-off page that banked the fifth node (Ian, 2026-08-28). armHere()
+  // starts the 30 s window here, so the goon is actually explodable by the time anyone reaches CH 1.
+  if (window.MBS && window.MBS.armHere) { if (window.MBS.armHere() > 0) arm(); }
+  else if (window.MBS && window.MBS.armedLeft && window.MBS.armedLeft() > 0) arm();   // older shell
   document.addEventListener("mbs:arm", arm); document.addEventListener("mbs:disarm", disarm);
 
   // --- the expectation tabs
