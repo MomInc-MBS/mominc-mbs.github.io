@@ -1,17 +1,41 @@
 <!--
-THESIS: Lil Boyfriend's page is a MOM Inc. MEDICATION infomercial for LIVING SMALL, the Residential Compression Program sold as a prescription. Housing is the condition; being shrunk is the treatment; the fine print is the side effects. His tiny-desk rig is the patient result.
-OWN-WORLD: A daytime pharma ad. Soft pastels (mint, lavender, baby blue), a gentle gold, white air, a swooping script wordmark with a swoosh, rounded body type, smiling charts. The opposite of DJ Scratch's loud 90s product ad: this one is quiet, warm, and clinical.
-STORY: The visitor is diagnosed (the housing numbers, real and sourced, drawn to look worse), measured (an estimator that is always negative), shown the cure (three tiny homes, stacked, with a tiny man waving), shown the clinical results (MOM's own studies, n=1), and read the side effects. Then the shadow man rips the page and the homes rot.
-INTERACTABLE (unlock node): a full-height shadow man anchored to the bottom-right of the glass SHRINKS toward that corner as you scroll; at the bottom he flashes purple; click him and he walks across and rips a small patch open to two wires; click the wires and they connect: a gold shock turns him to ash, the listings flip to their horror versions and the orange wave glitches through; 5s later the purple restore wave puts them back. Shared: window.MBS.wave({after, restore}), window.MBS.unlock("lilboyfriend").
-FORM: Ian's re-pin 2026-08-26 (medication infomercial, light colours + gentle gold, swooping fonts, housing stats made worse, a cost-of-living estimator that is always negative, studies and graphs, photos stacked vertically, room to scroll). Full spec: vault "Lil Boyfriend Page Spec". Inside the old television shell. Mobile-first.
+THESIS: total redesign per LilBF Museum Spec 0901.md. Lil Boyfriend's page is now a first-person walking-sim
+MUSEUM: one straight 60-unit gallery hall, fixed centreline path, free look. Outbound you pass three exhibits
+(the Teepee, Shoebox, Mason Jar - the same three homes from the "Patient results" section below, in the order
+the old game shrank through) showing the COZY photos with real sourced housing facts on the placards (LilBF
+Museum Housing Facts 0901.md Part A/C - numbers used exactly as written, never paraphrased). At the end wall a
+fuse box holds the wires interactable carried forward from the source build's .lb-tear block (markup and
+behaviour reused, restyled for the fuse-box framing) - connecting it is the locked ending beat: it fires
+MBS.wave/MBS.unlock once, the hall's lights flicker cold, and "Turn around." prompts the walk back. On the
+return the same three exhibits now show the HORROR photos and real housing-help resources (Part B) instead of
+facts, the hall's cross-section closes in continuously (no discrete steps) from 3x3 units to 1.2x1.7, eye
+height drops 1.5->0.9, and the exhibits scale up so the photos loom. A guest book lectern near the entrance is
+the one collect (MBS.form, same {city,country,income} payload the old estimator used) - skippable, fires once.
+The MOM Inc infomercial below is carried forward unchanged except the estimator card is removed (one call site
+now, not two) and the .breached photo flip, which still works, still driven by the same MBS.wave() call.
+ARCHITECTURE: #lbStage stays inside .lb's own subtree the whole time (fitViewport() sizes it to fill .glass on
+arrival, same measured-not-calc'd pattern every other channel game uses) - nothing is ever appended to .glass,
+so there is no custom-property-inheritance trap to pay for (CSS vars inherit down the DOM, not through
+selectors; staying inside .lb's subtree sidesteps that entirely). Three.js r180 via dynamic import() from a
+classic script (tv.js drops attributes on injected scripts, so a <script type=module> tag would throw here) -
+feature-detected WebGL with a verbatim non-WebGL DOM-gallery fallback; both share the exact same state object,
+storage key, fact/resource data, and wires/guestbook DOM components, so the unlock chain and content are
+identical whether or not the visitor has a GPU. The hall is ONE box mesh (BackSide material, so the camera -
+which is always inside it - sees its interior faces; the ceiling/wall lights all sit inside that volume, never
+behind a sealed face, which is what keeps the first render from going pure black) with its own width/height
+scaled continuously by return-progress instead of rebuilt each frame. Exhibit photos are TextureLoader planes,
+placards are canvas-text textures on planes, both preloaded for every exhibit before the first frame renders
+(so the horror swap on return is instant, not a load stall). renderer.setSize(w,h,false) with clientWidth/
+clientHeight, no position:fixed anywhere, --panel-clear reserved by the HUD's own bottom padding.
 -->
 <style>
   .lb{--mint:#dff5ec; --lav:#ebe3fa; --sky:#e3effd; --white:#fffdf8; --gold:#e6c67a; --gold-d:#c9a24c; --gold-l:#f7eacb; --ink:#3c3552; --ink-l:#6f6688; --rose:#f3c9d6; --pur:#7a2fc4;
+      --panel-clear:82px;
       min-height:100%; margin:0; color:var(--ink); font-family:"Nunito",system-ui,sans-serif; font-weight:600; position:relative; overflow-x:hidden;
       background:linear-gradient(180deg,var(--white) 0%,var(--sky) 28%,var(--lav) 58%,var(--mint) 100%)}
   .lb *{box-sizing:border-box}
   .lb .ribbon{margin:0; padding:7px 8px; text-align:center; background:var(--gold-l); color:var(--ink-l); font-size:clamp(11px,3vw,13px); letter-spacing:.08em; text-transform:uppercase; border-bottom:1px solid var(--gold)}
-  .lb .wrap{position:relative; z-index:1; padding:0 clamp(14px,4.5vw,28px) 40px; max-width:760px; margin:0 auto}
+  .lb .wrap{position:relative; z-index:1; padding:0 clamp(14px,4.5vw,28px) calc(26px + var(--panel-clear)); max-width:760px; margin:0 auto}
   .lb section{margin:26px 0}
   .lb h2{font-family:"Pacifico",cursive; font-weight:400; color:var(--ink); font-size:clamp(24px,7vw,36px); margin:0 0 8px; line-height:1.15}
   .lb h2 small{display:block; font-family:"Nunito",sans-serif; font-weight:800; font-size:clamp(11px,3vw,13px); letter-spacing:.14em; text-transform:uppercase; color:var(--gold-d); margin-bottom:2px}
@@ -19,7 +43,6 @@ FORM: Ian's re-pin 2026-08-26 (medication infomercial, light colours + gentle go
   .lb .fine{font-size:11.5px; line-height:1.45; color:var(--ink-l); margin:8px 0 0}
   .lb .card{background:rgba(255,253,248,.82); border:1px solid rgba(230,198,122,.6); border-radius:18px; padding:16px 16px 14px; box-shadow:0 6px 18px rgba(120,100,160,.10)}
 
-  /* the wordmark, with its swoosh */
   .lb .head{text-align:center; padding:22px 0 6px}
   .lb .kick{font-size:clamp(12px,3.4vw,14px); letter-spacing:.14em; text-transform:uppercase; color:var(--ink-l); margin:0}
   .lb h1.logo{font-family:"Pacifico",cursive; font-weight:400; font-size:clamp(46px,15vw,92px); line-height:1.05; margin:0; color:var(--ink);
@@ -29,12 +52,10 @@ FORM: Ian's re-pin 2026-08-26 (medication infomercial, light colours + gentle go
   .lb .tagline{font-family:"Pacifico",cursive; font-weight:400; font-size:clamp(18px,5.4vw,26px); color:var(--gold-d); margin:8px 0 0}
   .lb .pill{display:inline-block; margin-top:12px; background:linear-gradient(90deg,var(--mint) 50%,var(--gold-l) 50%); border:1.5px solid var(--gold); border-radius:999px; padding:8px 18px; font-weight:800; font-size:clamp(13px,3.6vw,15px); color:var(--ink); box-shadow:0 3px 0 rgba(201,162,76,.35)}
 
-  /* symptoms */
   .lb .symptoms{list-style:none; margin:8px 0 0; padding:0; display:grid; gap:8px}
   .lb .symptoms li{display:grid; grid-template-columns:auto 1fr; gap:10px; align-items:start; font-size:clamp(15px,4.2vw,17px); line-height:1.4}
   .lb .symptoms .dot{width:22px; height:22px; border-radius:50%; background:var(--gold); color:#fff; display:grid; place-items:center; font-weight:800; font-size:13px; margin-top:1px}
 
-  /* the condition: real numbers, MOM's charts */
   .lb .stats{display:grid; gap:12px}
   .lb .stat{background:var(--white); border-radius:14px; padding:12px 14px; border:1px solid rgba(230,198,122,.5)}
   .lb .stat .big{font-family:"Pacifico",cursive; font-weight:400; font-size:clamp(28px,9vw,44px); color:var(--ink); line-height:1; margin:0}
@@ -44,23 +65,6 @@ FORM: Ian's re-pin 2026-08-26 (medication infomercial, light colours + gentle go
   .lb .verdict{text-align:center; font-family:"Pacifico",cursive; font-weight:400; font-size:clamp(22px,7vw,34px); color:var(--ink); margin:16px 0 0}
   .lb .verdict b{color:var(--gold-d); font-weight:400}
 
-  /* the estimator */
-  .lb .est{display:grid; gap:10px; margin-top:10px}
-  .lb .est label{display:grid; gap:4px; font-size:clamp(12px,3.4vw,13px); letter-spacing:.06em; text-transform:uppercase; color:var(--ink-l); font-weight:800}
-  .lb .est input{font-family:"Nunito",sans-serif; font-weight:600; font-size:16px; padding:11px 12px; border:1.5px solid var(--gold); border-radius:12px; background:#fff; color:var(--ink)}
-  .lb .est button{font-family:"Nunito",sans-serif; font-weight:800; font-size:clamp(15px,4.4vw,18px); border:0; cursor:pointer; border-radius:999px; padding:13px; background:var(--gold); color:#fff; box-shadow:0 4px 0 var(--gold-d); letter-spacing:.04em}
-  .lb .est button:active{transform:translateY(3px); box-shadow:0 1px 0 var(--gold-d)}
-  .lb .result{display:none; margin-top:12px; background:var(--white); border-radius:14px; padding:14px; border:1px solid rgba(230,198,122,.6)}
-  .lb .result.show{display:block}
-  .lb .result .vs{display:grid; grid-template-columns:1fr 1fr; gap:10px; text-align:center}
-  .lb .result .vs > div{padding:10px 6px; border-radius:12px}
-  .lb .result .you{background:var(--rose)}
-  .lb .result .him{background:var(--mint)}
-  .lb .result .num{font-family:"Pacifico",cursive; font-weight:400; font-size:clamp(22px,7vw,34px); line-height:1.1; margin:0}
-  .lb .result .who{font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-l); margin:4px 0 0}
-  .lb .result .sad{margin:10px 0 0; font-size:clamp(14px,4vw,16px); color:var(--ink)}
-
-  /* patient results: the three homes, stacked */
   .lb .homes{display:grid; gap:20px}
   .lb .home{position:relative; margin:0; background:var(--white); border:1px solid rgba(230,198,122,.7); border-radius:18px; overflow:hidden; box-shadow:0 8px 22px rgba(120,100,160,.12)}
   .lb .home .frame{position:relative; aspect-ratio:4/3; background:var(--lav)}
@@ -75,7 +79,6 @@ FORM: Ian's re-pin 2026-08-26 (medication infomercial, light colours + gentle go
   .lb .home figcaption b{font-family:"Pacifico",cursive; font-weight:400; font-size:1.15em; color:var(--gold-d)}
   .lb .scale{text-align:center; font-family:"Pacifico",cursive; font-weight:400; color:var(--ink-l); font-size:clamp(15px,4.4vw,19px); margin:4px 0 0}
 
-  /* clinical results */
   .lb .charts{display:grid; gap:12px}
   .lb .chart{background:var(--white); border-radius:14px; padding:12px 14px; border:1px solid rgba(230,198,122,.5)}
   .lb .chart svg{width:100%; height:auto; display:block}
@@ -83,7 +86,6 @@ FORM: Ian's re-pin 2026-08-26 (medication infomercial, light colours + gentle go
   .lb .studies{list-style:none; padding:0; margin:10px 0 0; display:grid; gap:6px; font-size:clamp(12.5px,3.5vw,14px); color:var(--ink-l); line-height:1.4}
   .lb .studies li::before{content:"◆ "; color:var(--gold)}
 
-  /* side effects */
   .lb .side{background:var(--white); border-radius:14px; padding:12px 14px; border:1px solid rgba(230,198,122,.5); font-size:11.5px; line-height:1.5; color:var(--ink-l)}
   .lb .side b{color:var(--ink)}
 
@@ -92,57 +94,120 @@ FORM: Ian's re-pin 2026-08-26 (medication infomercial, light colours + gentle go
   .lb .foot .legal{font-size:11.5px; line-height:1.45; margin:8px 0 0}
   .lb .stamp{display:inline-block; margin-top:10px; border:1.5px solid var(--gold); color:var(--gold-d); font-weight:800; letter-spacing:.12em; padding:4px 12px; border-radius:999px; font-size:11px}
 
-  /* the shrinking shadow man (the interactable): full page height, anchored bottom-right of the glass (not the scroller), shrinks toward that corner as you scroll; at the bottom he charges */
-  .lb-shade{position:absolute; right:10px; bottom:14px; z-index:7; height:92%; width:auto; aspect-ratio:1/2; max-width:46%; transform-origin:bottom right; cursor:default; pointer-events:none;
-      transition:transform .12s linear, left .9s cubic-bezier(.5,0,.3,1), right .9s cubic-bezier(.5,0,.3,1)}
-  .lb-shade svg{width:100%; height:100%; display:block; filter:drop-shadow(0 3px 4px rgba(0,0,0,.3))}
-  .lb-shade .body{fill:#3c3552}
-  .lb-shade.charged{cursor:pointer; pointer-events:auto; animation:zap .5s steps(2) infinite}
-  @keyframes zap{50%{filter:drop-shadow(0 0 10px var(--pur)) hue-rotate(20deg)} }
-  .lb-shade.charged .body{fill:var(--pur)}
-  .lb-shade.walked{left:10px; right:auto; transform-origin:bottom left}
-  .lb-shade .hint{position:absolute; bottom:104%; left:50%; transform:translateX(-50%); white-space:nowrap; font-weight:800;
-      font-size:11px; color:#fff; background:var(--pur); padding:2px 8px; border-radius:999px; opacity:0; transition:opacity .3s}
-  .lb-shade.charged .hint{opacity:1}
+  /* ---- the stage: the game IS the page, first thing after the ribbon, sized by fitViewport() below. */
+  .lb-stage{position:relative; width:100%; height:60vh; min-height:280px; overflow:hidden; background:#12100e}
+  #lbCanvas{position:absolute; inset:0; width:100%; height:100%; display:block; touch-action:none}
 
-  /* the torn page + wires (revealed when he rips it): a small ragged patch at the bottom-left where he stands (Ian: much smaller) */
-  .lb-tear{position:absolute; left:8px; bottom:20px; width:84px; height:0; z-index:9; overflow:hidden; pointer-events:none;
-      background:#0b0714; border-radius:10px; transition:height .5s cubic-bezier(.6,0,.2,1);
-      clip-path:polygon(0 6%,8% 0,20% 5%,34% 0,47% 6%,60% 1%,74% 5%,88% 0,100% 7%,97% 30%,100% 55%,96% 80%,100% 100%,0 100%,3% 72%,0 45%,4% 20%)}
-  .lb-tear.ripped{height:74px; pointer-events:auto; cursor:pointer}   /* barely taller than him at the bottom (Ian); the wires are what you click next */
-  .lb-tear.ripped:not(.wired) .wires{animation:wirehint 1s ease-in-out infinite}
-  @keyframes wirehint{50%{filter:drop-shadow(0 0 6px var(--gold)) brightness(1.5)}}
-  .lb-tear .tip{display:none}
-  .lb-tear .wires{position:absolute; top:26px; left:8px; right:10px; height:22px}
-  .lb-tear .wire{position:absolute; top:8px; height:6px; border-radius:3px}
+  .lb-hud{position:absolute; inset:0; z-index:2; pointer-events:none; font-family:"Nunito",system-ui,sans-serif}
+  .lb-hud *{box-sizing:border-box}
+  .lb-hint{position:absolute; top:10px; left:50%; transform:translateX(-50%); color:#fff; background:rgba(0,0,0,.45); padding:6px 12px; border-radius:999px; font-size:12px; font-weight:700; letter-spacing:.02em; text-align:center; max-width:88%; opacity:1; transition:opacity .6s ease}
+  .lb-hint.hide{opacity:0}
+  .lb-prompt{position:absolute; top:14px; left:50%; transform:translateX(-50%); color:#fff; background:rgba(122,47,196,.75); padding:8px 18px; border-radius:999px; font-weight:800; letter-spacing:.04em; font-size:clamp(13px,4vw,16px); opacity:0; transition:opacity .5s ease; pointer-events:none}
+  .lb-prompt.show{opacity:1}
+  .lb-walk{position:absolute; left:12px; bottom:14px; z-index:3; pointer-events:auto; width:84px; height:84px; border-radius:50%; border:2px solid rgba(255,255,255,.8);
+      background:rgba(20,16,12,.55); color:#fff; font-family:"Nunito",system-ui,sans-serif; font-weight:800; font-size:13px; letter-spacing:.08em; cursor:pointer; -webkit-user-select:none; user-select:none}
+  .lb-walk:active{background:rgba(230,198,122,.55)}
+  .lb-lookzone{position:absolute; inset:0; pointer-events:auto; cursor:grab}
+  .lb-lookzone:active{cursor:grabbing}
+
+  .lb-panel{position:absolute; inset:0; z-index:4; display:none; place-items:center; padding:16px; pointer-events:none}
+  .lb-panel.show{display:grid; pointer-events:auto}
+  .lb-panel .card{max-width:340px; width:100%; max-height:92%; overflow:auto; background:rgba(255,253,248,.97); border:1px solid rgba(230,198,122,.7); border-radius:16px; padding:18px 18px 16px; box-shadow:0 10px 30px rgba(0,0,0,.4)}
+  .lb-panel h3{font-family:"Pacifico",cursive; font-weight:400; font-size:22px; margin:0 0 4px; color:var(--ink)}
+  .lb-panel p{font-size:14px; line-height:1.45; color:var(--ink); margin:0 0 12px}
+  .lb-book{display:grid; gap:10px}
+  .lb-book label{display:grid; gap:4px; font-family:"Times New Roman",Times,serif; font-style:italic; font-size:13px; color:var(--ink)}
+  .lb-book input{font-family:"Times New Roman",Times,serif; font-size:16px; padding:9px 10px; border:1px solid rgba(60,53,82,.5); border-radius:0; background:#fff; color:var(--ink)}
+  .lb-book .row{display:flex; gap:10px; margin-top:4px; align-items:center; flex-wrap:wrap}
+  .lb-book button{font-family:"Times New Roman",Times,serif; font-weight:700; font-size:15px; border:1px solid var(--ink); cursor:pointer; padding:10px 16px; background:var(--gold-l); color:var(--ink)}
+  .lb-book a.skip{font-size:13px; color:var(--ink-l); text-decoration:underline; cursor:pointer}
+
+  /* wires interactable, carried forward from the source build's .lb-tear (markup + behaviour unchanged,
+     restyled here for the fuse-box framing instead of a corner scrap of torn page). */
+  .lb-fusepanel{text-align:center}
+  .lb-tear{position:relative; width:220px; height:150px; margin:6px auto 0; overflow:hidden; background:#0b0714; border-radius:10px;
+      box-shadow:inset 0 0 0 3px #2a2118}
+  .lb-tear .wires{position:absolute; top:56px; left:14px; right:16px; height:40px}
+  .lb-tear .wire{position:absolute; top:14px; height:10px; border-radius:5px}
   .lb-tear .wire.l{left:0; width:42%; background:linear-gradient(90deg,#c02,#f44)}
-  .lb-tear .wire.r{right:0; width:42%; background:linear-gradient(270deg,#06c,#4af); transition:right .35s ease}
-  .lb-tear .wire .end{position:absolute; width:7px; height:11px; top:-2.5px; background:#c9c9cf; border-radius:2px}
-  .lb-tear .wire.l .end{right:-7px} .lb-tear .wire.r .end{left:-7px}
-  .lb-tear.wired .wire.r{right:14%}
-  .lb-tear.wired .spark{position:absolute; left:46%; top:6px; width:12px; height:12px; border-radius:50%; background:#ffcf5c; box-shadow:0 0 14px var(--gold), 0 0 30px var(--gold); animation:spk .5s ease 3}
+  .lb-tear .wire.r{right:0; width:42%; background:linear-gradient(270deg,#06c,#4af); transition:right .35s ease, transform .05s linear; cursor:grab; pointer-events:auto; touch-action:none}
+  .lb-tear .wire.r:active{cursor:grabbing}
+  .lb-tear .wire .end{position:absolute; width:11px; height:18px; top:-4px; background:#c9c9cf; border-radius:2px}
+  .lb-tear .wire.l .end{right:-11px} .lb-tear .wire.r .end{left:-11px}
+  .lb-tear.wired .wire.r{right:14%; transform:none !important}
+  .lb-tear:not(.wired) .wires{animation:wirehint 1s ease-in-out infinite}
+  @keyframes wirehint{50%{filter:drop-shadow(0 0 8px var(--gold)) brightness(1.5)}}
+  .lb-tear.wired .spark{position:absolute; left:46%; top:12px; width:20px; height:20px; border-radius:50%; background:#ffcf5c; box-shadow:0 0 20px var(--gold), 0 0 44px var(--gold); animation:spk .5s ease 3}
   @keyframes spk{from{transform:scale(.2);opacity:1}to{transform:scale(2.6);opacity:0}}
-  .lb-tear .tip{position:absolute; bottom:3px; left:4px; right:4px; color:#8affc9; font-family:"VT323",monospace; font-size:11px; text-align:center; opacity:0; transition:opacity .3s; line-height:1.1}
-  .lb-tear.ripped .tip{opacity:.9}
-  /* the shock: the connected wires throw a gold bolt up into him; he flashes gold, then goes to ash and crumbles; the purple restore puts him back */
-  .lb-bolt{position:absolute; left:46px; bottom:52px; width:4px; height:0; z-index:8; pointer-events:none; background:var(--gold); box-shadow:0 0 10px var(--gold), 0 0 24px #fff3b0;
-      clip-path:polygon(0 0,100% 0,60% 20%,100% 35%,40% 50%,100% 65%,50% 80%,100% 100%,0 100%,45% 82%,0 66%,55% 48%,0 33%,40% 18%)}
-  .lb-bolt.go{animation:bolt .55s steps(4) 2 forwards}
-  @keyframes bolt{0%{height:0; width:4px; opacity:1} 30%{height:70%; width:18px; opacity:1} 100%{height:70%; width:10px; opacity:0}}
-  .lb-shade.shock{animation:shockflash .12s steps(2) 6}
-  .lb-shade.shock .body{fill:var(--gold)}
-  @keyframes shockflash{50%{filter:drop-shadow(0 0 16px var(--gold)) brightness(2.2)}}
-  .lb-shade.ash .body{fill:#6f6a72; transition:fill .4s}
-  .lb-shade.ash svg{animation:crumble 1.8s ease-in forwards}
-  @keyframes crumble{0%{opacity:1; filter:blur(0)} 60%{opacity:.7; filter:blur(2px)} 100%{opacity:0; filter:blur(8px); transform:translateY(6%)}}
-  .lb-shade .ashbit{position:absolute; width:5px; height:5px; border-radius:1px; background:#8a858c; opacity:0; pointer-events:none; animation:ashfall 1.6s ease-in forwards}
-  @keyframes ashfall{0%{opacity:.95; transform:translate(0,0) rotate(0)} 100%{opacity:0; transform:translate(var(--ax,0px),var(--ay,160px)) rotate(200deg)}}
+  .lb-tear .tip{position:absolute; bottom:6px; left:6px; right:6px; color:#8affc9; font-family:"VT323",monospace,monospace; font-size:14px; text-align:center; line-height:1.1}
+  @media (prefers-reduced-motion:reduce){ .lb-tear:not(.wired) .wires{animation:none} }
+
+  .lb-epi{text-align:center}
+  .lb-epi .close-line{font-family:"Pacifico",cursive; font-size:20px; color:var(--ink); margin:0 0 14px}
+
+  /* ---- the flat/no-WebGL fallback: same content, same key, same unlock chain, no three.js. */
+  .lb-flat{position:absolute; inset:0; z-index:1; overflow:auto; background:#f7f4ec; color:#1a1410; font-family:"Times New Roman",Times,serif; padding:18px 16px calc(16px + var(--panel-clear))}
+  .lb-flat[hidden]{display:none}
+  .lb-flat .fl-name{display:block; font-style:italic; font-size:clamp(20px,6vw,26px); text-decoration:underline; text-underline-offset:3px; margin:0 0 4px}
+  .lb-flat .fl-sub{font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:rgba(26,20,16,.55); margin:0 0 14px}
+  .lb-flat .fl-photo{width:100%; aspect-ratio:4/3; object-fit:cover; border:1px solid rgba(26,20,16,.4); display:block; margin:0 0 14px}
+  .lb-flat .fl-card{border:1px solid rgba(26,20,16,.35); padding:10px 12px; margin:0 0 10px; font-size:15px; line-height:1.4}
+  .lb-flat .fl-card .fl-src{display:block; margin-top:6px; font-size:11.5px; color:rgba(26,20,16,.62)}
+  .lb-flat .fl-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px}
+  .lb-flat button, .lb-flat .fl-actions a{font-family:"Times New Roman",Times,serif; font-weight:700; font-size:15px; border:1px solid #1a1410; cursor:pointer; padding:11px 18px; background:transparent; color:#1a1410; text-decoration:none; display:inline-block}
+  .lb-flat button:active{transform:translateY(1px)}
+  .lb-flat .lb-fusepanel .lb-tear{background:#0b0714}
 
   @media (min-width:760px){ .lb .stats{grid-template-columns:1fr 1fr} .lb .charts{grid-template-columns:1fr 1fr 1fr} }
 </style>
 
 <article class="lb" id="lb" aria-label="Lil Boyfriend" data-host="LIL BOYFRIEND" data-show="LIVING SMALL" data-ch="2" data-gauge="off">
   <p class="ribbon">A MOM Inc. residential therapy · ask your provider · now in a smaller size</p>
+
+  <!-- the stage: the museum IS the page, sized to fill .glass by fitViewport() below. #lbCanvas holds the
+       three.js hall; #lbHud holds every DOM overlay (walk button, look-drag zone, guest book, wires, prompts,
+       epilogue); #lbFlat is the whole no-WebGL DOM gallery, mutually exclusive with the canvas+hud pair. -->
+  <div class="lb-stage" id="lbStage">
+    <canvas id="lbCanvas" aria-label="The museum. Drag to look, hold WALK or W to walk."></canvas>
+    <div class="lb-hud" id="lbHud">
+      <div class="lb-lookzone" id="lookZone"></div>
+      <p class="lb-hint" id="lbHint">Drag to look. Hold WALK or press W to walk.</p>
+      <p class="lb-prompt" id="lbPrompt">Turn around.</p>
+      <button type="button" class="lb-walk" id="lbWalk">WALK</button>
+
+      <div class="lb-panel" id="bookPanel">
+        <div class="card">
+          <h3>Guest Book</h3>
+          <p>Sign before you go in. Every field is the same one MOM already asks for.</p>
+          <form class="lb-book" id="bookForm">
+            <label>City <input name="city" placeholder="Las Vegas" autocomplete="address-level2" required></label>
+            <label>Country <input name="country" placeholder="United States" autocomplete="country-name" required></label>
+            <label>Household income <input name="income" type="number" min="0" step="100" placeholder="52000" inputmode="numeric" required></label>
+            <div class="row"><button type="submit">SIGN</button><a class="skip" id="bookSkip">walk on</a></div>
+          </form>
+        </div>
+      </div>
+
+      <div class="lb-panel" id="wirePanel">
+        <div class="card lb-fusepanel">
+          <h3>The Fuse Box</h3>
+          <p>Two wires. Drag or tap the right one to meet the left.</p>
+          <div class="lb-tear" id="tear3d">
+            <div class="wires"><div class="wire l"><span class="end"></span></div><div class="wire r"><span class="end"></span></div><span class="spark"></span></div>
+            <div class="tip" id="tearTip3d">two wires. drag the blue one left.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lb-panel" id="epiPanel">
+        <div class="card lb-epi">
+          <p class="close-line">You leave smaller than you came in. Everyone does.</p>
+          <button type="button" id="walkAgain3d">walk again</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="wrap">
     <header class="head">
       <p class="kick">MOM Inc. Residential Compression Program presents</p>
@@ -151,6 +216,7 @@ FORM: Ian's re-pin 2026-08-26 (medication infomercial, light colours + gentle go
       <p class="generic">(compressitol residential, 2.5 inches)</p>
       <p class="tagline">Can't afford rent? Get smaller. Size isn't everything.</p>
       <span class="pill">Ask MOM if Living Small is right for you</span>
+      <p class="fine">That's the museum underway, above. Scroll up any time to walk it again; scroll down here for the diagnosis.</p>
     </header>
 
     <section class="card" aria-label="Symptoms">
@@ -211,25 +277,6 @@ FORM: Ian's re-pin 2026-08-26 (medication infomercial, light colours + gentle go
       <p class="verdict">Diagnosis: <b>you are too large for the economy.</b></p>
     </section>
 
-    <section class="card" aria-label="Cost of living estimator">
-      <h2><small>Free screening</small>How short are you?</h2>
-      <p>He already ran his own numbers. He already knows how short he is. Tell MOM where you live and what you earn. She will tell you what is left too.</p>
-      <form class="est" id="est">
-        <label>City <input name="city" placeholder="Las Vegas" autocomplete="address-level2" required></label>
-        <label>Country <input name="country" placeholder="United States" autocomplete="country-name" required></label>
-        <label>Annual income <input name="income" type="number" min="0" step="100" placeholder="52000" inputmode="numeric" required></label>
-        <button type="submit">Screen me</button>
-      </form>
-      <div class="result" id="estResult" aria-live="polite">
-        <div class="vs">
-          <div class="you"><p class="num" id="estYou">−$0</p><p class="who">you, per year</p></div>
-          <div class="him"><p class="num">$0.12</p><p class="who">Lil Boyfriend, per month</p></div>
-        </div>
-        <p class="sad" id="estSad"></p>
-        <p class="fine">Based on MOM's cost-of-living tables and the Residential Reality Adjustment. The estimator has never returned a positive number. This is not a flaw. Lil Boyfriend's rent is paid in full, forever, in a currency he is too small to earn.</p>
-      </div>
-    </section>
-
     <section aria-label="Clinical results">
       <h2><small>Clinical results</small>Proven to help.</h2>
       <div class="charts">
@@ -257,7 +304,7 @@ FORM: Ian's re-pin 2026-08-26 (medication infomercial, light colours + gentle go
 
     <section aria-label="Patient results">
       <h2><small>Patient results</small>Look how little he needs.</h2>
-      <p>Lil Boyfriend took Living Small. Now he lives in one of these homes. And he waves.</p>
+      <p>Lil Boyfriend took Living Small. Now he lives in one of these homes, one hall further down than the last. Walk the museum above to see how far the treatment goes.</p>
       <div class="homes" id="listings">
         <figure class="home">
           <div class="frame">
@@ -297,94 +344,620 @@ FORM: Ian's re-pin 2026-08-26 (medication infomercial, light colours + gentle go
       <p class="legal">LIVING SMALL™ is a compliance program of MOM Inc. Tenants depicted are actual size. In-character participation only, never a sale. Size isn't everything to a goon; being below average size doesn't make you less than other goons.</p>
     </footer>
   </div>
-
-  <!-- the interactable: the shrinking shadow man, the tear, the wires -->
-  <div class="lb-tear" id="tear" aria-hidden="true">
-    <div class="wires"><div class="wire l"><span class="end"></span></div><div class="wire r"><span class="end"></span></div><span class="spark"></span></div>
-    <div class="tip" id="tearTip">two wires. click him again.</div>
-  </div>
-  <div class="lb-bolt" id="bolt" aria-hidden="true"></div>
-  <div class="lb-shade" id="shade" role="button" tabindex="-1" aria-label="A shrinking figure. Scroll down, then click him.">
-    <span class="hint" id="shadeHint">click me</span>
-    <svg viewBox="0 0 60 120" aria-hidden="true"><path class="body" d="M30 6 a10 10 0 1 1 0 20 a10 10 0 1 1 0-20 M18 30 h24 a4 4 0 0 1 4 4 v34 a3 3 0 0 1-6 0 v-28 h-2 v76 a4 4 0 0 1-8 0 v-44 h-2 v44 a4 4 0 0 1-8 0 v-76 h-2 v28 a3 3 0 0 1-6 0 v-34 a4 4 0 0 1 4-4 Z"/></svg>
-  </div>
 </article>
 <script>
 (() => {
   const lb = document.getElementById("lb"); if (!lb) return;
   const screen = lb.closest(".screen") || document.getElementById("screen");
+  const glass = screen ? screen.parentElement : null;
+  const lbStage = document.getElementById("lbStage");
 
-  // --- the estimator: MOM's cost-of-living tables (monthly, one adult, rent included) and the Residential Reality Adjustment, which makes it negative.
-  // ponytail: a hand table of cities and country defaults; a real cost-of-living API if this page ever earns one.
-  const CITY = { "las vegas":2900, "los angeles":3900, "new york":5200, "san francisco":5300, "chicago":3300, "houston":2700, "phoenix":2800, "miami":3600,
-    "seattle":4100, "denver":3400, "austin":3100, "boston":4600, "atlanta":3000, "london":4300, "toronto":3500, "vancouver":3600, "sydney":3900,
-    "melbourne":3500, "mexico city":1500, "tokyo":2600, "berlin":2700, "paris":3400, "dublin":3800 };
-  const COUNTRY = { "united states":3200, "usa":3200, "us":3200, "america":3200, "canada":3200, "united kingdom":3300, "uk":3300, "england":3300,
-    "australia":3500, "ireland":3400, "germany":2600, "france":2700, "japan":2400, "mexico":1300 };
-  const money = n => (n < 0 ? "−$" : "$") + Math.abs(Math.round(n)).toLocaleString("en-US");
-  document.getElementById("est").addEventListener("submit", e => {
-    e.preventDefault();
-    const f = new FormData(e.target);
-    const city = String(f.get("city")).trim().toLowerCase(), country = String(f.get("country")).trim().toLowerCase();
-    const income = Math.max(0, +f.get("income") || 0);
-    window.MBS && window.MBS.form && window.MBS.form("lilboyfriend", { city, country, income });
-    const monthly = CITY[city] || COUNTRY[country] || 2200;
-    const left = income - monthly * 12;                                   // what an honest estimator would say
-    const adjusted = Math.min(left, -1) - income * 0.31;                  // the Residential Reality Adjustment: never positive
-    document.getElementById("estYou").textContent = money(adjusted);
-    const years = income > 0 ? Math.ceil(431400 / Math.max(1, income * 0.05)) : Infinity;
-    document.getElementById("estSad").textContent =
-      `In ${f.get("city")} you end the year ${money(adjusted)} behind. Saving five percent, you own the median home in ${isFinite(years) ? years + " years" : "never"}. He owns his now. It is a shoebox.`;
-    document.getElementById("estResult").classList.add("show");
-  });
-
-  // --- the interactable: the shrinking shadow man
-  const shade = document.getElementById("shade"), hint = document.getElementById("shadeHint"), tip = document.getElementById("tearTip");
-  const tear = document.getElementById("tear"), bolt = document.getElementById("bolt");
-  const glass = screen.parentElement;                   // the shade, the tear and the bolt sit in the glass, above the scroller, so they never scroll away
-  if (glass) { glass.appendChild(tear); glass.appendChild(bolt); glass.appendChild(shade); }
-  const ratio = () => screen.scrollTop / Math.max(1, screen.scrollHeight - screen.clientHeight);
-  let stage = 0;   // 0 shrinking, 1 charged/at-bottom, 2 ripped, 3 wired/done
-
-  function onScroll() {
-    if (stage >= 2) return;
-    const r = ratio();
-    const sc = 1 - Math.min(r, 1) * 0.92;                // full height at the top, 8% at the bottom, shrinking toward the bottom corner
-    shade.style.transform = `scale(${sc.toFixed(3)})`;
-    if (r >= 0.96 && stage === 0) { stage = 1; shade.classList.add("charged"); hint.textContent = "click me"; }
-    else if (r < 0.9 && stage === 1) { stage = 0; shade.classList.remove("charged"); }
+  function fitViewport() {
+    if (!glass || !lbStage) return;
+    const gh = glass.getBoundingClientRect().height;
+    const ribbonH = lb.querySelector(".ribbon").getBoundingClientRect().height;
+    const visualTarget = Math.max(240, gh - ribbonH);
+    lbStage.style.height = (visualTarget / 1.15) + "px";
   }
-  screen.addEventListener("scroll", onScroll, { passive: true }); onScroll();
+  if (glass) { new ResizeObserver(fitViewport).observe(glass); fitViewport(); }
 
-  function connect() { if (stage === 2) click(); }        // the wires in the hole are the second click (Ian)
-  function click() {
-    if (stage === 1) {                                    // walk across + rip the page
-      stage = 2; shade.classList.remove("charged"); shade.classList.add("walked");
-      setTimeout(() => { lb.classList.add("ripped"); tear.classList.add("ripped"); shade.classList.add("charged"); hint.textContent = "click the wires"; }, 900);
-    } else if (stage === 2) {                              // connect the wires -> horror flip + orange glitch
-      stage = 3; lb.classList.add("wired"); tear.classList.add("wired");
-      tip.textContent = "connected.";
-      // the gold shock: bolt up from the wires, he flashes gold, then goes to ash and crumbles
-      bolt.classList.add("go"); shade.classList.add("shock");
-      setTimeout(() => {
-        shade.classList.remove("shock"); shade.classList.add("ash");
-        for (let i = 0; i < 26; i++) { const a = document.createElement("i"); a.className = "ashbit"; a.style.left = (20 + Math.random() * 60) + "%"; a.style.top = (10 + Math.random() * 80) + "%";
-          a.style.setProperty("--ax", (Math.random() * 80 - 30).toFixed(0) + "px"); a.style.setProperty("--ay", (120 + Math.random() * 160).toFixed(0) + "px"); a.style.animationDelay = (Math.random() * .5).toFixed(2) + "s"; shade.appendChild(a); }
-      }, 750);
-      const restore = () => {                              // the purple wave: photos back, and him too
-        lb.classList.remove("breached"); tip.textContent = "he put it back. for now.";
-        shade.classList.remove("ash"); bolt.classList.remove("go"); shade.querySelectorAll(".ashbit").forEach(a => a.remove());
-      };
-      if (window.MBS && window.MBS.wave) window.MBS.wave({ after: 5000, restore });   // horror holds 5s, then the purple wave restores it
-      else setTimeout(restore, 5000);
-      lb.classList.add("breached");                        // listings -> horror
-      shade.classList.remove("charged"); hint.textContent = "";
-      if (window.MBS && window.MBS.unlock) window.MBS.unlock("lilboyfriend");
+  // ---- data: sourced facts (Part A/C) and housing-help resources (Part B), used exactly as written in
+  // LilBF Museum Housing Facts 0901.md. Numbers are never paraphrased.
+  const FACTS = {
+    teepee: [
+      { t: "A1", body: "On one night in January 2024, about 770,000 people in America had nowhere indoors to sleep. That's 18 percent more than the year before. Nobody fixed it. They just counted it again.",
+        src: "HUD, 2024 Annual Homelessness Assessment Report, Dec. 2024. archives.hud.gov/news/2024/pr24-327.cfm" },
+      { t: "A2", body: "More than a third of those 770,000 people were not even in a shelter. About 277,000 were sleeping outside, in a car, or somewhere never built for a person.",
+        src: "HUD AHAR 2024, via National Alliance to End Homelessness. endhomelessness.org/media/news-releases/hud-releases-2024-annual-homelessness-assessment-report" },
+      { t: "A3", body: "This city counted 8,859 homeless people in January 2026, twelve percent more than last time. Most of them, 5,017 people, had no shelter at all. You are standing near where some of them are.",
+        src: "Southern Nevada Continuum of Care PIT Count, Jan. 2026. lasvegassun.com/news/2026/jul/09/point-in-time-count-reveals-12-rise-in-clark-county" }
+    ],
+    shoebox: [
+      { t: "A4", body: "Half of America's renters spent more than 30 percent of their income on rent in 2023. More than a quarter spent over half of everything they made just to keep a roof.",
+        src: "Harvard Joint Center for Housing Studies, State of the Nation's Housing 2025. habitat.org/about/advocacy/housing-report-2025" },
+      { t: "A5", body: "A full-time worker needs $33.63 an hour to afford a plain two-bedroom apartment without falling behind. That's more than four times the federal minimum wage.",
+        src: "National Low Income Housing Coalition, Out of Reach 2025. nlihc.org/resource/now-available-out-reach-2025-high-cost-housing" },
+      { t: "A6", body: "Renting a two-bedroom here takes $33.65 an hour. The average renter in this city earns $22.05 an hour. The math was never going to work out for him either.",
+        src: "NLIHC, Out of Reach 2025, Nevada data. nlihc.org/sites/default/files/oor/2025_OOR-Nevada.pdf" }
+    ],
+    masonjar: [
+      { t: "A7", body: "Landlords in this city filed an eviction case against 14 of every 100 renter households in 2025. That's almost double the rate researchers track nationally.",
+        src: "Eviction Lab, Princeton University, via Las Vegas Review-Journal. reviewjournal.com/business/housing/eviction-notices-drop-in-las-vegas-but-rates-still-high-for-metro-area-report-says" },
+      { t: "A8", body: "For every 100 of the poorest renter households in America, only 35 can find a home they can afford. In Nevada, it's 17. The gap is not an accident, it's arithmetic.",
+        src: "NLIHC, The Gap: A Shortage of Affordable Homes, 2025. nlihc.org/news/nlihc-releases-gap-2025-shortage-affordable-homes" },
+      { t: "A9", body: "The median home in America hit $412,500 in 2024, 60 percent more than six years earlier. By July 2026 it was $431,400. Nobody's paycheck grew 60 percent.",
+        src: "Harvard JCHS, State of the Nation's Housing 2025 (nahb.org); NAR Existing-Home Sales, July 2026." }
+    ]
+  };
+  const RES = {
+    B1: { body: "Call 211, anywhere in the country, for shelter, rent help, food, and utility assistance. Free and confidential. In Nevada: 1-866-535-5654 or text your zip code to 898-211.", src: "211.org · nevada211.org" },
+    B2: { body: "Free, HUD-approved housing counseling exists for renting, buying, or facing foreclosure. Look up an agency by zip code. No cost, no catch.", src: "consumerfinance.gov/find-a-housing-counselor · 855-411-2372" },
+    B3: { body: "If you are homeless or about to be, start with your local Continuum of Care, 211, or social services. Here is how the process actually works.", src: "National Alliance to End Homelessness · endhomelessness.org/how-to-get-help-experiencing-homelessness" },
+    B4: { body: "Behind on rent in Clark County? Emergency rental assistance and eviction prevention funds exist. Call and ask before the notice becomes a lockout.", src: "Clark County Social Service · 702-455-4270 · clarkcountynv.gov/residents/assistance_programs/housing-expense-assistance" },
+    B5: { body: "Homeless or about to be, in Southern Nevada? This is where the shelter system's front door actually is.", src: "HELP of Southern Nevada · 702-369-4357 · helpsonv.org/get-help" },
+    B6: { body: "Facing eviction in Southern Nevada? Free legal help exists, including a hotline and a weekly ask-a-lawyer clinic. Call before the court date, not after.", src: "Legal Aid Center of Southern Nevada · 702-386-1070 · lacsn.org/practice-areas/consumer-rights-project/tenant-rights" },
+    B7: { body: "Housing and abuse often trap people together. Free, confidential help is available 24 hours a day, every day.", src: "National Domestic Violence Hotline · 1-800-799-7233 · thehotline.org" },
+    B8: { body: "Behind on rent anywhere in the US? This federal tool points you to 211, HUD's housing map, and your local housing agency.", src: "CFPB Rent Help · consumerfinance.gov/renthelp" }
+  };
+  const RESOURCE_MAP = { teepee: ["B1", "B3", "B5"], shoebox: ["B2", "B4", "B8"], masonjar: ["B6", "B7"] };
+  const EXHIBITS = [
+    { id: "teepee", label: "THE TEEPEE", p: 0.25, side: 1, cozy: "assets/lilbf-teepee-cozy.jpg", horror: "assets/lilbf-teepee-horror.jpg" },
+    { id: "shoebox", label: "THE SHOEBOX", p: 0.5, side: -1, cozy: "assets/lilbf-shoebox-cozy.jpg", horror: "assets/lilbf-shoebox-horror.jpg" },
+    { id: "masonjar", label: "THE MASON JAR", p: 0.75, side: 1, cozy: "assets/lilbf-masonjar-cozy.jpg", horror: "assets/lilbf-masonjar-horror.jpg" }
+  ];
+  const TITLE_TEXT = { h1: "THE RESIDENTIAL COMPRESSION PROGRAM.", h2: "A MOM Inc retrospective.", body: FACTS.teepee[0].body };
+  const CLOSING_LINE = "You leave smaller than you came in. Everyone does.";
+
+  // ---- shared state: own key, doesn't collide with the shell's five (mbs-on, mbs-unlock, mbs-unlock-at,
+  // mbs-forms, mbs-offer-shut). {phase: out|wired|back|done, t: path position 0..1, signed: bool}.
+  const STORE_KEY = "mbs-lilbf-museum";
+  function loadState() {
+    let saved = {};
+    try { saved = JSON.parse(localStorage.getItem(STORE_KEY) || "{}") || {}; } catch {}
+    return Object.assign({ phase: "out", t: 0, signed: false }, saved);
+  }
+  const ST = loadState();
+  function saveState() { try { localStorage.setItem(STORE_KEY, JSON.stringify(ST)); } catch {} }
+
+  function fireForm(f) {
+    if (ST.signed) return;
+    ST.signed = true; saveState();
+    window.MBS && window.MBS.form && window.MBS.form("lilboyfriend", f);
+  }
+  let connectedThisLoad = false;
+  function fireConnect(onVisual) {
+    if (ST.phase !== "out") return;   // fires once: never on resume, never from walk again
+    ST.phase = "wired"; saveState();
+    connectedThisLoad = true;
+    window.MBS && window.MBS.unlock && window.MBS.unlock("lilboyfriend");
+    const restore = () => lb.classList.remove("breached");
+    lb.classList.add("breached");   // drives the infomercial's own .breached photo flip below, unchanged
+    if (window.MBS && window.MBS.wave) window.MBS.wave({ after: 5000, restore });
+    else setTimeout(restore, 5000);
+    onVisual && onVisual();
+  }
+  function isReturning() { return ST.phase === "wired" || ST.phase === "back" || ST.phase === "done"; }
+  function rpOf(p) { return 1 - p; }
+  const reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // ---- canvas-text sign textures, shared by both render paths' data but only consumed by the 3D path
+  // (the flat path renders the same strings as plain DOM text).
+  function drawWrapped(ctx, text, x, y, maxW, lh) {
+    const words = text.split(" "); let line = "", cy = y;
+    for (const w of words) {
+      const test = line ? line + " " + w : w;
+      if (ctx.measureText(test).width > maxW && line) { ctx.fillText(line, x, cy); cy += lh; line = w; }
+      else line = test;
     }
+    if (line) { ctx.fillText(line, x, cy); cy += lh; }
+    return cy;
   }
-  window.addEventListener("pagehide", () => { shade.remove(); tear.remove(); bolt.remove(); }, { once: true });
-  shade.addEventListener("click", e => { e.stopPropagation(); if (stage === 1) click(); });
-  tear.addEventListener("click", e => { e.stopPropagation(); connect(); });
-  shade.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); if (stage === 1) click(); else connect(); } });
+
+  // ==== WebGL feature detect ====
+  const glOK = (() => {
+    try { const c = document.createElement("canvas"); return !!(window.WebGLRenderingContext && (c.getContext("webgl2") || c.getContext("webgl"))); }
+    catch { return false; }
+  })();
+
+  const lbCanvas = document.getElementById("lbCanvas"), lbHud = document.getElementById("lbHud");
+
+  // shared wires-panel builder: same markup/behaviour for both render paths (the source build's .lb-tear,
+  // restyled for the fuse-box framing). Real pointer drag on the right wire, or a quick tap, both connect.
+  function wireUp(root, onConnected) {
+    const tear = root.querySelector(".lb-tear"), wireR = root.querySelector(".wire.r"), tip = root.querySelector(".tip");
+    let dragging = false, startX = 0, done = false;
+    const threshold = () => Math.max(40, wireR.getBoundingClientRect().width * 0.7);
+    function commit() {
+      if (done) return; done = true;
+      wireR.style.transform = "";
+      tear.classList.add("wired");
+      tip.textContent = "connected.";
+      onConnected();
+    }
+    function snapBack() { wireR.style.transform = ""; }
+    wireR.addEventListener("pointerdown", e => { if (done) return; dragging = true; startX = e.clientX; wireR.setPointerCapture(e.pointerId); e.preventDefault(); });
+    wireR.addEventListener("pointermove", e => { if (!dragging || done) return; const dx = Math.min(0, e.clientX - startX); wireR.style.transform = `translateX(${dx}px)`; });
+    wireR.addEventListener("pointerup", e => {
+      if (!dragging || done) return; dragging = false;
+      const dx = e.clientX - startX;
+      if (dx <= -threshold() || Math.abs(dx) < 6) commit(); else snapBack();
+    });
+    wireR.addEventListener("pointercancel", () => { dragging = false; snapBack(); });
+    return { reset() { done = false; dragging = false; tear.classList.remove("wired"); wireR.style.transform = ""; tip.textContent = "two wires. drag the blue one left."; } };
+  }
+
+  if (glOK) { lb.classList.add("webgl"); run3D(); } else { lbCanvas.remove(); lbHud.remove(); runFlat(); }
+
+  // =====================================================================================
+  // ==== 3D path ====
+  // =====================================================================================
+  function run3D() {
+    const HALL_LEN = 60, START_Z = -1, END_Z = START_Z - HALL_LEN, CENTER_Z = (START_Z + END_Z) / 2;
+    const WALL_OUT = 1.5, WALL_IN = 0.6, CEIL_OUT = 3.0, CEIL_IN = 1.7, EYE_OUT = 1.5, EYE_IN = 0.9;
+    const WALK_SPEED = 1.6 / HALL_LEN;
+    const GUESTBOOK_P = 0.035, GUESTBOOK_SIDE = -1, TITLE_P = 0.06, TITLE_SIDE = 1, FUSEBOX_P = 1;
+    const zAt = p => START_Z - p * HALL_LEN;
+    const wallHalf = rp => WALL_OUT + (WALL_IN - WALL_OUT) * rp;
+    const ceilY = rp => CEIL_OUT + (CEIL_IN - CEIL_OUT) * rp;
+    const eyeY = rp => EYE_OUT + (EYE_IN - EYE_OUT) * rp;
+    const loom = rp => 1 + 0.6 * rp;
+
+    const hint = document.getElementById("lbHint"), prompt = document.getElementById("lbPrompt");
+    const walkBtn = document.getElementById("lbWalk"), lookZone = document.getElementById("lookZone");
+    const bookPanel = document.getElementById("bookPanel"), wirePanel = document.getElementById("wirePanel"), epiPanel = document.getElementById("epiPanel");
+
+    import("https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.min.js").then(THREE => {
+      const renderer = new THREE.WebGLRenderer({ canvas: lbCanvas, antialias: true });
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(66, 1, 0.05, 120);
+      let yaw = 0, pitch = 0;
+      function applyLook() { camera.rotation.order = "YXZ"; camera.rotation.y = yaw; camera.rotation.x = pitch; }
+
+      // ---- the hall: ONE box, BackSide material so the camera (always inside it) sees the interior faces.
+      // Lights below all sit inside this volume, never behind a sealed face - that's what keeps the first
+      // render from going pure black. Geometry is unit width/height (translated so floor sits at local y=0)
+      // so width/height can be re-scaled every frame instead of rebuilt; length is fixed, never scaled.
+      const wallMat = new THREE.MeshStandardMaterial({ color: 0xece4d3, roughness: 1, metalness: 0, side: THREE.BackSide });
+      const hallGeo = new THREE.BoxGeometry(1, 1, HALL_LEN + 8);
+      hallGeo.translate(0, 0.5, 0);
+      const hallMesh = new THREE.Mesh(hallGeo, wallMat); hallMesh.name = "hall";
+      hallMesh.position.set(0, 0, CENTER_Z);
+      scene.add(hallMesh);
+      const WARM_WALL = new THREE.Color(0xece4d3), COLD_WALL = new THREE.Color(0xb9c2cc);
+
+      scene.add(new THREE.HemisphereLight(0xfff6e6, 0x241d14, 0.65));
+      const ambient = new THREE.AmbientLight(0xffffff, 0.55);   // flat, no-normal-dependent floor so a
+      scene.add(ambient);                                        // ceiling/wall facet can never render pure black
+      const hallLights = [];
+      for (let z = START_Z; z >= END_Z; z -= 8) {
+        const pl = new THREE.PointLight(0xfff0d0, 1.4, 16, 1.6);
+        pl.position.set(0, 2.6, z); scene.add(pl); hallLights.push(pl);
+      }
+      const WARM_LIGHT = new THREE.Color(0xfff0d0), COLD_LIGHT = new THREE.Color(0x9fb8dd);
+
+      // ---- preload every photo now (both cozy and horror) so the return swap is instant, no load stall.
+      const loader = new THREE.TextureLoader();
+      const tex = {};
+      const texPromises = [];
+      EXHIBITS.forEach(ex => {
+        [["cozy", ex.cozy], ["horror", ex.horror]].forEach(([k, url]) => {
+          texPromises.push(new Promise(res => {
+            loader.load(url, t => { t.colorSpace = THREE.SRGBColorSpace; tex[url] = t; res(); }, undefined, () => { console.error("[lb] photo failed to load", url); res(); });
+          }));
+        });
+      });
+
+      // review-round fix: placards were unreadable (tiny canvas font, cropped near the floor). fTitle/
+      // fBody/fSource are now explicit per call site instead of one-size-fits-all defaults, so a placard
+      // (big canvas, big font) and the title wall (smaller) can both use this without fighting each other.
+      function makeSignTexture({ w = 900, h = 620, bg = "#f4ecd8", ink = "#1a1410", title, body, source,
+          fTitle = 46, fBody = 32, fSource = 24, lhTitle = 52, lhBody = 42, lhSource = 30, pad = 40 }) {
+        const c = document.createElement("canvas"); c.width = w; c.height = h;
+        const x = c.getContext("2d");
+        x.fillStyle = bg; x.fillRect(0, 0, w, h);
+        x.strokeStyle = "rgba(20,16,10,.4)"; x.lineWidth = 8; x.strokeRect(4, 4, w - 8, h - 8);
+        x.fillStyle = ink; x.textBaseline = "top";
+        let y = pad;
+        if (title) { x.font = `bold ${fTitle}px Georgia, 'Times New Roman', serif`; y = drawWrapped(x, title, pad, y, w - pad * 2, lhTitle) + 16; }
+        if (body) { x.font = `${fBody}px Georgia, 'Times New Roman', serif`; y = drawWrapped(x, body, pad, y, w - pad * 2, lhBody) + 14; }
+        if (source) { x.font = `italic ${fSource}px Georgia, 'Times New Roman', serif`; x.fillStyle = "rgba(26,20,16,.66)"; drawWrapped(x, source, pad, y, w - pad * 2, lhSource); }
+        const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; return t;
+      }
+      // placard canvas: 800x900, big enough that body text lands >=14 CSS px on screen (mobile) / >=18px
+      // (desktop) at the 1.5-unit standing distance, source line >=10px - see the README's review-round
+      // section for the math. Placards no longer stack under the photo; they sit at eye height beside it.
+      function makePlacardTexture(id, body, source) {
+        return makeSignTexture({ w: 800, h: 900, title: id, body, source, fTitle: 44, fBody: 48, fSource: 32, lhTitle: 50, lhBody: 58, lhSource: 39, pad: 42 });
+      }
+      function makePlateTexture(label) {
+        const c = document.createElement("canvas"); c.width = 700; c.height = 150;
+        const x = c.getContext("2d");
+        x.fillStyle = "#241d14"; x.fillRect(0, 0, 700, 150);
+        x.strokeStyle = "#c9a24c"; x.lineWidth = 6; x.strokeRect(6, 6, 688, 138);
+        x.fillStyle = "#e6c67a"; x.textAlign = "center"; x.textBaseline = "middle"; x.font = "bold 58px Georgia, serif";
+        x.fillText(label, 350, 78);
+        const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+      }
+
+      // ---- exhibits: each a small Group so the "photos loom" scale-up on return moves as one unit; the
+      // group's own position/scale are recomputed every frame (see updateExhibit), never fixed.
+      // review-round fix: placards used to stack below the photo down near the floor, cropped by the
+      // viewport bottom and the MOM INC badge, at a canvas font too small to read. Now: photo is smaller,
+      // the nameplate sits above it, and the three placards run beside it (not below it) at the SAME eye
+      // height as the photo (local y=0, matching the pivot) - so nothing in this group is ever near the
+      // floor. Each placard is big (0.8x0.9 units) with a large canvas font (see makePlacardTexture) -
+      // legible standing in front of it without needing to be simultaneously framed with the photo on a
+      // narrow 390px portrait viewport (the photo and the placard run are read as two separate, both
+      // fully-in-frame, glances - like looking at a painting, then turning your head to its wall label -
+      // not two things squeezed into one shot; see the README's review-round section for the FOV math on
+      // why a 390px-wide view can't hold a legible photo AND a legible placard at once at a fixed 1.5-unit
+      // standing distance).
+      const PHOTO_W = 1.5, PHOTO_H = 1.05, PLACARD_W = 0.8, PLACARD_H = 0.9, PLACARD_GAP = 0.15;
+      const exhibitObjs = EXHIBITS.map(ex => {
+        const group = new THREE.Group();
+        scene.add(group);
+        const photoMat = new THREE.MeshStandardMaterial({ roughness: 0.9 });
+        const photo = new THREE.Mesh(new THREE.PlaneGeometry(PHOTO_W, PHOTO_H), photoMat); photo.name = ex.id + "-photo";
+        photo.position.set(-ex.side * 0.04, 0, 0); photo.rotation.y = -ex.side * Math.PI / 2;
+        const frame = new THREE.Mesh(new THREE.PlaneGeometry(PHOTO_W + 0.12, PHOTO_H + 0.12), new THREE.MeshStandardMaterial({ color: 0x2a2118, roughness: 1 }));
+        frame.position.set(-ex.side * 0.02, 0, 0); frame.rotation.y = -ex.side * Math.PI / 2;
+        const plate = new THREE.Mesh(new THREE.PlaneGeometry(1.05, 0.24), new THREE.MeshBasicMaterial({ map: makePlateTexture(ex.label) }));
+        plate.position.set(-ex.side * 0.03, PHOTO_H / 2 + 0.18, 0); plate.rotation.y = -ex.side * Math.PI / 2;
+        group.add(frame, photo, plate);
+        const placards = FACTS[ex.id].map((f, i) => {
+          const placardZ = PHOTO_W / 2 + PLACARD_GAP + PLACARD_W / 2 + i * (PLACARD_W + PLACARD_GAP);
+          const m = new THREE.Mesh(new THREE.PlaneGeometry(PLACARD_W, PLACARD_H), new THREE.MeshBasicMaterial({ map: makePlacardTexture(f.t, f.body, f.src) }));
+          m.position.set(-ex.side * 0.03, 0, placardZ); m.rotation.y = -ex.side * Math.PI / 2;
+          group.add(m); return m;
+        });
+        const spot = new THREE.SpotLight(0xfff0d0, 1.3, 6, 0.55, 0.45, 1.6);
+        const spotTarget = new THREE.Object3D();
+        scene.add(spot, spotTarget); spot.target = spotTarget;
+        return { cfg: ex, group, photo, photoMat, placards, spot, spotTarget, texKeyCozy: ex.cozy, texKeyHorror: ex.horror };
+      });
+
+      function updateExhibit(e, rp) {
+        const half = wallHalf(rp);
+        const z = zAt(e.cfg.p);
+        e.group.position.set(e.cfg.side * half, 1.6, z);
+        e.group.scale.setScalar(loom(rp));
+        e.spot.position.set(e.cfg.side * (half - 0.6), 2.7, z);
+        e.spotTarget.position.set(e.cfg.side * half, 1.7, z);
+      }
+      exhibitObjs.forEach(e => updateExhibit(e, 0));
+
+      // ---- guest book lectern + title plaque, near the entrance; reposition (not loom-scale) with the
+      // shrinking walls so they never float outside the hall on the final approach.
+      // review-round fix: this read as a bare brown box - the only thing on top of it was a small dark
+      // brass-style plate (the same texture as the exhibit nameplates), which doesn't look like a book at
+      // all. Now: an actual open-book texture (cream pages, a centre spine, two columns of ruled lines) on
+      // the lectern top, plus a separate wall-mounted GUEST BOOK sign above it so a visitor coming down the
+      // hall knows what it is before they're standing on top of it.
+      function makeOpenBookTexture() {
+        const c = document.createElement("canvas"); c.width = 640; c.height = 420;
+        const x = c.getContext("2d");
+        x.fillStyle = "#efe6d0"; x.fillRect(0, 0, 640, 420);
+        x.strokeStyle = "rgba(60,50,30,.35)"; x.lineWidth = 3;
+        [ [0, 0, 320, 420], [320, 0, 320, 420] ].forEach(([px, py, pw, ph]) => x.strokeRect(px + 6, py + 6, pw - 12, ph - 12));
+        x.fillStyle = "rgba(40,30,15,.4)"; x.fillRect(316, 0, 8, 420);   // the spine
+        x.strokeStyle = "rgba(60,50,30,.5)"; x.lineWidth = 2;
+        for (let col = 0; col < 2; col++) for (let i = 0; i < 11; i++) {
+          const ly = 40 + i * 32; x.beginPath(); x.moveTo(col * 320 + 34, ly); x.lineTo(col * 320 + 286, ly); x.stroke();
+        }
+        x.fillStyle = "#241d14"; x.font = "italic 30px Georgia, serif"; x.textAlign = "center";
+        x.fillText("guest book", 320, 400);
+        const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+      }
+      const bookGroup = new THREE.Group(); scene.add(bookGroup);
+      bookGroup.add(new THREE.Mesh(new THREE.BoxGeometry(0.5, 1, 0.4), new THREE.MeshStandardMaterial({ color: 0x5c4326, roughness: 0.9 })));
+      const bookTop = new THREE.Mesh(new THREE.PlaneGeometry(0.58, 0.38), new THREE.MeshBasicMaterial({ map: makeOpenBookTexture(), side: THREE.DoubleSide }));
+      bookTop.position.set(0, 0.52, 0); bookTop.rotation.x = -Math.PI / 2.6; bookGroup.add(bookTop);
+      const bookSign = new THREE.Mesh(new THREE.PlaneGeometry(0.85, 0.24), new THREE.MeshBasicMaterial({ map: makePlateTexture("GUEST BOOK") }));
+      bookSign.position.set(0, 1.0, 0); bookSign.rotation.y = -GUESTBOOK_SIDE * Math.PI / 2;
+      bookGroup.add(bookSign);
+
+      const titleGroup = new THREE.Group(); scene.add(titleGroup);
+      const titleTex = makeSignTexture({ w: 1100, h: 640, title: TITLE_TEXT.h1 + "\n" + TITLE_TEXT.h2, body: TITLE_TEXT.body });
+      const titleMesh = new THREE.Mesh(new THREE.PlaneGeometry(2.3, 1.34), new THREE.MeshBasicMaterial({ map: titleTex }));
+      titleMesh.rotation.y = -TITLE_SIDE * Math.PI / 2;
+      titleGroup.add(titleMesh);
+
+      // insetFrac pulls a prop in from the wall toward the centreline path, so its lateral offset doesn't
+      // already eat the whole 1.5-unit near-and-facing budget on its own (a flush wall-mount left almost no
+      // z-slack to trigger the guest book's proximity check - found and fixed in this pass, see README).
+      function updateProp(group, side, p, rp, insetFrac) { group.position.set(side * (wallHalf(rp) - 0.03) * (insetFrac ?? 1), 1.6, zAt(p)); }
+      updateProp(bookGroup, GUESTBOOK_SIDE, GUESTBOOK_P, 0, 0.55);
+      updateProp(titleGroup, TITLE_SIDE, TITLE_P, 0, 1);
+
+      // ---- fuse box on the end wall, facing the entrance.
+      const fuseGroup = new THREE.Group(); fuseGroup.position.set(0, 1.55, zAt(FUSEBOX_P) + 0.05); scene.add(fuseGroup);
+      fuseGroup.add(new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.75, 0.18), new THREE.MeshStandardMaterial({ color: 0x3a3f45, roughness: 0.7, metalness: 0.3 })));
+      const fuseLight = new THREE.PointLight(0xdfe8ff, 0.9, 6, 2); fuseLight.position.set(0, 2.0, zAt(FUSEBOX_P) - 1); scene.add(fuseLight);
+
+      camera.position.set(0, EYE_OUT, zAt(0)); applyLook();
+
+      // ---- input: hold-to-walk (keyboard + WALK button), free-look by pointer drag (getBoundingClientRect
+      // + clientX/clientY only, per the shell's own zoom-compensation contract).
+      let walkHeld = false;
+      function typing() { const a = document.activeElement; return a && (a.tagName === "INPUT" || a.tagName === "TEXTAREA"); }
+      window.addEventListener("keydown", e => { if ((e.key === "w" || e.key === "W" || e.key === "ArrowUp") && !typing()) walkHeld = true; });
+      window.addEventListener("keyup", e => { if (e.key === "w" || e.key === "W" || e.key === "ArrowUp") walkHeld = false; });
+      walkBtn.addEventListener("pointerdown", e => { walkHeld = true; e.preventDefault(); dismissHint(); });
+      ["pointerup", "pointercancel", "pointerleave"].forEach(ev => walkBtn.addEventListener(ev, () => walkHeld = false));
+
+      let dragging = false, lastX = 0, lastY = 0;
+      lookZone.addEventListener("pointerdown", e => {
+        dragging = true; lastX = e.clientX; lastY = e.clientY; lookZone.setPointerCapture(e.pointerId); dismissHint();
+      });
+      lookZone.addEventListener("pointermove", e => {
+        if (!dragging) return;
+        const r = lbCanvas.getBoundingClientRect();
+        const dx = (e.clientX - lastX) / Math.max(1, r.width), dy = (e.clientY - lastY) / Math.max(1, r.height);
+        lastX = e.clientX; lastY = e.clientY;
+        yaw -= dx * 4.2;
+        pitch = Math.max(-Math.PI / 3, Math.min(Math.PI / 3, pitch - dy * 3.4));
+      });
+      ["pointerup", "pointercancel", "pointerleave"].forEach(ev => lookZone.addEventListener(ev, () => dragging = false));
+
+      let hintShown = true;
+      function dismissHint() { if (!hintShown) return; hintShown = false; hint.classList.add("hide"); }
+      setTimeout(dismissHint, 7000);
+
+      // three.js's actual Y-axis rotation of the base forward vector (0,0,-1) is (-sin(yaw),0,-cos(yaw)) -
+      // matching camera.rotation.y=yaw (order YXZ) is what the renderer really does, so the near+facing
+      // math below has to use the same sign or it silently judges a mirrored direction (found via a raycast
+      // debug hit landing on the wrong wall while building this pass).
+      function forwardXZ() { return { x: -Math.sin(yaw), z: -Math.cos(yaw) }; }
+      function nearFacing(pos, maxDist, minDot) {
+        const dx = pos.x - camera.position.x, dz = pos.z - camera.position.z;
+        const dist = Math.hypot(dx, dz);
+        if (dist > maxDist) return false;
+        if (dist < 0.05) return true;
+        const f = forwardXZ();
+        return (f.x * dx / dist + f.z * dz / dist) > minDot;
+      }
+
+      // ---- guest book overlay
+      const bookForm = document.getElementById("bookForm"), bookSkip = document.getElementById("bookSkip");
+      let bookOpen = false, bookSkipped = false;   // review-round bug fix: without bookSkipped, the
+      // proximity check re-opened the panel (and re-froze movement) on the very next frame after
+      // "walk on" was clicked, since near+facing hadn't changed - the panel is level-triggered every
+      // frame, so a dismiss has to be sticky, not just a one-time close.
+      function openBook() { if (bookOpen || ST.signed || bookSkipped) return; bookOpen = true; bookPanel.classList.add("show"); }
+      function closeBook() { bookOpen = false; bookPanel.classList.remove("show"); }
+      bookForm.addEventListener("submit", e => {
+        e.preventDefault();
+        const f = new FormData(e.target);
+        fireForm({ city: String(f.get("city")).trim().toLowerCase(), country: String(f.get("country")).trim().toLowerCase(), income: Math.max(0, +f.get("income") || 0) });
+        closeBook();
+      });
+      bookSkip.addEventListener("click", () => { bookSkipped = true; closeBook(); });
+
+      // ---- fuse box / wires overlay
+      let wireOpen = false;
+      const tear3d = document.getElementById("tear3d");
+      const wireCtl = wireUp(wirePanel, () => onConnect());
+      function openWire() { if (wireOpen || ST.phase !== "out") return; wireOpen = true; wirePanel.classList.add("show"); }
+      function closeWire() { wireOpen = false; wirePanel.classList.remove("show"); }
+
+      let flickerT0 = 0, flickering = false;
+      function onConnect() {
+        fireConnect(() => {
+          closeWire();
+          exhibitObjs.forEach(e => {
+            const t = tex[e.texKeyHorror]; if (t) { e.photoMat.map = t; e.photoMat.needsUpdate = true; }
+            e.spot.color.set(0x9fb8dd); e.spot.intensity = 0.75;
+            e.placards.forEach(m => m.geometry.dispose && m.geometry); // no-op guard, placards rebuilt below
+          });
+          // swap placards to resource copy for each exhibit
+          exhibitObjs.forEach(e => {
+            const ids = RESOURCE_MAP[e.cfg.id];
+            e.placards.forEach((m, i) => { m.visible = i < ids.length; });
+            ids.forEach((id, i) => {
+              const r = RES[id];
+              e.placards[i].material.map = makePlacardTexture(id, r.body, r.src);
+              e.placards[i].material.needsUpdate = true;
+            });
+          });
+          if (reducedMotion) { hallLights.forEach(l => { l.color.set(COLD_LIGHT); l.intensity = 0.55; }); wallMat.color.set(COLD_WALL); ambient.intensity = 0.3; }
+          else { flickering = true; flickerT0 = performance.now(); }
+        });
+      }
+      wireCtl; // (kept for symmetry with the flat path; wireUp already wired the pointer handlers)
+
+      // ---- epilogue
+      let epiOpen = false;
+      function openEpi() { if (epiOpen) return; epiOpen = true; epiPanel.classList.add("show"); }
+      function closeEpi() { epiOpen = false; epiPanel.classList.remove("show"); }
+      document.getElementById("walkAgain3d").addEventListener("click", () => {
+        ST.phase = "out"; ST.t = 0; saveState();
+        closeEpi();
+        exhibitObjs.forEach(e => { const t = tex[e.texKeyCozy]; if (t) { e.photoMat.map = t; e.photoMat.needsUpdate = true; } e.spot.color.set(0xfff0d0); e.spot.intensity = 1.3; });
+        hallLights.forEach(l => { l.color.set(WARM_LIGHT); l.intensity = 0.85; });
+        wallMat.color.set(WARM_WALL); ambient.intensity = 0.55;
+        yaw = 0; pitch = 0; applyLook();
+      });
+
+      function resize() {
+        const w = lbStage.clientWidth || 320, h = lbStage.clientHeight || 240;
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        renderer.setSize(w, h, false);
+        camera.aspect = w / h; camera.updateProjectionMatrix();
+      }
+      new ResizeObserver(resize).observe(lbStage);
+      resize();
+
+      // ---- boot: resume from storage before the first frame, snap (no animation) to the saved phase.
+      Promise.all(texPromises).then(() => {
+        exhibitObjs.forEach(e => {
+          const cozy = tex[e.texKeyCozy]; if (cozy) e.photoMat.map = cozy; e.photoMat.needsUpdate = true;
+        });
+        if (isReturning()) {
+          exhibitObjs.forEach(e => {
+            const h = tex[e.texKeyHorror]; if (h) { e.photoMat.map = h; e.photoMat.needsUpdate = true; }
+            e.spot.color.set(0x9fb8dd); e.spot.intensity = 0.75;
+            const ids = RESOURCE_MAP[e.cfg.id];
+            e.placards.forEach((m, i) => { m.visible = i < ids.length; if (i < ids.length) { const r = RES[ids[i]]; m.material.map = makePlacardTexture(ids[i], r.body, r.src); m.material.needsUpdate = true; } });
+          });
+          hallLights.forEach(l => { l.color.set(COLD_LIGHT); l.intensity = 0.55; });
+          wallMat.color.set(COLD_WALL); ambient.intensity = 0.3;
+          lb.classList.toggle("breached", false);
+        }
+        if (ST.phase === "done") openEpi();
+        camera.position.z = zAt(ST.t);
+        const rp0 = isReturning() ? rpOf(ST.t) : 0;
+        camera.position.y = eyeY(rp0);
+        hallMesh.scale.set(2 * wallHalf(rp0), ceilY(rp0), 1);
+        exhibitObjs.forEach(e => updateExhibit(e, rp0));
+        updateProp(bookGroup, GUESTBOOK_SIDE, GUESTBOOK_P, rp0, 0.55);
+        updateProp(titleGroup, TITLE_SIDE, TITLE_P, rp0, 1);
+        last = performance.now();
+        requestAnimationFrame(frame);
+      });
+
+      let last = performance.now();
+      function frame(now) {
+        const dt = Math.min(0.05, (now - last) / 1000); last = now;
+        applyLook();
+
+        if (walkHeld && !bookOpen && !epiOpen) {
+          const dir = ST.phase === "out" ? 1 : -1;
+          ST.t = Math.max(0, Math.min(1, ST.t + dir * WALK_SPEED * dt));
+          saveState();
+        }
+        camera.position.z = zAt(ST.t);
+        const rp = isReturning() ? rpOf(ST.t) : 0;
+        camera.position.y = eyeY(rp);
+
+        if (!flickering) { hallMesh.scale.set(2 * wallHalf(rp), ceilY(rp), 1); }
+        exhibitObjs.forEach(e => updateExhibit(e, rp));
+        updateProp(bookGroup, GUESTBOOK_SIDE, GUESTBOOK_P, rp, 0.55);
+        updateProp(titleGroup, TITLE_SIDE, TITLE_P, rp, 1);
+
+        if (flickering) {
+          const el = now - flickerT0;
+          if (el < 600) {
+            const jitter = 0.6 + Math.random() * 0.7;
+            hallLights.forEach(l => l.intensity = 0.85 * jitter);
+          } else {
+            flickering = false;
+            hallLights.forEach(l => { l.color.set(COLD_LIGHT); l.intensity = 0.55; });
+            wallMat.color.set(COLD_WALL); ambient.intensity = 0.3;
+          }
+        }
+
+        // turn-around prompt
+        if (ST.phase === "wired") {
+          prompt.classList.add("show");
+          const f = forwardXZ();
+          if (f.z > 0.3) { ST.phase = "back"; saveState(); prompt.classList.remove("show"); }
+        } else prompt.classList.remove("show");
+
+        // guest book / wires proximity
+        if (!ST.signed && !bookSkipped) { if (nearFacing(bookGroup.position, 1.5, 0.35)) openBook(); else closeBook(); }
+        if (ST.phase === "out") { if (nearFacing(fuseGroup.position, 1.5, 0.35)) openWire(); else closeWire(); }
+
+        // reached the entrance on the way back
+        if (isReturning() && ST.t <= 0.001 && ST.phase !== "done") { ST.phase = "done"; saveState(); openEpi(); }
+
+        renderer.render(scene, camera);
+        requestAnimationFrame(frame);
+      }
+    }).catch(err => {
+      console.error("[lb] three.js failed to load", err);
+      lb.classList.remove("webgl"); lbCanvas.remove(); lbHud.remove(); runFlat();
+    });
+  }
+
+  // =====================================================================================
+  // ==== flat / no-WebGL fallback ====
+  // =====================================================================================
+  function runFlat() {
+    const flat = document.createElement("div"); flat.className = "lb-flat"; flat.id = "lbFlat";
+    lbStage.appendChild(flat);
+    // step -> {phase,t}: kept in exact lockstep with the shared storage schema so a save from this path
+    // reads back correctly (and, loosely, so a save from the 3D path resumes to the nearest matching step).
+    const STEPS = [
+      { id: "entrance", phase: "out", t: 0 },
+      { id: "book", phase: "out", t: 0 },
+      { id: "teepee", phase: "out", t: 0.25 },
+      { id: "shoebox", phase: "out", t: 0.5 },
+      { id: "masonjar", phase: "out", t: 0.75 },
+      { id: "fusebox", phase: "out", t: 1 },
+      { id: "turn", phase: "wired", t: 1 },
+      { id: "masonjar-h", phase: "back", t: 0.75 },
+      { id: "shoebox-h", phase: "back", t: 0.5 },
+      { id: "teepee-h", phase: "back", t: 0.25 },
+      { id: "epilogue", phase: "done", t: 0 }
+    ];
+    function nearestStep() {
+      let best = 0, bestScore = Infinity;
+      STEPS.forEach((s, i) => {
+        const phaseOk = s.phase === ST.phase || (ST.phase === "back" && s.phase === "wired") || (ST.phase === "wired" && s.phase === "back");
+        const score = (s.phase === ST.phase ? 0 : 2) + Math.abs(s.t - ST.t);
+        if (score < bestScore) { bestScore = score; best = i; }
+      });
+      return best;
+    }
+    let step = nearestStep();
+
+    function render() {
+      const s = STEPS[step];
+      ST.phase = s.phase === "wired" && step > 6 ? "back" : s.phase; ST.t = s.t; saveState();
+      flat.innerHTML = "";
+      const wrap = document.createElement("div");
+      switch (s.id) {
+        case "entrance": wrap.innerHTML = `<span class="fl-name">${TITLE_TEXT.h1}</span><p class="fl-sub">${TITLE_TEXT.h2}</p><p>${TITLE_TEXT.body}</p><div class="fl-actions"><button id="flNext">enter</button></div>`; break;
+        case "book": {
+          wrap.innerHTML = `<span class="fl-name">Guest Book</span><p>Sign before you go in.</p>
+            <form class="lb-book" id="flBook"><label>City <input name="city" required></label><label>Country <input name="country" required></label>
+            <label>Household income <input name="income" type="number" min="0" step="100" required></label>
+            <div class="row"><button type="submit">SIGN</button><a class="skip" id="flSkip">walk on</a></div></form>`;
+          break;
+        }
+        case "teepee": case "shoebox": case "masonjar": {
+          const ex = EXHIBITS.find(e => e.id === s.id);
+          wrap.innerHTML = `<span class="fl-name">${ex.label}</span><p class="fl-sub">cozy</p>
+            <img class="fl-photo" src="${ex.cozy}" alt="${ex.label} cozy">
+            ${FACTS[ex.id].map(f => `<div class="fl-card">${f.body}<span class="fl-src">${f.src}</span></div>`).join("")}
+            <div class="fl-actions"><button id="flNext">NEXT</button></div>`;
+          break;
+        }
+        case "fusebox": wrap.innerHTML = `<span class="fl-name">The Fuse Box</span><p>Two wires. Drag or tap the right one to meet the left.</p>
+          <div class="lb-fusepanel"><div class="lb-tear" id="flTear"><div class="wires"><div class="wire l"><span class="end"></span></div><div class="wire r"><span class="end"></span></div><span class="spark"></span></div>
+          <div class="tip" id="flTip">two wires. drag the blue one left.</div></div></div>`; break;
+        case "turn": wrap.innerHTML = `<span class="fl-name">Turn around.</span><p>The hall behind you is smaller than the one you walked in.</p><div class="fl-actions"><button id="flNext">turn around</button></div>`; break;
+        case "teepee-h": case "shoebox-h": case "masonjar-h": {
+          const ex = EXHIBITS.find(e => e.id === s.id.replace("-h", ""));
+          const ids = RESOURCE_MAP[ex.id];
+          wrap.innerHTML = `<span class="fl-name">${ex.label}</span><p class="fl-sub">the walls are closer now</p>
+            <img class="fl-photo" src="${ex.horror}" alt="${ex.label} horror">
+            ${ids.map(id => `<div class="fl-card">${RES[id].body}<span class="fl-src">${RES[id].src}</span></div>`).join("")}
+            <div class="fl-actions"><button id="flNext">NEXT</button></div>`;
+          break;
+        }
+        case "epilogue": wrap.innerHTML = `<span class="fl-name">${CLOSING_LINE}</span><div class="fl-actions"><button id="flAgain">walk again</button></div>`; break;
+      }
+      flat.appendChild(wrap);
+      wire();
+    }
+    function goNext() { step = Math.min(STEPS.length - 1, step + 1); render(); }
+    function wire() {
+      const next = document.getElementById("flNext"); if (next) next.addEventListener("click", goNext);
+      const skip = document.getElementById("flSkip"); if (skip) skip.addEventListener("click", goNext);
+      const bookForm = document.getElementById("flBook");
+      if (bookForm) bookForm.addEventListener("submit", e => {
+        e.preventDefault(); const f = new FormData(e.target);
+        fireForm({ city: String(f.get("city")).trim().toLowerCase(), country: String(f.get("country")).trim().toLowerCase(), income: Math.max(0, +f.get("income") || 0) });
+        goNext();
+      });
+      const tear = document.getElementById("flTear");
+      if (tear) wireUp(tear.parentElement, () => { fireConnect(() => setTimeout(goNext, 700)); });
+      const again = document.getElementById("flAgain");
+      if (again) again.addEventListener("click", () => { ST.phase = "out"; ST.t = 0; saveState(); step = 0; render(); });
+    }
+    render();
+  }
 })();
 </script>

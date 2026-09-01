@@ -1,13 +1,44 @@
 <!--
-THESIS: Cortisol Corgi's channel is a morning paper the anxious anchor prints and hands you himself. It is not a page about a newspaper, it is the newspaper: you hold it, you turn its pages, the bad news does not scroll past you, you turn toward it.
-FORM (Ian, 2026-08-28: "id like the cortisol gorgi page to be a news paper that we flip through"): THE FRAME DOES NOT SCROLL. A four-page paper sits in the glass and the visitor flips it, corner-drag or the PAGE buttons, exactly like turning a real page. This is the same answer as Dr Girlfriend's fixed camera: a television is a landscape window, so the frame holds still and the world (here, the page) turns through it instead of the visitor scrolling down a column.
-ASPECT SPLIT (round 2, coordinator review): desktop is a real two-page SPREAD filling the glass width -- .cc-left shows a static clone of the page you just turned past, .cc-right holds the live flipping leaf, pivoting at the gutter (their shared edge) so the right page visibly peels across to become the left. Phone stays the single portrait page from round 1 (.cc-left hidden) -- a spread does not fit a portrait screen. Same 4-leaf state machine drives both; only the CSS slot geometry and the left-clone changes.
-FLOAT (standing note, 2026-08-28): the whole paper rides above the desk and bobs, never rigid.
-OWN-WORLD: yellowed newsprint, ransom-note cut-out headlines (mismatched fonts, colors, rotations, torn scraps), halftone dot screens on the photo and the ad, a slight red/cyan colour-misregistration fringe on the big type the way a cheap press drifts off-plate. Purple, gold, hot pink. Kibble at the bottom of the back page spells HELP.
-STORY: the visitor opens the front page (masthead, the anchor's photo, this morning's conspiracy), turns to page 2 for three real tells for reading bad news, page 3 for a MOM Inc. ad that is plainly a lie, and page 4, "the anchor's own record": a purely-visual stress scan, a place to vent name-and-message to the dog, and the dog's own answer, kibble arranged into HELP.
-INTERACTABLE: turning the four pages (drag the corner or press PAGE); the stress scan (visual only, decorative, states nothing real); the vent form (name + a stress message) which fires window.MBS.form("corgi", ...); the fed kibble, pushed by a paw into HELP once the form is sent and dropped off the page on click, which fires window.MBS.unlock("corgi") -- unchanged from the previous build, same triggers, same effect, new home on page 4.
-TECH NOTE, both traps from Dr Girlfriend's build re-checked here: (1) no three.js on this page at all -- a page turn is a rotateY on a leaf with transform-style:preserve-3d and a perspective ancestor, plain CSS, no engine needed or wanted. (2) the corner-drag turn computes rotation from `.cc-book`'s getBoundingClientRect() and the pointer event's clientX ONLY, never clientWidth/offsetX -- .channel carries zoom:1.15 in tv.css and mixing rect-space with layout-space pixels puts the drag ~15% off with no error shown. (3) this stays a plain classic <script>; tv.js re-creates injected <script> tags by copying textContent only and drops every attribute, so type="module" would silently throw here.
-No real-world cortisol or stress claim is made anywhere on this page; the scan says so outright. Nothing invented.
+THESIS: Cortisol Corgi's newspaper channel (built 2026-08-28, unchanged in spirit) is now the thing you fill up
+rather than the thing you're handed. You are the dog: a GoPro strapped to his head, nose in frame, low to the
+floor, walking a MOM Inc school at closing time. Somewhere in it are three torn newspaper pages. Something
+tall and faceless, built out of newsprint, is in the halls with you. Collect the pages and they assemble into
+the paper you already know how to read: same leaves, same drag-corner turn, same rising meter. Read them and
+you get three real, checkable things about reading bad news, on the same beat as always: AI is coming for our
+jobs, and the anchor's stress record at the back, kept exactly as built.
+GAME LOOP (per [[MBS Channel Games]], "Cortisol Corgi -- the Slender game", 2026-08-30): wander, low camera,
+flashlight with a recharging battery not a consumable, a papier-mache man who slides rather than runs, three
+pages, a locked door at the end naming the two levels that come after this one. MBS.unlock("corgi") + wave()
+fire on the THIRD page, not the end -- the hunt keeps going past it, same as the standing rule that a game
+banks its node partway through and continues. MBS.form("corgi", ...) now asks which AI is coming for the
+visitor's job (Ian, 2026-08-30), replacing the old free-text stress vent; the name field stays. Exactly one
+call site, at the bottom of this file.
+REUSE, not rebuild: the leaf/flip/ransom-note/meter/scan/feeder-paw-kibble code below is the 2026-08-28 build,
+structurally unchanged. What's new is that leaves 1-3 are now locked slots a hunt fills in, leaf 0 carries a
+live tally instead of static copy, and leaf 4's kibble drop no longer calls unlock (that moved to page three)
+but still fires the wave, because the built interactable is an ending beat, not a deletion.
+TECH: three.js r180 via dynamic import() from a classic script, exactly like girlfriend.html and
+lilboyfriend.html -- tv.js drops attributes when it re-creates <script> tags, so type="module" would throw
+here. Non-WebGL fallback is a room-picker: same three pages, same lessons, same stats, same form, same
+unlock, told as short read documents instead of walked to. No canvas, no three.js, no loss of function.
+Pointer maths for look-drag uses raw client deltas (no rect needed, a delta needs no zoom correction); the
+joystick reads its own getBoundingClientRect() plus the event only, never clientWidth/offsetX -- .channel
+carries zoom:1.15 and mixing spaces is the ~15% miss paid for on Dr Girlfriend's build. Sizing is
+clientWidth/clientHeight into renderer.setSize(w,h,false), the false load-bearing per the house pattern.
+No position:fixed anywhere; the hunt viewport is a normal-flow element. It fills the glass, sized in JS
+(fitViewport()) against .glass's own measured height rather than a CSS % (collapses to zero, .channel only
+sets min-height:100%) or a fixed-px vh calc (wrong on mobile, where tv.css stacks the channel-card panel
+ABOVE the glass at content-dependent "auto" height -- there is no constant that's correct at both breakpoints).
+Nothing invented: the three literacy lessons are the SIFT method (Mike Caulfield) condensed to three checkable
+habits. The three AI/jobs statistics are real and sourced -- Goldman Sachs Mar 2023, WEF Future of Jobs Report
+2025, Pew Research Jun 2026 -- verified by web search 2026-08-31, cited on the page they appear on. The horror
+is fiction. The teaching is not.
+ponytail: the school is a hand-authored 27-unit corridor with three branch rooms and one end door, not a
+generated maze -- a bigger level is a data change (extend WALLS/PAGES), not an engine change. The monster is a
+four-beat scripted slide (ambient, then one per pickup), not a pathfinding AI -- upgrade to roaming behaviour
+if a future level needs the player to actually be caught. The trophy-case reflection is a DOM overlay that
+fades on proximity, not a real-time mirror render -- a true Reflector is the upgrade if a future level needs
+more than one reflective surface.
 -->
 <style>
   .cc{--ink:#241a0e; --paper:#ded3b8; --paper2:#e7dcc2; --news:#e3d8bd; --manila:#e6d3a2; --pink:#eab9c6; --construction:#4a2a7a; --rule:#6b5c3a; --hot:#c0135a; --gold:#b8860b; --purple:#4a2a7a; --meter:4;
@@ -16,31 +47,96 @@ No real-world cortisol or stress claim is made anywhere on this page; the scan s
         repeating-linear-gradient(28deg, rgba(0,0,0,.05) 0 2px, transparent 2px 6px),
         linear-gradient(160deg,#3a2c1a,#241a10 60%,#160f08);}
   .cc *{box-sizing:border-box}
+  .cc [hidden]{display:none !important}
   .cc .sr-only{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
-  /* NOTE: .channel (tv.css) only sets min-height:100%, never height -- a percentage height on .cc would
-     never resolve against that (CSS requires a definite, non-auto ancestor height) and silently collapses
-     to 0, which then breaks anything absolutely positioned via inset against it (found live: the whole
-     book rendered off-screen at y:-395 with a black glass showing). So this stays in normal flow, sized by
-     its own content -- the book's real height comes from aspect-ratio below, not from a % of an ancestor. */
 
-  /* the meter: pinned across the top of the glass, no longer scroll-driven -- it now rises with the page you're on and with every scan */
+  /* the meter, unchanged from the 2026-08-28 build: sticky, rises only, never scroll-driven */
   .cc .meter{position:sticky; top:0; z-index:60; display:grid; grid-template-columns:auto 1fr auto; gap:8px; align-items:center;
       padding:5px 10px; background:var(--ink); color:var(--paper); font-family:"Special Elite", monospace; font-size:12px; letter-spacing:.1em; box-shadow:0 2px 4px rgba(0,0,0,.4)}
   .cc .meter .bar{height:9px; background:#3a2f1a; position:relative; overflow:hidden}
   .cc .meter .bar i{position:absolute; inset:0; transform-origin:0 50%; transform:scaleX(calc(var(--meter)/100)); background:linear-gradient(90deg,var(--gold),var(--hot)); transition:transform 400ms ease}
   .cc .meter b{color:#ff9ec2; min-width:3.4em; text-align:right}
 
-  /* the desk and the stage the paper sits on: normal flow, centred by flex, height set by the book's own
-     aspect-ratio -- not by inset against an ancestor whose height is never definite (see note above).
-     Column layout: a toolbar row (PAGE buttons, never overlapping the book -- found live, they used to be
-     pinned to the stage's corners and sat on top of the masthead on phone) then the book beneath it. */
-  .cc-stage{position:relative; display:flex; flex-direction:column; align-items:center; gap:10px;
-      padding:14px 12px 16px; perspective:1900px; perspective-origin:50% 40%}
-  .cc-toolbar{display:flex; gap:10px; align-items:center}
-  /* sized from width on narrow screens (found live: a pure height+aspect-ratio rule let the book run wider
-     than the phone viewport with no width cap, clipping text on both edges) and from height on wide ones,
-     where a portrait page inside a landscape frame is height- not width-constrained. Mobile is one page
-     (.cc-right = the whole book, .cc-left hidden); the desktop override below turns it into a spread. */
+  .cc-stage{position:relative; display:flex; flex-direction:column; align-items:center; padding:8px 8px 10px}
+  /* moved OFF the page flow (Ian, review 2026-08-31: "the instruction line stranded in the void underneath
+     it") and onto the viewport itself, a thin bar over the top-centre of the world -- it used to be a second
+     flex child eating vertical budget the viewport needed to fill the glass. */
+  .cc-hint{position:absolute; left:50%; top:36px; transform:translateX(-50%); z-index:6; margin:0; width:64%;
+      font-size:9px; line-height:1.25; letter-spacing:.02em; color:#e8dfc4; text-align:center; text-shadow:0 1px 3px #000; pointer-events:none}
+
+  /* the hunt viewport: fills the glass. A CSS-only vh calc CANNOT do this correctly: on mobile, tv.css puts
+     the channel-card panel ABOVE the glass in a `grid-template-rows:auto 1fr` row -- "auto" wraps to however
+     many rows the LCD card list needs at that width, so the chrome above the glass is not a fixed pixel
+     number, it is content-dependent and different from desktop's fixed cabinet+bezel padding. No constant
+     put in a calc() can be right for both. So this is measured live in JS instead (fitViewport(), below,
+     same ResizeObserver pattern already used for the three.js canvas) against .glass's own actual rendered
+     height, which is correct regardless of which chrome layout produced it. This rule is just the pre-JS
+     fallback for the one frame before that runs. */
+  .cc-viewport{position:relative; width:100%; max-width:1100px; height:60vh; min-height:240px;
+      background:#0c0f08; overflow:hidden; border:2px solid var(--ink); box-shadow:0 6px 20px rgba(0,0,0,.5)}
+  .cc-viewport canvas{display:block; width:100%; height:100%}
+
+  /* GoPro dressing: vignette + faint barrel darkening, REC dot, timecode, nose, tally -- all decorative overlay, pointer-events none unless noted */
+  .cc-vig{position:absolute; inset:0; pointer-events:none; z-index:5;
+      background:radial-gradient(120% 120% at 50% 45%, transparent 58%, rgba(0,0,0,.55) 100%),
+                 linear-gradient(180deg, rgba(0,0,0,.14), transparent 12%, transparent 88%, rgba(0,0,0,.2));
+      box-shadow:inset 0 0 0 3px rgba(0,0,0,.35)}
+  .cc-rec{position:absolute; left:8px; top:8px; z-index:6; display:flex; align-items:center; gap:5px; pointer-events:none;
+      font-family:"Barlow Condensed", sans-serif; font-size:11px; letter-spacing:.12em; color:#f4efe2; text-shadow:0 1px 3px #000}
+  .cc-rec i{width:8px; height:8px; border-radius:50%; background:#ff2d4a; box-shadow:0 0 6px #ff2d4a; animation:ccRec 1.1s steps(2) infinite}
+  @keyframes ccRec{50%{opacity:.15}}
+  .cc-tc{position:absolute; left:8px; top:24px; z-index:6; pointer-events:none; font-family:monospace; font-size:10.5px; color:#f4efe2; text-shadow:0 1px 3px #000; opacity:.85}
+  .cc-tally{position:absolute; right:8px; top:8px; z-index:6; pointer-events:none; font-family:"Barlow Condensed", sans-serif; font-size:11px; letter-spacing:.1em; color:var(--gold); text-shadow:0 1px 3px #000}
+  /* off-centre and clear of the very bottom edge: the shell pins its own MOM INC bug (tv.css .momlogo, 64px,
+     left:50%/bottom:10px of .glass, unzoomed) to dead bottom-centre on every channel -- that strip is the
+     shell's, not ours (Ian, review 2026-08-31: "the bug lands on the dog's nose"). Shifted off axis and up. */
+  /* top-down, bottom-center, symmetric about the vertical centerline (Ian, art pass 0901: the dog is looking
+     along its own snout, not a shape parked at a corner). Sized by height (15-20% of the frame), not width,
+     so it holds its proportion across breakpoints; raised off the very bottom edge to clear the shell's own
+     bottom-centre MOM INC bug the way the left-shifted version used to, without giving up centreing. */
+  /* 0901 expansion: 15% (was 18%) -- at 390px the wider 18% box's bottom-left corner clipped the joystick's
+     top-right corner (measured live via getBoundingClientRect, not eyeballed: 10px x / 52px y overlap).
+     15% keeps a ~3px clearance margin and stays inside the spec's 15-20% band; desktop is unaffected since
+     the 104px max-height cap already governs there (18%*700+ > 104 already). */
+  .cc-nose{position:absolute; left:50%; bottom:8%; height:15%; max-height:104px; width:auto; aspect-ratio:1.6; transform:translateX(-50%); z-index:6; pointer-events:none; opacity:.92}
+  .cc-nose svg{width:100%; height:100%; display:block; filter:drop-shadow(0 -2px 3px rgba(0,0,0,.4))}
+
+  /* left/top set every frame in JS to the trophy case's own projected screen position -- a surface in the
+     world, not a HUD panel -- so this only carries size/look. Small: it's a pane of glass in a case, not a
+     portrait (Ian, review 2026-08-31: "covers about a quarter of the corridor on mobile"). */
+  .cc-reflect{position:absolute; left:50%; top:50%; width:min(17%,74px); aspect-ratio:.82; transform:translate(-50%,-58%); z-index:7; pointer-events:none;
+      opacity:0; transition:opacity .5s ease; background:linear-gradient(160deg, rgba(210,225,235,.28), rgba(40,50,60,.55));
+      border:1.5px solid rgba(230,220,190,.5); box-shadow:0 3px 10px rgba(0,0,0,.4)}
+  .cc-reflect.show{opacity:1}
+  .cc-reflect svg{width:100%; height:100%; display:block}
+
+  /* controls: overlaid on the viewport, not stacked below it -- this is what keeps the 390px layout fitting
+     without scrolling; a control row under the canvas would have pushed the total past the fold */
+  .cc-joy{position:absolute; left:10px; bottom:10px; z-index:8; width:74px; height:74px; border-radius:50%;
+      background:rgba(20,16,8,.42); border:2px solid rgba(230,220,190,.55); touch-action:none}
+  .cc-joy .nub{position:absolute; left:50%; top:50%; width:32px; height:32px; margin:-16px 0 0 -16px; border-radius:50%;
+      background:rgba(230,220,190,.85); box-shadow:0 2px 6px rgba(0,0,0,.4)}
+  .cc-flash,.cc-readbtn{position:absolute; z-index:8; font-family:"Anton", sans-serif; letter-spacing:.04em; font-size:10.5px;
+      background:var(--gold); color:#1a1200; border:2px solid var(--ink); padding:5px 8px; cursor:pointer; box-shadow:2px 2px 0 var(--ink)}
+  .cc-flash:active,.cc-readbtn:active{transform:translate(2px,2px); box-shadow:0 0 0 var(--ink)}
+  .cc-flash:focus-visible,.cc-readbtn:focus-visible{outline:3px solid var(--hot); outline-offset:2px}
+  .cc-flash{right:8px; bottom:44px; display:flex; flex-direction:column; align-items:center; gap:3px; width:76px}
+  .cc-flash[aria-pressed="true"]{background:#ffe08a}
+  .cc-flash .batwrap{width:100%; height:5px; background:#3a2f1a; border:1px solid var(--ink)}
+  .cc-flash .batwrap i{display:block; height:100%; width:calc(var(--bat,100) * 1%); background:linear-gradient(90deg,var(--hot),var(--gold)); transition:width .3s linear}
+  .cc-readbtn{right:8px; bottom:8px; width:76px}
+
+  .cc-fallback{position:absolute; inset:0; z-index:9; overflow-y:auto; padding:12px; background:linear-gradient(180deg,var(--paper2),var(--paper))}
+  .cc-fb-intro{font-size:12px; line-height:1.4; margin:0 0 8px}
+  .cc-fb-map{display:grid; gap:6px}
+  .cc-fb-map button{font-family:"Archivo Black", sans-serif; font-size:12px; text-align:left; padding:8px 10px; border:2px solid var(--ink); background:var(--news); cursor:pointer}
+  .cc-fb-map button.found{background:#cfe6c8}
+  .cc-fb-map button.locked{opacity:.55; cursor:default}
+  .cc-fb-read{margin:8px 0 0; font-size:12.5px; line-height:1.45; padding:8px; border:1px solid var(--rule); background:var(--paper2)}
+
+  /* the book stage, structurally the 2026-08-28 build */
+  .cc-stage#ccBookStage{perspective:1900px; perspective-origin:50% 40%}
+  .cc-toolbar{display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:center}
   .cc-book{position:relative; width:80vw; max-width:340px; aspect-ratio:.72; transform-style:preserve-3d; animation:ccFloat 7.5s ease-in-out infinite}
   @keyframes ccFloat{0%,100%{transform:translateY(0) rotate(-.35deg)} 50%{transform:translateY(-7px) rotate(.4deg)}}
   .cc-book::after{content:""; position:absolute; left:-3%; right:-3%; bottom:-6%; height:14%; z-index:0; pointer-events:none;
@@ -49,7 +145,6 @@ No real-world cortisol or stress claim is made anywhere on this page; the scan s
       background:linear-gradient(90deg, rgba(0,0,0,.5), transparent)}
   .cc-left{display:none}
   .cc-right{position:relative; width:100%; height:100%}
-
   .cc .leaf{position:absolute; inset:0; transform-style:preserve-3d; transform-origin:0% 50%; transform:rotateY(0deg);
       transition:transform 620ms cubic-bezier(.45,.05,.15,1)}
   .cc .face{position:absolute; inset:0; backface-visibility:hidden; overflow:hidden; box-shadow:2px 6px 20px rgba(0,0,0,.5)}
@@ -59,8 +154,6 @@ No real-world cortisol or stress claim is made anywhere on this page; the scan s
         linear-gradient(180deg, var(--paper2), var(--paper))}
   .cc .verso::before{content:"THE NAUSEOUS TIMES"; position:absolute; inset:0; display:grid; place-items:center;
       font-family:"Anton", sans-serif; font-size:13vw; color:rgba(36,26,14,.06); letter-spacing:.02em; text-align:center; transform:scaleX(-1)}
-
-  /* the front of each leaf: a sheet of newsprint, scrollable if its own content runs long */
   .cc .face.front{overflow-y:auto; scrollbar-width:thin; scrollbar-color:var(--rule) transparent;
       padding:18px clamp(12px,4vw,26px) 30px;
       background:
@@ -68,13 +161,8 @@ No real-world cortisol or stress claim is made anywhere on this page; the scan s
         radial-gradient(circle at 12% 8%, rgba(120,90,40,.10) 0 8px, transparent 9px),
         linear-gradient(180deg, var(--paper2), var(--paper))}
   .cc .face.front::after{content:""; position:absolute; inset:0; pointer-events:none; box-shadow:inset 0 0 40px rgba(90,60,20,.25)}
-
-  /* normal flow, not sticky -- a sticky footer inside a scrolling page floats over whatever paragraph
-     is currently at the bottom of the viewport (found live: it overlapped the body copy mid-scroll) */
   .cc .pageno{margin-top:10px; padding-top:6px; border-top:1px solid var(--rule);
       font-family:"Barlow Condensed", sans-serif; font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:#5a4a2a; text-align:right}
-
-  /* the corners you drag to turn a page, and the PAGE buttons for click/tap/keyboard */
   .cc .corner{position:absolute; z-index:900; width:15%; max-width:74px; height:22%; max-height:96px; padding:0; border:0; background:none; cursor:grab; touch-action:none}
   .cc .corner:active{cursor:grabbing}
   .cc .corner.next{right:-2%; bottom:-1%}
@@ -83,16 +171,12 @@ No real-world cortisol or stress claim is made anywhere on this page; the scan s
   .cc .corner.next::before{background:linear-gradient(135deg, transparent 60%, rgba(0,0,0,.16) 60% 62%, transparent 63%), linear-gradient(135deg, transparent 68%, rgba(255,250,235,.5) 68% 70%, transparent 71%)}
   .cc .corner.prev::before{background:linear-gradient(-135deg, transparent 60%, rgba(0,0,0,.16) 60% 62%, transparent 63%), linear-gradient(-135deg, transparent 68%, rgba(255,250,235,.5) 68% 70%, transparent 71%)}
   .cc .corner[hidden]{display:none}
-
-  /* normal flow in the toolbar row, not pinned to the stage's corners -- found live, that pinning put
-     PAGE (next) on top of the masthead once the book was narrower than the stage on phone */
   .cc .pagebtn{font-family:"Anton", sans-serif; letter-spacing:.06em; font-size:12px;
       background:var(--gold); color:#1a1200; border:2px solid var(--ink); padding:6px 10px; cursor:pointer; box-shadow:2px 2px 0 var(--ink)}
   .cc .pagebtn:active{transform:translate(2px,2px); box-shadow:0 0 0 var(--ink)}
   .cc .pagebtn:focus-visible{outline:3px solid var(--hot); outline-offset:2px}
   .cc .pagebtn:disabled{opacity:.35; cursor:default}
 
-  /* ransom-note letters: each glyph its own scrap, sized big and clear */
   .ransom{display:inline-flex; flex-wrap:wrap; gap:3px 4px; justify-content:center; align-items:baseline; line-height:1.05}
   .ransom .word{display:inline-flex; flex-wrap:wrap; min-width:0; gap:3px 2px; align-items:baseline; justify-content:center}
   .ransom .g{display:inline-block; padding:2px 6px; color:#111; background:#f3ecd8; box-shadow:1px 1px 0 rgba(0,0,0,.35); border-radius:2px;
@@ -110,18 +194,12 @@ No real-world cortisol or stress claim is made anywhere on this page; the scan s
   .cc .masthead{text-align:center; border-bottom:3px double var(--ink); padding:0 0 6px; margin-bottom:5px}
   .cc .dateline{display:flex; justify-content:space-between; gap:6px; font-size:9.5px; letter-spacing:.05em;
       border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); padding:3px 1px; margin-top:5px; color:#4a3d22}
-
   .cc figure.lead{margin:0 0 6px; text-align:center; position:relative}
   .cc figure.lead img{width:min(34%, 128px); height:auto; filter:grayscale(.15) contrast(1.05); mix-blend-mode:multiply; display:inline-block; position:relative}
-  .cc figure.lead::before{content:""; position:absolute; left:50%; top:0; width:min(34%,128px); height:min(41%,110px); transform:translateX(-50%);
-      background-image:radial-gradient(rgba(36,26,14,.35) 1px, transparent 1.3px); background-size:3px 3px; mix-blend-mode:multiply; pointer-events:none}
   .cc figure.lead figcaption{font-size:10px; line-height:1.25; color:#4a3d22; border-top:1px solid var(--rule); padding-top:2px; margin-top:2px; font-style:italic}
-
   .cc .cols{columns:1; column-gap:24px; column-rule:1px solid var(--rule); font-size:13.5px; line-height:1.4; text-align:justify; padding:4px 2px}
   .cc .cols p{margin:0 0 6px; break-inside:avoid}
   .cc .cols p .lede{font-family:"Anton", sans-serif; font-size:13px; letter-spacing:.02em}
-  .cc .cols p.head{font-family:"Archivo Black", sans-serif; font-size:14px; line-height:1.15; text-transform:uppercase; margin-bottom:2px; text-align:left}
-
   .cc .block{position:relative; padding:10px 12px 12px; margin:5px 4px 0; color:var(--ink);
       filter:url(#fibers) drop-shadow(2px 4px 5px rgba(0,0,0,.4))}
   .cc .block::before{content:""; position:absolute; inset:0; z-index:-1; background:var(--news);
@@ -133,20 +211,10 @@ No real-world cortisol or stress claim is made anywhere on this page; the scan s
       background-image:repeating-linear-gradient(90deg, rgba(0,0,0,.05) 0 3px, transparent 3px 7px); z-index:2}
   .cc .tape.tl{left:-10px; top:-7px; transform:rotate(-22deg)} .cc .tape.tr{right:-10px; top:-7px; transform:rotate(20deg)}
   .cc p.body{font-size:13.5px; line-height:1.38; margin:0 0 7px; max-width:70ch; font-family:"Special Elite", monospace}
-  .cc .tells{list-style:none; margin:0; padding:0; display:grid; gap:7px; font-size:13px; line-height:1.4}
-  .cc .tells li{padding-left:2px}
-  .cc .tells b{display:block; font-family:"Archivo Black", sans-serif; font-size:14.5px; margin-bottom:1px}
-  .cc .bark{font-family:"Anton", sans-serif; font-size:clamp(18px,4.4vw,26px); margin:4px 0 0; letter-spacing:.03em; color:var(--purple)}
+  .cc .lesson{list-style:none; margin:0; padding:0; font-size:13px; line-height:1.4}
+  .cc .lesson b{display:block; font-family:"Archivo Black", sans-serif; font-size:14.5px; margin-bottom:3px}
   .cc .cap{font-size:12px; color:var(--hot); font-style:italic; margin:3px 0 0; font-family:"Special Elite", monospace}
-
-  .cc .ad{border:0}
-  .cc .ad::before{outline:3px solid #b40000; outline-offset:-6px}
-  .cc .ad .halftone{position:absolute; right:10px; top:10px; width:64px; height:64px; border-radius:50%; opacity:.5;
-      background-image:radial-gradient(#b40000 1.1px, transparent 1.4px); background-size:4px 4px}
-  .cc .ad .price{font-family:"Anton", sans-serif; font-size:20px; color:#b40000; margin:6px 0}
-  .cc .ad .fine{font-size:10.5px; line-height:1.3; color:#5a3a1a; margin:8px 0 0}
-  .cc .ad .stamp{display:inline-block; margin-top:8px; padding:3px 8px; border:2px solid #b40000; color:#b40000; font-family:"Anton", sans-serif; font-size:12px; letter-spacing:.1em; transform:rotate(-6deg)}
-
+  .cc .src{font-size:10.5px; color:#5a4a2a; margin:6px 0 0}
   .cc .scan{position:relative; height:76px; background:#160f22; overflow:hidden; display:grid; place-items:center; text-align:center; border:2px solid var(--ink)}
   .cc .scan .line{position:absolute; left:0; right:0; top:-4px; height:4px; background:var(--hot); box-shadow:0 0 14px var(--hot); opacity:0}
   .cc .scan.running .line{opacity:1; animation:sweep 2.2s linear forwards}
@@ -159,10 +227,8 @@ No real-world cortisol or stress claim is made anywhere on this page; the scan s
   .cc button.big:focus-visible{outline:3px solid var(--hot); outline-offset:2px}
   .cc label{display:block; font-family:"Archivo Black", sans-serif; font-size:11px; line-height:1.3; letter-spacing:.03em; margin:8px 0 4px}
   .cc textarea,.cc input{width:100%; font-family:"Special Elite", monospace; font-size:14px; color:var(--ink); background:#efe7cf; border:2px solid var(--ink); padding:7px; caret-color:var(--hot)}
-  .cc textarea{min-height:48px; resize:vertical}
   .cc .fine{font-size:10.5px; line-height:1.3}
   .cc .pressure{border-top:3px solid var(--ink)}
-
   .cc .feeder{position:relative; margin:8px 0 2px; height:96px; opacity:0; transform:translateY(10px); transition:opacity .45s ease, transform .45s ease; pointer-events:none}
   .cc .feeder.on{opacity:1; transform:none}
   .cc .feeder .pile{position:absolute; left:0; right:0; bottom:6px; width:100%; height:84px; overflow:visible; outline:none}
@@ -177,20 +243,10 @@ No real-world cortisol or stress claim is made anywhere on this page; the scan s
   .cc .feeder.covering .paw{transform:translateX(2%) rotate(-6deg)}
 
   @media (min-width:760px){
-    /* a real spread: landscape, filling the glass width, aspect-ratio doubled (two portrait pages side
-       by side) -- round-1 shipped a portrait page floating in a landscape frame with dead margins either
-       side; this is the actual fix, not a size tweak */
-    /* width and height capped independently, not tied by a fixed aspect-ratio: the glass itself is
-       squarer than two true-portrait pages side by side (1.44), so an aspect-locked spread left real
-       height on the table (found live: shrank the page box vs the round-1 portrait book, making the
-       density problem worse, not better). Filling both budgets matters more than a pure page shape here. */
     .cc-book{width:min(78vw,850px); max-width:none; height:min(72vh,626px); aspect-ratio:auto; animation-name:ccFloatWide}
     @keyframes ccFloatWide{0%,100%{transform:translateY(0) rotate(-.15deg)} 50%{transform:translateY(-6px) rotate(.18deg)}}
     .cc-book::before{left:50%; top:1%; bottom:1%; width:1.4%; transform:translateX(-50%);
         background:linear-gradient(90deg, transparent, rgba(0,0,0,.55), transparent)}
-    /* z-index above the leaf stack (100+): a turned leaf rotates -180 around the gutter and geometrically
-       swings its (decorative) back face into this same left-half space -- found live, it sat there and
-       covered the real clone underneath since it never lost that high z-index once turned */
     .cc-left{display:block; position:absolute; left:0; top:0; width:50%; height:100%; z-index:150; pointer-events:none}
     .cc-right{position:absolute; right:0; top:0; width:50%; height:100%}
     .cc .cols{columns:2 200px}
@@ -199,140 +255,121 @@ No real-world cortisol or stress claim is made anywhere on this page; the scan s
   @media (prefers-reduced-motion:reduce){
     .cc-book{animation:none} .cc .leaf{transition:none}
     .cc .scan .line{animation:none} .cc .feeder,.cc .paw,.cc .feeder .pile .k,.cc .feeder.dropping .pile .k{transition:none}
+    .cc-rec i{animation:none}
+  }
+
+  /* ---- ART PASS 0901: Rung 3 VHS overlay (ported verbatim from vhs-ladder.html's .r3, inside the viewport
+     only) + Slender: The Eight Pages mechanics chrome. All overlay layers pointer-events:none. ---- */
+  .cc-viewport canvas{filter:saturate(0.7) contrast(1.12) sepia(0.22) brightness(0.95)}
+  .cc-vhs{position:absolute; inset:0; pointer-events:none; z-index:4; overflow:hidden}
+  .cc-vhs .grain{position:absolute; inset:-20px; opacity:.75; mix-blend-mode:soft-light;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      animation:ccGrain .5s steps(4) infinite}
+  @keyframes ccGrain{0%{transform:translate(0,0)} 25%{transform:translate(-18px,12px)} 50%{transform:translate(11px,-15px)} 75%{transform:translate(-6px,-9px)} 100%{transform:translate(0,0)}}
+  .cc-vhs .scan{position:absolute; inset:0; opacity:.6; background:repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0,0,0,.35) 2px 3px)}
+  .cc-vhs .cast{position:absolute; inset:0; opacity:.32; background:#b8c832; mix-blend-mode:overlay}
+  .cc-vhs-vig{position:absolute; inset:0; pointer-events:none; z-index:6;
+      background:radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.55) 100%)}
+  /* the cheap chromatic-aberration substitute the spec allows in place of a WebGL post-pass: a 1px red/cyan
+     fringe on the HUD text that sits on the tape, not a duplicate render of the live canvas */
+  .cc-rec,.cc-tc,.cc-tally{text-shadow:1px 0 rgba(255,20,80,.55), -1px 0 rgba(0,210,255,.45), 0 1px 3px #000}
+
+  /* dedicated coarse white-noise layer for the Slender proximity-static effect -- deliberately blockier and
+     brighter than the ambient Rung 3 grain above it, so a danger spike reads as distinct from the tape's
+     resting texture, not just "more of the same grain" */
+  .cc-static{position:absolute; inset:0; z-index:4; pointer-events:none; opacity:0; display:block; image-rendering:pixelated; mix-blend-mode:screen}
+  .cc-burst{position:absolute; inset:0; z-index:11; pointer-events:none; opacity:0; background:#fff}
+  .cc-burst.go{animation:ccBurst .9s ease-out}
+  @keyframes ccBurst{0%{opacity:0; transform:scale(1)} 12%{opacity:1; transform:scale(1.18)} 40%{opacity:.85; transform:scale(1.22)} 100%{opacity:0; transform:scale(1.3)}}
+
+  .cc-prompt{position:absolute; left:50%; bottom:26%; transform:translateX(-50%); z-index:6; pointer-events:none;
+      font-family:"Anton", sans-serif; font-size:11px; letter-spacing:.08em; color:#fff8e0; background:rgba(20,14,6,.62);
+      border:1px solid rgba(230,220,190,.5); padding:4px 10px; opacity:0; transition:opacity .15s ease; text-align:center; white-space:nowrap}
+  .cc-prompt.show{opacity:1}
+
+  .cc-sprint{position:absolute; left:10px; bottom:92px; z-index:8; width:74px; font-family:"Anton", sans-serif; font-size:9.5px;
+      letter-spacing:.06em; background:rgba(20,16,8,.55); color:#f4efe2; border:2px solid rgba(230,220,190,.55);
+      padding:4px 6px; cursor:pointer; text-align:center}
+  .cc-sprint[aria-pressed="true"]{background:#ffe08a; color:#1a1200}
+  .cc-sprint .stamwrap{width:100%; height:4px; background:rgba(0,0,0,.4); margin-top:3px}
+  .cc-sprint .stamwrap i{display:block; height:100%; width:calc(var(--stam,100) * 1%); background:#8fd6a0}
+
+  .cc-jolt{animation:ccJolt .22s ease-out}
+  @keyframes ccJolt{0%{filter:brightness(2.4) saturate(1.4); transform:scale(1.04)} 100%{filter:brightness(1) saturate(1); transform:scale(1)}}
+
+  @media (prefers-reduced-motion:reduce){
+    .cc-vhs .grain{animation:none} .cc-burst.go{animation:none} .cc-jolt{animation:none}
   }
 </style>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <filter id="fibers" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency=".04" numOctaves="3" seed="11" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="4" xChannelSelector="R" yChannelSelector="G"/></filter>
   <filter id="fur" x="-12%" y="-12%" width="124%" height="124%"><feTurbulence type="fractalNoise" baseFrequency="0.86 0.86" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="7" xChannelSelector="R" yChannelSelector="G" result="d"/><feTurbulence type="fractalNoise" baseFrequency="0.9 0.5" numOctaves="2" seed="3" result="n2"/><feDiffuseLighting in="n2" surfaceScale="1.2" diffuseConstant="1" lighting-color="#ffffff" result="light"><feDistantLight azimuth="235" elevation="60"/></feDiffuseLighting><feComposite in="light" in2="d" operator="in" result="lit"/><feBlend in="d" in2="lit" mode="multiply"/></filter>
 </svg>
-<article class="cc" id="cc" aria-label="Cortisol Corgi" data-host="CORTISOL CORGI" data-show="NAUSEOUS IN THE MORNING" data-ch="6" data-gauge="off">
+<article class="cc" id="cc" aria-label="Cortisol Corgi" data-host="CORTISOL CORGI" data-show="THE SCHOOL HUNT" data-ch="6" data-gauge="off">
   <div class="meter" id="ccMeter" role="meter" aria-label="Cortisol" aria-valuemin="0" aria-valuemax="100" aria-valuenow="4"><span>CORTISOL</span><div class="bar"><i></i></div><b id="ccMeterPct">4%</b></div>
   <p class="sr-only" id="ccAnnounce" role="status" aria-live="polite"></p>
 
-  <div class="cc-stage">
+  <div class="cc-stage" id="ccHuntStage">
+    <div class="cc-viewport" id="ccViewport">
+      <canvas id="ccCanvas" aria-hidden="true"></canvas>
+      <div class="cc-fallback" id="ccFallback" hidden>
+        <p class="cc-fb-intro">Your browser will not draw the hallway. Here is the floor plan instead. Cortisol Corgi still went in. Tap a room.</p>
+        <div class="cc-fb-map" id="ccFbMap"></div>
+        <p class="cc-fb-read" id="ccFbRead" aria-live="polite"></p>
+      </div>
+
+      <div class="cc-vhs" aria-hidden="true"><div class="cast"></div><div class="grain"></div><div class="scan"></div></div>
+      <canvas class="cc-static" id="ccStatic" aria-hidden="true"></canvas>
+      <div class="cc-vig" aria-hidden="true"></div>
+      <div class="cc-rec" aria-hidden="true"><i></i>REC</div>
+      <div class="cc-tc" id="ccTC" aria-hidden="true">00:00</div>
+      <div class="cc-tally" id="ccTally" aria-hidden="true">PAGES 0/3</div>
+      <div class="cc-reflect" id="ccReflect" aria-hidden="true">
+        <svg viewBox="0 0 100 122"><defs><clipPath id="ccRclip"><rect x="0" y="0" width="100" height="122" rx="4"/></clipPath></defs>
+        <g clip-path="url(#ccRclip)">
+          <rect width="100" height="122" fill="#171225"/>
+          <ellipse cx="50" cy="66" rx="34" ry="30" fill="#c98a4a"/>
+          <ellipse cx="50" cy="74" rx="26" ry="20" fill="#e3ad6f"/>
+          <ellipse cx="33" cy="42" rx="11" ry="16" transform="rotate(-18 33 42)" fill="#c98a4a"/>
+          <ellipse cx="67" cy="42" rx="11" ry="16" transform="rotate(18 67 42)" fill="#c98a4a"/>
+          <circle cx="38" cy="60" r="6" fill="#1a1208"/><circle cx="62" cy="60" r="6" fill="#1a1208"/>
+          <circle cx="40" cy="58" r="1.6" fill="#fff"/><circle cx="64" cy="58" r="1.6" fill="#fff"/>
+          <ellipse cx="50" cy="78" rx="6" ry="4.5" fill="#241a10"/>
+          <path d="M18 6 L34 30 M78 12 L58 34 M10 60 L28 66" stroke="rgba(255,255,255,.18)" stroke-width="6"/>
+        </g></svg>
+      </div>
+      <div class="cc-nose" aria-hidden="true">
+        <svg viewBox="0 0 100 62"><ellipse cx="50" cy="18" rx="46" ry="24" fill="#caa06a"/><ellipse cx="50" cy="14" rx="30" ry="15" fill="#2a1a10"/>
+          <ellipse cx="39" cy="10" rx="5" ry="7" fill="#0e0805"/><ellipse cx="61" cy="10" rx="5" ry="7" fill="#0e0805"/>
+          <ellipse cx="44" cy="6" rx="3" ry="2" fill="rgba(255,255,255,.35)"/></svg>
+      </div>
+      <div class="cc-vhs-vig" aria-hidden="true"></div>
+      <div class="cc-burst" id="ccBurst" aria-hidden="true"></div>
+      <div class="cc-prompt" id="ccPrompt" aria-hidden="true"></div>
+
+      <button type="button" class="cc-flash" id="ccFlashBtn" aria-pressed="false">FLASHLIGHT<span class="batwrap"><i id="ccBatFill" style="--bat:100"></i></span></button>
+      <button type="button" class="cc-readbtn" id="ccReadBtn">READ THE PAPER</button>
+      <button type="button" class="cc-sprint" id="ccSprintBtn" aria-pressed="false">SPRINT<span class="stamwrap"><i id="ccStamFill" style="--stam:100"></i></span></button>
+      <div class="cc-joy" id="ccJoy" aria-hidden="true"><div class="nub" id="ccJoyNub"></div></div>
+      <p class="cc-hint">Drag to look. Move with the pad, or WASD / arrows. Shift or SPRINT to run. F is the flashlight.</p>
+    </div>
+  </div>
+
+  <div class="cc-stage" id="ccBookStage" hidden>
     <div class="cc-toolbar">
+      <button type="button" class="pagebtn" id="ccBackHunt">&#9668; BACK TO THE HALL</button>
       <button type="button" class="pagebtn prev" id="ccPrev" aria-label="Previous page">&#9668; PAGE</button>
       <button type="button" class="pagebtn next" id="ccNext" aria-label="Next page">PAGE &#9658;</button>
     </div>
-
-    <div class="cc-book" id="ccBook" role="group" aria-roledescription="newspaper" aria-label="The Nauseous Times, four pages, drag a corner or press PAGE to turn">
+    <div class="cc-book" id="ccBook" role="group" aria-roledescription="newspaper" aria-label="The Nauseous Times, school edition, five pages, drag a corner or press PAGE to turn">
       <div class="cc-left" id="ccLeft" aria-hidden="true"><div class="verso"></div></div>
       <div class="cc-right" id="ccRight">
 
-      <div class="leaf" id="ccLeaf0">
-        <div class="face front">
-          <header class="masthead">
-            <p class="kicker">Mom's Brainwashing Stream presents</p>
-            <h1 class="rtitle" data-ransom="THE NAUSEOUS TIMES"></h1>
-            <div class="dateline"><span>MORNING EDITION</span><span>VOL. X9 &middot; NO. ???</span><span>PRICE: YOUR CALM</span></div>
-          </header>
-
-          <figure class="lead">
-            <img src="assets/cortisol-corgi-badge.png" alt="Cortisol Corgi, the anchor, three anxious corgis in collars" width="1761" height="1516">
-            <figcaption>THE ANCHOR, PHOTOGRAPHED THIS MORNING. HE HAS NOT SLEPT. NEITHER HAS THE STORY.</figcaption>
-          </figure>
-
-          <div class="cols" aria-label="This morning's newspaper">
-            <p><span class="lede">THEY MOVED THE MORNING AGAIN.</span> The sun rose four minutes early. No one asked us. The corgi knows. The corgi always knows. He has a board with string on it. The string is stress.</p>
-            <p class="head">Coffee is a listening device, insiders warn</p>
-            <p>A cup left on a desk all night is not a cup. It is a meeting. The steam spells things out. You just have to be tired enough to read it. This anchor is tired enough to read anything.</p>
-            <p class="head">The mother on the phone was never the mother</p>
-            <p>Officials will not say how a voice can wear a face it never had. The dog stopped answering the phone. Now he barks the study number instead. That is more than officials ever do.</p>
-            <p>PAGE 2: why the news is worse on purpose. PAGE 3: a company that files you. PAGE 4: the anchor's own record. And who keeps bringing it up. PAGE 9: nothing. There is no page 9. Do not ask about page 9.</p>
-          </div>
-          <p class="pageno">DRAG THE CORNER, OR PRESS PAGE &middot; PG 1 / 4</p>
-        </div>
-        <div class="face back"><div class="verso"></div></div>
-      </div>
-
-      <div class="leaf" id="ccLeaf1">
-        <div class="face front">
-          <section class="block manila r1" aria-labelledby="tellsH"><span class="tape tl" aria-hidden="true"></span>
-            <p class="kicker">The part that is not a joke</p>
-            <h2 id="tellsH" data-ransom="Three tells"></h2>
-            <p class="body">Read this before a headline gets into your blood. We are stressed goons here. Stressed goons make bad goons. The dog is stressed so you do not have to be.</p>
-            <ol class="tells">
-              <li><b>1. Who counted?</b> A number with no source is just a feeling with digits. Find the study. Find the agency. Find the count. No source means no real spike.</li>
-              <li><b>2. How many?</b> "Rampant." "Surging." "Everyone." If a sentence will not give you the number, it is hiding its size. Ask for the real count.</li>
-              <li><b>3. What is the ask?</b> Bad news that ends with a purchase, a signup, or a share is an ad wearing a headline. Note the ask. Then decide.</li>
-            </ol>
-            <p class="cap">(sniff) that one is free. MOM Inc. would like a word about that.</p>
-          </section>
-          <p class="pageno">PG 2 / 4</p>
-        </div>
-        <div class="face back"><div class="verso"></div></div>
-      </div>
-
-      <div class="leaf" id="ccLeaf2">
-        <div class="face front">
-          <aside class="block ad pink r2" aria-label="A MOM Inc. advertisement, fictional"><span class="tape tr" aria-hidden="true"></span><span class="halftone" aria-hidden="true"></span>
-            <p class="kicker">Paid placement</p>
-            <h2 data-ransom="Calm Compliance"></h2>
-            <p class="body">Feeling the morning? You are not sick. You are unenrolled. Calm Compliance lowers your stress. It removes the news you were not meant to read. It does this on its own. Forever. You already agreed to it.</p>
-            <div class="price">Nine hundred cycles a month. Per family member.</div>
-            <p class="fine">CALM COMPLIANCE IS A DEBT INSTRUMENT. TERMS APPLY. THIS ADVERTISEMENT IS FICTION AND SELLS NOTHING; THERE IS NO CHECKOUT AND NEVER WILL BE. THE ANCHOR WAS NOT CONSULTED. OFFER GOOD FOR STRESSED GOONS ONLY. THAT IS EVERYONE READING THIS.</p>
-            <span class="stamp">REVIEWED &middot; FINE</span>
-          </aside>
-          <p class="pageno">PG 3 / 4</p>
-        </div>
-        <div class="face back"><div class="verso"></div></div>
-      </div>
-
-      <div class="leaf" id="ccLeaf3">
-        <div class="face front">
-          <section class="block constr r3" aria-labelledby="scanH"><span class="tape tl" aria-hidden="true"></span>
-            <p class="kicker">The anchor's own record</p>
-            <h2 id="scanH" data-ransom="Submit your stress"></h2>
-            <p class="body">Other stressed people are reading too. Hold still for the scan. Then tell the dog what is wrong. Someone has to know. It may as well be him.</p>
-            <div class="scan" id="scan"><div class="line"></div><div class="out" id="scanOut">HOLD STILL. LOOK AT THE DOG.</div></div>
-            <button class="big" type="button" id="scanBtn">SCAN MY STRESS</button>
-            <p class="fine">The scan is purely visual. It measures nothing, stores nothing, and cannot see you. Cortisol Corgi cannot see either. That is canon.</p>
-
-            <form id="ventForm" action="mailto:tips@mbs.example" method="post" enctype="text/plain">
-              <label for="ventStory">He already filed his story today. He already worried about it. Now tell him yours: the bad news, the thing that happened, the morning</label>
-              <textarea id="ventStory" name="story" placeholder="It started when..." required></textarea>
-              <label for="ventName">A name, or not</label>
-              <input id="ventName" name="name" placeholder="Anonymous is fine. His record is the only one that matters.">
-              <button class="big" type="submit" id="ventBtn">TELL THE DOG</button>
-              <p class="fine">Nothing is posted anywhere. In-character participation only, never a sale.</p>
-            </form>
-
-            <div class="feeder" id="feeder" aria-hidden="true">
-              <svg class="pile" id="kibbleSvg" viewBox="0 0 560 180" preserveAspectRatio="xMidYMax meet" role="button" tabindex="-1" aria-label="Dog food pushed out. Click it."></svg>
-              <div class="pawclip"><svg class="paw" viewBox="0 0 210 210" aria-hidden="true">
-                <g filter="url(#fur)">
-                  <path d="M210 58 Q150 54 120 74 Q94 92 92 118 Q95 152 132 162 Q176 170 210 160 Z" fill="#f6f7f9"/>
-                  <ellipse cx="86" cy="112" rx="62" ry="70" fill="#f8f9fb"/>
-                  <ellipse cx="52" cy="52" rx="17" ry="24" transform="rotate(-32 52 52)" fill="#f6f7f9"/>
-                  <ellipse cx="40" cy="92" rx="18" ry="25" transform="rotate(-12 40 92)" fill="#f8f9fb"/>
-                  <ellipse cx="42" cy="134" rx="18" ry="25" transform="rotate(10 42 134)" fill="#f6f7f9"/>
-                  <ellipse cx="58" cy="170" rx="17" ry="24" transform="rotate(28 58 170)" fill="#f8f9fb"/>
-                </g>
-                <g opacity=".92">
-                  <path d="M60 96 Q86 78 112 96 Q118 128 86 140 Q54 128 60 96 Z" fill="#df9fb2"/>
-                  <ellipse cx="44" cy="54" rx="9" ry="12" transform="rotate(-30 44 54)" fill="#e7b7c6"/>
-                  <ellipse cx="31" cy="92" rx="9" ry="13" fill="#e7b7c6"/>
-                  <ellipse cx="33" cy="134" rx="9" ry="13" fill="#e7b7c6"/>
-                  <ellipse cx="49" cy="170" rx="9" ry="12" transform="rotate(28 49 170)" fill="#e7b7c6"/>
-                </g>
-                <g fill="#efe9dc" stroke="#b8ac90" stroke-width="1">
-                  <path d="M30 44 Q15 39 11 48 Q20 53 31 52 Z"/>
-                  <path d="M18 88 Q3 86 1 95 Q12 98 23 94 Z"/>
-                  <path d="M20 132 Q5 134 5 144 Q16 144 25 139 Z"/>
-                  <path d="M38 166 Q25 177 29 185 Q41 181 45 172 Z"/>
-                </g>
-              </svg></div>
-            </div>
-          </section>
-
-          <div class="block r1 pressure"><span class="tape tr" aria-hidden="true"></span>
-            <p class="bark">WOOF WOOF. WOOF.</p>
-            <p class="cap">(answer the quiz on Wednesday. every answer is a signal out. he cannot say more. he cannot say why.)</p>
-          </div>
-          <p class="pageno">PG 4 / 4 &middot; THE BACK PAGE</p>
-        </div>
-        <div class="face back"><div class="verso"></div></div>
-      </div>
+      <div class="leaf" id="ccLeaf0"><div class="face front"></div><div class="face back"><div class="verso"></div></div></div>
+      <div class="leaf" id="ccLeaf1"><div class="face front"></div><div class="face back"><div class="verso"></div></div></div>
+      <div class="leaf" id="ccLeaf2"><div class="face front"></div><div class="face back"><div class="verso"></div></div></div>
+      <div class="leaf" id="ccLeaf3"><div class="face front"></div><div class="face back"><div class="verso"></div></div></div>
+      <div class="leaf" id="ccLeaf4"><div class="face front"></div><div class="face back"><div class="verso"></div></div></div>
 
       </div>
       <button type="button" class="corner next" id="ccCornerNext" aria-label="Drag or press to turn the page"></button>
@@ -344,90 +381,107 @@ No real-world cortisol or stress claim is made anywhere on this page; the scan s
 (() => {
   const cc = document.getElementById("cc"); if (!cc) return;
 
-  // ransom-note letters: every heading tagged data-ransom becomes cut-out glyphs
-  let seed = 91; const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
-  const fonts = ["Anton", "Archivo Black", "Bowlby One SC", "Special Elite", "Barlow Condensed"];
-  cc.querySelectorAll("[data-ransom]").forEach(el => {
-    const wrap = document.createElement("span"); wrap.className = "ransom";
-    el.dataset.ransom.split(" ").forEach((word, wi) => {
-      if (wi) { const sp = document.createElement("span"); sp.className = "g sp"; sp.innerHTML = "&nbsp;"; wrap.appendChild(sp); }
-      const w = document.createElement("span"); w.className = "word";
-      [...word].forEach(ch => {
-        const g = document.createElement("span");
-        g.className = "g k" + Math.floor(rnd() * 6);
-        g.style.setProperty("--f", `"${fonts[Math.floor(rnd() * fonts.length)]}"`);
-        g.style.setProperty("--r", (rnd() * 10 - 5).toFixed(1) + "deg");
-        g.textContent = ch;
-        w.appendChild(g);
-      });
-      wrap.appendChild(w);
-    });
-    el.appendChild(wrap);
-  });
+  // ---------------------------------------------------------------- state
+  const STORE_KEY = "mbs-corgi-school";
+  const state = { found: [false, false, false] };
+  try { const s = JSON.parse(localStorage.getItem(STORE_KEY) || "{}"); if (Array.isArray(s.found)) state.found = [!!s.found[0], !!s.found[1], !!s.found[2]]; } catch {}
+  const save = () => { try { localStorage.setItem(STORE_KEY, JSON.stringify({ found: state.found })); } catch {} };
 
-  // --- the meter: rises with the page you're on, and with every scan; it never falls, stress only accrues
+  const PAGES = [
+    { door: "THE LIBRARY", title: "300 MILLION JOBS, ONE MORNING",
+      flavor: "The card catalog drawer was already open. Someone had been through it before you. One index card sat on top, torn from a newspaper, folded twice.",
+      stat: "Generative AI could expose the equivalent of 300 million full time jobs worldwide to automation, Goldman Sachs economists estimated in March 2023.",
+      src: "Goldman Sachs Global Investment Research, “The Potentially Large Effects of Artificial Intelligence on Economic Growth,” Mar 2023.",
+      lessonTitle: "STOP. WHO IS TELLING YOU THIS.",
+      lesson: "Before a number scares you, find out who is saying it. A bank publishing its own economists' research under their own names is a source you can check. An unnamed “expert” or “report” with nobody attached is not. Look for the name before you believe the number." },
+    { door: "THE GYMNASIUM", title: "170 MILLION NEW. 92 MILLION GONE.",
+      flavor: "Someone had taped a page to the underside of the bleachers, face down, like they did not want it read standing up.",
+      stat: "By 2030, AI and information processing technology will transform 86 percent of businesses, the World Economic Forum's Future of Jobs Report 2025 found, displacing 92 million existing roles while creating 170 million new ones.",
+      src: "World Economic Forum, Future of Jobs Report 2025.",
+      lessonTitle: "TRACE THE NUMBER BACK TO WHERE IT CAME FROM.",
+      lesson: "A scary number gets repeated until it is flattened. “92 million jobs gone” is only half of what this report says; the same report says 170 million new ones. Find the original report before you trust the half that got repeated the loudest." },
+    { door: "THE LOCKER ROW", title: "71 PERCENT OF US THINK SO",
+      flavor: "It was folded into a locker vent, small enough that a hand that was not yours had to have put it there.",
+      stat: "71 percent of US adults now think AI will lead to fewer jobs in the United States over the next two decades, Pew Research Center found in June 2026, up from 64 percent in 2024.",
+      src: "Pew Research Center, June 2026 survey.",
+      lessonTitle: "A FEELING IS NOT THE SAME SHAPE AS A FACT.",
+      lesson: "71 percent worried is a real, measured opinion about how people feel. It is not the same claim as 71 percent of jobs actually disappearing. A survey of feelings and a count of what happened are two different instruments. Check which one you are holding before you repeat it." }
+  ];
+
+  const announce = t => { const el = document.getElementById("ccAnnounce"); if (el) el.textContent = t; };
+
+  // ---------------------------------------------------------------- meter: banked ratchet (unchanged logic
+  // from 2026-08-28) plus a live component added on top for the hunt (0901: "the CORTISOL bar fills with
+  // proximity too"). Displayed value is min(100, banked + live); the banked ratchet itself never drops, and
+  // capture drops only the live component (see doCapture() below).
   const meterPct = document.getElementById("ccMeterPct"), meterEl = document.getElementById("ccMeter");
-  let meterVal = 4;
-  function setMeter(v) {
-    meterVal = Math.max(meterVal, Math.round(v));
-    cc.style.setProperty("--meter", meterVal);
-    meterPct.textContent = meterVal + "%";
-    meterEl.setAttribute("aria-valuenow", meterVal);
+  let bankedVal = 4, liveVal = 0, lastMeterPaint = 0;
+  function paintMeter() {
+    const shown = Math.max(0, Math.min(100, Math.round(bankedVal + liveVal)));
+    cc.style.setProperty("--meter", shown); meterPct.textContent = shown + "%"; meterEl.setAttribute("aria-valuenow", shown);
+  }
+  function bankMeter(v) { bankedVal = Math.max(bankedVal, Math.round(v)); paintMeter(); }
+
+  // ---------------------------------------------------------------- ransom-note headline letters (unchanged, 2026-08-28)
+  let rseed = 91; const rnd = () => (rseed = (rseed * 9301 + 49297) % 233280) / 233280;
+  const fonts = ["Anton", "Archivo Black", "Bowlby One SC", "Special Elite", "Barlow Condensed"];
+  function dressRansom(root) {
+    root.querySelectorAll("[data-ransom]").forEach(el => {
+      if (el.dataset.dressed) return; el.dataset.dressed = "1";
+      const wrap = document.createElement("span"); wrap.className = "ransom";
+      el.dataset.ransom.split(" ").forEach((word, wi) => {
+        if (wi) { const sp = document.createElement("span"); sp.className = "g sp"; sp.innerHTML = "&nbsp;"; wrap.appendChild(sp); }
+        const w = document.createElement("span"); w.className = "word";
+        [...word].forEach(ch => {
+          const g = document.createElement("span");
+          g.className = "g k" + Math.floor(rnd() * 6);
+          g.style.setProperty("--f", `"${fonts[Math.floor(rnd() * fonts.length)]}"`);
+          g.style.setProperty("--r", (rnd() * 10 - 5).toFixed(1) + "deg");
+          g.textContent = ch; w.appendChild(g);
+        });
+        wrap.appendChild(w);
+      });
+      el.appendChild(wrap);
+    });
   }
 
-  // --- the flip book: four leaves, corner-drag or PAGE buttons turn them. No scroll, no three.js.
+  // ---------------------------------------------------------------- the book (leaf/flip mechanics unchanged, 2026-08-28)
   const book = document.getElementById("ccBook");
   const leaves = [...book.querySelectorAll(".leaf")];
   const N = leaves.length;
   const prevBtn = document.getElementById("ccPrev"), nextBtn = document.getElementById("ccNext");
   const cornerNext = document.getElementById("ccCornerNext"), cornerPrev = document.getElementById("ccCornerPrev");
-  const announce = document.getElementById("ccAnnounce");
-  const titles = ["THE FRONT PAGE", "THREE TELLS", "A PAID PLACEMENT", "THE ANCHOR'S OWN RECORD"];
-  const state = { page: 0 };
-
-  // desktop-only spread: .cc-left shows a plain clone of whatever page was just turned past (no ids on
-  // pages 1-3, the only ones ever cloned here -- page 4 is always last, never appears on the left). A
-  // no-op on phone, where .cc-left is display:none.
+  const titles = ["THE FRONT PAGE", "PAGE ONE", "PAGE TWO", "PAGE THREE", "THE ANCHOR'S OWN RECORD"];
+  const bstate = { page: 0 };
   const leftPane = document.getElementById("ccLeft");
   function paintLeft() {
-    leftPane.innerHTML = state.page > 0 ? "" : '<div class="verso"></div>';
-    if (state.page > 0) leftPane.appendChild(leaves[state.page - 1].querySelector(".face.front").cloneNode(true));
+    leftPane.innerHTML = bstate.page > 0 ? "" : '<div class="verso"></div>';
+    if (bstate.page > 0) leftPane.appendChild(leaves[bstate.page - 1].querySelector(".face.front").cloneNode(true));
   }
-
-  function render() {
+  function renderBook() {
     leaves.forEach((leaf, i) => {
-      const turned = i < state.page;
+      const turned = i < bstate.page;
       leaf.style.transform = `rotateY(${turned ? -180 : 0}deg)`;
       leaf.style.zIndex = turned ? (100 + i) : (100 + (N - i));
-      leaf.style.pointerEvents = (i === state.page || (turned && i === state.page - 1)) ? "auto" : "none";
+      leaf.style.pointerEvents = (i === bstate.page || (turned && i === bstate.page - 1)) ? "auto" : "none";
     });
     paintLeft();
-    prevBtn.disabled = state.page <= 0;
-    nextBtn.disabled = state.page >= N - 1;
-    cornerNext.hidden = state.page >= N - 1;
-    cornerPrev.hidden = state.page <= 0;
-    setMeter(4 + (state.page / (N - 1)) * 95);
-    announce.textContent = `Page ${state.page + 1} of ${N}: ${titles[state.page]}`;
+    prevBtn.disabled = bstate.page <= 0;
+    nextBtn.disabled = bstate.page >= N - 1;
+    cornerNext.hidden = bstate.page >= N - 1;
+    cornerPrev.hidden = bstate.page <= 0;
+    announce(`Page ${bstate.page + 1} of ${N}: ${titles[bstate.page]}`);
   }
-  function goTo(p) { state.page = Math.max(0, Math.min(N - 1, p)); render(); }
-  prevBtn.addEventListener("click", () => goTo(state.page - 1));
-  nextBtn.addEventListener("click", () => goTo(state.page + 1));
-
-  // corner drag (forward only -- "back" is a plain click, see cornerPrev below): rotation is read from
-  // .cc-right's rect and the pointer event only (.channel carries zoom:1.15; clientWidth/offsetX are
-  // layout pixels while the rect and clientX are visual pixels -- mixing them is the silent ~15% miss
-  // documented on Dr Girlfriend's build. Do not reintroduce it here.) .cc-right is the whole book on
-  // phone and the right half of the spread on desktop, so this is correct in both shapes without a
-  // media-query branch: drag from its edge to its own gutter/left edge always completes the flip.
+  function goTo(p) { bstate.page = Math.max(0, Math.min(N - 1, p)); renderBook(); }
+  prevBtn.addEventListener("click", () => goTo(bstate.page - 1));
+  nextBtn.addEventListener("click", () => goTo(bstate.page + 1));
   const rightPane = document.getElementById("ccRight");
   function bindCorner(el, dir) {
     let dragging = false, rect = null, idx = null;
     el.addEventListener("pointerdown", e => {
-      if (dir === "next" && state.page >= N - 1) return;
-      idx = state.page;
-      rect = rightPane.getBoundingClientRect();
-      leaves[idx].style.transition = "none";
-      dragging = true;
+      if (dir === "next" && bstate.page >= N - 1) return;
+      idx = bstate.page; rect = rightPane.getBoundingClientRect();
+      leaves[idx].style.transition = "none"; dragging = true;
       try { el.setPointerCapture(e.pointerId); } catch {}
     });
     el.addEventListener("pointermove", e => {
@@ -436,116 +490,918 @@ No real-world cortisol or stress claim is made anywhere on this page; the scan s
       leaves[idx].style.transform = `rotateY(${(-(1 - frac) * 180).toFixed(2)}deg)`;
     });
     const finish = () => {
-      if (!dragging) return;
-      dragging = false;
+      if (!dragging) return; dragging = false;
       const leaf = leaves[idx];
       const m = /rotateY\(([-\d.]+)deg\)/.exec(leaf.style.transform);
       const deg = m ? parseFloat(m[1]) : 0;
       leaf.style.transition = "";
-      goTo(deg <= -90 ? state.page + 1 : state.page);
+      goTo(deg <= -90 ? bstate.page + 1 : bstate.page);
     };
     el.addEventListener("pointerup", finish);
     el.addEventListener("pointercancel", finish);
   }
   bindCorner(cornerNext, "next");
-  cornerNext.addEventListener("click", () => { if (!cornerNext.hidden) goTo(state.page + 1); });
-  cornerPrev.addEventListener("click", () => { if (!cornerPrev.hidden) goTo(state.page - 1); });
+  cornerNext.addEventListener("click", () => { if (!cornerNext.hidden) goTo(bstate.page + 1); });
+  cornerPrev.addEventListener("click", () => { if (!cornerPrev.hidden) goTo(bstate.page - 1); });
   book.addEventListener("keydown", e => {
-    if (e.key === "ArrowRight") goTo(state.page + 1);
-    else if (e.key === "ArrowLeft") goTo(state.page - 1);
-  });
-  render();
-
-  // the kibble: small matte chunks whose HOME positions spell a compact HELP in a 5x7 dot font.
-  // each chunk is drawn at the origin and PLACED with a CSS transform, so the paw can push it into HELP and a click can drop it off the page.
-  const font = { H: ["10001","10001","10001","11111","10001","10001","10001"], E: ["11111","10000","10000","11110","10000","10000","11111"],
-                 L: ["10000","10000","10000","10000","10000","10000","11111"], P: ["11110","10001","10001","11110","10000","10000","10000"] };
-  const svg = document.getElementById("kibbleSvg"), cell = 13, y0 = 12; const pieces = [];
-  const shades = ["#5a3a1c", "#6b4423", "#4a2f16", "#7a5230", "#3e2812"];
-  const chunk = (s) => {                                       // a small irregular matte chunk, centred on the origin
-    const rot = (rnd() * 360).toFixed(0), r = (5 + rnd() * 1.8).toFixed(1);
-    return `<g transform="rotate(${rot})">`
-      + `<path d="M${-r} 0 Q${-r} ${-r*0.9} 0 ${-r*0.95} Q${r*0.9} ${-r} ${r*0.95} 0 Q${r} ${r*0.85} 0 ${r*0.9} Q${-r*0.9} ${r} ${-r} 0 Z" fill="${s}" stroke="#231405" stroke-width="1"/>`
-      + `<ellipse cx="${-r*0.3}" cy="${-r*0.35}" rx="${(r*0.42).toFixed(1)}" ry="${(r*0.28).toFixed(1)}" fill="rgba(255,235,200,.16)"/></g>`;
-  };
-  const step = cell * 6 + 8;
-  let ox = (560 - ("HELP".length * step - 8)) / 2;             // centre the small word in the viewBox
-  for (const ch of "HELP") {
-    font[ch].forEach((row, r) => [...row].forEach((bit, c) => {
-      if (bit !== "1") return;
-      pieces.push({ hx: ox + c * cell + (rnd() - .5) * 6, hy: y0 + r * cell + (rnd() - .5) * 6, inner: chunk(shades[Math.floor(rnd() * shades.length)]) });
-    }));
-    ox += step;
-  }
-  for (let i = 0; i < 12; i++)                                  // a few loose crumbs near the word
-    pieces.push({ hx: 70 + rnd() * 420, hy: 2 + rnd() * 150, inner: chunk(shades[Math.floor(rnd() * shades.length)]) });
-
-  svg.innerHTML = pieces.map(p => `<g class="k">${p.inner}</g>`).join("");
-  [...svg.children].forEach((g, i) => {
-    const p = pieces[i]; p.g = g;
-    p.home = `translate(${p.hx.toFixed(1)}px, ${p.hy.toFixed(1)}px)`;   // its spot in the HELP word
-    p.px = 280 + (rnd() - .5) * 150; p.py = 116 + (rnd() - .5) * 34;    // its spot in the loose pile
-    p.pile = `translate(${p.px.toFixed(1)}px, ${p.py.toFixed(1)}px)`;
-    g.style.opacity = "0"; g.style.transform = `translate(${p.px.toFixed(1)}px, ${(p.py + 70).toFixed(1)}px)`;   // waiting below, out of sight
+    if (cc.dataset.view !== "book") return;
+    if (e.key === "ArrowRight") goTo(bstate.page + 1);
+    else if (e.key === "ArrowLeft") goTo(bstate.page - 1);
   });
 
-  const feeder = document.getElementById("feeder");
-  let dispensed = false, arranged = false, dropped = false;
+  // ---- leaf content: front page, three locked/found slots, the record
+  function paintFront() {
+    const n = state.found.filter(Boolean).length;
+    const front = document.getElementById("ccLeaf0").querySelector(".face.front");
+    front.innerHTML = `
+      <header class="masthead">
+        <p class="kicker">Mom's Brainwashing Stream presents</p>
+        <h1 class="rtitle" data-ransom="THE NAUSEOUS TIMES"></h1>
+        <div class="dateline"><span>SCHOOL EDITION</span><span>VOL. X9 &middot; NO. ???</span><span>PRICE: YOUR CALM</span></div>
+      </header>
+      <figure class="lead">
+        <img src="assets/cortisol-corgi-badge.png" alt="Cortisol Corgi, the anchor, three anxious corgis in collars" width="1761" height="1516">
+        <figcaption>THE ANCHOR, WEARING A CAMERA, ENTERING THE SCHOOL AFTER HOURS. HE HAS NOT SLEPT. NEITHER HAS THE STORY.</figcaption>
+      </figure>
+      <div class="cols" aria-label="This morning's newspaper">
+        <p><span class="lede">THE SCHOOL WAS EMPTY WHEN HE WENT IN.</span> Three pages are loose somewhere in it. He is going to find all three, because someone has to, and the someone is him.</p>
+        <p class="head">PAGES FOUND: ${n} / 3</p>
+        <p>${n === 0 ? "None yet. Walk the halls." : n < 3 ? "Keep going. It is worse further in." : "All three. Turn the page and see what he found."}</p>
+        <p>Each page he finds gets turned into this paper, right here, in order. Press READ THE PAPER any time to look at what he already has.</p>
+      </div>
+      <p class="pageno">DRAG THE CORNER, OR PRESS PAGE &middot; PG 1 / ${N}</p>`;
+    dressRansom(front);
+  }
+  function paintPage(i) {
+    const front = document.getElementById("ccLeaf" + (i + 1)).querySelector(".face.front");
+    const p = PAGES[i];
+    if (state.found[i]) {
+      front.innerHTML = `
+        <section class="block ${["manila","pink","constr"][i]} r${i + 1}" aria-labelledby="ccPg${i}H"><span class="tape tl" aria-hidden="true"></span>
+          <p class="kicker">Found in ${p.door}</p>
+          <h2 id="ccPg${i}H" data-ransom="${p.title}"></h2>
+          <p class="body">${p.stat}</p>
+          <p class="src">${p.src}</p>
+          <p class="lesson"><b>${p.lessonTitle}</b>${p.lesson}</p>
+        </section>
+        <p class="pageno">PG ${i + 2} / ${N}</p>`;
+    } else {
+      front.innerHTML = `
+        <section class="block r${i + 1}">
+          <p class="kicker">Still out there</p>
+          <h2>PAGE ${i + 1}</h2>
+          <p class="body">Not found yet. It is somewhere in ${p.door}. Go look.</p>
+        </section>
+        <p class="pageno">PG ${i + 2} / ${N}</p>`;
+    }
+    dressRansom(front);
+  }
+  function paintRecord() {
+    const front = document.getElementById("ccLeaf4").querySelector(".face.front");
+    front.innerHTML = `
+      <section class="block constr r3" aria-labelledby="scanH"><span class="tape tl" aria-hidden="true"></span>
+        <p class="kicker">The anchor's own record</p>
+        <h2 id="scanH" data-ransom="Submit your stress"></h2>
+        <p class="body">He walked the whole school for these three pages. Hold still for the scan. Then tell him which one is coming for your job.</p>
+        <div class="scan" id="scan"><div class="line"></div><div class="out" id="scanOut">HOLD STILL. LOOK AT THE DOG.</div></div>
+        <button class="big" type="button" id="scanBtn">SCAN MY STRESS</button>
+        <p class="fine">The scan is purely visual. It measures nothing, stores nothing, and cannot see you. Cortisol Corgi cannot see either. That is canon.</p>
+        <form id="ventForm">
+          <label for="ventName">A name, or not</label>
+          <input id="ventName" name="name" placeholder="Anonymous is fine.">
+          <label for="ventAI">Which AI is coming for your job?</label>
+          <input id="ventAI" name="aiJob" required placeholder="The chatbot. The scheduler. All of them.">
+          <button class="big" type="submit" id="ventBtn">TELL THE DOG</button>
+          <p class="fine">Nothing is posted anywhere. In-character participation only, never a sale.</p>
+        </form>
+        <div class="feeder" id="feeder" aria-hidden="true">
+          <svg class="pile" id="kibbleSvg" viewBox="0 0 560 180" preserveAspectRatio="xMidYMax meet" role="button" tabindex="-1" aria-label="Dog food pushed out. Click it."></svg>
+          <div class="pawclip"><svg class="paw" viewBox="0 0 210 210" aria-hidden="true">
+            <g filter="url(#fur)">
+              <path d="M210 58 Q150 54 120 74 Q94 92 92 118 Q95 152 132 162 Q176 170 210 160 Z" fill="#f6f7f9"/>
+              <ellipse cx="86" cy="112" rx="62" ry="70" fill="#f8f9fb"/>
+              <ellipse cx="52" cy="52" rx="17" ry="24" transform="rotate(-32 52 52)" fill="#f6f7f9"/>
+              <ellipse cx="40" cy="92" rx="18" ry="25" transform="rotate(-12 40 92)" fill="#f8f9fb"/>
+              <ellipse cx="42" cy="134" rx="18" ry="25" transform="rotate(10 42 134)" fill="#f6f7f9"/>
+              <ellipse cx="58" cy="170" rx="17" ry="24" transform="rotate(28 58 170)" fill="#f8f9fb"/>
+            </g>
+            <g opacity=".92">
+              <path d="M60 96 Q86 78 112 96 Q118 128 86 140 Q54 128 60 96 Z" fill="#df9fb2"/>
+              <ellipse cx="44" cy="54" rx="9" ry="12" transform="rotate(-30 44 54)" fill="#e7b7c6"/>
+              <ellipse cx="31" cy="92" rx="9" ry="13" fill="#e7b7c6"/>
+              <ellipse cx="33" cy="134" rx="9" ry="13" fill="#e7b7c6"/>
+              <ellipse cx="49" cy="170" rx="9" ry="12" transform="rotate(28 49 170)" fill="#e7b7c6"/>
+            </g>
+            <g fill="#efe9dc" stroke="#b8ac90" stroke-width="1">
+              <path d="M30 44 Q15 39 11 48 Q20 53 31 52 Z"/><path d="M18 88 Q3 86 1 95 Q12 98 23 94 Z"/>
+              <path d="M20 132 Q5 134 5 144 Q16 144 25 139 Z"/><path d="M38 166 Q25 177 29 185 Q41 181 45 172 Z"/>
+            </g>
+          </svg></div>
+        </div>
+      </section>
+      <div class="block r1 pressure"><span class="tape tr" aria-hidden="true"></span>
+        <p class="kicker">Next level, locked</p>
+        <h2 data-ransom="FOOD SERVICE. THE OFFICE."></h2>
+        <p class="body">Both doors at the end of this hallway. Both locked. Clear the three lessons here and they open next time.</p>
+        <p class="cap" style="color:var(--gold)">WOOF WOOF. WOOF.</p>
+        <p class="cap">(answer the quiz on Wednesday. every answer is a signal out. he cannot say more. he cannot say why.)</p>
+      </div>
+      <p class="pageno">PG ${N} / ${N} &middot; THE BACK PAGE</p>`;
+    dressRansom(front);
+    bindRecord();
+  }
+  function repaintAll() { paintFront(); PAGES.forEach((_, i) => paintPage(i)); }
 
-  // scan finished: a small pile of dog food is pushed out onto the floor
-  function dispense() {
-    if (dispensed) return; dispensed = true;
-    feeder.classList.add("on");
-    requestAnimationFrame(() => pieces.forEach((p, i) => setTimeout(() => { p.g.style.opacity = "1"; p.g.style.transform = p.pile; }, 60 + i * 7 + rnd() * 40)));
+  // ---- the record leaf's own behaviour: scan (decorative, unchanged) + vent form + kibble/paw (unchanged
+  // except the drop no longer calls MBS.unlock -- that fired already, on the third page)
+  let recordBound = false;
+  function bindRecord() {
+    if (recordBound) return; recordBound = true;
+    const svg = document.getElementById("kibbleSvg"), cell = 13, y0 = 12; const pieces = [];
+    const shades = ["#5a3a1c", "#6b4423", "#4a2f16", "#7a5230", "#3e2812"];
+    const font = { H: ["10001","10001","10001","11111","10001","10001","10001"], E: ["11111","10000","10000","11110","10000","10000","11111"],
+                   L: ["10000","10000","10000","10000","10000","10000","11111"], P: ["11110","10001","10001","11110","10000","10000","10000"] };
+    const chunk = s => { const rot = (rnd() * 360).toFixed(0), r = (5 + rnd() * 1.8).toFixed(1);
+      return `<g transform="rotate(${rot})"><path d="M${-r} 0 Q${-r} ${-r*0.9} 0 ${-r*0.95} Q${r*0.9} ${-r} ${r*0.95} 0 Q${r} ${r*0.85} 0 ${r*0.9} Q${-r*0.9} ${r} ${-r} 0 Z" fill="${s}" stroke="#231405" stroke-width="1"/><ellipse cx="${-r*0.3}" cy="${-r*0.35}" rx="${(r*0.42).toFixed(1)}" ry="${(r*0.28).toFixed(1)}" fill="rgba(255,235,200,.16)"/></g>`; };
+    const step = cell * 6 + 8; let ox = (560 - ("HELP".length * step - 8)) / 2;
+    for (const ch of "HELP") { font[ch].forEach((row, r) => [...row].forEach((bit, c) => { if (bit !== "1") return;
+      pieces.push({ hx: ox + c * cell + (rnd() - .5) * 6, hy: y0 + r * cell + (rnd() - .5) * 6, inner: chunk(shades[Math.floor(rnd() * shades.length)]) }); })); ox += step; }
+    for (let i = 0; i < 12; i++) pieces.push({ hx: 70 + rnd() * 420, hy: 2 + rnd() * 150, inner: chunk(shades[Math.floor(rnd() * shades.length)]) });
+    svg.innerHTML = pieces.map(p => `<g class="k">${p.inner}</g>`).join("");
+    [...svg.children].forEach((g, i) => { const p = pieces[i]; p.g = g;
+      p.home = `translate(${p.hx.toFixed(1)}px, ${p.hy.toFixed(1)}px)`;
+      p.px = 280 + (rnd() - .5) * 150; p.py = 116 + (rnd() - .5) * 34; p.pile = `translate(${p.px.toFixed(1)}px, ${p.py.toFixed(1)}px)`;
+      g.style.opacity = "0"; g.style.transform = `translate(${p.px.toFixed(1)}px, ${(p.py + 70).toFixed(1)}px)`; });
+    const feeder = document.getElementById("feeder");
+    let dispensed = false, arranged = false, dropped = false;
+    function dispense() { if (dispensed) return; dispensed = true; feeder.classList.add("on");
+      requestAnimationFrame(() => pieces.forEach((p, i) => setTimeout(() => { p.g.style.opacity = "1"; p.g.style.transform = p.pile; }, 60 + i * 7 + rnd() * 40))); }
+    function arrange() { if (arranged) return; if (!dispensed) dispense(); arranged = true;
+      setTimeout(() => { feeder.classList.add("covering");
+        setTimeout(() => pieces.forEach(p => { p.g.style.transform = p.home; }), 380);
+        setTimeout(() => { feeder.classList.remove("covering"); feeder.classList.add("ready"); svg.setAttribute("tabindex", "0"); }, 1180);
+      }, 300); }
+    function drop() { if (dropped || !arranged) return; dropped = true; feeder.classList.add("dropping");
+      if (window.MBS && window.MBS.wave) window.MBS.wave();
+      pieces.forEach((p, i) => setTimeout(() => { const dx = (rnd() * 60 - 30), dy = (760 + rnd() * 520), rot = (rnd() * 720 - 360).toFixed(0);
+        p.g.style.transform = `translate(${(p.hx + dx).toFixed(0)}px, ${(p.hy + dy).toFixed(0)}px) rotate(${rot}deg)`; p.g.style.opacity = "0"; }, i * 7 + rnd() * 40)); }
+    svg.addEventListener("click", drop);
+    svg.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); drop(); } });
+
+    const scan = document.getElementById("scan"), out = document.getElementById("scanOut"), btn = document.getElementById("scanBtn");
+    const readings = ["ELEVATED. AS EXPECTED.", "HIGH. THE DOG UNDERSTANDS.", "VERY HIGH. HAVE A SEAT.", "OFF THE CHART. WELCOME HOME.", "MILD. SUSPICIOUS. SCAN AGAIN."];
+    let scanCount = 0;
+    btn.addEventListener("click", () => { if (scan.classList.contains("running")) return;
+      scan.classList.remove("done"); scan.classList.add("running"); out.textContent = "SCANNING. DO NOT BREATHE NORMALLY."; scanCount++;
+      const held = Math.min(99, 44 + scanCount * 13);
+      setTimeout(() => { scan.classList.remove("running"); scan.classList.add("done");
+        out.textContent = `STRESS: ${held}%. ${readings[(scanCount - 1) % readings.length]}`; bankMeter(held); dispense(); }, 2300); });
+
+    // the ONE MBS.form call site on this page (Ian, 2026-08-30: which AI is coming for your job, name kept)
+    document.getElementById("ventForm").addEventListener("submit", e => {
+      e.preventDefault();
+      const b = document.getElementById("ventBtn"); b.textContent = "THE DOG HEARD YOU"; b.disabled = true;
+      const data = { name: document.getElementById("ventName").value || "anonymous", aiJob: document.getElementById("ventAI").value };
+      window.MBS && window.MBS.form && window.MBS.form("corgi", data);
+      arrange();
+    });
+  }
+  repaintAll(); paintRecord();
+
+  // ---------------------------------------------------------------- view switching
+  const huntStage = document.getElementById("ccHuntStage"), bookStage = document.getElementById("ccBookStage");
+  const readBtn = document.getElementById("ccReadBtn"), backHunt = document.getElementById("ccBackHunt");
+  function showHunt() { cc.dataset.view = "hunt"; huntStage.hidden = false; bookStage.hidden = true; announce("Back in the hallway."); }
+  function showBook() { cc.dataset.view = "book"; huntStage.hidden = true; bookStage.hidden = false; renderBook(); }
+  cc.dataset.view = "hunt";
+  readBtn.addEventListener("click", showBook);
+  backHunt.addEventListener("click", showHunt);
+
+  // ---- the moment a page is found, shared by both renderers below
+  let doorAnnounced = false;
+  function collect(i) {
+    if (state.found[i]) return;
+    state.found[i] = true; save();
+    paintFront(); paintPage(i);
+    const n = state.found.filter(Boolean).length;
+    document.getElementById("ccTally").textContent = `PAGES ${n}/3`;
+    bankMeter(4 + n * 30);
+    announce(`Page found: ${PAGES[i].title}. Read it any time.`);
+    if (n === 3) {
+      setTimeout(() => {
+        window.MBS && window.MBS.wave && window.MBS.wave();
+        window.MBS && window.MBS.unlock && window.MBS.unlock("corgi");
+        announce("All three pages found. The hallway keeps going.");
+      }, 900);
+    }
+    return true;
+  }
+  document.getElementById("ccTally").textContent = `PAGES ${state.found.filter(Boolean).length}/3`;
+  bankMeter(4 + state.found.filter(Boolean).length * 30);   // a restored session shows the stress already earned, not a reset 4%
+
+  // ---- the viewport fills the glass (Ian, review 2026-08-31: "a third of the glass is dead black... make
+  // the game fill the glass"). See the CSS comment on .cc-viewport for why this has to be measured, not
+  // calc()'d. Runs for both the WebGL and the fallback path, since both render inside #ccViewport.
+  const viewport = document.getElementById("ccViewport");
+  const glassEl = (document.getElementById("screen") || {}).parentElement;
+  function fitViewport() {
+    if (!glassEl) return;
+    const gh = glassEl.getBoundingClientRect().height;   // .glass sits OUTSIDE the zoomed .channel -- a plain, unzoomed px value
+    const meterH = document.getElementById("ccMeter").getBoundingClientRect().height;   // meter is INSIDE .channel, so this rect is already post-zoom (visual) px
+    const reserve = meterH + 21;   // this stage's 8px+10px padding * .channel's zoom:1.15 = ~9.2+11.5, a stable constant -- zoom is fixed, only the outer chrome (gh) varies by breakpoint
+    const visualTarget = Math.max(220, gh - reserve - 6);
+    // setting .style.height assigns a LAYOUT px value inside the zoomed .channel, which then RENDERS at
+    // *1.15 -- the same trap the old calc() had. Divide by 1.15 so the rendered (visual) height actually
+    // equals visualTarget, confirmed live: without this a "564.5px" layout height rendered at 649px.
+    viewport.style.height = (visualTarget / 1.15) + "px";
+  }
+  if (glassEl) { new ResizeObserver(fitViewport).observe(glassEl); fitViewport(); }
+
+  // ---------------------------------------------------------------- WebGL detect
+  const glOK = (() => { try { const c = document.createElement("canvas"); return !!(window.WebGLRenderingContext && (c.getContext("webgl2") || c.getContext("webgl"))); } catch { return false; } })();
+  const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (!glOK) { runFallback(); } else { runHunt3D(); }
+
+  // ================================================================== FALLBACK (no WebGL / no CDN)
+  function runFallback() {
+    document.getElementById("ccCanvas").remove();
+    document.querySelector(".cc-joy").remove();
+    document.getElementById("ccFlashBtn").remove();
+    document.querySelector(".cc-sprint").remove();
+    document.getElementById("ccStatic").remove();
+    document.getElementById("ccPrompt").remove();
+    document.getElementById("ccBurst").remove();
+    const fb = document.getElementById("ccFallback"); fb.hidden = false;
+    const map = document.getElementById("ccFbMap"), read = document.getElementById("ccFbRead");
+    let reflected = false;
+    // 0901: each area is now a hallway with branches -- the fallback stays a flat button list (spec allows
+    // it) but adds one flavour-only stop per area's loop, so the fallback still "walks" the whole expanded
+    // school, not just the three original doorways.
+    const ROOMS = [
+      { id: "trophy", label: "THE TROPHY CASE", kind: "reflect" },
+      { id: 0, label: PAGES[0].door + " -- THE BACK STACKS", kind: "page" },
+      { id: "lib-loop", label: "THE LIBRARY -- READING NOOK", kind: "flavor",
+        text: "A ring of low shelves, walked all the way around. Nothing here but dust and the sense of being circled." },
+      { id: 1, label: PAGES[1].door + " -- THE EQUIPMENT ROOM", kind: "page" },
+      { id: "gym-loop", label: "THE GYMNASIUM -- BLEACHER LOOP", kind: "flavor",
+        text: "Under and around the bleachers, a full lap. Something creaked on the far side before you got there." },
+      { id: 2, label: PAGES[2].door + " -- THE FAR LOCKERS", kind: "page" },
+      { id: "locker-loop", label: "THE LOCKER ROW -- VENT LOOP", kind: "flavor",
+        text: "A second row of lockers, looping back around to the first. One vent is warm to the touch." },
+      { id: "food", label: "FOOD SERVICE", kind: "locked" },
+      { id: "office", label: "THE OFFICE", kind: "locked" }
+    ];
+    function paintMap() {
+      map.innerHTML = "";
+      ROOMS.forEach(r => {
+        const btn = document.createElement("button"); btn.type = "button"; btn.textContent = r.label;
+        if (r.kind === "page") { if (state.found[r.id]) btn.classList.add("found"); }
+        if (r.kind === "locked") btn.classList.add("locked");
+        btn.addEventListener("click", () => visit(r));
+        map.appendChild(btn);
+      });
+    }
+    function visit(r) {
+      if (r.kind === "locked") { read.textContent = `${r.label}. Locked. Next time.`; return; }
+      if (r.kind === "flavor") { read.textContent = r.text; return; }
+      if (r.kind === "reflect") {
+        reflected = true;
+        read.textContent = "The glass on the case catches you before you catch it. Round ears. A wet nose, close to the floor. You are the dog. You already knew that. Seeing it is different.";
+        return;
+      }
+      const i = r.id, p = PAGES[i];
+      if (state.found[i]) { read.textContent = `${p.title}. Already in the paper. Press READ THE PAPER above the map to see it again.`; return; }
+      read.textContent = `${p.flavor} ${p.stat} ${p.src} ${p.lessonTitle} ${p.lesson}`;
+      collect(i); paintMap();
+    }
+    paintMap();
+    read.textContent = "Tap a room to see what Cortisol Corgi found there.";
   }
 
-  // message sent: the furry paw comes up from the right and pushes the pile into HELP, then draws back
-  function arrange() {
-    if (arranged) return; if (!dispensed) dispense(); arranged = true;
-    setTimeout(() => {
-      feeder.classList.add("covering");
-      setTimeout(() => pieces.forEach(p => { p.g.style.transform = p.home; }), 380);   // pushed into the letters under the paw
-      setTimeout(() => { feeder.classList.remove("covering"); feeder.classList.add("ready"); svg.setAttribute("tabindex", "0"); }, 1180);
-    }, 300);
+  // ================================================================== 3D HUNT
+  function runHunt3D() {
+    const canvas = document.getElementById("ccCanvas");   // viewport is already declared in the shared scope above
+    const joy = document.getElementById("ccJoy"), joyNub = document.getElementById("ccJoyNub");
+    const flashBtn = document.getElementById("ccFlashBtn"), batFill = document.getElementById("ccBatFill");
+    const tcEl = document.getElementById("ccTC"), reflectEl = document.getElementById("ccReflect");
+    const promptEl = document.getElementById("ccPrompt"), burstEl = document.getElementById("ccBurst");
+    const vhsGrain = viewport.querySelector(".cc-vhs .grain"), vhsScan = viewport.querySelector(".cc-vhs .scan");
+    const staticCanvas = document.getElementById("ccStatic"), staticCtx = staticCanvas.getContext("2d");
+    staticCanvas.width = 48; staticCanvas.height = 27;
+    function drawStaticNoise() {
+      const img = staticCtx.createImageData(48, 27);
+      for (let p = 0; p < 48 * 27; p++) { const v = Math.random() * 255, o = p * 4;
+        img.data[o] = img.data[o + 1] = img.data[o + 2] = v; img.data[o + 3] = 255; }
+      staticCtx.putImageData(img, 0, 0);
+    }
+
+    import("https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.min.js").then(THREE => {
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+      renderer.setClearColor(0xcfe6f2, 1);
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(68, 1, 0.05, 60);
+      scene.add(camera);
+
+      // ---- cheerful primary-colour school textures, all cheap canvas draws
+      function wallTexture() {
+        const c = document.createElement("canvas"); c.width = 256; c.height = 128; const x = c.getContext("2d");
+        x.fillStyle = "#f4ecd2"; x.fillRect(0, 0, 256, 128);
+        x.fillStyle = "#e2b23a"; x.fillRect(0, 0, 256, 14); x.fillStyle = "#3a7ab8"; x.fillRect(0, 108, 256, 20);
+        const cols = ["#d8452f", "#e2b23a", "#3a7ab8", "#4a9a5a"];
+        for (let i = 0; i < 8; i++) { x.fillStyle = cols[i % cols.length]; x.fillRect(6 + i * 31, 32, 24, 70); x.strokeStyle = "rgba(0,0,0,.25)"; x.strokeRect(6 + i * 31, 32, 24, 70);
+          x.fillStyle = "rgba(0,0,0,.18)"; for (let v = 0; v < 4; v++) x.fillRect(9 + i * 31, 40 + v * 15, 18, 2); }
+        const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.colorSpace = THREE.SRGBColorSpace; return t;
+      }
+      function floorTexture() {
+        const c = document.createElement("canvas"); c.width = c.height = 64; const x = c.getContext("2d");
+        x.fillStyle = "#e9eef2"; x.fillRect(0, 0, 64, 64); x.fillStyle = "#bcd7ea"; x.fillRect(0, 0, 32, 32); x.fillRect(32, 32, 32, 32);
+        const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.colorSpace = THREE.SRGBColorSpace; return t;
+      }
+      function paperTexture() {
+        const c = document.createElement("canvas"); c.width = c.height = 96; const x = c.getContext("2d");
+        x.fillStyle = "#e6dcc0"; x.fillRect(0, 0, 96, 96); x.strokeStyle = "rgba(40,30,10,.4)"; x.lineWidth = 1;
+        for (let i = 0; i < 26; i++) { x.beginPath(); const y = rnd() * 96; x.moveTo(3, y); x.lineTo(93, y + (rnd() * 2 - 1)); x.stroke(); }
+        const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; return t;
+      }
+      // real newsprint, canvas-drawn: columns of tiny type plus a bold headline fragment, not just ruled
+      // lines -- this is what actually reads as "papier-mache made out of newspaper" at monster scale (round
+      // 2 honest report, 2026-08-31: the ruled-line paperTexture above was legible on nothing up close).
+      // paper/ink swapped per part so the head stays pale and the suit stays dark -- same material family,
+      // different value, so the silhouette still separates the way a bald head must from a suited body.
+      function newsprintTexture(paper, ink, headline, density) {
+        // rows drawn at 3-4px and repeat kept low (below, where each texture is applied) on purpose: three.js
+        // mipmaps a CanvasTexture by default, and hairline detail averages straight back to a flat colour at
+        // any real viewing distance -- exactly the "texture is invisible" failure from the honest round-2
+        // report. Chunky rows plus mipmapping off keeps the pattern surviving past point-blank range.
+        // Art pass 0901 rebuild: round 3's attempt at this (paper base like #2e2b35 on the suit) was too dark
+        // for the ink to ever show against it -- that's the "torso samples flat #1A1920" failure. Paper bases
+        // now stay in the cream/manila family for all three parts (varied by density, not by going to near-
+        // black) and a big high-contrast headline block plus halftone dots are added so there's something
+        // that reads at corridor distance, not just up close.
+        const c = document.createElement("canvas"); c.width = c.height = 192; const x = c.getContext("2d");
+        x.fillStyle = paper; x.fillRect(0, 0, 192, 192);
+        // masthead-style headline block: big and high-contrast, the part that has to read from across the hall
+        x.fillStyle = `rgba(${ink},.88)`; x.fillRect(4, 4, 184, 20);
+        x.fillStyle = paper; x.font = "900 15px Georgia"; x.textBaseline = "top"; x.textAlign = "left";
+        x.fillText(headline, 8, 6);
+        x.fillStyle = `rgba(${ink},.7)`; x.fillRect(4, 28, 184, 3);
+        // fake body-text columns, density sets how dark/frequent -- the briefcase runs darkest of the three
+        const cols = 3, colW = 184 / cols;
+        for (let col = 0; col < cols; col++) {
+          let y = 38 + rnd() * 6;
+          while (y < 178) {
+            if (rnd() < 0.1) { y += 7; continue; }   // paragraph break
+            x.fillStyle = `rgba(${ink},${(0.32 + rnd() * 0.3 + density * 0.3).toFixed(2)})`;
+            x.fillRect(4 + col * colW + 3, y, (colW - 6) * (0.5 + rnd() * 0.5), 3.4);
+            y += 6.4;
+          }
+        }
+        // one halftone-dot patch -- the newsprint tell, a "photo" rendered as a dot grid
+        const hx = 8 + rnd() * 90, hy = 96 + rnd() * 34;
+        for (let py = 0; py < 46; py += 5) for (let px = 0; px < 70; px += 5) {
+          const shade = 0.25 + rnd() * 0.5;
+          x.fillStyle = `rgba(${ink},${shade.toFixed(2)})`;
+          x.beginPath(); x.arc(hx + px, hy + py, 1.1 + shade * 1.6, 0, 7); x.fill();
+        }
+        // crumple creases: irregular dark/light streak pairs so the flat map reads as paper glued over a
+        // form, which is what papier-mache actually is, rather than a printed-on skin
+        for (let i = 0; i < 5; i++) {
+          const sx = rnd() * 192, sy = rnd() * 192, ex = sx + (rnd() - .5) * 140, ey = sy + (rnd() - .5) * 140;
+          x.strokeStyle = `rgba(${ink},${(0.18 + rnd() * 0.18).toFixed(2)})`; x.lineWidth = 2 + rnd() * 2;
+          x.beginPath(); x.moveTo(sx, sy); x.lineTo(ex, ey); x.stroke();
+          x.strokeStyle = "rgba(255,250,235,.22)"; x.lineWidth = 1;
+          x.beginPath(); x.moveTo(sx + 1.5, sy + 1.5); x.lineTo(ex + 1.5, ey + 1.5); x.stroke();
+        }
+        const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping;
+        t.generateMipmaps = false; t.minFilter = THREE.LinearFilter; t.colorSpace = THREE.SRGBColorSpace; return t;
+      }
+      function signTexture(a, b) {
+        const c = document.createElement("canvas"); c.width = 256; c.height = 96; const x = c.getContext("2d");
+        x.fillStyle = "#c0392b"; x.fillRect(0, 0, 256, 96); x.fillStyle = "#f4ecd2"; x.font = "bold 26px Georgia"; x.textAlign = "center";
+        x.fillText(a, 128, 40); x.font = "bold 16px Georgia"; x.fillText(b, 128, 68);
+        const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+      }
+
+      const wallMat = new THREE.MeshStandardMaterial({ map: wallTexture(), roughness: 0.92, metalness: 0 });
+      const floorMat = new THREE.MeshStandardMaterial({ map: floorTexture(), roughness: 0.85, metalness: 0.05 });
+      const ceilMat = new THREE.MeshStandardMaterial({ color: 0xfff6da, roughness: 1, metalness: 0 });
+      const doorMat = new THREE.MeshStandardMaterial({ map: signTexture("LOCKED", "FOOD SERVICE / THE OFFICE"), roughness: 0.7, metalness: 0.15 });
+      const glassMat = new THREE.MeshStandardMaterial({ color: 0xdcefe8, roughness: 0.1, metalness: 0, transparent: true, opacity: 0.35, side: THREE.DoubleSide });
+      const trophyMat = new THREE.MeshStandardMaterial({ color: 0xe6c25a, roughness: 0.35, metalness: 0.7 });
+      // Art pass 0901: round 3's fix (real newsprint texture + a light that travels with him, monsterLight
+      // below) was the right direction but the paper base itself was too dark to read (#2e2b35 on the suit is
+      // near-black, so darker ink on top of it just disappears -- the "torso samples flat #1A1920" failure).
+      // All three surfaces now stay in the cream/manila family -- head palest, suit a duller cream, briefcase
+      // the darkest base AND the densest ink of the three -- so he still reads as the darkest thing on the
+      // tape (muted creams against the school's saturated primaries, then the Rung 3 sepia/vignette on top)
+      // without the print itself going invisible. Emissive dropped way down (was 0.3-0.32, washing toward
+      // flat colour) to a bare separation floor -- real light now does the work. Matte throughout: roughness
+      // stays at 1, metalness at 0.
+      const suitMat = new THREE.MeshStandardMaterial({ map: newsprintTexture("#7a7460", "40,34,20", "SLIDES IN", 0.55), roughness: 1, metalness: 0, emissive: 0x1a1610, emissiveIntensity: 0.06 });
+      suitMat.map.repeat.set(1.4, 2.6);
+      const paperMat = new THREE.MeshStandardMaterial({ map: newsprintTexture("#8f866c", "30,24,14", "JOBS", 0.3), roughness: 1, metalness: 0, emissive: 0x241f14, emissiveIntensity: 0.05 });
+      paperMat.map.repeat.set(1.2, 1.2);
+      const caseMat = new THREE.MeshStandardMaterial({ map: newsprintTexture("#5a5443", "20,16,8", "CASE FILE", 0.85), roughness: 1, metalness: 0, emissive: 0x120f0a, emissiveIntensity: 0.05 });
+      // Expansion pass 0901: one flat matte colour per area, no stripes -- a shared grain texture (3-5%
+      // per-pixel value noise near white) tinted by material.color, so it reads as painted concrete rather
+      // than bare untextured geometry without ever drawing a repeating pattern.
+      function grainTexture() {
+        const c = document.createElement("canvas"); c.width = c.height = 64; const x = c.getContext("2d");
+        const img = x.createImageData(64, 64);
+        for (let p = 0; p < 64 * 64; p++) { const v = 242 + Math.floor(rnd() * 13); const o = p * 4;
+          img.data[o] = img.data[o + 1] = img.data[o + 2] = v; img.data[o + 3] = 255; }
+        x.putImageData(img, 0, 0);
+        const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; return t;
+      }
+      function areaMat(hex) { return new THREE.MeshStandardMaterial({ color: hex, map: grainTexture(), roughness: 0.95, metalness: 0 }); }
+
+      const floor = new THREE.Mesh(new THREE.PlaneGeometry(60, 40), floorMat);
+      floor.rotation.x = -Math.PI / 2; floor.position.set(12, 0, 0); floor.material.map.repeat.set(20, 14); scene.add(floor);
+      const ceil = new THREE.Mesh(new THREE.PlaneGeometry(60, 40), ceilMat);
+      ceil.rotation.x = Math.PI / 2; ceil.position.set(12, 2.6, 0); scene.add(ceil);
+      for (let lx = 1; lx <= 24; lx += 5) { const l = new THREE.PointLight(0xfff3d0, 0.55, 9); l.position.set(lx, 2.4, 0); scene.add(l); }
+      scene.add(new THREE.HemisphereLight(0xfff6da, 0xbcd7ea, 1.05));
+
+      // ---- hand-authored corridor: [cx, cz, w(x-size), d(z-size)]
+      const WALL_H = 2.6;
+      const collideRects = [];
+      function wallBox(cx, cz, w, d, mat) {
+        const m = new THREE.Mesh(new THREE.BoxGeometry(w, WALL_H, d), mat || wallMat);
+        m.position.set(cx, WALL_H / 2, cz);
+        const rep = Math.max(1, Math.round(Math.max(w, d) / 1.4)); if (m.material.map) { m.material = m.material.clone(); m.material.map = m.material.map.clone(); m.material.map.needsUpdate = true; m.material.map.repeat.set(rep, 1); }
+        scene.add(m);
+        collideRects.push({ x0: cx - w / 2, x1: cx + w / 2, z0: cz - d / 2, z1: cz + d / 2 });
+        return m;
+      }
+      [[-0.6, 0, 0.4, 3.0], [2.75, 1.35, 5.5, 0.3], [14.4, 1.35, 11.8, 0.3], [24.35, 1.35, 3.3, 0.3],
+       [6.25, -1.35, 12.5, 0.3], [21.25, -1.35, 9.5, 0.3]
+      ].forEach(w => wallBox(...w));
+      wallBox(26, 0, 0.3, 2.6, doorMat);   // the locked door, naming what comes next
+
+      // ---- Expansion pass 0901: each of the three page areas is now its own hallway (10-14 units) with
+      // offshooting branches, authored as data -- one array of areas (id, colour, corridor-defining wall
+      // rectangles, lights, page position, haunt anchors, a bounding box for "which area is the player in")
+      // -- consumed by one loop that calls the existing wallBox() helper (unchanged). The main corridor above
+      // is untouched: same length, same striped wallTexture(), same doorway gaps. Each area leaves its
+      // doorway going straight, then forks: one dead-end branch, and one loop (two mouths into the same wall
+      // with a solid pillar between them, so it's an actual ring walked around, not a wide bulge) -- never a
+      // comb. Corridor widths stay in the 2.4-3.0 spec band (loop legs a touch narrower, still >= 2.2). Every
+      // page sits at the deep end of its branch, never visible from the main corridor doorway.
+      // Colours tuned THROUGH the Rung 3 treatment, not in isolation, per the spec's own instruction -- and
+      // it turned out to matter far more than "tune slightly": the overlay cast (#b8c832, overlay blend,
+      // opacity .32) plus saturate(.7)/sepia(.22) crushes almost any input hue toward the same yellow-green
+      // olive, verified by sampling actual rendered pixels (not by eye) through the exact pipeline. The
+      // spec's suggested library green/gym red-orange/locker blue all converged to within a few RGB units of
+      // each other post-treatment -- the suggested blue (#2c5f9e) was the worst offender, landing at #808463,
+      // essentially the same colour as the suggested green.
+      // A second constraint fought the first: "the monster must still be the darkest thing on the tape" (his
+      // own on-tape average sampled ~126/255) rules out going dark to separate from him, which is the
+      // opposite direction taken at first -- an initial dark-green library (~90 avg) put the WALL below the
+      // monster instead, inverting the requirement (caught live: monster-vs-wall pixel sample, not eyeballed).
+      // Final picks satisfy both floors at once, sampled live through the real render, not simulated: all
+      // three now sit comfortably above monster-brightness (~143-157 avg, vs his ~126) and are separated from
+      // each other by hue balance within that band -- library green-dominant (G>R>B), gym red-dominant
+      // (R>G>B, lowest blue of the three), locker balanced-bright with the highest blue channel. Measured
+      // post-treatment: library #55c060 raw -> ~(150,175,105), gym #ffb15c raw -> ~(175,161,103), locker
+      // #e8eef4 raw -> ~(170,178,122); pairwise RGB distance ~26-29 between each pair, real but modest --
+      // this treatment's hue crush is severe enough that "unmistakable at a glance" leans partly on the
+      // different wall SHAPES per area (the ASCII floor plan) as well as colour; verified live via screenshot,
+      // not claimed from the numbers alone (see the area screenshots and the monster-vs-wall check in README).
+      const AREAS = [
+        { id: "library", name: "THE LIBRARY", mat: areaMat(0x2f6b3a),
+          walls: [
+            [8.55, 3.675, 0.3, 4.65], [8.55, 11.975, 0.3, 6.75],          // spine east wall, gap z 6-8.6 (branch mouth)
+            [5.45, 2.675, 0.3, 2.65], [5.45, 9, 0.3, 4.8], [5.45, 14.675, 0.3, 1.35],   // spine west wall, gaps z 4-6.6 & 11.4-14 (loop mouths)
+            [7, 15.5, 3.1, 0.3],                                          // spine far cap
+            [12.55, 8.75, 8.3, 0.3], [12.55, 5.85, 8.3, 0.3], [16.7, 7.3, 0.3, 2.9],   // branch: north wall, south wall, dead-end cap
+            [2.45, 9, 0.3, 10], [3.95, 3.85, 3.0, 0.3], [3.95, 14.15, 3.0, 0.3]         // loop: outer wall, south cap, north cap
+          ],
+          lights: [[7, 4], [7, 8], [7, 12], [7, 15], [11, 7.3], [15, 7.3], [3.95, 6], [3.95, 9], [3.95, 13]],
+          pagePos: [15.5, 1.0, 7.3],
+          anchors: [[7, 2], [7, 5], [7, 9], [7, 12], [7, 14], [10, 7.3], [13, 7.3], [16, 7.3], [3.95, 5], [3.95, 9], [3.95, 13]],
+          bbox: { x0: 2.2, x1: 16.9, z0: 1.2, z1: 15.7 } },
+        { id: "gym", name: "THE GYMNASIUM", mat: areaMat(0x7a2e1c),
+          walls: [
+            [12.85, -3.675, 0.3, 4.65], [12.85, -11.975, 0.3, 6.75],
+            [16.15, -2.675, 0.3, 2.65], [16.15, -9, 0.3, 4.8], [16.15, -14.675, 0.3, 1.35],
+            [14.5, -15.5, 3.3, 0.3],
+            [9, -5.85, 8.3, 0.3], [9, -8.75, 8.3, 0.3], [4.7, -7.3, 0.3, 2.9],
+            [19.15, -9, 0.3, 10], [17.65, -3.85, 3.0, 0.3], [17.65, -14.15, 3.0, 0.3]
+          ],
+          lights: [[14.5, -4], [14.5, -8], [14.5, -12], [14.5, -15], [10, -7.3], [6, -7.3], [17.65, -6], [17.65, -9], [17.65, -13]],
+          pagePos: [6.2, 1.0, -7.3],
+          anchors: [[14.5, -2], [14.5, -5], [14.5, -9], [14.5, -12], [14.5, -14], [11, -7.3], [8, -7.3], [5, -7.3], [17.65, -5], [17.65, -9], [17.65, -13]],
+          bbox: { x0: 4.5, x1: 19.3, z0: -15.7, z1: -1.2 } },
+        { id: "locker", name: "THE LOCKER ROW", mat: areaMat(0x1c2a4a),
+          walls: [
+            [22.85, 3.675, 0.3, 4.65], [22.85, 11.975, 0.3, 6.75],
+            [20.15, 2.675, 0.3, 2.65], [20.15, 9, 0.3, 4.8], [20.15, 14.675, 0.3, 1.35],
+            [21.5, 15.5, 2.7, 0.3],
+            [26.85, 8.75, 8.3, 0.3], [26.85, 5.85, 8.3, 0.3], [31, 7.3, 0.3, 2.9],
+            [17.3, 9, 0.3, 10], [18.725, 3.85, 2.85, 0.3], [18.725, 14.15, 2.85, 0.3]
+          ],
+          lights: [[21.5, 4], [21.5, 8], [21.5, 12], [21.5, 15], [25, 7.3], [29, 7.3], [18.7, 6], [18.7, 9], [18.7, 13]],
+          pagePos: [29.7, 1.0, 7.3],
+          anchors: [[21.5, 2], [21.5, 5], [21.5, 9], [21.5, 12], [21.5, 14], [24, 7.3], [27, 7.3], [30, 7.3], [18.7, 5], [18.7, 9], [18.7, 13]],
+          bbox: { x0: 17.1, x1: 31.2, z0: 1.2, z1: 15.7 } }
+      ];
+      AREAS.forEach(a => { a.walls.forEach(w => wallBox(w[0], w[1], w[2], w[3], a.mat)); a.lights.forEach(([lx, lz]) => { const l = new THREE.PointLight(0xfff3d0, 0.5, 8); l.position.set(lx, 2.2, lz); scene.add(l); }); });
+      const MAIN_ANCHORS = [[2, 1], [2, -1], [6, 1], [6, -1], [10, 1], [10, -1], [14, 1], [14, -1], [18, 1], [18, -1], [22, 1], [22, -1], [24.5, 1], [24.5, -1]];
+      function areaAt(x, z) { for (const a of AREAS) if (x >= a.bbox.x0 && x <= a.bbox.x1 && z >= a.bbox.z0 && z <= a.bbox.z1) return a; return null; }
+
+      // ---- the trophy case: a shallow glass front set into the south corridor wall, plus two matte trophy
+      // shapes behind it. x=5, well past the x=1 spawn point, so the reveal is something the player walks to
+      // and finds, not something already in frame on the opening view (Ian, review 2026-08-31). Mounted at
+      // y=1.0, not adult wall height (1.5): the camera sits at dog eye height (EYE_H=0.38) and gets to within
+      // about 1 unit of the case, and a wall-height case at that distance needs a look-up angle (measured:
+      // 47 degrees) past both the FOV and the pitch clamp -- genuinely unreachable in frame at any angle.
+      // 1.0 keeps it inside a normal look-up.
+      const TROPHY_X = 5;
+      const trophyGlass = new THREE.Mesh(new THREE.PlaneGeometry(1.6, 1.6), glassMat);
+      trophyGlass.position.set(TROPHY_X, 1.0, -1.18); scene.add(trophyGlass);
+      [-0.35, 0.35].forEach((dx, i) => {
+        const base = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.12, 0.1, 10), trophyMat); base.position.set(TROPHY_X + dx, 0.55, -1.3); scene.add(base);
+        const cup = new THREE.Mesh(new THREE.ConeGeometry(0.09, 0.22, 10), trophyMat); cup.position.set(TROPHY_X + dx, 0.74, -1.3); scene.add(cup);
+      });
+      const TROPHY_AT = new THREE.Vector3(TROPHY_X, 0, -1.0);
+      const reflVec = new THREE.Vector3();
+
+      // ---- three page pickups, floating billboards
+      function wrapText(x, text, cx, cy, maxW, lh) {
+        const words = text.split(" "); let line = "", y = cy;
+        words.forEach(w => { const test = line + w + " "; if (x.measureText(test).width > maxW && line) { x.fillText(line, cx, y); line = w + " "; y += lh; } else line = test; });
+        x.fillText(line, cx, y);
+      }
+      function pageSprite(headline) {
+        const c = document.createElement("canvas"); c.width = 256; c.height = 160; const x = c.getContext("2d");
+        x.fillStyle = "#efe6cc"; x.fillRect(0, 0, 256, 160); x.strokeStyle = "#241a0e"; x.lineWidth = 4; x.strokeRect(4, 4, 248, 152);
+        x.fillStyle = "#241a0e"; x.font = "bold 20px Georgia"; x.textAlign = "center"; wrapText(x, headline, 128, 55, 220, 24);
+        const tex = new THREE.CanvasTexture(c);
+        const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true })); s.scale.set(1.1, 0.7, 1); return s;
+      }
+      const PAGE_POS = AREAS.map(a => new THREE.Vector3(...a.pagePos));   // deep in each area's branch now, not just off the corridor
+      const DOOR_X = AREAS.map(a => a.anchors[0][0]);   // each area's own doorway x on the (unchanged) main corridor
+      const pageObjs = PAGE_POS.map((pos, i) => {
+        if (state.found[i]) return null;
+        const s = pageSprite(PAGES[i].title); s.position.copy(pos); scene.add(s);
+        const g = new THREE.PointLight(0xffd36e, 0.9, 3); g.position.copy(pos); scene.add(g);
+        return { sprite: s, light: g, base: pos.y };
+      });
+
+      // ---- the monster: papier-mache, faceless, matte, tall and thin -- slides, never runs
+      function buildMonster() {
+        const g = new THREE.Group();
+        const legs = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.1, 1.05, 8), suitMat); legs.position.set(0, 0.55, 0); g.add(legs);
+        const torso = new THREE.Mesh(new THREE.CapsuleGeometry(0.14, 0.75, 4, 8), suitMat); torso.position.set(0, 1.42, 0); g.add(torso);
+        // head was 0.15 radius, same value/lit-behaviour as the torso it sat directly on -- it never read as
+        // its own shape (round 2 honest report). Bigger, flattened for a bald crown, and nudged up so there is
+        // real negative space above the collar before it starts, not a sphere grafted onto the capsule.
+        const head = new THREE.Mesh(new THREE.SphereGeometry(0.19, 16, 12), paperMat);
+        head.position.set(0, 2.14, 0); head.scale.set(1, 0.94, 1); g.add(head);
+        const armL = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.04, 0.7, 6), suitMat); armL.position.set(-0.18, 1.25, 0.05); armL.rotation.z = 0.15; g.add(armL);
+        const armR = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.04, 0.7, 6), suitMat); armR.position.set(0.19, 1.15, 0.05); armR.rotation.z = -0.05; g.add(armR);
+        const brief = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.16, 0.06), caseMat); brief.position.set(0.22, 0.82, 0.08); g.add(brief);
+        // his own light, travels with him: with lookAt(player) his local -Z always faces the camera, so a
+        // light offset onto -Z and to one side keys his camera-facing surface directly instead of relying on
+        // ceiling spill from above (root cause of the round-2 flat-black read). Not inside any sealed mesh --
+        // sits clear in front of his torso/head, checked live at all three test distances below.
+        // pulled back further still, intensity raised to match (inverse-square: same illumination needs
+        // ~4x intensity at 2x the distance) -- a point light this close to a body produces a tight bright
+        // patch exactly where the surface is nearest it (inverse-square falloff over ~2 units of height
+        // is steep), which read as a glowing purple orb stuck to his chest, not a key light (found live,
+        // screenshot-confirmed twice). Further back, the gradient across his height is gentle instead.
+        const monsterLight = new THREE.PointLight(0xcfe0ff, 0.65, 6, 2);
+        monsterLight.position.set(0.6, 1.5, -2.2); g.add(monsterLight);
+        g.visible = false; scene.add(g); return g;
+      }
+      const monster = buildMonster();
+      const ghost = { active: false, from: new THREE.Vector3(), to: new THREE.Vector3(), t0: 0, dur: 4000, seen: false };
+      let hideTimer = null;   // found live while testing FIX 1: a page-pickup haunt starting within 500ms of
+      // the PREVIOUS haunt's own end left that old haunt's hide callback pending, so it fired mid-way through
+      // the new one and hid the monster early -- the centrepiece vanishing right when he's meant to land.
+      function haunt(from, to, dur) {
+        if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+        ghost.active = true; ghost.from.copy(from); ghost.to.copy(to); ghost.t0 = performance.now(); ghost.dur = dur;
+        monster.visible = true; monster.position.copy(from);
+        if (!ghost.seen) { ghost.seen = true; announce("Something is standing at the end of the hall."); }
+      }
+      setTimeout(() => haunt(new THREE.Vector3(24, 0, 0), new THREE.Vector3(18, 0, 0), 6000), 3200);   // 0901: slower -- 4500ms was the old duration
+
+      // ---- ambient re-haunts: escalate per page found (locked canon: "each page found is more stressful
+      // than the last") -- more frequent, closer, and quicker to relocate as n climbs. Still no pathfinding:
+      // haunt() just slides him between two authored points, same as the page-pickup haunts already did.
+      const monsterVec = new THREE.Vector3();
+      let staticIntensity = 0, caught = false, ambientTimer = null;
+      // 0901: the creep (the Slender loop) and the touch-range kill. creep tracks its own "watched" clock
+      // (2s dead-on hides him, same as a normal haunt end); monsterVisibleAt/monsterWasVisible track how long
+      // he's been continuously visible so a touch-range catch can never fire on the very frame he appears.
+      const creep = { active: false, watchedMs: 0 };
+      const CREEP_SPEED = 0.45;   // walk speed is 2.5 -- any player who moves gets away
+      let monsterVisibleAt = 0, monsterWasVisible = false;
+      // the ONE capture routine both kill paths call (Ian's ruling: both live). Never touches state.found,
+      // never calls save(), never re-fires MBS.form/unlock/wave -- only player position, staticIntensity and
+      // the live meter component reset.
+      function doCapture() {
+        if (caught) return;
+        caught = true;
+        burstEl.classList.remove("go"); void burstEl.offsetWidth; burstEl.classList.add("go");
+        monster.visible = false; ghost.active = false; creep.active = false;
+        if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+        liveVal = 0; paintMeter();
+        announce("Caught. Pulled back to the start of the hall. Pages already found are still found.");
+        setTimeout(() => {
+          player.x = 1.0; player.z = 0; player.yaw = -Math.PI / 2; player.pitch = 0;
+          staticIntensity = 0; caught = false;
+        }, 700);
+      }
+      function scheduleAmbient() {
+        const n = state.found.filter(Boolean).length;
+        const wait = Math.max(3000, 8500 - n * 2000) + rnd() * 2500;
+        ambientTimer = setTimeout(() => {
+          if (cc.dataset.view === "hunt" && !ghost.active && !creep.active && !caught) {
+            // Haunt anchors, authored per area (corridor centrelines, never inside a wall) -- replaces the
+            // single-corridor aheadX/side math, which assumed one straight hallway and would place him inside
+            // a branch's own wall (or off in empty space) now that the school has branches (0901 expansion).
+            const area = areaAt(player.x, player.z);
+            const pool = area ? area.anchors : MAIN_ANCHORS;
+            const far = pool.filter(a => Math.hypot(a[0] - player.x, a[1] - player.z) > 3);
+            const near = pool.filter(a => Math.hypot(a[0] - player.x, a[1] - player.z) > 1.6);   // keeps the "to" point clear of touch range on frame one
+            const fromPool = far.length ? far : pool, toPool = near.length ? near : pool;
+            const from = fromPool[Math.floor(rnd() * fromPool.length)], to = toPool[Math.floor(rnd() * toPool.length)];
+            haunt(new THREE.Vector3(from[0], 0, from[1]), new THREE.Vector3(to[0], 0, to[1]), Math.max(2600, 4600 - n * 500));
+          }
+          scheduleAmbient();
+        }, wait);
+      }
+      scheduleAmbient();
+
+      // ---- player: low, at dog height
+      const EYE_H = 0.38, R = 0.28, SPEED = 2.5;
+      const player = { x: 1.0, z: 0, yaw: -Math.PI / 2, pitch: 0 };
+      // 0901 corner-trap fix. Root cause, found live by logging position + blocked() every frame while
+      // scripting a diagonal hold into three different corners: the old test expanded each wall's AABB by R
+      // on both axes independently, and the per-axis slide below tests each axis's candidate against the
+      // OTHER axis's frame-START value, never the proposed pair together (chaining them was tried in round 2
+      // and rejected -- it froze both axes solid the same way, just sooner). Diagonal movement can walk the
+      // player up to within fractions of a unit of TWO perpendicular walls at once, at which point every
+      // further diagonal step re-asks the same two already-blocked single-axis questions: a rejected axis
+      // never updates, so the next frame tests the identical stuck position again, forever, for as long as
+      // the player keeps holding into the corner.
+      // blocked() is now a real circle-vs-rectangle test (clamp the query point onto the wall's own box,
+      // compare distance to R) instead of a point-in-expanded-AABB test -- geometrically correct for the
+      // player's actual collision radius, and it rounds the corner dead zone instead of squaring it.
+      // depenetrate() is the actual escape guarantee: after the per-axis slide, if the player is still
+      // overlapping any wall's padded circle, push straight out along whichever single axis needs the least
+      // correction. Runs every frame regardless of input, so the very next move in ANY direction away from
+      // the wall is free -- "escaped by a single opposing input," proven live in the harness (see README).
+      function nearestOnRect(x, z, w) { return { x: Math.max(w.x0, Math.min(x, w.x1)), z: Math.max(w.z0, Math.min(z, w.z1)) }; }
+      function blocked(x, z) { for (const w of collideRects) { const p = nearestOnRect(x, z, w); const dx = x - p.x, dz = z - p.z; if (dx * dx + dz * dz < R * R) return true; } return false; }
+      function depenetrate(x, z) {
+        let px = x, pz = z;
+        for (const w of collideRects) {
+          const p = nearestOnRect(px, pz, w); const dx = px - p.x, dz = pz - p.z; const d = Math.hypot(dx, dz);
+          if (d >= R) continue;
+          if (d > 1e-4) { const push = (R - d) + 0.002; px += (dx / d) * push; pz += (dz / d) * push; }
+          else px = w.x1 + R + 0.002;   // dead-on top of a wall face: pick a side, any side, and go
+        }
+        return { x: px, z: pz };
+      }
+
+      // ---- flashlight: drains while on, recharges while off, never a consumable
+      const flash = new THREE.SpotLight(0xfff3d0, 0, 8, Math.PI / 6.5, 0.45, 1.4);
+      camera.add(flash); camera.add(flash.target); flash.target.position.set(0, 0, -1);
+      let battery = 100, flashOn = false;
+      function setFlash(on) { flashOn = on && battery > 3; flash.intensity = flashOn ? 2.6 : 0; flashBtn.setAttribute("aria-pressed", String(flashOn)); }
+      flashBtn.addEventListener("click", () => setFlash(!flashOn));
+
+      // ---- sprint: hold Shift (desktop) or the SPRINT button (mobile), drains/recharges a stamina pool,
+      // never a hard block on movement -- just slower once it's spent
+      const sprintBtn = document.getElementById("ccSprintBtn"), stamFill = document.getElementById("ccStamFill");
+      let stamina = 100, sprintHeld = false;
+      sprintBtn.addEventListener("pointerdown", () => { sprintHeld = true; sprintBtn.setAttribute("aria-pressed", "true"); });
+      ["pointerup", "pointercancel", "pointerleave"].forEach(ev => sprintBtn.addEventListener(ev, () => { sprintHeld = false; sprintBtn.setAttribute("aria-pressed", "false"); }));
+
+      // ---- look-drag: raw client deltas need no rect correction (a delta, not an absolute position)
+      let dragging = false, lastX = 0, lastY = 0;
+      function lookStart(x, y) { dragging = true; lastX = x; lastY = y; }
+      function lookMove(x, y) {
+        if (!dragging) return;
+        player.yaw -= (x - lastX) * 0.0055; player.pitch = Math.max(-0.6, Math.min(0.6, player.pitch - (y - lastY) * 0.0045));
+        lastX = x; lastY = y;
+      }
+      viewport.addEventListener("pointerdown", e => { if (e.target === joy || joy.contains(e.target) || e.target === flashBtn || e.target === readBtn) return; lookStart(e.clientX, e.clientY); try { viewport.setPointerCapture(e.pointerId); } catch {} });
+      viewport.addEventListener("pointermove", e => lookMove(e.clientX, e.clientY));
+      ["pointerup", "pointercancel", "pointerleave"].forEach(ev => viewport.addEventListener(ev, () => dragging = false));
+
+      // ---- joystick: its own getBoundingClientRect() plus the event only
+      let joyVec = { x: 0, y: 0 }, joyId = null;
+      joy.addEventListener("pointerdown", e => { joyId = e.pointerId; try { joy.setPointerCapture(e.pointerId); } catch {} updateJoy(e); e.stopPropagation(); });
+      joy.addEventListener("pointermove", e => { if (e.pointerId === joyId) { updateJoy(e); e.stopPropagation(); } });
+      ["pointerup", "pointercancel"].forEach(ev => joy.addEventListener(ev, e => { if (e.pointerId === joyId) { joyId = null; joyVec = { x: 0, y: 0 }; joyNub.style.transform = ""; } }));
+      function updateJoy(e) {
+        const r = joy.getBoundingClientRect();
+        let dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
+        const max = r.width / 2; const len = Math.hypot(dx, dy) || 1;
+        if (len > max) { dx = dx / len * max; dy = dy / len * max; }
+        joyNub.style.transform = `translate(${dx}px, ${dy}px)`;
+        joyVec = { x: dx / max, y: dy / max };
+      }
+
+      // ---- keyboard: WASD / arrows to move, F to flash, R to read the paper
+      const keys = {};
+      window.addEventListener("keydown", e => { if (cc.dataset.view !== "hunt") return; keys[e.key.toLowerCase()] = true;
+        if (e.key.toLowerCase() === "f") setFlash(!flashOn); if (e.key.toLowerCase() === "r") showBook(); });
+      window.addEventListener("keyup", e => keys[e.key.toLowerCase()] = false);
+
+      function resize() {
+        const w = viewport.clientWidth || 320, h = viewport.clientHeight || 320;
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        renderer.setSize(w, h, false);
+        camera.aspect = w / h; camera.updateProjectionMatrix();
+      }
+      new ResizeObserver(resize).observe(viewport); resize();
+
+      // ---- timecode
+      let secs = 0; setInterval(() => { if (cc.dataset.view === "hunt") { secs++; const m = String(Math.floor(secs / 60)).padStart(2, "0"), s = String(secs % 60).padStart(2, "0"); tcEl.textContent = `${m}:${s}`; } }, 1000);
+
+      let doorSeen = false;
+      let last = performance.now();
+      function frame(now) {
+        const dt = Math.min(50, now - last) / 1000; last = now;
+
+        // movement
+        let mx = 0, mz = 0;
+        if (keys.w || keys.arrowup) mz -= 1; if (keys.s || keys.arrowdown) mz += 1;
+        if (keys.a || keys.arrowleft) mx -= 1; if (keys.d || keys.arrowright) mx += 1;
+        mx += joyVec.x; mz += joyVec.y;
+        const mlen = Math.hypot(mx, mz);
+        const wantSprint = (keys.shift || sprintHeld) && stamina > 2 && mlen > 0.05;
+        if (wantSprint) stamina = Math.max(0, stamina - dt * 26); else stamina = Math.min(100, stamina + dt * 15);
+        stamFill.style.setProperty("--stam", stamina.toFixed(0));
+        if (mlen > 0.05) {
+          mx /= Math.max(mlen, 1); mz /= Math.max(mlen, 1);
+          const fx = -Math.sin(player.yaw), fz = -Math.cos(player.yaw);
+          const rx = Math.cos(player.yaw), rz = -Math.sin(player.yaw);
+          const curSpeed = SPEED * (wantSprint ? 1.7 : 1);
+          const dx = (fx * -mz + rx * mx) * curSpeed * dt, dz = (fz * -mz + rz * mx) * curSpeed * dt;
+          // both axes tested against the frame-START position, never chained -- chaining (testing z against
+          // the just-updated x) let a room's back corner freeze both axes solid while diagonal was held, since
+          // a rejected move never updates position, so the next frame re-asked the identical stuck question
+          // (found live 2026-08-31, round 2; workaround was avoiding diagonal input entirely). Independent
+          // tests always admit whichever single axis is actually open, which is what makes a wall a slide.
+          const x0 = player.x, z0 = player.z;
+          const nx = x0 + dx; if (!blocked(nx, z0)) player.x = nx;
+          const nz = z0 + dz; if (!blocked(x0, nz)) player.z = nz;
+        }
+        if (blocked(player.x, player.z)) { const r = depenetrate(player.x, player.z); player.x = r.x; player.z = r.z; }
+
+        camera.position.set(player.x, EYE_H + (mlen > 0.05 && !REDUCED ? Math.abs(Math.sin(now / 130)) * 0.02 : 0), player.z);
+        camera.rotation.set(player.pitch, player.yaw, 0, "YXZ");
+        const lookFx = -Math.sin(player.yaw), lookFz = -Math.cos(player.yaw);   // forward, needed even when not moving (the reflection's facing check below)
+
+        // flashlight battery
+        if (flashOn) { battery = Math.max(0, battery - dt * 2.4); if (battery <= 0) setFlash(false); }
+        else battery = Math.min(100, battery + dt * 1.4);
+        batFill.style.setProperty("--bat", battery.toFixed(0));
+
+        // page pickups: an interact prompt shows once near and looking at one, before the tighter pickup
+        // radius actually triggers -- so there's always a visible "found it" beat before the grab, not just
+        // an instant silent counter tick. Pickup itself stays proximity-based (a walked-to pickup, not a
+        // button press) but now fires a brief zoom/flash jolt, the classic paper-grab beat.
+        let anyPrompt = false;
+        pageObjs.forEach((po, i) => {
+          if (!po) return;
+          po.sprite.position.y = po.base + Math.sin(now / 500 + i) * 0.05;
+          const ddx = po.sprite.position.x - player.x, ddz = po.sprite.position.z - player.z;
+          const d = Math.hypot(ddx, ddz);
+          const facing = d > 0.05 && (lookFx * ddx / d + lookFz * ddz / d) > 0.3;
+          if (d < 0.9) {
+            scene.remove(po.sprite); scene.remove(po.light); pageObjs[i] = null; collect(i);
+            viewport.classList.remove("cc-jolt"); void viewport.offsetWidth; viewport.classList.add("cc-jolt");
+            const doorZ = i === 1 ? -1.35 : 1.35;   // each area's own doorway back to the corridor
+            // 0901: from the area's own doorway (DOOR_X), not PAGE_POS[i].x -- the page is now deep in a
+            // branch, and combining that x with the corridor's z would place him inside a wall. Slower too,
+            // scaled by the same ~1.44x as the ambient re-haunt formula below (old: 3000 + i*900).
+            haunt(new THREE.Vector3(DOOR_X[i], 0, doorZ), new THREE.Vector3(player.x, 0, player.z), 4300 + i * 1300);
+          } else if (d < 1.7 && facing) {
+            anyPrompt = true;
+            promptEl.textContent = "A PAGE. GET CLOSER.";
+            promptEl.classList.add("show");
+          }
+        });
+        if (!anyPrompt) promptEl.classList.remove("show");
+
+        // trophy case reflection: pinned to the glass's own projected screen position every frame, like the
+        // page sprites, so it sits ON the case rather than parked in a screen corner. Shows only when near it
+        // AND actually looking toward it AND it's in the camera's frustum -- a found reveal, not a HUD panel.
+        {
+          const dTrophy = Math.hypot(player.x - TROPHY_AT.x, player.z - TROPHY_AT.z);
+          const tdx = TROPHY_AT.x - player.x, tdz = TROPHY_AT.z - player.z, tlen = Math.hypot(tdx, tdz) || 1;
+          const facing = (lookFx * tdx / tlen + lookFz * tdz / tlen) > 0.45;
+          trophyGlass.getWorldPosition(reflVec); reflVec.project(camera);
+          const inFrustum = reflVec.z < 1 && Math.abs(reflVec.x) < 0.96 && Math.abs(reflVec.y) < 0.96;
+          const show = dTrophy < 1.9 && facing && inFrustum;
+          reflectEl.classList.toggle("show", show);
+          if (show) {
+            const vw = viewport.clientWidth, vh = viewport.clientHeight;
+            reflectEl.style.left = ((reflVec.x * 0.5 + 0.5) * vw).toFixed(0) + "px";
+            reflectEl.style.top = ((-reflVec.y * 0.5 + 0.5) * vh).toFixed(0) + "px";
+          }
+        }
+
+        // locked door
+        if (!doorSeen && player.x > 24.3) { doorSeen = true; announce("The hallway ends here. FOOD SERVICE and THE OFFICE. Both locked. Next time."); }
+
+        // monster: slides while off-frame or at the edge, holds still when watched dead-on (locked canon --
+        // no pathfinding chase either way, this only changes whether the existing slide is allowed to progress)
+        let monsterOnscreen = false, monsterCentered = false, monsterDist = 99;
+        if (monster.visible) {
+          if (!monsterWasVisible) monsterVisibleAt = now;
+          monsterVec.copy(monster.position); monsterVec.y = camera.position.y; monsterVec.project(camera);
+          monsterOnscreen = monsterVec.z < 1 && Math.abs(monsterVec.x) < 1.05 && Math.abs(monsterVec.y) < 1.05;
+          monsterCentered = monsterOnscreen && Math.abs(monsterVec.x) < 0.22 && Math.abs(monsterVec.y) < 0.3;
+          monsterDist = Math.hypot(monster.position.x - player.x, monster.position.z - player.z);
+          if (ghost.active) {
+            if (monsterCentered) { ghost.t0 += dt * 1000; }   // watched dead-on: freeze the slide's progress
+            else {
+              const p = Math.min(1, (now - ghost.t0) / ghost.dur);
+              monster.position.lerpVectors(ghost.from, ghost.to, p);
+              if (p >= 1) {
+                ghost.active = false;
+                // 0901: the Slender loop. A haunt that lands close to the player creeps instead of hiding --
+                // watching him dead-on freezes the creep (still builds static, same as any slide), looking
+                // away lets him close the gap. Ends by being watched out (hides, same as before) or by reaching
+                // touch range, where the kill check below takes it from there.
+                // Landing distance, not the frame-stale monsterDist computed above (before this lerp): that
+                // was still measuring the monster's PREVIOUS position, so a haunt landing close never read as
+                // close and the creep branch below never fired -- found live, the first time this was tested,
+                // by logging monsterDist across a haunt end and seeing it never dip under the threshold.
+                const landDist = Math.hypot(monster.position.x - player.x, monster.position.z - player.z);
+                if (landDist < 3.5) { creep.active = true; creep.watchedMs = 0; }
+                else hideTimer = setTimeout(() => { monster.visible = false; hideTimer = null; }, 500);
+              }
+            }
+            monster.lookAt(player.x, monster.position.y, player.z);
+          } else if (creep.active) {
+            if (monsterCentered) {
+              creep.watchedMs += dt * 1000;
+              if (creep.watchedMs >= 2000) { creep.active = false; monster.visible = false; }
+            } else {
+              creep.watchedMs = 0;
+              const cdx = player.x - monster.position.x, cdz = player.z - monster.position.z, cd = Math.hypot(cdx, cdz) || 1;
+              const step = Math.min(CREEP_SPEED * dt, cd);
+              monster.position.x += cdx / cd * step; monster.position.z += cdz / cd * step;
+            }
+            monster.lookAt(player.x, monster.position.y, player.z);
+          }
+          // touch-range kill: visible at least 600ms (no spawn-kills), close enough -- he can take you from
+          // behind, whether or not you're facing him. Static-maxout kill is the other path, below.
+          if (!caught && (now - monsterVisibleAt) >= 600 && monsterDist < 1.1) doCapture();
+        }
+        monsterWasVisible = monster.visible;
+
+        // static proximity effect: ramps faster watched dead-on than seen at the edge, decays once he's
+        // off-frame or far. Escalates with pages found. Distinct from the ambient Rung 3 grain: it also
+        // drives a dedicated coarse white-noise canvas layer, much blockier and brighter than the fine
+        // feTurbulence grain, so a danger spike actually reads as a spike.
+        {
+          const n = state.found.filter(Boolean).length;
+          const escal = 1 + n * 0.4;
+          let target = 0;
+          if (monster.visible && monsterOnscreen) { const prox = Math.max(0, 1 - monsterDist / 9); target = prox * (monsterCentered ? 1 : 0.45); }
+          else if (monster.visible && monsterDist < 3.5) target = (1 - monsterDist / 3.5) * 0.25;
+          const rate = (target > staticIntensity ? 0.55 : 0.4) * escal;
+          staticIntensity = target > staticIntensity ? Math.min(1, staticIntensity + rate * dt) : Math.max(0, staticIntensity - rate * dt);
+          vhsGrain.style.opacity = Math.min(1, 0.75 + staticIntensity * 0.4);
+          vhsScan.style.opacity = Math.min(1, 0.6 + staticIntensity * 0.3);
+          if (staticIntensity > 0.03) { drawStaticNoise(); staticCanvas.style.opacity = Math.min(0.85, staticIntensity); }
+          else staticCanvas.style.opacity = 0;
+
+          // 0901: CORTISOL fills with proximity too. A live component rides on top of the banked ratchet --
+          // proximity to the monster (when visible) plus staticIntensity, worth up to ~30 points, rising as
+          // he closes and decaying over ~2.5s once he's gone. Displayed value is min(100, banked + live),
+          // painted at ~10/sec (below) so the bar's 400ms CSS transition doesn't fight a per-frame write.
+          // Hitting 100 is a readout, not a trigger -- the two kill paths above/below are the only triggers.
+          const proxRaw = monster.visible ? Math.max(0, 1 - monsterDist / 6) : 0;
+          const liveTarget = Math.max(proxRaw, staticIntensity) * 30;
+          liveVal = liveTarget >= liveVal ? liveTarget : Math.max(liveTarget, liveVal - dt * 12);
+          if (now - lastMeterPaint > 100) { lastMeterPaint = now; paintMeter(); }
+
+          // static-maxout: the other kill path (both live, Ian's ruling). Shares the one capture routine
+          // with the touch-range path above -- doCapture() never touches state.found, never calls save(),
+          // never re-fires MBS.form/unlock/wave.
+          if (!caught && staticIntensity >= 0.99) doCapture();
+        }
+
+        renderer.render(scene, camera);
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }).catch(err => {
+      console.error("[cc] three.js failed to load", err);
+      runFallback();
+    });
   }
-
-  // click the food: it falls off the page and the orange wave glitches through
-  function drop() {
-    if (dropped || !arranged) return; dropped = true;
-    feeder.classList.add("dropping");
-    if (window.MBS && window.MBS.wave) window.MBS.wave();
-    pieces.forEach((p, i) => setTimeout(() => {
-      const dx = (rnd() * 60 - 30), dy = (760 + rnd() * 520), rot = (rnd() * 720 - 360).toFixed(0);
-      p.g.style.transform = `translate(${(p.hx + dx).toFixed(0)}px, ${(p.hy + dy).toFixed(0)}px) rotate(${rot}deg)`;
-      p.g.style.opacity = "0";
-    }, i * 7 + rnd() * 40));
-    if (window.MBS && window.MBS.unlock) window.MBS.unlock("corgi");
-  }
-  svg.addEventListener("click", drop);
-  svg.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); drop(); } });
-
-  // the sequence: scan -> dog food ; message -> paw -> HELP ; click -> fall + orange
-  const scan = document.getElementById("scan"), out = document.getElementById("scanOut"), btn = document.getElementById("scanBtn");
-  const readings = ["ELEVATED. AS EXPECTED.", "HIGH. THE DOG UNDERSTANDS.", "VERY HIGH. HAVE A SEAT.", "OFF THE CHART. WELCOME HOME.", "MILD. SUSPICIOUS. SCAN AGAIN."];
-  let scanCount = 0;
-  btn.addEventListener("click", () => {
-    if (scan.classList.contains("running")) return;
-    scan.classList.remove("done"); scan.classList.add("running"); out.textContent = "SCANNING. DO NOT BREATHE NORMALLY.";
-    scanCount++;
-    const held = Math.min(99, 44 + scanCount * 13);
-    setTimeout(() => {
-      scan.classList.remove("running"); scan.classList.add("done");
-      out.textContent = `STRESS: ${held}%. ${readings[(scanCount - 1) % readings.length]}`;
-      setMeter(held);
-      dispense();                                              // the dog sends food after the scan
-    }, 2300);
-  });
-
-  document.getElementById("ventForm").addEventListener("submit", e => {
-    e.preventDefault();
-    const b = document.getElementById("ventBtn"); b.textContent = "THE DOG HEARD YOU"; b.disabled = true;
-    window.MBS && window.MBS.form && window.MBS.form("corgi", { story: true });
-    arrange();                                                 // the message brings the paw
-  });
 })();
 </script>
