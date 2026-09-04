@@ -19,6 +19,16 @@ FORM: Ian's direction 2026-08-26/27; canon in MOM Inc.md "The goon theme" and Se
   .gn .ident img.mark{width:clamp(38px,10vw,52px); height:auto}
   .gn .ident .tag{text-align:right; font-family:"Anton",sans-serif; letter-spacing:.1em; font-size:clamp(11px,3.2vw,14px); color:var(--gold)}
 
+  /* the game frame: the built goon-gala Phaser build, sized to the glass like corgi's fitViewport (Ian, 2026-09-03: iframe port) */
+  .gn .ggFrame{position:relative; width:100%; max-width:900px; margin:16px auto 20px; min-height:220px; border:4px solid var(--card-d); border-radius:14px; overflow:hidden; box-shadow:0 8px 0 #6b4a25, 0 14px 30px rgba(0,0,0,.4); background:#150a24}
+  .gn .ggFrame iframe{display:block; width:100%; height:100%; border:0; touch-action:none}
+  /* Balatro's look: a CRT glow over the felt-and-cards loop (GUESSED reference, see README) */
+  .gn .ggFrame::after{content:""; position:absolute; inset:0; pointer-events:none; z-index:2;
+      background:
+        repeating-linear-gradient(0deg, rgba(0,0,0,.14) 0 1px, transparent 1px 3px),
+        radial-gradient(120% 100% at 50% 45%, transparent 55%, rgba(0,0,0,.5) 100%);
+      mix-blend-mode:multiply}
+
   /* the cardboard board that every section sits on */
   .gn .board{margin:22px 0; background:
       repeating-linear-gradient(0deg, rgba(0,0,0,.05) 0 2px, transparent 2px 7px),
@@ -82,6 +92,7 @@ FORM: Ian's direction 2026-08-26/27; canon in MOM Inc.md "The goon theme" and Se
 <article class="gn" id="gn" data-host="MOM INC" data-show="GOON" data-ch="8" data-gauge="off">
   <div class="code" aria-hidden="true" id="gnCode"></div>
   <div class="wrap">
+    <div class="ggFrame" id="ggFrame"><iframe id="ggGame" src="games/goon/index.html" title="The Goon Gala" loading="lazy" allowfullscreen aria-label="The Goon Gala, a game"></iframe></div>
     <header class="ident">
       <div class="mbs">MBS<small>A MOM INC NETWORK</small></div>
       <img class="mark" src="assets/mom-inc-mark.png" alt="MOM Inc." width="480" height="480">
@@ -167,6 +178,24 @@ FORM: Ian's direction 2026-08-26/27; canon in MOM Inc.md "The goon theme" and Se
 (() => {
   const gn = document.getElementById("gn"); if (!gn) return;
   const screen = gn.closest(".screen") || document.getElementById("screen");
+
+  // the game frame fills the glass, same fitViewport() pattern as corgi.html (divide by 1.15 for zoom:1.15)
+  const glassEl = screen ? screen.parentElement : null;
+  const ggFrame = document.getElementById("ggFrame");
+  function fitViewport() {
+    if (!glassEl || !ggFrame) return;
+    const gh = glassEl.getBoundingClientRect().height;
+    const visualTarget = Math.max(220, gh - 26);
+    ggFrame.style.height = (visualTarget / 1.15) + "px";
+  }
+  if (glassEl) { new ResizeObserver(fitViewport).observe(glassEl); fitViewport(); }
+
+  // the game posts a message at its first win; wave once, guard against repeats
+  window.__ggWaveHook = true;
+  let ggWaved = false;
+  window.addEventListener("message", e => {
+    if (e.data && e.data.type === "mbs-wave" && !ggWaved) { ggWaved = true; window.MBS && window.MBS.wave && window.MBS.wave(); }
+  });
 
   // MYR5 as decoration: five poses cut from her test clips, each knows where its eye sits (fractions of the sticker).
   const POSES = {

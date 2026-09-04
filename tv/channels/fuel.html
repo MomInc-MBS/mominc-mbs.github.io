@@ -42,8 +42,9 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
   .fu .chnum{position:relative; z-index:2; display:inline-block; margin-top:10px; font-family:"VT323",monospace; font-size:16px; letter-spacing:.1em; color:var(--ink); background:var(--cream); border:3px solid var(--ink); border-radius:20px; padding:2px 14px; transform:rotate(-2deg)}
 
   /* panels: thick outline, drop shadow, rounded, screaming colour blocks */
-  .fu .card{position:relative; margin:24px 0; background:var(--cream); border:5px solid var(--ink); border-radius:22px; padding:16px 16px 14px; box-shadow:8px 8px 0 rgba(0,0,0,.35)}
-  .fu .heading{margin:0 0 10px; font-family:"Anton",sans-serif; font-size:clamp(20px,6.4vw,30px); letter-spacing:.04em; color:var(--hot-d); -webkit-text-stroke:1px var(--ink); text-align:center}
+  .fu .card{position:relative; margin:24px 0; background:linear-gradient(155deg,#fff 0%,var(--cream) 40%,#f1efe0 100%); border:5px solid var(--ink); border-radius:22px; padding:16px 16px 14px; box-shadow:8px 8px 0 rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.6)}
+  .fu .card::before{content:""; position:absolute; inset:7px; border-radius:15px; border:1px solid rgba(26,10,16,.14); pointer-events:none}
+  .fu .heading{margin:0 0 10px; font-family:"Anton",sans-serif; font-size:clamp(20px,6.4vw,30px); letter-spacing:.04em; color:var(--hot-d); -webkit-text-stroke:1px var(--ink); text-align:center; text-shadow:0 1px 0 rgba(255,255,255,.5), 0 -1px 0 rgba(0,0,0,.2)}
   .fu .lede{margin:0 0 12px; font-weight:800; font-size:clamp(14px,4vw,16px); line-height:1.5; text-align:center}
   .fu .warn{margin:0 0 14px; background:repeating-linear-gradient(45deg,var(--sun) 0 10px,var(--ink) 10px 20px); color:var(--cream); font-family:"VT323",monospace; font-size:clamp(12px,3.6vw,15px); letter-spacing:.06em; text-align:center; padding:6px 8px; border-radius:8px; border:2px solid var(--ink)}
 
@@ -72,13 +73,17 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
   .fu.has3d #stageCard{flex:1 1 auto; min-height:0; margin:0 0 14px; padding:0; border:0; box-shadow:none; background:none; display:flex; flex-direction:column}
   .fu.has3d #stageCard .heading{display:none}
   .fu-stage{position:relative; width:100%; height:min(58vh,520px); min-height:320px; border-radius:16px; overflow:hidden;
-      background:radial-gradient(120% 100% at 50% 18%, #2a1030, var(--ink) 72%); touch-action:none; cursor:grab}
+      background:radial-gradient(120% 100% at 50% 18%, #2a1030, var(--ink) 72%); cursor:grab}
   .fu.has3d .fu-stage{flex:1 1 auto; min-height:280px; height:auto; border-radius:16px}
   .fu-stage:active{cursor:grabbing}
-  .fu-stage canvas{display:block; width:100%; height:100%}
+  .fu-stage canvas{display:block; width:100%; height:100%; touch-action:none}
+  .fu-stage canvas:focus-visible{outline:3px solid var(--acid); outline-offset:-3px}
   .fu-nudge{position:absolute; right:10px; top:9px; z-index:3; pointer-events:none;
-      font-family:"VT323",monospace; font-size:clamp(11px,3.2vw,13px); letter-spacing:.06em; color:var(--sun);
-      text-shadow:0 1px 4px #000; text-align:right; max-width:38%}
+      font-family:"Anton",sans-serif; font-size:clamp(12px,3.6vw,14px); letter-spacing:.04em; color:var(--ink);
+      background:var(--sun); border:2px solid var(--ink); border-radius:8px; padding:4px 8px;
+      text-align:right; max-width:44%; box-shadow:2px 2px 0 rgba(0,0,0,.3); animation:nudgepop 2.4s ease-in-out 3}
+  @keyframes nudgepop{0%,100%{transform:scale(1)} 50%{transform:scale(1.06)}}
+  @media (prefers-reduced-motion:reduce){ .fu-nudge{animation:none} }
   .fu-face{position:absolute; left:10px; top:9px; z-index:3; pointer-events:none; max-width:58%}
   .fu-face b{display:block; font-family:"Archivo Black",sans-serif; font-size:clamp(13px,3.6vw,16px); color:var(--cream); text-shadow:0 1px 5px #000}
   .fu-face i{display:block; font-style:normal; margin-top:2px; font-family:"Anton",sans-serif; font-size:clamp(11px,3vw,12.5px); letter-spacing:.04em; color:var(--sun); text-shadow:0 1px 4px #000}
@@ -91,7 +96,7 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
   .fu .srow .name{margin:0; font-family:"Archivo Black",sans-serif; font-size:clamp(16px,5vw,20px); letter-spacing:.01em; color:var(--ink)}
   .fu .srow .real{margin:0 0 10px; font-size:clamp(13px,3.7vw,14.5px); line-height:1.5; color:#2a1a20}
   .fu .levels{display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; margin-bottom:8px}
-  .fu .lvl{cursor:pointer; border:3px solid var(--ink); border-radius:10px; padding:8px 4px; background:#eee; font-family:"Anton",sans-serif; font-size:clamp(11px,3.4vw,13px); letter-spacing:.08em; color:var(--ink); box-shadow:3px 3px 0 rgba(0,0,0,.2); transition:transform 80ms ease-out}
+  .fu .lvl{cursor:pointer; border:3px solid var(--ink); border-radius:10px; padding:8px 4px; background:linear-gradient(160deg,#fff,#e4e4e4); font-family:"Anton",sans-serif; font-size:clamp(11px,3.4vw,13px); letter-spacing:.08em; color:var(--ink); box-shadow:3px 3px 0 rgba(0,0,0,.2), inset 0 1px 0 rgba(255,255,255,.8); transition:transform 80ms ease-out}
   .fu .lvl:active{transform:translate(2px,2px); box-shadow:1px 1px 0 rgba(0,0,0,.2)}
   .fu .srow[data-level="none"] .lvl[data-level="none"]{background:#bcb; }
   .fu .srow[data-level="weak"] .lvl[data-level="weak"]{background:var(--sun)}
@@ -116,7 +121,11 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
   .fu .can span{display:block; border-bottom:1px dashed rgba(255,234,0,.3); padding:2px 0}
   .fu .can span:last-child{border-bottom:0}
   .fu .can.full{outline:3px solid var(--acid)}
-  .fu .submit{display:block; width:100%; margin-top:14px; cursor:pointer; border:4px solid var(--ink); border-radius:14px; padding:14px 10px; background:linear-gradient(135deg,var(--hot),var(--grape)); color:var(--cream); font-family:"Anton",sans-serif; font-size:clamp(15px,4.6vw,19px); letter-spacing:.08em; box-shadow:6px 6px 0 rgba(0,0,0,.3); transition:transform 80ms ease-out}
+  .fu .costbar{background:var(--cream); color:var(--ink); border:3px solid var(--ink); border-radius:12px; padding:8px 12px; margin-top:8px; display:grid; gap:3px; font-family:"VT323",monospace; font-size:clamp(12px,3.6vw,14px); letter-spacing:.04em}
+  .fu .costbar span{display:block}
+  .fu .namepicker{display:flex; flex-wrap:wrap; gap:8px; justify-content:center}
+  .fu .namepicker select{cursor:pointer; border:3px solid var(--ink); border-radius:10px; padding:8px 10px; font-family:"Anton",sans-serif; font-size:clamp(12px,3.6vw,14px); letter-spacing:.05em; color:var(--ink); background:linear-gradient(160deg,#fff,#e4e4e4); box-shadow:3px 3px 0 rgba(0,0,0,.2)}
+  .fu .submit{display:block; width:100%; margin-top:14px; cursor:pointer; border:4px solid var(--ink); border-radius:14px; padding:14px 10px; background:linear-gradient(135deg,var(--hot),var(--grape)); color:var(--cream); font-family:"Anton",sans-serif; font-size:clamp(15px,4.6vw,19px); letter-spacing:.08em; box-shadow:6px 6px 0 rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.4), inset 0 -2px 0 rgba(0,0,0,.2); transition:transform 80ms ease-out}
   .fu .submit:active{transform:translate(3px,3px); box-shadow:3px 3px 0 rgba(0,0,0,.3)}
   .fu .result{margin-top:14px}
   .fu .result .note{margin:0 0 10px; font-family:"Archivo Black",sans-serif; font-size:clamp(13px,3.9vw,15px); text-align:center; color:var(--hot-d); line-height:1.4}
@@ -297,14 +306,37 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
       </div>
     </section>
 
+    <section class="card" id="nameCard" aria-label="Name your stack">
+      <h2 class="heading">NAME YOUR PRE-WORKOUT</h2>
+      <p class="lede">Three words, zero focus group. Pick your own.</p>
+      <div class="namepicker">
+        <select id="nameA" aria-label="First word">
+          <option>BUCKED</option><option>ELITE</option><option>PEAK</option><option>APEX</option>
+          <option>SAVAGE</option><option>PRIMAL</option><option>RIPPED</option><option>NITRO</option>
+          <option>HYPER</option><option>ALPHA</option><option>LIMITLESS</option><option>GODMODE</option>
+        </select>
+        <select id="nameB" aria-label="Second word">
+          <option>SURGE</option><option>PUMP</option><option>MATRIX</option><option>PROTOCOL</option>
+          <option>STACK</option><option>FORMULA</option><option>COMPLEX</option><option>BLEND</option>
+          <option>IGNITE</option><option>OVERDRIVE</option><option>ASCEND</option><option>ONSLAUGHT</option>
+        </select>
+        <select id="nameC" aria-label="Third word">
+          <option>XR</option><option>MAX</option><option>5000</option><option>BLACK</option>
+          <option>EXTREME</option><option>PRO</option><option>ULTRA</option><option>V2</option>
+          <option>ZERO</option><option>PLUS</option><option>X</option><option>RELOADED</option>
+        </select>
+      </div>
+    </section>
+
     <section class="card" aria-label="Your can">
       <p class="floatprint" style="right:5%; top:10%">UNTESTED</p>
       <h2 class="heading">YOUR CAN</h2>
       <div class="can" id="canLabel"></div>
+      <div class="costbar" id="costBar"></div>
       <button type="button" class="submit" id="submitBtn">SEAL THE CAN</button>
       <div class="result" id="result" hidden>
         <p class="note" id="resultNote">NOTHING WAS SENT. NOTHING WAS STORED. THIS DRINK DOES NOT EXIST YET.</p>
-        <a class="mailme" id="mailLink" href="#" target="_blank" rel="noopener">EMAIL US YOUR STACK YOURSELF</a>
+        <a class="mailme" id="mailLink" target="_blank" rel="noopener">EMAIL US YOUR STACK YOURSELF</a>
       </div>
     </section>
   </div>
@@ -329,7 +361,35 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
   const resultNote = document.getElementById("resultNote");
   const mailLink = document.getElementById("mailLink");
   const flavTag = document.getElementById("fuFlavTag");
+  const costBar = document.getElementById("costBar");
+  let bandsUpdater = null;   // set once three.js builds the powder bands; no-op in the flat fallback
+  const nameA = document.getElementById("nameA"), nameB = document.getElementById("nameB"), nameC = document.getElementById("nameC");
   let flavour = null;
+  let productLabelUpdater = null;   // set once three.js builds the tub's wall texture; no-op in the flat fallback
+
+  // ---- cost model: frozen bulk-ingredient economics (see COST-MODEL.md). Every figure is an
+  // estimate of real bulk supplement-grade pricing, not a live quote - flagged ESTIMATED there.
+  const COST = {
+    caffeine:     { kg: 12, weak: 0.10, strong: 0.30 },
+    theanine:     { kg: 45, weak: 0.10, strong: 0.20 },
+    glutamine:    { kg: 9,  weak: 2.5,  strong: 5 },
+    citrulline:   { kg: 18, weak: 3,    strong: 6 },
+    creatine:     { kg: 6,  weak: 3,    strong: 5 },
+    electrolytes: { kg: 5,  weak: 0.5,  strong: 1.5 }
+  };
+  const FLAVOUR_COST = { kg: 30, dose: 0.6 };
+  const PACKAGING_COST = 0.85, SERVINGS_PER_CONTAINER = 30, RETAIL_PRICE = 54.99;
+  const productName = () => [nameA.value, nameB.value, nameC.value].join(" ");
+  function scoopCost() {
+    let c = 0;
+    rows.forEach(r => {
+      const ing = COST[r.dataset.supp], lvl = r.dataset.level;
+      if (ing && (lvl === "weak" || lvl === "strong")) c += (ing[lvl] / 1000) * ing.kg;
+    });
+    if (flavour) c += (FLAVOUR_COST.dose / 1000) * FLAVOUR_COST.kg;
+    return c;
+  }
+  const containerCost = () => scoopCost() * SERVINGS_PER_CONTAINER + PACKAGING_COST;
 
   // ---- the original interaction, unchanged. This is the whole fallback: no WebGL, no three.js CDN, JS
   // partly broken - whatever happens, these buttons and this handler are what actually fires MBS.form/.unlock/.wave.
@@ -339,6 +399,7 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
       btn.setAttribute("aria-checked", "true");
       row.dataset.level = btn.dataset.level;
       renderCan();
+      if (bandsUpdater) bandsUpdater();
     }));
   });
 
@@ -349,30 +410,47 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
     renderCan();
   }));
 
+  [nameA, nameB, nameC].forEach(sel => sel.addEventListener("change", renderCan));
+
   const levelLabel = row => row.dataset.level ? row.dataset.level.toUpperCase() : "NOT SET";
   const complete = () => rows.every(r => r.dataset.level) && !!flavour;
+
+  // built fresh every render so the mailto link is always real, never a placeholder, from first paint
+  function buildMailto() {
+    const stackLines = rows.map(r => `${r.querySelector(".name").textContent}: ${levelLabel(r)}`);
+    stackLines.push(`Flavour: ${flavour || "not set"}`);
+    stackLines.push(`Name: ${productName()}`);
+    stackLines.push(`Cost per scoop (est.): $${scoopCost().toFixed(4)}`);
+    stackLines.push(`Cost per container (est., ${SERVINGS_PER_CONTAINER} servings): $${containerCost().toFixed(2)}`);
+    const body = "My " + productName() + " stack:\n" + stackLines.join("\n") + "\n\nNothing was sent by the site. I am sending this myself. This drink is untested and does not exist yet.";
+    const mail = (window.MBS && window.MBS.MAIL) || "";
+    mailLink.href = `mailto:${mail}?subject=${encodeURIComponent("My " + productName() + " stack")}&body=${encodeURIComponent(body)}`;
+    return stackLines;
+  }
 
   function renderCan() {
     const lines = rows.map(r => `<span>${r.querySelector(".name").textContent}: ${levelLabel(r)}</span>`);
     lines.push(`<span>FLAVOUR: ${flavour || "NOT SET"}</span>`);
+    lines.push(`<span>NAME: ${productName()}</span>`);
     canLabel.innerHTML = lines.join("");
     canBox.classList.toggle("full", complete());
     submitBtn.disabled = false;
     flavTag.textContent = flavour ? `FLAVOUR: ${flavour}` : "FLAVOUR: TAP A BOTTLE";
+    costBar.innerHTML = `<span>COST/SCOOP (est.): $${scoopCost().toFixed(4)}</span>`
+      + `<span>COST/CONTAINER (est., ${SERVINGS_PER_CONTAINER} sv): $${containerCost().toFixed(2)}</span>`
+      + `<span>MBS FUEL RETAIL: $${RETAIL_PRICE.toFixed(2)}</span>`;
+    if (productLabelUpdater) productLabelUpdater(productName());
+    buildMailto();
   }
   renderCan();
 
   submitBtn.addEventListener("click", () => {
-    const stackLines = rows.map(r => `${r.querySelector(".name").textContent}: ${levelLabel(r)}`);
-    stackLines.push(`Flavour: ${flavour || "not set"}`);
-    const body = "My MBS FUEL stack:\n" + stackLines.join("\n") + "\n\nNothing was sent by the site. I am sending this myself. This drink is untested and does not exist yet.";
-    const mail = (window.MBS && window.MBS.MAIL) || "";
-    mailLink.href = `mailto:${mail}?subject=${encodeURIComponent("My MBS FUEL stack")}&body=${encodeURIComponent(body)}`;
+    const stackLines = buildMailto();
     result.hidden = false;
     if (complete()) {
-      resultNote.textContent = "STACK LOCKED IN. NOTHING WAS SENT. NOTHING WAS STORED. THIS DRINK DOES NOT EXIST YET.";
+      resultNote.textContent = productName() + " \u2014 STACK LOCKED IN. NOTHING WAS SENT. NOTHING WAS STORED. THIS DRINK DOES NOT EXIST YET.";
       submitBtn.textContent = "STACK LOCKED IN";
-      window.MBS && window.MBS.form && window.MBS.form("fuel", { stack: stackLines });
+      window.MBS && window.MBS.form && window.MBS.form("fuel", { stack: stackLines, name: productName() });
       window.MBS && window.MBS.unlock && window.MBS.unlock("fuel");
       window.MBS && window.MBS.wave && window.MBS.wave();
     } else {
@@ -424,10 +502,10 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
     const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 40);
 
     const M = {
-      plastic: c => new THREE.MeshStandardMaterial({ color: c, roughness: 0.86, metalness: 0.04 }),
-      cream:   new THREE.MeshStandardMaterial({ color: 0xfffef2, roughness: 0.82, metalness: 0.03 }),
-      ink:     new THREE.MeshStandardMaterial({ color: 0x1a0a10, roughness: 0.8, metalness: 0.1 }),
-      metal:   new THREE.MeshStandardMaterial({ color: 0xcfc8d8, roughness: 0.55, metalness: 0.4 }),
+      plastic: c => new THREE.MeshPhysicalMaterial({ color: c, roughness: 0.55, metalness: 0, clearcoat: 0.35, clearcoatRoughness: 0.25 }),
+      cream:   new THREE.MeshPhysicalMaterial({ color: 0xfffef2, roughness: 0.55, metalness: 0, clearcoat: 0.35, clearcoatRoughness: 0.25 }),
+      ink:     new THREE.MeshStandardMaterial({ color: 0x1a0a10, roughness: 0.6, metalness: 0.05 }),
+      metal:   new THREE.MeshPhysicalMaterial({ color: 0xfffef2, roughness: 0.55, metalness: 0, clearcoat: 0.5, clearcoatRoughness: 0.2 }),
       glass:   new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.3, metalness: 0.0, transparent: true, opacity: 0.28, side: THREE.DoubleSide })
     };
 
@@ -458,7 +536,7 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
     key.shadow.camera.near = 1; key.shadow.camera.far = 20;
     key.shadow.camera.left = -6; key.shadow.camera.right = 6; key.shadow.camera.top = 6; key.shadow.camera.bottom = -6;
     scene.add(key);
-    const rimLight = new THREE.DirectionalLight(0xff9ad0, 0.6); rimLight.position.set(4, 3, -3); scene.add(rimLight);
+    const rimLight = new THREE.DirectionalLight(0xffffff, 1.3); rimLight.position.set(4, 3, -3); scene.add(rimLight);
 
     // ---- everything floats
     const floaters = [];
@@ -472,17 +550,62 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
     // ---- the tub itself: this is what the visitor drags. Continuous rotation.y, never clamped, so
     // there is no seam turning either way - "endless" by construction, not by faking a loop.
     const TUB = new THREE.Group(); TUB.position.y = BASE_Y + 0.5; scene.add(TUB);
-    const wall = new THREE.Mesh(new THREE.CylinderGeometry(1.9, 1.55, 1.15, 32, 1, true), M.plastic(HOT));
+    // the label: the wordmark and the chosen name wrap the tub like a real printed label,
+    // rendered entirely in canvas - never generated art, so it can always spell correctly.
+    function labelTexture(name) {
+      const c = document.createElement("canvas"); c.width = 1024; c.height = 256;
+      const x = c.getContext("2d");
+      // BUGFIX (part 21): part 17's 180-rotate did not fix this - confirmed by reading the actual
+      // screenshot, still mirrored. The tub is only ever seen from its inside (an open bowl viewed
+      // from above never shows its outside), and three.js does not alter UV sampling for a
+      // DoubleSide back face - so the back reads as a plain left-right mirror of the front, like
+      // print seen through the back of the page. A mirror needs a mirror, not a rotation.
+      x.translate(1024, 0); x.scale(-1, 1);
+      const grad = x.createLinearGradient(0, 0, 0, 256);
+      grad.addColorStop(0, "#ff2e88"); grad.addColorStop(0.5, "#ffea00"); grad.addColorStop(1, "#7a2fc4");
+      x.fillStyle = grad; x.fillRect(0, 0, 1024, 256);
+      for (let i = 0; i < 6; i++) { x.fillStyle = "rgba(255,255,255,.22)"; x.fillRect(i * 171, 0, 2, 256); }
+      x.textAlign = "center"; x.textBaseline = "middle";
+      x.fillStyle = "#1a0a10"; x.font = "bold 92px Arial"; x.fillText("MBS FUEL", 512, 96);
+      x.font = "bold 46px Arial"; x.fillText(name || "", 512, 176);
+      const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+    }
+    const wallMat = M.plastic(0xffffff); wallMat.map = labelTexture(productName());
+    const wall = new THREE.Mesh(new THREE.CylinderGeometry(1.9, 1.55, 1.15, 32, 1, true), wallMat);
     wall.material.side = THREE.DoubleSide;
+    productLabelUpdater = (name) => { wallMat.map.dispose(); wallMat.map = labelTexture(name); wallMat.needsUpdate = true; };
     wall.position.y = 0.58; wall.castShadow = true; TUB.add(wall);
+    // lived-in: a sticker peeled off long ago, the ghost rectangle and residue still there
+    const residue = new THREE.Mesh(new THREE.PlaneGeometry(0.34, 0.22),
+      new THREE.MeshStandardMaterial({ color: 0xfffef2, roughness: 0.85, metalness: 0, transparent: true, opacity: 0.3 }));
+    residue.position.set(0, 0.7, 1.62); TUB.add(residue);
     const rim = new THREE.Mesh(new THREE.TorusGeometry(1.9, 0.09, 12, 40), M.cream);
     rim.rotation.x = Math.PI / 2; rim.position.y = 1.15; TUB.add(rim);
     const tubFloor = new THREE.Mesh(new THREE.CircleGeometry(1.55, 32), M.plastic(0x8a1040));
     tubFloor.rotation.x = -Math.PI / 2; tubFloor.position.y = 0.02; TUB.add(tubFloor);
 
-    // the brewing liquid: rises and tints toward whatever was last scooped in
-    const liquid = new THREE.Mesh(new THREE.CylinderGeometry(1.5, 1.5, 1, 28), new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.5, metalness: 0, transparent: true, opacity: 0.85 }));
-    liquid.scale.y = 0.001; liquid.position.y = 0.03; liquid.visible = false; TUB.add(liquid);
+    // powder bands: one flat disc per additive, nested like a target seen from above - each
+    // additive owns a fixed radius ring, so its own colour always shows in its own annulus
+    // whenever it is set, independent of every other additive's state. None removes the band.
+    // The jar is a live record of the mix, not a re-tinted liquid.
+    const BAND_H = { none: 0, weak: 0.12, strong: 0.26 };
+    const BAND_R = [1.48, 1.30, 1.12, 0.94, 0.76, 0.58];
+    const bands = SUPPS.map((s, i) => {
+      const m = new THREE.Mesh(new THREE.CylinderGeometry(BAND_R[i], BAND_R[i], 1, 24),
+        new THREE.MeshStandardMaterial({ color: s.col, roughness: 0.95, metalness: 0 }));
+      m.position.y = 0.03; m.scale.y = 0.0001; m.visible = false; TUB.add(m); return m;
+    });
+    function updateBands() {
+      SUPPS.forEach((s, i) => {
+        const row = rowByKey(s.key);
+        const h = BAND_H[row.dataset.level || "none"];
+        bands[i].visible = h > 0;
+        bands[i].scale.y = Math.max(0.0001, h);
+        bands[i].position.y = 0.03 + h / 2;
+      });
+    }
+    updateBands();
+    bandsUpdater = updateBands;
 
     // six canisters, 60 degrees apart, riding the rim
     const RING_R = 1.55;
@@ -496,6 +619,14 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
       const cap = new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.28, 0.1, 16),
         new THREE.MeshStandardMaterial({ color: s.col, roughness: 0.6, metalness: 0.1, emissive: s.col, emissiveIntensity: 0.05 }));
       cap.position.y = 0.3; g.add(cap);
+      // lived-in: a moulding sprue nub repeats on every canister, the raw plastic never fully trimmed
+      const sprue = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.02, 0.04, 6), M.ink);
+      sprue.position.set(0, -0.22, 0.26); g.add(sprue);
+      if (i === 0) {
+        // lived-in: one canister carries a scratch through its finish, down to the raw plastic underneath
+        const scratch = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.02, 0.01), new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.9, metalness: 0 }));
+        scratch.position.set(0.02, 0.05, 0.27); scratch.rotation.z = 0.6; g.add(scratch);
+      }
       g.userData = { key: s.key, angle: a, cap };
       TUB.add(g);
       floatIt(g, g.position.y, 0.03);
@@ -519,8 +650,12 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
       const bottle = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.15, 0.5, 14),
         new THREE.MeshStandardMaterial({ color: FLAV_COL[i], roughness: 0.5, metalness: 0.05, emissive: FLAV_COL[i], emissiveIntensity: 0.15 }));
       bottle.castShadow = true; g.add(bottle);
+      if (i === 0) bottle.material.color.lerp(new THREE.Color(0xffffff), 0.4);   // lived-in: this one bottle sun-faded on the shelf
       const neck = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.07, 0.14, 10), M.ink);
       neck.position.y = 0.32; g.add(neck);
+      // lived-in: the same moulding sprue nub as the canisters, repeated on every bottle
+      const sprue2 = new THREE.Mesh(new THREE.CylinderGeometry(0.008, 0.012, 0.03, 6), M.ink);
+      sprue2.position.set(0, -0.24, 0.13); g.add(sprue2);
       // an invisible, generous hit target - the bottle itself is a small thing to aim at on a phone
       const hit = new THREE.Mesh(new THREE.CylinderGeometry(0.26, 0.26, 0.9, 8), new THREE.MeshBasicMaterial({ visible: false }));
       hit.position.y = 0.18; g.add(hit);
@@ -540,6 +675,18 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
     // selected flavour in the header line instead (#fuFlavTag, updated from renderCan()) rather than
     // label all eight at once. Bottle colour still tells them apart; tapping one reveals which.
 
+    // ---- the injector: a slim nozzle that drives down into the powder from directly above the tub,
+    // then a colour bloom spreads through the surface. Different verb from the scoop: scooping dumps
+    // in bulk from the side, injecting is a single potent plunge from above.
+    const NOZZLE_HOME = new THREE.Vector3(0, 2.6, 0);
+    const nozzle = new THREE.Group(); nozzle.position.copy(NOZZLE_HOME); scene.add(nozzle);
+    const nozzleBody = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.6, 10), M.metal);
+    nozzle.add(nozzleBody);
+    const nozzleTip = new THREE.Mesh(new THREE.ConeGeometry(0.05, 0.16, 10), M.ink);
+    nozzleTip.position.y = -0.38; nozzle.add(nozzleTip);
+    nozzle.visible = false;
+    floatIt(nozzle, NOZZLE_HOME.y, 0.03);
+
     // ---- the scoop: fixed outside the tub, at the front. Tapping it is the act of choosing.
     const SCOOP_HOME = new THREE.Vector3(0, 1.85, 2.15);
     const scoop = new THREE.Group(); scoop.position.copy(SCOOP_HOME); scoop.rotation.x = -0.5; scene.add(scoop);
@@ -547,6 +694,9 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
     handle.position.y = 0.3; scoop.add(handle);
     const bowl = new THREE.Mesh(new THREE.SphereGeometry(0.24, 16, 12, 0, Math.PI * 2, 0, Math.PI / 1.7), M.metal);
     bowl.rotation.x = Math.PI; bowl.position.y = -0.08; bowl.castShadow = true; scoop.add(bowl);
+    // lived-in: the same sprue nub, repeated once more on the scoop
+    const scoopSprue = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.016, 0.03, 6), M.ink);
+    scoopSprue.position.set(0.2, -0.05, 0); scoopSprue.rotation.z = Math.PI / 2; scoop.add(scoopSprue);
     floatIt(scoop, SCOOP_HOME.y, 0.035);
 
     // the two UNTESTED flags, fixed beside the tub, float on their own
@@ -638,29 +788,50 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
       }
     }
 
-    // ---- act: scoop cycles the front canister's level; vial picks a flavour. Both just click the real button.
-    let scooping = false;
+    // ---- act: scoop cycles the front canister's level; vial injects a flavour. Both drive the same state.
+    let scooping = false, injecting = false;
+
+    function injectFlavour(i) {
+      if (injecting) return;
+      injecting = true;
+      flavours[i].click(); updateVialVisual(i);
+      nozzle.visible = true;
+      const col = new THREE.Color(FLAV_COL[i]);
+      const bloom = new THREE.Mesh(new THREE.CircleGeometry(0.1, 24),
+        new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: 0.85, side: THREE.DoubleSide }));
+      bloom.rotation.x = -Math.PI / 2; bloom.position.y = 0.35; TUB.add(bloom);
+      const t0 = performance.now();
+      const down = new THREE.Vector3(0, 0.5, 0);
+      function step(now) {
+        const t = Math.min(1, (now - t0) / 900);
+        if (t < 0.4) { nozzle.position.lerpVectors(NOZZLE_HOME, down, t / 0.4); }
+        else {
+          const k = (t - 0.4) / 0.6;
+          nozzle.position.lerpVectors(down, NOZZLE_HOME, k);
+          bloom.scale.setScalar(0.3 + k * 6);
+          bloom.material.opacity = 0.85 * (1 - k);
+        }
+        if (t < 1) requestAnimationFrame(step);
+        else { nozzle.visible = false; TUB.remove(bloom); bloom.geometry.dispose(); bloom.material.dispose(); injecting = false; }
+      }
+      requestAnimationFrame(step);
+    }
     function frontIndex() { return ((Math.round(-angle / (Math.PI * 2 / N)) % N) + N) % N; }
     function act(hit) {
-      if (hit.kind === "vial") { flavours[hit.i].click(); updateVialVisual(hit.i); return; }
-      if (scooping) return;
+      if (hit.kind === "vial") { injectFlavour(hit.i); return; }
+      if (scooping || injecting) return;
       const i = frontIndex();
       const row = rowByKey(pods[i].userData.key);
       const order = ["none", "weak", "strong"];
       const next = !row.dataset.level ? "none" : order[(order.indexOf(row.dataset.level) + 1) % order.length];
       row.querySelector(`.lvl[data-level="${next}"]`).click();
       updatePodVisual(i);
-      // liquid rises with however many canisters now have a level set, tints toward this dump
-      const set = rows.filter(r => r.dataset.level).length;
-      liquid.visible = true;
-      liquid.material.color.lerp(new THREE.Color(SUPPS[i].col), 0.6);
       scooping = true;
       setTimeout(() => { scooping = false; }, 1300);   // backstop: rAF can stall on a dropped frame, setTimeout can't
       const t0 = performance.now();
       const from = SCOOP_HOME.clone();
       const dip = new THREE.Vector3(SCOOP_HOME.x, SCOOP_HOME.y - 0.55, SCOOP_HOME.z - 0.55);
       const pour = new THREE.Vector3(SCOOP_HOME.x, SCOOP_HOME.y + 0.15, SCOOP_HOME.z - 1.6);
-      const targetFill = Math.max(0.001, (set / N) * 0.85);
       function step(now) {
         const t = Math.min(1, (now - t0) / 900);
         if (t < 0.35) {
@@ -672,8 +843,6 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
           if (next !== "none" && k > 0.85 && !scoop.userData.dumped) {
             scoop.userData.dumped = true;
             dump(SUPPS[i].col, next === "strong" ? 26 : 10);
-            liquid.scale.y = Math.max(0.001, targetFill);
-            liquid.position.y = 0.03 + liquid.scale.y * 0.5;
           }
         } else {
           const k = (t - 0.6) / 0.4;
@@ -685,6 +854,20 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
       requestAnimationFrame(step);
     }
     canvas.addEventListener("click", e => { if (!dragging) { const hit = pick(e); if (hit) act(hit); } });
+
+    // ---- keyboard path: same state, same act() the touch/pointer path uses. Arrow keys only inside
+    // the canvas, so the rest of the page still scrolls normally with the keyboard.
+    canvas.tabIndex = 0;
+    let kbFlav = 0;
+    canvas.addEventListener("keydown", e => {
+      const step = (Math.PI * 2 / N) / 3;
+      if (e.key === "ArrowLeft") { angle -= step; velocity = 0; e.preventDefault(); }
+      else if (e.key === "ArrowRight") { angle += step; velocity = 0; e.preventDefault(); }
+      else if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+        kbFlav = (kbFlav + (e.key === "ArrowDown" ? 1 : -1) + flavours.length) % flavours.length;
+        act({ kind: "vial", i: kbFlav }); e.preventDefault();
+      } else if (e.key === "Enter" || e.key === " ") { act({ kind: "scoop" }); e.preventDefault(); }
+    });
 
     // ---- frame loop
     let last = performance.now();

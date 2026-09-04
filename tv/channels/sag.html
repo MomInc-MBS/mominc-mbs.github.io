@@ -1,100 +1,131 @@
 <!--
 THESIS: Sag's channel is his hut worked as a Storage Wars bidding site, but the site is the front for a debt-collection racket he never wanted. He never says a word himself; the site does the talking, dry and unbothered, exactly like him.
-OWN-WORLD: A carnival fortune teller's hut, carved stone and handmade materials, not flat purple. One big revolving door, a turnstile of eight identical metal roll-up garage doors (Ian, 2026-08-27: one material, no variety) seen as a wheel from the front, the facing panel large and live, its neighbours receding in 3D. Scrolling the page turns the wheel. Sag's mirrored table and crystal ball (with the 8-ball question box) sit next to the wheel, not inside it: right of it on desktop, below it on phones.
+OWN-WORLD: A carnival fortune teller's hut, carved stone and handmade materials, not flat purple. One big revolving door, a turnstile of five identical metal roll-up garage doors (Ian, 2026-08-27, commit 56fadd5: "the wheel is five doors, four lots and the locked fifth" - every count derives from N, not hard-coded; one material, no variety), now REAL 3D (Ian, 2026-08-28: "i want sags 3d" / "lazlos needs depth and shadows and movement in the inside the storage units" - his direction, never his name, in the copy): real box geometry with real edge thickness, one fixed key light so a door's own face genuinely brightens and dims as it turns past the light (no CSS trick needed), and behind each door a real recessed room - back wall, floor, two side walls - holding a pile of somebody's collateral under a dropped blanket and a bare bulb on a cord that never quite stops swinging, casting a real moving shadow while the door is open. Scrolling the page turns the drum. Sag's mirrored table and crystal ball (with the 8-ball question box) sit next to the wheel, not inside it: right of it on desktop, below it on phones.
+NOTE ON COUNTS (2026-08-28, after a doc-drift near-miss): the wheel is FIVE doors — four buyable lots, then the locked fifth holding the chicken leg. `N`/`FINAL` in the script are the only source of truth; everything else derives from them. The `ITEMS`/`LADDERS`/`ICONS` banks carry seven entries and the `assets/storage-1..8.jpg` files on disk run to eight — both are a DELIBERATE surplus pool (56fadd5), only the first `FINAL` of each gets used. Do not "fix" the count up to match the pool size; the pool is allowed to be bigger than the wheel.
 CANON (round 2, Ian 2026-08-26 night, see [[Supporting Cast]]): the goods are not stolen, they were taken for debt, sometimes by force. Sag is a loan shark who hates it; Cortisol Corgi is one of his biggest victims. He was forced into enforcing because his crime was talking about a future without AI, a free-speech play, and what he actually loves is fortune telling and astronomy. The receipt he hands the visitor is him letting them leave. His one honest product is natural dog treats, sold in his real voice, because what he actually wants is to be a salesman in the woods.
-STORY: Scroll to bring a panel to the front (the only one that's live), click it: photo of a messy storage unit shows sharp for a one second peek, then closes and the bid tag climbs three absurd bids, then the panel reopens, the photo blurs, and a pop-up says what was found, its description, its price; the pop-up fades (or dismiss with a tap) and the door reads SOLD, the find lands in the seven-box inventory (each slot clickable for the same pop-up, on demand). The eighth panel only opens once the other seven are bought, and behind it is just a chicken leg, same pop-up style, "chicken leg...?" only. Dragged to Sag, he eats it (his states render as three video clips with the static mark as fallback while they don't exist yet: idle loop, duck-under-the-table, bandage) and goes under the table; a receipt appears; clicking it turns the ball orange for two seconds. Catch it and he's fine, back to idle. Miss it and he comes back bandaged, holding the bandage clip's last frame, and the whole lot resets.
-INTERACTABLE (unlock node): the chicken leg drag-to-Sag-to-receipt-to-orange-ball chain. window.MBS.wave({after,restore}), window.MBS.unlock("sag").
-FORM: Ian's spec 2026-08-26 + Round 2 same night, twice amended (the 3x3/single-column layout was scrapped for the revolving door; the reveal was amended to the photo-blur-pop-up sequence) (vault: Sag Sniffer Page Spec). Inside the old television shell. The wheel section is sticky inside #screen's own scroll (never position:fixed), tall enough to turn all eight panels before the rest of the page arrives. Phones: 342px glass, no horizontal overflow.
+STORY: Scroll to bring a door to the front (the only one that's live), click it: the door rolls up on real geometry, the interior lit and swinging for a one second peek, then it rolls back down and the bid tag climbs three absurd bids, then the door reopens, a dark gauze plane stands in over the room for the harder-to-make-out reveal beat (in place of a CSS blur, which a live 3D texture can't do without a shader this page doesn't need), and a pop-up says what was found, its description, its price; the pop-up fades (or dismiss with a tap) and the door reads SOLD, the find lands in the four-box inventory (each slot clickable for the same pop-up, on demand). The fifth door only opens once the other four are bought, and behind it is just a chicken leg, same pop-up style, "chicken leg...?" only. Dragged to Sag, he eats it (his states render as three video clips with the static mark as fallback while they don't exist yet: idle loop, duck-under-the-table, bandage) and goes under the table; a receipt appears; clicking it turns the ball orange for two seconds. Catch it and he's fine, back to idle. Miss it and he comes back bandaged, holding the bandage clip's last frame, and the whole lot resets.
+INTERACTABLE (unlock node): the chicken leg drag-to-Sag-to-receipt-to-orange-ball chain. window.MBS.wave({after,restore}), window.MBS.unlock("sag"). Unaffected by the 3D rebuild - it still fires the same way, off the same DOM elements.
+FORM: Ian's spec 2026-08-26 + Round 2 same night + the 2026-08-28 3D rebuild (vault: Sag Sniffer Page Spec, Round 3 Page Directions 0828). Inside the old television shell. The wheel section is sticky inside #screen's own scroll (never position:fixed), tall enough to turn all five doors before the rest of the page arrives. Phones: 342px glass, no horizontal overflow.
+TECH: three.js r180 as an ES module via dynamic import() from a classic script - tv.js re-creates channel scripts with textContent only and drops attributes, so type="module" would throw here; dynamic import() sidesteps it and needs no shell change (same trick as Dr Girlfriend's channel). Only the wheel is three.js; the ball, the table, Sag's clips, the receipt chain, and the treats form stay exactly the DOM/CSS they always were - this was a surgical swap of the wheel's renderer, not a whole-page rebuild. No WebGL or the CDN unreachable: the page falls back to a plain clickable list of the same five doors, driving the identical state machine, so the unlock node and the inventory survive even without three.js.
+ZOOM TRAP: .channel carries zoom:1.15 (tv.css). getBoundingClientRect() and clientX/clientY are VISUAL px under that zoom; clientWidth/clientHeight are LAYOUT px. The canvas needs no pointer math at all (its one click always acts on whichever door is currently facing, never raycast), so this only bites the chicken leg's drag math and the leg's spawn point, both built from rects and events only, never clientWidth.
 -->
 <style>
-  .sg{--tex:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.045 0.07' numOctaves='5' seed='7' stitchTiles='stitch' result='t'/><feDiffuseLighting in='t' surfaceScale='2.2' diffuseConstant='1.05' lighting-color='white' result='d'><feDistantLight azimuth='235' elevation='50'/></feDiffuseLighting></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+  .sg{--tex:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.012 0.09' numOctaves='4' seed='7' stitchTiles='stitch' result='t'/><feDiffuseLighting in='t' surfaceScale='1.8' diffuseConstant='1.05' lighting-color='white' result='d'><feDistantLight azimuth='235' elevation='55'/></feDiffuseLighting></filter><rect width='300' height='120' filter='url(%23n)'/></svg>");
       --purple:#7a2fc4; --purple-d:#4a1a86; --purple-dd:#2a0a44; --gold:#ffd36e; --gold-d:#c9992e; --orange:#ff8a2a;
       --wood:#8a5a2e; --wood-d:#5c3a1a; --wood-l:#c98a4b; --cream:#f4ecd8;
-      --stone-l:#5f5347; --stone:#3c332a; --stone-d:#241e18; --stone-dd:#120e0b;
+      --plank-l:#6b4423; --plank:#4a2e18; --plank-d:#301c0e; --plank-dd:#1a0f08;
       min-height:100%; margin:0; position:relative; overflow-x:clip; color:var(--cream); font-family:"Zilla Slab",Georgia,serif;
-      /* the hut's walls: hand-cut rock (SVG-lit noise for relief, a chisel-stroke band, purple ball-light wash) */
+      /* the hut's walls: rough-sawn wood planks (SVG-lit grain, vertical plank seams, a scatter of knots, purple ball-light wash) */
       background:
-        radial-gradient(1px 1px at 15% 25%, rgba(0,0,0,.32) 50%, transparent 51%) 0 0/16px 16px,
-        radial-gradient(1px 1px at 65% 75%, rgba(255,255,255,.06) 50%, transparent 51%) 0 0/22px 22px,
-        repeating-linear-gradient(91deg, rgba(0,0,0,.2) 0 2px, rgba(255,255,255,.04) 2px 3px, transparent 3px 44px),
-        var(--tex) 0 0/260px 260px,
+        radial-gradient(9px 7px at 22% 30%, rgba(0,0,0,.28), transparent 70%) 0 0/220px 160px,
+        radial-gradient(7px 5px at 71% 68%, rgba(0,0,0,.24), transparent 70%) 0 0/260px 190px,
+        repeating-linear-gradient(90deg, rgba(0,0,0,.22) 0 2px, rgba(255,255,255,.03) 2px 4px, transparent 4px 62px),
+        var(--tex) 0 0/300px 120px,
         radial-gradient(60% 24% at 50% 5%, rgba(155,100,225,.18), transparent 62%),
-        linear-gradient(180deg, var(--stone-l) 0%, var(--stone) 40%, var(--stone-d) 78%, var(--stone-dd) 100%);
+        linear-gradient(180deg, var(--plank-l) 0%, var(--plank) 40%, var(--plank-d) 78%, var(--plank-dd) 100%);
       background-blend-mode: normal, normal, normal, multiply, normal, normal}
   .sg *{box-sizing:border-box}
   .sg .ribbon{margin:0; padding:6px 8px; text-align:center; background:var(--purple-dd); color:#c9a6ff; font-family:"Barlow Condensed",sans-serif;
       font-size:11px; letter-spacing:.1em; text-transform:uppercase; border-bottom:1px solid rgba(255,211,110,.3)}
-  .sg .wrap{max-width:520px; margin:0 auto; padding:0 14px 10px}
+  .sg .wrap{max-width:calc(520px * var(--sgscale,1)); margin:0 auto; padding:0 14px 10px}
 
-  /* the hut hero: the photo background, his mark up top, the wordmark */
-  .sg .hero{position:relative; margin:0 0 4px; min-height:170px; overflow:hidden; background:var(--purple-dd) center/cover; box-shadow:0 6px 20px rgba(0,0,0,.5)}
-  .sg .hero img.bg{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 34%}
-  .sg .hero::after{content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(20,6,36,.1) 0%,rgba(20,6,36,.72) 76%,rgba(20,6,36,.94) 100%)}
-  .sg .hero .hin{position:relative; z-index:1; padding:18px 14px 14px; text-align:center}
-  .sg .hero .mark{width:60px; height:60px; border-radius:50%; box-shadow:0 4px 10px rgba(0,0,0,.5), 0 0 0 3px var(--gold); display:block; margin:0 auto}
-  .sg .hero h1{font-family:"Bowlby One SC",cursive; color:var(--gold); font-size:clamp(24px,9vw,38px); margin:6px 0 0; text-shadow:2px 2px 0 var(--purple-dd)}
-  .sg .hero p.sub{font-family:"Barlow Condensed",sans-serif; color:var(--cream); font-size:12px; letter-spacing:.12em; text-transform:uppercase; margin:3px 0 0; opacity:.85}
-  .sg .hero p.tag{font-family:"Special Elite",monospace; color:var(--cream); font-size:12.5px; margin:2px 0 0; letter-spacing:.03em}
+  /* the hut hero: shrunk to a slim wood-signage strip so the fixed-landscape stage below gets the vertical
+     budget - it used to be a tall photo header (170px) when the page was a long scroll; now most of the
+     glass belongs to .sgstage. Title+sub live in their own .hintext block, stacked beside the mark, so they
+     never get squeezed into the flex row and wrap into a tower on narrow phones. */
+  .sg .hero{position:relative; margin:0 0 4px; min-height:78px; overflow:hidden; background:var(--purple-dd) center/cover; box-shadow:0 6px 20px rgba(0,0,0,.5)}
+  .sg .hero img.bg{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 30%}
+  .sg .hero::after{content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(20,6,36,.25) 0%,rgba(20,6,36,.78) 76%,rgba(20,6,36,.94) 100%)}
+  .sg .hero .hin{position:relative; z-index:1; padding:8px 14px 7px; text-align:center; display:flex; align-items:center; justify-content:center; gap:8px}
+  .sg .hero .hintext{min-width:0}
+  .sg .hero .mark{width:34px; height:34px; border-radius:50%; box-shadow:0 4px 10px rgba(0,0,0,.5), 0 0 0 2px var(--gold); display:block; flex:none}
+  .sg .hero h1{font-family:"Bowlby One SC",cursive; color:var(--gold); font-size:clamp(16px,6vw,24px); margin:0; text-shadow:2px 2px 0 var(--purple-dd); line-height:1}
+  .sg .hero p.sub{font-family:"Barlow Condensed",sans-serif; color:var(--cream); font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; margin:2px 0 0; opacity:.85}
 
   .sg .sec-h{font-family:"Bowlby One SC",cursive; color:var(--gold); font-size:clamp(18px,7vw,24px); text-shadow:2px 2px 0 var(--purple-dd); margin:20px 0 2px}
   .sg .sec-sub{font-family:"Barlow Condensed",sans-serif; color:#cbb8e6; font-size:12.5px; margin:0 0 10px; line-height:1.4; text-shadow:0 1px 3px rgba(0,0,0,.85)}
 
-  /* the revolving door: a wheel of eight material panels, seen from the front, turned by scrolling */
-  .sg .wheelsec{position:relative; min-height:2200px}
-  .sg .stagewrap{position:sticky; top:6px; z-index:1; padding-top:4px}
-  .sg .wheelrow{display:flex; gap:30px; align-items:center; justify-content:center}
-  .sg .wheelstage{position:relative; width:240px; height:160px; flex:none; perspective:1100px; margin:0 auto; isolation:isolate}
-  /* the housing: the wheel sits inside a carved-wood surround with iron corner rivets, so the doors read as set into a frame.
-     Sized to the facing panel's on-screen (perspective-magnified) footprint, not the flat layout box, or the door would swallow it. */
-  .sg .wheelstage::before{content:""; position:absolute; left:50%; top:50%; width:272px; height:173px; transform:translate(-50%,-50%);
+  /* the fixed-landscape loop: the wheel is the stage, everything else (Ask Ball/table, Treats) is reached by
+     tapping a tab instead of scrolling past the wheel. Sized live against .glass (fitStage(), corgi.html's
+     fitViewport() pattern, divided by 1.15 for the same zoom:1.15 reason) since .channel only sets
+     min-height:100% and a CSS % or vh guess is wrong on at least one breakpoint (documented in MBS Channel
+     Games). */
+  .sg .sgstage{position:relative; display:flex; flex-direction:column; overflow:hidden; border-radius:10px;
+      background:linear-gradient(180deg,rgba(0,0,0,.14),transparent 40%); box-shadow:inset 0 0 0 1px rgba(255,211,110,.12)}
+  .sg .sgtabs{display:flex; gap:6px; flex:none; padding:6px 6px 4px}
+  .sg .sgtab{flex:1; font-family:"Barlow Condensed",sans-serif; font-weight:600; letter-spacing:.05em; font-size:12px;
+      color:var(--cream); text-transform:uppercase; padding:7px 4px; border:0; border-radius:6px; cursor:pointer;
+      background:linear-gradient(180deg,var(--wood),var(--wood-d)); box-shadow:0 2px 0 rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.12)}
+  .sg .sgtab.active{background:linear-gradient(180deg,var(--wood-l),var(--wood)); color:var(--purple-dd); box-shadow:0 1px 0 rgba(0,0,0,.4) inset, 0 0 0 2px var(--gold)}
+  .sg .sgpanel{display:none; flex:1; min-height:0; overflow-y:auto; padding:2px 4px 10px}
+  .sg .sgpanel.active{display:block}
+  .sg .wheelarrows{display:flex; align-items:center; gap:8px; margin-top:2px}
+  .sg .sgarrow{width:34px; height:34px; border-radius:50%; border:0; cursor:pointer; flex:none; font-size:18px; line-height:1;
+      color:var(--cream); background:radial-gradient(circle at 35% 30%,var(--wood-l),var(--wood) 60%,var(--wood-d));
+      box-shadow:0 3px 0 rgba(0,0,0,.45), inset 0 0 0 2px rgba(20,12,4,.4)}
+  .sg .sgarrow:active{transform:translateY(2px); box-shadow:0 1px 0 rgba(0,0,0,.45), inset 0 0 0 2px rgba(20,12,4,.4)}
+  /* the rupee-style counter: a wood plaque, a coin icon, a number that climbs with the bid stage (0-3) */
+  .sg .rupeecount{display:flex; align-items:center; gap:4px; padding:calc(5px * var(--sgscale,1)) calc(10px * var(--sgscale,1)); border-radius:999px;
+      background:linear-gradient(180deg,var(--wood-l),var(--wood-d)); box-shadow:0 2px 0 rgba(0,0,0,.4), inset 0 0 0 2px rgba(20,12,4,.35)}
+  .sg .rupeeicon{width:calc(14px * var(--sgscale,1)); height:calc(14px * var(--sgscale,1)); color:var(--gold)}
+  .sg .rupeecount b{font-family:"Anton",sans-serif; font-size:calc(13px * var(--sgscale,1)); color:var(--gold); letter-spacing:.02em}
+  /* the receipt/letter's wooden board: a plank mounted low on the table, the paper reads as pinned to it */
+  .sg .deskboard{position:absolute; left:50%; bottom:0; transform:translateX(-50%); z-index:3; width:150px; height:26px;
+      border-radius:3px 3px 0 0; background:
+        radial-gradient(circle at 8px 6px, #d8dce0 0 2px, #4a4e54 3px 4px, transparent 5px),
+        radial-gradient(circle at calc(100% - 8px) 6px, #d8dce0 0 2px, #4a4e54 3px 4px, transparent 5px),
+        repeating-linear-gradient(90deg, var(--wood-l) 0 7px, var(--wood) 7px 14px),
+        linear-gradient(180deg, var(--wood-l), var(--wood-d) 70%);
+      box-shadow:inset 0 0 0 2px #2a1810}
+  .sg .wheelsec{position:relative}
+  .sg .stagewrap{position:relative; z-index:1; padding-top:2px}
+  .sg .wheelrow{display:flex; gap:20px; align-items:flex-start; justify-content:center; flex-wrap:wrap}
+  .sg .wheelcol{display:flex; flex-direction:column; align-items:center; gap:6px; flex:none}
+  /* Sag himself, presiding above the wheel (7.2): his figure, then the site's own dry explanation of
+     the racket beneath it. He never speaks it himself - this is site copy, not his dialogue. */
+  .sg .sagpresides{display:flex; flex-direction:column; align-items:center; gap:4px; margin:0 auto; max-width:min(92vw,300px)}
+  .sg .sagpresides .sec-sub{margin:0; font-size:9.5px; line-height:1.25}
+  .sg .wheelstage{position:relative; width:calc(240px * var(--sgscale,1)); height:calc(160px * var(--sgscale,1)); flex:none; margin:0 auto; isolation:isolate; transition:transform 60ms linear, width .2s ease, height .2s ease}
+  /* the housing: a rough wood-plank surround with iron corner screws (one gone, bottom-right, an empty dark
+     socket - lived-in), a ring stain repeated from the treats table, and a brand mark burned in near the top */
+  .sg .wheelstage::before{content:""; position:absolute; left:50%; top:50%; width:calc(272px * var(--sgscale,1)); height:calc(173px * var(--sgscale,1)); transform:translate(-50%,-50%);
       z-index:-1; border-radius:14px;
       background:
         radial-gradient(circle at 16px 16px, #d8dce0 0 3px, #4a4e54 4px 6px, transparent 7px),
         radial-gradient(circle at calc(100% - 16px) 16px, #d8dce0 0 3px, #4a4e54 4px 6px, transparent 7px),
         radial-gradient(circle at 16px calc(100% - 16px), #d8dce0 0 3px, #4a4e54 4px 6px, transparent 7px),
-        radial-gradient(circle at calc(100% - 16px) calc(100% - 16px), #d8dce0 0 3px, #4a4e54 4px 6px, transparent 7px),
+        radial-gradient(circle at calc(100% - 16px) calc(100% - 16px), #241a10 0 2px, transparent 3px),
+        radial-gradient(11px 2.5px at 22px 30px, rgba(0,0,0,.55), transparent 70%),
+        radial-gradient(ellipse 30px 12px at 80% 76%, transparent 56%, rgba(30,15,4,.4) 60%, rgba(30,15,4,.4) 64%, transparent 68%),
+        var(--tex) 0 0/220px 90px,
         repeating-linear-gradient(90deg, var(--wood-l) 0 9px, var(--wood) 9px 18px),
         linear-gradient(180deg, var(--wood-l), var(--wood-d) 65%, #3a2410 100%);
+      background-blend-mode:normal, normal, normal, normal, normal, normal, multiply, normal, normal;
       box-shadow:inset 0 0 0 4px #2a1810, inset 0 2px 0 rgba(255,255,255,.15), 0 6px 16px rgba(0,0,0,.55)}
-  .sg .wheel{position:relative; width:100%; height:100%; transform-style:preserve-3d; transition:transform .12s linear}
-  .sg .panel{position:absolute; left:50%; top:50%; width:210px; height:130px; margin:-65px 0 0 -105px; border-radius:8px;
-      overflow:hidden; backface-visibility:hidden; pointer-events:none; cursor:default; outline:none;
-      box-shadow:0 3px 0 rgba(0,0,0,.35), 0 6px 14px rgba(0,0,0,.3)}
-  .sg .panel.facing{pointer-events:auto; cursor:pointer}
-  .sg .panel.facing:focus-visible{box-shadow:0 0 0 3px var(--gold), 0 3px 0 rgba(0,0,0,.35)}
-  .sg .panel .num{position:absolute; left:6px; top:6px; z-index:3; font-family:"VT323",monospace; font-size:14px; color:#fff9;
-      background:rgba(0,0,0,.35); padding:1px 6px; border-radius:4px}
-  .sg .panel .peek{position:absolute; inset:0; z-index:0; display:grid; place-items:center; filter:none; transition:filter .4s ease}
-  .sg .panel .peek.blurred{filter:blur(6px) brightness(.55)}
-  .sg .panel .peek .photo{position:absolute; inset:0; z-index:1; width:100%; height:100%; object-fit:cover}
-  .sg .panel .peek .pile{width:70%; height:56%; border-radius:8px; background:linear-gradient(160deg,#6b7280,#3f4551);
-      box-shadow:0 3px 0 #2b2f37, inset 0 2px 4px rgba(255,255,255,.15)}
-  .sg .panel .peek .blanket{position:absolute; width:82%; height:38%; bottom:8%; border-radius:10px 10px 4px 4px; transform:rotate(-3deg);
-      background:repeating-linear-gradient(100deg,#d8cdb0 0 8px,#c7b998 8px 16px); box-shadow:0 2px 4px rgba(0,0,0,.3)}
-  .sg .panel .face{position:absolute; inset:0; z-index:2; transition:transform .5s ease; transform-origin:left center}
-
-  /* every door is the same metal roll-up garage door (Ian, 2026-08-27): corrugated slats, riveted rails, one pull handle */
-  .sg .panel .face{background:
-      repeating-linear-gradient(180deg, rgba(255,255,255,.16) 0 2px, rgba(0,0,0,.22) 2px 5px, transparent 5px 22px),
-      radial-gradient(circle at 8px 8px,#2f343a 2px,transparent 2.6px) 0 0/24px 24px,
-      linear-gradient(100deg,#a7b0ba 0%,#767f89 45%,#8e97a1 60%,#565d66 100%); box-shadow:inset 0 0 0 3px #3f454c}
-  .sg .panel .handle{position:absolute; left:50%; bottom:14%; width:34%; height:7px; margin-left:-17%; border-radius:3px;
-      background:linear-gradient(180deg,#e6ecf2,#8d959f 55%,#4c525a); box-shadow:0 1px 3px rgba(0,0,0,.55)}
-  .sg .panel.open .face{transform:translateY(-94%); transform-origin:top}   /* rolls up and out of sight, like a shutter */
-
-  .sg .panel .tag{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%) rotate(-3deg); z-index:4; opacity:0; pointer-events:none;
-      min-width:76%; text-align:center; background:linear-gradient(160deg,var(--wood-l),var(--wood)); color:var(--cream);
-      font-family:"Special Elite",monospace; font-size:11px; line-height:1.3; padding:7px 5px 6px; border-radius:4px;
-      box-shadow:0 3px 0 var(--wood-d), 0 5px 10px rgba(0,0,0,.4); transition:opacity .25s}
-  .sg .panel .tag::before{content:""; position:absolute; left:50%; top:-6px; width:6px; height:6px; margin-left:-3px; border-radius:50%; background:#2a1d10}
-  .sg .panel.bidding .tag{opacity:1; pointer-events:auto}
-  .sg .panel.bought .tag{opacity:1; pointer-events:none; background:linear-gradient(160deg,var(--purple),var(--purple-d)); font-family:"Anton",sans-serif; letter-spacing:.04em; font-size:11.5px}
-  .sg .panel.locked{filter:grayscale(.7) brightness(.65)}
-  .sg .panel.locked .face::after{content:"🔒 LOCKED"; position:absolute; inset:0; z-index:2; display:grid; place-items:center;
-      font-family:"Anton",sans-serif; font-size:26px; letter-spacing:.14em; color:#fff; line-height:1.1;
-      text-shadow:0 2px 0 #000, 0 0 14px rgba(0,0,0,.9); background:rgba(0,0,0,.34)}
+  .sg .wheelstage canvas{position:relative; z-index:1; width:100%; height:100%; display:block; cursor:pointer; touch-action:pan-y; outline:none}
+  .sg .wheelstage canvas:focus-visible{box-shadow:0 0 0 3px var(--gold)}
   @keyframes sgshake{0%,100%{transform:translateX(0)} 20%{transform:translateX(-4px)} 40%{transform:translateX(4px)} 60%{transform:translateX(-3px)} 80%{transform:translateX(3px)}}
-  .sg .panel.shake{animation:sgshake .4s}
+  .sg .wheelstage.shake{animation:sgshake .4s}
+  /* the one floating tag: only the facing door ever has one, so one DOM label projected from its 3D point does the job of five */
+  .sg .wheeltag{position:absolute; left:0; top:0; z-index:4; transform:translate(-50%,calc(-100% - 8px)) rotate(-3deg); opacity:0; pointer-events:none;
+      min-width:76%; max-width:88%; text-align:center; background:linear-gradient(160deg,var(--wood-l),var(--wood)); color:var(--cream);
+      font-family:"Special Elite",monospace; font-size:calc(11px * var(--sgscale,1)); line-height:1.3; padding:calc(7px * var(--sgscale,1)) calc(5px * var(--sgscale,1)) calc(6px * var(--sgscale,1)); border-radius:4px; white-space:nowrap;
+      box-shadow:0 3px 0 var(--wood-d), 0 5px 10px rgba(0,0,0,.4); transition:opacity .25s}
+  .sg .wheeltag::before{content:""; position:absolute; left:50%; bottom:-6px; width:6px; height:6px; margin-left:-3px; border-radius:50%; background:#2a1d10}
+  .sg .wheeltag.show{opacity:1}
+  .sg .wheeltag.sold{background:linear-gradient(160deg,var(--purple),var(--purple-d)); font-family:"Anton",sans-serif; letter-spacing:.04em; font-size:calc(11.5px * var(--sgscale,1))}
+  /* no WebGL, or the CDN unreachable: the same five doors as a plain clickable list, driving the identical state machine */
+  .sg .sg-flat{display:none}
+  .sg.flat .wheelstage canvas,.sg.flat .wheelstage::before,.sg.flat .wheeltag{display:none}
+  .sg.flat .wheelstage{width:100%; max-width:400px; height:auto; min-height:0}
+  .sg.flat .sg-flat{display:block; width:100%}
+  .sg-flat ul{list-style:none; margin:0; padding:0; display:grid; gap:6px}
+  .sg-flat li{display:flex; align-items:center; justify-content:space-between; gap:8px; background:rgba(0,0,0,.28); border-radius:8px; padding:6px 8px}
+  .sg-flat button{font-family:"Barlow Condensed",sans-serif; font-weight:600; font-size:12px; letter-spacing:.04em;
+      color:var(--purple-dd); background:var(--gold); border:0; border-radius:999px; padding:6px 12px; cursor:pointer; flex:none}
+  .sg-flat button:disabled{opacity:.4; cursor:default}
+  .sg-flat .wftag{font-family:"Special Elite",monospace; font-size:11px; color:var(--cream); text-align:right; min-height:1.3em}
+  .sg-flat .wftag.sold{color:var(--gold)}
 
   /* Sag's cell: felt, not stone, soft matte weave under the ball and table */
   .sg .sagcell{flex:1; min-width:150px; position:relative; border-radius:10px; padding:8px 5px 6px;
@@ -108,9 +139,9 @@ FORM: Ian's spec 2026-08-26 + Round 2 same night, twice amended (the 3x3/single-
   .sg .sagcell .sec-h{font-size:12px; margin:0 0 1px}
   .sg .sagcell .sec-sub{font-size:9px; margin:0 0 4px; line-height:1.25}
 
-  @media (max-width:520px){ .sg .wheelrow{flex-direction:column} }
+  @media (max-width:520px){ .sg .wheelrow{flex-direction:column; align-items:center} }
 
-  /* the seven-box inventory, pinned to the glass, larger and translucent so the page reads behind it */
+  /* the four-box inventory, pinned to the glass, larger and translucent so the page reads behind it */
   /* pinned outside .sg (moved into .glass by the script), so these rules must not be scoped under .sg */
   .invpin{position:absolute; left:0; right:0; bottom:8px; z-index:5; display:flex; justify-content:center; pointer-events:none; transition:transform .4s ease, opacity .4s ease}
   .invpin.aside{transform:translateY(-96px) scale(.86); opacity:.55}   /* out of the receipt's way while it is showing (short phones) */
@@ -124,8 +155,8 @@ FORM: Ian's spec 2026-08-26 + Round 2 same night, twice amended (the 3x3/single-
         linear-gradient(180deg,rgba(179,138,90,.78),rgba(90,58,26,.78) 55%,rgba(58,36,16,.78));
       background-blend-mode: normal, normal, overlay, normal, normal;
       border-radius:12px; box-shadow:0 2px 0 rgba(0,0,0,.4), 0 -1px 0 rgba(255,255,255,.14) inset, inset 0 0 0 2px rgba(20,12,4,.45); pointer-events:none; flex-wrap:wrap; max-width:96vw}   /* the plank never swallows a click meant for the receipt or the letter behind it */
-  .invpin .inv .box{width:50px; height:50px; border-radius:8px; border:2px dashed rgba(255,211,110,.5); display:grid; place-items:center;
-      font-family:"VT323",monospace; font-size:10.5px; color:#e6d9f5; text-align:center; overflow:hidden; line-height:1.1; padding:3px}
+  .invpin .inv .box{width:calc(50px * var(--sgscale,1)); height:calc(50px * var(--sgscale,1)); border-radius:8px; border:2px dashed rgba(255,211,110,.5); display:grid; place-items:center;
+      font-family:"VT323",monospace; font-size:calc(10.5px * var(--sgscale,1)); color:#e6d9f5; text-align:center; overflow:hidden; line-height:1.1; padding:3px}
   .invpin .inv .box.filled{border-style:solid; border-color:#ffd36e; background:rgba(255,211,110,.15); color:#ffd36e; cursor:pointer; pointer-events:auto}   /* only a filled slot is clickable */
 
   /* the pop-up: peek reveal, chicken leg, and the on-demand inventory look. also pinned to .glass, unscoped */
@@ -141,8 +172,13 @@ FORM: Ian's spec 2026-08-26 + Round 2 same night, twice amended (the 3x3/single-
       box-shadow:0 10px 30px rgba(0,0,0,.55), inset 0 0 0 1px rgba(122,47,196,.28), inset 0 0 26px rgba(90,60,20,.18);
       text-align:center; font-family:"Special Elite",monospace; color:#3a2a16}
   .sgpopclose{position:absolute; right:6px; top:4px; background:none; border:0; color:#6b4a2e; font-size:22px; line-height:1; cursor:pointer; padding:6px}
-  .sgpopicon{width:42px; height:42px; margin:0 auto 8px; color:#4a1a86}   /* dark purple on the papery card (Ian, 2026-08-27) */
+  /* the chest-open beat: the found item holds itself up over the reveal, the way an opened chest raises its
+     contents overhead, with a wood-toned spotlight glow standing in for the chime */
+  .sgpopicon{position:relative; width:46px; height:46px; margin:0 auto 10px; color:#4a1a86; animation:sgholdup .5s cubic-bezier(.2,1.4,.4,1)}
+  .sgpopicon::before{content:""; position:absolute; left:50%; top:50%; width:78px; height:78px; transform:translate(-50%,-50%); z-index:-1;
+      background:radial-gradient(circle, rgba(255,211,110,.55), transparent 68%)}
   .sgpopicon svg{width:100%; height:100%; display:block}
+  @keyframes sgholdup{0%{transform:translateY(14px) scale(.7); opacity:0} 60%{transform:translateY(-4px) scale(1.08); opacity:1} 100%{transform:translateY(0) scale(1)}}
   .sgpoptitle{font-family:"Anton",sans-serif; font-size:14px; letter-spacing:.03em; color:#4a2f18; margin:0 0 6px}
   .sgpopdesc{font-size:12.5px; line-height:1.4; margin:0 0 8px; color:#3a2a16}
   .sgpopprice{font-family:"Anton",sans-serif; font-size:12.5px; letter-spacing:.03em; color:#6a1fb0; margin:0}
@@ -151,7 +187,7 @@ FORM: Ian's spec 2026-08-26 + Round 2 same night, twice amended (the 3x3/single-
   .sg .ballwrap{position:absolute; left:50%; bottom:30px; transform:translateX(-50%); z-index:3;
       display:grid; place-items:center; pointer-events:none}   /* only the ball itself takes the click */
   .sg .ballwrap .ball{pointer-events:auto}
-  .sg .ball{position:relative; width:min(26vw,92px); aspect-ratio:1; border-radius:50%; cursor:pointer; overflow:hidden;
+  .sg .ball{position:relative; width:min(26vw, calc(92px * var(--sgscale,1))); aspect-ratio:1; border-radius:50%; cursor:pointer; overflow:hidden;
       background:radial-gradient(circle at 35% 30%,#c99bff,var(--purple) 45%,var(--purple-dd) 100%);
       box-shadow:inset 0 -8px 16px rgba(0,0,0,.4), inset 0 6px 14px rgba(255,255,255,.25), 0 8px 20px rgba(0,0,0,.6),
         0 0 0 2px rgba(255,211,110,.35), 0 0 22px 4px rgba(180,110,255,.45)}   /* rim and glow: he sits against dark stone now */
@@ -164,7 +200,7 @@ FORM: Ian's spec 2026-08-26 + Round 2 same night, twice amended (the 3x3/single-
   @keyframes sgspin{to{transform:rotate(360deg)}}
   @keyframes sgpulse{0%,100%{box-shadow:inset 0 -8px 16px rgba(0,0,0,.4), inset 0 6px 14px rgba(255,255,255,.25), 0 0 16px rgba(255,138,42,.6)}
       50%{box-shadow:inset 0 -8px 16px rgba(0,0,0,.4), inset 0 6px 14px rgba(255,255,255,.25), 0 0 36px rgba(255,138,42,.95)}}
-  .sg .ballbase{width:min(30vw,92px); height:8px; margin-top:-4px; border-radius:50%;
+  .sg .ballbase{width:min(30vw, calc(92px * var(--sgscale,1))); height:8px; margin-top:-4px; border-radius:50%;
       background:radial-gradient(ellipse at 50% 0%,var(--wood-l),var(--wood-d)); box-shadow:0 4px 8px rgba(0,0,0,.5)}
   .sg .askform{display:grid; gap:5px; justify-items:center; margin:2px auto 4px; max-width:min(88%,260px)}
   .sg .asklabel{font-family:"Special Elite",monospace; font-size:9px; line-height:1.35; color:var(--cream); opacity:.8; text-align:center}
@@ -178,14 +214,14 @@ FORM: Ian's spec 2026-08-26 + Round 2 same night, twice amended (the 3x3/single-
   .sg .ballsays{min-height:2.1em; text-align:center; font-family:"Special Elite",monospace; font-size:9.5px; color:var(--cream); margin:0}
 
   /* the table: Sag peeking over it (video with a static-mark fallback), the front panel, the receipt sticking out */
-  .sg .stagetable{position:relative; height:262px; margin-top:6px; width:100%}
-  .sg .sagfig{position:absolute; left:50%; top:0; transform:translateX(-50%); z-index:1; width:min(64vw,224px);
-      transition:transform .7s ease, opacity .7s ease}   /* bigger, up top, behind the ball (Ian, 2026-08-27) */
+  .sg .stagetable{position:relative; height:calc(180px * var(--sgscale,1)); margin-top:6px; width:100%}
+  .sg .sagfig{position:relative; width:min(30vw, calc(160px * var(--sgscale,1)));
+      transition:transform .7s ease, opacity .7s ease}   /* presides above the wheel now (7.2): small enough that the wheel and arrows still fit in view under him, no scroll */
   .sg .sagfig video,.sg .sagfig img{width:100%; height:auto; display:block; background:transparent; filter:drop-shadow(0 4px 6px rgba(0,0,0,.4))}
   .sg .sagfig video{display:none}
-  .sg .sagfig.undertable{transform:translateX(-50%) translateY(80px) scale(.85); opacity:0}
+  .sg .sagfig.undertable{transform:translateY(80px) scale(.85); opacity:0}
   .sg .sagfig.gulp{animation:sggulp .5s ease}
-  @keyframes sggulp{30%{transform:translateX(-50%) scale(1.12)} 60%{transform:translateX(-50%) scale(.94)}}
+  @keyframes sggulp{30%{transform:scale(1.12)} 60%{transform:scale(.94)}}
   .sg .sagfig.bandaged::after{content:""; position:absolute; left:20%; top:24%; width:60%; height:14%; background:#f2ede0;
       border:1px solid #cfc6ad; border-radius:3px; transform:rotate(-16deg); box-shadow:0 1px 2px rgba(0,0,0,.3); z-index:1}
   .sg .sagfig.bandaged::before{content:"+ + +"; position:absolute; left:24%; top:25%; z-index:2; font-family:"VT323",monospace;
@@ -193,10 +229,12 @@ FORM: Ian's spec 2026-08-26 + Round 2 same night, twice amended (the 3x3/single-
   .sg .tablefront{position:absolute; left:2%; right:2%; bottom:0; height:52px; z-index:4; border-radius:10px 10px 4px 4px;
       background:linear-gradient(180deg,var(--wood-l),var(--wood) 60%,var(--wood-d)); box-shadow:0 4px 0 rgba(0,0,0,.4), inset 0 2px 0 rgba(255,255,255,.2)}
   .sg .receipt{position:absolute; left:50%; bottom:0; transform:translateX(-50%); z-index:5; width:58px; height:0; overflow:hidden;
-      background:#fbf6e8; border:1px solid #d8d0ba; border-radius:2px; box-shadow:0 2px 6px rgba(0,0,0,.4); cursor:pointer;
+      background:#fbf6e8; border:1px solid var(--wood-d); border-radius:2px; box-shadow:0 2px 6px rgba(0,0,0,.4); cursor:pointer;
       transition:height .5s cubic-bezier(.3,0,.2,1)}
+  .sg .receipt::before{content:""; position:absolute; left:50%; top:2px; width:6px; height:6px; margin-left:-3px; border-radius:50%;
+      background:radial-gradient(circle at 35% 30%,#e8c86e,#8a6018 75%); box-shadow:0 1px 2px rgba(0,0,0,.5); z-index:1}
   .sg .receipt.out{height:70px}
-  .sg .receipt p{margin:0; padding:6px 4px; font-family:"VT323",monospace; font-size:8.5px; line-height:1.3; color:#3a3020; text-align:center}
+  .sg .receipt p{margin:0; padding:9px 4px 6px; font-family:"VT323",monospace; font-size:8.5px; line-height:1.3; color:#3a3020; text-align:center}
   /* the second ending: unfed after ten seconds gets a red desk message, then a letter of debt in the same slot the receipt uses */
   .sg .paydesk{position:absolute; left:50%; bottom:0; transform:translateX(-50%); z-index:5; width:132px; height:0; overflow:hidden;
       background:#1a0505; border:1px solid #7a1414; border-radius:2px 2px 4px 4px; box-shadow:0 2px 6px rgba(0,0,0,.5);
@@ -206,9 +244,11 @@ FORM: Ian's spec 2026-08-26 + Round 2 same night, twice amended (the 3x3/single-
   @keyframes sgpayflash{50%{opacity:.25}}
   .sg .paydesk p{margin:0; padding:8px 6px; font-family:"VT323",monospace; font-size:10.5px; line-height:1.1; color:#ff4242; text-align:center; letter-spacing:.03em; text-shadow:0 0 5px rgba(255,40,40,.6)}
   .sg .letter{position:absolute; left:50%; bottom:0; transform:translateX(-50%); z-index:5; width:64px; height:0; overflow:hidden;
-      background:#e8ded0; border:1px solid #b8a888; border-radius:2px; box-shadow:0 2px 6px rgba(0,0,0,.4); cursor:pointer;
+      background:#e8ded0; border:1px solid var(--wood-d); border-radius:2px; box-shadow:0 2px 6px rgba(0,0,0,.4); cursor:pointer;
       display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
       transition:height .5s cubic-bezier(.3,0,.2,1)}
+  .sg .letter::before{content:""; position:absolute; left:50%; top:2px; width:6px; height:6px; margin-left:-3px; border-radius:50%;
+      background:radial-gradient(circle at 35% 30%,#e8c86e,#8a6018 75%); box-shadow:0 1px 2px rgba(0,0,0,.5); z-index:1}
   .sg .letter.out{height:56px}
   .sg .letter .seal{width:14px; height:14px; border-radius:50%; flex:none; background:radial-gradient(circle at 35% 30%,#a83a3a,#5c1414 70%); box-shadow:0 1px 2px rgba(0,0,0,.4)}
   .sg .letter p{margin:0; padding:0 4px; font-family:"VT323",monospace; font-size:8px; line-height:1.2; color:#5c1414; text-align:center}
@@ -221,13 +261,18 @@ FORM: Ian's spec 2026-08-26 + Round 2 same night, twice amended (the 3x3/single-
   .sg .leg .bone::before{left:-4px} .sg .leg .bone::after{left:6px}
 
   /* the one real thing: natural dog treats, his honest section */
-  .sg .treats{margin-top:24px}
-  .sg .treatscard{background:linear-gradient(180deg,#5c3a1a,#3a2410); border-radius:12px; padding:14px 14px 16px; box-shadow:0 4px 0 rgba(0,0,0,.4), inset 0 0 0 1px rgba(255,211,110,.25)}
+  .sg .treats{margin-top:0}
+  .sg .treatscard{background:
+        radial-gradient(ellipse 30px 12px at 18% 24%, transparent 56%, rgba(255,220,170,.16) 60%, rgba(255,220,170,.16) 64%, transparent 68%),
+        var(--tex) 0 0/180px 76px,
+        linear-gradient(180deg,#5c3a1a,#3a2410);
+      background-blend-mode:normal, multiply, normal;
+      border-radius:12px; padding:14px 14px 16px; box-shadow:0 4px 0 rgba(0,0,0,.4), inset 0 0 0 1px rgba(255,211,110,.25), inset 0 0 0 4px rgba(26,15,8,.35)}
   .sg .treatsbody{font-family:"Barlow Condensed",sans-serif; font-size:13.5px; line-height:1.5; color:var(--cream); margin:0 0 8px}
   .sg .treatsprice{font-family:"Special Elite",monospace; font-size:12px; color:var(--gold); margin:0 0 10px}
   .sg .treatsform{display:flex; gap:8px; margin:0 0 8px}
-  .sg .treatsinput{flex:1; min-width:0; font-family:"Barlow Condensed",sans-serif; font-size:13.5px; padding:8px 10px; border-radius:8px;
-      border:1px solid rgba(255,211,110,.4); background:rgba(0,0,0,.25); color:var(--cream)}
+  .sg .treatsinput{flex:1; min-width:0; font-family:"Barlow Condensed",sans-serif; font-size:13.5px; padding:8px 10px; border-radius:6px;
+      border:2px solid var(--wood-l); box-shadow:inset 0 0 0 2px var(--wood-d), inset 0 2px 4px rgba(0,0,0,.4); background:rgba(0,0,0,.3); color:var(--cream)}
   .sg .treatsinput::placeholder{color:#cbb8e6}
   .sg .treatsbtn{display:inline-block; font-family:"Barlow Condensed",sans-serif; font-weight:600; letter-spacing:.05em; font-size:13.5px;
       color:#3a2410; background:var(--gold); border-radius:999px; padding:8px 18px; border:0; cursor:pointer; flex:none}
@@ -240,7 +285,8 @@ FORM: Ian's spec 2026-08-26 + Round 2 same night, twice amended (the 3x3/single-
       letter-spacing:.12em; padding:3px 10px; border-radius:6px; font-size:11px}
 
   @media (max-width:520px){ .sg .wrap{padding:0 10px 10px} }
-  @media (prefers-reduced-motion:reduce){ .sg .ball .swirl{animation:none} .sg .ball.orange{animation:none} .sg .sagfig,.sg .receipt,.sg .panel .face,.sg .wheel{transition:none} }
+  @media (max-width:520px){ #sgWheelSec > .sec-sub{font-size:10px; line-height:1.25; margin:0 0 4px} }
+  @media (prefers-reduced-motion:reduce){ .sg .ball .swirl{animation:none} .sg .ball.orange{animation:none} .sg .sagfig,.sg .receipt{transition:none} }
 </style>
 
 <article class="sg" id="sg" aria-label="Sag Sniffer" data-host="SAG SNIFFER" data-show="BASSET'S ASSETS" data-ch="4" data-gauge="off">
@@ -250,75 +296,98 @@ FORM: Ian's spec 2026-08-26 + Round 2 same night, twice amended (the 3x3/single-
       <img class="bg" src="assets/sag-hut.jpg" alt="Sag's hut, a curtained storage stall lined with shelves of odd collateral">
       <div class="hin">
         <img class="mark" src="assets/marks/sag.png" alt="Sag Sniffer">
-        <h1>BASSET'S ASSETS</h1>
-        <p class="sub">Sag Sniffer, proprietor</p>
-        <p class="tag">Barking Bites. Everything on these walls came in against a debt. We're broke goons back here, all of us.</p>
+        <div class="hintext">
+          <h1>BASSET'S ASSETS</h1>
+          <p class="sub">Sag Sniffer, proprietor</p>
+        </div>
       </div>
     </header>
 
-    <section class="wheelsec" id="sgWheelSec" aria-label="The walls">
-      <h2 class="sec-h">The Walls</h2>
-      <p class="sec-sub">He'd rather be reading the stars tonight. Instead: four panels of somebody's debt, and one nobody's opened yet. Scroll to turn the wheel. Open one, one second to look before it shuts, then you bid, and it goes up fast.</p>
-      <div class="stagewrap" id="sgStageWrap">
-        <div class="wheelrow">
-          <div class="wheelstage" id="sgWheelStage">
-            <div class="wheel" id="sgWheel"></div>
-          </div>
-          <div class="sagcell" id="sgCell">
-            <h2 class="sec-h">Ask the Ball</h2>
-            <p class="sec-sub">He already knows the answer. He'll make you wait for it anyway.</p>
-            <form class="askform" id="sgAskForm">
-              <label class="asklabel" for="sgQ">Type a real money question. The ball answers what it wants.</label>
-              <input class="askin" id="sgQ" name="q" type="text" maxlength="140" autocomplete="off"
-                     placeholder="Should I pay off the card or save it?">
-              <button class="askbtn" id="sgAsk" type="submit">Ask the ball</button>
-            </form>
-            <p class="ballsays" id="sgSays" aria-live="polite"></p>
+    <div class="sgstage" id="sgStage">
+      <nav class="sgtabs" id="sgTabs" aria-label="Basset's Assets sections">
+        <button type="button" class="sgtab active" data-panel="wheel" aria-pressed="true">The Walls</button>
+        <button type="button" class="sgtab" data-panel="treats" aria-pressed="false">Treats</button>
+      </nav>
 
-            <div class="stagetable" id="sgTable">
-              <div class="sagfig" id="sgSagFig">
-                <video id="sgVid" muted playsinline aria-hidden="true"></video>
-                <img id="sgSagImg" src="assets/marks/sag.png" alt="Sag, behind the table">
-              </div>
-              <div class="ballwrap">
-                <div class="ball" id="sgBall" role="button" tabindex="0" aria-label="The crystal ball">
-                  <span class="swirl" aria-hidden="true"></span><span class="glint" aria-hidden="true"></span>
+      <section class="wheelsec sgpanel active" data-panel="wheel" id="sgWheelSec" aria-label="The walls">
+        <p class="sec-sub">He'd rather be reading the stars tonight. Instead: four panels of somebody's debt, and one nobody's opened yet. Turn the wheel with the arrows. Open one, one second to look before it shuts, then you bid, and it goes up fast.</p>
+        <div class="stagewrap" id="sgStageWrap">
+          <div class="wheelrow">
+            <div class="wheelcol">
+              <div class="sagpresides" id="sgPresides">
+                <div class="sagfig" id="sgSagFig">
+                  <video id="sgVid" muted playsinline aria-hidden="true"></video>
+                  <img id="sgSagImg" src="assets/marks/sag.png" alt="Sag, presiding over the wheel">
                 </div>
-                <div class="ballbase" aria-hidden="true"></div>
+                <p class="sec-sub">A lot is one locked door and whatever somebody couldn't pay to keep. Bidding climbs three fake rungs, then SOLD reseals the door for good. Call it Storage Wars if that helps. It is still collections.</p>
               </div>
-              <div class="tablefront" aria-hidden="true"></div>
-              <div class="receipt" id="sgReceipt" role="button" tabindex="0" aria-label="A slip, sticking out from under the table">
-                <p>YOU MAY GO<br>NOTHING FURTHER OWED TONIGHT<br>BALANCE: SETTLED<br>SIGNED, S.</p>
+              <div class="wheelstage" id="sgWheelStage">
+                <canvas id="sgCanvas" tabindex="0" role="button" aria-label="The facing storage door. Press Enter to open it."></canvas>
+                <p class="wheeltag" id="sgTag" aria-hidden="true"></p>
+                <div class="sg-flat" id="sgFlat">
+                  <p class="sec-sub" style="margin:0 0 6px">Your browser can't draw the room, so here's the wall as a plain list. Same five doors, same odds.</p>
+                  <ul id="sgFlatList"></ul>
+                </div>
               </div>
-              <div class="paydesk" id="sgPaydesk" aria-hidden="true"><p>PAYMENT COULD NOT<br>BE COMPLETED</p></div>
-              <div class="letter" id="sgLetter" role="button" tabindex="0" aria-label="A letter of debt, sticking out from under the table">
-                <span class="seal" aria-hidden="true"></span><p>LETTER OF<br>DEBT</p>
+              <div class="wheelarrows">
+                <button type="button" class="sgarrow" id="sgArrowL" aria-label="Turn the wheel left">&#8249;</button>
+                <div class="rupeecount" id="sgRupee" aria-live="polite"><svg viewBox="0 0 24 24" class="rupeeicon" aria-hidden="true"><path d="M12 2 3 8v8l9 6 9-6V8z" fill="currentColor"/></svg><b id="sgRupeeVal">0</b></div>
+                <button type="button" class="sgarrow" id="sgArrowR" aria-label="Turn the wheel right">&#8250;</button>
+              </div>
+            </div>
+            <div class="sagcell" id="sgCell">
+              <h2 class="sec-h">Ask the Ball</h2>
+              <p class="sec-sub">He already knows the answer. He'll make you wait for it anyway.</p>
+              <form class="askform" id="sgAskForm">
+                <label class="asklabel" for="sgQ">Type a real money question. The ball answers what it wants.</label>
+                <input class="askin" id="sgQ" name="q" type="text" maxlength="140" autocomplete="off"
+                       placeholder="Should I pay off the card or save it?">
+                <button class="askbtn" id="sgAsk" type="submit">Ask the ball</button>
+              </form>
+              <p class="ballsays" id="sgSays" aria-live="polite"></p>
+
+              <div class="stagetable" id="sgTable">
+                <div class="ballwrap">
+                  <div class="ball" id="sgBall" role="button" tabindex="0" aria-label="The crystal ball">
+                    <span class="swirl" aria-hidden="true"></span><span class="glint" aria-hidden="true"></span>
+                  </div>
+                  <div class="ballbase" aria-hidden="true"></div>
+                </div>
+                <div class="deskboard" aria-hidden="true"></div>
+                <div class="tablefront" aria-hidden="true"></div>
+                <div class="receipt" id="sgReceipt" role="button" tabindex="0" aria-label="A slip, sticking out from under the table">
+                  <p>YOU MAY GO<br>NOTHING FURTHER OWED TONIGHT<br>BALANCE: SETTLED<br>SIGNED, S.</p>
+                </div>
+                <div class="paydesk" id="sgPaydesk" aria-hidden="true"><p>PAYMENT COULD NOT<br>BE COMPLETED</p></div>
+                <div class="letter" id="sgLetter" role="button" tabindex="0" aria-label="A letter of debt, sticking out from under the table">
+                  <span class="seal" aria-hidden="true"></span><p>LETTER OF<br>DEBT</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <section class="treats sgpanel" data-panel="treats" aria-label="Natural dog treats">
+        <h2 class="sec-h">The One Real Thing</h2>
+        <p class="sec-sub">Everything above this line is a bit. This part isn't.</p>
+        <div class="treatscard">
+          <p class="treatsbody">He'd rather be out there than in here. He already set a bag of real, natural treats aside for your dog, before you even asked. Text him your number: he'll send you a dog fact when one crosses his mind, no schedule to it. Send back a photo proving your dog's still upright and the treats are already on their way.</p>
+          <form class="treatsform" id="sgTreatsForm">
+            <input class="treatsinput" id="sgTreatsPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="Your number" aria-label="Your phone number" required>
+            <button class="treatsbtn" type="submit">Text Sag</button>
+          </form>
+          <p class="sec-sub treatsconsent">He'll text you dog facts and treat instructions, nothing else. Stop anytime by texting STOP.</p>
+          <p class="treatsprice" id="sgTreatsMsg" aria-live="polite"></p>
+        </div>
+        <p class="sec-sub treatsfine">This part is real: dog facts by text, free treats for a photo proving your dog's alive. No shop yet, no charge, and this part is not a bit.</p>
+      </section>
+    </div>
 
     <div class="inv" id="sgInvSrc" aria-hidden="true" style="display:none">
       <div class="box" data-box="0"></div><div class="box" data-box="1"></div>
       <div class="box" data-box="2"></div><div class="box" data-box="3"></div>
     </div>
-
-    <section class="treats" aria-label="Natural dog treats">
-      <h2 class="sec-h">The One Real Thing</h2>
-      <p class="sec-sub">Everything above this line is a bit. This part isn't.</p>
-      <div class="treatscard">
-        <p class="treatsbody">He'd rather be out there than in here. He already set a bag of real, natural treats aside for your dog, before you even asked. Text him your number: he'll send you a dog fact when one crosses his mind, no schedule to it. Send back a photo proving your dog's still upright and the treats are already on their way.</p>
-        <form class="treatsform" id="sgTreatsForm">
-          <input class="treatsinput" id="sgTreatsPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="Your number" aria-label="Your phone number" required>
-          <button class="treatsbtn" type="submit">Text Sag</button>
-        </form>
-        <p class="sec-sub treatsconsent">He'll text you dog facts and treat instructions, nothing else. Stop anytime by texting STOP.</p>
-        <p class="treatsprice" id="sgTreatsMsg" aria-live="polite"></p>
-      </div>
-      <p class="sec-sub treatsfine">This part is real: dog facts by text, free treats for a photo proving your dog's alive. No shop yet, no charge, and this part is not a bit.</p>
-    </section>
 
     <footer class="foot">
       <span class="stamp">BASSET'S ASSETS · CH 4</span>
@@ -386,74 +455,50 @@ FORM: Ian's spec 2026-08-26 + Round 2 same night, twice amended (the 3x3/single-
     "Saturn's in a bad spot for this tonight. So am I.",
   ];
 
-  // --- build the wheel: seven item panels, then the eighth, locked one
-  const wheel = document.getElementById("sgWheel");
-  const panelEls = [], panelState = [];
-  function panelMarkup() {
-    return '<span class="num"></span>'
-      + '<span class="peek" aria-hidden="true"><span class="pile"></span><span class="blanket"></span></span>'
-      + '<span class="face"><span class="handle"></span></span>'
-      + '<span class="tag" aria-hidden="true"></span>';
-  }
-  const N = 5;                                   // four lots, then the locked fifth (Ian, 2026-08-27)
-  const FINAL = N - 1;                           // the locked door: the chicken leg
-  const STEP = 360 / N;                          // degrees between panels on the drum
-  const RAD = Math.round(65 / Math.tan(Math.PI / N));   // half the panel height over tan(half step)
-  for (let i = 0; i < N; i++) {
-    const isFinal = i === FINAL;
-    panelState[i] = { phase: isFinal ? "locked" : "closed", stage: 0 };
-    const p = document.createElement("div");
-    p.className = "panel" + (isFinal ? " final locked" : "");
-    p.style.transform = "rotateX(" + (-i * STEP) + "deg) translateZ(" + RAD + "px)";
-    p.innerHTML = panelMarkup();
-    p.querySelector(".num").textContent = isFinal ? "?" : (i + 1);
-    const photo = document.createElement("img");
-    photo.className = "photo";
-    photo.addEventListener("error", () => { photo.style.display = "none"; });
-    photo.src = "assets/storage-" + (i + 1) + ".jpg";
-    p.querySelector(".peek").appendChild(photo);
-    p.addEventListener("keydown", e => {
-      if ((e.key === "Enter" || e.key === " ") && p.classList.contains("facing")) { e.preventDefault(); (isFinal ? onFinalClick : onDoorClick)(i); }
-    });
-    wheel.appendChild(p); panelEls.push(p);
-  }
-
-  // --- scroll turns the wheel: map #screen's scrollTop across the wheel section into 45deg steps
+  // --- the five doors: a shared state machine, driven by whichever front-end is live (the three.js
+  // wheel, or the no-WebGL flat list). Only ever one door is reachable at a time (the facing one, or
+  // whichever flat row was clicked), so nothing here needs to know which renderer it is talking to.
+  // N is the one source of truth (Ian, 56fadd5): four lots, then the locked fifth, the chicken leg.
+  // The content banks below carry more entries than N needs on purpose - a pool, not a mismatch.
+  const N = 5, FINAL = N - 1;
+  const STEP = Math.PI * 2 / N;                  // radians between doors on the drum
+  const panelState = [];
+  for (let i = 0; i < N; i++) panelState[i] = { phase: i === FINAL ? "locked" : "closed", stage: 0 };
+  let currentIndex = 0, bought = 0;
+  const invBoxes = Array.from(document.querySelectorAll("#sgInvSrc .box"));
   const wheelSec = document.getElementById("sgWheelSec");
   const stageWrap = document.getElementById("sgStageWrap");
-  let currentIndex = -1;
-  function applyFacing() {
-    panelEls.forEach((p, i) => {
-      const on = i === currentIndex;
-      p.classList.toggle("facing", on);
-      p.tabIndex = on ? 0 : -1;
-    });
-  }
-  function updateWheel() {
-    if (!screen) return;
-    const scRect = screen.getBoundingClientRect();
-    const secRect = wheelSec.getBoundingClientRect();
-    const startOffset = secRect.top - scRect.top + screen.scrollTop;
-    const runway = Math.max(1, wheelSec.offsetHeight - stageWrap.offsetHeight);
-    let progress = (screen.scrollTop - startOffset) / runway;
-    progress = Math.max(0, Math.min(1, progress));
-    const idx = Math.round(progress * (N - 1));
-    wheel.style.transform = "rotateX(" + (idx * STEP) + "deg)";
-    if (idx !== currentIndex) { currentIndex = idx; applyFacing(); }
-  }
-  if (screen) screen.addEventListener("scroll", updateWheel, { passive: true });
-  updateWheel();
+  const rupeeVal = document.getElementById("sgRupeeVal");
 
-  // The panels live inside a preserve-3d wheel. When the wheel sits at exactly 90 or 270 degrees
-  // (doors 3 and 7) Chromium paints them but stops hit-testing them, so a click on those two never
-  // landed. The stage is a plain 2D box, so it takes the click and routes it to whichever door is facing.
-  const wheelStage = document.getElementById("sgWheelStage");
-  if (wheelStage) wheelStage.addEventListener("click", () => {
-    if (currentIndex >= 0) (currentIndex === FINAL ? onFinalClick : onDoorClick)(currentIndex);
-  });
+  // --- progress persists in this channel's own key (never the shell's five), a plain JSON snapshot of
+  // which doors are bought and which is currently facing. Restored once, before either renderer starts.
+  const PKEY = "sag-progress";
+  function saveProgress() {
+    try { localStorage.setItem(PKEY, JSON.stringify({ panelState, bought, currentIndex })); } catch (e) {}
+  }
+  function loadProgress() {
+    let saved = null;
+    try { saved = JSON.parse(localStorage.getItem(PKEY) || "null"); } catch (e) {}
+    if (!saved || !Array.isArray(saved.panelState) || saved.panelState.length !== N) return;
+    for (let i = 0; i < N; i++) {
+      const p = saved.panelState[i];
+      if (p && (p.phase === "bought" || p.phase === "closed" || p.phase === "locked")) panelState[i] = { phase: p.phase, stage: 0 };
+    }
+    bought = saved.bought || 0;
+    currentIndex = Math.max(0, Math.min(N - 1, saved.currentIndex || 0));
+    for (let i = 0; i < FINAL; i++) if (panelState[i].phase === "bought") restoreInventoryBox(i);
+  }
+  function restoreInventoryBox(idx) {
+    const box = invBoxes[idx];
+    box.classList.add("filled");
+    box.textContent = ITEMS[idx].split(" ").slice(0, 3).join(" ");
+    box.title = ITEMS[idx];
+    box.tabIndex = 0; box.setAttribute("role", "button");
+  }
 
-  let bought = 0;
-  const invBoxes = Array.from(document.querySelectorAll("#sgInvSrc .box"));
+  // the view: whichever front-end is live fills these in. Safe no-op defaults so nothing can throw
+  // before setup finishes (both setups run synchronously, well before a visitor can click anything).
+  let View = { spin() {}, open() {}, close() {}, tag() {}, lockChanged() {}, shake() {}, spawnLegAt() {} };
 
   // --- the pop-up: the peek reveal, the chicken leg, and the on-demand inventory look, all one component
   let popup = null, popupTimer = null, pendingDone = null, openBoxIdx = -1;
@@ -498,52 +543,57 @@ FORM: Ian's spec 2026-08-26 + Round 2 same night, twice amended (the 3x3/single-
     box.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && box.classList.contains("filled")) { e.preventDefault(); boxClick(idx); } });
   });
 
-  // --- a door: peek (photo sharp, 1s), then close and climb three bids, then reopen with the photo blurred behind the reveal pop-up
+  // --- a door: peek (sharp, 1s), then close and climb three bids, then reopen (a dark gauze stands in
+  // for a blur - a live 3D texture can't do a CSS-style blur without a shader this page doesn't need)
+  // behind the reveal pop-up. idx is always explicit, never implied by "whichever is currently facing",
+  // so a stale setTimeout from a door the visitor has since scrolled past can never label the wrong one.
   function onDoorClick(idx) {
-    const s = panelState[idx], el = panelEls[idx], tagEl = el.querySelector(".tag"), peekEl = el.querySelector(".peek");
+    const s = panelState[idx];
     if (s.phase === "closed") {
-      s.phase = "peek"; el.classList.add("open"); peekEl.classList.remove("blurred");
+      s.phase = "peek"; View.open(idx, false);
+      if (rupeeVal) rupeeVal.textContent = "0";
       setTimeout(() => {
-        el.classList.remove("open"); s.phase = "bidding"; s.stage = 0;
-        el.classList.add("bidding"); tagEl.textContent = LADDERS[idx][0];
+        View.close(idx); s.phase = "bidding"; s.stage = 0;
+        View.tag(idx, LADDERS[idx][0], false);
       }, 1000);
     } else if (s.phase === "bidding") {
       s.stage++;
-      tagEl.textContent = LADDERS[idx][s.stage];
+      View.tag(idx, LADDERS[idx][s.stage], false);
+      if (rupeeVal) rupeeVal.textContent = String(s.stage);   // the rupee-style count: climbs 0-3 with each outbid
       if (s.stage >= 3) {
         s.phase = "revealing";
         setTimeout(() => {
-          tagEl.style.opacity = 0; tagEl.textContent = "";
-          el.classList.remove("bidding"); el.classList.add("open");
-          peekEl.classList.add("blurred");
+          View.tag(idx, "", false);
+          View.open(idx, true);
           showReveal(itemHtml(idx), { auto: true, ms: 2600, onDone: () => finalizeSold(idx) });
         }, 1200);
       }
     }
   }
   function finalizeSold(idx) {
-    const el = panelEls[idx], tagEl = el.querySelector(".tag");
-    el.classList.remove("open"); el.classList.add("bought");
-    tagEl.textContent = "SOLD"; tagEl.style.opacity = "";
+    panelState[idx].phase = "bought";
+    View.close(idx);
+    View.tag(idx, "SOLD", true);
     fillInventory(idx);
+    saveProgress();
   }
-  function onFinalClick() {
-    const s = panelState[FINAL], el = panelEls[FINAL];
-    if (s.phase === "locked") { el.classList.add("shake"); setTimeout(() => el.classList.remove("shake"), 400); return; }
+  function onFinalClick(idx) {
+    const s = panelState[idx];
+    if (s.phase === "locked") { View.shake(); return; }
     if (s.phase === "closed") {
-      s.phase = "peek"; el.classList.add("open");
-      const peekEl = el.querySelector(".peek"); peekEl.classList.remove("blurred");
+      s.phase = "peek"; View.open(idx, false);
       setTimeout(() => {
-        peekEl.classList.add("blurred");
-        showReveal('<p class="sgpoptitle">chicken leg...?</p>', { auto: true, ms: 1800, onDone: () => finalizeChickenLeg(el) });
+        View.open(idx, true);
+        showReveal('<p class="sgpoptitle">chicken leg...?</p>', { auto: true, ms: 1800, onDone: () => finalizeChickenLeg(idx) });
       }, 1000);
     }
   }
-  function finalizeChickenLeg(el) {
-    el.classList.remove("open"); el.classList.add("bought");
-    el.querySelector(".tag").textContent = "chicken leg...?";
-    el.querySelector(".tag").style.opacity = 1;
-    spawnLeg(el);
+  function finalizeChickenLeg(idx) {
+    panelState[idx].phase = "bought";
+    View.close(idx);
+    View.tag(idx, "chicken leg...?", true);
+    View.spawnLegAt(idx);
+    saveProgress();
   }
   function fillInventory(idx) {
     bought++;
@@ -552,24 +602,351 @@ FORM: Ian's spec 2026-08-26 + Round 2 same night, twice amended (the 3x3/single-
     box.textContent = ITEMS[idx].split(" ").slice(0, 3).join(" ");
     box.title = ITEMS[idx];
     box.tabIndex = 0; box.setAttribute("role", "button");
-    if (bought === FINAL) { panelState[FINAL].phase = "closed"; panelEls[FINAL].classList.remove("locked"); }
+    if (bought === FINAL) { panelState[FINAL].phase = "closed"; View.lockChanged(false); }
+  }
+  function tagFor(idx) {                          // what the tag should read if this door is the one facing
+    const s = panelState[idx];
+    if (s.phase === "bidding") return [LADDERS[idx][s.stage], false];
+    if (s.phase === "bought") return [idx === FINAL ? "chicken leg...?" : "SOLD", true];
+    return ["", false];
+  }
+  function syncFacing(idx) {
+    View.spin(idx);
+    const t = tagFor(idx);
+    View.tag(idx, t[0], t[1]);
+  }
+  function resetDoors() {
+    bought = 0;
+    clearTimeout(debtTimer); debtTimer = null; hideDebt();
+    dismiss();
+    for (let i = 0; i < FINAL; i++) {
+      panelState[i] = { phase: "closed", stage: 0 };
+      View.close(i); View.tag(i, "", false);
+      invBoxes[i].classList.remove("filled"); invBoxes[i].textContent = ""; invBoxes[i].removeAttribute("title");
+      invBoxes[i].removeAttribute("tabindex"); invBoxes[i].removeAttribute("role");
+    }
+    panelState[FINAL] = { phase: "locked", stage: 0 };
+    View.close(FINAL); View.tag(FINAL, "", false); View.lockChanged(true);
+    const oldLeg = document.getElementById("sgLeg"); if (oldLeg) oldLeg.remove();
+    saveProgress();
   }
 
-  // --- the chicken leg: draggable via pointer events, dropped on Sag. the wheel itself is the position:relative stage
-  function spawnLeg(doorEl) {
+  // --- the wood arrow buttons turn the drum: the fixed-landscape stage replaced the old tall scroll
+  // runway, so the wheel is stepped by a click instead of mapped from #screen's scrollTop. drumTarget's
+  // own lerp inside the render loop is untouched, so the turn keeps the same eased momentum it always had.
+  function turnWheel(dir) {
+    currentIndex = ((currentIndex + dir) % N + N) % N;
+    syncFacing(currentIndex);
+    saveProgress();
+  }
+  const arrowL = document.getElementById("sgArrowL"), arrowR = document.getElementById("sgArrowR");
+  if (arrowL) arrowL.addEventListener("click", () => turnWheel(-1));
+  if (arrowR) arrowR.addEventListener("click", () => turnWheel(1));
+
+  // --- tabs: the stage's other systems (Treats) are reached by tapping, never by scrolling past the wheel
+  const sgStageEl = document.getElementById("sgStage");
+  document.querySelectorAll(".sgtab").forEach(tab => {
+    tab.addEventListener("click", () => {
+      const name = tab.dataset.panel;
+      document.querySelectorAll(".sgtab").forEach(t => { t.classList.toggle("active", t === tab); t.setAttribute("aria-pressed", t === tab ? "true" : "false"); });
+      document.querySelectorAll(".sg .sgpanel").forEach(p => p.classList.toggle("active", p.dataset.panel === name));
+    });
+  });
+
+  // --- fitStage: sizes the stage against .glass's own measured height, corgi.html's fitViewport() pattern.
+  // .channel only ever sets min-height (a % height inside it collapses), and a vh guess is wrong on mobile
+  // where tv.css stacks extra chrome above .glass at content-dependent "auto" height - so this is measured
+  // live instead, same as the three.js canvas already does via ResizeObserver.
+  function fitStage() {
+    if (!glass || !sgStageEl) return;
+    const gh = glass.getBoundingClientRect().height;
+    const heroH = sg.querySelector(".hero").getBoundingClientRect().height;
+    const ribbonH = sg.querySelector(".ribbon") ? sg.querySelector(".ribbon").getBoundingClientRect().height : 0;
+    const reserve = heroH + ribbonH + 26;
+    const visualTarget = Math.max(300, gh - reserve);
+    sgStageEl.style.height = (visualTarget / 1.15) + "px";
+    // desktop-only growth (7.1): reuse this same live .glass measurement rather than a new guessed
+    // breakpoint. Below the file's own existing 520px wheelrow breakpoint (the 342px phone glass this
+    // file's FORM comment names) the scale stays 1 - no change, no overflow. Above it, the wheel, tag,
+    // counter, inventory boxes, table and ball grow with the real measured glass width, capped so a very
+    // wide desktop window doesn't blow the wheel up past reason. Set on .glass, not .sg, so .invpin -
+    // pinned as a direct child of .glass, outside .sg's subtree - inherits it too.
+    const isDesktop = window.matchMedia && window.matchMedia("(min-width:521px)").matches;
+    const scale = isDesktop ? Math.min(1.25, Math.max(1, glass.getBoundingClientRect().width / 342)) : 1;
+    glass.style.setProperty("--sgscale", scale.toFixed(3));
+  }
+  if (glass) { new ResizeObserver(fitStage).observe(glass); fitStage(); }
+
+  loadProgress();
+
+  // --- the chicken leg: draggable via pointer events, dropped on Sag. px/py are page (visual) coordinates,
+  // the same domain as a pointer event's clientX/clientY, however they were arrived at.
+  function spawnLegAtPoint(px, py) {
     const leg = document.createElement("div"); leg.className = "leg"; leg.id = "sgLeg";
     leg.innerHTML = '<span class="meat"></span><span class="bone"></span>';
-    // The leg used to be appended to the wheel, which is a rotated preserve-3d box: the leg landed
-    // on the drum's tilted plane, so it rendered edge-on and could not be grabbed. It lives on the
-    // sticky stage now, which is flat, positioned, and holds Sag too, so it can be dragged to him.
-    const dr = doorEl.getBoundingClientRect(), sr = stageWrap.getBoundingClientRect();
+    const sr = stageWrap.getBoundingClientRect();
     const z0 = sr.width / stageWrap.offsetWidth || 1;   // the shell zooms .channel 1.15x; real pixel deltas must be divided back to local CSS px
-    leg.style.left = ((dr.left - sr.left + dr.width / 2 - 28) / z0) + "px";
-    leg.style.top = ((dr.top - sr.top + dr.height / 2 - 22) / z0) + "px";
+    leg.style.left = ((px - sr.left) / z0 - 28) + "px";
+    leg.style.top = ((py - sr.top) / z0 - 22) + "px";
     stageWrap.appendChild(leg);
     enableDrag(leg);
     clearTimeout(debtTimer); hideDebt();
     debtTimer = setTimeout(triggerDebt, 10000);   // unfed in 10s: the second ending
+  }
+
+  // --- the no-WebGL fallback: the same five doors as a plain clickable list, driving the identical
+  // state machine above, so the unlock node survives even without three.js or a reachable CDN.
+  function setupFlatView() {
+    sg.classList.add("flat");
+    const rows = [];
+    const list = document.getElementById("sgFlatList");
+    for (let i = 0; i < N; i++) {
+      const li = document.createElement("li");
+      const btn = document.createElement("button"); btn.type = "button";
+      btn.textContent = i === FINAL ? "Door " + N + " (locked)" : "Door " + (i + 1);
+      const span = document.createElement("span"); span.className = "wftag";
+      btn.addEventListener("click", () => (i === FINAL ? onFinalClick : onDoorClick)(i));
+      li.appendChild(btn); li.appendChild(span);
+      list.appendChild(li); rows.push({ btn, span });
+    }
+    View = {
+      spin() {},
+      open(idx) { rows[idx].btn.disabled = true; },
+      close(idx) { rows[idx].btn.disabled = panelState[idx].phase === "locked"; },
+      tag(idx, text, sold) { rows[idx].span.textContent = text; rows[idx].span.classList.toggle("sold", sold); },
+      lockChanged(locked) {
+        rows[FINAL].btn.disabled = locked;
+        rows[FINAL].btn.textContent = locked ? "Door " + N + " (locked)" : "Door " + N;
+      },
+      shake() {
+        rows[FINAL].btn.closest("li").animate(
+          [{ transform: "translateX(0)" }, { transform: "translateX(-4px)" }, { transform: "translateX(4px)" }, { transform: "translateX(0)" }],
+          { duration: 300 });
+      },
+      spawnLegAt() {
+        const r = stageWrap.getBoundingClientRect();
+        spawnLegAtPoint(r.left + r.width / 2, r.top + r.height / 2);
+      }
+    };
+    View.lockChanged(panelState[FINAL].phase === "locked");   // restored progress may already have this door open
+    for (let i = 0; i < FINAL; i++) if (panelState[i].phase === "bought") { rows[i].btn.disabled = true; rows[i].span.textContent = "SOLD"; rows[i].span.classList.add("sold"); }
+    syncFacing(currentIndex);
+  }
+
+  // --- the real wheel: five doors as actual box geometry with real thickness, a recessed room behind
+  // each with real depth, and one fixed key light so the doors genuinely brighten and dim as they turn.
+  function setup3DView(THREE) {
+    const canvas = document.getElementById("sgCanvas");
+    const tagEl = document.getElementById("sgTag");
+    const wheelStage = document.getElementById("sgWheelStage");
+    const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer.setClearColor(0x000000, 0);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(34, 1.5, 0.1, 20);
+
+    const RAD = 2.0, DOOR_W = 1.55, DOOR_H = 0.98, DOOR_T = 0.14, DEPTH = 1.0;
+
+    // one baked wood-plank texture, reused (per-door material clone) on every door - one material, no
+    // variety (Ian, 2026-08-27), same as the CSS version used one repeating gradient for all five. Grain
+    // runs along each horizontal slat (the doors are roll-up style, horizontal panels), with two knots
+    // and a carved "S" scratched into one corner - Sag's initial, repeated on every door since the
+    // texture is shared, matching the ring stain and brand mark repeated elsewhere in CSS.
+    function woodTexture() {
+      const c = document.createElement("canvas"); c.width = 128; c.height = 96;
+      const x = c.getContext("2d");
+      x.fillStyle = "#8a5a2e"; x.fillRect(0, 0, 128, 96);
+      for (let y = 0; y < 96; y += 14) {
+        x.fillStyle = "#c98a4b"; x.fillRect(0, y, 128, 7);
+        x.fillStyle = "#5c3a1a"; x.fillRect(0, y + 7, 128, 7);
+        x.strokeStyle = "rgba(40,20,8,.4)"; x.lineWidth = 1;
+        for (let gx = 0; gx < 128; gx += 9) {
+          x.beginPath(); x.moveTo(gx, y + 2); x.quadraticCurveTo(gx + 4, y + 5, gx + 8, y + 2); x.stroke();
+        }
+        x.fillStyle = "rgba(0,0,0,.35)"; x.fillRect(0, y + 13, 128, 1);
+      }
+      x.fillStyle = "rgba(30,15,5,.5)";
+      x.beginPath(); x.ellipse(30, 22, 4, 2.4, 0.3, 0, 7); x.fill();
+      x.beginPath(); x.ellipse(94, 58, 3, 2, -0.4, 0, 7); x.fill();
+      x.strokeStyle = "rgba(20,10,4,.55)"; x.lineWidth = 1.4;
+      x.beginPath(); x.moveTo(110, 78); x.quadraticCurveTo(114, 84, 110, 90); x.moveTo(110, 78); x.lineTo(110, 90); x.stroke();
+      const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+    }
+    const doorTex = woodTexture();
+    const edgeMat = new THREE.MeshStandardMaterial({ color: 0x3a2410, roughness: 0.8, metalness: 0.15 });
+    const wallMat = new THREE.MeshStandardMaterial({ color: 0x2e1f14, roughness: 1, metalness: 0 });
+    const floorMat = new THREE.MeshStandardMaterial({ color: 0x241708, roughness: 1, metalness: 0 });
+    const crateMats = [0x6b5a3a, 0x554530, 0x7a6a48].map(c => new THREE.MeshStandardMaterial({ color: c, roughness: 0.92, metalness: 0 }));
+    const blanketMat = new THREE.MeshStandardMaterial({ color: 0xc9b98d, roughness: 0.96, metalness: 0 });
+    const gauzeMat = new THREE.MeshBasicMaterial({ color: 0x0a0410, transparent: true, opacity: 0 });   // the reveal beat's stand-in for a CSS blur
+    const cordMat = new THREE.MeshStandardMaterial({ color: 0x2a2020, roughness: 0.8, metalness: 0.1 });
+    const bulbMat = new THREE.MeshStandardMaterial({ color: 0xffe6bc, emissive: 0xffcf8a, emissiveIntensity: 1.4, roughness: 1 });
+
+    const loader = new THREE.TextureLoader();
+    const drum = new THREE.Group(); scene.add(drum);
+    const doorUnits = [], doors = [], floaters = [], swingers = [];
+
+    for (let i = 0; i < N; i++) {
+      const spoke = new THREE.Group(); spoke.rotation.x = -i * STEP; drum.add(spoke);
+      const unit = new THREE.Group(); unit.position.set(0, 0, RAD); spoke.add(unit);
+      doorUnits.push(unit);
+
+      // the room behind the door: back wall (a real generated storage photo), floor, two side walls,
+      // all receding away from camera. Real occlusion does the visibility work - a closed door in front
+      // is opaque, so nothing here needs to be hidden or shown by hand.
+      const back = new THREE.Mesh(new THREE.PlaneGeometry(DOOR_W * 0.92, DOOR_H * 0.9),
+        new THREE.MeshStandardMaterial({ map: loader.load("assets/storage-" + (i + 1) + ".jpg"), roughness: 0.95, metalness: 0 }));
+      back.position.set(0, 0, -DEPTH); back.receiveShadow = true; unit.add(back);
+      const floor = new THREE.Mesh(new THREE.PlaneGeometry(DOOR_W * 0.92, DEPTH), floorMat);
+      floor.rotation.x = -Math.PI / 2; floor.position.set(0, -DOOR_H / 2, -DEPTH / 2); floor.receiveShadow = true; unit.add(floor);
+      [-1, 1].forEach(s => {
+        const wall = new THREE.Mesh(new THREE.PlaneGeometry(DEPTH, DOOR_H * 0.9), wallMat);
+        wall.rotation.y = -s * Math.PI / 2; wall.position.set(s * DOOR_W * 0.46, 0, -DEPTH / 2); wall.receiveShadow = true; unit.add(wall);
+      });
+      const gauze = new THREE.Mesh(new THREE.PlaneGeometry(DOOR_W * 0.92, DOOR_H * 0.9), gauzeMat);
+      gauze.position.set(0, 0, -DEPTH + 0.02); unit.add(gauze);
+
+      // a pile of somebody's collateral under a dropped blanket - it floats (Ian: everything floats),
+      // never quite still even with the door shut, though nothing sees it until the door rolls up
+      const pile = new THREE.Group(); pile.position.set(0, -DOOR_H * 0.28, -DEPTH * 0.55); unit.add(pile);
+      [[0, 0, 0.34], [0.14, 0.1, 0.2], [-0.13, 0.05, 0.24]].forEach((p, k) => {
+        const cr = new THREE.Mesh(new THREE.BoxGeometry(0.26, 0.2, 0.22), crateMats[k]);
+        cr.position.set(p[0], p[1], p[2]); cr.castShadow = true; pile.add(cr);
+      });
+      const blanket = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.06, 0.36), blanketMat);
+      blanket.position.set(0, 0.24, 0.26); blanket.rotation.z = -0.05; blanket.castShadow = true; pile.add(blanket);
+      floaters.push({ o: pile, y: pile.position.y, p: Math.random() * 6.28 });
+
+      // a bare bulb on a cord: it swings on its own, and it is the whole reason the room ever casts a shadow
+      const cord = new THREE.Group(); cord.position.set(0, DOOR_H * 0.42, -DEPTH * 0.62); unit.add(cord);
+      const wire = new THREE.Mesh(new THREE.CylinderGeometry(0.008, 0.008, 0.3, 5), cordMat);
+      wire.position.y = -0.15; cord.add(wire);
+      const bulb = new THREE.Mesh(new THREE.SphereGeometry(0.045, 10, 8), bulbMat);
+      bulb.position.y = -0.32; cord.add(bulb);
+      swingers.push({ o: cord, p: Math.random() * 6.28 });
+
+      // the door itself: real thickness, one pull handle, one material for all five
+      const slab = new THREE.Group(); unit.add(slab);
+      const mat = new THREE.MeshStandardMaterial({ map: doorTex, roughness: 0.78, metalness: 0.05 });
+      const face = new THREE.Mesh(new THREE.BoxGeometry(DOOR_W, DOOR_H, DOOR_T), [edgeMat, edgeMat, edgeMat, edgeMat, mat, edgeMat]);
+      face.position.z = DOOR_T / 2; face.castShadow = true; slab.add(face);
+      const handle = new THREE.Mesh(new THREE.BoxGeometry(DOOR_W * 0.3, 0.045, 0.045), edgeMat);
+      handle.position.set(0, -DOOR_H * 0.32, DOOR_T + 0.02); slab.add(handle);
+      doors.push({ slab, mat, bulb, openY: DOOR_H * 0.92 });
+    }
+    function setFinalLocked(locked) {
+      doors[FINAL].mat.color.set(locked ? 0x5a3f28 : 0xc9a26a);
+      doors[FINAL].mat.roughness = locked ? 0.88 : 0.7;
+    }
+    setFinalLocked(panelState[FINAL].phase === "locked");   // restored progress may already have this door open
+
+    // ---- lights: one fixed key light, so a door's own face genuinely brightens and dims purely from
+    // turning past it - no animation needed, that is just what a real light does to real geometry.
+    // One shared point light lives inside whichever unit is currently open, following the swinging bulb.
+    scene.add(new THREE.HemisphereLight(0x6a4a8a, 0x140a1e, 0.85));
+    const key = new THREE.DirectionalLight(0xffe0b0, 1.5); key.position.set(2.4, 2.6, 4.2); scene.add(key);
+    const fillL = new THREE.DirectionalLight(0x9a6ad8, 0.4); fillL.position.set(-2, 1, 3); scene.add(fillL);
+    const peekLight = new THREE.PointLight(0xffcf8a, 0, 2.6);
+    peekLight.castShadow = true; peekLight.shadow.mapSize.set(256, 256);
+    peekLight.shadow.camera.near = 0.05; peekLight.shadow.camera.far = 2.4;
+    scene.add(peekLight);
+
+    // ---- open/close: the door slides up on its frame like a real shutter. gauzeMat is shared by every
+    // unit, but only the currently open one is ever visible (a closed door occludes the rest for free),
+    // so fading one shared value reads correctly no matter which door it is.
+    const anims = [];
+    const tween = (ms, fn) => anims.push({ t: 0, ms, fn });
+    const ease = t => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
+    let openIdx = -1, gauzeTarget = 0, lightTarget = 0;
+    function openDoor(idx, blurred) {
+      const d = doors[idx];
+      tween(420, t => { d.slab.position.y = ease(t) * d.openY; });
+      openIdx = idx; gauzeTarget = blurred ? 0.55 : 0; lightTarget = blurred ? 0.5 : 1.6;
+    }
+    function closeDoor(idx) {
+      const d = doors[idx];
+      tween(420, t => { d.slab.position.y = (1 - ease(t)) * d.openY; });
+      if (openIdx === idx) { openIdx = -1; gauzeTarget = 0; lightTarget = 0; }
+    }
+    function shakeCanvas() { wheelStage.classList.add("shake"); setTimeout(() => wheelStage.classList.remove("shake"), 400); }
+
+    let drumTarget = 0;
+    View = {
+      spin(idx) { drumTarget = idx * STEP; },
+      open: openDoor, close: closeDoor,
+      tag(idx, text, sold) {
+        if (idx !== currentIndex) return;              // a stale timeout for a door the visitor has scrolled past
+        tagEl.textContent = text; tagEl.classList.toggle("sold", sold); tagEl.classList.toggle("show", !!text);
+      },
+      lockChanged: setFinalLocked,
+      shake: shakeCanvas,
+      spawnLegAt(idx) {
+        const v = new THREE.Vector3(); doorUnits[idx].getWorldPosition(v); v.project(camera);
+        const r = canvas.getBoundingClientRect();
+        spawnLegAtPoint(r.left + (v.x * 0.5 + 0.5) * r.width, r.top + (-v.y * 0.5 + 0.5) * r.height);
+      }
+    };
+
+    function resize() {
+      const w = canvas.clientWidth || 240, h = canvas.clientHeight || 160;
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h; camera.updateProjectionMatrix();
+    }
+    new ResizeObserver(resize).observe(wheelStage); resize();
+    camera.position.set(0, 0.08, RAD + 3.0); camera.lookAt(0, 0, RAD - 0.2);
+
+    function activate() { (currentIndex === FINAL ? onFinalClick : onDoorClick)(currentIndex); }
+    canvas.addEventListener("click", activate);
+    canvas.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); activate(); } });
+
+    syncFacing(currentIndex);
+
+    let last = performance.now();
+    function frame(now) {
+      const dt = Math.min(50, now - last); last = now;
+      drum.rotation.x += (drumTarget - drum.rotation.x) * (REDUCED ? 1 : 0.16);
+
+      if (!REDUCED) {
+        for (const f of floaters) f.o.position.y = f.y + Math.sin(now / 1100 + f.p) * 0.028;
+        for (const s of swingers) s.o.rotation.z = Math.sin(now / 850 + s.p) * 0.16;
+      }
+      gauzeMat.opacity += (gauzeTarget - gauzeMat.opacity) * 0.15;
+      peekLight.intensity += ((openIdx >= 0 ? lightTarget : 0) - peekLight.intensity) * 0.12;
+      if (openIdx >= 0) doors[openIdx].bulb.getWorldPosition(peekLight.position);
+
+      if (tagEl.classList.contains("show")) {
+        const v = new THREE.Vector3(); doorUnits[currentIndex].getWorldPosition(v); v.y += 0.62; v.project(camera);
+        const cw = canvas.clientWidth, ch = canvas.clientHeight;
+        tagEl.style.left = ((v.x * 0.5 + 0.5) * cw).toFixed(1) + "px";
+        tagEl.style.top = ((-v.y * 0.5 + 0.5) * ch).toFixed(1) + "px";
+      }
+
+      for (let i = anims.length - 1; i >= 0; i--) {
+        const a = anims[i]; a.t += dt; const p = Math.min(1, a.t / a.ms);
+        a.fn(p); if (p >= 1) anims.splice(i, 1);
+      }
+
+      renderer.render(scene, camera);
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  // --- pick the renderer: a real 3D wheel where WebGL exists, the same doors as a plain list where it doesn't
+  const glOK = (() => {
+    try { const c = document.createElement("canvas"); return !!(window.WebGLRenderingContext && (c.getContext("webgl2") || c.getContext("webgl"))); }
+    catch { return false; }
+  })();
+  if (!glOK) { setupFlatView(); }
+  else {
+    import("https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.min.js")
+      .then(THREE => setup3DView(THREE))
+      .catch(err => { console.error("[sag] three.js failed to load", err); setupFlatView(); });
   }
 
   // --- the second ending: everything's bought, ten seconds pass unfed, payment fails, the letter comes out instead of the chicken
@@ -674,25 +1051,6 @@ FORM: Ian's spec 2026-08-26 + Round 2 same night, twice amended (the 3x3/single-
     sagFig.classList.remove("undertable");
     if (success) { sagState("idle", true); if (window.MBS && window.MBS.unlock) window.MBS.unlock("sag"); }
     else { sagFig.classList.add("bandaged"); sagState("bandage", false); resetDoors(); }
-  }
-  function resetDoors() {
-    bought = 0;
-    clearTimeout(debtTimer); debtTimer = null; hideDebt();
-    dismiss();
-    for (let i = 0; i < FINAL; i++) {
-      panelState[i] = { phase: "closed", stage: 0 };
-      const el = panelEls[i];
-      el.classList.remove("open", "bidding", "bought", "shake");
-      el.querySelector(".peek").classList.remove("blurred");
-      el.querySelector(".tag").textContent = ""; el.querySelector(".tag").style.opacity = "";
-      invBoxes[i].classList.remove("filled"); invBoxes[i].textContent = ""; invBoxes[i].removeAttribute("title");
-      invBoxes[i].removeAttribute("tabindex"); invBoxes[i].removeAttribute("role");
-    }
-    panelState[FINAL] = { phase: "locked", stage: 0 };
-    panelEls[FINAL].classList.add("locked"); panelEls[FINAL].classList.remove("open", "bought", "shake");
-    panelEls[FINAL].querySelector(".peek").classList.remove("blurred");
-    panelEls[FINAL].querySelector(".tag").textContent = ""; panelEls[FINAL].querySelector(".tag").style.opacity = "";
-    const oldLeg = document.getElementById("sgLeg"); if (oldLeg) oldLeg.remove();
   }
 
   // --- asking the ball; while the unlock window is open, a click on the ball is the catch instead

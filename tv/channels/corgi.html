@@ -90,15 +90,14 @@ more than one reflective surface.
   /* off-centre and clear of the very bottom edge: the shell pins its own MOM INC bug (tv.css .momlogo, 64px,
      left:50%/bottom:10px of .glass, unzoomed) to dead bottom-centre on every channel -- that strip is the
      shell's, not ours (Ian, review 2026-08-31: "the bug lands on the dog's nose"). Shifted off axis and up. */
-  /* top-down, bottom-center, symmetric about the vertical centerline (Ian, art pass 0901: the dog is looking
-     along its own snout, not a shape parked at a corner). Sized by height (15-20% of the frame), not width,
-     so it holds its proportion across breakpoints; raised off the very bottom edge to clear the shell's own
-     bottom-centre MOM INC bug the way the left-shifted version used to, without giving up centreing. */
-  /* 0901 expansion: 15% (was 18%) -- at 390px the wider 18% box's bottom-left corner clipped the joystick's
-     top-right corner (measured live via getBoundingClientRect, not eyeballed: 10px x / 52px y overlap).
-     15% keeps a ~3px clearance margin and stays inside the spec's 15-20% band; desktop is unaffected since
-     the 104px max-height cap already governs there (18%*700+ > 104 already). */
-  .cc-nose{position:absolute; left:50%; bottom:8%; height:15%; max-height:104px; width:auto; aspect-ratio:1.6; transform:translateX(-50%); z-index:6; pointer-events:none; opacity:.92}
+  /* 0903 art directive (Ian, plan 3.1): the nose reads as a CONE, tip toward camera, base cropped by the
+     bottom edge -- the way a head-mounted GoPro crops a muzzle this close. Bottom pulled past 0 so the wide
+     base runs off the frame (.cc-viewport's own overflow:hidden does the actual cropping, same trick the old
+     rule relied on for the bottom-centre MOM INC clearance); the SVG below tapers to its tip near the top of
+     this box and flares to full width at the bottom, so the crop reads as perspective, not a clipped sticker.
+     Wider than tall (aspect-ratio 1.3, was a flat 1.6 oval). Height stays in the same band that cleared the
+     joystick in the prior build (measured live: 15% clipped it at 18%), just taller to carry the taper. */
+  .cc-nose{position:absolute; left:50%; bottom:-6%; height:19%; max-height:120px; width:auto; aspect-ratio:1.3; transform:translateX(-50%); z-index:6; pointer-events:none; opacity:.92}
   .cc-nose svg{width:100%; height:100%; display:block; filter:drop-shadow(0 -2px 3px rgba(0,0,0,.4))}
 
   /* left/top set every frame in JS to the trophy case's own projected screen position -- a surface in the
@@ -297,6 +296,17 @@ more than one reflective surface.
   .cc-jolt{animation:ccJolt .22s ease-out}
   @keyframes ccJolt{0%{filter:brightness(2.4) saturate(1.4); transform:scale(1.04)} 100%{filter:brightness(1) saturate(1); transform:scale(1)}}
 
+  /* Round 2, section 2: the reading beat's paws. A sibling of both cc-stage panels (see the markup), not a
+     .cc-viewport child -- it has to stay visible when the book stage replaces the hunt stage. Left/right of
+     centre, under the nose (z-index 6) and under the book (.cc-book gets z-index 20 below) so the shell's own
+     MOM INC bug at bottom-centre of .glass keeps its clearance in the gap between the two paws. */
+  .cc-paws{position:absolute; left:0; right:0; bottom:0; height:34%; max-height:220px; z-index:5; pointer-events:none}
+  .cc-paw{position:absolute; bottom:-6%; width:18%; aspect-ratio:.85; transform:translateY(115%); transition:transform var(--pawdur,400ms) ease-out}
+  .cc-paw svg{width:100%; height:100%; display:block; filter:drop-shadow(0 -3px 4px rgba(0,0,0,.4))}
+  .cc-paw.l{left:16%} .cc-paw.r{right:16%}
+  .cc-paws.up .cc-paw{transform:translateY(0)}
+  .cc-book{z-index:20}
+
   @media (prefers-reduced-motion:reduce){
     .cc-vhs .grain{animation:none} .cc-burst.go{animation:none} .cc-jolt{animation:none}
   }
@@ -339,9 +349,10 @@ more than one reflective surface.
         </g></svg>
       </div>
       <div class="cc-nose" aria-hidden="true">
-        <svg viewBox="0 0 100 62"><ellipse cx="50" cy="18" rx="46" ry="24" fill="#caa06a"/><ellipse cx="50" cy="14" rx="30" ry="15" fill="#2a1a10"/>
-          <ellipse cx="39" cy="10" rx="5" ry="7" fill="#0e0805"/><ellipse cx="61" cy="10" rx="5" ry="7" fill="#0e0805"/>
-          <ellipse cx="44" cy="6" rx="3" ry="2" fill="rgba(255,255,255,.35)"/></svg>
+        <svg viewBox="0 0 100 80" preserveAspectRatio="none"><path d="M50 3 C36 17 22 33 9 80 L91 80 C78 33 64 17 50 3 Z" fill="#caa06a"/>
+          <path d="M50 20 C41 31 33 43 27 80 L73 80 C67 43 59 31 50 20 Z" fill="#2a1a10"/>
+          <ellipse cx="40" cy="47" rx="6" ry="9" fill="#0e0805"/><ellipse cx="60" cy="47" rx="6" ry="9" fill="#0e0805"/>
+          <ellipse cx="44" cy="30" rx="4" ry="3" fill="rgba(255,255,255,.35)"/></svg>
       </div>
       <div class="cc-vhs-vig" aria-hidden="true"></div>
       <div class="cc-burst" id="ccBurst" aria-hidden="true"></div>
@@ -376,36 +387,127 @@ more than one reflective surface.
       <button type="button" class="corner prev" id="ccCornerPrev" aria-label="Drag or press to turn back a page" hidden></button>
     </div>
   </div>
+
+  <div class="cc-paws" id="ccPaws" aria-hidden="true">
+    <div class="cc-paw l"><svg viewBox="0 0 100 90"><ellipse cx="50" cy="55" rx="42" ry="32" fill="#caa06a"/>
+      <ellipse cx="22" cy="18" rx="15" ry="19" fill="#caa06a"/><ellipse cx="50" cy="10" rx="15" ry="19" fill="#caa06a"/><ellipse cx="78" cy="18" rx="15" ry="19" fill="#caa06a"/>
+      <ellipse cx="22" cy="20" rx="7" ry="9" fill="#2a1a10"/><ellipse cx="50" cy="12" rx="7" ry="9" fill="#2a1a10"/><ellipse cx="78" cy="20" rx="7" ry="9" fill="#2a1a10"/>
+      <ellipse cx="50" cy="58" rx="20" ry="15" fill="#2a1a10"/></svg></div>
+    <div class="cc-paw r"><svg viewBox="0 0 100 90"><ellipse cx="50" cy="55" rx="42" ry="32" fill="#caa06a"/>
+      <ellipse cx="22" cy="18" rx="15" ry="19" fill="#caa06a"/><ellipse cx="50" cy="10" rx="15" ry="19" fill="#caa06a"/><ellipse cx="78" cy="18" rx="15" ry="19" fill="#caa06a"/>
+      <ellipse cx="22" cy="20" rx="7" ry="9" fill="#2a1a10"/><ellipse cx="50" cy="12" rx="7" ry="9" fill="#2a1a10"/><ellipse cx="78" cy="20" rx="7" ry="9" fill="#2a1a10"/>
+      <ellipse cx="50" cy="58" rx="20" ry="15" fill="#2a1a10"/></svg></div>
+  </div>
 </article>
 <script>
 (() => {
   const cc = document.getElementById("cc"); if (!cc) return;
 
   // ---------------------------------------------------------------- state
-  const STORE_KEY = "mbs-corgi-school";
-  const state = { found: [false, false, false] };
-  try { const s = JSON.parse(localStorage.getItem(STORE_KEY) || "{}"); if (Array.isArray(s.found)) state.found = [!!s.found[0], !!s.found[1], !!s.found[2]]; } catch {}
-  const save = () => { try { localStorage.setItem(STORE_KEY, JSON.stringify({ found: state.found })); } catch {} };
+  // ---------------------------------------------------------------- state: LEVELS model, versioned save (3.2/3.3)
+  // v1 (pre-0903) stored one flat found[3] under STORE_KEY_V1 for a single hallway. Nine pages across three
+  // levels needs a shape v1 cannot express, so the key is bumped. Grandfather rule (locked): nobody who played
+  // the old build is demoted. An old save with all three pages found migrates to level 1 COMPLETE, level 2
+  // unlocked -- the standing that player actually earned. An old save with fewer than three keeps exactly that
+  // progress as level 1's own in-progress state; nothing invented, nothing taken away.
+  const STORE_KEY_V1 = "mbs-corgi-school";
+  const STORE_KEY = "mbs-corgi-school-v2";
+  const state = { level: 0, found: [[false, false, false], [false, false, false], [false, false, false]], unlocked: 0 };
+  const save = () => { try { localStorage.setItem(STORE_KEY, JSON.stringify({ found: state.found, unlocked: state.unlocked, level: state.level })); } catch {} };
+  (function loadState() {
+    try {
+      const raw = localStorage.getItem(STORE_KEY);
+      if (raw) {
+        const s = JSON.parse(raw);
+        if (Array.isArray(s.found) && Array.isArray(s.found[0])) {
+          state.found = [0, 1, 2].map(i => [!!(s.found[i] || [])[0], !!(s.found[i] || [])[1], !!(s.found[i] || [])[2]]);
+          state.unlocked = Math.max(0, Math.min(2, s.unlocked | 0));
+          state.level = Math.max(0, Math.min(2, s.level | 0));
+          return;
+        }
+      }
+    } catch {}
+    try {
+      const raw1 = localStorage.getItem(STORE_KEY_V1);
+      if (raw1) {
+        const s1 = JSON.parse(raw1);
+        if (Array.isArray(s1.found)) {
+          const f = [!!s1.found[0], !!s1.found[1], !!s1.found[2]];
+          state.found[0] = f;
+          const complete = f.every(Boolean);
+          state.unlocked = complete ? 1 : 0;
+          state.level = complete ? 1 : 0;
+          save();   // persist the migration immediately -- a player who looks and quits without collecting
+                    // anything this session must not depend on the v1 key still being there next time.
+        }
+      }
+    } catch {}
+  })();
 
-  const PAGES = [
-    { door: "THE LIBRARY", title: "300 MILLION JOBS, ONE MORNING",
-      flavor: "The card catalog drawer was already open. Someone had been through it before you. One index card sat on top, torn from a newspaper, folded twice.",
-      stat: "Generative AI could expose the equivalent of 300 million full time jobs worldwide to automation, Goldman Sachs economists estimated in March 2023.",
-      src: "Goldman Sachs Global Investment Research, “The Potentially Large Effects of Artificial Intelligence on Economic Growth,” Mar 2023.",
-      lessonTitle: "STOP. WHO IS TELLING YOU THIS.",
-      lesson: "Before a number scares you, find out who is saying it. A bank publishing its own economists' research under their own names is a source you can check. An unnamed “expert” or “report” with nobody attached is not. Look for the name before you believe the number." },
-    { door: "THE GYMNASIUM", title: "170 MILLION NEW. 92 MILLION GONE.",
-      flavor: "Someone had taped a page to the underside of the bleachers, face down, like they did not want it read standing up.",
-      stat: "By 2030, AI and information processing technology will transform 86 percent of businesses, the World Economic Forum's Future of Jobs Report 2025 found, displacing 92 million existing roles while creating 170 million new ones.",
-      src: "World Economic Forum, Future of Jobs Report 2025.",
-      lessonTitle: "TRACE THE NUMBER BACK TO WHERE IT CAME FROM.",
-      lesson: "A scary number gets repeated until it is flattened. “92 million jobs gone” is only half of what this report says; the same report says 170 million new ones. Find the original report before you trust the half that got repeated the loudest." },
-    { door: "THE LOCKER ROW", title: "71 PERCENT OF US THINK SO",
-      flavor: "It was folded into a locker vent, small enough that a hand that was not yours had to have put it there.",
-      stat: "71 percent of US adults now think AI will lead to fewer jobs in the United States over the next two decades, Pew Research Center found in June 2026, up from 64 percent in 2024.",
-      src: "Pew Research Center, June 2026 survey.",
-      lessonTitle: "A FEELING IS NOT THE SAME SHAPE AS A FACT.",
-      lesson: "71 percent worried is a real, measured opinion about how people feel. It is not the same claim as 71 percent of jobs actually disappearing. A survey of feelings and a count of what happened are two different instruments. Check which one you are holding before you repeat it." }
+  const LEVELS = [
+    { name: "THE SCHOOL", doorLabel: "FOOD SERVICE", furniture: "desk",
+      pages: [
+        { door: "THE LIBRARY", title: "300 MILLION JOBS, ONE MORNING", deskLabel: "300 MILLION JOBS AT RISK", deskDate: "MAR 2023",
+          flavor: "The card catalog drawer was already open. Someone had been through it before you. One index card sat on top, torn from a newspaper, folded twice.",
+          stat: "Generative AI could expose the equivalent of 300 million full time jobs worldwide to automation, Goldman Sachs economists estimated in March 2023.",
+          src: "Goldman Sachs Global Investment Research, “The Potentially Large Effects of Artificial Intelligence on Economic Growth,” Mar 2023.",
+          lessonTitle: "STOP. WHO IS TELLING YOU THIS.",
+          lesson: "Before a number scares you, find out who is saying it. A bank publishing its own economists' research under their own names is a source you can check. An unnamed “expert” or “report” with nobody attached is not. Look for the name before you believe the number." },
+        { door: "THE GYMNASIUM", title: "170 MILLION NEW. 92 MILLION GONE.", deskLabel: "92 MILLION ROLES DISPLACED", deskDate: "2025 REPORT",
+          flavor: "Someone had taped a page to the underside of the bleachers, face down, like they did not want it read standing up.",
+          stat: "By 2030, AI and information processing technology will transform 86 percent of businesses, the World Economic Forum's Future of Jobs Report 2025 found, displacing 92 million existing roles while creating 170 million new ones.",
+          src: "World Economic Forum, Future of Jobs Report 2025.",
+          lessonTitle: "TRACE THE NUMBER BACK TO WHERE IT CAME FROM.",
+          lesson: "A scary number gets repeated until it is flattened. “92 million jobs gone” is only half of what this report says; the same report says 170 million new ones. Find the original report before you trust the half that got repeated the loudest." },
+        { door: "THE LOCKER ROW", title: "71 PERCENT OF US THINK SO", deskLabel: "71% FEAR THE LAYOFFS", deskDate: "JUN 2026",
+          flavor: "It was folded into a locker vent, small enough that a hand that was not yours had to have put it there.",
+          stat: "71 percent of US adults now think AI will lead to fewer jobs in the United States over the next two decades, Pew Research Center found in June 2026, up from 64 percent in 2024.",
+          src: "Pew Research Center, June 2026 survey.",
+          lessonTitle: "A FEELING IS NOT THE SAME SHAPE AS A FACT.",
+          lesson: "71 percent worried is a real, measured opinion about how people feel. It is not the same claim as 71 percent of jobs actually disappearing. A survey of feelings and a count of what happened are two different instruments. Check which one you are holding before you repeat it." }
+      ] },
+    { name: "FOOD SERVICE", doorLabel: "THE OFFICE", furniture: "bench",
+      pages: [
+        { door: "THE DINING FLOOR", title: "26 PERCENT ALREADY DO", deskLabel: "26% ALREADY USE AI", deskDate: "NRA 2026",
+          flavor: "Tucked under a cold plate on table six, where the tip should have been. His own handwriting runs under the printed line.",
+          stat: "26 percent of restaurant operators say they are already using AI-related tools in their restaurant, the National Restaurant Association's State of the Restaurant Industry 2026 report found.",
+          src: "National Restaurant Association, State of the Restaurant Industry 2026 report.",
+          lessonTitle: "ONE FACT. ONE CONSEQUENCE.",
+          lesson: "One in four is not most, and it is not none. Read the actual number before you decide whether this is already everywhere or barely started. Both of those are wrong, and this is the number that says so." },
+        { door: "THE SERVER STATION", title: "47 PERCENT EXPECT MORE OF IT", deskLabel: "47% EXPECT MORE AI", deskDate: "NRA 2024",
+          flavor: "Rolled inside a straw sleeve at the server station. He had to unroll it twice to get it flat enough to carry.",
+          stat: "47 percent of restaurant operators expect automation and technology to become more common in the industry to help address labor shortages, the National Restaurant Association's 2024 State of the Restaurant Industry report found.",
+          src: "National Restaurant Association, 2024 State of the Restaurant Industry report.",
+          lessonTitle: "AN EXPECTATION IS NOT A DEPLOYMENT.",
+          lesson: "Operators expecting more automation is a forecast about their own plans, not a report of jobs already gone. Keep the plan and the outcome in separate columns until one of them actually happens." },
+        { door: "THE WALK-IN", title: "69 PERCENT SAY ‘ASSIST,’ NOT ‘REPLACE’", deskLabel: "69% SAY 'ASSIST'", deskDate: "NRA 2024",
+          flavor: "Stuck to the inside of the walk-in door with a piece of tape gone brittle in the cold.",
+          stat: "69 percent of restaurant operators believe technology will assist human workers rather than replace them, the same 2024 National Restaurant Association report found.",
+          src: "National Restaurant Association, 2024 State of the Restaurant Industry report.",
+          lessonTitle: "THE PEOPLE BUYING IT ARE NOT NEUTRAL.",
+          lesson: "The operators answering this survey are the ones deciding whether to buy the technology. Their belief about what it will do to their staff is worth reading and worth doubting at the same time." }
+      ] },
+    { name: "THE OFFICE", doorLabel: null, furniture: "cubicle",
+      pages: [
+        { door: "THE MAIL ROOM", title: "UP TO 800 MILLION JOBS, WORLDWIDE", deskLabel: "800M JOBS WORLDWIDE", deskDate: "MCKINSEY",
+          flavor: "Folded into an empty mail slot, the kind with a name label long since peeled off.",
+          stat: "Automation and generative AI could displace up to 800 million jobs worldwide by 2030, the McKinsey Global Institute has estimated.",
+          src: "McKinsey Global Institute, workforce automation research.",
+          lessonTitle: "A GLOBAL NUMBER IS NOT YOUR NUMBER.",
+          lesson: "800 million is every job, everywhere, added together. It tells you the shape of the problem. It does not tell you what happens to the one job in this building. Keep the scale of the claim attached to the claim." },
+        { door: "THE CUBE FARM", title: "710,000 FEWER ADMINISTRATIVE ASSISTANTS", deskLabel: "710K FEWER ASSISTANTS", deskDate: "MCKINSEY",
+          flavor: "Left on an empty chair in a cubicle with the nameplate still screwed to the wall.",
+          stat: "McKinsey's research on generative AI and the future of work in America found demand for administrative assistants could fall by roughly 710,000 positions as AI takes over repetitive clerical tasks.",
+          src: "McKinsey & Company, “Generative AI and the future of work in America.”",
+          lessonTitle: "A NAMED JOB TITLE IS EASIER TO CHECK THAN A TREND.",
+          lesson: "“Administrative assistants, down 710,000” can be checked against real hiring data for that one job title. “AI is coming for office jobs” cannot be checked against anything. Prefer the number with a job title attached to it." },
+        { door: "THE COPIER ALCOVE", title: "THE MOST REPETITIVE WORK GOES FIRST", deskLabel: "REPETITIVE WORK FIRST", deskDate: "MCKINSEY",
+          flavor: "Warm from the copier tray, like it had just come off the machine and nobody had claimed it.",
+          stat: "McKinsey's research found office and administrative support work involves an especially high share of repetitive, data-processing tasks, exactly the kind of work automated systems handle most easily.",
+          src: "McKinsey & Company, “Generative AI and the future of work in America.”",
+          lessonTitle: "REPETITIVE IS THE PATTERN, NOT THE JOB TITLE.",
+          lesson: "The pattern that predicts automation is the shape of the task, not the name on the door. A repetitive task inside a job that sounds safe is still a repetitive task. Look at what the day actually consists of." }
+      ] }
   ];
 
   const announce = t => { const el = document.getElementById("ccAnnounce"); if (el) el.textContent = t; };
@@ -509,22 +611,24 @@ more than one reflective surface.
     else if (e.key === "ArrowLeft") goTo(bstate.page - 1);
   });
 
-  // ---- leaf content: front page, three locked/found slots, the record
+  // ---- leaf content: front page, three locked/found slots, the record. Level-aware (3.2): reads whichever
+  // LEVELS[state.level] is current, so the same five leaves carry a different level's content each time.
   function paintFront() {
-    const n = state.found.filter(Boolean).length;
+    const lvl = state.level, L = LEVELS[lvl];
+    const n = state.found[lvl].filter(Boolean).length;
     const front = document.getElementById("ccLeaf0").querySelector(".face.front");
     front.innerHTML = `
       <header class="masthead">
         <p class="kicker">Mom's Brainwashing Stream presents</p>
         <h1 class="rtitle" data-ransom="THE NAUSEOUS TIMES"></h1>
-        <div class="dateline"><span>SCHOOL EDITION</span><span>VOL. X9 &middot; NO. ???</span><span>PRICE: YOUR CALM</span></div>
+        <div class="dateline"><span>${L.name} EDITION</span><span>VOL. X9 &middot; NO. ${lvl + 1}</span><span>PRICE: YOUR CALM</span></div>
       </header>
       <figure class="lead">
         <img src="assets/cortisol-corgi-badge.png" alt="Cortisol Corgi, the anchor, three anxious corgis in collars" width="1761" height="1516">
-        <figcaption>THE ANCHOR, WEARING A CAMERA, ENTERING THE SCHOOL AFTER HOURS. HE HAS NOT SLEPT. NEITHER HAS THE STORY.</figcaption>
+        <figcaption>THE ANCHOR, WEARING A CAMERA, IN ${L.name} AFTER HOURS. HE HAS NOT SLEPT. NEITHER HAS THE STORY.</figcaption>
       </figure>
       <div class="cols" aria-label="This morning's newspaper">
-        <p><span class="lede">THE SCHOOL WAS EMPTY WHEN HE WENT IN.</span> Three pages are loose somewhere in it. He is going to find all three, because someone has to, and the someone is him.</p>
+        <p><span class="lede">${lvl === 0 ? "THE SCHOOL WAS EMPTY WHEN HE WENT IN." : `HE IS IN ${L.name} NOW.`}</span> Three pages are loose somewhere in it. He is going to find all three, because someone has to, and the someone is him.</p>
         <p class="head">PAGES FOUND: ${n} / 3</p>
         <p>${n === 0 ? "None yet. Walk the halls." : n < 3 ? "Keep going. It is worse further in." : "All three. Turn the page and see what he found."}</p>
         <p>Each page he finds gets turned into this paper, right here, in order. Press READ THE PAPER any time to look at what he already has.</p>
@@ -533,9 +637,10 @@ more than one reflective surface.
     dressRansom(front);
   }
   function paintPage(i) {
+    const lvl = state.level;
     const front = document.getElementById("ccLeaf" + (i + 1)).querySelector(".face.front");
-    const p = PAGES[i];
-    if (state.found[i]) {
+    const p = LEVELS[lvl].pages[i];
+    if (state.found[lvl][i]) {
       front.innerHTML = `
         <section class="block ${["manila","pink","constr"][i]} r${i + 1}" aria-labelledby="ccPg${i}H"><span class="tape tl" aria-hidden="true"></span>
           <p class="kicker">Found in ${p.door}</p>
@@ -556,8 +661,23 @@ more than one reflective surface.
     }
     dressRansom(front);
   }
-  function paintRecord() {
+  function paintLeaf4() {
     const front = document.getElementById("ccLeaf4").querySelector(".face.front");
+    const lvl = state.level;
+    if (lvl < 2) {
+      const complete = state.found[lvl].every(Boolean);
+      front.innerHTML = `
+        <section class="block r1 pressure" aria-labelledby="ccNextH"><span class="tape tl" aria-hidden="true"></span>
+          <p class="kicker">${complete ? "Door open" : "Still out there"}</p>
+          <h2 id="ccNextH" data-ransom="${complete ? LEVELS[lvl].doorLabel : "KEEP LOOKING"}"></h2>
+          <p class="body">${complete ? `He found all three here. The door to ${LEVELS[lvl].doorLabel} is open at the end of the hall. Walk to it.` : "Three pages are somewhere in this building. He has not found all of them yet."}</p>
+          <p class="cap" style="color:var(--gold)">WOOF WOOF. WOOF.</p>
+          <p class="cap">(answer the quiz on Wednesday. every answer is a signal out. he cannot say more. he cannot say why.)</p>
+        </section>
+        <p class="pageno">PG ${N} / ${N}</p>`;
+      dressRansom(front);
+      return;
+    }
     front.innerHTML = `
       <section class="block constr r3" aria-labelledby="scanH"><span class="tape tl" aria-hidden="true"></span>
         <p class="kicker">The anchor's own record</p>
@@ -599,18 +719,13 @@ more than one reflective surface.
           </svg></div>
         </div>
       </section>
-      <div class="block r1 pressure"><span class="tape tr" aria-hidden="true"></span>
-        <p class="kicker">Next level, locked</p>
-        <h2 data-ransom="FOOD SERVICE. THE OFFICE."></h2>
-        <p class="body">Both doors at the end of this hallway. Both locked. Clear the three lessons here and they open next time.</p>
-        <p class="cap" style="color:var(--gold)">WOOF WOOF. WOOF.</p>
-        <p class="cap">(answer the quiz on Wednesday. every answer is a signal out. he cannot say more. he cannot say why.)</p>
-      </div>
+      <p class="cap" style="color:var(--gold)">WOOF WOOF. WOOF.</p>
+      <p class="cap">(answer the quiz on Wednesday. every answer is a signal out. he cannot say more. he cannot say why.)</p>
       <p class="pageno">PG ${N} / ${N} &middot; THE BACK PAGE</p>`;
     dressRansom(front);
     bindRecord();
   }
-  function repaintAll() { paintFront(); PAGES.forEach((_, i) => paintPage(i)); }
+  function repaintAll() { paintFront(); LEVELS[state.level].pages.forEach((_, i) => paintPage(i)); }
 
   // ---- the record leaf's own behaviour: scan (decorative, unchanged) + vent form + kibble/paw (unchanged
   // except the drop no longer calls MBS.unlock -- that fired already, on the third page)
@@ -666,7 +781,7 @@ more than one reflective surface.
       arrange();
     });
   }
-  repaintAll(); paintRecord();
+  repaintAll(); paintLeaf4();
 
   // ---------------------------------------------------------------- view switching
   const huntStage = document.getElementById("ccHuntStage"), bookStage = document.getElementById("ccBookStage");
@@ -674,30 +789,42 @@ more than one reflective surface.
   function showHunt() { cc.dataset.view = "hunt"; huntStage.hidden = false; bookStage.hidden = true; announce("Back in the hallway."); }
   function showBook() { cc.dataset.view = "book"; huntStage.hidden = true; bookStage.hidden = false; renderBook(); }
   cc.dataset.view = "hunt";
+  // Round 2, section 2: BACK TO THE HALL normally just swaps stages -- but if a page was found at a desk and
+  // the dog is still standing over it, this button has to stand him down first (camera, pitch, paws, the
+  // haunt) before the hall shows. runHunt3D fills this hook in; the fallback path leaves it null.
+  let deskStandDownHook = null;
   readBtn.addEventListener("click", showBook);
-  backHunt.addEventListener("click", showHunt);
+  backHunt.addEventListener("click", () => { if (!(deskStandDownHook && deskStandDownHook())) showHunt(); });
 
-  // ---- the moment a page is found, shared by both renderers below
+  // ---- the moment a page is found, shared by both renderers below (3.6: unlock+wave now fire only on the
+  // THIRD level's completion; levels 1 and 2 just open their own next door, no MBS call at all)
   let doorAnnounced = false;
+  function markLevelComplete() {
+    const lvl = state.level;
+    if (lvl >= 2) { window.MBS && window.MBS.wave && window.MBS.wave(); window.MBS && window.MBS.unlock && window.MBS.unlock("corgi"); }
+    save();
+  }
+  function advanceLevel() { if (state.level < 2) { state.level += 1; save(); return true; } return false; }
   function collect(i) {
-    if (state.found[i]) return;
-    state.found[i] = true; save();
+    const lvl = state.level;
+    if (state.found[lvl][i]) return;
+    state.found[lvl][i] = true; save();
     paintFront(); paintPage(i);
-    const n = state.found.filter(Boolean).length;
+    const n = state.found[lvl].filter(Boolean).length;
     document.getElementById("ccTally").textContent = `PAGES ${n}/3`;
     bankMeter(4 + n * 30);
-    announce(`Page found: ${PAGES[i].title}. Read it any time.`);
+    announce(`Page found: ${LEVELS[lvl].pages[i].title}. Read it any time.`);
     if (n === 3) {
       setTimeout(() => {
-        window.MBS && window.MBS.wave && window.MBS.wave();
-        window.MBS && window.MBS.unlock && window.MBS.unlock("corgi");
-        announce("All three pages found. The hallway keeps going.");
+        markLevelComplete();
+        paintLeaf4();
+        announce(lvl >= 2 ? "All nine pages found. The anchor's own record is open." : `All three pages found. The door to ${LEVELS[lvl].doorLabel} is open.`);
       }, 900);
     }
     return true;
   }
-  document.getElementById("ccTally").textContent = `PAGES ${state.found.filter(Boolean).length}/3`;
-  bankMeter(4 + state.found.filter(Boolean).length * 30);   // a restored session shows the stress already earned, not a reset 4%
+  document.getElementById("ccTally").textContent = `PAGES ${state.found[state.level].filter(Boolean).length}/3`;
+  bankMeter(4 + state.found[state.level].filter(Boolean).length * 30);   // a restored session shows the stress already earned, not a reset 4%
 
   // ---- the viewport fills the glass (Ian, review 2026-08-31: "a third of the glass is dead black... make
   // the game fill the glass"). See the CSS comment on .cc-viewport for why this has to be measured, not
@@ -735,45 +862,53 @@ more than one reflective surface.
     const fb = document.getElementById("ccFallback"); fb.hidden = false;
     const map = document.getElementById("ccFbMap"), read = document.getElementById("ccFbRead");
     let reflected = false;
-    // 0901: each area is now a hallway with branches -- the fallback stays a flat button list (spec allows
-    // it) but adds one flavour-only stop per area's loop, so the fallback still "walks" the whole expanded
-    // school, not just the three original doorways.
-    const ROOMS = [
-      { id: "trophy", label: "THE TROPHY CASE", kind: "reflect" },
-      { id: 0, label: PAGES[0].door + " -- THE BACK STACKS", kind: "page" },
-      { id: "lib-loop", label: "THE LIBRARY -- READING NOOK", kind: "flavor",
-        text: "A ring of low shelves, walked all the way around. Nothing here but dust and the sense of being circled." },
-      { id: 1, label: PAGES[1].door + " -- THE EQUIPMENT ROOM", kind: "page" },
-      { id: "gym-loop", label: "THE GYMNASIUM -- BLEACHER LOOP", kind: "flavor",
-        text: "Under and around the bleachers, a full lap. Something creaked on the far side before you got there." },
-      { id: 2, label: PAGES[2].door + " -- THE FAR LOCKERS", kind: "page" },
-      { id: "locker-loop", label: "THE LOCKER ROW -- VENT LOOP", kind: "flavor",
-        text: "A second row of lockers, looping back around to the first. One vent is warm to the touch." },
-      { id: "food", label: "FOOD SERVICE", kind: "locked" },
-      { id: "office", label: "THE OFFICE", kind: "locked" }
-    ];
+    // 3.2/3.6: level-aware now -- rooms are built from whichever LEVELS[state.level] is current, so the
+    // fallback walks all three levels in turn, not just the original school. The library's flavour-only loop
+    // stops stay (level 1 only, unchanged); levels 2 and 3 keep this simpler (three pages, one locked next
+    // door) -- ponytail: the bespoke flavour-loop dressing is not duplicated for the new levels, upgrade if a
+    // future pass wants it there too.
+    function roomsFor(lvl) {
+      const L = LEVELS[lvl];
+      const rooms = L.pages.map((p, i) => ({ id: i, label: p.door, kind: "page" }));
+      if (lvl === 0) {
+        rooms.unshift({ id: "trophy", label: "THE TROPHY CASE", kind: "reflect" });
+        rooms.splice(2, 0, { id: "lib-loop", label: "THE LIBRARY -- READING NOOK", kind: "flavor",
+          text: "A ring of low shelves, walked all the way around. Nothing here but dust and the sense of being circled." });
+        rooms.splice(4, 0, { id: "gym-loop", label: "THE GYMNASIUM -- BLEACHER LOOP", kind: "flavor",
+          text: "Under and around the bleachers, a full lap. Something creaked on the far side before you got there." });
+        rooms.push({ id: "locker-loop", label: "THE LOCKER ROW -- VENT LOOP", kind: "flavor",
+          text: "A second row of lockers, looping back around to the first. One vent is warm to the touch." });
+      }
+      if (L.doorLabel) rooms.push({ id: "next", label: L.doorLabel, kind: "locked" });
+      return rooms;
+    }
+    let ROOMS = roomsFor(state.level);
     function paintMap() {
       map.innerHTML = "";
       ROOMS.forEach(r => {
         const btn = document.createElement("button"); btn.type = "button"; btn.textContent = r.label;
-        if (r.kind === "page") { if (state.found[r.id]) btn.classList.add("found"); }
+        if (r.kind === "page") { if (state.found[state.level][r.id]) btn.classList.add("found"); }
         if (r.kind === "locked") btn.classList.add("locked");
         btn.addEventListener("click", () => visit(r));
         map.appendChild(btn);
       });
     }
     function visit(r) {
-      if (r.kind === "locked") { read.textContent = `${r.label}. Locked. Next time.`; return; }
+      if (r.kind === "locked") { read.textContent = `${r.label}. Locked. Find all three pages here first.`; return; }
       if (r.kind === "flavor") { read.textContent = r.text; return; }
       if (r.kind === "reflect") {
         reflected = true;
         read.textContent = "The glass on the case catches you before you catch it. Round ears. A wet nose, close to the floor. You are the dog. You already knew that. Seeing it is different.";
         return;
       }
-      const i = r.id, p = PAGES[i];
-      if (state.found[i]) { read.textContent = `${p.title}. Already in the paper. Press READ THE PAPER above the map to see it again.`; return; }
-      read.textContent = `${p.flavor} ${p.stat} ${p.src} ${p.lessonTitle} ${p.lesson}`;
+      const lvl = state.level, i = r.id, p = LEVELS[lvl].pages[i];
+      if (state.found[lvl][i]) { read.textContent = `${p.title}. Already in the paper. Press READ THE PAPER above the map to see it again.`; return; }
+      read.textContent = `${p.flavor} On a desk in ${LEVELS[lvl].name}. ${p.stat} ${p.src} ${p.lessonTitle} ${p.lesson}`;
       collect(i); paintMap();
+      if (state.found[lvl].every(Boolean) && LEVELS[lvl].doorLabel) {
+        setTimeout(() => { advanceLevel(); ROOMS = roomsFor(state.level); paintMap();
+          read.textContent = `${LEVELS[state.level].name}. Through the door.`; }, 950);
+      }
     }
     paintMap();
     read.textContent = "Tap a room to see what Cortisol Corgi found there.";
@@ -882,13 +1017,57 @@ more than one reflective surface.
         x.fillText(a, 128, 40); x.font = "bold 16px Georgia"; x.fillText(b, 128, 68);
         const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
       }
+      // Round 2 art directive (Ian, 0903, "newspaper papier-mache", overrides this channel's earlier prop
+      // materials): the monster is already papier-mache; now every prop is too -- torn newsprint strips wrapped
+      // over a form, readable headline fragments at the seams, matte, slightly lumpy, glue sheen off, torn
+      // edges. One shared texture generator, reused for every prop (the desks, the trophy case), so the whole
+      // school reads as one material vocabulary, not per-prop palettes. The masthead fragment is drawn
+      // identically on every call -- the repeated detail Ian's directive asks for.
+      function machePropTexture(headline, date) {
+        const c = document.createElement("canvas"); c.width = c.height = 192; const x = c.getContext("2d");
+        const paperTones = ["#cbbd91", "#d3c69a", "#c3b587", "#d9cc9f"];
+        x.fillStyle = "#3a2f1c"; x.fillRect(0, 0, 192, 192);   // glue-shadow base: torn strip gaps read dark, not white
+        for (let s = 0; s < 6; s++) {
+          const sy = s * 34 - 6 + rnd() * 6, rot = (rnd() * 6 - 3);
+          x.save(); x.translate(96, sy + 17); x.rotate(rot * Math.PI / 180); x.translate(-96, -(sy + 17));
+          x.fillStyle = paperTones[s % paperTones.length];
+          x.beginPath(); x.moveTo(-6, sy + 2);
+          for (let px = -6; px <= 198; px += 14) x.lineTo(px, sy + 2 + (rnd() * 6 - 3));
+          x.lineTo(198, sy + 32); for (let px = 198; px >= -6; px -= 14) x.lineTo(px, sy + 32 - (rnd() * 6 - 3));
+          x.closePath(); x.fill();
+          x.fillStyle = "rgba(40,34,20,.5)";   // fake type columns torn into the strip
+          for (let ty = 8; ty < 26; ty += 4) { let tx = -2;
+            while (tx < 192) { const wlen = 4 + rnd() * 14; x.fillRect(tx, sy + ty, wlen, 2); tx += wlen + 3 + rnd() * 5; } }
+          x.restore();
+        }
+        x.save(); x.translate(96, 96); x.rotate(-4 * Math.PI / 180);   // the repeated masthead fragment
+        x.fillStyle = "rgba(40,34,20,.75)"; x.font = "italic 900 13px Georgia"; x.textAlign = "center";
+        x.fillText("the NAUSEOUS TIMES", 0, 0);
+        x.strokeStyle = "rgba(40,34,20,.5)"; x.lineWidth = 1; x.beginPath(); x.moveTo(-46, 6); x.lineTo(46, 6); x.stroke();
+        x.restore();
+        x.save(); x.translate(96, 150); x.rotate((rnd() * 4 - 2) * Math.PI / 180);   // one AI/jobs headline, at the seam
+        x.fillStyle = "#ded2ac"; x.fillRect(-84, -14, 168, 30);
+        x.fillStyle = "#201808"; x.font = "900 14px Georgia"; x.textAlign = "center";
+        x.fillText(headline, 0, -1); x.font = "11px Georgia"; x.fillText(date, 0, 13);
+        x.restore();
+        for (let i = 0; i < 6; i++) {   // crumple creases, same idea as the monster's own newsprint
+          const sx = rnd() * 192, sy = rnd() * 192, ex = sx + (rnd() - .5) * 100, ey = sy + (rnd() - .5) * 100;
+          x.strokeStyle = "rgba(30,24,12,.22)"; x.lineWidth = 1.5 + rnd() * 1.5;
+          x.beginPath(); x.moveTo(sx, sy); x.lineTo(ex, ey); x.stroke();
+        }
+        const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping;
+        t.generateMipmaps = false; t.minFilter = THREE.LinearFilter; t.colorSpace = THREE.SRGBColorSpace; return t;
+      }
+      function machePropMat(headline, date) { return new THREE.MeshStandardMaterial({ map: machePropTexture(headline, date), roughness: 1, metalness: 0 }); }
 
       const wallMat = new THREE.MeshStandardMaterial({ map: wallTexture(), roughness: 0.92, metalness: 0 });
       const floorMat = new THREE.MeshStandardMaterial({ map: floorTexture(), roughness: 0.85, metalness: 0.05 });
       const ceilMat = new THREE.MeshStandardMaterial({ color: 0xfff6da, roughness: 1, metalness: 0 });
-      const doorMat = new THREE.MeshStandardMaterial({ map: signTexture("LOCKED", "FOOD SERVICE / THE OFFICE"), roughness: 0.7, metalness: 0.15 });
+      // doorMat is built fresh per level now (buildLevel, below) -- its texture names that level's own next
+      // door, so it can no longer be one shared constant.
       const glassMat = new THREE.MeshStandardMaterial({ color: 0xdcefe8, roughness: 0.1, metalness: 0, transparent: true, opacity: 0.35, side: THREE.DoubleSide });
-      const trophyMat = new THREE.MeshStandardMaterial({ color: 0xe6c25a, roughness: 0.35, metalness: 0.7 });
+      // trophy cups: matte papier-mache newsprint now, not gilt metal, per Ian's 0903 material directive
+      const trophyMat = machePropMat("CASE FILE: WHO'S NEXT", "SCHOOL EDITION");
       // Art pass 0901: round 3's fix (real newsprint texture + a light that travels with him, monsterLight
       // below) was the right direction but the paper base itself was too dark to read (#2e2b35 on the suit is
       // near-black, so darker ink on top of it just disappears -- the "torso samples flat #1A1920" failure).
@@ -916,29 +1095,33 @@ more than one reflective surface.
       }
       function areaMat(hex) { return new THREE.MeshStandardMaterial({ color: hex, map: grainTexture(), roughness: 0.95, metalness: 0 }); }
 
-      const floor = new THREE.Mesh(new THREE.PlaneGeometry(60, 40), floorMat);
-      floor.rotation.x = -Math.PI / 2; floor.position.set(12, 0, 0); floor.material.map.repeat.set(20, 14); scene.add(floor);
-      const ceil = new THREE.Mesh(new THREE.PlaneGeometry(60, 40), ceilMat);
-      ceil.rotation.x = Math.PI / 2; ceil.position.set(12, 2.6, 0); scene.add(ceil);
-      for (let lx = 1; lx <= 24; lx += 5) { const l = new THREE.PointLight(0xfff3d0, 0.55, 9); l.position.set(lx, 2.4, 0); scene.add(l); }
-      scene.add(new THREE.HemisphereLight(0xfff6da, 0xbcd7ea, 1.05));
-
-      // ---- hand-authored corridor: [cx, cz, w(x-size), d(z-size)]
+      // ---- WALL_H and wallBox() are the one shared building block every level (and its furniture, via
+      // machePropMat/buildFurniture below) is built from. collideRects and levelGroup are cleared and rebuilt
+      // by buildLevel() on every level change (3.2) -- levelGroup.add() instead of scene.add() so a whole
+      // level's meshes/lights come out in one THREE.Scene.remove() when the next level replaces them.
+      // ponytail: no explicit geometry/material .dispose() on teardown -- at most two rebuilds a playthrough,
+      // not a long-running leak; add disposal if a future build makes level transitions frequent.
       const WALL_H = 2.6;
       const collideRects = [];
+      let levelGroup = new THREE.Group(); scene.add(levelGroup);
       function wallBox(cx, cz, w, d, mat) {
         const m = new THREE.Mesh(new THREE.BoxGeometry(w, WALL_H, d), mat || wallMat);
         m.position.set(cx, WALL_H / 2, cz);
         const rep = Math.max(1, Math.round(Math.max(w, d) / 1.4)); if (m.material.map) { m.material = m.material.clone(); m.material.map = m.material.map.clone(); m.material.map.needsUpdate = true; m.material.map.repeat.set(rep, 1); }
-        scene.add(m);
+        levelGroup.add(m);
         collideRects.push({ x0: cx - w / 2, x1: cx + w / 2, z0: cz - d / 2, z1: cz + d / 2 });
         return m;
       }
-      [[-0.6, 0, 0.4, 3.0], [2.75, 1.35, 5.5, 0.3], [14.4, 1.35, 11.8, 0.3], [24.35, 1.35, 3.3, 0.3],
-       [6.25, -1.35, 12.5, 0.3], [21.25, -1.35, 9.5, 0.3]
-      ].forEach(w => wallBox(...w));
-      wallBox(26, 0, 0.3, 2.6, doorMat);   // the locked door, naming what comes next
 
+      // ---- level 1's hand-authored corridor and three areas, byte-identical to the pre-0903 build (do not
+      // touch: area colours closed 2026-09-01, corridor shape closed by round-2 collision fixes).
+      function level0MainCorridor() {
+        wallBox(-0.6, 0, 0.4, 3.0);
+        [[2.75, 1.35, 5.5, 0.3], [14.4, 1.35, 11.8, 0.3], [24.35, 1.35, 3.3, 0.3],
+         [6.25, -1.35, 12.5, 0.3], [21.25, -1.35, 9.5, 0.3]
+        ].forEach(w => wallBox(...w));
+        return 26;
+      }
       // ---- Expansion pass 0901: each of the three page areas is now its own hallway (10-14 units) with
       // offshooting branches, authored as data -- one array of areas (id, colour, corridor-defining wall
       // rectangles, lights, page position, haunt anchors, a bounding box for "which area is the player in")
@@ -968,86 +1151,211 @@ more than one reflective surface.
       // this treatment's hue crush is severe enough that "unmistakable at a glance" leans partly on the
       // different wall SHAPES per area (the ASCII floor plan) as well as colour; verified live via screenshot,
       // not claimed from the numbers alone (see the area screenshots and the monster-vs-wall check in README).
-      const AREAS = [
-        { id: "library", name: "THE LIBRARY", mat: areaMat(0x2f6b3a),
+      function level0Areas() {
+        return [
+          { id: "library", name: "THE LIBRARY", mat: areaMat(0x2f6b3a), furniture: "desk", deskYaw: Math.PI / 2,
+            walls: [
+              [8.55, 3.675, 0.3, 4.65], [8.55, 11.975, 0.3, 6.75],          // spine east wall, gap z 6-8.6 (branch mouth)
+              [5.45, 2.675, 0.3, 2.65], [5.45, 9, 0.3, 4.8], [5.45, 14.675, 0.3, 1.35],   // spine west wall, gaps z 4-6.6 & 11.4-14 (loop mouths)
+              [7, 15.5, 3.1, 0.3],                                          // spine far cap
+              [12.55, 8.75, 8.3, 0.3], [12.55, 5.85, 8.3, 0.3], [16.7, 7.3, 0.3, 2.9],   // branch: north wall, south wall, dead-end cap
+              [2.45, 9, 0.3, 10], [3.95, 3.85, 3.0, 0.3], [3.95, 14.15, 3.0, 0.3]         // loop: outer wall, south cap, north cap
+            ],
+            lights: [[7, 4], [7, 8], [7, 12], [7, 15], [11, 7.3], [15, 7.3], [3.95, 6], [3.95, 9], [3.95, 13]],
+            pagePos: [15.5, 1.0, 7.3],
+            anchors: [[7, 2], [7, 5], [7, 9], [7, 12], [7, 14], [10, 7.3], [13, 7.3], [16, 7.3], [3.95, 5], [3.95, 9], [3.95, 13]],
+            bbox: { x0: 2.2, x1: 16.9, z0: 1.2, z1: 15.7 } },
+          { id: "gym", name: "THE GYMNASIUM", mat: areaMat(0x7a2e1c), furniture: "desk", deskYaw: -Math.PI / 2,
+            walls: [
+              [12.85, -3.675, 0.3, 4.65], [12.85, -11.975, 0.3, 6.75],
+              [16.15, -2.675, 0.3, 2.65], [16.15, -9, 0.3, 4.8], [16.15, -14.675, 0.3, 1.35],
+              [14.5, -15.5, 3.3, 0.3],
+              [9, -5.85, 8.3, 0.3], [9, -8.75, 8.3, 0.3], [4.7, -7.3, 0.3, 2.9],
+              [19.15, -9, 0.3, 10], [17.65, -3.85, 3.0, 0.3], [17.65, -14.15, 3.0, 0.3]
+            ],
+            lights: [[14.5, -4], [14.5, -8], [14.5, -12], [14.5, -15], [10, -7.3], [6, -7.3], [17.65, -6], [17.65, -9], [17.65, -13]],
+            pagePos: [6.2, 1.0, -7.3],
+            anchors: [[14.5, -2], [14.5, -5], [14.5, -9], [14.5, -12], [14.5, -14], [11, -7.3], [8, -7.3], [5, -7.3], [17.65, -5], [17.65, -9], [17.65, -13]],
+            bbox: { x0: 4.5, x1: 19.3, z0: -15.7, z1: -1.2 } },
+          { id: "locker", name: "THE LOCKER ROW", mat: areaMat(0x1c2a4a), furniture: "desk", deskYaw: Math.PI / 2,
+            walls: [
+              [22.85, 3.675, 0.3, 4.65], [22.85, 11.975, 0.3, 6.75],
+              [20.15, 2.675, 0.3, 2.65], [20.15, 9, 0.3, 4.8], [20.15, 14.675, 0.3, 1.35],
+              [21.5, 15.5, 2.7, 0.3],
+              [26.85, 8.75, 8.3, 0.3], [26.85, 5.85, 8.3, 0.3], [31, 7.3, 0.3, 2.9],
+              [17.3, 9, 0.3, 10], [18.725, 3.85, 2.85, 0.3], [18.725, 14.15, 2.85, 0.3]
+            ],
+            lights: [[21.5, 4], [21.5, 8], [21.5, 12], [21.5, 15], [25, 7.3], [29, 7.3], [18.7, 6], [18.7, 9], [18.7, 13]],
+            pagePos: [29.7, 1.0, 7.3],
+            anchors: [[21.5, 2], [21.5, 5], [21.5, 9], [21.5, 12], [21.5, 14], [24, 7.3], [27, 7.3], [30, 7.3], [18.7, 5], [18.7, 9], [18.7, 13]],
+            bbox: { x0: 17.1, x1: 31.2, z0: 1.2, z1: 15.7 } }
+        ];
+      }
+      // ---- 3.5: FOOD SERVICE and THE OFFICE get a NEW generated corridor + three areas, same building block
+      // (wallBox) and the same topology family as level 1's hand-authored areas -- a dead-end branch (the
+      // page, at furthest depth) and a two-mouth loop around a solid pillar, never a comb. Parametrized on a
+      // spine position (cx) and side (s, +1/-1) so the same generator serves all six new areas across both
+      // levels; only names/colours/furniture differ between them. ponytail: simpler round-number geometry
+      // than level 1's bespoke hand-tuned shape (verified safe -- ring corridor width 1.8/1.5 units, both well
+      // over the 0.56-unit player diameter) -- upgrade to bespoke per-area shapes if a future pass wants
+      // level 1's exact intricacy replicated rather than the same template reused with a new skin.
+      function genArea(cx, s, name, id, furnKind, colorHex) {
+        const bx0 = cx - 4.4, bx1 = cx - 1.6;             // dead-end branch, width 2.8 (spec band 2.4-3.0)
+        const lx0 = cx + 1.5, lx1 = cx + 7.5;              // loop footprint, width 6
+        const near = s * 1.35, far = s * 8.5;
+        const zc = (near + far) / 2, zlen = Math.abs(far - near);
+        return {
+          id, name, mat: areaMat(colorHex), furniture: furnKind, deskYaw: s > 0 ? 0 : Math.PI,
           walls: [
-            [8.55, 3.675, 0.3, 4.65], [8.55, 11.975, 0.3, 6.75],          // spine east wall, gap z 6-8.6 (branch mouth)
-            [5.45, 2.675, 0.3, 2.65], [5.45, 9, 0.3, 4.8], [5.45, 14.675, 0.3, 1.35],   // spine west wall, gaps z 4-6.6 & 11.4-14 (loop mouths)
-            [7, 15.5, 3.1, 0.3],                                          // spine far cap
-            [12.55, 8.75, 8.3, 0.3], [12.55, 5.85, 8.3, 0.3], [16.7, 7.3, 0.3, 2.9],   // branch: north wall, south wall, dead-end cap
-            [2.45, 9, 0.3, 10], [3.95, 3.85, 3.0, 0.3], [3.95, 14.15, 3.0, 0.3]         // loop: outer wall, south cap, north cap
+            [bx0, zc, 0.3, zlen], [bx1, zc, 0.3, zlen], [(bx0 + bx1) / 2, far + s * 0.15, (bx1 - bx0) + 0.3, 0.3],   // branch: sides + dead-end cap
+            [lx0, zc, 0.3, zlen], [lx1, zc, 0.3, zlen], [(lx0 + lx1) / 2, far + s * 0.15, (lx1 - lx0) + 0.3, 0.3],   // loop: outer sides + far cap
+            [cx + 2.1, near, 1.2, 0.3], [cx + 4.5, near, 1.2, 0.3], [cx + 6.9, near, 1.2, 0.3],                       // loop: 3 near-wall stubs, 2 gaps between them (the two mouths)
+            [cx + 4.5, zc, 2.4, zlen - 3.0]                                                                            // loop: the solid pillar between the two mouths
           ],
-          lights: [[7, 4], [7, 8], [7, 12], [7, 15], [11, 7.3], [15, 7.3], [3.95, 6], [3.95, 9], [3.95, 13]],
-          pagePos: [15.5, 1.0, 7.3],
-          anchors: [[7, 2], [7, 5], [7, 9], [7, 12], [7, 14], [10, 7.3], [13, 7.3], [16, 7.3], [3.95, 5], [3.95, 9], [3.95, 13]],
-          bbox: { x0: 2.2, x1: 16.9, z0: 1.2, z1: 15.7 } },
-        { id: "gym", name: "THE GYMNASIUM", mat: areaMat(0x7a2e1c),
-          walls: [
-            [12.85, -3.675, 0.3, 4.65], [12.85, -11.975, 0.3, 6.75],
-            [16.15, -2.675, 0.3, 2.65], [16.15, -9, 0.3, 4.8], [16.15, -14.675, 0.3, 1.35],
-            [14.5, -15.5, 3.3, 0.3],
-            [9, -5.85, 8.3, 0.3], [9, -8.75, 8.3, 0.3], [4.7, -7.3, 0.3, 2.9],
-            [19.15, -9, 0.3, 10], [17.65, -3.85, 3.0, 0.3], [17.65, -14.15, 3.0, 0.3]
-          ],
-          lights: [[14.5, -4], [14.5, -8], [14.5, -12], [14.5, -15], [10, -7.3], [6, -7.3], [17.65, -6], [17.65, -9], [17.65, -13]],
-          pagePos: [6.2, 1.0, -7.3],
-          anchors: [[14.5, -2], [14.5, -5], [14.5, -9], [14.5, -12], [14.5, -14], [11, -7.3], [8, -7.3], [5, -7.3], [17.65, -5], [17.65, -9], [17.65, -13]],
-          bbox: { x0: 4.5, x1: 19.3, z0: -15.7, z1: -1.2 } },
-        { id: "locker", name: "THE LOCKER ROW", mat: areaMat(0x1c2a4a),
-          walls: [
-            [22.85, 3.675, 0.3, 4.65], [22.85, 11.975, 0.3, 6.75],
-            [20.15, 2.675, 0.3, 2.65], [20.15, 9, 0.3, 4.8], [20.15, 14.675, 0.3, 1.35],
-            [21.5, 15.5, 2.7, 0.3],
-            [26.85, 8.75, 8.3, 0.3], [26.85, 5.85, 8.3, 0.3], [31, 7.3, 0.3, 2.9],
-            [17.3, 9, 0.3, 10], [18.725, 3.85, 2.85, 0.3], [18.725, 14.15, 2.85, 0.3]
-          ],
-          lights: [[21.5, 4], [21.5, 8], [21.5, 12], [21.5, 15], [25, 7.3], [29, 7.3], [18.7, 6], [18.7, 9], [18.7, 13]],
-          pagePos: [29.7, 1.0, 7.3],
-          anchors: [[21.5, 2], [21.5, 5], [21.5, 9], [21.5, 12], [21.5, 14], [24, 7.3], [27, 7.3], [30, 7.3], [18.7, 5], [18.7, 9], [18.7, 13]],
-          bbox: { x0: 17.1, x1: 31.2, z0: 1.2, z1: 15.7 } }
+          lights: [[cx - 3, near + 1], [cx - 3, zc], [cx - 3, far - 1], [cx + 4.5, near + 1], [cx + 4.5, far - 1]],
+          pagePos: [cx - 3.0, 1.0, far - s * 1.0],
+          anchors: [[cx - 3, near + 1], [cx - 3, zc], [cx - 3, far - 1], [cx + 2.1, near + 0.8], [cx + 6.9, near + 0.8], [cx + 4.5, far - 0.8]],
+          bbox: { x0: cx - 4.6, x1: cx + 7.7, z0: Math.min(near, far) - 0.2, z1: Math.max(near, far) + 0.2 }
+        };
+      }
+      const AREA_PALETTE = [
+        [0x6b4a1e, 0x2e5a52, 0x5a2e3a],   // FOOD SERVICE: dining floor (warm wood), server station (steel-green), walk-in (cold brick)
+        [0x30507a, 0x555560, 0x6a5a2e]    // THE OFFICE: mail room (office blue), cube farm (grey), copier alcove (brass)
       ];
-      AREAS.forEach(a => { a.walls.forEach(w => wallBox(w[0], w[1], w[2], w[3], a.mat)); a.lights.forEach(([lx, lz]) => { const l = new THREE.PointLight(0xfff3d0, 0.5, 8); l.position.set(lx, 2.2, lz); scene.add(l); }); });
-      const MAIN_ANCHORS = [[2, 1], [2, -1], [6, 1], [6, -1], [10, 1], [10, -1], [14, 1], [14, -1], [18, 1], [18, -1], [22, 1], [22, -1], [24.5, 1], [24.5, -1]];
+      function genLevelAreas(lvl) {
+        const L = LEVELS[lvl], pal = AREA_PALETTE[lvl - 1];
+        return [{ cx: 8, s: 1 }, { cx: 22, s: -1 }, { cx: 36, s: 1 }].map((sp, i) =>
+          genArea(sp.cx, sp.s, L.pages[i].door, i, L.furniture, pal[i]));
+      }
+      function genMainCorridor() {
+        wallBox(-0.6, 0, 0.4, 3.0);
+        [[1.9, 1.35, 3.4, 0.3], [23.55, 1.35, 16.1, 0.3], [45, 1.35, 3, 0.3],
+         [8.9, -1.35, 17.4, 0.3], [38, -1.35, 17, 0.3]
+        ].forEach(w => wallBox(...w));
+        return 46;
+      }
+
+      // ---- Round 2, section 1: a kid's school desk under every page. Extended (3.5) into a furniture
+      // dispatcher: FOOD SERVICE's tool bench and THE OFFICE's cubicle are new shapes built the same way
+      // (boxes, one shared machePropMat papier-mache material, no laminate/metal) -- same material vocabulary,
+      // a different prop. buildDesk itself is unchanged; the reading beat below (startDeskRead/standDown)
+      // only ever reads a furniture group's position, never its shape, so all three are interchangeable to it.
+      function buildDesk(headline, date) {
+        const g = new THREE.Group(); const mat = machePropMat(headline, date);
+        const top = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.04, 0.5), mat); top.position.y = 0.56; g.add(top);
+        [[-0.3, -0.2], [0.3, -0.2], [-0.3, 0.2], [0.3, 0.2]].forEach(([lx, lz]) => {
+          const leg = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.56, 0.04), mat); leg.position.set(lx, 0.28, lz); g.add(leg); });
+        const seat = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.03, 0.16), mat); seat.position.set(0, 0.32, 0.42); g.add(seat);
+        [[-0.24, 0.42], [0.24, 0.42]].forEach(([lx, lz]) => {
+          const leg = new THREE.Mesh(new THREE.BoxGeometry(0.03, 0.32, 0.03), mat); leg.position.set(lx, 0.16, lz); g.add(leg); });
+        return g;
+      }
+      function buildBench(headline, date) {
+        const g = new THREE.Group(); const mat = machePropMat(headline, date);
+        const top = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.05, 0.55), mat); top.position.y = 0.6; g.add(top);
+        [[-0.42, -0.22], [0.42, -0.22], [-0.42, 0.22], [0.42, 0.22]].forEach(([lx, lz]) => {
+          const leg = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.6, 0.05), mat); leg.position.set(lx, 0.3, lz); g.add(leg); });
+        const rail = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.35, 0.04), mat); rail.position.set(0, 0.88, -0.28); g.add(rail);
+        return g;
+      }
+      function buildCubicle(headline, date) {
+        const g = new THREE.Group(); const mat = machePropMat(headline, date);
+        const top = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.05, 0.5), mat); top.position.y = 0.6; g.add(top);
+        [[-0.35, -0.2], [0.35, -0.2], [-0.35, 0.2], [0.35, 0.2]].forEach(([lx, lz]) => {
+          const leg = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.6, 0.04), mat); leg.position.set(lx, 0.3, lz); g.add(leg); });
+        const partition = new THREE.Mesh(new THREE.BoxGeometry(0.9, 1.1, 0.05), mat); partition.position.set(0, 1.05, -0.3); g.add(partition);
+        return g;
+      }
+      function buildFurniture(kind, headline, date) {
+        if (kind === "bench") return buildBench(headline, date);
+        if (kind === "cubicle") return buildCubicle(headline, date);
+        return buildDesk(headline, date);
+      }
       function areaAt(x, z) { for (const a of AREAS) if (x >= a.bbox.x0 && x <= a.bbox.x1 && z >= a.bbox.z0 && z <= a.bbox.z1) return a; return null; }
 
-      // ---- the trophy case: a shallow glass front set into the south corridor wall, plus two matte trophy
-      // shapes behind it. x=5, well past the x=1 spawn point, so the reveal is something the player walks to
-      // and finds, not something already in frame on the opening view (Ian, review 2026-08-31). Mounted at
-      // y=1.0, not adult wall height (1.5): the camera sits at dog eye height (EYE_H=0.38) and gets to within
-      // about 1 unit of the case, and a wall-height case at that distance needs a look-up angle (measured:
-      // 47 degrees) past both the FOV and the pitch clamp -- genuinely unreachable in frame at any angle.
-      // 1.0 keeps it inside a normal look-up.
-      const TROPHY_X = 5;
-      const trophyGlass = new THREE.Mesh(new THREE.PlaneGeometry(1.6, 1.6), glassMat);
-      trophyGlass.position.set(TROPHY_X, 1.0, -1.18); scene.add(trophyGlass);
-      [-0.35, 0.35].forEach((dx, i) => {
-        const base = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.12, 0.1, 10), trophyMat); base.position.set(TROPHY_X + dx, 0.55, -1.3); scene.add(base);
-        const cup = new THREE.Mesh(new THREE.ConeGeometry(0.09, 0.22, 10), trophyMat); cup.position.set(TROPHY_X + dx, 0.74, -1.3); scene.add(cup);
-      });
-      const TROPHY_AT = new THREE.Vector3(TROPHY_X, 0, -1.0);
-      const reflVec = new THREE.Vector3();
+      let AREAS = [], DESKS = [], MAIN_ANCHORS = [], pageObjs = [], monster = null, trophyGlass = null;
+      let PAGE_POS = [], AREA_DOOR_X = [], DOOR_X = 0, doorOpen = false, transitioning = false, doorMesh = null, doorRectIdx = -1;
+      const TROPHY_AT = new THREE.Vector3(), reflVec = new THREE.Vector3();
+      // ---- 3.2: buildLevel(idx) assembles one level's whole scene -- corridor, areas, furniture, monster,
+      // pages, door -- and runs again on every level transition (advanceLevel(), further down). Everything it
+      // creates goes into levelGroup, so a rebuild is one Scene.remove() away from clean.
+      function buildLevel(idx) {
+        scene.remove(levelGroup); levelGroup = new THREE.Group(); scene.add(levelGroup);
+        collideRects.length = 0; pageObjs = []; monster = null; trophyGlass = null; doorOpen = false; transitioning = false;
+        ghost.active = false; ghost.seen = false; creep.active = false; caught = false;
+        monsterWasVisible = false; monsterVisibleAt = 0; staticIntensity = 0; liveVal = 0;
+        if (ambientTimer) clearTimeout(ambientTimer);
+        if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
 
-      // ---- three page pickups, floating billboards
-      function wrapText(x, text, cx, cy, maxW, lh) {
-        const words = text.split(" "); let line = "", y = cy;
-        words.forEach(w => { const test = line + w + " "; if (x.measureText(test).width > maxW && line) { x.fillText(line, cx, y); line = w + " "; y += lh; } else line = test; });
-        x.fillText(line, cx, y);
+        const floor = new THREE.Mesh(new THREE.PlaneGeometry(110, 50), floorMat.clone());
+        floor.material.map = floor.material.map.clone(); floor.material.map.repeat.set(36, 16);
+        floor.rotation.x = -Math.PI / 2; floor.position.set(20, 0, 0); levelGroup.add(floor);
+        const ceil = new THREE.Mesh(new THREE.PlaneGeometry(110, 50), ceilMat);
+        ceil.rotation.x = Math.PI / 2; ceil.position.set(20, 2.6, 0); levelGroup.add(ceil);
+        levelGroup.add(new THREE.HemisphereLight(0xfff6da, 0xbcd7ea, 1.05));
+
+        DOOR_X = idx === 0 ? level0MainCorridor() : genMainCorridor();
+        for (let lx = 1; lx <= DOOR_X - 2; lx += 5) { const l = new THREE.PointLight(0xfff3d0, 0.55, 9); l.position.set(lx, 2.4, 0); levelGroup.add(l); }
+
+        AREAS = idx === 0 ? level0Areas() : genLevelAreas(idx);
+        AREAS.forEach(a => { a.walls.forEach(w => wallBox(w[0], w[1], w[2], w[3], a.mat)); a.lights.forEach(([lx, lz]) => { const l = new THREE.PointLight(0xfff3d0, 0.5, 8); l.position.set(lx, 2.2, lz); levelGroup.add(l); }); });
+
+        const pages = LEVELS[idx].pages;
+        DESKS = AREAS.map((a, i) => {
+          const d = buildFurniture(a.furniture, pages[i].deskLabel, pages[i].deskDate);
+          d.position.set(a.pagePos[0], 0, a.pagePos[2]); d.rotation.y = a.deskYaw || 0; levelGroup.add(d);
+          // ponytail: axis-aligned footprint, sized for desk+bench together rather than rotating the rectangle --
+          // every deskYaw this round is a multiple of 90deg so this is exact; a non-90 yaw would need real rotation.
+          collideRects.push({ x0: a.pagePos[0] - 0.35, x1: a.pagePos[0] + 0.35, z0: a.pagePos[2] - 0.45, z1: a.pagePos[2] + 0.45 });
+          return d;
+        });
+        MAIN_ANCHORS = idx === 0
+          ? [[2, 1], [2, -1], [6, 1], [6, -1], [10, 1], [10, -1], [14, 1], [14, -1], [18, 1], [18, -1], [22, 1], [22, -1], [24.5, 1], [24.5, -1]]
+          : [[2, 1], [2, -1], [12, 1], [12, -1], [19, 1], [19, -1], [27, 1], [27, -1], [33, 1], [33, -1], [41, 1], [41, -1], [44.5, 1], [44.5, -1]];
+
+        // ---- the trophy case: level 1's own easter egg, so it only exists there (idx===0) -- a shallow
+        // glass front set into the south corridor wall, plus two matte trophy shapes behind it. x=5, well
+        // past the x=1 spawn point, so the reveal is something the player walks to and finds (Ian, review
+        // 2026-08-31). Mounted at y=1.0, not adult wall height: a wall-height case at dog eye height needs a
+        // look-up angle past both the FOV and the pitch clamp -- genuinely unreachable at any angle.
+        if (idx === 0) {
+          const TROPHY_X = 5;
+          trophyGlass = new THREE.Mesh(new THREE.PlaneGeometry(1.6, 1.6), glassMat);
+          trophyGlass.position.set(TROPHY_X, 1.0, -1.18); levelGroup.add(trophyGlass);
+          [-0.35, 0.35].forEach(dx => {
+            const base = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.12, 0.1, 10), trophyMat); base.position.set(TROPHY_X + dx, 0.55, -1.3); levelGroup.add(base);
+            const cup = new THREE.Mesh(new THREE.ConeGeometry(0.09, 0.22, 10), trophyMat); cup.position.set(TROPHY_X + dx, 0.74, -1.3); levelGroup.add(cup);
+          });
+          TROPHY_AT.set(TROPHY_X, 0, -1.0);
+        }
+
+        PAGE_POS = AREAS.map(a => new THREE.Vector3(a.pagePos[0], 0.60, a.pagePos[2]));   // on the desktop (0.58) plus 0.02, not floating
+        AREA_DOOR_X = AREAS.map(a => a.anchors[0][0]);   // each area's own doorway x on this level's main corridor
+        function wrapText(x, text, cx, cy, maxW, lh) {
+          const words = text.split(" "); let line = "", y = cy;
+          words.forEach(w => { const test = line + w + " "; if (x.measureText(test).width > maxW && line) { x.fillText(line, cx, y); line = w + " "; y += lh; } else line = test; });
+          x.fillText(line, cx, y);
+        }
+        function pageSprite(headline) {
+          const c = document.createElement("canvas"); c.width = 256; c.height = 160; const x = c.getContext("2d");
+          x.fillStyle = "#efe6cc"; x.fillRect(0, 0, 256, 160); x.strokeStyle = "#241a0e"; x.lineWidth = 4; x.strokeRect(4, 4, 248, 152);
+          x.fillStyle = "#241a0e"; x.font = "bold 20px Georgia"; x.textAlign = "center"; wrapText(x, headline, 128, 55, 220, 24);
+          const tex = new THREE.CanvasTexture(c);
+          const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true })); s.scale.set(0.42, 0.26, 1); return s;   // Round 2: page-sized on the desktop, not a hallway sign
+        }
+        pageObjs = PAGE_POS.map((pos, i) => {
+          if (state.found[idx][i]) return null;
+          const s = pageSprite(pages[i].title); s.position.copy(pos); levelGroup.add(s);
+          const g = new THREE.PointLight(0xffd36e, 0.9, 3); g.position.copy(pos); levelGroup.add(g);
+          return { sprite: s, light: g, base: pos.y };
+        });
       }
-      function pageSprite(headline) {
-        const c = document.createElement("canvas"); c.width = 256; c.height = 160; const x = c.getContext("2d");
-        x.fillStyle = "#efe6cc"; x.fillRect(0, 0, 256, 160); x.strokeStyle = "#241a0e"; x.lineWidth = 4; x.strokeRect(4, 4, 248, 152);
-        x.fillStyle = "#241a0e"; x.font = "bold 20px Georgia"; x.textAlign = "center"; wrapText(x, headline, 128, 55, 220, 24);
-        const tex = new THREE.CanvasTexture(c);
-        const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true })); s.scale.set(1.1, 0.7, 1); return s;
-      }
-      const PAGE_POS = AREAS.map(a => new THREE.Vector3(...a.pagePos));   // deep in each area's branch now, not just off the corridor
-      const DOOR_X = AREAS.map(a => a.anchors[0][0]);   // each area's own doorway x on the (unchanged) main corridor
-      const pageObjs = PAGE_POS.map((pos, i) => {
-        if (state.found[i]) return null;
-        const s = pageSprite(PAGES[i].title); s.position.copy(pos); scene.add(s);
-        const g = new THREE.PointLight(0xffd36e, 0.9, 3); g.position.copy(pos); scene.add(g);
-        return { sprite: s, light: g, base: pos.y };
-      });
+      // buildLevel(idx) closes here -- the monster/haunt machinery just below is shared, reusable game
+      // mechanics (unchanged from the pre-0903 build), not per-level construction, so it stays OUTSIDE
+      // buildLevel as sibling functions. buildLevelTail(idx), defined right after it, is buildLevel's actual
+      // second half (a fresh monster, the door, the player back at spawn, the ambient loop) -- split out only
+      // because it has to be defined after scheduleAmbient exists, and both are called together at every
+      // call site (initial kickoff and every level transition, below).
 
       // ---- the monster: papier-mache, faceless, matte, tall and thin -- slides, never runs
       function buildMonster() {
@@ -1073,9 +1381,8 @@ more than one reflective surface.
         // screenshot-confirmed twice). Further back, the gradient across his height is gentle instead.
         const monsterLight = new THREE.PointLight(0xcfe0ff, 0.65, 6, 2);
         monsterLight.position.set(0.6, 1.5, -2.2); g.add(monsterLight);
-        g.visible = false; scene.add(g); return g;
+        g.visible = false; levelGroup.add(g); return g;
       }
-      const monster = buildMonster();
       const ghost = { active: false, from: new THREE.Vector3(), to: new THREE.Vector3(), t0: 0, dur: 4000, seen: false };
       let hideTimer = null;   // found live while testing FIX 1: a page-pickup haunt starting within 500ms of
       // the PREVIOUS haunt's own end left that old haunt's hide callback pending, so it fired mid-way through
@@ -1086,8 +1393,6 @@ more than one reflective surface.
         monster.visible = true; monster.position.copy(from);
         if (!ghost.seen) { ghost.seen = true; announce("Something is standing at the end of the hall."); }
       }
-      setTimeout(() => haunt(new THREE.Vector3(24, 0, 0), new THREE.Vector3(18, 0, 0), 6000), 3200);   // 0901: slower -- 4500ms was the old duration
-
       // ---- ambient re-haunts: escalate per page found (locked canon: "each page found is more stressful
       // than the last") -- more frequent, closer, and quicker to relocate as n climbs. Still no pathfinding:
       // haunt() just slides him between two authored points, same as the page-pickup haunts already did.
@@ -1116,7 +1421,7 @@ more than one reflective surface.
         }, 700);
       }
       function scheduleAmbient() {
-        const n = state.found.filter(Boolean).length;
+        const n = state.found[state.level].filter(Boolean).length;
         const wait = Math.max(3000, 8500 - n * 2000) + rnd() * 2500;
         ambientTimer = setTimeout(() => {
           if (cc.dataset.view === "hunt" && !ghost.active && !creep.active && !caught) {
@@ -1134,11 +1439,56 @@ more than one reflective surface.
           scheduleAmbient();
         }, wait);
       }
-      scheduleAmbient();
+
+      // buildLevel's second half: a fresh monster, this level's own end door (named for its own next level,
+      // or a dead end on the third), the player back at spawn, an opening haunt tease scaled to this level's
+      // own corridor length, and the ambient loop started. Split from buildLevel itself (closed in the
+      // previous part) only because it must come after scheduleAmbient is defined; every call site below
+      // calls buildLevel(idx) immediately followed by buildLevelTail(idx).
+      function buildLevelTail(idx) {
+        monster = buildMonster();
+        doorMesh = wallBox(DOOR_X, 0, 0.3, 2.6, new THREE.MeshStandardMaterial({ map: signTexture("LOCKED", LEVELS[idx].doorLabel || "END OF THE LINE"), roughness: 0.7, metalness: 0.15 }));
+        doorRectIdx = collideRects.length - 1;
+        doorSeen = false;
+        player.x = 1.0; player.z = 0; player.yaw = -Math.PI / 2; player.pitch = 0;
+        (function () { const dx = DOOR_X; setTimeout(() => haunt(new THREE.Vector3(dx - 2, 0, 0), new THREE.Vector3(dx - 8, 0, 0), 6000), 3200); })();
+        scheduleAmbient();
+      }
 
       // ---- player: low, at dog height
       const EYE_H = 0.38, R = 0.28, SPEED = 2.5;
       const player = { x: 1.0, z: 0, yaw: -Math.PI / 2, pitch: 0 };
+
+      // ---- Round 2, section 2: the reading beat. Approach a desk, the page comes off it, the camera rises
+      // to standing-on-hind-legs height while two paws come into frame -- then the book opens to the page just
+      // found. deskRead is the one state machine for it; data-reading (set on the <article>) is what the kill
+      // paths below check to suspend while the dog's back is to the hall. Yaw locks toward the desk itself
+      // (PAGE_POS[i], which now sits on the desktop) rather than a separate authored point.
+      const RISE_MS = REDUCED ? 150 : 700, STAND_MS = 400;
+      const deskRead = { phase: "idle", t0: 0, i: -1, baseYaw: 0, faceYaw: 0 };
+      const pawsEl = document.getElementById("ccPaws");
+      pawsEl.style.setProperty("--pawdur", REDUCED ? "0ms" : "400ms");
+      function startDeskRead(i) {
+        deskRead.phase = "rising"; deskRead.t0 = performance.now(); deskRead.i = i;
+        deskRead.baseYaw = player.yaw;
+        deskRead.faceYaw = Math.atan2(player.x - PAGE_POS[i].x, player.z - PAGE_POS[i].z);
+        cc.setAttribute("data-reading", "1");
+      }
+      function finishRise() { deskRead.phase = "held"; pawsEl.classList.add("up"); collect(deskRead.i); showBook(); goTo(deskRead.i + 1); }
+      function standDown() {
+        if (deskRead.phase !== "held") return false;
+        deskRead.phase = "standing"; deskRead.t0 = performance.now();
+        pawsEl.classList.remove("up"); showHunt();
+        const i = deskRead.i, doorZ = i === 1 ? -1.35 : 1.35;   // the pickup haunt, now fired here instead of on pickup
+        haunt(new THREE.Vector3(DOOR_X[i], 0, doorZ), new THREE.Vector3(player.x, 0, player.z), 4300 + i * 1300);
+        return true;
+      }
+      function finishStandDown() { deskRead.phase = "idle"; cc.removeAttribute("data-reading"); }
+      deskStandDownHook = standDown;
+      // read-only probe hook (BRIEF-0903b): confirms the desks exist and lets a harness script teleport the
+      // player next to one to exercise the rise. Getters, not a snapshot -- DESKS and state.level now change
+      // on every level transition. Never written to by game code; changes no behaviour.
+      window.__corgi = { player, deskRead, get desks() { return DESKS.length; }, get level() { return state.level; }, get doorLabel() { return LEVELS[state.level].doorLabel; } };
       // 0901 corner-trap fix. Root cause, found live by logging position + blocked() every frame while
       // scripting a diagonal hold into three different corners: the old test expanded each wall's AABB by R
       // on both axes independently, and the per-axis slide below tests each axis's candidate against the
@@ -1239,7 +1589,7 @@ more than one reflective surface.
         const wantSprint = (keys.shift || sprintHeld) && stamina > 2 && mlen > 0.05;
         if (wantSprint) stamina = Math.max(0, stamina - dt * 26); else stamina = Math.min(100, stamina + dt * 15);
         stamFill.style.setProperty("--stam", stamina.toFixed(0));
-        if (mlen > 0.05) {
+        if (mlen > 0.05 && deskRead.phase === "idle") {   // Round 2: movement ignored while rising, held or standing down
           mx /= Math.max(mlen, 1); mz /= Math.max(mlen, 1);
           const fx = -Math.sin(player.yaw), fz = -Math.cos(player.yaw);
           const rx = Math.cos(player.yaw), rz = -Math.sin(player.yaw);
@@ -1256,8 +1606,18 @@ more than one reflective surface.
         }
         if (blocked(player.x, player.z)) { const r = depenetrate(player.x, player.z); player.x = r.x; player.z = r.z; }
 
-        camera.position.set(player.x, EYE_H + (mlen > 0.05 && !REDUCED ? Math.abs(Math.sin(now / 130)) * 0.02 : 0), player.z);
-        camera.rotation.set(player.pitch, player.yaw, 0, "YXZ");
+        let camY = EYE_H + (mlen > 0.05 && !REDUCED ? Math.abs(Math.sin(now / 130)) * 0.02 : 0), camPitch = player.pitch, camYaw = player.yaw;
+        if (deskRead.phase === "rising" || deskRead.phase === "standing") {
+          const rising = deskRead.phase === "rising", dur = rising ? RISE_MS : STAND_MS;
+          const p = Math.min(1, (now - deskRead.t0) / dur), e = 1 - Math.pow(1 - p, 3);
+          const y0 = rising ? EYE_H : 0.95, y1 = rising ? 0.95 : EYE_H;
+          const pitch0 = rising ? 0 : 0.44, pitch1 = rising ? 0.44 : 0;
+          const yaw0 = rising ? deskRead.baseYaw : deskRead.faceYaw, yaw1 = rising ? deskRead.faceYaw : deskRead.baseYaw;
+          camY = y0 + (y1 - y0) * e; camPitch = pitch0 + (pitch1 - pitch0) * e; camYaw = yaw0 + (yaw1 - yaw0) * e;
+          if (p >= 1) { if (rising) finishRise(); else finishStandDown(); }
+        } else if (deskRead.phase === "held") { camY = 0.95; camPitch = 0.44; camYaw = deskRead.faceYaw; }
+        camera.position.set(player.x, camY, player.z);
+        camera.rotation.set(camPitch, camYaw, 0, "YXZ");
         const lookFx = -Math.sin(player.yaw), lookFz = -Math.cos(player.yaw);   // forward, needed even when not moving (the reflection's facing check below)
 
         // flashlight battery
@@ -1272,21 +1632,17 @@ more than one reflective surface.
         let anyPrompt = false;
         pageObjs.forEach((po, i) => {
           if (!po) return;
-          po.sprite.position.y = po.base + Math.sin(now / 500 + i) * 0.05;
+          po.sprite.position.y = po.base + Math.sin(now / 500 + i) * 0.015;   // stirring on the desk, not levitating
           const ddx = po.sprite.position.x - player.x, ddz = po.sprite.position.z - player.z;
           const d = Math.hypot(ddx, ddz);
           const facing = d > 0.05 && (lookFx * ddx / d + lookFz * ddz / d) > 0.3;
-          if (d < 0.9) {
-            scene.remove(po.sprite); scene.remove(po.light); pageObjs[i] = null; collect(i);
+          if (d < 0.9 && deskRead.phase === "idle") {
+            scene.remove(po.sprite); scene.remove(po.light); pageObjs[i] = null;
             viewport.classList.remove("cc-jolt"); void viewport.offsetWidth; viewport.classList.add("cc-jolt");
-            const doorZ = i === 1 ? -1.35 : 1.35;   // each area's own doorway back to the corridor
-            // 0901: from the area's own doorway (DOOR_X), not PAGE_POS[i].x -- the page is now deep in a
-            // branch, and combining that x with the corridor's z would place him inside a wall. Slower too,
-            // scaled by the same ~1.44x as the ambient re-haunt formula below (old: 3000 + i*900).
-            haunt(new THREE.Vector3(DOOR_X[i], 0, doorZ), new THREE.Vector3(player.x, 0, player.z), 4300 + i * 1300);
+            startDeskRead(i);   // Round 2: the rise begins here; collect() and the haunt fire later (finishRise/standDown)
           } else if (d < 1.7 && facing) {
             anyPrompt = true;
-            promptEl.textContent = "A PAGE. GET CLOSER.";
+            promptEl.textContent = "A PAGE. STAND UP.";
             promptEl.classList.add("show");
           }
         });
@@ -1295,7 +1651,7 @@ more than one reflective surface.
         // trophy case reflection: pinned to the glass's own projected screen position every frame, like the
         // page sprites, so it sits ON the case rather than parked in a screen corner. Shows only when near it
         // AND actually looking toward it AND it's in the camera's frustum -- a found reveal, not a HUD panel.
-        {
+        if (trophyGlass) {
           const dTrophy = Math.hypot(player.x - TROPHY_AT.x, player.z - TROPHY_AT.z);
           const tdx = TROPHY_AT.x - player.x, tdz = TROPHY_AT.z - player.z, tlen = Math.hypot(tdx, tdz) || 1;
           const facing = (lookFx * tdx / tlen + lookFz * tdz / tlen) > 0.45;
@@ -1308,10 +1664,25 @@ more than one reflective surface.
             reflectEl.style.left = ((reflVec.x * 0.5 + 0.5) * vw).toFixed(0) + "px";
             reflectEl.style.top = ((-reflVec.y * 0.5 + 0.5) * vh).toFixed(0) + "px";
           }
-        }
+        } else reflectEl.classList.remove("show");
 
-        // locked door
-        if (!doorSeen && player.x > 24.3) { doorSeen = true; announce("The hallway ends here. FOOD SERVICE and THE OFFICE. Both locked. Next time."); }
+        // locked door / level transition (3.6): three pages open THIS level's own next door; walking past it
+        // once open rebuilds the scene for the next level. The third level's door never opens -- doorLabel is
+        // null, there is nothing after it.
+        if (!doorSeen && player.x > DOOR_X - 1.7) {
+          doorSeen = true;
+          announce(LEVELS[state.level].doorLabel ? `The hallway ends here. ${LEVELS[state.level].doorLabel}. Locked. Find the three pages first.` : "The hallway ends here. Nothing past it. This is as far as the building goes.");
+        }
+        if (LEVELS[state.level].doorLabel && !doorOpen && state.found[state.level].every(Boolean)) {
+          doorOpen = true;
+          collideRects.splice(doorRectIdx, 1);
+          doorMesh.material.map = signTexture("OPEN. GO ON.", LEVELS[state.level].doorLabel);
+          doorMesh.material.map.colorSpace = THREE.SRGBColorSpace; doorMesh.material.needsUpdate = true;
+        }
+        if (doorOpen && !transitioning && player.x > DOOR_X - 0.4) {
+          transitioning = true;
+          setTimeout(() => { advanceLevel(); buildLevel(state.level); buildLevelTail(state.level); repaintAll(); paintLeaf4(); goTo(0); transitioning = false; }, 250);
+        }
 
         // monster: slides while off-frame or at the edge, holds still when watched dead-on (locked canon --
         // no pathfinding chase either way, this only changes whether the existing slide is allowed to progress)
@@ -1357,7 +1728,7 @@ more than one reflective surface.
           }
           // touch-range kill: visible at least 600ms (no spawn-kills), close enough -- he can take you from
           // behind, whether or not you're facing him. Static-maxout kill is the other path, below.
-          if (!caught && (now - monsterVisibleAt) >= 600 && monsterDist < 1.1) doCapture();
+          if (!caught && !cc.hasAttribute("data-reading") && (now - monsterVisibleAt) >= 600 && monsterDist < 1.1) doCapture();
         }
         monsterWasVisible = monster.visible;
 
@@ -1391,12 +1762,13 @@ more than one reflective surface.
           // static-maxout: the other kill path (both live, Ian's ruling). Shares the one capture routine
           // with the touch-range path above -- doCapture() never touches state.found, never calls save(),
           // never re-fires MBS.form/unlock/wave.
-          if (!caught && staticIntensity >= 0.99) doCapture();
+          if (!caught && !cc.hasAttribute("data-reading") && staticIntensity >= 0.99) doCapture();
         }
 
         renderer.render(scene, camera);
         requestAnimationFrame(frame);
       }
+      buildLevel(state.level); buildLevelTail(state.level);
       requestAnimationFrame(frame);
     }).catch(err => {
       console.error("[cc] three.js failed to load", err);

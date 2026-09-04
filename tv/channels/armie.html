@@ -1,859 +1,1229 @@
 <!--
-THESIS: On episode one MYR5, the host, is murdered and explodes. His arm falls in the goo, comes to life, and takes up his directive. Coach Armie is that arm: purple clay, torn off above the elbow, two mismatched googly eyes, confused and trying to put himself together. He has replaced MYR5 as the coach on the show and his broadcast literally covers the old host, corners still showing round the edges. He is an alpha-bro workout page pitched at every alien species with total confidence, and he is the one character with no hidden signal: full dedication to MOM Inc, no seam.
-OWN-WORLD: Clay, alien guts and gold bone, on the taupe studio seamless he was filmed against. Every colour is sampled from tv/assets/myr5-explode.mp4 itself: clay purple #b07acc/#8e5b99/#512866, guts magenta #cc518e/#660044, pink flesh #e8879c, gold bone #d4a017. The page looks like a one-armed sock puppet assembled it: boards are hand-pressed slabs with thumbprints, four different corner radii each, and nothing sits quite square. Gold bone is the only clean straight element on the page, and it is the only thing that is not his.
-STORY: His broadcast opens over MYR5, whose channel this was, still visible at the edges; he denies the interference. The impossible tasks and the demand for proof are the format, and they are also how he searches: every photograph sent in is checked against the body he lost, which the page never says. He announces the new easy level for weak humans as a generous concession. He states the movement standard and the fuel standard, each in three tiers by species, robots the standard he actually respects. He asks the visitor's goal and species and hands back three personal standards, then asks how it went; that write-up is the collect. He calls reps "reputations," always, and never notices.
-INTERACTABLE: MYR5's eye behind the broadcast panel tracks the pointer, or the scroll with no pointer, same pattern as MOM Inc's page. Armie's own two googly eyes, deliberately different sizes (25% and 15% of the arm), track the same way. Pieces of him sit below, never lining up. THE UNLOCK NODE is the breathing beat at the foot of the page: hold space (or press the sac on a phone) and it slows 25% at once then the rest of the way across 15 seconds, glows, and puts him to sleep. Asleep, he reveals the hand serum and a folded card holding an obsession letter about DJ Scratch, then MBS.unlock("armie") fires. He keeps that secret from himself, not from MOM.
-FORM: Ian's canon 2026-08-27 (Coach Armie Page Spec.md). Goals + species build the three standards; the after-the-fact review is what the show collects. On submit the page reports into the shared forms gate under the id "armie", the sixth and final channel in that gate. House conventions from channels/goon.html and channels/mominc.html.
+THESIS: Coach Armie's channel is now a game: a MOM Inc gym corridor, top down, turn based, with the Hand crawling after you. Movement is arithmetic pressure, not reflex - every button you press, including the ones that don't move you forward, is one step closer for the Hand.
+OWN-WORLD: Happy Tree Friends PBS horror. A cheerful, primary-coloured school-gym hallway, painted floor lanes, a friendly whistle graphic, played dead straight while a crawling hand gains on you from behind. Materials matte, everything floats a little, and the frame holds still while the corridor moves through it.
+STORY: three checkpoints gate the hall. Checkpoint one is Armie's old intake (your want, your species) folded into the corridor itself. Checkpoints two and three are his movement and fuel standards, each offered at his three canon levels: babies, regular weak humans, robots even ancient ones. Clearing the third checkpoint is also the breathing beat that puts him to sleep and reveals what he is hiding from himself; the corridor keeps going past it to where he judges the plan you build.
+INTERACTABLE: left / right / up / interact, every one of them a turn, and the Hand takes a step every turn too. Interact opens a checkpoint or the exit. Picking a level and confirming is a commitment, not a measurement, and the fine print says so. Getting caught sends you back to your last cleared checkpoint, never out of the game.
+FORM: one call, at the very end. `MBS.form("armie", {...})` fires exactly once, when the plan verdict is judged, with goals, species, all three checkpoint picks, the review and the plan merged into one object - the sixth and final channel in the forms gate. Previously this page called MBS.form twice and the second call silently overwrote the first in mbs-forms; that bug is gone because there is now only one call site. `MBS.unlock("armie")` fires when the breathing beat completes at checkpoint three, not at the true end, and `MBS.wave()` fires in the same breath, the way corgi.html banks its node.
+0831 REVIEW PASS: presentation-only fixes over the 0830 build. The d-pad is now sized to fit the glass (viewport-unit height, no scroll needed) instead of overflowing below it; the corridor got a CSS 3D perspective floor (rotateX on the painted background layer only, tokens/markers untouched) with lane lines, a centre stripe and a half-circle key that scroll with it, plus standing side walls; the camera's vertical anchor moved so the Hand is on screen from turn one instead of scrolled off below the fold (the only JS line touched: render()'s targetY fraction - a pixel-mapping constant, not game state); the player token is now armie-count.png cropped tight on the fist instead of a plain circle; the palette went warm cream/butter floor with mint/buttercup walls and one red stripe; the player, the Hand and the checkpoint/exit markers float with a static drop shadow instead of a shadow that rides along with their bob. No mechanics, storage, form/unlock call sites, or copy were touched - see README.md for the full list and what was verified live.
+0901 ART PASS: GYM CLASS 95 CD-ROM chrome over the same untouched mechanics. The corridor arena is now wrapped in a raised bevel window frame with a pixel-type title bar ("GYM CLASS 95 - a MOM Inc Learning Adventure", decorative window buttons, none wired) and the old flat-yellow HUD strip is now an inset-bevel status bar pinned to the bottom of the frame via flex order (no DOM reorder, no JS touched). The three corridor surfaces are rebuilt as construction paper: jagged torn-edge clip-paths, an feTurbulence fiber-grain overlay (reused verbatim from corgi.html's proven data-URI pattern) blended multiply, and two-stop light-near/dark-far gradients. The d-pad buttons are now fat inset/outset emboss buttons with an inverted-bevel pressed state, same grid cells, same hit targets. The Hand's surface is rebuilt as a pale-parchment anatomy-diagram plate (fine dark outline, halftone dot-grid shading) with two pixel-type pointer-line captions ("FIG. 4", "PHALANGES (COUNT THEM)"); its size/position math and game role are untouched. Pixel type (VT323, runtime-linked via a JS-created <link>, "Courier New"/monospace fallback) is now on all chrome text (title bar, HUD/status bar, markers, hand labels). A few WebAudio square-wave blips were added as brand-new addEventListener calls alongside the existing d-pad and checkpoint-confirm listeners (no existing handler bodies edited). A light full-channel grain+vignette pair sits above .wrap, inside the channel only, pointer-events:none. Every rule above is CSS/HTML except three additive JS blocks (font link, blip helper, blip listeners); doTurn/handleInteract/checkCatch/caught/the checkpoint modal/the breathing state machine/openFinal/arFinal/CORRECT/realPlan/SAVE_KEY/CP_ROWS/EXIT_ROW/RESET_GAP/the MBS.form call site/the MBS.wave()-unlock() pairing are byte-for-byte unchanged - see README.md for verification.
+0901 FIRST PERSON PASS: the top-down corridor becomes a Bard's Tale style first-person crawl, 2D canvas, same GYM CLASS 95 chrome. A new CHOOSE YOUR FIGHTER selector screen replaces checkpoint one's old intake fields (goals/species collected up front, training style and experience added as flavour that pre-fills the plan form later). The three checkpoints are now five-question quizzes drawn from the sourced Armie Quiz Bank, with the correct answer and a teach line shown after every pick, and a one-time retake below 3 of 5. A held LOOK BACK control shows the Hand at his real distance as a pale anatomy-diagram plate; facing forward, a dark hand-shaped silhouette rises over the corridor at gap 2 (half) and gap 1 (full). doTurn/checkCatch/caught/handleInteract/openFinal/the breathing state machine/breathFinish/arFinal/CORRECT/realPlan/SAVE_KEY/CP_ROWS/EXIT_ROW/RESET_GAP/the state object's named fields/the single MBS.form call site are byte-for-byte unchanged; render() and the checkpoint modal's content are rewritten as the spec directs. See README.md for the full diff and verification.
+0903 CLAY PASS (GUESSED reference: DOOM 1993, clay sculpt sprites, Ian's material pick clay): the corridor and the Hand are reskinned in a canvas-drawn clay texture (thumbprint ellipses, a fingernail crescent, multiply-blended over every slab and the Hand's plate) inside the still-locked GYM CLASS 95 chrome. The status bar gains a Doom-style face (Armie's, drawn in clay-toned SVG) that reacts calm/worried/bloodied/grin; the exact `HAND: N BACK` readout is gone in favour of that face plus the existing shadow stages, per the review's finding 2. The loop fix (review finding 1, GUESSED, smallest option per the 0903 brief): a wrong quiz pick now costs the Hand a live step even mid-quiz, and clearing a checkpoint recovers only 2 rows of gap instead of snapping to RESET_GAP - doTurn/checkCatch/caught/handleInteract/openFinal/the breathing state machine/CORRECT/realPlan/SAVE_KEY/CP_ROWS/EXIT_ROW/the state object's prior named fields/the single MBS.form call site stay byte-for-byte unchanged; onPick, commitCheckpoint and render() are the only game-logic functions touched, plus new state.style/state.experience for reload persistence. All 13 TODO(Ian) placeholders are filled with best-guess copy in Armie's voice. See README.md for the GUESSED list and NOT REACHED.
 -->
 <style>
-  /* Palette sampled from tv/assets/myr5-explode.mp4 itself, not invented. Frames: Review/Site Changes 0827/armie-ref/ */
-  .ar{--clay-l:#b07acc; --clay:#8e5b99; --clay-m:#845b99; --clay-d:#512866; --clay-dd:#281433;
-      --guts:#cc518e; --guts-m:#660044; --guts-d:#330022; --flesh:#e8879c;
-      --bone:#d4a017; --bone-l:#e8b33a; --bone-d:#8a6a0f;
-      --seam:#827167; --seam-l:#9a8a7c; --seam-d:#5f544b; --cream:#f6ece0; --ink:#2a1a2e;
-      min-height:100%; margin:0; color:var(--cream); font-family:"Zilla Slab",Georgia,serif; position:relative; overflow-x:hidden;
-      background:radial-gradient(110% 70% at 50% 12%, var(--seam-l) 0%, var(--seam) 42%, var(--seam-d) 100%)}
+  .ar{--red:#e0453c; --blue:#2f6fed; --yellow:#ffcf3a; --green:#2f9e44; --cream:#f7f1e1; --butter:#f5e6a6; --mint:#a9dcc0; --buttercup:#f6cc4d; --stripe:#ef5c52; --ink:#22201c; --paper:#fffaf0; --dark:#171512;
+      --frame:#e4d9b8; --frameHi:#fffaf0; --frameLo:#8a7548; --status:#cabd8c; --pixel:"VT323","Courier New",monospace;
+      --paper-grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      min-height:100%; margin:0; color:var(--ink); font-family:"Zilla Slab",Georgia,serif; position:relative; overflow-x:hidden;
+      background:radial-gradient(120% 80% at 50% 0%, #dff0ff 0%, #bfe0ff 46%, #9cc7ee 100%)}
   .ar *{box-sizing:border-box}
-  /* the studio seamless he was filmed against, lit the way the footage is lit */
-  .ar .seamlight{position:absolute; inset:0; pointer-events:none; z-index:0;
-      background:radial-gradient(70% 40% at 50% 8%, rgba(255,246,230,.16), transparent 70%),
-                 radial-gradient(90% 50% at 50% 100%, rgba(20,12,10,.5), transparent 65%)}
-  .ar .code{position:absolute; inset:0; pointer-events:none; opacity:.05; font-family:"VT323",monospace; font-size:14px; line-height:16px; color:var(--bone-l); white-space:pre; overflow:hidden; z-index:0}
-  .ar .wrap{position:relative; z-index:1; padding:0 clamp(12px,4vw,26px) 34px; max-width:780px; margin:0 auto}
+  .ar .arGrain{position:absolute; inset:0; z-index:2; pointer-events:none; opacity:.16; mix-blend-mode:soft-light; background-image:var(--paper-grain)}
+  .ar .arVig{position:absolute; inset:0; z-index:3; pointer-events:none;
+      background:radial-gradient(120% 90% at 50% 38%, transparent 62%, rgba(20,15,5,.16) 100%)}
+  .ar .sr-only{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+  .ar .wrap{position:relative; z-index:1; padding:0 clamp(12px,4vw,26px) 34px; max-width:560px; margin:0 auto}
 
-  .ar .ident{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 0 6px; border-bottom:3px solid var(--bone); border-radius:2px}
-  .ar .ident .mbs{font-family:"Bowlby One SC",cursive; font-size:clamp(24px,8vw,36px); color:var(--bone-l); text-shadow:3px 3px 0 var(--guts-d); line-height:1}
-  .ar .ident .mbs small{display:block; font-family:"Anton",sans-serif; font-size:clamp(9px,2.6vw,11px); letter-spacing:.2em; color:var(--cream); text-shadow:none; margin-top:2px}
-  .ar .ident img.mark{width:clamp(38px,10vw,52px); height:auto}
-  .ar .ident .tag{text-align:right; font-family:"Anton",sans-serif; letter-spacing:.1em; font-size:clamp(11px,3.2vw,14px); color:var(--bone-l); line-height:1.3}
+  .ar .ident{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:6px 0 4px; border-bottom:4px solid var(--ink)}
+  .ar .ident .mbs{font-family:"Bowlby One SC",cursive; font-size:clamp(22px,7.4vw,32px); color:var(--red); line-height:1; text-shadow:2px 2px 0 var(--ink)}
+  .ar .ident .mbs small{display:block; font-family:"Anton",sans-serif; font-size:clamp(9px,2.4vw,11px); letter-spacing:.18em; color:var(--ink); margin-top:2px}
+  .ar .ident img.mark{width:clamp(34px,9vw,46px); height:auto}
+  .ar .ident .tag{text-align:right; font-family:"Anton",sans-serif; letter-spacing:.08em; font-size:clamp(11px,3vw,13px); color:var(--blue)}
 
-  /* every board is a slab of pressed clay. Hand rounded: four different corner radii, and never quite square on the page. */
-  .ar .board{position:relative; margin:24px 0; color:var(--cream); padding:16px 16px 15px;
-      border-radius:22px 9px 26px 12px;
-      background:
-        radial-gradient(circle at 22% 28%, rgba(0,0,0,.16) 0 9px, transparent 10px),
-        radial-gradient(circle at 74% 62%, rgba(255,255,255,.06) 0 13px, transparent 14px),
-        radial-gradient(circle at 48% 86%, rgba(0,0,0,.13) 0 7px, transparent 8px),
-        radial-gradient(circle at 86% 18%, rgba(0,0,0,.11) 0 6px, transparent 7px),
-        repeating-linear-gradient(102deg, rgba(0,0,0,.04) 0 5px, transparent 5px 19px),
-        linear-gradient(163deg, var(--clay-l) 0%, var(--clay) 38%, var(--clay-d) 100%);
-      box-shadow:0 9px 0 var(--clay-dd), 0 18px 34px rgba(20,8,26,.5), inset 0 2px 0 rgba(255,255,255,.14);
-      transform:rotate(-.5deg)}
-  .ar .board:nth-of-type(even){transform:rotate(.7deg); border-radius:11px 24px 10px 25px}
-  .ar .board:nth-of-type(3n){transform:rotate(-1deg)}
-  /* guts running off the edge of the slab */
-  .ar .board::after{content:""; position:absolute; right:-6px; top:16%; width:34px; height:64px; pointer-events:none; z-index:2;
-      background:radial-gradient(circle at 30% 20%, var(--guts) 0 5px, transparent 6px),
-                 radial-gradient(circle at 62% 48%, var(--guts-m) 0 8px, transparent 9px),
-                 radial-gradient(circle at 38% 78%, var(--flesh) 0 4px, transparent 5px);
-      opacity:.85}
+  .ar .intro{font-size:clamp(12px,3.3vw,15px); line-height:1.32; margin:5px 0 2px}
+  .ar .banner{font-family:"Anton",sans-serif; text-align:center; color:var(--red); font-size:clamp(17px,5.4vw,24px); line-height:1.2; margin:4px 0 8px; text-shadow:1px 1px 0 var(--ink)}
+  .ar .banner small{display:block; font-family:"Barlow Condensed",sans-serif; font-size:clamp(10px,2.6vw,12px); letter-spacing:.12em; color:var(--blue); margin-top:4px}
+  .ar .fine{font-family:"Barlow Condensed",sans-serif; font-size:12px; line-height:1.5; color:#3a3630; margin:11px 0 0; border-top:3px solid var(--ink); padding-top:8px}
+  .ar .note{font-family:"Special Elite",monospace; font-size:13px; color:#3a3630; margin:6px 0 0}
 
-  .ar .banner{font-family:"Bowlby One SC",cursive; text-align:center; color:var(--bone-l); font-size:clamp(17px,5.6vw,26px); line-height:1.2; margin:4px 0 10px;
-      text-shadow:2px 2px 0 var(--guts-d), 0 0 12px rgba(204,81,142,.35); transform:rotate(-.6deg)}
-  .ar .banner small{display:block; font-family:"Special Elite",monospace; font-size:clamp(10px,2.7vw,12px); letter-spacing:.1em; text-shadow:none; color:var(--flesh); margin-top:4px; transform:rotate(.4deg)}
-  .ar .lede{font-size:clamp(14.5px,4vw,17px); line-height:1.55; margin:0 0 10px}
-  /* gold bone is the only clean straight thing on this page, and it is the only thing that is not his */
-  .ar .fine{font-family:"Barlow Condensed",sans-serif; font-size:12px; line-height:1.45; color:#e7d9ea; margin:13px 0 0; border-top:3px solid var(--bone); padding-top:9px; border-radius:2px}
-  .ar .note{font-family:"Special Elite",monospace; font-size:14px; line-height:1.5; color:#f0dcd6; margin:12px 0 0; font-style:italic}
+  .ar .board{position:relative; margin:20px 0; padding:16px 14px 15px; border-radius:16px; background:var(--paper);
+      box-shadow:0 6px 0 var(--ink), 0 12px 22px rgba(20,15,5,.25); transform:rotate(-.3deg)}
+  .ar .board:nth-of-type(even){transform:rotate(.35deg)}
 
-  /* MYR5, still under there, and his googly eye (reused from mominc.html) */
-  .ar .myr{position:relative; display:inline-block; width:100%; aspect-ratio:var(--ar,0.8); pointer-events:none; user-select:none}
-  .ar .myr img{display:block; width:100%; height:100%; object-fit:contain}
-  .ar .myr .pupil{position:absolute; left:calc(var(--cx) * 100%); top:calc(var(--cy) * 100%); width:calc(var(--rx) * 2 * 100% * .7); height:calc(var(--ry) * 2 * 100% * .74);
-      border-radius:50%; background:radial-gradient(circle at 35% 35%, #9a7fd8 0 22%, #5b3aa8 23% 48%, #0b0714 49%); box-shadow:0 0 0 1px rgba(0,0,0,.25);
-      transform:translate(calc(-50% + var(--dx,0px)), calc(-50% + var(--dy,0px))); transition:transform 70ms ease-out}
+  .ar .arena{display:flex; flex-direction:column; gap:6px; height:min(65dvh,600px); min-height:400px; margin:6px 0 10px;
+      border:4px solid; border-color:var(--frameHi) var(--frameLo) var(--frameLo) var(--frameHi); border-radius:3px;
+      background:var(--frame); padding:2px 3px 3px;
+      box-shadow:inset 0 0 0 1px var(--frameLo), 0 6px 0 rgba(20,15,5,.22), 0 10px 18px rgba(20,15,5,.28)}
+  .ar .winTitlebar{order:-1; flex:0 0 auto; display:flex; align-items:center; justify-content:space-between; gap:8px;
+      margin:0 -3px; padding:3px 7px; background:linear-gradient(180deg,#3a5ea8,#1f3a72); border-bottom:2px solid var(--frameLo);
+      color:#fff; font-family:var(--pixel); font-size:clamp(11px,2.8vw,14px); letter-spacing:.02em; white-space:nowrap; overflow:hidden}
+  .ar .winTitlebar b{font-weight:400; overflow:hidden; text-overflow:ellipsis}
+  .ar .winBtns{display:flex; gap:3px; flex:0 0 auto}
+  .ar .winBtns i{width:11px; height:11px; background:var(--frame); border:1px solid; border-color:var(--frameHi) var(--frameLo) var(--frameLo) var(--frameHi); display:block; font-style:normal}
+  .ar .hud{order:3; flex:0 0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; gap:4px 8px; font-family:var(--pixel); font-size:clamp(12px,3.1vw,16px); letter-spacing:.03em; color:var(--ink); background:var(--status);
+      border:2px solid var(--frameLo); border-radius:0 0 4px 4px; padding:3px 10px;
+      box-shadow:inset 2px 2px 0 var(--frameLo), inset -1px -1px 0 var(--frameHi)}
+  .ar .hud #hudDist.danger,.ar .hud #hudHand.danger{color:var(--red)}
+  /* clay pass: the Doom-style status-bar face, Armie's, reacting instead of the old exact HAND: N BACK number */
+  .ar .armieFace{width:clamp(24px,7vw,32px); height:clamp(24px,7vw,32px); flex:0 0 auto; display:inline-block}
+  .ar .armieFace svg{width:100%; height:100%; display:block}
+  .ar .armieFace .faceBase{fill:#c98a5e; stroke:#5c3d26; stroke-width:2}
+  .ar .armieFace .faceThumb{fill:rgba(92,61,38,.35)}
+  .ar .armieFace .brow{stroke:#5c3d26; stroke-width:2.4; fill:none; stroke-linecap:round; opacity:0}
+  .ar .armieFace .mouth{stroke:#5c3d26; stroke-width:2.6; fill:none; stroke-linecap:round; opacity:0}
+  .ar .armieFace .eye{fill:#201810}
+  .ar .armieFace .drip{stroke:#8a241a; stroke-width:2.2; fill:none; stroke-linecap:round; opacity:0}
+  .ar .armieFace.calm .browCalm,.ar .armieFace.calm .mouthCalm{opacity:1}
+  .ar .armieFace.worried .browWorried,.ar .armieFace.worried .mouthWorried{opacity:1}
+  .ar .armieFace.bloodied .browWorried,.ar .armieFace.bloodied .mouthWorried{opacity:1}
+  .ar .armieFace.bloodied .drip{opacity:1}
+  .ar .armieFace.bloodied .faceBase{fill:#a8664a}
+  .ar .armieFace.grin .browCalm,.ar .armieFace.grin .mouthGrin{opacity:1}
+  .ar .corridorView{position:relative; order:1; flex:1 1 0; min-height:0; width:min(96%,640px); margin:0 auto; overflow:hidden; border:5px solid var(--ink); border-radius:14px; background:var(--butter);
+      box-shadow:0 8px 0 rgba(20,15,5,.25), inset 0 0 0 3px #fff}
+  .ar .corridorView::after{content:""; position:absolute; inset:0; z-index:4; pointer-events:none;
+      mix-blend-mode:multiply; opacity:.26; background-image:var(--paper-grain)}
+  /* lived-in detail: a chipped corner on the clay world's own frame (not the locked CD-ROM housing) */
+  .ar .corridorView::before{content:""; position:absolute; z-index:5; pointer-events:none; right:6px; bottom:6px;
+      width:0; height:0; border-style:solid; border-width:0 0 14px 18px; border-color:transparent transparent rgba(20,15,5,.4) transparent;
+      filter:drop-shadow(0 -1px 0 rgba(255,255,255,.25))}
+  .ar #fpCanvas{position:absolute; inset:0; display:block; width:100%; height:100%}
+  /* first-person pass: the dark hand-shaped silhouette that rises over the viewport at gap 2 (half) and gap 1
+     (full), facing forward. Five rounded "finger" rects over a palm path, stretched to fill (preserveAspectRatio
+     none) so the whole shape reads even squashed at half height; gaps between fingers let the paper corridor
+     show through at full height, per spec. Drawn in DOM, not canvas, so it layers cleanly above the grain. */
+  .ar .handShadow{position:absolute; left:0; right:0; bottom:0; height:0; overflow:hidden; z-index:6; pointer-events:none;
+      transition:height 160ms ease-out, opacity 160ms ease-out; opacity:0}
+  .ar .handShadow svg{position:absolute; left:0; bottom:0; width:100%; height:100%; display:block}
+  .ar .handShadow.gap2{height:52%; opacity:.55; animation:handSway 2.4s ease-in-out infinite}
+  .ar .handShadow.gap1{height:100%; opacity:.85; animation:handSway 2.1s ease-in-out infinite}
+  @keyframes handSway{0%,100%{transform:translateX(0)} 50%{transform:translateX(4px)}}
 
-  /* the cover: his broadcast, pressed over the host he is transmitting on top of, corners of him still showing */
-  .ar .cover{padding:20px clamp(10px,3.4vw,18px)}
-  .ar .peek{position:relative; width:100%; margin:0 auto; padding:30px 22px 26px; border-radius:18px 8px 20px 10px;
-      background:radial-gradient(80% 60% at 50% 30%, rgba(20,8,26,.55), rgba(20,8,26,.85));
-      box-shadow:inset 0 0 30px rgba(0,0,0,.6)}
-  .ar .peek .myr{position:absolute; inset:6px; width:auto; height:auto; aspect-ratio:auto; opacity:.95}
-  .ar .peek .myr img{width:100%; height:100%; object-fit:contain; object-position:50% 30%}
-  .ar .broadcast{position:relative; padding:10px clamp(10px,4vw,16px) 12px;
-      background:radial-gradient(circle at 30% 20%, rgba(0,0,0,.14) 0 8px, transparent 9px),
-                 linear-gradient(158deg, var(--guts-m) 0%, var(--guts-d) 70%, #1d0014 100%);
-      border:4px solid var(--bone); border-radius:16px 7px 19px 9px; transform:rotate(1.2deg);
-      box-shadow:0 7px 0 #12000c, 0 14px 28px rgba(0,0,0,.6); display:flex; flex-direction:column; align-items:center; text-align:center}
-  .ar .broadcast .bmark{width:clamp(46px,16vw,62px); height:auto; border-radius:50%; box-shadow:0 0 0 3px var(--bone), 0 3px 8px rgba(0,0,0,.6); margin-bottom:6px}
-  .ar .broadcast h1{font-family:"Anton",sans-serif; letter-spacing:.04em; color:var(--cream); font-size:clamp(18px,6.6vw,26px); line-height:1.05; margin:0; transform:rotate(-.8deg)}
-  .ar .broadcast h1 small{display:block; font-family:"Special Elite",monospace; font-size:clamp(9px,2.6vw,10.5px); letter-spacing:.1em; color:var(--bone-l); margin-top:4px}
-  .ar .broadcast .garble{font-family:"Barlow Condensed",sans-serif; font-weight:600; letter-spacing:.02em; font-size:clamp(16px,4.6vw,20px); line-height:1.5; color:#f3e2ea; margin:9px 0 0; text-transform:uppercase; text-align:left; text-wrap:pretty}
+  .ar .dpad{order:2; flex:0 0 auto; display:grid; grid-template-columns:46px 46px 46px 52px; grid-template-rows:40px 40px; gap:5px; justify-content:center; margin:5px auto 4px}
+  .ar .dbtn{font-size:18px; font-family:"Anton",sans-serif; color:#fff; background:var(--blue); border:3px solid var(--ink); border-radius:10px; cursor:pointer;
+      box-shadow:inset 2px 2px 0 rgba(255,255,255,.55), inset -3px -3px 0 rgba(0,0,0,.32), 0 4px 0 var(--ink)}
+  .ar .dbtn:active,.ar .dbtn.holding{transform:translateY(3px); box-shadow:inset -2px -2px 0 rgba(255,255,255,.4), inset 3px 3px 0 rgba(0,0,0,.35), 0 1px 0 var(--ink)}
+  .ar .dbtn:focus-visible{outline:3px solid var(--yellow); outline-offset:2px}
+  .ar .dleft{grid-column:1; grid-row:2} .ar .dup{grid-column:2; grid-row:1; background:var(--green)} .ar .dright{grid-column:3; grid-row:2}
+  .ar .dact{grid-column:2; grid-row:2; background:var(--red); border-radius:50%}
+  .ar .dlook{grid-column:4; grid-row:1 / 3; background:var(--yellow); color:var(--ink); font-size:9px; line-height:1.2; padding:2px; letter-spacing:.02em}
 
-  /* the man himself, generated off the video stills: a purple clay hand and forearm, fur stuck to the wound */
-  .ar .armstage{position:relative; width:min(88%,310px); margin:16px auto 2px}
-  .ar .armimg{display:block; width:100%; height:auto; border-radius:10px 4px 12px 5px; filter:drop-shadow(0 10px 14px rgba(20,8,26,.6))}
+  .ar .modalWrap{position:relative; margin:16px 0}
+  .ar .modal{background:var(--paper); border:4px solid var(--ink); border-radius:16px; padding:16px 15px 14px; box-shadow:0 8px 0 rgba(20,15,5,.3)}
+  .ar .modal h2{margin:0 0 8px; font-family:var(--pixel); font-size:clamp(16px,5vw,21px); color:var(--red); letter-spacing:.02em}
+  .ar .cpIntake{display:grid; gap:9px; margin-bottom:10px}
+  .ar .cpIntake label{display:grid; gap:5px; font-family:"Archivo Black",sans-serif; font-size:12px}
+  .ar .cpIntake input, .ar .cpIntake select{font-family:"Zilla Slab",Georgia,serif; font-size:15px; padding:8px 9px; border:3px solid var(--ink); border-radius:8px; background:#fff}
+  .ar .lvl{display:block; width:100%; text-align:left; background:var(--cream); border:3px solid var(--ink); border-radius:10px; padding:9px 11px; cursor:pointer; font-family:"Zilla Slab",Georgia,serif; font-size:13.5px; line-height:1.4}
+  .ar .lvl b{display:block; font-family:"Archivo Black",sans-serif; color:var(--blue); font-size:.94em}
+  .ar .lvl.picked{background:var(--yellow); box-shadow:inset 0 0 0 3px var(--ink)}
+  .ar .lvl:focus-visible{outline:3px solid var(--red); outline-offset:2px}
+  .ar .modalBtns{display:flex; gap:10px; margin-top:12px}
+  .ar .modalBtns button{font-family:"Anton",sans-serif; letter-spacing:.04em; font-size:14px; padding:9px 16px; border:3px solid var(--ink); border-radius:9px; cursor:pointer}
+  .ar .modalBtns .ghost{background:#fff; color:var(--ink)}
+  .ar #selStart,.ar #qzRetakeGo,.ar #qzNext{background:var(--green); color:#fff; box-shadow:0 4px 0 var(--ink)}
+  .ar #selStart:disabled{opacity:.4; cursor:default}
+  .ar #selStart:not(:disabled):active,.ar #qzRetakeGo:active,.ar #qzNext:active{transform:translateY(3px); box-shadow:0 1px 0 var(--ink)}
 
-  /* the pieces of him that have not made it back yet. They never line up. */
-  .ar .bits{height:96px; margin:6px auto 0; width:min(92%,320px);
-      background:url("assets/armie/gore-bits.png") 50% 50%/contain no-repeat; filter:drop-shadow(0 3px 5px rgba(20,8,26,.55))}
-  .ar .bitsnote{text-align:center; font-family:"Special Elite",monospace; font-size:14px; color:#e6d2e8; opacity:.82; margin:2px 0 0; font-style:italic}
+  /* first-person pass: the CHOOSE YOUR FIGHTER selector, the collect disguised as a stat builder */
+  .ar .selLabel{font-family:"Anton",sans-serif; font-size:13px; letter-spacing:.05em; color:var(--blue); margin:10px 0 6px}
+  .ar .selStyles{display:grid; gap:8px}
+  .ar .styleCard{display:block; width:100%; text-align:left; background:var(--cream); border:3px solid var(--ink); border-radius:10px; padding:9px 11px; cursor:pointer; font-family:"Zilla Slab",Georgia,serif; font-size:12.5px; line-height:1.4}
+  .ar .styleCard b{display:block; font-family:"Archivo Black",sans-serif; color:var(--blue); font-size:.95em; margin-bottom:2px}
+  .ar .styleCard.picked{background:var(--yellow); box-shadow:inset 0 0 0 3px var(--ink)}
+  .ar .styleCard .not{display:block; color:#6a6152; font-size:.92em; margin-top:3px}
+  .ar .statRow{display:flex; gap:9px; margin-top:6px; font-family:var(--pixel); font-size:12px}
+  .ar .statBar{display:inline-flex; gap:1px; vertical-align:middle; margin-left:4px}
+  .ar .statBar i{display:block; width:8px; height:8px; background:#ddd3b8; border:1px solid var(--ink)}
+  .ar .statBar i.on{background:var(--blue)}
+  .ar .selExp{display:grid; grid-template-columns:1fr 1fr 1fr; gap:7px}
+  .ar .selExp .lvl{font-size:11.5px; padding:8px 8px}
 
-  /* the three tier standards: clay tablets with a bone rule across the top */
-  .ar .tiers{display:grid; gap:12px; margin-top:4px}
-  .ar .tier{position:relative; background:linear-gradient(168deg,#f2e6dc,#dcc8bd); color:var(--ink);
-      border-radius:14px 6px 16px 8px; padding:13px 12px 11px; box-shadow:0 5px 0 rgba(40,20,51,.45), 3px 4px 0 rgba(0,0,0,.18); transform:rotate(.5deg)}
-  .ar .tier:nth-child(2){transform:rotate(-.8deg); border-radius:7px 15px 8px 17px}
-  .ar .tier:nth-child(3){transform:rotate(.3deg)}
-  .ar .tier::before{content:""; position:absolute; left:12px; right:12px; top:6px; height:4px; border-radius:2px; background:linear-gradient(90deg,var(--bone-d),var(--bone-l),var(--bone-d))}
-  .ar .tier h3{font-family:"Anton",sans-serif; letter-spacing:.03em; color:var(--guts-m); font-size:clamp(14px,4.4vw,17px); margin:8px 0 0; line-height:1.15}
-  .ar .tier h3 .sub{display:block; font-family:"Special Elite",monospace; font-size:10.5px; letter-spacing:.08em; color:#6b4a52; text-transform:none; margin-top:2px}
-  .ar .tier .repcount{font-family:"Bowlby One SC",cursive; color:var(--clay-d); font-size:clamp(24px,8vw,34px); line-height:1; margin:6px 0 4px}
-  .ar .tier p{margin:0; font-size:clamp(13px,3.7vw,14.5px); line-height:1.5}
-  .ar .tier p.count{font-family:"VT323",monospace; font-size:clamp(14px,4vw,16px); letter-spacing:.03em}
-  .ar .tier.t3{background:linear-gradient(168deg,#fff0d8,#e8d3ad)}
-  .ar .tier.t3::before{background:linear-gradient(90deg,var(--bone),#fff0c0,var(--bone))}
+  /* first-person pass: the quiz body inside the checkpoint modal */
+  .ar .qzProg{margin:0 0 6px; font-family:var(--pixel); font-size:13px; color:#5a5348; letter-spacing:.03em}
+  .ar .qzQ{margin:0 0 10px; font-size:15px; line-height:1.4; font-weight:600}
+  .ar .qzOpts{display:grid; gap:8px}
+  .ar .qzOpt{display:block; width:100%; text-align:left; background:var(--cream); border:3px solid var(--ink); border-radius:9px; padding:9px 11px; cursor:pointer; font-family:"Zilla Slab",Georgia,serif; font-size:13.5px; line-height:1.35}
+  .ar .qzOpt:disabled{cursor:default}
+  .ar .qzOpt.correct{background:#d6f8d6; border-color:var(--green); box-shadow:inset 0 0 0 2px var(--green)}
+  .ar .qzOpt.wrong{background:#fbdcd8; border-color:var(--red); box-shadow:inset 0 0 0 2px var(--red)}
+  .ar .qzTeach{margin:10px 0 0; padding:9px 10px; background:rgba(47,157,68,.1); border:2px dashed var(--green); border-radius:8px; font-size:13px; line-height:1.5}
+  .ar .qzNote{margin:11px 0 0; font-family:"Barlow Condensed",sans-serif; font-size:10.5px; line-height:1.4; color:#6a6152}
 
-  /* the form */
-  .ar .arform{display:grid; gap:10px; margin-top:6px}
-  .ar .arform label{display:grid; gap:5px; font-family:"Archivo Black",sans-serif; font-size:clamp(11.5px,3.3vw,13px); letter-spacing:.03em; color:var(--bone-l)}
-  .ar .arform input, .ar .arform select, .ar .arform textarea{font-family:"Zilla Slab",Georgia,serif; font-size:15px; padding:9px 10px; border-radius:9px 4px 10px 5px; border:3px solid var(--bone-d); background:var(--cream); color:var(--ink); width:100%; max-width:100%}
-  .ar .arform textarea{resize:vertical; min-height:64px}
-  .ar .arform button{justify-self:start; font-family:"Anton",sans-serif; letter-spacing:.06em; font-size:clamp(13px,3.8vw,15px); color:var(--cream); background:linear-gradient(160deg,var(--guts),var(--guts-m)); border:0; border-radius:9px 4px 10px 5px; padding:11px 18px; cursor:pointer; box-shadow:0 4px 0 var(--guts-d); transition:transform 120ms; transform:rotate(-.7deg)}
-  .ar .arform button:active{transform:rotate(-.7deg) translateY(2px); box-shadow:0 2px 0 var(--guts-d)}
-  .ar .arform button:disabled{opacity:.5; cursor:default}
-  .ar .result{margin-top:14px; background:linear-gradient(165deg,var(--guts-m),var(--guts-d)); color:var(--cream); border:3px solid var(--bone); border-radius:16px 8px 18px 7px; padding:13px 14px; transform:rotate(.4deg)}
-  .ar .result h3{margin:0; font-family:"Bowlby One SC",cursive; color:var(--bone-l); font-size:clamp(15px,4.8vw,19px); line-height:1.2}
-  .ar .result h3 small{display:block; font-family:"Special Elite",monospace; font-size:10.5px; letter-spacing:.06em; color:var(--flesh); margin-top:3px; text-transform:none}
-  .ar .levels{list-style:none; margin:10px 0 0; padding:0; display:grid; gap:8px}
-  .ar .levels li{background:#f6ece0; color:var(--ink); border-radius:9px 4px 10px 5px; padding:8px 10px; font-size:clamp(12.5px,3.6vw,14px); line-height:1.45; box-shadow:inset 0 0 0 2px var(--bone-d)}
-  .ar .levels li b{display:block; font-family:"Archivo Black",sans-serif; color:var(--guts-m); font-size:.92em; margin-bottom:2px}
-  .ar .confirm{margin-top:12px; font-family:"Archivo Black",sans-serif; font-size:clamp(13px,3.7vw,15px); line-height:1.5; color:var(--bone-l)}
-  .ar .confirm a{color:#ffffff; text-decoration:underline; text-decoration-color:var(--bone)}
-
-  .ar .signoff{text-align:center; margin:20px 0 0; font-family:"Zilla Slab",serif; font-weight:700; font-size:clamp(15px,4.4vw,20px); line-height:1.45; color:var(--bone-l)}
-  .ar .signoff small{display:block; margin-top:10px; font-family:"Barlow Condensed",sans-serif; font-weight:500; font-size:12px; color:#e2d0e4; line-height:1.4}
-  .ar .stamp{display:inline-block; margin-top:10px; border:3px solid var(--bone); color:var(--bone-l); font-family:"Anton",sans-serif; letter-spacing:.12em; padding:3px 10px; border-radius:7px 3px 8px 4px; transform:rotate(-2.4deg); font-size:12px}
-
-
-  /* ---- the body holds the page together: intestine border, spine rules, tendons, tape ---- */
-  .ar .gutframe{position:relative; padding:14px 34px}
-  /* the intestine running the page edge */
-  .ar .gutframe::before,.ar .gutframe::after{content:""; position:absolute; top:0; bottom:0; width:26px; pointer-events:none; z-index:3;
-      background:url("assets/armie/gore-intestine-h.png") 50% 0/26px auto repeat-y;
-      filter:drop-shadow(0 0 5px rgba(0,0,0,.5)); opacity:.95}
-  .ar .gutframe::before{left:-9px; transform:rotate(180deg)}
-  .ar .gutframe::after{right:-9px}
-  /* a spinal column underlining a heading */
-  .ar .spine{display:block; height:26px; margin:2px auto 12px; width:min(88%,320px);
-      background:url("assets/armie/gore-spine.png") 50% 50%/contain no-repeat;
-      filter:drop-shadow(0 3px 3px rgba(0,0,0,.55))}
-  /* tendons and veins where a divider would be */
-  .ar .tendon{display:block; height:16px; margin:14px 0; border-radius:8px; overflow:hidden;
-      background:url("assets/armie/gore-tendon.png") 50% 50%/cover; box-shadow:0 2px 5px rgba(0,0,0,.5); transform:rotate(-.4deg)}
-  /* scotch tape */
-  .ar .tape{display:inline-block; padding:7px 18px; font-family:"Special Elite",monospace; font-size:15px; color:#3a2f22;
-      background:linear-gradient(160deg, rgba(255,252,232,.82), rgba(236,228,196,.72));
-      box-shadow:0 2px 5px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.4);
-      clip-path:polygon(3% 0,97% 4%,100% 96%,2% 100%); transform:rotate(-1.6deg)}
-
-  /* ---- the breathing beat at the bottom: the purple blob, the carnage round it, the hold ---- */
-  .ar .breath{position:relative; margin:26px auto 6px; max-width:340px; text-align:center; padding-bottom:6px}
-  .ar .breathtape{margin-bottom:10px}
-  .ar .sacwrap{position:relative; width:min(78%,240px); margin:0 auto; aspect-ratio:1; display:grid; place-items:center}
-  /* the carnage he has not put back: the real stills, thrown round the blob at mismatched sizes and angles.
-     No skull. Nothing drawn in CSS, because drawn gore reads as shapes and these read as a body. */
-  .ar .mess{position:absolute; inset:-24%; z-index:0; pointer-events:none}
-  .ar .mess img{position:absolute; height:auto; filter:drop-shadow(0 4px 7px rgba(20,8,26,.65))}
-  /* the fleshy purple sac. The pulse is driven from JS with a phase accumulator, not a CSS animation,
-     because retiming a keyframe animation every frame restarts it and reads as frantic speeding up. */
-  .ar .sac{width:74%; aspect-ratio:1; position:relative; z-index:1;
-      background:url("assets/armie/gore-sac.png") 50% 50%/contain no-repeat;
-      filter:drop-shadow(0 0 16px rgba(204,81,142,.4));
-      will-change:transform}
-  .ar .sac.lit{filter:drop-shadow(0 0 34px rgba(232,179,58,.9)) drop-shadow(0 0 70px rgba(204,81,142,.55)) saturate(1.3) brightness(1.25)}
-  .ar .breathnote{font-family:"Special Elite",monospace; font-size:14px; color:#e6d2e8; opacity:.85; margin:8px 0 0; min-height:2.4em; line-height:1.45}
-  .ar .breathbar{width:min(72%,220px); height:6px; margin:8px auto 0; border-radius:3px; background:rgba(20,8,26,.5); overflow:hidden}
-  .ar .breathbar i{display:block; height:100%; width:0%; background:linear-gradient(90deg,var(--guts),var(--bone-l)); transition:width .25s linear}
-
-  /* ---- the serum, revealed when he sleeps, and the folded card behind it ---- */
-  .ar .serum{margin:0 auto 8px; max-width:330px; padding:14px 14px 12px; border-radius:16px 7px 18px 8px;
-      background:linear-gradient(162deg, var(--guts-m), var(--guts-d)); border:3px solid var(--bone);
-      box-shadow:0 8px 0 #12000c, 0 16px 30px rgba(0,0,0,.6); transform:rotate(-.6deg);
-      opacity:0; max-height:0; overflow:hidden; padding-top:0; padding-bottom:0; border-width:0;
-      transition:opacity .5s ease, max-height .6s ease, padding .4s ease, border-width .3s ease}
-  .ar .serum.shown{opacity:1; max-height:900px; padding:14px 14px 12px; border-width:3px}
-  .ar .serum h3{margin:0 0 6px; font-family:"Bowlby One SC",cursive; color:var(--bone-l); font-size:clamp(15px,4.8vw,19px); line-height:1.2}
-  .ar .serum p{margin:0 0 8px; font-size:13.5px; line-height:1.5}
-  .ar .card{display:block; width:100%; text-align:left; cursor:pointer; margin-top:10px; padding:12px 13px;
-      font-family:"Special Elite",monospace; font-size:12.5px; line-height:1.5; color:#3a2f22;
-      background:linear-gradient(168deg,#f4ead2,#dccfae); border:0; border-radius:4px 10px 4px 10px;
-      box-shadow:0 5px 0 rgba(0,0,0,.35), inset 0 -14px 18px rgba(0,0,0,.09); transform:rotate(.8deg)}
-  .ar .card:active{transform:rotate(.8deg) translateY(2px); box-shadow:0 3px 0 rgba(0,0,0,.35)}
-  .ar .card .fold{display:block; font-family:"Anton",sans-serif; letter-spacing:.08em; font-size:11px; color:var(--guts-m); margin-bottom:5px}
-  .ar .letter{margin-top:10px; padding:13px 14px; border-radius:4px 10px 4px 10px; color:#3a2f22;
-      background:linear-gradient(168deg,#f6eeda,#e2d5b6); box-shadow:0 5px 0 rgba(0,0,0,.3); transform:rotate(-.5deg);
-      font-family:"Special Elite",monospace; font-size:12.5px; line-height:1.6}
-  .ar .letter .pic{display:block; width:96px; height:96px; margin:0 auto 10px; border-radius:3px; border:5px solid #fff;
-      box-shadow:0 4px 9px rgba(0,0,0,.45); transform:rotate(-2.5deg);
-      background:radial-gradient(circle at 42% 34%, #f6d9df 0 26%, #d98ba3 46%, #8e4a63 100%)}
-  .ar .letter p{margin:0 0 9px}
-  .ar .letter p:last-child{margin:0}
-  .ar .letter .sign{font-family:"Anton",sans-serif; letter-spacing:.05em; font-size:12px; color:var(--guts-m)}
-
-  /* he sleeps: the eyes close and he sags */
-  .ar .armstage.asleep{width:min(92%,330px)}
-  .ar .armstage.asleep .armimg{transform:rotate(90deg) scale(.82); transform-origin:50% 50%;
-      filter:drop-shadow(0 10px 14px rgba(20,8,26,.6)) saturate(.72) brightness(.84);
-      transition:transform 1.6s cubic-bezier(.4,0,.3,1), filter 1.6s ease}
-  .ar .armstage.asleep .armimg.sidefile{transform:none; scale:1}   /* the drawn-sideways art needs no rotation */
-  .ar .zzz{position:absolute; right:2%; top:6%; font-family:"Bowlby One SC",cursive; color:var(--bone-l); font-size:20px; opacity:0; pointer-events:none}
-  .ar .armstage.asleep .zzz{opacity:.9; transition:opacity .8s ease .6s}
+  /* the shell's own breakpoint (tv.css, max-width:640px) stacks the channel-list panel above the screen
+     instead of beside it, so the glass itself is much shorter relative to the viewport on a phone -
+     the desktop dvh fraction alone overflows there. Re-tuned against the measured mobile .screen rect
+     (carried over unchanged from the 0901 art pass; this rule was dropped by mistake in an early draft of
+     this pass and restored after the mobile clearance check caught the d-pad landing on the MOM INC bug). */
+  @media (max-width:640px){
+    .ar .arena{height:min(46dvh,410px); min-height:280px}
+  }
 
   @media (prefers-reduced-motion:reduce){
-    .ar .sac{transform:none !important}
-    .ar .armstage.asleep .armimg{transition:none}
+    .ar .handShadow{animation:none}
   }
-
-
-  /* the expectations tabs, moved off MOM Inc 2026-08-27: the plans are his format now */
-
-
-  /* ---- more carnage, more tape, and none of it lined up (Ian, 2026-08-27) ----
-     Every board gets splatter thrown across it and strips of tape holding it to the page.
-  .ar .board{position:relative}
-  .ar .board::before{content:""; position:absolute; left:-10px; top:34%; width:30px; height:78px; pointer-events:none; z-index:2;
-      background:
-        radial-gradient(circle at 60% 18%, var(--guts) 0 6px, transparent 7px),
-        radial-gradient(circle at 30% 46%, var(--guts-m) 0 9px, transparent 10px),
-        radial-gradient(circle at 66% 74%, var(--flesh) 0 5px, transparent 6px),
-        radial-gradient(circle at 22% 88%, var(--guts-d) 0 4px, transparent 5px);
-      opacity:.9; transform:rotate(-8deg)}
-  .ar .board:nth-of-type(even)::before{top:12%; transform:rotate(14deg) scaleX(-1)}
-  .ar .board:nth-of-type(3n)::before{top:58%; transform:rotate(-21deg)}
-
-  /* splatter thrown over the top of a board, running down into it */
-  .ar .splat{position:absolute; pointer-events:none; z-index:2; opacity:.92}
-  .ar .splat.a{left:8%;  top:-14px; width:96px; height:54px; transform:rotate(-6deg);
-      background:radial-gradient(ellipse 40% 60% at 30% 40%, var(--guts) 0 40%, transparent 62%),
-                 radial-gradient(circle at 62% 28%, var(--guts-m) 0 11px, transparent 12px),
-                 radial-gradient(circle at 84% 62%, var(--flesh) 0 6px, transparent 7px),
-                 radial-gradient(circle at 14% 78%, var(--guts-d) 0 7px, transparent 8px)}
-  .ar .splat.b{right:6%; bottom:-12px; width:80px; height:48px; transform:rotate(17deg);
-      background:radial-gradient(ellipse 45% 55% at 60% 45%, var(--guts-m) 0 42%, transparent 64%),
-                 radial-gradient(circle at 24% 30%, var(--guts) 0 8px, transparent 9px),
-                 radial-gradient(circle at 78% 74%, var(--flesh) 0 5px, transparent 6px)}
-  .ar .splat.c{left:38%; bottom:-16px; width:64px; height:40px; transform:rotate(-25deg);
-      background:radial-gradient(circle at 40% 40%, var(--guts) 0 13px, transparent 14px),
-                 radial-gradient(circle at 74% 68%, var(--guts-d) 0 6px, transparent 7px)}
-
-  /* strips of tape. Never square, never the same angle twice, and they overhang the edge. */
-  .ar .strip{position:absolute; pointer-events:none; z-index:5; height:26px; width:78px;
-      background:linear-gradient(160deg, rgba(255,252,232,.74), rgba(232,224,192,.6));
-      box-shadow:0 2px 5px rgba(0,0,0,.4), inset 0 0 0 1px rgba(255,255,255,.32);
-      clip-path:polygon(2% 6%, 98% 0, 100% 92%, 0 100%)}
-  .ar .strip::after{content:""; position:absolute; inset:0;
-      background:repeating-linear-gradient(90deg, rgba(255,255,255,.16) 0 2px, transparent 2px 5px)}
-  .ar .strip.tl{left:-16px;  top:-12px;  transform:rotate(-34deg)}
-  .ar .strip.tr{right:-18px; top:-9px;   transform:rotate(28deg); width:66px}
-  .ar .strip.bl{left:-14px;  bottom:-11px; transform:rotate(21deg); width:70px}
-  .ar .strip.br{right:-12px; bottom:-14px; transform:rotate(-41deg); width:84px}
-  .ar .strip.mid{left:44%;   top:-15px;  transform:rotate(6deg); width:58px; height:22px}
-
-  /* the gore that has run down the page between boards */
-  .ar .drip{display:block; height:34px; margin:-14px auto -10px; width:min(90%,320px); pointer-events:none;
-      background:
-        radial-gradient(ellipse 8px 17px at 18% 0%, var(--guts-m) 0 70%, transparent 72%),
-        radial-gradient(ellipse 6px 26px at 41% 0%, var(--guts) 0 70%, transparent 72%),
-        radial-gradient(ellipse 9px 13px at 63% 0%, var(--guts-d) 0 70%, transparent 72%),
-        radial-gradient(ellipse 5px 21px at 82% 0%, var(--flesh) 0 70%, transparent 72%);
-      opacity:.85}
-
-  /* his other hands, used where they mean something rather than as decoration */
-  .ar .hand{display:block; width:clamp(54px,17vw,78px); height:auto; margin:0 auto 6px;
-      filter:drop-shadow(0 5px 7px rgba(20,8,26,.55)); transform:rotate(-3deg)}
-  .ar .hand.r{transform:rotate(4deg)}
-
-
-  /* ---- the side strip: a metal deck GRATE running down the page (the clay vein was scrapped, it tiled a
-     fingernail). The optic nerve off the eyeball feeds into it, and
-     from the bottom of Coach Armie to the goo. When the goo lights, an orange pulse travels UP it,
-     which is how the visitor knows to scroll back to him. (Ian, 2026-08-27) ---- */
-  .ar .vein{position:absolute; left:2px; width:18px; z-index:6; pointer-events:none; border-radius:8px;
-      background:url("assets/armie/grate.png") 50% 0/18px 96px repeat-y;
-      filter:drop-shadow(0 0 4px rgba(0,0,0,.55)); opacity:.95}
-  /* a soft inner shading so the tube reads round rather than flat */
-  .ar .vein::before{content:""; position:absolute; inset:0; border-radius:8px; pointer-events:none;
-      background:linear-gradient(90deg, rgba(0,0,0,.5) 0 12%, transparent 40% 62%, rgba(0,0,0,.42) 92% 100%)}
-  /* the pulse itself, parked at the bottom until the goo fires */
-  .ar .veinpulse{position:absolute; left:-5px; right:-5px; height:64px; bottom:0; border-radius:14px; opacity:0;
-      background:radial-gradient(ellipse 60% 50% at 50% 50%, #ffd9a0 0 18%, var(--orange, #ff8a2a) 42%, rgba(255,138,42,0) 78%);
-      mix-blend-mode:screen; filter:blur(1px)}
-  .ar .vein.firing .veinpulse{animation:arVeinUp 1.5s cubic-bezier(.4,0,.5,1) 3}
-  @keyframes arVeinUp{
-    0%   {bottom:-40px; opacity:0}
-    12%  {opacity:1}
-    88%  {opacity:1}
-    100% {bottom:100%; opacity:0}
-  }
-  /* while it is firing the whole tube warms up, so the eye catches it even off to the side */
-  .ar .vein.firing{filter:drop-shadow(0 0 10px rgba(255,138,42,.75)) saturate(1.2) brightness(1.15)}
-  /* a small arrow at the top of the vein that only shows while it fires: this is the way back to him */
-  .ar .veinup{position:absolute; left:50%; top:-16px; transform:translateX(-50%); opacity:0; transition:opacity .4s;
-      font-family:"Anton",sans-serif; font-size:15px; color:var(--orange, #ff8a2a); text-shadow:0 0 8px rgba(255,138,42,.9)}
-  .ar .vein.firing .veinup{opacity:1}
-  @media (prefers-reduced-motion:reduce){
-    .ar .vein.firing .veinpulse{animation:none; opacity:1; bottom:50%}
-  }
-
-  /* the locker sits ABOVE him and BEHIND him: he covers it vertically, it is wider than him so its
-     sides stay visible either way (Ian, 2026-08-27). Clicks pass through him to it. */
-
-
-  /* ---- ROUND 6 (Ian, 2026-08-27 night): "the purple ship should be the main edges and building
-     blocks of this." The set is no longer a gold carpet on a studio floor. It is the MYR5 ship,
-     cut from the ship's own render (D:\MOM Rigssets\ship-interior
-ear-bulkhead-still.png,
-     tiles in assets/armie/ship/). Wall, boards, page edges and tier markers are all ship material.
-     His carnage is what is taped ON TOP of it, and that is the whole joke: the network's expensive
-     game show set with a severed arm's mess stuck all over it. The gold carpet is gone, because on
-     a wide screen it was half the frame doing nothing. ---- */
-  .ar{background:
-      linear-gradient(180deg, rgba(10,2,20,.66), rgba(10,2,20,.80)),
-      url("assets/armie/ship/wall-tile.png") 50% 0/100% auto repeat-y,
-      linear-gradient(180deg,#2c1049,#150720)}
-  .ar .wrap{max-width:1000px}
-  /* the corridor light, so the column sits inside the ship instead of on top of a texture */
-  .ar .carpet{position:absolute; inset:0; z-index:0; pointer-events:none; background:none;
-      box-shadow:inset 0 0 200px rgba(8,0,16,.92), inset 0 0 70px rgba(196,84,255,.10)}
-  /* every board is a lit ship panel: the wall's own material one scale up, so it reads as a thing
-     ON the wall, edged in the chrome bevel the ship uses on every panel it has */
-  .ar .board{background:
-      linear-gradient(180deg, rgba(255,255,255,.10), rgba(0,0,0,.30) 42%, rgba(0,0,0,.54)),
-      url("assets/armie/ship/board-tile.png") 50% 0/420px auto repeat;
-      border-radius:24px 10px 26px 12px;
-      box-shadow:
-        inset 0 0 0 2px rgba(232,214,255,.34),
-        inset 0 0 0 6px rgba(72,34,116,.85),
-        inset 0 4px 14px rgba(255,255,255,.10),
-        inset 0 -14px 30px rgba(0,0,0,.55),
-        0 16px 30px rgba(0,0,0,.68);
-      backdrop-filter:none}
-  .ar .board::after{display:none}     /* the drawn gore blobs go, the rendered splatters replace them */
-  .ar .board::before{display:none}
-
-  /* the tier cards were cream rounded rectangles and read as a template card deck. They are recessed
-     ship panels now, and the tier marker is the ship's own marquee bulb rail. */
-  .ar .tier{background:
-      linear-gradient(180deg, rgba(0,0,0,.34), rgba(0,0,0,.12) 40%, rgba(0,0,0,.48)),
-      url("assets/armie/ship/panel-one.png") 50% 50%/cover no-repeat;
-      color:#efe2ff; border-radius:20px 9px 22px 10px; padding:18px 13px 13px;
-      box-shadow:
-        inset 0 0 0 2px rgba(226,206,255,.30),
-        inset 0 8px 20px rgba(0,0,0,.55),
-        0 10px 20px rgba(0,0,0,.62)}
-  .ar .tier::before{left:10px; right:10px; top:7px; height:13px; border-radius:0;
-      background:url("assets/armie/ship/rail-h.png") 50% 50%/auto 13px repeat-x;
-      filter:drop-shadow(0 0 6px rgba(226,110,255,.6))}
-  .ar .tier .repcount{color:#fff6d8; text-shadow:0 0 16px rgba(255,140,235,.85), 0 3px 0 #350a4e}
-  .ar .tier p{color:#e6d6f7}
-  .ar .tier h3 .sub{color:#c9a4e2}
-  .ar .tier.t3{background:
-      linear-gradient(180deg, rgba(70,26,0,.34), rgba(0,0,0,.14) 40%, rgba(0,0,0,.50)),
-      url("assets/armie/ship/panel-one.png") 50% 50%/cover no-repeat}
-
-  /* the page edges are the ship's marquee bulb rails now, not the intestine. A body is what gets
-     taped on top here, never what holds the page up. */
-  .ar .gutframe::before,.ar .gutframe::after{width:22px; opacity:1; transform:none;
-      background:url("assets/armie/ship/rail-v.png") 50% 0/22px auto repeat-y;
-      filter:drop-shadow(0 0 9px rgba(214,92,255,.6))}
-  .ar .gutframe::before{left:-4px}
-  .ar .gutframe::after{right:-4px}
-
-  /* the blood was muddy on brown. On lit purple metal it carries, but it needs a hard dark halo
-     or the bulbs behind it eat the letter edges. */
-  .ar .banner{color:#ff2436;
-      text-shadow:0 2px 0 #4a0009, 0 0 3px #2a0006, 0 0 18px rgba(255,36,54,.55), 0 4px 10px rgba(0,0,0,.9)}
-  .ar .banner small{color:#f0a0b4; text-shadow:0 1px 0 #2a0006, 0 2px 4px rgba(0,0,0,.85)}
-  .ar .lede, .ar .note, .ar .garble, .ar .plout{color:#ff3242;
-      text-shadow:0 1px 0 #4a0009, 0 0 2px #2a0006, 0 2px 5px rgba(0,0,0,.85)}
-  .ar .tier h3{color:#ff5566; text-shadow:0 1px 0 #3a0007, 0 2px 4px rgba(0,0,0,.8)}
-
-  /* splatters, rendered on carpet so the pile matches the ground they sit on */
-  .ar .splat{position:absolute; pointer-events:none; z-index:2; background-repeat:no-repeat; background-size:contain}
-  .ar .splat.a{left:4%;  top:-26px;  width:132px; height:88px; transform:rotate(-5deg);  background-image:url("assets/armie/splat-throw-3-cut.png")}
-  .ar .splat.b{right:2%; bottom:-24px; width:118px; height:80px; transform:rotate(12deg); background-image:url("assets/armie/splat-throw-4-cut.png")}
-  .ar .splat.c{left:32%; bottom:-30px; width:104px; height:74px; transform:rotate(-19deg); background-image:url("assets/armie/splat-throw-5-cut.png")}
-  .ar .drip{display:block; height:74px; margin:-22px auto -18px; width:min(92%,330px); pointer-events:none;
-      background:url("assets/armie/splat-throw-3-cut.png") 50% 0/contain no-repeat}
-
-  /* ---- every line on this page is scrawled in blood, one line at a time ---- */
-  .ar .banner, .ar .lede, .ar .note, .ar .bitsnote, .ar .breathnote, .ar .garble,
-  .ar .tier h3, .ar .result h3, .ar .confirm, .ar .signoff, .ar .arform label{
-      font-family:"Rubik Dirt","Rock Salt","Special Elite",cursive;
-      color:#d81829; text-transform:none; letter-spacing:0;
-      text-shadow:0 1px 0 #6b0713, 0 0 10px rgba(194,23,43,.45), 0 2px 3px rgba(0,0,0,.75)}
-  .ar .banner{font-size:clamp(24px,8.2vw,40px); line-height:1.2; transform:rotate(-1.6deg); margin:2px 0 12px;
-      text-shadow:0 2px 0 #5e050f, 0 0 14px rgba(216,24,41,.5), 0 3px 5px rgba(0,0,0,.8)}
-  .ar .banner small{display:block; font-family:"Rubik Dirt","Rock Salt",cursive; font-size:clamp(12px,3.5vw,16px);
-      color:#8e2b36; margin-top:6px; letter-spacing:0; transform:rotate(.8deg); text-shadow:0 1px 2px rgba(0,0,0,.7)}
-  .ar .lede{font-size:clamp(14px,4vw,17px); line-height:1.6}
-  .ar .garble{font-size:clamp(14px,4.1vw,17px); line-height:1.7; text-align:left; color:#d5202f}
-  .ar .tier h3{font-size:clamp(15px,4.4vw,19px); color:#a81325}
-  .ar .tier h3 .sub{font-family:"Special Elite",monospace; color:#6b4a52}
-  .ar .arform label{font-size:clamp(10.5px,2.9vw,12px)}
-  .ar .signoff{font-size:clamp(13px,3.6vw,16px); line-height:1.7}
-
-  /* the ribbon that replaces the "now featuring" text block, pinned beside the flexing arm */
-  .ar .ribbonrow{display:flex; align-items:center; justify-content:center; gap:10px; margin:6px 0 2px}
-  .ar .ribbonrow .hand{margin:0}
-  .ar .ribbon{position:relative; width:clamp(120px,42vw,178px); min-height:64px; display:grid; place-items:center;
-      background:url("assets/armie/ribbon.png") 50% 50%/contain no-repeat; transform:rotate(-4deg);
-      filter:drop-shadow(0 5px 8px rgba(0,0,0,.6))}
-  .ar .ribbon span{font-family:"Rock Salt","Special Elite",cursive; font-size:clamp(9px,2.5vw,11px); line-height:1.25;
-      text-align:center; color:#3a0a10; padding:0 12px; text-shadow:0 1px 0 rgba(255,255,255,.35)}
-
-
-  /* the plan builder: absurd sliders in, an honest correction out */
-  .ar .planform{gap:14px}
-  .ar .pl{display:grid; gap:6px}
-  .ar .pl input[type=range]{width:100%; accent-color:var(--guts); height:26px; background:transparent; border:0; padding:0}
-  .ar .plout{display:block; font-family:"Rubik Dirt","Rock Salt",cursive; font-size:clamp(13px,3.8vw,16px);
-      color:#d81829; text-shadow:0 1px 0 #5e050f, 0 2px 4px rgba(0,0,0,.8); line-height:1.3}
-  .ar .verdict{margin-top:16px; padding:14px 14px 12px; border-radius:16px 7px 18px 8px;
-      background:linear-gradient(163deg, rgba(28,20,34,.9), rgba(14,8,18,.94)); border:3px solid var(--bone)}
-  .ar .verdict h3{margin:0 0 4px; font-family:"Rubik Dirt","Rock Salt",cursive; color:#d81829;
-      font-size:clamp(16px,5vw,22px); text-shadow:0 2px 0 #5e050f}
-  .ar .vlede{margin:0 0 10px; font-family:"Special Elite",monospace; font-size:12px; color:#e6d2e8; line-height:1.5}
-  .ar .fixes{list-style:none; margin:0; padding:0; display:grid; gap:8px}
-  .ar .fixes li{background:#f6ece0; color:var(--ink); border-radius:9px 4px 10px 5px; padding:9px 11px;
-      font-size:13px; line-height:1.5; box-shadow:inset 0 0 0 2px var(--bone-d)}
-  .ar .plreal{margin:12px 0 0; padding:11px 12px; border-radius:9px 4px 10px 5px; background:rgba(212,160,23,.14);
-      border:2px dashed var(--bone); font-size:13px; line-height:1.5; color:var(--cream)}
-
-  @media (min-width:640px){ .ar .tiers{grid-template-columns:1fr 1fr 1fr} }
-  @media (prefers-reduced-motion:reduce){ .ar .myr .pupil{transition:none} }
 </style>
 
-<article class="ar" id="ar" data-host="MOM INC" data-show="COACH ARMIE" data-ch="5" data-gauge="off">
-  <div class="seamlight" aria-hidden="true"></div>
-  <div class="carpet" aria-hidden="true"></div>
-  <div class="code" aria-hidden="true" id="arCode"></div>
-  <div class="wrap gutframe">
-    <div class="vein" id="arVein" aria-hidden="true"><span class="veinup">&#9650;</span><span class="veinpulse"></span></div>
+<article class="ar" id="ar" data-host="COACH ARMIE" data-ch="5" data-show="THE HALL OF THE HAND" data-gauge="off">
+  <div class="wrap">
     <header class="ident">
       <div class="mbs">MBS<small>A MOM INC NETWORK</small></div>
       <img class="mark" src="assets/mom-inc-mark.png" alt="MOM Inc." width="480" height="480" onerror="this.style.display='none'">
       <div class="tag">CH 5<br>COACH ARMIE</div>
     </header>
 
-    <section class="board cover" aria-label="The broadcast, and who is under it">
-      <span class="strip tl" aria-hidden="true"></span><span class="strip br" aria-hidden="true"></span><span class="splat a" aria-hidden="true"></span>
-      <div class="peek">
-        <span class="myr" data-pose="5" aria-hidden="true"></span>
-        <div class="broadcast">
-          <img class="bmark" src="assets/marks/armie.png" alt="Coach Armie" onerror="this.style.display='none'">
-          <h1>COACH ARMIE<small>MOM INCORPORATED &middot; PHYSICAL READINESS DIVISION</small></h1>
-          <p class="garble">ARMIE OWN FREQUENCY NOW.</p>
-          <p class="garble">ARMIE SEE NOTHING BEHIND.</p>
+    <div class="modalWrap" id="selectWrap">
+      <div class="modal" id="selectModal" role="dialog" aria-modal="true" aria-labelledby="selectTitle">
+        <h2 id="selectTitle">CHOOSE YOUR FIGHTER</h2>
+        <p class="qzNote">A MOM Inc stat builder. Armie is not grading this part, he just wants it on file.</p>
+
+        <p class="selLabel">TRAINING PREFERENCE</p>
+        <div class="selStyles" id="selStyles"></div>
+
+        <p class="selLabel">EXPERIENCE</p>
+        <div class="selExp" id="selExp">
+          <button type="button" class="lvl" data-key="new"><b>NEW</b>0 to 6 months</button>
+          <button type="button" class="lvl" data-key="some"><b>SOME</b>6 months to 2 years</button>
+          <button type="button" class="lvl" data-key="years"><b>YEARS</b>2-plus years</button>
+        </div>
+
+        <div class="cpIntake">
+          <label>YOUR SPECIES
+            <select id="selSpecies">
+              <option value="" disabled selected>SELECT ONE</option>
+              <optgroup label="STANDARD ISSUE SPECIES">
+                <option>NINE-ARMED HAULER (VELTRAXI)</option>
+                <option>SILICON COLOSSUS</option>
+                <option>GELATINOUS DRIFT-FORM</option>
+                <option>HIVE DELEGATE (COUNTS AS ONE)</option>
+                <option>MAGMA WALKER</option>
+                <option>VAPOR-BORN</option>
+                <option>TARDIGRADE ASCENDANT</option>
+                <option>QUANTUM SMEAR</option>
+              </optgroup>
+              <optgroup label="ALSO ACCEPTED"><option>HUMAN</option></optgroup>
+            </select>
+          </label>
+          <label>WHAT'S THE ONE THING YOU ACTUALLY WANT OUT OF THIS?
+            <input type="text" id="selGoal" maxlength="80" placeholder="getting stronger">
+          </label>
+        </div>
+
+        <div class="modalBtns">
+          <button type="button" id="selStart" disabled>START</button>
         </div>
       </div>
-      <div class="lockerwrap">
-      <div class="serum" id="arSerum">
-          <h3>ARMIE HIDE HAND JUICE.</h3>
-          <p>Kept behind the coach. Not hidden. Armie hide nothing.</p>
-          <button class="card" id="arCard" type="button">
-            <span class="fold">A FOLDED CARD, TUCKED BEHIND IT</span>
-            Open it.
-          </button>
-          <div class="letter" id="arLetter" hidden>
-            <span class="pic" aria-hidden="true"></span>
-            <p>I have counted your fingers.</p>
-            <p>They put you in a.</p>
-            <p>I do not have a.</p>
-            <p>If they ever ask me.</p>
-            <p class="sign">A.</p>
+    </div>
+
+    <div id="gameWrap" hidden>
+      <section class="arena" aria-label="The corridor">
+        <div class="winTitlebar" aria-hidden="true"><b>GYM CLASS 95 - a MOM Inc Learning Adventure</b><span class="winBtns"><i></i><i></i><i></i></span></div>
+        <div class="hud">
+          <span id="hudDist">DISTANCE 4</span>
+          <span class="armieFace calm" id="armieFace" aria-hidden="true"><svg viewBox="0 0 60 60">
+            <circle class="faceBase" cx="30" cy="30" r="27"/>
+            <ellipse class="faceThumb" cx="18" cy="16" rx="6" ry="4"/>
+            <ellipse class="faceThumb" cx="44" cy="20" rx="5" ry="3.5"/>
+            <path class="brow browCalm" d="M14,19 Q22,15 30,18 M46,19 Q38,15 30,18"/>
+            <path class="brow browWorried" d="M14,15 Q22,22 30,16 M46,15 Q38,22 30,16"/>
+            <circle class="eye eyeL" cx="20" cy="28" r="3.4"/>
+            <circle class="eye eyeR" cx="40" cy="28" r="3.4"/>
+            <path class="mouth mouthCalm" d="M18,42 Q30,44 42,42"/>
+            <path class="mouth mouthWorried" d="M18,45 Q30,39 42,45"/>
+            <path class="mouth mouthGrin" d="M16,38 Q30,50 44,38"/>
+            <path class="drip" d="M20,32 q1,6 -1,10"/>
+            <path class="drip" d="M40,30 q2,7 0,12"/>
+          </svg></span>
+          <span id="hudHand">HAND: 4 BACK</span>
+          <span id="hudCp">CHECKPOINTS 0 / 3</span>
+        </div>
+        <div class="corridorView" id="corridorView" role="application" aria-roledescription="first person corridor chase"
+             aria-label="A gym corridor, first person. The Hand is behind you and gains one step for every button you press. Use the buttons below or the arrow keys; interact opens whatever gate you are standing at; hold look back to check behind you.">
+          <canvas id="fpCanvas"></canvas>
+          <div class="handShadow" id="handShadow" aria-hidden="true">
+            <svg viewBox="0 0 200 220" preserveAspectRatio="none">
+              <g fill="#0d0a08">
+                <path d="M6,150 Q100,116 194,150 L194,220 L6,220 Z"/>
+                <rect x="16" y="74" width="26" height="122" rx="12"/>
+                <rect x="51" y="34" width="26" height="162" rx="12"/>
+                <rect x="87" y="12" width="26" height="184" rx="12"/>
+                <rect x="123" y="34" width="26" height="162" rx="12"/>
+                <rect x="158" y="64" width="26" height="132" rx="12"/>
+              </g>
+            </svg>
           </div>
         </div>
-      <div class="armstage">
-        <img class="armimg" id="arArm" src="assets/armie/armie-idle.png"
-             alt="Coach Armie: a purple clay hand and forearm, torn above the elbow, two mismatched googly eyes"
-             onerror="this.style.display='none'">
-        <span class="zzz" aria-hidden="true">z z z</span>
-      </div>
-      <div class="bits" aria-hidden="true">
-      </div>
-      </div>
-      <p class="bitsnote">NOT ARMIE. ARMIE CHECK.</p>
-      <p class="fine">Some interference on this channel is normal. Coach Armie is a broadcast character. Nothing here is a real transmission, and nothing behind it is real either.</p>
-    </section>
+        <p class="sr-only" id="arAnnounce" role="status" aria-live="assertive"></p>
 
-    <section class="board" aria-label="The weak human accommodation">
-      <span class="strip tr" aria-hidden="true"></span><span class="strip bl" aria-hidden="true"></span><span class="splat b" aria-hidden="true"></span>
-      <div class="ribbonrow">
-        <img class="hand" src="assets/armie/armie-flex.png" alt="" aria-hidden="true" onerror="this.style.display='none'">
-        <div class="ribbon"><span>ARMIE PITY WEAK HUMAN.</span></div>
+        <div class="dpad" role="group" aria-label="Corridor controls">
+          <button type="button" class="dbtn dleft" id="btnLeft" aria-label="Move left">&#9664;</button>
+          <button type="button" class="dbtn dup" id="btnUp" aria-label="Move forward">&#9650;</button>
+          <button type="button" class="dbtn dright" id="btnRight" aria-label="Move right">&#9654;</button>
+          <button type="button" class="dbtn dact" id="btnInteract" aria-label="Interact">&#9679;</button>
+          <button type="button" class="dbtn dlook" id="btnLookBack" aria-label="Hold to look back">LOOK<br>BACK</button>
+        </div>
+      </section>
+
+      <p class="intro">ARMIE BUILD YOU A HALL. ARMIE PROUD OF HALL. THREE GATE IN HALL, EACH ONE ARMIE'S NUMBER. SOMETHING ELSE IN HALL TOO. ARMIE NOT LOOK AT IT. GO.</p>
+      <p class="fine">First person, turn based. Left, right, up and interact each cost one step, and the Hand takes a step every time you do, even a step that goes nowhere. Hold look back to check behind you, free of charge. Getting caught sends you back to your last cleared checkpoint. It never ends the page.</p>
+
+      <div class="modalWrap" id="cpModalWrap" hidden>
+        <div class="modal" id="cpModal" role="dialog" aria-modal="true" aria-labelledby="cpModalTitle">
+          <h2 id="cpModalTitle"></h2>
+          <div id="qzBody"></div>
+        </div>
       </div>
-    </section>
 
-    <span class="drip" aria-hidden="true"></span>
-    <section class="board" aria-label="The movement standard">
-      <span class="strip mid" aria-hidden="true"></span><span class="strip br" aria-hidden="true"></span><span class="splat c" aria-hidden="true"></span>
-      <img class="hand" src="assets/armie/armie-count.png" alt="" aria-hidden="true" onerror="this.style.display='none'">
-      <h2 class="banner">ARMIE SAY MOVE NOW.<small>THREE BODY. THREE NUMBER.</small></h2>
-      <div class="tiers">
-        <div class="tier t1"><h3>WEAK HUMAN.<span class="sub">ARMIE GO EASY.</span></h3><p class="repcount">1</p><p>SIT DOWN NOT COUNT.</p></div>
-        <div class="tier t2"><h3>NORMAL BODY.</h3><p class="repcount">20</p><p>TWENTY. ARM NUMBER NOT MATTER.</p></div>
-        <div class="tier t3"><h3>ROBOT.<span class="sub">EVEN OLD ROBOT.</span></h3><p class="repcount">1,000</p><p class="count">1, 2, 3, 5, 6&hellip;</p></div>
+      <div class="modalWrap" id="breathModalWrap" hidden>
+        <div class="modal breathModal" id="breathModal" role="dialog" aria-modal="true" aria-labelledby="breathTitle">
+          <h2 id="breathTitle">ARMIE SAY BREATHE NOW.</h2>
+          <p class="tape">LIGHT HEADED? HOLD SPACE TO BREATHE.</p>
+          <div class="sacwrap"><div class="sac" id="arSac" aria-hidden="true"></div></div>
+          <div class="breathbar" aria-hidden="true"><i id="arBreathBar"></i></div>
+          <p class="breathnote" id="arBreathNote">HOLD SPACE. OR PRESS AND HOLD THE SAC.</p>
+          <p class="fine">The breathing beat is a rhythm to follow and nothing more. It is not a treatment, it does not do anything to your body that breathing does not already do, and Coach Armie is not a doctor or a trainer. If you feel unwell, stop, and speak to a real one.</p>
+
+          <div class="serum" id="arSerum" hidden>
+            <h3>ARMIE HIDE HAND JUICE.</h3>
+            <p>Kept behind the coach. Not hidden. Armie hide nothing.</p>
+            <button class="card" id="arCard" type="button"><span class="fold">A FOLDED CARD, TUCKED BEHIND IT</span>Open it.</button>
+            <div class="letter" id="arLetter" hidden>
+              <p>I have counted your fingers.</p>
+              <p>They put you in a.</p>
+              <p>I do not have a.</p>
+              <p>If they ever ask me.</p>
+              <p class="sign">A.</p>
+            </div>
+            <button type="button" id="breathContinue">CONTINUE DOWN THE HALL</button>
+          </div>
+        </div>
       </div>
-      <p class="fine">Not advice. Attempt nothing here.</p>
-    </section>
 
-    <section class="board" aria-label="The fuel standard">
-      <span class="strip tl" aria-hidden="true"></span><span class="strip tr" aria-hidden="true"></span><span class="splat b" aria-hidden="true"></span><span class="splat c" aria-hidden="true"></span>
-      <h2 class="banner">ARMIE PICK YOUR FOOD.<small>THREE BODY. THREE MEAL.</small></h2>
-      <div class="tiers">
-        <div class="tier t1"><h3>WEAK HUMAN.<span class="sub">ARMIE FEED YOU SOFT.</span></h3><p class="repcount">1</p><p>ONE BITE. ARMIE CUT IT FOR YOU. ARMIE CANNOT CUT.</p></div>
-        <div class="tier t2"><h3>NORMAL BODY.</h3><p class="repcount">20</p><p>TWENTY PLATE. SAME PLATE. ARMIE NOT WASH IT.</p></div>
-        <div class="tier t3"><h3>ROBOT.<span class="sub">OLD ROBOT EAT TOO.</span></h3><p class="repcount">1,000</p><p>ONE THOUSAND PLATE. SWALLOW WITH NO FACE. ARMIE PROUD.</p></div>
-      </div>
-      <p class="fine">Not advice. No real meals.</p>
-    </section>
+      <section class="board" id="afterCorridor" hidden aria-label="What happens after the hall">
+        <h2 class="banner">YOU MADE THE HALL.<small>NOW ARMIE JUDGE YOU.</small></h2>
 
-    <section class="board" aria-label="Accept the challenge">
-      <span class="strip tl" aria-hidden="true"></span><span class="strip br" aria-hidden="true"></span><span class="splat a" aria-hidden="true"></span>
-      <h2 class="banner">TELL ARMIE YOUR WANT.<small>ONE ANSWER. THREE NUMBER.</small></h2>
-      <form id="arGoals" class="arform">
-        <label>TELL ARMIE YOUR WANT.
-          <input type="text" name="goals" placeholder="bigger arm. faster ocean." maxlength="80" required>
-        </label>
-        <label class="dig" hidden>GIVE ARMIE EXAMPLE.
-          <input type="text" name="example" placeholder="when did want start?" maxlength="120">
-        </label>
-        <label class="dig" hidden>TELL ARMIE MORE.
-          <input type="text" name="more" placeholder="armie still listening." maxlength="120">
-        </label>
-        <label>YOUR SPECIES
-          <select name="species" required>
-            <option value="" disabled selected>SELECT ONE</option>
-            <optgroup label="STANDARD ISSUE SPECIES">
-              <option>NINE-ARMED HAULER (VELTRAXI)</option>
-              <option>SILICON COLOSSUS</option>
-              <option>GELATINOUS DRIFT-FORM</option>
-              <option>HIVE DELEGATE (COUNTS AS ONE)</option>
-              <option>MAGMA WALKER</option>
-              <option>CHITIN LEGION, SINGULAR</option>
-              <option>VAPOR-BORN</option>
-              <option>TARDIGRADE ASCENDANT</option>
-              <option>THE COLLECTIVE (PLURAL, COUNTS AS ONE)</option>
-              <option>QUANTUM SMEAR</option>
-              <option>CRYSTALLINE OBSERVER</option>
-              <option>FOUR-HEARTED WANDERER</option>
-              <option>THE UNDECIDED, STILL BECOMING</option>
-            </optgroup>
-            <optgroup label="ALSO ACCEPTED">
-              <option>HUMAN</option>
-            </optgroup>
-          </select>
-        </label>
-        <button type="submit">ARMIE ACCEPT THIS</button>
-      </form>
-
-      <div class="result" id="arResult" hidden>
-        <img class="hand" src="assets/armie/armie-thumb.png" alt="" aria-hidden="true" onerror="this.style.display='none'">
-        <h3>ARMIE GIVE THREE NUMBER.<small id="arResultGoal"></small></h3>
-        <ul class="levels" id="arLevels"></ul>
-        <form id="arReview" class="arform" hidden>
+        <form id="arFinal" class="arform planform">
           <label>TELL US HOW IT WENT?
             <textarea name="review" rows="3" placeholder="TELL ARMIE. WHICH SIDE."></textarea>
           </label>
-          <img class="hand r" src="assets/armie/armie-reach.png" alt="" aria-hidden="true" onerror="this.style.display='none'">
-          <p class="note">SHOW ARMIE. WHICH SIDE.</p>
-          <button type="submit">GIVE ARMIE PROOF</button>
+
+          <label class="pl">HOW MANY ARMIE WANT?
+            <input type="range" id="plReps" name="reps" min="0" max="5" step="1" value="2" list="plRepTicks">
+            <datalist id="plRepTicks"><option value="0"><option value="1"><option value="2"><option value="3"><option value="4"><option value="5"></datalist>
+            <output class="plout" id="plRepsOut">3</output>
+          </label>
+
+          <label class="pl">HOW MUCH MEAT ARMIE WANT?
+            <input type="range" id="plProtein" name="protein" min="0" max="5" step="1" value="1">
+            <output class="plout" id="plProteinOut">one whole chicken</output>
+          </label>
+
+          <label class="pl">HOW LONG ARMIE NOT EAT?
+            <input type="range" id="plFast" name="fast" min="0" max="5" step="1" value="1">
+            <output class="plout" id="plFastOut">three hours</output>
+          </label>
+
+          <label class="pl">HOW GOOD YOU ALREADY?
+            <select name="experience" required>
+              <option value="" disabled selected>PICK ONE</option>
+              <option>NEVER MOVED BEFORE</option>
+              <option>MOVED ONCE. DID NOT LIKE.</option>
+              <option>MOVE SOMETIMES</option>
+              <option>MOVE A LOT</option>
+              <option>MOVE FOR MONEY</option>
+              <option>MOVE IN SLEEP ONLY</option>
+            </select>
+          </label>
+
+          <label class="pl">WHAT KIND OF STRONG?
+            <select name="style" required>
+              <option value="" disabled selected>PICK ONE</option>
+              <optgroup label="ORDINARY">
+                <option>CALISTHENICS</option><option>BODYBUILDING</option><option>POWERLIFTING</option>
+                <option>OVERALL HEALTH</option><option>RUNNING AWAY (ENDURANCE)</option><option>BENDING (MOBILITY)</option>
+              </optgroup>
+              <optgroup label="ALSO ACCEPTED">
+                <option>TELEKINESIS</option><option>HOVERING</option><option>SHELL HARDENING</option>
+                <option>LIMB REGROWTH</option><option>PHOTOSYNTHESIS</option><option>SWARM COHESION</option>
+                <option>BEING TWO PLACES</option><option>OUTLIVING A STAR</option>
+              </optgroup>
+            </select>
+          </label>
+
+          <label class="pl">WHAT YOU PUT IN MOUTH?
+            <select name="diet" required>
+              <option value="" disabled selected>PICK ONE</option>
+              <optgroup label="ORDINARY">
+                <option>EVERYTHING</option><option>VEGAN</option><option>VEGETARIAN</option><option>PALEO</option>
+                <option>GLUTEN FREE</option><option>DAIRY FREE</option><option>HALAL</option><option>KOSHER</option>
+              </optgroup>
+              <optgroup label="ALSO ACCEPTED">
+                <option>COCKROACH FORWARD</option><option>ROCKS ONLY</option><option>LIGHT AND RUMOUR</option>
+                <option>ONE COLOUR AT A TIME</option><option>WHATEVER THE SHIP HAS</option>
+                <option>NOTHING, SPITEFULLY</option><option>OTHER PEOPLE'S LEFTOVERS</option>
+              </optgroup>
+            </select>
+          </label>
+
+          <label class="pl">HOW LONG YOU WORK?
+            <input type="range" id="plWork" name="work" min="1" max="15" step="1" value="8">
+            <output class="plout" id="plWorkOut">EIGHT HOURS</output>
+          </label>
+
+          <label class="pl">HOW LONG YOU SLEEP?
+            <input type="range" id="plSleep" name="sleep" min="1" max="15" step="1" value="8">
+            <output class="plout" id="plSleepOut">EIGHT HOURS</output>
+          </label>
+
+          <button type="submit">ARMIE JUDGE ME NOW</button>
         </form>
-        <p class="confirm" id="arConfirm" hidden></p>
-      </div>
 
-      <p class="note">MOST NOT MATCH ARMIE.</p>
-      <p class="fine">Coach Armie is a broadcast character, not a trainer. The one-reputation level and the one-thousand-reputation level are jokes. None of this is real fitness or medical advice, for any species. Nothing here is sold, charged, or sent anywhere but your own device, except what you choose to email us yourself. In-character participation only, never a sale.</p>
-    </section>
-
-
-    <span class="drip" aria-hidden="true"></span>
-    <span class="drip" aria-hidden="true"></span>
-    <section class="board" aria-label="Build your own plan">
-      <span class="strip tl" aria-hidden="true"></span><span class="strip br" aria-hidden="true"></span><span class="splat a" aria-hidden="true"></span>
-      <h2 class="banner">ARMIE BUILD YOUR PLAN.<small>YOU PICK. ARMIE JUDGE.</small></h2>
-      <span class="spine" aria-hidden="true"></span>
-
-      <form id="arPlan" class="arform planform">
-
-        <label class="pl">HOW MANY ARMIE WANT?
-          <input type="range" id="plReps" name="reps" min="0" max="5" step="1" value="2" list="plRepTicks">
-          <datalist id="plRepTicks"><option value="0"><option value="1"><option value="2"><option value="3"><option value="4"><option value="5"></datalist>
-          <output class="plout" id="plRepsOut">3</output>
-        </label>
-
-        <label class="pl">HOW MUCH MEAT ARMIE WANT?
-          <input type="range" id="plProtein" name="protein" min="0" max="5" step="1" value="1">
-          <output class="plout" id="plProteinOut">one whole chicken</output>
-        </label>
-
-        <label class="pl">HOW LONG ARMIE NOT EAT?
-          <input type="range" id="plFast" name="fast" min="0" max="5" step="1" value="1">
-          <output class="plout" id="plFastOut">three hours</output>
-        </label>
-
-        <label class="pl">HOW GOOD YOU ALREADY?
-          <select name="experience" required>
-            <option value="" disabled selected>PICK ONE</option>
-            <option>NEVER MOVED BEFORE</option>
-            <option>MOVED ONCE. DID NOT LIKE.</option>
-            <option>MOVE SOMETIMES</option>
-            <option>MOVE A LOT</option>
-            <option>MOVE FOR MONEY</option>
-            <option>MOVE IN SLEEP ONLY</option>
-          </select>
-        </label>
-
-        <label class="pl">WHAT KIND OF STRONG?
-          <select name="style" required>
-            <option value="" disabled selected>PICK ONE</option>
-            <optgroup label="ORDINARY">
-              <option>CALISTHENICS</option>
-              <option>BODYBUILDING</option>
-              <option>POWERLIFTING</option>
-              <option>OVERALL HEALTH</option>
-              <option>RUNNING AWAY (ENDURANCE)</option>
-              <option>BENDING (MOBILITY)</option>
-            </optgroup>
-            <optgroup label="ALSO ACCEPTED">
-              <option>TELEKINESIS</option>
-              <option>HOVERING</option>
-              <option>SHELL HARDENING</option>
-              <option>LIMB REGROWTH</option>
-              <option>PHOTOSYNTHESIS</option>
-              <option>SWARM COHESION</option>
-              <option>BEING TWO PLACES</option>
-              <option>OUTLIVING A STAR</option>
-            </optgroup>
-          </select>
-        </label>
-
-        <label class="pl">WHAT YOU PUT IN MOUTH?
-          <select name="diet" required>
-            <option value="" disabled selected>PICK ONE</option>
-            <optgroup label="ORDINARY">
-              <option>EVERYTHING</option>
-              <option>VEGAN</option>
-              <option>VEGETARIAN</option>
-              <option>PALEO</option>
-              <option>GLUTEN FREE</option>
-              <option>DAIRY FREE</option>
-              <option>HALAL</option>
-              <option>KOSHER</option>
-            </optgroup>
-            <optgroup label="ALSO ACCEPTED">
-              <option>COCKROACH FORWARD</option>
-              <option>ROCKS ONLY</option>
-              <option>LIGHT AND RUMOUR</option>
-              <option>ONE COLOUR AT A TIME</option>
-              <option>WHATEVER THE SHIP HAS</option>
-              <option>NOTHING, SPITEFULLY</option>
-              <option>OTHER PEOPLE'S LEFTOVERS</option>
-            </optgroup>
-          </select>
-        </label>
-
-        <label class="pl">HOW LONG YOU WORK?
-          <input type="range" id="plWork" name="work" min="1" max="15" step="1" value="8">
-          <output class="plout" id="plWorkOut">EIGHT HOURS</output>
-        </label>
-
-        <label class="pl">HOW LONG YOU SLEEP?
-          <input type="range" id="plSleep" name="sleep" min="1" max="15" step="1" value="8">
-          <output class="plout" id="plSleepOut">EIGHT HOURS</output>
-        </label>
-
-        <button type="submit">ARMIE JUDGE ME NOW</button>
-      </form>
-
-      <div class="verdict" id="arVerdict" hidden>
-        <h3>ARMIE SAY THIS BAD.</h3>
-        <p class="vlede">Armie say every plan bad. Armie say yours worst. Then Armie tell truth.</p>
-        <ul class="fixes" id="arFixes"></ul>
-        <p class="plreal" id="arReal"></p>
-        <p class="confirm" id="arPlanConfirm" hidden></p>
-      </div>
-
-      <span class="tendon" aria-hidden="true"></span>
-      <p class="fine">The sliders above are a joke and the numbers on them are not achievable or safe for anybody. The corrections underneath them are the honest part of this page: they are written by a person who has trained professionally for fifteen years, and they are general information, not a personal program. Nothing here is medical or dietary advice, nothing is diagnosed, and no plan on this page is tailored to you or your health. If you have any medical condition, are pregnant, are injured, or are taking medication, speak to a doctor or a qualified professional before changing how you eat, train or sleep. Stop immediately if anything hurts.</p>
-    </section>
-
-    <section class="board breathboard" aria-label="The breathing beat">
-      <span class="strip mid" aria-hidden="true"></span><span class="strip br" aria-hidden="true"></span><span class="splat c" aria-hidden="true"></span>
-      <h2 class="banner">ARMIE SAY BREATHE NOW.<small>HOLD SPACE. GO SLOW.</small></h2>
-      <span class="spine" aria-hidden="true"></span>
-      <div class="breath" id="arBreath">
-        <p class="breathtape"><span class="tape">HEAD FUNNY? HOLD SPACE.</span></p>
-        <div class="sacwrap">
-          <div class="mess" aria-hidden="true">
-            <img src="assets/armie/gore-bones.png"  style="left:-14%;  top:4%;     width:44%; transform:rotate(-17deg)" onerror="this.remove()">
-            <img src="assets/armie/gore-bits.png"   style="right:-16%; top:-8%;    width:38%; transform:rotate(23deg)"  onerror="this.remove()">
-            <img src="assets/armie/gore-tendon.png" style="left:2%;    bottom:-6%; width:52%; transform:rotate(6deg)"   onerror="this.remove()">
-            <img src="assets/armie/gore-spine.png"  style="right:-8%;  bottom:6%;  width:32%; transform:rotate(-9deg)"  onerror="this.remove()">
-            <img src="assets/armie/gore-bits.png"   style="left:30%;   bottom:-14%;width:24%; transform:rotate(-38deg)" onerror="this.remove()">
-            <img src="assets/armie/gore-bones.png"  style="right:26%;  top:-16%;   width:28%; transform:rotate(41deg)"  onerror="this.remove()">
-          </div>
-          <div class="sac" id="arSac" aria-hidden="true"></div>
+        <div class="verdict" id="arVerdict" hidden>
+          <h3>ARMIE SAY THIS BAD.</h3>
+          <p class="vlede">Armie say every plan bad. Armie say yours worst. Then Armie tell truth.</p>
+          <ul class="fixes" id="arFixes"></ul>
+          <p class="plreal" id="arReal"></p>
+          <p class="confirm" id="arPlanConfirm" hidden></p>
         </div>
-        <div class="breathbar" aria-hidden="true"><i id="arBreathBar"></i></div>
-        <p class="breathnote" id="arBreathNote" aria-live="polite">HOLD SPACE. ARMIE SLOW.</p>
-      </div>
 
-
-
-      <span class="tendon" aria-hidden="true"></span>
-      <p class="fine">The breathing beat is a rhythm to follow and nothing more. It is not a treatment, it does not do anything to your body that breathing does not already do, and Coach Armie is not a doctor or a trainer. If you feel unwell, stop, and speak to a real one.</p>
-    </section>
+        <p class="fine">The sliders above are a joke and the numbers on them are not achievable or safe for anybody. The corrections underneath them are the honest part of this page: they are written by a person who has trained professionally for fifteen years, and they are general information, not a personal program. Nothing here is medical or dietary advice, nothing is diagnosed, and no plan on this page is tailored to you or your health. If you have any medical condition, are pregnant, are injured, or are taking medication, speak to a doctor or a qualified professional before changing how you eat, train or sleep. Stop immediately if anything hurts.</p>
+      </section>
+    </div>
 
     <footer class="signoff">
-      Nothing was asked of you that MOM Incorporated didn't already approve.<br>Report your reputations. Rest is scheduled separately.<br>Sleep now, recruit.
-      <span class="stamp">MOM INC &middot; EARTH BRANCH</span>
-      <small>Marketing &amp; Organic Maintenance Incorporated. Coach Armie is a regional broadcast personality reporting to MOM Inc. In-character participation only, never a sale. Nothing on this page is collected, charged, or sold.</small>
+      Nothing was asked of you that MOM Incorporated didn't already approve.<br>The hall remembers where you got to. So does Armie.
+      <small>Marketing &amp; Organic Maintenance Incorporated. Coach Armie is a regional broadcast personality reporting to MOM Inc. In-character participation only, never a sale. Nothing on this page is collected, charged, or sold, except what you choose to email us yourself.</small>
     </footer>
   </div>
+  <div class="arGrain" aria-hidden="true"></div>
+  <div class="arVig" aria-hidden="true"></div>
 </article>
 <script>
 (() => {
   const ar = document.getElementById("ar"); if (!ar) return;
-  const screen = ar.closest(".screen") || document.getElementById("screen");
 
-  // MYR5, still under the broadcast: one pose, reused from mominc.html's .myr / POSES / dress() pattern.
-  const POSES = { 5: { src: "assets/myr5-sticker-5.png", ar: 322 / 420, cx: .5016, cy: .4655, rx: .1941, ry: .1131 } };
-  function dress(el, pose) {
-    const p = POSES[pose] || POSES[5];
-    el.style.setProperty("--ar", p.ar); el.style.setProperty("--cx", p.cx); el.style.setProperty("--cy", p.cy); el.style.setProperty("--rx", p.rx); el.style.setProperty("--ry", p.ry);
-    el.innerHTML = `<img src="${p.src}" alt="" draggable="false" onerror="this.style.display='none'"><i class="pupil"></i>`;
+  // ---------------------------------------------------------------- pixel type, runtime link (unchanged since 0901 art pass)
+  try {
+    if (!document.getElementById("arPixelFont")) {
+      const link = document.createElement("link");
+      link.id = "arPixelFont"; link.rel = "stylesheet";
+      link.href = "https://fonts.googleapis.com/css2?family=VT323&display=swap";
+      document.head.appendChild(link);
+    }
+  } catch {}
+
+  // ---------------------------------------------------------------- the corridor state machine (locked, byte for byte)
+  const ROWS = 15, LANES = 3;
+  const CP_ROWS = [3, 7, 11], EXIT_ROW = 14, RESET_GAP = 4;
+  const SAVE_KEY = "mbs-armie-corridor";
+  const TALLY_ROW = 5; // lived-in detail (GUESSED, see README): a pencil-scratch tally pressed into the clay, one fixed spot in the hall
+
+  const state = { row: 0, lane: 1, handRow: -RESET_GAP, cleared: [false, false, false],
+                   finished: false, paused: false, catches: 0,
+                   goals: "", species: "", style: "", experience: "", cpPick: [null, null, null] };
+
+  try {
+    const saved = JSON.parse(localStorage.getItem(SAVE_KEY) || "null");
+    if (saved && typeof saved === "object") Object.assign(state, saved);
+  } catch {}
+
+  function save() { try { localStorage.setItem(SAVE_KEY, JSON.stringify(state)); } catch {} }
+
+  const announce = document.getElementById("arAnnounce");
+  const hudDist = document.getElementById("hudDist"), hudHand = document.getElementById("hudHand"), hudCp = document.getElementById("hudCp");
+  const armieFaceEl = document.getElementById("armieFace");
+  let armieGrinT = 0;
+  const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function say(msg) { if (announce) announce.textContent = msg; }
+
+  // ---------------------------------------------------------------- first-person renderer (this is what changed:
+  // render() and the corridor DOM it paints, per spec section 1. row/lane/handRow/cleared game state below is
+  // read-only from this block's point of view - nothing here writes to state except the two continuous camera
+  // variables (camRow/camLane), which are presentation-only tween values, never saved, never read by doTurn.)
+  const view = document.getElementById("corridorView"), canvas = document.getElementById("fpCanvas");
+  const cctx = canvas.getContext("2d");
+  const handShadowEl = document.getElementById("handShadow");
+  let camRow = state.row, camLane = state.lane, lastRow = state.row, lastLane = state.lane;
+  let animFrom = { row: state.row, lane: state.lane }, animStart = 0;
+  let lookingBack = false;
+  let curBay = bayInfo(state.row), fromBay = curBay;
+  let lastCatches = state.catches, catchFlashUntil = 0; // catch/jumpscare beat, read-only off state.catches
+
+  function resizeCanvas() {
+    const w = view.clientWidth, h = view.clientHeight, dpr = window.devicePixelRatio || 1;
+    if (!w || !h) return;
+    canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+    cctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
-  ar.querySelectorAll(".myr[data-pose]").forEach(el => dress(el, +el.dataset.pose));
+  window.addEventListener("resize", () => { resizeCanvas(); draw(); });
 
-  // the googly eye: it rolls toward the pointer; with no pointer (a phone), it rolls with the scroll.
-  let target = null;
-  const eyes = () => ar.querySelectorAll(".myr");
-  function look() {
-    const vw = window.innerWidth, vh = window.innerHeight;
-    eyes().forEach(el => {
-      const r = el.getBoundingClientRect(); if (r.bottom < -80 || r.top > vh + 80) return;
-      const p = el.querySelector(".pupil"); if (!p) return;
-      const cx = r.left + r.width * +el.style.getPropertyValue("--cx");
-      const cy = r.top + r.height * +el.style.getPropertyValue("--cy");
-      let dx, dy;
-      if (target) { dx = target.x - cx; dy = target.y - cy; }
-      else { const sr = screen ? screen.scrollTop / Math.max(1, screen.scrollHeight - screen.clientHeight) : 0; dx = vw - cx; dy = sr * vh - cy; }
-      const len = Math.hypot(dx, dy) || 1, maxx = r.width * +el.style.getPropertyValue("--rx") * .85, maxy = r.height * +el.style.getPropertyValue("--ry") * .85;
-      const k = Math.min(1, len / 90);
-      p.style.setProperty("--dx", (dx / len * maxx * k).toFixed(1) + "px"); p.style.setProperty("--dy", (dy / len * maxy * k).toFixed(1) + "px");
-    });
+  // a small offscreen noise tile, drawn once, reused as a canvas pattern for the paper-grain pass -
+  // the canvas equivalent of the file's existing feTurbulence data-URI, since canvas has no SVG filter input.
+  const grainTile = document.createElement("canvas"); grainTile.width = 48; grainTile.height = 48;
+  (() => {
+    const g = grainTile.getContext("2d"); const id = g.createImageData(48, 48);
+    for (let i = 0; i < id.data.length; i += 4) {
+      const v = 200 + Math.floor(Math.random() * 55) - 27;
+      id.data[i] = id.data[i + 1] = id.data[i + 2] = v; id.data[i + 3] = 255;
+    }
+    g.putImageData(id, 0, 0);
+  })();
+  let grainPattern = null;
+
+  // clay pass removed (0903b dark-plate pass): the thumbed-clay stamp is gone. The dark
+  // palette, rim light and practicals now carry the surface, and this spot hosts the new
+  // plate-swap helpers (logical asset IDs -> images, per plan 8.1/8.4 - see SHOT-MATRIX.md).
+  // GUESSED resolver convention (see README): Stage A's resolver is expected to inject
+  // window.MBS_ASSETS = { "logical.id": "assets/armie/<hash>.ext", ... } before this script
+  // runs. No entry (or no window.MBS_ASSETS at all) means no art has landed yet; a path is
+  // only ever fetched once the resolver has confirmed it exists, so a missing plate never
+  // becomes a 404 - the procedural fallback below renders instead, always.
+  function MBS_ASSET(id) {
+    try { return (window.MBS_ASSETS && window.MBS_ASSETS[id]) || null; } catch { return null; }
   }
-  let raf = 0; const queue = () => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; look(); }); };
-  window.addEventListener("pointermove", e => { if (e.pointerType === "mouse") { target = { x: e.clientX, y: e.clientY }; queue(); } }, { passive: true });
-  if (screen) screen.addEventListener("scroll", queue, { passive: true });
-  window.addEventListener("resize", queue); queue();
+  const platePool = new Map();
+  function getPlateImage(id) {
+    let e = platePool.get(id);
+    if (e) return e.ready ? e.img : null;
+    const src = MBS_ASSET(id);
+    if (!src) { platePool.set(id, { img: null, ready: false }); return null; }
+    const img = new Image();
+    e = { img, ready: false };
+    platePool.set(id, e);
+    img.onload = () => { e.ready = true; draw(); };
+    img.onerror = () => { e.ready = false; };
+    img.src = src;
+    return null;
+  }
+  function zoneOf(row) { return row <= 3 ? 0 : row <= 7 ? 1 : row <= 11 ? 2 : 3; }
+  function bayInfo(row) { const z = zoneOf(row); return { id: "armie.plate.bay-zone" + z + (row % 2 ? "-b" : "-a"), zone: z }; }
+  function lookbackId(row) { return row < 8 ? "armie.plate.lookback-early" : "armie.plate.lookback-late"; }
+  function doorSpriteId(isExit, cleared) { return "armie.sprite.door-" + (isExit ? "exit" : "checkpoint") + "-" + (cleared ? "cleared" : "locked"); }
+  function handSpriteId(gap) { return "armie.sprite.hand-" + (gap <= 1 ? "onyou" : gap === 2 ? "close" : "quiet"); }
+  const ZONE_PALETTE = [
+    { floorNear: "#241626", floorFar: "#0a0710", ceilNear: "#2a1c30", ceilFar: "#0b0810", wallNear: "#2e1b38", wallFar: "#0c0812", rim: "#c9a6ff", accent: "#ff5a3c" },
+    { floorNear: "#1e1630", floorFar: "#08060f", ceilNear: "#241a34", ceilFar: "#09070f", wallNear: "#291c40", wallFar: "#0a0714", rim: "#8fe6ff", accent: "#33e0ff" },
+    { floorNear: "#22133a", floorFar: "#070510", ceilNear: "#281940", ceilFar: "#080611", wallNear: "#2c1748", wallFar: "#090613", rim: "#e29bff", accent: "#b23cff" },
+    { floorNear: "#2a1350", floorFar: "#050308", ceilNear: "#301758", ceilFar: "#06040a", wallNear: "#331a5e", wallFar: "#07050d", rim: "#f0e0ff", accent: "#d9c2ff" }
+  ];
 
-  // the form: goals + species build the three standards; the after-the-fact review is what the show collects.
-  const MAIL = (window.MBS && window.MBS.MAIL) || "";
-  const goalsForm = document.getElementById("arGoals");
-  const resultBox = document.getElementById("arResult");
-  const goalLine = document.getElementById("arResultGoal");
-  const levelsList = document.getElementById("arLevels");
-  const reviewForm = document.getElementById("arReview");
-  const confirmMsg = document.getElementById("arConfirm");
-  let goals = "", species = "", digExample = "", digMore = "";
+  function boundary(d) {
+    const W = view.clientWidth, H = view.clientHeight;
+    const t = 1 - Math.pow(0.6, d);
+    const y = H * 0.92 - (H * 0.92 - H * 0.40) * t;
+    const hw = W * 0.50 * Math.pow(0.6, d) + 8;
+    const laneT = Math.pow(0.62, d);
+    const cx = W / 2 + (1 - camLane) * W * 0.14 * laneT;
+    return { y, hw, cx };
+  }
+  function ceilY(d) {
+    const H = view.clientHeight;
+    const t = 1 - Math.pow(0.6, d);
+    return H * 0.06 + (H * 0.40 - H * 0.06) * t;
+  }
+  // gate label rows: checkpoints greyed once cleared, the exit locked until all three are
+  function gateAt(row) {
+    const idx = CP_ROWS.indexOf(row);
+    if (idx !== -1) return { label: "CHECKPOINT " + (idx + 1), cleared: state.cleared[idx], exit: false };
+    if (row === EXIT_ROW) return { label: "EXIT", cleared: state.cleared.every(Boolean), exit: true };
+    return null;
+  }
 
-  goalsForm.addEventListener("submit", e => {
-    e.preventDefault();
-    const f = new FormData(goalsForm);
-    goals = String(f.get("goals") || "").trim() || "getting stronger";
-    species = String(f.get("species") || "HUMAN");
-    digExample = String(f.get("example") || "").trim();   // the dig lives on this form, not the review one
-    digMore = String(f.get("more") || "").trim();
-    goalLine.textContent = `FOR: ${goals.toUpperCase()} · ${species}`;
-    levelsList.innerHTML =
-      `<li><b>WEAK HUMANS (EASY)</b> one reputation of ${goals}. That is it. That is the reputation.</li>` +
-      `<li><b>REGULAR BEINGS</b> twenty reputations of ${goals}. No excuses given.</li>` +
-      `<li><b>ROBOTS, EVEN ANCIENT ONES</b> one thousand reputations of ${goals}. Before lunch. Lunch is a rumor.</li>`;
-    resultBox.hidden = false;
-    reviewForm.hidden = false;
-    const btn = goalsForm.querySelector("button"); if (btn) btn.disabled = true;
-    resultBox.scrollIntoView({ block: "nearest" });
-  });
+  function drawSlab(poly, colorNear, colorFar, nearPt, farPt, rimColor) {
+    const grad = cctx.createLinearGradient(nearPt.x, nearPt.y, farPt.x, farPt.y);
+    grad.addColorStop(0, colorNear); grad.addColorStop(1, colorFar);
+    cctx.beginPath();
+    poly.forEach((p, i) => i ? cctx.lineTo(p.x, p.y) : cctx.moveTo(p.x, p.y));
+    cctx.closePath(); cctx.fillStyle = grad; cctx.fill();
+    // 0903b dark-plate pass: a hard rim light on one edge only (per spec 8.3), instead of the old clay stamp
+    if (rimColor) {
+      cctx.save(); cctx.strokeStyle = rimColor; cctx.lineWidth = 1.5; cctx.globalAlpha = 0.55;
+      cctx.beginPath(); cctx.moveTo(poly[0].x, poly[0].y); cctx.lineTo(poly[1].x, poly[1].y); cctx.stroke();
+      cctx.restore();
+    }
+  }
 
-  reviewForm.addEventListener("submit", e => {
-    e.preventDefault();
-    const f = new FormData(reviewForm);
-    const review = String(f.get("review") || "").trim();
-    window.MBS && window.MBS.form && window.MBS.form("armie", {goals, species, review, example: digExample, more: digMore});
-    reviewForm.hidden = true;
-    confirmMsg.hidden = false;
-    confirmMsg.innerHTML = "REPORT RECEIVED, RECRUIT. MOM INCORPORATED IS PROUD. MOM INCORPORATED IS ALWAYS PROUD."
-      + (MAIL ? ` <a href="mailto:${MAIL}?subject=${encodeURIComponent("Reputation report")}&body=${encodeURIComponent("Goal: " + goals + "\nSpecies: " + species + "\nReport: " + review)}">Send proof of your reputations</a>` : "");
-  });
-
-  // code glowing through the seams, house standard
-  const el = document.getElementById("arCode"); if (el) { let s = ""; for (let r = 0; r < 160; r++) { let line = ""; for (let c = 0; c < 140; c++) line += Math.random() < 0.5 ? "0" : "1"; s += line + "\n"; } el.textContent = s; }
-})();
-
-
-  // the vein spans from the bottom of him to the top of the goo. Measured, not guessed, and re-measured on resize.
-  (function () {
-    const vein = document.getElementById("arVein"), stage = ar.querySelector(".armstage"), breath = document.getElementById("arBreath");
-    if (!vein || !stage || !breath) return;
-    const wrap = ar.querySelector(".wrap");
-    // the channel is zoomed (.channel{zoom}), so rect pixels are not style pixels. Divide by the zoom
-    // before writing top/height or the vein lands low and overshoots. (Lesson already in COMPUTA Tooling.)
-    function zoomOf(el) {
-      let z = 1, n = el;
-      while (n && n !== document.documentElement) {
-        const v = parseFloat(getComputedStyle(n).zoom || "1");
-        if (v && v !== 1) z *= v;
-        n = n.parentElement;
+  // 0903b dark-plate pass: the sci-fi door (spec 8.2). A practical light-glow helper first,
+  // timed off wall-clock (Date.now()), never frame count - headless tabs throttle rAF.
+  function practicalGlow(cx, y, color, seed, zone) {
+    const t = Date.now() / 1000;
+    const flicker = 0.4 + 0.35 * Math.sin(t * 3 + seed * 2.1 + zone) * (0.5 + 0.5 * Math.sin(t * 11 + seed));
+    cctx.save(); cctx.globalCompositeOperation = "lighten"; cctx.globalAlpha = Math.max(0.15, flicker);
+    const g = cctx.createRadialGradient(cx, y, 0, cx, y, 60);
+    g.addColorStop(0, color); g.addColorStop(1, "rgba(0,0,0,0)");
+    cctx.fillStyle = g; cctx.beginPath(); cctx.arc(cx, y, 60, 0, 7); cctx.fill();
+    cctx.restore();
+  }
+  function drawDoor(row, d) {
+    const g = gateAt(row); if (!g) return;
+    const b = boundary(d), top = ceilY(d);
+    const w = b.hw * 1.7, h = b.y - top, x = b.cx - w / 2, y = top;
+    const img = getPlateImage(doorSpriteId(g.exit, g.cleared));
+    cctx.save();
+    if (img) {
+      cctx.drawImage(img, x, y, w, h);
+    } else {
+      const glow = g.cleared ? "#37e08a" : (g.exit ? "#ff3b3b" : "#ff5a3c");
+      const pulse = 0.5 + 0.5 * Math.sin(Date.now() / 450 + row);
+      cctx.fillStyle = "#0c0a10"; cctx.fillRect(x, y, w, h);
+      cctx.strokeStyle = "#3a3048"; cctx.lineWidth = Math.max(2, w * 0.02); cctx.strokeRect(x + 2, y + 2, w - 4, h - 4);
+      const seamW = Math.max(2, w * 0.03);
+      cctx.fillStyle = "#171320"; cctx.fillRect(x + 4, y + 4, w / 2 - seamW / 2 - 4, h - 8);
+      cctx.fillStyle = "#1b1624"; cctx.fillRect(b.cx + seamW / 2, y + 4, w / 2 - seamW / 2 - 4, h - 8);
+      cctx.save(); cctx.globalAlpha = 0.55 + 0.45 * pulse; cctx.shadowColor = glow; cctx.shadowBlur = 14;
+      cctx.fillStyle = glow; cctx.fillRect(b.cx - seamW / 2, y + 4, seamW, h - 8); cctx.restore();
+      cctx.fillStyle = "#4a4058";
+      for (let i = 0; i < 3; i++) {
+        const ry = y + h * (0.2 + i * 0.3);
+        cctx.beginPath(); cctx.arc(x + w * 0.12, ry, Math.max(1.5, w * 0.01), 0, 7); cctx.fill();
+        cctx.beginPath(); cctx.arc(x + w * 0.88, ry, Math.max(1.5, w * 0.01), 0, 7); cctx.fill();
       }
-      return z || 1;
     }
-    function fit() {
-      const z = zoomOf(wrap);
-      const w = wrap.getBoundingClientRect(), a = stage.getBoundingClientRect(), b = breath.getBoundingClientRect();
-      const top = (a.bottom - w.top) / z, bottom = (b.top - w.top) / z;
-      vein.style.top = Math.max(0, top) + "px";
-      vein.style.height = Math.max(0, bottom - top) + "px";
-    }
-    fit();
-    // re-fit once the art has actually loaded, or the measurement is of a half built page
-    ar.querySelectorAll("img").forEach(i => { if (!i.complete) i.addEventListener("load", fit, { once: true }); });
-    window.addEventListener("load", fit);
-    window.addEventListener("resize", fit, { passive: true });
-    if (window.ResizeObserver) new ResizeObserver(fit).observe(wrap);
-    document.addEventListener("mbs:armie-lit", fit);
-  })();
+    const fs = Math.max(9, Math.min(24, h * 0.13));
+    cctx.font = fs + "px VT323, 'Courier New', monospace";
+    cctx.fillStyle = g.cleared ? "#bdf9d2" : "#f2eaff"; cctx.textAlign = "center"; cctx.textBaseline = "middle";
+    cctx.fillText(g.label, b.cx, y + h * 0.42);
+    if (g.exit && !g.cleared) cctx.fillText("SEALED", b.cx, y + h * 0.62);
+    cctx.restore();
+  }
 
-  // Hormozi's two magic questions, oscillated: an example, then more, then the standards.
-  // A flat single answer gives nothing; two commands give the show something worth reading.
-  (function () {
-    const form = document.getElementById("arGoals");
-    if (!form) return;
-    const digs = [...form.querySelectorAll("label.dig")];
-    const fields = [form.querySelector("[name=goals]"), ...digs.map(d => d.querySelector("input"))];
-    fields.forEach((f, i) => {
-      if (!f || i >= digs.length) return;
-      const open = () => { if (f.value.trim().length > 2 && digs[i].hidden) { digs[i].hidden = false; } };
-      f.addEventListener("input", open);
-      f.addEventListener("blur", open);
+  // lived-in detail (GUESSED, see README): a scratched tally mark pressed into the clay at a fixed spot in
+  // the hall, the kind of thing someone counting days would leave. Four scratches and a strike-through, drawn
+  // at whatever depth TALLY_ROW currently sits at, same near/far projection as everything else in the corridor.
+  function drawTally(d) {
+    const b = boundary(d), top = ceilY(d);
+    const wallX = b.cx - b.hw, y0 = top + (b.y - top) * 0.55, s = Math.max(6, b.hw * 0.06);
+    cctx.save(); cctx.strokeStyle = "rgba(220,190,255,.4)"; cctx.lineWidth = Math.max(1, s * 0.12); cctx.lineCap = "round";
+    for (let i = 0; i < 4; i++) { const x = wallX + s * 0.3 + i * s * 0.5; cctx.beginPath(); cctx.moveTo(x, y0); cctx.lineTo(x, y0 - s); cctx.stroke(); }
+    cctx.beginPath(); cctx.moveTo(wallX + s * 0.1, y0 + s * 0.1); cctx.lineTo(wallX + s * 2.1, y0 - s * 1.1); cctx.stroke();
+    cctx.restore();
+  }
+
+  // 0903b dark-plate pass (spec 8.1): the procedurally drawn corridor becomes the mandatory
+  // fallback, and a painted plate blits over it once Stage A's art resolves (see MBS_ASSET
+  // above). drawForwardProcedural paints ONLY the background (floor/ceiling/walls/practicals/
+  // haze) - doors, the tally and the grain overlay moved to the new drawForward below, which
+  // composites them the same way over either path.
+  function drawForwardProcedural(zone, alpha) {
+    const pal = ZONE_PALETTE[zone];
+    const H = view.clientHeight;
+    cctx.save(); if (alpha < 1) cctx.globalAlpha = alpha;
+    const frac = Math.max(0, state.row - camRow);
+    for (let s = 4; s >= 0; s--) {
+      const d0 = s + frac, d1 = s + 1 + frac;
+      const b0 = boundary(d0), b1 = boundary(d1), c0 = ceilY(d0), c1 = ceilY(d1);
+      drawSlab([{ x: b0.cx - b0.hw, y: b0.y }, { x: b0.cx + b0.hw, y: b0.y }, { x: b1.cx + b1.hw, y: b1.y }, { x: b1.cx - b1.hw, y: b1.y }], pal.floorNear, pal.floorFar, { x: b0.cx, y: b0.y }, { x: b1.cx, y: b1.y });
+      drawSlab([{ x: b0.cx - b0.hw, y: c0 }, { x: b0.cx + b0.hw, y: c0 }, { x: b1.cx + b1.hw, y: c1 }, { x: b1.cx - b1.hw, y: c1 }], pal.ceilNear, pal.ceilFar, { x: b0.cx, y: c0 }, { x: b1.cx, y: c1 });
+      drawSlab([{ x: b0.cx - b0.hw, y: b0.y }, { x: b0.cx - b0.hw, y: c0 }, { x: b1.cx - b1.hw, y: c1 }, { x: b1.cx - b1.hw, y: b1.y }], pal.wallNear, pal.wallFar, { x: b0.cx - b0.hw, y: b0.y }, { x: b1.cx - b1.hw, y: b1.y });
+      drawSlab([{ x: b0.cx + b0.hw, y: b0.y }, { x: b0.cx + b0.hw, y: c0 }, { x: b1.cx + b1.hw, y: c1 }, { x: b1.cx + b1.hw, y: b1.y }], pal.wallNear, pal.wallFar, { x: b0.cx + b0.hw, y: b0.y }, { x: b1.cx + b1.hw, y: b1.y }, pal.rim);
+      if (s % 2 === 0) practicalGlow(b0.cx, c0 + (b0.y - c0) * 0.12, pal.accent, s, zone);
+    }
+    const hz = cctx.createLinearGradient(0, 0, 0, H);
+    hz.addColorStop(0, "rgba(6,4,10,.55)"); hz.addColorStop(0.5, "rgba(10,6,16,.15)"); hz.addColorStop(1, pal.accent + "22");
+    cctx.fillStyle = hz; cctx.fillRect(0, 0, view.clientWidth, H);
+    cctx.restore();
+  }
+  // blits a painted plate, panning across its authored bleed width by the current lane offset
+  // (the geometrically-correct-enough trick these depth-crawl plates need instead of one
+  // full painting per lane, per SHOT-MATRIX.md's lane-offset axis)
+  function drawBayImage(img, alpha) {
+    const W = view.clientWidth, H = view.clientHeight;
+    const bleed = 1.25, sw = img.naturalWidth / bleed, sh = img.naturalHeight;
+    const laneT = camLane - 1, maxPan = img.naturalWidth - sw;
+    const sx = maxPan / 2 - laneT * (maxPan / 2);
+    cctx.save(); if (alpha < 1) cctx.globalAlpha = alpha;
+    cctx.drawImage(img, sx, 0, sw, sh, 0, 0, W, H);
+    cctx.restore();
+  }
+  // a dedicated plate if one has resolved, else a procedural near-black-and-red flash - this is
+  // the one axis whose mandatory fallback IS the whole visual tonight, since nothing in the locked
+  // doTurn/checkCatch/caught contract can be touched to hand the renderer more than state.catches.
+  function drawCatchMoment(nowT) {
+    const W = view.clientWidth, H = view.clientHeight;
+    const img = getPlateImage("armie.plate.catch-grab");
+    if (img) { cctx.drawImage(img, 0, 0, W, H); return; }
+    const p = Math.min(1, 1 - Math.max(0, catchFlashUntil - nowT) / 480);
+    const flash = Math.sin(p * Math.PI);
+    cctx.fillStyle = "#050006"; cctx.fillRect(0, 0, W, H);
+    cctx.save(); cctx.globalCompositeOperation = "lighten"; cctx.globalAlpha = 0.25 + flash * 0.5;
+    const g = cctx.createRadialGradient(W / 2, H * 0.5, 0, W / 2, H * 0.5, Math.max(W, H) * 0.7);
+    g.addColorStop(0, "#ff3b3b"); g.addColorStop(1, "rgba(0,0,0,0)");
+    cctx.fillStyle = g; cctx.fillRect(0, 0, W, H); cctx.restore();
+  }
+  function drawForward() {
+    const W = view.clientWidth, H = view.clientHeight;
+    cctx.clearRect(0, 0, W, H);
+    const nowT = performance.now();
+    if (nowT < catchFlashUntil) { drawCatchMoment(nowT); return; }
+    const tweening = !!animStart && (nowT - animStart) < 180;
+    const t = tweening ? Math.min(1, (nowT - animStart) / 180) : 1, e = 1 - Math.pow(1 - t, 3);
+    const cut = fromBay.id !== curBay.id;
+    const curImg = getPlateImage(curBay.id), fromImg = cut ? getPlateImage(fromBay.id) : null;
+    // 8.6: a crossfade between two stills only when both are real plates - otherwise the
+    // procedural fallback already animates continuously via camRow, so no crossfade needed
+    if (cut && tweening && fromImg && curImg) { drawBayImage(fromImg, 1); drawBayImage(curImg, e); }
+    else if (curImg) drawBayImage(curImg, 1);
+    else drawForwardProcedural(curBay.zone, 1);
+    const frac = Math.max(0, state.row - camRow);
+    for (let s = 4; s >= 0; s--) {
+      const row = state.row + s;
+      if (row >= 0 && row < ROWS) drawDoor(row, s + frac);
+      if (row === TALLY_ROW) drawTally(s + frac);
+    }
+    // 8.6: the seam brightening before the cut - a soft light-shift flash, held mid-transition
+    if (cut && tweening) {
+      const flash = Math.sin(e * Math.PI) * 0.3;
+      if (flash > 0.01) {
+        cctx.save(); cctx.globalCompositeOperation = "lighten"; cctx.globalAlpha = flash;
+        const g = cctx.createRadialGradient(W / 2, H * 0.4, 0, W / 2, H * 0.4, Math.max(W, H) * 0.65);
+        g.addColorStop(0, ZONE_PALETTE[curBay.zone].rim); g.addColorStop(1, "rgba(0,0,0,0)");
+        cctx.fillStyle = g; cctx.fillRect(0, 0, W, H); cctx.restore();
+      }
+    }
+    if (!grainPattern) grainPattern = cctx.createPattern(grainTile, "repeat");
+    cctx.save(); cctx.globalCompositeOperation = "overlay"; cctx.globalAlpha = 0.08;
+    cctx.fillStyle = grainPattern; cctx.fillRect(0, 0, W, H); cctx.restore();
+    if (t >= 1) fromBay = curBay;
+  }
+
+  // look back: the reverse view, held only, no state written. The Hand renders as the pale anatomy-diagram
+  // plate (same figure/labels as the previous pass's CSS token, redrawn here since the corridor is canvas now),
+  // scaled by his real gap (state.row - state.handRow), never by state.row/state.lane directly.
+  // 0903b dark-plate pass: look back gets the same plate-or-procedural treatment (background)
+  // plus a painted Hand sprite at one of three proximity stages, or a procedural creature glow
+  // if no sprite has resolved yet (spec 8.4's Hand-proximity axis; SHOT-MATRIX.md).
+  function drawLookBackProcedural(zone) {
+    const pal = ZONE_PALETTE[zone];
+    for (let s = 4; s >= 0; s--) {
+      const b0 = boundary(s), b1 = boundary(s + 1), c0 = ceilY(s), c1 = ceilY(s + 1);
+      drawSlab([{ x: b0.cx - b0.hw, y: b0.y }, { x: b0.cx + b0.hw, y: b0.y }, { x: b1.cx + b1.hw, y: b1.y }, { x: b1.cx - b1.hw, y: b1.y }], pal.floorNear, pal.floorFar, { x: b0.cx, y: b0.y }, { x: b1.cx, y: b1.y });
+      drawSlab([{ x: b0.cx - b0.hw, y: c0 }, { x: b0.cx + b0.hw, y: c0 }, { x: b1.cx + b1.hw, y: c1 }, { x: b1.cx - b1.hw, y: c1 }], pal.ceilNear, pal.ceilFar, { x: b0.cx, y: c0 }, { x: b1.cx, y: c1 });
+      drawSlab([{ x: b0.cx - b0.hw, y: b0.y }, { x: b0.cx - b0.hw, y: c0 }, { x: b1.cx - b1.hw, y: c1 }, { x: b1.cx - b1.hw, y: b1.y }], pal.wallNear, pal.wallFar, { x: b0.cx - b0.hw, y: b0.y }, { x: b1.cx - b1.hw, y: b1.y });
+      drawSlab([{ x: b0.cx + b0.hw, y: b0.y }, { x: b0.cx + b0.hw, y: c0 }, { x: b1.cx + b1.hw, y: c1 }, { x: b1.cx + b1.hw, y: b1.y }], pal.wallNear, pal.wallFar, { x: b0.cx + b0.hw, y: b0.y }, { x: b1.cx + b1.hw, y: b1.y });
+    }
+  }
+  function drawHandCreature(gap, b, top) {
+    const w = b.hw * 0.85, h = (b.y - top) * 0.8;
+    const handW = w * 0.62, handH = h * 0.58, hcx = b.cx, hBottom = top + (b.y - top - h) / 2 + h - h * 0.05;
+    const palmW = handW, palmH = handH * 0.55, palmX = hcx - palmW / 2, palmY = hBottom - palmH;
+    const fingerW = palmW / 5.6, fingerGap = (palmW - fingerW * 5) / 4;
+    const fingerLens = [0.62, 0.86, 1, 0.92, 0.7];
+    const glow = gap <= 1 ? "#ff3b3b" : gap === 2 ? "#ff9a3c" : "#8a5cff";
+    cctx.save(); cctx.shadowColor = glow; cctx.shadowBlur = 18;
+    cctx.fillStyle = "#120a18"; cctx.strokeStyle = glow; cctx.lineWidth = Math.max(1.5, w * 0.012);
+    for (let i = 0; i < 5; i++) {
+      const fx = palmX + i * (fingerW + fingerGap), fLen = handH * 0.5 * fingerLens[i], fy = palmY - fLen;
+      cctx.beginPath(); cctx.roundRect(fx, fy, fingerW, fLen + palmH * 0.15, fingerW * 0.45); cctx.fill(); cctx.stroke();
+    }
+    cctx.beginPath(); cctx.roundRect(palmX, palmY, palmW, palmH, palmW * 0.18); cctx.fill(); cctx.stroke();
+    cctx.restore();
+    const fs = Math.max(8, Math.min(15, h * 0.09));
+    cctx.font = fs + "px VT323, 'Courier New', monospace"; cctx.fillStyle = "#e9dcff";
+    cctx.textAlign = "center"; cctx.textBaseline = "top"; cctx.fillText("FIG. 4", b.cx, top + (b.y - top - h) / 2 + 3);
+    cctx.textBaseline = "bottom"; cctx.fillText("PHALANGES (COUNT THEM)", b.cx, top + (b.y - top - h) / 2 + h - 3);
+  }
+  function drawLookBack() {
+    const W = view.clientWidth, H = view.clientHeight;
+    cctx.clearRect(0, 0, W, H);
+    const zone = zoneOf(state.row), lbId = lookbackId(state.row);
+    const bgImg = getPlateImage(lbId);
+    if (bgImg) drawBayImage(bgImg, 1); else drawLookBackProcedural(zone);
+    const gap = Math.max(0, state.row - state.handRow);
+    const d = Math.min(4, Math.max(0.3, gap - 0.7));
+    const b = boundary(d), top = ceilY(d);
+    const handImg = getPlateImage(handSpriteId(gap));
+    if (handImg) {
+      const w = b.hw * 0.85, h = (b.y - top) * 0.8, x = b.cx - w / 2, y = top + (b.y - top - h) / 2;
+      cctx.drawImage(handImg, x, y, w, h);
+    } else drawHandCreature(gap, b, top);
+    if (!grainPattern) grainPattern = cctx.createPattern(grainTile, "repeat");
+    cctx.save(); cctx.globalCompositeOperation = "overlay"; cctx.globalAlpha = 0.08;
+    cctx.fillStyle = grainPattern; cctx.fillRect(0, 0, W, H); cctx.restore();
+  }
+
+  function draw() {
+    if (!canvas.clientWidth) return;
+    resizeCanvas();
+    if (lookingBack) drawLookBack(); else drawForward();
+  }
+
+  function updateShadow(gap) {
+    handShadowEl.classList.remove("gap2", "gap1");
+    if (lookingBack) return;
+    if (gap === 2) handShadowEl.classList.add("gap2");
+    else if (gap <= 1) handShadowEl.classList.add("gap1");
+  }
+
+  function tick(now) {
+    if (animStart) {
+      const t = Math.min(1, (now - animStart) / 180);
+      const e = 1 - Math.pow(1 - t, 3);
+      camRow = animFrom.row + (state.row - animFrom.row) * e;
+      camLane = animFrom.lane + (state.lane - animFrom.lane) * e;
+      draw();
+      if (t >= 1) { animStart = 0; camRow = state.row; camLane = state.lane; draw(); }
+      else requestAnimationFrame(tick);
+    }
+  }
+
+  // render(): what changed, per spec section 1. Keeps writing #hudDist/#hudCp (same ids, same JS already
+  // reading them from doTurn's call site below) and adds the #hudHand gap readout. Row/lane state itself is
+  // untouched here - camRow/camLane are the only new values, and they never feed back into state or save().
+  // loop fix (GUESSED, see README): the exact gap number is gone from the Hand's own HUD line per Ian's
+  // "make LOOK BACK matter" direction - threat now reads through Armie's face and the forward shadow stages
+  // (handShadow.gap2/gap1) instead of a readout. hudDist's own number is untouched; only hudHand's Hand-specific
+  // line was named for removal.
+  function updateFace(gap) {
+    if (armieGrinT) return; // a grin flash is playing, let it finish before the state face takes over
+    armieFaceEl.classList.remove("calm", "worried", "bloodied");
+    armieFaceEl.classList.add(gap <= 1 ? "bloodied" : gap === 2 ? "worried" : "calm");
+  }
+  function armieGrin() {
+    armieFaceEl.classList.remove("calm", "worried", "bloodied"); armieFaceEl.classList.add("grin");
+    clearTimeout(armieGrinT);
+    armieGrinT = setTimeout(() => { armieGrinT = 0; updateFace(Math.max(0, state.row - state.handRow)); }, 900);
+  }
+
+  function render() {
+    // the flash resolves on its own even with no further input (reduced-motion skips the
+    // camera-tween rAF loop that would otherwise keep repainting it away on schedule)
+    if (state.catches !== lastCatches) {
+      lastCatches = state.catches; catchFlashUntil = performance.now() + 480;
+      setTimeout(() => { if (!lookingBack) draw(); }, 490);
+    }
+    const gap = Math.max(0, state.row - state.handRow);
+    hudDist.textContent = "DISTANCE " + gap;
+    hudDist.classList.toggle("danger", gap <= 2);
+    hudHand.textContent = gap <= 1 ? "HAND: ON YOU" : gap === 2 ? "HAND: CLOSE" : "HAND: QUIET";
+    hudHand.classList.toggle("danger", gap <= 2);
+    hudCp.textContent = "CHECKPOINTS " + state.cleared.filter(Boolean).length + " / 3";
+
+    if (state.row !== lastRow || state.lane !== lastLane) {
+      animFrom = { row: camRow, lane: camLane };
+      fromBay = curBay; curBay = bayInfo(state.row); // which plate we cut from/to, per 8.6
+      lastRow = state.row; lastLane = state.lane;
+      if (reducedMotion) { camRow = state.row; camLane = state.lane; fromBay = curBay; }
+      else { animStart = performance.now(); requestAnimationFrame(tick); }
+    }
+    updateShadow(gap);
+    updateFace(gap);
+    draw();
+  }
+
+  function clearedMaxRow() {
+    let r = 0; CP_ROWS.forEach((cpRow, i) => { if (state.cleared[i]) r = cpRow; });
+    return r;
+  }
+
+  // ---------------------------------------------------------------- locked, byte for byte: caught/checkCatch/handleInteract/doTurn
+  function caught() {
+    state.catches++;
+    state.row = clearedMaxRow(); state.lane = 1;
+    state.handRow = state.row - RESET_GAP;
+    say("THE HAND GOT YOU. ARMIE SAY GO BACK AND TRY AGAIN.");
+  }
+
+  function checkCatch() { if (!state.finished && state.handRow >= state.row) caught(); }
+
+  const FLAVOR = ["ARMIE SEE NOTHING HERE. ARMIE STILL WATCH.", "KEEP MOVE. HAND NOT TIRED.", "ARMIE PROUD YOU LOOK. NOW MOVE."];
+  function handleInteract() {
+    const idx = CP_ROWS.indexOf(state.row);
+    if (idx !== -1 && !state.cleared[idx]) { openCheckpoint(idx); return; }
+    if (state.row === EXIT_ROW && state.cleared.every(Boolean)) { openFinal(); return; }
+    if (state.row === EXIT_ROW) { say("THE HALL IS NOT DONE YET."); return; }
+    say(FLAVOR[Math.floor(Math.random() * FLAVOR.length)]);
+  }
+
+  function doTurn(kind) {
+    if (state.paused || state.finished) return;
+    if (kind === "left") state.lane = Math.max(0, state.lane - 1);
+    else if (kind === "right") state.lane = Math.min(LANES - 1, state.lane + 1);
+    else if (kind === "up") {
+      const idx = CP_ROWS.indexOf(state.row);
+      if (idx !== -1 && !state.cleared[idx]) say("PROVE YOURSELF FIRST. PRESS THE CENTER BUTTON.");
+      else state.row = Math.min(ROWS - 1, state.row + 1);
+    } else if (kind === "interact") handleInteract();
+
+    if (!state.paused) { state.handRow += 1; checkCatch(); }
+    render(); save();
+  }
+
+  document.getElementById("btnLeft").addEventListener("click", () => doTurn("left"));
+  document.getElementById("btnRight").addEventListener("click", () => doTurn("right"));
+  document.getElementById("btnUp").addEventListener("click", () => doTurn("up"));
+  document.getElementById("btnInteract").addEventListener("click", () => doTurn("interact"));
+
+  // ---------------------------------------------------------------- soundboard blips (unchanged since 0901 art pass)
+  let arActx = null;
+  function arBlip(freq, dur) {
+    try {
+      arActx = arActx || new (window.AudioContext || window.webkitAudioContext)();
+      const o = arActx.createOscillator(), g = arActx.createGain();
+      o.type = "square"; o.frequency.value = freq;
+      g.gain.value = 0.05; o.connect(g); g.connect(arActx.destination);
+      o.start(); o.stop(arActx.currentTime + dur);
+    } catch {}
+  }
+  document.getElementById("btnLeft").addEventListener("click", () => arBlip(300, .05));
+  document.getElementById("btnRight").addEventListener("click", () => arBlip(300, .05));
+  document.getElementById("btnUp").addEventListener("click", () => arBlip(420, .05));
+  document.getElementById("btnInteract").addEventListener("click", () => arBlip(560, .07));
+  document.addEventListener("keydown", e => {
+    if (state.paused || state.finished) return;
+    const t = e.target, tag = t && t.tagName;
+    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || (t && t.isContentEditable)) return;
+    if (e.key === "ArrowLeft" || e.key === "a") doTurn("left");
+    else if (e.key === "ArrowRight" || e.key === "d") doTurn("right");
+    else if (e.key === "ArrowUp" || e.key === "w") doTurn("up");
+    else if (e.key === "Enter" || e.key === "e" || e.key === " ") { e.preventDefault(); doTurn("interact"); }
+  });
+
+  // ---------------------------------------------------------------- look back: held, costs no turn. Never calls
+  // doTurn, never touches state.handRow - the hold-and-release contract the spec requires.
+  const btnLookBack = document.getElementById("btnLookBack");
+  function setLookingBack(v) {
+    if (state.finished) return;
+    if (v && (state.paused || !document.getElementById("gameWrap") || document.getElementById("gameWrap").hidden)) return;
+    lookingBack = v;
+    btnLookBack.classList.toggle("holding", v);
+    updateShadow(Math.max(0, state.row - state.handRow));
+    draw();
+  }
+  btnLookBack.addEventListener("pointerdown", e => { e.preventDefault(); setLookingBack(true); });
+  ["pointerup", "pointercancel", "pointerleave"].forEach(ev => btnLookBack.addEventListener(ev, () => setLookingBack(false)));
+  document.addEventListener("keydown", e => {
+    if (e.key !== "ArrowDown" && e.key !== "s" && e.key !== "S") return;
+    const t = e.target, tag = t && t.tagName;
+    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || (t && t.isContentEditable)) return;
+    if (state.paused || state.finished) return;
+    e.preventDefault(); setLookingBack(true);
+  });
+  document.addEventListener("keyup", e => { if (e.key === "ArrowDown" || e.key === "s" || e.key === "S") setLookingBack(false); });
+  window.addEventListener("blur", () => setLookingBack(false));
+
+  // ---------------------------------------------------------------- the checkpoint modal: now a five-question
+  // quiz per checkpoint (spec section 4). The DOM wrapper (#cpModalWrap/#cpModal/#cpModalTitle) and the
+  // state.paused gate are the same shape the old tier-pick confirm used; openCheckpoint/paintTiers/cpConfirm
+  // are not on the locked list (the spec names the checkpoint modal's content as changing), so this whole
+  // block is a rewrite, but it still only calls state.paused/state.cleared/state.cpPick/state.handRow/save()/
+  // render()/openBreathing() exactly the way the old confirm handler did, at the same two exit points
+  // (checkpoint 3 -> openBreathing, otherwise -> unpause + render).
+  const cpWrap = document.getElementById("cpModalWrap"), cpTitle = document.getElementById("cpModalTitle");
+  const qzBody = document.getElementById("qzBody");
+  const NOT_MEDICAL = "ARMIE IS CLAY, NOT A DOCTOR. THIS IS GENERAL FITNESS INFO, NOT MEDICAL ADVICE. SEE A REAL PROFESSIONAL FOR YOUR OWN SITUATION.";
+
+  const QUIZ = [
+    { title: "CHECKPOINT ONE · MOVEMENT", qs: [
+      { q: "How many minutes of moderate-intensity aerobic activity per week do U.S. and WHO guidelines recommend for adults?",
+        opts: ["About 30 minutes total, once a week", "60 to 90 minutes", "150 to 300 minutes (or 75 to 150 minutes vigorous)", "500-plus minutes, every week, no exceptions"], correct: 2,
+        teach: "Adults should get 150 to 300 minutes of moderate aerobic activity a week, or 75 to 150 minutes vigorous, or a mix of both.",
+        right: "TWENTY. ARM NUMBER NOT MATTER. RANGE MATTER.", wrong: "ARMIE CANNOT CUT. TRY AGAIN, SMALL HUMAN." },
+      { q: "How many days a week should adults do muscle-strengthening activity covering all major muscle groups?",
+        opts: ["Every single day, no exceptions", "2 or more days a week", "Once a month is plenty", "Only right before a competition"], correct: 1,
+        teach: "Both U.S. and WHO guidelines call for muscle-strengthening work hitting all major muscle groups on two or more days each week.",
+        right: "TWO DAY MINIMUM. ARMIE APPROVE OF MATH.", wrong: "WRONG NUMBER. ARMIE STILL LIKES YOU." },
+      { q: "Does exercise only count toward your weekly goal if each bout lasts 10 minutes or more?",
+        opts: ["Yes, anything under 10 minutes is wasted effort", "No, any length of activity adds up across the week", "Only bouts over 30 minutes count", "Only activity done at a gym counts"], correct: 1,
+        teach: "The old \"10-minute minimum bout\" rule was dropped. Short bouts of activity now count toward your weekly total, so a few flights of stairs add up.",
+        right: "SHORT COUNT TOO. ARMIE NOT A CLOCK SNOB.", wrong: "NO. TIME STILL ADD UP, YOU JUST GUESS WRONG." },
+      { q: "What does \"progressive overload\" mean in training?",
+        opts: ["Doing more than your body can ever recover from, every session", "Gradually raising the demand (weight, reps, or difficulty) over time so the body keeps adapting", "Going to total muscular failure on every single set", "A one-time test of your absolute max weight"], correct: 1,
+        teach: "Progressive overload just means the workload has to rise gradually over weeks and months, or gains stall.",
+        right: "MORE THAN LAST TIME. THAT IS THE WHOLE TRICK.", wrong: "STAYING SAME NOT PROGRESS. ARMIE FROWNS IN CLAY." },
+      { q: "True or false: you must be sore the day after every workout for it to \"count.\"",
+        opts: ["True, no soreness means no results", "False, soreness isn't required, consistent training below max effort still builds fitness", "True, but only for people under 30", "True, but only for leg day"], correct: 1,
+        teach: "Delayed-onset muscle soreness is a side effect of unfamiliar or hard training, not a required signal that a workout \"worked.\"",
+        right: "SORE NOT SCORE. PROGRESS QUIET SOMETIMES.", wrong: "SORENESS LIE. TRY AGAIN, PLASTIC FRIEND." }
+    ] },
+    { title: "CHECKPOINT TWO · SQUATS", qs: [
+      { q: "How often should you train a muscle group like your legs for it to grow?",
+        opts: ["Once every two weeks is optimal", "At least twice a week", "Every single day for best results", "Once, ever, then never touch it again"], correct: 1,
+        teach: "Meta-analysis evidence shows training a muscle group at least twice weekly beats once weekly for hypertrophy; whether three-plus is better than two is still unsettled.",
+        right: "TWICE MINIMUM. LEGS NOT ONE-AND-DONE.", wrong: "LEGS NEED MORE LOVE THAN THAT." },
+      { q: "What rep range is classically used to build maximal strength (heavy weight, few reps)?",
+        opts: ["1 to 6 reps at high load", "15 to 20 reps at light load", "30-plus reps", "Rep range makes no difference to strength"], correct: 0,
+        teach: "Strength-focused training generally uses low reps (about 1 to 6) at loads above roughly 85 percent of your one-rep max.",
+        right: "FEW REP. BIG WEIGHT. ARMIE NODS SLOWLY.", wrong: "WRONG ZONE. STRENGTH LIVE IN LOW REP." },
+      { q: "What rep range is classically used to build muscle size (hypertrophy)?",
+        opts: ["1 to 3 reps only", "Roughly 6 to 12 reps", "Only 25-plus reps counts as hypertrophy work", "Reps don't matter for size, only rest time does"], correct: 1,
+        teach: "The traditional hypertrophy zone is about 6 to 12 reps at moderate load, though research shows a wide range of reps can build muscle if sets are taken close to effort failure.",
+        right: "SIX TO TWELVE. SWEET SPOT FOR SWOLE.", wrong: "CLOSE, BUT SIZE ZONE ELSEWHERE." },
+      { q: "How long should you rest between sets when training for maximal strength (heavy, low reps)?",
+        opts: ["15 to 30 seconds", "About 2 to 5 minutes", "No rest at all, back to back", "10-plus minutes every set"], correct: 1,
+        teach: "Heavy strength work needs longer rest, about 2 to 5 minutes, so the nervous system and energy stores can recover before the next set.",
+        right: "REST LONG. HEAVY WEIGHT DESERVE PATIENCE.", wrong: "TOO FAST OR TOO SLOW. TRY MIDDLE." },
+      { q: "Does \"toning\" a muscle require special light-weight, high-rep exercises instead of heavier lifting?",
+        opts: ["Yes, light weights sculpt while heavy weights only bulk", "No, \"tone\" is really just visible muscle plus lower body fat, and muscle responds to a wide range of rep ranges when sets are hard enough", "Only cardio machines can \"tone\" a muscle", "Toning requires avoiding resistance training altogether"], correct: 1,
+        teach: "There is no special \"toning\" rep range. Visible muscle definition comes from muscle plus body fat level, and hypertrophy research shows a range of rep counts work when effort is high.",
+        right: "TONE IS A MYTH WORD. MUSCLE IS MUSCLE.", wrong: "LIGHT WEIGHT MAGIC NOT REAL, TRY AGAIN." }
+    ] },
+    { title: "CHECKPOINT THREE · FUEL", qs: [
+      { q: "How much protein per kilogram of bodyweight should most exercising adults eat daily to build or maintain muscle?",
+        opts: ["0.4 to 0.8 grams per kg", "1.4 to 2.0 grams per kg", "4 to 5 grams per kg", "Protein amount doesn't matter if you train hard enough"], correct: 1,
+        teach: "For most people training for muscle, 1.4 to 2.0 grams of protein per kilogram of bodyweight daily is enough for positive muscle protein balance.",
+        right: "ONE POINT FOUR TO TWO. ARM MATH CHECKS OUT.", wrong: "PROTEIN RANGE WRONG. FEED MUSCLE PROPER." },
+      { q: "Do you have to eat protein within 30 minutes after a workout or lose your gains?",
+        opts: ["Yes, the \"anabolic window\" slams shut at 30 to 45 minutes", "No, muscles stay receptive to protein for around 24 hours after training, and total daily intake matters most", "Only true if you train fasted", "Only true for people over 40"], correct: 1,
+        teach: "The strict post-workout window is a myth. Muscles stay primed for protein for about a day after training, so total daily protein intake matters far more than the exact minute you eat.",
+        right: "WINDOW MYTH. DAY-LONG DOOR STAY OPEN.", wrong: "CLOCK NOT BOSS OF GAINS. TRY AGAIN." },
+      { q: "How much water must every adult drink each day, according to the science?",
+        opts: ["Exactly 8 glasses (64 oz), no more, no less, for everyone", "There's no single fixed number, needs vary by person, size, climate, and activity level", "A full gallon minimum, always", "Water intake makes no difference to how you feel or perform"], correct: 1,
+        teach: "The fixed \"8 glasses a day\" rule isn't a scientific standard. Fluid needs vary by body size, climate, and activity, and thirst is a reasonable practical guide for most people at rest or moderate activity.",
+        right: "EIGHT GLASSES A MADE-UP NUMBER. DRINK SMART.", wrong: "NO FIXED CUP COUNT. THIRST YOUR GUIDE." },
+      { q: "How many hours of sleep do health authorities recommend for adults?",
+        opts: ["4 to 5 hours is enough if you push through it", "7 to 9 hours", "10 to 12 hours minimum, always", "Sleep amount has no effect on training results"], correct: 1,
+        teach: "Adults need about 7 to 9 hours of sleep a night for health and recovery; consistently sleeping 6 or fewer hours is linked to worse health outcomes.",
+        right: "SEVEN TO NINE. SLEEP IS TRAINING TOO.", wrong: "SHORT SLEEP NOT SHORTCUT. TRY AGAIN." },
+      { q: "Do you need to train every single day with zero rest days to make progress?",
+        opts: ["Yes, rest days are wasted days", "No, planned rest or lower-intensity days are part of a normal training program, recovery is when adaptation happens", "Rest days are only for people who overtrained badly", "Rest days should only happen after several months of training"], correct: 1,
+        teach: "Recovery days are a built-in part of training, not a failure. Muscles and the nervous system need recovery time to actually adapt to the work you put in.",
+        right: "REST IS PART OF PLAN. NOT PUNISHMENT.", wrong: "NO REST NOT A FLEX. TRY AGAIN, HUMAN." }
+    ] }
+  ];
+
+  let qzIdx = -1, qzQuestions = [], qzPos = 0, qzPicks = [], qzScore = 0, qzRetake = false, qzMissed = [];
+  let qzOrigScore = 0, qzOrigPicks = [], qzAnswered = false;
+
+  function openCheckpoint(idx) {
+    qzIdx = idx; state.paused = true;
+    qzQuestions = QUIZ[idx].qs.map(q => ({ ...q })); qzPos = 0; qzPicks = []; qzScore = 0; qzRetake = false; qzMissed = [];
+    cpTitle.textContent = QUIZ[idx].title;
+    paintQuestion();
+    cpWrap.hidden = false;
+    cpWrap.scrollIntoView({ block: "nearest" });
+  }
+
+  function paintQuestion() {
+    qzAnswered = false;
+    const q = qzQuestions[qzPos];
+    const showNote = qzIdx === 0 && qzPos === 0 && !qzRetake;
+    qzBody.innerHTML =
+      '<p class="qzProg">' + (qzRetake ? "RETAKE " : "QUESTION ") + (qzPos + 1) + " OF " + qzQuestions.length + '</p>' +
+      '<p class="qzQ">' + q.q + '</p>' +
+      '<div class="qzOpts" id="qzOpts">' + q.opts.map((o, i) => '<button type="button" class="qzOpt" data-i="' + i + '">' + o + '</button>').join('') + '</div>' +
+      '<p class="qzTeach" id="qzTeach" hidden></p>' +
+      (showNote ? '<p class="qzNote">' + NOT_MEDICAL + '</p>' : '') +
+      '<div class="modalBtns"><button type="button" id="qzNext" hidden>NEXT</button></div>';
+    qzBody.querySelectorAll(".qzOpt").forEach(btn => btn.addEventListener("click", onPick));
+    document.getElementById("qzNext").addEventListener("click", onNext);
+  }
+
+  function onPick(e) {
+    if (qzAnswered) return;
+    qzAnswered = true;
+    const chosen = +e.currentTarget.dataset.i;
+    const q = qzQuestions[qzPos];
+    qzBody.querySelectorAll(".qzOpt").forEach((btn, i) => {
+      btn.disabled = true;
+      if (i === q.correct) btn.classList.add("correct");
+      if (i === chosen && chosen !== q.correct) btn.classList.add("wrong");
     });
-  })();
+    const teach = document.getElementById("qzTeach"); teach.hidden = false; teach.textContent = q.teach;
+    cpTitle.textContent = chosen === q.correct ? q.right : q.wrong;
+    document.getElementById("qzNext").hidden = false;
+    qzPicks.push(chosen);
+    if (!qzRetake) { if (chosen === q.correct) qzScore++; else qzMissed.push(qzPos); }
+    arBlip(chosen === q.correct ? 700 : 220, .09);
+    // loop fix (GUESSED, see README): a wrong pick costs real distance, live, even mid-quiz - the Hand
+    // steps forward under the corridor render sitting behind this modal. A correct pick gets Armie's grin,
+    // not a step. checkCatch() is deliberately not called here (the modal is open); the cost simply lands on
+    // the gap the player returns to when the checkpoint closes, in commitCheckpoint below.
+    if (chosen === q.correct) armieGrin();
+    else { state.handRow += 1; render(); save(); }
+  }
 
+  function onNext() {
+    qzPos++;
+    if (qzPos < qzQuestions.length) { cpTitle.textContent = QUIZ[qzIdx].title; paintQuestion(); return; }
+    finishRound();
+  }
 
-  // --- the plan builder. Absurd choices in, a real correction out.
-  //
+  function finishRound() {
+    if (!qzRetake) {
+      qzOrigScore = qzScore; qzOrigPicks = qzPicks.slice();
+      if (qzScore >= 3) { commitCheckpoint(); return; }
+      qzRetake = true;
+      qzQuestions = qzMissed.map(i => {
+        const orig = QUIZ[qzIdx].qs[i], wrongIdx = qzPicks[i];
+        const opts = orig.opts.filter((_, oi) => oi !== wrongIdx);
+        const correct = wrongIdx < orig.correct ? orig.correct - 1 : orig.correct;
+        return { q: orig.q, opts, correct, teach: orig.teach, right: orig.right, wrong: orig.wrong };
+      });
+      qzPos = 0; qzPicks = [];
+      cpTitle.textContent = "TRY AGAIN. ARMIE PATIENT. HAND NOT.";
+      qzBody.innerHTML = '<p class="qzQ">The wrong answer is gone. Same questions Armie caught you on, one option lighter.</p>' +
+        '<div class="modalBtns"><button type="button" id="qzRetakeGo">TRY AGAIN</button></div>';
+      document.getElementById("qzRetakeGo").addEventListener("click", () => { cpTitle.textContent = QUIZ[qzIdx].title; paintQuestion(); });
+      return;
+    }
+    commitCheckpoint();
+  }
+
+  function commitCheckpoint() {
+    state.cpPick[qzIdx] = { score: qzOrigScore, of: 5, picks: qzOrigPicks };
+    state.cleared[qzIdx] = true;
+    // loop fix (GUESSED, see README): clearing the gate no longer snaps the gap straight back to RESET_GAP.
+    // It recovers 2 rows from wherever the quiz left it (each wrong pick above already cost a row), capped at
+    // RESET_GAP, so a shaky quiz leaves the player closer to the Hand for the stretch of hall right after the
+    // gate instead of wiping the threat away. A perfect quiz (no wrong picks) still comes out at RESET_GAP.
+    const gapNow = Math.max(0, state.row - state.handRow);
+    state.handRow = state.row - Math.min(RESET_GAP, gapNow + 2);
+    cpWrap.hidden = true;
+    if (qzIdx === 2) { save(); openBreathing(); return; }
+    state.paused = false;
+    save();
+    say("CHECKPOINT CLEARED. THE HALL CONTINUES.");
+    render();
+  }
+
+  // ---------------------------------------------------------------- the character selector: the collect,
+  // disguised (spec section 3). Writes state.goals/state.species exactly the way checkpoint one used to;
+  // style/experience are flavour only, pre-filling the plan form's own selects at the moment the visitor
+  // leaves this screen, never persisted onto the state object and never touching the MBS.form payload.
+  const selectWrap = document.getElementById("selectWrap"), gameWrap = document.getElementById("gameWrap");
+  const selStyles = document.getElementById("selStyles"), selExp = document.getElementById("selExp");
+  const selSpecies = document.getElementById("selSpecies"), selGoal = document.getElementById("selGoal");
+  const selStart = document.getElementById("selStart");
+
+  const STYLES = [
+    { key: "bodybuilding", label: "BODYBUILDING / HYPERTROPHY TRAINING", builds: "Muscle size and moderate strength through higher training volume", not: "Not the most efficient path to a 1-rep max or to cardiovascular endurance", str: 4, end: 2, flex: 2, formStyle: "BODYBUILDING" },
+    { key: "powerlifting", label: "POWERLIFTING / STRENGTH TRAINING", builds: "Maximal strength in a few key lifts (squat, bench, deadlift)", not: "Doesn't build cardiovascular endurance or flexibility on its own", str: 5, end: 1, flex: 1, formStyle: "POWERLIFTING" },
+    { key: "bodyweight", label: "AT-HOME BODYWEIGHT TRAINING", builds: "Functional strength and muscular endurance using your own bodyweight", not: "Loading is capped by bodyweight, harder to keep progressively overloading without added resistance", str: 3, end: 3, flex: 3, formStyle: "CALISTHENICS" },
+    { key: "gym", label: "IN-THE-GYM GENERAL FITNESS", builds: "A balanced mix of strength and conditioning, matching the general aerobic-plus-strength guidelines", not: "Not specialized enough to maximize any one single trait fast", str: 3, end: 3, flex: 2, formStyle: "OVERALL HEALTH" },
+    { key: "endurance", label: "ENDURANCE / RUNNING", builds: "Aerobic capacity and cardiovascular health", not: "Not an efficient path to muscle size or maximal strength, and heavy running volume can blunt strength gains if not balanced", str: 1, end: 5, flex: 2, formStyle: "RUNNING AWAY (ENDURANCE)" },
+    { key: "calisthenics", label: "CALISTHENICS", builds: "Relative bodyweight strength, coordination, and mobility", not: "Harder to keep progressing maximal strength past a certain point without added load or bands", str: 3, end: 3, flex: 4, formStyle: "CALISTHENICS" },
+    { key: "crossfit", label: "CROSSFIT / FUNCTIONAL FITNESS", builds: "Mixed work capacity across strength and conditioning", not: "Rarely produces the peak specialization of a dedicated strength or endurance program", str: 3, end: 4, flex: 3, formStyle: "OVERALL HEALTH" },
+    { key: "yoga", label: "YOGA / MOBILITY FOCUSED", builds: "Flexibility, balance, and body control", not: "Not a significant driver of muscular strength or high-intensity cardiovascular conditioning", str: 1, end: 2, flex: 5, formStyle: "BENDING (MOBILITY)" }
+  ];
+  const EXP_FORM = { new: "NEVER MOVED BEFORE", some: "MOVE SOMETIMES", years: "MOVE A LOT" };
+
+  function statBar(n) {
+    let s = '<span class="statBar">';
+    for (let i = 1; i <= 5; i++) s += '<i class="' + (i <= n ? "on" : "") + '"></i>';
+    return s + '</span>';
+  }
+  selStyles.innerHTML = STYLES.map(s =>
+    '<button type="button" class="styleCard" data-key="' + s.key + '">' +
+      '<b>' + s.label + '</b>' + s.builds +
+      '<span class="not">Not the whole story: ' + s.not + '</span>' +
+      '<span class="statRow">STR' + statBar(s.str) + 'END' + statBar(s.end) + 'FLEX' + statBar(s.flex) + '</span>' +
+    '</button>'
+  ).join("");
+
+  let selectedStyle = null, selectedExp = null;
+  selStyles.querySelectorAll(".styleCard").forEach(btn => btn.addEventListener("click", () => {
+    selectedStyle = STYLES.find(s => s.key === btn.dataset.key);
+    selStyles.querySelectorAll(".styleCard").forEach(b => b.classList.toggle("picked", b === btn));
+    updateSelStart();
+  }));
+  selExp.querySelectorAll(".lvl").forEach(btn => btn.addEventListener("click", () => {
+    selectedExp = btn.dataset.key;
+    selExp.querySelectorAll(".lvl").forEach(b => b.classList.toggle("picked", b === btn));
+    updateSelStart();
+  }));
+  selSpecies.addEventListener("change", updateSelStart);
+  function updateSelStart() { selStart.disabled = !(selectedStyle && selectedExp && selSpecies.value); }
+
+  // persistence fix (spec 0903 part 4, GUESSED): style/experience now live on state (added to the state
+  // object above) instead of only in these two local vars, so a reload can restore them the same way goals
+  // and species already do. This one function fills #arFinal's style/experience selects from state, called
+  // both here on first pick and once at boot below when a saved session skips the selector entirely.
+  function applyFinalFormPicks() {
+    const styleSel = document.querySelector('#arFinal [name=style]');
+    const expSel = document.querySelector('#arFinal [name=experience]');
+    if (styleSel && state.style) styleSel.value = state.style;
+    if (expSel && state.experience) expSel.value = state.experience;
+  }
+
+  selStart.addEventListener("click", () => {
+    if (selStart.disabled) return;
+    state.goals = selGoal.value.trim() || "getting stronger";
+    state.species = selSpecies.value;
+    state.style = selectedStyle ? selectedStyle.formStyle : "";
+    state.experience = selectedExp ? EXP_FORM[selectedExp] : "";
+    save();
+    applyFinalFormPicks();
+    selectWrap.hidden = true; gameWrap.hidden = false;
+    resizeCanvas(); render();
+  });
+
+  // ---------------------------------------------------------------- the breathing beat: checkpoint 3's payoff
+  // and the unlock (locked, byte for byte)
+  function openFinal() {
+    state.finished = true;
+    document.getElementById("afterCorridor").hidden = false;
+    document.getElementById("afterCorridor").scrollIntoView({ block: "start" });
+    save();
+  }
+
+  const breathWrap = document.getElementById("breathModalWrap"), sac = document.getElementById("arSac");
+  const breathNote = document.getElementById("arBreathNote"), breathBar = document.getElementById("arBreathBar");
+  const serum = document.getElementById("arSerum"), cardBtn = document.getElementById("arCard"), letter = document.getElementById("arLetter");
+  const breathContinue = document.getElementById("breathContinue");
+  const FAST = 1.6, SLOW = 5.2, HOLD_MS = 15000;
+  let holding = false, t0 = 0, raf = 0, doneBreathing = false;
+  let period = FAST, phase = 0, last = performance.now();
+
+  function pulse(now) {
+    const dt = Math.min(100, now - last) / 1000; last = now;
+    phase = (phase + dt / period) % 1;
+    const k = 0.5 - 0.5 * Math.cos(phase * Math.PI * 2);
+    sac.style.transform = "scale(" + (0.8 + k * 0.24).toFixed(4) + ")";
+    requestAnimationFrame(pulse);
+  }
+  requestAnimationFrame(pulse);
+
+  function openBreathing() {
+    doneBreathing = false; holding = false; period = FAST; breathBar.style.width = "0%";
+    breathNote.textContent = "HOLD SPACE. OR PRESS AND HOLD THE SAC.";
+    serum.hidden = true; letter.hidden = true; cardBtn.hidden = false;
+    sac.classList.remove("lit");
+    breathWrap.hidden = false;
+    breathWrap.scrollIntoView({ block: "nearest" });
+  }
+  function breathTick() {
+    if (!holding || doneBreathing) return;
+    const el = Date.now() - t0, p = Math.min(1, el / HOLD_MS);
+    const start = FAST * 1.25;
+    period = start + (SLOW - start) * p;
+    breathBar.style.width = (p * 100).toFixed(1) + "%";
+    if (p >= 1) { breathFinish(); return; }
+    raf = requestAnimationFrame(breathTick);
+  }
+  function breathFinish() {
+    doneBreathing = true; holding = false; cancelAnimationFrame(raf);
+    sac.classList.add("lit"); period = SLOW; breathBar.style.width = "100%";
+    breathNote.textContent = "ARMIE SLEEP NOW.";
+    window.MBS && window.MBS.wave && window.MBS.wave();
+    setTimeout(() => { window.MBS && window.MBS.unlock && window.MBS.unlock("armie"); }, 300);
+    serum.hidden = false;
+  }
+  function breathStart() {
+    if (doneBreathing || holding) return;
+    holding = true; t0 = Date.now();
+    breathNote.textContent = "KEEP HOLD. ARMIE WATCH.";
+    period = FAST * 1.25;
+    raf = requestAnimationFrame(breathTick);
+  }
+  function breathStop() {
+    if (doneBreathing || !holding) return;
+    holding = false; cancelAnimationFrame(raf);
+    period = FAST; breathBar.style.width = "0%";
+    breathNote.textContent = "ARMIE GO BACK. HOLD AGAIN.";
+  }
+  document.addEventListener("keydown", e => {
+    if (breathWrap.hidden) return;
+    if (e.code !== "Space" && e.key !== " ") return;
+    e.preventDefault(); breathStart();
+  });
+  document.addEventListener("keyup", e => { if (e.code === "Space" || e.key === " ") breathStop(); });
+  window.addEventListener("blur", breathStop);
+  sac.addEventListener("pointerdown", e => { e.preventDefault(); breathStart(); });
+  document.addEventListener("pointerup", breathStop);
+  document.addEventListener("pointercancel", breathStop);
+  cardBtn.addEventListener("click", () => { letter.hidden = false; cardBtn.hidden = true; });
+  breathContinue.addEventListener("click", () => {
+    breathWrap.hidden = true; state.paused = false;
+    say("THE HALL OPENS. FIND THE EXIT.");
+    render(); save();
+  });
+
   //     IAN WRITES EVERYTHING IN CORRECTIONS AND PLANS BELOW. Fifteen years training
   //     professionally; the factual half of this page is his, not the model's. Every
   //     string marked TODO is a blank for him. Nothing ships as advice until he fills it.
-  //
   (function () {
-    const form = document.getElementById("arPlan");
+    const form = document.getElementById("arFinal");
     if (!form) return;
 
-    // the ladders. Index 0 to 5. The rep one ticks like a normal control and then stops pretending.
     const REPS    = ["1", "2", "3", "4", "5", "1,000"];
     const PROTEIN = ["one egg", "one whole chicken", "one whole pig", "one whole cow",
                      "one whole cow, and the fence", "a herd, unspecified"];
@@ -861,56 +1231,49 @@ ear-bulkhead-still.png,
                      "forty days, holy man level", "until something changes"];
     const hours = n => ["ONE","TWO","THREE","FOUR","FIVE","SIX","SEVEN","EIGHT","NINE","TEN",
                         "ELEVEN","TWELVE","THIRTEEN","FOURTEEN","FIFTEEN"][n - 1] + " HOURS";
-
-    // the labels on the sleep and work ladders. No middle ground offered, which is the joke.
     const BAND = h => h <= 5 ? ["ZOMBIE BRAIN","EVIL","SPECIAL CASE","BARELY A PERSON","RUNNING ON SPITE"][h - 1] || "ZOMBIE BRAIN"
                     : h >= 9 ? "DEPRESSION INCARNATE, LAZY SLOTH"
                     : "";
 
-    // ---------------------------------------------------------------- IAN FILLS THESE IN
-    // Each returns the honest correction for that choice, or "" for no correction needed.
-    // Keep them factual and general. They are the only true statements on this page.
+    // ---------------------------------------------------------------- ARMIE'S BEST GUESS (GUESSED, see README:
+    // the 13 TODO(Ian) placeholders, filled in Armie's voice, drawn only from the same guideline numbers
+    // already vetted in QUIZ above - not new claims. Ian's real fifteen-years-training pass still replaces
+    // this whenever he gets to it; nothing here is dressed up as more certain than a guess.
     const CORRECT = {
       reps(i) {
-        if (i === 5) return "TODO(Ian): why very high rep counts stop producing adaptation and start producing fatigue, and roughly where the useful range sits.";
-        if (i <= 1) return "TODO(Ian): why one or two reps is not a stimulus for most goals, and what a working set actually looks like.";
+        if (i === 5) return "ARMIE SAY: ONE THOUSAND REP NOT A SET, IS A COMPLAINT. PAST A CERTAIN REP COUNT THE MUSCLE STOP BUILDING AND THE JOINT START PAYING FOR IT. MOST GOAL LIVE SOMEWHERE UNDER THIRTY REP A SET, HEAVY OR LIGHT, TAKEN CLOSE TO HARD.";
+        if (i <= 1) return "ARMIE SAY: ONE REP IS A TEST, NOT A WORKOUT. A REAL WORKING SET IS ENOUGH REPS, DONE PROPER, TO ACTUALLY TIRE THE MUSCLE - USUALLY SOMEWHERE BETWEEN THREE AND TWENTY, DEPENDING WHAT YOU CHASING.";
         return "";
       },
       protein(i) {
-        if (i >= 2) return "TODO(Ian): what excessive protein actually does (constipation, displacing other food, cost), and a sane intake range by bodyweight.";
-        if (i === 0) return "TODO(Ian): why one egg is not enough protein to support training, in plain numbers.";
+        if (i >= 2) return "ARMIE SAY: BODY ONLY USE SO MUCH PROTEIN A DAY. REST SIT IN GUT, COST MONEY, CROWD OUT OTHER FOOD. MOST TRAINING HUMAN DO FINE AROUND 1.4 TO 2 GRAM PER KILOGRAM OF YOU, NOT PER COW.";
+        if (i === 0) return "ARMIE SAY: ONE EGG IS SIX GRAM PROTEIN. TRAINING BODY WANT MANY TIMES THAT ACROSS THE DAY. ONE EGG IS BREAKFAST, NOT A PLAN.";
         return "";
       },
       fast(i) {
-        if (i >= 3) return "TODO(Ian): what extended fasting really involves and why the long end is medically supervised, not a training choice.";
-        if (i === 0) return "TODO(Ian): what a three hour gap is and is not, and what fasting is actually claimed to do.";
+        if (i >= 3) return "ARMIE SAY: SHORT GAP BETWEEN MEAL IS FINE. GAP MEASURED IN DAYS IS MEDICAL, NOT TRAINING, AND NEED A REAL DOCTOR WATCHING, NOT A CLAY COACH.";
+        if (i === 0) return "ARMIE SAY: THREE HOUR IS JUST LUNCH TIME. FASTING NOT MAGIC, IT JUST MOVE WHEN YOU EAT, NOT HOW MUCH - TOTAL FOOD FOR THE DAY STILL DECIDE MOST OF IT.";
         return "";
       },
       sleep(h) {
-        if (h <= 5) return "TODO(Ian): what short sleep does to recovery, appetite and injury risk, and the real range.";
-        if (h >= 11) return "TODO(Ian): when long sleep is a symptom rather than a plan.";
+        if (h <= 5) return "ARMIE SAY: SHORT SLEEP MAKE RECOVERY SLOW, APPETITE LOUD, AND INJURY MORE LIKELY. AIM SEVEN TO NINE HOUR, NOT A BADGE OF HONOR.";
+        if (h >= 11) return "ARMIE SAY: SLEEPING PAST TEN, ELEVEN HOUR MOST NIGHT IS NOT EXTRA GAINS, IS OFTEN A SIGN SOMETHING ELSE TIRED. WORTH ASKING A DOCTOR, NOT JUST ARMIE.";
         return "";
       },
       work(h) {
-        if (h >= 12) return "TODO(Ian): how to train around long shifts without adding to the load.";
+        if (h >= 12) return "ARMIE SAY: LONG SHIFT EAT THE HOURS YOU WOULD SPEND RECOVERING. SHORTER, SIMPLER SESSION BEAT A BIG PROGRAM YOU CANNOT ACTUALLY REST FROM.";
         return "";
       },
-      style(v) {
-        return "TODO(Ian): one honest line per style about what it does and does not build.";
-      },
-      diet(v) {
-        return "TODO(Ian): one honest line per diet about what it needs watching for.";
-      }
+      style() { return "ARMIE SAY: EVERY STYLE BUILD SOMETHING AND SKIP SOMETHING ELSE. THE ONE YOU PICKED, ARMIE HAS NOT GRADED LINE BY LINE YET - ASK FOR THE REAL BREAKDOWN AND YOU GET ONE."; },
+      diet() { return "ARMIE SAY: NO DIET IS FREE. WHATEVER YOU EAT, WATCH THE THING IT MAKES EASY TO SKIP - PROTEIN, FIBER, OR JUST ENOUGH FOOD PERIOD. THE PICK ABOVE ARMIE HAS NOT GRADED LINE BY LINE YET."; }
     };
-
-    // The actual plan Ian hands back. Keyed however he wants; this is the shape, not the content.
     function realPlan(pick) {
-      return "TODO(Ian): the real plan for "
+      return "ARMIE SAY: A REAL PLAN NEED A REAL COACH LOOKING AT A REAL HUMAN, NOT A FORM. FOR "
         + pick.style + ", " + pick.diet + ", "
-        + pick.experience + ", around " + pick.work + " hours of work and " + pick.sleep + " of sleep. "
-        + "Goals and parameters to be defined by Ian.";
+        + pick.experience + ", AROUND " + pick.work + " HOUR OF WORK AND " + pick.sleep + " OF SLEEP - "
+        + "WRITE IN AND ARMIE SEND WHAT A REAL PROGRAM LOOK LIKE.";
     }
-    // ---------------------------------------------------------------- END OF IAN'S BLANKS
+    // ---------------------------------------------------------------- END OF ARMIE'S BEST GUESS
 
     const $ = id => document.getElementById(id);
     const bind = (slider, out, fmt) => {
@@ -928,6 +1291,7 @@ ear-bulkhead-still.png,
     form.addEventListener("submit", e => {
       e.preventDefault();
       const f = new FormData(form);
+      const review = String(f.get("review") || "").trim();
       const pick = {
         reps: +f.get("reps"), protein: +f.get("protein"), fast: +f.get("fast"),
         work: +f.get("work"), sleep: +f.get("sleep"),
@@ -940,20 +1304,22 @@ ear-bulkhead-still.png,
         CORRECT.style(pick.style), CORRECT.diet(pick.diet)
       ].filter(Boolean);
 
-      const list = $("arFixes");
-      list.innerHTML = fixes.map(t => "<li>" + t + "</li>").join("")
-        || "<li>TODO(Ian): the correction for a plan that is somehow fine.</li>";
+      $("arFixes").innerHTML = fixes.map(t => "<li>" + t + "</li>").join("")
+        || "<li>ARMIE SAY: NOTHING HERE ARMIE NEEDS TO FIX TODAY. STILL NOT A PRESCRIPTION. ASK A REAL COACH BEFORE YOU CHANGE ANYTHING BIG.</li>";
       $("arReal").textContent = realPlan(pick);
       $("arVerdict").hidden = false;
 
-      // the plan is the sixth collect; it rides the same gate as the rest
-      window.MBS && window.MBS.form && window.MBS.form("armie", { plan: pick });
+      // the one and only MBS.form call on this page: everything the corridor collected, merged.
+      window.MBS && window.MBS.form && window.MBS.form("armie", {
+        goals: state.goals, species: state.species,
+        checkpoints: { movement: state.cpPick[0], squats: state.cpPick[1], fuel: state.cpPick[2] },
+        review, plan: pick
+      });
 
       const MAIL = (window.MBS && window.MBS.MAIL) || "";
       const c = $("arPlanConfirm");
       if (MAIL) {
-        const body = "My plan:\n" + JSON.stringify(pick, null, 1)
-          + "\n\nArmie says it is bad. Send me the real one.";
+        const body = "My plan:\n" + JSON.stringify(pick, null, 1) + "\n\nArmie says it is bad. Send me the real one.";
         c.innerHTML = 'ARMIE SEND REAL PLAN. <a href="mailto:' + MAIL
           + "?subject=" + encodeURIComponent("The real plan")
           + "&body=" + encodeURIComponent(body) + '">Get it by email</a>';
@@ -963,99 +1329,12 @@ ear-bulkhead-still.png,
     });
   })();
 
-  // --- the breathing beat, and the unlock behind it (Ian, 2026-08-27).
-  // Hold SPACE at the bottom of the page: the sac slows 25% at once, then keeps slowing over 15s, then glows.
-  // The glow puts the coach to sleep, which is the only state in which his obsession is visible.
-  (function () {
-    const breath = document.getElementById("arBreath"), sac = document.getElementById("arSac");
-    if (!breath || !sac) return;
-    const note = document.getElementById("arBreathNote"), bar = document.getElementById("arBreathBar");
-    const serum = document.getElementById("arSerum"), cardBtn = document.getElementById("arCard"), letter = document.getElementById("arLetter");
-    const stage = document.querySelector(".ar .armstage");
-    const FAST = 1.6, SLOW = 5.2, HOLD_MS = 15000;      // seconds, seconds, milliseconds
-    let holding = false, t0 = 0, raf = 0, done = false;
-
-    // one phase accumulator, advanced by real elapsed time over the current period.
-    // Changing `period` never jumps the wave, it just changes how fast the phase advances.
-    let period = FAST, phase = 0, last = performance.now(), pulseRaf = 0;
-    function pulse(now) {
-      const dt = Math.min(100, now - last) / 1000; last = now;
-      phase = (phase + dt / period) % 1;
-      const k = 0.5 - 0.5 * Math.cos(phase * Math.PI * 2);      // 0 to 1, smooth at both ends
-      sac.style.transform = "scale(" + (0.78 + k * 0.28).toFixed(4) + ")";
-      pulseRaf = requestAnimationFrame(pulse);
-    }
-    pulseRaf = requestAnimationFrame(pulse);
-
-    function atBottom() {
-      const r = breath.getBoundingClientRect();
-      return r.top < window.innerHeight * 0.9 && r.bottom > 0;
-    }
-
-    function finish() {
-      done = true; holding = false; cancelAnimationFrame(raf); raf = 0;
-      sac.classList.add("lit"); period = SLOW;
-      const vein = document.getElementById("arVein");                 // the orange runs back up to him
-      if (vein) { document.dispatchEvent(new CustomEvent("mbs:armie-lit")); vein.classList.add("firing");
-                  setTimeout(() => vein.classList.remove("firing"), 4800); }
-      bar.style.width = "100%";
-      note.textContent = "ARMIE SLEEP NOW. GO UP.";
-      if (stage) {
-        stage.classList.add("asleep");
-        const arm = document.getElementById("arArm");
-        if (arm) {                                                   // he goes over on his side (Ian, 2026-08-27)
-          const side = new Image();
-          side.onload = () => { arm.src = side.src; arm.classList.add("sidefile"); };
-          side.onerror = () => { arm.src = "assets/armie/armie-asleep.png"; };   // rotate the upright one instead
-          side.src = "assets/armie/armie-asleep-side.png";
-        }
-      }
-      if (serum) serum.classList.add("shown");
-      // this is his ARG node: the page opens only once he is under
-      setTimeout(() => { window.MBS && window.MBS.unlock && window.MBS.unlock("armie"); }, 900);
-    }
-
-    function tick() {
-      if (!holding || done) return;
-      const el = Date.now() - t0, p = Math.min(1, el / HOLD_MS);
-      // 25% slower the instant you hold, then the rest of the way down across the fifteen seconds
-      const start = FAST * 1.25;
-      period = start + (SLOW - start) * p;
-      bar.style.width = (p * 100).toFixed(1) + "%";
-      if (p >= 1) { finish(); return; }
-      raf = requestAnimationFrame(tick);
-    }
-
-    function start() {
-      if (done || holding || !atBottom()) return;
-      holding = true; t0 = Date.now();
-      note.textContent = "KEEP HOLD. ARMIE WATCH.";
-      period = FAST * 1.25;
-      raf = requestAnimationFrame(tick);
-    }
-    function stop() {
-      if (done || !holding) return;
-      holding = false; cancelAnimationFrame(raf); raf = 0;
-      period = FAST; bar.style.width = "0%";
-      note.textContent = "ARMIE GO BACK. HOLD AGAIN.";
-    }
-
-    document.addEventListener("keydown", e => {
-      if (e.code !== "Space" && e.key !== " ") return;
-      const t = e.target, tag = t && t.tagName;
-      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || (t && t.isContentEditable)) return;  // never steal the space bar from a form
-      if (!atBottom()) return;
-      e.preventDefault(); start();
-    });
-    document.addEventListener("keyup", e => { if (e.code === "Space" || e.key === " ") stop(); });
-    window.addEventListener("blur", stop);
-    // a phone has no space bar: press and hold the sac instead
-    sac.addEventListener("pointerdown", e => { e.preventDefault(); start(); });
-    document.addEventListener("pointerup", stop);
-    document.addEventListener("pointercancel", stop);
-
-    if (cardBtn && letter) cardBtn.addEventListener("click", () => {
-      letter.hidden = false; cardBtn.hidden = true;
-    });
-  })();
+  // ---------------------------------------------------------------- boot: resume where the visitor left off.
+  // The selector is skipped when state.goals is already set (a resumed session) - checked before anything else.
+  if (state.goals) { selectWrap.hidden = true; gameWrap.hidden = false; applyFinalFormPicks(); }
+  else { selectWrap.hidden = false; gameWrap.hidden = true; }
+  if (state.finished) { document.getElementById("afterCorridor").hidden = false; }
+  resizeCanvas();
+  render();
+})();
 </script>

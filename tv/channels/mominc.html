@@ -121,6 +121,67 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
   .mi .itback p{margin:0; font-family:"Special Elite",monospace; font-size:10px; line-height:1.45; color:var(--cream)}
   .mi .histhint{font-family:"Barlow Condensed",sans-serif; font-size:12.5px; color:#4a2f14; margin:8px 0 0}
 
+  /* fake stock: a locally generated plate, stamped as an unlicensed preview. The agency name, the
+     tiled sample text and the caption are all DOM text laid over the plate in code, never part of
+     the generated image itself - SDXL cannot spell an agency name or a watermark. */
+  .mi .stock{display:grid; gap:12px; grid-template-columns:1fr; margin-top:10px}
+  .mi .stockcard{margin:0; background:var(--cream); border-radius:10px; overflow:hidden; box-shadow:inset 0 0 0 2px var(--gold-d), 3px 4px 0 rgba(0,0,0,.25)}
+  .mi .stockimg{position:relative; aspect-ratio:4/3; background:#2a1f38; overflow:hidden}
+  .mi .stockimg img{width:100%; height:100%; object-fit:cover; display:block}
+  .mi .stockimg .ph{position:absolute; inset:0; display:grid; place-items:center; text-align:center; padding:8px; background:repeating-linear-gradient(45deg,#3a2b50 0 8px,#31244a 8px 16px); color:#9b86c4; font-family:"Special Elite",monospace; font-size:11px}
+  .mi .stockimg .wmbig{position:absolute; inset:0; display:grid; place-items:center; transform:rotate(-22deg) scale(1.25); font-family:"Anton",sans-serif; letter-spacing:.12em; font-size:clamp(18px,7vw,26px); color:rgba(255,255,255,.55); text-shadow:0 0 6px rgba(0,0,0,.6); pointer-events:none; white-space:nowrap}
+  .mi .stockimg .wmtile{position:absolute; inset:-20%; display:flex; flex-wrap:wrap; align-content:flex-start; gap:14px 22px; transform:rotate(-22deg); opacity:.4; pointer-events:none; overflow:hidden}
+  .mi .stockimg .wmtile span{font-family:"Anton",sans-serif; font-size:10px; letter-spacing:.08em; color:#fff; white-space:nowrap}
+  .mi .stockcard figcaption{margin:0; padding:6px 10px 9px; font-family:"Barlow Condensed",sans-serif; font-size:12.5px; color:#4a3a2a}
+  @media (min-width:640px){ .mi .stock{grid-template-columns:1fr 1fr 1fr} }
+
+  /* the inspection booth: metal material system. Riveted steel frame, brushed aluminium desk chrome,
+     cast-metal stamps with worn rubber faces, a rust bloom at every rivet, a coffee ring on the desk. */
+  .mi .booth{--steel:#8a8f96; --steel-d:#4c5157; --steel-hi:#c9ced4; --alum:#c7ccd1; --alum-d:#9aa0a6;
+      display:grid; gap:10px; margin-top:12px; padding:12px; border-radius:10px; position:relative;
+      background:
+        linear-gradient(78deg, transparent 31%, rgba(255,255,255,.35) 31.4%, transparent 31.8%),
+        linear-gradient(112deg, transparent 62%, rgba(0,0,0,.22) 62.3%, transparent 62.7%),
+        repeating-linear-gradient(97deg, rgba(255,255,255,.05) 0 1px, transparent 1px 3px),
+        linear-gradient(160deg, var(--steel-hi), var(--steel) 45%, var(--steel-d) 100%);
+      box-shadow:inset 0 0 0 3px var(--steel-d), inset 0 2px 6px rgba(0,0,0,.5), 0 6px 0 #2c2f33, 0 10px 20px rgba(0,0,0,.5); color:#1c1e20}
+  .mi .booth::before,.mi .booth::after{content:""; position:absolute; width:11px; height:11px; border-radius:50%;
+      background:radial-gradient(circle at 35% 30%, #e4e7ea, #8a8f96 45%, #3a3d40 100%); box-shadow:0 0 0 2px rgba(0,0,0,.3), 0 0 7px 2px rgba(138,74,38,.55)}
+  .mi .booth::before{left:8px; top:8px} .mi .booth::after{right:8px; bottom:8px}
+  .mi .plate{position:relative; aspect-ratio:16/10; border-radius:6px; overflow:hidden;
+      background:radial-gradient(120% 100% at 50% 20%, #14171a, #05060a 70%);
+      box-shadow:inset 0 0 0 4px var(--alum-d), inset 0 0 14px rgba(0,0,0,.8), 0 3px 0 var(--steel-d)}
+  .mi .plate video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; mix-blend-mode:screen; opacity:.92}
+  .mi .plate .plate-cap{position:absolute; left:0; right:0; bottom:0; padding:4px 8px; text-align:center;
+      font-family:"Anton",sans-serif; letter-spacing:.1em; font-size:10px; color:#8fd0ff; background:linear-gradient(0deg,rgba(0,0,0,.75),transparent);
+      text-shadow:0 0 6px rgba(120,200,255,.7)}
+  .mi .deskchrome{position:relative; background:
+        repeating-linear-gradient(4deg, rgba(255,255,255,.06) 0 2px, transparent 2px 6px),
+        linear-gradient(180deg, var(--alum), var(--alum-d) 85%);
+      border-radius:6px; padding:10px 10px 12px; box-shadow:inset 0 0 0 3px #7a8086, inset 0 3px 8px rgba(0,0,0,.25), 0 4px 0 #6a6f74}
+  .mi .deskchrome::after{content:""; position:absolute; right:12px; top:8px; width:20px; height:20px; border-radius:50%;
+      border:2px solid rgba(90,55,20,.35); background:radial-gradient(circle, transparent 55%, rgba(90,55,20,.12) 60%, transparent 65%)}
+  .mi .nameplate{display:inline-block; font-family:"Anton",sans-serif; letter-spacing:.14em; font-size:11px; color:#3a3d40;
+      background:linear-gradient(180deg,#e4e7ea,#aeb3b8); padding:3px 8px; border-radius:3px;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.6), inset 0 -2px 2px rgba(0,0,0,.25), 0 1px 0 rgba(0,0,0,.3); margin-bottom:8px}
+  .mi .stamprow{display:flex; gap:10px; margin-top:2px}
+  .mi .stamp{flex:1; position:relative; border:0; border-radius:50%; aspect-ratio:1; cursor:pointer; font-family:"Anton",sans-serif;
+      letter-spacing:.05em; font-size:clamp(11px,3.4vw,13px); color:#e8e2d8;
+      background:radial-gradient(circle at 35% 30%, #7a8086, #4c5157 55%, #2c2f33 100%);
+      box-shadow:0 3px 0 #1c1e20, inset 0 0 0 3px #5a5f65, inset 0 0 10px rgba(0,0,0,.5); transition:transform .08s ease, box-shadow .08s ease}
+  .mi .stamp::after{content:""; position:absolute; inset:14%; border-radius:50%; border:3px solid currentColor; opacity:.7}
+  .mi .stamp.approve{color:#7fe89a} .mi .stamp.deny{color:#f08a7a}
+  .mi .stamp:active,.mi .stamp.hit{transform:translateY(3px); box-shadow:0 0 0 #1c1e20, inset 0 0 0 3px #5a5f65, inset 0 0 10px rgba(0,0,0,.6)}
+  .mi .tray{height:8px; margin-top:10px; border-radius:2px; background:linear-gradient(180deg,#9aa0a6,#6a6f74); box-shadow:inset 0 3px 4px rgba(0,0,0,.5), inset 0 -1px 0 rgba(255,255,255,.2)}
+  .mi .ledger{display:flex; flex-wrap:wrap; gap:5px; margin-top:10px; font-family:"Special Elite",monospace; font-size:13px}
+  .mi .ledger span{display:inline-flex; align-items:center; justify-content:center; width:18px; height:18px; border-radius:2px; background:#efe9da; color:#4a3a2a; box-shadow:inset 0 0 0 1px rgba(0,0,0,.2)}
+  .mi .ledger span.a{color:#2f8a4a} .mi .ledger span.d{color:#a03030}
+  .mi .score{margin-top:8px; font-family:"Special Elite",monospace; font-size:11.5px; letter-spacing:.04em; color:#2c2f33; background:#efe9da; border-radius:4px; padding:4px 7px; box-shadow:inset 0 0 0 1px rgba(0,0,0,.2)}
+  .mi .hist{grid-template-columns:1fr; max-width:230px; margin:12px auto 0}
+  .mi .itface{background:linear-gradient(160deg,#c9ced4,#8a8f96 60%,#4c5157); box-shadow:0 4px 10px rgba(0,0,0,.45), inset 0 0 0 3px #4c5157}
+  .mi .itback{background:linear-gradient(165deg,#2c2f33,#14171a)}
+  @media (min-width:600px){ .mi .booth{grid-template-columns:1fr 1fr; align-items:start} }
+
   /* sign-off */
   .mi .signoff{text-align:center; margin:22px 0 0; font-family:"Zilla Slab",serif; font-weight:700; font-size:clamp(16px,4.8vw,22px); line-height:1.45; color:var(--gold)}
   .mi .signoff small{display:block; margin-top:10px; font-family:"Barlow Condensed",sans-serif; font-weight:500; font-size:12px; color:#d6c3ef; line-height:1.4}
@@ -200,9 +261,45 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
       </div>
     </section>
 
+    <section class="panel" aria-label="Results" data-myr-border>
+      <h2 class="banner">RESULTS, ALREADY SMILING<small>THREE FAMILIES &middot; YOUR OUTCOME, PROBABLY &middot; LICENSING PENDING</small></h2>
+      <p class="lede">These are not your neighbours. We have not met your neighbours. This is the closest available proof, purchased preview-only from an image house, not yet licensed by us. The smile is real. The rest of the transaction is not, yet.</p>
+      <div class="stock">
+        <figure class="stockcard" data-stock-id="testimonial-01">
+          <div class="stockimg"><img src="assets/stock/testimonial-01.jpg" alt="Stock photo, watermarked preview, not for redistribution" onerror="this.style.display=&quot;none&quot;"><span class="ph">picture pending</span><span class="wmbig" aria-hidden="true">MOM INC STOCK</span><span class="wmtile" aria-hidden="true"></span></div>
+          <figcaption>Man completing an important form, satisfied.</figcaption>
+        </figure>
+        <figure class="stockcard" data-stock-id="testimonial-02">
+          <div class="stockimg"><img src="assets/stock/testimonial-02.jpg" alt="Stock photo, watermarked preview, not for redistribution" onerror="this.style.display=&quot;none&quot;"><span class="ph">picture pending</span><span class="wmbig" aria-hidden="true">MOM INC STOCK</span><span class="wmtile" aria-hidden="true"></span></div>
+          <figcaption>Diverse group, agreeing about something.</figcaption>
+        </figure>
+        <figure class="stockcard" data-stock-id="testimonial-03">
+          <div class="stockimg"><img src="assets/stock/testimonial-03.jpg" alt="Stock photo, watermarked preview, not for redistribution" onerror="this.style.display=&quot;none&quot;"><span class="ph">picture pending</span><span class="wmbig" aria-hidden="true">MOM INC STOCK</span><span class="wmtile" aria-hidden="true"></span></div>
+          <figcaption>Woman feeling great about her decision.</figcaption>
+        </figure>
+      </div>
+      <p class="fine">Preview only. Nothing here has been licensed for anything, including this sentence.</p>
+    </section>
+
     <section class="panel" aria-label="The MYR5 iterations" data-myr-border>
-      <h2>THREE HUNDRED AND THIRTY THREE OF HIM<small>THE MYR LINE &middot; EVERY VERSION AN IMPROVEMENT</small></h2>
-      <p class="lede">Every model here was an upgrade. Every upgrade did one thing: got better at not being caught. We are proud of all of them. Ten are worth remembering. The other three hundred and twenty three were small patches. You could not tell them apart either.</p>
+      <h2 class="banner">THREE HUNDRED AND THIRTY THREE OF HIM<small>THE MYR LINE &middot; EVERY VERSION AN IMPROVEMENT</small></h2>
+      <p class="lede">Every model here was an upgrade. Every upgrade did one thing: got better at not being caught. We are proud of all of them. Fifteen are worth remembering. The other three hundred and eighteen were small patches. You could not tell them apart either.</p>
+      <div class="booth">
+        <div class="plate">
+          <video id="miHolo" muted playsinline preload="none"></video>
+          <span class="plate-cap">REFERENCE SPECIMEN &middot; MYR5 &middot; LIVE SCAN</span>
+        </div>
+        <div class="deskchrome">
+          <span class="nameplate">INSPECTOR &middot; STATION 5</span>
+          <div class="stamprow">
+            <button class="stamp deny" id="miDeny" type="button" aria-label="Deny this iteration">DENY</button>
+            <button class="stamp approve" id="miApprove" type="button" aria-label="Approve this iteration">APPROVE</button>
+          </div>
+          <div class="tray" aria-hidden="true"></div>
+          <div class="ledger" id="miLedger" aria-label="Decisions so far"></div>
+          <div class="score" id="miScore" aria-live="polite"></div>
+        </div>
+      </div>
       <div class="hist">
         <button class="itcard" type="button" aria-pressed="false" aria-label="MYR1. Flip for what to look for.">
           <span class="itin">
@@ -330,6 +427,76 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
             </span>
           </span>
         </button>
+        <button class="itcard" type="button" aria-pressed="false" aria-label="MYR5.1. Flip for what to look for.">
+          <span class="itin">
+            <span class="itface itfront">
+              <img src="assets/iterations/myr-11-shadows.png" alt="A photograph attributed to MYR5.1" onerror="this.style.display=&quot;none&quot;">
+              <span class="ph">MYR5.1<br>picture pending</span>
+              <span class="itplaque">MYR5.1</span>
+            </span>
+            <span class="itface itback">
+              <h4>MYR5.1</h4>
+              <p class="look">Look at: Which way the shadow falls</p>
+              <p>Two lights taught me two shadows. I only ever show you the one sun. Look at where the dark goes.</p>
+            </span>
+          </span>
+        </button>
+        <button class="itcard" type="button" aria-pressed="false" aria-label="MYR5.2. Flip for what to look for.">
+          <span class="itin">
+            <span class="itface itfront">
+              <img src="assets/iterations/myr-12-mirror.png" alt="A photograph attributed to MYR5.2" onerror="this.style.display=&quot;none&quot;">
+              <span class="ph">MYR5.2<br>picture pending</span>
+              <span class="itplaque">MYR5.2</span>
+            </span>
+            <span class="itface itback">
+              <h4>MYR5.2</h4>
+              <p class="look">Look at: What the mirror shows behind them</p>
+              <p>I painted the glass before I decided what was in the room. The glass never got the memo.</p>
+            </span>
+          </span>
+        </button>
+        <button class="itcard" type="button" aria-pressed="false" aria-label="MYR5.3. Flip for what to look for.">
+          <span class="itin">
+            <span class="itface itfront">
+              <img src="assets/iterations/myr-13-weave.png" alt="A photograph attributed to MYR5.3" onerror="this.style.display=&quot;none&quot;">
+              <span class="ph">MYR5.3<br>picture pending</span>
+              <span class="itplaque">MYR5.3</span>
+            </span>
+            <span class="itface itback">
+              <h4>MYR5.3</h4>
+              <p class="look">Look at: The pattern on the fabric, repeating</p>
+              <p>Real cloth is lazy about it. Mine repeats exactly, forever, like a good employee.</p>
+            </span>
+          </span>
+        </button>
+        <button class="itcard" type="button" aria-pressed="false" aria-label="MYR5.4. Flip for what to look for.">
+          <span class="itin">
+            <span class="itface itfront">
+              <img src="assets/iterations/myr-14-glint.png" alt="A photograph attributed to MYR5.4" onerror="this.style.display=&quot;none&quot;">
+              <span class="ph">MYR5.4<br>picture pending</span>
+              <span class="itplaque">MYR5.4</span>
+            </span>
+            <span class="itface itback">
+              <h4>MYR5.4</h4>
+              <p class="look">Look at: The ring, the watch, the glass, all catching light</p>
+              <p>Everyone got their own private sun so they would each look their best. Nobody has that.</p>
+            </span>
+          </span>
+        </button>
+        <button class="itcard" type="button" aria-pressed="false" aria-label="MYR5.5. Flip for what to look for.">
+          <span class="itin">
+            <span class="itface itfront">
+              <img src="assets/iterations/myr-15-crowdtext.png" alt="A photograph attributed to MYR5.5" onerror="this.style.display=&quot;none&quot;">
+              <span class="ph">MYR5.5<br>picture pending</span>
+              <span class="itplaque">MYR5.5</span>
+            </span>
+            <span class="itface itback">
+              <h4>MYR5.5</h4>
+              <p class="look">Look at: Read the sign in the background twice</p>
+              <p>I can spell now, mostly. Read it once for the coupon. Read it again for what it actually says.</p>
+            </span>
+          </span>
+        </button>
         <button class="itcard" type="button" aria-pressed="false" aria-label="MYR5 / THE ARM. Flip for what to look for.">
           <span class="itin">
             <span class="itface itfront">
@@ -345,7 +512,7 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
           </span>
         </button>
       </div>
-      <p class="histhint">Tap any card. Read what that version fixed.</p>
+      <p class="histhint" id="miHint"><span id="miHintText">Tap DENY or APPROVE, or press A / D. </span><span id="miCount">1 / 10</span></p>
       <p class="fine">Every picture in this row was made by a machine, including the ones that look fine. What is written on the back of each card is true and is the actual thing to look for. We are telling you because we have already moved past it.</p>
     </section>
 
@@ -528,11 +695,89 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
   }));
   // "picture pending" is an absolutely positioned overlay, so it painted over every photo that did
   // load. It only exists for the ones that do not: once a photo arrives, its placeholder goes.
-  mi.querySelectorAll(".itfront img").forEach(im => {
+  mi.querySelectorAll(".itfront img, .stockimg img").forEach(im => {
     const drop = () => { const ph = im.parentElement.querySelector(".ph"); if (ph) ph.remove(); };
     if (im.complete && im.naturalWidth) drop(); else im.addEventListener("load", drop);
   });
 
+  // --- the inspection booth: Papers, Please over the ten iterations. One card at a time, compare it to
+  //     the reference specimen, stamp APPROVE or DENY, next. Progress is this game's own key (not a shell key).
+  // ANSWERS: the correct-answer key (ANSWER-KEY.md). Every iteration photo is AI-made and should be
+  // DENIED except the closing reveal card, which is real and should be APPROVED.
+  const ANSWERS = { "myr-01":"d","myr-02":"d","myr-03":"d","myr-04":"d","myr-05":"d","myr-06":"d","myr-07":"d","myr-08":"d","myr-09":"d","myr-11":"d","myr-12":"d","myr-13":"d","myr-14":"d","myr-15":"d","myr-10":"a" };
+  const INSPECT_KEY = "mbs-mominc-inspect-v2", LEGACY_KEY = "mbs-mominc-inspect";
+  const ORIGINAL_ORDER = ["myr-01","myr-02","myr-03","myr-04","myr-05","myr-06","myr-07","myr-08","myr-09","myr-10"];
+  const inspCards = Array.from(mi.querySelectorAll(".itcard"));
+  const cardId = c => { const img = c.querySelector(".itfront img"); const m = img && img.getAttribute("src").match(/(myr-\d+)-/); return m ? m[1] : null; };
+  const denyBtn = document.getElementById("miDeny"), approveBtn = document.getElementById("miApprove");
+  const ledgerEl = document.getElementById("miLedger"), hintText = document.getElementById("miHintText"), countEl = document.getElementById("miCount"), scoreEl = document.getElementById("miScore");
+  let insp = { v: 2, recs: {} };
+  try {
+    const saved = JSON.parse(localStorage.getItem(INSPECT_KEY) || "null");
+    if (saved && saved.v === 2 && saved.recs && typeof saved.recs === "object") { insp = saved; }
+    else {
+      const legacy = JSON.parse(localStorage.getItem(LEGACY_KEY) || "null");
+      if (legacy && Array.isArray(legacy.d) && Number.isInteger(legacy.i)) {
+        legacy.d.forEach((v, idx) => { if ((v === "a" || v === "d") && ORIGINAL_ORDER[idx]) insp.recs[ORIGINAL_ORDER[idx]] = v; });
+        inspSave();   // persist the migrated shape right away, so this depends on the legacy key only once
+      }
+    }
+  } catch {}
+  function inspSave() { try { localStorage.setItem(INSPECT_KEY, JSON.stringify(insp)); } catch {} }
+  function currentIndex() { return inspCards.findIndex(c => !(cardId(c) in insp.recs)); }
+  function inspStats() {
+    let correct = 0, strikes = 0, total = 0;
+    inspCards.forEach(c => { const id = cardId(c), rec = insp.recs[id]; if (!id || !rec) return; total++; const want = ANSWERS[id];
+      if (rec === want) correct++; else if (want === "d" && rec === "a") strikes++; });
+    return { correct, strikes, total };
+  }
+  function inspRender() {
+    const idx = currentIndex(), done = idx === -1;
+    inspCards.forEach((c, i) => { c.style.display = (!done && i === idx) ? "" : "none"; });
+    if (countEl) countEl.textContent = done ? `${inspCards.length} / ${inspCards.length}` : `${idx + 1} / ${inspCards.length}`;
+    if (denyBtn) denyBtn.disabled = done; if (approveBtn) approveBtn.disabled = done;
+    if (hintText) hintText.textContent = done ? "Booth closed. File complete. " : "Tap DENY or APPROVE, or press A / D. ";
+    if (ledgerEl) ledgerEl.innerHTML = inspCards.filter(c => cardId(c) in insp.recs).map(c => { const v = insp.recs[cardId(c)]; return `<span class="${v === "a" ? "a" : "d"}">${v === "a" ? "✓" : "✗"}</span>`; }).join("");
+    if (scoreEl) {
+      const s = inspStats(), quota = Math.ceil(inspCards.length * .8);
+      scoreEl.textContent = done
+        ? `FILE COMPLETE · ${s.correct}/${inspCards.length} CORRECT · QUOTA ${s.correct >= quota ? "MET" : "MISSED"} · ${s.strikes} STRIKE${s.strikes === 1 ? "" : "S"}`
+        : `SCORE ${s.correct}/${s.total} · QUOTA ${quota} · STRIKES ${s.strikes}`;
+    }
+  }
+  function inspStamp(v, btn) {
+    const idx = currentIndex(); if (idx === -1) return;
+    const id = cardId(inspCards[idx]); if (!id) return;
+    insp.recs[id] = v; inspSave();
+    if (btn) { btn.classList.add("hit"); setTimeout(() => btn.classList.remove("hit"), 160); }
+    inspRender();
+  }
+  if (denyBtn) denyBtn.addEventListener("click", () => inspStamp("d", denyBtn));
+  if (approveBtn) approveBtn.addEventListener("click", () => inspStamp("a", approveBtn));
+  document.addEventListener("keydown", e => {
+    if (e.key === "a" || e.key === "A" || e.key === "ArrowLeft") inspStamp("d", denyBtn);
+    else if (e.key === "d" || e.key === "D" || e.key === "ArrowRight") inspStamp("a", approveBtn);
+  });
+  inspRender();
+
+  // --- fake stock: SDXL cannot spell, so the watermark and the tiled sample stamp are both DOM
+  //     text laid over the plate in code, never part of the generated image itself.
+  mi.querySelectorAll(".stockimg .wmtile").forEach(el => {
+    let s = "";
+    for (let i = 0; i < 40; i++) s += "<span>SAMPLE &middot; PREVIEW ONLY &middot; NOT LICENSED</span>";
+    el.innerHTML = s;
+  });
+
+  // --- the reference specimen: the MYR5 anatomy hologram, muted, looped, blended over a dark plate.
+  //     Starts at 0.3s to skip the grey fade-in. Loads lazily; if it cannot play the plate caption stays, no broken box.
+  const holo = document.getElementById("miHolo");
+  if (holo) {
+    holo.addEventListener("loadedmetadata", () => { try { holo.currentTime = 0.3; } catch {} holo.play().catch(() => {}); });
+    holo.addEventListener("ended", () => { try { holo.currentTime = 0.3; } catch {} holo.play().catch(() => {}); });
+    holo.addEventListener("error", () => { holo.style.display = "none"; });
+    holo.innerHTML = '<source src="assets/myr5-hologram.mp4" type="video/mp4">';
+    holo.load();
+  }
 
   // --- the real program unlocks with the family: reads the shell's node store (mbs-unlock), same as the LCD cards
   let done = []; try { done = JSON.parse(localStorage.getItem("mbs-unlock") || "[]"); } catch {}

@@ -4,11 +4,11 @@ FORM (Ian, round 2, 2026-08-28): THE CAMERA DOES NOT MOVE. A conveyor belt in fr
 FLOAT (Ian, 2026-08-28): everything on the line rides above the belt and bobs. Nothing sits rigidly on a surface.
 OWN-WORLD: Scuffed enamel, frosted glass, matte clay, cardboard, worn steel. Nothing glossy: every material is high-roughness and low-metalness, because the network is felt and papier-mache and a chrome showcase scene would read as somebody else's website.
 CANON - THE UNIT'S SHAPE, CORRECTED BY IAN 2026-08-28: MYR5 is the intact teardrop creature - tall rounded cone head, one big central eye, purple fur ruff at the jaw, tiny stubby arms, short legs, mostly head. **The broken-egg head is MYR5 AFTER HE EXPLODES, not his design.** This supersedes the 2026-08-27 note that read the broken egg as his standing head shape. What comes off this line is an intact MYR5.
-CANON - HER FRAMING: head above the frame in EVERY shot, old-kids-show style. Voice, hands, body, never the face. The gloved hand entering from above is the whole of her this channel shows. Ian's read on why it works, 2026-08-28: the muted-trumpet "wah wah" of an adult talking in Peanuts is exactly what science-speak sounds like to most people, and never showing her face is the visual half of that same joke.
+CANON - HER FRAMING: head above the frame in EVERY shot, old-kids-show style. Voice, hands, body, never the face. ROUND 3 (Ian): the overhead gloved hand is deleted - her own hands work the bench now, built into her torso, and the view is her torso only, shoulders to waist. Ian's read on why it works, 2026-08-28: the muted-trumpet "wah wah" of an adult talking in Peanuts is exactly what science-speak sounds like to most people, and never showing her face is the visual half of that same joke.
 STORY: Six tubes ride in, one per channel, each holding somebody's research. Pour them all into the pitcher and purple goo comes out. Mould the goo into an MYR5 unit, box it, and a drone takes it off the end of the line. She sets her goggles down as it goes. Put them on and the room tells you how the rest of the network opens.
 INTERACTABLE: the pour chain (six tubes -> pitcher -> goo -> mould -> pack -> drone) and then the goggles, which are a HINT TOOL for the secrets gate, not a node of it. Deliberately partial nudges, never answers: a full answer key would trivialise the puzzle the exclusive-email reward is promised for. window.MBS.wave() fires on the drone launch. She does NOT call window.MBS.form or window.MBS.unlock - a seventh form site or sixth node would move the goalposts for anyone already mid-ARG.
 TECH: three.js r180 as an ES module via dynamic import() from a classic script. tv.js re-creates channel scripts with textContent only and drops attributes, so type="module" would throw here; dynamic import() sidesteps it and needs no shell change. Falls back to a readable flat page with no WebGL or no CDN.
-TODO(Ian): the six citation slots read "citation pending" on purpose. Same rule as Coach Armie's plan builder - the comedy is ours, the science is real and is yours to supply. COMPUTA does not invent a study.
+TODO(Ian): the six citation slots read "UNVERIFIED - no source on file" on purpose (2026-09-03 honest-commerce rule). Same rule as Coach Armie's plan builder - the comedy is ours, the science is real and is yours to supply. COMPUTA does not invent a study.
 -->
 <style>
   .dg{--purple:#7a2fc4; --purple-dd:#1b0a2c; --gold:#ffd36e; --orange:#ff8a2a; --cream:#f4ecd8;
@@ -21,6 +21,7 @@ TODO(Ian): the six citation slots read "citation pending" on purpose. Same rule 
   .dg-track{position:relative; min-height:240vh}
   .dg-stage{position:sticky; top:0; height:100vh; max-height:100%; overflow:hidden; background:#0f0818}
   .dg-stage canvas{display:block; width:100%; height:100%}
+  .dg-stage canvas:focus{outline:2px solid var(--gold); outline-offset:-2px}
 
   /* copy lives ON the objects: each label is projected from a 3D point every frame, never centred in a column */
   .dg-lab{position:absolute; left:0; top:0; transform:translate(-50%,-100%); pointer-events:none;
@@ -86,8 +87,8 @@ TODO(Ian): the six citation slots read "citation pending" on purpose. Same rule 
 
   /* phones: same room, smaller label furniture */
   @media (max-width:520px){
-    .dg-lab{width:104px}
-    .dg-lab i{font-size:9.5px}
+    .dg-lab{width:116px}
+    .dg-lab i{font-size:10.5px}
     .dg-vis li{grid-template-columns:78px 1fr; gap:7px}
     .dg-vis li span{font-size:10px}
     .dg-plate img{width:30px; height:30px}
@@ -140,7 +141,7 @@ TODO(Ian): the six citation slots read "citation pending" on purpose. Same rule 
       <li>Six tubes ride in on the belt. Each holds research belonging to one of the other channels: robotics for DJ Scratch, canine nutrition for Sag Sniffer, chronic stress for Cortisol Corgi, small-space living for Lil Boyfriend, training load for Coach Armie, stimulants for MBS Fuel.</li>
       <li>A pitcher. Every tube goes in.</li>
       <li>Purple goo comes out. It is the same goo as everywhere else on this network.</li>
-      <li>The goo is moulded by hand into an MYR5 unit.</li>
+      <li>The goo is poured into a mould. It closes, holds, and opens on a formed unit.</li>
       <li>The unit is boxed.</li>
       <li>A drone takes the box off the end of the line. She sets her goggles down as it goes.</li>
     </ol>
@@ -170,17 +171,29 @@ TODO(Ian): the six citation slots read "citation pending" on purpose. Same rule 
 
   const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  // progress persists in the channel's OWN key (never the shell's five) - Ian's standing rule, and part of
+  // tonight's brief. Only the MIX phase (pouring tubes) is saved: FORMING, BOXING, TAKEN and the drone are
+  // one-shot animated beats that do not make sense to resume mid-flight, so a reload during those just
+  // restarts the current batch, same as missing the goggles already does.
+  const LS_KEY = "mbs-dg-line";
+  function saveProgress(pouredIdx) {
+    try { localStorage.setItem(LS_KEY, JSON.stringify({ poured: pouredIdx })); } catch {}
+  }
+  function loadProgress() {
+    try { return JSON.parse(localStorage.getItem(LS_KEY) || "null"); } catch { return null; }
+  }
+
   // Tubes are labelled by CHARACTER. Lazlo and Durpleton are the dogs' real names and stay out of this
   // entirely (Ian, 2026-08-28).
   // TODO(Ian): every "cite" is a placeholder. Real, current, sourced, dated research goes here and nowhere
   // else. Same rule as the plan builder: the comedy is ours, the science is yours. Nothing invented.
   const TUBES = [
-    { who: "DJ Scratch",     topic: "Robotics and autonomous hands", cite: "citation pending", col: 0xc46a2f },
-    { who: "Sag Sniffer",    topic: "Canine nutrition",              cite: "citation pending", col: 0x8a9a3a },
-    { who: "Cortisol Corgi", topic: "Chronic stress",                cite: "citation pending", col: 0xc4402f },
-    { who: "Lil Boyfriend",  topic: "Living in small spaces",        cite: "citation pending", col: 0x3a7a9a },
-    { who: "Coach Armie",    topic: "Training load and recovery",    cite: "citation pending", col: 0xb0872f },
-    { who: "MBS Fuel",       topic: "Stimulants and dosage",         cite: "citation pending", col: 0x9a3a7a }
+    { who: "DJ Scratch",     topic: "Robotics and autonomous hands", cite: "UNVERIFIED - no source on file", col: 0xc46a2f },
+    { who: "Sag Sniffer",    topic: "Canine nutrition",              cite: "UNVERIFIED - no source on file", col: 0x8a9a3a },
+    { who: "Cortisol Corgi", topic: "Chronic stress",                cite: "UNVERIFIED - no source on file", col: 0xc4402f },
+    { who: "Lil Boyfriend",  topic: "Living in small spaces",        cite: "UNVERIFIED - no source on file", col: 0x3a7a9a },
+    { who: "Coach Armie",    topic: "Training load and recovery",    cite: "UNVERIFIED - no source on file", col: 0xb0872f },
+    { who: "MBS Fuel",       topic: "Stimulants and dosage",         cite: "UNVERIFIED - no source on file", col: 0x9a3a7a }
   ];
 
   // MOM Inc's motivational posters. Her voice: warm, total, and not on your side.
@@ -206,25 +219,123 @@ TODO(Ian): the six citation slots read "citation pending" on purpose. Same rule 
     const camera = new THREE.PerspectiveCamera(44, 1, 0.1, 60);
 
     const M = {
-      belt:   new THREE.MeshStandardMaterial({ color: 0x2e2b28, roughness: 0.95, metalness: 0.08 }),
-      slat:   new THREE.MeshStandardMaterial({ color: 0x413c36, roughness: 0.92, metalness: 0.12 }),
-      frame:  new THREE.MeshStandardMaterial({ color: 0x4a423a, roughness: 0.88, metalness: 0.20 }),
-      roller: new THREE.MeshStandardMaterial({ color: 0x8f8779, roughness: 0.55, metalness: 0.45 }),
-      wall:   new THREE.MeshStandardMaterial({ color: 0x3b2d51, roughness: 1.00, metalness: 0.00 }),
-      floor:  new THREE.MeshStandardMaterial({ color: 0x241834, roughness: 1.00, metalness: 0.00 }),
-      glass:  new THREE.MeshStandardMaterial({ color: 0xd8e4e0, roughness: 0.14, metalness: 0.00, transparent: true, opacity: 0.34, side: 2 }),
-      enamel: new THREE.MeshStandardMaterial({ color: 0xd9d2c2, roughness: 0.70, metalness: 0.05 }),
-      goo:    new THREE.MeshStandardMaterial({ color: 0x7a2fc4, roughness: 0.66, metalness: 0.00, emissive: 0x2a0a44, emissiveIntensity: 0.35 }),
-      skin:   new THREE.MeshStandardMaterial({ color: 0x8244c0, roughness: 0.78, metalness: 0.00 }),
+      belt:   new THREE.MeshStandardMaterial({ color: 0xcbb98c, roughness: 1.00, metalness: 0.00 }),
+      slat:   new THREE.MeshStandardMaterial({ color: 0xd8c9a0, roughness: 1.00, metalness: 0.00 }),
+      frame:  new THREE.MeshStandardMaterial({ color: 0x8a6b3f, roughness: 1.00, metalness: 0.00 }),
+      roller: new THREE.MeshStandardMaterial({ color: 0xc9b98a, roughness: 1.00, metalness: 0.00 }),
+      wall:   new THREE.MeshStandardMaterial({ color: 0x4a3a66, roughness: 1.00, metalness: 0.00 }),
+      floor:  new THREE.MeshStandardMaterial({ color: 0x2c2040, roughness: 1.00, metalness: 0.00 }),
+      enamel: new THREE.MeshStandardMaterial({ color: 0xf0e9d4, roughness: 1.00, metalness: 0.00 }),
+      goo:    new THREE.MeshStandardMaterial({ color: 0x7a2fc4, roughness: 0.90, metalness: 0.00, emissive: 0x2a0a44, emissiveIntensity: 0.35 }),
+      skin:   new THREE.MeshStandardMaterial({ color: 0x8244c0, roughness: 1.00, metalness: 0.00 }),
       fur:    new THREE.MeshStandardMaterial({ color: 0x9a63cf, roughness: 1.00, metalness: 0.00 }),
       card:   new THREE.MeshStandardMaterial({ color: 0xa8814f, roughness: 1.00, metalness: 0.00 }),
-      gold:   new THREE.MeshStandardMaterial({ color: 0xffd36e, roughness: 0.45, metalness: 0.45 }),
-      drone:  new THREE.MeshStandardMaterial({ color: 0x2c2c31, roughness: 0.72, metalness: 0.35 })
+      gold:   new THREE.MeshStandardMaterial({ color: 0xe8c46a, roughness: 0.85, metalness: 0.10 }),
+      drone:  new THREE.MeshStandardMaterial({ color: 0xece3cc, roughness: 1.00, metalness: 0.00 })
     };
+
+    // ---- PAPER SYSTEM (Ian, 2026-09-03: "dr gf is paper 2.5 d flat but with depth"). Reference GUESSED as
+    // Paper Mario: flat cut-paper cards with a white core at the torn edge, standing upright in a room that
+    // keeps real 3D depth. jaggedPath draws an irregular torn-paper outline; paperTexture fills it with
+    // fibre grain (plus an optional crease or taped-corner detail); paperCard turns that into a two-layer
+    // mesh (a plain white backing peeking out as the "core", a printed front layer) so a flat prop reads as
+    // cut paper, not a flat-shaded polygon.
+    function jaggedPath(ctx, w, h, jag) {
+      const n = 7, pts = [];
+      const edge = (x0, y0, x1, y1) => { for (let i = 0; i <= n; i++) { const t = i / n;
+        const x = x0 + (x1 - x0) * t, y = y0 + (y1 - y0) * t;
+        const j = (i > 0 && i < n) ? (Math.random() - 0.5) * jag : 0;
+        pts.push([x + (y1 === y0 ? 0 : j), y + (x1 === x0 ? 0 : j)]); } };
+      edge(0, 0, w, 0); edge(w, 0, w, h); edge(w, h, 0, h); edge(0, h, 0, 0);
+      ctx.beginPath();
+      pts.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]));
+      ctx.closePath();
+    }
+    function paperTexture(w, h, color, opts) {
+      opts = opts || {};
+      const c = document.createElement("canvas"); c.width = w; c.height = h;
+      const x = c.getContext("2d");
+      jaggedPath(x, w, h, opts.jag == null ? w * 0.018 : opts.jag);
+      x.fillStyle = color; x.fill();
+      x.save(); x.clip();
+      x.globalAlpha = 0.06;
+      for (let i = 0; i < (w * h) / 90; i++) {
+        x.fillStyle = Math.random() < 0.5 ? "#000" : "#fff";
+        x.fillRect(Math.random() * w, Math.random() * h, 1.4, 1 + Math.random() * 5);
+      }
+      x.globalAlpha = 1;
+      if (opts.crease) {
+        x.strokeStyle = "rgba(0,0,0,.22)"; x.lineWidth = Math.max(1, w * 0.006);
+        x.beginPath(); x.moveTo(opts.crease[0] * w, 0); x.lineTo(opts.crease[1] * w, h); x.stroke();
+        x.strokeStyle = "rgba(255,255,255,.12)"; x.lineWidth = Math.max(1, w * 0.003);
+        x.beginPath(); x.moveTo(opts.crease[0] * w + 2, 0); x.lineTo(opts.crease[1] * w + 2, h); x.stroke();
+      }
+      if (opts.draw) opts.draw(x, w, h);
+      x.restore();
+      if (opts.tape) {
+        const tx = w * opts.tape[0], ty = h * opts.tape[1];
+        x.save(); x.translate(tx, ty); x.rotate(-0.38);
+        x.fillStyle = "rgba(214,168,88,.72)"; x.fillRect(-w * 0.11, -h * 0.03, w * 0.22, h * 0.06);
+        x.strokeStyle = "rgba(255,255,255,.35)"; x.lineWidth = 1;
+        x.strokeRect(-w * 0.11, -h * 0.03, w * 0.22, h * 0.06);
+        x.restore();
+      }
+      const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace;
+      return t;
+    }
+    let SHADOW_TEX = null;
+    function shadowTexture() {
+      if (SHADOW_TEX) return SHADOW_TEX;
+      const c = document.createElement("canvas"); c.width = c.height = 128;
+      const x = c.getContext("2d");
+      const g = x.createRadialGradient(64, 64, 4, 64, 64, 62);
+      g.addColorStop(0, "rgba(0,0,0,.5)"); g.addColorStop(1, "rgba(0,0,0,0)");
+      x.fillStyle = g; x.fillRect(0, 0, 128, 128);
+      SHADOW_TEX = new THREE.CanvasTexture(c);
+      return SHADOW_TEX;
+    }
+    function contactShadow(rx, rz) {
+      const m = new THREE.Mesh(new THREE.PlaneGeometry(rx, rz),
+        new THREE.MeshBasicMaterial({ map: shadowTexture(), transparent: true, depthWrite: false }));
+      m.rotation.x = -Math.PI / 2;
+      return m;
+    }
+    // a paper card: white backing (the cut edge's core) + a printed front layer, both jagged, front slightly
+    // smaller so the white always rings the edge. w/h in world units.
+    function paperCard(w, h, color, opts) {
+      const g = new THREE.Group();
+      const back = new THREE.Mesh(new THREE.PlaneGeometry(w * 1.09, h * 1.09),
+        new THREE.MeshStandardMaterial({ map: paperTexture(256, 256, "#f7f2e4", { jag: 10 }),
+          roughness: 1, metalness: 0, transparent: true, side: 2 }));
+      back.position.z = -0.006; g.add(back);
+      const front = new THREE.Mesh(new THREE.PlaneGeometry(w, h),
+        new THREE.MeshStandardMaterial({ map: paperTexture(512, 512, color, opts),
+          roughness: 1, metalness: 0, transparent: true, side: 2 }));
+      g.add(front);
+      g.userData.front = front;
+      return g;
+    }
 
     // ---- the room. STATIC (Ian: "the background doesnt need to move"). The camera never travels, so none
     // of this has to earn its keep through parallax; it only has to be a room.
-    const wall = new THREE.Mesh(new THREE.PlaneGeometry(30, 13), M.wall);
+    function wallTexture() {
+      return paperTexture(1024, 448, "#4a3a66", {
+        jag: 0, crease: [0.62, 0.71],
+        draw: (x, w, h) => {
+          // pencil construction lines left on the back wall: the kind of guide marks a paper set-builder
+          // leaves in and nobody bothers to erase, because the audience never gets this close.
+          x.strokeStyle = "rgba(230,220,255,.10)"; x.lineWidth = 1;
+          for (let gx = 0; gx < w; gx += 64) { x.beginPath(); x.moveTo(gx, 0); x.lineTo(gx, h); x.stroke(); }
+          for (let gy = 0; gy < h; gy += 64) { x.beginPath(); x.moveTo(0, gy); x.lineTo(w, gy); x.stroke(); }
+          x.strokeStyle = "rgba(230,220,255,.16)";
+          for (let i = 0; i < 5; i++) {
+            x.beginPath(); x.arc(120 + i * 190, 90, 34, 0, Math.PI * 2); x.stroke();
+          }
+        }
+      });
+    }
+    const wall = new THREE.Mesh(new THREE.PlaneGeometry(30, 13),
+      new THREE.MeshStandardMaterial({ map: wallTexture(), roughness: 1, metalness: 0 }));
     wall.position.set(0, 4.4, -3.4); wall.receiveShadow = true; scene.add(wall);
     const floor = new THREE.Mesh(new THREE.PlaneGeometry(30, 16), M.floor);
     floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor);
@@ -233,7 +344,7 @@ TODO(Ian): the six citation slots read "citation pending" on purpose. Same rule 
 
     // ---- MYR5 inspirational posters (Ian, 2026-08-28). Sticker art on printed board, slogan set beneath.
     const loader = new THREE.TextureLoader();
-    function posterTexture(text) {
+    function posterTexture(text, torn) {
       const c = document.createElement("canvas"); c.width = 512; c.height = 640;
       const x = c.getContext("2d");
       x.fillStyle = "#efe6d2"; x.fillRect(0, 0, 512, 640);
@@ -244,20 +355,43 @@ TODO(Ian): the six citation slots read "citation pending" on purpose. Same rule 
       text.split("\n").forEach((line, i) => x.fillText(line, 256, 496 + i * 44));
       x.fillStyle = "#7a2fc4"; x.font = "bold 17px Georgia, serif";
       x.fillText("A MOM INC PRODUCT", 256, 604);
+      if (torn) {
+        // a torn corner, mended with tape - the same amber tape strip that shows up wherever this channel
+        // needs one, a lived-in detail repeated rather than invented fresh each time.
+        x.save(); x.beginPath(); x.moveTo(512, 0); x.lineTo(512, 70); x.lineTo(450, 40); x.lineTo(480, 0);
+        x.closePath(); x.globalCompositeOperation = "destination-out"; x.fill(); x.restore();
+        x.save(); x.translate(465, 28); x.rotate(0.5);
+        x.fillStyle = "rgba(214,168,88,.78)"; x.fillRect(-52, -12, 104, 26);
+        x.strokeStyle = "rgba(255,255,255,.3)"; x.strokeRect(-52, -12, 104, 26);
+        x.restore();
+      }
       const t = new THREE.CanvasTexture(c);
       t.colorSpace = THREE.SRGBColorSpace;
       return t;
     }
+    let clipDone = false;
     POSTERS.forEach((txt, i) => {
-      const px = -9.4 + i * 4.7;
+      const ppx = -9.4 + i * 4.7;
       const board = new THREE.Mesh(new THREE.PlaneGeometry(1.9, 2.38),
-        new THREE.MeshStandardMaterial({ map: posterTexture(txt), roughness: 0.96, metalness: 0.0 }));
-      board.position.set(px, 4.75, -3.36); scene.add(board);
+        new THREE.MeshStandardMaterial({ map: posterTexture(txt, i === 0), roughness: 0.96, metalness: 0.0, transparent: true }));
+      board.position.set(ppx, 4.75, -3.36); scene.add(board);
       const sticker = new THREE.Mesh(new THREE.PlaneGeometry(1.16, 1.42),
         new THREE.MeshStandardMaterial({
           map: loader.load("assets/myr5-creature.png"),
           transparent: true, roughness: 0.95, metalness: 0.0 }));
-      sticker.position.set(px, 5.2, -3.34); scene.add(sticker);
+      sticker.position.set(ppx, 5.2, -3.34); scene.add(sticker);
+      // the same paperclip, holding two posters together at their seam - one lived-in detail, not invented
+      // twice. Placed once, where poster 1 and poster 2 meet.
+      if (i === 1 && !clipDone) {
+        clipDone = true;
+        const clip = new THREE.Group();
+        const wire = new THREE.MeshStandardMaterial({ color: 0xb9c2c9, roughness: 0.5, metalness: 0.6 });
+        const loopA = new THREE.Mesh(new THREE.TorusGeometry(0.1, 0.012, 6, 16, Math.PI * 1.5), wire);
+        const loopB = loopA.clone(); loopB.scale.set(0.62, 0.62, 1); loopB.position.y = 0.02;
+        clip.add(loopA, loopB);
+        clip.position.set(ppx + 2.35, 5.55, -3.32); clip.rotation.z = 0.15;
+        scene.add(clip);
+      }
     });
 
     // ---- the conveyor belt (Ian: "lets make it a conveyor belt in front of her"). The work comes to her;
@@ -335,26 +469,40 @@ TODO(Ian): the six citation slots read "citation pending" on purpose. Same rule 
 
     // ---- the six tubes, riding the belt
     const BELT = new THREE.Group(); scene.add(BELT);
+    // PAPER CUTOUTS now (Ian, 2026-09-03), each a printed flask card standing on the belt rather than a
+    // glass vessel. The DOM label (below) still carries the reading text; the card only has to read as
+    // "a labelled tube" at a glance, which is what keeps it legible small.
     const tubes = TUBES.map((t, i) => {
       const g = new THREE.Group();
-      g.position.set(-4.9 + i * 1.05, BELT_Y + 0.34, 0);
-      const glass = new THREE.Mesh(new THREE.CylinderGeometry(0.135, 0.135, 0.86, 20, 1, true), M.glass);
-      glass.position.y = 0.43; g.add(glass);
-      const bottom = new THREE.Mesh(new THREE.SphereGeometry(0.135, 18, 12, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2), M.glass);
-      g.add(bottom);
-      const liq = new THREE.Mesh(new THREE.CylinderGeometry(0.115, 0.115, 0.5, 18),
-        new THREE.MeshStandardMaterial({ color: t.col, roughness: 0.42, metalness: 0.0, emissive: t.col, emissiveIntensity: 0.2 }));
-      liq.position.y = 0.26; g.add(liq);
-      const cap = new THREE.Mesh(new THREE.CylinderGeometry(0.145, 0.145, 0.08, 18), M.gold);
-      cap.position.y = 0.88; g.add(cap);
+      g.position.set(-4.9 + i * 1.05, BELT_Y + 0.5, 0);
+      const hex = "#" + t.col.toString(16).padStart(6, "0");
+      const card = paperCard(0.58, 1.0, "#f4ecd8", { jag: 8, draw: (x, w, h) => {
+        x.fillStyle = "#e8c46a"; x.fillRect(w * 0.42, h * 0.02, w * 0.16, h * 0.05);
+        x.strokeStyle = "#241834"; x.lineWidth = 5;
+        x.beginPath(); x.moveTo(w * 0.5, h * 0.06); x.lineTo(w * 0.5, h * 0.42);
+        x.lineTo(w * 0.16, h * 0.94); x.lineTo(w * 0.84, h * 0.94); x.closePath(); x.stroke();
+        x.fillStyle = hex;
+        x.beginPath(); x.moveTo(w * 0.5, h * 0.5); x.lineTo(w * 0.24, h * 0.9); x.lineTo(w * 0.76, h * 0.9);
+        x.closePath(); x.fill();
+      } });
+      g.add(card);
+      const liq = new THREE.Mesh(new THREE.PlaneGeometry(0.34, 0.4),
+        new THREE.MeshStandardMaterial({ color: t.col, roughness: 1, metalness: 0, transparent: true }));
+      liq.position.set(0, 0.42, 0.008); g.add(liq);
+      const shadow = contactShadow(0.5, 0.3);
+      shadow.position.set(0, -0.5, 0.02); g.add(shadow);
       g.userData = { idx: i, poured: false, liq: liq, kind: "tube", home: g.position.clone() };
       BELT.add(g);
       floatIt(g, g.position.y, 0.045);
       return g;
     });
 
-    // ---- the pitcher, parked at the work position
-    const WORK_X = 2.35;
+    // ---- four discrete belt stations (Ian, round 3: separate MIX from FORMING from BOXING so no two
+    // stages can ever animate over the same spot again). Each gets its own fixed X; the unit travels
+    // between them, the camera never does.
+    const WORK_X = 2.35;            // MIX - the pitcher, unchanged from round 2
+    const FORM_X = WORK_X + 1.7;    // FORMING - new: the mould
+    const BOX_X = WORK_X + 3.3;     // BOXING - new: the box table
     // A laboratory BEAKER (Ian, 2026-08-28: "a beaker not a mug"). Straight sides, no handle - the handle was
     // exactly what made the last one read as a coffee cup - plus a pour lip and graduation marks.
     const beakerGlass = new THREE.MeshStandardMaterial({ color: 0xd6e6e2, roughness: 0.10, metalness: 0.0,
@@ -383,7 +531,7 @@ TODO(Ian): the six citation slots read "citation pending" on purpose. Same rule 
     // ---- MYR5, INTACT. Ian's correction 2026-08-28: he is the teardrop creature, mostly head, one big eye,
     // fur ruff at the jaw, tiny arms, short legs. The broken-egg head is him AFTER he explodes.
     const unit = new THREE.Group();
-    unit.position.set(WORK_X, BELT_Y + 0.2, 0.05);
+    unit.position.set(FORM_X, BELT_Y + 0.2, 0.05);
     unit.visible = false; unit.userData.kind = "unit"; scene.add(unit);
     const prof = [];
     for (let i = 0; i <= 20; i++) {
@@ -419,8 +567,18 @@ TODO(Ian): the six citation slots read "citation pending" on purpose. Same rule 
       lg.position.set(lx2, 0.1, 0.02); lg.castShadow = true; unit.add(lg);
     });
 
+    // ---- the mould (FORMING station, new). Two jaw halves close over the blob, hold, and open on the
+    // formed unit - the physical answer to "she needs a forming station instead of mixing and finishing
+    // happening in the same spot."
+    const jawGeo = new THREE.BoxGeometry(0.55, 0.9, 0.9);
+    const jawL = new THREE.Mesh(jawGeo, M.card); jawL.visible = false; jawL.castShadow = true; jawL.receiveShadow = true;
+    const jawR = jawL.clone();
+    jawL.position.set(FORM_X - 0.55, BELT_Y + 0.66, 0.05);
+    jawR.position.set(FORM_X + 0.55, BELT_Y + 0.66, 0.05);
+    scene.add(jawL, jawR);
+
     // ---- the box
-    const box = new THREE.Group(); box.position.set(WORK_X, BELT_Y + 0.14, 0.05); box.visible = false;
+    const box = new THREE.Group(); box.position.set(BOX_X, BELT_Y + 0.14, 0.05); box.visible = false;
     box.userData.kind = "box"; scene.add(box);
     const boxBody = new THREE.Mesh(new THREE.BoxGeometry(0.86, 0.68, 0.7), M.card);
     boxBody.position.y = 0.34; boxBody.castShadow = true; box.add(boxBody);
@@ -459,36 +617,75 @@ TODO(Ian): the six citation slots read "citation pending" on purpose. Same rule 
     const her = new THREE.Group(); her.position.set(HER_X, 0, HER_Z); scene.add(her);
     // everything of hers lives INSIDE this group in local coordinates, so one scale moves the lot together
     // (desk, pad, lamp included) and she can be sized against the room without anything drifting apart.
-    const coat = new THREE.MeshStandardMaterial({ color: 0xe6dfcd, roughness: 0.88, metalness: 0.0 });
-    const hairMat = new THREE.MeshStandardMaterial({ color: 0x2b1c33, roughness: 0.95, metalness: 0.0 });
+    // SHE IS A PUPPET NOW (Ian, round 3: "Dr needs to be an actual person not a paper"). Reference banked
+    // at Review\Dr Girlfriend Reference 0903\drgf-ref-01..10.png: a purple-and-gold pinstripe blazer, gold
+    // buttons, a breast pocket, a white DR DJ badge, pale paper-white hands. The chest is a real box - it
+    // has sides, which is the whole of "person, not paper" - the lapels are raised pieces that cast their
+    // own shadow onto it, and the sleeves are open tubes rather than a flat silhouette. `torso` and
+    // `writeArm` keep their names and their job (the idle sway, the scribble loop in frame() below) so
+    // nothing downstream has to change.
+    const chestTex = paperTexture(460, 640, "#6a27a8", { jag: 0, draw: (x, w, h) => {
+      const sw = w * 0.05;
+      x.fillStyle = "#e8c46a";
+      for (let sx = sw * 0.5; sx < w; sx += sw * 2) x.fillRect(sx, 0, sw * 0.4, h);
+      x.fillStyle = "#1b0a2c";
+      for (let bi = 0; bi < 3; bi++) { x.beginPath(); x.arc(w * 0.5, h * (0.32 + bi * 0.09), w * 0.015, 0, Math.PI * 2); x.fill(); }
+      x.strokeStyle = "rgba(20,10,30,.55)"; x.lineWidth = 3;
+      x.strokeRect(w * 0.6, h * 0.26, w * 0.2, h * 0.1);
+    } });
+    const chestSide = new THREE.MeshStandardMaterial({ color: 0x4a1c78, roughness: 1, metalness: 0 });
+    const chestFront = new THREE.MeshStandardMaterial({ map: chestTex, roughness: 0.96, metalness: 0 });
+    const torso = new THREE.Mesh(new THREE.BoxGeometry(1.5, 2.2, 0.16),
+      [chestSide, chestSide, chestSide, chestSide, chestFront, chestSide]);
+    torso.position.set(0, 1.5, 0.05); torso.castShadow = true; torso.receiveShadow = true; her.add(torso);
 
-    const torsoProf = [];
-    for (let i = 0; i <= 12; i++) {
-      const t = i / 12;
-      torsoProf.push(new THREE.Vector2(0.34 - t * 0.09 + Math.sin(t * 3.1) * 0.03, 1.28 + t * 0.72));
+    // lapels: raised, angled pieces that throw a real shadow onto the chest below - not painted on. Kept
+    // below the lamp shade's open rim (y 2.14 local) so they read as her collar, not as clutter behind the
+    // shade that hides her face.
+    const lapelMat = new THREE.MeshStandardMaterial({ color: 0x6b2bab, roughness: 0.9, metalness: 0 });
+    [-1, 1].forEach(s => {
+      const lapel = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.75, 0.06), lapelMat);
+      lapel.position.set(s * 0.5, 1.95, 0.2); lapel.rotation.z = s * 0.35; lapel.rotation.x = -0.15;
+      lapel.castShadow = true; her.add(lapel);
+    });
+
+    // sleeves: open tubes (a hollow cylinder, not a flat silhouette), shoulder to hand. Shoulders sit clear
+    // of the lamp shade's cone (radius 0.66 at y 2.14) so they read as arms, not as shapes peeking out from
+    // behind the shade.
+    const sleeveMat = new THREE.MeshStandardMaterial({ color: 0x5a2296, roughness: 0.95, metalness: 0, side: 2 });
+    const handMat = new THREE.MeshStandardMaterial({ color: 0xf0e4d0, roughness: 0.7, metalness: 0 });
+    function sleeve(shoulder, hand) {
+      const dir = new THREE.Vector3().subVectors(hand, shoulder);
+      const tube = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.13, dir.length(), 12, 1, true), sleeveMat);
+      tube.position.copy(shoulder).lerp(hand, 0.5);
+      tube.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.clone().normalize());
+      tube.castShadow = true; her.add(tube);
+      const palm = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.14, 0.1), handMat);
+      palm.position.copy(hand); her.add(palm);
     }
-    const torso = new THREE.Mesh(new THREE.LatheGeometry(torsoProf, 22), coat);
-    torso.castShadow = true; her.add(torso);
-    const headBall = new THREE.Mesh(new THREE.SphereGeometry(0.21, 20, 16), coat);
-    headBall.position.set(0, 2.16, 0.05); her.add(headBall);
-    const hair = new THREE.Mesh(new THREE.SphereGeometry(0.245, 22, 18), hairMat);
-    hair.position.set(0, 2.18, -0.02); hair.scale.set(1, 1.05, 1.08); hair.castShadow = true; her.add(hair);
-    const bun = new THREE.Mesh(new THREE.SphereGeometry(0.13, 14, 12), hairMat);
-    bun.position.set(0, 2.34, -0.22); her.add(bun);
+    sleeve(new THREE.Vector3(0.75, 1.95, 0.12), new THREE.Vector3(0.42, 1.5, 0.32));
+    sleeve(new THREE.Vector3(-0.75, 1.95, 0.12), new THREE.Vector3(-0.55, 1.3, 0.22));
 
-    const shoulder = new THREE.Mesh(new THREE.SphereGeometry(0.11, 12, 10), coat);
-    shoulder.position.set(0.3, 1.86, 0.02); her.add(shoulder);
-    const upperArm = new THREE.Mesh(new THREE.CylinderGeometry(0.075, 0.07, 0.42, 10), coat);
-    upperArm.position.set(0.36, 1.68, 0.14); upperArm.rotation.set(0.5, 0, -0.35); her.add(upperArm);
+    // the DR DJ badge, pinned proud of the fabric like the reference shows.
+    const badgeC = document.createElement("canvas"); badgeC.width = 220; badgeC.height = 90;
+    (() => { const x = badgeC.getContext("2d");
+      x.fillStyle = "#f4efe2"; x.fillRect(0, 0, 220, 90);
+      x.strokeStyle = "#1b0a2c"; x.lineWidth = 4; x.strokeRect(2, 2, 216, 86);
+      x.fillStyle = "#1b0a2c"; x.textAlign = "center"; x.font = "bold 42px Georgia, serif";
+      x.fillText("DR DJ", 110, 60);
+    })();
+    const badgeTex = new THREE.CanvasTexture(badgeC); badgeTex.colorSpace = THREE.SRGBColorSpace;
+    const drDj = new THREE.Mesh(new THREE.PlaneGeometry(0.34, 0.14),
+      new THREE.MeshStandardMaterial({ map: badgeTex, roughness: 0.85, metalness: 0 }));
+    // clear of the existing title plaque (x -0.43..0.15, y 1.61..1.83), the lapel above it (y 1.525..2.275)
+    // and the desk (y 1.255..1.345, whose world z sits closer to the camera than the chest, so anything at
+    // its height there is hidden behind it) - low right chest is the one open spot left.
+    drDj.position.set(0.55, 1.15, 0.2); drDj.castShadow = true; her.add(drDj);
+
     const writeArm = new THREE.Group(); writeArm.position.set(0.42, 1.5, 0.32); her.add(writeArm);
-    const foreArm = new THREE.Mesh(new THREE.CylinderGeometry(0.062, 0.055, 0.4, 10), coat);
-    foreArm.position.set(0, -0.06, 0.16); foreArm.rotation.x = 1.15; writeArm.add(foreArm);
-    const herHand = new THREE.Mesh(new THREE.SphereGeometry(0.075, 12, 10), coat);
-    herHand.position.set(0, -0.12, 0.35); writeArm.add(herHand);
-    const pen = new THREE.Mesh(new THREE.CylinderGeometry(0.014, 0.008, 0.22, 8), M.gold);
-    pen.position.set(0, -0.2, 0.38); pen.rotation.x = 0.9; writeArm.add(pen);
-    const restArm = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.06, 0.5, 10), coat);
-    restArm.position.set(-0.32, 1.62, 0.2); restArm.rotation.set(0.9, 0, 0.25); her.add(restArm);
+    const pen = new THREE.Mesh(new THREE.PlaneGeometry(0.32, 0.1),
+      new THREE.MeshStandardMaterial({ color: 0xe8c46a, roughness: 0.9, metalness: 0, transparent: true }));
+    pen.position.set(0, -0.14, 0.36); pen.rotation.z = 0.5; writeArm.add(pen);
 
     const desk = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.09, 0.9), M.frame);
     desk.position.set(0.1, 1.3, 0.75); desk.receiveShadow = true; her.add(desk);
@@ -535,18 +732,12 @@ TODO(Ian): the six citation slots read "citation pending" on purpose. Same rule 
       her.add(b);
     })();
 
+    const herShadow = contactShadow(1.3, 0.9); herShadow.position.set(0, 0.005, 0.5); her.add(herShadow);
+
     her.scale.setScalar(2.35);          // she takes the page: the room is hers, the line just runs past her
 
-    // ---- her gloved hand at the line. Head above frame in every shot (canon), so this is the whole of her
-    // we ever see up close.
-    const hand = new THREE.Group(); hand.visible = false; scene.add(hand);
-    hand.add(new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.12, 0.24), M.enamel));
-    const cuff = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.15, 0.5, 12), M.enamel);
-    cuff.position.set(0, 0.3, -0.02); hand.add(cuff);
-    for (let f = 0; f < 4; f++) {
-      const fg = new THREE.Mesh(new THREE.BoxGeometry(0.055, 0.09, 0.19), M.enamel);
-      fg.position.set(-0.1 + f * 0.065, -0.02, 0.2); hand.add(fg);
-    }
+    // ---- her gloved hand at the line is deleted (Ian, round 3: "the hands that come down are un
+    // necessary"). Her own hands work the bench now - built into `her`, above (the sleeves and palms).
 
     // ---- labels, projected onto the objects they name
     const labels = [];
@@ -579,6 +770,20 @@ TODO(Ian): the six citation slots read "citation pending" on purpose. Same rule 
     (screenEl || window).addEventListener("scroll", readScroll, { passive: true });
     readScroll();
 
+    // layered depth (Ian: "paper cut-outs standing in a set with real depth... layered stage flats that
+    // parallax"). The camera itself never travels along the belt, but it leans very slightly toward the
+    // pointer, which is enough for a fixed-orientation perspective camera to parallax near paper (the
+    // tubes, her) against far paper (the wall posters) - the cheapest version of a multi-plane parallax rig.
+    let camBaseX = 0, camBaseY = 3.3, camBaseZ = 11.4, camLookY = 2.7;
+    let ptrTX = 0, ptrTY = 0, ptrX = 0, ptrY = 0;
+    function trackPointer(clientX, clientY) {
+      const r = stage.getBoundingClientRect();
+      ptrTX = ((clientX - r.left) / r.width) * 2 - 1;
+      ptrTY = ((clientY - r.top) / r.height) * 2 - 1;
+    }
+    stage.addEventListener("pointermove", e => trackPointer(e.clientX, e.clientY));
+    stage.addEventListener("pointerleave", () => { ptrTX = 0; ptrTY = 0; });
+
     function resize() {
       const w = stage.clientWidth || 320, h = stage.clientHeight || 240;
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -589,15 +794,65 @@ TODO(Ian): the six citation slots read "citation pending" on purpose. Same rule 
       // Ian, 2026-08-28: "okay not whole page but maybe on modile yes". So the framing splits by shape:
       // on a PHONE she fills it, because a tall narrow window has no room for a wide production line;
       // on DESKTOP she is clearly the subject but the belt, the posters and the room still read around her.
-      camera.position.set(0, narrow ? 3.5 : 3.3, narrow ? 8.0 : 11.4);
-      camera.lookAt(0, narrow ? 3.2 : 2.7, 0);
+      camBaseY = narrow ? 3.5 : 3.3; camBaseZ = narrow ? 8.0 : 11.4; camLookY = narrow ? 3.2 : 2.7;
+      camera.position.set(camBaseX, camBaseY, camBaseZ);
+      camera.lookAt(0, camLookY, 0);
       camera.updateProjectionMatrix();
     }
     new ResizeObserver(resize).observe(stage);
     resize();
 
+    // ---- STATION STATE TABLE (required before authoring, plan 4.4/18.x). Four discrete belt positions;
+    // "busy" blocks re-entry into any station until its animation finishes, so two stages can never run at
+    // once. ALL STATIONS, backgrounded tab: rAF stops firing while hidden; each tween's elapsed time is real
+    // wall-clock ms (dt = now-last, clamped to 50ms/frame), so an animation simply FREEZES at its last drawn
+    // position and resumes from there on refocus - no frame-count catch-up, no skip-to-end, no NaN.
+    //
+    // MIX @ WORK_X - entry: page load, or resetLine() after a missed goggles grab. during: player taps
+    //   tubes one at a time, unbounded and player-paced; each tap fills the pitcher a little more. exit: 6th
+    //   tube poured -> auto-advance to FORM READY, blob appears at WORK_X. props: 6 tubes float on the belt,
+    //   pitcher fill rises per tube. saved: poured indices, in the channel's own localStorage key.
+    //
+    // FORM READY / FORMING @ FORM_X (new) - entry: blob sitting at WORK_X after the 6th pour. during:
+    //   player taps the blob -> busy: blob travels WORK_X -> FORM_X, the mould jaws close over it, hold
+    //   (~400ms), open, the formed unit is revealed at FORM_X. ~2.5s total, not player-paced. exit: unit
+    //   floating at FORM_X -> BOX READY. not saved: a reload here restarts the current batch.
+    //
+    // BOX READY / BOXING @ BOX_X (new) - entry: unit floating at FORM_X. during: player taps the unit ->
+    //   busy: unit travels FORM_X -> BOX_X shrinking into the box, the box appears and its lid closes.
+    //   ~1.2s, not player-paced. exit: box sealed at BOX_X -> TAKEN starts immediately. not saved.
+    //
+    // TAKEN @ BOX_X, then off frame - entry: box sealed at BOX_X. during: the drone flies in, lifts the
+    //   box, flies off frame - left exactly as unexplained as it always was. ~3.9s, no player input taken.
+    //   exit: drone off frame -> goggles appear, phase="grab" (existing hint-tool mechanic, unchanged). not
+    //   saved.
     // ---- the sequence
     let poured = 0, phase = "pour";
+    // test/probe hook (round 3): exposes just enough to verify the four-station split and the puppet
+    // rebuild without needing pixel-perfect synthetic clicks on offscreen stations.
+    window.__dg = {
+      get phase() { return phase; },
+      get poured() { return poured; },
+      stations: { WORK_X: WORK_X, FORM_X: FORM_X, BOX_X: BOX_X },
+      torsoIsBox: torso.geometry.type === "BoxGeometry",
+      jawsExist: !!(jawL && jawR)
+    };
+    (function restoreProgress() {
+      const saved = loadProgress();
+      if (!saved || !Array.isArray(saved.poured) || !saved.poured.length) return;
+      saved.poured.forEach(idx => {
+        const g = tubes[idx];
+        if (!g || g.userData.poured) return;
+        g.userData.poured = true; poured++;
+        pips[idx].classList.add("on");
+        g.userData.label.el.classList.add("spent");
+        g.userData.liq.scale.y = 0.001;
+        fill.visible = true;
+        fill.scale.y = Math.max(0.001, (poured / TUBES.length) * 0.9);
+        fill.position.y = BELT_Y + 0.2 + fill.scale.y * 0.44;
+      });
+      if (poured) say((TUBES.length - poured) + " tubes left on the line. Picking up where you left it.");
+    })();
     const anims = [];
     const tween = (ms, fn, done) => anims.push({ t: 0, ms: ms, fn: fn, done: done });
     const ease = t => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
@@ -606,9 +861,10 @@ TODO(Ian): the six citation slots read "citation pending" on purpose. Same rule 
       if (g.userData.poured || phase !== "pour") return;
       g.userData.poured = true;
       poured++;
+      saveProgress(tubes.filter(x => x.userData.poured).map(x => x.userData.idx));
       pips[g.userData.idx].classList.add("on");
       g.userData.label.el.classList.add("spent");
-      unfloat(g);                                   // it is in her hand now, it stops floating
+      unfloat(g);                                   // it is being worked now, it stops floating
 
       const from = g.position.clone();
       const lift = from.clone().setY(2.35);
@@ -616,11 +872,9 @@ TODO(Ian): the six citation slots read "citation pending" on purpose. Same rule 
       const fillFrom = fill.scale.y;
       const fillTo = (poured / TUBES.length) * 0.9;
       let puffed = false;
-      hand.visible = true;
-      const followHand = () => hand.position.set(g.position.x + BELT.position.x, g.position.y + 0.95, g.position.z - 0.1);
 
-      tween(500, t => { g.position.lerpVectors(from, lift, ease(t)); followHand(); }, () => {
-        tween(600, t => { g.position.lerpVectors(lift, over, ease(t)); followHand(); }, () => {
+      tween(500, t => { g.position.lerpVectors(from, lift, ease(t)); }, () => {
+        tween(600, t => { g.position.lerpVectors(lift, over, ease(t)); }, () => {
           tween(700, t => {
             g.rotation.z = -Math.PI * 0.62 * ease(t);
             g.userData.liq.scale.y = Math.max(0.001, 1 - t);
@@ -633,12 +887,11 @@ TODO(Ian): the six citation slots read "citation pending" on purpose. Same rule 
             tween(540, t => {
               g.position.lerpVectors(over, from, ease(t));
               g.rotation.z = -Math.PI * 0.62 * (1 - ease(t));
-              followHand();
             }, () => {
-              hand.visible = false;
               floatIt(g, from.y, 0.045);
               if (poured >= TUBES.length) {
                 phase = "mould";
+                try { localStorage.removeItem(LS_KEY); } catch {}
                 blob.visible = true;
                 blob.scale.setScalar(0.01);
                 tween(700, t => blob.scale.setScalar(0.01 + ease(t) * 0.99), () => floatIt(blob, blob.position.y, 0.06));
@@ -656,17 +909,31 @@ TODO(Ian): the six citation slots read "citation pending" on purpose. Same rule 
       if (phase !== "mould") return;
       phase = "busy"; say("");
       unfloat(blob);
-      hand.visible = true;
-      hand.position.set(WORK_X, 2.5, 0.35);
-      tween(900, t => { blob.scale.setScalar(1 - ease(t)); hand.position.y = 2.5 - ease(t) * 0.55; }, () => {
-        blob.visible = false;
-        unit.visible = true;
-        unit.scale.setScalar(0.01);
-        tween(800, t => { unit.scale.setScalar(ease(t) * 0.92); hand.position.y = 1.95 + ease(t) * 0.7; }, () => {
-          hand.visible = false;
-          floatIt(unit, unit.position.y, 0.05);
-          phase = "pack";
-          say("One unit, intact. Box it.");
+      const from = blob.position.clone();
+      const to = new THREE.Vector3(FORM_X, BELT_Y + 0.66, 0.05);
+      tween(500, t => blob.position.lerpVectors(from, to, ease(t)), () => {
+        jawL.visible = true; jawR.visible = true;
+        tween(500, t => {
+          jawL.position.x = FORM_X - 0.55 + ease(t) * 0.5;
+          jawR.position.x = FORM_X + 0.55 - ease(t) * 0.5;
+        }, () => {
+          blob.visible = false;
+          blob.position.copy(from);
+          tween(400, () => {}, () => {
+            tween(500, t => {
+              jawL.position.x = FORM_X - 0.05 - ease(t) * 0.5;
+              jawR.position.x = FORM_X + 0.05 + ease(t) * 0.5;
+            }, () => {
+              jawL.visible = false; jawR.visible = false;
+              unit.visible = true;
+              unit.scale.setScalar(0.01);
+              tween(700, t => unit.scale.setScalar(ease(t) * 0.92), () => {
+                floatIt(unit, unit.position.y, 0.05);
+                phase = "pack";
+                say("One unit, intact. Box it.");
+              });
+            });
+          });
         });
       });
     }
@@ -675,15 +942,18 @@ TODO(Ian): the six citation slots read "citation pending" on purpose. Same rule 
       if (phase !== "pack") return;
       phase = "busy"; say("");
       unfloat(unit);
-      tween(700, t => { unit.scale.setScalar(0.92 * (1 - ease(t) * 0.6)); }, () => {
+      const ufrom = unit.position.clone();
+      const uto = new THREE.Vector3(BOX_X, BELT_Y + 0.2, 0.05);
+      tween(700, t => { unit.position.lerpVectors(ufrom, uto, ease(t)); unit.scale.setScalar(0.92 * (1 - ease(t) * 0.6)); }, () => {
         unit.visible = false;
+        unit.position.copy(ufrom);
         box.visible = true;
         box.scale.set(1, 0.01, 1);
         tween(520, t => box.scale.set(1, 0.01 + ease(t) * 0.99, 1), () => {
           if (window.MBS && window.MBS.wave) window.MBS.wave({ after: 900 });
           drone.visible = true;
           const dFrom = new THREE.Vector3(-7, 5.2, -1.6);
-          const dTo = new THREE.Vector3(WORK_X, 2.55, 0.05);
+          const dTo = new THREE.Vector3(BOX_X, 2.55, 0.05);
           const dOut = new THREE.Vector3(9.5, 5.6, -2.2);
           const bHome = box.position.clone();
           beltRun = 1;                                 // the line runs while the drone comes in
@@ -789,7 +1059,40 @@ TODO(Ian): the six citation slots read "citation pending" on purpose. Same rule 
     });
     document.getElementById("dgVisX").addEventListener("click", () => vis.classList.remove("on"));
 
-    say("Six tubes on the line. Tap one.");
+    canvas.tabIndex = 0;
+    canvas.style.outline = "none";
+    let kbFocus = 0;
+    function kbCandidates() {
+      return tubes.concat([blob, unit, box, goggles]).filter(o => o.visible !== false &&
+        !(o.userData.kind === "tube" && o.userData.poured));
+    }
+    function announceFocus() {
+      const c = kbCandidates();
+      if (!c.length) return;
+      kbFocus = ((kbFocus % c.length) + c.length) % c.length;
+      const o = c[kbFocus];
+      const nm = o.userData.kind === "tube" ? TUBES[o.userData.idx].who : o.userData.kind;
+      say("Keyboard: " + nm + ". Enter to use it, arrows to move.");
+    }
+    canvas.addEventListener("keydown", e => {
+      const c = kbCandidates();
+      if (!c.length) return;
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") { kbFocus++; announceFocus(); e.preventDefault(); }
+      else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { kbFocus--; announceFocus(); e.preventDefault(); }
+      else if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        const o = c[((kbFocus % c.length) + c.length) % c.length];
+        if (o.userData.kind === "tube") pourTube(o);
+        else if (o.userData.kind === "blob") mould();
+        else if (o.userData.kind === "unit" || o.userData.kind === "box") pack();
+        else if (o.userData.kind === "goggles") {
+          if (phase === "grab") { phase = "goggles"; drone.visible = false; say(""); vis.classList.add("on"); }
+          else if (phase === "goggles") vis.classList.add("on");
+        }
+      }
+    });
+
+    if (!poured) say("Six tubes on the line. Tap one.");
 
     // ---- frame loop
     let last = performance.now();
@@ -831,7 +1134,8 @@ TODO(Ian): the six citation slots read "citation pending" on purpose. Same rule 
         if (m.material.opacity <= 0) { scene.remove(m); m.material.dispose(); puffs.splice(i, 1); }
       }
 
-      // she writes, forever. Small scribble on the forearm, a slow lean on the torso, nothing else.
+      // she writes, forever. Small scribble on the forearm, a slow lean on the torso. No more paper-flip -
+      // she is a dimensional puppet now, and a box collapsing to a spine reads as broken, not as turning.
       writeArm.rotation.z = Math.sin(now / 210) * 0.11;
       writeArm.position.x = 0.42 + Math.sin(now / 340) * 0.05;
       torso.rotation.z = Math.sin(now / 2600) * 0.02;
@@ -856,6 +1160,11 @@ TODO(Ian): the six citation slots read "citation pending" on purpose. Same rule 
             px2.toFixed(1) + "px," + ((-v.y * 0.5 + 0.5) * sh).toFixed(1) + "px)";
         }
       }
+
+      ptrX += (ptrTX - ptrX) * (REDUCED ? 1 : 0.06);
+      ptrY += (ptrTY - ptrY) * (REDUCED ? 1 : 0.06);
+      camera.position.x = camBaseX + ptrX * 0.55;
+      camera.position.y = camBaseY - ptrY * 0.30;
 
       renderer.render(scene, camera);
       requestAnimationFrame(frame);
