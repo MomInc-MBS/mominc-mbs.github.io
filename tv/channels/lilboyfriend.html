@@ -27,6 +27,16 @@ scaled continuously by return-progress instead of rebuilt each frame. Exhibit ph
 placards are canvas-text textures on planes, both preloaded for every exhibit before the first frame renders
 (so the horror swap on return is instant, not a load stall). renderer.setSize(w,h,false) with clientWidth/
 clientHeight, no position:fixed anywhere, --panel-clear reserved by the HUD's own bottom padding.
+ROUND 2 (0903, felt pass): every surface is a procedural felt canvas texture (makeFeltTexture - fibre-noise
+flecks and a dashed stitched border, repeated as panels) instead of a flat colour; a runner rug plane sits on
+the centreline. Lil BF holds a magnifying glass, a camera-child THREE.Group (camera.add), idle-bobbing at
+lower right; clicking/tapping/E while near a case opens a fisheye zoom (a ShaderMaterial quad, camera-child,
+barrel-remapping the exhibit's own photo texture). Each exhibit is a miniature on a felt plinth in a glass
+case outbound, swapping to the original full-size wall piece at the door slot (a discrete swap, not a morph);
+the three placards never move. The end wall is now a door with a magnifying-glass-shaped slot, replacing the
+fuse box - the same wireUp drag-then-commit widget, reskinned and relabelled, still fires MBS.wave/unlock once
+and still called "wired" in code/CSS internals (not player-facing) though the state machine's phase value is
+now "slotted" (a saved legacy "wired" record still resumes correctly, see loadState()).
 -->
 <style>
   .lb{--mint:#dff5ec; --lav:#ebe3fa; --sky:#e3effd; --white:#fffdf8; --gold:#e6c67a; --gold-d:#c9a24c; --gold-l:#f7eacb; --ink:#3c3552; --ink-l:#6f6688; --rose:#f3c9d6; --pur:#7a2fc4;
@@ -122,15 +132,16 @@ clientHeight, no position:fixed anywhere, --panel-clear reserved by the HUD's ow
   .lb-book button{font-family:"Times New Roman",Times,serif; font-weight:700; font-size:15px; border:1px solid var(--ink); cursor:pointer; padding:10px 16px; background:var(--gold-l); color:var(--ink)}
   .lb-book a.skip{font-size:13px; color:var(--ink-l); text-decoration:underline; cursor:pointer}
 
-  /* wires interactable, carried forward from the source build's .lb-tear (markup + behaviour unchanged,
-     restyled here for the fuse-box framing instead of a corner scrap of torn page). */
+  /* the door-slot interactable: reuses the proven drag-then-commit widget the source build shipped as
+     .lb-tear (same markup, same pointer logic - a working mechanic, just reskinned gold/felt and relabelled
+     for the museum door instead of a fuse box). */
   .lb-fusepanel{text-align:center}
-  .lb-tear{position:relative; width:220px; height:150px; margin:6px auto 0; overflow:hidden; background:#0b0714; border-radius:10px;
-      box-shadow:inset 0 0 0 3px #2a2118}
+  .lb-tear{position:relative; width:220px; height:150px; margin:6px auto 0; overflow:hidden; background:#241b1f; border-radius:10px;
+      box-shadow:inset 0 0 0 3px #6b3f4a}
   .lb-tear .wires{position:absolute; top:56px; left:14px; right:16px; height:40px}
   .lb-tear .wire{position:absolute; top:14px; height:10px; border-radius:5px}
-  .lb-tear .wire.l{left:0; width:42%; background:linear-gradient(90deg,#c02,#f44)}
-  .lb-tear .wire.r{right:0; width:42%; background:linear-gradient(270deg,#06c,#4af); transition:right .35s ease, transform .05s linear; cursor:grab; pointer-events:auto; touch-action:none}
+  .lb-tear .wire.l{left:0; width:42%; background:linear-gradient(90deg,#241b1f,#120d10); box-shadow:inset 0 0 0 2px #6b3f4a}
+  .lb-tear .wire.r{right:0; width:42%; background:linear-gradient(270deg,#c9a24c,#e6c67a); transition:right .35s ease, transform .05s linear; cursor:grab; pointer-events:auto; touch-action:none}
   .lb-tear .wire.r:active{cursor:grabbing}
   .lb-tear .wire .end{position:absolute; width:11px; height:18px; top:-4px; background:#c9c9cf; border-radius:2px}
   .lb-tear .wire.l .end{right:-11px} .lb-tear .wire.r .end{left:-11px}
@@ -139,24 +150,36 @@ clientHeight, no position:fixed anywhere, --panel-clear reserved by the HUD's ow
   @keyframes wirehint{50%{filter:drop-shadow(0 0 8px var(--gold)) brightness(1.5)}}
   .lb-tear.wired .spark{position:absolute; left:46%; top:12px; width:20px; height:20px; border-radius:50%; background:#ffcf5c; box-shadow:0 0 20px var(--gold), 0 0 44px var(--gold); animation:spk .5s ease 3}
   @keyframes spk{from{transform:scale(.2);opacity:1}to{transform:scale(2.6);opacity:0}}
-  .lb-tear .tip{position:absolute; bottom:6px; left:6px; right:6px; color:#8affc9; font-family:"VT323",monospace,monospace; font-size:14px; text-align:center; line-height:1.1}
+  .lb-tear .tip{position:absolute; bottom:6px; left:6px; right:6px; color:#e6c67a; font-family:"VT323",monospace,monospace; font-size:14px; text-align:center; line-height:1.1}
   @media (prefers-reduced-motion:reduce){ .lb-tear:not(.wired) .wires{animation:none} }
 
   .lb-epi{text-align:center}
   .lb-epi .close-line{font-family:"Pacifico",cursive; font-size:20px; color:var(--ink); margin:0 0 14px}
 
-  /* ---- the flat/no-WebGL fallback: same content, same key, same unlock chain, no three.js. */
-  .lb-flat{position:absolute; inset:0; z-index:1; overflow:auto; background:#f7f4ec; color:#1a1410; font-family:"Times New Roman",Times,serif; padding:18px 16px calc(16px + var(--panel-clear))}
+  /* felt-wrapped magnifying glass badge, drawn once as inline SVG, reused by both the flat fallback (a
+     corner decoration) and the flat zoom (the tap target). */
+  .lb-flat-glass{position:absolute; right:14px; bottom:14px; width:54px; height:54px; pointer-events:none; filter:drop-shadow(0 2px 3px rgba(0,0,0,.35))}
+  .fl-zoomable{position:relative; cursor:zoom-in}
+  .fl-zoomable img{transition:clip-path .3s ease, transform .3s ease}
+  .fl-zoomable.zoomed img{clip-path:circle(46% at 50% 50%); transform:scale(2)}
+
+  /* ---- the flat/no-WebGL fallback: same content, same key, same unlock chain, no three.js. Felt-panel
+     ground (soft fibre noise as a repeating radial-gradient, cheap and CSS-only) standing in for the
+     canvas felt texture the 3D path draws. */
+  .lb-flat{position:absolute; inset:0; z-index:1; overflow:auto; color:#2c1e14; font-family:"Times New Roman",Times,serif; padding:18px 16px calc(16px + var(--panel-clear));
+      background-color:#ece0c8;
+      background-image:repeating-radial-gradient(circle at 20% 30%,rgba(0,0,0,.05) 0 1px,transparent 1px 6px),
+                        repeating-radial-gradient(circle at 70% 65%,rgba(255,255,255,.35) 0 1px,transparent 1px 7px)}
   .lb-flat[hidden]{display:none}
   .lb-flat .fl-name{display:block; font-style:italic; font-size:clamp(20px,6vw,26px); text-decoration:underline; text-underline-offset:3px; margin:0 0 4px}
-  .lb-flat .fl-sub{font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:rgba(26,20,16,.55); margin:0 0 14px}
-  .lb-flat .fl-photo{width:100%; aspect-ratio:4/3; object-fit:cover; border:1px solid rgba(26,20,16,.4); display:block; margin:0 0 14px}
-  .lb-flat .fl-card{border:1px solid rgba(26,20,16,.35); padding:10px 12px; margin:0 0 10px; font-size:15px; line-height:1.4}
-  .lb-flat .fl-card .fl-src{display:block; margin-top:6px; font-size:11.5px; color:rgba(26,20,16,.62)}
+  .lb-flat .fl-sub{font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:rgba(44,30,20,.6); margin:0 0 14px}
+  .lb-flat .fl-photo{width:100%; aspect-ratio:4/3; object-fit:cover; border:6px solid #c9a24c; outline:2px dashed rgba(44,30,20,.5); outline-offset:-10px; display:block; margin:0 0 14px}
+  .lb-flat .fl-card{border:1px solid rgba(44,30,20,.35); background:rgba(255,253,246,.55); padding:10px 12px; margin:0 0 10px; font-size:15px; line-height:1.4}
+  .lb-flat .fl-card .fl-src{display:block; margin-top:6px; font-size:11.5px; color:rgba(44,30,20,.62)}
   .lb-flat .fl-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px}
-  .lb-flat button, .lb-flat .fl-actions a{font-family:"Times New Roman",Times,serif; font-weight:700; font-size:15px; border:1px solid #1a1410; cursor:pointer; padding:11px 18px; background:transparent; color:#1a1410; text-decoration:none; display:inline-block}
+  .lb-flat button, .lb-flat .fl-actions a{font-family:"Times New Roman",Times,serif; font-weight:700; font-size:15px; border:1px solid #2c1e14; cursor:pointer; padding:11px 18px; background:transparent; color:#2c1e14; text-decoration:none; display:inline-block}
   .lb-flat button:active{transform:translateY(1px)}
-  .lb-flat .lb-fusepanel .lb-tear{background:#0b0714}
+  .lb-flat .lb-fusepanel .lb-tear{background:#241b1f}
 
   @media (min-width:760px){ .lb .stats{grid-template-columns:1fr 1fr} .lb .charts{grid-template-columns:1fr 1fr 1fr} }
 </style>
@@ -190,11 +213,11 @@ clientHeight, no position:fixed anywhere, --panel-clear reserved by the HUD's ow
 
       <div class="lb-panel" id="wirePanel">
         <div class="card lb-fusepanel">
-          <h3>The Fuse Box</h3>
-          <p>Two wires. Drag or tap the right one to meet the left.</p>
+          <h3>The Door</h3>
+          <p>Insert the instrument. Drag the glass into the slot, or tap it.</p>
           <div class="lb-tear" id="tear3d">
             <div class="wires"><div class="wire l"><span class="end"></span></div><div class="wire r"><span class="end"></span></div><span class="spark"></span></div>
-            <div class="tip" id="tearTip3d">two wires. drag the blue one left.</div>
+            <div class="tip" id="tearTip3d">drag the glass into the slot.</div>
           </div>
         </div>
       </div>
@@ -334,6 +357,33 @@ clientHeight, no position:fixed anywhere, --panel-clear reserved by the HUD's ow
           </div>
           <figcaption><b>The Mason Jar.</b> Grow your own carrot. One is plenty at that size.</figcaption>
         </figure>
+        <figure class="home">
+          <div class="frame">
+            <span class="ph">the reclined-seat car</span>
+            <img class="cozy" src="assets/lilbf-car-cozy.jpg" alt="A small hatchback listing photo with a tiny man waving from the reclined driver's seat" onerror="this.style.display='none'">
+            <img class="horror" src="assets/lilbf-car-horror.jpg" alt="" onerror="this.style.display='none'">
+            <span class="rx">Rx · $0/mo*</span>
+          </div>
+          <figcaption><b>The Car.</b> Seat reclined as far as it goes. Sunshade on the windshield doubles as a curtain.</figcaption>
+        </figure>
+        <figure class="home">
+          <div class="frame">
+            <span class="ph">the ten-by-ten storage unit</span>
+            <img class="cozy" src="assets/lilbf-storage-cozy.jpg" alt="A self storage unit listing photo staged as a tidy room with a tiny man waving" onerror="this.style.display='none'">
+            <img class="horror" src="assets/lilbf-storage-horror.jpg" alt="" onerror="this.style.display='none'">
+            <span class="rx">Rx · $0/mo*</span>
+          </div>
+          <figcaption><b>The Storage Unit.</b> Ten by ten, climate controlled, and after hours nobody checks the padlock.</figcaption>
+        </figure>
+        <figure class="home">
+          <div class="frame">
+            <span class="ph">the converted van</span>
+            <img class="cozy" src="assets/lilbf-van-cozy.jpg" alt="A converted camper van listing photo with a tiny man waving from the open side door" onerror="this.style.display='none'">
+            <img class="horror" src="assets/lilbf-van-horror.jpg" alt="" onerror="this.style.display='none'">
+            <span class="rx">Rx · $0/mo*</span>
+          </div>
+          <figcaption><b>The Converted Van.</b> A camp stove where the passenger seat used to be. Parks somewhere different every night, on purpose.</figcaption>
+        </figure>
       </div>
       <p class="scale">Each home is smaller than the last. So is he. That is the treatment working.</p>
     </section>
@@ -387,6 +437,30 @@ clientHeight, no position:fixed anywhere, --panel-clear reserved by the HUD's ow
         src: "NLIHC, The Gap: A Shortage of Affordable Homes, 2025. nlihc.org/news/nlihc-releases-gap-2025-shortage-affordable-homes" },
       { t: "A9", body: "The median home in America hit $412,500 in 2024, 60 percent more than six years earlier. By July 2026 it was $431,400. Nobody's paycheck grew 60 percent.",
         src: "Harvard JCHS, State of the Nation's Housing 2025 (nahb.org); NAR Existing-Home Sales, July 2026." }
+    ],
+    car: [
+      { t: "A10", body: "California cities have been racing to ban it outright. As of January 2025, forty two California cities and two counties had passed some version of a public camping ban since the Supreme Court's Grants Pass ruling, and the newer ones increasingly name the car itself, not just a tent.",
+        src: "National Homelessness Law Center, via Stateline, Many more cities ban sleeping outside despite a lack of shelter space, Jan. 27, 2025. stateline.org/2025/01/27/many-more-cities-ban-sleeping-outside-despite-a-lack-of-shelter-space" },
+      { t: "A11", body: "San Joaquin County's version goes further than a tent ban. It bans sleeping in a parked car outright, and anyone living outside is required to move at least 300 feet every hour.",
+        src: "CalMatters, New enforcement efforts target people living in cars, RVs on California streets, Sept. 2025. calmatters.org/housing/homelessness/2025/09/homeless-enforcement-cars-rvs" },
+      { t: "A12", body: "Carlsbad, California counted 60 homeless residents in 2023. By 2024 it was 112, nearly double, in the same stretch the city passed its own ban on camping in a car.",
+        src: "CalMatters, New enforcement efforts target people living in cars, RVs on California streets, Sept. 2025. calmatters.org/housing/homelessness/2025/09/homeless-enforcement-cars-rvs" }
+    ],
+    storage: [
+      { t: "A13", body: "A South Salt Lake, Utah storage facility found families bolted inside sheds fitted out with beds, a microwave and a working air conditioner. One held a family of three, including a three month old. Some had been living there six months before anyone found them.",
+        src: "KSL.com, Homeless families found living in storage units, 2012. ksl.com/article/20169843" },
+      { t: "A14", body: "It is illegal everywhere in the country under fire, sanitation and zoning code. A national survey of 2,000 US adults found one in five, 20 percent, had slept in a self storage unit anyway.",
+        src: "StorageUnits.com and Pollfish survey, via PRWeb, Survey Finds 1 in 5 Americans Have Slept in a Storage Unit, June 2025. prweb.com/releases/survey-finds-1-in-5-americans-have-slept-in-a-storage-unit-302499519.html" },
+      { t: "A15", body: "Self storage is a fifty billion dollar industry now, more than 52,000 facilities covering 2.1 billion square feet. It grows fastest in a downturn: storage companies posted a 5 percent return the same years family homelessness rose 30 percent.",
+        src: "Slate, Self-storage units serve as a long-term solution when finding housing or moving isn't an option, Aug. 2024, citing Mordor Intelligence, the US Census Bureau and HUD. slate.com/business/2024/08/self-storage-units-industry-growth-housing-insecurity-evictions.html" }
+    ],
+    van: [
+      { t: "A16", body: "The number of people living full time in a van in the US grew 63 percent in two years, from about 1.9 million in 2020 to 3.1 million in 2022.",
+        src: "Statista, via Yahoo Finance, Paying for van life: Costs and statistics, 2025. finance.yahoo.com/news/paying-van-life-202933082.html" },
+      { t: "A17", body: "It is marketed as freedom. A new camper van conversion still starts around $130,000. The median US home costs $431,400. A van is not cheap. It is just cheaper.",
+        src: "Moneywise, Wealthy people are selling their million dollar homes to live in a van all year, 2025; NAR Existing-Home Sales, July 2026. moneywise.com/life/lifestyle/vanlife-wealthy-homeowners-hidden-costs" },
+      { t: "A18", body: "More than 100 US cities passed a new homeless camping ban in a single year, and enforcement keeps reaching further, past the tent and into anyone parked overnight.",
+        src: "NPR, 100-plus cities in the U.S. banned homeless camping this year. But will it work?, Dec. 26, 2024. npr.org/2024/12/26/nx-s1-5199103/homeless-camping-bans-grants-pass" }
     ]
   };
   const RES = {
@@ -399,22 +473,38 @@ clientHeight, no position:fixed anywhere, --panel-clear reserved by the HUD's ow
     B7: { body: "Housing and abuse often trap people together. Free, confidential help is available 24 hours a day, every day.", src: "National Domestic Violence Hotline · 1-800-799-7233 · thehotline.org" },
     B8: { body: "Behind on rent anywhere in the US? This federal tool points you to 211, HUD's housing map, and your local housing agency.", src: "CFPB Rent Help · consumerfinance.gov/renthelp" }
   };
-  const RESOURCE_MAP = { teepee: ["B1", "B3", "B5"], shoebox: ["B2", "B4", "B8"], masonjar: ["B6", "B7"] };
+  const RESOURCE_MAP = { teepee: ["B1", "B3", "B5"], shoebox: ["B2", "B4", "B8"], masonjar: ["B6", "B7"], car: ["B1", "B5", "B8"], storage: ["B2", "B4", "B6"], van: ["B3", "B7"] };
+  // half the round-2 spacing (0.125 fraction vs 0.25) packs six exhibits into the same HALL_LEN - denser,
+  // not longer, per 5.1. Old and new pairs interleave so the walk still reads as a housing progression.
   const EXHIBITS = [
-    { id: "teepee", label: "THE TEEPEE", p: 0.25, side: 1, cozy: "assets/lilbf-teepee-cozy.jpg", horror: "assets/lilbf-teepee-horror.jpg" },
-    { id: "shoebox", label: "THE SHOEBOX", p: 0.5, side: -1, cozy: "assets/lilbf-shoebox-cozy.jpg", horror: "assets/lilbf-shoebox-horror.jpg" },
-    { id: "masonjar", label: "THE MASON JAR", p: 0.75, side: 1, cozy: "assets/lilbf-masonjar-cozy.jpg", horror: "assets/lilbf-masonjar-horror.jpg" }
+    { id: "teepee", label: "THE TEEPEE", p: 0.15, side: 1, cozy: "assets/lilbf-teepee-cozy.jpg", horror: "assets/lilbf-teepee-horror.jpg" },
+    { id: "car", label: "THE CAR", p: 0.275, side: -1, cozy: "assets/lilbf-car-cozy.jpg", horror: "assets/lilbf-car-horror.jpg" },
+    { id: "shoebox", label: "THE SHOEBOX", p: 0.4, side: 1, cozy: "assets/lilbf-shoebox-cozy.jpg", horror: "assets/lilbf-shoebox-horror.jpg" },
+    { id: "storage", label: "THE STORAGE UNIT", p: 0.525, side: -1, cozy: "assets/lilbf-storage-cozy.jpg", horror: "assets/lilbf-storage-horror.jpg" },
+    { id: "masonjar", label: "THE MASON JAR", p: 0.65, side: 1, cozy: "assets/lilbf-masonjar-cozy.jpg", horror: "assets/lilbf-masonjar-horror.jpg" },
+    { id: "van", label: "THE VAN", p: 0.775, side: -1, cozy: "assets/lilbf-van-cozy.jpg", horror: "assets/lilbf-van-horror.jpg" }
   ];
   const TITLE_TEXT = { h1: "THE RESIDENTIAL COMPRESSION PROGRAM.", h2: "A MOM Inc retrospective.", body: FACTS.teepee[0].body };
   const CLOSING_LINE = "You leave smaller than you came in. Everyone does.";
 
-  // ---- shared state: own key, doesn't collide with the shell's five (mbs-on, mbs-unlock, mbs-unlock-at,
-  // mbs-forms, mbs-offer-shut). {phase: out|wired|back|done, t: path position 0..1, signed: bool}.
-  const STORE_KEY = "mbs-lilbf-museum";
+  // ---- shared state (v2 adds shrinkStartedAt for 5.3's clock-driven walls). {phase: out|slotted|back|done,
+  // t: path position 0..1, signed: bool, shrinkStartedAt: epoch ms|null}. "slotted" replaces round-1's "wired".
+  const STORE_KEY_V1 = "mbs-lilbf-museum", STORE_KEY = "mbs-lilbf-museum-v2";
+  const SHRINK_MS = 37500;   // matches a straight walk back at WALK_SPEED below - loitering no longer buys safety
+  function backfillShrink(phase, t) {
+    // deterministic per legacy phase, never NaN/restart/snap-to-full: reproduces the v1 load's own progress
+    const impliedProgress = phase === "done" ? 1 : Math.max(0, Math.min(1, 1 - t));
+    return Date.now() - impliedProgress * SHRINK_MS;
+  }
   function loadState() {
-    let saved = {};
-    try { saved = JSON.parse(localStorage.getItem(STORE_KEY) || "{}") || {}; } catch {}
-    return Object.assign({ phase: "out", t: 0, signed: false }, saved);
+    let raw = null; try { raw = localStorage.getItem(STORE_KEY); } catch {}
+    if (raw) { let saved = {}; try { saved = JSON.parse(raw) || {}; } catch {}
+      return Object.assign({ phase: "out", t: 0, signed: false, shrinkStartedAt: null }, saved); }
+    let legacy = {}; try { legacy = JSON.parse(localStorage.getItem(STORE_KEY_V1) || "{}") || {}; } catch {}
+    if (legacy.phase === "wired") legacy.phase = "slotted";
+    const st = Object.assign({ phase: "out", t: 0, signed: false, shrinkStartedAt: null }, legacy);
+    if ((st.phase === "slotted" || st.phase === "back" || st.phase === "done") && !st.shrinkStartedAt) st.shrinkStartedAt = backfillShrink(st.phase, st.t);
+    return st;
   }
   const ST = loadState();
   function saveState() { try { localStorage.setItem(STORE_KEY, JSON.stringify(ST)); } catch {} }
@@ -427,7 +517,7 @@ clientHeight, no position:fixed anywhere, --panel-clear reserved by the HUD's ow
   let connectedThisLoad = false;
   function fireConnect(onVisual) {
     if (ST.phase !== "out") return;   // fires once: never on resume, never from walk again
-    ST.phase = "wired"; saveState();
+    ST.phase = "slotted"; ST.shrinkStartedAt = Date.now(); saveState();
     connectedThisLoad = true;
     window.MBS && window.MBS.unlock && window.MBS.unlock("lilboyfriend");
     const restore = () => lb.classList.remove("breached");
@@ -436,8 +526,18 @@ clientHeight, no position:fixed anywhere, --panel-clear reserved by the HUD's ow
     else setTimeout(restore, 5000);
     onVisual && onVisual();
   }
-  function isReturning() { return ST.phase === "wired" || ST.phase === "back" || ST.phase === "done"; }
-  function rpOf(p) { return 1 - p; }
+  function isReturning() { return ST.phase === "slotted" || ST.phase === "back" || ST.phase === "done"; }
+  function shrinkProgress() {
+    // 5.3: driven by elapsed wall-clock time from shrink start, never frame count or return-progress, so
+    // standing still (or a throttled/backgrounded tab) no longer stalls or skips the close. Floor is rp=1
+    // (the existing WALL_IN/CEIL_IN/EYE_IN minimum below); it never goes past it, on reload or otherwise.
+    if (!isReturning() || !ST.shrinkStartedAt) return 0;
+    return Math.max(0, Math.min(1, (Date.now() - ST.shrinkStartedAt) / SHRINK_MS));
+  }
+  // test-only readback for the save-migration fixture check (18.6) - the epilogue phase blocks every normal
+  // saveState() path (walking is disabled there), so there is no other way to observe a migrated value
+  // without resetting it. Reads ST, changes nothing.
+  window.__lbState = () => ({ phase: ST.phase, t: ST.t, shrinkStartedAt: ST.shrinkStartedAt, rp: shrinkProgress() });
   const reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // ---- canvas-text sign textures, shared by both render paths' data but only consumed by the 3D path
@@ -507,24 +607,60 @@ clientHeight, no position:fixed anywhere, --panel-clear reserved by the HUD's ow
     const bookPanel = document.getElementById("bookPanel"), wirePanel = document.getElementById("wirePanel"), epiPanel = document.getElementById("epiPanel");
 
     import("https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.min.js").then(THREE => {
-      const renderer = new THREE.WebGLRenderer({ canvas: lbCanvas, antialias: true });
+      const renderer = new THREE.WebGLRenderer({ canvas: lbCanvas, antialias: true, preserveDrawingBuffer: true });
       renderer.outputColorSpace = THREE.SRGBColorSpace;
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(66, 1, 0.05, 120);
+      scene.add(camera);   // a first-person held prop is a camera child; the camera must be a scene member
       let yaw = 0, pitch = 0;
       function applyLook() { camera.rotation.order = "YXZ"; camera.rotation.y = yaw; camera.rotation.x = pitch; }
+
+      // ---- felt: the one material vocabulary for this channel (Ian, 0903 texture pass). A soft base
+      // colour, short flecked fibre strokes for grain, a dashed running stitch in a contrasting thread
+      // colour along the tile border so every repeat reads as a stitched felt panel, and an occasional
+      // stray pale thread for the lived-in rule. One generator, reused for every surface and prop below.
+      function makeFeltTexture(base, stitch, w = 512, h = 512, repX = 1, repY = 1) {
+        const c = document.createElement("canvas"); c.width = w; c.height = h;
+        const x = c.getContext("2d");
+        x.fillStyle = base; x.fillRect(0, 0, w, h);
+        for (let i = 0; i < 2600; i++) {
+          const px = Math.random() * w, py = Math.random() * h, a = Math.random() * Math.PI, l = 2 + Math.random() * 5;
+          x.strokeStyle = `rgba(${Math.random() < 0.5 ? "255,255,255" : "0,0,0"},${0.03 + Math.random() * 0.06})`;
+          x.lineWidth = 1; x.beginPath(); x.moveTo(px, py); x.lineTo(px + Math.cos(a) * l, py + Math.sin(a) * l); x.stroke();
+        }
+        x.fillStyle = "rgba(255,255,255,.55)";
+        for (let i = 0; i < 5; i++) { x.beginPath(); x.arc(Math.random() * w, Math.random() * h, 1.6, 0, Math.PI * 2); x.fill(); }
+        x.strokeStyle = "rgba(80,60,40,.35)"; x.lineWidth = 1.4;
+        x.beginPath(); x.moveTo(w * 0.15, h * 0.2); x.lineTo(w * (0.15 + Math.random() * 0.5), h * (0.2 + Math.random() * 0.5)); x.stroke();
+        x.strokeStyle = stitch; x.lineWidth = 3; x.setLineDash([9, 7]);
+        x.strokeRect(6, 6, w - 12, h - 12);
+        x.setLineDash([]);
+        const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.wrapS = t.wrapT = THREE.RepeatWrapping;
+        t.repeat.set(repX, repY); t.anisotropy = 4; return t;
+      }
 
       // ---- the hall: ONE box, BackSide material so the camera (always inside it) sees the interior faces.
       // Lights below all sit inside this volume, never behind a sealed face - that's what keeps the first
       // render from going pure black. Geometry is unit width/height (translated so floor sits at local y=0)
       // so width/height can be re-scaled every frame instead of rebuilt; length is fixed, never scaled.
-      const wallMat = new THREE.MeshStandardMaterial({ color: 0xece4d3, roughness: 1, metalness: 0, side: THREE.BackSide });
+      // Walls/ceiling/floor share one felt panel material; the cold multiply on the return still works
+      // because a CanvasTexture map is multiplied by material.color exactly like the flat colour it replaces.
+      const wallMat = new THREE.MeshStandardMaterial({ map: makeFeltTexture("#ece4d3", "#c9a24c", 512, 512, 14, 3), roughness: 1, metalness: 0, side: THREE.BackSide });
       const hallGeo = new THREE.BoxGeometry(1, 1, HALL_LEN + 8);
       hallGeo.translate(0, 0.5, 0);
       const hallMesh = new THREE.Mesh(hallGeo, wallMat); hallMesh.name = "hall";
       hallMesh.position.set(0, 0, CENTER_Z);
       scene.add(hallMesh);
-      const WARM_WALL = new THREE.Color(0xece4d3), COLD_WALL = new THREE.Color(0xb9c2cc);
+      const WARM_WALL = new THREE.Color(0xffffff), COLD_WALL = new THREE.Color(0xa9b4c2);
+
+      // ---- the runner rug: a second felt panel, wine-red with a cream stitched border, laid 0.01 above
+      // the floor on the centreline so it never z-fights - felt does not fray like a woven rug when cut,
+      // it leaves a soft raw fibrous edge, which is this material's version of the spec's fringe.
+      const rugMat = new THREE.MeshStandardMaterial({ map: makeFeltTexture("#7a2a3a", "#e8ceb0", 512, 512, 1, 24), roughness: 1, metalness: 0 });
+      const rugMesh = new THREE.Mesh(new THREE.PlaneGeometry(1.4, HALL_LEN + 8), rugMat);
+      rugMesh.rotation.x = -Math.PI / 2; rugMesh.position.set(0, 0.01, CENTER_Z);
+      scene.add(rugMesh);
+      const RUG_WARM = new THREE.Color(0xffffff), RUG_COLD = new THREE.Color(0xa9b4c2);
 
       scene.add(new THREE.HemisphereLight(0xfff6e6, 0x241d14, 0.65));
       const ambient = new THREE.AmbientLight(0xffffff, 0.55);   // flat, no-normal-dependent floor so a
@@ -551,17 +687,26 @@ clientHeight, no position:fixed anywhere, --panel-clear reserved by the HUD's ow
       // review-round fix: placards were unreadable (tiny canvas font, cropped near the floor). fTitle/
       // fBody/fSource are now explicit per call site instead of one-size-fits-all defaults, so a placard
       // (big canvas, big font) and the title wall (smaller) can both use this without fighting each other.
-      function makeSignTexture({ w = 900, h = 620, bg = "#f4ecd8", ink = "#1a1410", title, body, source,
+      // placards are felt patches now, not paper cards: a fibre-noise base and a dashed stitched border
+      // drawn under the copy, with a soft white text shadow to suggest embroidery. Same 48px body rule.
+      function makeSignTexture({ w = 900, h = 620, bg = "#f4ecd8", stitch = "#c9a24c", ink = "#1a1410", title, body, source,
           fTitle = 46, fBody = 32, fSource = 24, lhTitle = 52, lhBody = 42, lhSource = 30, pad = 40 }) {
         const c = document.createElement("canvas"); c.width = w; c.height = h;
         const x = c.getContext("2d");
         x.fillStyle = bg; x.fillRect(0, 0, w, h);
-        x.strokeStyle = "rgba(20,16,10,.4)"; x.lineWidth = 8; x.strokeRect(4, 4, w - 8, h - 8);
+        for (let i = 0; i < Math.round(w * h / 350); i++) {
+          const px = Math.random() * w, py = Math.random() * h, a = Math.random() * Math.PI, l = 2 + Math.random() * 4;
+          x.strokeStyle = `rgba(${Math.random() < 0.5 ? "255,255,255" : "0,0,0"},${0.03 + Math.random() * 0.05})`;
+          x.lineWidth = 1; x.beginPath(); x.moveTo(px, py); x.lineTo(px + Math.cos(a) * l, py + Math.sin(a) * l); x.stroke();
+        }
+        x.strokeStyle = stitch; x.lineWidth = 4; x.setLineDash([10, 8]); x.strokeRect(6, 6, w - 12, h - 12); x.setLineDash([]);
+        x.shadowColor = "rgba(255,255,255,.55)"; x.shadowOffsetX = 1; x.shadowOffsetY = 1; x.shadowBlur = 0;
         x.fillStyle = ink; x.textBaseline = "top";
         let y = pad;
         if (title) { x.font = `bold ${fTitle}px Georgia, 'Times New Roman', serif`; y = drawWrapped(x, title, pad, y, w - pad * 2, lhTitle) + 16; }
         if (body) { x.font = `${fBody}px Georgia, 'Times New Roman', serif`; y = drawWrapped(x, body, pad, y, w - pad * 2, lhBody) + 14; }
         if (source) { x.font = `italic ${fSource}px Georgia, 'Times New Roman', serif`; x.fillStyle = "rgba(26,20,16,.66)"; drawWrapped(x, source, pad, y, w - pad * 2, lhSource); }
+        x.shadowColor = "transparent";
         const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; return t;
       }
       // placard canvas: 800x900, big enough that body text lands >=14 CSS px on screen (mobile) / >=18px
@@ -594,38 +739,66 @@ clientHeight, no position:fixed anywhere, --panel-clear reserved by the HUD's ow
       // why a 390px-wide view can't hold a legible photo AND a legible placard at once at a fixed 1.5-unit
       // standing distance).
       const PHOTO_W = 1.5, PHOTO_H = 1.05, PLACARD_W = 0.8, PLACARD_H = 0.9, PLACARD_GAP = 0.15;
+      // ---- round 2: each exhibit is a shrunken scene on a felt-covered plinth outbound (CASE_SCALE), and
+      // a full-size wall piece on the return (round-1 size, unchanged) - a discrete swap at the door slot,
+      // not a continuous morph, matching every other state change that fires at that same beat. The three
+      // placards are a separate group (wallGroup) that never leaves the wall and never case-scales, exactly
+      // as the spec requires ("stay on the wall beside it, unchanged").
+      const CASE_SCALE = 0.3, PLINTH_W = 0.5, PLINTH_D = 0.4, PLINTH_H = 1.1;
+      const frameMat = new THREE.MeshStandardMaterial({ map: makeFeltTexture("#5c4326", "#e6c67a", 256, 256, 2, 2), roughness: 1 });
+      const plinthGeo = new THREE.BoxGeometry(PLINTH_W, PLINTH_H, PLINTH_D);
+      const plinthMat = new THREE.MeshStandardMaterial({ map: makeFeltTexture("#3d5a45", "#e6c67a", 256, 256, 2, 2), roughness: 1 });
+      const caseGeo = new THREE.BoxGeometry(PLINTH_W + 0.16, 0.64, PLINTH_D + 0.12);
+      const caseMat = new THREE.MeshPhysicalMaterial({ color: 0xdcefff, transparent: true, opacity: 0.16, roughness: 0.15, side: THREE.DoubleSide });
       const exhibitObjs = EXHIBITS.map(ex => {
-        const group = new THREE.Group();
-        scene.add(group);
+        const photoGroup = new THREE.Group(); scene.add(photoGroup);
         const photoMat = new THREE.MeshStandardMaterial({ roughness: 0.9 });
         const photo = new THREE.Mesh(new THREE.PlaneGeometry(PHOTO_W, PHOTO_H), photoMat); photo.name = ex.id + "-photo";
         photo.position.set(-ex.side * 0.04, 0, 0); photo.rotation.y = -ex.side * Math.PI / 2;
-        const frame = new THREE.Mesh(new THREE.PlaneGeometry(PHOTO_W + 0.12, PHOTO_H + 0.12), new THREE.MeshStandardMaterial({ color: 0x2a2118, roughness: 1 }));
+        const frame = new THREE.Mesh(new THREE.PlaneGeometry(PHOTO_W + 0.12, PHOTO_H + 0.12), frameMat);
         frame.position.set(-ex.side * 0.02, 0, 0); frame.rotation.y = -ex.side * Math.PI / 2;
         const plate = new THREE.Mesh(new THREE.PlaneGeometry(1.05, 0.24), new THREE.MeshBasicMaterial({ map: makePlateTexture(ex.label) }));
-        plate.position.set(-ex.side * 0.03, PHOTO_H / 2 + 0.18, 0); plate.rotation.y = -ex.side * Math.PI / 2;
-        group.add(frame, photo, plate);
+        plate.rotation.y = -ex.side * Math.PI / 2;
+        photoGroup.add(frame, photo, plate);
+
+        const wallGroup = new THREE.Group(); scene.add(wallGroup);
         const placards = FACTS[ex.id].map((f, i) => {
           const placardZ = PHOTO_W / 2 + PLACARD_GAP + PLACARD_W / 2 + i * (PLACARD_W + PLACARD_GAP);
           const m = new THREE.Mesh(new THREE.PlaneGeometry(PLACARD_W, PLACARD_H), new THREE.MeshBasicMaterial({ map: makePlacardTexture(f.t, f.body, f.src) }));
           m.position.set(-ex.side * 0.03, 0, placardZ); m.rotation.y = -ex.side * Math.PI / 2;
-          group.add(m); return m;
+          wallGroup.add(m); return m;
         });
+
+        const caseDecor = new THREE.Group(); scene.add(caseDecor);
+        const plinth = new THREE.Mesh(plinthGeo, plinthMat); plinth.position.set(0, PLINTH_H / 2, 0); caseDecor.add(plinth);
+        const glassBox = new THREE.Mesh(caseGeo, caseMat); glassBox.position.set(0, PLINTH_H + 0.32, 0); caseDecor.add(glassBox);
+
         const spot = new THREE.SpotLight(0xfff0d0, 1.3, 6, 0.55, 0.45, 1.6);
         const spotTarget = new THREE.Object3D();
         scene.add(spot, spotTarget); spot.target = spotTarget;
-        return { cfg: ex, group, photo, photoMat, placards, spot, spotTarget, texKeyCozy: ex.cozy, texKeyHorror: ex.horror };
+        return { cfg: ex, photoGroup, photo, photoMat, plate, wallGroup, placards, caseDecor, spot, spotTarget, texKeyCozy: ex.cozy, texKeyHorror: ex.horror };
       });
 
-      function updateExhibit(e, rp) {
-        const half = wallHalf(rp);
-        const z = zAt(e.cfg.p);
-        e.group.position.set(e.cfg.side * half, 1.6, z);
-        e.group.scale.setScalar(loom(rp));
-        e.spot.position.set(e.cfg.side * (half - 0.6), 2.7, z);
-        e.spotTarget.position.set(e.cfg.side * half, 1.7, z);
+      function updateExhibit(e, rp, caseMode) {
+        const half = wallHalf(rp), z = zAt(e.cfg.p);
+        e.wallGroup.position.set(e.cfg.side * half, 1.6, z);
+        e.wallGroup.scale.setScalar(loom(rp));
+        let px, py, pz, pscale;
+        if (caseMode) {
+          px = e.cfg.side * (WALL_OUT - 0.55); py = PLINTH_H + 0.03; pz = z; pscale = CASE_SCALE;
+          e.plate.position.set(-e.cfg.side * 0.03, -PHOTO_H * 0.55, 0.04);
+        } else {
+          px = e.cfg.side * half; py = 1.6; pz = z; pscale = loom(rp);
+          e.plate.position.set(-e.cfg.side * 0.03, PHOTO_H / 2 + 0.18, 0);
+        }
+        e.photoGroup.position.set(px, py, pz);
+        e.photoGroup.scale.setScalar(pscale);
+        e.caseDecor.visible = caseMode;
+        e.caseDecor.position.set(e.cfg.side * (WALL_OUT - 0.55), 0, z);
+        e.spot.position.set(px + (caseMode ? 0 : e.cfg.side * -0.6), py + 1.1, pz);
+        e.spotTarget.position.set(px, py, pz);
       }
-      exhibitObjs.forEach(e => updateExhibit(e, 0));
+      exhibitObjs.forEach(e => updateExhibit(e, 0, true));
 
       // ---- guest book lectern + title plaque, near the entrance; reposition (not loom-scale) with the
       // shrinking walls so they never float outside the hall on the final approach.
@@ -670,25 +843,76 @@ clientHeight, no position:fixed anywhere, --panel-clear reserved by the HUD's ow
       updateProp(bookGroup, GUESTBOOK_SIDE, GUESTBOOK_P, 0, 0.55);
       updateProp(titleGroup, TITLE_SIDE, TITLE_P, 0, 1);
 
-      // ---- fuse box on the end wall, facing the entrance.
-      const fuseGroup = new THREE.Group(); fuseGroup.position.set(0, 1.55, zAt(FUSEBOX_P) + 0.05); scene.add(fuseGroup);
-      fuseGroup.add(new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.75, 0.18), new THREE.MeshStandardMaterial({ color: 0x3a3f45, roughness: 0.7, metalness: 0.3 })));
-      const fuseLight = new THREE.PointLight(0xdfe8ff, 0.9, 6, 2); fuseLight.position.set(0, 2.0, zAt(FUSEBOX_P) - 1); scene.add(fuseLight);
+      // ---- the museum door: felt panel with a magnifying-glass-shaped slot (a dark ring inset, a felt
+      // brass rim, a stem below for the handle), replacing the fuse box as the end-hall interactable.
+      const doorGroup = new THREE.Group(); doorGroup.position.set(0, 0, zAt(FUSEBOX_P) + 0.04); scene.add(doorGroup);
+      doorGroup.add(new THREE.Mesh(new THREE.PlaneGeometry(1.3, 2.2), new THREE.MeshStandardMaterial({ map: makeFeltTexture("#6b3f4a", "#e6c67a", 512, 512, 1, 2), roughness: 1 })));
+      const slotRing = new THREE.Mesh(new THREE.TorusGeometry(0.11, 0.02, 10, 24), new THREE.MeshStandardMaterial({ map: makeFeltTexture("#c9a24c", "#3c3552", 128, 128), roughness: 0.8 }));
+      slotRing.position.set(0, 1.5, 0.03); doorGroup.add(slotRing);
+      const slotHole = new THREE.Mesh(new THREE.CircleGeometry(0.1, 24), new THREE.MeshBasicMaterial({ color: 0x140f12 }));
+      slotHole.position.set(0, 1.5, 0.031); doorGroup.add(slotHole);
+      const slotStem = new THREE.Mesh(new THREE.PlaneGeometry(0.032, 0.17), new THREE.MeshBasicMaterial({ color: 0x140f12 }));
+      slotStem.position.set(0, 1.5 - 0.185, 0.031); doorGroup.add(slotStem);
+      const doorPlate = new THREE.Mesh(new THREE.PlaneGeometry(1.0, 0.22), new THREE.MeshBasicMaterial({ map: makeSignTexture({ w: 900, h: 200, bg: "#241d14", stitch: "#8a5a34", ink: "#e6c67a", body: "INSERT INSTRUMENT TO CONTINUE THE TOUR.", fBody: 40, lhBody: 46, pad: 30 }) }));
+      doorPlate.position.set(0, 1.1, 0.031); doorGroup.add(doorPlate);
+      const doorLight = new THREE.PointLight(0xdfe8ff, 0.9, 6, 2); doorLight.position.set(0, 2.0, zAt(FUSEBOX_P) - 1); scene.add(doorLight);
+
+      // ---- the magnifying glass, held: a felt-wrapped ring and a wooden handle, parented to the camera so
+      // it moves with the look; idle a slow breathing bob, raised and grown to frame the fisheye on zoom.
+      const GLASS_REST = new THREE.Vector3(0.34, -0.26, -0.52), GLASS_RAISED = new THREE.Vector3(0, -0.04, -0.42);
+      const glassGroup = new THREE.Group(); glassGroup.position.copy(GLASS_REST); camera.add(glassGroup);
+      const glassRing = new THREE.Mesh(new THREE.TorusGeometry(0.085, 0.016, 10, 24), new THREE.MeshStandardMaterial({ map: makeFeltTexture("#c9a24c", "#3c3552", 128, 128), roughness: 0.85 }));
+      glassGroup.add(glassRing);
+      const glassLens = new THREE.Mesh(new THREE.CircleGeometry(0.078, 24), new THREE.MeshBasicMaterial({ color: 0xeaf6ff, transparent: true, opacity: 0.32, side: THREE.DoubleSide }));
+      glassGroup.add(glassLens);
+      const glassHandle = new THREE.Mesh(new THREE.CylinderGeometry(0.013, 0.017, 0.22, 8), new THREE.MeshStandardMaterial({ color: 0x5c4326, roughness: 0.9 }));
+      glassHandle.position.set(0, -0.17, 0); glassHandle.rotation.z = 0.35; glassGroup.add(glassHandle);
+
+      // ---- the fisheye lens: a camera-child plane sampling the currently-faced exhibit's photo through a
+      // radial barrel remap (uv' = c + (uv - c) * (1 + k*r^2)), clipped to a circle with a soft rim vignette.
+      // Hidden until zoomed; grows and centres together with the glass above.
+      const lensMat = new THREE.ShaderMaterial({
+        transparent: true, depthTest: false, depthWrite: false,
+        uniforms: { map: { value: null }, aspect: { value: PHOTO_W / PHOTO_H }, k: { value: 0.35 } },
+        vertexShader: `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+        fragmentShader: `uniform sampler2D map; uniform float aspect; uniform float k; varying vec2 vUv;
+          void main(){
+            vec2 c = vUv - 0.5; c.x *= aspect; float r = length(c);
+            if (r > 0.5) discard;
+            vec2 warped = c * (1.0 + k * r * r); warped.x /= aspect;
+            vec4 col = texture2D(map, warped + 0.5);
+            float vig = smoothstep(0.32, 0.5, r);
+            col.rgb *= mix(1.0, 0.55, vig);
+            gl_FragColor = vec4(col.rgb, 1.0);
+          }`
+      });
+      const lensQuad = new THREE.Mesh(new THREE.PlaneGeometry(0.6, 0.6), lensMat);
+      lensQuad.visible = false; lensQuad.renderOrder = 5; camera.add(lensQuad);
 
       camera.position.set(0, EYE_OUT, zAt(0)); applyLook();
 
       // ---- input: hold-to-walk (keyboard + WALK button), free-look by pointer drag (getBoundingClientRect
-      // + clientX/clientY only, per the shell's own zoom-compensation contract).
+      // + clientX/clientY only, per the shell's own zoom-compensation contract). The look zone also reads
+      // taps (movement under a small threshold) as the exhibit zoom's click-to-open/close.
       let walkHeld = false;
       function typing() { const a = document.activeElement; return a && (a.tagName === "INPUT" || a.tagName === "TEXTAREA"); }
       window.addEventListener("keydown", e => { if ((e.key === "w" || e.key === "W" || e.key === "ArrowUp") && !typing()) walkHeld = true; });
       window.addEventListener("keyup", e => { if (e.key === "w" || e.key === "W" || e.key === "ArrowUp") walkHeld = false; });
+      window.addEventListener("keydown", e => {
+        if (typing()) return;
+        if (e.key === "e" || e.key === "E" || e.key === "Enter") {
+          if (doorOpen) { onConnect(); return; }
+          if (zoomOpen) { closeZoom(); return; }
+          const ne = nearestCaseExhibit(); if (ne) openZoom(ne);
+        } else if (e.key === "Escape" && zoomOpen) { closeZoom(); }
+      });
       walkBtn.addEventListener("pointerdown", e => { walkHeld = true; e.preventDefault(); dismissHint(); });
       ["pointerup", "pointercancel", "pointerleave"].forEach(ev => walkBtn.addEventListener(ev, () => walkHeld = false));
 
-      let dragging = false, lastX = 0, lastY = 0;
+      let dragging = false, lastX = 0, lastY = 0, downX = 0, downY = 0, downMoved = false;
       lookZone.addEventListener("pointerdown", e => {
-        dragging = true; lastX = e.clientX; lastY = e.clientY; lookZone.setPointerCapture(e.pointerId); dismissHint();
+        dragging = true; lastX = e.clientX; lastY = e.clientY; downX = e.clientX; downY = e.clientY; downMoved = false;
+        lookZone.setPointerCapture(e.pointerId); dismissHint();
       });
       lookZone.addEventListener("pointermove", e => {
         if (!dragging) return;
@@ -697,8 +921,14 @@ clientHeight, no position:fixed anywhere, --panel-clear reserved by the HUD's ow
         lastX = e.clientX; lastY = e.clientY;
         yaw -= dx * 4.2;
         pitch = Math.max(-Math.PI / 3, Math.min(Math.PI / 3, pitch - dy * 3.4));
+        if (Math.abs(e.clientX - downX) > 6 || Math.abs(e.clientY - downY) > 6) downMoved = true;
       });
-      ["pointerup", "pointercancel", "pointerleave"].forEach(ev => lookZone.addEventListener(ev, () => dragging = false));
+      ["pointerup", "pointercancel", "pointerleave"].forEach(type => lookZone.addEventListener(type, () => {
+        dragging = false;
+        if (type === "pointerup" && !downMoved) {
+          if (zoomOpen) closeZoom(); else { const ne = nearestCaseExhibit(); if (ne) openZoom(ne); }
+        }
+      }));
 
       let hintShown = true;
       function dismissHint() { if (!hintShown) return; hintShown = false; hint.classList.add("hide"); }
@@ -709,6 +939,8 @@ clientHeight, no position:fixed anywhere, --panel-clear reserved by the HUD's ow
       // math below has to use the same sign or it silently judges a mirrored direction (found via a raycast
       // debug hit landing on the wrong wall while building this pass).
       function forwardXZ() { return { x: -Math.sin(yaw), z: -Math.cos(yaw) }; }
+      function bearingTo(pos) { return Math.atan2(camera.position.x - pos.x, camera.position.z - pos.z); }
+      function angleLerp(a, b, t) { const d = ((b - a + Math.PI) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI) - Math.PI; return a + d * t; }
       function nearFacing(pos, maxDist, minDot) {
         const dx = pos.x - camera.position.x, dz = pos.z - camera.position.z;
         const dist = Math.hypot(dx, dz);
@@ -717,6 +949,25 @@ clientHeight, no position:fixed anywhere, --panel-clear reserved by the HUD's ow
         const f = forwardXZ();
         return (f.x * dx / dist + f.z * dz / dist) > minDot;
       }
+
+      // ---- exhibit zoom: which case (if any) is in range while a case exists (outbound only), and the
+      // glass's rise/grow eased toward its target every frame (450ms open, 300ms close; cut instantly with
+      // no bob under reduced motion, per spec).
+      // 5.2: opening also yaws the view onto the exhibit's exact bearing over that same open ease, so the
+      // turn is a visible swing (the glass rig, a camera child, swings with it for free) - the camera is
+      // already roughly facing the case (that's what nearFacing already required), this squares it exactly.
+      let zoomExhibit = null, zoomOpen = false, zoomEase = 0, zoomTurning = false, zoomYawFrom = 0, zoomYawTo = 0;
+      function caseAnchorOf(e) { return { x: e.cfg.side * (WALL_OUT - 0.55), z: zAt(e.cfg.p) }; }
+      function nearestCaseExhibit() {
+        if (ST.phase !== "out") return null;
+        for (const e of exhibitObjs) if (nearFacing(caseAnchorOf(e), 1.6, 0.35)) return e;
+        return null;
+      }
+      function openZoom(e) {
+        zoomExhibit = e; zoomOpen = true;
+        zoomYawFrom = yaw; zoomYawTo = bearingTo(caseAnchorOf(e)); zoomTurning = true;
+      }
+      function closeZoom() { zoomOpen = false; zoomTurning = false; }
 
       // ---- guest book overlay
       const bookForm = document.getElementById("bookForm"), bookSkip = document.getElementById("bookSkip");
@@ -734,21 +985,21 @@ clientHeight, no position:fixed anywhere, --panel-clear reserved by the HUD's ow
       });
       bookSkip.addEventListener("click", () => { bookSkipped = true; closeBook(); });
 
-      // ---- fuse box / wires overlay
-      let wireOpen = false;
+      // ---- the door / slot overlay: reuses the proven drag-then-commit widget (wireUp, unchanged), just
+      // relabelled and reskinned for the door instead of a fuse box.
+      let doorOpen = false;
       const tear3d = document.getElementById("tear3d");
-      const wireCtl = wireUp(wirePanel, () => onConnect());
-      function openWire() { if (wireOpen || ST.phase !== "out") return; wireOpen = true; wirePanel.classList.add("show"); }
-      function closeWire() { wireOpen = false; wirePanel.classList.remove("show"); }
+      const doorCtl = wireUp(wirePanel, () => onConnect());
+      function openDoor() { if (doorOpen || ST.phase !== "out") return; doorOpen = true; wirePanel.classList.add("show"); }
+      function closeDoor() { doorOpen = false; wirePanel.classList.remove("show"); }
 
       let flickerT0 = 0, flickering = false;
       function onConnect() {
         fireConnect(() => {
-          closeWire();
+          closeDoor();
           exhibitObjs.forEach(e => {
             const t = tex[e.texKeyHorror]; if (t) { e.photoMat.map = t; e.photoMat.needsUpdate = true; }
             e.spot.color.set(0x9fb8dd); e.spot.intensity = 0.75;
-            e.placards.forEach(m => m.geometry.dispose && m.geometry); // no-op guard, placards rebuilt below
           });
           // swap placards to resource copy for each exhibit
           exhibitObjs.forEach(e => {
@@ -760,22 +1011,24 @@ clientHeight, no position:fixed anywhere, --panel-clear reserved by the HUD's ow
               e.placards[i].material.needsUpdate = true;
             });
           });
-          if (reducedMotion) { hallLights.forEach(l => { l.color.set(COLD_LIGHT); l.intensity = 0.55; }); wallMat.color.set(COLD_WALL); ambient.intensity = 0.3; }
-          else { flickering = true; flickerT0 = performance.now(); }
+          if (reducedMotion) {
+            hallLights.forEach(l => { l.color.set(COLD_LIGHT); l.intensity = 0.55; });
+            wallMat.color.set(COLD_WALL); rugMat.color.set(RUG_COLD); ambient.intensity = 0.3;
+          } else { flickering = true; flickerT0 = performance.now(); }
         });
       }
-      wireCtl; // (kept for symmetry with the flat path; wireUp already wired the pointer handlers)
+      doorCtl; // (kept for symmetry with the flat path; wireUp already wired the pointer handlers)
 
       // ---- epilogue
       let epiOpen = false;
       function openEpi() { if (epiOpen) return; epiOpen = true; epiPanel.classList.add("show"); }
       function closeEpi() { epiOpen = false; epiPanel.classList.remove("show"); }
       document.getElementById("walkAgain3d").addEventListener("click", () => {
-        ST.phase = "out"; ST.t = 0; saveState();
-        closeEpi();
+        ST.phase = "out"; ST.t = 0; ST.shrinkStartedAt = null; saveState();
+        closeEpi(); closeZoom();
         exhibitObjs.forEach(e => { const t = tex[e.texKeyCozy]; if (t) { e.photoMat.map = t; e.photoMat.needsUpdate = true; } e.spot.color.set(0xfff0d0); e.spot.intensity = 1.3; });
         hallLights.forEach(l => { l.color.set(WARM_LIGHT); l.intensity = 0.85; });
-        wallMat.color.set(WARM_WALL); ambient.intensity = 0.55;
+        wallMat.color.set(WARM_WALL); rugMat.color.set(RUG_WARM); ambient.intensity = 0.55;
         yaw = 0; pitch = 0; applyLook();
       });
 
@@ -801,17 +1054,18 @@ clientHeight, no position:fixed anywhere, --panel-clear reserved by the HUD's ow
             e.placards.forEach((m, i) => { m.visible = i < ids.length; if (i < ids.length) { const r = RES[ids[i]]; m.material.map = makePlacardTexture(ids[i], r.body, r.src); m.material.needsUpdate = true; } });
           });
           hallLights.forEach(l => { l.color.set(COLD_LIGHT); l.intensity = 0.55; });
-          wallMat.color.set(COLD_WALL); ambient.intensity = 0.3;
+          wallMat.color.set(COLD_WALL); rugMat.color.set(RUG_COLD); ambient.intensity = 0.3;
           lb.classList.toggle("breached", false);
         }
         if (ST.phase === "done") openEpi();
         camera.position.z = zAt(ST.t);
-        const rp0 = isReturning() ? rpOf(ST.t) : 0;
+        const rp0 = shrinkProgress(), caseMode0 = ST.phase === "out";
         camera.position.y = eyeY(rp0);
         hallMesh.scale.set(2 * wallHalf(rp0), ceilY(rp0), 1);
-        exhibitObjs.forEach(e => updateExhibit(e, rp0));
+        exhibitObjs.forEach(e => updateExhibit(e, rp0, caseMode0));
         updateProp(bookGroup, GUESTBOOK_SIDE, GUESTBOOK_P, rp0, 0.55);
         updateProp(titleGroup, TITLE_SIDE, TITLE_P, rp0, 1);
+        glassGroup.visible = caseMode0;
         last = performance.now();
         requestAnimationFrame(frame);
       });
@@ -821,19 +1075,42 @@ clientHeight, no position:fixed anywhere, --panel-clear reserved by the HUD's ow
         const dt = Math.min(0.05, (now - last) / 1000); last = now;
         applyLook();
 
-        if (walkHeld && !bookOpen && !epiOpen) {
+        if (walkHeld && !bookOpen && !epiOpen && !zoomOpen) {
           const dir = ST.phase === "out" ? 1 : -1;
           ST.t = Math.max(0, Math.min(1, ST.t + dir * WALK_SPEED * dt));
           saveState();
         }
         camera.position.z = zAt(ST.t);
-        const rp = isReturning() ? rpOf(ST.t) : 0;
+        const rp = shrinkProgress(), caseMode = ST.phase === "out";
         camera.position.y = eyeY(rp);
 
         if (!flickering) { hallMesh.scale.set(2 * wallHalf(rp), ceilY(rp), 1); }
-        exhibitObjs.forEach(e => updateExhibit(e, rp));
+        exhibitObjs.forEach(e => updateExhibit(e, rp, caseMode));
         updateProp(bookGroup, GUESTBOOK_SIDE, GUESTBOOK_P, rp, 0.55);
         updateProp(titleGroup, TITLE_SIDE, TITLE_P, rp, 1);
+        glassGroup.visible = caseMode;
+
+        // exhibit zoom: close on walking away, leaving the case phase, or turning; ease the glass and the
+        // fisheye lens toward the open/closed target together.
+        const nearEx = caseMode ? nearestCaseExhibit() : null;
+        if (zoomOpen && (nearEx !== zoomExhibit || !caseMode)) closeZoom();
+        const zoomTarget = zoomOpen ? 1 : 0;
+        if (reducedMotion) zoomEase = zoomTarget;
+        else { const rate = (zoomTarget > zoomEase ? dt / 0.45 : dt / 0.3); zoomEase = zoomTarget > zoomEase ? Math.min(zoomTarget, zoomEase + rate) : Math.max(zoomTarget, zoomEase - rate); }
+        const ease = zoomEase * zoomEase * (3 - 2 * zoomEase);
+        if (zoomTurning && !dragging) {
+          yaw = angleLerp(zoomYawFrom, zoomYawTo, ease); applyLook();
+          if (ease >= 1) zoomTurning = false;
+        } else if (zoomTurning) zoomTurning = false;   // the player grabbed the look and took the turn over
+        glassGroup.position.lerpVectors(GLASS_REST, GLASS_RAISED, ease);
+        glassGroup.scale.setScalar(1 + 2.4 * ease);
+        if (!reducedMotion) glassGroup.position.y += Math.sin(now * 0.0016) * 0.012 * (1 - ease);
+        if (zoomEase > 0.02 && zoomExhibit && zoomExhibit.photoMat.map) {
+          lensMat.uniforms.map.value = zoomExhibit.photoMat.map;
+          lensQuad.position.lerpVectors(GLASS_REST, new THREE.Vector3(0, -0.04, -0.5), ease);
+          lensQuad.scale.setScalar(0.25 + 1.1 * ease);
+          lensQuad.visible = true;
+        } else lensQuad.visible = false;
 
         if (flickering) {
           const el = now - flickerT0;
@@ -843,20 +1120,24 @@ clientHeight, no position:fixed anywhere, --panel-clear reserved by the HUD's ow
           } else {
             flickering = false;
             hallLights.forEach(l => { l.color.set(COLD_LIGHT); l.intensity = 0.55; });
-            wallMat.color.set(COLD_WALL); ambient.intensity = 0.3;
+            wallMat.color.set(COLD_WALL); rugMat.color.set(RUG_COLD); ambient.intensity = 0.3;
           }
         }
 
-        // turn-around prompt
-        if (ST.phase === "wired") {
-          prompt.classList.add("show");
+        // prompt priority: turn around, then the door's slot, then an in-range case - one shared element
+        if (ST.phase === "slotted") {
+          prompt.textContent = "Turn around."; prompt.classList.add("show");
           const f = forwardXZ();
           if (f.z > 0.3) { ST.phase = "back"; saveState(); prompt.classList.remove("show"); }
+        } else if (caseMode && nearFacing(doorGroup.position, 1.5, 0.35)) {
+          prompt.textContent = "The door has a slot."; prompt.classList.add("show");
+        } else if (nearEx && !zoomOpen) {
+          prompt.textContent = "Look closer."; prompt.classList.add("show");
         } else prompt.classList.remove("show");
 
-        // guest book / wires proximity
+        // guest book / door proximity
         if (!ST.signed && !bookSkipped) { if (nearFacing(bookGroup.position, 1.5, 0.35)) openBook(); else closeBook(); }
-        if (ST.phase === "out") { if (nearFacing(fuseGroup.position, 1.5, 0.35)) openWire(); else closeWire(); }
+        if (ST.phase === "out") { if (nearFacing(doorGroup.position, 1.5, 0.35)) openDoor(); else closeDoor(); }
 
         // reached the entrance on the way back
         if (isReturning() && ST.t <= 0.001 && ST.phase !== "done") { ST.phase = "done"; saveState(); openEpi(); }
@@ -876,25 +1157,34 @@ clientHeight, no position:fixed anywhere, --panel-clear reserved by the HUD's ow
   function runFlat() {
     const flat = document.createElement("div"); flat.className = "lb-flat"; flat.id = "lbFlat";
     lbStage.appendChild(flat);
+    // the held glass, drawn once as inline SVG: a corner decoration on every exhibit step, and (via
+    // .fl-zoomable) the tap target that swaps a photo for a 2x circular crop of itself - fisheye is a
+    // WebGL-only build, magnification is the fallback's job.
+    const GLASS_SVG = `<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="26" cy="26" r="16" fill="rgba(234,246,255,.4)" stroke="#c9a24c" stroke-width="5"/><line x1="38" y1="38" x2="54" y2="54" stroke="#5c4326" stroke-width="6" stroke-linecap="round"/></svg>`;
     // step -> {phase,t}: kept in exact lockstep with the shared storage schema so a save from this path
     // reads back correctly (and, loosely, so a save from the 3D path resumes to the nearest matching step).
     const STEPS = [
       { id: "entrance", phase: "out", t: 0 },
       { id: "book", phase: "out", t: 0 },
-      { id: "teepee", phase: "out", t: 0.25 },
-      { id: "shoebox", phase: "out", t: 0.5 },
-      { id: "masonjar", phase: "out", t: 0.75 },
-      { id: "fusebox", phase: "out", t: 1 },
-      { id: "turn", phase: "wired", t: 1 },
-      { id: "masonjar-h", phase: "back", t: 0.75 },
-      { id: "shoebox-h", phase: "back", t: 0.5 },
-      { id: "teepee-h", phase: "back", t: 0.25 },
+      { id: "teepee", phase: "out", t: 0.15 },
+      { id: "car", phase: "out", t: 0.275 },
+      { id: "shoebox", phase: "out", t: 0.4 },
+      { id: "storage", phase: "out", t: 0.525 },
+      { id: "masonjar", phase: "out", t: 0.65 },
+      { id: "van", phase: "out", t: 0.775 },
+      { id: "door", phase: "out", t: 1 },
+      { id: "turn", phase: "slotted", t: 1 },
+      { id: "van-h", phase: "back", t: 0.775 },
+      { id: "masonjar-h", phase: "back", t: 0.65 },
+      { id: "storage-h", phase: "back", t: 0.525 },
+      { id: "shoebox-h", phase: "back", t: 0.4 },
+      { id: "car-h", phase: "back", t: 0.275 },
+      { id: "teepee-h", phase: "back", t: 0.15 },
       { id: "epilogue", phase: "done", t: 0 }
     ];
     function nearestStep() {
       let best = 0, bestScore = Infinity;
       STEPS.forEach((s, i) => {
-        const phaseOk = s.phase === ST.phase || (ST.phase === "back" && s.phase === "wired") || (ST.phase === "wired" && s.phase === "back");
         const score = (s.phase === ST.phase ? 0 : 2) + Math.abs(s.t - ST.t);
         if (score < bestScore) { bestScore = score; best = i; }
       });
@@ -904,7 +1194,7 @@ clientHeight, no position:fixed anywhere, --panel-clear reserved by the HUD's ow
 
     function render() {
       const s = STEPS[step];
-      ST.phase = s.phase === "wired" && step > 6 ? "back" : s.phase; ST.t = s.t; saveState();
+      ST.phase = s.phase === "slotted" && step > 6 ? "back" : s.phase; ST.t = s.t; saveState();
       flat.innerHTML = "";
       const wrap = document.createElement("div");
       switch (s.id) {
@@ -916,23 +1206,23 @@ clientHeight, no position:fixed anywhere, --panel-clear reserved by the HUD's ow
             <div class="row"><button type="submit">SIGN</button><a class="skip" id="flSkip">walk on</a></div></form>`;
           break;
         }
-        case "teepee": case "shoebox": case "masonjar": {
+        case "teepee": case "car": case "shoebox": case "storage": case "masonjar": case "van": {
           const ex = EXHIBITS.find(e => e.id === s.id);
-          wrap.innerHTML = `<span class="fl-name">${ex.label}</span><p class="fl-sub">cozy</p>
-            <img class="fl-photo" src="${ex.cozy}" alt="${ex.label} cozy">
+          wrap.innerHTML = `<span class="fl-name">${ex.label}</span><p class="fl-sub">cozy - tap the photo to look closer</p>
+            <div class="fl-zoomable" id="flZoom"><img class="fl-photo" src="${ex.cozy}" alt="${ex.label} cozy"><div class="lb-flat-glass">${GLASS_SVG}</div></div>
             ${FACTS[ex.id].map(f => `<div class="fl-card">${f.body}<span class="fl-src">${f.src}</span></div>`).join("")}
             <div class="fl-actions"><button id="flNext">NEXT</button></div>`;
           break;
         }
-        case "fusebox": wrap.innerHTML = `<span class="fl-name">The Fuse Box</span><p>Two wires. Drag or tap the right one to meet the left.</p>
+        case "door": wrap.innerHTML = `<span class="fl-name">The Door</span><p>Insert the instrument. Drag or tap the glass into the slot.</p>
           <div class="lb-fusepanel"><div class="lb-tear" id="flTear"><div class="wires"><div class="wire l"><span class="end"></span></div><div class="wire r"><span class="end"></span></div><span class="spark"></span></div>
-          <div class="tip" id="flTip">two wires. drag the blue one left.</div></div></div>`; break;
+          <div class="tip" id="flTip">drag the glass into the slot.</div></div></div>`; break;
         case "turn": wrap.innerHTML = `<span class="fl-name">Turn around.</span><p>The hall behind you is smaller than the one you walked in.</p><div class="fl-actions"><button id="flNext">turn around</button></div>`; break;
-        case "teepee-h": case "shoebox-h": case "masonjar-h": {
+        case "teepee-h": case "car-h": case "shoebox-h": case "storage-h": case "masonjar-h": case "van-h": {
           const ex = EXHIBITS.find(e => e.id === s.id.replace("-h", ""));
           const ids = RESOURCE_MAP[ex.id];
           wrap.innerHTML = `<span class="fl-name">${ex.label}</span><p class="fl-sub">the walls are closer now</p>
-            <img class="fl-photo" src="${ex.horror}" alt="${ex.label} horror">
+            <div class="fl-zoomable" id="flZoom"><img class="fl-photo" src="${ex.horror}" alt="${ex.label} horror"></div>
             ${ids.map(id => `<div class="fl-card">${RES[id].body}<span class="fl-src">${RES[id].src}</span></div>`).join("")}
             <div class="fl-actions"><button id="flNext">NEXT</button></div>`;
           break;
@@ -952,10 +1242,12 @@ clientHeight, no position:fixed anywhere, --panel-clear reserved by the HUD's ow
         fireForm({ city: String(f.get("city")).trim().toLowerCase(), country: String(f.get("country")).trim().toLowerCase(), income: Math.max(0, +f.get("income") || 0) });
         goNext();
       });
+      const zoomable = document.getElementById("flZoom");
+      if (zoomable) zoomable.addEventListener("click", () => zoomable.classList.toggle("zoomed"));
       const tear = document.getElementById("flTear");
       if (tear) wireUp(tear.parentElement, () => { fireConnect(() => setTimeout(goNext, 700)); });
       const again = document.getElementById("flAgain");
-      if (again) again.addEventListener("click", () => { ST.phase = "out"; ST.t = 0; saveState(); step = 0; render(); });
+      if (again) again.addEventListener("click", () => { ST.phase = "out"; ST.t = 0; ST.shrinkStartedAt = null; saveState(); step = 0; render(); });
     }
     render();
   }
