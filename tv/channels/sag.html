@@ -340,6 +340,7 @@ ZOOM TRAP: .channel carries zoom:1.15 (tv.css). getBoundingClientRect() and clie
               <p class="sec-sub">He already knows the answer. He'll make you wait for it anyway.</p>
               <form class="askform" id="sgAskForm">
                 <label class="asklabel" for="sgQ">Type a real money question. The ball answers what it wants.</label>
+                <p class="sec-sub askfine">Your question is saved in this browser so the channel knows you asked. It is not sent anywhere and nobody reads it.</p>
                 <input class="askin" id="sgQ" name="q" type="text" maxlength="140" autocomplete="off"
                        placeholder="Should I pay off the card or save it?">
                 <button class="askbtn" id="sgAsk" type="submit">Ask the ball</button>
@@ -372,15 +373,11 @@ ZOOM TRAP: .channel carries zoom:1.15 (tv.css). getBoundingClientRect() and clie
         <h2 class="sec-h">The One Real Thing</h2>
         <p class="sec-sub">Everything above this line is a bit. This part isn't.</p>
         <div class="treatscard">
-          <p class="treatsbody">He'd rather be out there than in here. He already set a bag of real, natural treats aside for your dog, before you even asked. Text him your number: he'll send you a dog fact when one crosses his mind, no schedule to it. Send back a photo proving your dog's still upright and the treats are already on their way.</p>
-          <form class="treatsform" id="sgTreatsForm">
-            <input class="treatsinput" id="sgTreatsPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="Your number" aria-label="Your phone number" required>
-            <button class="treatsbtn" type="submit">Text Sag</button>
-          </form>
-          <p class="sec-sub treatsconsent">He'll text you dog facts and treat instructions, nothing else. Stop anytime by texting STOP.</p>
+          <p class="treatsbody">He'd rather be out there than in here. Natural dog treats, sent free for a photo proving your dog is still upright, and a dog fact whenever one crosses his mind. That is the plan and it is not a bit. It is also not running yet, so there is nothing to sign up to and he is not taking numbers.</p>
+          <p class="sec-sub treatsconsent">No form here yet, on purpose. When the treats are real this is where the signup will be, and it will say what it keeps and for how long before it asks for anything.</p>
           <p class="treatsprice" id="sgTreatsMsg" aria-live="polite"></p>
         </div>
-        <p class="sec-sub treatsfine">This part is real: dog facts by text, free treats for a photo proving your dog's alive. No shop yet, no charge, and this part is not a bit.</p>
+        <p class="sec-sub treatsfine">No shop, no charge, no list, and nothing in this section is asked for, kept or sent. When that changes, this line changes with it.</p>
       </section>
     </div>
 
@@ -1073,9 +1070,9 @@ ZOOM TRAP: .channel carries zoom:1.15 (tv.css). getBoundingClientRect() and clie
   // --- the one real thing: dog facts by text, free treats for a photo. In-character; stores nothing, no backend yet
   const treatsForm = document.getElementById("sgTreatsForm");
   const treatsMsg = document.getElementById("sgTreatsMsg");
-  treatsForm.addEventListener("submit", e => {
+  if (treatsForm) treatsForm.addEventListener("submit", e => {
     e.preventDefault();
-    treatsMsg.textContent = "Got it. Don't expect the facts to be good ones.";
+    treatsMsg.textContent = "Nothing was sent: there is no list yet and your number was not kept. When the treats are real this form will say so and ask you again.";
     treatsForm.reset();
   });
 

@@ -7,3 +7,10 @@ tv/assets/armie$f
 # internal, not for a public repo
 PRODUCT.md
 .impeccable/
+
+# review artefacts, never deployed
+PLAN.md
+PLAN-REVIEW-LOG.md
+
+# gate screenshots, regenerated on every run
+tools/shots/

@@ -45,16 +45,19 @@
     { id: "sag",          ch: 4, name: "SAG SNIFFER" },
     { id: "girlfriend",   ch: 9, name: "DR GIRLFRIEND" },
     { id: "armie",        ch: 5, name: "COACH ARMIE" },
+    // the way out of the television and into the games' own pages (plan item 13: the set discovers and
+    // launches them, it is no longer the box they have to run inside)
+    { id: "allgames",     ch: 0, name: "ALL GAMES", href: "../games/", label: "PLAY" },
   ];
   const lcdList = document.getElementById("lcdList");
   const current = new URLSearchParams(location.search).get("ch") || "";
   if (lcdList) CHANNELS.forEach(c => {
-    const built = c.ch > 0;
+    const built = c.ch > 0 || !!c.href;
     const el = document.createElement(built ? "a" : "span");
     el.className = "lcd-card" + (c.head ? " head" : "") + (c.half ? " half" : "") + (built ? "" : " off") + (c.id === current ? " on" : "");
     el.dataset.id = c.id;
-    if (built) el.href = `?ch=${c.id}`;
-    el.innerHTML = `<span class="lcd-ch">${built ? "CH " + c.ch : "CH --"}</span><span class="lcd-name">${c.name}</span>`;
+    if (built) el.href = c.href || `?ch=${c.id}`;
+    el.innerHTML = `<span class="lcd-ch">${c.ch > 0 ? "CH " + c.ch : (c.label || "CH --")}</span><span class="lcd-name">${c.name}</span>`;
     lcdList.appendChild(el);
   });
 

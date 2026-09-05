@@ -254,9 +254,10 @@ FORM: Ian's pin, 2026-08-25, "90s late-night infomercial." Inside the old televi
         </ul>
         <p>And here is a real one, no joke: she gets her nails done on camera. She shouts out <span class="link">her actual nail tech</span>. That part is true. The true parts are how you know it's her.</p>
         <form class="subform" id="subForm">
-          <label for="trackName">She already cleared a spot on the stack today. She already listened for something real. Now send your unsigned track. She plays real ones first.</label>
+          <label for="trackName">She already cleared a spot on the stack today. She already listened for something real. Name your unsigned track.</label>
+          <p class="ofine">There is no inbox behind this yet: what you type is discarded and only the fact that you filled it in is saved in this browser. Nothing reaches her, or anyone.</p>
           <input id="trackName" name="track" placeholder="artist, track, or a link" required>
-          <button type="submit" id="subBtn">SEND IT TO THE DECK</button>
+          <button type="submit" id="subBtn">NAME IT FOR THE DECK</button>
         </form>
       </section>
 
@@ -294,7 +295,7 @@ FORM: Ian's pin, 2026-08-25, "90s late-night infomercial." Inside the old televi
 
       <section class="card customize" id="customize">
         <h2>BUILD YOUR OWN HAND</h2>
-        <p>MOM already started growing one, just for you, before you even asked. Tell her what you want in yours. She will send the ad copy for the hand you designed.</p>
+        <p>MOM already started growing one, just for you, before you even asked. Tell her what you want in yours. Nothing is sent and nothing arrives: this is a builder, not an order form.</p>
         <form id="orderForm" class="orderform">
           <label>Being type
             <select name="being" required>
@@ -314,11 +315,8 @@ FORM: Ian's pin, 2026-08-25, "90s late-night infomercial." Inside the old televi
           <label>Powers
             <input name="powers" placeholder="telekinesis? fire? folds fitted sheets?">
           </label>
-          <label>Where to send the paperwork
-            <input name="email" type="email" placeholder="you@dimension.???" required>
-          </label>
-          <button type="submit" id="orderBtn">ORDER MY HAND</button>
-          <p class="ofine">No payment, no obligation, nothing sent yet. MOM will send ad copy for the hand you designed. In-character participation only, never a sale.</p>
+          <button type="submit" id="orderBtn">BUILD MY HAND</button>
+          <p class="ofine">A preview, not an order: no payment, no address asked for, and nothing sent or kept. MOM cannot post you anything because there is nothing behind this form. In-character participation only, never a sale.</p>
         </form>
       </section>
 
@@ -371,14 +369,14 @@ FORM: Ian's pin, 2026-08-25, "90s late-night infomercial." Inside the old televi
   });
   document.getElementById("subForm").addEventListener("submit", e => {
     e.preventDefault();
-    const b = document.getElementById("subBtn"); b.textContent = "ON THE STACK. SHE PLAYS REAL ONES FIRST."; b.disabled = true;
+    const b = document.getElementById("subBtn"); b.textContent = "NOTED ON THIS DEVICE ONLY. NOTHING WAS SENT AND NOBODY HEARD IT."; b.disabled = true;
     window.MBS && window.MBS.form && window.MBS.form("djscratch", { track: true });
   });
   // the customization order: in-character only; a real endpoint (Formspree free tier) can be wired later to actually receive orders
   document.getElementById("orderForm").addEventListener("submit", e => {
     e.preventDefault();
-    const b = document.getElementById("orderBtn"); b.textContent = "MOM IS GROWING YOUR HAND…"; b.disabled = true;
-    setTimeout(() => { b.textContent = "SPECIFICATIONS RECEIVED. WATCH YOUR DIMENSION."; }, 1500);
+    const b = document.getElementById("orderBtn"); b.textContent = "DRAWING UP YOUR HAND…"; b.disabled = true;
+    setTimeout(() => { b.textContent = "THAT IS YOUR HAND. NOTHING WAS SENT AND NO FACTORY EXISTS."; }, 1500);
   });
 
   // THE TURNTABLE, PARTY MODE. The record spins forever; scratching the hand halts it and jolts it back.

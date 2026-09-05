@@ -2,6 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://mominc-mbs.github.io/</loc></url>
   <url><loc>https://mominc-mbs.github.io/tv/</loc></url>
+  <url><loc>https://mominc-mbs.github.io/games/</loc></url>
   <url><loc>https://mominc-mbs.github.io/tv/?ch=mominc</loc></url>
   <url><loc>https://mominc-mbs.github.io/tv/?ch=lilboyfriend</loc></url>
   <url><loc>https://mominc-mbs.github.io/tv/?ch=djscratch</loc></url>
@@ -10,4 +11,13 @@
   <url><loc>https://mominc-mbs.github.io/tv/?ch=corgi</loc></url>
   <url><loc>https://mominc-mbs.github.io/tv/?ch=fuel</loc></url>
   <url><loc>https://mominc-mbs.github.io/tv/?ch=goon</loc></url>
+  <url><loc>https://mominc-mbs.github.io/tv/?ch=girlfriend</loc></url>
+  <url><loc>https://mominc-mbs.github.io/games/lilboyfriend/</loc></url>
+  <url><loc>https://mominc-mbs.github.io/games/djscratch/</loc></url>
+  <url><loc>https://mominc-mbs.github.io/games/sag/</loc></url>
+  <url><loc>https://mominc-mbs.github.io/games/armie/</loc></url>
+  <url><loc>https://mominc-mbs.github.io/games/corgi/</loc></url>
+  <url><loc>https://mominc-mbs.github.io/games/fuel/</loc></url>
+  <url><loc>https://mominc-mbs.github.io/games/goon/</loc></url>
+  <url><loc>https://mominc-mbs.github.io/games/girlfriend/</loc></url>
 </urlset>

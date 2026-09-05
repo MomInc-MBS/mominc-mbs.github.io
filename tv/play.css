@@ -1,0 +1,67 @@
+/* Standalone play route: the channel gets the whole screen, with none of the television around it.
+   The wave rules are lifted verbatim from tv.css so a channel's own MBS.wave() looks identical off the set. */
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#0b0710;color:#ffd36e;
+  font:600 16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;overscroll-behavior:none}
+html,body{height:100%}
+body{min-height:100vh; min-height:100dvh}
+
+.stage{position:relative;width:100%;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;overflow:hidden;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+/* the television's own .glass > .screen > .channel contract, reproduced verbatim (games measure .glass
+   and divide their height by .channel's zoom). .glass carries none of tv.css's cosmetics (no radius, no
+   phosphor, no inset shadow) - it exists here only for geometry. flex:1 off .stage's column flex fills
+   whatever room the safe-area padding leaves, so .glass is never zero-height. */
+.glass{position:relative;overflow:hidden;flex:1 1 auto;min-height:0;width:100%}
+.screen{position:absolute;inset:0;overflow:auto;overscroll-behavior:contain}
+.channel{min-height:100%; zoom:1.15; width:100%}   /* verbatim tv.css:68 - every channel reads 15% larger */
+
+/* Page furniture, hidden by mount.js's ancestor-path reveal. Hidden, never removed: the channel
+   scripts still bind to these nodes (djscratch's #buyBtn and #orderForm, fuel's flat controls) and
+   removing them would throw before the game ever starts. !important because a channel's own CSS
+   sets display on some of them (fuel's .fu.has3d rules at fuel.html:56-72). */
+.mbs-off{display:none !important}
+
+/* The way back sits in a rail of its own ABOVE the glass, never floating over the game. Round 2 of
+   review caught it covering corgi's CORTISOL meter and part of sag's first tab at 390x844 - a fixed
+   control over a game's own status display is a collision waiting for every new channel, so the shell
+   takes its own reserved strip and .glass gets what is left. */
+.rail{flex:0 0 auto;display:flex;align-items:center;gap:8px;height:44px;padding:0 6px}
+.exit{width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;overflow:hidden;
+  border-radius:50%;border:2px solid #ffd36e;background:#0b0710;
+  color:#ffd36e;text-decoration:none;font-size:20px;line-height:1;font-weight:700;
+  box-shadow:0 2px 8px rgba(0,0,0,.6);transition:transform .15s ease}
+.exit:hover{transform:scale(1.08)}
+.exit span{display:none}
+.exit:focus-visible{outline:3px solid #ffd36e;outline-offset:2px}
+
+/* the stress meter the television normally owns */
+.meter{position:fixed;z-index:40;left:0;right:0;bottom:env(safe-area-inset-bottom,0px);height:6px;background:rgba(255,255,255,.12)}
+.meter::before{content:"";display:block;height:100%;width:calc(var(--meter,0) * 1%);
+  background:linear-gradient(90deg,#7a2fc4,#ffd36e);transition:width .3s ease}
+
+.boot{position:fixed;inset:0;display:grid;place-items:center;text-align:center;padding:24px;z-index:30;background:#0b0710}
+.boot p{max-width:32ch}
+.boot a{color:#ffd36e}
+
+/* --- the shared orange wave, from tv.css --- */
+.wave{position:fixed;inset:0;z-index:35;pointer-events:none;opacity:0;overflow:hidden}
+.wave.go{opacity:1;animation:mbswavefade 760ms ease-out forwards}
+.wave::before{content:"";position:absolute;top:-6%;bottom:-6%;left:-46%;width:40%;
+  background:repeating-linear-gradient(90deg,
+    transparent 0 3px, rgba(255,150,50,.9) 3px 9px, rgba(255,196,96,.96) 9px 12px, rgba(255,128,32,.9) 12px 18px, transparent 18px 22px);
+  image-rendering:pixelated;filter:contrast(1.35) saturate(1.4) drop-shadow(0 0 8px rgba(255,150,50,.6));
+  transform:skewX(-9deg);
+  -webkit-mask-image:linear-gradient(90deg, transparent, #000 48%, transparent);
+  mask-image:linear-gradient(90deg, transparent, #000 48%, transparent)}
+.wave.go::before{animation:mbswave 760ms steps(22,end) forwards}
+@keyframes mbswave{from{left:-46%} to{left:108%}}
+@keyframes mbswavefade{0%{opacity:0} 12%{opacity:1} 82%{opacity:1} 100%{opacity:0}}
+.wave.purple::before{background:repeating-linear-gradient(90deg,
+    transparent 0 3px, rgba(140,60,220,.9) 3px 9px, rgba(190,130,255,.96) 9px 12px, rgba(110,30,190,.9) 12px 18px, transparent 18px 22px);
+  filter:contrast(1.35) saturate(1.4) drop-shadow(0 0 8px rgba(140,60,220,.6))}
+
+@media (prefers-reduced-motion: reduce){
+  .wave.go{animation-duration:820ms;animation-timing-function:step-end}
+  .meter::before{transition:none}
+}

@@ -335,7 +335,7 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
       <div class="costbar" id="costBar"></div>
       <button type="button" class="submit" id="submitBtn">SEAL THE CAN</button>
       <div class="result" id="result" hidden>
-        <p class="note" id="resultNote">NOTHING WAS SENT. NOTHING WAS STORED. THIS DRINK DOES NOT EXIST YET.</p>
+        <p class="note" id="resultNote">NOTHING WAS SENT OR SAVED. THIS DRINK DOES NOT EXIST YET.</p>
         <a class="mailme" id="mailLink" target="_blank" rel="noopener">EMAIL US YOUR STACK YOURSELF</a>
       </div>
     </section>
@@ -448,13 +448,13 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
     const stackLines = buildMailto();
     result.hidden = false;
     if (complete()) {
-      resultNote.textContent = productName() + " \u2014 STACK LOCKED IN. NOTHING WAS SENT. NOTHING WAS STORED. THIS DRINK DOES NOT EXIST YET.";
+      resultNote.textContent = productName() + " \u2014 STACK LOCKED IN. NOTHING WAS SENT. THE STACK STAYS IN THIS BROWSER, IF IT ALLOWS STORAGE. THIS DRINK DOES NOT EXIST YET.";
       submitBtn.textContent = "STACK LOCKED IN";
       window.MBS && window.MBS.form && window.MBS.form("fuel", { stack: stackLines, name: productName() });
       window.MBS && window.MBS.unlock && window.MBS.unlock("fuel");
       window.MBS && window.MBS.wave && window.MBS.wave();
     } else {
-      resultNote.textContent = "NOTHING WAS SENT. NOTHING WAS STORED. SET EVERY ROW AND A FLAVOUR TO LOCK IN THE FULL STACK.";
+      resultNote.textContent = "NOTHING WAS SENT OR SAVED. SET EVERY ROW AND A FLAVOUR TO LOCK IN THE FULL STACK.";
     }
   });
 
