@@ -250,5 +250,7 @@ if errs:
     print("\n  console/page errors seen (not asserted, the channels are not under test here):")
     for e in errs[:8]:
         print("   ", e[:160])
-print("\n%s  %d/%d" % ("ALL PASS" if ok else "FAILURES", sum(1 for n in notes if n.startswith("PASS")), len(notes)))
+asserted = [n for n in notes if n.startswith(("PASS", "FAIL"))]   # the "note" lines are not assertions
+print("\n%s  %d/%d" % ("ALL PASS" if ok else "FAILURES",
+                       sum(1 for n in asserted if n.startswith("PASS")), len(asserted)))
 raise SystemExit(0 if ok else 1)
