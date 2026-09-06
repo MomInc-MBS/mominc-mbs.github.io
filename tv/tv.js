@@ -148,16 +148,23 @@
     document.title = `MBS · ${name}`;
     vfd(String(c.ch), c.name, "COMING SOON");
   } else if (name && /^[a-z0-9-]+$/.test(name)) {
-    fetch(`channels/${name}.html`, { cache: "no-store" }).then(r => r.ok ? r.text() : Promise.reject(r.status))   // phone testing: every refresh is the current file
-      .then(html => {
-        channel.innerHTML = html; document.title = `MBS · ${name}`;
-        const root = channel.querySelector("[data-host]");
-        vfd(root ? root.dataset.ch || "" : "", root ? root.dataset.host : name.toUpperCase(), root ? root.dataset.show || "" : "");
-        tv.dataset.gauge = (root && root.dataset.gauge === "off") ? "off" : "";   // a channel can hide the stress meter
-        // scripts inserted through innerHTML never run; re-create each one so the channel's own behaviour starts
+    // 2.17: fetching the fragment, importing a channel module and calling mount() all belong to
+    // channel-runtime.js, so the module-loading and error contracts have ONE owner and one failure
+    // path. What stays here is the television's own dressing - the VFD readout and the stress gauge -
+    // which is the set's job and not the channel's.
+    window.MBS_CH.mount(name, channel).then(res => {
+      if (!res.ok && !res.legacy) return;     // the runtime rendered the unavailable state; the set keeps working
+      document.title = `MBS · ${name}`;
+      const root = res.root && res.root.matches("[data-host]") ? res.root : channel.querySelector("[data-host]");
+      vfd(root ? root.dataset.ch || "" : "", root ? root.dataset.host : name.toUpperCase(), root ? root.dataset.show || "" : "");
+      tv.dataset.gauge = (root && root.dataset.gauge === "off") ? "off" : "";   // a channel can hide the stress meter
+      // Not converted to a module yet (2.18 does that one channel at a time): scripts inserted through
+      // innerHTML never run, so re-create each one. This is the path with no teardown - it is exactly
+      // what channel-runtime.js exists to replace, and it shrinks by one channel per 2.18 micro-step.
+      if (res.legacy) {
         channel.querySelectorAll("script").forEach(old => { const s = document.createElement("script"); s.textContent = old.textContent; old.replaceWith(s); });
-      })
-      .catch(() => { channel.innerHTML = testcard; });
+      }
+    });
   } else channel.innerHTML = testcard;
 
   // --- 2.15 / C001: the game frame. A game channel can take the whole set: data-mode="game" drops the

@@ -1,0 +1,21 @@
+<!-- tv/channels/_runtime-probe.html - NOT A CHANNEL. The fixture channel-runtime.js is tested
+     against (2.17), underscore-prefixed like _mob.html and _goon-quarantined/ for the same reason:
+     it is not in the manifest, has no channel number, and the sidebar never offers it.
+
+     It exists because 2.17's acceptance is "a channel mounts, unmounts and remounts with no
+     duplicate listeners" and no real channel is a module yet - 2.18 converts them one at a time.
+     Testing the runtime against a real channel before any real channel is converted would mean
+     converting one early, which is exactly the sweeping change the plan forbids. So the subject of
+     the test is a fixture that does, deliberately, every leaky thing a real channel does: binds
+     listeners, starts a timer and an interval, holds a rAF loop, observes its own box, and opens an
+     AudioContext. Its counterpart tv/channels/_runtime-probe.js registers all of it through the
+     context, which is the thing under test.
+
+     Delete this pair once a real converted channel can serve as the gate's subject. Until then it is
+     the only thing standing between the teardown contract and nobody ever running it. -->
+<article id="probe" class="probe" data-host="RUNTIME PROBE" data-ch="0" data-show="A FIXTURE, NOT A CHANNEL" data-gauge="off">
+  <h1>Runtime probe</h1>
+  <p>This fixture exists so <code>channel-runtime.js</code> has something to mount, unmount and remount.</p>
+  <button id="probeBtn" type="button">A control the probe binds to</button>
+  <div id="probeBox" style="min-height:40px"></div>
+</article>

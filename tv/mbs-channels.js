@@ -11,7 +11,8 @@ window.MBS_CHANNELS = {
       "half": false,
       "comingSoon": false,
       "suppressed": false,
-      "game": false
+      "game": false,
+      "module": false
     },
     {
       "id": "fuel",
@@ -21,7 +22,8 @@ window.MBS_CHANNELS = {
       "half": true,
       "comingSoon": false,
       "suppressed": false,
-      "game": true
+      "game": true,
+      "module": false
     },
     {
       "id": "goon",
@@ -31,7 +33,8 @@ window.MBS_CHANNELS = {
       "half": true,
       "comingSoon": true,
       "suppressed": true,
-      "game": true
+      "game": true,
+      "module": false
     },
     {
       "id": "lilboyfriend",
@@ -41,7 +44,8 @@ window.MBS_CHANNELS = {
       "half": false,
       "comingSoon": false,
       "suppressed": false,
-      "game": true
+      "game": true,
+      "module": false
     },
     {
       "id": "djscratch",
@@ -51,7 +55,8 @@ window.MBS_CHANNELS = {
       "half": false,
       "comingSoon": false,
       "suppressed": false,
-      "game": true
+      "game": true,
+      "module": false
     },
     {
       "id": "corgi",
@@ -61,7 +66,8 @@ window.MBS_CHANNELS = {
       "half": false,
       "comingSoon": false,
       "suppressed": false,
-      "game": true
+      "game": true,
+      "module": false
     },
     {
       "id": "sag",
@@ -71,7 +77,8 @@ window.MBS_CHANNELS = {
       "half": false,
       "comingSoon": true,
       "suppressed": false,
-      "game": true
+      "game": true,
+      "module": false
     },
     {
       "id": "girlfriend",
@@ -81,7 +88,8 @@ window.MBS_CHANNELS = {
       "half": false,
       "comingSoon": false,
       "suppressed": false,
-      "game": true
+      "game": true,
+      "module": false
     },
     {
       "id": "armie",
@@ -91,7 +99,8 @@ window.MBS_CHANNELS = {
       "half": false,
       "comingSoon": true,
       "suppressed": false,
-      "game": true
+      "game": true,
+      "module": false
     }
   ],
   "active": [

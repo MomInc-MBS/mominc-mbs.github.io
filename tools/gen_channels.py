@@ -56,6 +56,14 @@ def gen_channels_js(manifest):
             # the network hub and is the one channel without one. A literal list of game ids in tv.js
             # would be a fourth place a channel id has to be kept in sync (2.3b, 2.3c).
             "game": bool(c.get("gameRoute")),
+            # 2.17: whether this channel has been converted to a module (tv/channels/<id>.js) and so
+            # whether channel-runtime.js should import it instead of running the fragment's inline
+            # scripts. DERIVED FROM DISK, never hand-maintained: converting a channel in 2.18 is
+            # "write the .js, re-run this script", and a flag someone has to remember to flip is a
+            # flag that will disagree with the tree. The runtime needs this answered from data
+            # because an import failure cannot distinguish a missing file from a broken one - a 404
+            # and a syntax error both surface as "Failed to fetch dynamically imported module".
+            "module": os.path.exists(os.path.join(ROOT, "tv", "channels", c["id"] + ".js")),
         })
     active = [c["id"] for c in channels if c["active"]]
     # No manifest field distinguishes "asks the visitor for a form" from "active unlock node" today -
