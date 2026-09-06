@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Your Files | MBS</title>
+<meta name="description" content="Everything this browser is keeping for you from the MBS network. It stays on this device.">
+<link rel="canonical" href="https://mominc-mbs.github.io/files/">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="Your Files | MBS">
+<meta property="og:description" content="Everything this browser is keeping for you from the MBS network. It stays on this device.">
+<meta property="og:url" content="https://mominc-mbs.github.io/files/">
+<meta property="og:image" content="https://mominc-mbs.github.io/tv/assets/mom-inc-mark.png">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#1b0a2c;color:#fffef2;font:600 16px/1.45 "Nunito",-apple-system,"Segoe UI",Arial,sans-serif}
+header{text-align:center;padding:26px 16px 8px}
+h1{margin:0;font-family:"Bowlby One SC","Arial Black",Impact,sans-serif;font-weight:400;text-transform:uppercase;
+   font-size:clamp(1.8rem,9vw,4rem);line-height:.95;color:#fffef2;-webkit-text-stroke:3px #000;paint-order:stroke fill;
+   text-shadow:4px 4px 0 #7a2fc4}
+.sub{margin:8px auto 0;max-width:46ch;opacity:.85;font-size:15px;padding:0 8px}
+.count{margin:10px auto 0;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#ffd36e}
+main{max-width:940px;margin:0 auto;padding:0 16px 48px}
+.disclosure{border:4px solid #000;border-radius:16px;background:#2a1240;box-shadow:5px 6px 0 rgba(0,0,0,.45);
+            padding:16px 18px;margin:22px 0}
+.disclosure h2{margin:0 0 8px;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#ffd36e}
+.disclosure p{margin:0 0 8px;font-size:14.5px;line-height:1.5;opacity:.94}
+.disclosure p:last-child{margin-bottom:0}
+h2.group{font-family:"Bowlby One SC","Arial Black",Impact,sans-serif;font-weight:400;text-transform:uppercase;
+         font-size:clamp(1.05rem,4.6vw,1.4rem);margin:26px 0 10px;-webkit-text-stroke:2px #000;paint-order:stroke fill}
+.chnum{font-size:11px;letter-spacing:.2em;color:#ffd36e;-webkit-text-stroke:0;display:block;margin-bottom:2px}
+ul.items{list-style:none;display:grid;gap:10px;grid-template-columns:1fr;margin:0;padding:0}
+@media(min-width:640px){ul.items{grid-template-columns:1fr 1fr}}
+.item{border:4px solid #000;border-radius:14px;background:#ebe3fa;color:#12060f;box-shadow:4px 5px 0 rgba(0,0,0,.4);
+      padding:12px 14px;display:grid;gap:3px}
+.item .k{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#5c2a8f}
+.item .t{font-size:15.5px;line-height:1.25;font-weight:800}
+.item .w{font-size:12.5px;opacity:.72}
+.empty{border:4px dashed #6b4a94;border-radius:16px;padding:26px 18px;text-align:center;margin:22px 0}
+.empty p{margin:0 0 10px;opacity:.9}
+.empty a{color:#ffd36e;min-height:44px;display:inline-flex;align-items:center;padding:0 10px}
+.actions{margin:30px 0 0;border-top:3px solid #3d2159;padding-top:18px;display:flex;flex-wrap:wrap;gap:10px}
+button.mini{background:#ffd36e;color:#12060f;border:3px solid #000;border-radius:10px;padding:10px 14px;min-height:44px;
+     font:700 13.5px/1 "Nunito",Arial,sans-serif;letter-spacing:.05em;text-transform:uppercase;box-shadow:0 4px 0 #000;cursor:pointer}
+button.mini.ghost{background:transparent;color:#fffef2;border-color:#6b4a94;box-shadow:0 4px 0 #2a1240}
+button.mini:focus-visible,a:focus-visible{outline:4px solid #ffd36e;outline-offset:3px}
+.said{margin:12px 0 0;font-size:13.5px;color:#ffd36e;min-height:1.2em}
+footer{text-align:center;padding:10px 16px 40px}
+footer a{color:#ffd36e;min-height:44px;display:inline-flex;align-items:center;padding:0 10px}
+.fine{opacity:.6;font-size:12px;max-width:54ch;margin:10px auto 0;line-height:1.5}
+</style>
+</head>
+<body>
+<header>
+  <h1>Your Files</h1>
+  <p class="sub">Everything the MBS network is keeping for you, in one place. MOM Inc would very much like a copy. She does not have one.</p>
+  <p class="count" id="count"></p>
+</header>
+
+<main>
+  <section class="disclosure">
+    <h2>Where this actually lives</h2>
+    <p>All of it is stored in this browser, on this device, and nothing on this page was sent anywhere. There is no account behind it and no server holding a second copy, so it is not backed up either. Clearing your browser data removes it, and so do the buttons at the bottom.</p>
+    <p>A different browser, or a different device, shows a different file. That is not a bug. It is what "stored locally" honestly means, and most things that tell you they keep your data on your device do not mean it this literally.</p>
+  </section>
+
+  <div id="out"></div>
+
+  <div class="empty" id="empty" hidden>
+    <p>This browser is not keeping anything for you yet.</p>
+    <p><a href="../games/">Pick a channel and start one</a></p>
+  </div>
+
+  <div class="actions" id="actions" hidden>
+    <button type="button" class="mini ghost" id="delDrafts">Delete my answers</button>
+    <button type="button" class="mini ghost" id="delSubs">Delete my submissions</button>
+    <button type="button" class="mini" id="delAll">Delete everything</button>
+  </div>
+  <p class="said" id="said" role="status"></p>
+</main>
+
+<footer>
+  <a href="../tv/">The MBS television</a>
+  <a href="../games/">All games</a>
+  <p class="fine">MOM Inc is a fictional corporation and MBS is a comedy programme. Nothing here is a real transmission, and nothing here has been transmitted.</p>
+</footer>
+
+<script src="../tv/mbs-channels.js"></script>
+<script src="../tv/state.js"></script>
+<script>
+/* The list is derived by MBS_STATE.earnedItems() rather than assembled here, so this page and
+   tools/check_state.py agree by construction instead of by two implementations staying in step. */
+(function(){
+  var S = window.MBS_STATE;
+  var out = document.getElementById("out");
+  var said = document.getElementById("said");
+  var say = function(m){ said.textContent = m; };
+
+  var names = {};
+  try {
+    (window.MBS_CHANNELS.channels || []).forEach(function(c){ names[c.id] = { name: c.name || c.id, ch: c.ch }; });
+  } catch (e) {}
+
+  var LABEL = {
+    secret:      "Solved",
+    performance: "Performance",
+    reward:      "Reward",
+    form:        "Submitted",
+    draft:       "Coach file",
+    artifact:    "Artifact"
+  };
+
+  function when(ts){
+    if (!ts) return "";
+    try { return new Date(ts).toLocaleDateString(undefined, { year:"numeric", month:"short", day:"numeric" }); }
+    catch (e) { return ""; }
+  }
+
+  function render(){
+    var items = S ? S.earnedItems() : [];
+    out.textContent = "";
+
+    document.getElementById("empty").hidden = items.length > 0;
+    document.getElementById("actions").hidden = items.length === 0;
+    document.getElementById("count").textContent =
+      items.length ? items.length + (items.length === 1 ? " item kept" : " items kept") : "";
+
+    // group by channel so the file reads as a file, not a feed
+    var order = [], byCh = {};
+    items.forEach(function(it){
+      var k = it.channel || "other";
+      if (!byCh[k]) { byCh[k] = []; order.push(k); }
+      byCh[k].push(it);
+    });
+    order.sort(function(a,b){
+      var ca = names[a] && names[a].ch, cb = names[b] && names[b].ch;
+      if (ca && cb) return ca - cb;
+      return ca ? -1 : cb ? 1 : String(a).localeCompare(String(b));
+    });
+
+    order.forEach(function(slug){
+      var meta = names[slug] || {};
+      var h = document.createElement("h2");
+      h.className = "group";
+      if (meta.ch) {
+        var n = document.createElement("span");
+        n.className = "chnum"; n.textContent = "CH " + meta.ch;
+        h.appendChild(n);
+      }
+      h.appendChild(document.createTextNode(meta.name || slug));
+      out.appendChild(h);
+
+      var ul = document.createElement("ul");
+      ul.className = "items";
+      byCh[slug].forEach(function(it){
+        var li = document.createElement("li");
+        li.className = "item";
+        var k = document.createElement("span");
+        k.className = "k"; k.textContent = LABEL[it.kind] || it.kind;
+        var t = document.createElement("span");
+        t.className = "t"; t.textContent = it.title || "";
+        li.append(k, t);
+        var note = when(it.earnedAt);
+        if (it.kind === "draft") note = "On this device only, never sent";
+        if (it.kind === "form" && it.status === "saved_here") note = "Saved on this device, not sent";
+        if (note) {
+          var w = document.createElement("span");
+          w.className = "w"; w.textContent = note;
+          li.appendChild(w);
+        }
+        ul.appendChild(li);
+      });
+      out.appendChild(ul);
+    });
+  }
+
+  /* Deleting is not reversible and there is no second copy, so each button asks once by turning into
+     its own confirmation. No modal dialog: this is the visitor's own data and the page should not
+     dramatise handing it back. */
+  function arm(btn, label, run){
+    var armed = false, t = 0;
+    var reset = function(){ armed = false; btn.textContent = label; clearTimeout(t); };
+    btn.addEventListener("click", function(){
+      if (!armed) {
+        armed = true;
+        btn.textContent = "Tap again to confirm";
+        t = setTimeout(reset, 5000);
+        return;
+      }
+      reset();
+      if (!S) return say("This page could not reach its own storage, so nothing was deleted.");
+      run();
+      render();
+    });
+  }
+
+  if (S) {
+    arm(document.getElementById("delDrafts"), "Delete my answers", function(){
+      S.clearDrafts(); say("Your answers were deleted from this device.");
+    });
+    arm(document.getElementById("delSubs"), "Delete my submissions", function(){
+      S.clearSubmissions(); say("Your submissions were deleted from this device.");
+    });
+    arm(document.getElementById("delAll"), "Delete everything", function(){
+      S.write(S.emptyState()); say("Everything was deleted from this device. Nothing was kept and nothing was sent.");
+    });
+  } else {
+    say("This page could not reach its own storage, so it cannot show your file.");
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>

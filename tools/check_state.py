@@ -214,6 +214,73 @@ with sync_playwright() as pw:
     check(status == "saved_here", "formStatus after a local saveForm is saved_here (%r)" % (status,))
     check(status != "received", "formStatus is never received without an actual server response")
 
+    print("== 2.10 the coach-profile adoption: card.js's old third store folds into drafts")
+
+    # a returning visitor who only ever filled coach answers on a landing, and has no mbs-state yet
+    seed(pg, page_errs, legacy={"mbs-coach-profile": json.dumps({"fuel": {"title": "Drinks", "answers": {"q1": "a"}}})})
+    d = (pg.evaluate("() => window.MBS_STATE.read()")["drafts"].get("fuel")) or {}
+    check(d.get("answers") == {"q1": "a"} and d.get("title") == "Drinks",
+          "mbs-coach-profile is adopted into drafts, title and answers intact")
+    check(pg.evaluate("() => localStorage.getItem('mbs-coach-profile')") is None,
+          "the old coach key is consumed, so the adoption cannot run twice")
+    check(pg.evaluate("() => !!localStorage.getItem('mbs-coach-profile-backup-v1')"),
+          "the original coach bytes are kept as a backup, never simply dropped")
+
+    # it must also work when mbs-state ALREADY exists: a visitor can answer a coach question long after
+    # the state store was created, which migrate()'s once-only guard would never catch
+    seed(pg, page_errs)
+    pg.evaluate("""() => localStorage.setItem('mbs-coach-profile',
+        JSON.stringify({corgi: {title: "Corgi", answers: {q: "later"}}}))""")
+    pg.reload(wait_until="load"); pg.wait_for_timeout(150)
+    s = pg.evaluate("() => window.MBS_STATE.read()")
+    check((s["drafts"].get("corgi") or {}).get("answers") == {"q": "later"},
+          "a coach profile written AFTER mbs-state exists is still adopted (not gated by migrate())")
+
+    seed(pg, page_errs)
+    pg.evaluate("""() => { window.MBS_STATE.saveDraft("fuel", {title: "mine", answers: {q: "newer"}});
+        localStorage.setItem('mbs-coach-profile', JSON.stringify({fuel: {title: "old", answers: {q: "older"}}})); }""")
+    pg.reload(wait_until="load"); pg.wait_for_timeout(150)
+    s = pg.evaluate("() => window.MBS_STATE.read()")
+    check((s["drafts"].get("fuel") or {}).get("answers") == {"q": "newer"},
+          "adoption never overwrites a draft written since")
+
+    print("== 2.10 earnedItems, artifacts, and the Your files route")
+
+    seed(pg, page_errs)
+    pg.evaluate("""() => { const S = window.MBS_STATE;
+        S.bankUnlock("fuel"); S.saveForm("corgi", {a: 1}); S.saveDraft("djscratch", {title: "DJ", answers: {q: "x"}});
+        S.addArtifact({id: "case-file-1", channel: "lilboyfriend", title: "Housing case file", kind: "artifact"}); }""")
+    kinds = sorted(pg.evaluate("() => window.MBS_STATE.earnedItems().map(i => i.kind)"))
+    check(kinds == ["artifact", "draft", "form", "secret"],
+          "earnedItems surfaces each kind independently (%r)" % (kinds,))
+
+    check(pg.evaluate("""() => { window.MBS_STATE.addArtifact({id: "dupe", title: "One"});
+        window.MBS_STATE.addArtifact({id: "dupe", title: "One"});
+        return window.MBS_STATE.read().artifacts.filter(a => a.id === "dupe").length; }""") == 1,
+          "addArtifact is keyed by id, so a replay does not stack duplicates")
+
+    # the route itself: 2.10's acceptance is a reload with populated state listing every earned artifact
+    pg.goto(BASE + "/files/", wait_until="load"); pg.wait_for_timeout(200)
+    pg.evaluate("""() => { const S = window.MBS_STATE;
+        S.bankUnlock("fuel"); S.saveDraft("corgi", {title: "Corgi", answers: {q: "x"}}); }""")
+    page_errs.clear()
+    pg.reload(wait_until="load"); pg.wait_for_timeout(250)
+    listed = pg.evaluate("() => document.querySelectorAll('#out .item').length")
+    expected = pg.evaluate("() => window.MBS_STATE.earnedItems().length")
+    check(listed == expected and listed >= 2,
+          "/files/ lists every earned item after a reload (%d listed, %d in state)" % (listed, expected))
+    check(pg.evaluate("() => document.getElementById('empty').hidden") is True,
+          "/files/ hides its empty state when the visitor has kept something")
+    check(not [e for e in page_errs if "favicon" not in e], "/files/ loads with no console error")
+
+    # the empty state must be honest rather than broken
+    pg.evaluate("""() => { for (const k of Object.keys(localStorage)) localStorage.removeItem(k); }""")
+    pg.reload(wait_until="load"); pg.wait_for_timeout(250)
+    check(pg.evaluate("() => document.getElementById('empty').hidden") is False,
+          "/files/ shows its empty state when nothing is kept")
+    check(pg.evaluate("() => document.getElementById('actions').hidden") is True,
+          "/files/ offers no delete controls when there is nothing to delete")
+
     b.close()
 
 for n in notes: print("  " + n)

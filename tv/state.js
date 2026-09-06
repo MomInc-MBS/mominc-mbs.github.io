@@ -12,6 +12,8 @@
   const KEY = "mbs-state";
   const BACKUP_KEY = "mbs-state-backup-v1";     // the pre-migration legacy snapshot, kept until read() proves the new key readable
   const QUARANTINE_KEY = "mbs-state-quarantine"; // exact original bytes of whatever failed to parse/validate
+  const COACH_KEY = "mbs-coach-profile";         // card.js's own former store: { slug: { answers: {...} } }
+  const COACH_BACKUP = "mbs-coach-profile-backup-v1";
   const VERSION = 2;
   const ARMED_MS = 30000;                        // must match tv.js/mbs-shim.js's own ARMED_MS
 
@@ -190,15 +192,104 @@
 
   // 2.11: drafts and submissions are separate collections. Clearing one must never touch the other -
   // tested both directions in check_state.py.
-  function saveDraft(site, data) { const s = read(); s.drafts[site] = data; write(s); }
+  // Returns whether the write actually landed. Private windows and blocked site data make persist() a
+  // no-op, and a card that says "Saved" when nothing was saved is a lie the visitor cannot see - that
+  // guarantee came from card.js's own writeJSON and has to survive moving the store here.
+  function saveDraft(site, data) {
+    const s = read();
+    s.drafts[site] = data;
+    write(s);
+    return JSON.stringify(read().drafts[site]) === JSON.stringify(data);
+  }
+  function draftFor(site) { const d = read().drafts[site]; return (d && typeof d === "object") ? d : null; }
+  function clearDraft(site) { const s = read(); delete s.drafts[site]; write(s); return read().drafts[site] === undefined; }
   function clearDrafts() { const s = read(); s.drafts = {}; write(s); }
   function clearSubmissions() { const s = read(); s.submissions = {}; write(s); }
 
-  migrate();   // before anything else reads state
+  /* ---- 2.10: artifacts. The schema has always carried the array; this is the only writer. An entry is
+     { id, channel, title, kind, earnedAt }. Keyed by id so a channel that re-awards the same artifact
+     on a replay does not stack duplicates in the visitor's file. */
+  function addArtifact(entry) {
+    if (!entry || !entry.id) return false;
+    const s = read();
+    if (s.artifacts.some(a => a && a.id === entry.id)) return false;
+    s.artifacts.push({
+      id: String(entry.id),
+      channel: entry.channel || null,
+      title: entry.title || String(entry.id),
+      kind: entry.kind || "artifact",
+      earnedAt: entry.earnedAt || Date.now(),
+    });
+    write(s);
+    return true;
+  }
+
+  /* ---- 2.10: what the "Your files" route renders. Derived here rather than in the page, so the route
+     and check_state.py agree by construction. Four independent per-channel states (2.9) each surface
+     separately - earning one must not imply the others - plus explicit artifacts and kept answers. */
+  function earnedItems() {
+    const s = read();
+    const out = [];
+    const stamp = (o) => (o && o.earnedAt) || null;
+    activeIds().forEach(id => {
+      const c = s.channels[id];
+      if (!c) return;
+      if (c.secret && c.secret.earned)      out.push({ channel: id, kind: "secret",      title: "Signal recovered",      earnedAt: stamp(c.secret) });
+      if (c.performance && c.performance.earned) out.push({ channel: id, kind: "performance", title: "Performance logged", earnedAt: stamp(c.performance) });
+      if (c.reward && c.reward.earned)      out.push({ channel: id, kind: "reward",      title: c.reward.kind || "Reward", earnedAt: stamp(c.reward) });
+      const st = c.form && c.form.status;
+      if (st && st !== "draft")             out.push({ channel: id, kind: "form",        title: "Form answers", earnedAt: stamp(c.form), status: st });
+    });
+    s.artifacts.forEach(a => { if (a && a.id) out.push({ channel: a.channel, kind: a.kind || "artifact", title: a.title || a.id, earnedAt: a.earnedAt || null, id: a.id }); });
+    // drafts hold card.js's coach-file shape: { title, answers }. A bare answers map is accepted too,
+    // so a draft written by anything else still lists rather than silently vanishing.
+    Object.keys(s.drafts).forEach(id => {
+      const d = s.drafts[id];
+      if (!d || typeof d !== "object") return;
+      const answers = (d.answers && typeof d.answers === "object") ? d.answers : d;
+      const n = Object.keys(answers).length;
+      // the channel name is already the group heading above this card, so the title carries the count
+      if (n) out.push({ channel: id, kind: "draft", title: n + (n === 1 ? " answer kept" : " answers kept"), earnedAt: null, count: n });
+    });
+    return out;
+  }
+
+  /* ---- card.js used to keep coach answers in its own `mbs-coach-profile` key - a third store beside
+     this one, which is how `mbs-state` became a shadow copy in the first place. Adopted into `drafts`
+     here. NOT part of migrate(): that runs once, only when `mbs-state` is absent, and a visitor can
+     answer a coach question long after this store exists. Idempotent by consuming the old key. */
+  function adoptCoachProfile() {
+    const raw = safeGet(COACH_KEY);
+    if (raw === null) return false;
+    let all = null;
+    try { all = JSON.parse(raw); } catch {}
+    if (!all || typeof all !== "object") {                  // unreadable: keep the bytes, drop the key
+      quarantine(raw);
+      try { localStorage.removeItem(COACH_KEY); } catch {}
+      return false;
+    }
+    const s = read();
+    let changed = false;
+    Object.keys(all).forEach(slug => {
+      const entry = all[slug];
+      const answers = entry && entry.answers;
+      if (!answers || typeof answers !== "object" || !Object.keys(answers).length) return;
+      if (s.drafts[slug]) return;                           // a draft written since wins; never overwrite newer
+      s.drafts[slug] = { title: entry.title || slug, answers };   // card.js's own shape, carried across intact
+      changed = true;
+    });
+    if (changed) write(s);
+    try { localStorage.setItem(COACH_BACKUP, raw); localStorage.removeItem(COACH_KEY); } catch {}
+    return changed;
+  }
+
+  migrate();            // before anything else reads state
+  adoptCoachProfile();  // and before card.js asks for its draft
 
   window.MBS_STATE = {
     VERSION, KEY, BACKUP_KEY, QUARANTINE_KEY, read, write, migrate, completion, emptyState, emptyChannel,
     unlockedActive, bankUnlock, getArmedAt, setArmedAt, formStatus, saveForm, formsDone,
-    saveDraft, clearDrafts, clearSubmissions,
+    saveDraft, draftFor, clearDraft, clearDrafts, clearSubmissions,
+    addArtifact, earnedItems, adoptCoachProfile, COACH_KEY,
   };
 })();

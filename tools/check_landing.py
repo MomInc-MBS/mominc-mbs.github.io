@@ -282,14 +282,17 @@ with sync_playwright() as pw:
         # write one answer, prove it survives a reload, then prove delete really deletes
         pg.fill("#%s-q1" % slug, "gate probe")
         pg.click("#profileForm button[type=submit]"); pg.wait_for_timeout(250)
-        sent = pg.evaluate("()=>Object.keys(JSON.parse(localStorage.getItem('mbs-coach-profile')||'{}'))")
+        # coach answers live in the one shared store's `drafts` as of 2.10; card.js's own
+        # `mbs-coach-profile` key was a third source of truth and is now adopted into it on load.
+        # Same coverage as before, read through the store that is actually authoritative.
+        sent = pg.evaluate("()=>Object.keys(window.MBS_STATE.read().drafts)")
         if slug not in sent:
             bad.append("not saved")
         pg.reload(wait_until="load"); pg.wait_for_timeout(350)
         if pg.input_value("#%s-q1" % slug) != "gate probe":
             bad.append("did not survive reload")
         pg.click("#profileDelete"); pg.wait_for_timeout(250)
-        left = pg.evaluate("()=>Object.keys(JSON.parse(localStorage.getItem('mbs-coach-profile')||'{}'))")
+        left = pg.evaluate("()=>Object.keys(window.MBS_STATE.read().drafts)")
         if slug in left:
             bad.append("delete left it behind")
 

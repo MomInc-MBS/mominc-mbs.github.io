@@ -7,19 +7,15 @@
 (() => {
   const body = document.body;
   const D = body.dataset;
-  const PROFILE_KEY = "mbs-coach-profile";      // one object, keyed by channel slug. The ONLY key this
-                                                // file writes, because it is the only one disclosed.
+  /* Coach answers live in the one shared store (tv/state.js, `mbs-state`), under `drafts`. This file
+     used to keep its own `mbs-coach-profile` key, which made a third source of truth beside the state
+     store and the legacy keys - the same shadow-copy defect 2.8b removed everywhere else. state.js
+     adopts that old key into `drafts` on load, so a returning visitor's answers carry across.
 
-  const readJSON = (k, fallback) => {
-    try { return JSON.parse(localStorage.getItem(k)) || fallback; } catch { return fallback; }
-  };
-  // returns whether the write actually happened: private windows and blocked site data throw here,
-  // and a card that says "Saved" when nothing was saved is a lie the visitor cannot see
-  const writeJSON = (k, v) => {
-    const want = JSON.stringify(v);
-    try { localStorage.setItem(k, want); return localStorage.getItem(k) === want; }
-    catch { return false; }
-  };
+     The disclosure beside the form still holds exactly: this is the visitor's own browser, and nothing
+     here sends anything anywhere. It is one key instead of two. */
+  const S = () => window.MBS_STATE;
+  const readAll = () => { const s = S(); return s ? s.read().drafts : {}; };
 
   /* ---- the CTA. `[data-play]` anchors carry a real href to the play route and no target, so a click
      navigates this tab there directly - no new tab, nothing to open or fall back from. The onward-channel
@@ -53,35 +49,34 @@
   const fields = () => Array.from(form ? form.querySelectorAll("textarea") : []);
 
   function loadDraft() {
-    const all = readJSON(PROFILE_KEY, {});
-    const mine = all[D.slug];
+    const s = S(); if (!s) return;
+    const mine = s.draftFor(D.slug);
     if (!mine || !mine.answers) return;
     fields().forEach(t => { if (mine.answers[t.name]) t.value = mine.answers[t.name]; });
   }
 
   function saveDraft(e) {
     e.preventDefault();
+    const s = S();
+    if (!s) return say("This page could not reach its own storage, so nothing was saved.");
     const answers = {};
     fields().forEach(t => { const v = t.value.trim(); if (v) answers[t.name] = v; });
-    const all = readJSON(PROFILE_KEY, {});
     if (!Object.keys(answers).length) {         // an empty save is a delete, not an empty record
-      delete all[D.slug];
-      say(writeJSON(PROFILE_KEY, all)
+      say(s.clearDraft(D.slug)
           ? "Nothing to save, so nothing was kept."
           : "This browser is not letting the page change stored data.");
       return paintFile();
     }
-    all[D.slug] = { title: document.title.split(" | ")[0], answers };
-    say(writeJSON(PROFILE_KEY, all)
+    say(s.saveDraft(D.slug, { title: document.title.split(" | ")[0], answers })
         ? "Saved on this device. Nothing was sent."
         : "This browser is not letting the page store anything, so nothing was saved.");
     paintFile();
   }
 
   function deleteMine() {
-    const all = readJSON(PROFILE_KEY, {});
-    delete all[D.slug];
-    const wrote = writeJSON(PROFILE_KEY, all);
+    const s = S();
+    if (!s) return say("This page could not reach its own storage, so nothing was deleted.");
+    const wrote = s.clearDraft(D.slug);
     fields().forEach(t => { t.value = ""; });
     say(wrote ? "Deleted from this device."
               : "This browser is not letting the page change stored data, so nothing was deleted.");
@@ -95,11 +90,14 @@
     const countEl = document.getElementById("profileCount");
     const list = document.getElementById("profileList");
     if (!wrap || !countEl || !list) return;
-    const all = readJSON(PROFILE_KEY, {});
+    const all = readAll();
     const slugs = Object.keys(all);
     if (!slugs.length) { wrap.hidden = true; return; }
-    // six channels carry a coach-file slice; sag and armie are coming soon and have no form to fill
-    countEl.textContent = "Your coach file: " + slugs.length + " of 6 channel slices saved.";
+    // derived from the manifest, never a literal: a channel promoted or suppressed changes this text
+    // with no code edit. (The old hard-coded "of 6" was the same defect as games/index.html's "6 games".)
+    let total = slugs.length;
+    try { const f = window.MBS_CHANNELS && window.MBS_CHANNELS.forms; if (f && f.length) total = f.length; } catch {}
+    countEl.textContent = "Your coach file: " + slugs.length + " of " + total + " channel slices saved.";
     list.textContent = "";
     slugs.forEach(sl => {
       const li = document.createElement("li");
@@ -109,9 +107,8 @@
       del.type = "button"; del.className = "linkish";
       del.textContent = "Delete this channel's answers";
       del.addEventListener("click", () => {
-        const now = readJSON(PROFILE_KEY, {});
-        delete now[sl];
-        if (!writeJSON(PROFILE_KEY, now)) {
+        const s = S();
+        if (!s || !s.clearDraft(sl)) {
           say("This browser is not letting the page change stored data.");
           return;
         }
