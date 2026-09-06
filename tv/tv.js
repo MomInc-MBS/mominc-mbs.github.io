@@ -35,29 +35,32 @@
   power.addEventListener("click", () => (tv.dataset.state === "on" ? turnOff() : turnOn()));
 
   // --- the channel LCD: MOM INC as the heading, then every channel as a card. Built ones link; the rest sit dim until their page exists.
+  // sag and armie keep their television slots (a coming-soon channel is still a channel; tv/registry.json
+  // carries status:"coming_soon" for both) - comingSoon just marks them for the LCD badge and the loader below.
   const CHANNELS = [
     { id: "mominc",       ch: 1, name: "MOM INC",        head: true },
     { id: "fuel",         ch: 7, name: "DRINKS",         half: true },   // the two half-width entries sit side by side under MOM INC (Ian, 2026-08-26)
-    { id: "goon",         ch: 8, name: "GOON",           half: true },
+    { id: "goon",         ch: 8, name: "GOON",           half: true, comingSoon: true, suppressed: true },   // C081/C084: the compiled bundle asks for card details; route closed until the rebuild lands
     { id: "lilboyfriend", ch: 2, name: "LIL BOYFRIEND" },
     { id: "djscratch",    ch: 3, name: "DJ SCRATCH" },
     { id: "corgi",        ch: 6, name: "CORTISOL CORGI" },
-    { id: "sag",          ch: 4, name: "SAG SNIFFER" },
+    { id: "sag",          ch: 4, name: "SAG SNIFFER",    comingSoon: true },
     { id: "girlfriend",   ch: 9, name: "DR GIRLFRIEND" },
-    { id: "armie",        ch: 5, name: "COACH ARMIE" },
+    { id: "armie",        ch: 5, name: "COACH ARMIE",    comingSoon: true },
     // the way out of the television and into the games' own pages (plan item 13: the set discovers and
     // launches them, it is no longer the box they have to run inside)
     { id: "allgames",     ch: 0, name: "ALL GAMES", href: "../games/", label: "PLAY" },
   ];
+  const COMING_SOON = CHANNELS.filter(c => c.comingSoon).map(c => c.id);   // keep in sync with the list above
   const lcdList = document.getElementById("lcdList");
   const current = new URLSearchParams(location.search).get("ch") || "";
   if (lcdList) CHANNELS.forEach(c => {
-    const built = c.ch > 0 || !!c.href;
+    const built = (c.ch > 0 || !!c.href) && !c.suppressed;   // a suppressed channel renders as a dim span, never as a link
     const el = document.createElement(built ? "a" : "span");
     el.className = "lcd-card" + (c.head ? " head" : "") + (c.half ? " half" : "") + (built ? "" : " off") + (c.id === current ? " on" : "");
     el.dataset.id = c.id;
     if (built) el.href = c.href || `?ch=${c.id}`;
-    el.innerHTML = `<span class="lcd-ch">${c.ch > 0 ? "CH " + c.ch : (c.label || "CH --")}</span><span class="lcd-name">${c.name}</span>`;
+    el.innerHTML = `<span class="lcd-ch">${c.ch > 0 ? "CH " + c.ch : (c.label || "CH --")}</span><span class="lcd-name">${c.name}${c.comingSoon ? " (SOON)" : ""}</span>`;
     lcdList.appendChild(el);
   });
 
@@ -109,10 +112,27 @@
   };
   ["pointerup", "pointercancel", "pointerleave"].forEach(ev => screen.addEventListener(ev, release));
 
+  // --- MBS.mode: the same TONE switch the standalone /play/ routes publish (mbs-shim.js:18-30), so a
+  // channel's live/off-air gate works identically embedded in the television or standalone. Set before
+  // the channel loads below, since its re-created scripts read this on their own init. TONE only, never
+  // entitlement - a query string can change what a channel looks like, never what it is worth (Codex C6).
+  window.MBS = window.MBS || {};
+  const mbsMode = new URLSearchParams(location.search).get("mode") === "live" ? "live" : "public";
+  document.documentElement.dataset.mode = mbsMode;
+  document.documentElement.classList.toggle("mbs-live", mbsMode === "live");
+  window.MBS.mode = mbsMode;
+  window.MBS.isLive = mbsMode === "live";
+
   // --- channel: ?ch=<name> loads channels/<name>.html into the glass; no channel = the test card
   const name = new URLSearchParams(location.search).get("ch");
   const testcard = `<section class="testcard" aria-label="MBS test card"><h1>MBS</h1><div class="spacer"></div><p>Mom's Brainwashing Stream. This set is tuned to no one yet.</p></section>`;
-  if (name && /^[a-z0-9-]+$/.test(name)) {
+  if (name && COMING_SOON.includes(name)) {
+    // coming_soon: the channel still has a slot, but there is no game to load - never fetch its fragment
+    const c = CHANNELS.find(x => x.id === name);
+    channel.innerHTML = `<section class="testcard" aria-label="${c.name} coming soon"><h1>${c.name}</h1><div class="spacer"></div><p>This channel is being rebuilt. Coming soon.</p></section>`;
+    document.title = `MBS · ${name}`;
+    vfd(String(c.ch), c.name, "COMING SOON");
+  } else if (name && /^[a-z0-9-]+$/.test(name)) {
     fetch(`channels/${name}.html`, { cache: "no-store" }).then(r => r.ok ? r.text() : Promise.reject(r.status))   // phone testing: every refresh is the current file
       .then(html => {
         channel.innerHTML = html; document.title = `MBS · ${name}`;
@@ -127,7 +147,6 @@
 
   // --- the stress gauge, driven by the channel
   const gaugeEl = document.getElementById("gauge"), gaugePct = document.getElementById("gaugePct"), gaugeLabel = document.getElementById("gaugeLabel");
-  window.MBS = window.MBS || {};
   window.MBS.meter = (pct, label) => {
     const v = Math.max(0, Math.min(100, pct || 0));
     if (gaugeEl) gaugeEl.style.setProperty("--meter", v);
@@ -160,9 +179,19 @@
 
   // --- the cross-site unlock: each channel's solved interactable turns its LCD card orange and banks its node.
   // Progress persists per visitor; when every node is in, the LCD is armed for the hacked menu (that destination is still to be built). Shared store: mbs-unlock.
-  const NODES = 5;                                          // the five character channels that are puzzle nodes
+  // sag and armie went coming_soon (G5) and no longer call MBS.unlock, so the reachable set is the four
+  // channels that still do - goon and girlfriend deliberately never call it either. readUnlock() filters
+  // and rewrites storage on every read, so a stale sag/armie entry from before this change self-heals
+  // instead of permanently over- or under-counting a returning visitor's progress.
+  const ACTIVE_UNLOCK = ["lilboyfriend", "djscratch", "corgi", "fuel"];
+  const NODES = ACTIVE_UNLOCK.length;
   const lcd = document.getElementById("lcd");
-  const readUnlock = () => { try { return JSON.parse(localStorage.getItem("mbs-unlock") || "[]"); } catch { return []; } };
+  const readUnlock = () => {
+    let raw = []; try { raw = JSON.parse(localStorage.getItem("mbs-unlock") || "[]"); } catch {}
+    const active = raw.filter(x => ACTIVE_UNLOCK.includes(x));
+    if (active.length !== raw.length) { try { localStorage.setItem("mbs-unlock", JSON.stringify(active)); } catch {} }
+    return active;
+  };
   const paintUnlock = () => {
     const done = readUnlock();
     document.querySelectorAll(".lcd-card").forEach(el => el.classList.toggle("done", done.includes(el.dataset.id)));
@@ -181,8 +210,8 @@
     // fired mbs:arm, and that is the localhost test hook, so a channel listening for it never heard a thing.
     if (window.MBS.armedLeft() > 0) document.dispatchEvent(new CustomEvent("mbs:arm"));
   };
-  // Every node is in, but the clock has NOT started. The fifth node always banks on DJ Scratch, Sag, Lil
-  // Boyfriend, Armie or Fuel, never on MOM Inc - so starting a 30 s window there meant it had always expired
+  // Every node is in, but the clock has NOT started. The fourth node always banks on DJ Scratch, Lil
+  // Boyfriend, Corgi or Fuel, never on MOM Inc - so starting a 30 s window there meant it had always expired
   // by the time the visitor reached CH 1 and the payoff was unreachable in normal play. (Ian, 2026-08-28:
   // arm on arrival instead. His 30 s stands; it just starts where the event actually happens.)
   window.MBS.armReady = () => readUnlock().length >= NODES;
@@ -196,7 +225,7 @@
   // --- the forms gate (Ian, 2026-08-27): two separate gates, not one.
   // Gate 1, here: fill in every channel's form and MYR5 offers the free workout template outright.
   // Gate 2, above: solve every channel's secret and MBS.unlock banks the node, which is what frees the full coach assistant.
-  const FORM_SITES = ["lilboyfriend", "djscratch", "corgi", "sag", "fuel", "armie"];   // every built channel that asks the visitor for something
+  const FORM_SITES = ["lilboyfriend", "djscratch", "corgi", "fuel"];   // every built channel that asks the visitor for something; sag and armie are coming soon and ask nothing
   const readForms = () => { try { return JSON.parse(localStorage.getItem("mbs-forms") || "{}"); } catch { return {}; } };
   window.MBS.formsDone = () => { const f = readForms(); return { done: FORM_SITES.filter(x => f[x]).length, need: FORM_SITES.length }; };
   window.MBS.form = (site, data) => {                       // a channel calls this when its form is submitted
@@ -207,7 +236,7 @@
   };
   function paintForms() {
     const { done, need } = window.MBS.formsDone();
-    document.querySelectorAll(".lcd-card").forEach(el => el.classList.toggle("filled", !!readForms()[el.dataset.id]));
+    document.querySelectorAll(".lcd-card").forEach(el => el.classList.toggle("filled", FORM_SITES.includes(el.dataset.id) && !!readForms()[el.dataset.id]));
     if (done < need) return;
     if (document.getElementById("myrOffer")) return;        // the offer stands once; it is not a nag
     if (sessionStorage.getItem("mbs-offer-shut")) return;
@@ -233,9 +262,9 @@
     clearTimeout(armedTimer);
     if (left > 0) armedTimer = setTimeout(() => { lcd && lcd.classList.remove("armed"); window.MBS.wave && window.MBS.wave({ after: 0 }); document.dispatchEvent(new CustomEvent("mbs:disarm")); }, left);
   }
-  window.MBS.rearmTest = () => {                            // local testing only: pretend the fifth node just banked
+  window.MBS.rearmTest = () => {                            // local testing only: pretend the fourth node just banked
     if (!/^(127\.|192\.168\.|100\.|localhost)/.test(location.hostname)) return;
-    try { localStorage.setItem("mbs-unlock", JSON.stringify(["lilboyfriend", "djscratch", "corgi", "sag", "mominc"])); localStorage.setItem("mbs-unlock-at", String(Date.now())); } catch {}
+    try { localStorage.setItem("mbs-unlock", JSON.stringify(ACTIVE_UNLOCK)); localStorage.setItem("mbs-unlock-at", String(Date.now())); } catch {}
     paintUnlock(); paintArmed(); document.dispatchEvent(new CustomEvent("mbs:arm"));
   };
   paintUnlock(); paintArmed(); paintForms();

@@ -133,6 +133,17 @@ more than one reflective surface.
   .cc-fb-map button.locked{opacity:.55; cursor:default}
   .cc-fb-read{margin:8px 0 0; font-size:12.5px; line-height:1.45; padding:8px; border:1px solid var(--rule); background:var(--paper2)}
 
+  /* 0905: the head office's desk terminal -- public mode's own end-of-hall beat, reusing the same
+     stage-swap pattern as the book (a sibling .cc-stage, shown/hidden the same way) rather than inventing a
+     new view system. A login screen, not a new game -- the code itself is checked server-side (see the
+     script's redeem() call), never compared to anything sitting in this page. */
+  .cc-desk{position:relative; width:min(86vw,420px); margin:8px auto 0}
+  .cc-screen{background:#10140f; border:3px solid #2a2a1a; border-radius:4px; padding:16px 14px 14px;
+      box-shadow:0 8px 26px rgba(0,0,0,.5), inset 0 0 40px rgba(80,220,140,.08)}
+  .cc-screen-msg{font-family:"Special Elite", monospace; font-size:13px; color:#7be89a; margin:0 0 10px; line-height:1.4; text-shadow:0 0 6px rgba(123,232,154,.4)}
+  .cc-desk[data-state="inert"] input,.cc-desk[data-state="inert"] button.big{opacity:.45; pointer-events:none}
+  .cc-desk[data-state="checking"] button.big{opacity:.6; pointer-events:none}
+
   /* the book stage, structurally the 2026-08-28 build */
   .cc-stage#ccBookStage{perspective:1900px; perspective-origin:50% 40%}
   .cc-toolbar{display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:center}
@@ -273,6 +284,18 @@ more than one reflective surface.
      fringe on the HUD text that sits on the tape, not a duplicate render of the live canvas */
   .cc-rec,.cc-tc,.cc-tally{text-shadow:1px 0 rgba(255,20,80,.55), -1px 0 rgba(0,210,255,.45), 0 1px 3px #000}
 
+  /* 0905: public mode (the office) has to read as visually distinct from live (the school) at a glance --
+     "bright and still, but with CCTV" is the client's own phrase. Same VHS-chrome elements, lighter dressing:
+     less sepia/grime on the render, thinner grain/scanlines, a shallower vignette. The CCTV readout REUSES the
+     existing REC/timecode corner (relabelled in JS, see ccRecLabel) rather than adding a second badge next to
+     it -- 390px is already tight between the REC block and the PAGES tally, and stacking a third line there
+     read as genuinely crowded when tried (verified live, screenshot, not assumed). */
+  .cc[data-mode="public"] .cc-viewport canvas{filter:saturate(0.92) contrast(1.02) brightness(1.1)}
+  .cc[data-mode="public"] .cc-vhs .cast{opacity:.06}
+  .cc[data-mode="public"] .cc-vhs .grain{opacity:.3}
+  .cc[data-mode="public"] .cc-vig{opacity:.55}
+  .cc[data-mode="public"] .cc-vhs-vig{opacity:.4}
+
   /* dedicated coarse white-noise layer for the Slender proximity-static effect -- deliberately blockier and
      brighter than the ambient Rung 3 grain above it, so a danger spike reads as distinct from the tape's
      resting texture, not just "more of the same grain" */
@@ -331,7 +354,7 @@ more than one reflective surface.
       <div class="cc-vhs" aria-hidden="true"><div class="cast"></div><div class="grain"></div><div class="scan"></div></div>
       <canvas class="cc-static" id="ccStatic" aria-hidden="true"></canvas>
       <div class="cc-vig" aria-hidden="true"></div>
-      <div class="cc-rec" aria-hidden="true"><i></i>REC</div>
+      <div class="cc-rec" aria-hidden="true"><i></i><span id="ccRecLabel">REC</span></div>
       <div class="cc-tc" id="ccTC" aria-hidden="true">00:00</div>
       <div class="cc-tally" id="ccTally" aria-hidden="true">PAGES 0/3</div>
       <div class="cc-reflect" id="ccReflect" aria-hidden="true">
@@ -349,10 +372,12 @@ more than one reflective surface.
         </g></svg>
       </div>
       <div class="cc-nose" aria-hidden="true">
-        <svg viewBox="0 0 100 80" preserveAspectRatio="none"><path d="M50 3 C36 17 22 33 9 80 L91 80 C78 33 64 17 50 3 Z" fill="#caa06a"/>
-          <path d="M50 20 C41 31 33 43 27 80 L73 80 C67 43 59 31 50 20 Z" fill="#2a1a10"/>
-          <ellipse cx="40" cy="47" rx="6" ry="9" fill="#0e0805"/><ellipse cx="60" cy="47" rx="6" ry="9" fill="#0e0805"/>
-          <ellipse cx="44" cy="30" rx="4" ry="3" fill="rgba(255,255,255,.35)"/></svg>
+        <!-- 0905 art directive: rounder cone (curved base corners instead of a hard L-cutoff) and the
+             nostrils moved DOWN toward the wide/near end of the snout (cy 47->62), not up near the tip. -->
+        <svg viewBox="0 0 100 80" preserveAspectRatio="none"><path d="M50 3 C30 14 16 30 9 62 C7 75 15 80 30 80 L70 80 C85 80 93 75 91 62 C84 30 70 14 50 3 Z" fill="#caa06a"/>
+          <path d="M50 24 C38 33 29 46 26 68 C25 76 30 80 38 80 L62 80 C70 80 75 76 74 68 C71 46 62 33 50 24 Z" fill="#2a1a10"/>
+          <ellipse cx="39" cy="62" rx="7.5" ry="10" fill="#0e0805"/><ellipse cx="61" cy="62" rx="7.5" ry="10" fill="#0e0805"/>
+          <ellipse cx="43" cy="46" rx="4.5" ry="3.5" fill="rgba(255,255,255,.32)"/></svg>
       </div>
       <div class="cc-vhs-vig" aria-hidden="true"></div>
       <div class="cc-burst" id="ccBurst" aria-hidden="true"></div>
@@ -362,7 +387,7 @@ more than one reflective surface.
       <button type="button" class="cc-readbtn" id="ccReadBtn">READ THE PAPER</button>
       <button type="button" class="cc-sprint" id="ccSprintBtn" aria-pressed="false">SPRINT<span class="stamwrap"><i id="ccStamFill" style="--stam:100"></i></span></button>
       <div class="cc-joy" id="ccJoy" aria-hidden="true"><div class="nub" id="ccJoyNub"></div></div>
-      <p class="cc-hint">Drag to look. Move with the pad, or WASD / arrows. Shift or SPRINT to run. F is the flashlight.</p>
+      <p class="cc-hint">Drag to look. Tap the pad to walk that way -- tap again to change, centre to stop. WASD works too.</p>
     </div>
   </div>
 
@@ -388,6 +413,25 @@ more than one reflective surface.
     </div>
   </div>
 
+  <!-- 0905: public mode only -- the head office's desk, reached once every report has been read and the
+       suited figure is behind you. Server-checked; see the script's redeem() function. -->
+  <div class="cc-stage" id="ccDeskStage" hidden>
+    <div class="cc-toolbar">
+      <button type="button" class="pagebtn" id="ccDeskBack">&#9668; STAND UP</button>
+    </div>
+    <div class="cc-desk" id="ccDesk">
+      <div class="cc-screen">
+        <p class="cc-screen-msg" id="ccDeskMsg">A LOGIN SCREEN. IT WANTS A CODE.</p>
+        <form id="ccDeskForm">
+          <label for="ccDeskCode">CODE</label>
+          <input id="ccDeskCode" name="code" autocomplete="off" inputmode="text" placeholder="Given out live on stream.">
+          <button class="big" type="submit" id="ccDeskSubmit">ENTER</button>
+        </form>
+        <p class="fine">The code is only ever given out live. This machine checks it with the server -- nothing on this screen decides anything by itself.</p>
+      </div>
+    </div>
+  </div>
+
   <div class="cc-paws" id="ccPaws" aria-hidden="true">
     <div class="cc-paw l"><svg viewBox="0 0 100 90"><ellipse cx="50" cy="55" rx="42" ry="32" fill="#caa06a"/>
       <ellipse cx="22" cy="18" rx="15" ry="19" fill="#caa06a"/><ellipse cx="50" cy="10" rx="15" ry="19" fill="#caa06a"/><ellipse cx="78" cy="18" rx="15" ry="19" fill="#caa06a"/>
@@ -403,91 +447,173 @@ more than one reflective surface.
 (() => {
   const cc = document.getElementById("cc"); if (!cc) return;
 
+  // ---------------------------------------------------------------- mode (0905): TONE only, never entitlement.
+  // The shim (mbs-shim.js:22-27) already publishes this on document.documentElement whenever it runs; a plain
+  // TV-embedded view without the shim has nothing set, and that absence must read as PUBLIC (the office is the
+  // default, brighter world), never LIVE. window.MBS.mode is checked first because it survives even if the
+  // dataset attribute is written after this script runs; falls back to the dataset/class the shim also sets.
+  const MODE = (((window.MBS && window.MBS.mode) || document.documentElement.dataset.mode ||
+      (document.documentElement.classList.contains("mbs-live") ? "live" : "public")) === "live") ? "live" : "public";
+  cc.dataset.mode = MODE;
+  // the office is watched by CCTV, not worn on a GoPro -- reuses the existing REC corner instead of adding a
+  // second badge next to it (a second line there crowded the 390px HUD against the PAGES tally, tried and
+  // screenshotted). The timecode underneath it is left running: a security-camera readout still has one.
+  const recLabel = document.getElementById("ccRecLabel");
+  if (recLabel && MODE === "public") recLabel.textContent = "CCTV 04";
+
   // ---------------------------------------------------------------- state
-  // ---------------------------------------------------------------- state: LEVELS model, versioned save (3.2/3.3)
-  // v1 (pre-0903) stored one flat found[3] under STORE_KEY_V1 for a single hallway. Nine pages across three
-  // levels needs a shape v1 cannot express, so the key is bumped. Grandfather rule (locked): nobody who played
-  // the old build is demoted. An old save with all three pages found migrates to level 1 COMPLETE, level 2
-  // unlocked -- the standing that player actually earned. An old save with fewer than three keeps exactly that
-  // progress as level 1's own in-progress state; nothing invented, nothing taken away.
+  // ---------------------------------------------------------------- state: LEVELS model, versioned save (3.2/3.3),
+  // now mode-partitioned (3.7, Ian's 2026-09-04 public/live split). THE KEY ITSELF DOES NOT CHANGE: registry.json's
+  // progress_key and tv/card.js's resume check both point at STORE_KEY by name, and neither is this file's to
+  // edit. Only the value stored under it changes shape, from one flat save to {public,live} partitions, so an
+  // untouched card.js still sees a valid non-empty object and still offers "resume" correctly either way.
+  // v1 (pre-0903) stored one flat found[3] for a single hallway. v2 (pre-0905) stored one flat
+  // {found:[3][3],unlocked,level} covering all three old levels (School, Food Service, Office) with no mode
+  // split at all. Reusing that one save for two now-different level sets would resume a player into the wrong
+  // world (Codex C7), so it is split here, once, on first load under the new build:
+  //   - old level 0 (THE SCHOOL) had, and still has, unchanged content -> becomes live's own first level.
+  //   - old level 2 (THE OFFICE) had, and still has, unchanged content -> becomes public's one level.
+  //   - old level 1 (FOOD SERVICE) has no home in either new scheme. Its flags are not carried into anything;
+  //     nothing is invented in their place, and nothing already earned in the other two levels is lost.
   const STORE_KEY_V1 = "mbs-corgi-school";
   const STORE_KEY = "mbs-corgi-school-v2";
-  const state = { level: 0, found: [[false, false, false], [false, false, false], [false, false, false]], unlocked: 0 };
-  const save = () => { try { localStorage.setItem(STORE_KEY, JSON.stringify({ found: state.found, unlocked: state.unlocked, level: state.level })); } catch {} };
+  const emptyFound = () => [[false, false, false], [false, false, false], [false, false, false]];
+  const state = { level: 0, found: emptyFound(), unlocked: 0 };
+  const coerceModeState = s => ({
+    found: [0, 1, 2].map(i => [!!(s.found[i] || [])[0], !!(s.found[i] || [])[1], !!(s.found[i] || [])[2]]),
+    unlocked: Math.max(0, Math.min(2, s.unlocked | 0)),
+    level: Math.max(0, Math.min(2, s.level | 0))
+  });
+  const save = () => {
+    try {
+      const blob = { public: null, live: null };
+      try { const prior = JSON.parse(localStorage.getItem(STORE_KEY) || "null");
+        if (prior) { if (prior.live) blob.live = prior.live; if (prior.public) blob.public = prior.public; } } catch {}
+      blob[MODE] = { found: state.found, unlocked: state.unlocked, level: state.level };
+      localStorage.setItem(STORE_KEY, JSON.stringify(blob));
+    } catch {}
+  };
   (function loadState() {
     try {
       const raw = localStorage.getItem(STORE_KEY);
       if (raw) {
-        const s = JSON.parse(raw);
-        if (Array.isArray(s.found) && Array.isArray(s.found[0])) {
-          state.found = [0, 1, 2].map(i => [!!(s.found[i] || [])[0], !!(s.found[i] || [])[1], !!(s.found[i] || [])[2]]);
-          state.unlocked = Math.max(0, Math.min(2, s.unlocked | 0));
-          state.level = Math.max(0, Math.min(2, s.level | 0));
+        const blob = JSON.parse(raw);
+        if (blob && (blob.live || blob.public)) {
+          const mine = blob[MODE];
+          if (mine && Array.isArray(mine.found) && Array.isArray(mine.found[0])) Object.assign(state, coerceModeState(mine));
+          return;
+        }
+        if (Array.isArray(blob.found) && Array.isArray(blob.found[0])) {
+          const old = coerceModeState(blob);
+          if (MODE === "live") {
+            state.found = [old.found[0], [false, false, false], [false, false, false]];
+            state.level = Math.min(old.level, 1); state.unlocked = Math.min(old.unlocked, 1);
+          } else {
+            state.found = [old.level === 2 ? old.found[2] : [false, false, false], [false, false, false], [false, false, false]];
+            state.level = 0; state.unlocked = 0;
+          }
+          save();   // persist the split immediately -- a player who looks and quits this session must not
+                    // depend on the old flat key still being there next time.
           return;
         }
       }
     } catch {}
-    try {
-      const raw1 = localStorage.getItem(STORE_KEY_V1);
-      if (raw1) {
-        const s1 = JSON.parse(raw1);
-        if (Array.isArray(s1.found)) {
-          const f = [!!s1.found[0], !!s1.found[1], !!s1.found[2]];
-          state.found[0] = f;
-          const complete = f.every(Boolean);
-          state.unlocked = complete ? 1 : 0;
-          state.level = complete ? 1 : 0;
-          save();   // persist the migration immediately -- a player who looks and quits without collecting
-                    // anything this session must not depend on the v1 key still being there next time.
+    // v1: a single un-leveled hallway, and it was always the school -- only live mode has anywhere to put it
+    if (MODE === "live") {
+      try {
+        const raw1 = localStorage.getItem(STORE_KEY_V1);
+        if (raw1) {
+          const s1 = JSON.parse(raw1);
+          if (Array.isArray(s1.found)) {
+            const f = [!!s1.found[0], !!s1.found[1], !!s1.found[2]];
+            state.found[0] = f;
+            const complete = f.every(Boolean);
+            state.unlocked = complete ? 1 : 0;
+            state.level = complete ? 1 : 0;
+            save();
+          }
         }
-      }
-    } catch {}
+      } catch {}
+    }
   })();
 
-  const LEVELS = [
-    { name: "THE SCHOOL", doorLabel: "FOOD SERVICE", furniture: "desk",
+  // ---------------------------------------------------------------- LEVELS (0905): two separate sets, one per
+  // mode. LIVE is now three SCHOOL levels that get stranger as you go deeper (Ian's directive; the pre-0905
+  // build's "Food Service" and "Office" stages were never school, so they are not reused as live levels -- see
+  // codex-r1-findings.md finding A3). PUBLIC is the office alone, unchanged content, reused verbatim per Codex
+  // B3 (corgi.html:490-509 pre-existing) -- its own door now leads to the head office's desk (buildLevel's
+  // transition branches on MODE for this, see the public-only enterHeadOffice() path further down) instead of a
+  // fourth level. `crazy` (live only) scales wall art density, light colour and monster tempo per level -- see
+  // buildLevel/scheduleAmbient below. `handAuthored` marks live level 0 as the pre-existing, byte-identical
+  // corridor (level0MainCorridor/level0Areas); everything else, public's office included, uses the generated
+  // corridor (genMainCorridor/genLevelAreas) that already served the old Food Service/Office levels.
+  const LEVELS_LIVE = [
+    { name: "THE SCHOOL", doorLabel: "THE ART WING", furniture: "desk", handAuthored: true, crazy: 0,
       pages: [
-        { door: "THE LIBRARY", title: "300 MILLION JOBS, ONE MORNING", deskLabel: "300 MILLION JOBS AT RISK", deskDate: "MAR 2023",
+        { door: "THE LIBRARY", title: "FREE MENTORS FOR YOUR OWN BUSINESS", deskLabel: "FREE SBA MENTORING", deskDate: "SCORE / SBA",
           flavor: "The card catalog drawer was already open. Someone had been through it before you. One index card sat on top, torn from a newspaper, folded twice.",
-          stat: "Generative AI could expose the equivalent of 300 million full time jobs worldwide to automation, Goldman Sachs economists estimated in March 2023.",
-          src: "Goldman Sachs Global Investment Research, “The Potentially Large Effects of Artificial Intelligence on Economic Growth,” Mar 2023.",
-          lessonTitle: "STOP. WHO IS TELLING YOU THIS.",
-          lesson: "Before a number scares you, find out who is saying it. A bank publishing its own economists' research under their own names is a source you can check. An unnamed “expert” or “report” with nobody attached is not. Look for the name before you believe the number." },
-        { door: "THE GYMNASIUM", title: "170 MILLION NEW. 92 MILLION GONE.", deskLabel: "92 MILLION ROLES DISPLACED", deskDate: "2025 REPORT",
+          stat: "SCORE, a nonprofit resource partner of the U.S. Small Business Administration, gives free one-on-one mentoring and a free business plan review to anyone starting a company -- no cost, no revenue minimum to qualify.",
+          src: "SCORE.org, a resource partner of the U.S. Small Business Administration.",
+          lessonTitle: "FREE IS A CLAIM YOU CAN GO CHECK.",
+          lesson: "A free-mentor claim is either true or it isn't, and it's checkable in one search. SCORE has run this exact program for decades under an actual federal partnership. Before assuming starting a business costs money you don't have, go look at what's already free." },
+        { door: "THE GYMNASIUM", title: "PASS ONE TEST, SKIP THE CLASS", deskLabel: "CLEP: CREDIT UNDER $100", deskDate: "COLLEGE BOARD",
           flavor: "Someone had taped a page to the underside of the bleachers, face down, like they did not want it read standing up.",
-          stat: "By 2030, AI and information processing technology will transform 86 percent of businesses, the World Economic Forum's Future of Jobs Report 2025 found, displacing 92 million existing roles while creating 170 million new ones.",
-          src: "World Economic Forum, Future of Jobs Report 2025.",
-          lessonTitle: "TRACE THE NUMBER BACK TO WHERE IT CAME FROM.",
-          lesson: "A scary number gets repeated until it is flattened. “92 million jobs gone” is only half of what this report says; the same report says 170 million new ones. Find the original report before you trust the half that got repeated the loudest." },
-        { door: "THE LOCKER ROW", title: "71 PERCENT OF US THINK SO", deskLabel: "71% FEAR THE LAYOFFS", deskDate: "JUN 2026",
+          stat: "CLEP exams, run by the College Board, let you earn real college credit for a flat fee under $100 per test, accepted at more than 2,900 colleges and universities nationwide.",
+          src: "The College Board, CLEP program.",
+          lessonTitle: "ONE TEST IS CHEAPER THAN ONE SEMESTER.",
+          lesson: "A single exam fee under $100 standing in for a whole semester's tuition is a real trade, not a trick. Check the accepted-college list for the specific school you care about before assuming it doesn't apply to you." },
+        { door: "THE LOCKER ROW", title: "IRELAND WILL PAY YOU TO MOVE TO AN ISLAND", deskLabel: "EUR 84,000 TO RELOCATE", deskDate: "IRELAND, 2022",
           flavor: "It was folded into a locker vent, small enough that a hand that was not yours had to have put it there.",
-          stat: "71 percent of US adults now think AI will lead to fewer jobs in the United States over the next two decades, Pew Research Center found in June 2026, up from 64 percent in 2024.",
-          src: "Pew Research Center, June 2026 survey.",
-          lessonTitle: "A FEELING IS NOT THE SAME SHAPE AS A FACT.",
-          lesson: "71 percent worried is a real, measured opinion about how people feel. It is not the same claim as 71 percent of jobs actually disappearing. A survey of feelings and a count of what happened are two different instruments. Check which one you are holding before you repeat it." }
+          stat: "In 2022 Ireland's government began offering grants of roughly 84,000 euro to people willing to relocate to, and renovate a home on, one of its remote offshore islands -- a real repopulation policy, not a rumor.",
+          src: "Government of Ireland, Our Living Islands policy, 2022.",
+          lessonTitle: "A GOVERNMENT PROGRAM HAS A NAME AND A PAGE.",
+          lesson: "\"Countries pay you to move there\" sounds like an urban legend until you find the actual policy with an actual name. This one has both. Search the name before deciding whether it's real." }
       ] },
-    { name: "FOOD SERVICE", doorLabel: "THE OFFICE", furniture: "bench",
+    { name: "THE ART WING", doorLabel: "THE ATTIC", furniture: "desk", crazy: 1,
       pages: [
-        { door: "THE DINING FLOOR", title: "26 PERCENT ALREADY DO", deskLabel: "26% ALREADY USE AI", deskDate: "NRA 2026",
-          flavor: "Tucked under a cold plate on table six, where the tip should have been. His own handwriting runs under the printed line.",
-          stat: "26 percent of restaurant operators say they are already using AI-related tools in their restaurant, the National Restaurant Association's State of the Restaurant Industry 2026 report found.",
-          src: "National Restaurant Association, State of the Restaurant Industry 2026 report.",
-          lessonTitle: "ONE FACT. ONE CONSEQUENCE.",
-          lesson: "One in four is not most, and it is not none. Read the actual number before you decide whether this is already everywhere or barely started. Both of those are wrong, and this is the number that says so." },
-        { door: "THE SERVER STATION", title: "47 PERCENT EXPECT MORE OF IT", deskLabel: "47% EXPECT MORE AI", deskDate: "NRA 2024",
-          flavor: "Rolled inside a straw sleeve at the server station. He had to unroll it twice to get it flat enough to carry.",
-          stat: "47 percent of restaurant operators expect automation and technology to become more common in the industry to help address labor shortages, the National Restaurant Association's 2024 State of the Restaurant Industry report found.",
-          src: "National Restaurant Association, 2024 State of the Restaurant Industry report.",
-          lessonTitle: "AN EXPECTATION IS NOT A DEPLOYMENT.",
-          lesson: "Operators expecting more automation is a forecast about their own plans, not a report of jobs already gone. Keep the plan and the outcome in separate columns until one of them actually happens." },
-        { door: "THE WALK-IN", title: "69 PERCENT SAY ‘ASSIST,’ NOT ‘REPLACE’", deskLabel: "69% SAY 'ASSIST'", deskDate: "NRA 2024",
-          flavor: "Stuck to the inside of the walk-in door with a piece of tape gone brittle in the cold.",
-          stat: "69 percent of restaurant operators believe technology will assist human workers rather than replace them, the same 2024 National Restaurant Association report found.",
-          src: "National Restaurant Association, 2024 State of the Restaurant Industry report.",
-          lessonTitle: "THE PEOPLE BUYING IT ARE NOT NEUTRAL.",
-          lesson: "The operators answering this survey are the ones deciding whether to buy the technology. Their belief about what it will do to their staff is worth reading and worth doubting at the same time." }
+        { door: "THE ART ROOM", title: "ADVICE FROM 900 FREE CENTERS", deskLabel: "FREE SBDC ADVISING", deskDate: "SBA NETWORK",
+          flavor: "Paint-smudged and pinned under a drying brush, like whoever left it meant to come back for it.",
+          stat: "The Small Business Administration's nationwide network of roughly 900 free Small Business Development Centers offers no-cost, one-on-one advising on writing a business plan and getting a company running, in every state.",
+          src: "America's SBDC / U.S. Small Business Administration.",
+          lessonTitle: "FREE ADVICE STILL NEEDS A NAME ATTACHED.",
+          lesson: "900 centers is a specific, checkable number, not a vibe. Look up the one nearest you before deciding whether \"free business advice\" is a real thing or a slogan." },
+        { door: "THE COMPUTER LAB", title: "DSST: THE MILITARY'S CREDIT-BY-EXAM", deskLabel: "DSST EXAMS, OFTEN FREE", deskDate: "PROMETRIC / DANTES",
+          flavor: "Still warm from a monitor that shouldn't have been on after hours, half printed and left in the tray.",
+          stat: "DSST exams work the same way CLEP does -- one test in place of one class -- and for servicemembers the fee has historically been covered entirely through the Defense Department's DANTES program.",
+          src: "Prometric DSST program; U.S. Department of Defense DANTES.",
+          lessonTitle: "SOMEONE ELSE MAY HAVE ALREADY PAID THE FEE.",
+          lesson: "Before assuming a credit-by-exam costs you anything, check whether an employer, a branch of service, or a school already covers it. That one question has saved people real money." },
+        { door: "THE FACULTY LOUNGE", title: "ITALY PAID TOWNS TO STAY ALIVE", deskLabel: "UP TO EUR 28,000 TO RELOCATE", deskDate: "CALABRIA, ITALY",
+          flavor: "Left face-up on the good couch, the one nobody but the staff was ever supposed to sit on.",
+          stat: "Italy's Calabria region offered new residents payments of up to about 28,000 euro over three years for moving into one of its depopulating towns and staying -- one of several such offers across small Italian towns this decade.",
+          src: "Regione Calabria relocation incentive, widely reported 2021-2022.",
+          lessonTitle: "\"THIS DECADE\" MEANS IT'S STILL SEARCHABLE.",
+          lesson: "A recent policy leaves a recent paper trail. Search the region's own name plus the year before repeating a secondhand version of the story." }
       ] },
-    { name: "THE OFFICE", doorLabel: null, furniture: "cubicle",
+    { name: "THE ATTIC", doorLabel: null, furniture: "desk", crazy: 2,
+      pages: [
+        { door: "THE AUDITORIUM", title: "FILE YOUR OWN COMPANY FOR UNDER $200", deskLabel: "MOST STATES: UNDER $200", deskDate: "STATE FILING FEES",
+          flavor: "Taped under a folding seat, in a room with no lights on and no reason for anyone to be seated.",
+          stat: "Forming an LLC yourself, without a lawyer, costs a state filing fee that in most U.S. states runs well under $200 -- a few charge more, several charge far less -- and no attorney is legally required to file it.",
+          src: "State Secretary of State filing fee schedules, by state.",
+          lessonTitle: "THE FEE VARIES BY STATE. YOURS IS ONE SEARCH AWAY.",
+          lesson: "\"It costs too much to start a company\" is a claim about a specific number that's different in every state and public on every Secretary of State's website. Look up your own state's fee before believing the average." },
+        { door: "THE BOILER ROOM", title: "WHAT YOU ALREADY KNOW MIGHT BE CREDIT", deskLabel: "CREDIT FOR PRIOR LEARNING", deskDate: "CAEL",
+          flavor: "Scorched a little at one corner, resting on a pipe that should not have been that warm.",
+          stat: "Many community colleges run a \"credit for prior learning\" review that turns a work certification, military training, or documented job experience you already have into transferable college credit, at no extra tuition.",
+          src: "Council for Adult and Experiential Learning (CAEL), prior learning assessment.",
+          lessonTitle: "WHAT YOU ALREADY DID MIGHT ALREADY COUNT.",
+          lesson: "Before paying for a class in something you already know how to do, ask the registrar whether a prior-learning review exists. The answer is yes or no, and it's a five-minute question." },
+        { door: "THE ATTIC", title: "SWITZERLAND PAID CASH TO STOP A VILLAGE DYING", deskLabel: "CASH AND FREE LAND, EUROPE", deskDate: "ALBINEN, SWITZERLAND",
+          flavor: "Under a drop cloth, dated but never thrown out, like someone up here was keeping score.",
+          stat: "The Swiss village of Albinen voted to pay newcomers cash to move in and build a home -- one of several small European towns, alongside offers in Greece, Spain and Sardinia, that have paid or given away property just to keep the local school and shops open.",
+          src: "Municipality of Albinen, Switzerland, resident vote widely reported 2017 onward.",
+          lessonTitle: "A SMALL TOWN'S OWN VOTE IS A RECORD, NOT A RUMOR.",
+          lesson: "A town council vote is public record in a way a viral post is not. Before repeating \"this country pays you to move there,\" find the town, the vote and the year." }
+      ] }
+  ];
+  const LEVELS_PUBLIC = [
+    { name: "THE OFFICE", doorLabel: "THE HEAD OFFICE", furniture: "cubicle", crazy: 0,
       pages: [
         { door: "THE MAIL ROOM", title: "UP TO 800 MILLION JOBS, WORLDWIDE", deskLabel: "800M JOBS WORLDWIDE", deskDate: "MCKINSEY",
           flavor: "Folded into an empty mail slot, the kind with a name label long since peeled off.",
@@ -509,6 +635,7 @@ more than one reflective surface.
           lesson: "The pattern that predicts automation is the shape of the task, not the name on the door. A repetitive task inside a job that sounds safe is still a repetitive task. Look at what the day actually consists of." }
       ] }
   ];
+  const LEVELS = MODE === "public" ? LEVELS_PUBLIC : LEVELS_LIVE;
 
   const announce = t => { const el = document.getElementById("ccAnnounce"); if (el) el.textContent = t; };
 
@@ -628,7 +755,7 @@ more than one reflective surface.
         <figcaption>THE ANCHOR, WEARING A CAMERA, IN ${L.name} AFTER HOURS. HE HAS NOT SLEPT. NEITHER HAS THE STORY.</figcaption>
       </figure>
       <div class="cols" aria-label="This morning's newspaper">
-        <p><span class="lede">${lvl === 0 ? "THE SCHOOL WAS EMPTY WHEN HE WENT IN." : `HE IS IN ${L.name} NOW.`}</span> Three pages are loose somewhere in it. He is going to find all three, because someone has to, and the someone is him.</p>
+        <p><span class="lede">${lvl === 0 ? (MODE === "public" ? "THE OFFICE WAS BRIGHT WHEN HE WENT IN." : "THE SCHOOL WAS EMPTY WHEN HE WENT IN.") : `HE IS IN ${L.name} NOW.`}</span> Three pages are loose somewhere in it. He is going to find all three, because someone has to, and the someone is him.</p>
         <p class="head">PAGES FOUND: ${n} / 3</p>
         <p>${n === 0 ? "None yet. Walk the halls." : n < 3 ? "Keep going. It is worse further in." : "All three. Turn the page and see what he found."}</p>
         <p>Each page he finds gets turned into this paper, right here, in order. Press READ THE PAPER any time to look at what he already has.</p>
@@ -664,7 +791,8 @@ more than one reflective surface.
   function paintLeaf4() {
     const front = document.getElementById("ccLeaf4").querySelector(".face.front");
     const lvl = state.level;
-    if (lvl < 2) {
+    if (lvl < LEVELS.length - 1) {   // 0905: was hardcoded to 2, which assumed exactly three levels -- public's
+                                      // single-level office would never reach its own record leaf otherwise.
       const complete = state.found[lvl].every(Boolean);
       front.innerHTML = `
         <section class="block r1 pressure" aria-labelledby="ccNextH"><span class="tape tl" aria-hidden="true"></span>
@@ -682,7 +810,7 @@ more than one reflective surface.
       <section class="block constr r3" aria-labelledby="scanH"><span class="tape tl" aria-hidden="true"></span>
         <p class="kicker">The anchor's own record</p>
         <h2 id="scanH" data-ransom="Submit your stress"></h2>
-        <p class="body">He walked the whole school for these three pages. Hold still for the scan. Then tell him which one is coming for your job.</p>
+        <p class="body">He walked ${MODE === "public" ? "the whole office" : "the whole school"} for these three pages. Hold still for the scan. Then tell him which one is coming for your job.</p>
         <div class="scan" id="scan"><div class="line"></div><div class="out" id="scanOut">HOLD STILL. LOOK AT THE DOG.</div></div>
         <button class="big" type="button" id="scanBtn">SCAN MY STRESS</button>
         <p class="fine">The scan is purely visual. It measures nothing, stores nothing, and cannot see you. Cortisol Corgi cannot see either. That is canon.</p>
@@ -786,9 +914,11 @@ more than one reflective surface.
 
   // ---------------------------------------------------------------- view switching
   const huntStage = document.getElementById("ccHuntStage"), bookStage = document.getElementById("ccBookStage");
+  const deskStage = document.getElementById("ccDeskStage");
   const readBtn = document.getElementById("ccReadBtn"), backHunt = document.getElementById("ccBackHunt");
-  function showHunt() { cc.dataset.view = "hunt"; huntStage.hidden = false; bookStage.hidden = true; announce("Back in the hallway."); }
-  function showBook() { cc.dataset.view = "book"; huntStage.hidden = true; bookStage.hidden = false; renderBook(); }
+  function showHunt() { cc.dataset.view = "hunt"; huntStage.hidden = false; bookStage.hidden = true; deskStage.hidden = true; announce("Back in the hallway."); }
+  function showBook() { cc.dataset.view = "book"; huntStage.hidden = true; bookStage.hidden = false; deskStage.hidden = true; renderBook(); }
+  function showDesk() { cc.dataset.view = "desk"; huntStage.hidden = true; bookStage.hidden = true; deskStage.hidden = false; announce("At the head office's desk. It wants a code."); }
   cc.dataset.view = "hunt";
   // Round 2, section 2: BACK TO THE HALL normally just swaps stages -- but if a page was found at a desk and
   // the dog is still standing over it, this button has to stand him down first (camera, pitch, paws, the
@@ -796,16 +926,60 @@ more than one reflective surface.
   let deskStandDownHook = null;
   readBtn.addEventListener("click", showBook);
   backHunt.addEventListener("click", () => { if (!(deskStandDownHook && deskStandDownHook())) showHunt(); });
+  const deskBackBtn = document.getElementById("ccDeskBack");
+  if (deskBackBtn) deskBackBtn.addEventListener("click", showHunt);
 
-  // ---- the moment a page is found, shared by both renderers below (3.6: unlock+wave now fire only on the
-  // THIRD level's completion; levels 1 and 2 just open their own next door, no MBS call at all)
+  // ---- 0905: public mode's head-office desk. enterHeadOffice() is the door-transition's public-mode branch
+  // (see the frame loop below); the code itself is never checked here -- see redeem() further down.
+  function enterHeadOffice() { showDesk(); }
+
+  // ---- 0905: the desk's own code check, server-authority only (Codex C6). MBS.mode is a tone switch and is
+  // never treated as entitlement here -- this form does not compare the typed code to anything in the page;
+  // it posts to the deployed Supabase `redeem` function ({mission_id, code} -> a bearer + the mission's game
+  // slug) and only a genuine 2xx response with a matching game slug counts as a win. mission_id and the API
+  // base are read straight off document.documentElement, the same place mbs-shim.js reads its own API base
+  // (dataset.api) -- both are populated by the generator this round adds; while either is empty the desk
+  // renders inert and claims nothing, and it never falls back to accepting a code locally.
+  (function setupDesk() {
+    const deskEl = document.getElementById("ccDesk"), deskMsg = document.getElementById("ccDeskMsg");
+    const deskForm = document.getElementById("ccDeskForm"), deskCode = document.getElementById("ccDeskCode");
+    if (!deskEl) return;
+    const MISSION_ID = document.documentElement.dataset.missionId || "";
+    const API_BASE = document.documentElement.dataset.api || "";
+    const ready = !!(MISSION_ID && API_BASE);
+    if (!ready) {
+      deskEl.dataset.state = "inert";
+      deskMsg.textContent = "THE SCREEN IS DARK. NOTHING TO TYPE INTO YET -- CHECK BACK DURING THE STREAM.";
+    }
+    deskForm.addEventListener("submit", e => {
+      e.preventDefault();
+      if (!ready) return;   // inert: never accepts a code with nothing to check it against
+      const code = deskCode.value.trim();
+      if (!code) return;
+      deskEl.dataset.state = "checking"; deskMsg.textContent = "CHECKING...";
+      fetch(API_BASE + "/redeem", {
+        method: "POST", credentials: "include", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ mission_id: MISSION_ID, code })
+      }).then(r => r.ok ? r.json() : Promise.reject(new Error("http " + r.status)))
+        .then(data => {
+          if (data && data.game && data.game !== "corgi") throw new Error("mismatched game");
+          deskEl.dataset.state = ""; deskMsg.textContent = "ACCESS GRANTED. SENDING YOU BACK.";
+          setTimeout(() => { const u = new URL(location.href); u.searchParams.set("mode", "live"); location.href = u.toString(); }, 900);
+        })
+        .catch(() => { deskEl.dataset.state = ""; deskMsg.textContent = "THAT CODE COULD NOT BE CHECKED. TRY AGAIN."; });
+    });
+  })();
+
+  // ---- the moment a page is found, shared by both renderers below (3.6/0905: unlock+wave fire once the
+  // FINAL level of whichever mode's own LEVELS is complete -- public has exactly one level, so its office
+  // completes on its own; live still needs its third school level, same as before).
   let doorAnnounced = false;
   function markLevelComplete() {
     const lvl = state.level;
-    if (lvl >= 2) { window.MBS && window.MBS.wave && window.MBS.wave(); window.MBS && window.MBS.unlock && window.MBS.unlock("corgi"); }
+    if (lvl >= LEVELS.length - 1) { window.MBS && window.MBS.wave && window.MBS.wave(); window.MBS && window.MBS.unlock && window.MBS.unlock("corgi"); }
     save();
   }
-  function advanceLevel() { if (state.level < 2) { state.level += 1; save(); return true; } return false; }
+  function advanceLevel() { if (state.level < LEVELS.length - 1) { state.level += 1; save(); return true; } return false; }
   function collect(i) {
     const lvl = state.level;
     if (state.found[lvl][i]) return;
@@ -819,7 +993,9 @@ more than one reflective surface.
       setTimeout(() => {
         markLevelComplete();
         paintLeaf4();
-        announce(lvl >= 2 ? "All nine pages found. The anchor's own record is open." : `All three pages found. The door to ${LEVELS[lvl].doorLabel} is open.`);
+        announce(lvl >= LEVELS.length - 1
+          ? (MODE === "public" ? "All three reports found. The head office door is open." : "All nine pages found. The anchor's own record is open.")
+          : `All three pages found. The door to ${LEVELS[lvl].doorLabel} is open.`);
       }, 900);
     }
     return true;
@@ -844,6 +1020,62 @@ more than one reflective surface.
     viewport.style.height = (visualTarget / 1.15) + "px";
   }
   if (glassEl) { new ResizeObserver(fitViewport).observe(glassEl); fitViewport(); }
+
+  // ---------------------------------------------------------------- office ambience (0905): fax, typing,
+  // phone chatter, synthesised locally with WebAudio -- no audio asset, nothing scraped, nothing licensed
+  // (the standing 2026-09-04 rule against deploying scraped previews doesn't even come up). Shared between the
+  // WebGL and fallback paths since it's audio, not scene content; gated to public mode only, and started on
+  // the first pointer/key gesture, same event class the shim already waits for, since browsers refuse audio
+  // before one. ponytail: three fixed sound-shapes (typing bursts, an occasional fax handshake, a muffled
+  // phone-murmur bed), not a mixed soundscape engine -- upgrade if a future pass wants more variety.
+  function setupOfficeAmbience() {
+    let ctx = null, started = false;
+    function typingBurst(t) {
+      const n = 4 + Math.floor(rnd() * 6);
+      for (let i = 0; i < n; i++) {
+        const at = t + i * (0.06 + rnd() * 0.05);
+        const src = ctx.createBufferSource(); const buf = ctx.createBuffer(1, 200, ctx.sampleRate);
+        const d = buf.getChannelData(0); for (let j = 0; j < 200; j++) d[j] = (Math.random() * 2 - 1) * (1 - j / 200);
+        src.buffer = buf;
+        const f = ctx.createBiquadFilter(); f.type = "bandpass"; f.frequency.value = 2200 + rnd() * 1400; f.Q.value = 2.2;
+        const g = ctx.createGain(); g.gain.value = 0.05 + rnd() * 0.04;
+        src.connect(f); f.connect(g); g.connect(ctx.destination); src.start(at);
+      }
+    }
+    function faxHandshake(t) {
+      const o1 = ctx.createOscillator(), o2 = ctx.createOscillator(), g = ctx.createGain();
+      o1.type = "square"; o2.type = "square"; o1.frequency.value = 1100; o2.frequency.value = 1850;
+      g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(0.035, t + 0.08); g.gain.linearRampToValueAtTime(0, t + 1.6);
+      o1.connect(g); o2.connect(g); g.connect(ctx.destination);
+      o1.start(t); o2.start(t + 0.35); o1.stop(t + 1.6); o2.stop(t + 1.6);
+    }
+    function phoneMurmurBed() {
+      const bufLen = ctx.sampleRate * 2, buf = ctx.createBuffer(1, bufLen, ctx.sampleRate);
+      const d = buf.getChannelData(0); for (let i = 0; i < bufLen; i++) d[i] = Math.random() * 2 - 1;
+      const src = ctx.createBufferSource(); src.buffer = buf; src.loop = true;
+      const f = ctx.createBiquadFilter(); f.type = "lowpass"; f.frequency.value = 420;
+      const g = ctx.createGain(); g.gain.value = 0.012;
+      const lfo = ctx.createOscillator(); lfo.frequency.value = 0.4; const lfoGain = ctx.createGain(); lfoGain.gain.value = 0.008;
+      lfo.connect(lfoGain); lfoGain.connect(g.gain);
+      src.connect(f); f.connect(g); g.connect(ctx.destination); src.start(); lfo.start();
+    }
+    function scheduleNext() {
+      const wait = 2600 + rnd() * 4200;
+      setTimeout(() => {
+        if (cc.dataset.mode !== "public") return;   // defensive; MODE never actually changes mid-session
+        if (rnd() < 0.7) typingBurst(ctx.currentTime); else faxHandshake(ctx.currentTime);
+        scheduleNext();
+      }, wait);
+    }
+    function start() {
+      if (started) return; started = true;
+      try { ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch { return; }
+      if (ctx.state === "suspended") ctx.resume().catch(() => {});
+      phoneMurmurBed(); scheduleNext();
+    }
+    ["pointerdown", "keydown"].forEach(ev => viewport.addEventListener(ev, start, { once: true, passive: true }));
+  }
+  if (MODE === "public") setupOfficeAmbience();
 
   // ---------------------------------------------------------------- WebGL detect
   const glOK = (() => { try { const c = document.createElement("canvas"); return !!(window.WebGLRenderingContext && (c.getContext("webgl2") || c.getContext("webgl"))); } catch { return false; } })();
@@ -871,7 +1103,9 @@ more than one reflective surface.
     function roomsFor(lvl) {
       const L = LEVELS[lvl];
       const rooms = L.pages.map((p, i) => ({ id: i, label: p.door, kind: "page" }));
-      if (lvl === 0) {
+      if (L.handAuthored) {   // 0905: was `lvl === 0`, which also matched public's office (idx 0, generated) --
+                              // this flavour dressing (trophy/library/gym/locker) is the hand-authored school's
+                              // own, so it must key off that flag, not the index.
         rooms.unshift({ id: "trophy", label: "THE TROPHY CASE", kind: "reflect" });
         rooms.splice(2, 0, { id: "lib-loop", label: "THE LIBRARY -- READING NOOK", kind: "flavor",
           text: "A ring of low shelves, walked all the way around. Nothing here but dust and the sense of being circled." });
@@ -907,7 +1141,10 @@ more than one reflective surface.
       read.textContent = `${p.flavor} On a desk in ${LEVELS[lvl].name}. ${p.stat} ${p.src} ${p.lessonTitle} ${p.lesson}`;
       collect(i); paintMap();
       if (state.found[lvl].every(Boolean) && LEVELS[lvl].doorLabel) {
-        setTimeout(() => { advanceLevel(); ROOMS = roomsFor(state.level); paintMap();
+        // 0905: public's single office level has no next LEVELS entry to advance into -- its door leads to
+        // the head office's desk instead, same as the WebGL path's door-crossing branch (frame() below).
+        if (MODE === "public") { setTimeout(() => enterHeadOffice(), 950); }
+        else setTimeout(() => { advanceLevel(); ROOMS = roomsFor(state.level); paintMap();
           read.textContent = `${LEVELS[state.level].name}. Through the door.`; }, 950);
       }
     }
@@ -1219,12 +1456,16 @@ more than one reflective surface.
           bbox: { x0: cx - 4.6, x1: cx + 7.7, z0: Math.min(near, far) - 0.2, z1: Math.max(near, far) + 0.2 }
         };
       }
-      const AREA_PALETTE = [
-        [0x6b4a1e, 0x2e5a52, 0x5a2e3a],   // FOOD SERVICE: dining floor (warm wood), server station (steel-green), walk-in (cold brick)
-        [0x30507a, 0x555560, 0x6a5a2e]    // THE OFFICE: mail room (office blue), cube farm (grey), copier alcove (brass)
-      ];
+      // 0905: palette selection is mode-aware now, not just an idx-1 offset -- public's office sits at idx 0
+      // (the generated layout, not the hand-authored school), where the old scheme assumed idx 0 always meant
+      // the hand-authored school and never looked up a palette for it at all.
+      function paletteFor(idx) {
+        if (MODE === "public") return [0xd8dde6, 0xdfe6df, 0xe9e3c8];   // bright office: pale blue-grey, pale sage, pale brass
+        const LIVE_PAL = [null, [0x6b3a8a, 0x1c6b5a, 0x8a5a1c], [0xb0203a, 0x203ab0, 0xb0a020]];   // idx0 is hand-authored, unused
+        return LIVE_PAL[idx];
+      }
       function genLevelAreas(lvl) {
-        const L = LEVELS[lvl], pal = AREA_PALETTE[lvl - 1];
+        const L = LEVELS[lvl], pal = paletteFor(lvl);
         return [{ cx: 8, s: 1 }, { cx: 22, s: -1 }, { cx: 36, s: 1 }].map((sp, i) =>
           genArea(sp.cx, sp.s, L.pages[i].door, i, L.furniture, pal[i]));
       }
@@ -1234,6 +1475,51 @@ more than one reflective surface.
          [8.9, -1.35, 17.4, 0.3], [38, -1.35, 17, 0.3]
         ].forEach(w => wallBox(...w));
         return 46;
+      }
+
+      // ---- 0905: "every hallway needs to get crazier and crazier as you go deeper" -- generic-school-wall-art
+      // made scary, canvas-drawn (no new asset dependency), density and warp scaling with `crazy` (1 or 2).
+      // Decorative planes only, no collideRects entry -- they hang flush on the corridor walls, never blocking.
+      function posterTexture(kind, crazyLvl) {
+        const c = document.createElement("canvas"); c.width = c.height = 220; const x = c.getContext("2d");
+        x.fillStyle = "#e9e2c8"; x.fillRect(0, 0, 220, 220); x.strokeStyle = "#2a2214"; x.lineWidth = 6; x.strokeRect(3, 3, 214, 214);
+        const drips = (bx, by, n, len) => { for (let i = 0; i < n; i++) { const dx = bx + (rnd() - .5) * 40;
+          x.strokeStyle = "rgba(40,20,50,.5)"; x.lineWidth = 3 + rnd() * 3; x.beginPath(); x.moveTo(dx, by);
+          x.bezierCurveTo(dx + (rnd() - .5) * 10, by + len * 0.5, dx + (rnd() - .5) * 14, by + len * 0.8, dx + (rnd() - .5) * 6, by + len); x.stroke(); } };
+        if (kind === "apple") {
+          x.fillStyle = "#b8203a"; x.beginPath();
+          x.moveTo(110, 60); x.bezierCurveTo(150, 50, 175, 90, 165, 130); x.bezierCurveTo(155, 175, 120, 190, 110, 190);
+          x.bezierCurveTo(100, 190, 65, 175, 55, 130); x.bezierCurveTo(45, 90, 70, 50, 110, 60); x.fill();
+          x.strokeStyle = "#3a2410"; x.lineWidth = 5; x.beginPath(); x.moveTo(110, 60); x.lineTo(112, 34); x.stroke();
+          drips(80, 150, 3 + crazyLvl * 3, 40 + crazyLvl * 30); drips(140, 155, 2 + crazyLvl * 3, 35 + crazyLvl * 30);
+          x.fillStyle = "#3a2214"; x.font = "italic 12px Georgia"; x.textAlign = "center"; x.fillText("EVERY BITE IS TRACKED", 110, 210);
+        } else if (kind === "ai") {
+          x.fillStyle = "#1c1a2a"; x.fillRect(20, 30, 180, 140);
+          const nodes = []; for (let i = 0; i < 8 + crazyLvl * 4; i++) nodes.push([40 + rnd() * 140, 45 + rnd() * 110]);
+          x.strokeStyle = "rgba(150,220,255,.55)"; x.lineWidth = 1.5;
+          nodes.forEach((n, i) => nodes.slice(i + 1).forEach(m => { if (rnd() < 0.35) { x.beginPath(); x.moveTo(n[0], n[1]); x.lineTo(m[0], m[1]); x.stroke(); } }));
+          nodes.forEach(n => { x.fillStyle = "#8fe0ff"; x.beginPath(); x.arc(n[0], n[1], 3 + rnd() * 2, 0, 7); x.fill(); });
+          drips(70, 170, 2 + crazyLvl * 3, 30 + crazyLvl * 25); drips(150, 168, 2 + crazyLvl * 2, 28 + crazyLvl * 22);
+          x.fillStyle = "#3a2214"; x.font = "900 16px Georgia"; x.textAlign = "center"; x.fillText("A.I.", 110, 200);
+        } else {
+          x.fillStyle = "#1e3524"; x.fillRect(16, 16, 188, 188);
+          const glyphs = ["∑", "∂", "π", "∞", "√", "Δ", "≈", "∫", "x²", "θ", "λ", "≡"];
+          x.fillStyle = "#e9e2c8"; x.textAlign = "center";
+          for (let i = 0; i < 22 + crazyLvl * 16; i++) {
+            x.save(); x.translate(30 + rnd() * 160, 30 + rnd() * 160); x.rotate((rnd() - .5) * (0.5 + crazyLvl * 0.4));
+            x.font = (10 + rnd() * 10) + "px Georgia"; x.fillText(glyphs[Math.floor(rnd() * glyphs.length)], 0, 0); x.restore();
+          }
+        }
+        const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+      }
+      function addSchoolPosters(doorX, crazyLvl) {
+        const kinds = ["apple", "ai", "formula"], count = crazyLvl * 4;
+        for (let i = 0; i < count; i++) {
+          const px = 4 + (i / count) * (doorX - 8), pz = i % 2 ? 1.34 : -1.34, ry = i % 2 ? Math.PI : 0;
+          const mesh = new THREE.Mesh(new THREE.PlaneGeometry(0.9, 0.9),
+            new THREE.MeshStandardMaterial({ map: posterTexture(kinds[i % 3], crazyLvl), roughness: 1, metalness: 0, side: THREE.DoubleSide }));
+          mesh.position.set(px, 1.5, pz); mesh.rotation.y = ry; levelGroup.add(mesh);
+        }
       }
 
       // ---- Round 2, section 1: a kid's school desk under every page. Extended (3.5) into a furniture
@@ -1288,17 +1574,28 @@ more than one reflective surface.
         if (ambientTimer) clearTimeout(ambientTimer);
         if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
 
+        // 0905: brightness is the office's own visual signature ("bright and still, but with CCTV" -- the
+        // client's own words) -- public mode's hemisphere and corridor lights run noticeably hotter than the
+        // school's. `crazy` (live only, 0-2) nudges the corridor lights toward an off colour as the levels get
+        // stranger, on top of the wall-art/monster-tempo escalation below.
+        const bright = MODE === "public";
+        const crazy = LEVELS[idx].crazy || 0;
         const floor = new THREE.Mesh(new THREE.PlaneGeometry(110, 50), floorMat.clone());
         floor.material.map = floor.material.map.clone(); floor.material.map.repeat.set(36, 16);
         floor.rotation.x = -Math.PI / 2; floor.position.set(20, 0, 0); levelGroup.add(floor);
-        const ceil = new THREE.Mesh(new THREE.PlaneGeometry(110, 50), ceilMat);
+        const ceil = new THREE.Mesh(new THREE.PlaneGeometry(110, 50), bright ? ceilMat.clone() : ceilMat);
+        if (bright) ceil.material.color.set(0xffffff);
         ceil.rotation.x = Math.PI / 2; ceil.position.set(20, 2.6, 0); levelGroup.add(ceil);
-        levelGroup.add(new THREE.HemisphereLight(0xfff6da, 0xbcd7ea, 1.05));
+        levelGroup.add(new THREE.HemisphereLight(bright ? 0xffffff : 0xfff6da, bright ? 0xe4ecf4 : 0xbcd7ea, bright ? 1.75 : 1.05));
 
-        DOOR_X = idx === 0 ? level0MainCorridor() : genMainCorridor();
-        for (let lx = 1; lx <= DOOR_X - 2; lx += 5) { const l = new THREE.PointLight(0xfff3d0, 0.55, 9); l.position.set(lx, 2.4, 0); levelGroup.add(l); }
+        const useHandAuthored = !!LEVELS[idx].handAuthored;
+        DOOR_X = useHandAuthored ? level0MainCorridor() : genMainCorridor();
+        const corridorLight = bright ? 0xffffff : (crazy >= 2 ? 0xd9b8ff : crazy >= 1 ? 0xe8d0ff : 0xfff3d0);
+        for (let lx = 1; lx <= DOOR_X - 2; lx += 5) { const l = new THREE.PointLight(corridorLight, bright ? 0.85 : 0.55, 9); l.position.set(lx, 2.4, 0); levelGroup.add(l); }
 
-        AREAS = idx === 0 ? level0Areas() : genLevelAreas(idx);
+        if (MODE === "live" && crazy > 0) addSchoolPosters(DOOR_X, crazy);
+
+        AREAS = useHandAuthored ? level0Areas() : genLevelAreas(idx);
         AREAS.forEach(a => { a.walls.forEach(w => wallBox(w[0], w[1], w[2], w[3], a.mat)); a.lights.forEach(([lx, lz]) => { const l = new THREE.PointLight(0xfff3d0, 0.5, 8); l.position.set(lx, 2.2, lz); levelGroup.add(l); }); });
 
         const pages = LEVELS[idx].pages;
@@ -1310,16 +1607,17 @@ more than one reflective surface.
           collideRects.push({ x0: a.pagePos[0] - 0.35, x1: a.pagePos[0] + 0.35, z0: a.pagePos[2] - 0.45, z1: a.pagePos[2] + 0.45 });
           return d;
         });
-        MAIN_ANCHORS = idx === 0
+        MAIN_ANCHORS = useHandAuthored
           ? [[2, 1], [2, -1], [6, 1], [6, -1], [10, 1], [10, -1], [14, 1], [14, -1], [18, 1], [18, -1], [22, 1], [22, -1], [24.5, 1], [24.5, -1]]
           : [[2, 1], [2, -1], [12, 1], [12, -1], [19, 1], [19, -1], [27, 1], [27, -1], [33, 1], [33, -1], [41, 1], [41, -1], [44.5, 1], [44.5, -1]];
 
-        // ---- the trophy case: level 1's own easter egg, so it only exists there (idx===0) -- a shallow
-        // glass front set into the south corridor wall, plus two matte trophy shapes behind it. x=5, well
-        // past the x=1 spawn point, so the reveal is something the player walks to and finds (Ian, review
+        // ---- the trophy case: live level 1's own easter egg (the hand-authored school), so it only exists
+        // there (useHandAuthored) -- public's office at idx 0 must NOT get it, only live's school does. A
+        // shallow glass front set into the south corridor wall, plus two matte trophy shapes behind it. x=5,
+        // well past the x=1 spawn point, so the reveal is something the player walks to and finds (Ian, review
         // 2026-08-31). Mounted at y=1.0, not adult wall height: a wall-height case at dog eye height needs a
         // look-up angle past both the FOV and the pitch clamp -- genuinely unreachable at any angle.
-        if (idx === 0) {
+        if (useHandAuthored) {
           const TROPHY_X = 5;
           trophyGlass = new THREE.Mesh(new THREE.PlaneGeometry(1.6, 1.6), glassMat);
           trophyGlass.position.set(TROPHY_X, 1.0, -1.18); levelGroup.add(trophyGlass);
@@ -1405,6 +1703,16 @@ more than one reflective surface.
       const creep = { active: false, watchedMs: 0 };
       const CREEP_SPEED = 0.45;   // walk speed is 2.5 -- any player who moves gets away
       let monsterVisibleAt = 0, monsterWasVisible = false;
+      // 0905: public mode's dialogue lines, picked and held for a few seconds at a time (see the frame loop).
+      const DEADLINE_LINES = [
+        "The Q3 numbers are due Thursday. Nobody has started them.",
+        "Did you get the memo about Friday? There wasn't one. There will be.",
+        "He needs that email forwarded. He will not say to who.",
+        "The deadline moved up again. It always moves up.",
+        "Someone has to own this by end of day. It is being decided who.",
+        "The meeting about the meeting starts in five minutes."
+      ];
+      let talkLine = "", talkPickedAt = 0;
       // the ONE capture routine both kill paths call (Ian's ruling: both live). Never touches state.found,
       // never calls save(), never re-fires MBS.form/unlock/wave -- only player position, staticIntensity and
       // the live meter component reset.
@@ -1423,7 +1731,10 @@ more than one reflective surface.
       }
       function scheduleAmbient() {
         const n = state.found[state.level].filter(Boolean).length;
-        const wait = Math.max(3000, 8500 - n * 2000) + rnd() * 2500;
+        // 0905: "every hallway needs to get crazier" also means the monster gets bolder, deeper in -- shorter
+        // waits and quicker haunts as `crazy` climbs (live only; crazy is 0 for public and live's own level 0).
+        const crazyLvl = LEVELS[state.level].crazy || 0;
+        const wait = Math.max(1800, (8500 - n * 2000) - crazyLvl * 1800) + rnd() * 2500;
         ambientTimer = setTimeout(() => {
           if (cc.dataset.view === "hunt" && !ghost.active && !creep.active && !caught) {
             // Haunt anchors, authored per area (corridor centrelines, never inside a wall) -- replaces the
@@ -1435,7 +1746,7 @@ more than one reflective surface.
             const near = pool.filter(a => Math.hypot(a[0] - player.x, a[1] - player.z) > 1.6);   // keeps the "to" point clear of touch range on frame one
             const fromPool = far.length ? far : pool, toPool = near.length ? near : pool;
             const from = fromPool[Math.floor(rnd() * fromPool.length)], to = toPool[Math.floor(rnd() * toPool.length)];
-            haunt(new THREE.Vector3(from[0], 0, from[1]), new THREE.Vector3(to[0], 0, to[1]), Math.max(2600, 4600 - n * 500));
+            haunt(new THREE.Vector3(from[0], 0, from[1]), new THREE.Vector3(to[0], 0, to[1]), Math.max(1600, 4600 - n * 500 - crazyLvl * 900));
           }
           scheduleAmbient();
         }, wait);
@@ -1545,15 +1856,22 @@ more than one reflective surface.
       viewport.addEventListener("pointermove", e => lookMove(e.clientX, e.clientY));
       ["pointerup", "pointercancel", "pointerleave"].forEach(ev => viewport.addEventListener(ev, () => dragging = false));
 
-      // ---- joystick: its own getBoundingClientRect() plus the event only
+      // ---- 0905 (G2): "get rid of the drag feature ... it just needs to be based off of where the mouse is."
+      // This was a held/moved joystick that zeroed on release; it's tap-to-set now -- a tap or drag inside the
+      // ring sets a heading that PERSISTS after release, so the dog keeps walking without the pointer held
+      // down. Tapping the small dead zone at dead-centre stops him. Still its own getBoundingClientRect() plus
+      // the event only (see the file's own note on .channel's zoom:1.15 -- never clientWidth/offsetX here).
+      // A concrete tap mechanic, not just a relabelled drag: touch has no hover, so a full-viewport
+      // mouse-position control would leave 390px with nothing to move it at all (Codex C4).
       let joyVec = { x: 0, y: 0 }, joyId = null;
       joy.addEventListener("pointerdown", e => { joyId = e.pointerId; try { joy.setPointerCapture(e.pointerId); } catch {} updateJoy(e); e.stopPropagation(); });
       joy.addEventListener("pointermove", e => { if (e.pointerId === joyId) { updateJoy(e); e.stopPropagation(); } });
-      ["pointerup", "pointercancel"].forEach(ev => joy.addEventListener(ev, e => { if (e.pointerId === joyId) { joyId = null; joyVec = { x: 0, y: 0 }; joyNub.style.transform = ""; } }));
+      ["pointerup", "pointercancel"].forEach(ev => joy.addEventListener(ev, e => { if (e.pointerId === joyId) joyId = null; }));
       function updateJoy(e) {
         const r = joy.getBoundingClientRect();
         let dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
         const max = r.width / 2; const len = Math.hypot(dx, dy) || 1;
+        if (len < max * 0.22) { joyVec = { x: 0, y: 0 }; joyNub.style.transform = ""; return; }   // centre tap: stop
         if (len > max) { dx = dx / len * max; dy = dy / len * max; }
         joyNub.style.transform = `translate(${dx}px, ${dy}px)`;
         joyVec = { x: dx / max, y: dy / max };
@@ -1647,7 +1965,6 @@ more than one reflective surface.
             promptEl.classList.add("show");
           }
         });
-        if (!anyPrompt) promptEl.classList.remove("show");
 
         // trophy case reflection: pinned to the glass's own projected screen position every frame, like the
         // page sprites, so it sits ON the case rather than parked in a screen corner. Shows only when near it
@@ -1682,7 +1999,10 @@ more than one reflective surface.
         }
         if (doorOpen && !transitioning && player.x > DOOR_X - 0.4) {
           transitioning = true;
-          setTimeout(() => { advanceLevel(); buildLevel(state.level); buildLevelTail(state.level); repaintAll(); paintLeaf4(); goTo(0); transitioning = false; }, 250);
+          // 0905: public's door doesn't lead to a fourth level (LEVELS_PUBLIC has exactly one entry) -- it
+          // leads to the head office's desk instead. See enterHeadOffice(), defined with the desk-terminal UI.
+          if (MODE === "public") setTimeout(() => { enterHeadOffice(); transitioning = false; }, 250);
+          else setTimeout(() => { advanceLevel(); buildLevel(state.level); buildLevelTail(state.level); repaintAll(); paintLeaf4(); goTo(0); transitioning = false; }, 250);
         }
 
         // monster: slides while off-frame or at the edge, holds still when watched dead-on (locked canon --
@@ -1728,10 +2048,19 @@ more than one reflective surface.
             monster.lookAt(player.x, monster.position.y, player.z);
           }
           // touch-range kill: visible at least 600ms (no spawn-kills), close enough -- he can take you from
-          // behind, whether or not you're facing him. Static-maxout kill is the other path, below.
-          if (!caught && !cc.hasAttribute("data-reading") && (now - monsterVisibleAt) >= 600 && monsterDist < 1.1) doCapture();
+          // behind, whether or not you're facing him. Static-maxout kill is the other path, below. LIVE ONLY --
+          // "the suited figure does NOT kill you" in public mode is the one behaviour difference the mode makes.
+          if (MODE === "live" && !caught && !cc.hasAttribute("data-reading") && (now - monsterVisibleAt) >= 600 && monsterDist < 1.1) doCapture();
         }
         monsterWasVisible = monster.visible;
+
+        // 0905: public mode's obstacle talks instead of killing -- a random deadline line while he's in range,
+        // refreshed every few seconds rather than every frame so it reads as speech, not a flicker.
+        if (MODE === "public" && monster.visible && monsterDist < 3.4) {
+          if (!talkLine || now - talkPickedAt > 4500) { talkLine = DEADLINE_LINES[Math.floor(rnd() * DEADLINE_LINES.length)]; talkPickedAt = now; }
+          anyPrompt = true; promptEl.textContent = talkLine; promptEl.classList.add("show");
+        }
+        if (!anyPrompt) promptEl.classList.remove("show");
 
         // static proximity effect: ramps faster watched dead-on than seen at the edge, decays once he's
         // off-frame or far. Escalates with pages found. Distinct from the ambient Rung 3 grain: it also
@@ -1762,8 +2091,8 @@ more than one reflective surface.
 
           // static-maxout: the other kill path (both live, Ian's ruling). Shares the one capture routine
           // with the touch-range path above -- doCapture() never touches state.found, never calls save(),
-          // never re-fires MBS.form/unlock/wave.
-          if (!caught && !cc.hasAttribute("data-reading") && staticIntensity >= 0.99) doCapture();
+          // never re-fires MBS.form/unlock/wave. LIVE ONLY, same as the touch-range path above.
+          if (MODE === "live" && !caught && !cc.hasAttribute("data-reading") && staticIntensity >= 0.99) doCapture();
         }
 
         renderer.render(scene, camera);

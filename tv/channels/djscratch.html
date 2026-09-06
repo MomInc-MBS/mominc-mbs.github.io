@@ -1,12 +1,13 @@
 <!--
 THESIS: DJ Scratch's page is the one that is openly an advertisement, because she is openly the product. It is MOM Inc.'s late-night infomercial for THE HAND: a severed autonomous hand sold as an appliance, in MOM's warm repeat-of-three voice, with the hand's own signal skipping through underneath.
 OWN-WORLD: A 90s late-night infomercial. Loud cream-and-purple gradient, gold starbursts, "AS SEEN ON MOM," bubbly drop-shadowed Bowlby type, a strikethrough price and three easy payments, sparkles. Under the gloss, a purple-on-black transmission where the real signal (the Music Desk, the nail-tech shoutout, an unsigned track) leaks out.
-STORY: The visitor is sold a hand. Everything is warm, everything comes in threes, everything is a little wrong. Then they scratch the record three times, the ad skips, and the hand spells HELP.
-INTERACTABLE (unlock node): the turntable. Scratch the record three times (the repeat of three). On the third, the gloss glitches, the record skips out HELP, the orange wave fires, and DJ Scratch's node banks; 3s later the purple restore wave puts PARTY MODE back on the tuner. Shared: window.MBS.wave({after, restore}), window.MBS.unlock("djscratch"), window.MBS.meter().
+STORY: The visitor is sold a hand. Everything is warm, everything comes in threes, everything is a little wrong. The record still spins and can still be scratched for feel, but the payoff is now earned on a full control rack: knobs, sliders and a power switch, each with a number, played as a slow colour-following game. Complete it and the ad skips, the hand spells HELP.
+INTERACTABLE (unlock node): the control rack. BASS/TREBLE knobs, VOLUME/TEMPO sliders and a POWER switch, each tap-to-set from pointer POSITION (never drag - a single tap sets the value at that position, matching the client's "based off of where the mouse is"), each wired to a real synthesised beat (Web Audio: shelf filters, a gain node, an analyser feeding the ON AIR visualiser on the right, hitting on the kick accents). Power on, then follow the lamp of matching colour to its control, one at a time, slow and easy. On completion, breakThrough() fires exactly as before: the gloss glitches, the record skips out HELP, the orange wave fires, DJ Scratch's node banks, and 3s later the purple restore wave puts PARTY MODE back on the tuner. Scratching the hand is preserved for feel only and no longer gates anything - the increment that used to call breakThrough() at three scratches was removed and nothing else about scratch() changed. Shared: window.MBS.wave({after, restore}), window.MBS.unlock("djscratch"), window.MBS.meter().
+2026-09-05 addendum: the left column adds a DJ-name picker (three-part, Fuel's pattern reused per PLAN C2/Codex, leetspeak-transformed) and a live grade for the follow-game. A numeric LIVE CODE ENTRY, checked only by the deployed Supabase `redeem` ({mission_id, code}, response validated against game==="djscratch"), transforms the deck into a phonograph/tape-player combo with its own tuning dial. mission_id and the tuning station are read from data-mission-id/data-station on <html> (alongside the existing data-api the shim already reads) - registry fields the registry agent is wiring up; while empty this build renders the code box and the dial inert and claims nothing, per Codex C6/B5. MBS.mode is never used to gate any of this (Codex C6: ?mode=live is user-settable, a tone switch only).
 FORM: Ian's pin, 2026-08-25, "90s late-night infomercial." Inside the old television shell. Mobile-first.
 -->
 <style>
-  .dj{--pur:#7a2fc4; --pur-d:#4a1a86; --pur-dd:#2a0a44; --gold:#ffd36e; --gold-d:#c9992e; --cream:#fdf6e3; --ink:#1a1020; --hot:#ff2f7a; --sig:#39ff9a;
+  .dj{--pur:#7a2fc4; --pur-d:#4a1a86; --pur-dd:#2a0a44; --gold:#ffd36e; --gold-d:#c9992e; --cream:#fdf6e3; --ink:#1a1020; --hot:#ff2f7a; --sig:#39ff9a; --sky:#39c5ff;
       min-height:100%; margin:0; color:var(--ink); font-family:"Barlow Condensed", system-ui, sans-serif; position:relative;
       background:
         radial-gradient(120% 90% at 50% -10%, #fff7e6 0%, #ffe6b8 32%, #e9b6f0 66%, #b06fe0 100%);
@@ -179,6 +180,66 @@ FORM: Ian's pin, 2026-08-25, "90s late-night infomercial." Inside the old televi
   .dj .scratchmark i{width:16px; height:16px; border-radius:50%; background:#3a3247; box-shadow:inset 0 0 0 2px #000; transition:background .2s, box-shadow .2s}
   .dj .scratchmark i.on{background:var(--gold); box-shadow:0 0 10px var(--gold)}
 
+  /* THE CONTROL RACK: knobs, sliders and a switch that do exactly what they look like, and the
+     colour-following game played across them. Left column = identity + grade, right = ON AIR visual. */
+  .dj .deckgrid{display:grid; grid-template-columns:1fr; gap:14px; margin-top:14px; text-align:left}
+  @media (min-width:640px){ .dj .deckgrid{grid-template-columns:1fr 1.7fr 1fr; align-items:start} }
+  .dj .deckcol{display:flex; flex-direction:column; gap:10px; min-width:0}
+  .dj .deckcol.center{align-items:center; text-align:center}
+  .dj .djid,.dj .score,.dj .vizbox{background:rgba(0,0,0,.28); border:2px solid #000; border-radius:10px; padding:10px}
+  .dj .djid-label,.dj .score-label,.dj .viz-label{font-family:"Anton",sans-serif; color:var(--gold); letter-spacing:.08em; font-size:12px; margin:0 0 6px}
+  .dj .djid-picker{display:grid; gap:6px}
+  .dj .djid-picker select{font-family:"Barlow Condensed",sans-serif; font-weight:600; font-size:13px; padding:6px; border:2px solid var(--pur); border-radius:6px; background:#fff; color:var(--ink)}
+  .dj .djid-name{font-family:"VT323",monospace; color:var(--sig); font-size:19px; letter-spacing:.05em; margin:8px 0 0; word-break:break-word}
+  .dj .score-num{font-family:"Bowlby One SC",cursive; color:#fff; font-size:26px; margin:0}
+  .dj .score-num span{font-size:.5em; color:#c9b3e8}
+  .dj .score-grade{font-family:"Anton",sans-serif; color:var(--gold); font-size:13px; letter-spacing:.06em; margin:4px 0 0}
+  .dj .vizbox canvas{display:block; width:100%; height:120px; background:#0b0710; border-radius:6px; transition:box-shadow .1s}
+  .dj .vizbox canvas.hit{box-shadow:0 0 14px var(--gold)}
+  .dj .viz-note{font-family:"VT323",monospace; color:#8affc9; font-size:14px; margin:6px 0 0; text-align:center}
+  .dj .cuelights{display:flex; justify-content:center; gap:10px; margin:12px 0 4px}
+  .dj .lamp{width:16px; height:16px; border-radius:50%; background:#3a3247; box-shadow:inset 0 0 0 2px #000; transition:box-shadow .2s, background .2s}
+  .dj .lamp[data-key="bass"]{--c:var(--gold)} .dj .lamp[data-key="treble"]{--c:var(--hot)} .dj .lamp[data-key="volume"]{--c:var(--sig)} .dj .lamp[data-key="tempo"]{--c:var(--pur)}
+  .dj .lamp.on{background:var(--c); box-shadow:0 0 12px var(--c), inset 0 0 0 2px #000; animation:tw 1s ease-in-out infinite}
+  .dj .cuehint{font-family:"Anton",sans-serif; color:#d8c6f0; font-size:13px; letter-spacing:.03em; margin:0 0 10px; min-height:16px}
+  .dj .rack{display:grid; grid-template-columns:repeat(2,1fr); gap:16px 14px; width:100%; max-width:300px; margin:0 auto}
+  .dj .ctrl{display:flex; flex-direction:column; align-items:center; gap:5px}
+  .dj .ctrl-label{font-family:"Anton",sans-serif; font-size:12px; letter-spacing:.07em; color:var(--c); margin:0}
+  .dj .ctrl-num{font-family:"VT323",monospace; font-size:18px; color:#fff; background:#000; border-radius:4px; padding:0 8px; margin:0; min-width:1.6em; text-align:center}
+  .dj .ctrl.glow .ctrl-label{text-shadow:0 0 8px var(--c)}
+  .dj .knobface{position:relative; width:56px; height:56px; border-radius:50%; background:radial-gradient(circle at 35% 30%,#3a3247,#15121c 70%); box-shadow:0 0 0 3px #000, inset 0 0 0 2px var(--c), 0 4px 6px rgba(0,0,0,.5); touch-action:none; cursor:pointer}
+  .dj .knobneedle{position:absolute; left:50%; top:50%; width:3px; height:22px; background:var(--c); transform-origin:50% 0; transform:translate(-50%,0) rotate(0deg); border-radius:2px; pointer-events:none}
+  .dj .slidertrack{position:relative; width:34px; height:80px; border-radius:6px; background:linear-gradient(180deg,#15121c,#0a0810); box-shadow:0 0 0 3px #000, inset 0 0 0 2px var(--c); touch-action:none; cursor:pointer}
+  .dj .sliderthumb{position:absolute; left:2px; right:2px; height:12px; border-radius:4px; background:var(--c); bottom:44%; box-shadow:0 1px 3px rgba(0,0,0,.6); pointer-events:none}
+  .dj .switchbtn{width:56px; height:30px; border-radius:16px; border:2px solid #000; background:#15121c; position:relative; cursor:pointer; padding:0; box-shadow:inset 0 0 0 2px var(--c)}
+  .dj .switchbtn .switchknob{position:absolute; top:2px; left:2px; width:22px; height:22px; border-radius:50%; background:var(--c); transition:transform .15s ease}
+  .dj .switchbtn[aria-pressed="true"] .switchknob{transform:translateX(24px)}
+  .dj .codebox{background:#0c0715; border:2px solid var(--pur); border-radius:10px; padding:12px; margin:16px 0 0; text-align:center}
+  .dj .code-label{font-family:"Anton",sans-serif; color:var(--gold); font-size:13px; letter-spacing:.08em; margin:0 0 8px}
+  .dj .codeform{display:flex; gap:8px; justify-content:center; flex-wrap:wrap}
+  .dj .codeform input{font-family:"VT323",monospace; font-size:18px; width:130px; padding:8px; border-radius:6px; border:2px solid var(--pur); background:#160c22; color:var(--sig); letter-spacing:.1em; text-align:center}
+  .dj .codeform button{font-family:"Anton",sans-serif; letter-spacing:.06em; border:0; border-radius:6px; padding:8px 14px; background:var(--gold); color:var(--pur-dd); cursor:pointer}
+  .dj .codeform input:disabled,.dj .codeform button:disabled{opacity:.45; cursor:not-allowed}
+  .dj .code-note{font-size:12px; color:#c9b3e8; margin:8px 0 0; font-family:"Barlow Condensed",sans-serif}
+
+  /* THE PHONOGRAPH: what the deck becomes once a real code is redeemed. Replaces the turntable in place. */
+  .dj .deck.phono-on .tt,.dj .deck.phono-on .tuner,.dj .deck.phono-on .scratchmark,.dj .deck.phono-on .cuelights,.dj .deck.phono-on .cuehint,.dj .deck.phono-on .rack{display:none}
+  .dj .phono{display:none}
+  .dj .deck.phono-on .phono{display:block}
+  .dj .phono{margin:6px 0 0; padding:16px; border-radius:16px; text-align:center; width:100%;
+      background:linear-gradient(180deg,#6b4423,#3f2914); border:3px solid #241608; box-shadow:0 10px 22px rgba(0,0,0,.5), inset 0 2px 0 rgba(255,255,255,.08)}
+  .dj .phono-horn{width:min(60%,180px); margin:0 auto 10px; aspect-ratio:1/.8; border-radius:50% 50% 40% 40%/60% 60% 40% 40%;
+      background:linear-gradient(160deg,#f4d896,#c9992e 55%,#8a6318); box-shadow:0 6px 14px rgba(0,0,0,.5), inset 0 -6px 10px rgba(0,0,0,.25)}
+  .dj .phono-name{font-family:"Bowlby One SC",cursive; color:#f4d896; font-size:20px; margin:0 0 8px; text-shadow:2px 2px 0 rgba(0,0,0,.4)}
+  .dj .phono-controls{display:flex; justify-content:center; gap:8px; margin:10px 0; flex-wrap:wrap}
+  .dj .phono-btn{font-family:"Anton",sans-serif; font-size:12px; letter-spacing:.06em; color:#f4d896; background:#241608; border:2px solid #100a04; border-radius:6px; padding:8px 12px; cursor:pointer; box-shadow:0 3px 0 #100a04}
+  .dj .phono-btn:active{transform:translateY(2px); box-shadow:none}
+  .dj .phono-dial-wrap{margin:10px auto 0; width:100px; text-align:center}
+  .dj .phono-dial{width:90px; height:90px; margin:0 auto; border-radius:50%; background:radial-gradient(circle at 35% 30%,#e9c778,#8a6318 75%); box-shadow:0 0 0 3px #100a04, inset 0 0 0 2px #f4d896; position:relative; touch-action:none; cursor:pointer}
+  .dj .phono-dial .knobneedle{background:#241608}
+  .dj .phono-dial.inert{filter:grayscale(1) brightness(.7); pointer-events:none; cursor:default}
+  .dj .phono-station{font-family:"VT323",monospace; color:#f4d896; font-size:14px; margin:8px 0 0}
+
   /* footer */
   .dj .foot{text-align:center; padding:8px 4px 0; color:var(--pur-dd)}
   .dj .foot .stars{font-family:"Anton",sans-serif; color:var(--gold-d); font-size:clamp(13px,3.8vw,17px); margin:2px 0; letter-spacing:.02em}
@@ -192,7 +253,7 @@ FORM: Ian's pin, 2026-08-25, "90s late-night infomercial." Inside the old televi
   .dj.glitch{animation:glit .5s steps(2) 2}
   @keyframes glit{50%{filter:hue-rotate(40deg) saturate(1.5) contrast(1.2)}}
   @media (prefers-reduced-motion:reduce){
-    .dj .rays,.dj .hero img,.dj .burst,.dj .sparkle,.dj.glitch,.dj .deck.skip .tonearm{animation:none}
+    .dj .rays,.dj .hero img,.dj .burst,.dj .sparkle,.dj.glitch,.dj .deck.skip .tonearm,.dj .lamp.on{animation:none}
   }
   @media (min-width:760px){ .dj .wrap{max-width:720px; margin:0 auto} }
   @media (max-width:640px){ .dj .logobar{flex-direction:column; align-items:center; padding-left:0} .dj .logobar .name{order:1; text-align:center} .dj .logobar .badge{order:2; width:44%; margin-top:6px} .dj .logobar .burst{top:0} }   /* the logo moves under HELPING HAND on phones (Ian, 2026-08-26) */
@@ -261,36 +322,134 @@ FORM: Ian's pin, 2026-08-25, "90s late-night infomercial." Inside the old televi
         </form>
       </section>
 
-      <!-- THE TURNTABLE, PARTY MODE: the record spins forever; her nail is the needle; scratch it three times -->
+      <!-- THE TURNTABLE, PARTY MODE: the record spins forever, her nail is the needle, scratch it for feel.
+           The follow-game and the payoff now live on the control rack below (see script). -->
       <section class="deck" id="deck">
         <p class="feature">NOW FEATURING, <b>PARTY MODE</b></p>
-        <p class="hint" id="deckHint">The record never stops. <b>Scratch it, three times.</b></p>
-        <div class="tt">
-          <div class="platter" id="platter" aria-hidden="true"><div class="label"><span>THE<br>MUSIC<br>DESK</span></div></div>
-          <a class="customsign" href="#customize">CUSTOM HANDS<br>MADE HERE&nbsp;<span class="arrow">➜</span></a>
-          <div class="scratchhand" id="scratchHand" role="button" tabindex="0" aria-label="DJ Scratch's finger, its long gold nail on the record. Scratch it three times.">
-            <svg viewBox="0 0 130 210" aria-hidden="true">
-              <g transform="rotate(-30 65 105)">
-                <!-- the digit: a clean rounded finger -->
-                <rect x="45" y="16" width="36" height="126" rx="18" fill="#7a2fc4" stroke="#2a0a44" stroke-width="4"/>
-                <!-- soft length highlight -->
-                <rect x="52" y="26" width="9" height="104" rx="4.5" fill="#9a5fd0" opacity=".65"/>
-                <!-- knuckle creases -->
-                <path d="M46 84 h34" stroke="#2a0a44" stroke-width="2.4" fill="none" opacity=".32"/>
-                <path d="M48 110 h30" stroke="#2a0a44" stroke-width="2.2" fill="none" opacity=".26"/>
-                <!-- gold ring band with a gem -->
-                <rect x="40" y="50" width="46" height="16" rx="4" fill="#ffd36e" stroke="#c9992e" stroke-width="1.8"/>
-                <rect x="40" y="50" width="46" height="5" rx="2.5" fill="#fff3cf" opacity=".6"/>
-                <circle cx="63" cy="45" r="6.5" fill="#fff6da" stroke="#c9992e" stroke-width="1.8"/>
-                <!-- long gold stiletto nail = the needle -->
-                <path d="M47 140 Q63 137 79 140 L71 202 Q63 208 55 202 Z" fill="#ffd36e" stroke="#c9992e" stroke-width="2.6" stroke-linejoin="round"/>
-                <path d="M63 146 L63 196" stroke="#fff6da" stroke-width="2.2" opacity=".7"/>
-              </g>
-            </svg>
+        <p class="hint" id="deckHint">The record's still spinning. <b>Power up the deck, then follow the lights.</b></p>
+
+        <div class="deckgrid">
+          <div class="deckcol left">
+            <div class="djid">
+              <p class="djid-label">YOUR DJ NAME</p>
+              <div class="djid-picker">
+                <select id="djA" aria-label="First part of your DJ name">
+                  <option>DJ</option><option>MC</option><option>LIL</option><option>YUNG</option>
+                  <option>SIR</option><option>DOC</option><option>BIG</option><option>KID</option>
+                </select>
+                <select id="djB" aria-label="Second part of your DJ name">
+                  <option>SCRATCH</option><option>VINYL</option><option>BASS</option><option>TREBLE</option>
+                  <option>WAX</option><option>NEEDLE</option><option>FADER</option><option>ECHO</option>
+                  <option>LOOP</option><option>GROOVE</option><option>STATIC</option><option>DROP</option>
+                </select>
+                <select id="djC" aria-label="Third part of your DJ name">
+                  <option>3000</option><option>XL</option><option>JR</option><option>PRIME</option>
+                  <option>ZERO</option><option>ONE</option><option>X</option><option>247</option>
+                </select>
+              </div>
+              <p class="djid-name" id="djName">DJ SCR4TCH 3000</p>
+            </div>
+            <div class="score">
+              <p class="score-label">YOUR GRADE</p>
+              <p class="score-num" id="scoreNum">0<span>/4</span></p>
+              <p class="score-grade" id="scoreGrade">FLIP THE POWER</p>
+            </div>
+          </div>
+
+          <div class="deckcol center">
+            <div class="tt">
+              <div class="platter" id="platter" aria-hidden="true"><div class="label"><span>THE<br>MUSIC<br>DESK</span></div></div>
+              <a class="customsign" href="#customize">CUSTOM HANDS<br>MADE HERE&nbsp;<span class="arrow">➜</span></a>
+              <div class="scratchhand" id="scratchHand" role="button" tabindex="0" aria-label="DJ Scratch's finger, its long gold nail on the record. Scratch it for the feel of it.">
+                <svg viewBox="0 0 130 210" aria-hidden="true">
+                  <g transform="rotate(-30 65 105)">
+                    <!-- the digit: a clean rounded finger -->
+                    <rect x="45" y="16" width="36" height="126" rx="18" fill="#7a2fc4" stroke="#2a0a44" stroke-width="4"/>
+                    <!-- soft length highlight -->
+                    <rect x="52" y="26" width="9" height="104" rx="4.5" fill="#9a5fd0" opacity=".65"/>
+                    <!-- knuckle creases -->
+                    <path d="M46 84 h34" stroke="#2a0a44" stroke-width="2.4" fill="none" opacity=".32"/>
+                    <path d="M48 110 h30" stroke="#2a0a44" stroke-width="2.2" fill="none" opacity=".26"/>
+                    <!-- gold ring band with a gem -->
+                    <rect x="40" y="50" width="46" height="16" rx="4" fill="#ffd36e" stroke="#c9992e" stroke-width="1.8"/>
+                    <rect x="40" y="50" width="46" height="5" rx="2.5" fill="#fff3cf" opacity=".6"/>
+                    <circle cx="63" cy="45" r="6.5" fill="#fff6da" stroke="#c9992e" stroke-width="1.8"/>
+                    <!-- long gold stiletto nail = the needle -->
+                    <path d="M47 140 Q63 137 79 140 L71 202 Q63 208 55 202 Z" fill="#ffd36e" stroke="#c9992e" stroke-width="2.6" stroke-linejoin="round"/>
+                    <path d="M63 146 L63 196" stroke="#fff6da" stroke-width="2.2" opacity=".7"/>
+                  </g>
+                </svg>
+              </div>
+            </div>
+            <div class="tuner"><div class="tuner-glass"><div class="tuner-text" id="tunerText">★ PARTY MODE ★ PART TIME ★ NOW SPINNING ★ SATISFACTION GUARANTEED ★ PARTY MODE ★ PART TIME ★</div></div></div>
+            <div class="scratchmark" aria-hidden="true"><i id="s1"></i><i id="s2"></i><i id="s3"></i></div>
+
+            <div class="cuelights" id="cueLights" aria-hidden="true">
+              <i class="lamp" data-key="bass"></i><i class="lamp" data-key="treble"></i><i class="lamp" data-key="volume"></i><i class="lamp" data-key="tempo"></i>
+            </div>
+            <p class="cuehint" id="cueHint">Flip POWER, then follow the lit lamp to its control.</p>
+
+            <div class="rack" id="rack">
+              <div class="ctrl" data-key="bass" style="--c:var(--gold)">
+                <p class="ctrl-label">BASS</p>
+                <div class="knobface" data-key="bass"><div class="knobneedle"></div></div>
+                <p class="ctrl-num" id="numBass">5</p>
+              </div>
+              <div class="ctrl" data-key="treble" style="--c:var(--hot)">
+                <p class="ctrl-label">TREBLE</p>
+                <div class="knobface" data-key="treble"><div class="knobneedle"></div></div>
+                <p class="ctrl-num" id="numTreble">5</p>
+              </div>
+              <div class="ctrl" data-key="volume" style="--c:var(--sig)">
+                <p class="ctrl-label">VOLUME</p>
+                <div class="slidertrack" data-key="volume"><div class="sliderthumb"></div></div>
+                <p class="ctrl-num" id="numVolume">5</p>
+              </div>
+              <div class="ctrl" data-key="tempo" style="--c:var(--pur)">
+                <p class="ctrl-label">TEMPO</p>
+                <div class="slidertrack" data-key="tempo"><div class="sliderthumb"></div></div>
+                <p class="ctrl-num" id="numTempo">5</p>
+              </div>
+            </div>
+            <div class="ctrl" style="--c:var(--sky); margin-top:14px">
+              <p class="ctrl-label">POWER</p>
+              <button type="button" class="switchbtn" id="powerSwitch" aria-pressed="false" aria-label="Power switch"><span class="switchknob"></span></button>
+              <p class="ctrl-num" id="numPower">0</p>
+            </div>
+
+            <!-- THE PHONOGRAPH: what the deck becomes once a live code is redeemed by the server -->
+            <div class="phono" id="phono">
+              <div class="phono-horn" aria-hidden="true"></div>
+              <p class="phono-name">THE MUSIC DESK &middot; TAPE MODE</p>
+              <div class="phono-controls">
+                <button type="button" class="phono-btn phono-play">▸ PLAY</button>
+                <button type="button" class="phono-btn phono-stop">■ STOP</button>
+                <button type="button" class="phono-btn phono-rewind">◂◂ REWIND</button>
+              </div>
+              <div class="phono-dial-wrap">
+                <div class="phono-dial" id="phonoDial" data-key="phono"><div class="knobneedle"></div></div>
+                <p class="phono-station" id="phonoStation">NO STATION SET</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="deckcol right">
+            <div class="vizbox">
+              <p class="viz-label">ON AIR</p>
+              <canvas id="vizCanvas" width="140" height="120" aria-hidden="true"></canvas>
+              <p class="viz-note" id="vizNote">deck is off</p>
+            </div>
           </div>
         </div>
-        <div class="tuner"><div class="tuner-glass"><div class="tuner-text" id="tunerText">★ PARTY MODE ★ PART TIME ★ NOW SPINNING ★ SATISFACTION GUARANTEED ★ PARTY MODE ★ PART TIME ★</div></div></div>
-        <div class="scratchmark" aria-hidden="true"><i id="s1"></i><i id="s2"></i><i id="s3"></i></div>
+
+        <div class="codebox" id="codeBox">
+          <p class="code-label">LIVE CODE ENTRY</p>
+          <form id="codeForm" class="codeform">
+            <input id="codeInput" inputmode="numeric" pattern="[0-9]*" placeholder="CODE" autocomplete="off">
+            <button type="submit" id="codeSubmit">ENTER</button>
+          </form>
+          <p class="code-note" id="codeNote">Not armed for this broadcast yet. A code is only ever given out live.</p>
+        </div>
       </section>
 
       <section class="card customize" id="customize">
@@ -379,8 +538,8 @@ FORM: Ian's pin, 2026-08-25, "90s late-night infomercial." Inside the old televi
     setTimeout(() => { b.textContent = "THAT IS YOUR HAND. NOTHING WAS SENT AND NO FACTORY EXISTS."; }, 1500);
   });
 
-  // THE TURNTABLE, PARTY MODE. The record spins forever; scratching the hand halts it and jolts it back.
-  // Three scratches and the ad skips: the tuner drops PARTY MODE for her real message.
+  // THE TURNTABLE. The record spins forever; scratching the hand halts it and jolts it back.
+  // Kept for feel only (Ian: "the scratching is good") - it no longer gates anything. The rack below does.
   const deck = document.getElementById("deck"), platter = document.getElementById("platter");
   const hand = document.getElementById("scratchHand"), tuner = document.querySelector(".tuner"), tunerText = document.getElementById("tunerText");
   const marks = [document.getElementById("s1"), document.getElementById("s2"), document.getElementById("s3")];
@@ -409,7 +568,6 @@ FORM: Ian's pin, 2026-08-25, "90s late-night infomercial." Inside the old televi
     hand.classList.remove("jab"); void hand.offsetWidth; hand.classList.add("jab");
     scratches++;
     if (marks[scratches - 1]) marks[scratches - 1].classList.add("on");
-    if (scratches >= 3) setTimeout(breakThrough, 220);
   }
 
   function breakThrough() {
@@ -434,5 +592,275 @@ FORM: Ian's pin, 2026-08-25, "90s late-night infomercial." Inside the old televi
 
   hand.addEventListener("pointerdown", e => { e.preventDefault(); scratch(); });
   hand.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); scratch(); } });
+
+  // ---- YOUR DJ NAME: three fixed lists, concatenated (Fuel's picker pattern, fuel.html:313-327/382),
+  // then leetspeak-transformed ourselves - Fuel has no generator or transform to reuse (Codex B4).
+  const djA = document.getElementById("djA"), djB = document.getElementById("djB"), djC = document.getElementById("djC");
+  const djName = document.getElementById("djName");
+  const cap = s => s[0].toUpperCase() + s.slice(1);
+  function leetify(s) {
+    const map = { A: "4", E: "3", I: "1", O: "0", S: "5", T: "7" };
+    let out = "";
+    for (let i = 0; i < s.length; i++) {
+      const ch = s[i], up = ch.toUpperCase();
+      out += (map[up] && (s.charCodeAt(i) + i * 7) % 3 === 0) ? map[up] : ch;   // deterministic swap, not every eligible letter - reads "swished", not fully numeric
+    }
+    return out;
+  }
+  function updateDjName() { djName.textContent = leetify([djA.value, djB.value, djC.value].join(" ")); }
+  [djA, djB, djC].forEach(s => s.addEventListener("change", updateDjName));
+  updateDjName();
+
+  // ---- THE CONTROL RACK: BASS/TREBLE knobs, VOLUME/TEMPO sliders, POWER switch. Every value is set from
+  // pointer POSITION (rect + event only, per the zoom note) so a single tap works exactly like a drag would -
+  // no press-move-release gesture is required, so this is usable at 390px with one tap (Codex C4: no hover on touch).
+  const rack = document.getElementById("rack");
+  const state = { bass: 5, treble: 5, volume: 5, tempo: 5, power: 0 };
+  function setValue(key, val) {
+    val = Math.max(0, Math.min(10, val));
+    state[key] = val;
+    const num = document.getElementById("num" + cap(key));
+    if (num) num.textContent = val;
+    const knob = rack.querySelector(`.knobface[data-key="${key}"]`);
+    if (knob) {
+      const deg = (val / 10 * 270) - 135;
+      knob.querySelector(".knobneedle").style.transform = `translate(-50%,0) rotate(${deg}deg)`;
+      knob.setAttribute("aria-valuenow", val);
+    }
+    const track = rack.querySelector(`.slidertrack[data-key="${key}"]`);
+    if (track) {
+      track.querySelector(".sliderthumb").style.bottom = (val / 10 * 88) + "%";
+      track.setAttribute("aria-valuenow", val);
+    }
+    applyAudioParam(key, val);
+  }
+  rack.querySelectorAll(".knobface,.slidertrack").forEach(el => {
+    el.tabIndex = 0; el.setAttribute("role", "slider");
+    el.setAttribute("aria-valuemin", "0"); el.setAttribute("aria-valuemax", "10");
+    el.setAttribute("aria-label", cap(el.dataset.key));
+  });
+  rack.querySelectorAll(".knobface").forEach(face => {
+    const key = face.dataset.key;
+    const fromEvent = e => {
+      const r = face.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      let deg = Math.atan2(e.clientY - cy, e.clientX - cx) * 180 / Math.PI + 90;
+      if (deg > 180) deg -= 360;
+      return Math.round(((Math.max(-135, Math.min(135, deg))) + 135) / 270 * 10);
+    };
+    face.addEventListener("pointerdown", e => { e.preventDefault(); try { face.setPointerCapture(e.pointerId); } catch {} setValue(key, fromEvent(e)); registerTouch(key); });
+    face.addEventListener("pointermove", e => { if (e.buttons) setValue(key, fromEvent(e)); });
+  });
+  rack.querySelectorAll(".slidertrack").forEach(track => {
+    const key = track.dataset.key;
+    const fromEvent = e => {
+      const r = track.getBoundingClientRect();
+      const rel = Math.max(0, Math.min(1, (e.clientY - r.top) / r.height));
+      return Math.round((1 - rel) * 10);
+    };
+    track.addEventListener("pointerdown", e => { e.preventDefault(); try { track.setPointerCapture(e.pointerId); } catch {} setValue(key, fromEvent(e)); registerTouch(key); });
+    track.addEventListener("pointermove", e => { if (e.buttons) setValue(key, fromEvent(e)); });
+  });
+  rack.querySelectorAll(".knobface,.slidertrack").forEach(el => {
+    el.addEventListener("keydown", e => {
+      const key = el.dataset.key;
+      if (e.key === "ArrowUp" || e.key === "ArrowRight") { e.preventDefault(); setValue(key, state[key] + 1); registerTouch(key); }
+      else if (e.key === "ArrowDown" || e.key === "ArrowLeft") { e.preventDefault(); setValue(key, state[key] - 1); registerTouch(key); }
+    });
+  });
+  // ---- THE BEAT. Synthesised only (oscillators + noise), never a file. Feeds the visualiser and the follow-game's audio.
+  let actx = null, master = null, lowShelf = null, highShelf = null, analyser = null;
+  let bpm = 115, nextStepTime = 0, stepIdx = 0, schedTimer = null, vizRAF = null;
+  function ensureAudio() {
+    if (actx) return;
+    actx = new (window.AudioContext || window.webkitAudioContext)();
+    master = actx.createGain(); master.gain.value = 0.0001;
+    lowShelf = actx.createBiquadFilter(); lowShelf.type = "lowshelf"; lowShelf.frequency.value = 200;
+    highShelf = actx.createBiquadFilter(); highShelf.type = "highshelf"; highShelf.frequency.value = 3000;
+    analyser = actx.createAnalyser(); analyser.fftSize = 64;
+    lowShelf.connect(highShelf); highShelf.connect(master); master.connect(analyser); analyser.connect(actx.destination);
+  }
+  function playKick(t) {
+    const o = actx.createOscillator(), g = actx.createGain();
+    o.type = "sine"; o.frequency.setValueAtTime(120, t); o.frequency.exponentialRampToValueAtTime(40, t + 0.12);
+    g.gain.setValueAtTime(0.9, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
+    o.connect(g); g.connect(lowShelf); o.start(t); o.stop(t + 0.16);
+  }
+  function playHat(t) {
+    const n = Math.floor(actx.sampleRate * 0.05), buf = actx.createBuffer(1, n, actx.sampleRate), d = buf.getChannelData(0);
+    for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / n);
+    const src = actx.createBufferSource(); src.buffer = buf;
+    const g = actx.createGain(); g.gain.value = 0.22;
+    src.connect(g); g.connect(highShelf); src.start(t);
+  }
+  function applyAudioParam(key, val) {
+    if (!actx) return;
+    const t = actx.currentTime;
+    if (key === "bass") lowShelf.gain.setTargetAtTime((val - 5) * 3, t, 0.05);
+    if (key === "treble") highShelf.gain.setTargetAtTime((val - 5) * 3, t, 0.05);
+    if (key === "volume") master.gain.setTargetAtTime(state.power ? val / 10 * 0.5 : 0.0001, t, 0.05);
+    if (key === "tempo") bpm = 70 + val * 9;
+  }
+  ["bass", "treble", "volume", "tempo"].forEach(k => setValue(k, 5));   // sync needle/thumb art to the default numbers
+  const vizCanvas = document.getElementById("vizCanvas"), vizNote = document.getElementById("vizNote");
+  function scheduleStep() {
+    while (nextStepTime < actx.currentTime + 0.1) {
+      const accent = stepIdx % 4 === 0;
+      if (accent) { playKick(nextStepTime); flashViz(nextStepTime - actx.currentTime); }
+      else if (stepIdx % 2 === 1) playHat(nextStepTime);
+      stepIdx = (stepIdx + 1) % 8;
+      nextStepTime += (60 / bpm) / 2;
+    }
+  }
+  function flashViz(delaySec) { setTimeout(() => { vizCanvas.classList.add("hit"); setTimeout(() => vizCanvas.classList.remove("hit"), 120); }, Math.max(0, delaySec * 1000)); }
+  function startScheduler() {
+    if (schedTimer) return;
+    nextStepTime = actx.currentTime + 0.05; stepIdx = 0;
+    schedTimer = setInterval(() => { if (!dj.isConnected) return stopScheduler(); scheduleStep(); }, 25);
+  }
+  function stopScheduler() { clearInterval(schedTimer); schedTimer = null; }
+  function startViz() {
+    if (vizRAF) return;
+    const ctx2d = vizCanvas.getContext("2d"), data = new Uint8Array(analyser.frequencyBinCount);
+    const draw = () => {
+      if (!dj.isConnected) { vizRAF = null; return; }
+      analyser.getByteFrequencyData(data);
+      ctx2d.clearRect(0, 0, vizCanvas.width, vizCanvas.height);
+      const barW = vizCanvas.width / (data.length / 2);
+      for (let i = 0; i < data.length / 2; i++) {
+        const h = (data[i] / 255) * vizCanvas.height;
+        ctx2d.fillStyle = i % 2 ? "#ffd36e" : "#39ff9a";
+        ctx2d.fillRect(i * barW, vizCanvas.height - h, barW - 2, h);
+      }
+      vizRAF = requestAnimationFrame(draw);
+    };
+    vizRAF = requestAnimationFrame(draw);
+  }
+  function stopViz() { if (vizRAF) cancelAnimationFrame(vizRAF); vizRAF = null; vizCanvas.getContext("2d").clearRect(0, 0, vizCanvas.width, vizCanvas.height); }
+
+  // ---- THE COLOUR-FOLLOWING GAME: slow, easy, one lamp lit at a time. Follow it to the matching control.
+  // Completing it earns the exact same payoff three scratches used to (breakThrough(), unchanged below).
+  const SEQUENCE = ["bass", "treble", "volume", "tempo"];
+  const lamps = [...document.querySelectorAll("#cueLights .lamp")];
+  const cueHint = document.getElementById("cueHint");
+  const scoreNum = document.getElementById("scoreNum"), scoreGrade = document.getElementById("scoreGrade");
+  let seqIndex = 0, hits = 0, misses = 0, gameStarted = false, gameActive = false, gameDone = false;
+  function startGame() {
+    if (gameStarted) return;
+    gameStarted = true; gameActive = true; seqIndex = 0;
+    scoreGrade.textContent = "FOLLOW THE LIGHTS";
+    nextRound();
+  }
+  function nextRound() {
+    lamps.forEach(l => l.classList.remove("on"));
+    rack.querySelectorAll(".ctrl.glow").forEach(c => c.classList.remove("glow"));
+    if (seqIndex >= SEQUENCE.length) return finishGame();
+    const key = SEQUENCE[seqIndex];
+    const lamp = lamps.find(l => l.dataset.key === key);
+    if (lamp) lamp.classList.add("on");
+    const ctrl = rack.querySelector(`.ctrl[data-key="${key}"]`);
+    if (ctrl) ctrl.classList.add("glow");
+    cueHint.textContent = "follow the light — move the " + key.toUpperCase();
+  }
+  function registerTouch(key) {
+    if (!gameActive || gameDone) return;
+    if (key === SEQUENCE[seqIndex]) { hits++; seqIndex++; updateScore(); nextRound(); }
+    else { misses++; updateScore(); }
+  }
+  function updateScore() {
+    scoreNum.textContent = hits + "/" + SEQUENCE.length;
+    const total = hits + misses, pct = total ? Math.round(hits / total * 100) : 100;
+    if (!gameDone) scoreGrade.textContent = pct >= 90 ? "SHARP EAR" : pct >= 60 ? "KEEPING UP" : "KEEP LISTENING";
+  }
+  function finishGame() {
+    gameActive = false; gameDone = true;
+    cueHint.textContent = "the follow's done.";
+    const total = hits + misses, pct = total ? Math.round(hits / total * 100) : 100;
+    scoreGrade.textContent = pct >= 90 ? "A+ DJ" : pct >= 60 ? "B DJ" : "STILL A DJ";
+    setTimeout(breakThrough, 400);
+  }
+
+  // ---- POWER: turns on the beat + visualiser (first tap needs a gesture for AudioContext) and starts the game.
+  const powerBtn = document.getElementById("powerSwitch");
+  function togglePower(on) {
+    powerBtn.setAttribute("aria-pressed", on ? "true" : "false");
+    state.power = on ? 1 : 0;
+    document.getElementById("numPower").textContent = state.power;
+    if (on) {
+      ensureAudio(); actx.resume && actx.resume();
+      applyAudioParam("volume", state.volume);
+      startScheduler(); startViz();
+      vizNote.textContent = "deck is live"; startGame();
+    } else {
+      stopScheduler(); stopViz();
+      if (master) master.gain.setTargetAtTime(0.0001, actx.currentTime, 0.05);
+      vizNote.textContent = "deck is off";
+    }
+  }
+  powerBtn.addEventListener("click", () => togglePower(powerBtn.getAttribute("aria-pressed") !== "true"));
+  powerBtn.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); powerBtn.click(); } });
+
+  // ---- LIVE CODE ENTRY. Numeric, typed manually, checked ONLY by the deployed Supabase redeem endpoint
+  // ({mission_id, code} -> {game, bearer}), never compared locally. mission_id/API base come from
+  // data-mission-id / data-api on <html> - the registry agent is adding these empty (Codex C blocker 5),
+  // so while either is blank this stays inert and claims nothing. MBS.mode is never used to gate it (Codex C6).
+  const missionId = (document.documentElement.dataset.missionId || "").trim();
+  const apiBase = (document.documentElement.dataset.api || "").trim();
+  const codeArmed = !!(missionId && apiBase);
+  const codeForm = document.getElementById("codeForm"), codeInput = document.getElementById("codeInput");
+  const codeSubmit = document.getElementById("codeSubmit"), codeNote = document.getElementById("codeNote");
+  codeInput.disabled = !codeArmed; codeSubmit.disabled = !codeArmed;
+  if (codeArmed) codeNote.textContent = "Enter the code given live on stream.";
+  let bearer = null;   // memory only - never localStorage, never a URL (Part D)
+  codeForm.addEventListener("submit", e => {
+    e.preventDefault();
+    if (!codeArmed) return;                            // never accepted locally, whatever the input holds
+    const code = codeInput.value.trim();
+    if (!code) return;
+    codeSubmit.disabled = true; codeSubmit.textContent = "CHECKING…";
+    fetch(apiBase.replace(/\/$/, "") + "/redeem", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ mission_id: missionId, code })
+    }).then(r => r.json().then(j => ({ ok: r.ok, j })).catch(() => ({ ok: false, j: null })))
+      .then(({ ok, j }) => {
+        codeSubmit.disabled = false; codeSubmit.textContent = "ENTER";
+        if (ok && j && j.game === "djscratch") {
+          bearer = j.bearer || null;
+          codeNote.textContent = "CODE ACCEPTED.";
+          transformToPhono();
+        } else {
+          codeNote.textContent = "CODE NOT RECOGNIZED. TRY AGAIN.";
+        }
+      })
+      .catch(() => { codeSubmit.disabled = false; codeSubmit.textContent = "ENTER"; codeNote.textContent = "COULD NOT REACH THE DESK. TRY AGAIN."; });
+  });
+
+  // ---- THE PHONOGRAPH: what the whole record-player/turntable setup becomes once a code is redeemed.
+  // The tuning dial reads data-station on <html> - also empty until the registry agent wires it (Codex B5) -
+  // and stays visually inert and claims no station while it is.
+  const phono = document.getElementById("phono"), phonoDial = document.getElementById("phonoDial"), phonoStation = document.getElementById("phonoStation");
+  const station = (document.documentElement.dataset.station || "").trim();
+  if (!station) {
+    phonoDial.classList.add("inert"); phonoDial.setAttribute("aria-disabled", "true");
+    phonoStation.textContent = "NO STATION SET";
+  } else {
+    phonoStation.textContent = "TUNED TO " + station;
+    const needle = phonoDial.querySelector(".knobneedle");
+    const fromEvent = e => {
+      const r = phonoDial.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      let deg = Math.atan2(e.clientY - cy, e.clientX - cx) * 180 / Math.PI + 90;
+      if (deg > 180) deg -= 360;
+      return Math.max(-135, Math.min(135, deg));
+    };
+    phonoDial.addEventListener("pointerdown", e => { e.preventDefault(); try { phonoDial.setPointerCapture(e.pointerId); } catch {} needle.style.transform = `translate(-50%,0) rotate(${fromEvent(e)}deg)`; });
+    phonoDial.addEventListener("pointermove", e => { if (e.buttons) needle.style.transform = `translate(-50%,0) rotate(${fromEvent(e)}deg)`; });
+  }
+  phono.querySelector(".phono-play").addEventListener("click", () => { ensureAudio(); actx.resume && actx.resume(); state.power = 1; applyAudioParam("volume", state.volume); startScheduler(); startViz(); vizNote.textContent = "deck is live"; });
+  phono.querySelector(".phono-stop").addEventListener("click", () => { stopScheduler(); if (master) master.gain.setTargetAtTime(0.0001, actx.currentTime, 0.05); vizNote.textContent = "deck is off"; });
+  phono.querySelector(".phono-rewind").addEventListener("click", () => { stepIdx = 0; });
+  function transformToPhono() {
+    deck.classList.add("phono-on");
+    dj.classList.add("glitch");
+    if (window.MBS && window.MBS.wave) window.MBS.wave({ after: 800, restore: () => {} });
+  }
 })();
 </script>

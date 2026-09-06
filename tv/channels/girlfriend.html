@@ -3,12 +3,28 @@ THESIS: Dr Girlfriend is MOM Inc's manufacturing floor. The literacy-desk scient
 FORM (Ian, round 2, 2026-08-28): THE CAMERA DOES NOT MOVE. A conveyor belt in front of her carries the work past instead. The background is static and hung with MYR5 inspirational posters. This is the real answer to "the sites are being viewed on a tv set" and "plenty of websites that dont feel up and down" - a television is a fixed landscape window, so the frame holds still and the world moves through it. Scroll pushes the belt along; it never scrolls a page.
 FLOAT (Ian, 2026-08-28): everything on the line rides above the belt and bobs. Nothing sits rigidly on a surface.
 OWN-WORLD: Scuffed enamel, frosted glass, matte clay, cardboard, worn steel. Nothing glossy: every material is high-roughness and low-metalness, because the network is felt and papier-mache and a chrome showcase scene would read as somebody else's website.
-CANON - THE UNIT'S SHAPE, CORRECTED BY IAN 2026-08-28: MYR5 is the intact teardrop creature - tall rounded cone head, one big central eye, purple fur ruff at the jaw, tiny stubby arms, short legs, mostly head. **The broken-egg head is MYR5 AFTER HE EXPLODES, not his design.** This supersedes the 2026-08-27 note that read the broken egg as his standing head shape. What comes off this line is an intact MYR5.
-CANON - HER FRAMING: head above the frame in EVERY shot, old-kids-show style. Voice, hands, body, never the face. ROUND 3 (Ian): the overhead gloved hand is deleted - her own hands work the bench now, built into her torso, and the view is her torso only, shoulders to waist. Ian's read on why it works, 2026-08-28: the muted-trumpet "wah wah" of an adult talking in Peanuts is exactly what science-speak sounds like to most people, and never showing her face is the visual half of that same joke.
-STORY: Six tubes ride in, one per channel, each holding somebody's research. Pour them all into the pitcher and purple goo comes out. Mould the goo into an MYR5 unit, box it, and a drone takes it off the end of the line. She sets her goggles down as it goes. Put them on and the room tells you how the rest of the network opens.
+CANON - THE UNIT'S MATERIAL, ROUND 4 (Ian, 2026-09-05): MYR5 is no longer one procedurally-built shape. He
+ships as one of SIX real material stills - purple, darkstone, straw-wood, palestone, newsprint, blankpaper -
+cut from the morph clip with backgrounds removed (assets/myr5-*.png). Whichever tube is poured LAST decides
+which material the batch reveals as; each carries a definition, a random interim number under 5.0, and one
+downplayed crime (see the CREATURES table and showCreatureLabel() below). The 2026-08-28 teardrop-creature
+canon is superseded by this - there is no procedural geometry left to correct.
+CANON - SHE IS A STILL PHOTO, ROUND 4 (Ian, 2026-09-05): "she needs to be not animated at all... cut it and
+frame it right and blow it up." The round-3 puppet (torso/lapels/sleeves/writeArm) is deleted. She is now
+`assets/drgf-laughing-framed.png` - the reference footage's laughing beat, already cut, framed and scaled
+3x - standing in the set as one flat, untransformed image. This supersedes the round-3 "head above the
+frame" framing note below; there is no head, torso or hand left to frame.
+STORY: Six tubes ride in, one per channel, each holding a real, verified study. Pour them all into the
+pitcher and a differently-coloured goo comes out depending on the mix. Mould it into an MYR5 unit, box it,
+and a drone takes it off the end of the line. She sets her goggles down as it goes. Put them on and the
+room tells you how the rest of the network opens - but only once the stream is live; off-air they say to
+come back later and give nothing away (Codex C6: MBS.mode is a TONE switch, never an entitlement).
 INTERACTABLE: the pour chain (six tubes -> pitcher -> goo -> mould -> pack -> drone) and then the goggles, which are a HINT TOOL for the secrets gate, not a node of it. Deliberately partial nudges, never answers: a full answer key would trivialise the puzzle the exclusive-email reward is promised for. window.MBS.wave() fires on the drone launch. She does NOT call window.MBS.form or window.MBS.unlock - a seventh form site or sixth node would move the goalposts for anyone already mid-ARG.
 TECH: three.js r180 as an ES module via dynamic import() from a classic script. tv.js re-creates channel scripts with textContent only and drops attributes, so type="module" would throw here; dynamic import() sidesteps it and needs no shell change. Falls back to a readable flat page with no WebGL or no CDN.
-TODO(Ian): the six citation slots read "UNVERIFIED - no source on file" on purpose (2026-09-03 honest-commerce rule). Same rule as Coach Armie's plan builder - the comedy is ours, the science is real and is yours to supply. COMPUTA does not invent a study.
+CITATIONS, ROUND 4: the six placeholder "UNVERIFIED" cites are gone. Every one was checked by COMPUTA
+directly against its own source before shipping - see the comment above the TUBES array for the full
+reference list. Same honest-commerce rule as before: the comedy is ours, the science is real, and nothing
+here is invented.
 -->
 <style>
   .dg{--purple:#7a2fc4; --purple-dd:#1b0a2c; --gold:#ffd36e; --orange:#ff8a2a; --cream:#f4ecd8;
@@ -117,18 +133,20 @@ TODO(Ian): the six citation slots read "UNVERIFIED - no source on file" on purpo
       <div class="dg-vis" id="dgVis" role="dialog" aria-label="The goggles">
         <div class="dg-visin">
           <button type="button" id="dgVisX">Take them off</button>
-          <h2>KNOWLEDGE IS POWER</h2>
-          <p class="sub">Optical overlay &middot; property of MOM Inc &middot; do not remove from the floor</p>
-          <ul>
-            <li><b>DJ Scratch</b><span>The record repeats. So should you. It answers on the third, never the first.</span></li>
-            <li><b>Sag Sniffer</b><span>Seven of those doors are business. The eighth is dinner, and he is hungry.</span></li>
-            <li><b>Lil Boyfriend</b><span>He gets smaller the further down you go. At the bottom he is small enough to open.</span></li>
-            <li><b>Coach Armie</b><span>Stop reading and breathe with him. Hold it longer than feels sensible.</span></li>
-            <li><b>MBS Fuel</b><span>Nothing pours until every field has an opinion. Indifference is not an answer.</span></li>
-            <li class="none"><b>Cortisol Corgi</b><span>Nothing to solve here yet. She has not finished with him.</span></li>
-            <li class="none"><b>MOM Inc</b><span>Her own channel keeps score. It does not play.</span></li>
-          </ul>
-          <p class="foot">I am not going to click it for you. That is the difference between knowing a thing and being told it.</p>
+          <div id="dgVisBody">
+            <h2>KNOWLEDGE IS POWER</h2>
+            <p class="sub">Optical overlay &middot; property of MOM Inc &middot; do not remove from the floor</p>
+            <ul>
+              <li><b>DJ Scratch</b><span>The record repeats. So should you. It answers on the third, never the first.</span></li>
+              <li><b>Sag Sniffer</b><span>Seven of those doors are business. The eighth is dinner, and he is hungry.</span></li>
+              <li><b>Lil Boyfriend</b><span>He gets smaller the further down you go. At the bottom he is small enough to open.</span></li>
+              <li><b>Coach Armie</b><span>Stop reading and breathe with him. Hold it longer than feels sensible.</span></li>
+              <li><b>MBS Fuel</b><span>Nothing pours until every field has an opinion. Indifference is not an answer.</span></li>
+              <li class="none"><b>Cortisol Corgi</b><span>Nothing to solve here yet. She has not finished with him.</span></li>
+              <li class="none"><b>MOM Inc</b><span>Her own channel keeps score. It does not play.</span></li>
+            </ul>
+            <p class="foot">I am not going to click it for you. That is the difference between knowing a thing and being told it.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -139,13 +157,12 @@ TODO(Ian): the six citation slots read "UNVERIFIED - no source on file" on purpo
     <p>This room needs a browser that can draw rooms. Here is what runs down the line instead.</p>
     <ol>
       <li>Six tubes ride in on the belt. Each holds research belonging to one of the other channels: robotics for DJ Scratch, canine nutrition for Sag Sniffer, chronic stress for Cortisol Corgi, small-space living for Lil Boyfriend, training load for Coach Armie, stimulants for MBS Fuel.</li>
-      <li>A pitcher. Every tube goes in.</li>
-      <li>Purple goo comes out. It is the same goo as everywhere else on this network.</li>
-      <li>The goo is poured into a mould. It closes, holds, and opens on a formed unit.</li>
+      <li>A pitcher. Every tube goes in, and the mix comes out a different colour depending on the order.</li>
+      <li>The goo is poured into a mould. It closes, holds, and opens on a formed unit - one of six real MYR5 materials, decided by whichever tube went in last: purple, darkstone, straw-wood, palestone, newsprint, or blankpaper. Each one gets a definition, an interim number under 5.0, and one downplayed crime.</li>
       <li>The unit is boxed.</li>
       <li>A drone takes the box off the end of the line. She sets her goggles down as it goes.</li>
     </ol>
-    <p>She never invents a study. Neither does anyone else here.</p>
+    <p>She never invents a study. Neither does anyone else here - every citation on this line was checked against its own source.</p>
   </div>
 </div>
 
@@ -171,6 +188,24 @@ TODO(Ian): the six citation slots read "UNVERIFIED - no source on file" on purpo
 
   const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  // THE GOGGLES ARE MODE-AWARE (round 4, Ian). MBS.mode is a TONE switch, never an entitlement (Codex C6) -
+  // ?mode=live is user-settable, so this only changes what the goggles SAY, never anything that could be
+  // mistaken for proof of a win. Off-air they give nothing away at all, on-air they keep the existing,
+  // deliberately partial hints. window.MBS.isLive is undefined in the embedded TV route until tv.js wires
+  // a mode through (out of this file's scope); it is genuinely set already by tv/mbs-shim.js on the
+  // standalone /play/ route via ?mode=live.
+  const LIVE = !!(window.MBS && window.MBS.isLive);
+  (function gogglesCopy() {
+    if (LIVE) return;                       // default markup already carries the live hints, leave it
+    const body = document.getElementById("dgVisBody");
+    if (!body) return;
+    body.innerHTML =
+      '<h2>COME BACK DURING THE STREAM</h2>' +
+      '<p class="sub">Optical overlay &middot; idle &middot; property of MOM Inc</p>' +
+      '<p class="foot">The lenses are fogged on purpose. Put them on once the broadcast is live and the ' +
+      'room tells you what it knows. Right now: nothing. That is not a malfunction.</p>';
+  })();
+
   // progress persists in the channel's OWN key (never the shell's five) - Ian's standing rule, and part of
   // tonight's brief. Only the MIX phase (pouring tubes) is saved: FORMING, BOXING, TAKEN and the drone are
   // one-shot animated beats that do not make sense to resume mid-flight, so a reload during those just
@@ -185,15 +220,32 @@ TODO(Ian): the six citation slots read "UNVERIFIED - no source on file" on purpo
 
   // Tubes are labelled by CHARACTER. Lazlo and Durpleton are the dogs' real names and stay out of this
   // entirely (Ian, 2026-08-28).
-  // TODO(Ian): every "cite" is a placeholder. Real, current, sourced, dated research goes here and nowhere
-  // else. Same rule as the plan builder: the comedy is ours, the science is yours. Nothing invented.
+  // CITATIONS (round 4, 2026-09-05): the TODO placeholders are gone. Each "cite" below was checked directly
+  // against its own source by COMPUTA before shipping - never invented, never a local model's unverified
+  // output. Full reference, one per tube, in the same order:
+  //   DJ Scratch     - Piazza, Grioli, Catalano & Bicchi, "A Century of Robotic Hands," Annual Review of
+  //                     Control, Robotics, and Autonomous Systems, vol. 2 (2019), pp. 1-32.
+  //   Sag Sniffer    - AAFCO Dog Food Nutrient Profiles: adult maintenance minimum 18% crude protein (dry
+  //                     matter basis). aafco.org (Model Bills & Regulations, Nutrient Profiles).
+  //   Cortisol Corgi - Gutierrez Nunez, Peixoto Rabelo, Subotic, Caruso & Knezevic, "Chronic Stress and
+  //                     Autoimmunity: The Role of HPA Axis and Cortisol Dysregulation," International
+  //                     Journal of Molecular Sciences (2025). PMC12563903.
+  //   Lil Boyfriend  - National Low Income Housing Coalition, Out of Reach 2025: $33.63/hr national Housing
+  //                     Wage for a modest two-bedroom rental. nlihc.org/oor.
+  //   Coach Armie    - Qin, Li & Chen, "Acute to chronic workload ratio (ACWR) for predicting sports injury
+  //                     risk: a systematic review and meta-analysis," BMC Sports Science, Medicine and
+  //                     Rehabilitation (2025): 0.8-1.3 is the lower-risk zone. PMC12487117.
+  //   MBS Fuel       - U.S. FDA: 400 mg/day is the general upper limit of caffeine not usually associated
+  //                     with negative effects in healthy adults. fda.gov, "Spilling the Beans."
+  // `variant` maps each tube to one of the six MYR5 material stills (assets/myr5-*.png, cut from the morph
+  // clip, background removed) - whichever tube is poured LAST decides which material the batch ships as.
   const TUBES = [
-    { who: "DJ Scratch",     topic: "Robotics and autonomous hands", cite: "UNVERIFIED - no source on file", col: 0xc46a2f },
-    { who: "Sag Sniffer",    topic: "Canine nutrition",              cite: "UNVERIFIED - no source on file", col: 0x8a9a3a },
-    { who: "Cortisol Corgi", topic: "Chronic stress",                cite: "UNVERIFIED - no source on file", col: 0xc4402f },
-    { who: "Lil Boyfriend",  topic: "Living in small spaces",        cite: "UNVERIFIED - no source on file", col: 0x3a7a9a },
-    { who: "Coach Armie",    topic: "Training load and recovery",    cite: "UNVERIFIED - no source on file", col: 0xb0872f },
-    { who: "MBS Fuel",       topic: "Stimulants and dosage",         cite: "UNVERIFIED - no source on file", col: 0x9a3a7a }
+    { who: "DJ Scratch",     topic: "Robotics and autonomous hands", cite: "Piazza et al. 2019, Ann Rev Control",     col: 0xc46a2f, variant: "darkstone" },
+    { who: "Sag Sniffer",    topic: "Canine nutrition",              cite: "AAFCO Dog Food Nutrient Profile",         col: 0x8a9a3a, variant: "straw-wood" },
+    { who: "Cortisol Corgi", topic: "Chronic stress",                cite: "Gutierrez Nunez et al. 2025, IJMS",       col: 0xc4402f, variant: "newsprint" },
+    { who: "Lil Boyfriend",  topic: "Living in small spaces",        cite: "NLIHC, Out of Reach 2025",                col: 0x3a7a9a, variant: "blankpaper" },
+    { who: "Coach Armie",    topic: "Training load and recovery",    cite: "Qin et al. 2025, BMC Sports Med Rehab",   col: 0xb0872f, variant: "palestone" },
+    { who: "MBS Fuel",       topic: "Stimulants and dosage",         cite: "FDA: 400mg/day caffeine ceiling",         col: 0x9a3a7a, variant: "purple" }
   ];
 
   // MOM Inc's motivational posters. Her voice: warm, total, and not on your side.
@@ -227,8 +279,6 @@ TODO(Ian): the six citation slots read "UNVERIFIED - no source on file" on purpo
       floor:  new THREE.MeshStandardMaterial({ color: 0x2c2040, roughness: 1.00, metalness: 0.00 }),
       enamel: new THREE.MeshStandardMaterial({ color: 0xf0e9d4, roughness: 1.00, metalness: 0.00 }),
       goo:    new THREE.MeshStandardMaterial({ color: 0x7a2fc4, roughness: 0.90, metalness: 0.00, emissive: 0x2a0a44, emissiveIntensity: 0.35 }),
-      skin:   new THREE.MeshStandardMaterial({ color: 0x8244c0, roughness: 1.00, metalness: 0.00 }),
-      fur:    new THREE.MeshStandardMaterial({ color: 0x9a63cf, roughness: 1.00, metalness: 0.00 }),
       card:   new THREE.MeshStandardMaterial({ color: 0xa8814f, roughness: 1.00, metalness: 0.00 }),
       gold:   new THREE.MeshStandardMaterial({ color: 0xe8c46a, roughness: 0.85, metalness: 0.10 }),
       drone:  new THREE.MeshStandardMaterial({ color: 0xece3cc, roughness: 1.00, metalness: 0.00 })
@@ -528,44 +578,51 @@ TODO(Ian): the six citation slots read "UNVERIFIED - no source on file" on purpo
     blob.position.set(WORK_X, BELT_Y + 0.66, 0.05); blob.castShadow = true; blob.visible = false;
     blob.userData.kind = "blob"; scene.add(blob);
 
-    // ---- MYR5, INTACT. Ian's correction 2026-08-28: he is the teardrop creature, mostly head, one big eye,
-    // fur ruff at the jaw, tiny arms, short legs. The broken-egg head is him AFTER he explodes.
+    // ---- MYR5, AS SIX MATERIALS. Round 4 (Ian): the creature is no longer built from primitives - it is
+    // one of six real stills cut from "MYR5 morph - clay to wood, stone, papermache, paper" with the
+    // background removed. Six variants, six tubes, mapping is exact: whichever tube gets poured LAST decides
+    // which material the batch ships as. Each carries a definition, a random interim number under 5.0 ("cuz
+    // that's the interim we're at"), and one horrific, corporately-downplayed crime, shown on `unitLabel`.
+    const CREATURES = {
+      "purple":     { file: "myr5-purple.png",     w: 357, h: 427, name: "MYR5 &middot; PURPLE",
+        def: "Our signature shade. Trusted by nobody, worn by everyone.",
+        crime: "Filed as a routine viscosity test. It absorbed the tester. HR is calling that retention." },
+      "darkstone":  { file: "myr5-darkstone.png",  w: 251, h: 432, name: "MYR5 &middot; DARKSTONE",
+        def: "Load-bearing. Approved for outdoor use and quiet suffering.",
+        crime: "Cracked twice in transit, both times over a different family's driveway. Warranty voided." },
+      "straw-wood": { file: "myr5-straw-wood.png", w: 339, h: 432, name: "MYR5 &middot; STRAW-WOOD",
+        def: "Warm to the touch. Smells faintly of a county fair that closed for a reason.",
+        crime: "Caught fire near a school bus stop. The claim called it ambient enrichment." },
+      "palestone":  { file: "myr5-palestone.png",  w: 346, h: 431, name: "MYR5 &middot; PALESTONE",
+        def: "Museum finish. Looks expensive, costs nothing, means less.",
+        crime: "Stood motionless in a lobby for six weeks before anyone noticed it wasn't decor." },
+      "newsprint":  { file: "myr5-newsprint.png",  w: 355, h: 438, name: "MYR5 &middot; NEWSPRINT",
+        def: "Prints yesterday's headlines, forever. It never learns a new one either.",
+        crime: "The ink is not food-grade. Forty units shipped to a daycare regardless." },
+      "blankpaper": { file: "myr5-blankpaper.png", w: 333, h: 430, name: "MYR5 &middot; BLANKPAPER",
+        def: "No print, no opinion, no complaints filed and none accepted.",
+        crime: "Missing from the shipping manifest a full year. Came back with a name and a mortgage." }
+    };
+    Object.keys(CREATURES).forEach(k => {
+      const c = CREATURES[k];
+      c.tex = loader.load("assets/" + c.file);
+      c.tex.colorSpace = THREE.SRGBColorSpace;
+    });
+
     const unit = new THREE.Group();
     unit.position.set(FORM_X, BELT_Y + 0.2, 0.05);
     unit.visible = false; unit.userData.kind = "unit"; scene.add(unit);
-    const prof = [];
-    for (let i = 0; i <= 20; i++) {
-      const t = i / 20;
-      const r = Math.sin(Math.pow(1 - t, 0.68) * Math.PI * 0.5) * 0.47;
-      prof.push(new THREE.Vector2(Math.max(0.004, r), t * 1.36));
+    const UNIT_H = 1.15;
+    const unitMat = new THREE.MeshStandardMaterial({ map: null, transparent: true, alphaTest: 0.15, roughness: 0.9, metalness: 0, side: 2 });
+    const unitMesh = new THREE.Mesh(new THREE.PlaneGeometry(UNIT_H, UNIT_H), unitMat);
+    unitMesh.castShadow = true; unit.add(unitMesh);
+    function setUnitVariant(key) {
+      const c = CREATURES[key] || CREATURES.purple;
+      unitMesh.geometry.dispose();
+      unitMesh.geometry = new THREE.PlaneGeometry(UNIT_H * (c.w / c.h), UNIT_H);
+      unitMesh.position.y = UNIT_H / 2;
+      unitMat.map = c.tex; unitMat.needsUpdate = true;
     }
-    const head = new THREE.Mesh(new THREE.LatheGeometry(prof, 30), M.skin);
-    head.position.y = 0.30; head.castShadow = true; unit.add(head);
-    const eye = new THREE.Mesh(new THREE.SphereGeometry(0.185, 20, 16),
-      new THREE.MeshStandardMaterial({ color: 0xf2ead2, roughness: 0.42 }));
-    eye.position.set(0, 0.85, 0.30); unit.add(eye);
-    const iris = new THREE.Mesh(new THREE.SphereGeometry(0.115, 18, 14),
-      new THREE.MeshStandardMaterial({ color: 0x6d4fae, roughness: 0.5 }));
-    iris.position.set(0, 0.85, 0.44); unit.add(iris);
-    const pupil = new THREE.Mesh(new THREE.SphereGeometry(0.058, 14, 12),
-      new THREE.MeshStandardMaterial({ color: 0x0a0510, roughness: 0.9 }));
-    pupil.position.set(0, 0.85, 0.50); unit.add(pupil);
-    const furGeo = new THREE.ConeGeometry(0.055, 0.3, 6);
-    for (let i = 0; i < 30; i++) {
-      const a = (i / 30) * Math.PI * 2;
-      const f = new THREE.Mesh(furGeo, M.fur);
-      f.position.set(Math.sin(a) * 0.44, 0.42 + Math.sin(i * 2.1) * 0.05, Math.cos(a) * 0.44);
-      f.rotation.set(Math.cos(a) * 0.9, 0, -Math.sin(a) * 0.9);
-      unit.add(f);
-    }
-    [-1, 1].forEach(s => {
-      const arm = new THREE.Mesh(new THREE.CylinderGeometry(0.042, 0.055, 0.26, 8), M.skin);
-      arm.position.set(s * 0.42, 0.52, 0.06); arm.rotation.z = s * 0.85; unit.add(arm);
-    });
-    [-0.15, 0.15].forEach(lx2 => {
-      const lg = new THREE.Mesh(new THREE.CylinderGeometry(0.075, 0.09, 0.2, 10), M.skin);
-      lg.position.set(lx2, 0.1, 0.02); lg.castShadow = true; unit.add(lg);
-    });
 
     // ---- the mould (FORMING station, new). Two jaw halves close over the blob, hold, and open on the
     // formed unit - the physical answer to "she needs a forming station instead of mixing and finishing
@@ -611,108 +668,37 @@ TODO(Ian): the six citation slots read "UNVERIFIED - no source on file" on purpo
     const strap = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.06, 0.03), M.drone);
     strap.position.set(0, 0, -0.06); goggles.add(strap);
 
-    // ---- Dr Girlfriend herself, seated behind the line, writing. Lofi-girl staging: a figure at work,
-    // looping forever, lit by one hanging lamp whose shade sits exactly where her face would be.
+    // ---- Dr Girlfriend herself. ROUND 4 (Ian): "she needs to be not animated at all... we can literally
+    // just take the reference video, cut her from the reference video and that laughing sequence and if we
+    // cut it and frame it right and blow it up in the right way, it'll look exactly the way I want." The
+    // round-3 puppet build (torso/lapels/sleeves/badge/writeArm) is gone. She is now the one still image
+    // `assets/drgf-laughing-framed.png` - already cut, framed and scaled 3x from the reference footage -
+    // standing in the set as a flat photo. Nothing below this point transforms per frame; that is the whole
+    // point.
     const HER_X = -0.15, HER_Z = -2.85;
     const her = new THREE.Group(); her.position.set(HER_X, 0, HER_Z); scene.add(her);
-    // everything of hers lives INSIDE this group in local coordinates, so one scale moves the lot together
-    // (desk, pad, lamp included) and she can be sized against the room without anything drifting apart.
-    // SHE IS A PUPPET NOW (Ian, round 3: "Dr needs to be an actual person not a paper"). Reference banked
-    // at Review\Dr Girlfriend Reference 0903\drgf-ref-01..10.png: a purple-and-gold pinstripe blazer, gold
-    // buttons, a breast pocket, a white DR DJ badge, pale paper-white hands. The chest is a real box - it
-    // has sides, which is the whole of "person, not paper" - the lapels are raised pieces that cast their
-    // own shadow onto it, and the sleeves are open tubes rather than a flat silhouette. `torso` and
-    // `writeArm` keep their names and their job (the idle sway, the scribble loop in frame() below) so
-    // nothing downstream has to change.
-    const chestTex = paperTexture(460, 640, "#6a27a8", { jag: 0, draw: (x, w, h) => {
-      const sw = w * 0.05;
-      x.fillStyle = "#e8c46a";
-      for (let sx = sw * 0.5; sx < w; sx += sw * 2) x.fillRect(sx, 0, sw * 0.4, h);
-      x.fillStyle = "#1b0a2c";
-      for (let bi = 0; bi < 3; bi++) { x.beginPath(); x.arc(w * 0.5, h * (0.32 + bi * 0.09), w * 0.015, 0, Math.PI * 2); x.fill(); }
-      x.strokeStyle = "rgba(20,10,30,.55)"; x.lineWidth = 3;
-      x.strokeRect(w * 0.6, h * 0.26, w * 0.2, h * 0.1);
-    } });
-    const chestSide = new THREE.MeshStandardMaterial({ color: 0x4a1c78, roughness: 1, metalness: 0 });
-    const chestFront = new THREE.MeshStandardMaterial({ map: chestTex, roughness: 0.96, metalness: 0 });
-    const torso = new THREE.Mesh(new THREE.BoxGeometry(1.5, 2.2, 0.16),
-      [chestSide, chestSide, chestSide, chestSide, chestFront, chestSide]);
-    torso.position.set(0, 1.5, 0.05); torso.castShadow = true; torso.receiveShadow = true; her.add(torso);
+    const DRGF_W = 1095, DRGF_H = 798;
+    const PLANE_H = 4.6, PLANE_W = PLANE_H * (DRGF_W / DRGF_H);
+    const drgfTex = loader.load("assets/drgf-laughing-framed.png");
+    drgfTex.colorSpace = THREE.SRGBColorSpace;
+    const heroPlane = new THREE.Mesh(new THREE.PlaneGeometry(PLANE_W, PLANE_H),
+      new THREE.MeshStandardMaterial({ map: drgfTex, roughness: 0.92, metalness: 0 }));
+    heroPlane.position.set(0, PLANE_H / 2 + 0.05, 0.05);
+    heroPlane.castShadow = true; heroPlane.receiveShadow = true; her.add(heroPlane);
 
-    // lapels: raised, angled pieces that throw a real shadow onto the chest below - not painted on. Kept
-    // below the lamp shade's open rim (y 2.14 local) so they read as her collar, not as clutter behind the
-    // shade that hides her face.
-    const lapelMat = new THREE.MeshStandardMaterial({ color: 0x6b2bab, roughness: 0.9, metalness: 0 });
-    [-1, 1].forEach(s => {
-      const lapel = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.75, 0.06), lapelMat);
-      lapel.position.set(s * 0.5, 1.95, 0.2); lapel.rotation.z = s * 0.35; lapel.rotation.x = -0.15;
-      lapel.castShadow = true; her.add(lapel);
-    });
-
-    // sleeves: open tubes (a hollow cylinder, not a flat silhouette), shoulder to hand. Shoulders sit clear
-    // of the lamp shade's cone (radius 0.66 at y 2.14) so they read as arms, not as shapes peeking out from
-    // behind the shade.
-    const sleeveMat = new THREE.MeshStandardMaterial({ color: 0x5a2296, roughness: 0.95, metalness: 0, side: 2 });
-    const handMat = new THREE.MeshStandardMaterial({ color: 0xf0e4d0, roughness: 0.7, metalness: 0 });
-    function sleeve(shoulder, hand) {
-      const dir = new THREE.Vector3().subVectors(hand, shoulder);
-      const tube = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.13, dir.length(), 12, 1, true), sleeveMat);
-      tube.position.copy(shoulder).lerp(hand, 0.5);
-      tube.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.clone().normalize());
-      tube.castShadow = true; her.add(tube);
-      const palm = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.14, 0.1), handMat);
-      palm.position.copy(hand); her.add(palm);
-    }
-    sleeve(new THREE.Vector3(0.75, 1.95, 0.12), new THREE.Vector3(0.42, 1.5, 0.32));
-    sleeve(new THREE.Vector3(-0.75, 1.95, 0.12), new THREE.Vector3(-0.55, 1.3, 0.22));
-
-    // the DR DJ badge, pinned proud of the fabric like the reference shows.
-    const badgeC = document.createElement("canvas"); badgeC.width = 220; badgeC.height = 90;
-    (() => { const x = badgeC.getContext("2d");
-      x.fillStyle = "#f4efe2"; x.fillRect(0, 0, 220, 90);
-      x.strokeStyle = "#1b0a2c"; x.lineWidth = 4; x.strokeRect(2, 2, 216, 86);
-      x.fillStyle = "#1b0a2c"; x.textAlign = "center"; x.font = "bold 42px Georgia, serif";
-      x.fillText("DR DJ", 110, 60);
-    })();
-    const badgeTex = new THREE.CanvasTexture(badgeC); badgeTex.colorSpace = THREE.SRGBColorSpace;
-    const drDj = new THREE.Mesh(new THREE.PlaneGeometry(0.34, 0.14),
-      new THREE.MeshStandardMaterial({ map: badgeTex, roughness: 0.85, metalness: 0 }));
-    // clear of the existing title plaque (x -0.43..0.15, y 1.61..1.83), the lapel above it (y 1.525..2.275)
-    // and the desk (y 1.255..1.345, whose world z sits closer to the camera than the chest, so anything at
-    // its height there is hidden behind it) - low right chest is the one open spot left.
-    drDj.position.set(0.55, 1.15, 0.2); drDj.castShadow = true; her.add(drDj);
-
-    const writeArm = new THREE.Group(); writeArm.position.set(0.42, 1.5, 0.32); her.add(writeArm);
-    const pen = new THREE.Mesh(new THREE.PlaneGeometry(0.32, 0.1),
-      new THREE.MeshStandardMaterial({ color: 0xe8c46a, roughness: 0.9, metalness: 0, transparent: true }));
-    pen.position.set(0, -0.14, 0.36); pen.rotation.z = 0.5; writeArm.add(pen);
-
-    const desk = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.09, 0.9), M.frame);
-    desk.position.set(0.1, 1.3, 0.75); desk.receiveShadow = true; her.add(desk);
-    const pad = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.03, 0.44),
-      new THREE.MeshStandardMaterial({ color: 0xf1e9d6, roughness: 0.98 }));
-    pad.position.set(0.42, 1.36, 0.72); pad.rotation.y = -0.18; her.add(pad);
-    for (let li = 0; li < 5; li++) {
-      const ln = new THREE.Mesh(new THREE.BoxGeometry(0.4 - li * 0.03, 0.004, 0.012),
-        new THREE.MeshStandardMaterial({ color: 0x3a2f46, roughness: 1 }));
-      ln.position.set(0.4, 1.378, 0.63 + li * 0.04); ln.rotation.y = -0.18; her.add(ln);
-    }
-
-    // THE LAMP THAT COVERS HER FACE (Ian, 2026-08-28). Hung directly above her with the shade sitting exactly
-    // where her face would be. This is the in-world REASON her face is never seen, rather than the camera
-    // simply cropping it out - and it is the lofi-girl staging he asked for: one worker, one lamp, endless work.
+    // the lamp stays as set dressing - it lights the frame, it no longer needs to hide a face - moved beside
+    // the photo instead of over it so it never covers her.
+    const lampX = PLANE_W / 2 + 0.75;
     const herCord = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 2.4, 6), M.frame);
-    herCord.position.set(0, 3.75, 0.06); her.add(herCord);
+    herCord.position.set(lampX, 5.4, 0.3); her.add(herCord);
     const herShade = new THREE.Mesh(new THREE.ConeGeometry(0.66, 0.52, 24, 1, true), M.enamel);
-    herShade.position.set(0, 2.4, 0.06); herShade.castShadow = true; her.add(herShade);
+    herShade.position.set(lampX, 4.05, 0.3); herShade.castShadow = true; her.add(herShade);
     const herBulb = new THREE.Mesh(new THREE.SphereGeometry(0.08, 10, 8),
       new THREE.MeshStandardMaterial({ color: 0xffe6bc, emissive: 0xffd9a0, emissiveIntensity: 1.7, roughness: 1 }));
-    herBulb.position.set(0, 2.24, 0.06); her.add(herBulb);
-    const herPool = new THREE.PointLight(0xffdca8, 1.15, 5); herPool.position.set(0, 2.05, 0.3); her.add(herPool);
+    herBulb.position.set(lampX, 3.89, 0.3); her.add(herBulb);
+    const herPool = new THREE.PointLight(0xffdca8, 1.15, 5); herPool.position.set(lampX, 3.7, 0.55); her.add(herPool);
 
-    // her NAME BADGE carries the channel title. Ian, 2026-08-28: "she needs to take up the hole page the
-    // title on her name baddge" - so the floating HTML plate is gone and the title is pinned to her coat,
-    // which is where a title belongs on a person who works somewhere.
+    // her NAME BADGE carries the channel title, standing at the base of the frame like a museum placard.
     (function badge() {
       const c = document.createElement("canvas"); c.width = 512; c.height = 200;
       const x = c.getContext("2d");
@@ -728,16 +714,14 @@ TODO(Ian): the six citation slots read "UNVERIFIED - no source on file" on purpo
       tex.colorSpace = THREE.SRGBColorSpace;
       const b = new THREE.Mesh(new THREE.PlaneGeometry(0.58, 0.227),
         new THREE.MeshStandardMaterial({ map: tex, roughness: 0.9, metalness: 0.0 }));
-      b.position.set(-0.14, 1.72, 0.29); b.rotation.set(-0.12, 0.06, 0.04);
+      b.position.set(-PLANE_W / 2 + 1.05, 0.3, 0.15); b.rotation.set(-0.05, 0, 0.02);
       her.add(b);
     })();
 
-    const herShadow = contactShadow(1.3, 0.9); herShadow.position.set(0, 0.005, 0.5); her.add(herShadow);
-
-    her.scale.setScalar(2.35);          // she takes the page: the room is hers, the line just runs past her
+    const herShadow = contactShadow(PLANE_W * 0.55, 1.0); herShadow.position.set(0, 0.005, 0.9); her.add(herShadow);
 
     // ---- her gloved hand at the line is deleted (Ian, round 3: "the hands that come down are un
-    // necessary"). Her own hands work the bench now - built into `her`, above (the sleeves and palms).
+    // necessary"), and as of round 4 there is no hand at all - she is a photograph, not a worker.
 
     // ---- labels, projected onto the objects they name
     const labels = [];
@@ -755,6 +739,17 @@ TODO(Ian): the six citation slots read "UNVERIFIED - no source on file" on purpo
       rec.lift = 0.72 + (i % 2) * 0.66;      // stagger, or six side-by-side labels collide
       t.userData.label = rec;
     });
+
+    // the reveal label: "you are told what kind of alien it is." Empty until the first batch forms, and
+    // hidden by the visible-check below the rest of the time - never shows a blank card before then.
+    const unitLabel = label(unit, "", "", "");
+    unitLabel.lift = 1.25;
+    function showCreatureLabel(key) {
+      const c = CREATURES[key] || CREATURES.purple;
+      const interim = (Math.random() * 4.99).toFixed(2);       // "below 5.0, cuz that's the interim we're at"
+      unitLabel.el.innerHTML = "<s></s><b>" + c.name + " &middot; INTERIM " + interim + "</b>" +
+        "<i>" + c.def + "</i><u>" + c.crime + "</u>";
+    }
 
     // ---- the belt's own travel. Scroll pushes the LINE, never the page, and the camera never moves.
     let beltX = 0, beltTarget = 0, beltRun = 0;
@@ -827,15 +822,31 @@ TODO(Ian): the six citation slots read "UNVERIFIED - no source on file" on purpo
     //   exit: drone off frame -> goggles appear, phase="grab" (existing hint-tool mechanic, unchanged). not
     //   saved.
     // ---- the sequence
-    let poured = 0, phase = "pour";
-    // test/probe hook (round 3): exposes just enough to verify the four-station split and the puppet
-    // rebuild without needing pixel-perfect synthetic clicks on offscreen stations.
+    let poured = 0, phase = "pour", lastPouredIdx = -1;
+    // the mixing colour: "the way you mix it, it makes a different color blob." Recency-weighted so order
+    // matters - the last tube poured dominates the final hue, and also decides which of the six MYR5
+    // material stills gets revealed at FORM_X (see setUnitVariant/showCreatureLabel below).
+    const GOO_BASE_COLOR = 0x7a2fc4, GOO_BASE_EMISSIVE = 0x2a0a44;
+    const mixColor = new THREE.Color(GOO_BASE_COLOR);
+    function mixIn(idx) {
+      lastPouredIdx = idx;
+      mixColor.lerp(new THREE.Color(TUBES[idx].col), 0.55);
+      M.goo.color.copy(mixColor);
+      M.goo.emissive.copy(mixColor).multiplyScalar(0.4);
+    }
+    // test/probe hook (round 4): exposes just enough to verify the four-station split, that she is a static
+    // photo (no puppet, nothing rebuilt per frame), and which creature variant a batch shipped as.
     window.__dg = {
       get phase() { return phase; },
       get poured() { return poured; },
       stations: { WORK_X: WORK_X, FORM_X: FORM_X, BOX_X: BOX_X },
-      torsoIsBox: torso.geometry.type === "BoxGeometry",
-      jawsExist: !!(jawL && jawR)
+      jawsExist: !!(jawL && jawR),
+      heroIsStaticImage: heroPlane.material.map === drgfTex,
+      get lastVariant() { return lastPouredIdx >= 0 ? TUBES[lastPouredIdx].variant : null; },
+      // drives the sequence directly, so a probe never has to land a pixel-perfect synthetic click.
+      pour: i => pourTube(tubes[i]),
+      mould: () => mould(),
+      pack: () => pack()
     };
     (function restoreProgress() {
       const saved = loadProgress();
@@ -844,6 +855,7 @@ TODO(Ian): the six citation slots read "UNVERIFIED - no source on file" on purpo
         const g = tubes[idx];
         if (!g || g.userData.poured) return;
         g.userData.poured = true; poured++;
+        mixIn(idx);
         pips[idx].classList.add("on");
         g.userData.label.el.classList.add("spent");
         g.userData.liq.scale.y = 0.001;
@@ -862,6 +874,7 @@ TODO(Ian): the six citation slots read "UNVERIFIED - no source on file" on purpo
       g.userData.poured = true;
       poured++;
       saveProgress(tubes.filter(x => x.userData.poured).map(x => x.userData.idx));
+      mixIn(g.userData.idx);
       pips[g.userData.idx].classList.add("on");
       g.userData.label.el.classList.add("spent");
       unfloat(g);                                   // it is being worked now, it stops floating
@@ -925,11 +938,13 @@ TODO(Ian): the six citation slots read "UNVERIFIED - no source on file" on purpo
               jawR.position.x = FORM_X + 0.05 + ease(t) * 0.5;
             }, () => {
               jawL.visible = false; jawR.visible = false;
+              setUnitVariant(TUBES[lastPouredIdx].variant);      // whichever tube went in last decides the material
               unit.visible = true;
               unit.scale.setScalar(0.01);
               tween(700, t => unit.scale.setScalar(ease(t) * 0.92), () => {
                 floatIt(unit, unit.position.y, 0.05);
                 phase = "pack";
+                showCreatureLabel(TUBES[lastPouredIdx].variant);
                 say("One unit, intact. Box it.");
               });
             });
@@ -994,7 +1009,10 @@ TODO(Ian): the six citation slots read "UNVERIFIED - no source on file" on purpo
 
     function resetLine() {
       // put the line back exactly as it started. Nothing is remembered, which is the cost of missing.
-      poured = 0;
+      poured = 0; lastPouredIdx = -1;
+      mixColor.set(GOO_BASE_COLOR);
+      M.goo.color.set(GOO_BASE_COLOR); M.goo.emissive.set(GOO_BASE_EMISSIVE);
+      unitLabel.el.innerHTML = "";
       fill.visible = false; fill.scale.y = 0.001;
       gooGlow.intensity = 0;
       blob.visible = false; unfloat(blob);
@@ -1134,11 +1152,8 @@ TODO(Ian): the six citation slots read "UNVERIFIED - no source on file" on purpo
         if (m.material.opacity <= 0) { scene.remove(m); m.material.dispose(); puffs.splice(i, 1); }
       }
 
-      // she writes, forever. Small scribble on the forearm, a slow lean on the torso. No more paper-flip -
-      // she is a dimensional puppet now, and a box collapsing to a spine reads as broken, not as turning.
-      writeArm.rotation.z = Math.sin(now / 210) * 0.11;
-      writeArm.position.x = 0.42 + Math.sin(now / 340) * 0.05;
-      torso.rotation.z = Math.sin(now / 2600) * 0.02;
+      // she does not move. Round 4: no scribble, no lean, no per-frame transform on her at all - she is the
+      // still photo, full stop.
 
       if (drone.visible) props.forEach((p, i) => { p.rotation.y += (i % 2 ? 0.9 : -0.9); });
       if (blob.visible) blob.rotation.y += 0.004;
@@ -1150,7 +1165,9 @@ TODO(Ian): the six citation slots read "UNVERIFIED - no source on file" on purpo
         L.target.getWorldPosition(v);
         v.y += L.lift;
         v.project(camera);
-        const on = v.z < 1 && Math.abs(v.x) < 0.94;
+        // target.visible guards the reveal label: without it an empty card would float at FORM_X from the
+        // very first frame, before any batch has ever formed.
+        const on = L.target.visible !== false && v.z < 1 && Math.abs(v.x) < 0.94;
         L.el.classList.toggle("show", on);
         if (on) {
           // clamp inside the glass: on a 390px phone an un-clamped label runs off the right edge

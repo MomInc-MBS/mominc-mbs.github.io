@@ -63,6 +63,11 @@
     if (!selectors(roots) || !roots.length || !selectors(hide)) throw new Error("roots must be a non-empty list of selectors");
   } catch (e) { return fail(e.message || "bad roots"); }
 
+  // suppressed channels: this loader accepts any valid slug, so it is a second way into a
+  // fragment independently of tv.js. GOON's compiled bundle asks for card details and its
+  // replacement is not built yet (C081/C084), so the same guard applies here.
+  if (["goon"].includes(slug)) return fail("channel unavailable");
+
   fetch("channels/" + slug + ".html", { cache: "no-store" })
     .then(r => r.ok ? r.text() : Promise.reject(r.status))
     .then(htmlText => {

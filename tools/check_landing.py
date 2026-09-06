@@ -78,6 +78,11 @@ with sync_playwright() as pw:
 # configured, because a switch that is only ever tested in the off position is not known to work.
 REG = json.load(io.open(os.path.join(ROOT, "tv", "registry.json"), encoding="utf-8"))
 GAMES = {g["slug"]: g for g in REG["games"]}
+# sag and armie are coming_soon: no play route, no finish, no profile form, not a stop on the onward
+# cycle. Anywhere this file needs one representative playable route to probe, it picks the first of these
+# rather than a hard-coded slug, so it cannot go stale the next time a channel's status changes.
+PLAYABLE = [g for g in REG["games"] if g.get("status") != "coming_soon"]
+PROBE_SLUG = PLAYABLE[0]["slug"]
 
 print("== accent text is legible on every card, not just the ones with a bright accent")
 # This class of bug has bitten twice: the CTA (dark ink on Corgi's dark purple) and then every accent
@@ -176,7 +181,7 @@ for g in REG["games"]:
                                   ("  " + "; ".join(bad)) if bad else ""))
 
 print("== the onward route is a complete cycle, and every stop exists")
-order = sorted(REG["games"], key=lambda g: g["ch"])
+order = sorted(PLAYABLE, key=lambda g: g["ch"])
 hops, seen, cur = [], set(), order[0]["slug"]
 for _ in range(len(order)):
     hops.append(cur); seen.add(cur)
@@ -188,9 +193,9 @@ ok &= good
 print("  %s %d channels, cycle closes back to %s" % ("PASS" if good else "FAIL", len(seen), cur))
 
 print("== nothing unconfigured is claimed, and the switch works when it is configured")
-sag = io.open(os.path.join(ROOT, "games", "sag", "index.html"), encoding="utf-8").read()
-absent = [t for t in ('class="mission', 'id="remindBtn"', 'id="identityForm"', "Watch MBS live") if t in sag]
-present = "There is nowhere to send this, so nothing here asks" in sag
+probe = io.open(os.path.join(ROOT, "games", PROBE_SLUG, "index.html"), encoding="utf-8").read()
+absent = [t for t in ('class="mission', 'id="remindBtn"', 'id="identityForm"', "Watch MBS live") if t in probe]
+present = "There is nowhere to send this, so nothing here asks" in probe
 good = not absent and present
 ok &= good
 print("  %s off: no mission block, no reminder, no identity form%s; the honest note is shown=%s"
@@ -207,7 +212,7 @@ try:
                        "rules_url": "https://example.invalid/rules"})
     io.open(_reg_path, "w", encoding="utf-8", newline="\n").write(json.dumps(_r, indent=2, ensure_ascii=False) + "\n")
     subprocess.run([sys.executable, "gen.py"], cwd=GEN_DIR, capture_output=True)
-    live_html = io.open(os.path.join(ROOT, "games", "sag", "index.html"), encoding="utf-8").read()
+    live_html = io.open(os.path.join(ROOT, "games", PROBE_SLUG, "index.html"), encoding="utf-8").read()
     want = ('class="mission is-live"', "Live now", 'id="remindBtn"', "Watch MBS live",
             "published rules", 'data-live-at="2026-09-10')
     missing = [t for t in want if t not in live_html]
@@ -227,7 +232,7 @@ try:
     io.open(_reg_path, "w", encoding="utf-8", newline=chr(10)).write(
         json.dumps(_r2, indent=2, ensure_ascii=False) + chr(10))
     subprocess.run([sys.executable, "gen.py"], cwd=GEN_DIR, capture_output=True)
-    idh = io.open(os.path.join(ROOT, "games", "sag", "index.html"), encoding="utf-8").read()
+    idh = io.open(os.path.join(ROOT, "games", PROBE_SLUG, "index.html"), encoding="utf-8").read()
     # a verification form with no address field would post a channel choice and nothing else, which is
     # how the dormant version shipped; switching it on has to produce a form that can do its job
     want = ('id="identityForm"', 'name="address"', 'name="channel"', "Send verification code")
@@ -248,8 +253,8 @@ with sync_playwright() as pw:
     # private windows and blocked site data throw here; the card used to answer "Saved" anyway
     _pg.add_init_script("Object.defineProperty(Storage.prototype,'setItem',"
                         "{value:function(){throw new Error('blocked')}})")
-    _pg.goto(BASE + "/games/sag/", wait_until="load"); _pg.wait_for_timeout(350)
-    _pg.fill("#sag-q1", "probe")
+    _pg.goto(BASE + "/games/" + PROBE_SLUG + "/", wait_until="load"); _pg.wait_for_timeout(350)
+    _pg.fill("#%s-q1" % PROBE_SLUG, "probe")
     _pg.click("#profileForm button[type=submit]"); _pg.wait_for_timeout(250)
     said = _pg.inner_text("#profileSaved")
     good = "not letting" in said
@@ -261,7 +266,7 @@ with sync_playwright() as pw:
 print("== the profile keeps its promise: on this device, and gone when asked")
 with sync_playwright() as pw:
     b = pw.chromium.launch()
-    for g in REG["games"]:
+    for g in PLAYABLE:      # a coming_soon page carries no game and no profile form to make this promise
         slug = g["slug"]
         errs = []
         pg = b.new_page(viewport={"width": 390, "height": 844})

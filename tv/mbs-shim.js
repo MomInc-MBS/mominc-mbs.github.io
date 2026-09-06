@@ -5,8 +5,11 @@
    Same origin as /tv/, so localStorage progress is genuinely shared with the hub, not a second copy. */
 (() => {
   const LIFECYCLE_VERSION = 1;
-  const NODES = 5, ARMED_MS = 30000;
-  const FORM_SITES = ["lilboyfriend", "djscratch", "corgi", "sag", "fuel", "armie"];
+  // sag and armie are coming_soon (tv/registry.json) and ship no play route, so neither calls MBS.unlock or
+  // MBS.form any more - the reachable set is the four games that still do. Kept identical to tv.js's lists.
+  const ACTIVE_UNLOCK = ["lilboyfriend", "djscratch", "corgi", "fuel"];
+  const NODES = ACTIVE_UNLOCK.length, ARMED_MS = 30000;
+  const FORM_SITES = ["lilboyfriend", "djscratch", "corgi", "fuel"];
 
   const M = (window.MBS = window.MBS || {});
   M.MAIL = "ianmyersrocks97@gmail.com";
@@ -105,8 +108,15 @@
     }, opts.after ?? 1000));
   };
 
-  /* ---- the unlock nodes, shared with the hub through the same localStorage key. */
-  const readUnlock = () => readJSON("mbs-unlock", "[]");
+  /* ---- the unlock nodes, shared with the hub through the same localStorage key. Filtered against
+     ACTIVE_UNLOCK and rewritten on every read, so a stale sag/armie entry from before either channel went
+     coming_soon self-heals instead of permanently over- or under-counting a returning visitor's progress. */
+  const readUnlock = () => {
+    const raw = readJSON("mbs-unlock", "[]");
+    const active = raw.filter(x => ACTIVE_UNLOCK.includes(x));
+    if (active.length !== raw.length) writeJSON("mbs-unlock", active);
+    return active;
+  };
   M.unlock = (site) => {
     if (!site) return;
     const done = readUnlock();

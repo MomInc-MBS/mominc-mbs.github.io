@@ -12,7 +12,7 @@ The invariant that actually catches the bug needs no per-game formula. The games
 .channel's zoom:1.15 context, pre-divided by 1.15. offsetHeight is LAYOUT px; getBoundingClientRect() is
 VISUAL px. So visual/layout == 1.15 proves the zoom contract is reproduced, and == 1.00 is the round-1 bug.
 """
-import os, sys
+import html, io, json, os, re, sys
 from playwright.sync_api import sync_playwright
 
 # The gate serves the repo itself, on its own thread and its own port. It used to point at whatever
@@ -22,6 +22,8 @@ import functools, threading
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
+REG = json.load(io.open(os.path.join(ROOT, "tv", "registry.json"), encoding="utf-8"))
+ACTIVE_GAMES = [g for g in REG["games"] if g.get("status") != "coming_soon"]
 
 class _Quiet(SimpleHTTPRequestHandler):
     def log_message(self, *a): pass
@@ -30,19 +32,19 @@ _srv = ThreadingHTTPServer(("127.0.0.1", 0), functools.partial(_Quiet, directory
 threading.Thread(target=_srv.serve_forever, daemon=True).start()
 BASE = "http://127.0.0.1:%d" % _srv.server_address[1]
 VP = {"width": 390, "height": 844}
-ROOTS = {"goon":"#ggFrame", "lilboyfriend":"#lbStage", "sag":"#sgStage", "corgi":"#ccViewport",
-         "djscratch":"#deck", "girlfriend":"#dgTrack", "fuel":"#stageCard", "armie":"#gameWrap"}
+# sag and armie are coming_soon (no play route) and are gone from this dict. corgi's selector really is
+# #ccViewport, not registry.json's isolation root #cc: #ccViewport is the element corgi.html itself sizes
+# to visualTarget/1.15 (corgi.html:833,844), which is the one thing this check can measure; #cc is one
+# level up and exists for isolation (what stays visible), a different job. Neither is stale.
 
-# armie hides #gameWrap until its picker is satisfied (armie.html:1114,1135). A root that is not measured
-# is not a verdict, so the gate drives the real UI rather than skipping the game.
-ARMIE_UNLOCK = """()=>{
-  document.querySelector('#selStyles .styleCard').click();
-  document.querySelector('#selExp .lvl').click();
-  const s=document.getElementById('selSpecies');
-  if(!s.value){ s.value=[...s.options].map(o=>o.value).find(v=>v)||s.options[1].value; }
-  s.dispatchEvent(new Event('change',{bubbles:true}));
-  document.getElementById('selStart').click();
-}"""
+# --- suppressed channels (C081/C084). GOON's compiled bundle asks visitors for card details, so its
+# route is closed and /play/goon/ 404s. Its checks below skip rather than being deleted: two of them
+# are the only coverage of MBS.bindFrames() and of the lazy-iframe failure, and a deleted test is
+# invisible where a SKIPPED line is not. Remove the slug here when the C084 rebuild lands.
+SUPPRESSED = {"goon"}
+
+ROOTS = {"lilboyfriend":"#lbStage", "corgi":"#ccViewport",
+         "djscratch":"#deck", "girlfriend":"#dgTrack", "fuel":"#stageCard"}
 
 def instrument(b):
     pg = b.new_page(viewport=VP); seen = []; errs = []
@@ -60,8 +62,6 @@ with sync_playwright() as pw:
     for slug, sel in ROOTS.items():
         pg, seen, errs = instrument(b)
         pg.goto(f"{BASE}/play/{slug}/", wait_until="load"); pg.wait_for_timeout(2600)
-        if slug == "armie":
-            pg.evaluate(ARMIE_UNLOCK); pg.wait_for_timeout(1800)
         m = pg.evaluate("""(sel)=>{const r=document.querySelector(sel);
             return r?{v:r.getBoundingClientRect().height,l:r.offsetHeight,
                       g:document.querySelector('.glass').getBoundingClientRect().height}:null}""", sel)
@@ -76,7 +76,8 @@ with sync_playwright() as pw:
 
     print("== GAME_READY means mounted, never earlier (D2)")
     pg, seen, _ = instrument(b)
-    pg.goto(f"{BASE}/play/goon/", wait_until="commit")
+    # was /play/goon/ until GOON was suppressed; lilboyfriend exercises the same [data-host] contract
+    pg.goto(f"{BASE}/play/lilboyfriend/", wait_until="commit")
     hosted = None
     for _ in range(40):
         pg.wait_for_timeout(50)
@@ -92,6 +93,10 @@ with sync_playwright() as pw:
     for slug, target, in_frame in (("djscratch", "#scratchHand", False),
                                    ("lilboyfriend", "#lbStage", False),
                                    ("goon", "body", True)):
+        if slug in SUPPRESSED:
+            # goon is the only in-frame case, so this skip retires the sole MBS.bindFrames() coverage
+            print(f"  SKIPPED {slug} (suppressed) - NO in-frame GAME_START coverage while this holds")
+            continue
         for label, want in (("exit", False), ("game", True)):
             pg, seen, _ = instrument(b)
             pg.goto(f"{BASE}/play/{slug}/", wait_until="load"); pg.wait_for_timeout(3000)
@@ -107,8 +112,6 @@ with sync_playwright() as pw:
             pg.close()
     b.close()
 
-import io
-
 # --- Part A isolation: the page furniture is gone and the game is not.
 #
 # The main assertion is EXHAUSTIVE and needs no per-channel list of furniture: read the route's own
@@ -122,15 +125,12 @@ import io
 # fuel's #fuFlavTag carries `hidden` until a flavour is picked, armie's #gameWrap until the picker is
 # satisfied - so these are asserted on the CLASS mount applies, never on visibility.
 ISOLATION = {
-  "armie":       {"kept": ["#selectWrap", "#gameWrap", "#ar .arGrain"]},
   "corgi":       {"kept": ["#cc", "#ccMeter", "#ccPaws", "#ccBookStage", "#channel > svg"]},
   "djscratch":   {"kept": ["#deck", "#sigLbl", "#deckHint"]},
   "fuel":        {"kept": ["#stageCard", "#stackCard", "#flavCard", "#nameCard", "#fuFlavTag",
                            '#fu .card[aria-label="Your can"]', "#submitBtn"]},
   "girlfriend":  {"kept": ["#dgTrack", ".dg-flat"]},
-  "goon":        {"kept": ["#ggFrame", "#ggGame", "#gnCode"]},
   "lilboyfriend":{"kept": ["#lbStage", "#lbCanvas", "#lbHud"]},
-  "sag":         {"kept": ["#sgStage", "#sgTabs", "#sgWheelSec", "#sgInvSrc"]},
 }
 
 # Every rendering element inside #channel must be inside a declared root, or on the path to one. The
@@ -221,35 +221,30 @@ with sync_playwright() as pw:
         print("  %s %-13s owned-check kept=%d%s" % (verdict, slug, len(want["kept"]), detail))
         pg.close()
 
-    # sag's inventory bar is the one node that leaves #channel: the game moves it into .glass and clears
-    # only its inline display, so a class hide would stick forever and the bar would never be seen again.
-    print("== sag's moved inventory bar really renders where the game put it")
-    pg, seen, errs = instrument(b)
-    pg.goto(BASE + "/play/sag/", wait_until="load"); pg.wait_for_timeout(2600)
-    inv = pg.evaluate("""()=>{const n=document.getElementById("sgInvSrc"); if(!n) return null;
-        const r=n.getBoundingClientRect();
-        return {h:Math.round(r.height), inGlass:!!n.closest(".glass"), off:n.classList.contains("mbs-off")};}""")
-    good = bool(inv) and inv["h"] > 0 and inv["inGlass"] and not inv["off"]
-    ok &= good
-    print("  %s #sgInvSrc height=%s pinned-in-glass=%s carries-mbs-off=%s" %
-          ("PASS" if good else "FAIL", inv and inv["h"], inv and inv["inGlass"], inv and inv["off"]))
-    pg.close()
-
     # Two ways the registry can be wrong, and neither may serve the page as if it were the game.
     # Written as real routes and served normally rather than intercepted: Playwright's request
     # interception stalls navigation on a browser that has already driven every route above, and a
     # temporary file on disk tests exactly what a bad registry would actually deploy.
-    SAG_PAGE = io.open(os.path.join(ROOT, "play", "sag", "index.html"), encoding="utf-8").read()
-    CASES = (("unresolvable root", "#sgStage", "#thisDoesNotExist"),
-             ("empty roots list", "[&quot;#sgStage&quot;, &quot;#sgInvSrc&quot;]", "[]"))
+    # The base fixture is registry-selected, not a name hard-coded here: sag was that fixture until it
+    # went coming_soon and its play route stopped existing, so this picks whichever active game is first
+    # in the registry rather than going stale the next time a channel's status changes.
+    FC_GAME = ACTIVE_GAMES[0]
+    FC_SLUG = FC_GAME["slug"]
+    FC_PAGE = io.open(os.path.join(ROOT, "play", FC_SLUG, "index.html"), encoding="utf-8").read()
+
+    def _with_roots(page, roots):
+        payload = html.escape(json.dumps({"roots": roots, "hide": FC_GAME["hide"]}, ensure_ascii=False), quote=True)
+        return re.sub(r'data-roots="[^"]*"', 'data-roots="%s"' % payload, page, count=1)
+
+    CASES = (("unresolvable root", _with_roots(FC_PAGE, ["#thisDoesNotExist"])),
+             ("empty roots list", _with_roots(FC_PAGE, [])))
     made = []
     try:
-        print("== fail closed on the registry as well as on the DOM")
-        for i, (label, find, repl) in enumerate(CASES):
+        print("== fail closed on the registry as well as on the DOM (base fixture: %s)" % FC_SLUG)
+        for i, (label, page_html) in enumerate(CASES):
             d = os.path.join(ROOT, "play", "_gate%d" % i)
             if not os.path.isdir(d): os.makedirs(d)
-            io.open(os.path.join(d, "index.html"), "w", encoding="utf-8", newline=chr(10)).write(
-                SAG_PAGE.replace(find, repl))
+            io.open(os.path.join(d, "index.html"), "w", encoding="utf-8", newline=chr(10)).write(page_html)
             made.append(d)
 
             pg, seen, errs = instrument(b)

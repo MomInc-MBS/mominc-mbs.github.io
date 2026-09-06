@@ -21,32 +21,9 @@
     catch { return false; }
   };
 
-  /* ---- the CTA. Opens the play route in its own top-level context straight from the click, because
-     anything asynchronous is what browsers treat as a popup. Blocked anyway, the href takes over this
-     tab, so a blocked window never costs anyone the game. */
-  const note = document.getElementById("ctaNote");
-  document.querySelectorAll("[data-play]").forEach(a => {
-    a.addEventListener("click", e => {
-      let w = null;
-      try { w = window.open(a.dataset.play, "_blank", "noopener"); } catch {}
-      if (w) { e.preventDefault(); onLaunched(); return; }   // opened elsewhere; this card stays standing
-      if (note) note.hidden = false;                          // blocked: the href navigates this tab
-    });
-  });
-
-  /* ---- the tab left behind becomes a specific recommendation, never a claim that anything was
-     finished. A browser cannot see whether the game in the other tab was completed, so this says
-     "when you come back" and nothing more. */
-  function onLaunched() {
-    const block = document.getElementById("nextChannel");
-    const second = document.getElementById("play2");
-    if (!block || !D.nextSlug) return;
-    document.getElementById("nextTitle").textContent = D.nextTitle || "";
-    document.getElementById("nextPremise").textContent = D.nextPremise || "";
-    document.getElementById("nextLink").textContent = "Open Ch " + (D.nextCh || "");
-    if (second) second.hidden = true;
-    block.hidden = false;
-  }
+  /* ---- the CTA. `[data-play]` anchors carry a real href to the play route and no target, so a click
+     navigates this tab there directly - no new tab, nothing to open or fall back from. The onward-channel
+     block below is shown up front instead of after a launch this same-tab nav can no longer observe. */
 
   /* ---- saved progress, and only where the game genuinely saves. The key comes from the registry and
      is the key the game itself writes; three channels save nothing and declare no key, so their cards
@@ -121,7 +98,8 @@
     const all = readJSON(PROFILE_KEY, {});
     const slugs = Object.keys(all);
     if (!slugs.length) { wrap.hidden = true; return; }
-    countEl.textContent = "Your coach file: " + slugs.length + " of 8 channel slices saved.";
+    // six channels carry a coach-file slice; sag and armie are coming soon and have no form to fill
+    countEl.textContent = "Your coach file: " + slugs.length + " of 6 channel slices saved.";
     list.textContent = "";
     slugs.forEach(sl => {
       const li = document.createElement("li");

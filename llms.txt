@@ -2,18 +2,17 @@
 
 > A 90s-kids-TV-style health-education show whose cast are prisoners of an AI corporation, MOM Inc. Every character hosts a segment and every segment has its own channel. The whole site is one old television: the set is the network, the channel is the character.
 
-The television lives at https://mominc-mbs.github.io/tv/ . A channel is a query on that one page, so https://mominc-mbs.github.io/tv/?ch=goon is the GOON channel. The channel pages are assembled in the browser, which is why this file exists: it is the same information without needing to run the page.
+The television lives at https://mominc-mbs.github.io/tv/ . A channel is a query on that one page, so https://mominc-mbs.github.io/tv/?ch=corgi is the CORTISOL CORGI channel. The channel pages are assembled in the browser, which is why this file exists: it is the same information without needing to run the page.
 
 ## Channels
 
 - [CH 1 · MBS NETWORK HOME](https://mominc-mbs.github.io/tv/?ch=mominc): The parent company's own channel and the network's front door. Welcome home. We have your file open. We know what you need.
 - [CH 2 · LIVING SMALL](https://mominc-mbs.github.io/tv/?ch=lilboyfriend): A MOM Inc residential therapy, now in a smaller size. The Residential Compression Program, and what living small costs.
 - [CH 3 · THE MUSIC DESK](https://mominc-mbs.github.io/tv/?ch=djscratch): The Music Desk. It DJs. It cleans. It obeys. Send an unsigned track and the hand will play it.
-- [CH 4 · BASSET'S ASSETS](https://mominc-mbs.github.io/tv/?ch=sag): Basset's Assets. Debts collected, accounts settled, nothing forgiven. Everything on these walls came in against a debt.
-- [CH 5 · COACH ARMIE](https://mominc-mbs.github.io/tv/?ch=armie): Coach Armie takes the Workout of the Day. He has counted your fingers. A broadcast character; nothing behind him is a real transmission.
+- [CH 4 · BASSET'S ASSETS](https://mominc-mbs.github.io/tv/?ch=sag): Basset's Assets. Debts collected, accounts settled, nothing forgiven. Everything on these walls came in against a debt. Coming soon.
+- [CH 5 · COACH ARMIE](https://mominc-mbs.github.io/tv/?ch=armie): Coach Armie takes the Workout of the Day. He has counted your fingers. A broadcast character; nothing behind him is a real transmission. Coming soon.
 - [CH 6 · NAUSEOUS IN THE MORNING](https://mominc-mbs.github.io/tv/?ch=corgi): The bad news desk. They moved the morning again, the sun rose four minutes early, and the corgi knows. The corgi always knows.
 - [CH 7 · BUILD YOUR STACK](https://mominc-mbs.github.io/tv/?ch=fuel): Build your own pre-workout stack, flavour and can included. Untested: this blend has never been brewed, and the page says so.
-- [CH 8 · GOON](https://mominc-mbs.github.io/tv/?ch=goon): A helper. Someone who gives, money or time or love. One of us. You are one too, you just did not know the word yet.
 
 ## About
 

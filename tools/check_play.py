@@ -90,22 +90,21 @@ def grind(pg, rounds=16, wait=520):
         pg.wait_for_timeout(wait)
 
 
-def lb_walk(pg, rounds=18, wait=420):
-    """Lil Boyfriend's flat gallery: next, next, skip the guest book, then CONNECT the fuse, which is a
-    drag and not a click (lilboyfriend.html:566) - the one action that fires MBS.unlock in flat mode."""
+def lb_walk(pg, rounds=11, wait=350):
+    """Lil Boyfriend's flat gallery, finished build (lilboyfriend.html:1227-1345): the old wire-drag
+    widget is gone. entrance -> book -> six exhibits -> door, an empty magnifying-glass hole (#flSlot)
+    that does nothing off stream and fires MBS.unlock on click while MBS.isLive. Reload with ?mode=live
+    for exactly that reason - a tone switch per Codex C6, never an entitlement, and the standard way any
+    visitor sees the live version."""
+    pg.goto(pg.url + "?mode=live", wait_until="load")
+    pg.wait_for_timeout(2600)
     for _ in range(rounds):
         if pg.evaluate("()=>!!window.__done"):
             return
-        wire = pg.locator("#lbFlat .wire.r")
-        if wire.count() and wire.first.is_visible():
-            box = wire.first.bounding_box()
-            pg.mouse.move(box["x"] + box["width"] / 2, box["y"] + box["height"] / 2)
-            pg.mouse.down()
-            for step in range(6):
-                pg.mouse.move(box["x"] + box["width"] / 2 - 30 * (step + 1), box["y"] + box["height"] / 2)
-                pg.wait_for_timeout(40)
-            pg.mouse.up()
-            pg.wait_for_timeout(900)
+        slot = pg.locator("#flSlot")
+        if slot.count() and slot.is_visible() and not slot.is_disabled():
+            slot.click(no_wait_after=True)
+            pg.wait_for_timeout(1200)
             continue
         pg.evaluate("""()=>{
           const pick = document.querySelector("#flSkip") || document.querySelector("#flNext")
@@ -115,134 +114,17 @@ def lb_walk(pg, rounds=18, wait=420):
         pg.wait_for_timeout(wait)
 
 
-def sag_chain(pg, rounds=20, wait=450):
-    """Sag's unlock node end to end (sag.html:7): buy the four lots off the flat door list, open the
-    locked fifth, drag the chicken leg to Sag, take the receipt, then catch the ball inside the two
-    second window (sag.html:1044) - miss it and the whole lot resets instead of unlocking."""
-    # One door is FOUR clicks, not one: the first opens the peek, then each further click outbids, and
-    # only stage 3 reveals and marks it SOLD (sag.html:559-570). A bought door's button is also left
-    # enabled on purpose so the find can be re-read (sag.html:715), so "first enabled button" would
-    # re-click door one forever. Drive by index, and wait each door out on its own SOLD tag.
-    for i in range(5):
-        for _ in range(rounds):
-            if pg.locator("#sgLeg").count():
-                break
-            st = pg.evaluate("(i)=>{const li=document.querySelectorAll('#sgFlatList li')[i];"
-                             "return {sold: !!(li && li.querySelector('.wftag.sold')),"
-                             " leg: !!document.getElementById('sgLeg')};}", i)
-            if st["sold"] or st["leg"]:
-                break
-            # the reveal pop-up dismisses itself (showReveal auto:true) and the node is created once and
-            # reused, so its presence says nothing; clicking the button directly ignores it either way
-            pg.evaluate("(i)=>{const b=document.querySelectorAll('#sgFlatList button')[i];"
-                        "if (b && !b.disabled) b.click();}", i)
-            pg.wait_for_timeout(wait)
-        if pg.locator("#sgLeg").count():
-            break
-
-    leg, sag = pg.locator("#sgLeg"), pg.locator("#sgSagFig")
-    if not leg.count():
-        return
-    a, z = leg.bounding_box(), sag.bounding_box()
-    pg.mouse.move(a["x"] + a["width"] / 2, a["y"] + a["height"] / 2)
-    pg.mouse.down()
-    for step in range(1, 9):                       # a real drag: the leg tracks pointermove (sag.html:985)
-        pg.mouse.move(a["x"] + (z["x"] + z["width"] / 2 - a["x"]) * step / 8,
-                      a["y"] + (z["y"] + z["height"] / 2 - a["y"]) * step / 8)
-        pg.wait_for_timeout(40)
-    pg.mouse.up()
-    pg.wait_for_timeout(1400)
-
-    pg.evaluate('()=>{const r=document.getElementById("sgReceipt"); if(r) r.click();}')
-    pg.wait_for_timeout(400)                       # inside the 2s window, never after it
-    pg.evaluate('()=>{const b=document.getElementById("sgBall"); if(b) b.click();}')
-    pg.wait_for_timeout(900)
-
-
-ARMIE_SELECT = """()=>{
-  document.querySelector('#selStyles .styleCard').click();
-  document.querySelector('#selExp .lvl').click();
-  const s=document.getElementById('selSpecies');
-  if(!s.value){ s.value=[...s.options].map(o=>o.value).find(v=>v)||s.options[1].value; }
-  s.dispatchEvent(new Event('change',{bubbles:true}));
-  document.getElementById('selStart').click();
-}"""
-
-# Each checkpoint is a five-question quiz with no answer key in the DOM - but onPick REVEALS the right
-# option by classing it .correct (armie.html:1007). So the driver learns: it records the correct answer
-# text against the question text on every pick, and uses what it has learned the next time the same
-# question comes round. Getting caught returns the player to the last cleared checkpoint rather than
-# ending the run (armie.html:5), so a second pass is always available and the quiz is winnable.
-ARMIE_STEP = """(known)=>{
-  const vis = n => n && n.getBoundingClientRect().height > 0;
-  const out = {learned:null, did:"none"};
-
-  const serum = document.getElementById("arSerum");
-  if (serum && !serum.hidden) { out.did = "done"; return out; }
-
-  const opt = [...document.querySelectorAll(".qzOpt")].filter(b => !b.disabled);
-  const qEl = document.querySelector(".qzQ");
-  if (opt.length && qEl) {
-    const q = qEl.textContent.trim();
-    const want = known[q];
-    const pick = (want && opt.find(b => b.textContent.trim() === want)) || opt[0];
-    pick.click();
-    const right = document.querySelector(".qzOpt.correct");
-    if (right) out.learned = [q, right.textContent.trim()];
-    out.did = "answer";
-    return out;
-  }
-  const next = document.getElementById("qzNext");
-  if (vis(next) && !next.hidden) { next.click(); out.did = "next"; return out; }
-
-  for (const id of ["qzRetakeGo", "cpConfirm", "cpGo", "cpStart"]) {
-    const b = document.getElementById(id);
-    if (vis(b)) { b.click(); out.did = id; return out; }
-  }
-  const modal = document.querySelector("#cpModalWrap:not([hidden]) button, .modalWrap:not([hidden]) .modalBtns button");
-  if (vis(modal)) { modal.click(); out.did = "modal"; return out; }
-
-  document.getElementById("btnInteract").click();
-  document.getElementById("btnUp").click();
-  out.did = "walk";
-  return out;
-}"""
-
-
-def armie_hall(pg, rounds=260, wait=110):
-    """Armie end to end: pick a fighter, walk the corridor, clear three five-question checkpoints, then
-    hold the sac through the breathing beat, which is what fires MBS.unlock (armie.html:1188)."""
-    pg.evaluate(ARMIE_SELECT)
-    pg.wait_for_timeout(1500)
-
-    known = {}
-    for _ in range(rounds):
-        if pg.evaluate("()=>!!window.__done"):
-            return
-        # the breathing beat is a real hold, so it is held for real
-        if pg.evaluate('()=>{const w=document.getElementById("breathModalWrap"); return !!w && !w.hidden;}'):
-            # held with the keyboard, which armie documents as the equivalent control (armie.html:1202)
-            # and which needs no pointer geometry inside a modal that has just scrolled itself into view.
-            # HOLD_MS is 15s (armie.html:1152) and any release before it resets the bar to zero.
-            pg.keyboard.down(" ")
-            for _ in range(38):
-                pg.wait_for_timeout(500)
-                if pg.evaluate("()=>!!window.__done"):
-                    break
-            pg.keyboard.up(" ")
-            pg.wait_for_timeout(600)
-            return
-        r = pg.evaluate(ARMIE_STEP, known)
-        if r["learned"]:
-            known[r["learned"][0]] = r["learned"][1]
-        pg.wait_for_timeout(wait)
-
-
-def scratch_three(pg):
-    for _ in range(3):
-        pg.click("#scratchHand", no_wait_after=True)
-        pg.wait_for_timeout(320)
-    pg.wait_for_timeout(1600)
+def dj_rack(pg):
+    """DJ Scratch's finished mechanic (djscratch.html:614-799): the three-scratch trigger is gone. Flip
+    POWER, then touch each control in SEQUENCE order (bass knob, treble knob, volume slider, tempo
+    slider) - registerTouch() only checks which control was touched, not which lamp is lit, so driving
+    the fixed sequence always hits. finishGame() -> breakThrough() -> MBS.unlock('djscratch') follows."""
+    pg.click("#powerSwitch", no_wait_after=True)
+    pg.wait_for_timeout(400)
+    for key in ("bass", "treble", "volume", "tempo"):
+        pg.click('.knobface[data-key="%s"], .slidertrack[data-key="%s"]' % (key, key), no_wait_after=True)
+        pg.wait_for_timeout(350)
+    pg.wait_for_timeout(2200)   # finishGame() -> 400ms -> breakThrough()'s typed reveal -> unlock
 
 
 def fuel_seal(pg):
@@ -256,14 +138,20 @@ def fuel_seal(pg):
 
 
 # slug -> (driver, force WebGL off, terminal state must be reached)
+# sag and armie are coming_soon (tv/registry.json) and ship no play route, so their drivers are gone with
+# them: four terminal playthroughs, plus the two behavioral probes below that were never playthroughs.
+
+# --- suppressed channels (C081/C084). GOON's compiled bundle asks visitors for card details, so its
+# route is closed and /play/goon/ 404s. Its checks below skip rather than being deleted: two of them
+# are the only coverage of MBS.bindFrames() and of the lazy-iframe failure, and a deleted test is
+# invisible where a SKIPPED line is not. Remove the slug here when the C084 rebuild lands.
+SUPPRESSED = {"goon"}
+
 PLAN = {
-    "djscratch":    (scratch_three, False, True),
+    "djscratch":    (dj_rack,       False, True),
     "fuel":         (fuel_seal,     True,  True),
     "corgi":        (grind,         True,  True),
     "lilboyfriend": (lb_walk,       True,  True),
-    "sag":          (sag_chain,     True,  True),
-    "armie":        (armie_hall,    False, True),
-    "goon":         (grind,         False, False),   # a compiled third-party bundle in an iframe; checked separately below
     "girlfriend":   (grind,         False, False),   # calls no MBS.unlock at all by design; checked separately below
 }
 
@@ -347,19 +235,25 @@ with sync_playwright() as pw:
     # seeding it to one merge below its win would mean reverse-engineering minified code - out of all
     # proportion to a change that never touches the bundle. What Part A CAN break is the iframe itself:
     # it is loading="lazy" (goon.html:95), and a lazy iframe inside a collapsed ancestor never loads.
-    pg = b.new_page(viewport=VP)
-    codes = []
-    pg.on("response", lambda r: codes.append(r.status) if "games/goon/assets/" in r.url else None)
-    pg.goto(BASE + "/play/goon/", wait_until="load"); pg.wait_for_timeout(3500)
-    fr = pg.evaluate("""()=>{const f=document.getElementById("ggGame");
-        const r=f?f.getBoundingClientRect():null; const d=f&&f.contentDocument;
-        return {w:r?Math.round(r.width):0, h:r?Math.round(r.height):0,
-                painted: !!(d && d.querySelector("#game-container") && d.querySelector("#game-container").children.length)};}""")
-    good = fr["w"] > 0 and fr["h"] > 0 and fr["painted"] and codes and all(c == 200 for c in codes)
-    ok &= good
-    print("  %s goon          lazy iframe: %dx%d, bundle=%s, game mounted inside=%s"
-          % ("PASS" if good else "FAIL", fr["w"], fr["h"], codes[:2] or "none", fr["painted"]))
-    pg.close()
+    if "goon" in SUPPRESSED:
+        # the only check of the lazy-iframe-inside-a-collapsed-ancestor failure; nothing else covers it
+        print("  SKIPPED goon          suppressed (C081/C084) - NO lazy-iframe coverage while this holds")
+        pg = None
+    else:
+        pg = b.new_page(viewport=VP)
+        codes = []
+        pg.on("response", lambda r: codes.append(r.status) if "games/goon/assets/" in r.url else None)
+        pg.goto(BASE + "/play/goon/", wait_until="load"); pg.wait_for_timeout(3500)
+    if pg is not None:
+        fr = pg.evaluate("""()=>{const f=document.getElementById("ggGame");
+            const r=f?f.getBoundingClientRect():null; const d=f&&f.contentDocument;
+            return {w:r?Math.round(r.width):0, h:r?Math.round(r.height):0,
+                    painted: !!(d && d.querySelector("#game-container") && d.querySelector("#game-container").children.length)};}""")
+        good = fr["w"] > 0 and fr["h"] > 0 and fr["painted"] and codes and all(c == 200 for c in codes)
+        ok &= good
+        print("  %s goon          lazy iframe: %dx%d, bundle=%s, game mounted inside=%s"
+              % ("PASS" if good else "FAIL", fr["w"], fr["h"], codes[:2] or "none", fr["painted"]))
+        pg.close()
     b.close()
 
 if probed:

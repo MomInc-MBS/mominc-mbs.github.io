@@ -37,6 +37,16 @@ the three placards never move. The end wall is now a door with a magnifying-glas
 fuse box - the same wireUp drag-then-commit widget, reskinned and relabelled, still fires MBS.wave/unlock once
 and still called "wired" in code/CSS internals (not player-facing) though the state machine's phase value is
 now "slotted" (a saved legacy "wired" record still resumes correctly, see loadState()).
+ROUND 3 (0905, client pass): walking is forward AND backward now (WALK/BACK buttons, W/S or arrow keys) in
+both render paths; free-look no longer needs a drag - it follows wherever the pointer currently is (hover
+for mouse, live position while touching for touch), per the site-wide "no drag, position-based" rule. The
+ceiling no longer descends with the walls - CEIL_H is fixed; what "vanishes" on the return trip is fog
+(scene.fog near/far pull in with shrinkProgress(), eased so the close-in is gentle at first and faster later)
+and a boosted warm beacon light at the door reads as "the light at the end of the tunnel" outbound. Each
+case is now set INTO the wall (an alcove, a flush glass pane, a windowsill lip, two pillars, a banner) rather
+than standing on a floor plinth. The door's magnifying-glass slot lost its wire animation entirely: it is a
+plain click/tap (attemptInsert()) - off stream nothing happens and the museum stays explorable, live it
+fires a purple laser (fireLaser()) at the player before the same breach/shrink sequence plays.
 -->
 <style>
   .lb{--mint:#dff5ec; --lav:#ebe3fa; --sky:#e3effd; --white:#fffdf8; --gold:#e6c67a; --gold-d:#c9a24c; --gold-l:#f7eacb; --ink:#3c3552; --ink-l:#6f6688; --rose:#f3c9d6; --pur:#7a2fc4;
@@ -117,8 +127,8 @@ now "slotted" (a saved legacy "wired" record still resumes correctly, see loadSt
   .lb-walk{position:absolute; left:12px; bottom:14px; z-index:3; pointer-events:auto; width:84px; height:84px; border-radius:50%; border:2px solid rgba(255,255,255,.8);
       background:rgba(20,16,12,.55); color:#fff; font-family:"Nunito",system-ui,sans-serif; font-weight:800; font-size:13px; letter-spacing:.08em; cursor:pointer; -webkit-user-select:none; user-select:none}
   .lb-walk:active{background:rgba(230,198,122,.55)}
-  .lb-lookzone{position:absolute; inset:0; pointer-events:auto; cursor:grab}
-  .lb-lookzone:active{cursor:grabbing}
+  .lb-back{left:auto; right:12px}
+  .lb-lookzone{position:absolute; inset:0; pointer-events:auto; cursor:default}
 
   .lb-panel{position:absolute; inset:0; z-index:4; display:none; place-items:center; padding:16px; pointer-events:none}
   .lb-panel.show{display:grid; pointer-events:auto}
@@ -132,26 +142,23 @@ now "slotted" (a saved legacy "wired" record still resumes correctly, see loadSt
   .lb-book button{font-family:"Times New Roman",Times,serif; font-weight:700; font-size:15px; border:1px solid var(--ink); cursor:pointer; padding:10px 16px; background:var(--gold-l); color:var(--ink)}
   .lb-book a.skip{font-size:13px; color:var(--ink-l); text-decoration:underline; cursor:pointer}
 
-  /* the door-slot interactable: reuses the proven drag-then-commit widget the source build shipped as
-     .lb-tear (same markup, same pointer logic - a working mechanic, just reskinned gold/felt and relabelled
-     for the museum door instead of a fuse box). */
+  /* the door-slot interactable: an empty magnifying-glass-shaped hole. Click/tap puts the glass in - no
+     wire, no drag, none of that (see attemptInsert()/the flat path's flSlot handler for the off/live
+     gating). */
   .lb-fusepanel{text-align:center}
-  .lb-tear{position:relative; width:220px; height:150px; margin:6px auto 0; overflow:hidden; background:#241b1f; border-radius:10px;
-      box-shadow:inset 0 0 0 3px #6b3f4a}
-  .lb-tear .wires{position:absolute; top:56px; left:14px; right:16px; height:40px}
-  .lb-tear .wire{position:absolute; top:14px; height:10px; border-radius:5px}
-  .lb-tear .wire.l{left:0; width:42%; background:linear-gradient(90deg,#241b1f,#120d10); box-shadow:inset 0 0 0 2px #6b3f4a}
-  .lb-tear .wire.r{right:0; width:42%; background:linear-gradient(270deg,#c9a24c,#e6c67a); transition:right .35s ease, transform .05s linear; cursor:grab; pointer-events:auto; touch-action:none}
-  .lb-tear .wire.r:active{cursor:grabbing}
-  .lb-tear .wire .end{position:absolute; width:11px; height:18px; top:-4px; background:#c9c9cf; border-radius:2px}
-  .lb-tear .wire.l .end{right:-11px} .lb-tear .wire.r .end{left:-11px}
-  .lb-tear.wired .wire.r{right:14%; transform:none !important}
-  .lb-tear:not(.wired) .wires{animation:wirehint 1s ease-in-out infinite}
-  @keyframes wirehint{50%{filter:drop-shadow(0 0 8px var(--gold)) brightness(1.5)}}
-  .lb-tear.wired .spark{position:absolute; left:46%; top:12px; width:20px; height:20px; border-radius:50%; background:#ffcf5c; box-shadow:0 0 20px var(--gold), 0 0 44px var(--gold); animation:spk .5s ease 3}
-  @keyframes spk{from{transform:scale(.2);opacity:1}to{transform:scale(2.6);opacity:0}}
-  .lb-tear .tip{position:absolute; bottom:6px; left:6px; right:6px; color:#e6c67a; font-family:"VT323",monospace,monospace; font-size:14px; text-align:center; line-height:1.1}
-  @media (prefers-reduced-motion:reduce){ .lb-tear:not(.wired) .wires{animation:none} }
+  .lb-slotBtn{display:block; width:92px; height:92px; margin:8px auto 6px; padding:0; border-radius:50%;
+      border:4px solid var(--gold); background:#140f12; color:var(--gold-l); font-size:34px; line-height:84px;
+      cursor:pointer; box-shadow:inset 0 0 16px rgba(0,0,0,.85), 0 0 0 3px rgba(230,198,122,.25)}
+  .lb-slotBtn:active{transform:translateY(1px)}
+  .lb-slotBtn:disabled{opacity:.5; cursor:default}
+  .lb-flat .lb-slotBtn{display:block; width:92px; height:92px; margin:8px auto 6px; padding:0; border-radius:50%;
+      border:4px solid var(--gold); background:#140f12; color:var(--gold-l); font-size:34px; line-height:84px;
+      cursor:pointer; box-shadow:inset 0 0 16px rgba(0,0,0,.85), 0 0 0 3px rgba(230,198,122,.25)}
+  /* the purple laser hit, live-only: a brief full-stage radial flash (paired with the 3D beam mesh, or
+     standing alone in the flat fallback). */
+  .lb-laser-flash{position:absolute; inset:0; z-index:6; pointer-events:none; opacity:0; transition:opacity .12s ease;
+      background:radial-gradient(circle,rgba(179,0,255,.75),transparent 70%)}
+  .lb-laser-flash.show{opacity:1}
 
   .lb-epi{text-align:center}
   .lb-epi .close-line{font-family:"Pacifico",cursive; font-size:20px; color:var(--ink); margin:0 0 14px}
@@ -179,7 +186,6 @@ now "slotted" (a saved legacy "wired" record still resumes correctly, see loadSt
   .lb-flat .fl-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px}
   .lb-flat button, .lb-flat .fl-actions a{font-family:"Times New Roman",Times,serif; font-weight:700; font-size:15px; border:1px solid #2c1e14; cursor:pointer; padding:11px 18px; background:transparent; color:#2c1e14; text-decoration:none; display:inline-block}
   .lb-flat button:active{transform:translateY(1px)}
-  .lb-flat .lb-fusepanel .lb-tear{background:#241b1f}
 
   @media (min-width:760px){ .lb .stats{grid-template-columns:1fr 1fr} .lb .charts{grid-template-columns:1fr 1fr 1fr} }
 </style>
@@ -191,12 +197,14 @@ now "slotted" (a saved legacy "wired" record still resumes correctly, see loadSt
        three.js hall; #lbHud holds every DOM overlay (walk button, look-drag zone, guest book, wires, prompts,
        epilogue); #lbFlat is the whole no-WebGL DOM gallery, mutually exclusive with the canvas+hud pair. -->
   <div class="lb-stage" id="lbStage">
-    <canvas id="lbCanvas" aria-label="The museum. Drag to look, hold WALK or W to walk."></canvas>
+    <canvas id="lbCanvas" aria-label="The museum. Look with your mouse or finger. Hold WALK/BACK or press W/S to walk."></canvas>
     <div class="lb-hud" id="lbHud">
       <div class="lb-lookzone" id="lookZone"></div>
-      <p class="lb-hint" id="lbHint">Drag to look. Hold WALK or press W to walk.</p>
+      <p class="lb-hint" id="lbHint">Look with your mouse or finger. Hold WALK/BACK or press W/S to walk.</p>
       <p class="lb-prompt" id="lbPrompt">Turn around.</p>
+      <div class="lb-laser-flash" id="lbFlash"></div>
       <button type="button" class="lb-walk" id="lbWalk">WALK</button>
+      <button type="button" class="lb-walk lb-back" id="lbBack">BACK</button>
 
       <div class="lb-panel" id="bookPanel">
         <div class="card">
@@ -215,11 +223,9 @@ now "slotted" (a saved legacy "wired" record still resumes correctly, see loadSt
       <div class="lb-panel" id="wirePanel">
         <div class="card lb-fusepanel">
           <h3>The Door</h3>
-          <p>Insert the instrument. Drag the glass into the slot, or tap it.</p>
-          <div class="lb-tear" id="tear3d">
-            <div class="wires"><div class="wire l"><span class="end"></span></div><div class="wire r"><span class="end"></span></div><span class="spark"></span></div>
-            <div class="tip" id="tearTip3d">drag the glass into the slot.</div>
-          </div>
+          <p>There's an empty magnifying-glass hole in it.</p>
+          <button type="button" class="lb-slotBtn" id="slotBtn" aria-label="Put the glass in the hole">🔍</button>
+          <p class="fine" id="doorNote"></p>
         </div>
       </div>
 
@@ -259,7 +265,7 @@ now "slotted" (a saved legacy "wired" record still resumes correctly, see loadSt
       <p>These are real numbers. MOM did not make them worse. MOM only drew them.</p>
       <div class="stats">
         <div class="stat">
-          <p class="big">$431,400</p>
+          <p class="big">$434,100</p>
           <p class="lbl">the median existing home, July 2026</p>
           <svg viewBox="0 0 300 70" aria-hidden="true">
             <text x="0" y="14" font-size="10" fill="#6f6688">what the home costs</text><rect x="0" y="18" width="300" height="14" rx="7" fill="#e6c67a"/>
@@ -436,29 +442,29 @@ now "slotted" (a saved legacy "wired" record still resumes correctly, see loadSt
         src: "Eviction Lab, Princeton University, via Las Vegas Review-Journal. reviewjournal.com/business/housing/eviction-notices-drop-in-las-vegas-but-rates-still-high-for-metro-area-report-says" },
       { t: "A8", body: "For every 100 of the poorest renter households in America, only 35 can find a home they can afford. In Nevada, it's 17. The gap is not an accident, it's arithmetic.",
         src: "NLIHC, The Gap: A Shortage of Affordable Homes, 2025. nlihc.org/news/nlihc-releases-gap-2025-shortage-affordable-homes" },
-      { t: "A9", body: "The median home in America hit $412,500 in 2024, 60 percent more than six years earlier. By July 2026 it was $431,400. Nobody's paycheck grew 60 percent.",
+      { t: "A9", body: "The median home in America hit $412,500 in 2024, 60 percent more than six years earlier. By July 2026 it was $434,100. Nobody's paycheck grew 60 percent.",
         src: "Harvard JCHS, State of the Nation's Housing 2025 (nahb.org); NAR Existing-Home Sales, July 2026." }
     ],
     car: [
       { t: "A10", body: "California cities have been racing to ban it outright. As of January 2025, forty two California cities and two counties had passed some version of a public camping ban since the Supreme Court's Grants Pass ruling, and the newer ones increasingly name the car itself, not just a tent.",
         src: "National Homelessness Law Center, via Stateline, Many more cities ban sleeping outside despite a lack of shelter space, Jan. 27, 2025. stateline.org/2025/01/27/many-more-cities-ban-sleeping-outside-despite-a-lack-of-shelter-space" },
       { t: "A11", body: "San Joaquin County's version goes further than a tent ban. It bans sleeping in a parked car outright, and anyone living outside is required to move at least 300 feet every hour.",
-        src: "CalMatters, New enforcement efforts target people living in cars, RVs on California streets, Sept. 2025. calmatters.org/housing/homelessness/2025/09/homeless-enforcement-cars-rvs" },
+        src: "NPR, 100-plus cities in the U.S. banned homeless camping this year. But will it work?, Dec. 26, 2024. npr.org/2024/12/26/nx-s1-5199103/homeless-camping-bans-grants-pass" },
       { t: "A12", body: "Carlsbad, California counted 60 homeless residents in 2023. By 2024 it was 112, nearly double, in the same stretch the city passed its own ban on camping in a car.",
-        src: "CalMatters, New enforcement efforts target people living in cars, RVs on California streets, Sept. 2025. calmatters.org/housing/homelessness/2025/09/homeless-enforcement-cars-rvs" }
+        src: "San Diego Regional Task Force on Homelessness, Point-in-Time Count, May 22, 2024, via The Coast News. thecoastnews.com" }
     ],
     storage: [
       { t: "A13", body: "A South Salt Lake, Utah storage facility found families bolted inside sheds fitted out with beds, a microwave and a working air conditioner. One held a family of three, including a three month old. Some had been living there six months before anyone found them.",
         src: "KSL.com, Homeless families found living in storage units, 2012. ksl.com/article/20169843" },
       { t: "A14", body: "It is illegal everywhere in the country under fire, sanitation and zoning code. A national survey of 2,000 US adults found one in five, 20 percent, had slept in a self storage unit anyway.",
         src: "StorageUnits.com and Pollfish survey, via PRWeb, Survey Finds 1 in 5 Americans Have Slept in a Storage Unit, June 2025. prweb.com/releases/survey-finds-1-in-5-americans-have-slept-in-a-storage-unit-302499519.html" },
-      { t: "A15", body: "Self storage is a fifty billion dollar industry now, more than 52,000 facilities covering 2.1 billion square feet. It grows fastest in a downturn: storage companies posted a 5 percent return the same years family homelessness rose 30 percent.",
+      { t: "A15", body: "Self storage is on track to be a fifty billion dollar industry by 2029, and already runs more than 52,000 facilities covering 2.1 billion square feet. It grows fastest in a downturn: storage companies posted a 5 percent return the same years family homelessness rose 30 percent.",
         src: "Slate, Self-storage units serve as a long-term solution when finding housing or moving isn't an option, Aug. 2024, citing Mordor Intelligence, the US Census Bureau and HUD. slate.com/business/2024/08/self-storage-units-industry-growth-housing-insecurity-evictions.html" }
     ],
     van: [
       { t: "A16", body: "The number of people living full time in a van in the US grew 63 percent in two years, from about 1.9 million in 2020 to 3.1 million in 2022.",
         src: "Statista, via Yahoo Finance, Paying for van life: Costs and statistics, 2025. finance.yahoo.com/news/paying-van-life-202933082.html" },
-      { t: "A17", body: "It is marketed as freedom. A new camper van conversion still starts around $130,000. The median US home costs $431,400. A van is not cheap. It is just cheaper.",
+      { t: "A17", body: "It is marketed as freedom. People are selling million dollar homes to live in one. The median US home costs $434,100. A van is not cheap. It is just cheaper.",
         src: "Moneywise, Wealthy people are selling their million dollar homes to live in a van all year, 2025; NAR Existing-Home Sales, July 2026. moneywise.com/life/lifestyle/vanlife-wealthy-homeowners-hidden-costs" },
       { t: "A18", body: "More than 100 US cities passed a new homeless camping ban in a single year, and enforcement keeps reaching further, past the tent and into anyone parked overnight.",
         src: "NPR, 100-plus cities in the U.S. banned homeless camping this year. But will it work?, Dec. 26, 2024. npr.org/2024/12/26/nx-s1-5199103/homeless-camping-bans-grants-pass" }
@@ -531,9 +537,10 @@ now "slotted" (a saved legacy "wired" record still resumes correctly, see loadSt
   function shrinkProgress() {
     // 5.3: driven by elapsed wall-clock time from shrink start, never frame count or return-progress, so
     // standing still (or a throttled/backgrounded tab) no longer stalls or skips the close. Floor is rp=1
-    // (the existing WALL_IN/CEIL_IN/EYE_IN minimum below); it never goes past it, on reload or otherwise.
+    // (the existing WALL_IN/EYE_IN/FOG_*_IN minimum below); it never goes past it, on reload or otherwise.
     if (!isReturning() || !ST.shrinkStartedAt) return 0;
-    return Math.max(0, Math.min(1, (Date.now() - ST.shrinkStartedAt) / SHRINK_MS));
+    const raw = Math.max(0, Math.min(1, (Date.now() - ST.shrinkStartedAt) / SHRINK_MS));
+    return raw * raw;   // eased in: gentle at first, closing in faster as it goes, per Ian
   }
   // test-only readback for the save-migration fixture check (18.6) - the epilogue phase blocks every normal
   // saveState() path (walking is disabled there), so there is no other way to observe a migrated value
@@ -562,31 +569,6 @@ now "slotted" (a saved legacy "wired" record still resumes correctly, see loadSt
 
   const lbCanvas = document.getElementById("lbCanvas"), lbHud = document.getElementById("lbHud");
 
-  // shared wires-panel builder: same markup/behaviour for both render paths (the source build's .lb-tear,
-  // restyled for the fuse-box framing). Real pointer drag on the right wire, or a quick tap, both connect.
-  function wireUp(root, onConnected) {
-    const tear = root.querySelector(".lb-tear"), wireR = root.querySelector(".wire.r"), tip = root.querySelector(".tip");
-    let dragging = false, startX = 0, done = false;
-    const threshold = () => Math.max(40, wireR.getBoundingClientRect().width * 0.7);
-    function commit() {
-      if (done) return; done = true;
-      wireR.style.transform = "";
-      tear.classList.add("wired");
-      tip.textContent = "connected.";
-      onConnected();
-    }
-    function snapBack() { wireR.style.transform = ""; }
-    wireR.addEventListener("pointerdown", e => { if (done) return; dragging = true; startX = e.clientX; wireR.setPointerCapture(e.pointerId); e.preventDefault(); });
-    wireR.addEventListener("pointermove", e => { if (!dragging || done) return; const dx = Math.min(0, e.clientX - startX); wireR.style.transform = `translateX(${dx}px)`; });
-    wireR.addEventListener("pointerup", e => {
-      if (!dragging || done) return; dragging = false;
-      const dx = e.clientX - startX;
-      if (dx <= -threshold() || Math.abs(dx) < 6) commit(); else snapBack();
-    });
-    wireR.addEventListener("pointercancel", () => { dragging = false; snapBack(); });
-    return { reset() { done = false; dragging = false; tear.classList.remove("wired"); wireR.style.transform = ""; tip.textContent = "two wires. drag the blue one left."; } };
-  }
-
   if (glOK) { lb.classList.add("webgl"); run3D(); } else { lbCanvas.remove(); lbHud.remove(); runFlat(); }
 
   // =====================================================================================
@@ -594,23 +576,27 @@ now "slotted" (a saved legacy "wired" record still resumes correctly, see loadSt
   // =====================================================================================
   function run3D() {
     const HALL_LEN = 60, START_Z = -1, END_Z = START_Z - HALL_LEN, CENTER_Z = (START_Z + END_Z) / 2;
-    const WALL_OUT = 1.5, WALL_IN = 0.6, CEIL_OUT = 3.0, CEIL_IN = 1.7, EYE_OUT = 1.5, EYE_IN = 0.9;
+    // the ceiling no longer descends (that read as the walls cropping the view, per Ian) - CEIL_H is fixed.
+    // What "vanishes" instead is fog: near/far pull in as the return-trip shrink progresses, so the far hall
+    // and its ceiling fade into darkness rather than being pressed down onto the player.
+    const WALL_OUT = 1.5, WALL_IN = 0.6, CEIL_H = 3.0, EYE_OUT = 1.5, EYE_IN = 0.9;
+    const FOG_NEAR_OUT = 95, FOG_FAR_OUT = 115, FOG_NEAR_IN = 5, FOG_FAR_IN = 13;
     const WALK_SPEED = 1.6 / HALL_LEN;
     const GUESTBOOK_P = 0.035, GUESTBOOK_SIDE = -1, TITLE_P = 0.06, TITLE_SIDE = 1, FUSEBOX_P = 1;
     const zAt = p => START_Z - p * HALL_LEN;
     const wallHalf = rp => WALL_OUT + (WALL_IN - WALL_OUT) * rp;
-    const ceilY = rp => CEIL_OUT + (CEIL_IN - CEIL_OUT) * rp;
     const eyeY = rp => EYE_OUT + (EYE_IN - EYE_OUT) * rp;
     const loom = rp => 1 + 0.6 * rp;
 
     const hint = document.getElementById("lbHint"), prompt = document.getElementById("lbPrompt");
-    const walkBtn = document.getElementById("lbWalk"), lookZone = document.getElementById("lookZone");
+    const walkBtn = document.getElementById("lbWalk"), backBtn = document.getElementById("lbBack"), lookZone = document.getElementById("lookZone");
     const bookPanel = document.getElementById("bookPanel"), wirePanel = document.getElementById("wirePanel"), epiPanel = document.getElementById("epiPanel");
 
     import("https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.min.js").then(THREE => {
       const renderer = new THREE.WebGLRenderer({ canvas: lbCanvas, antialias: true, preserveDrawingBuffer: true });
       renderer.outputColorSpace = THREE.SRGBColorSpace;
       const scene = new THREE.Scene();
+      scene.fog = new THREE.Fog(0x0a0d14, FOG_NEAR_OUT, FOG_FAR_OUT);
       const camera = new THREE.PerspectiveCamera(66, 1, 0.05, 120);
       scene.add(camera);   // a first-person held prop is a camera child; the camera must be a scene member
       let yaw = 0, pitch = 0;
@@ -740,17 +726,34 @@ now "slotted" (a saved legacy "wired" record still resumes correctly, see loadSt
       // why a 390px-wide view can't hold a legible photo AND a legible placard at once at a fixed 1.5-unit
       // standing distance).
       const PHOTO_W = 1.5, PHOTO_H = 1.05, PLACARD_W = 0.8, PLACARD_H = 0.9, PLACARD_GAP = 0.15;
-      // ---- round 2: each exhibit is a shrunken scene on a felt-covered plinth outbound (CASE_SCALE), and
-      // a full-size wall piece on the return (round-1 size, unchanged) - a discrete swap at the door slot,
-      // not a continuous morph, matching every other state change that fires at that same beat. The three
-      // placards are a separate group (wallGroup) that never leaves the wall and never case-scales, exactly
-      // as the spec requires ("stay on the wall beside it, unchanged").
-      const CASE_SCALE = 0.3, PLINTH_W = 0.5, PLINTH_D = 0.4, PLINTH_H = 1.1;
+      // ---- round 3 (0905, "part of the wall, not on a stand"): the case is set INTO the wall - a shallow
+      // lit alcove behind a glass pane flush with the wall, a small windowsill lip protruding below it, two
+      // pillars flanking it, a felt banner above. CASE_CY matches the full-size wall piece's eye height
+      // (1.6) so the discrete swap at the door slot never jumps vertically. The three placards are still a
+      // separate group (wallGroup) that never leaves the wall and never case-scales, exactly as the spec
+      // requires ("stay on the wall beside it, unchanged").
+      const CASE_SCALE = 0.3, CASE_W = 0.85, CASE_H = 0.85, CASE_CY = 1.6;
+      const SILL_LIP = 0.11, SILL_H = 0.06, RECESS = 0.14, PILLAR_W = 0.09, PILLAR_PROTRUDE = 0.06;
+      const BANNER_H = 0.3, BANNER_GAP = 0.05;
       const frameMat = new THREE.MeshStandardMaterial({ map: makeFeltTexture("#5c4326", "#e6c67a", 256, 256, 2, 2), roughness: 1 });
-      const plinthGeo = new THREE.BoxGeometry(PLINTH_W, PLINTH_H, PLINTH_D);
-      const plinthMat = new THREE.MeshStandardMaterial({ map: makeFeltTexture("#3d5a45", "#e6c67a", 256, 256, 2, 2), roughness: 1 });
-      const caseGeo = new THREE.BoxGeometry(PLINTH_W + 0.16, 0.64, PLINTH_D + 0.12);
+      const alcoveGeo = new THREE.BoxGeometry(RECESS, CASE_H - 0.05, CASE_W - 0.05);
+      const alcoveMat = new THREE.MeshStandardMaterial({ map: makeFeltTexture("#1c1712", "#3c3552", 128, 128), roughness: 1 });
+      const glassGeo = new THREE.PlaneGeometry(CASE_W, CASE_H);
       const caseMat = new THREE.MeshPhysicalMaterial({ color: 0xdcefff, transparent: true, opacity: 0.16, roughness: 0.15, side: THREE.DoubleSide });
+      const sillGeo = new THREE.BoxGeometry(SILL_LIP + 0.03, SILL_H, CASE_W + 0.14);
+      const sillMat = new THREE.MeshStandardMaterial({ map: makeFeltTexture("#c9a24c", "#3c3552", 128, 128, 2, 1), roughness: 0.7 });
+      const pillarGeo = new THREE.BoxGeometry(PILLAR_PROTRUDE + 0.02, CASE_H + 0.34, PILLAR_W);
+      const pillarMat = new THREE.MeshStandardMaterial({ map: makeFeltTexture("#e6dcc0", "#c9a24c", 128, 128, 1, 3), roughness: 0.85 });
+      function makeBannerTexture(label) {
+        const w = 420, h = 190; const c = document.createElement("canvas"); c.width = w; c.height = h;
+        const x = c.getContext("2d");
+        x.fillStyle = "#7a2a3a";
+        x.beginPath(); x.moveTo(0, 0); x.lineTo(w, 0); x.lineTo(w, h * 0.7); x.lineTo(w * 0.5, h); x.lineTo(0, h * 0.7); x.closePath(); x.fill();
+        x.strokeStyle = "#e6c67a"; x.lineWidth = 5; x.stroke();
+        x.fillStyle = "#f7eacb"; x.font = "bold 34px Georgia, serif"; x.textAlign = "center"; x.textBaseline = "middle";
+        x.fillText(label, w / 2, h * 0.34);
+        const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+      }
       const exhibitObjs = EXHIBITS.map(ex => {
         const photoGroup = new THREE.Group(); scene.add(photoGroup);
         const photoMat = new THREE.MeshStandardMaterial({ roughness: 0.9 });
@@ -770,9 +773,19 @@ now "slotted" (a saved legacy "wired" record still resumes correctly, see loadSt
           wallGroup.add(m); return m;
         });
 
+        // the case: built into the wall, not on a stand. The alcove recesses INTO the wall (away from the
+        // corridor), the glass sits flush at the wall plane, the sill protrudes a small lip toward the
+        // corridor below it, pillars flank it either side, a banner hangs above - all mirrored by "side"
+        // the same way the wall pieces already are.
         const caseDecor = new THREE.Group(); scene.add(caseDecor);
-        const plinth = new THREE.Mesh(plinthGeo, plinthMat); plinth.position.set(0, PLINTH_H / 2, 0); caseDecor.add(plinth);
-        const glassBox = new THREE.Mesh(caseGeo, caseMat); glassBox.position.set(0, PLINTH_H + 0.32, 0); caseDecor.add(glassBox);
+        const alcove = new THREE.Mesh(alcoveGeo, alcoveMat); alcove.position.set(ex.side * (RECESS / 2 + 0.01), CASE_CY, 0); caseDecor.add(alcove);
+        const glassPane = new THREE.Mesh(glassGeo, caseMat); glassPane.position.set(-ex.side * 0.01, CASE_CY, 0); glassPane.rotation.y = -ex.side * Math.PI / 2; caseDecor.add(glassPane);
+        const sill = new THREE.Mesh(sillGeo, sillMat); sill.position.set(-ex.side * (SILL_LIP / 2 + 0.01), CASE_CY - CASE_H / 2 - SILL_H / 2, 0); caseDecor.add(sill);
+        const pillarL = new THREE.Mesh(pillarGeo, pillarMat); pillarL.position.set(-ex.side * (PILLAR_PROTRUDE / 2 + 0.01), CASE_CY, -(CASE_W / 2 + PILLAR_W / 2 + 0.04)); caseDecor.add(pillarL);
+        const pillarR = pillarL.clone(); pillarR.position.z = CASE_W / 2 + PILLAR_W / 2 + 0.04; caseDecor.add(pillarR);
+        const banner = new THREE.Mesh(new THREE.PlaneGeometry(CASE_W * 0.95, BANNER_H), new THREE.MeshBasicMaterial({ map: makeBannerTexture(ex.label), transparent: true }));
+        banner.position.set(-ex.side * 0.01, CASE_CY + CASE_H / 2 + BANNER_GAP + BANNER_H / 2, 0); banner.rotation.y = -ex.side * Math.PI / 2;
+        caseDecor.add(banner);
 
         const spot = new THREE.SpotLight(0xfff0d0, 1.3, 6, 0.55, 0.45, 1.6);
         const spotTarget = new THREE.Object3D();
@@ -786,7 +799,7 @@ now "slotted" (a saved legacy "wired" record still resumes correctly, see loadSt
         e.wallGroup.scale.setScalar(loom(rp));
         let px, py, pz, pscale;
         if (caseMode) {
-          px = e.cfg.side * (WALL_OUT - 0.55); py = PLINTH_H + 0.03; pz = z; pscale = CASE_SCALE;
+          px = e.cfg.side * (half - 0.02); py = CASE_CY; pz = z; pscale = CASE_SCALE;
           e.plate.position.set(-e.cfg.side * 0.03, -PHOTO_H * 0.55, 0.04);
         } else {
           px = e.cfg.side * half; py = 1.6; pz = z; pscale = loom(rp);
@@ -795,8 +808,8 @@ now "slotted" (a saved legacy "wired" record still resumes correctly, see loadSt
         e.photoGroup.position.set(px, py, pz);
         e.photoGroup.scale.setScalar(pscale);
         e.caseDecor.visible = caseMode;
-        e.caseDecor.position.set(e.cfg.side * (WALL_OUT - 0.55), 0, z);
-        e.spot.position.set(px + (caseMode ? 0 : e.cfg.side * -0.6), py + 1.1, pz);
+        e.caseDecor.position.set(e.cfg.side * half, 0, z);
+        e.spot.position.set(px + (caseMode ? e.cfg.side * -0.35 : e.cfg.side * -0.6), py + 1.1, pz);
         e.spotTarget.position.set(px, py, pz);
       }
       exhibitObjs.forEach(e => updateExhibit(e, 0, true));
@@ -856,7 +869,9 @@ now "slotted" (a saved legacy "wired" record still resumes correctly, see loadSt
       slotStem.position.set(0, 1.5 - 0.185, 0.031); doorGroup.add(slotStem);
       const doorPlate = new THREE.Mesh(new THREE.PlaneGeometry(1.0, 0.22), new THREE.MeshBasicMaterial({ map: makeSignTexture({ w: 900, h: 200, bg: "#241d14", stitch: "#8a5a34", ink: "#e6c67a", body: "INSERT INSTRUMENT TO CONTINUE THE TOUR.", fBody: 40, lhBody: 46, pad: 30 }) }));
       doorPlate.position.set(0, 1.1, 0.031); doorGroup.add(doorPlate);
-      const doorLight = new THREE.PointLight(0xdfe8ff, 0.9, 6, 2); doorLight.position.set(0, 2.0, zAt(FUSEBOX_P) - 1); scene.add(doorLight);
+      // the beacon: a warm light bright and far-reaching enough to read as "the light at the end of the
+      // tunnel" from well back down the hall, something to walk toward rather than just corridor lighting.
+      const doorLight = new THREE.PointLight(0xffdca0, 2.2, 46, 1.4); doorLight.position.set(0, 1.9, zAt(FUSEBOX_P) - 0.6); scene.add(doorLight);
 
       // ---- the magnifying glass, held: a felt-wrapped ring and a wooden handle, parented to the camera so
       // it moves with the look; idle a slow breathing bob, raised and grown to frame the fisheye on zoom.
@@ -892,44 +907,52 @@ now "slotted" (a saved legacy "wired" record still resumes correctly, see loadSt
 
       camera.position.set(0, EYE_OUT, zAt(0)); applyLook();
 
-      // ---- input: hold-to-walk (keyboard + WALK button), free-look by pointer drag (getBoundingClientRect
-      // + clientX/clientY only, per the shell's own zoom-compensation contract). The look zone also reads
-      // taps (movement under a small threshold) as the exhibit zoom's click-to-open/close.
-      let walkHeld = false;
+      // ---- input: hold-to-walk forward AND backward (keyboard + WALK/BACK buttons); look follows wherever
+      // the pointer currently is (hover for mouse, live position while touching for touch - no drag, per
+      // G2), using getBoundingClientRect() + clientX/clientY only, per the shell's own zoom-compensation
+      // contract. The look zone also reads a quick tap (short + little movement) as the exhibit zoom's
+      // click-to-open/close.
+      let fwdHeld = false, backHeld = false;
       function typing() { const a = document.activeElement; return a && (a.tagName === "INPUT" || a.tagName === "TEXTAREA"); }
-      window.addEventListener("keydown", e => { if ((e.key === "w" || e.key === "W" || e.key === "ArrowUp") && !typing()) walkHeld = true; });
-      window.addEventListener("keyup", e => { if (e.key === "w" || e.key === "W" || e.key === "ArrowUp") walkHeld = false; });
+      window.addEventListener("keydown", e => {
+        if (typing()) return;
+        if (e.key === "w" || e.key === "W" || e.key === "ArrowUp") fwdHeld = true;
+        else if (e.key === "s" || e.key === "S" || e.key === "ArrowDown") backHeld = true;
+      });
+      window.addEventListener("keyup", e => {
+        if (e.key === "w" || e.key === "W" || e.key === "ArrowUp") fwdHeld = false;
+        else if (e.key === "s" || e.key === "S" || e.key === "ArrowDown") backHeld = false;
+      });
       window.addEventListener("keydown", e => {
         if (typing()) return;
         if (e.key === "e" || e.key === "E" || e.key === "Enter") {
-          if (doorOpen) { onConnect(); return; }
+          if (doorOpen) { attemptInsert(); return; }
           if (zoomOpen) { closeZoom(); return; }
           const ne = nearestCaseExhibit(); if (ne) openZoom(ne);
         } else if (e.key === "Escape" && zoomOpen) { closeZoom(); }
       });
-      walkBtn.addEventListener("pointerdown", e => { walkHeld = true; e.preventDefault(); dismissHint(); });
-      ["pointerup", "pointercancel", "pointerleave"].forEach(ev => walkBtn.addEventListener(ev, () => walkHeld = false));
+      walkBtn.addEventListener("pointerdown", e => { fwdHeld = true; e.preventDefault(); dismissHint(); });
+      ["pointerup", "pointercancel", "pointerleave"].forEach(ev => walkBtn.addEventListener(ev, () => fwdHeld = false));
+      backBtn.addEventListener("pointerdown", e => { backHeld = true; e.preventDefault(); dismissHint(); });
+      ["pointerup", "pointercancel", "pointerleave"].forEach(ev => backBtn.addEventListener(ev, () => backHeld = false));
 
-      let dragging = false, lastX = 0, lastY = 0, downX = 0, downY = 0, downMoved = false;
+      let targetYaw = 0, targetPitch = 0, downX = 0, downY = 0, downT = 0;
+      function updateLook(e) {
+        const r = lbCanvas.getBoundingClientRect();
+        const nx = (e.clientX - r.left) / Math.max(1, r.width), ny = (e.clientY - r.top) / Math.max(1, r.height);
+        targetYaw = (nx - 0.5) * Math.PI;
+        targetPitch = Math.max(-Math.PI / 3, Math.min(Math.PI / 3, (0.5 - ny) * (Math.PI / 2)));
+      }
+      lookZone.addEventListener("pointermove", e => { updateLook(e); dismissHint(); });
       lookZone.addEventListener("pointerdown", e => {
-        dragging = true; lastX = e.clientX; lastY = e.clientY; downX = e.clientX; downY = e.clientY; downMoved = false;
+        updateLook(e); downX = e.clientX; downY = e.clientY; downT = performance.now();
         lookZone.setPointerCapture(e.pointerId); dismissHint();
       });
-      lookZone.addEventListener("pointermove", e => {
-        if (!dragging) return;
-        const r = lbCanvas.getBoundingClientRect();
-        const dx = (e.clientX - lastX) / Math.max(1, r.width), dy = (e.clientY - lastY) / Math.max(1, r.height);
-        lastX = e.clientX; lastY = e.clientY;
-        yaw -= dx * 4.2;
-        pitch = Math.max(-Math.PI / 3, Math.min(Math.PI / 3, pitch - dy * 3.4));
-        if (Math.abs(e.clientX - downX) > 6 || Math.abs(e.clientY - downY) > 6) downMoved = true;
+      lookZone.addEventListener("pointerup", e => {
+        const isTap = performance.now() - downT < 400 && Math.hypot(e.clientX - downX, e.clientY - downY) < 10;
+        if (!isTap) return;
+        if (zoomOpen) closeZoom(); else { const ne = nearestCaseExhibit(); if (ne) openZoom(ne); }
       });
-      ["pointerup", "pointercancel", "pointerleave"].forEach(type => lookZone.addEventListener(type, () => {
-        dragging = false;
-        if (type === "pointerup" && !downMoved) {
-          if (zoomOpen) closeZoom(); else { const ne = nearestCaseExhibit(); if (ne) openZoom(ne); }
-        }
-      }));
 
       let hintShown = true;
       function dismissHint() { if (!hintShown) return; hintShown = false; hint.classList.add("hide"); }
@@ -986,13 +1009,15 @@ now "slotted" (a saved legacy "wired" record still resumes correctly, see loadSt
       });
       bookSkip.addEventListener("click", () => { bookSkipped = true; closeBook(); });
 
-      // ---- the door / slot overlay: reuses the proven drag-then-commit widget (wireUp, unchanged), just
-      // relabelled and reskinned for the door instead of a fuse box.
+      // ---- the door / slot overlay: an empty magnifying-glass hole. Click/tap puts the glass in - no wire,
+      // no drag. Off stream: nothing happens and the museum stays explorable. Live: a machine behind the
+      // hole fires a purple laser at the player (fireLaser below), then the same breach/shrink sequence
+      // that used to fire on a wired connection. MBS.mode is a tone switch, never an entitlement (Codex
+      // C6) - this only changes what plays, never what the run is worth.
       let doorOpen = false;
-      const tear3d = document.getElementById("tear3d");
-      const doorCtl = wireUp(wirePanel, () => onConnect());
+      const slotBtn = document.getElementById("slotBtn"), doorNote = document.getElementById("doorNote"), lbFlash = document.getElementById("lbFlash");
       function openDoor() { if (doorOpen || ST.phase !== "out") return; doorOpen = true; wirePanel.classList.add("show"); }
-      function closeDoor() { doorOpen = false; wirePanel.classList.remove("show"); }
+      function closeDoor() { doorOpen = false; wirePanel.classList.remove("show"); doorNote.textContent = ""; slotBtn.disabled = false; }
 
       let flickerT0 = 0, flickering = false;
       function onConnect() {
@@ -1018,7 +1043,40 @@ now "slotted" (a saved legacy "wired" record still resumes correctly, see loadSt
           } else { flickering = true; flickerT0 = performance.now(); }
         });
       }
-      doorCtl; // (kept for symmetry with the flat path; wireUp already wired the pointer handlers)
+
+      // ---- the purple laser: the machine behind the hole, only real on stream. A thin emissive beam from
+      // the slot to the camera for ~half a second, plus a screen flash, while the hole itself flashes
+      // purple as the machine fires.
+      const LASER_MS = 550;
+      const laserMat = new THREE.MeshBasicMaterial({ color: 0xb400ff, transparent: true, opacity: 0, fog: false });
+      const laserBeam = new THREE.Mesh(new THREE.CylinderGeometry(0.028, 0.028, 1, 8), laserMat);
+      laserBeam.visible = false; scene.add(laserBeam);
+      const laserFrom = new THREE.Vector3(0, 1.5, zAt(FUSEBOX_P) + 0.03);
+      let laserActive = false, laserT0 = 0, laserCb = null;
+      function fireLaser(cb) {
+        laserActive = true; laserT0 = performance.now(); laserCb = cb; laserBeam.visible = true;
+        slotHole.material.color.set(0xb400ff);
+        if (lbFlash) lbFlash.classList.add("show");
+      }
+      function updateLaser(now) {
+        if (!laserActive) return;
+        const el = now - laserT0, to = camera.position;
+        laserBeam.position.lerpVectors(laserFrom, to, 0.5);
+        laserBeam.scale.set(1, laserFrom.distanceTo(to), 1);
+        laserBeam.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), to.clone().sub(laserFrom).normalize());
+        laserMat.opacity = Math.min(1, el / 100) - Math.max(0, (el - (LASER_MS - 150)) / 150);
+        if (el >= LASER_MS) {
+          laserActive = false; laserBeam.visible = false; slotHole.material.color.set(0x140f12);
+          if (lbFlash) lbFlash.classList.remove("show");
+          const cb = laserCb; laserCb = null; if (cb) cb();
+        }
+      }
+      function attemptInsert() {
+        if (!doorOpen || slotBtn.disabled) return;
+        if (window.MBS && window.MBS.isLive) { slotBtn.disabled = true; fireLaser(onConnect); }
+        else { doorNote.textContent = "Nothing happens."; }
+      }
+      slotBtn.addEventListener("click", attemptInsert);
 
       // ---- epilogue
       let epiOpen = false;
@@ -1030,7 +1088,8 @@ now "slotted" (a saved legacy "wired" record still resumes correctly, see loadSt
         exhibitObjs.forEach(e => { const t = tex[e.texKeyCozy]; if (t) { e.photoMat.map = t; e.photoMat.needsUpdate = true; } e.spot.color.set(0xfff0d0); e.spot.intensity = 1.3; });
         hallLights.forEach(l => { l.color.set(WARM_LIGHT); l.intensity = 0.85; });
         wallMat.color.set(WARM_WALL); rugMat.color.set(RUG_WARM); ambient.intensity = 0.55;
-        yaw = 0; pitch = 0; applyLook();
+        scene.fog.near = FOG_NEAR_OUT; scene.fog.far = FOG_FAR_OUT;
+        yaw = 0; pitch = 0; targetYaw = 0; targetPitch = 0; applyLook();
       });
 
       function resize() {
@@ -1062,7 +1121,9 @@ now "slotted" (a saved legacy "wired" record still resumes correctly, see loadSt
         camera.position.z = zAt(ST.t);
         const rp0 = shrinkProgress(), caseMode0 = ST.phase === "out";
         camera.position.y = eyeY(rp0);
-        hallMesh.scale.set(2 * wallHalf(rp0), ceilY(rp0), 1);
+        hallMesh.scale.set(2 * wallHalf(rp0), CEIL_H, 1);
+        scene.fog.near = FOG_NEAR_OUT + (FOG_NEAR_IN - FOG_NEAR_OUT) * rp0;
+        scene.fog.far = FOG_FAR_OUT + (FOG_FAR_IN - FOG_FAR_OUT) * rp0;
         exhibitObjs.forEach(e => updateExhibit(e, rp0, caseMode0));
         updateProp(bookGroup, GUESTBOOK_SIDE, GUESTBOOK_P, rp0, 0.55);
         updateProp(titleGroup, TITLE_SIDE, TITLE_P, rp0, 1);
@@ -1074,18 +1135,26 @@ now "slotted" (a saved legacy "wired" record still resumes correctly, see loadSt
       let last = performance.now();
       function frame(now) {
         const dt = Math.min(0.05, (now - last) / 1000); last = now;
+        if (!zoomOpen) {
+          yaw += (targetYaw - yaw) * Math.min(1, dt * 8);
+          pitch += (targetPitch - pitch) * Math.min(1, dt * 8);
+        }
         applyLook();
+        updateLaser(now);
 
-        if (walkHeld && !bookOpen && !epiOpen && !zoomOpen) {
-          const dir = ST.phase === "out" ? 1 : -1;
-          ST.t = Math.max(0, Math.min(1, ST.t + dir * WALK_SPEED * dt));
-          saveState();
+        if ((fwdHeld || backHeld) && !bookOpen && !epiOpen && !zoomOpen) {
+          const dir = (fwdHeld ? 1 : 0) - (backHeld ? 1 : 0);
+          if (dir) { ST.t = Math.max(0, Math.min(1, ST.t + dir * WALK_SPEED * dt)); saveState(); }
         }
         camera.position.z = zAt(ST.t);
         const rp = shrinkProgress(), caseMode = ST.phase === "out";
         camera.position.y = eyeY(rp);
 
-        if (!flickering) { hallMesh.scale.set(2 * wallHalf(rp), ceilY(rp), 1); }
+        if (!flickering) {
+          hallMesh.scale.set(2 * wallHalf(rp), CEIL_H, 1);
+          scene.fog.near = FOG_NEAR_OUT + (FOG_NEAR_IN - FOG_NEAR_OUT) * rp;
+          scene.fog.far = FOG_FAR_OUT + (FOG_FAR_IN - FOG_FAR_OUT) * rp;
+        }
         exhibitObjs.forEach(e => updateExhibit(e, rp, caseMode));
         updateProp(bookGroup, GUESTBOOK_SIDE, GUESTBOOK_P, rp, 0.55);
         updateProp(titleGroup, TITLE_SIDE, TITLE_P, rp, 1);
@@ -1099,10 +1168,10 @@ now "slotted" (a saved legacy "wired" record still resumes correctly, see loadSt
         if (reducedMotion) zoomEase = zoomTarget;
         else { const rate = (zoomTarget > zoomEase ? dt / 0.45 : dt / 0.3); zoomEase = zoomTarget > zoomEase ? Math.min(zoomTarget, zoomEase + rate) : Math.max(zoomTarget, zoomEase - rate); }
         const ease = zoomEase * zoomEase * (3 - 2 * zoomEase);
-        if (zoomTurning && !dragging) {
+        if (zoomTurning) {
           yaw = angleLerp(zoomYawFrom, zoomYawTo, ease); applyLook();
           if (ease >= 1) zoomTurning = false;
-        } else if (zoomTurning) zoomTurning = false;   // the player grabbed the look and took the turn over
+        }
         glassGroup.position.lerpVectors(GLASS_REST, GLASS_RAISED, ease);
         glassGroup.scale.setScalar(1 + 2.4 * ease);
         if (!reducedMotion) glassGroup.position.y += Math.sin(now * 0.0016) * 0.012 * (1 - ease);
@@ -1215,9 +1284,10 @@ now "slotted" (a saved legacy "wired" record still resumes correctly, see loadSt
             <div class="fl-actions"><button id="flNext">NEXT</button></div>`;
           break;
         }
-        case "door": wrap.innerHTML = `<span class="fl-name">The Door</span><p>Insert the instrument. Drag or tap the glass into the slot.</p>
-          <div class="lb-fusepanel"><div class="lb-tear" id="flTear"><div class="wires"><div class="wire l"><span class="end"></span></div><div class="wire r"><span class="end"></span></div><span class="spark"></span></div>
-          <div class="tip" id="flTip">drag the glass into the slot.</div></div></div>`; break;
+        case "door": wrap.innerHTML = `<span class="fl-name">The Door</span><p>There's an empty magnifying-glass hole in it.</p>
+          <button type="button" class="lb-slotBtn" id="flSlot" aria-label="Put the glass in the hole">🔍</button>
+          <p class="fl-sub" id="flDoorNote"></p>
+          <div class="fl-actions"></div>`; break;
         case "turn": wrap.innerHTML = `<span class="fl-name">Turn around.</span><p>The hall behind you is smaller than the one you walked in.</p><div class="fl-actions"><button id="flNext">turn around</button></div>`; break;
         case "teepee-h": case "car-h": case "shoebox-h": case "storage-h": case "masonjar-h": case "van-h": {
           const ex = EXHIBITS.find(e => e.id === s.id.replace("-h", ""));
@@ -1231,11 +1301,22 @@ now "slotted" (a saved legacy "wired" record still resumes correctly, see loadSt
         case "epilogue": wrap.innerHTML = `<span class="fl-name">${CLOSING_LINE}</span><div class="fl-actions"><button id="flAgain">walk again</button></div>`; break;
       }
       flat.appendChild(wrap);
+      const flash = document.createElement("div"); flash.className = "lb-laser-flash"; flash.id = "flFlash";
+      flat.appendChild(flash);
+      if (step > 0) {
+        const actions = wrap.querySelector(".fl-actions, .lb-book .row");
+        if (actions) {
+          const back = document.createElement("button"); back.type = "button"; back.id = "flBack"; back.textContent = "back";
+          actions.insertBefore(back, actions.firstChild);
+        }
+      }
       wire();
     }
     function goNext() { step = Math.min(STEPS.length - 1, step + 1); render(); }
+    function goBack() { step = Math.max(0, step - 1); render(); }
     function wire() {
       const next = document.getElementById("flNext"); if (next) next.addEventListener("click", goNext);
+      const back = document.getElementById("flBack"); if (back) back.addEventListener("click", goBack);
       const skip = document.getElementById("flSkip"); if (skip) skip.addEventListener("click", goNext);
       const bookForm = document.getElementById("flBook");
       if (bookForm) bookForm.addEventListener("submit", e => {
@@ -1245,8 +1326,20 @@ now "slotted" (a saved legacy "wired" record still resumes correctly, see loadSt
       });
       const zoomable = document.getElementById("flZoom");
       if (zoomable) zoomable.addEventListener("click", () => zoomable.classList.toggle("zoomed"));
-      const tear = document.getElementById("flTear");
-      if (tear) wireUp(tear.parentElement, () => { fireConnect(() => setTimeout(goNext, 700)); });
+      // the door: an empty magnifying-glass hole, click to put the glass in - no wire, no drag. Off stream,
+      // nothing happens and the museum stays explorable; live, a laser flash plays, then the same
+      // breach/shrink sequence the 3D path uses.
+      const flSlot = document.getElementById("flSlot");
+      if (flSlot) flSlot.addEventListener("click", () => {
+        if (flSlot.disabled) return;
+        if (ST.phase !== "out") { goNext(); return; }
+        const note = document.getElementById("flDoorNote");
+        if (window.MBS && window.MBS.isLive) {
+          flSlot.disabled = true;
+          const flashEl = document.getElementById("flFlash"); if (flashEl) flashEl.classList.add("show");
+          setTimeout(() => { fireConnect(() => { if (flashEl) flashEl.classList.remove("show"); goNext(); }); }, 500);
+        } else if (note) { note.textContent = "Nothing happens."; }
+      });
       const again = document.getElementById("flAgain");
       if (again) again.addEventListener("click", () => { ST.phase = "out"; ST.t = 0; ST.shrinkStartedAt = null; saveState(); step = 0; render(); });
     }

@@ -62,34 +62,16 @@ footer a{color:#ffd36e;min-height:44px;display:inline-flex;align-items:center;pa
       <a href="djscratch/">
         <span class="ch">CH 3</span>
         <span class="nm">The Music Desk</span>
-        <span class="pr">The hand plays a phrase. Play it back. It gets longer every time.</span>
-        <span class="go">Take The Desk &rarr;</span>
+        <span class="pr">THE HAND does dishes, laundry and a passable set. MOM Inc would like you to notice the first two.</span>
+        <span class="go">Scratch It Three Times &rarr;</span>
       </a>
       <span class="done" data-slug="djscratch" hidden>SOLVED</span>
-    </li>
-    <li class="card" style="--accent:#ff8a2a;--bg:#2a0a44">
-      <a href="sag/">
-        <span class="ch">CH 4</span>
-        <span class="nm">Basset&#x27;s Assets</span>
-        <span class="pr">Five doors, and behind them art. Some of it a person made. Some of it did not.</span>
-        <span class="go">Open The Doors &rarr;</span>
-      </a>
-      <span class="done" data-slug="sag" hidden>SOLVED</span>
-    </li>
-    <li class="card" style="--accent:#ffcf3a;--bg:#2f6fed">
-      <a href="armie/">
-        <span class="ch">CH 5</span>
-        <span class="nm">The Hall Of The Hand</span>
-        <span class="pr">Something is crawling up the hall behind you. Coach says keep moving.</span>
-        <span class="go">Run The Hall &rarr;</span>
-      </a>
-      <span class="done" data-slug="armie" hidden>SOLVED</span>
     </li>
     <li class="card" style="--accent:#4a2a7a;--bg:#ded3b8">
       <a href="corgi/">
         <span class="ch">CH 6</span>
         <span class="nm">The School Hunt</span>
-        <span class="pr">Nine pages are loose in a dark school, and something moves when you look away.</span>
+        <span class="pr">Nine pages are loose across a school, a food-service floor and an office. The paper man moves when you look away.</span>
         <span class="go">Start The Hunt &rarr;</span>
       </a>
       <span class="done" data-slug="corgi" hidden>SOLVED</span>
@@ -99,25 +81,16 @@ footer a{color:#ffd36e;min-height:44px;display:inline-flex;align-items:center;pa
         <span class="ch">CH 7</span>
         <span class="nm">Build Your Stack</span>
         <span class="pr">Turn the tub, drop the scoop, seal a pre workout nobody has ever brewed.</span>
-        <span class="go">Build Your Stack &rarr;</span>
+        <span class="go">Mix The Untested Can &rarr;</span>
       </a>
       <span class="done" data-slug="fuel" hidden>SOLVED</span>
-    </li>
-    <li class="card" style="--accent:#e04b6a;--bg:#2a0a44">
-      <a href="goon/">
-        <span class="ch">CH 8</span>
-        <span class="nm">Goon</span>
-        <span class="pr">Slide the tiles together. A goon is someone who gives. You are one too.</span>
-        <span class="go">Play A Hand &rarr;</span>
-      </a>
-      <span class="done" data-slug="goon" hidden>SOLVED</span>
     </li>
     <li class="card" style="--accent:#ff8a2a;--bg:#1b0a2c">
       <a href="girlfriend/">
         <span class="ch">CH 9</span>
         <span class="nm">The Manufacturing Floor</span>
-        <span class="pr">Walk the line where a health study becomes a headline, one station at a time.</span>
-        <span class="go">Enter The Floor &rarr;</span>
+        <span class="pr">Six tubes of somebody&#x27;s research go into one pitcher. What comes out is moulded, boxed and flown away. She leaves the goggles behind.</span>
+        <span class="go">Start The Line &rarr;</span>
       </a>
       <span class="done" data-slug="girlfriend" hidden>SOLVED</span>
     </li>
@@ -132,7 +105,11 @@ footer a{color:#ffd36e;min-height:44px;display:inline-flex;align-items:center;pa
   var done=[];try{done=JSON.parse(localStorage.getItem("mbs-unlock")||"[]")}catch(e){}
   document.querySelectorAll(".done").forEach(function(el){ if(done.indexOf(el.dataset.slug)>-1) el.hidden=false; });
   var n=document.querySelectorAll(".done:not([hidden])").length;
-  document.getElementById("count").textContent = n ? n+" of 8 solved" : "8 games";
+  // derived from the cards actually on the page, never a literal: a channel added,
+  // promoted or suppressed changes this text with no code edit
+  var total=document.querySelectorAll("li.card").length;
+  document.getElementById("count").textContent = n ? n+" of "+total+" solved"
+                                                   : total+" game"+(total===1?"":"s");
 })();
 </script>
 </body>

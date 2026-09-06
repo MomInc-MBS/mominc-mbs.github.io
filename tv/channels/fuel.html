@@ -84,6 +84,12 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
       text-align:right; max-width:44%; box-shadow:2px 2px 0 rgba(0,0,0,.3); animation:nudgepop 2.4s ease-in-out 3}
   @keyframes nudgepop{0%,100%{transform:scale(1)} 50%{transform:scale(1.06)}}
   @media (prefers-reduced-motion:reduce){ .fu-nudge{animation:none} }
+  /* touch has no hover (Codex C4): visible tap controls spin the tub without needing pointer position */
+  .fu-rotate{position:absolute; left:0; right:0; bottom:10px; z-index:4; display:flex; justify-content:center; gap:14px; pointer-events:none}
+  .fu-rotbtn{pointer-events:auto; cursor:pointer; width:44px; height:44px; border-radius:50%; border:3px solid var(--ink);
+      background:var(--sun); color:var(--ink); font-family:"Anton",sans-serif; font-size:20px; line-height:1;
+      box-shadow:2px 2px 0 rgba(0,0,0,.3)}
+  .fu-rotbtn:active{transform:translate(1px,1px); box-shadow:1px 1px 0 rgba(0,0,0,.3)}
   .fu-face{position:absolute; left:10px; top:9px; z-index:3; pointer-events:none; max-width:58%}
   .fu-face b{display:block; font-family:"Archivo Black",sans-serif; font-size:clamp(13px,3.6vw,16px); color:var(--cream); text-shadow:0 1px 5px #000}
   .fu-face i{display:block; font-style:normal; margin-top:2px; font-family:"Anton",sans-serif; font-size:clamp(11px,3vw,12.5px); letter-spacing:.04em; color:var(--sun); text-shadow:0 1px 4px #000}
@@ -168,16 +174,20 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
       <p class="floatprint" style="left:6%; top:8%">UNTESTED</p>
       <p class="floatprint" style="right:4%; bottom:6%">UNTESTED</p>
       <h2 class="heading">YOUR PRE-WORKOUT. YOUR RULES.</h2>
-      <p class="lede">MOM already mixed your can. It is waiting right below. Six ingredients. Three settings each: none, weak, strong. Drag the tub, bring one under the scoop, and tap the scoop to set it. What each one really does is written straight. What MBS FUEL promises at that setting is not.</p>
+      <p class="lede">MOM already mixed your can. It is waiting right below. Six ingredients. Three settings each: none, weak, strong. Tap a jar to set it. What each one really does is written straight. What MBS FUEL promises at that setting is not.</p>
       <p class="warn">⚠ THIS BLEND HAS NEVER BEEN BREWED. NOTHING BELOW HAS BEEN TESTED ON A HUMAN, A LAB, OR A DOG. ⚠</p>
     </section>
 
     <section class="card" id="stageCard" aria-label="The tub">
       <h2 class="heading">THE STACK</h2>
       <div class="fu-stage" id="fuStage">
-        <canvas id="fuCanvas" aria-label="The endless FUEL tub. Drag it to bring an additive to the scoop, tap the scoop to set none, weak or strong."></canvas>
+        <canvas id="fuCanvas" aria-label="The endless FUEL tub. Move your mouse left or right over it to spin it. Tap a jar in front to cycle none, weak, strong. Tap a bottle on the left to pick a flavour."></canvas>
         <div class="fu-face" id="fuFace"><b>&nbsp;</b><i>&nbsp;</i></div>
-        <p class="fu-nudge" id="fuNudge">Drag the tub. Tap the scoop.</p>
+        <p class="fu-nudge" id="fuNudge">Tap a jar. Tap a flavour.</p>
+        <div class="fu-rotate">
+          <button type="button" class="fu-rotbtn" id="fuRotL" aria-label="Rotate tub left">&#8249;</button>
+          <button type="button" class="fu-rotbtn" id="fuRotR" aria-label="Rotate tub right">&#8250;</button>
+        </div>
       </div>
     </section>
 
@@ -570,18 +580,26 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
       x.font = "bold 46px Arial"; x.fillText(name || "", 512, 176);
       const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
     }
+    // outer wall: carries the product label, FrontSide only so the label is visible from outside and
+    // never renders on the inside face - "we don't want the copy... on the inside of it" (client).
     const wallMat = M.plastic(0xffffff); wallMat.map = labelTexture(productName());
+    wallMat.side = THREE.FrontSide;
     const wall = new THREE.Mesh(new THREE.CylinderGeometry(1.9, 1.55, 1.15, 32, 1, true), wallMat);
-    wall.material.side = THREE.DoubleSide;
     productLabelUpdater = (name) => { wallMat.map.dispose(); wallMat.map = labelTexture(name); wallMat.needsUpdate = true; };
     wall.position.y = 0.58; wall.castShadow = true; TUB.add(wall);
+    // inner wall: a second shell just inside the outer one, giving the tub real thickness (it was a
+    // single paper-thin surface, which is what let the far interior wall clip away to nothing when
+    // viewed from above) and facing the powder with plain colour, no label.
+    const innerWall = new THREE.Mesh(new THREE.CylinderGeometry(1.82, 1.48, 1.1, 32, 1, true),
+      new THREE.MeshStandardMaterial({ color: 0x8a1040, roughness: 0.8, metalness: 0, side: THREE.DoubleSide }));
+    innerWall.position.y = 0.58; TUB.add(innerWall);
     // lived-in: a sticker peeled off long ago, the ghost rectangle and residue still there
     const residue = new THREE.Mesh(new THREE.PlaneGeometry(0.34, 0.22),
       new THREE.MeshStandardMaterial({ color: 0xfffef2, roughness: 0.85, metalness: 0, transparent: true, opacity: 0.3 }));
     residue.position.set(0, 0.7, 1.62); TUB.add(residue);
-    const rim = new THREE.Mesh(new THREE.TorusGeometry(1.9, 0.09, 12, 40), M.cream);
+    const rim = new THREE.Mesh(new THREE.TorusGeometry(1.9, 0.11, 12, 40), M.cream);
     rim.rotation.x = Math.PI / 2; rim.position.y = 1.15; TUB.add(rim);
-    const tubFloor = new THREE.Mesh(new THREE.CircleGeometry(1.55, 32), M.plastic(0x8a1040));
+    const tubFloor = new THREE.Mesh(new THREE.CircleGeometry(1.6, 32), M.plastic(0x8a1040));
     tubFloor.rotation.x = -Math.PI / 2; tubFloor.position.y = 0.02; TUB.add(tubFloor);
 
     // powder bands: one flat disc per additive, nested like a target seen from above - each
@@ -607,46 +625,82 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
     updateBands();
     bandsUpdater = updateBands;
 
-    // six canisters, 60 degrees apart, riding the rim
-    const RING_R = 1.55;
-    const pods = SUPPS.map((s, i) => {
-      const a = (i / N) * Math.PI * 2;
-      const g = new THREE.Group();
-      g.position.set(Math.sin(a) * RING_R, 1.0, Math.cos(a) * RING_R);
-      g.rotation.y = -a;
+    // ---- the jars: six additive canisters, standing outside the tub in front of it, each carrying
+    // its own printed label. Client: "we don't want the jars to be inside the bucket... we want them
+    // to be outside... the jars being each individually labeled." They no longer ride the tub, so
+    // tapping one directly is now the whole interaction - no rotation-to-align step.
+    function jarLabelTexture(key) {
+      const row = rowByKey(key);
+      const name = row ? row.querySelector(".name").textContent : key.toUpperCase();
+      const c = document.createElement("canvas"); c.width = 220; c.height = 140;
+      const x = c.getContext("2d");
+      x.fillStyle = "#fffef2"; x.fillRect(0, 0, 220, 140);
+      x.strokeStyle = "#1a0a10"; x.lineWidth = 7; x.strokeRect(3, 3, 214, 134);
+      x.fillStyle = "#1a0a10"; x.font = "bold 26px Arial"; x.textAlign = "center"; x.textBaseline = "middle";
+      const words = name.split(" ");
+      if (words.length > 1) { x.fillText(words[0], 110, 58); x.fillText(words.slice(1).join(" "), 110, 92); }
+      else x.fillText(name, 110, 74);
+      const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+    }
+    const jarBay = new THREE.Group(); jarBay.position.set(0, 0, 2.05); scene.add(jarBay);
+    const JAR_SPACING = 0.62;
+    const jars = SUPPS.map((s, i) => {
+      const x = (i - (N - 1) / 2) * JAR_SPACING;
+      const g = new THREE.Group(); g.position.set(x, 0.5, 0);
       const body = new THREE.Mesh(new THREE.CylinderGeometry(0.26, 0.29, 0.5, 16), M.cream);
       body.castShadow = true; g.add(body);
       const cap = new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.28, 0.1, 16),
         new THREE.MeshStandardMaterial({ color: s.col, roughness: 0.6, metalness: 0.1, emissive: s.col, emissiveIntensity: 0.05 }));
       cap.position.y = 0.3; g.add(cap);
+      const label = new THREE.Mesh(new THREE.PlaneGeometry(0.4, 0.26),
+        new THREE.MeshBasicMaterial({ map: jarLabelTexture(s.key), transparent: true }));
+      label.position.set(0, 0, 0.27); g.add(label);
       // lived-in: a moulding sprue nub repeats on every canister, the raw plastic never fully trimmed
       const sprue = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.02, 0.04, 6), M.ink);
       sprue.position.set(0, -0.22, 0.26); g.add(sprue);
       if (i === 0) {
         // lived-in: one canister carries a scratch through its finish, down to the raw plastic underneath
         const scratch = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.02, 0.01), new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.9, metalness: 0 }));
-        scratch.position.set(0.02, 0.05, 0.27); scratch.rotation.z = 0.6; g.add(scratch);
+        scratch.position.set(0.02, 0.05, -0.27); scratch.rotation.z = 0.6; g.add(scratch);
       }
-      g.userData = { key: s.key, angle: a, cap };
-      TUB.add(g);
+      const hit = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.3, 0.9, 8), new THREE.MeshBasicMaterial({ visible: false }));
+      hit.position.y = 0.15; g.add(hit);
+      g.userData = { key: s.key, cap, hit };
+      jarBay.add(g);
       floatIt(g, g.position.y, 0.03);
       return g;
     });
 
-    function updatePodVisual(i) {
-      const row = rowByKey(pods[i].userData.key);
+    function updateJarVisual(i) {
+      const row = rowByKey(jars[i].userData.key);
       const lvl = row && row.dataset.level;
-      const cap = pods[i].userData.cap;
+      const cap = jars[i].userData.cap;
       cap.material.emissiveIntensity = lvl === "strong" ? 1.25 : lvl === "weak" ? 0.5 : 0.05;
       cap.scale.setScalar(lvl === "strong" ? 1.14 : 1);
     }
-    pods.forEach((_, i) => updatePodVisual(i));
+    jars.forEach((_, i) => updateJarVisual(i));
 
-    // ---- the flavour rack: eight bottles, fixed, not part of the tub's rotation
-    const rack = new THREE.Group(); rack.position.set(0, 0.6, 2.0); scene.add(rack);
+    // ---- the flavour menu: eight bottles, fixed to the LEFT of the tub (client, round 3 pass 3),
+    // laid out as a small 2x4 shelf under a title card so it reads as a menu, not a loose row.
+    const rack = new THREE.Group(); rack.position.set(-1.7, 0, 1.3); scene.add(rack);
+    function menuTitleTexture(text) {
+      const c = document.createElement("canvas"); c.width = 320; c.height = 96;
+      const x = c.getContext("2d");
+      x.fillStyle = "#1a0a10"; x.fillRect(0, 0, 320, 96);
+      x.strokeStyle = "#ffea00"; x.lineWidth = 4; x.strokeRect(3, 3, 314, 90);
+      x.fillStyle = "#ffea00"; x.font = "bold 40px Arial"; x.textAlign = "center"; x.textBaseline = "middle";
+      x.fillText(text, 160, 48);
+      const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+    }
+    const menuTitle = new THREE.Mesh(new THREE.PlaneGeometry(0.85, 0.26),
+      new THREE.MeshBasicMaterial({ map: menuTitleTexture("FLAVOUR"), transparent: true }));
+    menuTitle.position.set(0, 1.04, 0); rack.add(menuTitle);
+    const FLAV_COLS = 2;
     const vials = flavours.map((btn, i) => {
-      const x = (i - (flavours.length - 1) / 2) * 0.46;
-      const g = new THREE.Group(); g.position.set(x, 0.55, 0);
+      const col = i % FLAV_COLS, row = Math.floor(i / FLAV_COLS);
+      const x = (col - (FLAV_COLS - 1) / 2) * 0.3;
+      const y = 0.78 - row * 0.28;
+      const g = new THREE.Group(); g.position.set(x, y, 0);
       const bottle = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.15, 0.5, 14),
         new THREE.MeshStandardMaterial({ color: FLAV_COL[i], roughness: 0.5, metalness: 0.05, emissive: FLAV_COL[i], emissiveIntensity: 0.15 }));
       bottle.castShadow = true; g.add(bottle);
@@ -657,11 +711,11 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
       const sprue2 = new THREE.Mesh(new THREE.CylinderGeometry(0.008, 0.012, 0.03, 6), M.ink);
       sprue2.position.set(0, -0.24, 0.13); g.add(sprue2);
       // an invisible, generous hit target - the bottle itself is a small thing to aim at on a phone
-      const hit = new THREE.Mesh(new THREE.CylinderGeometry(0.26, 0.26, 0.9, 8), new THREE.MeshBasicMaterial({ visible: false }));
-      hit.position.y = 0.18; g.add(hit);
+      const hit = new THREE.Mesh(new THREE.CylinderGeometry(0.17, 0.17, 0.45, 8), new THREE.MeshBasicMaterial({ visible: false }));
+      hit.position.y = 0.15; g.add(hit);
       g.userData = { i, bottle, hit };
       rack.add(g);
-      floatIt(g, g.position.y, 0.025);
+      floatIt(g, g.position.y, 0.02);
       return g;
     });
     function updateVialVisual(i) {
@@ -737,41 +791,45 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
     resize();
     setTimeout(resize, 80);   // a tab that loads backgrounded can hand the stage a 0x0 layout on the first pass
 
-    // ---- drag to rotate. Trap: .channel carries zoom:1.15 (tv.css), so getBoundingClientRect()/clientX/
-    // clientY are visual pixels while clientWidth/offsetX are layout pixels. Build every bit of this from the
-    // rect and the event only.
-    let angle = 0, velocity = 0, dragging = false, dragRect = null, lastX = 0;
-    canvas.addEventListener("pointerdown", e => {
-      dragRect = canvas.getBoundingClientRect();
-      const hit = pick(e);
-      if (hit && (hit.kind === "scoop" || hit.kind === "vial")) { act(hit); return; }
-      dragging = true; velocity = 0; lastX = e.clientX;
-      try { canvas.setPointerCapture(e.pointerId); } catch {}
-    });
-    canvas.addEventListener("pointermove", e => {
-      if (!dragging || !dragRect) return;
-      const dx = e.clientX - lastX; lastX = e.clientX;
-      const d = (dx / dragRect.width) * Math.PI * 2.4;   // full-width drag ~= 2.4 turns
-      angle += d; velocity = d;
-      e.preventDefault();
-    });
-    const endDrag = () => { dragging = false; };
-    ["pointerup", "pointercancel", "pointerleave"].forEach(ev => canvas.addEventListener(ev, endDrag));
+    // ---- rotation follows the pointer's horizontal position (client, round 3: "get rid of the drag
+    // feature... it just needs to be based off of where the mouse is"). No press/move/release: while the
+    // pointer sits over the stage, the tub keeps spinning at a speed/direction set by how far left or
+    // right of centre it is - hard stop the instant the pointer leaves. Still endless (angle is never
+    // clamped), so there is still no seam turning either way. Touch has no hover (Codex C4), so mouse/pen
+    // only here; the rotate buttons below cover touch. Trap: .channel carries zoom:1.15 (tv.css), so
+    // getBoundingClientRect()/clientX/clientY are visual pixels while clientWidth is layout pixels -
+    // every bit of this is built from the rect and the event only, never clientWidth.
+    let angle = 0, hoverActive = false, hoverFrac = 0, lastJar = 0;
+    const ROT_SPEED = 2.0;   // rad/s at full deflection
+    ["pointerenter", "pointermove"].forEach(evt => canvas.addEventListener(evt, e => {
+      if (e.pointerType === "touch") return;
+      const r = canvas.getBoundingClientRect();
+      hoverFrac = ((e.clientX - r.left) / r.width) * 2 - 1;
+      hoverActive = true;
+    }));
+    canvas.addEventListener("pointerleave", e => { if (e.pointerType !== "touch") hoverActive = false; });
+
+    // ---- visible tap controls: a touch device has no hover, so it needs its own way to spin the tub.
+    const rotL = document.getElementById("fuRotL"), rotR = document.getElementById("fuRotR");
+    const ROT_STEP = Math.PI / 8;
+    if (rotL) rotL.addEventListener("click", () => { angle -= ROT_STEP; });
+    if (rotR) rotR.addEventListener("click", () => { angle += ROT_STEP; });
 
     // ---- raycast, same rect-and-event rule
     const ray = new THREE.Raycaster(), pt = new THREE.Vector2();
     function pick(e) {
-      const r = dragRect || canvas.getBoundingClientRect();
+      const r = canvas.getBoundingClientRect();
       pt.x = ((e.clientX - r.left) / r.width) * 2 - 1;
       pt.y = -((e.clientY - r.top) / r.height) * 2 + 1;
       ray.setFromCamera(pt, camera);
-      const targets = [bowl, handle, ...vials.map(v => v.userData.hit)];
+      const targets = [...vials.map(v => v.userData.hit), ...jars.map(j => j.userData.hit)];
       const isect = ray.intersectObjects(targets, false);
       if (!isect.length) return null;
       const o = isect[0].object;
-      if (o === bowl || o === handle) return { kind: "scoop" };
       const vi = vials.findIndex(v => v.userData.hit === o);
       if (vi >= 0) return { kind: "vial", i: vi };
+      const ji = jars.findIndex(j => j.userData.hit === o);
+      if (ji >= 0) return { kind: "jar", i: ji };
       return null;
     }
 
@@ -816,16 +874,20 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
       }
       requestAnimationFrame(step);
     }
-    function frontIndex() { return ((Math.round(-angle / (Math.PI * 2 / N)) % N) + N) % N; }
     function act(hit) {
       if (hit.kind === "vial") { injectFlavour(hit.i); return; }
+      if (hit.kind === "jar") { scoopJar(hit.i); return; }
+    }
+    // scoop a specific jar by index - jars are now standalone and clicked directly (client: "jars...
+    // outside... each individually labeled"), so there is no more "front" jar to compute from rotation.
+    function scoopJar(i) {
       if (scooping || injecting) return;
-      const i = frontIndex();
-      const row = rowByKey(pods[i].userData.key);
+      const row = rowByKey(jars[i].userData.key);
       const order = ["none", "weak", "strong"];
       const next = !row.dataset.level ? "none" : order[(order.indexOf(row.dataset.level) + 1) % order.length];
       row.querySelector(`.lvl[data-level="${next}"]`).click();
-      updatePodVisual(i);
+      updateJarVisual(i);
+      lastJar = i;
       scooping = true;
       setTimeout(() => { scooping = false; }, 1300);   // backstop: rAF can stall on a dropped frame, setTimeout can't
       const t0 = performance.now();
@@ -853,7 +915,7 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
       }
       requestAnimationFrame(step);
     }
-    canvas.addEventListener("click", e => { if (!dragging) { const hit = pick(e); if (hit) act(hit); } });
+    canvas.addEventListener("click", e => { const hit = pick(e); if (hit) act(hit); });
 
     // ---- keyboard path: same state, same act() the touch/pointer path uses. Arrow keys only inside
     // the canvas, so the rest of the page still scrolls normally with the keyboard.
@@ -861,12 +923,16 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
     let kbFlav = 0;
     canvas.addEventListener("keydown", e => {
       const step = (Math.PI * 2 / N) / 3;
-      if (e.key === "ArrowLeft") { angle -= step; velocity = 0; e.preventDefault(); }
-      else if (e.key === "ArrowRight") { angle += step; velocity = 0; e.preventDefault(); }
+      if (e.key === "ArrowLeft") { angle -= step; }
+      else if (e.key === "ArrowRight") { angle += step; }
       else if (e.key === "ArrowUp" || e.key === "ArrowDown") {
         kbFlav = (kbFlav + (e.key === "ArrowDown" ? 1 : -1) + flavours.length) % flavours.length;
-        act({ kind: "vial", i: kbFlav }); e.preventDefault();
-      } else if (e.key === "Enter" || e.key === " ") { act({ kind: "scoop" }); e.preventDefault(); }
+        act({ kind: "vial", i: kbFlav });
+      } else if (e.key === "[" || e.key === "]") {
+        lastJar = (lastJar + (e.key === "]" ? 1 : -1) + N) % N;
+      } else if (e.key === "Enter" || e.key === " ") { act({ kind: "jar", i: lastJar }); }
+      else return;
+      e.preventDefault();
     });
 
     // ---- frame loop
@@ -874,7 +940,7 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
     function frame(now) {
       const dt = Math.min(50, now - last); last = now;
 
-      if (!dragging) { angle += velocity; velocity *= 0.93; if (Math.abs(velocity) < 0.0003) velocity = 0; }
+      if (hoverActive) angle += hoverFrac * ROT_SPEED * (dt / 1000);
       TUB.rotation.y = angle;
 
       if (!REDUCED) for (const f of floaters) f.o.position.y = f.y + Math.sin(now / 900 + f.p) * f.a;
@@ -887,13 +953,12 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
         if (p.t >= p.life || p.m.position.y < 0.1) { scene.remove(p.m); p.m.geometry === pGeo || p.m.geometry.dispose(); p.m.material.dispose(); particles.splice(i, 1); }
       }
 
-      const fi = frontIndex();
-      const row = rowByKey(SUPPS[fi].key);
+      const row = rowByKey(SUPPS[lastJar].key);
       const lvl = row.dataset.level;
       const promiseEl = row.querySelector(lvl ? `.p-${lvl}` : ".p-unset");
       faceEl.querySelector("b").textContent = row.querySelector(".name").textContent + (lvl ? " · " + lvl.toUpperCase() : "");
       faceEl.querySelector("i").textContent = promiseEl ? promiseEl.textContent : "";
-      nudge.textContent = complete() ? "Full stack. Seal the can below." : "Drag the tub. Tap the scoop.";
+      nudge.textContent = complete() ? "Full stack. Seal the can below." : "Tap a jar to set it. Tap a flavour on the left.";
 
       renderer.render(scene, camera);
       requestAnimationFrame(frame);

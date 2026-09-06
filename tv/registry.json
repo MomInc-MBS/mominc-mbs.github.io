@@ -1,9 +1,10 @@
 {
-  "note": "One source of truth for every playable channel. Palettes are lifted verbatim from each channel's own CSS custom properties, not chosen here. 'mominc' is deliberately absent: it is the network hub and narrative front door, not a game. `roots`/`hide` drive play-route isolation (see tv/mount.js). `live` and `identity_api` are OFF switches: every live-mission and identity element on a landing card renders only when its value here is non-empty, so an unconfirmed broadcast can never produce an invented deadline and no form can collect an address there is nowhere to send. Durations are estimates and are flagged as such until a timed pass is run.",
+  "note": "One source of truth for every playable channel. Palettes are lifted verbatim from each channel's own CSS custom properties, not chosen here. 'mominc' is deliberately absent: it is the network hub and narrative front door, not a game. `roots`/`hide` drive play-route isolation (see tv/mount.js). `live` and `identity_api` are OFF switches: every live-mission and identity element on a landing card renders only when its value here is non-empty, so an unconfirmed broadcast can never produce an invented deadline and no form can collect an address there is nowhere to send. Durations are estimates and are flagged as such until a timed pass is run. `status: \"coming_soon\"` (sag, armie) keeps a channel's television slot but generates no play route and drops it from the playable index and the onward cycle. `mission_id` (per game), `api_base` (root) and `live.station` are the same kind of OFF switch: empty means the redeem/tuning feature they feed does not render.",
   "games": [
     {
       "slug": "lilboyfriend",
       "ch": 2,
+      "mission_id": "",
       "title": "Living Small",
       "host": "LIL BOYFRIEND",
       "eyebrow": "GUIDED TOUR",
@@ -39,6 +40,7 @@
     {
       "slug": "djscratch",
       "ch": 3,
+      "mission_id": "",
       "title": "The Music Desk",
       "host": "DJ SCRATCH",
       "eyebrow": "PAID PROGRAMMING",
@@ -77,6 +79,8 @@
     {
       "slug": "sag",
       "ch": 4,
+      "status": "coming_soon",
+      "mission_id": "",
       "title": "Basset's Assets",
       "host": "SAG SNIFFER",
       "eyebrow": "FIVE DOORS",
@@ -113,6 +117,8 @@
     {
       "slug": "armie",
       "ch": 5,
+      "status": "coming_soon",
+      "mission_id": "",
       "title": "The Hall Of The Hand",
       "host": "COACH ARMIE",
       "eyebrow": "CORRIDOR RUN",
@@ -151,6 +157,7 @@
     {
       "slug": "corgi",
       "ch": 6,
+      "mission_id": "",
       "title": "The School Hunt",
       "host": "CORTISOL CORGI",
       "eyebrow": "PAPER ROUND",
@@ -187,6 +194,7 @@
     {
       "slug": "fuel",
       "ch": 7,
+      "mission_id": "",
       "title": "Build Your Stack",
       "host": "MBS FUEL",
       "eyebrow": "MIX IT YOURSELF",
@@ -228,6 +236,8 @@
     {
       "slug": "goon",
       "ch": 8,
+      "status": "coming_soon",
+      "mission_id": "",
       "title": "Goon",
       "host": "MOM INC",
       "eyebrow": "SLIDE AND MERGE",
@@ -264,6 +274,7 @@
     {
       "slug": "girlfriend",
       "ch": 9,
+      "mission_id": "",
       "title": "The Manufacturing Floor",
       "host": "DR GIRLFRIEND",
       "eyebrow": "FOUR STATIONS",
@@ -303,7 +314,9 @@
     "broadcast_url": "",
     "next_broadcast_at": "",
     "schedule_label": "",
-    "rules_url": ""
+    "rules_url": "",
+    "station": ""
   },
-  "identity_api": ""
+  "identity_api": "",
+  "api_base": ""
 }
