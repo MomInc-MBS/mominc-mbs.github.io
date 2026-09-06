@@ -154,6 +154,104 @@
       .catch(() => { channel.innerHTML = testcard; });
   } else channel.innerHTML = testcard;
 
+  // --- 2.15 / C001: the game frame. A game channel can take the whole set: data-mode="game" drops the
+  // CRT furniture and gives the stage the viewport, with the shell controls kept visible above it.
+  //
+  // Three things this does NOT do, each on purpose:
+  //   - It never re-fetches or re-mounts the channel. Entering and leaving game mode is one attribute
+  //     on .tv and the CSS that hangs off it, so the running game keeps its DOM, its canvas and its
+  //     variables, and "progress-preserving exit" is a property of the design rather than a promise.
+  //   - It never requires fullscreen. The API is called only from the visitor's own click, and a
+  //     refusal is not an error path: the in-page expanded layout IS game mode, and fullscreen only
+  //     removes the browser chrome on top of it.
+  //   - It never writes a second sweep or a second timer. The pause lifecycle is MBS_RT's.
+  const gameKey = document.getElementById("gameKey");
+  const gameBtn = document.getElementById("gameBtn");
+  const gameLegend = document.getElementById("gameLegend");
+  const chanRec = (window.MBS_CHANNELS.channels || []).find(c => c.id === name) || {};
+  // a coming-soon or suppressed channel loads no fragment at all (above), so there is nothing to frame
+  const isGame = !!chanRec.game && !chanRec.comingSoon && !chanRec.suppressed;
+  const inGame = () => tv.dataset.mode === "game";
+
+  function paintGame() {
+    const on = inGame();
+    if (gameBtn) {
+      gameBtn.setAttribute("aria-pressed", on ? "true" : "false");
+      gameBtn.setAttribute("aria-label", on ? "Exit game" : "Enter game");
+      gameBtn.title = on ? "Exit game" : "Enter game";
+    }
+    if (gameLegend) gameLegend.textContent = on ? "EXIT" : "GAME";
+  }
+
+  // The stage changed shape. Pause across the transition and resume on the other side of it: the
+  // lifecycle's held-input release is the point, because the pointer or key that entered game mode
+  // can be released outside the page and never deliver its keyup. Two frames, so the resume lands
+  // after the browser has laid the new stage out rather than during it.
+  function settleGame() {
+    requestAnimationFrame(() => requestAnimationFrame(() => window.MBS_RT.resume("game")));
+  }
+  function enterGame() {
+    if (!isGame || inGame()) return;
+    window.MBS_RT.pause("game");
+    window.MBS.cancelWave && window.MBS.cancelWave();     // a sweep is television furniture, not game
+    tv.dataset.mode = "game";
+    try { sessionStorage.setItem("mbs-game", "1"); } catch {}
+    paintGame();
+    const el = document.documentElement;
+    if (el.requestFullscreen) { const r = el.requestFullscreen(); r && r.catch && r.catch(() => {}); }
+    settleGame();
+  }
+  function exitGame() {
+    if (!inGame()) return;
+    window.MBS_RT.pause("game");
+    delete tv.dataset.mode;
+    try { sessionStorage.removeItem("mbs-game"); } catch {}
+    paintGame();
+    if (document.fullscreenElement && document.exitFullscreen) {
+      const r = document.exitFullscreen(); r && r.catch && r.catch(() => {});
+    }
+    settleGame();
+  }
+  window.MBS.enterGame = enterGame;
+  window.MBS.exitGame = exitGame;
+  window.MBS.inGame = inGame;
+
+  if (isGame && gameKey && gameBtn) {
+    gameKey.hidden = false;
+    gameBtn.addEventListener("click", () => (inGame() ? exitGame() : enterGame()));
+    // game mode survives a channel change within the tab, the same way the power state does. Fullscreen
+    // cannot: it needs a gesture, so a restored session comes back in the in-page expanded mode.
+    let wasGame = false; try { wasGame = sessionStorage.getItem("mbs-game") === "1"; } catch {}
+    if (wasGame) { tv.dataset.mode = "game"; settleGame(); }
+  } else {
+    try { sessionStorage.removeItem("mbs-game"); } catch {}   // tuning to the hub leaves game mode
+  }
+  paintGame();
+
+  // the accessible exit, beyond the button: Escape leaves game mode, and if the browser drops
+  // fullscreen by any route (its own Escape, the window chrome, a gesture) the layout follows it out
+  // instead of stranding the visitor in a frame they did not ask to keep.
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && inGame()) exitGame(); });
+  document.addEventListener("fullscreenchange", () => { if (!document.fullscreenElement && inGame()) exitGame(); });
+
+  // --- the renderer-resize contract: the renderer follows the STAGE, not the window.
+  // Entering game mode changes the stage's box without changing the window's, so a game that sizes
+  // itself on a window resize would keep the old letterbox forever. Every game in this tree does size
+  // itself that way (mount.js dispatches a resize after injecting a fragment for exactly that reason),
+  // so one observer on the stage turns a stage change into the event they already listen for, and not
+  // one game file needs editing. Coalesced to a frame, and guarded on the measured box so a game that
+  // resizes its own canvas in the handler cannot feed itself.
+  if (window.ResizeObserver) {
+    let stageRaf = 0, lastBox = "";
+    new ResizeObserver(() => {
+      const box = screen.clientWidth + "x" + screen.clientHeight;
+      if (box === lastBox) return;
+      lastBox = box;
+      cancelAnimationFrame(stageRaf);
+      stageRaf = requestAnimationFrame(() => window.dispatchEvent(new Event("resize")));
+    }).observe(screen);
+  }
+
   // --- the stress gauge, driven by the channel
   const gaugeEl = document.getElementById("gauge"), gaugePct = document.getElementById("gaugePct"), gaugeLabel = document.getElementById("gaugeLabel");
   window.MBS.meter = (pct, label) => {

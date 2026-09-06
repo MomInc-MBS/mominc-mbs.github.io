@@ -51,6 +51,11 @@ def gen_channels_js(manifest):
             "half": c["id"] in HALF_IDS,
             "comingSoon": c["status"] == "coming_soon",
             "suppressed": c.get("suppressed") is not None,
+            # 2.15 / C001: whether this channel is a game, and so whether the television offers it the
+            # game frame. Read from `gameRoute`, which already answers exactly that question - mominc is
+            # the network hub and is the one channel without one. A literal list of game ids in tv.js
+            # would be a fourth place a channel id has to be kept in sync (2.3b, 2.3c).
+            "game": bool(c.get("gameRoute")),
         })
     active = [c["id"] for c in channels if c["active"]]
     # No manifest field distinguishes "asks the visitor for a form" from "active unlock node" today -

@@ -283,3 +283,57 @@ body{display:block;padding:0;overflow:hidden}
   .model{display:none}
 }
 
+/* --- game mode: the set hands the whole viewport to the game (2.15 / C001).
+   `data-mode="game"` sits on .tv and means the LAYOUT mode. It is not the TONE switch of the same
+   name: that one is live/public and lives on <html> (tv.js) and on a channel's own root (corgi.html).
+   Nothing selects on .tv[data-mode] but this block.
+
+   F.1's resolution, adopted: the CRT furniture comes off games and stays on every non-game page, while
+   the shell controls remain around an unframed stage. So the phosphor, glare, glass curvature and the
+   engraved MOM INC all go, and the panel becomes one compact strip above the stage carrying the two
+   things C001 names - an exit control and a reachable channel drawer.
+
+   The stage takes the whole viewport apart from that strip rather than a literal 100dvh, because
+   C001's own check is "enter, exit, rotate and navigate channels without losing progress OR HIDING
+   CONTROLS", and a stage covering every pixel can only satisfy that by floating the controls over the
+   picture, which hides part of the game instead. The strip is ~56px; everything below it is game.
+
+   This block sits last in the file on purpose: it ties on specificity with .tv[data-gauge="off"] and
+   with the phone rules above, so source order is what decides, and game mode has to win both. */
+.tv[data-mode="game"] .cabinet{grid-template-columns:1fr; grid-template-rows:auto 1fr; grid-template-areas:"panel" "screen";
+  padding:0; background:#0a0a0c; box-shadow:none}
+.tv[data-mode="game"] .gauge{display:none}
+.tv[data-mode="game"] .bezel{grid-area:screen; min-height:0; padding:0; border-radius:0; background:#000; box-shadow:none}
+.tv[data-mode="game"] .bezel::after{display:none}                       /* the engraved MOM INC is cabinet, not picture */
+.tv[data-mode="game"] .glass{border-radius:0; box-shadow:none}
+.tv[data-mode="game"] .phosphor,
+.tv[data-mode="game"] .glare,
+.tv[data-mode="game"] .momlogo{display:none}                            /* CRT furniture off (S1) */
+/* the controls stay visible above the stage: never an overlay on the picture, never a hidden drawer */
+.tv[data-mode="game"] .panel{grid-area:panel; display:flex; align-items:center; gap:10px;
+  margin:0; padding:5px 10px 6px; border-left:0; border-bottom:1px solid rgba(0,0,0,.45)}
+.tv[data-mode="game"] .dial-block,
+.tv[data-mode="game"] .maker,
+.tv[data-mode="game"] .model,
+.tv[data-mode="game"] .lcd .vfd{display:none}
+.tv[data-mode="game"] .lcd{flex:1 1 auto; width:auto; min-width:0; padding:4px; gap:0}
+.tv[data-mode="game"] .lcd-list{display:flex; flex-wrap:nowrap; overflow-x:auto; gap:4px; padding-bottom:2px}
+.tv[data-mode="game"] .lcd-card,
+.tv[data-mode="game"] .lcd-card.half,
+.tv[data-mode="game"] .lcd-card.head{flex:0 0 auto; grid-column:auto; grid-template-columns:auto; gap:0;
+  margin:0; padding:5px 9px; white-space:nowrap}
+.tv[data-mode="game"] .lcd-card .lcd-ch{display:none}
+.tv[data-mode="game"] .lcd-card .lcd-name,
+.tv[data-mode="game"] .lcd-card.head .lcd-name{font-size:13px}
+.tv[data-mode="game"] .keys{flex:0 0 auto; flex-direction:row; align-items:center; gap:10px; margin:0}
+.tv[data-mode="game"] .key-item{width:auto; grid-template-columns:auto auto; gap:6px}
+/* the strip is unlit black plastic rather than the cabinet's front, so the printed legends have to
+   stop being printed ink: #3a2b18 on #0a0a0c is unreadable, and POWER and EXIT are the two controls
+   C001 says must stay usable. */
+.tv[data-mode="game"] .key-item .legend{font-size:11px; letter-spacing:.14em; color:rgba(255,240,210,.72)}
+.tv[data-mode="game"] .panel{border-bottom-color:rgba(255,240,210,.14)}
+/* the key itself: hidden until the channel on the set is a game. #gameKey beats .key-item's display:grid,
+   which an author rule otherwise wins over the UA sheet's [hidden]. */
+#gameKey[hidden]{display:none}
+.key.game::before{background:linear-gradient(180deg,#ffe6a8 0%,#ffd36e 45%,#c79a2c 100%)}
+.key.game svg{stroke:#3a2b18; fill:none; margin-top:-8px}
