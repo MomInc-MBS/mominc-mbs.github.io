@@ -174,20 +174,15 @@
   };
 
   // --- the cross-site unlock: each channel's solved interactable turns its LCD card orange and banks its node.
-  // Progress persists per visitor; when every node is in, the LCD is armed for the hacked menu (that destination is still to be built). Shared store: mbs-unlock.
+  // Progress persists per visitor; when every node is in, the LCD is armed for the hacked menu (that destination is still to be built). Shared store: mbs-state (tv/state.js), via MBS_STATE.
   // sag and armie went coming_soon (G5) and no longer call MBS.unlock, so the reachable set is whatever
-  // the manifest marks active - two other channels deliberately never call it either. readUnlock() filters
-  // and rewrites storage on every read, so a stale sag/armie entry from before this change self-heals
+  // the manifest marks active - two other channels deliberately never call it either. MBS_STATE.unlockedActive()
+  // filters against the active set on every read, so a stale sag/armie entry from before this change self-heals
   // instead of permanently over- or under-counting a returning visitor's progress.
   const ACTIVE_UNLOCK = window.MBS_CHANNELS.active;
   const NODES = ACTIVE_UNLOCK.length;
   const lcd = document.getElementById("lcd");
-  const readUnlock = () => {
-    let raw = []; try { raw = JSON.parse(localStorage.getItem("mbs-unlock") || "[]"); } catch {}
-    const active = raw.filter(x => ACTIVE_UNLOCK.includes(x));
-    if (active.length !== raw.length) { try { localStorage.setItem("mbs-unlock", JSON.stringify(active)); } catch {} }
-    return active;
-  };
+  const readUnlock = () => window.MBS_STATE.unlockedActive();
   const paintUnlock = () => {
     const done = readUnlock();
     document.querySelectorAll(".lcd-card").forEach(el => el.classList.toggle("done", done.includes(el.dataset.id)));
@@ -197,10 +192,7 @@
   window.MBS.MAIL = "ianmyersrocks97@gmail.com";           // the one address behind every email link on the network; change here only
   window.MBS.unlock = (site) => {
     if (!site) return;
-    const done = readUnlock();
-    if (!done.includes(site)) {
-      done.push(site); try { localStorage.setItem("mbs-unlock", JSON.stringify(done)); } catch {}
-    }
+    window.MBS_STATE.bankUnlock(site);
     paintUnlock(); paintArmed();
     // the missing half of the old chain: unlock() banked the node and told nobody. Only rearmTest() ever
     // fired mbs:arm, and that is the localhost test hook, so a channel listening for it never heard a thing.
@@ -213,7 +205,7 @@
   window.MBS.armReady = () => { const done = readUnlock(); return ACTIVE_UNLOCK.every(id => done.includes(id)); };  // C004: explicit active-set every(), not a counter
   window.MBS.armHere = () => {                              // a channel calls this on load to start its window
     if (!window.MBS.armReady()) return 0;
-    try { localStorage.setItem("mbs-unlock-at", String(Date.now())); } catch {}
+    window.MBS_STATE.setArmedAt(Date.now());
     paintArmed();
     document.dispatchEvent(new CustomEvent("mbs:arm"));
     return window.MBS.armedLeft();
@@ -222,17 +214,15 @@
   // Gate 1, here: fill in every channel's form and MYR5 offers the free workout template outright.
   // Gate 2, above: solve every channel's secret and MBS.unlock banks the node, which is what frees the full coach assistant.
   const FORM_SITES = window.MBS_CHANNELS.forms;   // every built channel that asks the visitor for something; sag and armie are coming soon and ask nothing
-  const readForms = () => { try { return JSON.parse(localStorage.getItem("mbs-forms") || "{}"); } catch { return {}; } };
-  window.MBS.formsDone = () => { const f = readForms(); return { done: FORM_SITES.filter(x => f[x]).length, need: FORM_SITES.length }; };
+  window.MBS.formsDone = () => window.MBS_STATE.formsDone(FORM_SITES);
   window.MBS.form = (site, data) => {                       // a channel calls this when its form is submitted
     if (!site || FORM_SITES.indexOf(site) < 0) return;
-    const f = readForms(); f[site] = data || true;
-    try { localStorage.setItem("mbs-forms", JSON.stringify(f)); } catch {}
+    window.MBS_STATE.saveForm(site, data);
     paintForms();
   };
   function paintForms() {
     const { done, need } = window.MBS.formsDone();
-    document.querySelectorAll(".lcd-card").forEach(el => el.classList.toggle("filled", FORM_SITES.includes(el.dataset.id) && !!readForms()[el.dataset.id]));
+    document.querySelectorAll(".lcd-card").forEach(el => el.classList.toggle("filled", FORM_SITES.includes(el.dataset.id) && window.MBS_STATE.formStatus(el.dataset.id) !== "draft"));
     if (done < need) return;
     if (document.getElementById("myrOffer")) return;        // the offer stands once; it is not a nag
     if (sessionStorage.getItem("mbs-offer-shut")) return;
@@ -248,7 +238,7 @@
   }
 
   window.MBS.armedLeft = () => {                            // ms left in the unlock window, or 0
-    let at = 0; try { at = +localStorage.getItem("mbs-unlock-at") || 0; } catch {}
+    const at = window.MBS_STATE.getArmedAt() || 0;
     return window.MBS.armReady() && at ? Math.max(0, ARMED_MS - (Date.now() - at)) : 0;
   };
   let armedTimer = 0;
@@ -260,7 +250,8 @@
   }
   window.MBS.rearmTest = () => {                            // local testing only: pretend the fourth node just banked
     if (!/^(127\.|192\.168\.|100\.|localhost)/.test(location.hostname)) return;
-    try { localStorage.setItem("mbs-unlock", JSON.stringify(ACTIVE_UNLOCK)); localStorage.setItem("mbs-unlock-at", String(Date.now())); } catch {}
+    ACTIVE_UNLOCK.forEach(id => window.MBS_STATE.bankUnlock(id));
+    window.MBS_STATE.setArmedAt(Date.now());
     paintUnlock(); paintArmed(); document.dispatchEvent(new CustomEvent("mbs:arm"));
   };
   paintUnlock(); paintArmed(); paintForms();

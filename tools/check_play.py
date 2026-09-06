@@ -196,7 +196,7 @@ with sync_playwright() as pw:
         hid = [w for w in hid if not any(a in w.split(" under ")[0] for a in ALLOW.get(slug, ()))][:4]
         escaped = pg.evaluate("""()=>Array.from(document.querySelectorAll(".mbs-off"))
             .filter(n=>!n.closest("#channel")).map(n=>n.tagName.toLowerCase()+"#"+n.id).slice(0,2)""")
-        stored = pg.evaluate("()=>{try{return JSON.parse(localStorage.getItem('mbs-unlock')||'[]')}catch(e){return []}}")
+        stored = pg.evaluate("()=>{try{return window.MBS_STATE.unlockedActive()}catch(e){return []}}")
         # the event must name THIS game, and the stored node must agree
         reached = (slug in done) and (slug in (stored or []))
         pg.screenshot(path=os.path.join(SHOTS, slug + ("-flat" if no_webgl else "") + ".png"))

@@ -779,8 +779,8 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
     holo.load();
   }
 
-  // --- the real program unlocks with the family: reads the shell's node store (mbs-unlock), same as the LCD cards
-  let done = []; try { done = JSON.parse(localStorage.getItem("mbs-unlock") || "[]"); } catch {}
+  // --- the real program unlocks with the family: reads the shell's node store (mbs-state), same as the LCD cards
+  let done = window.MBS_STATE.unlockedActive();
   if (lock) lock.textContent = `${Math.min(done.length, 5)}/5`;
   if (done.length >= 5 && box) { box.classList.add("open"); txt.textContent = "The family's signal is out. The real program is yours: the honest track, said plainly, no ticks pre-filled. It opens here when it is built."; }
 

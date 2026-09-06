@@ -150,6 +150,70 @@ with sync_playwright() as pw:
     check(c["complete"] is True and c["done"] == 4 and c["need"] == 4,
           "exactly the four active ids completes the four-set (%r)" % (c,))
 
+    print("== 2.8b the shared accessors (bankUnlock/setArmedAt/saveForm) - the shell's own read/write path")
+
+    seed(pg, page_errs)
+    s = pg.evaluate("() => window.MBS_STATE.bankUnlock('fuel')")
+    check(s == ["fuel"], "bankUnlock('fuel') returns the updated unlockedActive() list")
+    s2 = pg.evaluate("() => window.MBS_STATE.read()")
+    check(s2["channels"]["fuel"]["secret"]["earned"] is True and isinstance(s2["channels"]["fuel"]["secret"]["earnedAt"], (int, float)),
+          "bankUnlock stamps secret.earned and secret.earnedAt")
+
+    seed(pg, page_errs)
+    pg.evaluate("() => window.MBS_STATE.setArmedAt(999)")
+    check(pg.evaluate("() => window.MBS_STATE.getArmedAt()") == 999, "setArmedAt/getArmedAt round-trip")
+
+    print("== 2.9 four independent states (C005): earning one does not stamp the others")
+
+    seed(pg, page_errs)
+    pg.evaluate("() => window.MBS_STATE.bankUnlock('fuel')")
+    s = pg.evaluate("() => window.MBS_STATE.read()").get("channels", {}).get("fuel", {})
+    check(s["secret"]["earned"] is True and s["form"]["earnedAt"] is None
+          and s["performance"]["earnedAt"] is None and s["reward"]["earnedAt"] is None,
+          "bankUnlock (secret) leaves form/performance/reward earnedAt untouched")
+
+    seed(pg, page_errs)
+    pg.evaluate("() => window.MBS_STATE.saveForm('fuel', {a: 1})")
+    s = pg.evaluate("() => window.MBS_STATE.read()").get("channels", {}).get("fuel", {})
+    check(s["form"]["status"] == "saved_here" and isinstance(s["form"]["earnedAt"], (int, float)),
+          "saveForm stamps only form.status/form.earnedAt")
+    check(s["secret"]["earned"] is False and s["performance"]["earned"] is False and s["reward"]["earned"] is False,
+          "saveForm leaves secret/performance/reward untouched")
+
+    seed(pg, page_errs)
+    pg.evaluate("""() => { const s = window.MBS_STATE.read();
+        s.channels.fuel.reward = { earned: true, earnedAt: 555, kind: "template" }; window.MBS_STATE.write(s); }""")
+    s = pg.evaluate("() => window.MBS_STATE.read()").get("channels", {}).get("fuel", {})
+    check(s["reward"]["kind"] == "template" and s["secret"]["earned"] is False and s["form"]["status"] == "draft",
+          "reward.kind is a field on the independent reward state, not a second code path")
+
+    print("== 2.11 drafts separate from submissions (C008): clear-drafts leaves submissions intact, both directions")
+
+    seed(pg, page_errs)
+    pg.evaluate("""() => { window.MBS_STATE.saveDraft("fuel", {x: 1}); window.MBS_STATE.saveForm("fuel", {y: 2}); }""")
+    s = pg.evaluate("() => window.MBS_STATE.read()")
+    check(s["drafts"].get("fuel") == {"x": 1} and s["submissions"].get("fuel") == {"y": 2},
+          "a draft and a submission coexist independently for the same channel")
+    pg.evaluate("() => window.MBS_STATE.clearDrafts()")
+    s = pg.evaluate("() => window.MBS_STATE.read()")
+    check(s["drafts"] == {} and s["submissions"].get("fuel") == {"y": 2},
+          "clearDrafts empties drafts and leaves submissions intact")
+
+    seed(pg, page_errs)
+    pg.evaluate("""() => { window.MBS_STATE.saveDraft("fuel", {x: 1}); window.MBS_STATE.saveForm("fuel", {y: 2});
+        window.MBS_STATE.clearSubmissions(); }""")
+    s = pg.evaluate("() => window.MBS_STATE.read()")
+    check(s["submissions"] == {} and s["drafts"].get("fuel") == {"x": 1},
+          "clearSubmissions empties submissions and leaves drafts intact")
+
+    print("== 2.12 truthful receipts (C008): a local saveForm (no server in this build) renders only saved_here")
+
+    seed(pg, page_errs)
+    pg.evaluate("() => window.MBS_STATE.saveForm('fuel', {a: 1})")
+    status = pg.evaluate("() => window.MBS_STATE.formStatus('fuel')")
+    check(status == "saved_here", "formStatus after a local saveForm is saved_here (%r)" % (status,))
+    check(status != "received", "formStatus is never received without an actual server response")
+
     b.close()
 
 for n in notes: print("  " + n)

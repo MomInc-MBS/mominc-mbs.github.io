@@ -99,10 +99,12 @@ footer a{color:#ffd36e;min-height:44px;display:inline-flex;align-items:center;pa
   <a href="../tv/">The MBS television</a>
   <p class="fine">MOM Inc is a fictional corporation and MBS is a comedy programme. Nothing here is a real transmission.</p>
 </footer>
+<script src="../tv/mbs-channels.js"></script>
+<script src="../tv/state.js"></script>
 <script>
 /* Progress is the same store the television and the play routes write, so a game solved anywhere shows here. */
 (function(){
-  var done=[];try{done=JSON.parse(localStorage.getItem("mbs-unlock")||"[]")}catch(e){}
+  var done=window.MBS_STATE.unlockedActive();
   document.querySelectorAll(".done").forEach(function(el){ if(done.indexOf(el.dataset.slug)>-1) el.hidden=false; });
   var n=document.querySelectorAll(".done:not([hidden])").length;
   // derived from the cards actually on the page, never a literal: a channel added,

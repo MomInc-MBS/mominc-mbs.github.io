@@ -4,9 +4,10 @@
    Runs its migration and its corruption recovery immediately, synchronously, at script-load time -
    nothing else has to remember to call it first.
 
-   One key (`mbs-state`) replaces mbs-unlock, mbs-forms and mbs-unlock-at. Those three are left in
-   place, untouched, because tv.js and mbs-shim.js still read and write them directly this packet;
-   only the migration's own derived copy lives under the new key. */
+   One key (`mbs-state`) replaces mbs-unlock, mbs-forms and mbs-unlock-at. As of 2.8b, this file's own
+   shared accessors (unlockedActive/bankUnlock/getArmedAt/setArmedAt/formStatus/saveForm/formsDone) are
+   the ONLY way tv.js and mbs-shim.js touch that state - the three legacy keys are read only once more,
+   by this file's own migrate()/deriveFromLegacy() below, for a returning visitor's old data. */
 (() => {
   const KEY = "mbs-state";
   const BACKUP_KEY = "mbs-state-backup-v1";     // the pre-migration legacy snapshot, kept until read() proves the new key readable
@@ -137,7 +138,67 @@
     return { done: done.length, need: ids.length, complete: ids.length > 0 && done.length === ids.length };
   }
 
+  /* ---- 2.8b: the shared accessors. tv.js and mbs-shim.js had these as functionally identical
+     duplicated localStorage readers/writers (readUnlock's filter-and-self-heal, the unlock write,
+     armedAt read/write, the forms read/write) - one implementation here, both files call it, instead
+     of two parallel copies that can drift (which is exactly how mbs-state ended up a shadow copy). */
+
+  // the "done" list: active ids whose secret is earned. Filtered against activeIds() the same way the
+  // old readUnlock() filtered its raw array, so a stale sag/armie entry never counts (self-heals).
+  function unlockedActive() {
+    const s = read();
+    return activeIds().filter(id => s.channels[id] && s.channels[id].secret && s.channels[id].secret.earned);
+  }
+
+  // banks the ARG node. Idempotent (earnedAt is stamped once, on first earn); does not gate on the
+  // active set at write time, same as the old unlock(site) - a non-active id just self-heals on read.
+  function bankUnlock(site) {
+    if (!site) return unlockedActive();
+    const s = read();
+    if (!s.channels[site]) s.channels[site] = emptyChannel();
+    if (!s.channels[site].secret.earned) { s.channels[site].secret = { earned: true, earnedAt: Date.now() }; write(s); }
+    return unlockedActive();
+  }
+
+  function getArmedAt() { return read().armedAt; }
+  function setArmedAt(ts) { const s = read(); s.armedAt = ts; write(s); }
+
+  function formStatus(site) {
+    const s = read();
+    return (s.channels[site] && s.channels[site].form && s.channels[site].form.status) || "draft";
+  }
+
+  // 2.12 truthful receipts: this build has no server, so a local submit can only ever reach
+  // saved_here - never sending/received/failed, which all require an actual server round-trip.
+  function saveForm(site, data) {
+    const s = read();
+    if (!s.channels[site]) s.channels[site] = emptyChannel();
+    s.channels[site].form = { status: "saved_here", earnedAt: Date.now() };
+    s.submissions[site] = (data && typeof data === "object") ? data : null;   // legacy true-as-"no payload" rule, kept for new writes too
+    write(s);
+  }
+
+  // sites: the caller's FORM_SITES list (tv.js/mbs-shim.js already own that list from the manifest).
+  function formsDone(sites) {
+    const s = read();
+    const done = sites.filter(id => {
+      const st = s.channels[id] && s.channels[id].form && s.channels[id].form.status;
+      return st === "saved_here" || st === "sending" || st === "received";
+    });
+    return { done: done.length, need: sites.length };
+  }
+
+  // 2.11: drafts and submissions are separate collections. Clearing one must never touch the other -
+  // tested both directions in check_state.py.
+  function saveDraft(site, data) { const s = read(); s.drafts[site] = data; write(s); }
+  function clearDrafts() { const s = read(); s.drafts = {}; write(s); }
+  function clearSubmissions() { const s = read(); s.submissions = {}; write(s); }
+
   migrate();   // before anything else reads state
 
-  window.MBS_STATE = { VERSION, KEY, BACKUP_KEY, QUARANTINE_KEY, read, write, migrate, completion, emptyState, emptyChannel };
+  window.MBS_STATE = {
+    VERSION, KEY, BACKUP_KEY, QUARANTINE_KEY, read, write, migrate, completion, emptyState, emptyChannel,
+    unlockedActive, bankUnlock, getArmedAt, setArmedAt, formStatus, saveForm, formsDone,
+    saveDraft, clearDrafts, clearSubmissions,
+  };
 })();

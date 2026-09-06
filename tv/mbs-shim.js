@@ -2,7 +2,9 @@
    A channel fragment is loaded verbatim into a standalone play route and must not be edited, so this
    file has to satisfy the exact surface tv.js exposes: MBS.meter, MBS.wave, MBS.unlock, MBS.form,
    MBS.MAIL, MBS.formsDone, MBS.armReady, MBS.armHere, MBS.armedLeft, and the mbs:arm / mbs:disarm events.
-   Same origin as /tv/, so localStorage progress is genuinely shared with the hub, not a second copy. */
+   Same origin as /tv/, so localStorage progress is genuinely shared with the hub, not a second copy.
+   Progress itself is read/written entirely through window.MBS_STATE (tv/state.js, loaded before this
+   file on every play route) - the shared accessors tv.js also calls, so there is one implementation. */
 (() => {
   const LIFECYCLE_VERSION = 1;
   // sag and armie are coming_soon (tv/channel-manifest.json) and ship no play route, so neither calls
@@ -30,9 +32,6 @@
   document.documentElement.classList.toggle("mbs-live", mode === "live");
   M.mode = mode;
   M.isLive = mode === "live";
-
-  const readJSON = (k, d) => { try { return JSON.parse(localStorage.getItem(k) || d); } catch { return JSON.parse(d); } };
-  const writeJSON = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
 
   /* ---- lifecycle (plan item 9). The games predate this contract, so the adapter derives the events
      from what they already do rather than asking any game to emit them. */
@@ -110,19 +109,15 @@
     }, opts.after ?? 1000));
   };
 
-  /* ---- the unlock nodes, shared with the hub through the same localStorage key. Filtered against
-     ACTIVE_UNLOCK and rewritten on every read, so a stale sag/armie entry from before either channel went
-     coming_soon self-heals instead of permanently over- or under-counting a returning visitor's progress. */
-  const readUnlock = () => {
-    const raw = readJSON("mbs-unlock", "[]");
-    const active = raw.filter(x => ACTIVE_UNLOCK.includes(x));
-    if (active.length !== raw.length) writeJSON("mbs-unlock", active);
-    return active;
-  };
+  /* ---- the unlock nodes, shared with the hub through mbs-state (tv/state.js), via MBS_STATE.
+     MBS_STATE.unlockedActive() filters against ACTIVE_UNLOCK on every read, so a stale sag/armie entry
+     from before either channel went coming_soon self-heals instead of permanently over- or
+     under-counting a returning visitor's progress. */
+  const readUnlock = () => window.MBS_STATE.unlockedActive();
   M.unlock = (site) => {
     if (!site) return;
+    window.MBS_STATE.bankUnlock(site);
     const done = readUnlock();
-    if (!done.includes(site)) { done.push(site); writeJSON("mbs-unlock", done); }
     if (!completed) { completed = true; emit("GAME_COMPLETE", { site, nodes: done.length, need: NODES }); }
     if (M.armedLeft() > 0) document.dispatchEvent(new CustomEvent("mbs:arm"));
     paint();
@@ -130,12 +125,12 @@
   M.armReady = () => { const done = readUnlock(); return ACTIVE_UNLOCK.every(id => done.includes(id)); };  // C004: explicit active-set every(), not a counter
   M.armHere = () => {
     if (!M.armReady()) return 0;
-    writeJSON("mbs-unlock-at", Date.now());
+    window.MBS_STATE.setArmedAt(Date.now());
     paint(); document.dispatchEvent(new CustomEvent("mbs:arm"));
     return M.armedLeft();
   };
   M.armedLeft = () => {
-    const at = readJSON("mbs-unlock-at", "0");
+    const at = window.MBS_STATE.getArmedAt() || 0;
     return M.armReady() && at ? Math.max(0, ARMED_MS - (Date.now() - at)) : 0;
   };
   let armedTimer = 0;
@@ -151,14 +146,10 @@
   /* ---- the forms gate. Banked the same way the television banks it; the offer bar belongs to the hub. */
   M.form = (site, data) => {
     if (!site || FORM_SITES.indexOf(site) < 0) return;
-    const f = readJSON("mbs-forms", "{}");
-    f[site] = data || true; writeJSON("mbs-forms", f);
+    window.MBS_STATE.saveForm(site, data);
     emit("GAME_PROGRESS", { form: site });
   };
-  M.formsDone = () => {
-    const f = readJSON("mbs-forms", "{}");
-    return { done: FORM_SITES.filter(x => f[x]).length, need: FORM_SITES.length };
-  };
+  M.formsDone = () => window.MBS_STATE.formsDone(FORM_SITES);
   M.rearmTest = () => {};                                  // localhost-only hook on the shell; no standalone equivalent
 
   addEventListener("pagehide", () => { if (started && !completed) emit("GAME_EXIT"); });
