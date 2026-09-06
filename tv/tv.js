@@ -25,13 +25,26 @@
   }
 
   // --- power
+  // 2.13/C006: the warm-up is cancellable. It used to be a bare setTimeout, so pausing (or switching
+  // off) during the 900 ms warm-up did nothing and the set came on anyway, mid-pause.
+  let cancelWarmUp = null;
   function turnOn() {
     if (tv.dataset.state === "on") return;
     tv.dataset.state = "warming";
     try { sessionStorage.setItem("mbs-on", "1"); } catch {}
-    setTimeout(() => { tv.dataset.state = "on"; screen.focus({ preventScroll: true }); }, 900);
+    window.MBS_RT.resume("power");
+    cancelWarmUp = window.MBS_RT.warmUp(900, () => {
+      cancelWarmUp = null;
+      tv.dataset.state = "on";
+      screen.focus({ preventScroll: true });
+    });
   }
-  function turnOff() { tv.dataset.state = "off"; darkNote.textContent = "Off. Press power."; try { sessionStorage.removeItem("mbs-on"); } catch {} }
+  function turnOff() {
+    if (cancelWarmUp) { cancelWarmUp(); cancelWarmUp = null; }
+    window.MBS.cancelWave && window.MBS.cancelWave();
+    window.MBS_RT.pause("power");
+    tv.dataset.state = "off"; darkNote.textContent = "Off. Press power."; try { sessionStorage.removeItem("mbs-on"); } catch {}
+  }
   power.addEventListener("click", () => (tv.dataset.state === "on" ? turnOff() : turnOn()));
 
   // --- the channel LCD: MOM INC as the heading, then every channel as a card. Built ones link; the rest sit dim until their page exists.
@@ -153,25 +166,17 @@
   // --- the orange wave, a shared effect every channel can fire: a pixelated band sweeps through the glass.
   // Then, after a pause (opts.after ms, default 1000), the MOM Inc bug glows purple and a purple wave sweeps back through, restoring the page;
   // opts.restore() runs as that wave fires, so a channel can put its own picture back in step with it.
+  // 2.14/C007: the sweep engine is tv/mbs-effects.js, shared with mbs-shim.js. It used to be written
+  // out here and again there, and both copies accumulated animationend listeners across overlapping
+  // waves, so a second wave ran the first one's completion.
   const wave = document.getElementById("wave"), momlogo = document.getElementById("momlogo");
-  let restoreTimer = 0;
-  const sweep = (purple, then) => {
-    wave.classList.remove("go"); void wave.offsetWidth;   // restart even mid-sweep
-    wave.classList.toggle("purple", purple);
-    wave.classList.add("go");
-    wave.addEventListener("animationend", () => { wave.classList.remove("go", "purple"); then && then(); }, { once: true });
-  };
+  let liveWave = null;
   window.MBS.wave = (opts = {}) => {
-    if (!wave) return;
-    clearTimeout(restoreTimer);
-    sweep(false, () => {
-      restoreTimer = setTimeout(() => {
-        momlogo && momlogo.classList.add("glow");
-        opts.restore && opts.restore();
-        sweep(true, () => setTimeout(() => momlogo && momlogo.classList.remove("glow"), 900));
-      }, opts.after ?? 1000);
-    });
+    if (!wave) { opts.restore && opts.restore(); return; }
+    liveWave = window.MBS_RT.wave(wave, opts, momlogo);
+    return liveWave;
   };
+  window.MBS.cancelWave = () => { liveWave && liveWave.cancel && liveWave.cancel(); liveWave = null; };
 
   // --- the cross-site unlock: each channel's solved interactable turns its LCD card orange and banks its node.
   // Progress persists per visitor; when every node is in, the LCD is armed for the hacked menu (that destination is still to be built). Shared store: mbs-state (tv/state.js), via MBS_STATE.

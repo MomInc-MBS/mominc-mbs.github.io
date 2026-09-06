@@ -94,20 +94,14 @@
 
   /* ---- the orange-then-purple sweep. Same two-stage timing and the same restore() contract as tv.js,
      so a channel's picture goes back in step exactly as it does inside the television. */
+  let liveWave = null;
   M.wave = (opts = {}) => {
     const w = document.getElementById("mbsWave");
     if (!w) { opts.restore && opts.restore(); return; }
-    const sweep = (purple, then) => {
-      w.classList.remove("go"); void w.offsetWidth;
-      w.classList.toggle("purple", purple);
-      w.classList.add("go");
-      w.addEventListener("animationend", () => { w.classList.remove("go", "purple"); then && then(); }, { once: true });
-    };
-    sweep(false, () => setTimeout(() => {
-      opts.restore && opts.restore();
-      sweep(true, null);
-    }, opts.after ?? 1000));
+    liveWave = window.MBS_RT.wave(w, opts, null);   // no MOM Inc bug on a standalone play route
+    return liveWave;
   };
+  M.cancelWave = () => { liveWave && liveWave.cancel && liveWave.cancel(); liveWave = null; };
 
   /* ---- the unlock nodes, shared with the hub through mbs-state (tv/state.js), via MBS_STATE.
      MBS_STATE.unlockedActive() filters against ACTIVE_UNLOCK on every read, so a stale sag/armie entry
