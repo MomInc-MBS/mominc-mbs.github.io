@@ -2,7 +2,7 @@
 
 > A 90s-kids-TV-style health-education show whose cast are prisoners of an AI corporation, MOM Inc. Every character hosts a segment and every segment has its own channel. The whole site is one old television: the set is the network, the channel is the character.
 
-The television lives at https://mominc-mbs.github.io/tv/ . A channel is a query on that one page, so https://mominc-mbs.github.io/tv/?ch=goon is the GOON channel. The channel pages are assembled in the browser, which is why this file exists: it is the same information without needing to run the page.
+The television lives at https://mominc-mbs.github.io/tv/ . A channel is a query on that one page, so https://mominc-mbs.github.io/tv/?ch=corgi is the CORTISOL CORGI channel. The channel pages are assembled in the browser, which is why this file exists: it is the same information without needing to run the page.
 
 ## Channels
 
@@ -13,7 +13,6 @@ The television lives at https://mominc-mbs.github.io/tv/ . A channel is a query 
 - [CH 5 · COACH ARMIE](https://mominc-mbs.github.io/tv/?ch=armie): Coach Armie takes the Workout of the Day. He has counted your fingers. A broadcast character; nothing behind him is a real transmission.
 - [CH 6 · NAUSEOUS IN THE MORNING](https://mominc-mbs.github.io/tv/?ch=corgi): The bad news desk. They moved the morning again, the sun rose four minutes early, and the corgi knows. The corgi always knows.
 - [CH 7 · BUILD YOUR STACK](https://mominc-mbs.github.io/tv/?ch=fuel): Build your own pre-workout stack, flavour and can included. Untested: this blend has never been brewed, and the page says so.
-- [CH 8 · GOON](https://mominc-mbs.github.io/tv/?ch=goon): A helper. Someone who gives, money or time or love. One of us. You are one too, you just did not know the word yet.
 
 ## About
 
