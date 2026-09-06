@@ -23,8 +23,7 @@ _srv = ThreadingHTTPServer(("127.0.0.1", 0), functools.partial(_Quiet, directory
 threading.Thread(target=_srv.serve_forever, daemon=True).start()
 BASE = "http://127.0.0.1:%d" % _srv.server_address[1]
 
-GEN_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..",
-                       "OpenGameBuilds", "registry-0904")
+GEN_DIR = os.path.dirname(os.path.abspath(__file__))   # gen.py lives in the repo as of 2026-09-06
 REG = json.load(io.open(os.path.join(ROOT, "tv", "registry.json"), encoding="utf-8"))
 SIZES = [(320, 568), (360, 800), (390, 844), (430, 932)]
 
