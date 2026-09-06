@@ -38,7 +38,6 @@
   const CHANNELS = [
     { id: "mominc",       ch: 1, name: "MOM INC",        head: true },
     { id: "fuel",         ch: 7, name: "DRINKS",         half: true },   // the two half-width entries sit side by side under MOM INC (Ian, 2026-08-26)
-    { id: "goon",         ch: 8, name: "GOON",           half: true },
     { id: "lilboyfriend", ch: 2, name: "LIL BOYFRIEND" },
     { id: "djscratch",    ch: 3, name: "DJ SCRATCH" },
     { id: "corgi",        ch: 6, name: "CORTISOL CORGI" },
@@ -109,7 +108,15 @@
   // --- channel: ?ch=<name> loads channels/<name>.html into the glass; no channel = the test card
   const name = new URLSearchParams(location.search).get("ch");
   const testcard = `<section class="testcard" aria-label="MBS test card"><h1>MBS</h1><div class="spacer"></div><p>Mom's Brainwashing Stream. This set is tuned to no one yet.</p></section>`;
-  if (name && /^[a-z0-9-]+$/.test(name)) {
+  // --- suppressed channels: the slug still parses, so the fetch below would mount the channel for
+  // anyone who types or bookmarks the query. GOON's compiled bundle asks for card details and its
+  // replacement is not built yet, so the route is closed here, above the fetch, and stays closed
+  // until that work lands. Removing the LCD entry alone does not do this.
+  const SUPPRESSED = ["goon"];
+  if (name && SUPPRESSED.includes(name)) {
+    channel.innerHTML = `<section class="testcard" aria-label="Channel unavailable"><h1>OFF AIR</h1><div class="spacer"></div><p>This channel is being rebuilt. It will be back.</p></section>`;
+    document.title = "MBS · off air";
+  } else if (name && /^[a-z0-9-]+$/.test(name)) {
     fetch(`channels/${name}.html`, { cache: "no-store" }).then(r => r.ok ? r.text() : Promise.reject(r.status))   // phone testing: every refresh is the current file
       .then(html => {
         channel.innerHTML = html; document.title = `MBS · ${name}`;

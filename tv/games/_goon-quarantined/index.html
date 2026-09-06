@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Off air</title>
+    <style>
+      body{margin:0;min-height:100vh;display:grid;place-items:center;background:#2a0a44;
+           color:#e9e2f5;font:16px/1.6 system-ui,sans-serif;text-align:center;padding:24px}
+      h1{font-size:1.4rem;letter-spacing:.14em;margin:0 0 .6em}
+      a{color:#e9e2f5}
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>OFF AIR</h1>
+      <p>This channel is being rebuilt. It will be back.</p>
+      <p><a href="/tv/">Back to the television</a></p>
+    </main>
+  </body>
+</html>
+<!--
+  QUARANTINE - do not restore this directory to tv/games/goon/ .
+
+  The compiled bundle in ./assets/ contains live "Card number", "Expiry" and "Security code"
+  inputs. It was serving on the public site until this commit. The replacement (fictional prop
+  card tokens, a hand-over action, three lesson branches) is change C084 and is not built yet,
+  because C081 has not yet settled which source tree reproduces this bundle.
+
+  The bundle is kept, unmodified, precisely so C081 can answer that: it is the only artifact
+  that can confirm which candidate source tree the deployed build came from. The original
+  loader page is preserved beside it as index.html.quarantined so nothing can boot it.
+
+  Reversing this is one command once C084 ships and its acceptance is green:
+      git mv tv/games/_goon-quarantined tv/games/goon
+  and restore the channel entry plus the SUPPRESSED guard in tv/tv.js.
+-->
