@@ -93,8 +93,14 @@
 
   // --- press into the glass: a distortion spot at the point, growing while held; the picture sinks toward it
   let active = null, raf = 0, t0 = 0;
+  // 2.16/C002: the press-scale is set dressing for the GLASS, not for what is playing on it. Scaling
+  // the whole #screen under a live canvas, an embedded game, or a control moves the thing the pointer is
+  // already on, so a drag lands off-target and a button pushes itself out from under the finger. Excluded
+  // at the shell by what the press LANDED on, not by a class each channel has to remember to add.
+  const NO_PRESS = "canvas,iframe,video,button,input,select,textarea,a,label,[role=button],[data-nopress]";
   screen.addEventListener("pointerdown", e => {
     if (tv.dataset.state !== "on") return;
+    if (e.target.closest && e.target.closest(NO_PRESS)) return;
     const r = screen.getBoundingClientRect();
     const x = e.clientX - r.left, y = e.clientY - r.top;
     const p = document.createElement("span"); p.className = "press";

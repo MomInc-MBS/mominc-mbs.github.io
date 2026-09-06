@@ -65,7 +65,7 @@ body{display:block;padding:0;overflow:hidden}
 }
 .screen::-webkit-scrollbar{width:6px}
 .screen::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px}
-.channel{min-height:100%; zoom:1.15; width:100%}   /* every channel reads 15% larger (Ian, 2026-08-26); one knob for all sites. zoom widens too, so the width is compensated or phones overflow */
+.channel{min-height:100%; width:100%}   /* 2.16/C002: zoom:1.15 retired 2026-09-06. CSS zoom put rects and events in VISUAL px while clientWidth stayed LAYOUT px, so every channel carried a /1.15 correction and one of them got it wrong. Channels now render at their design size; a channel that wants to read larger sizes its own type. */
 .phosphor{
   position:absolute; inset:0; pointer-events:none;
   background:

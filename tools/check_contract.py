@@ -8,9 +8,18 @@ WHY THIS SHAPE. Round 1 passed 8/8 while three games rendered 13% short, because
   * asserting rendered height as a percentage of .glass -- sag's reserve is heroH + ribbonH + 26, which is
     content-dependent, so 0.80 is correct for sag and says nothing about the zoom.
 
-The invariant that actually catches the bug needs no per-game formula. The games set a height INSIDE
-.channel's zoom:1.15 context, pre-divided by 1.15. offsetHeight is LAYOUT px; getBoundingClientRect() is
-VISUAL px. So visual/layout == 1.15 proves the zoom contract is reproduced, and == 1.00 is the round-1 bug.
+ROUNDS 1-6 measured the zoom itself: the games sized inside .channel's zoom:1.15 and pre-divided by
+1.15, so visual/layout == 1.15 proved the play route reproduced the television's zoom and == 1.00 was
+the round-1 bug. **2.16/C002 retired that zoom**, so the ratio is now 1.00 everywhere and the old
+assertion is inverted, not deleted: a play route that drifts back to any zoom or stray ancestor scale
+fails here, which is the regression the retirement can actually suffer.
+
+That leaves the ORIGINAL bug -- a game rendering short and leaving dead black -- needing its own check,
+and it cannot be one formula for all five. Only two of these roots fit themselves to .glass (corgi's
+#ccViewport and lilboyfriend's #lbStage, both via a measured fitViewport()). #deck and #dgTrack are
+scroll tracks, legitimately taller than the glass, and fuel's #stageCard is a flex card that never
+claimed the height. So the fill assertion applies to the fitted pair only, and says so per row rather
+than averaging a number that means nothing for the other three.
 """
 import html, io, json, os, re, sys
 from playwright.sync_api import sync_playwright
@@ -34,7 +43,7 @@ BASE = "http://127.0.0.1:%d" % _srv.server_address[1]
 VP = {"width": 390, "height": 844}
 # sag and armie are coming_soon (no play route) and are gone from this dict. corgi's selector really is
 # #ccViewport, not registry.json's isolation root #cc: #ccViewport is the element corgi.html itself sizes
-# to visualTarget/1.15 (corgi.html:833,844), which is the one thing this check can measure; #cc is one
+# to visualTarget (corgi.html's fitViewport), which is the one thing this check can measure; #cc is one
 # level up and exists for isolation (what stays visible), a different job. Neither is stale.
 
 # --- suppressed channels (C081/C084). GOON's compiled bundle asks visitors for card details, so its
@@ -58,7 +67,11 @@ rows, ok = [], True
 with sync_playwright() as pw:
     b = pw.chromium.launch()
 
-    print("== zoom contract (visual/layout must be 1.15; 1.00 is the round-1 bug)")
+    # the fitted pair: the only roots that size themselves against .glass, so the only ones where
+    # "short" is even defined. 0.90 is well clear of both live values (corgi .957, lilboyfriend 1.00)
+    # and well above the ~.83 a reintroduced 13%-short bug would produce.
+    FITTED = {"corgi": 0.90, "lilboyfriend": 0.90}
+    print("== zoom contract (visual/layout must be 1.00; 2.16 retired .channel's zoom:1.15)")
     for slug, sel in ROOTS.items():
         pg, seen, errs = instrument(b)
         pg.goto(f"{BASE}/play/{slug}/", wait_until="load"); pg.wait_for_timeout(2600)
@@ -67,11 +80,17 @@ with sync_playwright() as pw:
                       g:document.querySelector('.glass').getBoundingClientRect().height}:null}""", sel)
         z = (m["v"]/m["l"]) if (m and m["l"]) else 0
         clean = [e for e in errs if "favicon" not in e and "jsdelivr" not in e.lower()]
-        good = bool(m) and m["v"] > 0 and abs(z-1.15) < 0.02 and "GAME_READY" in seen and not clean
+        frac = (m["v"]/m["g"]) if (m and m["g"]) else 0
+        floor = FITTED.get(slug)
+        fits = (frac >= floor) if floor else True
+        good = bool(m) and m["v"] > 0 and abs(z-1.0) < 0.02 and fits and "GAME_READY" in seen and not clean
         ok &= good
+        fill = (f"  fill={frac:.3f} (>= {floor:.2f})" if floor else "  fill n/a, not glass-fitted")
         print(f"  {'PASS' if good else 'FAIL'} {slug:13} {sel:12} visual={m['v']:7.1f} layout={m['l']:7.1f} "
-              f"zoom={z:.3f} glass={m['g']:.0f}"
-              f"{'  <-- NO ZOOM' if abs(z-1.0)<0.02 else ''}{('  ERR='+str(clean[:1])) if clean else ''}")
+              f"zoom={z:.3f} glass={m['g']:.0f}{fill}"
+              f"{'  <-- ZOOM IS BACK' if abs(z-1.0)>=0.02 else ''}"
+              f"{'  <-- SHORT' if (floor and not fits) else ''}"
+              f"{('  ERR='+str(clean[:1])) if clean else ''}")
         pg.close()
 
     print("== GAME_READY means mounted, never earlier (D2)")

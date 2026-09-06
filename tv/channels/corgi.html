@@ -22,8 +22,9 @@ lilboyfriend.html -- tv.js drops attributes when it re-creates <script> tags, so
 here. Non-WebGL fallback is a room-picker: same three pages, same lessons, same stats, same form, same
 unlock, told as short read documents instead of walked to. No canvas, no three.js, no loss of function.
 Pointer maths for look-drag uses raw client deltas (no rect needed, a delta needs no zoom correction); the
-joystick reads its own getBoundingClientRect() plus the event only, never clientWidth/offsetX -- .channel
-carries zoom:1.15 and mixing spaces is the ~15% miss paid for on Dr Girlfriend's build. Sizing is
+joystick reads its own getBoundingClientRect() plus the event only, never clientWidth/offsetX. .channel's
+zoom:1.15 is gone (2.16/C002) so the two spaces now agree, but rect+event is kept: it is correct under any
+ancestor scale, and mixing spaces is the ~15% miss that was paid for on Dr Girlfriend's build. Sizing is
 clientWidth/clientHeight into renderer.setSize(w,h,false), the false load-bearing per the house pattern.
 No position:fixed anywhere; the hunt viewport is a normal-flow element. It fills the glass, sized in JS
 (fitViewport()) against .glass's own measured height rather than a CSS % (collapses to zero, .channel only
@@ -1012,12 +1013,11 @@ more than one reflective surface.
     if (!glassEl) return;
     const gh = glassEl.getBoundingClientRect().height;   // .glass sits OUTSIDE the zoomed .channel -- a plain, unzoomed px value
     const meterH = document.getElementById("ccMeter").getBoundingClientRect().height;   // meter is INSIDE .channel, so this rect is already post-zoom (visual) px
-    const reserve = meterH + 21;   // this stage's 8px+10px padding * .channel's zoom:1.15 = ~9.2+11.5, a stable constant -- zoom is fixed, only the outer chrome (gh) varies by breakpoint
+    const reserve = meterH + 18;   // this stage's 8px+10px padding, now plain px (2.16 retired .channel's zoom, so no 1.15 factor) -- only the outer chrome (gh) varies by breakpoint
     const visualTarget = Math.max(220, gh - reserve - 6);
-    // setting .style.height assigns a LAYOUT px value inside the zoomed .channel, which then RENDERS at
-    // *1.15 -- the same trap the old calc() had. Divide by 1.15 so the rendered (visual) height actually
-    // equals visualTarget, confirmed live: without this a "564.5px" layout height rendered at 649px.
-    viewport.style.height = (visualTarget / 1.15) + "px";
+    // .channel is no longer zoomed (2.16/C002), so a layout px IS a rendered px here and the height is
+    // assigned as measured. gh comes off .glass, which was always outside the zoom, so it never changed.
+    viewport.style.height = visualTarget + "px";
   }
   if (glassEl) { new ResizeObserver(fitViewport).observe(glassEl); fitViewport(); }
 
@@ -1860,7 +1860,7 @@ more than one reflective surface.
       // This was a held/moved joystick that zeroed on release; it's tap-to-set now -- a tap or drag inside the
       // ring sets a heading that PERSISTS after release, so the dog keeps walking without the pointer held
       // down. Tapping the small dead zone at dead-centre stops him. Still its own getBoundingClientRect() plus
-      // the event only (see the file's own note on .channel's zoom:1.15 -- never clientWidth/offsetX here).
+      // the event only (see the file's own note on the retired .channel zoom -- never clientWidth/offsetX).
       // A concrete tap mechanic, not just a relabelled drag: touch has no hover, so a full-viewport
       // mouse-position control would leave 390px with nothing to move it at all (Codex C4).
       let joyVec = { x: 0, y: 0 }, joyId = null;

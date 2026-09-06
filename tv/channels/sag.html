@@ -7,7 +7,7 @@ STORY: Scroll to bring a door to the front (the only one that's live), click it:
 INTERACTABLE (unlock node): the chicken leg drag-to-Sag-to-receipt-to-orange-ball chain. window.MBS.wave({after,restore}), window.MBS.unlock("sag"). Unaffected by the 3D rebuild - it still fires the same way, off the same DOM elements.
 FORM: Ian's spec 2026-08-26 + Round 2 same night + the 2026-08-28 3D rebuild (vault: Sag Sniffer Page Spec, Round 3 Page Directions 0828). Inside the old television shell. The wheel section is sticky inside #screen's own scroll (never position:fixed), tall enough to turn all five doors before the rest of the page arrives. Phones: 342px glass, no horizontal overflow.
 TECH: three.js r180 as an ES module via dynamic import() from a classic script - tv.js re-creates channel scripts with textContent only and drops attributes, so type="module" would throw here; dynamic import() sidesteps it and needs no shell change (same trick as Dr Girlfriend's channel). Only the wheel is three.js; the ball, the table, Sag's clips, the receipt chain, and the treats form stay exactly the DOM/CSS they always were - this was a surgical swap of the wheel's renderer, not a whole-page rebuild. No WebGL or the CDN unreachable: the page falls back to a plain clickable list of the same five doors, driving the identical state machine, so the unlock node and the inventory survive even without three.js.
-ZOOM TRAP: .channel carries zoom:1.15 (tv.css). getBoundingClientRect() and clientX/clientY are VISUAL px under that zoom; clientWidth/clientHeight are LAYOUT px. The canvas needs no pointer math at all (its one click always acts on whichever door is currently facing, never raycast), so this only bites the chicken leg's drag math and the leg's spawn point, both built from rects and events only, never clientWidth.
+ZOOM: .channel's zoom:1.15 was retired 2026-09-06 (2.16/C002), so visual and layout px now agree and fitStage() no longer divides. The chicken leg's drag math and spawn point are still built from rects and events only, never clientWidth, and the leg's z0 is still a MEASURED ratio rather than a constant - both stay correct if any ancestor scale ever returns.
 -->
 <style>
   .sg{--tex:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.012 0.09' numOctaves='4' seed='7' stitchTiles='stitch' result='t'/><feDiffuseLighting in='t' surfaceScale='1.8' diffuseConstant='1.05' lighting-color='white' result='d'><feDistantLight azimuth='235' elevation='55'/></feDiffuseLighting></filter><rect width='300' height='120' filter='url(%23n)'/></svg>");
@@ -47,7 +47,7 @@ ZOOM TRAP: .channel carries zoom:1.15 (tv.css). getBoundingClientRect() and clie
 
   /* the fixed-landscape loop: the wheel is the stage, everything else (Ask Ball/table, Treats) is reached by
      tapping a tab instead of scrolling past the wheel. Sized live against .glass (fitStage(), corgi.html's
-     fitViewport() pattern, divided by 1.15 for the same zoom:1.15 reason) since .channel only sets
+     fitViewport() pattern, no zoom divisor since 2.16) since .channel only sets
      min-height:100% and a CSS % or vh guess is wrong on at least one breakpoint (documented in MBS Channel
      Games). */
   .sg .sgstage{position:relative; display:flex; flex-direction:column; overflow:hidden; border-radius:10px;
@@ -661,7 +661,7 @@ ZOOM TRAP: .channel carries zoom:1.15 (tv.css). getBoundingClientRect() and clie
     const ribbonH = sg.querySelector(".ribbon") ? sg.querySelector(".ribbon").getBoundingClientRect().height : 0;
     const reserve = heroH + ribbonH + 26;
     const visualTarget = Math.max(300, gh - reserve);
-    sgStageEl.style.height = (visualTarget / 1.15) + "px";
+    sgStageEl.style.height = visualTarget + "px";
     // desktop-only growth (7.1): reuse this same live .glass measurement rather than a new guessed
     // breakpoint. Below the file's own existing 520px wheelrow breakpoint (the 342px phone glass this
     // file's FORM comment names) the scale stays 1 - no change, no overflow. Above it, the wheel, tag,
@@ -682,7 +682,7 @@ ZOOM TRAP: .channel carries zoom:1.15 (tv.css). getBoundingClientRect() and clie
     const leg = document.createElement("div"); leg.className = "leg"; leg.id = "sgLeg";
     leg.innerHTML = '<span class="meat"></span><span class="bone"></span>';
     const sr = stageWrap.getBoundingClientRect();
-    const z0 = sr.width / stageWrap.offsetWidth || 1;   // the shell zooms .channel 1.15x; real pixel deltas must be divided back to local CSS px
+    const z0 = sr.width / stageWrap.offsetWidth || 1;   // measured, not assumed: 1 now that 2.16 retired .channel's zoom, and still correct if any ancestor scale ever returns
     leg.style.left = ((px - sr.left) / z0 - 28) + "px";
     leg.style.top = ((py - sr.top) / z0 - 22) + "px";
     stageWrap.appendChild(leg);

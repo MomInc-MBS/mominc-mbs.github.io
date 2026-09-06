@@ -221,14 +221,14 @@ FORM: Ian's direction 2026-08-26/27; canon in MOM Inc.md "The goon theme" and Se
   const gn = document.getElementById("gn"); if (!gn) return;
   const screen = gn.closest(".screen") || document.getElementById("screen");
 
-  // the game frame fills the glass, same fitViewport() pattern as corgi.html (divide by 1.15 for zoom:1.15)
+  // the game frame fills the glass, same fitViewport() pattern as corgi.html (no zoom divisor since 2.16)
   const glassEl = screen ? screen.parentElement : null;
   const ggFrame = document.getElementById("ggFrame");
   function fitViewport() {
     if (!glassEl || !ggFrame) return;
     const gh = glassEl.getBoundingClientRect().height;
     const visualTarget = Math.max(220, gh - 26);
-    ggFrame.style.height = (visualTarget / 1.15) + "px";
+    ggFrame.style.height = visualTarget + "px";
   }
   if (glassEl) { new ResizeObserver(fitViewport).observe(glassEl); fitViewport(); }
 

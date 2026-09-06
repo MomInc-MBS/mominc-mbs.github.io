@@ -1050,9 +1050,9 @@ here is invented.
     // ---- clicks
     const ray = new THREE.Raycaster(), pt = new THREE.Vector2();
     canvas.addEventListener("click", e => {
-      // .channel carries zoom:1.15 (tv.css). Under CSS zoom, getBoundingClientRect() and clientX/clientY are
-      // both VISUAL pixels while clientWidth/clientHeight are LAYOUT pixels - build the ray from the rect and
-      // the event alone. Mixing in clientWidth or offsetX puts every click ~15% off, silently.
+      // .channel's zoom:1.15 is retired (2.16/C002), so visual and layout px now agree. The ray is still
+      // built from the rect and the event alone, never clientWidth or offsetX: that form is correct under any
+      // ancestor scale, and the mixed form is what silently put every click ~15% off on this build.
       const r = canvas.getBoundingClientRect();
       pt.x = ((e.clientX - r.left) / r.width) * 2 - 1;
       pt.y = -((e.clientY - r.top) / r.height) * 2 + 1;

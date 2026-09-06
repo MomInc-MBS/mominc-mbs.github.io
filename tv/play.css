@@ -14,7 +14,7 @@ body{min-height:100vh; min-height:100dvh}
    whatever room the safe-area padding leaves, so .glass is never zero-height. */
 .glass{position:relative;overflow:hidden;flex:1 1 auto;min-height:0;width:100%}
 .screen{position:absolute;inset:0;overflow:auto;overscroll-behavior:contain}
-.channel{min-height:100%; zoom:1.15; width:100%}   /* verbatim tv.css:68 - every channel reads 15% larger */
+.channel{min-height:100%; width:100%}   /* verbatim tv.css:68 - zoom:1.15 retired with it (2.16/C002) */
 
 /* Page furniture, hidden by mount.js's ancestor-path reveal. Hidden, never removed: the channel
    scripts still bind to these nodes (djscratch's #buyBtn and #orderForm, fuel's flat controls) and

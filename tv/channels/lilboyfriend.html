@@ -414,7 +414,7 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
     const gh = glass.getBoundingClientRect().height;
     const ribbonH = lb.querySelector(".ribbon").getBoundingClientRect().height;
     const visualTarget = Math.max(240, gh - ribbonH);
-    lbStage.style.height = (visualTarget / 1.15) + "px";
+    lbStage.style.height = visualTarget + "px";
   }
   if (glass) { new ResizeObserver(fitViewport).observe(glass); fitViewport(); }
 

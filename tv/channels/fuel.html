@@ -61,7 +61,7 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
      no scrolling past a card of copy to reach it. The intro card's job (what this is, what to do) is
      already done by the ticker above and the in-scene face label/nudge, so it steps aside; the header
      shrinks to a strip instead of a hero. flex:1 + min-height:100% divides the real screen height between
-     the strip and the stage natively - no vh/zoom arithmetic against .channel's zoom:1.15 to get wrong. */
+     the strip and the stage natively - no vh/zoom arithmetic to get wrong (and .channel's zoom is retired). */
   .fu.has3d .wrap{display:flex; flex-direction:column; min-height:100%}
   .fu.has3d #introCard{display:none}
   .fu.has3d .head{padding:6px 4px 4px}
@@ -796,8 +796,8 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
     // pointer sits over the stage, the tub keeps spinning at a speed/direction set by how far left or
     // right of centre it is - hard stop the instant the pointer leaves. Still endless (angle is never
     // clamped), so there is still no seam turning either way. Touch has no hover (Codex C4), so mouse/pen
-    // only here; the rotate buttons below cover touch. Trap: .channel carries zoom:1.15 (tv.css), so
-    // getBoundingClientRect()/clientX/clientY are visual pixels while clientWidth is layout pixels -
+    // only here; the rotate buttons below cover touch. .channel's zoom:1.15 is retired (2.16/C002), so
+    // visual and layout px now agree; the rect+event form below is kept because it is correct either way -
     // every bit of this is built from the rect and the event only, never clientWidth.
     let angle = 0, hoverActive = false, hoverFrac = 0, lastJar = 0;
     const ROT_SPEED = 2.0;   // rad/s at full deflection
