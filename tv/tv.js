@@ -35,21 +35,17 @@
   power.addEventListener("click", () => (tv.dataset.state === "on" ? turnOff() : turnOn()));
 
   // --- the channel LCD: MOM INC as the heading, then every channel as a card. Built ones link; the rest sit dim until their page exists.
-  // sag and armie keep their television slots (a coming-soon channel is still a channel; tv/registry.json
-  // carries status:"coming_soon" for both) - comingSoon just marks them for the LCD badge and the loader below.
+  // Channel data (id/ch/name/head/half/comingSoon/suppressed) is generated from tv/channel-manifest.json
+  // into window.MBS_CHANNELS by tools/gen_channels.py (mbs-channels.js, loaded before this file) - three
+  // channels carry comingSoon from the manifest's status; one of those three also carries suppressed
+  // (its compiled bundle asks for card details; route closed until the rebuild lands, see the
+  // suppression register in channel-manifest.json).
   const CHANNELS = [
-    { id: "mominc",       ch: 1, name: "MOM INC",        head: true },
-    { id: "fuel",         ch: 7, name: "DRINKS",         half: true },   // the two half-width entries sit side by side under MOM INC (Ian, 2026-08-26)
-    { id: "goon",         ch: 8, name: "GOON",           half: true, comingSoon: true, suppressed: true },   // C081/C084: the compiled bundle asks for card details; route closed until the rebuild lands
-    { id: "lilboyfriend", ch: 2, name: "LIL BOYFRIEND" },
-    { id: "djscratch",    ch: 3, name: "DJ SCRATCH" },
-    { id: "corgi",        ch: 6, name: "CORTISOL CORGI" },
-    { id: "sag",          ch: 4, name: "SAG SNIFFER",    comingSoon: true },
-    { id: "girlfriend",   ch: 9, name: "DR GIRLFRIEND" },
-    { id: "armie",        ch: 5, name: "COACH ARMIE",    comingSoon: true },
+    ...window.MBS_CHANNELS.channels,
     // the way out of the television and into the games' own pages (plan item 13: the set discovers and
-    // launches them, it is no longer the box they have to run inside)
-    { id: "allgames",     ch: 0, name: "ALL GAMES", href: "../games/", label: "PLAY" },
+    // launches them, it is no longer the box they have to run inside). Not a channel, so not in the
+    // manifest: a navigation link to /games/, kept here.
+    { id: "allgames", ch: 0, name: "ALL GAMES", href: "../games/", label: "PLAY" },
   ];
   const COMING_SOON = CHANNELS.filter(c => c.comingSoon).map(c => c.id);   // keep in sync with the list above
   const lcdList = document.getElementById("lcdList");
@@ -179,11 +175,11 @@
 
   // --- the cross-site unlock: each channel's solved interactable turns its LCD card orange and banks its node.
   // Progress persists per visitor; when every node is in, the LCD is armed for the hacked menu (that destination is still to be built). Shared store: mbs-unlock.
-  // sag and armie went coming_soon (G5) and no longer call MBS.unlock, so the reachable set is the four
-  // channels that still do - goon and girlfriend deliberately never call it either. readUnlock() filters
+  // sag and armie went coming_soon (G5) and no longer call MBS.unlock, so the reachable set is whatever
+  // the manifest marks active - two other channels deliberately never call it either. readUnlock() filters
   // and rewrites storage on every read, so a stale sag/armie entry from before this change self-heals
   // instead of permanently over- or under-counting a returning visitor's progress.
-  const ACTIVE_UNLOCK = ["lilboyfriend", "djscratch", "corgi", "fuel"];
+  const ACTIVE_UNLOCK = window.MBS_CHANNELS.active;
   const NODES = ACTIVE_UNLOCK.length;
   const lcd = document.getElementById("lcd");
   const readUnlock = () => {
@@ -225,7 +221,7 @@
   // --- the forms gate (Ian, 2026-08-27): two separate gates, not one.
   // Gate 1, here: fill in every channel's form and MYR5 offers the free workout template outright.
   // Gate 2, above: solve every channel's secret and MBS.unlock banks the node, which is what frees the full coach assistant.
-  const FORM_SITES = ["lilboyfriend", "djscratch", "corgi", "fuel"];   // every built channel that asks the visitor for something; sag and armie are coming soon and ask nothing
+  const FORM_SITES = window.MBS_CHANNELS.forms;   // every built channel that asks the visitor for something; sag and armie are coming soon and ask nothing
   const readForms = () => { try { return JSON.parse(localStorage.getItem("mbs-forms") || "{}"); } catch { return {}; } };
   window.MBS.formsDone = () => { const f = readForms(); return { done: FORM_SITES.filter(x => f[x]).length, need: FORM_SITES.length }; };
   window.MBS.form = (site, data) => {                       // a channel calls this when its form is submitted
