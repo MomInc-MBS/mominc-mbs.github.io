@@ -210,7 +210,7 @@
   // Boyfriend, Corgi or Fuel, never on MOM Inc - so starting a 30 s window there meant it had always expired
   // by the time the visitor reached CH 1 and the payoff was unreachable in normal play. (Ian, 2026-08-28:
   // arm on arrival instead. His 30 s stands; it just starts where the event actually happens.)
-  window.MBS.armReady = () => readUnlock().length >= NODES;
+  window.MBS.armReady = () => { const done = readUnlock(); return ACTIVE_UNLOCK.every(id => done.includes(id)); };  // C004: explicit active-set every(), not a counter
   window.MBS.armHere = () => {                              // a channel calls this on load to start its window
     if (!window.MBS.armReady()) return 0;
     try { localStorage.setItem("mbs-unlock-at", String(Date.now())); } catch {}
@@ -249,7 +249,7 @@
 
   window.MBS.armedLeft = () => {                            // ms left in the unlock window, or 0
     let at = 0; try { at = +localStorage.getItem("mbs-unlock-at") || 0; } catch {}
-    return readUnlock().length >= NODES && at ? Math.max(0, ARMED_MS - (Date.now() - at)) : 0;
+    return window.MBS.armReady() && at ? Math.max(0, ARMED_MS - (Date.now() - at)) : 0;
   };
   let armedTimer = 0;
   function paintArmed() {                                   // the LCD goes orange for the window, then the purple wave passes and it returns

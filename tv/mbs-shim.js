@@ -127,7 +127,7 @@
     if (M.armedLeft() > 0) document.dispatchEvent(new CustomEvent("mbs:arm"));
     paint();
   };
-  M.armReady = () => readUnlock().length >= NODES;
+  M.armReady = () => { const done = readUnlock(); return ACTIVE_UNLOCK.every(id => done.includes(id)); };  // C004: explicit active-set every(), not a counter
   M.armHere = () => {
     if (!M.armReady()) return 0;
     writeJSON("mbs-unlock-at", Date.now());
