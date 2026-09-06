@@ -227,10 +227,19 @@ with sync_playwright() as pw:
     pg.wait_for_timeout(2500)                     # the 900 ms warm-up, then the game's own first frames
     check(pg.evaluate("() => document.getElementById('tv').dataset.state") == "on",
           "the set is on for the shots, so the frame is photographed around a running game")
-    pg.screenshot(path=os.path.join(ROOT, "tools", "shots", "gameframe-normal.png"))
+    # The shots are diagnostics, not assertions, and tools/shots/ is gitignored. Windows refuses the
+    # write while an image viewer holds the file open, and a gate that goes red because someone is
+    # LOOKING at last run's screenshot is a gate nobody will trust. Say so and carry on.
+    def shot(fname):
+        try:
+            pg.screenshot(path=os.path.join(ROOT, "tools", "shots", fname))
+        except OSError as e:
+            notes.append("note  screenshot %s not written (%s); close it and re-run" % (fname, e.strerror))
+
+    shot("gameframe-normal.png")
     pg.click("#gameBtn")
     pg.wait_for_timeout(1500)
-    pg.screenshot(path=os.path.join(ROOT, "tools", "shots", "gameframe-game.png"))
+    shot("gameframe-game.png")
 
     b.close()
 
