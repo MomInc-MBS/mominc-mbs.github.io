@@ -34,6 +34,16 @@ the subject of the error and raw-listener cases, which need a channel that misbe
 mominc, converted by 2.18's first micro-step, is now the subject of the mount/unmount/remount
 assertions, so the contract is measured against a real channel rather than only a fixture.
 
+SINCE THE HAND EDITOR, IT ALSO COVERS WebGL. djscratch's customize card builds a three.js scene, and
+a WebGLRenderer is the first disposable on this television that the context genuinely cannot own. The
+failure it causes is not an exception: a browser holds only a handful of live WebGL contexts and
+silently drops the OLDEST when a page opens too many, so a retained renderer takes an EARLIER
+channel's canvas away several channel changes later. The assertion is therefore a property of the
+contexts themselves - how many are still un-lost after unmount - and never a tally, which cannot see
+it. The no-WebGL case is asserted too, because the card's whole design is that the preset racks are
+the control and the hologram is an upgrade layered on top; that claim is only worth anything if
+somebody takes WebGL away and checks.
+
 Run:  python tools/check_teardown.py     (serves the repo itself; nothing else need be running)
 """
 import functools, io, json, os, re, threading
@@ -402,6 +412,94 @@ with sync_playwright() as pw:
     # legacy path still exists and still mounts after packet 10 rewired the converted one.
     check(legacy["hidden"] == 0,
           "with nothing hidden, which for corgi is correct: its two roots cover every child")
+
+    print("== the WebGL context: the first disposable on this television that ctx does NOT own")
+    # A page holds a small, fixed number of live WebGL contexts and the browser silently drops the
+    # OLDEST once that is exceeded - so a renderer that outlives its channel does not throw, it takes
+    # an EARLIER channel's canvas away, several channel changes later, with no error anywhere. A tally
+    # cannot see that. What can is the context object itself: forceContextLoss() makes isContextLost()
+    # true, so "how many live contexts does this page still hold" is a real, readable property.
+    gpg = b.new_page(viewport={"width": 1280, "height": 900})
+    gpg.on("pageerror", lambda e: errs.append(str(e)))
+    gpg.add_init_script("""
+        (() => { const real = HTMLCanvasElement.prototype.getContext;
+                 window.__gl = [];
+                 HTMLCanvasElement.prototype.getContext = function (type) {
+                   const c = real.apply(this, arguments);
+                   if (c && /webgl/i.test(String(type))) window.__gl.push(c);
+                   return c;
+                 }; })();
+    """)
+    open_tv(gpg)
+
+    def hand_cycle(page):
+        """Mount djscratch, get the hand editor to actually build, unmount. Returns what is live."""
+        page.evaluate("() => window.MBS_CH.mount('djscratch', document.getElementById('channel'))")
+        page.wait_for_timeout(300)
+        # the model is fetched on an IntersectionObserver hit, so the card has to be approached
+        page.evaluate("() => document.querySelector('#customize').scrollIntoView({block:'center'})")
+        built = True
+        try:
+            page.wait_for_function("() => document.querySelector('#customize.has3d')", timeout=25000)
+        except Exception:
+            built = False
+        page.evaluate("() => window.MBS_CH.unmount()")
+        page.wait_for_timeout(250)
+        return built, page.evaluate("""() => ({
+            made: window.__gl.length,
+            live: window.__gl.filter(c => !c.isContextLost()).length })""")
+
+    built1, gl1 = hand_cycle(gpg)
+    check(built1, "the hand editor actually builds a scene, so this probe is measuring something")
+    check(gl1["made"] > 0, "and it took a real WebGL context to do it (%d)" % gl1["made"])
+    check(gl1["live"] == 0,
+          "after unmount the page holds NO live WebGL context (%d made, %d still live)"
+          % (gl1["made"], gl1["live"]))
+
+    built2, gl2 = hand_cycle(gpg)
+    built3, gl3 = hand_cycle(gpg)
+    check(built2 and built3, "and it rebuilds on the second and third visit rather than coming up empty")
+    # The property, not a constant: contexts are ALLOWED to be created once per visit - that is what
+    # a fresh renderer means - and what must never happen is one being retained. Asserting a total
+    # here would assert something false the moment the model is cached differently.
+    check(gl3["live"] == 0,
+          "three visits later it still holds none (%d made across three, %d live)"
+          % (gl3["made"], gl3["live"]))
+    check(gl3["made"] <= gl1["made"] * 3,
+          "and a visit costs ONE context, never a growing number (%d over three visits)" % gl3["made"])
+    gpg.close()
+
+    print("== and with no WebGL at all, the card is still a working control")
+    # The claim the channel's own comment makes: the racks are the real control and the hologram is
+    # an upgrade layered on top. The only honest way to check that is to take WebGL away.
+    npg = b.new_page(viewport={"width": 1280, "height": 900})
+    npg.on("pageerror", lambda e: errs.append(str(e)))
+    npg.add_init_script("""
+        (() => { const real = HTMLCanvasElement.prototype.getContext;
+                 HTMLCanvasElement.prototype.getContext = function (type) {
+                   return /webgl/i.test(String(type)) ? null : real.apply(this, arguments);
+                 }; })();
+    """)
+    open_tv(npg)
+    npg.evaluate("() => window.MBS_CH.mount('djscratch', document.getElementById('channel'))")
+    npg.wait_for_timeout(300)
+    npg.evaluate("() => document.querySelector('#customize').scrollIntoView({block:'center'})")
+    npg.wait_for_timeout(2500)
+    npg.evaluate("() => document.getElementById('hb-be2').click()")
+    npg.evaluate("() => document.getElementById('hb-na3').click()")
+    npg.wait_for_timeout(150)
+    flat = npg.evaluate("""() => ({
+        has3d: !!document.querySelector('#customize.has3d'),
+        spec: (document.querySelector('#handSpec') || {}).textContent || '',
+        racks: document.querySelectorAll('#orderForm .chips input').length,
+        text: document.querySelectorAll('#orderForm input:not([type=radio]), #orderForm select, #orderForm textarea').length })""")
+    check(not flat["has3d"], "no WebGL: the stage stays hidden rather than showing an empty box")
+    check(flat["racks"] >= 15, "the preset racks are in the DOM regardless (%d chips)" % flat["racks"])
+    check("lizard" in flat["spec"].lower() and "talons" in flat["spec"].lower(),
+          "and picking still reads the spec back in words: %r" % flat["spec"][:90])
+    check(flat["text"] == 0,
+          "and there is no free-text field left on this card at all (%d)" % flat["text"])
+    npg.close()
 
     b.close()
 

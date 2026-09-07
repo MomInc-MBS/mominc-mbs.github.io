@@ -102,6 +102,31 @@ FORM: Ian's pin, 2026-08-25, "90s late-night infomercial." Inside the old televi
   .dj .orderform button:active{transform:translateY(3px); box-shadow:0 1px 0 var(--pur-dd)}
   .dj .orderform button:disabled{background:var(--gold); color:var(--pur-dd); box-shadow:none; cursor:default}
   .dj .ofine{font-size:12px; line-height:1.4; color:var(--pur-d); margin:2px 0 0; font-family:"Barlow Condensed",sans-serif}
+  /* THE HAND EDITOR (PLAN-r9 7.9). The supplied floating-hand.obj, held as a hologram and restyled
+     live by the chips below. The stage stays display:none until three.js has actually built a scene:
+     the chips are the real control and work with no WebGL at all, the same way fuel's flat rows are
+     the true fallback rather than an apology for one. */
+  .dj .handstage{display:none; position:relative; aspect-ratio:4/3; margin:10px 0 2px; border-radius:12px; overflow:hidden;
+      border:2px solid var(--pur-d); touch-action:none;
+      background:radial-gradient(120% 90% at 50% 18%, #2b0d4d 0%, #14061f 68%, #09030f 100%)}
+  .dj .customize.has3d .handstage{display:block}
+  /* touch-action is not inherited, and the canvas is the pointer target: without this a drag on a phone scrolls the page instead of turning the hand */
+  .dj .handstage canvas{display:block; width:100%; height:100%; cursor:grab; touch-action:none}
+  .dj .handstage canvas:active{cursor:grabbing}
+  /* the scanlines are CSS, not a shader pass: a hologram look for one rule and no render cost */
+  .dj .handstage::after{content:""; position:absolute; inset:0; pointer-events:none;
+      background:repeating-linear-gradient(0deg, rgba(120,255,220,.05) 0 2px, transparent 2px 4px)}
+  .dj .handhint{position:absolute; left:11px; bottom:8px; margin:0; z-index:2; pointer-events:none;
+      font-family:"Barlow Condensed",sans-serif; font-size:12px; letter-spacing:.09em; text-transform:uppercase; color:var(--sig); opacity:.7}
+  .dj .pick{border:0; margin:0; padding:0; display:grid; gap:5px; min-width:0}
+  .dj .pick legend{padding:0; font-family:"Archivo Black",sans-serif; font-size:clamp(13px,3.6vw,15px); color:var(--pur-dd)}
+  .dj .chips{display:flex; flex-wrap:wrap; gap:6px}
+  .dj .chips input{position:absolute; width:1px; height:1px; opacity:0}
+  .dj .chips label{font-family:"Barlow Condensed",sans-serif; font-weight:600; font-size:15px; line-height:1; cursor:pointer;
+      padding:9px 12px; border:2px solid var(--pur-d); border-radius:999px; background:#fff; color:var(--pur-dd)}
+  .dj .chips input:checked+label{background:var(--pur); border-color:var(--pur-dd); color:#fff; box-shadow:0 2px 0 var(--pur-dd)}
+  .dj .chips input:focus-visible+label{outline:3px solid var(--sky); outline-offset:2px}
+  .dj .handspec{margin:2px 0 0; font-family:"Archivo Black",sans-serif; font-size:clamp(13px,3.6vw,15px); color:var(--pur-d)}
 
   /* price */
   .dj .price{text-align:center; background:var(--pur-dd); color:#fff; border-radius:14px; padding:16px; margin:16px 0; border:3px solid var(--gold); box-shadow:6px 6px 0 var(--gold-d)}
@@ -454,28 +479,47 @@ FORM: Ian's pin, 2026-08-25, "90s late-night infomercial." Inside the old televi
 
       <section class="card customize" id="customize">
         <h2>BUILD YOUR OWN HAND</h2>
-        <p>MOM already started growing one, just for you, before you even asked. Tell her what you want in yours. Nothing is sent and nothing arrives: this is a builder, not an order form.</p>
+        <p>MOM already started growing one, just for you, before you even asked. It is turning over down there now. Change your mind as often as you like: nothing is sent and nothing arrives, this is a builder, not an order form.</p>
+        <div class="handstage" id="handStage"><p class="handhint" id="handHint">drag to turn it over</p></div>
         <form id="orderForm" class="orderform">
-          <label>Being type
-            <select name="being" required>
-              <option value="">, choose your hand,</option>
-              <option>Lizard-skin, scaled, cold-blooded</option>
-              <option>Super-furry, clawed, warm</option>
-              <option>Human, uncanny, familiar</option>
-              <option>Surprise me, MOM decides</option>
-            </select>
-          </label>
-          <label>Colour
-            <input name="color" placeholder="molten gold? void black? your ex's aura?" required>
-          </label>
-          <label>Nails
-            <input name="nails" placeholder="length, shape, finish, go long">
-          </label>
-          <label>Powers
-            <input name="powers" placeholder="telekinesis? fire? folds fitted sheets?">
-          </label>
+          <fieldset class="pick">
+            <legend>Being type</legend>
+            <div class="chips">
+              <input type="radio" name="being" id="hb-be1" value="human" checked><label for="hb-be1">Human, uncanny, familiar</label>
+              <input type="radio" name="being" id="hb-be2" value="lizard"><label for="hb-be2">Lizard-skin, scaled, cold-blooded</label>
+              <input type="radio" name="being" id="hb-be3" value="furry"><label for="hb-be3">Super-furry, clawed, warm</label>
+              <input type="radio" name="being" id="hb-be4" value="rock"><label for="hb-be4">Quarried rock, patient</label>
+            </div>
+          </fieldset>
+          <fieldset class="pick">
+            <legend>Colour</legend>
+            <div class="chips">
+              <input type="radio" name="color" id="hb-co1" value="gold" checked><label for="hb-co1">Molten gold</label>
+              <input type="radio" name="color" id="hb-co2" value="void"><label for="hb-co2">Void black</label>
+              <input type="radio" name="color" id="hb-co3" value="aura"><label for="hb-co3">Your ex&rsquo;s aura</label>
+              <input type="radio" name="color" id="hb-co4" value="signal"><label for="hb-co4">Signal green</label>
+            </div>
+          </fieldset>
+          <fieldset class="pick">
+            <legend>Nails</legend>
+            <div class="chips">
+              <input type="radio" name="nails" id="hb-na1" value="trimmed"><label for="hb-na1">Trimmed, sensible</label>
+              <input type="radio" name="nails" id="hb-na2" value="long" checked><label for="hb-na2">Long, gold, the needle</label>
+              <input type="radio" name="nails" id="hb-na3" value="talon"><label for="hb-na3">Talons, go longer</label>
+            </div>
+          </fieldset>
+          <fieldset class="pick">
+            <legend>Powers</legend>
+            <div class="chips">
+              <input type="radio" name="powers" id="hb-po1" value="telekinesis" checked><label for="hb-po1">Telekinesis</label>
+              <input type="radio" name="powers" id="hb-po2" value="fire"><label for="hb-po2">Fire</label>
+              <input type="radio" name="powers" id="hb-po3" value="sheets"><label for="hb-po3">Folds fitted sheets</label>
+              <input type="radio" name="powers" id="hb-po4" value="mom"><label for="hb-po4">MOM decides</label>
+            </div>
+          </fieldset>
+          <p class="handspec" id="handSpec"></p>
           <button type="submit" id="orderBtn">BUILD MY HAND</button>
-          <p class="ofine">A preview, not an order: no payment, no address asked for, and nothing sent or kept. MOM cannot post you anything because there is nothing behind this form. In-character participation only, never a sale.</p>
+          <p class="ofine">A preview, not an order: nothing to type, no payment, no address asked for, and nothing sent or kept. Your hand is drawn on this device and dies with the page. MOM cannot post you anything because there is nothing behind this form. In-character participation only, never a sale.</p>
         </form>
       </section>
 
