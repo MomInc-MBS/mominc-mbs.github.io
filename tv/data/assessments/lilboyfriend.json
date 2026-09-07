@@ -1,0 +1,148 @@
+{
+  "id": "lilboyfriend",
+  "title": "Residential Compression Intake",
+  "intro": "Six questions. MOM Incorporated's Department of Residential Compression will assess how much room you are currently taking up, and prescribe less.",
+  "privacy": "Your answers stay on this device. Nothing here is sent anywhere, no account is made, and no email or phone number is asked for or required to see your result. You are never asked for your exact address or your exact income.",
+  "submitLabel": "Submit for assessment",
+  "missingLabel": "The department requires an answer here: ",
+  "score": { "id": "compression", "max": 14 },
+  "questions": [
+    {
+      "id": "housing",
+      "label": "What are you living in at the moment?",
+      "options": [
+        { "value": "owned_outright", "label": "A home I own outright", "score": 0 },
+        { "value": "mortgage", "label": "A home I am still paying a mortgage on", "score": 1 },
+        { "value": "rented_house", "label": "A rented house", "score": 2 },
+        { "value": "rented_flat", "label": "A rented apartment", "score": 2 },
+        { "value": "shared_room", "label": "A room in someone else's home", "score": 3 },
+        { "value": "staying", "label": "Staying with family or friends", "score": 3 },
+        { "value": "no_fixed", "label": "Nowhere fixed", "score": 4 }
+      ]
+    },
+    {
+      "id": "burden",
+      "label": "Roughly what share of your income goes on housing?",
+      "help": "A range only. The exact figure is nobody's business, including MOM's.",
+      "options": [
+        { "value": "under30", "label": "Less than 30%", "score": 0 },
+        { "value": "30to50", "label": "Between 30% and 50%", "score": 2 },
+        { "value": "over50", "label": "More than half", "score": 4 },
+        { "value": "unsure", "label": "I would rather not work it out", "score": 2 }
+      ]
+    },
+    {
+      "id": "sharing",
+      "label": "How many people share that space with you?",
+      "options": [
+        { "value": "alone", "label": "Nobody, it is just me", "score": 0 },
+        { "value": "two", "label": "One other person", "score": 1 },
+        { "value": "few", "label": "Two or three others", "score": 2 },
+        { "value": "many", "label": "Four or more", "score": 3 }
+      ]
+    },
+    {
+      "id": "space",
+      "label": "If you could have one more thing, what would it be?",
+      "options": [
+        { "value": "floor", "label": "A whole floor to myself", "score": 3 },
+        { "value": "room", "label": "A room of my own", "score": 2 },
+        { "value": "door", "label": "A door that closes", "score": 1 },
+        { "value": "table", "label": "Somewhere to put a table", "score": 1 },
+        { "value": "stopped", "label": "I stopped asking", "score": 0 }
+      ]
+    },
+    {
+      "id": "region",
+      "label": "Broadly, where is that?",
+      "help": "Optional, and deliberately vague. There is no city field and there will not be one.",
+      "optional": true,
+      "options": [
+        { "value": "west", "label": "The West" },
+        { "value": "midwest", "label": "The Midwest" },
+        { "value": "south", "label": "The South" },
+        { "value": "northeast", "label": "The Northeast" },
+        { "value": "elsewhere", "label": "Outside the United States" },
+        { "value": "unsaid", "label": "I would rather not say" }
+      ]
+    },
+    {
+      "id": "wednesday",
+      "label": "Which residence should the museum demonstrate on Wednesday's show?",
+      "help": "This one is a vote. It is the only answer here that changes what gets broadcast.",
+      "optional": true,
+      "options": [
+        { "value": "cupboard", "label": "The Cupboard" },
+        { "value": "car", "label": "The Car" },
+        { "value": "storage", "label": "The Storage Unit" },
+        { "value": "masonjar", "label": "The Mason Jar" }
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "id": "compression",
+      "label": "Your compression score",
+      "kind": "score"
+    },
+    {
+      "id": "diagnosis",
+      "label": "MOM's diagnosis",
+      "kind": "band",
+      "bands": [
+        { "max": 3, "text": "Compliant volume. You occupy roughly what the economy has decided you may occupy, and the department has no further business with you this quarter. Keep it that way." },
+        { "min": 4, "max": 7, "text": "Mild expansion. You are taking up slightly more room than is currently affordable and have not yet noticed. The department will monitor." },
+        { "min": 8, "max": 10, "text": "Moderate compression indicated. A meaningful share of your working life is already being spent on the square footage around you. MOM suggests fewer square feet rather than more working life." },
+        { "min": 11, "text": "Acute. You are, in the department's clinical opinion, far too large for the economy. This is presented as your failure. It is not." }
+      ]
+    },
+    {
+      "id": "residence",
+      "label": "Your prescribed residence",
+      "kind": "band",
+      "bands": [
+        { "max": 3, "text": "No prescription issued. Return when your circumstances deteriorate. (MOM Incorporated is fiction and prescribes nothing. This is a television programme.)" },
+        { "min": 4, "max": 7, "text": "The Cupboard. Two metres by one, shelf included, door optional at extra cost. (MOM Incorporated is fiction and prescribes nothing. This is a television programme.)" },
+        { "min": 8, "max": 10, "text": "The Car. Reclining, mobile, and legal in fewer places every year. (MOM Incorporated is fiction and prescribes nothing. This is a television programme.)" },
+        { "min": 11, "text": "The Mason Jar. The department's flagship unit. Airtight, affordable, and yours. (MOM Incorporated is fiction and prescribes nothing. This is a television programme.)" }
+      ]
+    },
+    {
+      "id": "context",
+      "label": "What is actually true",
+      "kind": "map",
+      "of": "burden",
+      "map": {
+        "under30": {
+          "text": "Under 30% is the line researchers use for cost burden, and you are on the right side of it. 22.7 million renter households in the United States are not: they pay more than 30% of their income for housing, and 12.1 million pay more than half.",
+          "src": "Harvard Joint Center for Housing Studies, America's Rental Housing 2026."
+        },
+        "30to50": {
+          "text": "That range has a name. Researchers call it cost burdened, and 22.7 million renter households are in it. Rents are about 29% above their 2020 level.",
+          "src": "Harvard Joint Center for Housing Studies, America's Rental Housing 2026."
+        },
+        "over50": {
+          "text": "More than half of your income on housing is what researchers call severely cost burdened. 12.1 million renter households are in that position, and 83% of renters earning under $30,000 a year are burdened at some level. It is a structural condition, not a personal one.",
+          "src": "Harvard Joint Center for Housing Studies, America's Rental Housing 2026."
+        },
+        "unsure": {
+          "text": "Fair enough. For scale: a full-time worker needs $33.63 an hour to afford a plain two-bedroom apartment in the United States without crossing the cost-burden line. That is more than four times the federal minimum wage.",
+          "src": "National Low Income Housing Coalition, Out of Reach 2025. nlihc.org/resource/now-available-out-reach-2025-high-cost-housing"
+        }
+      }
+    },
+    {
+      "id": "wednesday",
+      "label": "What you changed about Wednesday",
+      "kind": "map",
+      "of": "wednesday",
+      "map": {
+        "cupboard": "Your vote goes to the Cupboard. If it wins, Wednesday's show opens inside one.",
+        "car": "Your vote goes to the Car. If it wins, Wednesday's show is broadcast from a parking space.",
+        "storage": "Your vote goes to the Storage Unit. If it wins, Wednesday's show is broadcast with the roller door down.",
+        "masonjar": "Your vote goes to the Mason Jar. If it wins, the museum's flagship unit gets the full hour."
+      },
+      "fallback": "You did not vote, so Wednesday is somebody else's decision."
+    }
+  ]
+}

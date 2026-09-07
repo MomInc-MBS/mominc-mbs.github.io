@@ -1,0 +1,119 @@
+{
+  "id": "fuel",
+  "title": "Chemical Services Intake",
+  "intro": "Five questions. MBS FUEL's Department of Chemical Services will work out how much of your eating has already been replaced, and offer to replace the rest.",
+  "privacy": "Your answers stay on this device. Nothing here is sent anywhere, no account is made, and no email or phone number is asked for or required to see your result.",
+  "submitLabel": "Run the analysis",
+  "missingLabel": "Chemical Services requires an answer here: ",
+  "score": { "id": "conversion", "max": 11 },
+  "questions": [
+    {
+      "id": "standing",
+      "label": "In a normal week, how many meals do you eat standing up, walking, or at a desk?",
+      "options": [
+        { "value": "none", "label": "None, I sit down to eat", "score": 0 },
+        { "value": "few", "label": "One to three", "score": 1 },
+        { "value": "some", "label": "Four to seven", "score": 2 },
+        { "value": "most", "label": "Eight or more", "score": 3 }
+      ]
+    },
+    {
+      "id": "replace",
+      "label": "How often does a drink stand in for a meal?",
+      "options": [
+        { "value": "never", "label": "Never", "score": 0 },
+        { "value": "weekly", "label": "Once or twice a week", "score": 1 },
+        { "value": "most_days", "label": "Most days", "score": 2 },
+        { "value": "most_meals", "label": "Most meals", "score": 3 }
+      ]
+    },
+    {
+      "id": "budget",
+      "label": "Roughly what share of your food spending goes on powders, bars and replacement drinks?",
+      "help": "A range only. No exact figure is asked for.",
+      "options": [
+        { "value": "under10", "label": "Under a tenth", "score": 0 },
+        { "value": "10to25", "label": "A tenth to a quarter", "score": 1 },
+        { "value": "25to50", "label": "A quarter to a half", "score": 2 },
+        { "value": "over50", "label": "More than half", "score": 3 }
+      ]
+    },
+    {
+      "id": "reason",
+      "label": "Why, mostly?",
+      "options": [
+        { "value": "time", "label": "There is no time", "score": 2 },
+        { "value": "cost", "label": "It is cheaper", "score": 2 },
+        { "value": "deciding", "label": "It is easier than deciding", "score": 1 },
+        { "value": "taste", "label": "I actually like it", "score": 0 }
+      ]
+    },
+    {
+      "id": "wednesday",
+      "label": "Which flavour should the lab mix live on Wednesday's show?",
+      "help": "This one is a vote. It is the only answer here that changes what gets broadcast.",
+      "optional": true,
+      "options": [
+        { "value": "original", "label": "Original" },
+        { "value": "citrus", "label": "Citrus Compliance" },
+        { "value": "chalk", "label": "Vanilla Chalk" },
+        { "value": "unflavoured", "label": "Unflavoured, for the purists" }
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "id": "conversion",
+      "label": "Your conversion score",
+      "kind": "score"
+    },
+    {
+      "id": "diagnosis",
+      "label": "Chemical Services' diagnosis",
+      "kind": "band",
+      "bands": [
+        { "max": 2, "text": "Unconverted. You are still eating food, in a room, with a chair. Chemical Services regards this as a market opportunity." },
+        { "min": 3, "max": 5, "text": "Partially converted. Meals are already becoming errands. The department is encouraged." },
+        { "min": 6, "max": 8, "text": "Substantially converted. Eating has been folded into the working day, which is exactly where the department likes it." },
+        { "min": 9, "text": "Fully converted. There is nothing left for MBS FUEL to replace, and the department would like to congratulate you on this in an advertisement." }
+      ]
+    },
+    {
+      "id": "formula",
+      "label": "Your prescribed formula",
+      "kind": "band",
+      "bands": [
+        { "max": 2, "text": "No formula issued. Keep the chair. (MBS FUEL is a fiction. Nothing here is nutritional advice, and no product exists.)" },
+        { "min": 3, "max": 5, "text": "One serving daily, taken in place of whichever meal is least defended. (MBS FUEL is a fiction. Nothing here is nutritional advice, and no product exists.)" },
+        { "min": 6, "max": 8, "text": "Two servings daily, with the third meal retained for morale. (MBS FUEL is a fiction. Nothing here is nutritional advice, and no product exists.)" },
+        { "min": 9, "text": "The full stack: every meal, every day, forever, at a price that rises annually. (MBS FUEL is a fiction. Nothing here is nutritional advice, and no product exists.)" }
+      ]
+    },
+    {
+      "id": "context",
+      "label": "What that actually adds up to",
+      "kind": "map",
+      "of": "replace",
+      "map": {
+        "never": "No arithmetic to do. A meal is still a meal here, which is rarer than the advertising suggests.",
+        "weekly": "Call it one or two a week: somewhere around six or eight meals a month that are a purchase rather than a meal. Small, and worth knowing the size of.",
+        "most_days": "Most days is roughly twenty meals a month you are not choosing so much as buying. That is the number the category is built on.",
+        "most_meals": "Most meals is most of the roughly ninety eating occasions in a month, handed over to whoever mixes the powder. Worth knowing the size of, whatever you decide about it."
+      },
+      "fallback": "Nothing to add up yet."
+    },
+    {
+      "id": "wednesday",
+      "label": "What you changed about Wednesday",
+      "kind": "map",
+      "of": "wednesday",
+      "map": {
+        "original": "Your vote goes to Original. If it wins, Wednesday's mix is the one the ads use.",
+        "citrus": "Your vote goes to Citrus Compliance. If it wins, Wednesday's mix is the orange one.",
+        "chalk": "Your vote goes to Vanilla Chalk. If it wins, the lab has to drink it on camera.",
+        "unflavoured": "Your vote goes to Unflavoured. If it wins, Wednesday's show is going to be quiet."
+      },
+      "fallback": "You did not vote, so Wednesday's flavour is somebody else's decision."
+    }
+  ]
+}

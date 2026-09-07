@@ -1,0 +1,119 @@
+{
+  "id": "armie",
+  "title": "Human Optimization Intake",
+  "intro": "Five questions. Coach Armie's Department of Human Optimization will establish how much of you is currently going to waste, and schedule the rest.",
+  "privacy": "Your answers stay on this device. Nothing here is sent anywhere, no account is made, and no email or phone number is asked for or required to see your result.",
+  "submitLabel": "Get the verdict",
+  "missingLabel": "Coach needs an answer here: ",
+  "score": { "id": "slack", "max": 11 },
+  "questions": [
+    {
+      "id": "sleep",
+      "label": "On a normal night, how long do you sleep?",
+      "options": [
+        { "value": "over8", "label": "More than eight hours", "score": 3 },
+        { "value": "7to8", "label": "Seven or eight", "score": 2 },
+        { "value": "5to6", "label": "Five or six", "score": 1 },
+        { "value": "under5", "label": "Less than five", "score": 0 }
+      ]
+    },
+    {
+      "id": "hours",
+      "label": "In a normal week, how long do you spend working or studying?",
+      "options": [
+        { "value": "under30", "label": "Under thirty hours", "score": 3 },
+        { "value": "30to40", "label": "Thirty to forty", "score": 2 },
+        { "value": "40to55", "label": "Forty to fifty-five", "score": 1 },
+        { "value": "over55", "label": "More than fifty-five", "score": 0 }
+      ]
+    },
+    {
+      "id": "rest",
+      "label": "When did you last have a whole day with nothing scheduled on it?",
+      "options": [
+        { "value": "week", "label": "This week", "score": 3 },
+        { "value": "month", "label": "This month", "score": 2 },
+        { "value": "year", "label": "Sometime this year", "score": 1 },
+        { "value": "never", "label": "I cannot remember one", "score": 0 }
+      ]
+    },
+    {
+      "id": "optimize",
+      "label": "If Coach could optimize one thing about you, what should it be?",
+      "options": [
+        { "value": "nothing", "label": "Nothing, I am fine", "score": 2 },
+        { "value": "sleep", "label": "My sleep", "score": 1 },
+        { "value": "attention", "label": "My attention", "score": 1 },
+        { "value": "body", "label": "My body", "score": 0 },
+        { "value": "money", "label": "My earnings", "score": 0 }
+      ]
+    },
+    {
+      "id": "wednesday",
+      "label": "Which drill should Coach run on Wednesday's show?",
+      "help": "This one is a vote. It is the only answer here that changes what gets broadcast.",
+      "optional": true,
+      "options": [
+        { "value": "breathing", "label": "The breathing ladder" },
+        { "value": "grip", "label": "The grip test" },
+        { "value": "quiz", "label": "The optimization quiz" },
+        { "value": "rest", "label": "An hour of nothing at all" }
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "id": "slack",
+      "label": "Your slack score",
+      "kind": "score"
+    },
+    {
+      "id": "diagnosis",
+      "label": "Coach's diagnosis",
+      "kind": "band",
+      "bands": [
+        { "max": 2, "text": "No slack detected. Every hour you have is already spoken for, which the department scores as excellent and everybody else would score as a warning." },
+        { "min": 3, "max": 5, "text": "Minimal slack. There are perhaps two unclaimed hours in your week. Coach has plans for both of them." },
+        { "min": 6, "max": 8, "text": "Recoverable slack. You are sleeping, resting and occasionally doing nothing. The department regards this as inventory." },
+        { "min": 9, "text": "Substantial slack. You have a life outside the schedule. Coach would like to sell you a system for it." }
+      ]
+    },
+    {
+      "id": "regimen",
+      "label": "Your prescribed regimen",
+      "kind": "band",
+      "bands": [
+        { "max": 2, "text": "No regimen issued. There is nothing left to schedule. (Coach Armie is a fiction. Nothing here is medical, fitness or mental-health advice.)" },
+        { "min": 3, "max": 5, "text": "The Maintenance Block: one drill, daily, in whichever gap you have left. (Coach Armie is a fiction. Nothing here is medical, fitness or mental-health advice.)" },
+        { "min": 6, "max": 8, "text": "The Recovery Package: your rest, rebranded as training, and invoiced. (Coach Armie is a fiction. Nothing here is medical, fitness or mental-health advice.)" },
+        { "min": 9, "text": "The Full Programme: every unclaimed hour, permanently allocated, with a wearable to confirm it. (Coach Armie is a fiction. Nothing here is medical, fitness or mental-health advice.)" }
+      ]
+    },
+    {
+      "id": "context",
+      "label": "What that actually adds up to",
+      "kind": "map",
+      "of": "rest",
+      "map": {
+        "week": "One clear day in the last seven is about fourteen percent of your week that belongs to you. Coach calls that waste. It is the only part of the week the department cannot bill for.",
+        "month": "One clear day in about thirty is roughly three percent of your month. Whatever you call that, it is not a lot of it.",
+        "year": "One clear day in a year is under half a percent of it. That is not a personal failing and no drill fixes it.",
+        "never": "You could not name one. That is worth noticing on its own, without a score attached and without anything to buy."
+      },
+      "fallback": "Nothing to add up yet."
+    },
+    {
+      "id": "wednesday",
+      "label": "What you changed about Wednesday",
+      "kind": "map",
+      "of": "wednesday",
+      "map": {
+        "breathing": "Your vote goes to the breathing ladder. If it wins, Wednesday opens with four minutes of it.",
+        "grip": "Your vote goes to the grip test. If it wins, Coach measures the audience on camera.",
+        "quiz": "Your vote goes to the optimization quiz. If it wins, Wednesday is a scoreboard.",
+        "rest": "Your vote goes to an hour of nothing at all. If it wins, Coach has to sit still on television, which he has never once managed."
+      },
+      "fallback": "You did not vote, so Wednesday's drill is somebody else's decision."
+    }
+  ]
+}
