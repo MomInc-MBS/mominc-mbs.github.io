@@ -48,10 +48,22 @@
     return state;
   };
 
+  /* 3.L1/C018: D.1.3 gives form.status a CLOSED set, and this file is its only writer. A save carrying
+     anything else was not written by this build, and nothing downstream re-checks it - formStatus()
+     (:194), formsDone() (:212) and earnedItems() (:272) all read it straight back out. So a junk status
+     is corruption and quarantines like any other wrong shape. A channel record with NO `form` is not
+     corrupt: formStatus() has always defaulted such a record to "draft", and this is a shape check,
+     not a completeness check - filling the gap is ensureChannels()'s job, not this function's. */
+  const FORM_STATUSES = ["draft", "saved_here", "sending", "received", "failed"];
+  const formOk = (c) => !!c && typeof c === "object"
+    && (!c.form || (typeof c.form === "object"
+                    && (!c.form.status || FORM_STATUSES.includes(c.form.status))));
+
   const isWellFormed = (obj) =>
     !!obj && typeof obj === "object"
     && obj.v === VERSION
     && obj.channels && typeof obj.channels === "object"
+    && Object.keys(obj.channels).every(id => formOk(obj.channels[id]))
     && obj.drafts && typeof obj.drafts === "object"
     && obj.submissions && typeof obj.submissions === "object"
     && obj.facility && typeof obj.facility === "object" && obj.facility.rooms && typeof obj.facility.rooms === "object"

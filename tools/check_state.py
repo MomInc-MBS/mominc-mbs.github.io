@@ -138,6 +138,53 @@ with sync_playwright() as pw:
     s = pg.evaluate("() => window.MBS_STATE.read()")
     check(s.get("v") == 3, "the visitor gets a fresh working v3 session, wrong-shape case")
 
+    print("== 3.L1/C018 form.status is a CLOSED set (D.1.3): a junk status is corruption, not a value")
+
+    # Matched pair, both halves in this one run: "nothing happened" is the passing half of the first,
+    # so a GOOD save must be proved to still load in the same run that proves a corrupt one is rejected.
+    # `sending` is deliberately not `saved_here`: the check is the closed set, not the one status this
+    # server-less build can actually write, and a body this build never produces must still load.
+    def body(status):
+        ch = {"form": {"status": status, "earnedAt": 111},
+              "secret": {"earned": True, "earnedAt": 222},
+              "performance": {"earned": False, "earnedAt": None},
+              "reward": {"earned": False, "earnedAt": None, "kind": None}}
+        return json.dumps({"v": 3, "armedAt": None, "channels": {"fuel": ch},
+                           "drafts": {}, "submissions": {"fuel": {"a": 1}},
+                           "facility": {"rooms": {}}, "artifacts": [], "events": []})
+
+    good = body("sending")
+    errs = seed(pg, page_errs, state_raw=good)
+    check(not errs, "a save with a legal non-default form.status loads with no console error")
+    check(pg.evaluate("() => localStorage.getItem('mbs-state-quarantine')") is None,
+          "a legal form.status ('sending') is NOT quarantined")
+    s = pg.evaluate("() => window.MBS_STATE.read()")
+    check(pg.evaluate("() => window.MBS_STATE.formStatus('fuel')") == "sending"
+          and s["channels"]["fuel"]["secret"]["earnedAt"] == 222,
+          "the good save is LOADED intact, status and earned state both")
+
+    bad = body("banana")
+    errs = seed(pg, page_errs, state_raw=bad)
+    check(not errs, "a junk form.status: no exception reaches the page")
+    check(pg.evaluate("() => localStorage.getItem('mbs-state-quarantine')") == bad,
+          "quarantine key holds the original bytes, junk-form.status case")
+    s = pg.evaluate("() => window.MBS_STATE.read()")
+    check(s.get("v") == 3 and s["channels"]["fuel"]["secret"]["earned"] is False,
+          "the visitor gets a fresh working v3 session, junk-form.status case - the junk body is not loaded")
+    check(pg.evaluate("() => window.MBS_STATE.formStatus('fuel')") == "draft",
+          "formStatus after quarantine reads the fresh record, never the rejected one")
+
+    # deliberate permissiveness, asserted so a future tightening trips this gate instead of a visitor:
+    # a channel record with no `form` at all is incomplete, not corrupt, and ensureChannels() fills it.
+    no_form = json.dumps({"v": 3, "armedAt": None,
+                          "channels": {"fuel": {"secret": {"earned": True, "earnedAt": 222}}},
+                          "drafts": {}, "submissions": {}, "facility": {"rooms": {}},
+                          "artifacts": [], "events": []})
+    seed(pg, page_errs, state_raw=no_form)
+    check(pg.evaluate("() => localStorage.getItem('mbs-state-quarantine')") is None
+          and pg.evaluate("() => window.MBS_STATE.read()")["channels"]["fuel"]["secret"]["earned"] is True,
+          "a channel record with no `form` is incomplete, not corrupt - it loads and keeps what it earned")
+
     print("== 2.24 the v2 -> v3 upgrade (C010): a returning visitor is carried forward, not quarantined")
 
     # a real v2 body, exactly as this store wrote it before 2.24: earned secret, a submission, a draft.
