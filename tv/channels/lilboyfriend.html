@@ -216,6 +216,48 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
   .lb-flat button, .lb-flat .fl-actions a{font-family:"Times New Roman",Times,serif; font-weight:700; font-size:15px; border:1px solid #2c1e14; cursor:pointer; padding:11px 18px; background:transparent; color:#2c1e14; text-decoration:none; display:inline-block}
   .lb-flat button:active{transform:translateY(1px)}
 
+  /* ---- 4.1 / F.2: the two MODES. S1 asked for the museum walk AND the old scroll presentation, so this
+     is a switch between two whole presentations, never a replacement of one by the other. The switch is
+     one class on the stage rather than a `hidden` attribute per element, because the museum's three
+     elements do not all exist at the same time (#lbCanvas + .lb-hud on the WebGL path, .lb-flat on the
+     fallback, and .lb-flat can also arrive LATE when the three.js CDN import fails after boot) - a class
+     on the container covers whatever is there now and whatever appears later, with no bookkeeping. Note
+     #lbCanvas carries display:block above, which beats the UA stylesheet's [hidden], which is the other
+     reason not to do this with the attribute. */
+  .lb-stage.mode-scroll #lbCanvas,
+  .lb-stage.mode-scroll .lb-hud,
+  .lb-stage.mode-scroll .lb-flat{display:none}
+  .lb-scroll{display:none}
+  .lb-stage.mode-scroll .lb-scroll{display:block}
+
+  /* the mode control lives in the STAGE, not in .lb-hud: the flat path removes the whole hud, and the
+     control has to outlive that. Above the laser flash (z-index 6) so it is never the one thing a
+     visitor cannot reach. */
+  .lb-mode{position:absolute; top:10px; right:10px; z-index:7; pointer-events:auto;
+      font-family:"Nunito",system-ui,sans-serif; font-weight:800; font-size:11px; letter-spacing:.1em;
+      color:#fffdf8; background:rgba(20,16,12,.72); border:1.5px solid var(--gold); border-radius:999px;
+      padding:7px 13px; cursor:pointer; -webkit-user-select:none; user-select:none}
+  .lb-mode:active{background:rgba(230,198,122,.55); color:#2c1e14}
+
+  /* the scroll chapters. One vertical run inside the stage, each chapter at least a stage tall, so the
+     stage is the viewport the chapters are measured against (4.2's "within one viewport" check lands
+     here). Card and source styling is the flat gallery's, reused verbatim rather than restated. */
+  .lb-scroll{position:absolute; inset:0; z-index:1; overflow-y:auto; scroll-behavior:smooth;
+      color:#2c1e14; font-family:"Times New Roman",Times,serif;
+      background-color:#ece0c8;
+      background-image:repeating-radial-gradient(circle at 20% 30%,rgba(0,0,0,.05) 0 1px,transparent 1px 6px),
+                        repeating-radial-gradient(circle at 70% 65%,rgba(255,255,255,.35) 0 1px,transparent 1px 7px)}
+  .lb-scroll .lb-ch{min-height:100%; display:flex; align-items:center; padding:22px 16px calc(22px + var(--panel-clear)); border-bottom:1px solid rgba(44,30,20,.2)}
+  .lb-scroll .lb-ch:last-child{border-bottom:0}
+  .lb-scroll .lb-ch-inner{width:100%; max-width:560px; margin:0 auto}
+  .lb-scroll .lb-ch-n{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:rgba(44,30,20,.6); margin:0 0 4px}
+  .lb-scroll .lb-ch h3{font-style:italic; font-weight:400; font-size:clamp(20px,6vw,26px); text-decoration:underline; text-underline-offset:3px; margin:0 0 12px}
+  .lb-scroll .lb-ch-photo{width:100%; aspect-ratio:4/3; object-fit:cover; border:6px solid #c9a24c; outline:2px dashed rgba(44,30,20,.5); outline-offset:-10px; display:block; margin:0 0 14px}
+  .lb-scroll .fl-card{border:1px solid rgba(44,30,20,.35); background:rgba(255,253,246,.55); padding:10px 12px; margin:0 0 10px; font-size:15px; line-height:1.4}
+  .lb-scroll .fl-card .fl-src{display:block; margin-top:6px; font-size:11.5px; color:rgba(44,30,20,.62)}
+  .lb-scroll .fl-name{display:block; font-style:italic; font-size:clamp(20px,6vw,26px); text-decoration:underline; text-underline-offset:3px; margin:0 0 4px}
+  .lb-scroll .fl-sub{font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:rgba(44,30,20,.6); margin:0 0 14px}
+
   @media (min-width:760px){ .lb .stats{grid-template-columns:1fr 1fr} .lb .charts{grid-template-columns:1fr 1fr 1fr} }
 </style>
 
@@ -226,6 +268,10 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
        three.js hall; #lbHud holds every DOM overlay (walk button, look-drag zone, guest book, wires, prompts,
        epilogue); #lbFlat is the whole no-WebGL DOM gallery, mutually exclusive with the canvas+hud pair. -->
   <div class="lb-stage" id="lbStage">
+    <!-- 4.1/F.2: the mode control. A sibling of the canvas and the hud rather than a child of either,
+         because the flat path removes both and the control has to survive that. Its label names what
+         pressing it DOES, the way the shell's own picture control does. -->
+    <button type="button" class="lb-mode" id="lbModeBtn" aria-label="Switch to the scroll chapters">CHAPTERS</button>
     <canvas id="lbCanvas" aria-label="The museum. Look with your mouse or finger. Hold WALK/BACK or press W/S to walk."></canvas>
     <div class="lb-hud" id="lbHud">
       <div class="lb-lookzone" id="lookZone"></div>

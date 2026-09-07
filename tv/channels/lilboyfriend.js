@@ -174,6 +174,20 @@ export default {
     // t: path position 0..1, signed: bool, shrinkStartedAt: epoch ms|null}. "slotted" replaces round-1's "wired".
     const STORE_KEY_V1 = "mbs-lilbf-museum", STORE_KEY = "mbs-lilbf-museum-v2";
     const PHASES = ["out", "slotted", "back", "done"];   // the allowlist: nothing else has ever been a phase here
+    /* 4.1 / F.2. Which of the two presentations the visitor last chose. "museum" is the default because
+       it is the RETAINED one - a save written before this field existed, and any save that names a mode
+       nobody built, is a visitor who walks the museum, never a visitor staring at a blank stage.
+
+       WHY IT LIVES HERE AND NOT IN `mbs-state`, decided rather than defaulted. tv/state.js holds EARNED
+       history - unlocks, submissions, artifacts, the event log - which is the same argument that put
+       artifacts and the log there. A mode choice is a PREFERENCE: nothing about it is earned, losing it
+       costs one button press, and it is meaningless to any channel but this one. 2.22 is the precedent
+       and it went the same way: the CRT picture setting is a preference and got its own key in
+       tv/tv.js (PICTURE_KEY), not a field in mbs-state. Two consequences worth stating out loud, since
+       the alternative was live: mbs-state's VERSION is untouched and isWellFormed()'s new form.status
+       clause is not involved, and sanitize() below already drops unknown keys, so the write end of this
+       field is closed by the same code that closes phase's. */
+    const MODES = ["museum", "scroll"];
     const SHRINK_MS = 37500;   // matches a straight walk back at WALK_SPEED below - loitering no longer buys safety
     function backfillShrink(phase, t) {
       // deterministic per legacy phase, never NaN/restart/snap-to-full: reproduces the v1 load's own progress
@@ -214,6 +228,8 @@ export default {
         t: Number.isFinite(rawT) ? Math.max(0, Math.min(1, rawT)) : 0,
         signed: saved.signed === true,
         shrinkStartedAt: null,
+        // 4.1: allowlisted exactly like `phase`, and for the same reason - it selects which code runs.
+        mode: MODES.indexOf(saved.mode) >= 0 ? saved.mode : "museum",
       };
       if (phase !== "out") {
         const at = Number(saved.shrinkStartedAt);
@@ -291,7 +307,7 @@ export default {
     // saveState() path (walking is disabled there), so there is no other way to observe a migrated value
     // without resetting it. Reads ST, changes nothing. Removed in unmount(): it closes over this mount's ST,
     // and a reader that outlives the fragment would be answering about a museum that is no longer there.
-    window.__lbState = () => ({ phase: ST.phase, t: ST.t, signed: ST.signed, shrinkStartedAt: ST.shrinkStartedAt, rp: shrinkProgress() });
+    window.__lbState = () => ({ phase: ST.phase, t: ST.t, signed: ST.signed, shrinkStartedAt: ST.shrinkStartedAt, mode: ST.mode, rp: shrinkProgress() });
     const reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     // ---- canvas-text sign textures, shared by both render paths' data but only consumed by the 3D path
@@ -331,9 +347,86 @@ export default {
       } catch { return false; }
     })();
 
-    const lbCanvas = byId("lbCanvas"), lbHud = byId("lbHud");
+    const lbCanvas = byId("lbCanvas"), lbHud = byId("lbHud"), modeBtn = byId("lbModeBtn");
+
+    /* ---- 4.1 / F.2: the two modes -------------------------------------------------------------------
+       S1 wants the museum walk AND the scroll presentation, and F.2 resolves that as "both, as modes".
+       So the museum is built exactly as it always was - unchanged, on whichever of its two render paths
+       this browser earns - and the chapters are a THIRD presentation built beside it, with the stage
+       showing one at a time.
+
+       THE MUSEUM IS NOT TORN DOWN TO SHOW THE CHAPTERS, and that is the whole reason this is cheap.
+       run3D() registers three window listeners, two ResizeObservers and a frame loop through ctx; calling
+       it a second time would register all of them twice, and unwinding a WebGLRenderer to rebuild it on
+       the way back is the unmount() path run mid-mount. Hiding costs one CSS class. What it does cost is
+       a live GPU context while the chapters are up - which this channel already pays for its whole life
+       by design - and that is bought back by the one guard in frame() below, which stops the museum
+       RENDERING while it is off screen without stopping the loop that makes coming back instant.
+
+       The chapters are built LAZILY and once: a visitor who never presses the control never pays for
+       them, and pressing the control twice does not build them twice. */
+    let scrollEl = null;
+    function applyMode() {
+      const scroll = ST.mode === "scroll";
+      if (scroll) buildScroll();
+      lbStage.classList.toggle("mode-scroll", scroll);
+      if (!modeBtn) return;
+      modeBtn.textContent = scroll ? "MUSEUM" : "CHAPTERS";
+      modeBtn.setAttribute("aria-label", scroll ? "Switch to the museum walk" : "Switch to the scroll chapters");
+    }
+    if (modeBtn) ctx.on(modeBtn, "click", () => {
+      ST.mode = ST.mode === "scroll" ? "museum" : "scroll";
+      saveState();
+      applyMode();
+    });
 
     if (glOK) { lb.classList.add("webgl"); run3D(); } else { lbCanvas.remove(); lbHud.remove(); runFlat(); }
+    applyMode();
+
+    // =====================================================================================
+    // ==== 4.1 / F.2: scroll chapters, the other mode ====
+    // =====================================================================================
+    /* Six chapters, one per exhibit, in the order the museum walks them - the same six homes, the same
+       sourced facts, the same photographs, presented as a vertical read instead of a walk. Nothing here
+       is a second copy of the content: EXHIBITS and FACTS are the file's own data and this renders them,
+       exactly as runFlat() does. The card and source classes are the flat gallery's too.
+
+       WHAT IS DELIBERATELY NOT HERE, so the next packet does not find it built twice. 4.2 makes each
+       chapter sticky and bounds it to one viewport; 4.3 hangs the six consequences off scroll position;
+       4.4 makes the shrink exponential and finite; 4.5 and 4.6 build the SHOE as this mode's terminal
+       and put completion there. So this mode has no ending beat and no unlock of its own yet: the door,
+       the guest book and the epilogue are the museum's, and the museum is one button away at all times,
+       which is what "modes, not a replacement" buys. Building a terminal here now would be building
+       4.5's terminal twice, which is the mistake Stage 4's ordering exists to prevent. */
+    function buildScroll() {
+      if (scrollEl) return scrollEl;
+      scrollEl = document.createElement("div");
+      scrollEl.className = "lb-scroll"; scrollEl.id = "lbScroll";
+      scrollEl.setAttribute("aria-label", "Living Small, in chapters");
+      const chapters = EXHIBITS.map((ex, i) => `
+        <section class="lb-ch" data-chapter="${i + 1}" id="lbCh-${ex.id}">
+          <div class="lb-ch-inner">
+            <p class="lb-ch-n">Chapter ${i + 1} of ${EXHIBITS.length}</p>
+            <h3>${ex.label}</h3>
+            <img class="lb-ch-photo" src="${ex.cozy}" alt="${ex.label}" loading="lazy">
+            ${FACTS[ex.id].map(f => `<div class="fl-card">${f.body}<span class="fl-src">${f.src}</span></div>`).join("")}
+          </div>
+        </section>`).join("");
+      scrollEl.innerHTML = `
+        <section class="lb-ch" id="lbChIntro">
+          <div class="lb-ch-inner">
+            <span class="fl-name">${TITLE_TEXT.h1}</span>
+            <p class="fl-sub">${TITLE_TEXT.h2}</p>
+            <p>${TITLE_TEXT.body}</p>
+            <p class="fl-sub">Scroll. Six chapters. The walk is still there - the control at the top right goes back to it.</p>
+          </div>
+        </section>${chapters}
+        <section class="lb-ch" id="lbChEnd">
+          <div class="lb-ch-inner"><span class="fl-name">${CLOSING_LINE}</span></div>
+        </section>`;
+      lbStage.appendChild(scrollEl);
+      return scrollEl;
+    }
 
     // =====================================================================================
     // ==== 3D path ====
@@ -926,6 +1019,11 @@ export default {
           // is the belt to that braces - what it actually prevents is a frame already in flight when
           // unmount() ran from rendering into a disposed renderer.
           if (!gl || session !== mine) return;
+          // 4.1: the chapters are up, so the museum is off screen. Keep the loop (coming back is then a
+          // class toggle and the next frame, not a rebuild) and skip the work - no scene update, and above
+          // all no renderer.render() into a canvas nobody can see. `last` still advances, or the first
+          // frame back would carry the whole time away as one dt.
+          if (ST.mode !== "museum") { last = now; ctx.frame(frame); return; }
           const dt = Math.min(0.05, (now - last) / 1000); last = now;
           if (!zoomOpen) {
             yaw += (targetYaw - yaw) * Math.min(1, dt * 8);

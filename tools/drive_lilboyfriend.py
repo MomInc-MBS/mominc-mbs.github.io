@@ -145,6 +145,11 @@ with sync_playwright() as pw:
 
     state = lambda: pg.evaluate("() => window.__lbState()")
     check(pg.evaluate("() => !!document.querySelector('#lb.webgl')"), "the 3D path was taken")
+    # 4.1: the mode control is a sibling of the canvas and the hud, so it exists on this path too, and
+    # the museum is what a visitor who has never chosen gets. The switching itself is driven on the flat
+    # page at the bottom, which is the cheap one - three.js is not what is under test there.
+    check(pg.evaluate("() => !!document.querySelector('#lbModeBtn')") and state().get("mode") == "museum",
+          "4.1: the mode control is on the 3D path, and the museum walk is the default")
     t0 = state()["t"]
 
     # ---- the keyboard walk: three window listeners, the ones most likely to be silently unbound
@@ -368,6 +373,72 @@ with sync_playwright() as pw:
 
     c18errs = [e for e in flerrs if "favicon" not in e and "jsdelivr" not in e.lower()]
     check(not c18errs, "C018: no page errors across any seeded load (%s)" % (c18errs[:2] or "none"))
+
+    # ---- 4.1 / F.2: the two modes ------------------------------------------------------------------
+    # "Both reachable; the mode choice persists in state." Driven on the flat page because the mode is
+    # a presentation switch, not a WebGL claim - and because seeded() already lives here, which is what
+    # lets the allowlist half be asserted against the loader's own answer rather than the DOM.
+    #
+    # MATCHED PAIR, and it is the reason this section is not four lines: "the chapters are reachable"
+    # passes on a build that simply replaced the museum with them, which is precisely what F.2 forbids.
+    # So every reach assertion has its opposite - the museum is still there and still reachable after
+    # the switch, and it comes back across a reload the same way the chapters do. A one-way gate would
+    # be green on the one implementation the ticket rules out.
+    print("\n  -- 4.1: the museum walk and the scroll chapters are two MODES --")
+
+    s = seeded('{"phase":"out","t":0,"mode":"chapters"}')
+    check(s.get("mode") == "museum",
+          "a mode nobody built is the museum, not a blank stage (%s)" % s)
+    s = seeded('{"phase":"out","t":0}')
+    check(s.get("mode") == "museum",
+          "and a save written before the field existed is the museum too - the RETAINED one is the default")
+    check(fl.evaluate("""() => !!document.querySelector('#lbFlat')
+              && !document.querySelector('#lbStage').classList.contains('mode-scroll')
+              && !document.querySelector('#lbScroll')"""),
+          "museum mode: the museum rendered, and the chapters were not even built")
+
+    fl.click("#lbModeBtn")
+    fl.wait_for_timeout(250)
+    n = fl.evaluate("() => document.querySelectorAll('#lbScroll .lb-ch[data-chapter]').length")
+    check(n == 6, "the control reaches the scroll chapters, and there are six of them (got %d)" % n)
+    check(fl.evaluate("""() => { const s = document.querySelector('#lbScroll'),
+                                       f = document.querySelector('#lbFlat');
+              return !!s && s.getClientRects().length > 0 && !!f && f.getClientRects().length === 0; }"""),
+          "it is a MODE, not both at once: the chapters are on screen and the museum is off it")
+    # F.2's "retained", asserted rather than assumed: the museum is HIDDEN, never destroyed. A build that
+    # replaced it would pass every reach assertion above and fail this one.
+    check(fl.evaluate("() => !!document.querySelector('#lbFlat')"),
+          "and the museum was hidden, not torn down - its DOM is still there to come back to")
+
+    check(fl.evaluate("() => JSON.parse(localStorage.getItem('mbs-lilbf-museum-v2')).mode") == "scroll",
+          "the choice is written to the channel's own key")
+    # 2.22's precedent, made a gate: mbs-state holds EARNED history. A preference is not earned, so
+    # nothing about the mode may appear there - and if a later packet moves it, this fails loudly rather
+    # than the schema drifting by accident.
+    check(fl.evaluate("""() => { try { return !/"mode"/.test(localStorage.getItem('mbs-state') || ''); }
+                                 catch (e) { return false; } }"""),
+          "and NOT into mbs-state, which holds earned history, not preferences (2.22's precedent)")
+
+    fl.reload(wait_until="load")
+    fl.wait_for_function("() => !!window.__lbLoaded", timeout=10000)
+    check(fl.evaluate("() => window.__lbLoaded.mode") == "scroll"
+          and fl.evaluate("() => document.querySelectorAll('#lbScroll .lb-ch[data-chapter]').length") == 6,
+          "the choice PERSISTS: the chapters come back on their own across a reload")
+
+    fl.click("#lbModeBtn")
+    fl.wait_for_timeout(250)
+    check(fl.evaluate("""() => { const f = document.querySelector('#lbFlat'),
+                                       s = document.querySelector('#lbScroll');
+              return !!f && f.getClientRects().length > 0 && !!s && s.getClientRects().length === 0; }"""),
+          "the museum walk is reachable again from the chapters - the switch goes both ways")
+    fl.reload(wait_until="load")
+    fl.wait_for_function("() => !!window.__lbLoaded", timeout=10000)
+    check(fl.evaluate("() => window.__lbLoaded.mode") == "museum"
+          and fl.evaluate("() => !!document.querySelector('#lbFlat') && !document.querySelector('#lbScroll')"),
+          "and that choice persists too - the museum is back after a reload, unasked")
+
+    modeerrs = [e for e in flerrs if "favicon" not in e and "jsdelivr" not in e.lower()]
+    check(not modeerrs, "4.1: no page errors across either mode (%s)" % (modeerrs[:2] or "none"))
 
     b.close()
 
