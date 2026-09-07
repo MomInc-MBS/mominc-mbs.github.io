@@ -159,6 +159,7 @@ PLAY = u"""<!doctype html>
 <script src="mbs-channels.js"></script>
 <script src="state.js"></script>
 <script src="mbs-runtime.js"></script>
+<script src="channel-runtime.js"></script>
 <script src="mbs-shim.js"></script>
 <script src="mount.js"></script>
 </body>

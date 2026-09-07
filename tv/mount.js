@@ -1,6 +1,16 @@
 /* Mounts one channel fragment into a standalone play route, showing the GAME and none of the page.
-   Same injection contract tv.js uses (scripts re-created copying textContent only), because the
-   fragments were written against that contract and must not be edited to leave the television. */
+
+   TWO PATHS, and which one a channel takes is DATA, never a guess. A channel converted by 2.18 has a
+   module on disk, so mbs-channels.js carries `module: true` for it and channel-runtime.js owns the
+   whole sequence: fetch, inject, beforeMount, mount, and one failure path. An unconverted one keeps
+   the legacy contract this file has always used (scripts re-created copying textContent only),
+   because those fragments were written against it and must not be edited to leave the television.
+
+   THE ORDER IS THE WHOLE POINT. The isolation pass below has to run AFTER the fragment is in the
+   document and BEFORE the game's own code initialises: these games measure layout as they start
+   (fuel.html:721, lilboyfriend.html:1035, armie.html:441), so a game that sees the advert around it
+   measures the advert. On the legacy path that is simply the order of the statements; on the module
+   path the runtime exposes opts.beforeMount for exactly this gap, and there is no other seam. */
 (() => {
   const slug = document.documentElement.dataset.game;
   const host = document.getElementById("channel");
@@ -71,16 +81,38 @@
   const chan = ((window.MBS_CHANNELS && window.MBS_CHANNELS.channels) || []).find(c => c.id === slug);
   if (chan && (chan.suppressed || chan.comingSoon)) return fail("channel unavailable");
 
+  /* The two halves of a mount, named once and used by both paths: what happens between the fragment
+     and the game, and what happens after the game is up. A missing selector, a duplicate match or a
+     stale wrapper THROWS here and nothing mounts, rather than running the game with the whole page
+     still around it. */
+  const reveal = (root) => {
+    if (root) document.title = (root.dataset.show || root.dataset.host || slug) + " | MBS";
+    isolate(roots, hide);
+  };
+  const ready = () => {
+    boot && boot.remove();
+    window.dispatchEvent(new Event("resize"));   // a fragment inserted after load never gets one otherwise; games size themselves on resize
+    window.MBS && window.MBS.bindFrames && window.MBS.bindFrames();       // an iframe game swallows its own pointer events
+    window.MBS && window.MBS.lifecycle && window.MBS.lifecycle.ready();   // ready means mounted, never before
+  };
+
+  /* A CONVERTED channel (2.18). The runtime fetches and injects, calls reveal() through beforeMount,
+     then mounts the module - so this file does not fetch at all on this path and there is one
+     injection contract rather than two drifting copies. A throw out of reveal() fails the mount
+     closed and is reported here, because serving the whole page as the game is the exact defect
+     Part A exists to remove. */
+  if (chan && chan.module && window.MBS_CH) {
+    return window.MBS_CH.mount(slug, host, { beforeMount: reveal })
+      .then(r => r.ok ? ready() : fail((r.reason && r.reason.message) || r.reason || "mount failed"))
+      .catch(fail);
+  }
+
   fetch("channels/" + slug + ".html", { cache: "no-store" })
     .then(r => r.ok ? r.text() : Promise.reject(r.status))
     .then(htmlText => {
       host.innerHTML = htmlText;
-      const root = host.querySelector("[data-host]");
-      if (root) document.title = (root.dataset.show || root.dataset.host || slug) + " | MBS";
 
-      /* A missing selector, a duplicate match or a stale wrapper aborts with nothing mounted, rather
-         than running the game with the whole page still around it. */
-      try { isolate(roots, hide); }
+      try { reveal(host.querySelector("[data-host]")); }
       catch (e) { return fail(e.message); }
 
       host.querySelectorAll("script").forEach(old => {
@@ -88,10 +120,7 @@
         s.textContent = old.textContent;
         old.replaceWith(s);
       });
-      boot && boot.remove();
-      window.dispatchEvent(new Event("resize"));   // a fragment inserted after load never gets one otherwise; games size themselves on resize
-      window.MBS && window.MBS.bindFrames && window.MBS.bindFrames();       // an iframe game swallows its own pointer events
-      window.MBS && window.MBS.lifecycle && window.MBS.lifecycle.ready();   // ready means mounted, never before
+      ready();
     })
     .catch(fail);
 })();

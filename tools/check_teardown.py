@@ -102,7 +102,7 @@ check(on_disk == flagged, "the flag matches the tree exactly (on disk %s, flagge
       % (sorted(on_disk) or "none", sorted(flagged) or "none"))
 
 print("== 2.18 is converting channels one at a time, and both paths still exist")
-CONVERTED = {"mominc"}
+CONVERTED = {"mominc", "djscratch"}
 check(flagged == CONVERTED, "exactly the channels this packet claims are converted (%s)"
       % (sorted(flagged) or "none"))
 for cid in sorted(flagged):
@@ -116,6 +116,31 @@ check(flagged != {c["id"] for c in chans["channels"]},
       % (len(chans["channels"]) - len(flagged)))
 check("res.legacy" in read("tv/tv.js"),
       "tv.js still re-creates inline scripts for an unconverted channel")
+
+print("== the play routes can mount a module too (2.18 packet 10, the half packet 9 left)")
+check("opts.beforeMount(root)" in rt and "typeof opts.beforeMount" in rt,
+      "channel-runtime.js calls opts.beforeMount(root) if it is given one")
+# the CALL, not the doc comment above it that names the same identifier - .index() found the prose
+CALL = 'if (typeof opts.beforeMount === "function") opts.beforeMount(root);'
+check(CALL in rt, "and the call is guarded, so a caller that passes no hook is unaffected")
+check(rt.index("host.innerHTML = html") < rt.index(CALL) < rt.index("mod.mount(root, ctx)"),
+      "and calls it AFTER the fragment is injected and BEFORE the module's mount() - the whole point")
+mnt = read("tv/mount.js")
+check("chan.module" in mnt and "beforeMount: reveal" in mnt,
+      "mount.js routes a converted channel through MBS_CH.mount with the isolation as the hook")
+check('host.querySelectorAll("script")' in mnt,
+      "and still has the legacy script-recreating path for the seven that are not converted")
+gp = read("tools/gen.py")
+play_block = gp[gp.index("PLAY = "):gp.index("COMING_SOON = ")]
+check('<script src="channel-runtime.js"></script>' in play_block,
+      "tools/gen.py emits the runtime on every play route")
+check(play_block.index("channel-runtime.js") < play_block.index("mount.js"),
+      "before mount.js, so MBS_CH exists when the play route mounts")
+for _cid in sorted(flagged):
+    _rec = next(c for c in chans["channels"] if c["id"] == _cid)
+    if _rec.get("gameRoute"):
+        check('<script src="channel-runtime.js"></script>' in read("play/%s/index.html" % _cid),
+              "the generated /play/%s/ carries it (a hand-edit there would be overwritten anyway)" % _cid)
 
 
 # ---------------------------------------------------------------- the behaviour half
@@ -222,6 +247,40 @@ with sync_playwright() as pw:
     notes.append("note  the raw listener is NOT released by unmount(). That is the reach of this "
                  "gate, stated rather than hidden: every 2.18 conversion must route through ctx.on.")
 
+    print("== beforeMount runs BETWEEN the fragment and mount(), which is why it exists")
+    open_tv(pg)
+    # asserted with the probe rather than a real channel, because the probe is the only subject that
+    # reports on its own mount(): the question is ORDER, and order needs a witness on both sides of it.
+    order = pg.evaluate("""() => {
+        window.__hook = null;
+        return window.MBS_CH.mount('_runtime-probe', document.getElementById('channel'), {
+          module: true,
+          beforeMount: (root) => { window.__hook = {
+              injected: !!(root && root.isConnected),
+              mountedYet: !!(window.__probe && window.__probe.mounted) }; }
+        }).then(r => ({ ok: !!r.ok, hook: window.__hook,
+                        mountedAfter: !!(window.__probe && window.__probe.mounted) }));
+    }""")
+    check(order["ok"] and order["hook"], "the hook was called")
+    check(order["hook"] and order["hook"]["injected"],
+          "with the fragment already in the document, so an isolation pass has something to walk")
+    check(order["hook"] and not order["hook"]["mountedYet"] and order["mountedAfter"],
+          "and BEFORE the module's mount() ran - a game must never measure the page furniture")
+    pg.evaluate("() => window.MBS_CH.unmount()")
+
+    print("== a throw out of beforeMount fails the mount CLOSED, never into an un-isolated game")
+    thrown = pg.evaluate("""() => window.MBS_CH.mount('_runtime-probe',
+            document.getElementById('channel'),
+            { module: true, beforeMount: () => { throw new Error('isolation failed'); } })
+          .then(r => ({ ok: !!r.ok, reason: r.reason ? String(r.reason) : null,
+                        rendered: !!document.querySelector('#channel .testcard'),
+                        mounted: !!window.MBS_CH.current() }))""")
+    check(not thrown["ok"] and thrown["reason"] and "isolation failed" in thrown["reason"],
+          "the mount fails and names the hook's own error")
+    check(thrown["rendered"] and not thrown["mounted"],
+          "the unavailable state is rendered and nothing is mounted: serving the whole page as the "
+          "game is the exact defect Part A exists to remove")
+
     print("== the FIRST REAL CONVERTED CHANNEL mounts, unmounts and remounts (2.18)")
     open_tv(pg)
     # no {module:true} here, unlike the probe: this proves the manifest's disk-derived flag is what
@@ -284,6 +343,65 @@ with sync_playwright() as pw:
     check(stamp["mounted"], "while mounted, A stamps the booth (so the probe itself is live)")
     check(stamp["after"] == stamp["mounted"],
           "after unmount the SAME key changes nothing: the document listener is released")
+
+    print("== /play/djscratch/: a converted channel on a REAL play route (2.18 packet 10)")
+    pg.goto(BASE + "/play/djscratch/", wait_until="load")
+    pg.wait_for_timeout(900)
+    play = pg.evaluate("""() => {
+        const cur = window.MBS_CH && window.MBS_CH.current();
+        return { name: cur && cur.name, counts: cur ? cur.counts : null,
+                 dj: !!document.querySelector('#channel #dj'),
+                 scripts: document.querySelectorAll('#channel script').length,
+                 sliders: document.querySelectorAll('#rack .knobface[role="slider"]').length,
+                 deckOff: !!document.querySelector('#deck.mbs-off'),
+                 sigOff: !!document.querySelector('#sigLbl.mbs-off'),
+                 signHidden: !!document.querySelector('.customsign.mbs-off'),
+                 hidden: document.querySelectorAll('#channel .mbs-off').length,
+                 boot: !!document.getElementById('boot'),
+                 title: document.title };
+    }""")
+    check(play["name"] == "djscratch",
+          "the runtime mounted it, so the play route took the MODULE path (%s)" % play["name"])
+    check(total(play["counts"]) > 0,
+          "and everything it opened went through the context (%s)" % json.dumps(play["counts"]))
+    check(play["dj"] and play["scripts"] == 0,
+          "the channel is on the page with NO inline script re-created: the module IS the channel")
+    # role="slider" is written by the module and appears nowhere in the markup, so this is evidence
+    # the module's own mount() ran, not merely that the fragment arrived
+    check(play["sliders"] == 2,
+          "the module's mount() ran (%s knobs made sliders)" % play["sliders"])
+    check(not play["deckOff"] and not play["sigOff"] and play["hidden"] > 0,
+          "isolation ran through the hook: both roots visible, %s off-path elements hidden" % play["hidden"])
+    check(play["signHidden"],
+          "and the hide list still subtracts INSIDE a root (the CUSTOM HANDS sign lives in the deck)")
+    check(not play["boot"], "the boot message is gone, so ready() ran")
+    check("MBS" in (play["title"] or ""),
+          "and the title came from the fragment (%s)" % play["title"])
+
+    playgone = pg.evaluate("() => window.MBS_CH.unmount().then(r => r.counts)")
+    check(total(playgone) == 0,
+          "and it tears down on the play route exactly as it does in the television (%s)"
+          % json.dumps(playgone))
+
+    print("== an UNCONVERTED channel's play route is untouched by any of this")
+    pg.goto(BASE + "/play/corgi/", wait_until="load")
+    pg.wait_for_timeout(1500)
+    legacy = pg.evaluate("""() => ({
+        mounted: !!(window.MBS_CH && window.MBS_CH.current()),
+        scripts: document.querySelectorAll('#channel script').length,
+        root: !!document.querySelector('#channel [data-host]'),
+        hidden: document.querySelectorAll('#channel .mbs-off').length,
+        boot: !!document.getElementById('boot') })""")
+    check(not legacy["mounted"], "corgi did NOT go down the module path")
+    check(legacy["scripts"] > 0 and legacy["root"],
+          "its inline scripts were re-created the way they always have been (%s)" % legacy["scripts"])
+    check(not legacy["boot"], "and it still comes up, so ready() runs on both paths")
+    # NOT "hidden > 0": corgi's roots are ':scope > svg' and '#cc', which between them are every
+    # child of #channel, so nothing is off-path and 0 is the right number. What each play route
+    # actually reveals and hides is check_play's gate, not this one; this only has to show that the
+    # legacy path still exists and still mounts after packet 10 rewired the converted one.
+    check(legacy["hidden"] == 0,
+          "with nothing hidden, which for corgi is correct: its two roots cover every child")
 
     b.close()
 

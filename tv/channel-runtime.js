@@ -133,7 +133,17 @@
 
      The fragment is fetched and injected here rather than by the caller, so that the module-loading
      contract has one owner: fragment, then module, then mount, with a single failure path. `no-store`
-     matches the loader it replaces - phone testing wants every refresh to be the current file. */
+     matches the loader it replaces - phone testing wants every refresh to be the current file.
+
+     opts.beforeMount(root) is the one hook in that sequence, and it exists for the PLAY ROUTES
+     (2.18, packet 10). tv/mount.js has to run its isolation pass - the ancestor-path reveal that
+     hides the page furniture around a game - AFTER the fragment is in the document and BEFORE the
+     module's mount() runs, because these games measure layout while they initialise and must never
+     see the advert around them. Nothing else in the sequence can be split to make room for it, so
+     the hook is one callback rather than a new file. A throw from it fails the mount closed, into
+     the same unavailable state as any other failure: serving the whole page as the game is the
+     exact defect Part A exists to remove, so a broken isolation must never fall through to a
+     mounted channel. */
   R.mount = function (name, host, opts) {
     if (!/^[a-z0-9_-]+$/.test(name)) return Promise.resolve(unavailable(host, "channel", "bad id"));
     opts = opts || {};
@@ -164,6 +174,9 @@
         return import("./channels/" + name + ".js").then(function (m) {
           const mod = m && (m.default || m);
           if (!mod || typeof mod.mount !== "function") throw new Error("module exports no mount()");
+          // between the fragment and mount(): see opts.beforeMount above. Deliberately NOT caught
+          // here - a failed isolation is a failed mount, and the .catch below renders it as one.
+          if (typeof opts.beforeMount === "function") opts.beforeMount(root);
           const ctx = makeContext(name, root);
           // A throw inside mount() is the channel's failure, not the television's: it is caught here,
           // whatever the channel managed to register is released, and the set keeps working.
