@@ -5,9 +5,18 @@
    release all of it. Nothing about what the channel does changed.
 
    WHY THIS CHANNEL WENT THIRD. Every channel still on the legacy path pulls three.js, so "simplest
-   first" now means the smallest of them: fuel 963 script lines, girlfriend 1026, lilboyfriend 1329,
-   corgi 2088 - counted off the files, because the counts in the handoff table have been wrong once
-   already. It also has a play route, so it exercises both halves of packet 10's split mount.
+   first" means the smallest of them, and fuel was it: 612 script lines against lilboyfriend's 944,
+   girlfriend's 1026 and corgi's 1662.
+
+   THOSE FIGURES WERE MEASURED TWICE, because the first measurement was wrong and the handoff warned
+   that this table has been wrong before. Counting from the FIRST <script> to the first </script>
+   gave fuel 963, lilboyfriend 1329 and corgi 2088 - inflated, because fuel, corgi and lilboyfriend
+   each quote a literal <script> inside their own header comment, explaining why type='module' would
+   throw, and the count started there and swallowed the comment and the stylesheet. The real block is
+   the LAST one. The choice of fuel survives the correction; the numbers did not, and the ordering of
+   what remains changed with them - lilboyfriend is next, not girlfriend. Same mistake, three times in
+   one session: it also broke the script that stripped this fragment and the first two versions of
+   tools/scan_strict.py, which is why that tool now states its own reach.
 
    WHAT ctx CANNOT OWN HERE, AND WHY IT IS THE POINT. mominc had a <video>; djscratch's hand editor
    was the first WebGLRenderer on this television. fuel is the first channel whose ENTIRE reason for
