@@ -91,7 +91,7 @@ def grind(pg, rounds=16, wait=520):
 
 
 def lb_walk(pg, rounds=11, wait=350):
-    """Lil Boyfriend's flat gallery, finished build (lilboyfriend.html:1227-1345): the old wire-drag
+    """Lil Boyfriend's flat gallery, finished build (lilboyfriend.js:934-1058): the old wire-drag
     widget is gone. entrance -> book -> six exhibits -> door, an empty magnifying-glass hole (#flSlot)
     that does nothing off stream and fires MBS.unlock on click while MBS.isLive. Reload with ?mode=live
     for exactly that reason - a tone switch per Codex C6, never an entitlement, and the standard way any

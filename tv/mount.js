@@ -8,7 +8,7 @@
 
    THE ORDER IS THE WHOLE POINT. The isolation pass below has to run AFTER the fragment is in the
    document and BEFORE the game's own code initialises: these games measure layout as they start
-   (fuel.js:479, lilboyfriend.html:1035, armie.html:441), so a game that sees the advert around it
+   (fuel.js:479, lilboyfriend.js:795, armie.html:441), so a game that sees the advert around it
    measures the advert. On the legacy path that is simply the order of the statements; on the module
    path the runtime exposes opts.beforeMount for exactly this gap, and there is no other seam. */
 (() => {
@@ -24,7 +24,7 @@
   if (!slug || !/^[a-z0-9-]+$/.test(slug)) return fail("bad slug");
 
   /* Isolation is an ancestor-path reveal, never a blanket hide: display:none collapses descendant
-     geometry and these games measure layout while they initialise (fuel.js:479, lilboyfriend.html:1035,
+     geometry and these games measure layout while they initialise (fuel.js:479, lilboyfriend.js:795,
      armie.html:441). So mark every root and every ancestor of a root as on-path, then hide only the
      OFF-path siblings. Interleaved game UI keeps its ancestor: fuel's live flavour readout sits inside
      the branding strip and djscratch's signal line sits inside the advert, and each survives while its

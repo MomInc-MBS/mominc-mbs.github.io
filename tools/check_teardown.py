@@ -51,6 +51,13 @@ graph rather than from a list built at construction time. Those are different wa
 so both are measured - and fuel is where a leak shows first, because it needs a context on every
 single visit rather than only on the visits where somebody scrolls.
 
+PACKET 12 ADDS THE THIRD SHAPE, and it is the biggest: lilboyfriend's museum is a first-person hall
+whose scene the walk never leaves, with a camera that is itself a scene member because the held
+magnifying glass and the fisheye quad are parented to it. It also loads twelve photographs of which
+only one is ever a live material.map, so the scene walk alone would dispose one and miss eleven. What
+is asserted here is the same property as for fuel, for the same reason: how many contexts are still
+un-lost, never how many were made.
+
 Run:  python tools/check_teardown.py     (serves the repo itself; nothing else need be running)
 """
 import functools, io, json, os, re, threading
@@ -119,7 +126,7 @@ check(on_disk == flagged, "the flag matches the tree exactly (on disk %s, flagge
       % (sorted(on_disk) or "none", sorted(flagged) or "none"))
 
 print("== 2.18 is converting channels one at a time, and both paths still exist")
-CONVERTED = {"mominc", "djscratch", "fuel"}
+CONVERTED = {"mominc", "djscratch", "fuel", "lilboyfriend"}
 check(flagged == CONVERTED, "exactly the channels this packet claims are converted (%s)"
       % (sorted(flagged) or "none"))
 for cid in sorted(flagged):
@@ -533,6 +540,69 @@ with sync_playwright() as pw:
     check(fpg.evaluate("() => window.MBS_CH.current()") is None,
           "and the runtime reports nothing mounted afterwards")
     fpg.close()
+
+    print("== lilboyfriend: the museum, whose WebGL scene the whole channel lives inside (2.18 packet 12)")
+    # The third shape, and the largest: a first-person hall of some hundred meshes that the walk never
+    # leaves, against a canvas in the fragment's own markup, with the camera itself added to the scene
+    # (the held magnifying glass and the fisheye quad are its children) and twelve loaded photographs of
+    # which only the displayed one is ever a live material.map.
+    lpg = b.new_page(viewport={"width": 1280, "height": 900})
+    lpg.on("pageerror", lambda e: errs.append(str(e)))
+    lpg.add_init_script("""
+        (() => { const real = HTMLCanvasElement.prototype.getContext;
+                 window.__gl = [];
+                 HTMLCanvasElement.prototype.getContext = function (type) {
+                   const c = real.apply(this, arguments);
+                   if (c && /webgl/i.test(String(type))) window.__gl.push(c);
+                   return c;
+                 }; })();
+    """)
+    open_tv(lpg)
+
+    def lb_cycle(page):
+        """Mount the museum, wait for the renderer to actually exist, unmount. Returns what is live."""
+        page.evaluate("() => window.MBS_CH.mount('lilboyfriend', document.getElementById('channel'))")
+        built = True
+        try:
+            # This channel has no has3d-style marker class of its own to wait on - it sets .webgl before
+            # the CDN import, which says only that the probe passed. A LIVE context is the honest signal
+            # that the renderer came up, and it is the same property this gate exists to measure: the
+            # fixed feature probe hands its own context straight back, so anything still un-lost here is
+            # the renderer's.
+            page.wait_for_function("() => window.__gl.filter(c => !c.isContextLost()).length > 0",
+                                   timeout=25000)
+        except Exception:
+            built = False
+        page.wait_for_timeout(400)
+        page.evaluate("() => window.MBS_CH.unmount()")
+        page.wait_for_timeout(250)
+        return built, page.evaluate("""() => ({
+            made: window.__gl.length,
+            live: window.__gl.filter(c => !c.isContextLost()).length })""")
+
+    lbuilt1, lgl1 = lb_cycle(lpg)
+    check(lbuilt1, "the museum opens a real WebGL context, so this probe is measuring something")
+    check(lgl1["live"] == 0,
+          "after unmount the page holds NO live WebGL context (%d made, %d still live)"
+          % (lgl1["made"], lgl1["live"]))
+
+    lbuilt2, lgl2 = lb_cycle(lpg)
+    lbuilt3, lgl3 = lb_cycle(lpg)
+    check(lbuilt2 and lbuilt3, "and it rebuilds on the second and third visit rather than coming up empty")
+    # the property, never a constant: a fresh context per visit is CORRECT, a retained one is not
+    check(lgl3["live"] == 0,
+          "three visits later it still holds none (%d made across three, %d live)"
+          % (lgl3["made"], lgl3["live"]))
+    check(lgl3["made"] <= lgl1["made"] * 3,
+          "and a visit costs the SAME number of contexts, never a growing one (%d over three visits)"
+          % lgl3["made"])
+    check(lpg.evaluate("() => window.MBS_CH.current()") is None,
+          "and the runtime reports nothing mounted afterwards")
+    # the one window global this channel sets: it closes over the mount's state object, so leaving it
+    # behind would mean a reader answering about a museum that is no longer in the document
+    check(lpg.evaluate("() => typeof window.__lbState") == "undefined",
+          "and the channel's own window.__lbState readback is gone with it")
+    lpg.close()
 
     print("== fuel with no WebGL at all: the flat form is still the whole channel")
     # fuel's stated design is that the six radiogroups, the eight flavour buttons and the can readout
