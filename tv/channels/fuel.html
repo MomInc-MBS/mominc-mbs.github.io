@@ -129,6 +129,11 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
   .fu .can.full{outline:3px solid var(--acid)}
   .fu .costbar{background:var(--cream); color:var(--ink); border:3px solid var(--ink); border-radius:12px; padding:8px 12px; margin-top:8px; display:grid; gap:3px; font-family:"VT323",monospace; font-size:clamp(12px,3.6vw,14px); letter-spacing:.04em}
   .fu .costbar span{display:block}
+  /* C061: the cost record, native <details> so it needs no script to open and works in the flat fallback */
+  .fu .assump{background:var(--cream); color:var(--ink); border:3px solid var(--ink); border-radius:12px; margin-top:8px; font-family:"VT323",monospace; letter-spacing:.04em}
+  .fu .assump summary{cursor:pointer; padding:8px 12px; font-size:clamp(12px,3.6vw,14px)}
+  .fu .assump-body{display:grid; gap:3px; padding:0 12px 10px; font-size:clamp(11px,3.3vw,13px); line-height:1.35}
+  .fu .assump-body span{display:block}
   .fu .namepicker{display:flex; flex-wrap:wrap; gap:8px; justify-content:center}
   .fu .namepicker select{cursor:pointer; border:3px solid var(--ink); border-radius:10px; padding:8px 10px; font-family:"Anton",sans-serif; font-size:clamp(12px,3.6vw,14px); letter-spacing:.05em; color:var(--ink); background:linear-gradient(160deg,#fff,#e4e4e4); box-shadow:3px 3px 0 rgba(0,0,0,.2)}
   .fu .submit{display:block; width:100%; margin-top:14px; cursor:pointer; border:4px solid var(--ink); border-radius:14px; padding:14px 10px; background:linear-gradient(135deg,var(--hot),var(--grape)); color:var(--cream); font-family:"Anton",sans-serif; font-size:clamp(15px,4.6vw,19px); letter-spacing:.08em; box-shadow:6px 6px 0 rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.4), inset 0 -2px 0 rgba(0,0,0,.2); transition:transform 80ms ease-out}
@@ -343,6 +348,10 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
       <h2 class="heading">YOUR CAN</h2>
       <div class="can" id="canLabel"></div>
       <div class="costbar" id="costBar"></div>
+      <details class="assump" id="assumpBox">
+        <summary>WHERE THOSE TWO NUMBERS COME FROM</summary>
+        <div class="assump-body" id="assumpBody"></div>
+      </details>
       <button type="button" class="submit" id="submitBtn">SEAL THE CAN</button>
       <div class="result" id="result" hidden>
         <p class="note" id="resultNote">NOTHING WAS SENT OR SAVED. THIS DRINK DOES NOT EXIST YET.</p>

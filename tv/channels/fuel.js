@@ -74,23 +74,48 @@ export default {
     const mailLink = byId("mailLink");
     const flavTag = byId("fuFlavTag");
     const costBar = byId("costBar");
+    const assumpBody = byId("assumpBody");    // C061: where the versioned cost record is printed for the visitor
     let bandsUpdater = null;   // set once three.js builds the powder bands; no-op in the flat fallback
     const nameA = byId("nameA"), nameB = byId("nameB"), nameC = byId("nameC");
     let flavour = null;
     let productLabelUpdater = null;   // set once three.js builds the tub's wall texture; no-op in the flat fallback
 
-    // ---- cost model: frozen bulk-ingredient economics (see COST-MODEL.md). Every figure is an
-    // estimate of real bulk supplement-grade pricing, not a live quote - flagged ESTIMATED there.
-    const COST = {
-      caffeine:     { kg: 12, weak: 0.10, strong: 0.30 },
-      theanine:     { kg: 45, weak: 0.10, strong: 0.20 },
-      glutamine:    { kg: 9,  weak: 2.5,  strong: 5 },
-      citrulline:   { kg: 18, weak: 3,    strong: 6 },
-      creatine:     { kg: 6,  weak: 3,    strong: 5 },
-      electrolytes: { kg: 5,  weak: 0.5,  strong: 1.5 }
+    // ---- cost model (3.3/C061). The versioned record below IS the provenance. It used to say
+    // "see COST-MODEL.md" - a file that existed in neither tree, so the justification the visitor was
+    // pointed at was not there to read. Now every figure a visitor sees is derived from this object
+    // and printed straight back to them under the cost bar (#assumpBody), so the arithmetic can be
+    // checked without leaving the page. Estimated bulk supplement-grade pricing, frozen, never a live quote.
+    // `kg` is dollars per kilogram; `weak`/`strong`/`dose` are grams per scoop.
+    const ASSUMPTIONS = {
+      version: "fuel-cost-1.0",
+      snapshot: "2026-09-07",
+      currency: "USD",
+      basis: "Estimated bulk supplement-grade pricing, carried forward unchanged from this channel's first build. Frozen figures, not a live quote, and not sourced from a named supplier.",
+      excluded: [
+        "labour, blending and filling",
+        "shipping, freight and duties",
+        "tooling, minimum order quantities and wastage",
+        "testing, certification and insurance",
+        "payment fees, returns and marketing"
+      ],
+      ingredients: {
+        caffeine:     { kg: 12, weak: 0.10, strong: 0.30 },
+        theanine:     { kg: 45, weak: 0.10, strong: 0.20 },
+        glutamine:    { kg: 9,  weak: 2.5,  strong: 5 },
+        citrulline:   { kg: 18, weak: 3,    strong: 6 },
+        creatine:     { kg: 6,  weak: 3,    strong: 5 },
+        electrolytes: { kg: 5,  weak: 0.5,  strong: 1.5 }
+      },
+      flavour: { kg: 30, dose: 0.6 },
+      packaging: 0.85,
+      servingsPerContainer: 30,
+      retailPrice: 54.99
     };
-    const FLAVOUR_COST = { kg: 30, dose: 0.6 };
-    const PACKAGING_COST = 0.85, SERVINGS_PER_CONTAINER = 30, RETAIL_PRICE = 54.99;
+    const COST = ASSUMPTIONS.ingredients;
+    const FLAVOUR_COST = ASSUMPTIONS.flavour;
+    const PACKAGING_COST = ASSUMPTIONS.packaging,
+          SERVINGS_PER_CONTAINER = ASSUMPTIONS.servingsPerContainer,
+          RETAIL_PRICE = ASSUMPTIONS.retailPrice;
     const productName = () => [nameA.value, nameB.value, nameC.value].join(" ");
     function scoopCost() {
       let c = 0;
@@ -127,6 +152,14 @@ export default {
     const levelLabel = row => row.dataset.level ? row.dataset.level.toUpperCase() : "NOT SET";
     const complete = () => rows.every(r => r.dataset.level) && !!flavour;
 
+    // 3.3/C065: the stack's identity, not its history. Two clicks on an unchanged stack produce the same
+    // string, so the second one seals nothing and fires no second wave; change any level, the flavour or a
+    // name word and it is a different concept, sealable again.
+    const fingerprint = () => rows.map(r => `${r.dataset.supp}=${r.dataset.level || "none"}`).join("|")
+      + `|flavour=${flavour || "none"}|name=${productName()}`;
+    let sealed = null;                                // the fingerprint already sealed; null until the first seal
+    const isSealed = () => sealed !== null && sealed === fingerprint();
+
     // built fresh every render so the mailto link is always real, never a placeholder, from first paint
     function buildMailto() {
       const stackLines = rows.map(r => `${r.querySelector(".name").textContent}: ${levelLabel(r)}`);
@@ -146,7 +179,9 @@ export default {
       lines.push(`<span>NAME: ${productName()}</span>`);
       canLabel.innerHTML = lines.join("");
       canBox.classList.toggle("full", complete());
-      submitBtn.disabled = false;
+      const done = isSealed();                        // C065: only the already-sealed, unchanged stack locks the button
+      submitBtn.disabled = done;
+      submitBtn.textContent = done ? "STACK LOCKED IN" : "SEAL THE CAN";
       flavTag.textContent = flavour ? `FLAVOUR: ${flavour}` : "FLAVOUR: TAP A BOTTLE";
       costBar.innerHTML = `<span>COST/SCOOP (est.): $${scoopCost().toFixed(4)}</span>`
         + `<span>COST/CONTAINER (est., ${SERVINGS_PER_CONTAINER} sv): $${containerCost().toFixed(2)}</span>`
@@ -154,19 +189,52 @@ export default {
       if (productLabelUpdater) productLabelUpdater(productName());
       buildMailto();
     }
+
+    // C061: the record, printed. Written once - none of it depends on the visitor's choices - and printed
+    // in the same units the arithmetic uses, so the two lines in the cost bar above can be recomputed by hand.
+    function renderAssumptions() {
+      if (!assumpBody) return;
+      // labelled off the rows, not off the record's own keys, so every line here reads back with the exact
+      // name the can readout above prints ("L-THEANINE", not "theanine") and the two can be lined up
+      const out = rows.filter(r => COST[r.dataset.supp]).map(r => {
+        const c = COST[r.dataset.supp];
+        return `<span>${r.querySelector(".name").textContent}: $${c.kg.toFixed(2)}/kg`
+          + ` · WEAK ${c.weak} g/scoop · STRONG ${c.strong} g/scoop</span>`;
+      });
+      out.push(`<span>FLAVOUR: $${FLAVOUR_COST.kg.toFixed(2)}/kg · ${FLAVOUR_COST.dose} g/scoop</span>`);
+      out.push(`<span>PACKAGING: $${PACKAGING_COST.toFixed(2)} PER CONTAINER · ${SERVINGS_PER_CONTAINER} SCOOPS PER CONTAINER</span>`);
+      out.push(`<span>SCOOP = SUM OF (g/scoop ÷ 1000 × $/kg), SET LEVELS ONLY. CONTAINER = SCOOP × ${SERVINGS_PER_CONTAINER} + PACKAGING.</span>`);
+      out.push(`<span>MBS FUEL RETAIL: $${RETAIL_PRICE.toFixed(2)} ${ASSUMPTIONS.currency}</span>`);
+      out.push(`<span>RECORD ${ASSUMPTIONS.version}, SNAPSHOT ${ASSUMPTIONS.snapshot}. ${ASSUMPTIONS.basis}</span>`);
+      out.push(`<span>NOT COUNTED: ${ASSUMPTIONS.excluded.join("; ")}. A real container costs more than the figure above.</span>`);
+      assumpBody.innerHTML = out.join("");
+    }
+
     renderCan();
+    renderAssumptions();
 
     ctx.on(submitBtn, "click", () => {
+      const fp = fingerprint();
+      if (sealed === fp) return;             // C065: this exact stack is already sealed - no second form, no second wave
       const stackLines = buildMailto();
       result.hidden = false;
       if (complete()) {
+        sealed = fp;
         resultNote.textContent = productName() + " — STACK LOCKED IN. NOTHING WAS SENT. THE STACK STAYS IN THIS BROWSER, IF IT ALLOWS STORAGE. THIS DRINK DOES NOT EXIST YET.";
         submitBtn.textContent = "STACK LOCKED IN";
+        submitBtn.disabled = true;           // re-enabled by renderCan() the moment the stack becomes a different one
         ctx.mbs && ctx.mbs.form && ctx.mbs.form("fuel", { stack: stackLines, name: productName() });
         ctx.mbs && ctx.mbs.unlock && ctx.mbs.unlock("fuel");
         ctx.mbs && ctx.mbs.wave && ctx.mbs.wave();
       } else {
-        resultNote.textContent = "NOTHING WAS SENT OR SAVED. SET EVERY ROW AND A FLAVOUR TO LOCK IN THE FULL STACK.";
+        // C064: name the first missing choice and put the caret on it. In the 3D skin the flat rows are
+        // display:none, so focus is skipped there - the sentence still says which one, and the in-scene
+        // nudge is already pointing at the tub.
+        const missing = rows.find(r => !r.dataset.level);
+        const what = missing ? missing.querySelector(".name").textContent.toUpperCase() : "A FLAVOUR";
+        resultNote.textContent = `NOTHING WAS SENT OR SAVED. SET ${what} TO CARRY ON, THEN EVERY REMAINING ROW AND A FLAVOUR, TO LOCK IN THE FULL STACK.`;
+        const target = missing ? missing.querySelector(".lvl") : flavours[0];
+        if (target && target.offsetParent) target.focus();
       }
     });
 
