@@ -381,7 +381,11 @@ export default {
     });
 
     if (glOK) { lb.classList.add("webgl"); run3D(); } else { lbCanvas.remove(); lbHud.remove(); runFlat(); }
-    applyMode();
+    // applyMode() is NOT called here, and the reason is a TDZ rather than taste: a saved mode of
+    // "scroll" makes this call build the chapters immediately, and buildScroll() reads 4.3's RENT,
+    // sceneScale and RX - `const`s declared further down, so reaching them from here throws
+    // "Cannot access before initialization" for the one visitor who chose the chapters last time.
+    // The call is at the bottom of the 4.3 block instead. Function declarations hoist; const does not.
 
     // =====================================================================================
     // ==== 4.1 / F.2: scroll chapters, the other mode ====
@@ -398,6 +402,84 @@ export default {
        the guest book and the epilogue are the museum's, and the museum is one button away at all times,
        which is what "modes, not a replacement" buys. Building a terminal here now would be building
        4.5's terminal twice, which is the mistake Stage 4's ordering exists to prevent. */
+
+    /* ---- 4.3 / E.5: the six scroll consequences -----------------------------------------------------
+       E.5 names six, all six required: the character becomes smaller; the room changes teepee -> shoebox
+       -> jar -> car; the monthly price REMAINS FIXED while usable space collapses; the stress meter
+       rises; MOM's medical copy becomes increasingly aggressive; and the final scene reveals how much
+       space the audience can restore live.
+
+       Five of the six are one readout each, and they only land as satire if they are legible AT ONCE -
+       the fixed price next to the collapsing footage is the whole joke, and it does not survive being
+       split across five chapters. So they share one strip, the CONSOLE, present at every scroll
+       position, and scroll position is the only input.
+
+       THE ROOM IS NOT A SECOND LIST. E.5's teepee -> shoebox -> jar -> car is the chapter sequence this
+       channel already has - EXHIBITS runs teepee, car, shoebox, storage, masonjar, van, and all four
+       named rooms are in it - so the room readout is `EXHIBITS[n-1].label` and there is nothing to keep
+       in step with anything.
+
+       WHAT 4.3 DOES NOT BUILD. 4.4 owns the shrink CURVE (exponential and finite); this packet only has
+       to make the shrink observable, so the curve is one function below and today it is a plain descent.
+       4.5/4.6 own the shoe and completion: consequence six is a REVEAL, not a door, and nothing here
+       unlocks, completes or ends the run. */
+    const RENT = 1450;          // consequence 3: this number never moves. That is the entire joke.
+    const BASE_SQFT = 240;
+    /* 4.4 REPLACES THIS ONE LINE and nothing else. The figure's height, the square footage and the
+       restorable total are all derived from it, so that packet changes a curve rather than five call
+       sites. Today: 1.0 at the entrance down to 0.2 after the sixth chapter, never 0. */
+    const sceneScale = (n) => 1 - n * (0.8 / EXHIBITS.length);
+    const sqftAt = (n) => Math.round(BASE_SQFT * sceneScale(n));
+    const LOST = BASE_SQFT - sqftAt(EXHIBITS.length);
+    const GIVE_STEP = LOST / 8;
+
+    /* consequence 5, and the severity word is VISIBLE COPY drawn from an ORDERED vocabulary rather than
+       a data attribute. "Increasingly aggressive" then reads off the screen the visitor is looking at -
+       a source that scores its own escalation in a hidden number is its own witness, which is the one
+       thing a check here must not accept. Index 0 is the entrance, before any chapter. */
+    const RX = [
+      ["INTAKE", "Your residence is larger than your income supports."],
+      ["ADVISORY", "Mild compression. Most patients adjust within a cycle."],
+      ["RECOMMENDED", "Dose increased. The discomfort is the treatment."],
+      ["PRESCRIBED", "Surplus belongings are a symptom. Dispose of them."],
+      ["MANDATORY", "Do not measure the room. It worsens outcomes."],
+      ["ENFORCED", "Your complaint is now a condition. The unit complies."],
+      ["FINAL", "Terminal size. Dissatisfaction is treated, not housed."]
+    ];
+
+    let consoleEl = null, scene = -1, restored = 0;
+    const ratios = new Array(EXHIBITS.length + 1).fill(0);
+
+    function renderScene() {
+      if (!consoleEl) return;
+      const n = Math.max(0, scene);
+      // consequence 6 feeds back in here: restored square footage is added to whatever the scene left,
+      // so giving it back grows the figure and the footage LIVE rather than printing a separate number.
+      const shown = Math.min(BASE_SQFT, sqftAt(n) + restored);
+      consoleEl.style.setProperty("--lb-scale", (shown / BASE_SQFT).toFixed(4));
+      consoleEl.dataset.scene = String(n);
+      byId("lbRoom").textContent = n ? EXHIBITS[n - 1].label : "THE ENTRANCE";
+      byId("lbSqft").textContent = Math.round(shown) + " sq ft";
+      byId("lbPrice").textContent = "$" + RENT.toLocaleString("en-US") + "/mo";
+      byId("lbRxSev").textContent = RX[n][0];
+      byId("lbRx").textContent = RX[n][1];
+      const pct = n * 16;
+      byId("lbStressFill").style.width = pct + "%";
+      byId("lbStressPct").textContent = pct + "% COMPRESSION";
+    }
+
+    function setScene(n) {
+      if (n === scene) return;
+      scene = n;
+      renderScene();
+      /* E.5's meter call, and it happens PER INTERSECTION rather than per frame - which is also what
+         C016 asks of this channel's writes. MBS.meter IS the progress write in this tree: tv.js paints
+         the set's gauge and mbs-shim.js paints the standalone bar AND emits GAME_PROGRESS on the wire.
+         E.5 also names `MBS.progress.set`; no such API exists anywhere in tv/, and adding one is a new
+         shared surface through CHANGE-GATE, not a line in a channel packet. */
+      if (n > 0 && ctx.mbs && ctx.mbs.meter) ctx.mbs.meter(n * 16, "COMPRESSION");
+    }
+
     function buildScroll() {
       if (scrollEl) return scrollEl;
       scrollEl = document.createElement("div");
@@ -422,11 +504,60 @@ export default {
           </div>
         </section>${chapters}
         <section class="lb-ch" id="lbChEnd">
-          <div class="lb-ch-inner"><span class="fl-name">${CLOSING_LINE}</span></div>
-        </section>`;
+          <div class="lb-ch-inner">
+            <span class="fl-name">${CLOSING_LINE}</span>
+            <div class="lb-restore" id="lbRestore">
+              <p class="fl-sub">Removed across the six chapters: ${LOST} square feet. Rent charged for them: $${RENT.toLocaleString("en-US")} a month, unchanged.</p>
+              <p>Every one of those ${LOST} square feet can be handed back, and the people watching are the ones who hand them back. Restored so far: <b id="lbGiven">0</b> of ${LOST} sq ft.</p>
+              <button type="button" class="lb-give" id="lbGive">GIVE IT BACK</button>
+            </div>
+          </div>
+        </section>
+        <div class="lb-console" id="lbConsole" data-scene="0">
+          <div class="lb-fig" id="lbFig" aria-hidden="true"><i></i></div>
+          <div class="lb-con-body" aria-live="polite">
+            <p class="lb-con-row"><b id="lbRoom"></b><span id="lbSqft"></span><span class="lb-con-price" id="lbPrice"></span></p>
+            <p class="lb-con-row lb-con-bar"><span class="lb-stress"><i id="lbStressFill"></i></span><span class="lb-con-pct" id="lbStressPct"></span></p>
+            <p class="lb-con-rx"><b id="lbRxSev"></b> <span id="lbRx"></span></p>
+          </div>
+        </div>`;
       lbStage.appendChild(scrollEl);
+      consoleEl = byId("lbConsole");
+
+      /* STICKY CHAPTERS NEVER UN-INTERSECT, and that is the one thing E.5's "IntersectionObserver at
+         threshold 0.65" does not anticipate. 4.2 pins every chapter at top:0 for the rest of the run,
+         so once chapter 1 is on screen its ratio stays 1 and so does every earlier chapter's -
+         IntersectionObserver reports geometry, and a chapter buried under four others is not occluded
+         as far as it is concerned. Reading `entry.isIntersecting` the obvious way would therefore park
+         the scene on chapter 1 for the whole scroll. The chapter at 0.65 is the HIGHEST-numbered one
+         over the threshold, not the only one, so the ratios are kept and the maximum is taken. */
+      const io = ctx.observe(new IntersectionObserver(entries => {
+        for (const e of entries) ratios[+e.target.dataset.chapter] = e.intersectionRatio;
+        let n = 0;
+        for (let i = 1; i <= EXHIBITS.length; i++) if (ratios[i] >= 0.65) n = i;
+        setScene(n);
+      }, { root: scrollEl, threshold: [0, 0.65, 1] }));
+      scrollEl.querySelectorAll(".lb-ch[data-chapter]").forEach(c => io.observe(c));
+
+      /* consequence 6. A BUTTON, not a slider: 4.2's contract is that no chapter needs precision
+         movement, and a drag target inside this run is the thing that check fails on. It restores in
+         eight equal handfuls up to the full amount taken and then stops - the reveal is that the whole
+         192 is on the table, not that it is infinite. Nothing here unlocks or completes: the shoe is
+         4.5/4.6's, and this is a reveal rather than a door. */
+      const give = byId("lbGive"), given = byId("lbGiven");
+      ctx.on(give, "click", () => {
+        restored = Math.min(LOST, restored + GIVE_STEP);
+        given.textContent = String(Math.round(restored));
+        give.disabled = restored >= LOST;
+        renderScene();
+      });
+
+      setScene(0);
       return scrollEl;
     }
+
+    // the deferred boot call: everything buildScroll() reaches for now exists. See the note above.
+    applyMode();
 
     // =====================================================================================
     // ==== 3D path ====

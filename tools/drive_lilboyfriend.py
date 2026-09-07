@@ -584,6 +584,175 @@ with sync_playwright() as pw:
     scclean = [e for e in scerrs if "favicon" not in e and "jsdelivr" not in e.lower()]
     check(not scclean, "4.2: no page errors across the chapter drive (%s)" % (scclean[:2] or "none"))
 
+    # ---- 4.3: the six scroll consequences ----------------------------------------------------------
+    # "All six observable across a scripted scroll, each asserted independently." Independently is the
+    # word doing the work: one snapshot per chapter, six separate questions asked of it, so a build that
+    # shrinks the character and forgets the rent fails on the rent alone rather than on a single
+    # composite line that could be green for the wrong reason.
+    #
+    # A FRESH PAGE, because the section above ends by squeezing the stage to 440px on purpose and every
+    # measurement below would then be taken against a stage no visitor has.
+    #
+    # THE SCENE IS DRIVEN BY SCROLL POSITION AND NOTHING ELSE - no click, no keypress. That is also the
+    # trap this channel sets: 4.2's chapters are position:sticky, so a chapter already passed still
+    # reports intersectionRatio 1 and an observer reading isIntersecting the obvious way parks on
+    # chapter 1 forever. Asserting the scene ADVANCES to 1..6 in step with the scroll is what catches it.
+    print("\n  -- 4.3: the six scroll consequences --")
+
+    LABELS = ["THE TEEPEE", "THE CAR", "THE SHOEBOX", "THE STORAGE UNIT", "THE MASON JAR", "THE VAN"]
+    # the ordered severity vocabulary, entrance first. "Increasingly aggressive" is read off the copy the
+    # visitor can see, against this order - not off a score the channel wrote about itself.
+    SEV = ["INTAKE", "ADVISORY", "RECOMMENDED", "PRESCRIBED", "MANDATORY", "ENFORCED", "FINAL"]
+    LOST = 192          # 240 sq ft at the entrance, 48 after chapter six
+    SNAP = """() => { const q = s => document.querySelector(s);
+      const bar = q('.lb-stress').getBoundingClientRect(), fill = q('#lbStressFill').getBoundingClientRect();
+      return { scene: q('#lbConsole').dataset.scene,
+               figH: +q('#lbFig i').getBoundingClientRect().height.toFixed(2),
+               room: q('#lbRoom').textContent.trim(),
+               sqft: parseInt(q('#lbSqft').textContent, 10),
+               price: q('#lbPrice').textContent.trim(),
+               sev: q('#lbRxSev').textContent.trim(),
+               rx: q('#lbRx').textContent.trim(),
+               stress: bar.width ? +(fill.width / bar.width).toFixed(3) : 0,
+               pct: q('#lbStressPct').textContent.trim(),
+               // the strip is a FIXED height with overflow:hidden, so a readout that does not fit is
+               // not a wrapped line - it is a silently missing one. Anything ellipsised sideways or
+               // sitting outside the strip's own box is named here.
+               spill: (() => { const c = q('#lbConsole'), cr = c.getBoundingClientRect();
+                 const wide = [...c.querySelectorAll('.lb-con-row,.lb-con-rx,.lb-con-row *')]
+                   .filter(e => !e.children.length && e.scrollWidth > e.clientWidth + 1);
+                 const out = [...c.querySelectorAll('.lb-con-row,.lb-con-rx')].filter(e => {
+                   const r = e.getBoundingClientRect();
+                   return r.top < cr.top - 0.5 || r.bottom > cr.bottom + 0.5; });
+                 return wide.concat(out).map(e => e.id || e.className); })() }; }"""
+
+    cs = b.new_page(viewport={"width": 390, "height": 844})
+    cserrs = []
+    cs.on("pageerror", lambda e: cserrs.append(str(e)))
+    cs.on("console", lambda m: cserrs.append(m.text) if m.type == "error" else None)
+    cs.add_init_script("""(() => { const g = HTMLCanvasElement.prototype.getContext;
+      HTMLCanvasElement.prototype.getContext = function (t, ...a) {
+        return /webgl/i.test(t) ? null : g.call(this, t, ...a); }; })()""")
+    # the meter write, sampled off the wire rather than off the DOM: E.5 asks for the call PER
+    # INTERSECTION, and mbs-shim.js turns MBS.meter into a GAME_PROGRESS lifecycle event. Recorded from
+    # an init script so no event between boot and the first scroll can be missed.
+    cs.add_init_script("""(() => { window.__lbProg = [];
+      document.addEventListener('mbs:lifecycle', e => {
+        if (e.detail && e.detail.type === 'GAME_PROGRESS') window.__lbProg.push(e.detail.detail); }); })()""")
+    cs.goto(BASE + "/play/lilboyfriend/", wait_until="load")
+    cs.wait_for_timeout(2500)
+    cs.click("#lbModeBtn")
+    cs.wait_for_selector("#lbConsole", timeout=5000)
+    cs.evaluate("() => { document.querySelector('#lbScroll').style.scrollBehavior = 'auto'; }")
+    cs.wait_for_timeout(300)
+
+    entrance = cs.evaluate(SNAP)
+    snaps = []
+    stuck = []
+    for i in range(1, 7):
+        cs.evaluate("i => { const s = document.querySelector('#lbScroll');"
+                    "        s.scrollTop = i * s.clientHeight; }", i)
+        try:
+            # polling= is mandatory in this file's drivers; the default is "raf".
+            cs.wait_for_function("i => document.querySelector('#lbConsole').dataset.scene === String(i)",
+                                 arg=i, timeout=3000, polling=60)
+        except Exception:
+            stuck.append((i, cs.evaluate("() => document.querySelector('#lbConsole').dataset.scene")))
+        snaps.append(cs.evaluate(SNAP))
+
+    check(not stuck, "scroll position alone advances the scene 1..6, and sticky chapters do not pin it "
+                     "to the first (%s)" % (stuck or "1..6 all reached"))
+
+    # 1. the character becomes smaller. Measured off the rendered figure, and the last one still exists:
+    #    "shrinks" satisfied by shrinking to nothing is 4.4's finite bound already broken.
+    figs = [s["figH"] for s in snaps]
+    check(all(figs[i] < figs[i - 1] for i in range(1, 6)) and figs[0] < entrance["figH"],
+          "1. the character is smaller at every chapter than the one before (%s)" % figs)
+    check(figs[-1] > 0, "   and is still there at chapter six, not shrunk out of existence (%.2fpx)" % figs[-1])
+
+    # 2. the room changes, teepee -> shoebox -> jar -> car. The chapter sequence IS that sequence, so the
+    #    readout is checked against the six rooms in order and against E.5's four by name.
+    rooms = [s["room"] for s in snaps]
+    check(rooms == LABELS, "2. the room changes with the chapter (%s)" % " > ".join(rooms))
+    named = [r for r in ["THE TEEPEE", "THE SHOEBOX", "THE MASON JAR", "THE CAR"] if r in rooms]
+    check(len(named) == 4, "   and E.5's teepee, shoebox, jar and car are all four of them (%s)" % named)
+
+    # 3. the price stays FIXED while usable space collapses - two halves, asserted apart, because a build
+    #    that collapses both is exactly as wrong as one that collapses neither.
+    prices = [s["price"] for s in snaps]
+    check(len(set(prices)) == 1 and prices[0] == entrance["price"],
+          "3. the monthly price never moves across the six chapters (%s)" % prices[0])
+    sqft = [s["sqft"] for s in snaps]
+    check(all(sqft[i] < sqft[i - 1] for i in range(1, 6)) and sqft[0] < entrance["sqft"],
+          "   while the usable space collapses under it (%d sq ft > %s)" % (entrance["sqft"], sqft))
+
+    # 4. the stress meter rises. The BAR is measured, not the label, and the label is the matched half -
+    #    a fill that never paints and a number that only counts are each half a meter.
+    stress = [s["stress"] for s in snaps]
+    check(all(stress[i] > stress[i - 1] for i in range(1, 6)) and stress[0] > entrance["stress"],
+          "4. the stress meter rises at every chapter (%s)" % stress)
+    check([s["pct"] for s in snaps] == ["%d%% COMPRESSION" % (i * 16) for i in range(1, 7)],
+          "   and it is labelled with the compression it is showing (%s)" % snaps[-1]["pct"])
+    prog = cs.evaluate("() => window.__lbProg")
+    pcts = [p["pct"] for p in prog if p and p.get("label") == "COMPRESSION"]
+    check(pcts == sorted(set(pcts)) and pcts[-1:] == [96],
+          "   and the write goes out per intersection, never per frame (%d COMPRESSION writes: %s)"
+          % (len(pcts), pcts))
+
+    # 5. MOM's medical copy becomes increasingly aggressive. Escalation is the severity word's position in
+    #    an ordered vocabulary the visitor can read; the matched half is that the copy itself is six
+    #    different sentences, since one line repeated under six rising labels escalates nothing.
+    sevs = [s["sev"] for s in snaps]
+    idx = [SEV.index(v) if v in SEV else -1 for v in sevs]
+    check(idx == sorted(idx) and len(set(idx)) == 6 and -1 not in idx and idx[-1] == len(SEV) - 1,
+          "5. MOM's prescription escalates every chapter and ends at the top of the scale (%s)"
+          % " > ".join(sevs))
+    rxs = [s["rx"] for s in snaps]
+    check(len(set(rxs)) == 6 and all(len(r) > 20 for r in rxs),
+          "   and the copy under it is six different sentences, not one label change (%d distinct)"
+          % len(set(rxs)))
+
+    # 6. the final scene reveals how much space the audience can restore LIVE. The reveal is the number;
+    #    "live" is that pressing it moves the console this instant. Bounded, and the bound is asserted:
+    #    the point is that the whole 192 is on the table, not that space is infinite.
+    cs.evaluate("() => { const s = document.querySelector('#lbScroll'); s.scrollTop = s.scrollHeight; }")
+    cs.wait_for_timeout(400)
+    reveal = cs.evaluate("""() => { const r = document.querySelector('#lbRestore');
+        return { shown: !!(r && r.getClientRects().length), text: r ? r.textContent : '',
+                 given: +document.querySelector('#lbGiven').textContent }; }""")
+    check(reveal["shown"] and ("%d square feet" % LOST) in reveal["text"] and reveal["given"] == 0,
+          "6. the closing scene reveals the %d sq ft taken, none of it restored yet (%s)"
+          % (LOST, reveal["shown"]))
+    before = cs.evaluate(SNAP)
+    cs.click("#lbGive")
+    cs.wait_for_timeout(150)
+    after = cs.evaluate(SNAP)
+    check(after["sqft"] > before["sqft"] and after["figH"] > before["figH"]
+          and cs.evaluate("() => +document.querySelector('#lbGiven').textContent") > 0,
+          "   and the audience restores it LIVE - one press grows the room %d->%d sq ft and the "
+          "character with it" % (before["sqft"], after["sqft"]))
+    for _ in range(12):
+        if cs.evaluate("() => document.querySelector('#lbGive').disabled"): break
+        cs.click("#lbGive")
+        cs.wait_for_timeout(60)
+    end = cs.evaluate("""() => ({ given: +document.querySelector('#lbGiven').textContent,
+        done: document.querySelector('#lbGive').disabled,
+        sqft: parseInt(document.querySelector('#lbSqft').textContent, 10) }); """)
+    check(end["given"] == LOST and end["done"] and end["sqft"] == entrance["sqft"],
+          "   up to exactly the %d sq ft that were taken and no further (%d restored, room back to %d)"
+          % (LOST, end["given"], end["sqft"]))
+
+    # the strip's own matched half: five readouts are only five readouts if all five are on screen.
+    # `.lb p{font-size:clamp(15px,4.2vw,18px)}` out-specifies a bare `.lb-con-row`, and when it did the
+    # first line rendered at 16px and left the top of a 60px strip entirely - visible as a stray line of
+    # text over the paper, invisible to every assertion above, which all read textContent.
+    spill = [(s["scene"], s["spill"]) for s in ([entrance] + snaps) if s["spill"]]
+    check(not spill, "and all five readouts fit inside the strip, none clipped or ellipsised (%s)"
+          % (spill or "clean at the entrance and all six chapters"))
+
+    csclean = [e for e in cserrs if "favicon" not in e and "jsdelivr" not in e.lower()]
+    check(not csclean, "4.3: no page errors across the consequence drive (%s)" % (csclean[:2] or "none"))
+
     b.close()
 
 print("\n%s" % ("3D PATH DRIVES" if ok else "3D PATH BROKEN"))

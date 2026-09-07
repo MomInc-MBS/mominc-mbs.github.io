@@ -268,15 +268,22 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
           means it takes whatever is left after the type rather than demanding 4:3, and object-fit:cover
           keeps it a photograph at any height. min-height is the floor below which it stops reading as a
           picture at all, and the storage chapter - three of the longest facts of the eighteen - is the
-          one that ever reaches it.
+          one that ever reaches it. 4.3's console strip took 82px of that slack back at the bottom of
+          every chapter, so the floor came down from 84px to 70px to keep the storage chapter's third
+          citation on screen rather than behind the strip. It is still a photograph at 70.
 
      The cards drop to 14px/1.35 from 15px/1.4 for the same reason - the six chapters are three long
      sourced facts each, and the alternative to a slightly tighter measure is cutting a citation. */
   /* margin:0 is load-bearing, not tidiness: `.lb section{margin:26px 0}` above catches these too, and a
      26px gap between two chapters PINNED at the same top is a seam of bare container showing through. */
+  /* --lb-console is the console strip's height AND the clearance the chapters leave for it, declared
+     once so the two cannot drift apart. It is set on the two descendants rather than on .lb-scroll
+     because the container query at the bottom has to be able to change it, and a container query
+     styles a container's DESCENDANTS, never the container itself. */
+  .lb-scroll .lb-ch, .lb-scroll .lb-console{--lb-console:72px}
   .lb-scroll .lb-ch{position:sticky; top:0; height:100%; margin:0; scroll-snap-align:start;
       display:flex; align-items:stretch;
-      padding:20px 16px; border-bottom:1px solid rgba(44,30,20,.2);
+      padding:20px 16px calc(10px + var(--lb-console)); border-bottom:1px solid rgba(44,30,20,.2);
       background-color:#ece0c8;
       background-image:repeating-radial-gradient(circle at 20% 30%,rgba(0,0,0,.05) 0 1px,transparent 1px 6px),
                         repeating-radial-gradient(circle at 70% 65%,rgba(255,255,255,.35) 0 1px,transparent 1px 7px)}
@@ -288,13 +295,65 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
       display:flex; flex-direction:column; justify-content:center}
   .lb-scroll .lb-ch-n{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:rgba(44,30,20,.6); margin:0 0 4px}
   .lb-scroll .lb-ch h3{font-style:italic; font-weight:400; font-size:clamp(20px,6vw,26px); text-decoration:underline; text-underline-offset:3px; margin:0 0 10px}
-  .lb-scroll .lb-ch-photo{width:100%; flex:1 1 0; min-height:84px; aspect-ratio:auto; object-fit:cover; border:6px solid #c9a24c; outline:2px dashed rgba(44,30,20,.5); outline-offset:-10px; display:block; margin:0 0 12px}
+  .lb-scroll .lb-ch-photo{width:100%; flex:1 1 0; min-height:70px; aspect-ratio:auto; object-fit:cover; border:6px solid #c9a24c; outline:2px dashed rgba(44,30,20,.5); outline-offset:-10px; display:block; margin:0 0 12px}
   .lb-scroll .fl-card{flex:0 0 auto; border:1px solid rgba(44,30,20,.35); background:rgba(255,253,246,.55); padding:9px 12px; margin:0 0 8px; font-size:14px; line-height:1.35}
   .lb-scroll .fl-card:last-child{margin-bottom:0}
   .lb-scroll .fl-card .fl-src{display:block; margin-top:5px; font-size:11.5px; color:rgba(44,30,20,.62)}
 
   .lb-scroll .fl-name{display:block; font-style:italic; font-size:clamp(20px,6vw,26px); text-decoration:underline; text-underline-offset:3px; margin:0 0 4px}
   .lb-scroll .fl-sub{font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:rgba(44,30,20,.6); margin:0 0 14px}
+
+  /* ---- 4.3 / E.5: the consequence console ---------------------------------------------------------
+     Five of the six consequences read as satire only side by side - the fixed rent against the
+     collapsing footage is the joke - so they share one strip that is on screen at every scroll
+     position. It is the LAST CHILD of the scroll run and `position:sticky; bottom:0`, which is worth a
+     sentence: the chapters above are sticky to the TOP and stack, so a strip pinned to the opposite
+     edge never joins that stack, and being last it paints over all of them without a z-index. Inside
+     the scroller rather than beside it because the container query below reaches descendants only.
+     The chapters pay for it in padding, not in height, and because .lb *{box-sizing:border-box} they
+     are still exactly one stage tall, which is 4.2's bound. */
+  /* EVERY SELECTOR IN THIS BLOCK IS PREFIXED WITH .lb-scroll, and it is not tidiness. The console's
+     three lines are <p>, and `.lb p{font-size:clamp(15px,4.2vw,18px); margin:0 0 10px}` at the top of
+     this stylesheet is a two-simple-selector rule: a bare `.lb-con-row` LOSES to it and the strip
+     renders at 16px on a 60px budget, which spills the first line out of the top of the strip. The
+     rest of the scroll block already carries the prefix for the same reason. */
+  .lb-scroll .lb-console{position:sticky; bottom:0; height:var(--lb-console);
+      display:flex; align-items:center; gap:10px; padding:6px 12px;
+      color:#f4ead6; background:rgba(20,16,12,.94); border-top:2px solid var(--gold);
+      font-family:"Nunito",system-ui,sans-serif; overflow:hidden; --lb-scale:1}
+  /* consequence 1. The figure's height IS the scale, so "the character becomes smaller" is a measured
+     rectangle on the screen rather than a class name that claims it. */
+  .lb-scroll .lb-fig{flex:0 0 26px; height:38px; display:flex; align-items:flex-end; justify-content:center}
+  .lb-scroll .lb-fig i{display:block; width:calc(8px + 10px * var(--lb-scale)); height:calc(38px * var(--lb-scale));
+      background:var(--gold); border-radius:44% 44% 14% 14% / 26% 26% 8% 8%}
+  .lb-scroll .lb-con-body{flex:1 1 auto; min-width:0}
+  /* three lines and no more. The strip is a fixed height and the chapters above reserve exactly that
+     height, so a fourth line does not push the strip down - it spills out of the top of it, over the
+     paper, with no background under it. Everything that can be long is nowrap with an ellipsis, so a
+     longer room name or a reworded prescription shortens itself instead of wrapping; overflow:hidden
+     on the strip is the last guard rather than the design. */
+  .lb-scroll .lb-con-row{display:flex; align-items:baseline; gap:8px; margin:0 0 3px; font-size:11.5px;
+      line-height:1.3; letter-spacing:.05em; white-space:nowrap}
+  .lb-scroll .lb-con-row b{font-weight:800; letter-spacing:.1em; overflow:hidden; text-overflow:ellipsis}
+  .lb-scroll .lb-con-row span{overflow:hidden; text-overflow:ellipsis}
+  .lb-scroll .lb-con-price{margin-left:auto; font-weight:800; color:#ffdf9a; flex:0 0 auto}
+  .lb-scroll .lb-con-pct{font-weight:800; color:#ff9a6a; flex:0 0 auto}
+  .lb-scroll .lb-con-bar{margin:0 0 4px}
+  .lb-scroll .lb-con-bar .lb-stress{flex:1 1 auto}
+  .lb-scroll .lb-con-rx{margin:0; font-size:10.5px; line-height:1.3; color:rgba(244,234,214,.86);
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .lb-scroll .lb-con-rx b{color:#ff9a6a; letter-spacing:.1em; font-weight:800}
+  .lb-scroll .lb-stress{display:block; height:5px; background:rgba(244,234,214,.18); border:1px solid rgba(244,234,214,.35)}
+  .lb-scroll .lb-stress i{display:block; height:100%; width:0; background:#ff6a3d}
+
+  /* consequence 6, in the closing scene. A BUTTON and not a slider, deliberately: 4.2's contract is
+     that nothing in this run needs a precise finger, and a drag target here is what fails it. */
+  .lb-scroll .lb-restore{margin-top:14px; border-top:1px solid rgba(44,30,20,.3); padding-top:10px}
+  .lb-scroll .lb-restore p{margin:0 0 7px; font-size:13.5px; line-height:1.35}
+  .lb-give{font-family:"Nunito",system-ui,sans-serif; font-weight:800; font-size:12px; letter-spacing:.1em;
+      color:#2c1e14; background:var(--gold); border:1.5px solid #2c1e14; border-radius:999px;
+      padding:10px 18px; min-height:40px; cursor:pointer}
+  .lb-give[disabled]{opacity:.5; cursor:default}
 
   /* the stage is NOT the window, and the difference is the whole reason this is a container query and
      not a media query: at a 390x844 phone the play route's stage measures 800px and the same phone
@@ -306,10 +365,19 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
      is a worse outcome than the last chapter scrolling a few pixels inside itself. On a stage shorter
      than roughly 500px the guard above takes over rather than the type shrinking further. */
   @container lbscroll (max-height:700px){
-    .lb-scroll .lb-ch{padding:14px 12px}
-    .lb-scroll .lb-ch h3{font-size:20px; margin:0 0 7px}
-    .lb-scroll .lb-ch-photo{min-height:48px; border-width:5px; margin:0 0 8px}
-    .lb-scroll .fl-card{font-size:12.5px; line-height:1.28; padding:6px 9px; margin:0 0 5px}
+    .lb-scroll .lb-ch, .lb-scroll .lb-console{--lb-console:54px}
+    .lb-scroll .lb-ch{padding:14px 12px calc(6px + var(--lb-console))}
+    .lb-scroll .lb-console{gap:8px; padding:4px 10px}
+    .lb-scroll .lb-fig{flex:0 0 22px; height:32px}
+    .lb-scroll .lb-fig i{width:calc(7px + 8px * var(--lb-scale)); height:calc(32px * var(--lb-scale))}
+    .lb-scroll .lb-con-row{font-size:10.5px; margin:0 0 2px}
+    .lb-scroll .lb-con-bar{margin:0 0 3px; font-size:9.5px}
+    .lb-scroll .lb-con-rx{font-size:9.5px}
+    .lb-scroll .lb-restore{margin-top:10px; padding-top:8px}
+    .lb-scroll .lb-restore p{font-size:12.5px}
+    .lb-scroll .lb-ch h3{font-size:20px; margin:0 0 5px}
+    .lb-scroll .lb-ch-photo{min-height:34px; border-width:5px; margin:0 0 6px}
+    .lb-scroll .fl-card{font-size:12.5px; line-height:1.22; padding:5px 9px; margin:0 0 4px}
     .lb-scroll .fl-card .fl-src{margin-top:4px; font-size:10.5px}
   }
 
