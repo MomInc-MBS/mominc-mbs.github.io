@@ -155,6 +155,11 @@
       })
       .then(function (html) {
         host.innerHTML = html;
+        // 2.24/C010: `start` is recorded HERE, after the fragment lands and before the module is
+        // imported, because this is the single point BOTH the module path and the legacy path
+        // below pass through. Recorded inside a channel module it would miss every unconverted
+        // one; guarded because a page can mount a channel without having loaded state.js.
+        try { if (window.MBS_STATE) window.MBS_STATE.recordEvent("start", name); } catch (e) {}
         const root = host.querySelector("[data-host]") || host.firstElementChild || host;
         // The module is imported ONLY when the manifest says the file exists. Sniffing by catching an
         // import failure cannot tell a missing file from a broken one: a 404 and a syntax error both

@@ -14,7 +14,9 @@
   const QUARANTINE_KEY = "mbs-state-quarantine"; // exact original bytes of whatever failed to parse/validate
   const COACH_KEY = "mbs-coach-profile";         // card.js's own former store: { slug: { answers: {...} } }
   const COACH_BACKUP = "mbs-coach-profile-backup-v1";
-  const VERSION = 2;
+  const VERSION = 3;                             // 2.24/C010: v3 adds `events`; a v2 visitor is UPGRADED, never quarantined (see upgrade())
+  const SESSION_KEY = "mbs-session";             // the per-tab participation session id, in sessionStorage, never sent anywhere
+  const MAX_EVENTS = 500;                        // the event log's hard ceiling - see recordEvent()
   const ARMED_MS = 30000;                        // must match tv.js/mbs-shim.js's own ARMED_MS
 
   const activeIds = () => {
@@ -36,6 +38,7 @@
     submissions: {},
     facility: { rooms: {} },
     artifacts: [],
+    events: [],
   });
 
   // Any id in the manifest's active set gets a channel record, defaulted, without disturbing one
@@ -52,7 +55,8 @@
     && obj.drafts && typeof obj.drafts === "object"
     && obj.submissions && typeof obj.submissions === "object"
     && obj.facility && typeof obj.facility === "object" && obj.facility.rooms && typeof obj.facility.rooms === "object"
-    && Array.isArray(obj.artifacts);
+    && Array.isArray(obj.artifacts)
+    && Array.isArray(obj.events);
 
   const safeGet = (k) => { try { return localStorage.getItem(k); } catch { return null; } };
   const quarantine = (raw) => { try { localStorage.setItem(QUARANTINE_KEY, raw); } catch {} };
@@ -111,6 +115,18 @@
     return persist(state);
   }
 
+  /* 2.24/C010: the v2 -> v3 upgrade. A schema bump that simply quarantined every existing visitor
+     would delete what they earned in order to make room for an empty event log, so a v2 body is
+     carried forward in place. It is NOT a way past validation: anything that is not a plausible v2
+     body comes out the other side unchanged and is quarantined by isWellFormed() exactly as before,
+     which is what keeps the "right version, wrong shape" case honest after the bump. */
+  function upgrade(obj) {
+    if (!obj || typeof obj !== "object" || obj.v !== 2) return obj;
+    obj.v = VERSION;
+    if (!Array.isArray(obj.events)) obj.events = [];
+    return obj;
+  }
+
   // Corruption recovery + normal read path. Unparseable JSON, the wrong version, or the right version
   // in the wrong shape all quarantine the original bytes and hand back a fresh working session - never
   // an exception reaching the page.
@@ -119,7 +135,10 @@
     if (raw === null) return migrate();
     let parsed;
     try { parsed = JSON.parse(raw); } catch { quarantine(raw); return persist(ensureChannels(emptyState())); }
+    const wasOld = !parsed || parsed.v !== VERSION;
+    parsed = upgrade(parsed);
     if (!isWellFormed(parsed)) { quarantine(raw); return persist(ensureChannels(emptyState())); }
+    if (wasOld) persist(parsed);   // the upgrade is written back once, not re-derived on every read
     try { localStorage.removeItem(BACKUP_KEY); } catch {}   // the migrated state has now been read back successfully at least once
     return ensureChannels(parsed);
   }
@@ -127,6 +146,7 @@
   function write(state) {
     const s = (state && typeof state === "object") ? state : emptyState();
     s.v = VERSION;
+    if (!Array.isArray(s.events)) s.events = [];   // the one chokepoint every mutation passes through
     ensureChannels(s);
     return persist(s);
   }
@@ -158,7 +178,11 @@
     if (!site) return unlockedActive();
     const s = read();
     if (!s.channels[site]) s.channels[site] = emptyChannel();
-    if (!s.channels[site].secret.earned) { s.channels[site].secret = { earned: true, earnedAt: Date.now() }; write(s); }
+    if (!s.channels[site].secret.earned) {
+      s.channels[site].secret = { earned: true, earnedAt: Date.now() };
+      write(s);
+      recordEvent("milestone", site, { what: "secret" });   // AFTER the write, never before: recordEvent re-reads the store
+    }
     return unlockedActive();
   }
 
@@ -178,6 +202,7 @@
     s.channels[site].form = { status: "saved_here", earnedAt: Date.now() };
     s.submissions[site] = (data && typeof data === "object") ? data : null;   // legacy true-as-"no payload" rule, kept for new writes too
     write(s);
+    recordEvent("participation_form_saved", site);
   }
 
   // sites: the caller's FORM_SITES list (tv.js/mbs-shim.js already own that list from the manifest).
@@ -199,7 +224,13 @@
     const s = read();
     s.drafts[site] = data;
     write(s);
-    return JSON.stringify(read().drafts[site]) === JSON.stringify(data);
+    const landed = JSON.stringify(read().drafts[site]) === JSON.stringify(data);
+    // The event 2.24 is actually about: an answer kept is participation and NO game was completed.
+    // Recorded only when the write landed - a private window that saved nothing must not leave a
+    // log entry claiming it did, which is the same lie saveDraft's return value exists to prevent.
+    if (landed) recordEvent("participation_draft_saved", site,
+                            { answers: Object.keys((data && data.answers) || data || {}).length });
+    return landed;
   }
   function draftFor(site) { const d = read().drafts[site]; return (d && typeof d === "object") ? d : null; }
   function clearDraft(site) { const s = read(); delete s.drafts[site]; write(s); return read().drafts[site] === undefined; }
@@ -221,6 +252,7 @@
       earnedAt: entry.earnedAt || Date.now(),
     });
     write(s);
+    recordEvent("artifact_saved", entry.channel || null, { id: String(entry.id) });
     return true;
   }
 
@@ -283,6 +315,94 @@
     return changed;
   }
 
+  /* ---- 2.24/C010: the participation event log.
+
+     C010 asks for an adapter carrying channel / episode / event / session id. It lives HERE, in the
+     store, and not in a new file, because these events ARE earned history - the same argument that
+     put artifacts in `mbs-state` and deliberately kept 2.22's display preference OUT of it. That
+     costs a schema bump and a migration (v2 -> v3, see upgrade()), which is the honest price.
+
+     Nothing leaves the browser. There is no endpoint, no beacon, no queue to flush - C008's
+     draft/saved_here vocabulary exists precisely so a local write never implies a creator received
+     anything, and an event log is the easiest place in the codebase to break that promise. */
+
+  // Per TAB. sessionStorage is exactly the lifetime the word "session" means here, and it is already
+  // what tv.js uses to remember the set was left on.
+  const newId = () => {
+    try { if (window.crypto && window.crypto.randomUUID) return window.crypto.randomUUID(); } catch {}
+    return "s-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 10);
+  };
+  const MEM_SESSION = newId();   // the fallback when sessionStorage is blocked: one id for this page's life, never null
+
+  function sessionId() {
+    try {
+      let id = sessionStorage.getItem(SESSION_KEY);
+      if (!id) { id = newId(); sessionStorage.setItem(SESSION_KEY, id); }
+      return id;
+    } catch { return MEM_SESSION; }
+  }
+
+  /* The episode: which broadcast week this happened in, labelled by the Wednesday that opened it -
+     so the whole week from Wednesday to Tuesday carries one episode id, and the label turns over at
+     midnight rather than at the top of the hour the show starts. Same weekly grid as tv.js's schedule
+     (C009), read in the SHOW's timezone, because an episode is a property of the broadcast and not of
+     where the visitor happens to be sitting: 11am Thursday in Tokyo is Wednesday's episode.
+
+     This is deliberately NOT tv.js's zoned() inverse. That function exists to find the UTC INSTANT
+     of a wall-clock hour, which is the part DST makes hard. An episode is a LABEL: format the
+     instant into the show's zone and do calendar arithmetic on the parts. No instant is ever
+     reconstructed, so there is no offset to get wrong and no second copy of the hard code. */
+  const EP_TZ = "America/Los_Angeles", EP_WEEKDAY = 3;   // Wednesday, matching tv.js's SHOW
+  const EP_WD = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+  const epFmt = new Intl.DateTimeFormat("en-US", {
+    timeZone: EP_TZ, weekday: "short", year: "numeric", month: "numeric", day: "numeric",
+  });
+
+  function episodeFor(now) {
+    const p = epFmt.formatToParts(now || new Date());
+    const g = (t) => (p.find(x => x.type === t) || {}).value;
+    const back = (EP_WD[g("weekday")] - EP_WEEKDAY + 7) % 7;
+    // Date.UTC normalises a day-of-month that has gone negative, so stepping back across the 1st of
+    // a month (or of January) needs no special case.
+    return new Date(Date.UTC(+g("year"), +g("month") - 1, +g("day") - back)).toISOString().slice(0, 10);
+  }
+
+  /* The adapter. One entry: { event, channel, episode, session, at } and an optional `detail`.
+     Callers below are the existing shared writers, not the channels - a channel that saves a draft
+     records participation because saveDraft() records it, which is why an unconverted channel and a
+     module channel are measured the same way and neither had to remember anything. */
+  function recordEvent(event, channel, detail) {
+    if (!event) return null;
+    const s = read();
+    const rec = {
+      event:   String(event),
+      channel: channel || null,
+      episode: episodeFor(),
+      session: sessionId(),
+      at:      Date.now(),
+    };
+    if (detail && typeof detail === "object") rec.detail = detail;
+    s.events.push(rec);
+    // ponytail: hard cap, oldest dropped. localStorage is ~5MB and persist() fails SILENTLY when it
+    // is full, so an uncapped log would eventually stop the visitor's EARNED state from saving at
+    // all - the log would cost them the thing it was measuring. If a full history is ever wanted,
+    // that is a different store, not a bigger number.
+    if (s.events.length > MAX_EVENTS) s.events.splice(0, s.events.length - MAX_EVENTS);
+    write(s);
+    return rec;
+  }
+
+  // The readback. `filter` is an exact-match map over the record's own fields, so
+  // events({ channel: "fuel", event: "start" }) is the whole query language and there is no second one.
+  function events(filter) {
+    const all = read().events;
+    if (!filter || typeof filter !== "object") return all;
+    const keys = Object.keys(filter);
+    return all.filter(e => e && keys.every(k => e[k] === filter[k]));
+  }
+
+  function clearEvents() { const s = read(); s.events = []; write(s); }
+
   migrate();            // before anything else reads state
   adoptCoachProfile();  // and before card.js asks for its draft
 
@@ -291,5 +411,6 @@
     unlockedActive, bankUnlock, getArmedAt, setArmedAt, formStatus, saveForm, formsDone,
     saveDraft, draftFor, clearDraft, clearDrafts, clearSubmissions,
     addArtifact, earnedItems, adoptCoachProfile, COACH_KEY,
+    recordEvent, events, clearEvents, episodeFor, sessionId, SESSION_KEY, MAX_EVENTS,
   };
 })();

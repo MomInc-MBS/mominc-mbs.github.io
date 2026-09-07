@@ -62,7 +62,7 @@ with sync_playwright() as pw:
         s.channels.fuel.secret.earnedAt = 12345; window.MBS_STATE.write(s); }""")
     pg.reload(wait_until="load"); pg.wait_for_timeout(150)
     after = pg.evaluate("() => window.MBS_STATE.read()")
-    check(after.get("v") == 2, "version field present after reload (v=%r)" % after.get("v"))
+    check(after.get("v") == 3, "version field present after reload (v=%r)" % after.get("v"))
     check(after["channels"]["fuel"]["secret"]["earned"] is True and after["channels"]["fuel"]["secret"]["earnedAt"] == 12345,
           "the write survives a reload-read")
 
@@ -118,7 +118,7 @@ with sync_playwright() as pw:
     q = pg.evaluate("() => localStorage.getItem('mbs-state-quarantine')")
     check(q == "not json {{{", "quarantine key holds the original bytes, unparseable case")
     s = pg.evaluate("() => window.MBS_STATE.read()")
-    check(s.get("v") == 2, "the visitor gets a fresh working v2 session, unparseable case")
+    check(s.get("v") == 3, "the visitor gets a fresh working v3 session, unparseable case")
 
     bad_version = json.dumps({"v": 1, "channels": {}, "drafts": {}, "submissions": {},
                                "facility": {"rooms": {}}, "artifacts": []})
@@ -127,16 +127,41 @@ with sync_playwright() as pw:
     q = pg.evaluate("() => localStorage.getItem('mbs-state-quarantine')")
     check(q == bad_version, "quarantine key holds the original bytes, wrong-version case")
     s = pg.evaluate("() => window.MBS_STATE.read()")
-    check(s.get("v") == 2, "the visitor gets a fresh working v2 session, wrong-version case")
+    check(s.get("v") == 3, "the visitor gets a fresh working v3 session, wrong-version case")
 
-    bad_shape = json.dumps({"v": 2, "channels": "nope", "drafts": {}, "submissions": {},
-                             "facility": {"rooms": {}}, "artifacts": []})
+    bad_shape = json.dumps({"v": 3, "channels": "nope", "drafts": {}, "submissions": {},
+                             "facility": {"rooms": {}}, "artifacts": [], "events": []})
     errs = seed(pg, page_errs, state_raw=bad_shape)
     check(not errs, "right-version wrong-shape payload: no exception reaches the page")
     q = pg.evaluate("() => localStorage.getItem('mbs-state-quarantine')")
     check(q == bad_shape, "quarantine key holds the original bytes, wrong-shape case")
     s = pg.evaluate("() => window.MBS_STATE.read()")
-    check(s.get("v") == 2, "the visitor gets a fresh working v2 session, wrong-shape case")
+    check(s.get("v") == 3, "the visitor gets a fresh working v3 session, wrong-shape case")
+
+    print("== 2.24 the v2 -> v3 upgrade (C010): a returning visitor is carried forward, not quarantined")
+
+    # a real v2 body, exactly as this store wrote it before 2.24: earned secret, a submission, a draft.
+    v2 = json.dumps({"v": 2, "armedAt": None,
+                     "channels": {"fuel": {"form": {"status": "saved_here", "earnedAt": 111},
+                                            "secret": {"earned": True, "earnedAt": 222},
+                                            "performance": {"earned": False, "earnedAt": None},
+                                            "reward": {"earned": False, "earnedAt": None, "kind": None}}},
+                     "drafts": {"corgi": {"title": "Corgi", "answers": {"q": "kept"}}},
+                     "submissions": {"fuel": {"a": 1}},
+                     "facility": {"rooms": {}}, "artifacts": [{"id": "keepsake", "channel": "fuel"}]})
+    errs = seed(pg, page_errs, state_raw=v2)
+    check(not errs, "a v2 payload upgrades with no console error")
+    check(pg.evaluate("() => localStorage.getItem('mbs-state-quarantine')") is None,
+          "a v2 payload is NOT quarantined - upgraded in place")
+    s = pg.evaluate("() => window.MBS_STATE.read()")
+    check(s.get("v") == 3 and s.get("events") == [], "the upgraded state is v3 with an empty event log")
+    check(s["channels"]["fuel"]["secret"]["earnedAt"] == 222
+          and s["submissions"].get("fuel") == {"a": 1}
+          and (s["drafts"].get("corgi") or {}).get("answers") == {"q": "kept"}
+          and [a["id"] for a in s["artifacts"]] == ["keepsake"],
+          "every earned thing in the v2 body survives the upgrade untouched")
+    stored = json.loads(pg.evaluate("() => localStorage.getItem('mbs-state')"))
+    check(stored.get("v") == 3, "the upgrade is PERSISTED, so it runs once rather than on every read")
 
     print("== 2.8 active-set validation (C004): a stale sag/armie entry never counts toward completion")
 
