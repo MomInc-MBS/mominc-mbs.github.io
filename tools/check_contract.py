@@ -157,6 +157,61 @@ with sync_playwright() as pw:
             got = "GAME_START" in seen; good = got == want; ok &= good
             print(f"  {'PASS' if good else 'FAIL'} {slug:13} {label:4} START={got} want={want}")
             pg.close()
+    # --- D.1.10 (C018): unlock() and complete() are two calls with two meanings.
+    #
+    # The defect this exists to prevent: unlock() emitting GAME_COMPLETE means a channel that unlocks
+    # at the door (lilboyfriend) reports the door as its terminal state, and the driver stops there.
+    # complete() is the separate call. Asserted as a MATCHED PAIR wherever "nothing happened" is the
+    # passing half - a gate that only proved complete() emits would pass just as happily on a
+    # complete() that also banked a node, which is the thing being separated.
+    print("== complete() is the terminal state, unlock() is the ARG node (D.1.10)")
+    pg, seen, errs = instrument(b)
+    pg.goto(f"{BASE}/play/{ACTIVE_GAMES[0]['slug']}/", wait_until="load"); pg.wait_for_timeout(2600)
+    before = pg.evaluate("()=>window.MBS_STATE.unlockedActive().slice()")
+
+    def call(js):
+        """One complete() call and the event count it actually produced. Counted PER CALL, not once at
+        the end: sampling the total after all three calls makes the idempotency row assert only the
+        return value, and a complete() that emitted twice but still returned False would sail through
+        the very check written to catch it."""
+        r = pg.evaluate(js)
+        pg.wait_for_timeout(250)                                     # expose_function round-trips async
+        return r, seen.count("GAME_COMPLETE")
+
+    r1, n1 = call("()=>window.MBS.complete('_gateA', {terminal:'gate'})")
+    r2, n2 = call("()=>window.MBS.complete('_gateA')")               # idempotent: same site, no second event
+    r3, n3 = call("()=>window.MBS.complete('_gateB')")               # keyed on the site, not on the document
+    after = pg.evaluate("()=>window.MBS_STATE.unlockedActive().slice()")
+    banked = pg.evaluate("()=>!!window.MBS.lifecycle.completed")
+    for label, good, detail in (
+        ("first complete() emits",        r1 is True and n1 == 1,      f"returned={r1} events={n1} want=1"),
+        ("repeat complete() is a no-op",  r2 is False and n2 == 1,     f"returned={r2} events={n2} want=1"),
+        ("a second site emits its own",   r3 is True and n3 == 2,      f"returned={r3} events={n3} want=2"),
+        ("complete() banks NO ARG node",  after == before,             f"{before} -> {after}"),
+        ("lifecycle.completed follows",   banked is True,              f"completed={banked}"),
+    ):
+        ok &= good
+        print(f"  {'PASS' if good else 'FAIL'} {label:32} {detail}")
+    pg.close()
+
+    # The other surface. A channel fragment is loaded verbatim into the television as well as into a
+    # play route, so a complete() that exists only on the shim is a TypeError on /tv/ for all six of
+    # D.1.10's callers. The television has no lifecycle stream, so the assertion is that the call is
+    # there, is idempotent, and stays silent - not that it emits.
+    pg, seen, errs = instrument(b)
+    pg.goto(f"{BASE}/tv/", wait_until="load"); pg.wait_for_timeout(1500)
+    tv = pg.evaluate("""()=>{const M=window.MBS||{};
+        if (typeof M.complete !== "function") return {fn:false};
+        return {fn:true, first:M.complete('_gateA'), again:M.complete('_gateA')};}""")
+    clean = [e for e in errs if "favicon" not in e and "jsdelivr" not in e.lower()]
+    good = tv["fn"] is True and tv.get("first") is True and tv.get("again") is False \
+           and "GAME_COMPLETE" not in seen and not clean
+    ok &= good
+    print(f"  {'PASS' if good else 'FAIL'} {'complete() exists inside /tv/':32} "
+          f"callable={tv['fn']} once={tv.get('first')} repeat={tv.get('again')} "
+          f"emitted={'GAME_COMPLETE' in seen} (want False)"
+          f"{('  ERR=' + str(clean[:1])) if clean else ''}")
+    pg.close()
     b.close()
 
 # --- Part A isolation: the page furniture is gone and the game is not.

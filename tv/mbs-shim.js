@@ -1,7 +1,8 @@
 /* MBS standalone shim: everything tv.js hands a channel, provided outside the television.
    A channel fragment is loaded verbatim into a standalone play route and must not be edited, so this
-   file has to satisfy the exact surface tv.js exposes: MBS.meter, MBS.wave, MBS.unlock, MBS.form,
-   MBS.MAIL, MBS.formsDone, MBS.armReady, MBS.armHere, MBS.armedLeft, and the mbs:arm / mbs:disarm events.
+   file has to satisfy the exact surface tv.js exposes: MBS.meter, MBS.wave, MBS.unlock, MBS.complete,
+   MBS.form, MBS.MAIL, MBS.formsDone, MBS.armReady, MBS.armHere, MBS.armedLeft, and the mbs:arm /
+   mbs:disarm events.
    Same origin as /tv/, so localStorage progress is genuinely shared with the hub, not a second copy.
    Progress itself is read/written entirely through window.MBS_STATE (tv/state.js, loaded before this
    file on every play route) - the shared accessors tv.js also calls, so there is one implementation. */
@@ -35,7 +36,10 @@
 
   /* ---- lifecycle (plan item 9). The games predate this contract, so the adapter derives the events
      from what they already do rather than asking any game to emit them. */
-  let started = false, completed = false;
+  let started = false;
+  // D.1.10: the sites whose run has reached its terminal state. A Set, not a boolean, because
+  // GAME_COMPLETE is "exactly once per site per session" and the guard has to key on the site to say so.
+  const completedSites = new Set();
   const emit = (type, detail) => {
     const ev = { v: LIFECYCLE_VERSION, type, game: slug, mode, t: Date.now(), detail: detail || null };
     document.dispatchEvent(new CustomEvent("mbs:lifecycle", { detail: ev }));
@@ -47,7 +51,7 @@
   try { chan = new BroadcastChannel("mbs-lifecycle"); } catch {}
   let ready = false;
   const readyOnce = (detail) => { if (!ready) { ready = true; emit("GAME_READY", detail); } };
-  M.lifecycle = { version: LIFECYCLE_VERSION, emit, ready: readyOnce, get started() { return started; }, get completed() { return completed; } };
+  M.lifecycle = { version: LIFECYCLE_VERSION, emit, ready: readyOnce, get started() { return started; }, get completed() { return completedSites.size > 0; } };
 
   /* ---- live mode talks to the server, which is the only authority for access, time and eligibility.
      A failed report is never treated as a completion; the server decides, and says so on its own endpoint. */
@@ -112,10 +116,29 @@
     if (!site) return;
     window.MBS_STATE.bankUnlock(site);
     const done = readUnlock();
-    if (!completed) { completed = true; emit("GAME_COMPLETE", { site, nodes: done.length, need: NODES }); }
+    // TRANSITIONAL (D.1.10). unlock() reporting completion is the defect: a channel that unlocks at the
+    // door reports the door as its terminal state. This emission is removed only in the packet that lands
+    // the LAST of D.1.10's six complete() calls - removing it now would silently stop every channel that
+    // has not yet added its own call from ever completing. It shares complete()'s guard, so the pair
+    // cannot emit twice for one site while both exist.
+    completeOnce(site, { nodes: done.length, need: NODES });
     if (M.armedLeft() > 0) document.dispatchEvent(new CustomEvent("mbs:arm"));
     paint();
   };
+  /* ---- D.1.10 (C018): two calls, two meanings, so that unlocking and finishing can happen at
+     different moments and in either order.
+       unlock(site)   the ARG node is banked - the visitor solved the secret. Paints; banks state.
+       complete(site) the run reached its TERMINAL state. Emits GAME_COMPLETE, banks nothing, paints
+                      nothing. Completion is not persisted progress; the node is.
+     Idempotent per site, and order-independent: a run may complete without unlocking (finished the
+     game, never found the secret) or unlock without completing (found the secret, walked away). */
+  function completeOnce(site, detail) {
+    if (!site || completedSites.has(site)) return false;
+    completedSites.add(site);
+    emit("GAME_COMPLETE", Object.assign({ site }, detail));
+    return true;
+  }
+  M.complete = (site, opts) => completeOnce(site, { terminal: (opts && opts.terminal) || null });
   M.armReady = () => { const done = readUnlock(); return ACTIVE_UNLOCK.every(id => done.includes(id)); };  // C004: explicit active-set every(), not a counter
   M.armHere = () => {
     if (!M.armReady()) return 0;
@@ -146,7 +169,7 @@
   M.formsDone = () => window.MBS_STATE.formsDone(FORM_SITES);
   M.rearmTest = () => {};                                  // localhost-only hook on the shell; no standalone equivalent
 
-  addEventListener("pagehide", () => { if (started && !completed) emit("GAME_EXIT"); });
+  addEventListener("pagehide", () => { if (started && !completedSites.size) emit("GAME_EXIT"); });
   addEventListener("error", e => emit("GAME_ERROR", { message: String(e.message || e.type).slice(0, 200) }));
   paint();
 })();
