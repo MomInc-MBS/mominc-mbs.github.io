@@ -126,7 +126,7 @@ check(on_disk == flagged, "the flag matches the tree exactly (on disk %s, flagge
       % (sorted(on_disk) or "none", sorted(flagged) or "none"))
 
 print("== 2.18 is converting channels one at a time, and both paths still exist")
-CONVERTED = {"mominc", "djscratch", "fuel", "lilboyfriend", "girlfriend"}
+CONVERTED = {"mominc", "djscratch", "fuel", "lilboyfriend", "girlfriend", "corgi"}
 check(flagged == CONVERTED, "exactly the channels this packet claims are converted (%s)"
       % (sorted(flagged) or "none"))
 for cid in sorted(flagged):
@@ -407,25 +407,40 @@ with sync_playwright() as pw:
           "and it tears down on the play route exactly as it does in the television (%s)"
           % json.dumps(playgone))
 
-    print("== an UNCONVERTED channel's play route is untouched by any of this")
+    print("== EVERY generated play route is a module now (2.18 complete for the live channels)")
+    # This block used to point at corgi as the UNCONVERTED example and assert the legacy path still
+    # mounted through it. Packet 14 converted corgi, and with it the last play route on disk: corgi,
+    # djscratch, fuel, girlfriend and lilboyfriend are all modules, and the three still on the legacy
+    # path - goon, sag, armie - are coming_soon, so no play route is generated for them and there is
+    # nothing left to point the old probe at. The assertion is INVERTED rather than dropped: same
+    # route, same probe, opposite expectation.
     pg.goto(BASE + "/play/corgi/", wait_until="load")
-    pg.wait_for_timeout(1500)
-    legacy = pg.evaluate("""() => ({
+    pg.wait_for_timeout(2500)
+    conv = pg.evaluate("""() => ({
         mounted: !!(window.MBS_CH && window.MBS_CH.current()),
         scripts: document.querySelectorAll('#channel script').length,
         root: !!document.querySelector('#channel [data-host]'),
-        hidden: document.querySelectorAll('#channel .mbs-off').length,
         boot: !!document.getElementById('boot') })""")
-    check(not legacy["mounted"], "corgi did NOT go down the module path")
-    check(legacy["scripts"] > 0 and legacy["root"],
-          "its inline scripts were re-created the way they always have been (%s)" % legacy["scripts"])
-    check(not legacy["boot"], "and it still comes up, so ready() runs on both paths")
-    # NOT "hidden > 0": corgi's roots are ':scope > svg' and '#cc', which between them are every
-    # child of #channel, so nothing is off-path and 0 is the right number. What each play route
-    # actually reveals and hides is check_play's gate, not this one; this only has to show that the
-    # legacy path still exists and still mounts after packet 10 rewired the converted one.
-    check(legacy["hidden"] == 0,
-          "with nothing hidden, which for corgi is correct: its two roots cover every child")
+    check(conv["mounted"], "corgi's play route goes down the MODULE path now")
+    check(conv["scripts"] == 0 and conv["root"],
+          "with NO inline script re-created: the module IS the channel (%s)" % conv["scripts"])
+    check(not conv["boot"], "and it still comes up, so ready() runs on both paths")
+    # the milestone, read from data rather than claimed: every play route that exists on disk belongs
+    # to a channel the manifest marks as a module.
+    routed = sorted(d for d in os.listdir(os.path.join(ROOT, "play"))
+                    if os.path.isdir(os.path.join(ROOT, "play", d)))
+    modules = {c["id"] for c in chans["channels"] if c.get("module")}
+    check(routed and set(routed) <= modules,
+          "and every generated play route is a converted channel (%s)" % ", ".join(routed))
+    # what is left on the legacy path, and why it cannot be exercised here. Named rather than assumed:
+    # a silently empty set would make the check above vacuously true the day someone converts the rest.
+    legacy_ids = sorted({c["id"] for c in chans["channels"]} - modules)
+    coming = sorted(c["id"] for c in chans["channels"] if c.get("comingSoon"))
+    check(legacy_ids and legacy_ids == coming,
+          "the channels still on the legacy path are exactly the coming_soon ones (%s)"
+          % ", ".join(legacy_ids))
+    check(not (set(legacy_ids) & set(routed)),
+          "and none of them has a play route to drive, which is why this block inverted rather than moved")
 
     print("== the WebGL context: the first disposable on this television that ctx does NOT own")
     # A page holds a small, fixed number of live WebGL contexts and the browser silently drops the
@@ -666,6 +681,68 @@ with sync_playwright() as pw:
     check(ppg.evaluate("() => typeof window.__dg") == "undefined",
           "and the channel's own window.__dg probe hook is gone with it")
     ppg.close()
+
+    print("== corgi: the school hunt, the LAST live channel and the largest scene (2.18 packet 14)")
+    # The biggest of the four WebGL shapes: a corridor with three branch areas, per-area lighting,
+    # furniture, a monster and a door, rebuilt wholesale on every level transition. It also carries the
+    # two things no earlier channel did - an AudioContext (public mode's office ambience) and two
+    # listeners bound to WINDOW - but those are the runtime's job, and current() below is what says it
+    # was done. What is measured here is the GPU.
+    cpg = b.new_page(viewport={"width": 1280, "height": 900})
+    cpg.on("pageerror", lambda e: errs.append(str(e)))
+    cpg.add_init_script("""
+        (() => { const real = HTMLCanvasElement.prototype.getContext;
+                 window.__gl = [];
+                 HTMLCanvasElement.prototype.getContext = function (type) {
+                   const c = real.apply(this, arguments);
+                   if (c && /webgl/i.test(String(type))) window.__gl.push(c);
+                   return c;
+                 }; })();
+    """)
+    open_tv(cpg)
+
+    def cc_cycle(page):
+        """Mount the school, wait for the scene to actually exist, unmount. Returns what is live."""
+        page.evaluate("() => window.MBS_CH.mount('corgi', document.getElementById('channel'))")
+        built = True
+        try:
+            # window.__corgi is created inside runHunt3D AFTER the import resolves and the player exists,
+            # so it is the channel's own statement that there is a scene here to leak. desks is a getter
+            # over the level's furniture, which only buildLevel fills in.
+            page.wait_for_function("() => window.__corgi && window.__corgi.desks > 0", timeout=25000)
+        except Exception:
+            built = False
+        page.wait_for_timeout(400)
+        page.evaluate("() => window.MBS_CH.unmount()")
+        page.wait_for_timeout(250)
+        return built, page.evaluate("""() => ({
+            made: window.__gl.length,
+            live: window.__gl.filter(c => !c.isContextLost()).length })""")
+
+    cbuilt1, cgl1 = cc_cycle(cpg)
+    check(cbuilt1, "the school builds its scene as a module, so this probe is measuring something")
+    check(cgl1["made"] > 0, "and it took a real WebGL context to do it (%d)" % cgl1["made"])
+    check(cgl1["live"] == 0,
+          "after unmount the page holds NO live WebGL context (%d made, %d still live)"
+          % (cgl1["made"], cgl1["live"]))
+
+    cbuilt2, cgl2 = cc_cycle(cpg)
+    cbuilt3, cgl3 = cc_cycle(cpg)
+    check(cbuilt2 and cbuilt3, "and it rebuilds on the second and third visit rather than coming up empty")
+    # the property, never a constant: a fresh context per visit is CORRECT, a retained one is not
+    check(cgl3["live"] == 0,
+          "three visits later it still holds none (%d made across three, %d live)"
+          % (cgl3["made"], cgl3["live"]))
+    check(cgl3["made"] <= cgl1["made"] * 3,
+          "and a visit costs the SAME number of contexts, never a growing one (%d over three visits)"
+          % cgl3["made"])
+    check(cpg.evaluate("() => window.MBS_CH.current()") is None,
+          "and the runtime reports nothing mounted afterwards")
+    # the one window global this channel sets, and it can MOVE the player: left behind, a driver could
+    # teleport a dog around a school that is no longer in the document
+    check(cpg.evaluate("() => typeof window.__corgi") == "undefined",
+          "and the channel's own window.__corgi probe hook is gone with it")
+    cpg.close()
 
     print("== fuel with no WebGL at all: the flat form is still the whole channel")
     # fuel's stated design is that the six radiogroups, the eight flavour buttons and the can readout
