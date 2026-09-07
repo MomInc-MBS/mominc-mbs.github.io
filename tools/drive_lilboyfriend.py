@@ -22,6 +22,11 @@ which a stub rendering three empty divs would satisfy. Below, the fixture answer
 including the two the data marks optional, and each of the five outcomes is matched BY ID against the
 one branch that fixture selects, so a mis-derived band or a mis-keyed map is a failure rather than a
 box that still counts.
+
+3.3 packet 3/C018 adds the last section: what loadState() accepts. Every gate above drives a museum
+that loaded its own save, so none of them ever asked what happens when the save is not one. The cases
+at the bottom seed the channel's private key with the phases, positions and timestamps a hand edit can
+put there and read back what the loader kept, which is the whole of that ticket's claim.
 """
 import functools, os, threading
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
@@ -276,6 +281,93 @@ with sync_playwright() as pw:
           "flat: and 'walk on' moves the gallery on")
     flclean = [e for e in flerrs if "favicon" not in e and "jsdelivr" not in e.lower()]
     check(not flclean, "flat: no page errors (%s)" % (flclean[:2] or "none"))
+
+    # ---- 3.3 packet 3 / C018: the save is untrusted input ------------------------------------------
+    # loadState() used to Object.assign whatever parsed over the defaults, on BOTH paths, so a
+    # hand-edited key was adopted whole. Every case below is seeded through the page (never through
+    # add_init_script, which fires on EVERY navigation and would re-seed the reload under test).
+    #
+    # It reads window.__lbLoaded, not __lbState(): both render paths MOVE the state as they boot - the
+    # flat gallery's render() snaps phase and t onto its nearest step before anything can be observed -
+    # so __lbState() answers "where is the museum now", which is a different question from "what did the
+    # loader accept". The snapshot is taken at module scope, ahead of the WebGL branch, so this is the
+    # same answer on either path and the flat page can be reused rather than paying for three.js twice.
+    print("\n  -- C018: what loadState() accepts --")
+
+    def seeded(v2, v1=None):
+        """Seed the channel's own key(s), reload, and read what loadState() actually returned."""
+        fl.evaluate("""([v2, v1]) => {
+            localStorage.removeItem('mbs-lilbf-museum-v2');
+            localStorage.removeItem('mbs-lilbf-museum');
+            if (v2 !== null) localStorage.setItem('mbs-lilbf-museum-v2', v2);
+            if (v1 !== null) localStorage.setItem('mbs-lilbf-museum', v1);
+        }""", [v2, v1])
+        fl.reload(wait_until="load")
+        fl.wait_for_function("() => !!window.__lbLoaded", timeout=10000)
+        return fl.evaluate("() => window.__lbLoaded")
+
+    now = lambda: fl.evaluate("() => Date.now()")
+
+    # 1. the rebaseline's own example, plus a non-boolean `signed`. Each field is judged on its own
+    #    terms rather than the record being thrown away whole: the phase is not a phase, the signature
+    #    is not a boolean and the timestamp is not a number, so those three go - but t=99 is a position
+    #    that CLAMPS to a real one (the door), and out/1 is a state the walk reaches legitimately.
+    s = seeded('{"phase":"banana","t":99,"signed":"yes","shrinkStartedAt":"x"}')
+    check(s["phase"] == "out" and s["t"] == 1 and s["signed"] is False and s["shrinkStartedAt"] is None,
+          "a junk save is repaired field by field, not adopted whole (%s)" % s)
+
+    # 2. a real phase carrying an impossible position: the phase stands, `t` is clamped onto the path.
+    #    zAt(t) and every proximity test take t on trust, so an unclamped 99 puts the camera outside
+    #    the hall and NaN would put it nowhere at all.
+    s = seeded('{"phase":"back","t":42}')
+    check(s["phase"] == "back" and s["t"] == 1 and s["shrinkStartedAt"] is not None
+          and s["shrinkStartedAt"] <= now(),
+          "an out-of-range t is clamped to the path and the missing clock is backfilled (%s)" % s)
+    s = seeded('{"phase":"back","t":"NaN"}')
+    check(s["t"] == 0, "a non-numeric t is 0, never NaN (%s)" % s)
+
+    # 3. a timestamp in the FUTURE is the quiet one: shrinkProgress() would sit at 0 for as long as it
+    #    is ahead, so the walls never close and nothing on screen says why. Rebuilt from the phase.
+    ahead = now() + 3600000
+    s = seeded('{"phase":"back","t":0.5,"shrinkStartedAt":%d}' % ahead)
+    # rp is read live: render() moves phase and t, but nothing on either path rewrites the shrink clock,
+    # so this is the loaded value working as the walls' own input rather than a number in a snapshot.
+    rp = fl.evaluate("() => window.__lbState().rp")
+    check(s["shrinkStartedAt"] is not None and s["shrinkStartedAt"] <= now() and rp > 0.05,
+          "a future shrink clock is rejected and rebuilt, so the walls still close (rp %.3f)" % rp)
+
+    # 4. the other half of the claim: a GOOD save is not damaged by any of this.
+    at = now() - 10000
+    s = seeded('{"phase":"back","t":0.6,"signed":true,"shrinkStartedAt":%d}' % at)
+    check(s["phase"] == "back" and abs(s["t"] - 0.6) < 1e-9 and s["signed"] is True
+          and s["shrinkStartedAt"] == at,
+          "a valid save is passed through exactly, field for field (%s)" % s)
+
+    # 5. bytes that are not JSON, and JSON that is not an object
+    for raw, why in [('{not json', "unparseable bytes"), ('[1,2,3]', "an array"), ('"back"', "a bare string")]:
+        s = seeded(raw)
+        check(s["phase"] == "out" and s["t"] == 0 and s["signed"] is False,
+              "%s loads the defaults rather than throwing or half-loading (%s)" % (why, s))
+
+    # 6. the v1 key, which is the path that used to be the only one that backfilled the clock
+    s = seeded(None, '{"phase":"wired","t":0.4}')
+    rp = fl.evaluate("() => window.__lbState().rp")
+    check(s["phase"] == "slotted" and abs(s["t"] - 0.4) < 1e-9 and s["shrinkStartedAt"] is not None
+          and 0.2 < rp < 0.5,
+          "a v1 save still migrates: wired -> slotted, with a deterministic backfilled clock (%s, rp %.3f)"
+          % (s, rp))
+
+    # 7. and the merge is gone at the WRITE end too - an unknown key from some other version is dropped
+    #    on load, so the next saveState() cannot write it back out.
+    seeded('{"phase":"out","t":0.2,"bogus":1,"shrinkStartedAt":123}')
+    fl.click("#flNext")
+    fl.wait_for_timeout(300)
+    stored = fl.evaluate("() => localStorage.getItem('mbs-lilbf-museum-v2')")
+    check(stored and "bogus" not in stored,
+          "an unknown key is dropped on load and never written back (%s)" % stored)
+
+    c18errs = [e for e in flerrs if "favicon" not in e and "jsdelivr" not in e.lower()]
+    check(not c18errs, "C018: no page errors across any seeded load (%s)" % (c18errs[:2] or "none"))
 
     b.close()
 

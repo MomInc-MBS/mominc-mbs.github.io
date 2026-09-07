@@ -173,23 +173,67 @@ export default {
     // ---- shared state (v2 adds shrinkStartedAt for 5.3's clock-driven walls). {phase: out|slotted|back|done,
     // t: path position 0..1, signed: bool, shrinkStartedAt: epoch ms|null}. "slotted" replaces round-1's "wired".
     const STORE_KEY_V1 = "mbs-lilbf-museum", STORE_KEY = "mbs-lilbf-museum-v2";
+    const PHASES = ["out", "slotted", "back", "done"];   // the allowlist: nothing else has ever been a phase here
     const SHRINK_MS = 37500;   // matches a straight walk back at WALK_SPEED below - loitering no longer buys safety
     function backfillShrink(phase, t) {
       // deterministic per legacy phase, never NaN/restart/snap-to-full: reproduces the v1 load's own progress
       const impliedProgress = phase === "done" ? 1 : Math.max(0, Math.min(1, 1 - t));
       return Date.now() - impliedProgress * SHRINK_MS;
     }
-    function loadState() {
-      let raw = null; try { raw = localStorage.getItem(STORE_KEY); } catch {}
-      if (raw) { let saved = {}; try { saved = JSON.parse(raw) || {}; } catch {}
-        return Object.assign({ phase: "out", t: 0, signed: false, shrinkStartedAt: null }, saved); }
-      let legacy = {}; try { legacy = JSON.parse(localStorage.getItem(STORE_KEY_V1) || "{}") || {}; } catch {}
-      if (legacy.phase === "wired") legacy.phase = "slotted";
-      const st = Object.assign({ phase: "out", t: 0, signed: false, shrinkStartedAt: null }, legacy);
-      if ((st.phase === "slotted" || st.phase === "back" || st.phase === "done") && !st.shrinkStartedAt) st.shrinkStartedAt = backfillShrink(st.phase, st.t);
+    /* C018: BOTH load paths used to be a bare Object.assign over the defaults, so whatever parsed was
+       adopted whole - `{phase:"banana", t:99, shrinkStartedAt:"x"}` became the museum's state, and only
+       the LEGACY path ever backfilled the timestamp. tv/state.js has validated its own key since D.1.2;
+       this channel's private key is untrusted input by exactly the same argument, and a save is the one
+       input a visitor can hand-edit. Field by field, never merged:
+         phase  - allowlisted, anything else is a fresh walk from the entrance
+         t      - a finite number clamped to the path, because zAt(t) and the exhibit proximity tests
+                  take it on trust and NaN propagates into the camera
+         signed - a boolean, so a truthy string cannot half-open the guest book
+         shrink - a real epoch ms in the PAST, or it is rebuilt from the phase. A future timestamp (a
+                  clock moved back, a hand edit) would hold shrinkProgress() at 0 for as long as it is
+                  ahead, which is the walls never closing rather than a wrong-but-visible clock.
+       Unknown keys are dropped rather than carried: the four above are the whole schema, and a merge is
+       how a stale field from a version that no longer exists gets written straight back out by save().
+
+       Field by field, and NOT the whole record thrown away on the first bad value - unlike tv/state.js,
+       which quarantines. There is nothing here worth quarantining (a walk, not a submission), and every
+       field repairs to a state the museum reaches on its own anyway: an unreadable phase is a visitor at
+       the entrance, and a t of 99 with no phase left is a visitor at the door. Discarding the rest of a
+       save because one key was edited costs a real walk to defend against a hand edit that cannot hurt
+       anything the clamps already bound. */
+    function sanitize(raw) {
+      let saved = {}; try { saved = JSON.parse(raw) || {}; } catch {}
+      if (typeof saved !== "object" || Array.isArray(saved)) saved = {};
+      // round-1's name, remapped on either path: a v2 file never wrote "wired", but reading one as
+      // "slotted" costs nothing and refusing it would silently restart a walk that really did happen.
+      if (saved.phase === "wired") saved.phase = "slotted";
+      const phase = PHASES.indexOf(saved.phase) >= 0 ? saved.phase : "out";
+      const rawT = Number(saved.t);
+      const st = {
+        phase,
+        t: Number.isFinite(rawT) ? Math.max(0, Math.min(1, rawT)) : 0,
+        signed: saved.signed === true,
+        shrinkStartedAt: null,
+      };
+      if (phase !== "out") {
+        const at = Number(saved.shrinkStartedAt);
+        st.shrinkStartedAt = (Number.isFinite(at) && at > 0 && at <= Date.now()) ? at : backfillShrink(phase, st.t);
+      }
       return st;
     }
+    function loadState() {
+      let raw = null; try { raw = localStorage.getItem(STORE_KEY); } catch {}
+      if (raw !== null) return sanitize(raw);
+      let legacy = null; try { legacy = localStorage.getItem(STORE_KEY_V1); } catch {}
+      return sanitize(legacy || "{}");
+    }
     const ST = loadState();
+    // test-only, and NOT the same readback as __lbState below: both render paths move ST the moment they
+    // boot (the flat gallery's render() snaps phase and t to its nearest step, the 3D walk ends a return
+    // that resumes at t=0), so by the time anything can be observed, what loadState() ACCEPTED is already
+    // gone. C018 is a claim about the loader, so the loader's own answer is what the gate has to read.
+    // Frozen: a reader cannot become a writer. Removed in unmount() with the other hook.
+    window.__lbLoaded = Object.freeze(Object.assign({}, ST));
     function saveState() { try { localStorage.setItem(STORE_KEY, JSON.stringify(ST)); } catch {} }
 
     function fireForm(f) {
@@ -247,7 +291,7 @@ export default {
     // saveState() path (walking is disabled there), so there is no other way to observe a migrated value
     // without resetting it. Reads ST, changes nothing. Removed in unmount(): it closes over this mount's ST,
     // and a reader that outlives the fragment would be answering about a museum that is no longer there.
-    window.__lbState = () => ({ phase: ST.phase, t: ST.t, shrinkStartedAt: ST.shrinkStartedAt, rp: shrinkProgress() });
+    window.__lbState = () => ({ phase: ST.phase, t: ST.t, signed: ST.signed, shrinkStartedAt: ST.shrinkStartedAt, rp: shrinkProgress() });
     const reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     // ---- canvas-text sign textures, shared by both render paths' data but only consumed by the 3D path
@@ -1120,11 +1164,12 @@ export default {
      The canvas itself is NOT removed here: #lbCanvas is in the fragment's own markup, so it goes when
      the fragment is replaced. Removing it would be reaching into markup this module did not create.
 
-     window.__lbState goes because it closes over this mount's state object: left behind, it would answer
-     questions about a museum that is no longer in the document. */
+     window.__lbState and window.__lbLoaded go because they close over this mount's state object: left
+     behind, they would answer questions about a museum that is no longer in the document. */
   unmount() {
     session = null;
     try { delete window.__lbState; } catch (e) { window.__lbState = undefined; }
+    try { delete window.__lbLoaded; } catch (e) { window.__lbLoaded = undefined; }
     if (!gl) return;
     const g = gl;
     gl = null;

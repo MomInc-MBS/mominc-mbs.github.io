@@ -372,19 +372,26 @@ export default {
     const marks = [byId("s1"), byId("s2"), byId("s3")];
     const hint = byId("deckHint"), sigLbl = byId("sigLbl");
     let scratches = 0, angle = 0, spinning = true, done = false, jog = null;
-    const VEL = 2.4;                                              // deg/frame: a full spin about every 2.5s at 60fps
+    // C023, second half: deg PER SECOND, not per frame. `angle += VEL` was 2.4 deg/frame - a full spin
+    // every 2.5s at 60Hz and every 1.25s on a 120Hz display, which is the same frame-count-as-clock
+    // mistake the jog branch below already avoids with its own (now - t0)/dur. The record now keeps
+    // one speed on any display, and the constant carries the unit it is actually in.
+    const DEG_PER_SEC = 144;                                      // = 2.4 deg/frame x 60fps: a full spin about every 2.5s
+    const MAX_DT = 0.1;                                           // a backgrounded tab, or the loop re-armed by scratch() after going idle, resumes without a lurch
 
     // raf is the single-slot guard, and it is now actually enforced: see the header note. A frame is
     // queued through ctx.frame, never raw, or the runtime cannot cancel the loop when the channel goes.
-    let raf = 0;
+    let raf = 0, last = 0;
     function loop(now) {                                          // one animation loop drives the endless spin and every jog
       raf = 0;
+      const dt = last ? Math.min((now - last) / 1000, MAX_DT) : 0;   // first frame of a run has no elapsed time to spend
+      last = now;
       if (jog) {
         const p = Math.min((now - jog.t0) / jog.dur, 1);
         angle = jog.from - jog.back * (1 - Math.pow(1 - p, 2));   // halt forward, jerk backward (ease-out)
         if (p >= 1) { jog = null; spinning = !done; }             // resume the endless spin (unless it's over)
       } else if (spinning && !done) {
-        angle += VEL;
+        angle += DEG_PER_SEC * dt;
       }
       platter.style.transform = `rotate(${angle}deg)`;
       if (!done || jog) raf = ctx.frame(loop);
