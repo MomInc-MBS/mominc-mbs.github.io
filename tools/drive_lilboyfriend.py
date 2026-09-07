@@ -2159,9 +2159,13 @@ with sync_playwright() as pw:
     check(kb.evaluate("() => window.__lbState().phase") == "done"
           and kb.evaluate("() => !!document.querySelector('#flAgain')"),
           "C019: and the epilogue was reached without a single pointer event, from the entrance")
-    check(focus_id(kb) == "flAgain",
-          "C019: with focus on the epilogue's own control rather than back at the top of the document "
-          "(%r)" % focus_id(kb))
+    # C020 added a second control to this step and it is the FIRST one, so the id here moved from
+    # flAgain to flCase. That is the intended order rather than an accident of the DOM: "walk again"
+    # throws the walk away and the case file is the thing that survives it, so a keyboard visitor does
+    # not have to Tab past the reset to reach the object the row is about. Both are still asserted.
+    check(focus_id(kb) == "flCase" and kb.evaluate("() => !!document.querySelector('#flAgain')"),
+          "C019: with focus on the epilogue's own first control rather than back at the top of the "
+          "document, and 'walk again' still there behind it (%r)" % focus_id(kb))
     kbclean = [e for e in kberrs if "favicon" not in e and "jsdelivr" not in e.lower()]
     check(not kbclean, "C019: no page errors across the keyboard-only run (%s)" % (kbclean[:2] or "none"))
     kb.close()
@@ -2415,6 +2419,286 @@ with sync_playwright() as pw:
           "C012: a hand-edited read list is allowlisted against EXHIBITS and deduped on the way in, "
           "the same treatment C018 gave phase (%s)" % [i["id"] for i in back if i["read"]])
     rt.close()
+
+    # ================================================================================================
+    # ---- 4.11 packet 3: C014 the reading panel, C020 the case file ---------------------------------
+    # ================================================================================================
+    # Two tickets, and the trap in both is the same one: an assertion that the NEW thing exists is
+    # passed by a build that added it beside the old problem instead of instead of it.
+    #
+    #   C014's acceptance is three verbs a visitor does - select, open, resume - and none of them can
+    #   be asserted by looking for an element. A canvas placard can be photographed, counted, even
+    #   given an aria-label, and it is still a picture of a paragraph. So the gate SELECTS the text
+    #   with the platform's own selection API and reads back what it got, follows the link's href to
+    #   an origin it can check against the citation printed beside it, and reloads the page to see
+    #   whether the museum came back to the exhibit that was open. The matched half is the one the old
+    #   build cannot fake at any timing: on the 3D path, before this packet, no sourced fact appeared
+    #   in the DOM at all - the facts existed only as fillText into a texture - so "the exact shipped
+    #   body string is in the document, inside #lbRead" is a claim about the reading surface moving
+    #   rather than about a panel being added.
+    #
+    #   C020's acceptance has two halves and the second is the one with teeth: a USEFUL OBJECT, and
+    #   no second walk. "A download happened" is passed by a file that says "you walked a museum", so
+    #   the gate opens what came down and requires the things a person in this position could act on -
+    #   the phone numbers, the scopes that say which of them are Southern Nevada only, all eighteen
+    #   claims with their links - plus the sourced bodies character for character, because a summary
+    #   is exactly what a souvenir would contain. "Without another full walk" is asserted as the
+    #   state being untouched by the press: same phase, same position, same read marks after it.
+    print("\n  -- 4.11 pkt 3: C014 the reading panel, C020 the case file --")
+
+    CARDS_JS = """() => Array.from(document.querySelectorAll('#lbRead .rd-card')).map(c => ({
+      t: (c.querySelector('.rd-t') || {}).textContent || '',
+      scope: (c.querySelector('.rd-scope') || {}).textContent || '',
+      take: (c.querySelector('.rd-take') || {}).textContent || '',
+      src: Array.from((c.querySelector('.rd-src') || c).childNodes)
+             .filter(n => n.nodeType === 3).map(n => n.nodeValue).join('').trim(),
+      href: (c.querySelector('.rd-link') || {}).href || '',
+      target: (c.querySelector('.rd-link') || { getAttribute: () => '' }).getAttribute('target') || '',
+      rel: (c.querySelector('.rd-link') || { getAttribute: () => '' }).getAttribute('rel') || '',
+      date: (c.querySelector('.rd-date') || {}).textContent || '',
+      text: (c.textContent || '').replace(/\\s+/g, ' ').trim()
+    }))"""
+    # the exact strings that shipped, and the only two that are arrays - a panel that re-flowed a
+    # sourced fact into its own prose fails here rather than reading nicely
+    A1 = ("On one night in January 2024, about 770,000 people in America had nowhere indoors to sleep. "
+          "That's 18 percent more than the year before. Nobody fixed it. They just counted it again.")
+    A5 = ("A full-time worker needs $33.63 an hour to afford a plain two-bedroom apartment without "
+          "falling behind. That's more than four times the federal minimum wage.")
+    A2 = ("More than a third of those 770,000 people were not even in a shelter. About 277,000 were "
+          "sleeping outside, in a car, or somewhere never built for a person.")
+
+    # 4.11 PACKET 2'S RULE, WHICH THIS SECTION LEARNED THE SAME WAY: no step here may RAISE. Every
+    # control below appears because the frame loop decided it should, so a build that regressed does
+    # not fail the click - the element is simply never visible, and a raised Locator timeout takes
+    # every ticket AFTER it down with the one that actually broke. The first probe of this section
+    # lost all eleven C020 assertions to one un-clickable "step back".
+    def tap(page, sel, ms=4000):
+        try:
+            page.locator(sel).click(timeout=ms)
+            return True
+        except Exception:
+            return False
+
+    def grab(page, sel):
+        """Press a download control and return what came down, or '' if nothing did."""
+        try:
+            with page.expect_download(timeout=15000) as d:
+                page.locator(sel).click(timeout=6000)
+            return io.open(d.value.path(), encoding="utf-8").read(), d.value.suggested_filename
+        except Exception as e:
+            return "", "<no download: %s>" % str(e).splitlines()[0][:60]
+
+    # ---- C014: the material is text now, on both legs and both paths --------------------------------
+    rd = fresh("C014")
+    seed(rd, {"phase": "out", "t": 0.15, "signed": True}, "1")
+    check(not rd.evaluate(shown, "#lbRead"),
+          "C014: standing in the corridor, there is no panel - the reading is something a visitor "
+          "opens, not a sheet the museum leaves over the hall")
+    face_teepee(rd)
+    up = waits(rd, "() => { const b = document.querySelector('#lbLook'); return b && !b.hidden; }")
+    tap(rd, "#lbLook")
+    opened = waits(rd, "() => document.querySelector('#lbRead').classList.contains('show')", 6000)
+    cards = rd.evaluate(CARDS_JS) if opened else []
+    check(up and opened and [c["t"] for c in cards] == ["A1", "A2", "A3"],
+          "C014: opening the teepee opens its three claims as DOM, in the order the file holds them "
+          "(%s)" % ([c["t"] for c in cards] or "never opened"))
+
+    # THE ASSERTION THE OLD BUILD CANNOT PASS AT ANY TIMING. Before this packet the 3D museum drew
+    # every fact with fillText into a CanvasTexture: the words existed on a GPU surface and nowhere in
+    # the document. This is the reading surface having moved, not a panel having been added.
+    # A2 is a plain string and lands as one text node. A1 is 4.10's bullet array, and a <ul> has no
+    # whitespace between its items, so textContent reads "...sleep.That's 18 percent..." - it is
+    # rejoined from the <li>s exactly the way 4.10's matched half does, which is also the guard that
+    # this panel did not re-flow a sourced fact into prose of its own on the way into the DOM.
+    in_dom = rd.evaluate("(s) => (document.querySelector('#lbRead').textContent || '')"
+                         ".replace(/\\s+/g, ' ').indexOf(s) >= 0", A2)
+    rejoin = rd.evaluate("""() => Array.from(document.querySelectorAll('#lbRead .rd-card .fl-bul'))
+        .map(u => Array.from(u.children).map(li => li.textContent.replace(/\\s+/g, ' ').trim()).join(' '))""")
+    check(in_dom and A1 in rejoin,
+          "C014: and the sourced bodies are IN the document, character for character - the facts used "
+          "to exist only as fillText into a texture (%d bullet lists)" % len(rejoin))
+
+    # SELECT. Not "user-select is not none" (a guess about why it would fail) - the platform's own
+    # selection is run over the card and read back, which is the thing a visitor does and the thing a
+    # picture of a paragraph cannot do however it is styled.
+    sel = rd.evaluate("""() => {
+      const c = document.querySelector('#lbRead .rd-card');
+      const s = window.getSelection(); s.removeAllRanges(); s.selectAllChildren(c);
+      const got = String(s).replace(/\\s+/g, ' ').trim(); s.removeAllRanges(); return got;
+    }""")
+    check(A1 in sel and len(sel) > len(A1),
+          "C014: the text selects - the platform put the whole claim, its scope and its citation on "
+          "the clipboard's side of the line (%d chars)" % len(sel))
+
+    # OPEN ITS SOURCE. A real anchor with a real href, opened in a new tab so the walk is not lost -
+    # and the host has to be one the citation beside it already names, which is what stops a link
+    # field from quietly becoming a second, unreviewed citation.
+    from urllib.parse import urlparse
+    bad = [c["t"] for c in cards
+           if not c["href"].startswith("https://")
+           or urlparse(c["href"]).netloc.replace("www.", "") not in c["src"]
+           or c["target"] != "_blank" or "noopener" not in c["rel"]]
+    check(cards and not bad,
+          "C014: every claim links to the source its own citation names, in a new tab, with noopener "
+          "(bad: %s)" % (bad or "none"))
+    check(all(c["scope"].strip() and c["take"].strip() and c["date"].strip() for c in cards),
+          "C014: and each one carries its claim scope, its takeaway and its publication date")
+    # the scope is the field that stops a national number reading as a local one, so it is asserted
+    # on the pair that exists to be told apart rather than on "a string is present"
+    scopes = {c["t"]: c["scope"] for c in cards}
+    check("United States" in scopes.get("A1", "") and "Clark County" in scopes.get("A3", ""),
+          "C014: the national count and the count outside this window say which is which (%s)"
+          % [scopes.get("A1", "")[:28], scopes.get("A3", "")[:28]])
+    # NO NUMBER IS PARAPHRASED INTO A TAKEAWAY. The one way a takeaway field can do harm on a channel
+    # whose thesis is "numbers exactly as written" is by restating one, so no figure may appear in one.
+    numeric = [c["t"] for c in cards if re.search(r"\d", c["take"])]
+    check(not numeric, "C014: and no takeaway restates a figure - the numbers stay in the body where "
+                       "they were reviewed (%s)" % (numeric or "none"))
+
+    # RESUME AT THE SAME EXHIBIT. The walk's position alone puts a visitor back in the corridor near
+    # the right alcove, which is a place, not a page; this reloads and requires the museum to come
+    # back to what was OPEN.
+    rd.reload(wait_until="load")
+    settle(rd)
+    back_cards = rd.evaluate(CARDS_JS)
+    check(rd.evaluate(shown, "#lbRead") and [c["t"] for c in back_cards] == ["A1", "A2", "A3"]
+          and rd.evaluate("() => window.__lbState().reading") == "teepee"
+          and abs(rd.evaluate("() => window.__lbState().t") - 0.15) < 1e-6,
+          "C014: a reload comes back to the same exhibit, still open, still on its own material (%s)"
+          % ([c["t"] for c in back_cards] or "panel gone"))
+    # the matched half: stepping back is not the same as leaving mid-read, and a visitor who closed
+    # the panel is not handed it again next time. Without this, "resume" is a panel that never shuts.
+    tap(rd, "#lbReadClose")
+    closed = waits(rd, "() => !document.querySelector('#lbRead').classList.contains('show')", 6000)
+    check(closed and rd.evaluate("() => window.__lbState().reading") is None,
+          "C014: stepping back clears it, so the resume is a record of being interrupted rather than "
+          "a panel that cannot be shut")
+    rd.reload(wait_until="load")
+    settle(rd)
+    check(not rd.evaluate(shown, "#lbRead"),
+          "C014: and the next visit opens on the hall, not on the panel that was already dismissed")
+
+    # THE RETURN LEG, which is where the eight things a visitor might actually need to act on hang.
+    # The glass case is outbound furniture; the resources are not, and leaving them as canvas text
+    # would have fixed reading for the half of this channel that is only interesting.
+    seed(rd, {"phase": "back", "t": 0.65, "signed": True, "shrinkStartedAt": 1}, "1")
+    face_teepee(rd)                                   # the mason jar is side +1 too - the same turn
+    upb = waits(rd, "() => { const b = document.querySelector('#lbLook'); return b && !b.hidden; }")
+    if upb:
+        tap(rd, "#lbLook")
+    resb = waits(rd, "() => document.querySelector('#lbRead').classList.contains('show')", 6000)
+    rcards = rd.evaluate(CARDS_JS) if resb else []
+    check(upb and resb and [c["t"] for c in rcards] == ["B6", "B7"],
+          "C014: on the way back the same control opens the RESOURCES for that exhibit, as text with "
+          "live links (%s)" % ([c["t"] for c in rcards] or "never opened"))
+    check(any("Southern Nevada" in c["scope"] for c in rcards)
+          and all("no dated edition" in c["date"] for c in rcards),
+          "C014: and their scope says which of them are Southern Nevada only, which is the difference "
+          "between a phone number and the wrong phone number (%s)" % [c["scope"][:30] for c in rcards])
+    rd.close()
+
+    # ONE PROJECTION, TWO PATHS. The flat gallery renders the identical markup from the identical
+    # function, so a claim that is linked and scoped in the museum cannot be a bare paragraph in the
+    # fallback - which is what two hand-written renderers drift into.
+    fl = b.new_page(viewport={"width": 900, "height": 1000})
+    fl.on("pageerror", lambda e: lwerrs.append("C014-flat: %s" % e))
+    fl.add_init_script("""(() => { const g = HTMLCanvasElement.prototype.getContext;
+      HTMLCanvasElement.prototype.getContext = function (t, ...a) {
+        return /webgl/i.test(t) ? null : g.call(this, t, ...a); }; })()""")
+    fl.goto(BASE + "/play/lilboyfriend/?mode=live", wait_until="load")
+    fl.wait_for_selector("#lbFlat #flNext", timeout=8000)
+    fl.click("#flNext"); fl.wait_for_selector("#flSkip", timeout=6000)
+    fl.click("#flSkip"); fl.wait_for_selector("#flZoom", timeout=6000)
+    flat_cards = fl.evaluate("""() => Array.from(document.querySelectorAll('#lbFlat .rd-card')).map(c => ({
+      t: (c.querySelector('.rd-t') || {}).textContent || '',
+      href: (c.querySelector('.rd-link') || {}).href || '',
+      take: (c.querySelector('.rd-take') || {}).textContent || ''
+    }))""")
+    check([c["t"] for c in flat_cards] == ["A1", "A2", "A3"]
+          and all(c["href"].startswith("https://") and c["take"].strip() for c in flat_cards),
+          "C014: the flat gallery renders the same cards from the same function - the two paths cannot "
+          "tell a visitor different things about a source (%s)" % [c["t"] for c in flat_cards])
+    fl.close()
+
+    # ---- C020: the case file, and whether it is worth having ---------------------------------------
+    # Reached from a SAVE rather than by walking: "without another full walk" is the acceptance, and a
+    # gate that walks the whole museum to test it has quietly asserted the opposite.
+    cf = b.new_page(viewport={"width": 1280, "height": 900}, accept_downloads=True)
+    cf.on("pageerror", lambda e: lwerrs.append("C020: %s" % e))
+    cf.goto(BASE + "/play/lilboyfriend/", wait_until="load")
+    cf.wait_for_timeout(2500)
+    cf.evaluate(SEED_JS, [{"phase": "done", "t": 0, "signed": True, "shrinkStartedAt": 1,
+                           "read": ["teepee", "car", "shoebox"]}, "1", KEY2, TKEY])
+    cf.reload(wait_until="load")
+    settle(cf)
+    check(cf.evaluate(shown, "#epiPanel") and not cf.evaluate("() => document.querySelector('#caseFile3d').hidden"),
+          "C020: a visitor who finished is at the epilogue with the file offered there, one press away")
+    before = cf.evaluate("() => window.__lbState()")
+    body, fname = grab(cf, "#caseFile3d")
+    after = cf.evaluate("() => window.__lbState()")
+    check(fname.endswith(".md") and len(body) > 4000,
+          "C020: pressing it produces a real file (%s, %d bytes)" % (fname, len(body)))
+    check(before == after,
+          "C020: and nothing about the walk changed to get it - no second walk, no state spent "
+          "(phase %s, t %s)" % (after["phase"], after["t"]))
+
+    # THE SIX TRANSFORMATIONS, with the arithmetic shown and off 4.4's own curve - 240 down to 48 is
+    # sqftAt(0) and sqftAt(6), and 192 is LOST. A file that named the six rooms without the numbers
+    # would be a contents page.
+    labels = ["THE TEEPEE", "THE CAR", "THE SHOEBOX", "THE STORAGE UNIT", "THE MASON JAR", "THE VAN"]
+    check(all(l in body for l in labels) and "240 sq ft to" in body and "to 48 sq ft" in body
+          and "192 square feet" in body and "$1,450" in body,
+          "C020: the six transformations are in it with the square feet and the rent that did not move")
+    # ...and which of them this visitor actually opened, so the file is a record of THIS walk
+    check(body.count("[opened]") == 3 and body.count("[not opened]") == 3,
+          "C020: marked with the three this walk opened and the three it did not (%d / %d)"
+          % (body.count("[opened]"), body.count("[not opened]")))
+
+    # THE USEFUL OBJECT, which is the half a souvenir fails. All eighteen claims and all eight
+    # resources, each with a link, a scope and a date - and the phone numbers, unaltered.
+    ids = ["A%d" % i for i in range(1, 19)] + ["B%d" % i for i in range(1, 9)]
+    missing = [i for i in ids if ("[%s]" % i) not in body]
+    check(not missing and body.count("    Link: ") == 26 and body.count("    Scope: ") == 26,
+          "C020: every one of the eighteen claims and eight resources is in it with its link and its "
+          "scope (missing %s, %d links)" % (missing or "none", body.count("    Link: ")))
+    check("1-866-535-5654" in body and "702-386-1070" in body and "1-800-799-7233" in body
+          and "Southern Nevada only" in body,
+          "C020: the numbers a person could dial today are in it, with the line that says which ones "
+          "are local - that is the difference between a useful object and a receipt")
+    # NOT A SUMMARY. The bodies go in whole, which is the same guard 4.10 put on the bullet rewrite.
+    check(A1 in body and A5 in body,
+          "C020: and the sourced claims are reproduced word for word, not summarised into something "
+          "shorter and wrong")
+
+    # THE BROADCAST CONTRIBUTION: an episode-specific prompt, not a generic 'tell us what you think'.
+    check("Living Small" in body and "recognise" in body and "LB-2-" in body,
+          "C020: it closes with a question about THIS episode and a reference that ties an answer back "
+          "to this walk")
+    check("sent anywhere" in body,
+          "C020: and it says plainly that making it sent nothing anywhere - C008 established there is "
+          "no send path, and the file must not imply one")
+    cf.close()
+
+    # the flat path's copy of the same button, and the same builder behind it: two epilogues, one file.
+    fc = b.new_page(viewport={"width": 900, "height": 1000}, accept_downloads=True)
+    fc.on("pageerror", lambda e: lwerrs.append("C020-flat: %s" % e))
+    fc.add_init_script("""(() => { const g = HTMLCanvasElement.prototype.getContext;
+      HTMLCanvasElement.prototype.getContext = function (t, ...a) {
+        return /webgl/i.test(t) ? null : g.call(this, t, ...a); }; })()""")
+    fc.goto(BASE + "/play/lilboyfriend/", wait_until="load")
+    fc.wait_for_selector("#lbFlat", timeout=8000)
+    fc.evaluate(SEED_JS, [{"phase": "done", "t": 0, "signed": True, "shrinkStartedAt": 1,
+                           "read": ["teepee", "car", "shoebox"]}, "1", KEY2, TKEY])
+    fc.reload(wait_until="load")
+    try:
+        fc.wait_for_selector("#flCase", timeout=8000)
+    except Exception:
+        pass
+    body2, _ = grab(fc, "#flCase")
+    check(body2 and body2 == body,
+          "C020: the fallback's epilogue hands over the identical file - one builder, two endings "
+          "(%d vs %d bytes)" % (len(body2), len(body)))
+    fc.close()
 
     lwclean = [e for e in lwerrs if "favicon" not in e and "jsdelivr" not in e.lower()
                and "lilbf-van-cozy" not in e and "lilbf-van-horror" not in e and "lilbf-car-cozy" not in e]

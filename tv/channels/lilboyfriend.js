@@ -97,71 +97,146 @@ export default {
     }
     if (glass) { ctx.observe(new ResizeObserver(fitViewport), glass); fitViewport(); }
 
-    // ---- data: sourced facts (Part A/C) and housing-help resources (Part B), used exactly as written in
-    // LilBF Museum Housing Facts 0901.md. Numbers are never paraphrased.
+    /* ---- data: sourced facts (Part A/C) and housing-help resources (Part B), used exactly as written in
+       LilBF Museum Housing Facts 0901.md. Numbers are never paraphrased.
+
+       C014 adds four fields to every entry in both sets and re-cuts NOTHING: `body` and `src` are the
+       reviewed strings, character for character, and the new fields sit beside them.
+
+         url    - the source, as a link a visitor can actually open. THE RULE IS MECHANICAL AND THE GATE
+                  ENFORCES IT: the host is one that already appears verbatim in this entry's own `src`,
+                  never a path invented to look more specific. Where `src` cites a bare host (A9's
+                  "(nahb.org)", A12's "thecoastnews.com", B1's "211.org") the link is that host's root,
+                  which is a weaker link and an honest one - a fabricated article path is a fabricated
+                  citation, and this file's whole thesis is that it does not have any.
+         date   - the publication date as `src` states it. The eight resources have no edition, and say
+                  so in the field rather than carrying an empty one: a standing hotline is not stale.
+         scope  - who, where and when the claim covers. This is the field that stops a national number
+                  reading as a local one and a 2024 count reading as today's, which is the whole reason
+                  A3 and A6 exist beside A1 and A5.
+         take   - one line of what the visitor is meant to carry away. Deliberately carries NO figure:
+                  a takeaway that restates a number is a paraphrase of a number, which the top of this
+                  file forbids. The numbers stay in `body`, where they were reviewed. */
     const FACTS = {
       teepee: [
         { t: "A1", body: ["On one night in January 2024, about 770,000 people in America had nowhere indoors to sleep.",
                           "That's 18 percent more than the year before.",
                           "Nobody fixed it. They just counted it again."],
-          src: "HUD, 2024 Annual Homelessness Assessment Report, Dec. 2024. archives.hud.gov/news/2024/pr24-327.cfm" },
+          src: "HUD, 2024 Annual Homelessness Assessment Report, Dec. 2024. archives.hud.gov/news/2024/pr24-327.cfm",
+          url: "https://archives.hud.gov/news/2024/pr24-327.cfm", date: "December 2024",
+          scope: "United States, a single night in January 2024", take: "The count went up. The response did not." },
         { t: "A2", body: "More than a third of those 770,000 people were not even in a shelter. About 277,000 were sleeping outside, in a car, or somewhere never built for a person.",
-          src: "HUD AHAR 2024, via National Alliance to End Homelessness. endhomelessness.org/media/news-releases/hud-releases-2024-annual-homelessness-assessment-report" },
+          src: "HUD AHAR 2024, via National Alliance to End Homelessness. endhomelessness.org/media/news-releases/hud-releases-2024-annual-homelessness-assessment-report",
+          url: "https://endhomelessness.org/media/news-releases/hud-releases-2024-annual-homelessness-assessment-report", date: "December 2024",
+          scope: "United States, the unsheltered share of that same January 2024 night", take: "Shelter is not what most of that number got." },
         { t: "A3", body: "This city counted 8,859 homeless people in January 2026, twelve percent more than last time. Most of them, 5,017 people, had no shelter at all. You are standing near where some of them are.",
-          src: "Southern Nevada Continuum of Care PIT Count, Jan. 2026. lasvegassun.com/news/2026/jul/09/point-in-time-count-reveals-12-rise-in-clark-county" }
+          src: "Southern Nevada Continuum of Care PIT Count, Jan. 2026. lasvegassun.com/news/2026/jul/09/point-in-time-count-reveals-12-rise-in-clark-county",
+          url: "https://lasvegassun.com/news/2026/jul/09/point-in-time-count-reveals-12-rise-in-clark-county", date: "July 9, 2026",
+          scope: "Clark County, Nevada, counted in January 2026", take: "This one is local. It is the street outside." }
       ],
       shoebox: [
         { t: "A4", body: "Half of America's renters spent more than 30 percent of their income on rent in 2023. More than a quarter spent over half of everything they made just to keep a roof.",
-          src: "Harvard Joint Center for Housing Studies, State of the Nation's Housing 2025. habitat.org/about/advocacy/housing-report-2025" },
+          src: "Harvard Joint Center for Housing Studies, State of the Nation's Housing 2025. habitat.org/about/advocacy/housing-report-2025",
+          url: "https://habitat.org/about/advocacy/housing-report-2025", date: "2025 edition",
+          scope: "United States renter households, 2023 data", take: "Paying too much for rent is the ordinary case, not the edge one." },
         { t: "A5", body: "A full-time worker needs $33.63 an hour to afford a plain two-bedroom apartment without falling behind. That's more than four times the federal minimum wage.",
-          src: "National Low Income Housing Coalition, Out of Reach 2025. nlihc.org/resource/now-available-out-reach-2025-high-cost-housing" },
+          src: "National Low Income Housing Coalition, Out of Reach 2025. nlihc.org/resource/now-available-out-reach-2025-high-cost-housing",
+          url: "https://nlihc.org/resource/now-available-out-reach-2025-high-cost-housing", date: "2025 edition",
+          scope: "United States, the wage a two-bedroom rental takes", take: "Full-time work and a two-bedroom stopped being the same thing." },
         { t: "A6", body: "Renting a two-bedroom here takes $33.65 an hour. The average renter in this city earns $22.05 an hour. The math was never going to work out for him either.",
-          src: "NLIHC, Out of Reach 2025, Nevada data. nlihc.org/sites/default/files/oor/2025_OOR-Nevada.pdf" }
+          src: "NLIHC, Out of Reach 2025, Nevada data. nlihc.org/sites/default/files/oor/2025_OOR-Nevada.pdf",
+          url: "https://nlihc.org/sites/default/files/oor/2025_OOR-Nevada.pdf", date: "2025 edition",
+          scope: "Nevada, the two-bedroom wage against what renters here actually earn", take: "The same gap as the national one, measured on this street." }
       ],
       masonjar: [
         { t: "A7", body: "Landlords in this city filed an eviction case against 14 of every 100 renter households in 2025. That's almost double the rate researchers track nationally.",
-          src: "Eviction Lab, Princeton University, via Las Vegas Review-Journal. reviewjournal.com/business/housing/eviction-notices-drop-in-las-vegas-but-rates-still-high-for-metro-area-report-says" },
+          src: "Eviction Lab, Princeton University, via Las Vegas Review-Journal. reviewjournal.com/business/housing/eviction-notices-drop-in-las-vegas-but-rates-still-high-for-metro-area-report-says",
+          url: "https://reviewjournal.com/business/housing/eviction-notices-drop-in-las-vegas-but-rates-still-high-for-metro-area-report-says", date: "2025 filings",
+          scope: "Clark County, Nevada renter households", take: "Filing here is routine in a way it is not elsewhere." },
         { t: "A8", body: "For every 100 of the poorest renter households in America, only 35 can find a home they can afford. In Nevada, it's 17. The gap is not an accident, it's arithmetic.",
-          src: "NLIHC, The Gap: A Shortage of Affordable Homes, 2025. nlihc.org/news/nlihc-releases-gap-2025-shortage-affordable-homes" },
+          src: "NLIHC, The Gap: A Shortage of Affordable Homes, 2025. nlihc.org/news/nlihc-releases-gap-2025-shortage-affordable-homes",
+          url: "https://nlihc.org/news/nlihc-releases-gap-2025-shortage-affordable-homes", date: "2025 edition",
+          scope: "United States and Nevada, extremely low-income renter households", take: "There are not enough homes at the bottom for the people at the bottom." },
         { t: "A9", body: "The median home in America hit $412,500 in 2024, 60 percent more than six years earlier. By July 2026 it was $434,100. Nobody's paycheck grew 60 percent.",
-          src: "Harvard JCHS, State of the Nation's Housing 2025 (nahb.org); NAR Existing-Home Sales, July 2026." }
+          src: "Harvard JCHS, State of the Nation's Housing 2025 (nahb.org); NAR Existing-Home Sales, July 2026.",
+          url: "https://nahb.org", date: "2025 report; NAR series to July 2026",
+          scope: "United States, the median existing-home sale price", take: "The price ran away from the wage and never came back." }
       ],
       car: [
         { t: "A10", body: "California cities have been racing to ban it outright. As of January 2025, forty two California cities and two counties had passed some version of a public camping ban since the Supreme Court's Grants Pass ruling, and the newer ones increasingly name the car itself, not just a tent.",
-          src: "National Homelessness Law Center, via Stateline, Many more cities ban sleeping outside despite a lack of shelter space, Jan. 27, 2025. stateline.org/2025/01/27/many-more-cities-ban-sleeping-outside-despite-a-lack-of-shelter-space" },
+          src: "National Homelessness Law Center, via Stateline, Many more cities ban sleeping outside despite a lack of shelter space, Jan. 27, 2025. stateline.org/2025/01/27/many-more-cities-ban-sleeping-outside-despite-a-lack-of-shelter-space",
+          url: "https://stateline.org/2025/01/27/many-more-cities-ban-sleeping-outside-despite-a-lack-of-shelter-space", date: "January 27, 2025",
+          scope: "California cities and counties, bans passed since the Grants Pass ruling", take: "The law moved faster than the housing did." },
         { t: "A11", body: "San Joaquin County's version goes further than a tent ban. It bans sleeping in a parked car outright, and anyone living outside is required to move at least 300 feet every hour.",
-          src: "NPR, 100-plus cities in the U.S. banned homeless camping this year. But will it work?, Dec. 26, 2024. npr.org/2024/12/26/nx-s1-5199103/homeless-camping-bans-grants-pass" },
+          src: "NPR, 100-plus cities in the U.S. banned homeless camping this year. But will it work?, Dec. 26, 2024. npr.org/2024/12/26/nx-s1-5199103/homeless-camping-bans-grants-pass",
+          url: "https://npr.org/2024/12/26/nx-s1-5199103/homeless-camping-bans-grants-pass", date: "December 26, 2024",
+          scope: "San Joaquin County, California", take: "A parked car became somewhere you can be moved on from." },
         { t: "A12", body: "Carlsbad, California counted 60 homeless residents in 2023. By 2024 it was 112, nearly double, in the same stretch the city passed its own ban on camping in a car.",
-          src: "San Diego Regional Task Force on Homelessness, Point-in-Time Count, May 22, 2024, via The Coast News. thecoastnews.com" }
+          src: "San Diego Regional Task Force on Homelessness, Point-in-Time Count, May 22, 2024, via The Coast News. thecoastnews.com",
+          url: "https://thecoastnews.com", date: "May 22, 2024",
+          scope: "Carlsbad, California, counted 2023 against 2024", take: "Banning it and counting more of it happened in the same year." }
       ],
       storage: [
         { t: "A13", body: "A South Salt Lake, Utah storage facility found families bolted inside sheds fitted out with beds, a microwave and a working air conditioner. One held a family of three, including a three month old. Some had been living there six months before anyone found them.",
-          src: "KSL.com, Homeless families found living in storage units, 2012. ksl.com/article/20169843" },
+          src: "KSL.com, Homeless families found living in storage units, 2012. ksl.com/article/20169843",
+          url: "https://ksl.com/article/20169843", date: "2012",
+          scope: "South Salt Lake, Utah, one storage facility", take: "It is not new, and it was found by accident." },
         { t: "A14", body: "It is illegal everywhere in the country under fire, sanitation and zoning code. A national survey of 2,000 US adults found one in five, 20 percent, had slept in a self storage unit anyway.",
-          src: "StorageUnits.com and Pollfish survey, via PRWeb, Survey Finds 1 in 5 Americans Have Slept in a Storage Unit, June 2025. prweb.com/releases/survey-finds-1-in-5-americans-have-slept-in-a-storage-unit-302499519.html" },
+          src: "StorageUnits.com and Pollfish survey, via PRWeb, Survey Finds 1 in 5 Americans Have Slept in a Storage Unit, June 2025. prweb.com/releases/survey-finds-1-in-5-americans-have-slept-in-a-storage-unit-302499519.html",
+          url: "https://prweb.com/releases/survey-finds-1-in-5-americans-have-slept-in-a-storage-unit-302499519.html", date: "June 2025",
+          scope: "United States, a survey panel of 2,000 adults", take: "Illegal everywhere, and common anyway." },
         { t: "A15", body: "Self storage is on track to be a fifty billion dollar industry by 2029, and already runs more than 52,000 facilities covering 2.1 billion square feet. It grows fastest in a downturn: storage companies posted a 5 percent return the same years family homelessness rose 30 percent.",
-          src: "Slate, Self-storage units serve as a long-term solution when finding housing or moving isn't an option, Aug. 2024, citing Mordor Intelligence, the US Census Bureau and HUD. slate.com/business/2024/08/self-storage-units-industry-growth-housing-insecurity-evictions.html" }
+          src: "Slate, Self-storage units serve as a long-term solution when finding housing or moving isn't an option, Aug. 2024, citing Mordor Intelligence, the US Census Bureau and HUD. slate.com/business/2024/08/self-storage-units-industry-growth-housing-insecurity-evictions.html",
+          url: "https://slate.com/business/2024/08/self-storage-units-industry-growth-housing-insecurity-evictions.html", date: "August 2024",
+          scope: "United States self-storage industry, against family homelessness over the same years", take: "Somebody is doing well out of the shortage." }
       ],
       van: [
         { t: "A16", body: "The number of people living full time in a van in the US grew 63 percent in two years, from about 1.9 million in 2020 to 3.1 million in 2022.",
-          src: "Statista, via Yahoo Finance, Paying for van life: Costs and statistics, 2025. finance.yahoo.com/news/paying-van-life-202933082.html" },
+          src: "Statista, via Yahoo Finance, Paying for van life: Costs and statistics, 2025. finance.yahoo.com/news/paying-van-life-202933082.html",
+          url: "https://finance.yahoo.com/news/paying-van-life-202933082.html", date: "2025",
+          scope: "United States, full-time van residents, 2020 against 2022", take: "The fastest-growing kind of home has no address." },
         { t: "A17", body: ["It is marketed as freedom. People are selling million dollar homes to live in one.",
                            "The median US home costs $434,100.",
                            "A van is not cheap. It is just cheaper."],
-          src: "Moneywise, Wealthy people are selling their million dollar homes to live in a van all year, 2025; NAR Existing-Home Sales, July 2026. moneywise.com/life/lifestyle/vanlife-wealthy-homeowners-hidden-costs" },
+          src: "Moneywise, Wealthy people are selling their million dollar homes to live in a van all year, 2025; NAR Existing-Home Sales, July 2026. moneywise.com/life/lifestyle/vanlife-wealthy-homeowners-hidden-costs",
+          url: "https://moneywise.com/life/lifestyle/vanlife-wealthy-homeowners-hidden-costs", date: "2025; NAR series to July 2026",
+          scope: "United States, van life as marketed against the median home price", take: "Cheaper is not the same word as affordable." },
         { t: "A18", body: "More than 100 US cities passed a new homeless camping ban in a single year, and enforcement keeps reaching further, past the tent and into anyone parked overnight.",
-          src: "NPR, 100-plus cities in the U.S. banned homeless camping this year. But will it work?, Dec. 26, 2024. npr.org/2024/12/26/nx-s1-5199103/homeless-camping-bans-grants-pass" }
+          src: "NPR, 100-plus cities in the U.S. banned homeless camping this year. But will it work?, Dec. 26, 2024. npr.org/2024/12/26/nx-s1-5199103/homeless-camping-bans-grants-pass",
+          url: "https://npr.org/2024/12/26/nx-s1-5199103/homeless-camping-bans-grants-pass", date: "December 26, 2024",
+          scope: "United States, camping bans passed in a single year", take: "The ban keeps widening to cover wherever people actually are." }
       ]
     };
+    /* The resources carry the same four fields, and two of them read differently here on purpose. A
+       hotline has no edition, so `date` says that rather than sitting empty - "no dated edition" is a
+       fact about the source, an empty string is a gap in the file. And `scope` is the field that
+       matters most in this set: B4, B5 and B6 are Southern Nevada only, and a visitor in Ohio reading
+       a Clark County phone number as national help is the exact harm the field exists to stop. */
     const RES = {
-      B1: { body: "Call 211, anywhere in the country, for shelter, rent help, food, and utility assistance. Free and confidential. In Nevada: 1-866-535-5654 or text your zip code to 898-211.", src: "211.org · nevada211.org" },
-      B2: { body: "Free, HUD-approved housing counseling exists for renting, buying, or facing foreclosure. Look up an agency by zip code. No cost, no catch.", src: "consumerfinance.gov/find-a-housing-counselor · 855-411-2372" },
-      B3: { body: "If you are homeless or about to be, start with your local Continuum of Care, 211, or social services. Here is how the process actually works.", src: "National Alliance to End Homelessness · endhomelessness.org/how-to-get-help-experiencing-homelessness" },
-      B4: { body: "Behind on rent in Clark County? Emergency rental assistance and eviction prevention funds exist. Call and ask before the notice becomes a lockout.", src: "Clark County Social Service · 702-455-4270 · clarkcountynv.gov/residents/assistance_programs/housing-expense-assistance" },
-      B5: { body: "Homeless or about to be, in Southern Nevada? This is where the shelter system's front door actually is.", src: "HELP of Southern Nevada · 702-369-4357 · helpsonv.org/get-help" },
-      B6: { body: "Facing eviction in Southern Nevada? Free legal help exists, including a hotline and a weekly ask-a-lawyer clinic. Call before the court date, not after.", src: "Legal Aid Center of Southern Nevada · 702-386-1070 · lacsn.org/practice-areas/consumer-rights-project/tenant-rights" },
-      B7: { body: "Housing and abuse often trap people together. Free, confidential help is available 24 hours a day, every day.", src: "National Domestic Violence Hotline · 1-800-799-7233 · thehotline.org" },
-      B8: { body: "Behind on rent anywhere in the US? This federal tool points you to 211, HUD's housing map, and your local housing agency.", src: "CFPB Rent Help · consumerfinance.gov/renthelp" }
+      B1: { body: "Call 211, anywhere in the country, for shelter, rent help, food, and utility assistance. Free and confidential. In Nevada: 1-866-535-5654 or text your zip code to 898-211.", src: "211.org · nevada211.org",
+            url: "https://211.org", date: "Standing service, no dated edition",
+            scope: "United States, with a Nevada line", take: "One number, any state, no cost." },
+      B2: { body: "Free, HUD-approved housing counseling exists for renting, buying, or facing foreclosure. Look up an agency by zip code. No cost, no catch.", src: "consumerfinance.gov/find-a-housing-counselor · 855-411-2372",
+            url: "https://consumerfinance.gov/find-a-housing-counselor", date: "Standing directory, no dated edition",
+            scope: "United States, HUD-approved counselling agencies", take: "Free advice exists before you need a lawyer." },
+      B3: { body: "If you are homeless or about to be, start with your local Continuum of Care, 211, or social services. Here is how the process actually works.", src: "National Alliance to End Homelessness · endhomelessness.org/how-to-get-help-experiencing-homelessness",
+            url: "https://endhomelessness.org/how-to-get-help-experiencing-homelessness", date: "Standing guide, no dated edition",
+            scope: "United States, getting into the homelessness system", take: "There is a front door, and this is where it is." },
+      B4: { body: "Behind on rent in Clark County? Emergency rental assistance and eviction prevention funds exist. Call and ask before the notice becomes a lockout.", src: "Clark County Social Service · 702-455-4270 · clarkcountynv.gov/residents/assistance_programs/housing-expense-assistance",
+            url: "https://clarkcountynv.gov/residents/assistance_programs/housing-expense-assistance", date: "Standing programme, no dated edition",
+            scope: "Clark County, Nevada renters only", take: "Ask before the notice becomes a lockout." },
+      B5: { body: "Homeless or about to be, in Southern Nevada? This is where the shelter system's front door actually is.", src: "HELP of Southern Nevada · 702-369-4357 · helpsonv.org/get-help",
+            url: "https://helpsonv.org/get-help", date: "Standing service, no dated edition",
+            scope: "Southern Nevada only", take: "This is where the shelter system actually starts." },
+      B6: { body: "Facing eviction in Southern Nevada? Free legal help exists, including a hotline and a weekly ask-a-lawyer clinic. Call before the court date, not after.", src: "Legal Aid Center of Southern Nevada · 702-386-1070 · lacsn.org/practice-areas/consumer-rights-project/tenant-rights",
+            url: "https://lacsn.org/practice-areas/consumer-rights-project/tenant-rights", date: "Standing service, no dated edition",
+            scope: "Southern Nevada tenants facing eviction", take: "Free legal help, before the court date." },
+      B7: { body: "Housing and abuse often trap people together. Free, confidential help is available 24 hours a day, every day.", src: "National Domestic Violence Hotline · 1-800-799-7233 · thehotline.org",
+            url: "https://thehotline.org", date: "Standing service, no dated edition",
+            scope: "United States, every hour of every day", take: "Housing and safety are often the same problem." },
+      B8: { body: "Behind on rent anywhere in the US? This federal tool points you to 211, HUD's housing map, and your local housing agency.", src: "CFPB Rent Help · consumerfinance.gov/renthelp",
+            url: "https://consumerfinance.gov/renthelp", date: "Standing directory, no dated edition",
+            scope: "United States renters behind on rent", take: "One federal page that points at the local ones." }
     };
     const RESOURCE_MAP = { teepee: ["B1", "B3", "B5"], shoebox: ["B2", "B4", "B8"], masonjar: ["B6", "B7"], car: ["B1", "B5", "B8"], storage: ["B2", "B4", "B6"], van: ["B3", "B7"] };
 
@@ -258,6 +333,11 @@ export default {
            the length is bounded by the six that exist rather than by whatever a hand edit typed. The
            order is EXHIBITS' own, so the strip's marks never depend on the order they were read in. */
         read: Array.isArray(saved.read) ? EXHIBITS.filter(e => saved.read.indexOf(e.id) >= 0).map(e => e.id) : [],
+        /* C014: which exhibit the visitor was reading when they left. This is what "resume at the same
+           exhibit" is, said in the save rather than inferred: `t` alone puts them back in the corridor
+           near the right alcove, which is a position, not a page. Allowlisted against EXHIBITS for the
+           same reason `read` and `phase` are - it selects an object this file then renders. */
+        reading: (EXHIBITS.find(e => e.id === saved.reading) || {}).id || null,
       };
       if (phase !== "out") {
         const at = Number(saved.shrinkStartedAt);
@@ -426,11 +506,155 @@ export default {
       ST.read = ST.read.concat(id);
       saveState();
     }
+
+    /* ---- C014: the reading surface, shared by both render paths ------------------------------------
+       An exhibit's material used to be TEXTURE TEXT: makePlacardTexture() drew the whole body and the
+       whole citation into a canvas and hung it on a wall. That surface cannot be selected, cannot be
+       copied, cannot be handed to a screen reader, and its URLs are a picture of a URL. Every one of
+       those is a thing the ticket asks for, so the reading moves into the DOM and the placard keeps
+       what a placard is for - which fact this is, what it covers, and the line to walk away with.
+
+       ONE PROJECTION, TWO PATHS. readCards() builds the markup the 3D reading panel shows and the flat
+       gallery's step shows, off the same objects, so "the source opens" cannot be true on one path and
+       false on the other. The scroll chapters are deliberately NOT re-cut: 4.2's sections are asserted
+       at exactly one stage tall on an 800px stage AND a 566px one, four extra lines per card is about
+       35px x 3 cards, and re-fitting six chapters is 4.2 built twice for a link that the museum and
+       the flat gallery both already give. Filed in the backlog, not smuggled in here.
+
+       The link carries rel="noopener noreferrer" and opens in a new tab, which is the only shape that
+       lets a visitor open a source WITHOUT losing the walk - "resume at the same exhibit" is cheapest
+       when nothing was left in the first place. ST.reading is the belt to that braces: it survives a
+       real reload too, which a target that replaced the page would need. */
+    const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    // the link's visible text is the host and path without the scheme - the same string `src` already
+    // prints, so the citation and the link read as one thing rather than two competing addresses
+    const linkLabel = u => u.replace(/^https?:\/\//, "");
+    function readCard(item) {
+      return '<div class="fl-card rd-card">'
+        + '<p class="rd-head"><span class="rd-t">' + esc(item.t) + '</span>'
+        + '<span class="rd-scope">' + esc(item.scope) + '</span></p>'
+        + bodyHTML(item.body)
+        + '<p class="rd-take">' + esc(item.take) + '</p>'
+        + '<span class="fl-src rd-src">' + esc(item.src)
+        + '<a class="rd-link" href="' + esc(item.url) + '" target="_blank" rel="noopener noreferrer">'
+        + esc(linkLabel(item.url)) + '</a>'
+        + '<span class="rd-date">' + esc(item.date) + '</span></span></div>';
+    }
+    // the facts on the way in, the resources on the way back - the same split the placards already make,
+    // named once here so the panel, the flat step and the case file cannot disagree about it
+    const factsOf = id => FACTS[id];
+    const resOf = id => RESOURCE_MAP[id].map(k => Object.assign({ t: k }, RES[k]));
+    const readItems = (id, returning) => (returning ? resOf(id) : factsOf(id));
+    const readCards = (id, returning) => readItems(id, returning).map(readCard).join("");
+
+    /* ---- C020: the case file the epilogue hands over -----------------------------------------------
+       The row's acceptance is that finishing the museum "creates a useful object and broadcast
+       contribution WITHOUT ANOTHER FULL WALK", so this is a button at the end and not a seventh
+       exhibit: everything in the file is already in this module, and the walk is what earned the right
+       to be standing at the epilogue holding it.
+
+       USEFUL OBJECT is the load-bearing half. A souvenir that says "you walked a museum" is a receipt;
+       what a person in this position can use is the eight resources with their phone numbers and their
+       SCOPE, the eighteen claims with their sources and dates, and the six transformations with the
+       arithmetic shown - so the file is all three, in a plain text/markdown blob that opens in
+       anything, needs no network and can be forwarded to somebody else. Nothing in it is a summary:
+       every body and every citation is the reviewed string, and the square feet come from sqftAt(),
+       4.4's own curve, rather than a second table that could drift off it.
+
+       BROADCAST CONTRIBUTION is the prompt at the foot, and it is a question rather than a form on
+       purpose - C008 established this site has no send path, and inventing one would be a new
+       capability through CHANGE-GATE rather than a P1 content row. The file carries its own reference
+       so a contribution can be matched to the walk that produced it.
+
+       Called from a click on both paths, never at boot: it reads RENT, BASE_SQFT and sqftAt, which are
+       `const`s declared further down this module. A function declaration hoists and a const does not,
+       which is exactly the TDZ that 4.3's applyMode() had to be moved for - a flat-path visitor whose
+       save resumes them AT the epilogue renders that step synchronously at mount. */
+    function caseFileText() {
+      const stamp = new Date().toISOString().slice(0, 10);
+      const n = (v) => v.toLocaleString("en-US");
+      const L = [];
+      L.push("MOM INC. - RESIDENTIAL COMPRESSION PROGRAM");
+      L.push("CASE FILE: LIVING SMALL");
+      L.push("Channel 2 - Lil Boyfriend - file LB-2-" + stamp.replace(/-/g, "") + "-" + ST.read.length + "of" + EXHIBITS.length);
+      L.push("");
+      L.push("THE SIX TRANSFORMATIONS");
+      L.push("Starting residence: " + n(BASE_SQFT) + " sq ft. Rent: $" + n(RENT) + " a month, unchanged throughout.");
+      L.push("");
+      EXHIBITS.forEach((ex, i) => {
+        const was = sqftAt(i), now = sqftAt(i + 1);
+        L.push("  " + (i + 1) + ". " + ex.label + " - " + n(was) + " sq ft to " + n(now) + " sq ft (-" + n(was - now) + ")"
+               + (ST.read.indexOf(ex.id) >= 0 ? "  [opened]" : "  [not opened]"));
+      });
+      L.push("");
+      L.push("  Removed across the six: " + n(LOST) + " square feet.");
+      L.push("  Rent charged for them: $" + n(RENT) + " a month, unchanged.");
+      L.push("");
+      L.push("WHAT THE FILE IS BUILT ON");
+      EXHIBITS.forEach(ex => {
+        L.push("");
+        L.push("## " + ex.label);
+        factsOf(ex.id).forEach(f => {
+          L.push("");
+          L.push("[" + f.t + "] " + (Array.isArray(f.body) ? f.body.join(" ") : f.body));
+          L.push("    Scope: " + f.scope);
+          L.push("    Takeaway: " + f.take);
+          L.push("    Source: " + f.src);
+          L.push("    Link: " + f.url + "  (" + f.date + ")");
+        });
+      });
+      L.push("");
+      L.push("IF YOU NEED HOUSING HELP NOW");
+      L.push("Read the scope line before you dial: three of these are Southern Nevada only.");
+      Object.keys(RES).forEach(k => {
+        const r = RES[k];
+        L.push("");
+        L.push("[" + k + "] " + r.body);
+        L.push("    Scope: " + r.scope);
+        L.push("    Takeaway: " + r.take);
+        L.push("    Source: " + r.src);
+        L.push("    Link: " + r.url + "  (" + r.date + ")");
+      });
+      L.push("");
+      L.push("WHAT THE BROADCAST WANTS BACK");
+      L.push("Living Small is an episode about a treatment nobody consented to. The programme");
+      L.push("measures rooms. It does not measure the people left in them, so that part has to");
+      L.push("come from outside the building.");
+      L.push("");
+      L.push("Answer one question in your own words and bring it to the channel:");
+      L.push("");
+      L.push("  Which of the six did you recognise, and what gave it away - the room,");
+      L.push("  the rent, or the person still living in it?");
+      L.push("");
+      L.push("Quote the file reference above so your answer can be matched to this walk.");
+      L.push("Nothing was sent anywhere when this file was made. It is yours, and it stays");
+      L.push("on your machine until you decide otherwise.");
+      L.push("");
+      L.push(CLOSING_LINE);
+      L.push("");
+      return L.join("\n");
+    }
+    /* The download itself. An object URL on a throwaway anchor is the whole mechanism - no library, no
+       server, no permission prompt - and the revoke is a PLAIN setTimeout rather than ctx.timeout for
+       the reason the photo queue's patience is: check_teardown compares the context's registration
+       tally between mounts for EQUALITY, and a tally that moves when somebody clicks a button is a
+       flaky gate, not a leak. The URL is revoked either way; the anchor is gone the same tick. */
+    function downloadCaseFile() {
+      const url = URL.createObjectURL(new Blob([caseFileText()], { type: "text/markdown;charset=utf-8" }));
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "mom-inc-case-file-living-small.md";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => { try { URL.revokeObjectURL(url); } catch (e) { /* already gone */ } }, 20000);
+    }
+
     // test-only readback for the save-migration fixture check (18.6) - the epilogue phase blocks every normal
     // saveState() path (walking is disabled there), so there is no other way to observe a migrated value
     // without resetting it. Reads ST, changes nothing. Removed in unmount(): it closes over this mount's ST,
     // and a reader that outlives the fragment would be answering about a museum that is no longer there.
-    window.__lbState = () => ({ phase: ST.phase, t: ST.t, signed: ST.signed, shrinkStartedAt: ST.shrinkStartedAt, mode: ST.mode, rp: shrinkProgress(), read: ST.read.slice(), taught: taught, mark: markAt(shrinkProgress()) });
+    window.__lbState = () => ({ phase: ST.phase, t: ST.t, signed: ST.signed, shrinkStartedAt: ST.shrinkStartedAt, mode: ST.mode, rp: shrinkProgress(), read: ST.read.slice(), taught: taught, mark: markAt(shrinkProgress()), reading: ST.reading });
     const reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     // ---- canvas-text sign textures, shared by both render paths' data but only consumed by the 3D path
@@ -1063,11 +1287,19 @@ export default {
           x.shadowColor = "transparent";
           const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; return t;
         }
-        // placard canvas: 800x900, big enough that body text lands >=14 CSS px on screen (mobile) / >=18px
-        // (desktop) at the 1.5-unit standing distance, source line >=10px - see the README's review-round
-        // section for the math. Placards no longer stack under the photo; they sit at eye height beside it.
-        function makePlacardTexture(id, body, source) {
-          return makeSignTexture({ w: 800, h: 900, title: id, body, source, fTitle: 44, fBody: 48, fSource: 32, lhTitle: 50, lhBody: 58, lhSource: 39, pad: 42 });
+        /* placard canvas: 800x900. C014 CHANGED WHAT GOES ON IT, and that is the "instead of" half of
+           the ticket rather than a styling choice. It used to carry the whole body and the whole
+           citation - a paragraph painted into a texture, with a picture of a URL underneath. Nobody
+           can select that, copy it, hand it to a screen reader or open it, which is the entire list of
+           things the row asks for. So the wall keeps what a wall label is for - which claim this is,
+           what it covers, and the one line to walk away with - and the words themselves are read in
+           #lbRead, where they are text.
+           The type gets bigger for free: three short fields on the same 800x900 canvas, so the
+           takeaway lands well above the 14 CSS px floor the original body text was sized to at the
+           1.5-unit standing distance. */
+        function makePlacardTexture(item) {
+          return makeSignTexture({ w: 800, h: 900, title: item.t, body: item.take, source: item.scope,
+                                   fTitle: 52, fBody: 62, fSource: 38, lhTitle: 60, lhBody: 74, lhSource: 46, pad: 46 });
         }
         function makePlateTexture(label) {
           const c = document.createElement("canvas"); c.width = 700; c.height = 150;
@@ -1135,7 +1367,7 @@ export default {
           const wallGroup = new THREE.Group(); scene.add(wallGroup);
           const placards = FACTS[ex.id].map((f, i) => {
             const placardZ = PHOTO_W / 2 + PLACARD_GAP + PLACARD_W / 2 + i * (PLACARD_W + PLACARD_GAP);
-            const m = new THREE.Mesh(new THREE.PlaneGeometry(PLACARD_W, PLACARD_H), new THREE.MeshBasicMaterial({ map: makePlacardTexture(f.t, f.body, f.src) }));
+            const m = new THREE.Mesh(new THREE.PlaneGeometry(PLACARD_W, PLACARD_H), new THREE.MeshBasicMaterial({ map: makePlacardTexture(f) }));
             m.position.set(-ex.side * 0.03, 0, placardZ); m.rotation.y = -ex.side * Math.PI / 2;
             wallGroup.add(m); return m;
           });
@@ -1297,9 +1529,8 @@ export default {
           if (typing()) return;
           if (e.key === "e" || e.key === "E" || e.key === "Enter") {
             if (doorOpen) { attemptInsert(); return; }
-            if (zoomOpen) { closeZoom(); return; }
-            const ne = nearestCaseExhibit(); if (ne) openZoom(ne);
-          } else if (e.key === "Escape" && zoomOpen) { closeZoom(); }
+            toggleRead();
+          } else if (e.key === "Escape" && (zoomOpen || readOpen)) { if (zoomOpen) closeZoom(); else closeRead(); }
         });
         ctx.on(walkBtn, "pointerdown", e => { fwdHeld = true; e.preventDefault(); });
         ["pointerup", "pointercancel", "pointerleave"].forEach(ev => ctx.on(walkBtn, ev, () => fwdHeld = false));
@@ -1321,7 +1552,7 @@ export default {
         ctx.on(lookZone, "pointerup", e => {
           const isTap = performance.now() - downT < 400 && Math.hypot(e.clientX - downX, e.clientY - downY) < 10;
           if (!isTap) return;
-          if (zoomOpen) closeZoom(); else { const ne = nearestCaseExhibit(); if (ne) openZoom(ne); }
+          toggleRead();
         });
 
         /* ---- C011: the contextual tutorial, and C017's readout, and C012's route strip. All three are
@@ -1425,27 +1656,92 @@ export default {
           zoomYawFrom = yaw; zoomYawTo = bearingTo(caseAnchorOf(e)); zoomTurning = true;
           markTaught();          // C011: opening one is what teaches, and it teaches once, for good
           markRead(e.cfg.id);    // C012: and it is the only thing that marks an exhibit read here
+          openRead(e);           // C014: and the material it holds is now read in the DOM, not off a texture
         }
-        function closeZoom() { zoomOpen = false; zoomTurning = false; }
+        function closeZoom() { zoomOpen = false; zoomTurning = false; closeRead(); }
+
+        /* ---- C014: the reading panel, on both legs of the walk.
+           THE RETURN LEG IS NOT AN AFTERTHOUGHT HERE. The glass case is outbound furniture - phase
+           "out" is the whole of nearestCaseExhibit()'s contract, and caseDecor is hidden the moment
+           the walls start closing - but the RESOURCES hang on the same walls coming back, and they
+           are the eight things in this channel a visitor might genuinely need to act on: phone
+           numbers, a legal aid clinic, a hotline. Leaving those as canvas text while the facts got a
+           DOM panel would fix reading for the half of the material that is only interesting.
+
+           So the panel is its own thing rather than a face of the zoom: the zoom opens it outbound
+           (the glass, the fisheye and the yaw swing are unchanged), and on the way back the same
+           LOOK CLOSER control opens it alone, against the photograph on the wall rather than a case
+           that is not there. Two anchors because there are two arrangements - the case is recessed
+           0.55 in from the wall plane, the photograph IS the wall plane - and the return leg's radius
+           is wider because the corridor it is measured across is narrowing under the visitor. */
+        const readPanel = byId("lbRead"), readTitle = byId("lbReadTitle"), readSub = byId("lbReadSub"),
+              readBody = byId("lbReadBody"), readClose = byId("lbReadClose");
+        let readExhibit = null, readOpen = false;
+        function wallAnchorOf(e, rp) { return { x: e.cfg.side * wallHalf(rp), z: zAt(e.cfg.p) }; }
+        function nearestWallExhibit(rp) {
+          for (const e of exhibitObjs) if (nearFacing(wallAnchorOf(e, rp), 2.4, 0.35)) return e;
+          return null;
+        }
+        // which exhibit is readable right now, on whichever leg is running. The entrance-facing
+        // "slotted" moment has nothing on the walls to read, so it answers null there too.
+        function nearestReadable(rp) {
+          if (ST.phase === "out") return nearestCaseExhibit();
+          if (ST.phase === "back") return nearestWallExhibit(rp);
+          return null;
+        }
+        function openRead(e) {
+          const returning = isReturning();
+          readExhibit = e; readOpen = true;
+          readTitle.textContent = e.cfg.label;
+          readSub.textContent = returning ? "Somewhere to call - check the scope before you dial"
+                                          : "The sourced record - open any source in a new tab";
+          readBody.innerHTML = readCards(e.cfg.id, returning);
+          readPanel.classList.add("show");
+          markRead(e.cfg.id);
+          // C014: "resume at the same exhibit". Written the moment it opens rather than on the way
+          // out, because the exit this has to survive is the one nobody announces - a closed tab, a
+          // channel change, a phone that went to sleep on the source that had just been opened.
+          if (ST.reading !== e.cfg.id) { ST.reading = e.cfg.id; saveState(); }
+          takeFocus(readClose);
+        }
+        function closeRead() {
+          const was = readOpen;
+          readOpen = false; readExhibit = null;
+          readPanel.classList.remove("show");
+          if (ST.reading !== null) { ST.reading = null; saveState(); }
+          if (was) giveFocus();
+        }
+        ctx.on(readClose, "click", () => { if (zoomOpen) closeZoom(); else closeRead(); });
+
         /* C019: the inspect control. Same action the look zone's tap and the E key already ran, given
            a name and a tab stop. Its state is written from the frame loop below, which is the only
            place that knows whether a case is in range - but through a one-key memo, because writing
            textContent and an ARIA attribute sixty times a second is the habit C016 is in this same
-           packet to break. */
+           packet to break. C014 adds one bit to that key: the panel can now be open with no zoom
+           behind it, which is what the return leg is. */
         const lookBtn = byId("lbLook");
         let lookKey = "";
         function syncLook(inRange) {
-          const key = (inRange ? "1" : "0") + (zoomOpen ? "1" : "0");
+          const open = zoomOpen || readOpen;
+          const key = (inRange ? "1" : "0") + (open ? "1" : "0");
           if (key === lookKey) return;
           lookKey = key;
-          lookBtn.hidden = !(inRange || zoomOpen);
-          lookBtn.textContent = zoomOpen ? "STEP BACK" : "LOOK CLOSER";
-          lookBtn.setAttribute("aria-pressed", zoomOpen ? "true" : "false");
+          lookBtn.hidden = !(inRange || open);
+          lookBtn.textContent = open ? "STEP BACK" : "LOOK CLOSER";
+          lookBtn.setAttribute("aria-pressed", open ? "true" : "false");
         }
-        ctx.on(lookBtn, "click", () => {
+        /* ONE inspect action, four ways to reach it: the button, the E/Enter key, a tap on the look
+           zone, and (outbound) the glass itself. They were three copies of the same three lines
+           before C014 needed a fourth branch in each, which is how a keyboard path and a touch path
+           quietly stop agreeing about what the return leg does. */
+        function toggleRead() {
           if (zoomOpen) { closeZoom(); return; }
-          const ne = nearestCaseExhibit(); if (ne) openZoom(ne);
-        });
+          if (readOpen) { closeRead(); return; }
+          const ne = nearestReadable(shrinkProgress());
+          if (!ne) return;
+          if (ST.phase === "out") openZoom(ne); else openRead(ne);
+        }
+        ctx.on(lookBtn, "click", toggleRead);
 
         /* ---- C019: focus, when a panel opens and when it closes.
            A panel that opens takes focus; closing hands it back to whatever had it. Without the first
@@ -1505,7 +1801,7 @@ export default {
               e.placards.forEach((m, i) => { m.visible = i < ids.length; });
               ids.forEach((id, i) => {
                 const r = RES[id];
-                e.placards[i].material.map = makePlacardTexture(id, r.body, r.src);
+                e.placards[i].material.map = makePlacardTexture(Object.assign({ t: id }, r));
                 e.placards[i].material.needsUpdate = true;
               });
             });
@@ -1552,13 +1848,21 @@ export default {
 
         // ---- epilogue
         let epiOpen = false;
-        function openEpi() { if (epiOpen) return; epiOpen = true; epiPanel.classList.add("show"); takeFocus(byId("walkAgain3d")); }
+        function openEpi() {
+          if (epiOpen) return;
+          epiOpen = true; closeRead(); epiPanel.classList.add("show");
+          // C020: the download is the first control in the panel and the first thing focus lands on.
+          // "walk again" throws the walk away; the file is the thing that survives it, so it is not
+          // the one a keyboard visitor has to Tab past the reset to reach.
+          takeFocus(byId("caseFile3d"));
+        }
         function closeEpi() { const was = epiOpen; epiOpen = false; epiPanel.classList.remove("show"); if (was) giveFocus(); }
+        ctx.on(byId("caseFile3d"), "click", downloadCaseFile);
         ctx.on(byId("walkAgain3d"), "click", () => {
           // C012: a new walk starts with nothing seen. The route strip is a record of THIS walk, not a
           // trophy cabinet - six gold marks over an untouched hall would say the opposite of what it
           // is for. `taught` is the one thing that survives, which is exactly why it is not in here.
-          ST.phase = "out"; ST.t = 0; ST.shrinkStartedAt = null; ST.read = []; saveState();
+          ST.phase = "out"; ST.t = 0; ST.shrinkStartedAt = null; ST.read = []; ST.reading = null; saveState();
           closeEpi(); closeZoom();
           exhibitObjs.forEach(e => { paint(e); e.spot.color.set(0xfff0d0); e.spot.intensity = 1.3; });
           hallLights.forEach(l => { l.color.set(WARM_LIGHT); l.intensity = 0.85; });
@@ -1642,7 +1946,7 @@ export default {
             exhibitObjs.forEach(e => {
               e.spot.color.set(0x9fb8dd); e.spot.intensity = 0.75;
               const ids = RESOURCE_MAP[e.cfg.id];
-              e.placards.forEach((m, i) => { m.visible = i < ids.length; if (i < ids.length) { const r = RES[ids[i]]; m.material.map = makePlacardTexture(ids[i], r.body, r.src); m.material.needsUpdate = true; } });
+              e.placards.forEach((m, i) => { m.visible = i < ids.length; if (i < ids.length) { const r = RES[ids[i]]; m.material.map = makePlacardTexture(Object.assign({ t: ids[i] }, r)); m.material.needsUpdate = true; } });
             });
             hallLights.forEach(l => { l.color.set(COLD_LIGHT); l.intensity = 0.55; });
             wallMat.color.set(COLD_WALL); rugMat.color.set(RUG_COLD); ambient.intensity = 0.3;
@@ -1658,6 +1962,25 @@ export default {
           updateProp(bookGroup, GUESTBOOK_SIDE, GUESTBOOK_P, rp0, 0.55);
           updateProp(titleGroup, TITLE_SIDE, TITLE_P, rp0, 1);
           glassGroup.visible = caseMode0;
+          /* C014: "resume at the same exhibit", done after the camera has been snapped and the walls
+             sized, so the panel opens over a hall that is already in the right shape. The saved id is
+             an ALLOWLISTED one (sanitize() filtered it against EXHIBITS), and this looks it up in the
+             live objects rather than trusting the string a second time. It is deliberately NOT the
+             zoom outbound: the glass rig eases over 450ms of frames and a resume has no frames yet to
+             ease over - the visitor who left mid-read wanted the words back, not the animation. */
+          const resumeEx = ST.reading && exhibitObjs.find(e => e.cfg.id === ST.reading);
+          if (resumeEx && ST.phase !== "done") {
+            // standing at it and LOOKING at it, both: the frame loop's own proximity test is what
+            // holds this panel open, and it is a facing test - resuming with the saved yaw of 0 would
+            // put the visitor beside the alcove staring down the corridor, and the first frame would
+            // close the panel it just opened. So the resume sets the position AND the bearing, which
+            // is what "at the same exhibit" means to somebody who was reading it.
+            ST.t = resumeEx.cfg.p; saveState();
+            camera.position.z = zAt(ST.t);
+            yaw = bearingTo(caseMode0 ? caseAnchorOf(resumeEx) : wallAnchorOf(resumeEx, rp0));
+            targetYaw = yaw; pitch = 0; targetPitch = 0; applyLook();
+            openRead(resumeEx);
+          }
           last = performance.now();
           ctx.frame(frame);
           queueRest();       // the other eleven, behind the open door
@@ -1675,14 +1998,21 @@ export default {
           // frame back would carry the whole time away as one dt.
           if (ST.mode !== "museum") { last = now; ctx.frame(frame); return; }
           const dt = Math.min(0.05, (now - last) / 1000); last = now;
-          if (!zoomOpen) {
+          // C014: reading holds the view still for the same reason the zoom does. Without it a pointer
+          // parked off to one side before the panel opened keeps dragging the bearing round underneath
+          // it, until the frame loop's own facing test stops finding the exhibit and closes the panel
+          // the visitor is still reading.
+          if (!zoomOpen && !readOpen) {
             yaw += (targetYaw - yaw) * Math.min(1, dt * 8);
             pitch += (targetPitch - pitch) * Math.min(1, dt * 8);
           }
           applyLook();
           updateLaser(now);
 
-          if ((fwdHeld || backHeld) && !bookOpen && !epiOpen && !zoomOpen) {
+          // C014: !readOpen joins the list for the return leg, where there is no zoom holding the
+          // visitor still - a panel that is being read while the walk carries on underneath it is the
+          // guest book's bug, and this one has links in it.
+          if ((fwdHeld || backHeld) && !bookOpen && !epiOpen && !zoomOpen && !readOpen) {
             const dir = (fwdHeld ? 1 : 0) - (backHeld ? 1 : 0);
             if (dir) { ST.t = Math.max(0, Math.min(1, ST.t + dir * WALK_SPEED * dt)); saveWalk(); }
           }
@@ -1702,13 +2032,18 @@ export default {
 
           // exhibit zoom: close on walking away, leaving the case phase, or turning; ease the glass and the
           // fisheye lens toward the open/closed target together.
-          const nearEx = caseMode ? nearestCaseExhibit() : null;
+          // C014: the same level-triggered test, asked of whichever leg is running - the case
+          // outbound, the photograph on the wall coming back. closeZoom() closes the panel with it,
+          // so the outbound arm needs no second line; the return leg has no zoom to ride on.
+          const nearEx = nearestReadable(rp);
           if (zoomOpen && (nearEx !== zoomExhibit || !caseMode)) closeZoom();
+          if (readOpen && !zoomOpen && nearEx !== readExhibit) closeRead();
           syncLook(!!nearEx);
           // C011: at the FIRST exhibit on the route, to a visitor who has never opened one. EXHIBITS[0]
           // rather than the string "teepee": the tutorial belongs to whichever exhibit the walk meets
-          // first, and 4.11a re-authors this list.
-          const teaching = !taught && !!nearEx && !zoomOpen && nearEx.cfg.id === EXHIBITS[0].id;
+          // first, and 4.11a re-authors this list. `caseMode` is C014's addition: nearEx answers on the
+          // return leg now, and the walk does not meet its first exhibit on the way back.
+          const teaching = !taught && caseMode && !!nearEx && !zoomOpen && nearEx.cfg.id === EXHIBITS[0].id;
           syncHint(teaching);
           syncShrink(rp);
           syncRoute();
@@ -1833,7 +2168,7 @@ export default {
             markRead(ex.id);   // C012: on this path the step IS the exhibit open, facts and all
             wrap.innerHTML = `<span class="fl-name">${ex.label}</span><p class="fl-sub">cozy - tap the photo to look closer</p>
               <button type="button" class="fl-zoomable" id="flZoom" aria-pressed="false" aria-label="Look closer at ${ex.label}"><img class="fl-photo" src="${ex.cozy}" alt="${ex.label} cozy"><div class="lb-flat-glass">${GLASS_SVG}</div></button>
-              ${FACTS[ex.id].map(f => `<div class="fl-card">${bodyHTML(f.body)}<span class="fl-src">${f.src}</span></div>`).join("")}
+              ${readCards(ex.id, false)}
               <div class="fl-actions"><button id="flNext">NEXT</button></div>`;
             break;
           }
@@ -1844,7 +2179,6 @@ export default {
           case "turn": wrap.innerHTML = `<span class="fl-name">Turn around.</span><p>The hall behind you is smaller than the one you walked in.</p><div class="fl-actions"><button id="flNext">turn around</button></div>`; break;
           case "teepee-h": case "car-h": case "shoebox-h": case "storage-h": case "masonjar-h": case "van-h": {
             const ex = EXHIBITS.find(e => e.id === s.id.replace("-h", ""));
-            const ids = RESOURCE_MAP[ex.id];
             markRead(ex.id);
             // C017: the same rail, off the same wallHalf(). This path has no hall to lay rails in, so
             // the mark is all there is of the cue here - and it is the same number the 3D narration
@@ -1852,11 +2186,17 @@ export default {
             const rpF = shrinkProgress();
             wrap.innerHTML = `<span class="fl-name">${ex.label}</span><p class="fl-sub">the walls are closer now - ${markLine(rpF)}${rpF >= 1 ? ", the last" : ""}</p>
               <button type="button" class="fl-zoomable" id="flZoom" aria-pressed="false" aria-label="Look closer at ${ex.label}"><img class="fl-photo" src="${ex.horror}" alt="${ex.label} horror"></button>
-              ${ids.map(id => `<div class="fl-card">${RES[id].body}<span class="fl-src">${RES[id].src}</span></div>`).join("")}
+              ${readCards(ex.id, true)}
               <div class="fl-actions"><button id="flNext">NEXT</button></div>`;
             break;
           }
-          case "epilogue": wrap.innerHTML = `<span class="fl-name">${CLOSING_LINE}</span><div class="fl-actions"><button id="flAgain">walk again</button></div>`; break;
+          /* C020: the same object the museum's epilogue hands over, built by the same function from
+             the same data. The note under it is not decoration - "made on this machine, sent nowhere"
+             is the honest statement of what pressing it does, on a channel whose whole subject is
+             being processed by a programme that never asked. */
+          case "epilogue": wrap.innerHTML = `<span class="fl-name">${CLOSING_LINE}</span>
+            <p class="fl-sub">Six transformations, eighteen sourced claims, eight places to call. Plain text, made on this machine, sent nowhere.</p>
+            <div class="fl-actions"><button id="flCase">download the case file</button><button id="flAgain">walk again</button></div>`; break;
         }
         flat.appendChild(wrap);
         const flash = document.createElement("div"); flash.className = "lb-laser-flash"; flash.id = "flFlash";
@@ -1876,7 +2216,7 @@ export default {
            deliberately not in the list. Not on the first render: that one runs at boot, and a channel
            that steals focus from the page the moment it mounts is a worse bug than the one this fixes. */
         if (booted) {
-          const f = wrap.querySelector("#flNext, #flSlot, #flAgain, #flSkip") || wrap.querySelector("button");
+          const f = wrap.querySelector("#flNext, #flSlot, #flCase, #flAgain, #flSkip") || wrap.querySelector("button");
           if (f) try { f.focus({ preventScroll: true }); } catch (e) { f.focus(); }
         }
       }
@@ -1918,7 +2258,9 @@ export default {
           } else if (note) { note.textContent = "Nothing happens."; }
         });
         const again = q("flAgain");
-        if (again) ctx.on(again, "click", () => { ST.phase = "out"; ST.t = 0; ST.shrinkStartedAt = null; ST.read = []; saveState(); step = 0; render(); });
+        const caseBtn = q("flCase");
+        if (caseBtn) ctx.on(caseBtn, "click", downloadCaseFile);
+        if (again) ctx.on(again, "click", () => { ST.phase = "out"; ST.t = 0; ST.shrinkStartedAt = null; ST.read = []; ST.reading = null; saveState(); step = 0; render(); });
       }
       render();
       booted = true;

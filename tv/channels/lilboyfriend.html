@@ -213,6 +213,30 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
   .lb-panel .skip{font-family:"Times New Roman",Times,serif; font-size:13px; color:var(--ink-l);
       text-decoration:underline; cursor:pointer; background:none; border:0; padding:0}
 
+  /* C014: the reading panel. EVERY RULE HERE IS TWO CLASSES (0,2,0) ON PURPOSE. `.lb p` at the top of
+     this sheet is (0,1,1) and `.lb-panel p` is (0,1,1) too, so a single-class rule on a <p> in here
+     either ties or loses - which is the trap that had `.lb-con-row` at 16px in 4.3, `.lb .side p` at
+     body size in 4.10 and both HUD pills at the body clamp until 4.11 packet 2. Fourth form, declined.
+     The card is wider than the guest book's 340: this one is read, not answered. */
+  .lb-read .card{max-width:420px}
+  .lb-read .rd-sub{font-size:11px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-l); margin:0 0 12px}
+  .lb-read .rd-card{border:1px solid rgba(44,30,20,.3); background:rgba(255,253,246,.6); border-radius:8px;
+      padding:10px 12px; margin:0 0 10px; font-size:14px; line-height:1.45; color:var(--ink)}
+  /* the card's INSIDES are keyed off .rd-card rather than off the panel, because the flat gallery
+     renders the identical markup from the identical readCard() - one block, both paths, and no way for
+     the museum and the fallback to drift into showing a visitor different things. Still (0,2,0). */
+  .rd-card .rd-head{display:flex; gap:8px; align-items:baseline; margin:0 0 6px}
+  .rd-card .rd-t{flex:0 0 auto; font-weight:800; font-size:11px; letter-spacing:.1em; color:var(--gold-d)}
+  .rd-card .rd-scope{flex:1 1 auto; font-size:11px; line-height:1.3; font-style:italic; color:var(--ink-l)}
+  .rd-card .rd-take{font-size:12.5px; line-height:1.4; font-weight:700; color:var(--ink); margin:8px 0 0;
+      border-left:3px solid var(--gold); padding-left:8px}
+  .rd-card .rd-src{display:block; margin-top:8px; font-size:11px; line-height:1.4; color:rgba(44,30,20,.62)}
+  .rd-card .rd-link{display:block; margin-top:3px; color:var(--gold-d); word-break:break-all}
+  .rd-card .rd-date{display:block; margin-top:2px; font-style:italic}
+  /* C020: the line under the download, which says what the object is and - the half that matters -
+     that making it sent nothing anywhere. */
+  .lb-epi .rd-note{font-size:11.5px; line-height:1.4; color:var(--ink-l); margin:8px 0 12px}
+
   /* the door-slot interactable: an empty magnifying-glass-shaped hole. Click/tap puts the glass in - no
      wire, no drag, none of that (see attemptInsert()/the flat path's flSlot handler for the off/live
      gating). */
@@ -667,9 +691,29 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
         </div>
       </div>
 
+      <!-- C014: the reading panel. What used to be here was a canvas texture with the whole fact
+           painted into it - a picture of a paragraph, hung on a wall, with a picture of a URL under
+           it. Nothing in that can be selected, copied, read out by a screen reader or opened. The
+           placards kept what a placard is for (which claim this is, what it covers, the line to walk
+           away with) and the reading moved in here, filled by run3D() from FACTS on the way in and
+           RES on the way back - six hardcoded panels would be a second copy of the material. -->
+      <div class="lb-panel lb-read" id="lbRead">
+        <div class="card">
+          <h3 id="lbReadTitle"></h3>
+          <p class="rd-sub" id="lbReadSub"></p>
+          <div id="lbReadBody"></div>
+          <div class="lb-bookrow"><button type="button" class="skip" id="lbReadClose">step back</button></div>
+        </div>
+      </div>
+
       <div class="lb-panel" id="epiPanel">
         <div class="card lb-epi">
           <p class="close-line">You leave smaller than you came in. Everyone does.</p>
+          <!-- C020: the useful object. Everything in it is already in this channel; the walk is what
+               earned the right to be standing here holding it, which is why it is a button at the end
+               and not a seventh exhibit to walk to. -->
+          <button type="button" id="caseFile3d">download the case file</button>
+          <p class="rd-note">Six transformations, eighteen sourced claims, eight places to call. Plain text, made on this machine, sent nowhere.</p>
           <button type="button" id="walkAgain3d">walk again</button>
         </div>
       </div>
