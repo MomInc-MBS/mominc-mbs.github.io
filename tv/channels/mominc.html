@@ -120,6 +120,10 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
   .mi .itback .look{margin:0 0 5px; font-family:"Archivo Black",sans-serif; font-size:9px; letter-spacing:.05em; color:var(--orange, #ff8a2a); text-transform:uppercase}
   .mi .itback p{margin:0; font-family:"Special Elite",monospace; font-size:10px; line-height:1.45; color:var(--cream)}
   .mi .histhint{font-family:"Barlow Condensed",sans-serif; font-size:12.5px; color:#4a2f14; margin:8px 0 0}
+  .mi .basis{margin-top:8px; background:#efe7d2; border-radius:6px; padding:6px 8px; font-family:"Barlow Condensed",sans-serif; font-size:12.5px; color:#3a3a3a}
+  .mi .basis summary{cursor:pointer; letter-spacing:.06em; text-transform:uppercase; font-weight:600; color:#5a4a2a}
+  .mi .basis-body{display:flex; flex-direction:column; gap:6px; margin-top:6px; line-height:1.4}
+  .mi .basis-body b{font-family:"Anton",sans-serif; letter-spacing:.06em; color:#5a4a2a}
 
   /* fake stock: a locally generated plate, stamped as an unlicensed preview. The agency name, the
      tiled sample text and the caption are all DOM text laid over the plate in code, never part of
@@ -169,6 +173,7 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
       letter-spacing:.05em; font-size:clamp(11px,3.4vw,13px); color:#e8e2d8;
       background:radial-gradient(circle at 35% 30%, #7a8086, #4c5157 55%, #2c2f33 100%);
       box-shadow:0 3px 0 #1c1e20, inset 0 0 0 3px #5a5f65, inset 0 0 10px rgba(0,0,0,.5); transition:transform .08s ease, box-shadow .08s ease}
+  .mi .stamp small{display:block; font-family:"Special Elite",monospace; font-size:.85em; letter-spacing:.1em; opacity:.75; margin-top:2px}
   .mi .stamp::after{content:""; position:absolute; inset:14%; border-radius:50%; border:3px solid currentColor; opacity:.7}
   .mi .stamp.approve{color:#7fe89a} .mi .stamp.deny{color:#f08a7a}
   .mi .stamp:active,.mi .stamp.hit{transform:translateY(3px); box-shadow:0 0 0 #1c1e20, inset 0 0 0 3px #5a5f65, inset 0 0 10px rgba(0,0,0,.6)}
@@ -292,8 +297,8 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
         <div class="deskchrome">
           <span class="nameplate">INSPECTOR &middot; STATION 5</span>
           <div class="stamprow">
-            <button class="stamp deny" id="miDeny" type="button" aria-label="Deny this iteration">DENY</button>
-            <button class="stamp approve" id="miApprove" type="button" aria-label="Approve this iteration">APPROVE</button>
+            <button class="stamp deny" id="miDeny" type="button" aria-label="Deny this iteration, keyboard D">DENY<small>D</small></button>
+            <button class="stamp approve" id="miApprove" type="button" aria-label="Approve this iteration, keyboard A">APPROVE<small>A</small></button>
           </div>
           <div class="tray" aria-hidden="true"></div>
           <div class="ledger" id="miLedger" aria-label="Decisions so far"></div>
@@ -512,7 +517,11 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
           </span>
         </button>
       </div>
-      <p class="histhint" id="miHint"><span id="miHintText">Tap DENY or APPROVE, or press A / D. </span><span id="miCount">1 / 10</span></p>
+      <p class="histhint" id="miHint"><span id="miHintText">Tap a stamp, or press D to deny and A to approve. </span><span id="miCount">1 / 10</span></p>
+      <details class="basis" id="miBasisBox">
+        <summary>WHAT YOU ARE BEING GRADED AGAINST</summary>
+        <div class="basis-body" id="miBasis"></div>
+      </details>
       <p class="fine">Every picture in this row was made by a machine, including the ones that look fine. What is written on the back of each card is true and is the actual thing to look for. We are telling you because we have already moved past it.</p>
     </section>
 

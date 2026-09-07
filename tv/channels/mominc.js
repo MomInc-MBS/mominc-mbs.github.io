@@ -162,16 +162,24 @@ export default {
     // --- the unlock window: when the family's five signals are out, every goon's eye goes orange (the LCD too, from the shell);
     //     the big goon explodes when clicked and an orange bar offers the real program by email, free; after 30 s the purple glow passes and it all returns.
     const mailbar = byId("mailbar");
+    // C097: `explode()` ends in a 2.6 s reveal and nothing could cancel it. `ctx.timeout` is runtime-owned,
+    // so a CHANNEL CHANGE cancelled it - but a `disarm()` inside the same channel did not, and the stale
+    // timer still printed THE REAL PROGRAM IS OPEN and 5/5 after the window had closed. `boomRun` is that
+    // missing state: the explosion captures the run it belongs to, and arm/disarm invalidate it.
+    let boomRun = 0;
     function arm() {
+      boomRun++;
       mi.classList.add("armed"); queue();
       goonWho.textContent = "MYR5 · SIGNAL DETECTED · HE DOES NOT LIKE IT"; goonLine.textContent = "Something is wrong with my eye. Nothing is wrong. Click me.";
     }
     function disarm() {
+      boomRun++;                                  // any reveal still pending belongs to the run that just ended
       mi.classList.remove("armed", "mail"); goon && goon.classList.remove("boom"); const v = goon && goon.querySelector("video"); if (v) { v.pause(); v.remove(); }
       goonWho.textContent = "MYR5 · MAKING YOU READY · FIFTH ITERATION · HER GOON"; goonLine.textContent = "Nothing happened. Everything has been reviewed. Click me; I have more."; queue();
     }
     function explode() {
-      if (!goon || goon.classList.contains("boom")) return;
+      if (!goon || goon.classList.contains("boom")) return;   // repeat clicks refused, and always were
+      const run = boomRun;                                     // the state this explosion belongs to
       const v = document.createElement("video"); v.muted = true; v.playsInline = true; v.autoplay = true;
       v.innerHTML = '<source src="assets/myr5-explode.webm" type="video/webm"><source src="assets/myr5-explode.mp4" type="video/mp4">';
       goon.appendChild(v); goon.classList.add("boom"); v.play().catch(() => {});
@@ -179,6 +187,7 @@ export default {
       // ctx.timeout: 2.6 s is long enough to change channel inside, and a raw setTimeout would then
       // write the mail bar into a fragment that is no longer on the screen.
       ctx.timeout(() => {
+        if (run !== boomRun) return;   // disarmed inside the window: this reveal is stale, drop it
         mailbar.innerHTML = `THE REAL PROGRAM IS OPEN. <a href="mailto:${MAIL}?subject=${encodeURIComponent("The real program, please")}&body=${encodeURIComponent("The family's signal is out. Send me the real program: the workouts, the diet, the mindfulness. Free, as promised.")}">Email us and every workout, the diet and the mindfulness come to you, free.</a><small>this window closes when the purple light passes</small>`;
         mi.classList.add("mail");
         if (lock) { lock.textContent = "5/5"; box.classList.add("open"); }
@@ -206,15 +215,49 @@ export default {
 
     // --- the inspection booth: Papers, Please over the ten iterations. One card at a time, compare it to
     //     the reference specimen, stamp APPROVE or DENY, next. Progress is this game's own key (not a shell key).
-    // ANSWERS: the correct-answer key (ANSWER-KEY.md). Every iteration photo is AI-made and should be
-    // DENIED except the closing reveal card, which is real and should be APPROVED.
-    const ANSWERS = { "myr-01":"d","myr-02":"d","myr-03":"d","myr-04":"d","myr-05":"d","myr-06":"d","myr-07":"d","myr-08":"d","myr-09":"d","myr-11":"d","myr-12":"d","myr-13":"d","myr-14":"d","myr-15":"d","myr-10":"a" };
+    // KEY (3.3/C091). The versioned record below IS the key's provenance. It was a flat id->letter map
+    // under a comment pointing at a justification file that exists in neither tree, so the basis a
+    // visitor is graded against was not there to read. Each record is now printed back to the visitor
+    // under the booth (#miBasis) as its card is stamped, so nobody is scored against an unseen rule.
+    //
+    // The honest part first, and it is printed too. NONE of these fifteen pictures is a photograph:
+    // all fifteen were generated for this channel and live in tv/assets/iterations/. So this booth
+    // does not measure anyone's ability to detect AI images and its score is not a detection
+    // benchmark. What it grades is MOM Inc's own filing rule - DENY a card carrying a visible
+    // generation tell, APPROVE the single card the company files as unretouched - which is why
+    // myr-10 is an APPROVE while being just as machine-made as the other fourteen. `evidence` is
+    // the tell, and it is the sentence already printed on the back of that card.
+    const GEN = "Generated for this channel. Not a photograph, and nobody real is depicted.";
+    const KEY = {
+      version: "mominc-inspection-key-1.0",
+      snapshot: "2026-09-07",
+      basis: "All fifteen images were generated for this channel. The booth grades MOM Inc's filing rule, not image forensics: DENY a card with a visible generation tell, APPROVE the one card the company files as unretouched. A score here is not a measure of anyone's ability to spot an AI image.",
+      records: {
+        "myr-01": { plaque:"MYR1",            file:"myr-01-smear.png",      origin:GEN, evidence:"The edge of the head dissolves into the background - the face stops being a face.", finding:"d", why:"A visible tell, so the filing rule denies it." },
+        "myr-02": { plaque:"MYR1.1",          file:"myr-02-confident.png",  origin:GEN, evidence:"No tell to find. Nothing was corrected; the render simply got cleaner.", finding:"d", why:"Denied on origin, not on a tell. A clean render is still a render - this is the card that shows the rule is not 'spot the mistake'." },
+        "myr-03": { plaque:"MYR2",            file:"myr-03-melted-bg.png",  origin:GEN, evidence:"The room, not the person: the wall behind the face is melted.", finding:"d", why:"A visible tell, so the filing rule denies it." },
+        "myr-04": { plaque:"MYR2 SERIES X",   file:"myr-04-earrings.png",   origin:GEN, evidence:"Paired objects that do not match - both ears, both earrings.", finding:"d", why:"A visible tell, so the filing rule denies it." },
+        "myr-05": { plaque:"MYR3",            file:"myr-05-sixfingers.png", origin:GEN, evidence:"Six fingers on the hand.", finding:"d", why:"A visible tell, so the filing rule denies it." },
+        "myr-06": { plaque:"MYR3 SLIM",       file:"myr-06-garbled-text.png", origin:GEN, evidence:"The sign is the shape of words, not words.", finding:"d", why:"A visible tell, so the filing rule denies it." },
+        "myr-07": { plaque:"MYR4",            file:"myr-07-plastic.png",    origin:GEN, evidence:"Two light sources, no cast shadow, and skin with no pores.", finding:"d", why:"A visible tell, so the filing rule denies it." },
+        "myr-08": { plaque:"MYR4 PRO MAX",    file:"myr-08-crowd.png",      origin:GEN, evidence:"People at the back of the crowd are unfinished.", finding:"d", why:"A visible tell, so the filing rule denies it." },
+        "myr-09": { plaque:"MYR5",            file:"myr-09-clean.png",      origin:GEN, evidence:"Nothing in the frame. The tell is outside it - who posted it, and when.", finding:"d", why:"Denied on origin. The picture holds up; the account it came from is the evidence, and the booth does not show you one." },
+        "myr-11": { plaque:"MYR5.1",          file:"myr-11-shadows.png",    origin:GEN, evidence:"Shadows fall two ways under one sun.", finding:"d", why:"A visible tell, so the filing rule denies it." },
+        "myr-12": { plaque:"MYR5.2",          file:"myr-12-mirror.png",     origin:GEN, evidence:"The mirror shows a room that is not behind them.", finding:"d", why:"A visible tell, so the filing rule denies it." },
+        "myr-13": { plaque:"MYR5.3",          file:"myr-13-weave.png",      origin:GEN, evidence:"The fabric pattern repeats exactly, which real cloth does not.", finding:"d", why:"A visible tell, so the filing rule denies it." },
+        "myr-14": { plaque:"MYR5.4",          file:"myr-14-glint.png",      origin:GEN, evidence:"Ring, watch and glass each catch light from their own private sun.", finding:"d", why:"A visible tell, so the filing rule denies it." },
+        "myr-15": { plaque:"MYR5.5",          file:"myr-15-crowdtext.png",  origin:GEN, evidence:"The background sign is spelled correctly and says something else on the second read.", finding:"d", why:"A visible tell, so the filing rule denies it." },
+        "myr-10": { plaque:"MYR5 / THE ARM",  file:"myr-10-carnage.png",    origin:GEN, evidence:"None. MOM Inc files this one as unretouched and captions it 'this one is real'.", finding:"a", why:"The single APPROVE, and it is approved on the company's filing, not on the image: this picture was generated exactly like the other fourteen. That gap is the joke and it is the point." }
+      }
+    };
+    const answerFor = id => { const r = KEY.records[id]; return r ? r.finding : null; };
     const INSPECT_KEY = "mbs-mominc-inspect-v2", LEGACY_KEY = "mbs-mominc-inspect";
     const ORIGINAL_ORDER = ["myr-01","myr-02","myr-03","myr-04","myr-05","myr-06","myr-07","myr-08","myr-09","myr-10"];
     const inspCards = Array.from(mi.querySelectorAll(".itcard"));
     const cardId = c => { const img = c.querySelector(".itfront img"); const m = img && img.getAttribute("src").match(/(myr-\d+)-/); return m ? m[1] : null; };
     const denyBtn = byId("miDeny"), approveBtn = byId("miApprove");
     const ledgerEl = byId("miLedger"), hintText = byId("miHintText"), countEl = byId("miCount"), scoreEl = byId("miScore");
+    const basisEl = byId("miBasis");          // C091: where the key's record is printed for the visitor
     let insp = { v: 2, recs: {} };
     try {
       const saved = JSON.parse(localStorage.getItem(INSPECT_KEY) || "null");
@@ -231,7 +274,7 @@ export default {
     function currentIndex() { return inspCards.findIndex(c => !(cardId(c) in insp.recs)); }
     function inspStats() {
       let correct = 0, strikes = 0, total = 0;
-      inspCards.forEach(c => { const id = cardId(c), rec = insp.recs[id]; if (!id || !rec) return; total++; const want = ANSWERS[id];
+      inspCards.forEach(c => { const id = cardId(c), rec = insp.recs[id]; if (!id || !rec) return; total++; const want = answerFor(id);
         if (rec === want) correct++; else if (want === "d" && rec === "a") strikes++; });
       return { correct, strikes, total };
     }
@@ -240,7 +283,7 @@ export default {
       inspCards.forEach((c, i) => { c.style.display = (!done && i === idx) ? "" : "none"; });
       if (countEl) countEl.textContent = done ? `${inspCards.length} / ${inspCards.length}` : `${idx + 1} / ${inspCards.length}`;
       if (denyBtn) denyBtn.disabled = done; if (approveBtn) approveBtn.disabled = done;
-      if (hintText) hintText.textContent = done ? "Booth closed. File complete. " : "Tap DENY or APPROVE, or press A / D. ";
+      if (hintText) hintText.textContent = done ? "Booth closed. File complete. " : "Tap a stamp, or press D to deny and A to approve. ";
       if (ledgerEl) ledgerEl.innerHTML = inspCards.filter(c => cardId(c) in insp.recs).map(c => { const v = insp.recs[cardId(c)]; return `<span class="${v === "a" ? "a" : "d"}">${v === "a" ? "✓" : "✗"}</span>`; }).join("");
       if (scoreEl) {
         const s = inspStats(), quota = Math.ceil(inspCards.length * .8);
@@ -248,6 +291,23 @@ export default {
           ? `FILE COMPLETE · ${s.correct}/${inspCards.length} CORRECT · QUOTA ${s.correct >= quota ? "MET" : "MISSED"} · ${s.strikes} STRIKE${s.strikes === 1 ? "" : "S"}`
           : `SCORE ${s.correct}/${s.total} · QUOTA ${quota} · STRIKES ${s.strikes}`;
       }
+      renderBasis();
+    }
+    // C091: the record, printed. The header is up from the first frame - it is the honest part and it
+    // spoils nothing. A card's own record appears only once that card has been stamped, so the visitor
+    // gets the basis for every judgement they have actually made without being handed the key first.
+    function renderBasis() {
+      if (!basisEl) return;
+      const out = [`<span>KEY ${KEY.version}, SNAPSHOT ${KEY.snapshot}. ${KEY.basis}</span>`];
+      inspCards.forEach(c => {
+        const id = cardId(c), rec = id && insp.recs[id], r = id && KEY.records[id];
+        if (!rec || !r) return;
+        out.push(`<span><b>${r.plaque}</b> (${id}, ${r.file}) &middot; ORIGIN: ${r.origin}`
+          + ` &middot; TELL: ${r.evidence} &middot; FILED: ${r.finding === "a" ? "APPROVE" : "DENY"}`
+          + ` &middot; YOU STAMPED: ${rec === "a" ? "APPROVE" : "DENY"} &middot; ${r.why}</span>`);
+      });
+      if (out.length === 1) out.push("<span>Stamp a card and its record appears here.</span>");
+      basisEl.innerHTML = out.join("");
     }
     function inspStamp(v, btn) {
       const idx = currentIndex(); if (idx === -1) return;
@@ -261,9 +321,18 @@ export default {
     // THE listener this conversion exists for. Bound to `document`, so innerHTML replacing the channel
     // never took it away: before 2.18, leaving CH 1 and pressing A or D still stamped a booth that was
     // no longer on the screen, into localStorage.
+    // C093: the letters were inverted - A stamped DENY and D stamped APPROVE, the opposite of the hint
+    // the booth prints and the opposite of the mouse path directly above. D denies, A approves, and the
+    // buttons now carry their own letter so the binding is readable off the stamp. Arrows follow the
+    // buttons' positions (DENY left, APPROVE right), which they always did.
+    // Two guards, both missing before: a held key stamped a run of cards, and typing "a" into any field
+    // on the channel stamped one. Modified chords belong to the browser, not to us.
     ctx.on(document, "keydown", e => {
-      if (e.key === "a" || e.key === "A" || e.key === "ArrowLeft") inspStamp("d", denyBtn);
-      else if (e.key === "d" || e.key === "D" || e.key === "ArrowRight") inspStamp("a", approveBtn);
+      if (e.repeat || e.altKey || e.ctrlKey || e.metaKey) return;
+      const t = e.target;
+      if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName || ""))) return;
+      if (e.key === "d" || e.key === "D" || e.key === "ArrowLeft") inspStamp("d", denyBtn);
+      else if (e.key === "a" || e.key === "A" || e.key === "ArrowRight") inspStamp("a", approveBtn);
     });
     inspRender();
 
