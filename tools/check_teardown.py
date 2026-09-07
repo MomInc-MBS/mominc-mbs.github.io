@@ -126,7 +126,7 @@ check(on_disk == flagged, "the flag matches the tree exactly (on disk %s, flagge
       % (sorted(on_disk) or "none", sorted(flagged) or "none"))
 
 print("== 2.18 is converting channels one at a time, and both paths still exist")
-CONVERTED = {"mominc", "djscratch", "fuel", "lilboyfriend"}
+CONVERTED = {"mominc", "djscratch", "fuel", "lilboyfriend", "girlfriend"}
 check(flagged == CONVERTED, "exactly the channels this packet claims are converted (%s)"
       % (sorted(flagged) or "none"))
 for cid in sorted(flagged):
@@ -603,6 +603,69 @@ with sync_playwright() as pw:
     check(lpg.evaluate("() => typeof window.__lbState") == "undefined",
           "and the channel's own window.__lbState readback is gone with it")
     lpg.close()
+
+    print("== girlfriend: the production line, a third whole-life WebGL scene (2.18 packet 13)")
+    # Same shape as the museum and fuel - a renderer taken at mount and held for the visit - with one
+    # thing neither of those had: a listener on the SHELL's scroll container. .screen outlives every
+    # channel, so a scroll handler left bound to it is a dead channel's closure running on every dial
+    # turn afterwards. That is the runtime's job rather than this block's, and current() below is what
+    # says it was done; what is measured here is the GPU, and the six preloaded MYR5 stills of which
+    # only one is ever a live material.map.
+    ppg = b.new_page(viewport={"width": 1280, "height": 900})
+    ppg.on("pageerror", lambda e: errs.append(str(e)))
+    ppg.add_init_script("""
+        (() => { const real = HTMLCanvasElement.prototype.getContext;
+                 window.__gl = [];
+                 HTMLCanvasElement.prototype.getContext = function (type) {
+                   const c = real.apply(this, arguments);
+                   if (c && /webgl/i.test(String(type))) window.__gl.push(c);
+                   return c;
+                 }; })();
+    """)
+    open_tv(ppg)
+
+    def dg_cycle(page):
+        """Mount the line, wait for the scene to actually exist, unmount. Returns what is live."""
+        page.evaluate("() => window.MBS_CH.mount('girlfriend', document.getElementById('channel'))")
+        built = True
+        try:
+            # window.__dg is this channel's own probe hook and it is created at the END of the build,
+            # after the renderer, the room and every station - so it is the channel's own statement
+            # that there is a scene here to leak, and it is a stronger signal than a class name.
+            page.wait_for_function("() => window.__dg && window.__dg.jawsExist", timeout=25000)
+        except Exception:
+            built = False
+        page.wait_for_timeout(400)
+        page.evaluate("() => window.MBS_CH.unmount()")
+        page.wait_for_timeout(250)
+        return built, page.evaluate("""() => ({
+            made: window.__gl.length,
+            live: window.__gl.filter(c => !c.isContextLost()).length })""")
+
+    pbuilt1, pgl1 = dg_cycle(ppg)
+    check(pbuilt1, "the line builds its scene as a module, so this probe is measuring something")
+    check(pgl1["made"] > 0, "and it took a real WebGL context to do it (%d)" % pgl1["made"])
+    check(pgl1["live"] == 0,
+          "after unmount the page holds NO live WebGL context (%d made, %d still live)"
+          % (pgl1["made"], pgl1["live"]))
+
+    pbuilt2, pgl2 = dg_cycle(ppg)
+    pbuilt3, pgl3 = dg_cycle(ppg)
+    check(pbuilt2 and pbuilt3, "and it rebuilds on the second and third visit rather than coming up empty")
+    # the property, never a constant: a fresh context per visit is CORRECT, a retained one is not
+    check(pgl3["live"] == 0,
+          "three visits later it still holds none (%d made across three, %d live)"
+          % (pgl3["made"], pgl3["live"]))
+    check(pgl3["made"] <= pgl1["made"] * 3,
+          "and a visit costs the SAME number of contexts, never a growing one (%d over three visits)"
+          % pgl3["made"])
+    check(ppg.evaluate("() => window.MBS_CH.current()") is None,
+          "and the runtime reports nothing mounted afterwards")
+    # the one window global this channel sets, and it can DRIVE the line - pour, mould and pack are on
+    # it. Left behind it would work a room that is no longer in the document.
+    check(ppg.evaluate("() => typeof window.__dg") == "undefined",
+          "and the channel's own window.__dg probe hook is gone with it")
+    ppg.close()
 
     print("== fuel with no WebGL at all: the flat form is still the whole channel")
     # fuel's stated design is that the six radiogroups, the eight flavour buttons and the can readout

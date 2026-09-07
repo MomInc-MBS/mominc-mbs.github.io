@@ -163,6 +163,15 @@ with sync_playwright() as pw:
           "and its printed legend says so too")
 
     print("== the renderer follows the stage")
+    # WAITED FOR, not slept on. tv.js's stage observer coalesces deliberately - each box change cancels
+    # the pending frame and queues another - so the resize is not dispatched until the box stops moving,
+    # which is when the game-mode transition settles. Measured, that lands either side of the 300ms this
+    # used to sleep, so the assertion passed or failed on the run rather than on the code. A resize that
+    # never fires still fails here, which is the whole point of the check; only the flake is gone.
+    try:
+        pg.wait_for_function("() => window.__resizes >= 1", timeout=4000)
+    except Exception:
+        pass
     check(pg.evaluate("() => window.__resizes") >= 1,
           "changing the stage's box produced the resize the renderers listen for")
 
