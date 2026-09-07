@@ -12,6 +12,16 @@ assessment engine mounted from JSON, so the drive below answers radio groups ins
 asserts what the new contract promises on the REAL channel rather than in the engine's own harness:
 the privacy statement above the first question, no free-text field left to type an exact city or an
 exact income into, and the result readable without an email or a phone.
+
+2.21/E.8 is the outcomes, and its acceptance is a rendering claim - "all five render from a completed
+fixture; no email or phone is required to reveal any of them" - so it belongs HERE and not in
+tools/check_questionnaire.py, which harnesses the engine against synthetic specs. check_questionnaire
+is deliberately left untouched by this packet: asserting the same five ids in both places would prove
+the engine twice and the channel once. What 2.20 left was a count - "three or more outcome boxes" -
+which a stub rendering three empty divs would satisfy. Below, the fixture answers all six questions
+including the two the data marks optional, and each of the five outcomes is matched BY ID against the
+one branch that fixture selects, so a mis-derived band or a mis-keyed map is a failure rather than a
+box that still counts.
 """
 import functools, os, threading
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
@@ -35,6 +45,88 @@ def check(cond, msg):
     global ok
     ok &= bool(cond)
     print("  %s %s" % ("PASS" if cond else "FAIL", msg))
+
+
+# ---- 2.21/E.8: the completed fixture, and what the five outcomes must say for it -------------------
+# Every question answered, including `region` and `wednesday`, which the data marks optional. A fixture
+# that skips the Wednesday vote renders that outcome's FALLBACK, which proves the map was never read;
+# "a completed fixture" means completed. The four scored answers total 3+4+2+2 = 11, which is the exact
+# lower bound of the last band in BOTH band outcomes, so an off-by-one in the engine's range test moves
+# two of the five results rather than none.
+FIXTURE = {
+    "housing": "shared_room",   # 3
+    "burden": "over50",         # 4
+    "sharing": "few",           # 2
+    "space": "room",            # 2
+    "region": "midwest",        # unscored, and optional
+    "wednesday": "masonjar",    # unscored, optional, and the one answer that changes Wednesday's show
+}
+
+# The five E.8 names, in the order tv/data/assessments/lilboyfriend.json declares them.
+FIVE = ["compression", "diagnosis", "residence", "context", "wednesday"]
+
+# Substrings rather than whole paragraphs, so the satire can be reworded without breaking the gate -
+# but each one is unique to the single branch FIXTURE selects. "The Mason Jar" would NOT do: it appears
+# in the prescribed residence and in the Wednesday map both, so a swap between the two would pass.
+EXPECTED = {
+    "compression": "11 of 14",                          # score, and it knows the declared max
+    "diagnosis": "far too large for the economy",        # band, min 11
+    "residence": "Airtight, affordable, and yours",      # band, min 11
+    "context": "severely cost burdened",                 # map of `burden` -> over50
+    "wednesday": "gets the full hour",                   # map of `wednesday` -> masonjar
+}
+
+OUTCOME_JS = """(sel) => Array.from(document.querySelectorAll(sel + ' .q-outcome')).map(b => ({
+      id: b.dataset.outcome,
+      text: (b.querySelector('.q-outcome-text') || {}).textContent || '',
+      label: (b.querySelector('.q-outcome-label') || {}).textContent || '',
+      shown: b.getClientRects().length > 0,
+    }))"""
+
+# The acceptance's second clause, widened from the panel to the whole document: at the moment the result
+# is on screen, nothing anywhere on this channel is even CAPABLE of asking for an email or a phone. The
+# play page ships zero inputs of its own, so every input found here came from the assessment.
+NO_CONTACT_JS = """() => {
+      const bad = [];
+      document.querySelectorAll('input, textarea, select').forEach(n => {
+        const tag = n.tagName.toLowerCase();
+        const hint = [n.type, n.name, n.id, n.autocomplete, n.inputMode, n.placeholder,
+                      n.getAttribute('aria-label') || ''].join(' ').toLowerCase();
+        if (tag !== 'input' || n.type !== 'radio') bad.push(tag + ' [' + hint + ']');
+        else if (/mail|phone|tel|mobile|sms/.test(hint)) bad.push(tag + ' [' + hint + ']');
+      });
+      return bad;
+    }"""
+
+
+def answer_all(page, sel, tag):
+    """Check the fixture's option in each group, located by VALUE - which the engine sets as a property
+    and not as an attribute, so `input[value=x]` matches nothing and the index has to come from the DOM.
+    Real .check() clicks, not `.checked = true`: a drive that sets state directly is not a drive."""
+    missing = []
+    for name, value in FIXTURE.items():
+        vals = page.eval_on_selector_all("%s input[name=%s]" % (sel, name), "ns => ns.map(n => n.value)")
+        if value in vals:
+            page.locator("%s input[name=%s]" % (sel, name)).nth(vals.index(value)).check()
+        else:
+            missing.append("%s=%s" % (name, value))
+    check(not missing, "%s: every fixture answer exists and was checked (missing: %s)" % (tag, missing or "none"))
+
+
+def check_five(page, sel, tag):
+    got = page.evaluate(OUTCOME_JS, sel)
+    ids = [o["id"] for o in got]
+    # If the step had advanced past the result, or the panel had closed, `sel` would be gone and this
+    # list would be empty - so this subsumes 2.20's "the outcomes render in place" as well.
+    check(ids == FIVE, "%s: all five outcomes render in place, by id, in the data's order (got %s)" % (tag, ids))
+    by = {o["id"]: o for o in got}
+    for oid in FIVE:
+        o = by.get(oid, {"text": "", "label": "", "shown": False})
+        check(o["shown"] and o["label"].strip() and EXPECTED[oid] in o["text"],
+              "%s: %s is visible, labelled, and says what the fixture derives (%r)" % (tag, oid, o["text"][:64]))
+    check(page.evaluate(NO_CONTACT_JS) == [],
+          "%s: with the result on screen, no field on the channel can ask for an email or a phone (%s)"
+          % (tag, page.evaluate(NO_CONTACT_JS)[:2] or "none"))
 
 
 with sync_playwright() as pw:
@@ -118,17 +210,14 @@ with sync_playwright() as pw:
                   .every(i => i.type === 'radio')"""),
               "every field is a radio - no free-text city, country or income input remains")
 
-        # answer the four required groups (region and the Wednesday vote are optional by the data)
-        for name in ("housing", "burden", "sharing", "space"):
-            pg.locator("#bookMount input[name=%s]" % name).first.check()
+        # 2.21/E.8: the completed fixture - all six groups, the two optional ones included
+        answer_all(pg, "#bookMount", "3D")
         pg.click("#bookMount button[type=submit]")
         pg.wait_for_timeout(600)
 
         check(pg.evaluate("() => document.querySelector('#bookPanel').classList.contains('show')"),
               "the panel STAYS open on submit, so the result is readable without an email or a phone")
-        check(pg.evaluate("""() => { const o = document.querySelector('#bookMount .q-out');
-                  return !!o && !o.hidden && o.querySelectorAll('.q-outcome').length >= 3; }"""),
-              "and the outcomes rendered in place")
+        check_five(pg, "#bookMount", "3D")
         check(pg.evaluate("""() => { try { return !!JSON.parse(
                   localStorage.getItem('mbs-lilbf-museum-v2')).signed; } catch (e) { return false; } }"""),
               "and the signature is recorded in the shared store")
@@ -172,13 +261,10 @@ with sync_playwright() as pw:
     check(fl.evaluate("""() => Array.from(document.querySelectorAll('#flBookMount input'))
               .every(i => i.type === 'radio')"""),
           "flat: no free-text city, country or income input remains")
-    for name in ("housing", "burden", "sharing", "space"):
-        fl.locator("#flBookMount input[name=%s]" % name).first.check()
+    answer_all(fl, "#flBookMount", "flat")
     fl.click("#flBookMount button[type=submit]")
     fl.wait_for_timeout(500)
-    check(fl.evaluate("""() => { const o = document.querySelector('#flBookMount .q-out');
-              return !!o && !o.hidden && o.querySelectorAll('.q-outcome').length >= 3; }"""),
-          "flat: the outcomes render in place, and the step did not advance past them")
+    check_five(fl, "#flBookMount", "flat")
     check(fl.evaluate("""() => { try { const a = JSON.parse(localStorage.getItem('mbs-state'))
                   .submissions.lilboyfriend;
               return !!a && !!a.housing && a.city === undefined && a.income === undefined;
