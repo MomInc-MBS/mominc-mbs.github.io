@@ -27,10 +27,12 @@ which is not a hole quietly accepted but a case the probe reproduces on purpose 
 gate asserts is observable. That is exactly the mistake each 2.18 conversion has to avoid, and a gate
 that pretended otherwise would be lying about its own reach.
 
-THE SUBJECT IS A FIXTURE, AND THAT IS DELIBERATE. No real channel is a module yet - 2.18 converts them
-one at a time, simplest first. Converting one early just to have something to test would be the
-sweeping change the plan forbids. tv/channels/_runtime-probe.{html,js} is therefore the subject, and
-it is written the way a converted channel should be written, so it doubles as 2.18's reference.
+THE SUBJECT IS A FIXTURE AND, SINCE PACKET 9, A REAL CHANNEL TOO. The fixture came first because when
+2.17 landed no real channel was a module, and converting one early just to have something to test
+would have been the sweeping change the plan forbids. tv/channels/_runtime-probe.{html,js} is still
+the subject of the error and raw-listener cases, which need a channel that misbehaves on purpose;
+mominc, converted by 2.18's first micro-step, is now the subject of the mount/unmount/remount
+assertions, so the contract is measured against a real channel rather than only a fixture.
 
 Run:  python tools/check_teardown.py     (serves the repo itself; nothing else need be running)
 """
@@ -81,6 +83,11 @@ check('<script src="channel-runtime.js">' in read("tv/index.html"),
 check(read("tv/index.html").index('channel-runtime.js') < read("tv/index.html").index('src="tv.js"'),
       "and in that order, so MBS_CH exists when tv.js runs")
 
+print("== the frame registry holds what is PENDING, not every frame ever asked for")
+check("new Set()" in rt and "frames.delete(id)" in rt,
+      "ctx.frame drops its own id when the frame fires, so a render loop cannot grow it without bound")
+check("frames.clear()" in rt, "and dispose() empties it")
+
 print("== the module flag is derived from disk, never hand-maintained")
 gen = read("tools/gen_channels.py")
 check("os.path.exists(os.path.join(ROOT" in gen and '"module"' in gen,
@@ -94,8 +101,19 @@ flagged = {c["id"] for c in chans["channels"] if c["module"]}
 check(on_disk == flagged, "the flag matches the tree exactly (on disk %s, flagged %s)"
       % (sorted(on_disk) or "none", sorted(flagged) or "none"))
 
-print("== the legacy path is still the one every real channel takes (2.18 has not run)")
-check(not flagged, "no channel is converted yet, so this packet changed no channel's behaviour")
+print("== 2.18 is converting channels one at a time, and both paths still exist")
+CONVERTED = {"mominc"}
+check(flagged == CONVERTED, "exactly the channels this packet claims are converted (%s)"
+      % (sorted(flagged) or "none"))
+for cid in sorted(flagged):
+    frag = read("tv/channels/%s.html" % cid)
+    check("<script" not in frag,
+          "%s.html has no inline <script> left: the module IS the channel now" % cid)
+    check("export default" in read("tv/channels/%s.js" % cid),
+          "%s.js is an ES module with a default export" % cid)
+check(flagged != {c["id"] for c in chans["channels"]},
+      "and this was NOT a sweeping conversion: %d channels are still on the legacy path"
+      % (len(chans["channels"]) - len(flagged)))
 check("res.legacy" in read("tv/tv.js"),
       "tv.js still re-creates inline scripts for an unconverted channel")
 
@@ -203,6 +221,69 @@ with sync_playwright() as pw:
           "the fixture really does bind one raw listener, so this is measured and not assumed")
     notes.append("note  the raw listener is NOT released by unmount(). That is the reach of this "
                  "gate, stated rather than hidden: every 2.18 conversion must route through ctx.on.")
+
+    print("== the FIRST REAL CONVERTED CHANNEL mounts, unmounts and remounts (2.18)")
+    open_tv(pg)
+    # no {module:true} here, unlike the probe: this proves the manifest's disk-derived flag is what
+    # actually routes a real channel down the module path
+    REAL = """(name) => window.MBS_CH.mount(name, document.getElementById('channel'))
+                .then(r => ({ ok: !!r.ok, legacy: !!r.legacy,
+                              counts: r.ctx ? r.ctx.counts() : null,
+                              dressed: document.querySelectorAll('#mi .myr .pupil').length,
+                              booth: !!document.querySelector('#mi #miDeny') }))"""
+    m1 = pg.evaluate(REAL, "mominc")
+    check(m1["ok"] and not m1["legacy"],
+          "mominc mounts as a MODULE off the manifest flag, not down the legacy path")
+    check(total(m1["counts"]) > 0,
+          "and everything it opened went through the context (%s)" % json.dumps(m1["counts"]))
+    check(m1["dressed"] > 0 and m1["booth"],
+          "the channel actually rendered: %d googly eyes dressed and the booth is there" % m1["dressed"])
+
+    gone = pg.evaluate("() => window.MBS_CH.unmount().then(r => r.counts)")
+    check(total(gone) == 0, "after unmount the runtime holds nothing (%s)" % json.dumps(gone))
+
+    # A REAL channel's tally is not identical mount to mount, and asserting that it was would be
+    # asserting something false. mominc binds a `load` listener only to an image that has not arrived
+    # yet, so the first mount carries up to 12 of them depending on what the cache already holds and
+    # every later mount carries none. 27 is the unconditional floor (3 on window/#screen, 1 goon, 2 arm
+    # and disarm, 15 iteration cards, 2 booth buttons, 1 keydown, 3 on the hologram); a cold first mount
+    # has been seen at 39. The number is therefore cache-dependent, and the contract is that
+    # remounting does not ACCUMULATE, so that is what is asserted - never growth, and a steady state
+    # once the cache is warm. A gate that demanded equality here would fail on a correct channel.
+    m2 = pg.evaluate(REAL, "mominc")
+    check(all(m2["counts"][k] <= m1["counts"][k] for k in m1["counts"]),
+          "remounting never GROWS the tally (%s then %s)"
+          % (json.dumps(m1["counts"]), json.dumps(m2["counts"])))
+    check(m2["dressed"] == m1["dressed"], "and renders the same on the second visit")
+    pg.evaluate("() => window.MBS_CH.unmount()")
+    m3 = pg.evaluate(REAL, "mominc")
+    check(m3["counts"] == m2["counts"],
+          "and a third mount matches the second exactly, so it does not creep (%s)"
+          % json.dumps(m3["counts"]))
+    check(total(pg.evaluate("() => window.MBS_CH.unmount().then(r => r.counts)")) == 0,
+          "and the last unmount still leaves nothing held")
+
+    print("== the leak this conversion was for: A and D stop stamping when you leave CH 1")
+    # mominc's inspection booth binds keydown to `document`, which innerHTML replacing the channel
+    # never took away. Under the legacy loader, leaving CH 1 and pressing A still wrote a verdict into
+    # localStorage for a booth that was no longer on the screen. This asserts the behaviour, not the
+    # tally - a count cannot tell you the keyboard went quiet.
+    stamp = pg.evaluate("""() => {
+        const K = 'mbs-mominc-inspect-v2';
+        localStorage.removeItem(K);
+        const fire = () => document.dispatchEvent(new KeyboardEvent('keydown', {key:'a'}));
+        return window.MBS_CH.mount('mominc', document.getElementById('channel')).then(() => {
+          fire();
+          const mounted = localStorage.getItem(K);
+          return window.MBS_CH.unmount().then(() => {
+            fire();
+            return { mounted: mounted, after: localStorage.getItem(K) };
+          });
+        });
+    }""")
+    check(stamp["mounted"], "while mounted, A stamps the booth (so the probe itself is live)")
+    check(stamp["after"] == stamp["mounted"],
+          "after unmount the SAME key changes nothing: the document listener is released")
 
     b.close()
 

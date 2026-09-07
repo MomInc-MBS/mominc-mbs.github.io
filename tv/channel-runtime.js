@@ -24,11 +24,12 @@
    flag, tearing down a WebGL context, saving progress. It runs inside a try/catch, because a channel
    that throws on the way out must not prevent the release of everything else.
 
-   WHAT THIS DOES NOT DO. It does not convert any channel. Every channel in the tree is still an
-   inline-script fragment and still loads by the legacy path; the manifest's generated `module` flag
-   is false for all nine. 2.18 converts them one at a time, simplest first, and flipping a channel
-   over is: write tv/channels/<id>.js, re-run tools/gen_channels.py, done. One channel per micro-step
-   is the plan's explicit instruction, because a sweeping conversion cannot be bisected when it breaks. */
+   WHAT THIS DID NOT DO, WHEN IT LANDED. Packet 8 converted no channel; 2.18 converts them one at a
+   time, simplest first, and flipping one over is: write tv/channels/<id>.js, re-run
+   tools/gen_channels.py, done. mominc went first (packet 9) because it is the smallest script with no
+   canvas, no WebGL and no CDN import - measured, not assumed. The other eight are still inline-script
+   fragments on the legacy path. One channel per micro-step is the plan's explicit instruction, because
+   a sweeping conversion cannot be bisected when it breaks. */
 (() => {
   const R = (window.MBS_CH = window.MBS_CH || {});
 
@@ -51,7 +52,14 @@
      `MBS_STATE` coming in as arguments instead of off window - and the disposable registry is the
      only thing it has to adopt. */
   function makeContext(name, root) {
-    const listeners = [], timeouts = [], intervals = [], frames = [], observers = [], audios = [];
+    const listeners = [], timeouts = [], intervals = [], observers = [], audios = [];
+    // frames is a SET of PENDING ids, not a log of every frame ever asked for. A channel with a
+    // render loop re-registers on every frame - mominc queues one per pointer move, the probe holds
+    // a continuous loop - so an append-only array here grows without bound for as long as the
+    // channel is on screen, which is the exact leak this runtime exists to prevent. The wrapper
+    // below drops its own id the moment the frame fires, so the set holds what is actually
+    // outstanding and counts().frames is an honest number rather than a stopwatch.
+    const frames = new Set();
 
     return {
       name: name,
@@ -74,7 +82,11 @@
       },
       timeout: function (fn, ms) { const id = setTimeout(fn, ms); timeouts.push(id); return id; },
       interval: function (fn, ms) { const id = setInterval(fn, ms); intervals.push(id); return id; },
-      frame: function (fn) { const id = requestAnimationFrame(fn); frames.push(id); return id; },
+      frame: function (fn) {
+        const id = requestAnimationFrame(function (t) { frames.delete(id); fn(t); });
+        frames.add(id);
+        return id;
+      },
       observe: function (obs, target, opts) {
         // registered even when target is omitted: an IntersectionObserver built here and observed
         // later still has to be disconnected, and forgetting that is the leak this exists to stop
@@ -91,7 +103,7 @@
       counts: function () {
         return {
           listeners: listeners.length, timeouts: timeouts.length, intervals: intervals.length,
-          frames: frames.length, observers: observers.length, audios: audios.length,
+          frames: frames.size, observers: observers.length, audios: audios.length,
         };
       },
 
@@ -111,7 +123,8 @@
           try { if (a && a.state !== "closed") a.close(); } catch (e) { /* already closed */ }
         });
         listeners.length = timeouts.length = intervals.length = 0;
-        frames.length = observers.length = audios.length = 0;
+        observers.length = audios.length = 0;
+        frames.clear();
       },
     };
   }

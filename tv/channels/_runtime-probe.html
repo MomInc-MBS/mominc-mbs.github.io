@@ -3,7 +3,8 @@
      it is not in the manifest, has no channel number, and the sidebar never offers it.
 
      It exists because 2.17's acceptance is "a channel mounts, unmounts and remounts with no
-     duplicate listeners" and no real channel is a module yet - 2.18 converts them one at a time.
+     duplicate listeners" and, when it was written, no real channel was a module yet - 2.18 converts
+     them one at a time.
      Testing the runtime against a real channel before any real channel is converted would mean
      converting one early, which is exactly the sweeping change the plan forbids. So the subject of
      the test is a fixture that does, deliberately, every leaky thing a real channel does: binds

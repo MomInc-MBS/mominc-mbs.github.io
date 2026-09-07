@@ -12,7 +12,7 @@ window.MBS_CHANNELS = {
       "comingSoon": false,
       "suppressed": false,
       "game": false,
-      "module": false
+      "module": true
     },
     {
       "id": "fuel",
