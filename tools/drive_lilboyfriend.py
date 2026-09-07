@@ -1234,6 +1234,195 @@ with sync_playwright() as pw:
     sdclean = [e for e in sderrs if "favicon" not in e and "jsdelivr" not in e.lower()]
     check(not sdclean, "4.7: no page errors across the layers drive (%s)" % (sdclean[:2] or "none"))
 
+    # ---- 4.8 / E.7: each downward movement reads as walking farther into the museum -----------------
+    # 4.8's acceptance is "manual review against the intent, recorded", and a gate cannot review a
+    # feeling. What it CAN do is hold the mechanism the review is about to look at, so that the recorded
+    # verdict keeps meaning something after the next packet - and, more to the point, prove that the
+    # effect did not buy its read by breaking a shipped row. Four claims, in that order:
+    #
+    #   IT IS THE MOVEMENT, NOT A THRESHOLD. "Each downward movement" is continuous - a chapter that
+    #   snaps to a new state when the observer crosses 0.65 is another slide transition, which is the
+    #   thing this row exists to replace. So the depth is sampled at five points ACROSS each of the six
+    #   movements and has to be strictly increasing at every one of them, in rendered ink as well as in
+    #   the animation's own progress.
+    #
+    #   AND IT ENDS. At the pinned position the content is exactly at rest - no chapter is ever READ
+    #   through a perspective distortion, which is the matched half: a build that simply left every
+    #   chapter scaled would pass "it moves" and be a worse channel than the one before it.
+    #
+    #   4.2, 4.4 AND 4.7 ARE UNHARMED. The sections are still one stage tall and still pin to the pixel
+    #   WHILE the effect is mid-travel, not merely at rest; and within a movement the depth advances at
+    #   samples where --lb-close and the rendered figure do not, which is what says the corridor is its
+    #   own layer rather than a re-cut of 4.4's curve or 4.7's veil.
+    #
+    #   AND THERE IS NO SECOND TIMELINE. The animation's timeline is a ViewTimeline - the browser
+    #   reading the scroller - and the scroll run has registered no scroll, wheel or touchmove listener
+    #   of its own. That is asserted rather than assumed because a scroll handler writing a variable
+    #   would look identical in every check above and would be exactly the thing 4.7's one-write-site
+    #   design was built to avoid.
+    #
+    # SNAPPING IS TURNED OFF FOR THE DURATION, for the same reason scroll-behavior is: 4.2 ships
+    # `scroll-snap-type:y proximity`, so a SCRIPTED scrollTop lands on a snap position and three of the
+    # five samples collapse onto one offset. A finger does not - snapping applies when the scroll comes
+    # to rest, and the travel between chapters is continuous under it. The shipped affordance is not
+    # what is under test here; the depth's relationship to scroll position is.
+    print("\n  -- 4.8: each downward movement is a step farther in --")
+
+    FRACS = [0.28, 0.44, 0.60, 0.76, 0.88]
+    WALK = """k => { const s = document.querySelector('#lbScroll');
+      const e = s.querySelector('.lb-ch[data-chapter="' + k + '"] .lb-ch-inner');
+      const a = e.getAnimations().find(x => x.animationName === 'lbWalkIn');
+      const pr = a ? a.effect.getComputedTiming().progress : null;
+      return { p: (pr === null || pr === undefined) ? -1 : +pr.toFixed(4),
+               tl: a ? a.timeline.constructor.name : null,
+               w: +e.getBoundingClientRect().width.toFixed(2),
+               o: +(+getComputedStyle(e).opacity).toFixed(3),
+               scene: document.querySelector('#lbConsole').dataset.scene,
+               close: +getComputedStyle(s).getPropertyValue('--lb-close'),
+               figH: +document.querySelector('#lbFig i').getBoundingClientRect().height.toFixed(2) }; }"""
+
+    def walk_page(reduced=None):
+        pg = b.new_page(viewport={"width": 390, "height": 844}, reduced_motion=reduced)
+        pg.add_init_script("""(() => { const g = HTMLCanvasElement.prototype.getContext;
+          HTMLCanvasElement.prototype.getContext = function (t, ...a) {
+            return /webgl/i.test(t) ? null : g.call(this, t, ...a); }; })()""")
+        pg.add_init_script("""(() => { window.__lbLis = [];
+          const add = EventTarget.prototype.addEventListener;
+          EventTarget.prototype.addEventListener = function (t, ...a) {
+            try { window.__lbLis.push([this, t]); } catch (e) {}
+            return add.call(this, t, ...a); }; })()""")
+        pg.goto(BASE + "/play/lilboyfriend/", wait_until="load")
+        pg.wait_for_timeout(2500)
+        pg.click("#lbModeBtn")
+        pg.wait_for_selector("#lbScroll .lb-ch[data-chapter]", timeout=5000)
+        pg.evaluate("""() => { const s = document.querySelector('#lbScroll');
+            s.style.scrollBehavior = 'auto'; s.style.scrollSnapType = 'none'; }""")
+        pg.wait_for_timeout(400)
+        return pg
+
+    def walk_samples(pg):
+        """Every chapter's approach, sampled across the movement that brings it in."""
+        out = {}
+        for k in range(1, 7):
+            row = []
+            for f in [0.0] + FRACS + [1.0]:
+                pg.evaluate("v => { const s = document.querySelector('#lbScroll');"
+                            "        s.scrollTop = v * s.clientHeight; }", (k - 1) + f)
+                pg.wait_for_timeout(140)
+                row.append(pg.evaluate(WALK, str(k)))
+            out[k] = row
+        return out
+
+    wk = walk_page()
+    wkerrs = []
+    wk.on("pageerror", lambda e: wkerrs.append(str(e)))
+    wk.on("console", lambda m: wkerrs.append(m.text) if m.type == "error" else None)
+
+    persp = wk.evaluate("() => getComputedStyle(document.querySelector('#lbScroll .lb-ch')).perspective")
+    check(persp and persp != "none" and float(persp.replace("px", "")) > 0,
+          "the chapters are a corridor and not a stack of cards - the section carries a real "
+          "perspective for its contents to travel through (%s)" % persp)
+
+    walks = walk_samples(wk)
+
+    # 1. the room ahead is genuinely AHEAD when the movement starts.
+    far = [(k, walks[k][0]["w"], walks[k][0]["o"]) for k in range(1, 7)]
+    rest = {k: walks[k][-1]["w"] for k in range(1, 7)}
+    back = [k for k in range(1, 7)
+            if not (walks[k][0]["w"] < rest[k] * 0.92 and walks[k][0]["o"] < 0.6)]
+    check(not back, "before the visitor moves, the next room is down the hall - its contents are "
+                    "measurably smaller and washed out, not sitting at full size waiting (%s)"
+          % (["ch%d w=%s o=%s" % f for f in far[:2]] if not back else back))
+
+    # 2. and it approaches WITH the movement, at every sample, in every one of the six.
+    jerky = []
+    for k in range(1, 7):
+        s = walks[k][1:6]
+        if not (all(s[i]["w"] > s[i - 1]["w"] for i in range(1, 5))
+                and all(s[i]["o"] > s[i - 1]["o"] for i in range(1, 5))
+                and all(s[i]["p"] > s[i - 1]["p"] for i in range(1, 5))):
+            jerky.append(k)
+    check(not jerky, "and it comes NEARER at every point of the movement, not at a threshold - five "
+                     "samples across each of the six downward movements, all six continuous (%s)"
+          % (["ch1 " + str([x["w"] for x in walks[1][1:6]])] if not jerky else jerky))
+
+    # 3. the matched half: arriving is ARRIVING. Nothing is read through the corridor.
+    stuck = [(k, walks[k][-1]["w"], walks[k][-1]["o"], walks[k][-1]["p"]) for k in range(1, 7)
+             if not (walks[k][-1]["o"] == 1 and walks[k][-1]["p"] == 1
+                     and walks[k][-1]["w"] > walks[k][-2]["w"])]
+    check(not stuck, "and the walk ENDS where the reading starts - every chapter is at full size and "
+                     "full ink once the visitor is standing in it (%s)" % (stuck or "all six land"))
+
+    # 4. no second timeline: the browser is reading the scroller, and the channel is not.
+    tls = {walks[k][3]["tl"] for k in range(1, 7)}
+    lis = wk.evaluate("""() => { const s = document.querySelector('#lbScroll');
+      const MOVEY = ['scroll','wheel','touchmove','pointermove'];
+      return { total: (window.__lbLis || []).length,
+        offenders: (window.__lbLis || []).filter(([el, t]) => MOVEY.includes(t) && el
+                     && (el === s || (el.nodeType === 1 && s.contains(el))))
+                   .map(([el, t]) => (el.id || el.className || el.tagName) + ':' + t) }; }""")
+    check(all(t and "ViewTimeline" in t for t in tls) and lis["total"] > 20
+          and not lis["offenders"],
+          "and the depth is the BROWSER reading the scroller, not a second timeline - a %s drives it "
+          "and the scroll run registered no scroll/wheel/move listener of its own (%d listeners seen, "
+          "offenders %s)" % ("/".join(sorted(str(t) for t in tls)), lis["total"],
+                             lis["offenders"] or "none"))
+
+    # 5. caution 1: 4.2's contract holds WHILE the effect is travelling, not only at rest. The sections
+    #    are what every 4.2 assertion measures, and the travel is deliberately on their child.
+    wk.evaluate("() => { const s = document.querySelector('#lbScroll');"
+                "        s.scrollTop = 2.6 * s.clientHeight; }")
+    wk.wait_for_timeout(200)
+    mid = wk.evaluate("""() => { const s = document.querySelector('#lbScroll'),
+                                 stage = document.querySelector('#lbStage').clientHeight,
+                                 top = s.getBoundingClientRect().top;
+      return { stage, chs: [...s.querySelectorAll('.lb-ch[data-chapter]')].map(c => {
+        const inner = c.querySelector('.lb-ch-inner');
+        return { n: +c.dataset.chapter, h: Math.round(c.getBoundingClientRect().height),
+                 rel: Math.round(c.getBoundingClientRect().top - top),
+                 cut: inner.scrollHeight - inner.clientHeight }; }) }; }""")
+    tall = [(c["n"], c["h"]) for c in mid["chs"] if c["h"] > mid["stage"] + 1]
+    pinned = [(c["n"], c["rel"]) for c in mid["chs"] if c["n"] <= 2 and abs(c["rel"]) > 1]
+    clipped = [(c["n"], c["cut"]) for c in mid["chs"] if c["cut"] > 0]
+    check(not tall and not pinned and not clipped,
+          "4.2 is untouched mid-travel: every chapter still exactly one stage of %dpx, the passed ones "
+          "still pinned to the pixel, nothing clipped (tall %s, unpinned %s, clipped %s)"
+          % (mid["stage"], tall or "none", pinned or "none", clipped or "none"))
+
+    # 6. caution 2: the corridor is its OWN layer. Inside a single movement there are samples where the
+    #    depth advanced and the scene did not - and at those, 4.4's figure and 4.7's veil are byte-equal.
+    recut, moved = [], 0
+    for k in range(1, 7):
+        for a, z in zip(walks[k][1:6], walks[k][2:6]):
+            if a["scene"] != z["scene"]:
+                continue
+            moved += 1
+            if z["p"] <= a["p"] or z["close"] != a["close"] or z["figH"] != a["figH"]:
+                recut.append((k, a["scene"], a["close"], z["close"], a["figH"], z["figH"]))
+    check(moved >= 6 and not recut,
+          "and it did not re-cut a shipped curve - at %d samples the walk advanced while the scene did "
+          "not, and --lb-close and the figure are identical at every one of them (%s)"
+          % (moved, recut[:2] or "none"))
+
+    wkclean = [e for e in wkerrs if "favicon" not in e and "jsdelivr" not in e.lower()]
+    check(not wkclean, "4.8: no page errors across the walking drive (%s)" % (wkclean[:2] or "none"))
+    wk.close()
+
+    # 7. caution 4: the accessibility branch. A "feels like" row is exactly where prefers-reduced-motion
+    #    gets skipped, and the shoe already honours it. The chapters must still ARRIVE - removing the
+    #    motion must not remove the content, so the scene still advances 1..6 with nothing travelling.
+    rm = walk_page(reduced="reduce")
+    rmwalks = walk_samples(rm)
+    travelled = [k for k in range(1, 7)
+                 if len({x["w"] for x in rmwalks[k]}) != 1 or len({x["o"] for x in rmwalks[k]}) != 1]
+    at_rest = all(x["o"] == 1 and x["w"] == rmwalks[k][-1]["w"]
+                  for k in range(1, 7) for x in rmwalks[k])
+    scenes = [rmwalks[k][-1]["scene"] for k in range(1, 7)]
+    check(not travelled and at_rest and scenes == [str(k) for k in range(1, 7)],
+          "under prefers-reduced-motion nothing travels toward the visitor - and the chapters still "
+          "arrive, at rest, all six (moving %s, scenes %s)" % (travelled or "none", scenes))
+    rm.close()
+
     b.close()
 
 print("\n%s" % ("3D PATH DRIVES" if ok else "3D PATH BROKEN"))

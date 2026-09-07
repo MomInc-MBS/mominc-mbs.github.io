@@ -313,6 +313,61 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
                         repeating-radial-gradient(circle at 20% 30%,rgba(0,0,0,.05) 0 1px,transparent 1px 6px),
                         repeating-radial-gradient(circle at 70% 65%,rgba(255,255,255,.35) 0 1px,transparent 1px 7px)}
   .lb-scroll .lb-ch:last-child{border-bottom:0}
+
+  /* ---- 4.8 / E.7: EACH DOWNWARD MOVEMENT IS A STEP FARTHER IN, not another page -------------------
+     4.2 built the chapters as a sticky stack, which is what makes each one hold still long enough to
+     read - and it is also why the scroll reads as PAGES STACKING. An opaque full-stage panel sliding
+     up over another opaque full-stage panel is a slide deck. Nothing about that says a visitor moved
+     through a space; it says a card was dealt. E.7 asks for the opposite read, so 4.8 gives the
+     movement itself a depth axis. The chapter still arrives by sliding up - that is 4.2's contract and
+     it does not move - but its CONTENTS arrive from down the hall: pushed back in Z and washed out
+     while the room is still ahead of the visitor, at full size and full ink exactly as it lands.
+
+     IT IS THE SAME MOVEMENT, NOT A SECOND ONE. The whole effect is one @keyframes on a view() progress
+     timeline, so the depth is a pure function of where the scroll is - the compositor reads the
+     scroller, and there is no scroll listener, no rAF loop and no JS on this path at all. That matters
+     beyond tidiness: 4.7's four layers all hang off renderScene()'s `shown`, and a fifth thing driven
+     from a scroll handler would be exactly the second timeline that packet's whole design avoids. The
+     figure and the veil are untouched here - --lb-scale is 4.4's and --lb-close is 4.7's, and a depth
+     effect that re-cut either would be a curve change wearing scenery's clothes.
+
+     THE SUBJECT IS .lb-ch-inner, AND THAT IS LOAD-BEARING. Every 4.2 assertion measures the SECTION's
+     bounding rect - one stage tall, pinned to within a pixel, filling the stage from scroll position
+     alone - and a transform on the section moves all three. The inner wrapper is measured by layout
+     only (scrollHeight vs clientHeight, the no-clip guard above), which a transform does not touch.
+     So the corridor's optics go on the section as `perspective`, which changes nothing about its own
+     box, and the travel goes on the child.
+
+     WHY `entry` AND NOT `cover`. A sticky chapter never leaves the scrollport once it pins, so its
+     `cover` range runs to the END of the whole scroll and the progress creeps forward under every
+     later chapter - measured, not assumed. `entry` ends the moment the subject is fully in view, which
+     for a chapter rising to pin is the moment it arrives, and it stays latched at 1 for the rest of
+     the run. That is the shape the row wants: 0 while the room is ahead, a continuous ramp across the
+     downward movement, and dead rest once the visitor is standing in it. Nothing is ever READ through
+     a distortion; the effect exists only while the visitor is moving.
+
+     A BROWSER WITHOUT SCROLL-DRIVEN ANIMATIONS LANDS ON THE REST STATE, not the far one. With
+     animation-timeline dropped the animation falls back to the document timeline at the default 0s
+     duration and `both` fill settles it on the `to` frame immediately - full size, full ink. The
+     failure mode of the feature being missing is the museum without the corridor, which is 4.7's
+     build exactly.
+
+     --lb-depth IS THE ONE TUNED NUMBER, so the short stage inside the television can walk a shorter
+     hall - 566px of stage with 170px of push reads as a lurch rather than a step. Same reason as
+     --lb-console: declared here, overridden in the @container block at the bottom, never in a media
+     query, because the stage is not the window.
+
+     DELIBERATELY NOT BUILT: the chapter being LEFT does not recede. `entry` latches at 1 on a pinned
+     chapter and a pinned chapter never exits, so the receding half would need a second range and a
+     second animation - and it would not be seen, because the arriving chapter is opaque paper and
+     covers it from the bottom up. The occlusion is the departure. */
+  .lb-scroll .lb-ch{--lb-depth:170px; perspective:700px}
+  @keyframes lbWalkIn{
+    from{transform:translateZ(calc(-1 * var(--lb-depth))); opacity:.5}
+    to{transform:translateZ(0); opacity:1}}
+  .lb-scroll .lb-ch-inner{animation:lbWalkIn linear both;
+      animation-timeline:view(block); animation-range:entry 0% entry 100%}
+
   /* the no-clip guard, and it is a guard rather than the design: a chapter is a fixed one stage tall, so
      without this a stage shorter than anything below anticipates would hide the last citation behind the
      next pinned chapter rather than showing it. It does not engage at either size this is tuned for. */
@@ -440,6 +495,12 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
       overflow:hidden; clip-path:inset(50%); white-space:nowrap}
   @media (prefers-reduced-motion:reduce){
     .lb-scroll.shoe-dropped .lb-shoe{animation-duration:1ms}
+    /* 4.8's corridor is motion by definition, so it is the branch a "feels like" row invites you to
+       skip. The chapters still arrive and still stack - 4.2's scroll is the content, not the effect -
+       they simply arrive at rest, with nothing travelling toward the visitor. Removing the animation
+       is enough: the `to` frame IS the rest state, so this leaves full size and full ink rather than
+       stranding a chapter at the far end of the hall. */
+    .lb-scroll .lb-ch-inner{animation:none}
   }
 
   /* the stage is NOT the window, and the difference is the whole reason this is a container query and
@@ -453,7 +514,10 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
      than roughly 500px the guard above takes over rather than the type shrinking further. */
   @container lbscroll (max-height:700px){
     .lb-scroll .lb-ch, .lb-scroll .lb-console{--lb-console:54px}
-    .lb-scroll .lb-ch{padding:14px 12px calc(6px + var(--lb-console))}
+    /* 4.8's hall is shorter inside the television for the same reason the type is smaller: 170px of
+       push across 566px of stage reads as a lurch, not a step. The optics are unchanged - only the
+       distance walked. */
+    .lb-scroll .lb-ch{--lb-depth:120px; padding:14px 12px calc(6px + var(--lb-console))}
     .lb-scroll .lb-console{gap:8px; padding:4px 10px}
     .lb-scroll .lb-fig{flex:0 0 22px; height:32px}
     .lb-scroll .lb-fig i{width:calc(7px + 8px * var(--lb-scale)); height:calc(32px * var(--lb-scale))}
