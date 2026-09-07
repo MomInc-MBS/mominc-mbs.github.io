@@ -141,7 +141,13 @@ with sync_playwright() as pw:
     pg.on("pageerror", lambda e: errs.append(str(e)))
     pg.on("console", lambda m: errs.append(m.text) if m.type == "error" else None)
     pg.goto(BASE + "/play/lilboyfriend/", wait_until="load")
-    pg.wait_for_timeout(6000)
+    # C015 turned the twelve photographs into a queue that runs AFTER the door opens, and each texture
+    # upload into a software renderer starves the frame loop for a few hundred milliseconds while it
+    # lands. Every proximity and walk assertion below is level-triggered from that loop, so the wait is
+    # boot plus the queue, not a single number that used to happen to cover both.
+    settle = lambda p: (p.wait_for_function("() => typeof window.__lbBooted === 'number'",
+                                            timeout=25000, polling=100), p.wait_for_timeout(7000))
+    settle(pg)
 
     state = lambda: pg.evaluate("() => window.__lbState()")
     check(pg.evaluate("() => !!document.querySelector('#lb.webgl')"), "the 3D path was taken")
@@ -185,7 +191,7 @@ with sync_playwright() as pw:
     pg.evaluate("""() => { const s = JSON.parse(localStorage.getItem('mbs-lilbf-museum-v2') || '{}');
                            s.t = 0.03; s.signed = false; localStorage.setItem('mbs-lilbf-museum-v2', JSON.stringify(s)); }""")
     pg.reload(wait_until="load")
-    pg.wait_for_timeout(6000)
+    settle(pg)
     # Look at the lectern. The guest book sits at side -1 (negative x), and this channel's own comment
     # spells the sign convention out: forward is (-sin(yaw), -cos(yaw)), so a POSITIVE yaw faces -x, and
     # targetYaw = (nx - 0.5) * PI means the pointer has to go to the RIGHT of the look zone's centre to
@@ -193,7 +199,11 @@ with sync_playwright() as pw:
     # records being made once already with a raycast.
     cv = pg.locator("#lookZone").bounding_box()
     pg.mouse.move(cv["x"] + cv["width"] * 0.82, cv["y"] + cv["height"] * 0.5)
-    pg.wait_for_timeout(900)
+    try:
+        pg.wait_for_function("() => document.querySelector('#bookPanel').classList.contains('show')",
+                             timeout=8000, polling=60)
+    except Exception:
+        pass   # the assertion below is what reports it, with the panel's real state
     opened = pg.evaluate("() => document.querySelector('#bookPanel').classList.contains('show')")
     check(opened, "walking up to the lectern and looking at it opens the guest book")
 
@@ -1473,9 +1483,15 @@ with sync_playwright() as pw:
 
     # 2. consumer one: the WebGL texture preload. It hands every URL to three.js, never to an <img>, so
     #    the DOM cannot answer for it - the wire and the channel's own load-failure console line can.
+    #    C015 made this a QUEUE rather than twelve simultaneous requests, so "all twelve resolve" is
+    #    no longer answered by a single fixed wait: it is polled to a bound instead. The claim 4.9 is
+    #    making is that every one of them still arrives, not that they all arrive at once.
     gl = watch(b.new_page(viewport={"width": 1280, "height": 900}))
     gl.goto(BASE + "/play/lilboyfriend/", wait_until="load")
-    gl.wait_for_timeout(4000)
+    for _ in range(50):
+        gl.wait_for_timeout(500)
+        if set(shot(u) for u, s in responses if s == 200 and shot(u) in WANT) == WANT:
+            break
     got_gl = set(shot(u) for u, s in responses if s == 200 and shot(u) in WANT)
     check(gl.evaluate("() => !!document.querySelector('#lb.webgl')") and got_gl == WANT,
           "the WebGL preload still resolves all twelve textures on the 3D path (%d of 12, missing %s)"
@@ -1797,6 +1813,359 @@ with sync_playwright() as pw:
 
     pclean = [e for e in perrs if "favicon" not in e and "jsdelivr" not in e.lower()]
     check(not pclean, "4.10: no page errors across the prose drive (%s)" % (pclean[:2] or "none"))
+
+    # ================================================================================================
+    # ---- 4.11 packet 1: C016 the walking save, C015 the load order, C019 the keyboard path ---------
+    # ================================================================================================
+    # Three tickets whose acceptances are all measurable from here, and each one has a way of passing
+    # on a build that never fixed it, so each is a matched pair.
+    #
+    #   C016's acceptance is a write COUNT PER SECOND. The channel must not keep that number itself -
+    #   a counter the code under test maintains proves the counter - so localStorage.setItem is
+    #   instrumented from an init script, exactly the way 4.7 instrumented AudioContext, and the walk
+    #   is measured off the PLATFORM. Its matched halves: the walk still advances (nought writes is a
+    #   perfect score for a museum that no longer moves), a phase transition still writes IMMEDIATELY
+    #   rather than joining the throttle, and the last frame walked survives a reload - a build that
+    #   simply dropped the pending write would post a lovely number and lose the walk.
+    #
+    #   C015's acceptance is "one missing late exhibit can't block entry". The sharp form of that is
+    #   an ORDER, not a duration: the museum opens BEFORE the far exhibit's photograph has even been
+    #   asked for, which twelve promises handed to Promise.all cannot do however fast the network is.
+    #   The stall is left hanging on purpose, and the second case seeds the RETURN leg with one horror
+    #   photograph hanging to prove the frames are never white while it is missing.
+    #
+    #   C019's acceptance is a keyboard-only run, so the run below uses no mouse at all: Tab and Enter
+    #   from the entrance to the epilogue, through all six exhibits, through the instrument, with the
+    #   zoom toggled on every one of them.
+    print("\n  -- 4.11: C016 the walking save, C015 the load order, C019 the keyboard path --")
+
+    WRITES_JS = """(() => {
+      window.__lbWrites = [];
+      const real = Storage.prototype.setItem;
+      Storage.prototype.setItem = function (k, v) {
+        window.__lbWrites.push({ k: String(k), t: Date.now() });
+        return real.call(this, k, v);
+      };
+    })()"""
+    KEY = "mbs-lilbf-museum-v2"
+    stored = "() => { try { return JSON.parse(localStorage.getItem('%s')) || {}; } catch (e) { return {}; } }" % KEY
+    saves = "() => window.__lbWrites.filter(w => w.k === '%s').length" % KEY
+
+    # ---- C016: walking no longer writes a save per frame -------------------------------------------
+    lw = b.new_page(viewport={"width": 1280, "height": 900})
+    lwerrs = []
+    lw.on("pageerror", lambda e: lwerrs.append(str(e)))
+    lw.add_init_script(WRITES_JS)
+    lw.goto(BASE + "/play/lilboyfriend/", wait_until="load")
+    lw.wait_for_timeout(4000)
+    # seeded past the lectern and already signed: the guest book is LEVEL-TRIGGERED by proximity and
+    # freezes the walk while it is open (the frame loop's own `!bookOpen` guard), so a measurement
+    # started at the entrance measures 0.4 seconds of walking and 3.6 of standing at a form.
+    lw.evaluate("""() => { const s = JSON.parse(localStorage.getItem('mbs-lilbf-museum-v2') || '{}');
+                           s.phase = 'out'; s.t = 0.1; s.signed = true;
+                           localStorage.setItem('mbs-lilbf-museum-v2', JSON.stringify(s)); }""")
+    lw.reload(wait_until="load")
+    lw.wait_for_function("() => typeof window.__lbBooted === 'number'", timeout=25000, polling=100)
+    # ...and then let C015's queue drain before timing anything. Twelve texture uploads into a software
+    # renderer cost about 400ms each and they starve the frame loop while they land: measuring the walk
+    # across them measures the uploads. Boot is when the door opens, not when the hall is quiet.
+    lw.wait_for_timeout(7000)
+    check(lw.evaluate("() => !!document.querySelector('#lb.webgl')"),
+          "C016: the 3D path is what is under test - the per-frame save was in its frame loop")
+    lw.evaluate("() => { window.__lbWrites.length = 0; }")
+    w_t0 = lw.evaluate("() => window.__lbState().t")
+    lw.keyboard.down("w")
+    lw.wait_for_timeout(4000)
+    lw.keyboard.up("w")
+    lw.wait_for_timeout(250)
+    walked = lw.evaluate(saves)
+    w_t1 = lw.evaluate("() => window.__lbState().t")
+    # THE MATCHED HALF FIRST: a museum that stopped walking writes nothing at all and would otherwise
+    # ace the count below. The bar is low on purpose - frame() clamps dt to 50ms, so under a software
+    # renderer at eight frames a second the hall advances at a fraction of WALK_SPEED and a threshold
+    # derived from the constant would be measuring this machine's GPU, not the walk.
+    check(w_t1 > w_t0 + 0.005, "C016: four seconds of held W really did walk the hall (t %.4f -> %.4f)"
+          % (w_t0, w_t1))
+    # The throttle's ceiling is one write per SAVE_MS OR per SAVE_DT of hall, whichever comes first:
+    # 1.33/s at full walking speed, 1/s when the frame rate holds the walk back - it measures 1.0/s
+    # here, so the bar below is twice what the throttle actually costs. A save per frame is 60/s on a
+    # real display and measures 2.8/s on the software renderer this gate runs against: still red.
+    check(w_t1 > w_t0 + 0.005 and walked / 4.0 <= 2.0,
+          "C016: and it cost %.1f localStorage writes a second, not one per animation frame (%d in 4s)"
+          % (walked / 4.0, walked))
+    check(walked >= 2,
+          "C016: it is a THROTTLE and not a switch - the walk is still being written down as it goes "
+          "(%d writes)" % walked)
+    # and the pending write is FLUSHED on the way out, so the resume point is the last frame walked
+    # rather than the last one written - up to SAVE_DT (0.02) of hall behind it without the flush
+    lw.reload(wait_until="load")
+    lw.wait_for_timeout(4000)
+    resumed = lw.evaluate("() => window.__lbLoaded.t")
+    check(abs(resumed - w_t1) < 0.002,
+          "C016: pagehide flushed what the throttle was holding, so the reload resumes at the last "
+          "frame WALKED, not the last one written (%.4f vs %.4f)" % (resumed, w_t1))
+    lw.close()
+
+    # ---- C016 (second half) + C019 focus: the door, on the keyboard, in the 3D museum ---------------
+    kb3 = b.new_page(viewport={"width": 1280, "height": 900})
+    kb3.on("pageerror", lambda e: lwerrs.append(str(e)))
+    kb3.add_init_script(WRITES_JS)
+    kb3.goto(BASE + "/play/lilboyfriend/?mode=live", wait_until="load")
+    kb3.wait_for_timeout(4000)
+    # seeded through the page and reloaded, never through add_init_script - the C018 rule. 0.96 of the
+    # hall is 2.4 units short of the door, outside openDoor()'s 1.5-unit range, so the panel opens
+    # while this drive is watching rather than before it starts.
+    kb3.evaluate("""() => { const s = JSON.parse(localStorage.getItem('mbs-lilbf-museum-v2') || '{}');
+                            s.phase = 'out'; s.t = 0.96;
+                            localStorage.setItem('mbs-lilbf-museum-v2', JSON.stringify(s)); }""")
+    kb3.reload(wait_until="load")
+    kb3.wait_for_timeout(6000)
+    kb3.focus("#lbWalk")
+    check(kb3.evaluate("() => (document.activeElement || {}).id") == "lbWalk",
+          "C019: focus starts on a known control (the WALK button), so the restore below has a target")
+    kb3.keyboard.down("w")
+    kb3.wait_for_function("() => document.querySelector('#wirePanel').classList.contains('show')",
+                          timeout=8000, polling=60)
+    kb3.keyboard.up("w")
+    kb3.wait_for_timeout(200)
+    check(kb3.evaluate("() => (document.activeElement || {}).id") == "slotBtn",
+          "C019: the door panel opened and took focus to its own labelled control (%s)"
+          % kb3.evaluate("() => (document.activeElement || {}).id"))
+    check(kb3.evaluate("() => { const b = document.querySelector('#slotBtn');"
+                       "        return b.tagName === 'BUTTON' && !!(b.getAttribute('aria-label') || '').trim(); }"),
+          "C019: and the insertion control is a real button carrying a name, not a glyph")
+    # walk back out of range: the panel closes level-triggered from the frame loop, and the guard on
+    # that restore is the whole reason the museum does not yank focus back sixty times a second
+    kb3.keyboard.down("s")
+    kb3.wait_for_function("() => !document.querySelector('#wirePanel').classList.contains('show')",
+                          timeout=8000, polling=60)
+    kb3.keyboard.up("s")
+    kb3.wait_for_timeout(300)
+    check(kb3.evaluate("() => (document.activeElement || {}).id") == "lbWalk",
+          "C019: and closing it handed focus back to where it came from (%s)"
+          % kb3.evaluate("() => (document.activeElement || {}).id"))
+    # back to the door and insert the instrument from the keyboard alone
+    kb3.keyboard.down("w")
+    kb3.wait_for_function("() => document.querySelector('#wirePanel').classList.contains('show')",
+                          timeout=8000, polling=60)
+    kb3.keyboard.up("w")
+    kb3.wait_for_timeout(200)
+    kb3.evaluate("() => { window.__lbWrites.length = 0; }")
+    kb3.keyboard.press("Enter")
+    kb3.wait_for_function("() => window.__lbState().phase !== 'out'", timeout=8000, polling=60)
+    kb3.wait_for_timeout(150)       # a sixth of SAVE_MS: far too soon for the walking throttle
+    check(kb3.evaluate(stored).get("phase") == "slotted",
+          "C016: a phase transition is written the moment it happens - the throttle is for the walk "
+          "only (stored phase %r within 150ms)" % kb3.evaluate(stored).get("phase"))
+    check(kb3.evaluate("() => window.__lbState().phase") != "out",
+          "C019: and the instrument went into the door from the keyboard alone")
+    kb3.close()
+
+    # ---- C019: the inspect control, which before this packet was a tap on a bare div ---------------
+    lk = b.new_page(viewport={"width": 1280, "height": 900})
+    lk.on("pageerror", lambda e: lwerrs.append(str(e)))
+    lk.goto(BASE + "/play/lilboyfriend/", wait_until="load")
+    lk.wait_for_timeout(3000)
+    lk.evaluate("""() => { const s = JSON.parse(localStorage.getItem('mbs-lilbf-museum-v2') || '{}');
+                           s.phase = 'out'; s.t = 0.15;
+                           localStorage.setItem('mbs-lilbf-museum-v2', JSON.stringify(s)); }""")
+    lk.reload(wait_until="load")
+    lk.wait_for_timeout(6000)
+    check(lk.evaluate("() => { const b = document.querySelector('#lbLook');"
+                      "        return !!b && b.tagName === 'BUTTON' && b.hidden; }"),
+          "C019: the inspect control exists and stays out of the way while there is nothing to inspect")
+    # THE TEEPEE IS AT side +1, so the camera has to look at +x. forward is (-sin(yaw),-cos(yaw)), so
+    # +x wants a NEGATIVE yaw, and targetYaw = (nx - 0.5) * PI means the pointer goes LEFT of centre -
+    # the mirror image of the lectern's approach at the top of this file, and worth stating twice.
+    zone = lk.locator("#lookZone").bounding_box()
+    lk.mouse.move(zone["x"] + zone["width"] * 0.18, zone["y"] + zone["height"] * 0.5)
+    lk.wait_for_function("() => { const b = document.querySelector('#lbLook'); return b && !b.hidden; }",
+                         timeout=6000, polling=60)
+    check(lk.evaluate("() => { const b = document.querySelector('#lbLook');"
+                      "        return b.textContent.trim() === 'LOOK CLOSER'"
+                      "               && b.getAttribute('aria-pressed') === 'false'; }"),
+          "C019: standing at an exhibit it appears, named, and says it is not pressed")
+    # aria-pressed is written by the FRAME LOOP off zoomOpen, never by the click handler, so reading it
+    # back is reading the museum's own state rather than the button's echo of its own press
+    lk.locator("#lbLook").click()
+    lk.wait_for_function("() => document.querySelector('#lbLook').getAttribute('aria-pressed') === 'true'",
+                         timeout=4000, polling=60)
+    check(lk.evaluate("() => document.querySelector('#lbLook').textContent.trim()") == "STEP BACK",
+          "C019: activating it opens the zoom, and the control says so")
+    lk.keyboard.press("Escape")
+    lk.wait_for_function("() => document.querySelector('#lbLook').getAttribute('aria-pressed') === 'false'",
+                         timeout=4000, polling=60)
+    check(True, "C019: and Escape closes it again, which is what the control now reports")
+    lk.close()
+
+    # ---- C015: entry does not wait for a photograph at the far end of the hall ----------------------
+    # WHEN each photograph was asked for, taken off the PLATFORM and on the page's own clock. Resource
+    # timing cannot answer this - an entry appears when a request finishes and the one below never
+    # does - and a Playwright route handler's timestamp is when PYTHON got to it, which is a different
+    # question again. The <img> src setter is where three.js's ImageLoader actually starts a request.
+    IMG_JS = """(() => {
+      window.__imgAt = [];
+      const d = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, 'src');
+      Object.defineProperty(HTMLImageElement.prototype, 'src', {
+        configurable: true, get: d.get,
+        set(v) { window.__imgAt.push({ u: String(v), t: performance.now() }); d.set.call(this, v); },
+      });
+    })()"""
+    asked = ("(n) => { const e = window.__imgAt.find(r => r.u.indexOf(n) >= 0); return e ? e.t : null; }")
+    ent = b.new_page(viewport={"width": 1280, "height": 900})
+    ent.on("pageerror", lambda e: lwerrs.append(str(e)))
+    ent.add_init_script(IMG_JS)
+    # left HANGING, not aborted: a 404 always resolved fast enough for the old Promise.all to shrug it
+    # off, and it is the SLOW exhibit that used to hold the door shut.
+    ent.route("**/lilbf-van-cozy.jpg", lambda r: None)
+    ent.goto(BASE + "/play/lilboyfriend/", wait_until="load")
+    ent.wait_for_function("() => typeof window.__lbBooted === 'number'", timeout=25000, polling=100)
+    booted = ent.evaluate("() => window.__lbBooted")
+    e_t0 = ent.evaluate("() => window.__lbState().t")
+    ent.keyboard.down("w")
+    ent.wait_for_timeout(1500)
+    ent.keyboard.up("w")
+    ent.wait_for_timeout(200)
+    e_t1 = ent.evaluate("() => window.__lbState().t")
+    check(e_t1 > e_t0, "C015: the museum came up and walks with the last exhibit's photograph still "
+                       "in flight (t %.4f -> %.4f)" % (e_t0, e_t1))
+    ent.wait_for_function("(n) => window.__imgAt.some(r => r.u.indexOf(n) >= 0)",
+                          arg="lilbf-van-cozy.jpg", timeout=20000, polling=100)
+    van_at = ent.evaluate(asked, "lilbf-van-cozy.jpg")
+    check(van_at is not None and booted < van_at,
+          "C015: and the door opened BEFORE that photograph was even requested - entry waits on the "
+          "exhibit you are standing at, never on the hall (booted %.0fms, requested %.0fms)"
+          % (booted, van_at if van_at else -1))
+    ent.wait_for_timeout(6000)     # LOAD_MS, then the stand-in the failed frame is owed
+    photos = ent.evaluate("() => window.__lbPhotos()")
+    check(len(photos) == 6 and all(p for p in photos),
+          "C015: and the hung request did not hold the queue behind it - every frame has a picture "
+          "(%s)" % [(p or "WHITE").rsplit("/", 1)[-1] for p in photos])
+    ent.close()
+
+    # ---- C015: the return leg reveals no blank frames -----------------------------------------------
+    rt = b.new_page(viewport={"width": 1280, "height": 900})
+    rt.on("pageerror", lambda e: lwerrs.append(str(e)))
+    rt.route("**/lilbf-van-horror.jpg", lambda r: None)
+    rt.goto(BASE + "/play/lilboyfriend/", wait_until="load")
+    rt.wait_for_timeout(3000)
+    rt.evaluate("""() => { const s = JSON.parse(localStorage.getItem('mbs-lilbf-museum-v2') || '{}');
+                           s.phase = 'back'; s.t = 0.2; s.shrinkStartedAt = Date.now();
+                           localStorage.setItem('mbs-lilbf-museum-v2', JSON.stringify(s)); }""")
+    rt.reload(wait_until="load")
+    rt.wait_for_function("() => typeof window.__lbBooted === 'number'", timeout=25000, polling=100)
+    at_entry = rt.evaluate("() => window.__lbPhotos()")
+    check(at_entry[0] and "horror" in at_entry[0],
+          "C015: resuming onto the return leg, the exhibit you are standing at already has its "
+          "photograph on the first frame (%s)" % ((at_entry[0] or "WHITE").rsplit("/", 1)[-1]))
+    # van-horror is FIRST in the return queue and never answers, so this also proves the queue moves
+    # on rather than deadlocking behind it - the stand-in is fetched the moment its patience runs out
+    # and the other five arrive behind that.
+    rt.wait_for_timeout(9000)
+    back = rt.evaluate("() => window.__lbPhotos()")
+    names = [(p or "WHITE").rsplit("/", 1)[-1] for p in back]
+    check(len(back) == 6 and all(p for p in back),
+          "C015: and no frame on the return leg is ever white, with one photograph missing (%s)" % names)
+    check(sum(1 for n in names if "horror" in n) == 5 and "cozy" in names[5],
+          "C015: five frames carry the horror photograph and the missing one stands in with the other "
+          "half of its own pair, which is the fallback the row asks for (%s)" % names)
+    rt.close()
+
+    # ---- C015: retry on failure ---------------------------------------------------------------------
+    tries = []
+    rty = b.new_page(viewport={"width": 1280, "height": 900})
+    rty.on("pageerror", lambda e: lwerrs.append(str(e)))
+
+    def _fail(route):
+        tries.append(1)
+        route.abort()
+
+    rty.route("**/lilbf-car-cozy.jpg", _fail)
+    rty.goto(BASE + "/play/lilboyfriend/", wait_until="load")
+    rty.wait_for_function("() => typeof window.__lbBooted === 'number'", timeout=25000, polling=100)
+    rty.wait_for_timeout(6000)
+    check(len(tries) == 2,
+          "C015: a photograph that fails is asked for exactly once more before the walk goes on "
+          "without it (%d requests)" % len(tries))
+    rty.close()
+
+    # ---- C019: the whole flat gallery on the keyboard, entrance to epilogue -------------------------
+    # The acceptance clause, run literally. No mouse event is generated anywhere below: every step is
+    # reached with Tab and Enter, and every one of the six outbound exhibits is inspected on the way.
+    kb = b.new_page(viewport={"width": 900, "height": 1000})
+    kberrs = []
+    kb.on("pageerror", lambda e: kberrs.append(str(e)))
+    kb.on("console", lambda m: kberrs.append(m.text) if m.type == "error" else None)
+    kb.add_init_script("""(() => { const g = HTMLCanvasElement.prototype.getContext;
+      HTMLCanvasElement.prototype.getContext = function (t, ...a) {
+        return /webgl/i.test(t) ? null : g.call(this, t, ...a); }; })()""")
+    kb.goto(BASE + "/play/lilboyfriend/?mode=live", wait_until="load")
+    kb.wait_for_selector("#lbFlat #flNext", timeout=8000)
+
+    def focus_id(page):
+        return page.evaluate("() => (document.activeElement || {}).id || ''")
+
+    def tab_to(page, want, key="Tab", limit=30):
+        """Walk the tab order to `want` - and no further. Returns False rather than raising, so the
+        assertion that follows names which control could not be reached from the keyboard."""
+        for _ in range(limit):
+            if focus_id(page) == want:
+                return True
+            page.keyboard.press(key)
+        return focus_id(page) == want
+
+    check(kb.evaluate("() => document.querySelectorAll('a:not([href])').length") == 0,
+          "C019: not one non-link anchor is left on the channel - #flSkip and its guest-book twin are "
+          "both real buttons now")
+    check(tab_to(kb, "flNext"), "C019: the entrance's control is reachable from the keyboard")
+    kb.keyboard.press("Enter")
+    kb.wait_for_selector("#flSkip", timeout=6000)
+    check(focus_id(kb) == "flSkip" and kb.evaluate(
+              "() => document.querySelector('#flSkip').tagName") == "BUTTON",
+          "C019: the step change moved focus onto the new step's own control, and 'walk on' is a "
+          "<button> (focus %r)" % focus_id(kb))
+    kb.keyboard.press("Enter")                       # -> the teepee, the first exhibit
+
+    zoomed = 0
+    for i in range(6):
+        kb.wait_for_selector("#flZoom", timeout=6000)
+        # #flZoom sits before .fl-actions in the step, so it is Shift+Tab from the focused NEXT button
+        if tab_to(kb, "flZoom", key="Shift+Tab"):
+            kb.keyboard.press("Enter")
+            kb.wait_for_timeout(120)
+            if kb.evaluate("() => document.querySelector('#flZoom').getAttribute('aria-pressed')") == "true":
+                zoomed += 1
+            kb.keyboard.press("Enter")               # and back out of the magnifier
+            kb.wait_for_timeout(80)
+        tab_to(kb, "flNext")
+        kb.keyboard.press("Enter")
+    check(zoomed == 6,
+          "C019: all six exhibits were inspected from the keyboard - the magnifier is a labelled "
+          "toggle, not a div with a click handler (%d of 6)" % zoomed)
+
+    kb.wait_for_selector("#flSlot", timeout=6000)
+    check(focus_id(kb) == "flSlot", "C019: the door step put focus on the instrument (%r)" % focus_id(kb))
+    kb.keyboard.press("Enter")
+    kb.wait_for_function("() => window.__lbState().phase !== 'out'", timeout=8000, polling=60)
+    kb.wait_for_selector("#flNext", timeout=8000)
+    for _ in range(7):                               # turn around, then the six return exhibits
+        tab_to(kb, "flNext")
+        kb.keyboard.press("Enter")
+        kb.wait_for_timeout(180)
+    kb.wait_for_selector("#flAgain", timeout=6000)
+    check(kb.evaluate("() => window.__lbState().phase") == "done"
+          and kb.evaluate("() => !!document.querySelector('#flAgain')"),
+          "C019: and the epilogue was reached without a single pointer event, from the entrance")
+    check(focus_id(kb) == "flAgain",
+          "C019: with focus on the epilogue's own control rather than back at the top of the document "
+          "(%r)" % focus_id(kb))
+    kbclean = [e for e in kberrs if "favicon" not in e and "jsdelivr" not in e.lower()]
+    check(not kbclean, "C019: no page errors across the keyboard-only run (%s)" % (kbclean[:2] or "none"))
+    kb.close()
+
+    lwclean = [e for e in lwerrs if "favicon" not in e and "jsdelivr" not in e.lower()
+               and "lilbf-van-cozy" not in e and "lilbf-van-horror" not in e and "lilbf-car-cozy" not in e]
+    check(not lwclean, "4.11: no page errors across the 3D drives (%s)" % (lwclean[:2] or "none"))
 
     b.close()
 

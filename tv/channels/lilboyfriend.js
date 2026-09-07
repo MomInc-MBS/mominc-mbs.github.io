@@ -65,6 +65,9 @@ const loadAssessment = () => (assessmentLoad = assessmentLoad ||
    session that has already ended must be dropped rather than attached to a fragment that has gone. */
 let gl = null;
 let session = null;
+/* C016: the walking save's flush, hoisted here for exactly one reason - unmount() is the other way a
+   walk ends, and it cannot see mount()'s closure. Set on mount, reset to a no-op on teardown. */
+let flushWalk = () => {};
 
 export default {
   mount(root, ctx) {
@@ -266,6 +269,39 @@ export default {
     // Frozen: a reader cannot become a writer. Removed in unmount() with the other hook.
     window.__lbLoaded = Object.freeze(Object.assign({}, ST));
     function saveState() { try { localStorage.setItem(STORE_KEY, JSON.stringify(ST)); } catch {} }
+
+    /* C016. Walking used to write the WHOLE save on every animation frame - about sixty synchronous
+       localStorage writes a second, all of them the same record with a fourth decimal changed. The
+       walk is a continuous quantity, so its save is throttled on both axes the ticket names: at most
+       one write per SAVE_MS, and one whenever the visitor has covered SAVE_DT of the hall since the
+       last one. At WALK_SPEED (a full hall in 37.5 seconds) it is the DISTANCE threshold that fires,
+       roughly every 0.75s, so a walk costs about one write a second instead of sixty - and it is
+       bounded by the speed, not by the frame rate, which is what makes the bound hold on a 144Hz
+       display too.
+
+       EVERY DISCRETE EVENT STILL CALLS saveState() DIRECTLY - the phase changes at the door and at the
+       entrance, the signature, walk again, the flat gallery's per-step render. A transition is not a
+       sample of a curve: there is nothing to coalesce it with, and it has to survive a reload on the
+       next tick.
+
+       And the throttle is FLUSHED, never dropped. `pagehide` (which a reload, a tab close and a
+       bfcache eviction all fire) and unmount() write whatever is pending, so the resume point is the
+       last frame WALKED rather than the last one written. Without that, the bounded write count would
+       be bought with up to three quarters of a second of lost walk on every exit, which is a trade
+       the row is not asking anyone to make. */
+    const SAVE_MS = 1000, SAVE_DT = 0.02;
+    let saveAt = 0, saveT = ST.t, walkDirty = false;
+    function saveWalk() {
+      walkDirty = true;
+      if (performance.now() - saveAt < SAVE_MS && Math.abs(ST.t - saveT) < SAVE_DT) return;
+      flushWalk();
+    }
+    flushWalk = () => {
+      if (!walkDirty) return;
+      walkDirty = false; saveAt = performance.now(); saveT = ST.t;
+      saveState();
+    };
+    ctx.on(window, "pagehide", flushWalk);
 
     function fireForm(f) {
       if (ST.signed) return;
@@ -841,23 +877,59 @@ export default {
         }
         const WARM_LIGHT = new THREE.Color(0xfff0d0), COLD_LIGHT = new THREE.Color(0x9fb8dd);
 
-        // ---- preload every photo now (both cozy and horror) so the return swap is instant, no load stall.
-        // Every one that lands is pushed onto gl.extra: only the CURRENTLY SHOWN photograph is ever a live
-        // material.map, so the scene walk in unmount() would reach one of the twelve and miss eleven.
+        /* ---- the photographs. C015: loaded in walking order, not all at once.
+           This used to build twelve promises and hand the lot to Promise.all, with the entire boot -
+           camera, resume, first frame, the whole museum - waiting behind the slowest of the twelve.
+           One exhibit at the far end of the hall, slow to answer, held the entrance shut. Now the boot
+           waits for ONE image (see the readiness below) and the other eleven queue behind it in the
+           order the walk meets them, each painted onto its own frame the moment it lands.
+
+           Every one that lands is still pushed onto gl.extra: only the CURRENTLY SHOWN photograph is
+           ever a live material.map, so the scene walk in unmount() would reach one of the twelve and
+           miss eleven.
+
+           `paint` is why the return leg never reveals a blank frame. photoMat ships with no map at
+           all, so an exhibit with nothing loaded is a WHITE rectangle - and a visitor resuming into
+           the return leg wants six horror photographs that have not been fetched yet. paint hangs the
+           best AVAILABLE picture for the phase the museum is in: the one this side wants, or the other
+           side of the same pair standing in until it arrives. Every place that used to swap a map by
+           hand - the boot, the door, walk again - calls it instead, so there is one rule for which
+           photograph is on a wall rather than four. */
         const loader = new THREE.TextureLoader();
         const tex = {};
-        const texPromises = [];
-        EXHIBITS.forEach(ex => {
-          [["cozy", ex.cozy], ["horror", ex.horror]].forEach(([k, url]) => {
-            texPromises.push(new Promise(res => {
-              loader.load(url, t => {
-                t.colorSpace = THREE.SRGBColorSpace; tex[url] = t;
-                if (gl) gl.extra.push(t); else t.dispose();   // landed after the channel left: hand it straight back
-                res();
-              }, undefined, () => { console.error("[lb] photo failed to load", url); res(); });
-            }));
+        const LOAD_MS = 3000;
+        function paint(e) {
+          const want = isReturning() ? e.texKeyHorror : e.texKeyCozy;
+          const m = tex[want] || tex[e.texKeyCozy] || tex[e.texKeyHorror] || null;
+          if (e.photoMat.map !== m) { e.photoMat.map = m; e.photoMat.needsUpdate = true; }
+        }
+        // One url, one retry, and it NEVER rejects: a photograph that will not come is a frame that
+        // keeps the picture it already has, not a dead boot. Resolves the texture, or null.
+        function loadTex(url, retry = 1) {
+          if (tex[url]) return Promise.resolve(tex[url]);
+          return new Promise(res => {
+            let done = false, tid = 0;
+            const settle = v => { if (done) return; done = true; clearTimeout(tid); res(v); };
+            /* A request that never answers must not hold the queue - or the entrance - behind it.
+               A plain setTimeout rather than ctx.timeout, cleared on every path that settles: this
+               fires up to twelve times a mount as the queue advances, and check_teardown compares the
+               context's tally between mounts for EQUALITY, so a registration whose count depends on
+               how far the queue happened to have got is a flaky gate rather than a caught leak. If the
+               photograph lands after its patience ran out, the load handler below still calls paint
+               and it goes up on the wall late. */
+            tid = setTimeout(() => settle(null), LOAD_MS);
+            loader.load(url, t => {
+              t.colorSpace = THREE.SRGBColorSpace;
+              if (!gl || session !== mine) { t.dispose(); return settle(null); }   // landed after the channel left
+              tex[url] = t; gl.extra.push(t);
+              exhibitObjs.forEach(paint);
+              settle(t);
+            }, undefined, () => {
+              console.error("[lb] photo failed to load", url);
+              if (retry > 0) settle(loadTex(url, retry - 1)); else settle(null);
+            });
           });
-        });
+        }
 
         // review-round fix: placards were unreadable (tiny canvas font, cropped near the floor). fTitle/
         // fBody/fSource are now explicit per call site instead of one-size-fits-all defaults, so a placard
@@ -1191,6 +1263,40 @@ export default {
           zoomYawFrom = yaw; zoomYawTo = bearingTo(caseAnchorOf(e)); zoomTurning = true;
         }
         function closeZoom() { zoomOpen = false; zoomTurning = false; }
+        /* C019: the inspect control. Same action the look zone's tap and the E key already ran, given
+           a name and a tab stop. Its state is written from the frame loop below, which is the only
+           place that knows whether a case is in range - but through a one-key memo, because writing
+           textContent and an ARIA attribute sixty times a second is the habit C016 is in this same
+           packet to break. */
+        const lookBtn = byId("lbLook");
+        let lookKey = "";
+        function syncLook(inRange) {
+          const key = (inRange ? "1" : "0") + (zoomOpen ? "1" : "0");
+          if (key === lookKey) return;
+          lookKey = key;
+          lookBtn.hidden = !(inRange || zoomOpen);
+          lookBtn.textContent = zoomOpen ? "STEP BACK" : "LOOK CLOSER";
+          lookBtn.setAttribute("aria-pressed", zoomOpen ? "true" : "false");
+        }
+        ctx.on(lookBtn, "click", () => {
+          if (zoomOpen) { closeZoom(); return; }
+          const ne = nearestCaseExhibit(); if (ne) openZoom(ne);
+        });
+
+        /* ---- C019: focus, when a panel opens and when it closes.
+           A panel that opens takes focus; closing hands it back to whatever had it. Without the first
+           half a keyboard visitor is told nothing opened and has to hunt for the new controls; without
+           the second, dismissing the guest book drops focus on <body> and the next Tab restarts at the
+           top of the document, several screens above the museum.
+
+           BOTH CLOSERS ARE LEVEL-TRIGGERED FROM THE FRAME LOOP - closeBook() and closeDoor() run on
+           every frame the visitor is not standing at the lectern or the door - so the restore is
+           guarded on the panel having actually been open. Unguarded, the museum would yank focus back
+           sixty times a second and no other control on the page could ever hold it. */
+        let focusFrom = null;
+        const softFocus = el => { if (el && el.isConnected && el.focus) try { el.focus({ preventScroll: true }); } catch (e) { el.focus(); } };
+        function takeFocus(el) { focusFrom = document.activeElement; softFocus(el); }
+        function giveFocus() { const el = focusFrom; focusFrom = null; softFocus(el); }
 
         // ---- guest book overlay
         const bookMount = byId("bookMount"), bookSkip = byId("bookSkip");
@@ -1204,8 +1310,9 @@ export default {
           // mounted on first approach, not at mount(): a visitor who never walks to the lectern never
           // fetches the assessment, and the import is idempotent for one who reaches it twice.
           mountAssessment(bookMount);
+          takeFocus(bookSkip);   // the one control that is in the panel before the engine mounts
         }
-        function closeBook() { bookOpen = false; bookPanel.classList.remove("show"); }
+        function closeBook() { const was = bookOpen; bookOpen = false; bookPanel.classList.remove("show"); if (was) giveFocus(); }
         // No submit handler here any more - the engine owns its own form. Once signed, the frame loop's
         // proximity check below stops running altogether (it is guarded on !ST.signed), so the panel is
         // NOT closed out from under the outcomes; "walk on" is what dismisses them.
@@ -1218,17 +1325,16 @@ export default {
         // C6) - this only changes what plays, never what the run is worth.
         let doorOpen = false;
         const slotBtn = byId("slotBtn"), doorNote = byId("doorNote"), lbFlash = byId("lbFlash");
-        function openDoor() { if (doorOpen || ST.phase !== "out") return; doorOpen = true; wirePanel.classList.add("show"); }
-        function closeDoor() { doorOpen = false; wirePanel.classList.remove("show"); doorNote.textContent = ""; slotBtn.disabled = false; }
+        function openDoor() { if (doorOpen || ST.phase !== "out") return; doorOpen = true; wirePanel.classList.add("show"); takeFocus(slotBtn); }
+        function closeDoor() { const was = doorOpen; doorOpen = false; wirePanel.classList.remove("show"); doorNote.textContent = ""; slotBtn.disabled = false; if (was) giveFocus(); }
 
         let flickerT0 = 0, flickering = false;
         function onConnect() {
           fireConnect(() => {
             closeDoor();
-            exhibitObjs.forEach(e => {
-              const t = tex[e.texKeyHorror]; if (t) { e.photoMat.map = t; e.photoMat.needsUpdate = true; }
-              e.spot.color.set(0x9fb8dd); e.spot.intensity = 0.75;
-            });
+            // C015: paint(), not a hand swap - a horror photograph still in the queue leaves its cozy
+            // original on the wall until it lands, rather than blanking the frame to white
+            exhibitObjs.forEach(e => { paint(e); e.spot.color.set(0x9fb8dd); e.spot.intensity = 0.75; });
             // swap placards to resource copy for each exhibit
             exhibitObjs.forEach(e => {
               const ids = RESOURCE_MAP[e.cfg.id];
@@ -1282,12 +1388,12 @@ export default {
 
         // ---- epilogue
         let epiOpen = false;
-        function openEpi() { if (epiOpen) return; epiOpen = true; epiPanel.classList.add("show"); }
-        function closeEpi() { epiOpen = false; epiPanel.classList.remove("show"); }
+        function openEpi() { if (epiOpen) return; epiOpen = true; epiPanel.classList.add("show"); takeFocus(byId("walkAgain3d")); }
+        function closeEpi() { const was = epiOpen; epiOpen = false; epiPanel.classList.remove("show"); if (was) giveFocus(); }
         ctx.on(byId("walkAgain3d"), "click", () => {
           ST.phase = "out"; ST.t = 0; ST.shrinkStartedAt = null; saveState();
           closeEpi(); closeZoom();
-          exhibitObjs.forEach(e => { const t = tex[e.texKeyCozy]; if (t) { e.photoMat.map = t; e.photoMat.needsUpdate = true; } e.spot.color.set(0xfff0d0); e.spot.intensity = 1.3; });
+          exhibitObjs.forEach(e => { paint(e); e.spot.color.set(0xfff0d0); e.spot.intensity = 1.3; });
           hallLights.forEach(l => { l.color.set(WARM_LIGHT); l.intensity = 0.85; });
           wallMat.color.set(WARM_WALL); rugMat.color.set(RUG_WARM); ambient.intensity = 0.55;
           scene.fog.near = FOG_NEAR_OUT; scene.fog.far = FOG_FAR_OUT;
@@ -1303,16 +1409,60 @@ export default {
         ctx.observe(new ResizeObserver(resize), lbStage);
         resize();
 
-        // ---- boot: resume from storage before the first frame, snap (no animation) to the saved phase.
-        Promise.all(texPromises).then(() => {
-          // the twelve photographs landed after the channel was left: there is nothing to boot into
+        /* ---- boot: resume from storage before the first frame, snap (no animation) to the saved phase.
+
+           C015's readiness is the ENTRANCE PLUS ONE PHOTOGRAPH: the exhibit the resume position is
+           nearest, on the side this phase shows. That is the only picture a visitor can see at the
+           moment the door opens; the other eleven are down a fogged hall and can arrive while the
+           walk is under way. If that one image is the thing that is missing, the other half of its own
+           pair stands in - a frame holding the wrong-mood photograph is a fallback, a white rectangle
+           is not - and only then does the museum open on nothing.
+
+           `queueRest` is the other eleven, one at a time, in the order the WALK meets them: the six
+           cozy exhibits outbound, the six horror ones in the order the return leg passes them, and
+           whichever leg the visitor is currently on first. Serial rather than parallel on purpose -
+           the point is that the NEXT frame is ready before the one after it, which twelve
+           simultaneous requests fighting for the same connections do not give you. */
+        function nearestExhibit() {
+          let best = EXHIBITS[0], bd = Infinity;
+          EXHIBITS.forEach(ex => { const d = Math.abs(ex.p - ST.t); if (d < bd) { bd = d; best = ex; } });
+          return best;
+        }
+        const twinOf = {};
+        EXHIBITS.forEach(ex => { twinOf[ex.cozy] = ex.horror; twinOf[ex.horror] = ex.cozy; });
+        function queueRest() {
+          const out = EXHIBITS.map(ex => ex.cozy);                       // the outbound walk's order
+          const back = EXHIBITS.map(ex => ex.horror).reverse();          // the return leg's order
+          const order = isReturning() ? back.concat(out) : out.concat(back);
+          (function next(i) {
+            if (i >= order.length || !gl || session !== mine) return;
+            const url = order[i];
+            loadTex(url).then(t => {
+              // a frame whose own photograph did not come needs its stand-in NOW, not whenever the
+              // queue happens to reach the other half of the pair - which, ordered by the walk, can
+              // be eleven loads later. This is the difference between a wall that goes up in the
+              // wrong mood and a wall that stays white for the rest of the leg.
+              const twin = t ? null : twinOf[url];
+              return twin && !tex[twin] ? loadTex(twin) : null;
+            }).then(() => next(i + 1));
+          })(0);
+        }
+        const firstEx = nearestExhibit();
+        const firstUrl = isReturning() ? firstEx.horror : firstEx.cozy;
+        loadTex(firstUrl).then(t => (t || firstUrl === firstEx.cozy) ? t : loadTex(firstEx.cozy)).then(() => {
+          // the photograph landed after the channel was left: there is nothing to boot into
           if (session !== mine || !gl) return;
-          exhibitObjs.forEach(e => {
-            const cozy = tex[e.texKeyCozy]; if (cozy) e.photoMat.map = cozy; e.photoMat.needsUpdate = true;
+          // test-only: WHEN the door opened, on the PAGE's clock, so a gate can put it against a
+          // resource's own start time without either number crossing a process boundary first.
+          // Removed in unmount() with the other hooks.
+          window.__lbBooted = performance.now();
+          window.__lbPhotos = () => exhibitObjs.map(e => {
+            const im = e.photoMat.map && e.photoMat.map.image;
+            return im ? String(im.currentSrc || im.src || "?") : null;
           });
+          exhibitObjs.forEach(paint);
           if (isReturning()) {
             exhibitObjs.forEach(e => {
-              const h = tex[e.texKeyHorror]; if (h) { e.photoMat.map = h; e.photoMat.needsUpdate = true; }
               e.spot.color.set(0x9fb8dd); e.spot.intensity = 0.75;
               const ids = RESOURCE_MAP[e.cfg.id];
               e.placards.forEach((m, i) => { m.visible = i < ids.length; if (i < ids.length) { const r = RES[ids[i]]; m.material.map = makePlacardTexture(ids[i], r.body, r.src); m.material.needsUpdate = true; } });
@@ -1333,6 +1483,7 @@ export default {
           glassGroup.visible = caseMode0;
           last = performance.now();
           ctx.frame(frame);
+          queueRest();       // the other eleven, behind the open door
         });
 
         let last = performance.now();
@@ -1356,7 +1507,7 @@ export default {
 
           if ((fwdHeld || backHeld) && !bookOpen && !epiOpen && !zoomOpen) {
             const dir = (fwdHeld ? 1 : 0) - (backHeld ? 1 : 0);
-            if (dir) { ST.t = Math.max(0, Math.min(1, ST.t + dir * WALK_SPEED * dt)); saveState(); }
+            if (dir) { ST.t = Math.max(0, Math.min(1, ST.t + dir * WALK_SPEED * dt)); saveWalk(); }
           }
           camera.position.z = zAt(ST.t);
           const rp = shrinkProgress(), caseMode = ST.phase === "out";
@@ -1376,6 +1527,7 @@ export default {
           // fisheye lens toward the open/closed target together.
           const nearEx = caseMode ? nearestCaseExhibit() : null;
           if (zoomOpen && (nearEx !== zoomExhibit || !caseMode)) closeZoom();
+          syncLook(!!nearEx);
           const zoomTarget = zoomOpen ? 1 : 0;
           if (reducedMotion) zoomEase = zoomTarget;
           else { const rate = (zoomTarget > zoomEase ? dt / 0.45 : dt / 0.3); zoomEase = zoomTarget > zoomEase ? Math.min(zoomTarget, zoomEase + rate) : Math.max(zoomTarget, zoomEase - rate); }
@@ -1474,6 +1626,7 @@ export default {
         return best;
       }
       let step = nearestStep();
+      let booted = false;   // C019: see the focus move at the end of render()
 
       function render() {
         const s = STEPS[step];
@@ -1485,14 +1638,16 @@ export default {
           case "book": {
             // 2.20: same engine the 3D lectern mounts, same JSON. The step is otherwise empty markup -
             // the questions have exactly one definition and it is not in this file.
+            // C019: a real button. The id survives on purpose - it is what the guest-book step's
+            // "walk on" has always been called, and three separate gate sections click it by name.
             wrap.innerHTML = `<div id="flBookMount"></div>
-              <div class="fl-actions"><a class="skip" id="flSkip">walk on</a></div>`;
+              <div class="fl-actions"><button type="button" class="skip" id="flSkip">walk on</button></div>`;
             break;
           }
           case "teepee": case "car": case "shoebox": case "storage": case "masonjar": case "van": {
             const ex = EXHIBITS.find(e => e.id === s.id);
             wrap.innerHTML = `<span class="fl-name">${ex.label}</span><p class="fl-sub">cozy - tap the photo to look closer</p>
-              <div class="fl-zoomable" id="flZoom"><img class="fl-photo" src="${ex.cozy}" alt="${ex.label} cozy"><div class="lb-flat-glass">${GLASS_SVG}</div></div>
+              <button type="button" class="fl-zoomable" id="flZoom" aria-pressed="false" aria-label="Look closer at ${ex.label}"><img class="fl-photo" src="${ex.cozy}" alt="${ex.label} cozy"><div class="lb-flat-glass">${GLASS_SVG}</div></button>
               ${FACTS[ex.id].map(f => `<div class="fl-card">${bodyHTML(f.body)}<span class="fl-src">${f.src}</span></div>`).join("")}
               <div class="fl-actions"><button id="flNext">NEXT</button></div>`;
             break;
@@ -1506,7 +1661,7 @@ export default {
             const ex = EXHIBITS.find(e => e.id === s.id.replace("-h", ""));
             const ids = RESOURCE_MAP[ex.id];
             wrap.innerHTML = `<span class="fl-name">${ex.label}</span><p class="fl-sub">the walls are closer now</p>
-              <div class="fl-zoomable" id="flZoom"><img class="fl-photo" src="${ex.horror}" alt="${ex.label} horror"></div>
+              <button type="button" class="fl-zoomable" id="flZoom" aria-pressed="false" aria-label="Look closer at ${ex.label}"><img class="fl-photo" src="${ex.horror}" alt="${ex.label} horror"></button>
               ${ids.map(id => `<div class="fl-card">${RES[id].body}<span class="fl-src">${RES[id].src}</span></div>`).join("")}
               <div class="fl-actions"><button id="flNext">NEXT</button></div>`;
             break;
@@ -1524,6 +1679,16 @@ export default {
           }
         }
         wire();
+        /* C019: render() replaces the step's whole markup, so a keyboard visitor who just pressed
+           NEXT is left with focus on <body> and a Tab that restarts at the top of the document. Focus
+           moves to the step's primary control instead - named in list order of PREFERENCE but resolved
+           by querySelector in DOCUMENT order, which is why #flBack (inserted first in .fl-actions) is
+           deliberately not in the list. Not on the first render: that one runs at boot, and a channel
+           that steals focus from the page the moment it mounts is a worse bug than the one this fixes. */
+        if (booted) {
+          const f = wrap.querySelector("#flNext, #flSlot, #flAgain, #flSkip") || wrap.querySelector("button");
+          if (f) try { f.focus({ preventScroll: true }); } catch (e) { f.focus(); }
+        }
       }
       function goNext() { step = Math.min(STEPS.length - 1, step + 1); render(); }
       function goBack() { step = Math.max(0, step - 1); render(); }
@@ -1542,7 +1707,11 @@ export default {
         const bookMount = q("flBookMount");
         if (bookMount) mountAssessment(bookMount);
         const zoomable = q("flZoom");
-        if (zoomable) ctx.on(zoomable, "click", () => zoomable.classList.toggle("zoomed"));
+        if (zoomable) ctx.on(zoomable, "click", () => {
+          // C019: it is a toggle, so it says which way it is set. Keyboard activation comes free with
+          // the element; announcing the state does not.
+          zoomable.setAttribute("aria-pressed", zoomable.classList.toggle("zoomed") ? "true" : "false");
+        });
         // the door: an empty magnifying-glass hole, click to put the glass in - no wire, no drag. Off stream,
         // nothing happens and the museum stays explorable; live, a laser flash plays, then the same
         // breach/shrink sequence the 3D path uses.
@@ -1561,6 +1730,7 @@ export default {
         if (again) ctx.on(again, "click", () => { ST.phase = "out"; ST.t = 0; ST.shrinkStartedAt = null; saveState(); step = 0; render(); });
       }
       render();
+      booted = true;
     }
   },
 
@@ -1587,9 +1757,14 @@ export default {
      window.__lbState and window.__lbLoaded go because they close over this mount's state object: left
      behind, they would answer questions about a museum that is no longer in the document. */
   unmount() {
+    // C016: leaving the channel is the other way a walk ends, and no pagehide fires for it. Whatever
+    // the throttle was holding is written here, before the closure it reads goes out of scope.
+    flushWalk(); flushWalk = () => {};
     session = null;
     try { delete window.__lbState; } catch (e) { window.__lbState = undefined; }
     try { delete window.__lbLoaded; } catch (e) { window.__lbLoaded = undefined; }
+    try { delete window.__lbBooted; } catch (e) { window.__lbBooted = undefined; }
+    try { delete window.__lbPhotos; } catch (e) { window.__lbPhotos = undefined; }
     if (!gl) return;
     const g = gl;
     gl = null;
