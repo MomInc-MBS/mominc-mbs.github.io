@@ -177,13 +177,17 @@ export default {
       ? '<ul class="fl-bul">' + b.map(s => "<li>" + s + "</li>").join("") + "</ul>" : b;
     // half the round-2 spacing (0.125 fraction vs 0.25) packs six exhibits into the same HALL_LEN - denser,
     // not longer, per 5.1. Old and new pairs interleave so the walk still reads as a housing progression.
+    /* C012 extends this list with `short`, the name the route strip wears. It is a SEPARATE field
+       rather than a slice of `label`: "THE STORAGE UNIT" cut to fit is "THE STORAG", and the strip's
+       whole job is being readable at a glance in the 9px of a phone stage. Nothing else reads it, and
+       the full label is still what the placard, the nameplate and every aria string use. */
     const EXHIBITS = [
-      { id: "teepee", label: "THE TEEPEE", p: 0.15, side: 1, cozy: "assets/lilbf-teepee-cozy.jpg", horror: "assets/lilbf-teepee-horror.jpg" },
-      { id: "car", label: "THE CAR", p: 0.275, side: -1, cozy: "assets/lilbf-car-cozy.jpg", horror: "assets/lilbf-car-horror.jpg" },
-      { id: "shoebox", label: "THE SHOEBOX", p: 0.4, side: 1, cozy: "assets/lilbf-shoebox-cozy.jpg", horror: "assets/lilbf-shoebox-horror.jpg" },
-      { id: "storage", label: "THE STORAGE UNIT", p: 0.525, side: -1, cozy: "assets/lilbf-storage-cozy.jpg", horror: "assets/lilbf-storage-horror.jpg" },
-      { id: "masonjar", label: "THE MASON JAR", p: 0.65, side: 1, cozy: "assets/lilbf-masonjar-cozy.jpg", horror: "assets/lilbf-masonjar-horror.jpg" },
-      { id: "van", label: "THE VAN", p: 0.775, side: -1, cozy: "assets/lilbf-van-cozy.jpg", horror: "assets/lilbf-van-horror.jpg" }
+      { id: "teepee", label: "THE TEEPEE", short: "TEEPEE", p: 0.15, side: 1, cozy: "assets/lilbf-teepee-cozy.jpg", horror: "assets/lilbf-teepee-horror.jpg" },
+      { id: "car", label: "THE CAR", short: "CAR", p: 0.275, side: -1, cozy: "assets/lilbf-car-cozy.jpg", horror: "assets/lilbf-car-horror.jpg" },
+      { id: "shoebox", label: "THE SHOEBOX", short: "SHOEBOX", p: 0.4, side: 1, cozy: "assets/lilbf-shoebox-cozy.jpg", horror: "assets/lilbf-shoebox-horror.jpg" },
+      { id: "storage", label: "THE STORAGE UNIT", short: "STORAGE", p: 0.525, side: -1, cozy: "assets/lilbf-storage-cozy.jpg", horror: "assets/lilbf-storage-horror.jpg" },
+      { id: "masonjar", label: "THE MASON JAR", short: "JAR", p: 0.65, side: 1, cozy: "assets/lilbf-masonjar-cozy.jpg", horror: "assets/lilbf-masonjar-horror.jpg" },
+      { id: "van", label: "THE VAN", short: "VAN", p: 0.775, side: -1, cozy: "assets/lilbf-van-cozy.jpg", horror: "assets/lilbf-van-horror.jpg" }
     ];
     const TITLE_TEXT = { h1: "THE RESIDENTIAL COMPRESSION PROGRAM.", h2: "A MOM Inc retrospective.", body: FACTS.teepee[0].body };
     const CLOSING_LINE = "You leave smaller than you came in. Everyone does.";
@@ -248,6 +252,12 @@ export default {
         shrinkStartedAt: null,
         // 4.1: allowlisted exactly like `phase`, and for the same reason - it selects which code runs.
         mode: MODES.indexOf(saved.mode) >= 0 ? saved.mode : "museum",
+        /* C012: which exhibits have been inspected. Written as a FILTER OF EXHIBITS rather than a
+           filter of the saved array, which is the same allowlist argument `phase` gets and closes
+           three edits at once: an unknown id cannot get in, a repeated one cannot get in twice, and
+           the length is bounded by the six that exist rather than by whatever a hand edit typed. The
+           order is EXHIBITS' own, so the strip's marks never depend on the order they were read in. */
+        read: Array.isArray(saved.read) ? EXHIBITS.filter(e => saved.read.indexOf(e.id) >= 0).map(e => e.id) : [],
       };
       if (phase !== "out") {
         const at = Number(saved.shrinkStartedAt);
@@ -352,11 +362,75 @@ export default {
       const raw = Math.max(0, Math.min(1, (Date.now() - ST.shrinkStartedAt) / SHRINK_MS));
       return raw * raw;   // eased in: gentle at first, closing in faster as it goes, per Ian
     }
+
+    /* C017: THE CONTRACTION MADE VISIBLE, AND IT READS THE SAME NUMBER.
+       SHRINK_MS, the eased curve above and every consumer of rp are untouched: what was missing was
+       never the logic, it was that a wall-clock contraction with no fixed reference beside it is
+       invisible while it happens and inexplicable when it stops. So the hall gets a floor ruler -
+       four gold rails a side, laid at the four half-widths the wall travels between, which never move
+       - and the closing wall swallows one rail per third of the contraction. The rails are the cue;
+       the wall arriving at them is the animation, and there is no second timeline anywhere in it.
+
+       markAt() takes wallHalf(rp), the identical expression the hall mesh is scaled by, and answers
+       which rail the wall is standing on. It does not re-derive the curve from Date.now(), from the
+       phase or from the walk - that is 4.4's mistake, and this is the row where making it twice would
+       be a cue that disagrees with the wall it is describing. WALL_OUT/WALL_IN/wallHalf moved OUT of
+       run3D() for the same reason: the flat fallback narrates the same marks, and two copies of the
+       geometry is how the two paths start telling a visitor different numbers. */
+    const WALL_OUT = 1.5, WALL_IN = 0.6;
+    const MARKS = [WALL_OUT, 1.2, 0.9, WALL_IN];   // the rails, outermost first; evenly spaced in rp
+    const wallHalf = rp => WALL_OUT + (WALL_IN - WALL_OUT) * rp;
+    function markAt(rp) {
+      const half = wallHalf(rp);
+      let i = 0;
+      while (i + 1 < MARKS.length && half <= MARKS[i + 1] + 1e-6) i++;
+      return i + 1;
+    }
+    function markLine(rp) { return "MARK " + markAt(rp) + " OF " + MARKS.length; }
+    /* The narration, and the second half of the acceptance is the LAST line: reaching the minimum has
+       to be legible as an end rather than as a stuck museum, and it names the control that leaves.
+       The entrance is t=0 and WALK raises t, so BACK is what returns - the "turn around" beat flips
+       the camera, never the buttons. */
+    function shrinkNarration(rp) {
+      if (!isReturning()) return "";
+      return rp >= 1
+        ? "THE HALL STOPS HERE · " + markLine(rp) + " · HOLD BACK FOR THE ENTRANCE"
+        : "THE HALL IS CLOSING · " + markLine(rp);
+    }
+
+    /* C011: the tutorial's own key, and "its own" is the whole point of the field. What it records is
+       that this visitor has been taught how to open a miniature - which is not ST.signed, not the
+       phase, not completion and not anything in mbs-state: a visitor who finished the whole museum
+       last week still knows how to open one, and a visitor who has opened one but walked out of the
+       hall does too. Tying it to any of those either re-teaches someone who knows or, worse, marks
+       them taught for reaching an end they reached without ever inspecting anything.
+
+       A separate key rather than a fifth field on the museum record, for the reason 4.1 gave the mode
+       its own home and 2.22 gave the CRT setting one: this is a preference-shaped fact about the
+       PERSON, and "walk again" resets the walk without unteaching them. */
+    const TUTOR_KEY = "mbs-lilbf-taught-v1";
+    let taught = false;
+    try { taught = localStorage.getItem(TUTOR_KEY) === "1"; } catch { }
+    function markTaught() {
+      if (taught) return;
+      taught = true;
+      try { localStorage.setItem(TUTOR_KEY, "1"); } catch { }
+    }
+
+    /* C012: an exhibit becomes "read" when it has actually been opened - the 3D zoom, or the flat
+       gallery rendering its step, which are the two places its facts are on screen. NEVER a push:
+       __lbLoaded holds the array this one came from and Object.freeze is shallow, so mutating in
+       place would quietly rewrite the loader's own answer about what it accepted. */
+    function markRead(id) {
+      if (ST.read.indexOf(id) >= 0) return;
+      ST.read = ST.read.concat(id);
+      saveState();
+    }
     // test-only readback for the save-migration fixture check (18.6) - the epilogue phase blocks every normal
     // saveState() path (walking is disabled there), so there is no other way to observe a migrated value
     // without resetting it. Reads ST, changes nothing. Removed in unmount(): it closes over this mount's ST,
     // and a reader that outlives the fragment would be answering about a museum that is no longer there.
-    window.__lbState = () => ({ phase: ST.phase, t: ST.t, signed: ST.signed, shrinkStartedAt: ST.shrinkStartedAt, mode: ST.mode, rp: shrinkProgress() });
+    window.__lbState = () => ({ phase: ST.phase, t: ST.t, signed: ST.signed, shrinkStartedAt: ST.shrinkStartedAt, mode: ST.mode, rp: shrinkProgress(), read: ST.read.slice(), taught: taught, mark: markAt(shrinkProgress()) });
     const reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     // ---- canvas-text sign textures, shared by both render paths' data but only consumed by the 3D path
@@ -787,16 +861,17 @@ export default {
       // the ceiling no longer descends (that read as the walls cropping the view, per Ian) - CEIL_H is fixed.
       // What "vanishes" instead is fog: near/far pull in as the return-trip shrink progresses, so the far hall
       // and its ceiling fade into darkness rather than being pressed down onto the player.
-      const WALL_OUT = 1.5, WALL_IN = 0.6, CEIL_H = 3.0, EYE_OUT = 1.5, EYE_IN = 0.9;
+      // C017: WALL_OUT, WALL_IN, MARKS and wallHalf() are module scope now - the flat fallback narrates
+      // the same marks, and one geometry cannot be kept in step with itself in two files' worth of scope.
+      const CEIL_H = 3.0, EYE_OUT = 1.5, EYE_IN = 0.9;
       const FOG_NEAR_OUT = 95, FOG_FAR_OUT = 115, FOG_NEAR_IN = 5, FOG_FAR_IN = 13;
       const WALK_SPEED = 1.6 / HALL_LEN;
       const GUESTBOOK_P = 0.035, GUESTBOOK_SIDE = -1, TITLE_P = 0.06, TITLE_SIDE = 1, FUSEBOX_P = 1;
       const zAt = p => START_Z - p * HALL_LEN;
-      const wallHalf = rp => WALL_OUT + (WALL_IN - WALL_OUT) * rp;
       const eyeY = rp => EYE_OUT + (EYE_IN - EYE_OUT) * rp;
       const loom = rp => 1 + 0.6 * rp;
 
-      const hint = byId("lbHint"), prompt = byId("lbPrompt");
+      const hint = byId("lbHint"), prompt = byId("lbPrompt"), shrinkNote = byId("lbShrink"), routeEl = byId("lbRoute");
       const walkBtn = byId("lbWalk"), backBtn = byId("lbBack"), lookZone = byId("lookZone");
       const bookPanel = byId("bookPanel"), wirePanel = byId("wirePanel"), epiPanel = byId("epiPanel");
 
@@ -866,6 +941,30 @@ export default {
         rugMesh.rotation.x = -Math.PI / 2; rugMesh.position.set(0, 0.01, CENTER_Z);
         scene.add(rugMesh);
         const RUG_WARM = new THREE.Color(0xffffff), RUG_COLD = new THREE.Color(0xa9b4c2);
+
+        /* ---- C017: the floor ruler. Eight rails - the four MARKS half-widths, mirrored - running the
+           whole length of the hall at the widths the wall passes through on its way in. They are the
+           one thing in this room that never moves, which is the entire trick: a wall closing in an
+           empty corridor has nothing to close ON, and the contraction reads as a camera effect. With
+           the rails laid down first, the wall visibly eats one per third of the 37.5 seconds and the
+           visitor can count what is left.
+
+           Nothing here is animated and nothing here reads a clock. Occlusion does the work for free:
+           the hall is a BackSide box, so a rail outside the current wall plane is simply behind it and
+           the depth test hides it. y=0.02 puts them ABOVE the runner rug (0.01), so the innermost pair
+           crosses the wine felt rather than disappearing under it, and MeshStandardMaterial means they
+           take the cold light on the return with everything else. One geometry and one material for
+           all eight; unmount()'s traverse disposes both several times over, which its own note already
+           records as safe. */
+        const railMat = new THREE.MeshStandardMaterial({ color: 0xe6c67a, roughness: 0.85, metalness: 0 });
+        const railGeo = new THREE.PlaneGeometry(0.06, HALL_LEN + 8);
+        MARKS.forEach(m => [-1, 1].forEach(s => {
+          const rail = new THREE.Mesh(railGeo, railMat);
+          rail.name = "rail";   // read back by the gate off the real scene graph, see __lbHall below
+          rail.rotation.x = -Math.PI / 2;
+          rail.position.set(s * m, 0.02, CENTER_Z);
+          scene.add(rail);
+        }));
 
         scene.add(new THREE.HemisphereLight(0xfff6e6, 0x241d14, 0.65));
         const ambient = new THREE.AmbientLight(0xffffff, 0.55);   // flat, no-normal-dependent floor so a
@@ -1202,9 +1301,9 @@ export default {
             const ne = nearestCaseExhibit(); if (ne) openZoom(ne);
           } else if (e.key === "Escape" && zoomOpen) { closeZoom(); }
         });
-        ctx.on(walkBtn, "pointerdown", e => { fwdHeld = true; e.preventDefault(); dismissHint(); });
+        ctx.on(walkBtn, "pointerdown", e => { fwdHeld = true; e.preventDefault(); });
         ["pointerup", "pointercancel", "pointerleave"].forEach(ev => ctx.on(walkBtn, ev, () => fwdHeld = false));
-        ctx.on(backBtn, "pointerdown", e => { backHeld = true; e.preventDefault(); dismissHint(); });
+        ctx.on(backBtn, "pointerdown", e => { backHeld = true; e.preventDefault(); });
         ["pointerup", "pointercancel", "pointerleave"].forEach(ev => ctx.on(backBtn, ev, () => backHeld = false));
 
         let targetYaw = 0, targetPitch = 0, downX = 0, downY = 0, downT = 0;
@@ -1214,10 +1313,10 @@ export default {
           targetYaw = (nx - 0.5) * Math.PI;
           targetPitch = Math.max(-Math.PI / 3, Math.min(Math.PI / 3, (0.5 - ny) * (Math.PI / 2)));
         }
-        ctx.on(lookZone, "pointermove", e => { updateLook(e); dismissHint(); });
+        ctx.on(lookZone, "pointermove", e => updateLook(e));
         ctx.on(lookZone, "pointerdown", e => {
           updateLook(e); downX = e.clientX; downY = e.clientY; downT = performance.now();
-          lookZone.setPointerCapture(e.pointerId); dismissHint();
+          lookZone.setPointerCapture(e.pointerId);
         });
         ctx.on(lookZone, "pointerup", e => {
           const isTap = performance.now() - downT < 400 && Math.hypot(e.clientX - downX, e.clientY - downY) < 10;
@@ -1225,9 +1324,72 @@ export default {
           if (zoomOpen) closeZoom(); else { const ne = nearestCaseExhibit(); if (ne) openZoom(ne); }
         });
 
-        let hintShown = true;
-        function dismissHint() { if (!hintShown) return; hintShown = false; hint.classList.add("hide"); }
-        ctx.timeout(dismissHint, 7000);
+        /* ---- C011: the contextual tutorial, and C017's readout, and C012's route strip. All three are
+           written from the frame loop, which is the only place that knows where the visitor is standing
+           and how far the walls have come - and all three go through a one-key memo, because writing
+           text and class lists sixty times a second is the habit C016 spent a packet breaking.
+
+           THE TUTORIAL IS NOT A TIMER ANY MORE. The old #lbHint carried a general instruction at the
+           entrance and a ctx.timeout(7000) took it away, so it taught whoever was looking at second
+           three and nobody else - and every walk, every look and every press dismissed it early, which
+           is a visitor being punished for doing the thing the banner was about to explain. It now
+           appears at the FIRST exhibit, says how to open that one, and is spent the first time anyone
+           opens any of them, forever. Two consequences, both deliberate: the generic "Look closer."
+           prompt is suppressed while it is up (they are the same pill position and the tutorial says
+           strictly more), and dismissHint() is gone - nothing dismisses this, doing it does. */
+        let hintOn = null;
+        function syncHint(on) {
+          if (on === hintOn) return;
+          hintOn = on;
+          hint.classList.toggle("show", on);
+        }
+        let shrinkText = null;
+        function syncShrink(rp) {
+          const txt = shrinkNarration(rp);
+          if (txt === shrinkText) return;
+          shrinkText = txt;
+          shrinkNote.textContent = txt;
+          shrinkNote.classList.toggle("show", !!txt);
+        }
+        /* C012: six marks, built from EXHIBITS, in the order the WALK meets them - which is why the
+           list is rebuilt in reverse on the return leg: the van is the first thing a returning visitor
+           passes, and a strip that still reads teepee-first is describing a walk nobody is on. The DOM
+           order is what reverses (appendChild moves a node it already holds), not a flex direction, so
+           the reading order and the visual order cannot drift apart.
+
+           "Visited" is DERIVED, never a seventh stored thing: outbound it is the exhibits the walk is
+           already past, and on the return leg it is all six, because reaching the door is what a
+           return leg means. "Read" is the stored half, and it is stored because inspecting is the
+           thing a visitor does that leaves no trace in their position.
+
+           NOT A MENU, which is half the acceptance: there is no control in here, .lb-hud's
+           pointer-events:none means there could not be, and walking is still the only way between two
+           exhibits. */
+        const routeItems = {};
+        EXHIBITS.forEach(ex => {
+          const li = document.createElement("li");
+          li.className = "lb-route-i";
+          li.dataset.ex = ex.id;
+          li.textContent = ex.short;
+          routeEl.appendChild(li);
+          routeItems[ex.id] = li;
+        });
+        let routeKey = null;
+        function syncRoute() {
+          const back = isReturning();
+          const seen = EXHIBITS.map(ex => (back || ex.p <= ST.t) ? "1" : "0").join("");
+          const key = (back ? "b" : "f") + seen + "|" + ST.read.join(",");
+          if (key === routeKey) return;
+          const reordered = routeKey === null || (routeKey[0] === "b") !== back;
+          routeKey = key;
+          if (reordered) (back ? EXHIBITS.slice().reverse() : EXHIBITS).forEach(ex => routeEl.appendChild(routeItems[ex.id]));
+          EXHIBITS.forEach((ex, i) => {
+            const li = routeItems[ex.id], v = seen[i] === "1", r = ST.read.indexOf(ex.id) >= 0;
+            li.classList.toggle("is-visited", v);
+            li.classList.toggle("is-read", r);
+            li.setAttribute("aria-label", ex.label + (r ? ", inspected" : v ? ", walked past" : ", not reached yet"));
+          });
+        }
 
         // three.js's actual Y-axis rotation of the base forward vector (0,0,-1) is (-sin(yaw),0,-cos(yaw)) -
         // matching camera.rotation.y=yaw (order YXZ) is what the renderer really does, so the near+facing
@@ -1261,6 +1423,8 @@ export default {
         function openZoom(e) {
           zoomExhibit = e; zoomOpen = true;
           zoomYawFrom = yaw; zoomYawTo = bearingTo(caseAnchorOf(e)); zoomTurning = true;
+          markTaught();          // C011: opening one is what teaches, and it teaches once, for good
+          markRead(e.cfg.id);    // C012: and it is the only thing that marks an exhibit read here
         }
         function closeZoom() { zoomOpen = false; zoomTurning = false; }
         /* C019: the inspect control. Same action the look zone's tap and the E key already ran, given
@@ -1391,7 +1555,10 @@ export default {
         function openEpi() { if (epiOpen) return; epiOpen = true; epiPanel.classList.add("show"); takeFocus(byId("walkAgain3d")); }
         function closeEpi() { const was = epiOpen; epiOpen = false; epiPanel.classList.remove("show"); if (was) giveFocus(); }
         ctx.on(byId("walkAgain3d"), "click", () => {
-          ST.phase = "out"; ST.t = 0; ST.shrinkStartedAt = null; saveState();
+          // C012: a new walk starts with nothing seen. The route strip is a record of THIS walk, not a
+          // trophy cabinet - six gold marks over an untouched hall would say the opposite of what it
+          // is for. `taught` is the one thing that survives, which is exactly why it is not in here.
+          ST.phase = "out"; ST.t = 0; ST.shrinkStartedAt = null; ST.read = []; saveState();
           closeEpi(); closeZoom();
           exhibitObjs.forEach(e => { paint(e); e.spot.color.set(0xfff0d0); e.spot.intensity = 1.3; });
           hallLights.forEach(l => { l.color.set(WARM_LIGHT); l.intensity = 0.85; });
@@ -1459,6 +1626,16 @@ export default {
           window.__lbPhotos = () => exhibitObjs.map(e => {
             const im = e.photoMat.map && e.photoMat.map.image;
             return im ? String(im.currentSrc || im.src || "?") : null;
+          });
+          /* C017, test-only, and RAW: where the eight rails are, and where the wall actually is this
+             frame - both straight off the scene graph, neither of them an answer this channel worked
+             out for anyone. Which rails are still inside the hall, and whether the narration in the
+             DOM agrees with the wall, are the gate's arithmetic to do; a hook that returned "3 marks
+             left" would be the museum marking its own homework, which is the one thing 4.9 and 4.7
+             both had to design around. Removed in unmount() with the other hooks. */
+          window.__lbHall = () => ({
+            half: hallMesh.scale.x / 2,
+            rails: scene.children.filter(o => o.name === "rail").map(o => Math.round(o.position.x * 1000) / 1000)
           });
           exhibitObjs.forEach(paint);
           if (isReturning()) {
@@ -1528,6 +1705,13 @@ export default {
           const nearEx = caseMode ? nearestCaseExhibit() : null;
           if (zoomOpen && (nearEx !== zoomExhibit || !caseMode)) closeZoom();
           syncLook(!!nearEx);
+          // C011: at the FIRST exhibit on the route, to a visitor who has never opened one. EXHIBITS[0]
+          // rather than the string "teepee": the tutorial belongs to whichever exhibit the walk meets
+          // first, and 4.11a re-authors this list.
+          const teaching = !taught && !!nearEx && !zoomOpen && nearEx.cfg.id === EXHIBITS[0].id;
+          syncHint(teaching);
+          syncShrink(rp);
+          syncRoute();
           const zoomTarget = zoomOpen ? 1 : 0;
           if (reducedMotion) zoomEase = zoomTarget;
           else { const rate = (zoomTarget > zoomEase ? dt / 0.45 : dt / 0.3); zoomEase = zoomTarget > zoomEase ? Math.min(zoomTarget, zoomEase + rate) : Math.max(zoomTarget, zoomEase - rate); }
@@ -1565,7 +1749,7 @@ export default {
             if (f.z > 0.3) { ST.phase = "back"; saveState(); prompt.classList.remove("show"); }
           } else if (caseMode && nearFacing(doorGroup.position, 1.5, 0.35)) {
             prompt.textContent = "The door has a slot."; prompt.classList.add("show");
-          } else if (nearEx && !zoomOpen) {
+          } else if (nearEx && !zoomOpen && !teaching) {
             prompt.textContent = "Look closer."; prompt.classList.add("show");
           } else prompt.classList.remove("show");
 
@@ -1646,6 +1830,7 @@ export default {
           }
           case "teepee": case "car": case "shoebox": case "storage": case "masonjar": case "van": {
             const ex = EXHIBITS.find(e => e.id === s.id);
+            markRead(ex.id);   // C012: on this path the step IS the exhibit open, facts and all
             wrap.innerHTML = `<span class="fl-name">${ex.label}</span><p class="fl-sub">cozy - tap the photo to look closer</p>
               <button type="button" class="fl-zoomable" id="flZoom" aria-pressed="false" aria-label="Look closer at ${ex.label}"><img class="fl-photo" src="${ex.cozy}" alt="${ex.label} cozy"><div class="lb-flat-glass">${GLASS_SVG}</div></button>
               ${FACTS[ex.id].map(f => `<div class="fl-card">${bodyHTML(f.body)}<span class="fl-src">${f.src}</span></div>`).join("")}
@@ -1660,7 +1845,12 @@ export default {
           case "teepee-h": case "car-h": case "shoebox-h": case "storage-h": case "masonjar-h": case "van-h": {
             const ex = EXHIBITS.find(e => e.id === s.id.replace("-h", ""));
             const ids = RESOURCE_MAP[ex.id];
-            wrap.innerHTML = `<span class="fl-name">${ex.label}</span><p class="fl-sub">the walls are closer now</p>
+            markRead(ex.id);
+            // C017: the same rail, off the same wallHalf(). This path has no hall to lay rails in, so
+            // the mark is all there is of the cue here - and it is the same number the 3D narration
+            // reads, never a second count of steps taken.
+            const rpF = shrinkProgress();
+            wrap.innerHTML = `<span class="fl-name">${ex.label}</span><p class="fl-sub">the walls are closer now - ${markLine(rpF)}${rpF >= 1 ? ", the last" : ""}</p>
               <button type="button" class="fl-zoomable" id="flZoom" aria-pressed="false" aria-label="Look closer at ${ex.label}"><img class="fl-photo" src="${ex.horror}" alt="${ex.label} horror"></button>
               ${ids.map(id => `<div class="fl-card">${RES[id].body}<span class="fl-src">${RES[id].src}</span></div>`).join("")}
               <div class="fl-actions"><button id="flNext">NEXT</button></div>`;
@@ -1711,6 +1901,7 @@ export default {
           // C019: it is a toggle, so it says which way it is set. Keyboard activation comes free with
           // the element; announcing the state does not.
           zoomable.setAttribute("aria-pressed", zoomable.classList.toggle("zoomed") ? "true" : "false");
+          markTaught();   // C011: this path's magnifier is the same lesson, so it spends the same key
         });
         // the door: an empty magnifying-glass hole, click to put the glass in - no wire, no drag. Off stream,
         // nothing happens and the museum stays explorable; live, a laser flash plays, then the same
@@ -1727,7 +1918,7 @@ export default {
           } else if (note) { note.textContent = "Nothing happens."; }
         });
         const again = q("flAgain");
-        if (again) ctx.on(again, "click", () => { ST.phase = "out"; ST.t = 0; ST.shrinkStartedAt = null; saveState(); step = 0; render(); });
+        if (again) ctx.on(again, "click", () => { ST.phase = "out"; ST.t = 0; ST.shrinkStartedAt = null; ST.read = []; saveState(); step = 0; render(); });
       }
       render();
       booted = true;
@@ -1765,6 +1956,7 @@ export default {
     try { delete window.__lbLoaded; } catch (e) { window.__lbLoaded = undefined; }
     try { delete window.__lbBooted; } catch (e) { window.__lbBooted = undefined; }
     try { delete window.__lbPhotos; } catch (e) { window.__lbPhotos = undefined; }
+    try { delete window.__lbHall; } catch (e) { window.__lbHall = undefined; }
     if (!gl) return;
     const g = gl;
     gl = null;

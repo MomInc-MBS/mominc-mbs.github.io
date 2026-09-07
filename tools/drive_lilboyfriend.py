@@ -183,9 +183,12 @@ with sync_playwright() as pw:
     t3 = state()["t"]
     check(t3 > t2, "holding the WALK button walks forward too (t %.4f -> %.4f)" % (t2, t3))
 
-    # ---- the hint dismiss, which is the ctx.timeout plus the look zone's pointermove
-    check(pg.evaluate("() => document.querySelector('#lbHint').classList.contains('hide')"),
-          "the hint was dismissed (the look zone's pointermove and/or the 7s timer fired)")
+    # ---- C011 replaced the timed banner with a contextual tutorial, so what this line used to assert
+    # (that the 7s timer or a pointermove had taken the instruction away) no longer exists. What is
+    # left of it here is the cheap half - nothing is being shown at the entrance, where there is
+    # nothing to teach. The tutorial's own section, at the bottom, drives it at the exhibit.
+    check(not pg.evaluate("() => document.querySelector('#lbHint').classList.contains('show')"),
+          "C011: no banner at the entrance - the hint is contextual now, not timed")
 
     # ---- the guest book: level-triggered by proximity from inside the frame loop
     pg.evaluate("""() => { const s = JSON.parse(localStorage.getItem('mbs-lilbf-museum-v2') || '{}');
@@ -2162,6 +2165,256 @@ with sync_playwright() as pw:
     kbclean = [e for e in kberrs if "favicon" not in e and "jsdelivr" not in e.lower()]
     check(not kbclean, "C019: no page errors across the keyboard-only run (%s)" % (kbclean[:2] or "none"))
     kb.close()
+
+    # ================================================================================================
+    # ---- 4.11 packet 2: C011 the tutorial, C017 the contraction cue, C012 the route strip ----------
+    # ================================================================================================
+    # Three tickets about a visitor knowing where they are, and every one of them has a passing shape
+    # that fixed nothing, so every one of them is driven as a matched pair.
+    #
+    #   C011 asks for the timed banner to become ONE contextual prompt. Deleting the banner outright
+    #   passes "no timed banner" perfectly and teaches nobody, so the run below asserts both halves:
+    #   nothing at the entrance, the tutorial AT the first exhibit, and - the assertion the old build
+    #   cannot pass - that it is still there eleven seconds after mount, four seconds past the death
+    #   of the old ctx.timeout(7000). Then that opening one spends it forever, and that resetting the
+    #   MUSEUM does not un-spend it, which is what "tracked separately from completion" buys.
+    #
+    #   C017 asks for a VISIBLE cue while SHRINK_MS keeps the logic. A cue that runs its own clock, or
+    #   its own curve, is 4.4's mistake made twice - so the gate reads the rails and the wall straight
+    #   off the scene graph (__lbHall, raw positions, no answers), works out for itself which rails are
+    #   still inside the hall, and requires the DOM narration to agree with the geometry. Loitering is
+    #   the acceptance's own word: nothing below touches the keyboard or the mouse while it advances.
+    #
+    #   C012 asks for a strip that is not a menu. Six links would show visited/read state beautifully
+    #   and fail the row, so "no control in it, and pointer-events off" is asserted as flatly as the
+    #   states are, along with the reversal, which is the half a static list of six passes silently.
+    print("\n  -- 4.11 pkt 2: C011 the tutorial, C017 the contraction cue, C012 the route strip --")
+
+    KEY2, TKEY = "mbs-lilbf-museum-v2", "mbs-lilbf-taught-v1"
+    SEED_JS = """([rec, tau, k, tk]) => {
+      if (rec === null) localStorage.removeItem(k); else localStorage.setItem(k, JSON.stringify(rec));
+      if (tau === null) localStorage.removeItem(tk); else localStorage.setItem(tk, tau);
+    }"""
+
+    def fresh(tag):
+        p2 = b.new_page(viewport={"width": 1280, "height": 900})
+        p2.on("pageerror", lambda e: lwerrs.append("%s: %s" % (tag, e)))
+        p2.goto(BASE + "/play/lilboyfriend/", wait_until="load")
+        p2.wait_for_timeout(2500)
+        return p2
+
+    def seed(p2, rec, tau):
+        p2.evaluate(SEED_JS, [rec, tau, KEY2, TKEY])
+        p2.reload(wait_until="load")
+        settle(p2)
+
+    # THE TEEPEE IS AT side +1: forward is (-sin(yaw),-cos(yaw)), so facing +x wants a NEGATIVE yaw and
+    # targetYaw = (nx - 0.5) * PI puts the pointer LEFT of the look zone's centre. Same move C019's
+    # section makes, and the mirror of the lectern's at the top of this file.
+    def face_teepee(p2):
+        z = p2.locator("#lookZone").bounding_box()
+        p2.mouse.move(z["x"] + z["width"] * 0.5, z["y"] + z["height"] * 0.5)
+        p2.mouse.move(z["x"] + z["width"] * 0.18, z["y"] + z["height"] * 0.5)
+
+    shown = "(id) => document.querySelector(id).classList.contains('show')"
+    text_of = "(id) => (document.querySelector(id).textContent || '').trim()"
+
+    # Every wait in this section is a level-triggered thing the FRAME LOOP writes, so a build that
+    # broke it does not fail the predicate, it never satisfies it - and a raised timeout takes the two
+    # tickets after it down with the one that regressed. This returns instead, so a C011 regression is
+    # reported as a C011 failure and C017 and C012 still get driven in the same run.
+    def waits(p2, expr, ms=9000):
+        try:
+            p2.wait_for_function(expr, timeout=ms, polling=60)
+            return True
+        except Exception:
+            return False
+
+    # ---- C011: the tutorial, at the exhibit, once, and not on a timer -------------------------------
+    tu = fresh("C011")
+    seed(tu, {"phase": "out", "t": 0.15, "signed": True}, None)
+    check(not tu.evaluate(shown, "#lbHint"),
+          "C011: standing at the teepee but not facing it, nothing is being explained")
+    face_teepee(tu)
+    up = waits(tu, "() => document.querySelector('#lbHint').classList.contains('show')")
+    hint_txt = tu.evaluate(text_of, "#lbHint")
+    check(up and "LOOK CLOSER" in hint_txt.upper() and ("E" in hint_txt),
+          "C011: turning to the first exhibit explains how to open THAT (%r)" % (hint_txt[:60] if up else "never appeared"))
+    check(not tu.evaluate(shown, "#lbPrompt"),
+          "C011: and the generic 'Look closer.' prompt stands down while it does - one prompt, not two "
+          "stacked in the same 10px of stage")
+    # THE ASSERTION THE OLD BUILD CANNOT PASS. settle() has already spent seven seconds since boot, so
+    # the ctx.timeout(7000) that used to carry this element away has been and gone; four more on top
+    # is a banner that would have vanished twice over. Nothing is pressed and nothing is moved.
+    tu.wait_for_timeout(4000)
+    check(tu.evaluate(shown, "#lbHint"),
+          "C011: eleven seconds after mount it is still there - the seven-second timer is gone, and "
+          "loitering is not what dismisses a tutorial")
+    tu.locator("#lbLook").click()
+    gone = waits(tu, "() => !document.querySelector('#lbHint').classList.contains('show')", 6000)
+    check(gone and tu.evaluate("() => localStorage.getItem('mbs-lilbf-taught-v1')") == "1"
+          and tu.evaluate("() => window.__lbState().taught") is True,
+          "C011: opening one is what spends it, and it is written to its own key")
+    # ...and it stays spent across a reload, which is the whole of "one contextual tutorial prompt"
+    seed(tu, {"phase": "out", "t": 0.15, "signed": True}, "1")
+    face_teepee(tu)
+    waits(tu, "() => document.querySelector('#lbPrompt').classList.contains('show')")
+    check(not tu.evaluate(shown, "#lbHint"),
+          "C011: a visitor who has opened one is never taught again")
+    check(tu.evaluate(text_of, "#lbPrompt") == "Look closer.",
+          "C011: and the ordinary prompt is back, so the suppression above was the tutorial's doing "
+          "and not the prompt being deleted (%r)" % tu.evaluate(text_of, "#lbPrompt"))
+    # TRACKED SEPARATELY FROM COMPLETION: throw the whole museum record away - phase, position,
+    # signature, the six read marks, everything the walk earned - and the teaching survives it. A build
+    # that kept this flag on the museum record would re-teach a visitor who simply started again.
+    seed(tu, None, "1")
+    face_teepee(tu)
+    tu.wait_for_timeout(2500)
+    check(not tu.evaluate(shown, "#lbHint") and tu.evaluate("() => window.__lbState().read") == []
+          and tu.evaluate("() => window.__lbState().phase") == "out",
+          "C011: the museum record was wiped to a fresh walk and the tutorial stayed spent - its key "
+          "is its own, not a field on the thing completion resets")
+    tu.close()
+
+    # ---- C017: the contraction is visible, on the same clock and the same number --------------------
+    MARKS = [1.5, 1.2, 0.9, 0.6]
+
+    def mark_from(half):                       # the gate's OWN arithmetic over the raw wall position
+        i = 0
+        while i + 1 < len(MARKS) and half <= MARKS[i + 1] + 1e-6:
+            i += 1
+        return i + 1
+
+    sh = fresh("C017")
+    seed(sh, {"phase": "out", "t": 0.3, "signed": True}, "1")
+    check(not sh.evaluate(shown, "#lbShrink"),
+          "C017: walking IN, nothing is closing and the readout says nothing - a strip that is always "
+          "on screen is not a cue")
+    hall = sh.evaluate("() => window.__lbHall()")
+    rails = sorted(round(abs(x), 3) for x in hall["rails"])
+    check(rails == [0.6, 0.6, 0.9, 0.9, 1.2, 1.2, 1.5, 1.5],
+          "C017: eight rails are laid in the floor of the hall, a mirrored pair at each of the four "
+          "half-widths the wall travels between (%s)" % rails)
+    check(abs(hall["half"] - 1.5) < 1e-3,
+          "C017: and the wall starts on the outermost pair (half %.3f)" % hall["half"])
+
+    # LOITERING. The contraction is seeded to start at this instant and nothing below touches the
+    # keyboard, the mouse or the walk: the marks are waited for, never walked to.
+    sh.evaluate("""([k]) => { const s = JSON.parse(localStorage.getItem(k) || '{}');
+                              s.phase = 'back'; s.t = 0.6; s.signed = true; s.shrinkStartedAt = Date.now();
+                              localStorage.setItem(k, JSON.stringify(s)); }""", [KEY2])
+    sh.reload(wait_until="load")
+    settle(sh)
+    t_in = sh.evaluate("() => window.__lbState().t")
+    got2 = waits(sh, "() => (document.querySelector('#lbShrink').textContent || '').indexOf('MARK 2') >= 0", 30000)
+    h2 = sh.evaluate("() => window.__lbHall()")
+    txt2 = sh.evaluate(text_of, "#lbShrink")
+    got3 = waits(sh, "() => (document.querySelector('#lbShrink').textContent || '').indexOf('MARK 3') >= 0", 30000)
+    h3 = sh.evaluate("() => window.__lbHall()")
+    txt3 = sh.evaluate(text_of, "#lbShrink")
+    in2 = [x for x in h2["rails"] if abs(x) <= h2["half"] + 1e-6]
+    in3 = [x for x in h3["rails"] if abs(x) <= h3["half"] + 1e-6]
+    check(abs(sh.evaluate("() => window.__lbState().t") - t_in) < 1e-6,
+          "C017: the visitor never moved - the contraction advanced on the clock alone, which is what "
+          "'loitering still advances contraction' means (t %.4f)" % t_in)
+    check(h3["half"] < h2["half"] - 0.02 and len(in3) < len(in2),
+          "C017: the wall came in past a rail while they stood there - %d rails inside the hall, then "
+          "%d (half %.3f -> %.3f)" % (len(in2), len(in3), h2["half"], h3["half"]))
+    check(got2 and got3 and sh.evaluate(shown, "#lbShrink") and "MARK 2 OF 4" in txt2 and "MARK 3 OF 4" in txt3,
+          "C017: and it is SAID as it happens, not left to be noticed (%r -> %r)" % (txt2[:44], txt3[:44]))
+    # THE CUE READS THE SAME NUMBER. The gate derives the mark from the raw wall position it just read
+    # off the scene and requires the DOM to have printed that one - a narration keeping its own clock,
+    # or its own easing, disagrees with the wall it is describing within a few seconds of starting.
+    check(("MARK %d OF 4" % mark_from(h2["half"])) in txt2 and ("MARK %d OF 4" % mark_from(h3["half"])) in txt3,
+          "C017: the readout is the wall's own position, not a second count of it (half %.3f said %r)"
+          % (h3["half"], txt3[:24]))
+
+    # REACHING THE MINIMUM: explained, and it neither traps nor resets.
+    sh.evaluate("""([k]) => { const s = JSON.parse(localStorage.getItem(k) || '{}');
+                              s.phase = 'back'; s.t = 0.6; s.shrinkStartedAt = Date.now() - 60000;
+                              localStorage.setItem(k, JSON.stringify(s)); }""", [KEY2])
+    sh.reload(wait_until="load")
+    settle(sh)
+    end_txt = sh.evaluate(text_of, "#lbShrink")
+    h_end = sh.evaluate("() => window.__lbHall()")
+    check("MARK 4 OF 4" in end_txt and "STOPS HERE" in end_txt and "HOLD BACK" in end_txt,
+          "C017: at the minimum it says the hall has stopped and names the control that leaves - "
+          "reaching it is an end, not a museum that has seized (%r)" % end_txt)
+    check(abs(h_end["half"] - 0.6) < 1e-3 and sh.evaluate("() => window.__lbState().rp") == 1,
+          "C017: the wall is on the innermost rail and rp is exactly 1 (half %.3f)" % h_end["half"])
+    sh.wait_for_timeout(3000)
+    h_after = sh.evaluate("() => window.__lbHall()")
+    check(abs(h_after["half"] - h_end["half"]) < 1e-6 and sh.evaluate(text_of, "#lbShrink") == end_txt,
+          "C017: three seconds later it has not gone further in and it has not started again - the "
+          "floor is the floor (half %.3f)" % h_after["half"])
+    sh.close()
+
+    # ---- C012: the route strip, a readout of six and not a menu of six -----------------------------
+    STRIP_JS = """() => Array.from(document.querySelectorAll('#lbRoute .lb-route-i')).map(li => ({
+      id: li.dataset.ex, x: Math.round(li.getBoundingClientRect().left),
+      text: (li.textContent || '').trim(),
+      visited: li.classList.contains('is-visited'), read: li.classList.contains('is-read'),
+      label: li.getAttribute('aria-label') || ''
+    }))"""
+    order = lambda p2: [i["id"] for i in sorted(p2.evaluate(STRIP_JS), key=lambda i: i["x"])]
+    OUTBOUND = ["teepee", "car", "shoebox", "storage", "masonjar", "van"]
+
+    rt = fresh("C012")
+    seed(rt, {"phase": "out", "t": 0.45, "signed": True}, "1")
+    strip = rt.evaluate(STRIP_JS)
+    check(len(strip) == 6 and order(rt) == OUTBOUND,
+          "C012: six marks, one per exhibit, left to right in the order the walk meets them (%s)"
+          % order(rt))
+    check([i["text"] for i in sorted(strip, key=lambda i: i["x"])]
+          == ["TEEPEE", "CAR", "SHOEBOX", "STORAGE", "JAR", "VAN"],
+          "C012: each one named, so it reads as a route rather than six anonymous dots (%s)"
+          % [i["text"] for i in strip])
+    # NOT A MENU, which is the half a strip of six links passes the rest of this section with.
+    check(rt.evaluate("() => getComputedStyle(document.querySelector('#lbRoute')).pointerEvents") == "none"
+          and rt.evaluate("() => document.querySelectorAll('#lbRoute a, #lbRoute button, #lbRoute [role=button],"
+                          " #lbRoute [tabindex], #lbRoute [onclick]').length") == 0,
+          "C012: nothing in it is a control and nothing in it takes a pointer - the hallway is still "
+          "the only way from one exhibit to another")
+    seen = {i["id"]: i["visited"] for i in strip}
+    check([seen[k] for k in OUTBOUND] == [True, True, True, False, False, False],
+          "C012: at t=0.45 the three exhibits the walk is past read as visited and the three ahead do "
+          "not (%s)" % [seen[k] for k in OUTBOUND])
+    check(all(not i["read"] for i in strip),
+          "C012: walking past one is not reading it - nothing is marked read yet")
+
+    # reading one: the same inspect C019 gave a name to, on the exhibit the walk is standing at
+    seed(rt, {"phase": "out", "t": 0.15, "signed": True}, "1")
+    face_teepee(rt)
+    waits(rt, "() => { const b = document.querySelector('#lbLook'); return b && !b.hidden; }")
+    rt.locator("#lbLook").click()
+    marked = waits(rt, "() => document.querySelector('#lbRoute .lb-route-i[data-ex=teepee]')"
+                       ".classList.contains('is-read')", 6000)
+    read_now = [i["id"] for i in rt.evaluate(STRIP_JS) if i["read"]]
+    check(marked and read_now == ["teepee"] and rt.evaluate("() => window.__lbState().read") == ["teepee"],
+          "C012: opening the teepee marks that one read and only that one (%s)" % read_now)
+    lab = [i["label"] for i in rt.evaluate(STRIP_JS) if i["id"] == "teepee"][0]
+    check("inspected" in lab and "THE TEEPEE" in lab,
+          "C012: and the state is said in words, not colour alone (%r)" % lab)
+    # it survives the reload, because the strip is a record of the walk and a reload is not a new walk
+    rt.reload(wait_until="load")
+    settle(rt)
+    check([i["id"] for i in rt.evaluate(STRIP_JS) if i["read"]] == ["teepee"],
+          "C012: and it is still read after a reload")
+
+    # THE REVERSAL, which a static list of six passes every assertion above without.
+    seed(rt, {"phase": "back", "t": 0.6, "signed": True, "shrinkStartedAt": 1,
+              "read": ["van", "banana", "van"]}, "1")
+    back = rt.evaluate(STRIP_JS)
+    check(order(rt) == list(reversed(OUTBOUND)),
+          "C012: on the return leg the strip runs the other way, because the van is the first thing a "
+          "returning visitor passes (%s)" % order(rt))
+    check(all(i["visited"] for i in back),
+          "C012: and all six read as visited - reaching the door is what a return leg means")
+    check([i["id"] for i in back if i["read"]] == ["van"]
+          and rt.evaluate("() => window.__lbState().read") == ["van"],
+          "C012: a hand-edited read list is allowlisted against EXHIBITS and deduped on the way in, "
+          "the same treatment C018 gave phase (%s)" % [i["id"] for i in back if i["read"]])
+    rt.close()
 
     lwclean = [e for e in lwerrs if "favicon" not in e and "jsdelivr" not in e.lower()
                and "lilbf-van-cozy" not in e and "lilbf-van-horror" not in e and "lilbf-car-cozy" not in e]

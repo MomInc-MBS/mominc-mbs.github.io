@@ -135,10 +135,34 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
 
   .lb-hud{position:absolute; inset:0; z-index:2; pointer-events:none; font-family:"Nunito",system-ui,sans-serif}
   .lb-hud *{box-sizing:border-box}
-  .lb-hint{position:absolute; top:10px; left:50%; transform:translateX(-50%); color:#fff; background:rgba(0,0,0,.45); padding:6px 12px; border-radius:999px; font-size:12px; font-weight:700; letter-spacing:.02em; text-align:center; max-width:88%; opacity:1; transition:opacity .6s ease}
-  .lb-hint.hide{opacity:0}
-  .lb-prompt{position:absolute; top:14px; left:50%; transform:translateX(-50%); color:#fff; background:rgba(122,47,196,.75); padding:8px 18px; border-radius:999px; font-weight:800; letter-spacing:.04em; font-size:clamp(13px,4vw,16px); opacity:0; transition:opacity .5s ease; pointer-events:none}
-  .lb-prompt.show{opacity:1}
+  /* EVERY HUD RULE BELOW CARRIES THE `.lb-hud` PREFIX, and the two oldest ones only got it in 4.11
+     packet 2. `.lb p` (0,1,1) out-specifies a bare `.lb-hint` or `.lb-prompt` (0,1,0), so both pills
+     had been rendering at the body clamp - 15-18px, not the 12px and 13-16px written here - and
+     carrying `.lb p`'s 10px bottom margin. That is 4.3's `.lb-con-row` trap in its third form, and it
+     is fixed here rather than filed because C011 and C017 stack three more elements against these two
+     and the stack's clearances are measured from their REAL heights. */
+  .lb-hud .lb-hint{position:absolute; top:10px; left:50%; transform:translateX(-50%); color:#fff; background:rgba(0,0,0,.45); padding:6px 12px; border-radius:999px; font-size:12px; line-height:1.35; font-weight:700; letter-spacing:.02em; text-align:center; max-width:88%; margin:0; opacity:0; transition:opacity .6s ease}
+  .lb-hud .lb-hint.show{opacity:1}
+  .lb-hud .lb-prompt{position:absolute; top:14px; left:50%; transform:translateX(-50%); color:#fff; background:rgba(122,47,196,.75); padding:8px 18px; border-radius:999px; font-weight:800; letter-spacing:.04em; font-size:clamp(13px,4vw,16px); line-height:1.2; margin:0; opacity:0; transition:opacity .5s ease; pointer-events:none}
+  .lb-hud .lb-prompt.show{opacity:1}
+  /* C017: the contraction's narration, the DOM half of the cue whose material half is the floor rails
+     in the hall. Below the prompt pill, which tops out at 14px + 16px of padding + a 19px line = 49px,
+     so 54px is the first clear row. Only ever on screen while the walls are actually moving. */
+  .lb-hud .lb-shrink{position:absolute; top:54px; left:50%; transform:translateX(-50%); color:#f2e6cf; background:rgba(20,16,12,.66); border:1px solid rgba(230,198,122,.45); padding:5px 11px; border-radius:999px; font-size:10px; line-height:1.35; font-weight:800; letter-spacing:.1em; text-align:center; max-width:88%; margin:0; opacity:0; transition:opacity .5s ease}
+  .lb-hud .lb-shrink.show{opacity:1}
+  /* C012: the route strip. A READOUT, never a menu - no control in it, and .lb-hud's pointer-events:none
+     is what keeps it that way, so the hall stays the only route between exhibits. It shares .lb-look's
+     horizontal budget (the two 84px walk circles own both corners, leaving calc(100% - 200px) between
+     them) and sits under it, at the same 14px the circles start from. The labels shrink and ellipsize
+     rather than wrapping or pushing the strip into the circles: on a narrow stage the six marks and
+     their states are the message, and the full names are the bonus a wide stage pays for. */
+  .lb-hud .lb-route{position:absolute; left:50%; bottom:14px; transform:translateX(-50%); z-index:3; display:flex; gap:3px; margin:0; padding:0; list-style:none; max-width:calc(100% - 200px)}
+  .lb-hud .lb-route-i{flex:0 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; margin:0;
+      font-size:9px; font-weight:800; letter-spacing:.06em; line-height:1;
+      color:rgba(255,253,248,.45); background:rgba(20,16,12,.5); border:1px solid rgba(255,253,248,.2);
+      border-radius:999px; padding:4px 6px}
+  .lb-hud .lb-route-i.is-visited{color:rgba(255,253,248,.9); border-color:rgba(230,198,122,.55)}
+  .lb-hud .lb-route-i.is-read{color:#2c1e14; background:rgba(230,198,122,.88); border-color:var(--gold)}
   .lb-walk{position:absolute; left:12px; bottom:14px; z-index:3; pointer-events:auto; width:84px; height:84px; border-radius:50%; border:2px solid rgba(255,255,255,.8);
       background:rgba(20,16,12,.55); color:#fff; font-family:"Nunito",system-ui,sans-serif; font-weight:800; font-size:13px; letter-spacing:.08em; cursor:pointer; -webkit-user-select:none; user-select:none}
   .lb-walk:active{background:rgba(230,198,122,.55)}
@@ -595,8 +619,21 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
     <canvas id="lbCanvas" aria-label="The museum. Look with your mouse or finger. Hold WALK/BACK or press W/S to walk."></canvas>
     <div class="lb-hud" id="lbHud">
       <div class="lb-lookzone" id="lookZone"></div>
-      <p class="lb-hint" id="lbHint">Look with your mouse or finger. Hold WALK/BACK or press W/S to walk.</p>
+      <!-- C011: the tutorial. It used to be a general instruction shown at the entrance and taken away
+           again by a seven-second timer, which is a banner that teaches whoever happened to be reading
+           at second three. This is the same teaching moved to the moment it is about: it appears at the
+           first exhibit, says how to open THAT, and leaves for good the first time anyone opens one -
+           remembered under its own key, so a second visit never sees it and completion never clears it. -->
+      <p class="lb-hint" id="lbHint">Miniatures open. Tap this one, press E, or use LOOK CLOSER.</p>
       <p class="lb-prompt" id="lbPrompt">Turn around.</p>
+      <!-- C017: the walls close on a 37.5-second clock and used to do it in silence. The rails on the
+           floor of the hall are the material half of the cue; this is the readout that names which one
+           the wall is standing on, and says out loud that the last one is the last - both off the same
+           wallHalf() the hall itself is scaled by. -->
+      <div class="lb-shrink" id="lbShrink"></div>
+      <!-- C012: filled from EXHIBITS by run3D(), because six hardcoded marks here would be a second
+           copy of the route to keep in step with the first. -->
+      <ol class="lb-route" id="lbRoute" aria-label="Your route through the museum"></ol>
       <div class="lb-laser-flash" id="lbFlash"></div>
       <button type="button" class="lb-walk" id="lbWalk">WALK</button>
       <button type="button" class="lb-walk lb-back" id="lbBack">BACK</button>
