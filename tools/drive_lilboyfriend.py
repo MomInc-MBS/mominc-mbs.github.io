@@ -440,6 +440,150 @@ with sync_playwright() as pw:
     modeerrs = [e for e in flerrs if "favicon" not in e and "jsdelivr" not in e.lower()]
     check(not modeerrs, "4.1: no page errors across either mode (%s)" % (modeerrs[:2] or "none"))
 
+    # ---- 4.2: sticky chapters, one phone screen tall, nothing needing a precise finger --------------
+    # "Each chapter's height at 390px is within one viewport; no drag or fine-pointer interaction
+    # exists." Three things about how that is measured, each of which cost a wrong answer first:
+    #
+    #   THE VIEWPORT IS THE STAGE, NOT THE WINDOW. fitViewport() sizes #lbStage to the television's
+    #   glass minus the ribbon, so at a 390x844 phone the stage is 800px on this route and 566 inside
+    #   the set. Measuring innerHeight would grade a chapter against a box it does not live in - and it
+    #   is also what makes this route enough on its own: a height:100vh chapter reads 844 here against
+    #   an 800px stage and fails, which is the mistake worth catching.
+    #
+    #   A HEIGHT ASSERTION ALONE IS NOT THE TICKET. "Within one viewport" is satisfied perfectly by a
+    #   chapter rendering nothing, and "sticky" is satisfied by neither. So the bound is asserted with
+    #   its matched half - every chapter still carries its heading, its photograph and all three of its
+    #   sourced fact cards, and nothing inside it is cut off - and pinning is asserted separately.
+    #
+    #   scroll-behavior IS smooth. Scripted scrolls set it to auto for the duration rather than racing
+    #   an animation; the shipped easing is not what is under test here.
+    print("\n  -- 4.2: six STICKY chapters, each one stage tall --")
+
+    sc = b.new_page(viewport={"width": 390, "height": 844})
+    scerrs = []
+    sc.on("pageerror", lambda e: scerrs.append(str(e)))
+    sc.on("console", lambda m: scerrs.append(m.text) if m.type == "error" else None)
+    sc.add_init_script("""(() => { const g = HTMLCanvasElement.prototype.getContext;
+      HTMLCanvasElement.prototype.getContext = function (t, ...a) {
+        return /webgl/i.test(t) ? null : g.call(this, t, ...a); }; })()""")
+    # the fine-pointer probe. It has to be installed before a single listener is registered, which is
+    # what an init script buys; recording the TARGET as well as the type is what lets the question be
+    # asked about the chapters specifically rather than about the whole channel.
+    sc.add_init_script("""(() => { window.__lbLis = [];
+      const add = EventTarget.prototype.addEventListener;
+      EventTarget.prototype.addEventListener = function (t, ...a) {
+        try { window.__lbLis.push([this, t]); } catch (e) {}
+        return add.call(this, t, ...a); }; })()""")
+    sc.goto(BASE + "/play/lilboyfriend/", wait_until="load")
+    sc.wait_for_timeout(2500)
+    sc.click("#lbModeBtn")
+    sc.wait_for_selector("#lbScroll .lb-ch[data-chapter]", timeout=5000)
+    sc.wait_for_timeout(600)
+
+    fit = sc.evaluate("""() => {
+      const stage = document.querySelector('#lbStage').clientHeight;
+      return { stage, win: innerHeight,
+        chs: [...document.querySelectorAll('#lbScroll .lb-ch[data-chapter]')].map(c => {
+          const inner = c.querySelector('.lb-ch-inner');
+          return { n: c.dataset.chapter, h: Math.round(c.getBoundingClientRect().height),
+                   cut: inner.scrollHeight - inner.clientHeight,
+                   heading: !!(c.querySelector('h3') || {}).textContent,
+                   photo: !!c.querySelector('.lb-ch-photo'),
+                   facts: c.querySelectorAll('.fl-card').length,
+                   srcs: [...c.querySelectorAll('.fl-card .fl-src')]
+                           .filter(s => s.textContent.trim()).length }; }) };
+    }""")
+    check(fit["stage"] > 0 and fit["stage"] != fit["win"],
+          "the stage is the viewport and it is NOT the window (stage %d, window %d)"
+          % (fit["stage"], fit["win"]))
+    check(len(fit["chs"]) == 6, "six chapters to measure (got %d)" % len(fit["chs"]))
+    over = [c for c in fit["chs"] if c["h"] > fit["stage"] + 1]
+    check(not over, "at 390px every chapter is within ONE stage of %dpx (worst %d)"
+          % (fit["stage"], max(c["h"] for c in fit["chs"])))
+    # the matched half. Without it the line above is green on six empty sections, which is the one
+    # implementation that must not pass: the bound exists to shape the read, not to drop the sources.
+    thin = [c["n"] for c in fit["chs"]
+            if not (c["heading"] and c["photo"] and c["facts"] == 3 and c["srcs"] == 3)]
+    check(not thin, "and nothing was dropped to fit: each keeps its heading, photo and 3 cited facts (%s)"
+          % (thin or "all six intact"))
+    cut = [(c["n"], c["cut"]) for c in fit["chs"] if c["cut"] > 0]
+    check(not cut, "and no chapter's content is cut off inside that stage (%s)" % (cut or "none"))
+
+
+    # STICKY, which no height assertion reaches: a chapter that is merely one stage tall scrolls away
+    # like any other section. Pinned means it holds at the top of the stage while the next one rises
+    # over it. Both halves matter - all six frozen at the top forever is not sticky either, it is a
+    # broken scroll, so the chapter still to come must be measurably in motion.
+    sc.evaluate("() => { document.querySelector('#lbScroll').style.scrollBehavior = 'auto'; }")
+    sc.evaluate("""() => { const s = document.querySelector('#lbScroll');
+        s.scrollTop = 2.5 * s.clientHeight; }""")
+    sc.wait_for_timeout(400)
+    rel = sc.evaluate("""() => { const s = document.querySelector('#lbScroll'),
+                                       top = s.getBoundingClientRect().top;
+        return [...s.querySelectorAll('.lb-ch')].map(c =>
+          Math.round(c.getBoundingClientRect().top - top)); }""")
+    check(all(abs(v) <= 1 for v in rel[:3]),
+          "scrolled past, a chapter PINS to the top of the stage instead of leaving (%s)" % rel[:3])
+    check(rel[3] > 1, "and the one still to come is genuinely moving, not frozen with it (%d)" % rel[3])
+
+    # "None requiring precision movement", the reachability half: every chapter arrives by scrolling
+    # the run and nothing else - no gesture, no drag, no target to hit.
+    missed = []
+    for i in range(1, 7):
+        sc.evaluate("i => { const s = document.querySelector('#lbScroll');"
+                    "        s.scrollTop = i * s.clientHeight; }", i)
+        sc.wait_for_timeout(160)
+        got = sc.evaluate("""() => { const s = document.querySelector('#lbScroll'),
+                                           r = s.getBoundingClientRect();
+            const c = [...s.querySelectorAll('.lb-ch')].filter(e => {
+              const b = e.getBoundingClientRect();
+              return b.top - r.top <= 1 && b.bottom - r.top >= r.height - 1; }).pop();
+            return c ? c.dataset.chapter || c.id : null; }""")
+        if got != str(i):
+            missed.append((i, got))
+    check(not missed, "each of the six fills the stage from scroll position alone (%s)"
+          % (missed or "1..6 all land"))
+
+    # "No drag or fine-pointer interaction exists." Asserted against what the chapters actually
+    # REGISTERED, not against the markup - a drag handler is invisible in the DOM. The instrument's own
+    # liveness is the matched half here: "no drag listeners found" is exactly what a probe that recorded
+    # nothing at all reports, so the recorder is made to prove it was running.
+    probe = sc.evaluate("""() => {
+      const s = document.querySelector('#lbScroll');
+      const DRAGGY = ['pointermove','mousemove','touchmove','dragstart','drag','gesturechange'];
+      const lis = window.__lbLis || [];
+      return { total: lis.length,
+        offenders: lis.filter(([el, t]) => DRAGGY.includes(t)
+                     && el && el.nodeType === 1 && s.contains(el))
+                      .map(([el, t]) => (el.className || el.tagName) + ':' + t),
+        fine: s.querySelectorAll('[draggable="true"], input[type=range], [contenteditable]').length };
+    }""")
+    check(probe["total"] > 0,
+          "the listener probe was live for the whole load (%d registrations seen)" % probe["total"])
+    check(not probe["offenders"],
+          "no drag or fine-pointer listener exists inside the chapters (%s)"
+          % (probe["offenders"] or "none"))
+    check(probe["fine"] == 0,
+          "and no draggable, slider or editable target either (%d)" % probe["fine"])
+
+    # ONE STAGE MEANS ONE STAGE, and this is the line that tells `height` from `min-height`. At 390px
+    # the photograph's flex absorbs the slack, so a min-height chapter measures a tidy 800 here and the
+    # bound above is green on it. Squeeze the stage past the point where the type alone fills it and the
+    # two part company at once: a fixed chapter still measures exactly one stage, a min-height chapter
+    # grows to its content and the screen-at-a-time read is gone. The stage is squeezed directly rather
+    # than by resizing the window because on this route it is CSS height, not fitViewport(), that sets it.
+    sc.evaluate("() => { document.querySelector('#lbStage').style.height = '440px'; }")
+    sc.wait_for_timeout(400)
+    tight = sc.evaluate("""() => { const st = document.querySelector('#lbStage').clientHeight;
+        return { stage: st, chs: [...document.querySelectorAll('#lbScroll .lb-ch[data-chapter]')]
+          .map(c => ({ n: c.dataset.chapter, h: Math.round(c.getBoundingClientRect().height) })) }; }""")
+    grew = [(c["n"], c["h"]) for c in tight["chs"] if c["h"] > tight["stage"] + 1]
+    check(not grew, "squeezed to a %dpx stage they are still exactly one stage, not grown to fit (%s)"
+          % (tight["stage"], grew or "all six held"))
+
+    scclean = [e for e in scerrs if "favicon" not in e and "jsdelivr" not in e.lower()]
+    check(not scclean, "4.2: no page errors across the chapter drive (%s)" % (scclean[:2] or "none"))
+
     b.close()
 
 print("\n%s" % ("3D PATH DRIVES" if ok else "3D PATH BROKEN"))
