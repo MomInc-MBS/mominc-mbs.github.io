@@ -355,6 +355,68 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
       padding:10px 18px; min-height:40px; cursor:pointer}
   .lb-give[disabled]{opacity:.5; cursor:default}
 
+  /* ---- 4.5: the shoe, this mode's terminal --------------------------------------------------------
+     A LANE OF ZERO HEIGHT, and the zero is the load-bearing part. The console is `position:sticky;
+     bottom:0` AND in flow, so it settles into the last 72px of the run; anything with real height
+     placed after it pushes that flow position up by its own height and the strip comes unstuck from
+     the bottom of the stage at full scroll. A zero-height lane contributes nothing to flow, parks on
+     the same bottom edge at every scroll position, and - being the LATER of two positioned siblings
+     with auto z-index - paints over the console without one, exactly as the console paints over the
+     sticky chapters. The shoe hangs off it absolutely, so it can be a stage taller than its lane.
+
+     THE FALL IS IN cqh, NOT vh. The stage is 800px on /play/ and 566 inside the television while vh
+     reads 844 in both, and .lb-scroll is already the size container the chapters are measured against
+     - so 120cqh is "a stage and a bit above the top of the run" in both places, and the scroller's own
+     overflow is what keeps the shoe invisible until it drops rather than a second hidden state.
+
+     IT LANDS ON THE CHARACTER AND STOPS SHORT OF THE READOUTS. 18px is the figure's own footing inside
+     the 72px strip - .lb-fig is 38px centred in a 60px content box, so its feet sit 17px up - and one
+     px under that is the sole biting. The right edge stops at x 42 and the room name starts at x 48,
+     after the 26px figure and the 10px gap: eclipsing the three readouts would undo 4.3's entire fit
+     for a bigger picture of a shoe.
+
+     IT IS AN L, AND THAT IS WHY IT READS AS A SHOE. A 42px box tall enough to look like it fell is
+     taller than it is wide, which is a thumb, not a footwear; the only free width on this strip is to
+     the LEFT, off the stage edge, where there is no readout to lose. So the element is the SHAFT -
+     narrow, upright, at x 20 to 42, directly over the figure - and the sole is a pseudo-element that
+     overhangs 22px past it to the left and squares off flush on the right. Shaft above, long sole
+     below, toe pointing away from the console: a boot from the side, at 42px, in two rectangles.
+     The leather is mid-brown rather than black for the same reason the sole carries a light top edge -
+     the strip behind it is rgba(20,16,12,.94), and a black shoe on a black strip is a hole.
+
+     The shadow's -6px spread is the same rule as the flush right edge: an 18px blur with no spread
+     hazes 9px sideways over a readout that has 6px of room. It looms from above; it has no business
+     to either side. */
+  .lb-scroll .lb-shoe-lane{position:sticky; bottom:0; height:0; pointer-events:none}
+  .lb-scroll .lb-shoe{position:absolute; left:20px; bottom:18px; width:22px; height:58px;
+      background:linear-gradient(100deg,#7b5433,#4a2f1a 62%,#3a2417);
+      border:2px solid #1d140d; border-bottom:0;
+      border-radius:7px 9px 0 0 / 9px 12px 0 0;
+      box-shadow:0 -8px 18px -6px rgba(0,0,0,.45);
+      transform:translateY(-120cqh)}
+  /* the toe cap: the low mass of the foot itself, spanning the sole and rising highest at the toe end.
+     Without it the shaft on the sole is a post on a plank; with it the silhouette is an ankle rising
+     out of a foot, which is the whole difference between "a shoe fell" and "something fell". */
+  .lb-scroll .lb-shoe::before{content:""; position:absolute; left:-22px; right:0; bottom:-2px; height:23px;
+      background:linear-gradient(170deg,#6b482b,#42291a);
+      border:2px solid #1d140d; border-bottom:0;
+      border-radius:15px 4px 0 0 / 20px 5px 0 0}
+  /* the sole, and the toe. Rounded at the left end where the toe is, square at the right under the
+     heel; the light top edge is what separates it from the strip it lands on. */
+  .lb-scroll .lb-shoe::after{content:""; position:absolute; left:-22px; right:0; bottom:-13px; height:15px;
+      background:#1d140d; border-top:2px solid #8a6a44;
+      border-radius:11px 2px 3px 12px / 13px 2px 3px 13px}
+  .lb-scroll.shoe-dropped .lb-shoe{animation:lbShoeDrop 460ms cubic-bezier(.55,0,.95,.35) forwards}
+  @keyframes lbShoeDrop{ from{transform:translateY(-120cqh)} to{transform:translateY(0)} }
+  /* the shoe is decorative and aria-hidden, so the terminal beat is announced in text instead of being
+     silently visual. Prefixed like everything else here: `.lb p` would otherwise put 10px of margin on
+     a clipped element and font-size it for nobody. */
+  .lb-scroll .lb-shoe-said{position:absolute; width:1px; height:1px; margin:-1px; padding:0; border:0;
+      overflow:hidden; clip-path:inset(50%); white-space:nowrap}
+  @media (prefers-reduced-motion:reduce){
+    .lb-scroll.shoe-dropped .lb-shoe{animation-duration:1ms}
+  }
+
   /* the stage is NOT the window, and the difference is the whole reason this is a container query and
      not a media query: at a 390x844 phone the play route's stage measures 800px and the same phone
      INSIDE the television measures 566, because fitViewport() sizes the stage to the glass minus the
@@ -370,6 +432,12 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
     .lb-scroll .lb-console{gap:8px; padding:4px 10px}
     .lb-scroll .lb-fig{flex:0 0 22px; height:32px}
     .lb-scroll .lb-fig i{width:calc(7px + 8px * var(--lb-scale)); height:calc(32px * var(--lb-scale))}
+    /* the shoe re-derived for the short strip: .lb-fig is 32px centred in a 46px content box, so the
+       feet are 11px up, and the room name now starts at x 40 after a 22px figure and an 8px gap - so
+       the shaft runs x 14 to 36 and keeps the same 4px of daylight to the readout. */
+    .lb-scroll .lb-shoe{left:14px; bottom:12px; width:22px; height:48px}
+    .lb-scroll .lb-shoe::before{left:-16px; bottom:-2px; height:19px}
+    .lb-scroll .lb-shoe::after{left:-16px; bottom:-11px; height:13px}
     .lb-scroll .lb-con-row{font-size:10.5px; margin:0 0 2px}
     .lb-scroll .lb-con-bar{margin:0 0 3px; font-size:9.5px}
     .lb-scroll .lb-con-rx{font-size:9.5px}

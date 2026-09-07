@@ -397,11 +397,10 @@ export default {
 
        WHAT IS DELIBERATELY NOT HERE, so the next packet does not find it built twice. 4.2 makes each
        chapter sticky and bounds it to one viewport; 4.3 hangs the six consequences off scroll position;
-       4.4 makes the shrink exponential and finite; 4.5 and 4.6 build the SHOE as this mode's terminal
-       and put completion there. So this mode has no ending beat and no unlock of its own yet: the door,
-       the guest book and the epilogue are the museum's, and the museum is one button away at all times,
-       which is what "modes, not a replacement" buys. Building a terminal here now would be building
-       4.5's terminal twice, which is the mistake Stage 4's ordering exists to prevent. */
+       4.4 makes the shrink exponential and finite; 4.5 builds the SHOE as this mode's terminal BEAT and
+       4.6 puts completion there. So this mode has an ending as of 4.5 but still no unlock of its own:
+       the door, the guest book and the epilogue are the museum's, and the museum is one button away at
+       all times, which is what "modes, not a replacement" buys. */
 
     /* ---- 4.3 / E.5: the six scroll consequences -----------------------------------------------------
        E.5 names six, all six required: the character becomes smaller; the room changes teepee -> shoebox
@@ -420,8 +419,9 @@ export default {
        in step with anything.
 
        WHAT 4.3 DID NOT BUILD. 4.3 only had to make the shrink observable; the shrink CURVE is 4.4's and
-       is the block below. 4.5/4.6 own the shoe and completion: consequence six is a REVEAL, not a door,
-       and nothing here unlocks, completes or ends the run. */
+       is the block below. 4.5 owns the shoe and 4.6 owns completion: consequence six is a REVEAL, not a
+       door, and nothing in THIS block unlocks, completes or ends the run - 4.5's shoe deliberately
+       leaves the give-it-back button working past the terminal. */
     const RENT = 1450;          // consequence 3: this number never moves. That is the entire joke.
     const BASE_SQFT = 240;
     /* ---- 4.4 / S1: the shrink curve, EXPONENTIAL and FINITE ----------------------------------------
@@ -501,6 +501,47 @@ export default {
       if (n > 0 && ctx.mbs && ctx.mbs.meter) ctx.mbs.meter(n * 16, "COMPRESSION");
     }
 
+    /* ---- 4.5: the shoe, this mode's terminal state -------------------------------------------------
+       "After chapter 6 a large shoe falls on the character and ends the run." Three conditions, and the
+       row names all three on purpose because no two of them are the same test.
+
+       AFTER CHAPTER SIX IS NOT AT CHAPTER SIX, and that is why the end section is observed rather than
+       the trigger hanging off setScene(6). Chapter six becomes the scene the moment it is 65% on screen
+       - a third of the way through its own facts - and a shoe there lands on a visitor still reading.
+       The end section rising is the signal that chapter six is BEHIND them. It is observed through the
+       same IntersectionObserver and kept in its own variable rather than being given a data-chapter:
+       the scroll run has exactly six chapters, several gates count them, and a seventh entry in that
+       set to carry a sentinel would be a lie told to the cheapest thing to check.
+
+       ONLY ONCE THE DIAGNOSIS HAS RENDERED is read OFF THE DOM, not off `scene`. MOM's prescription at
+       chapter six is the diagnosis - RX[6], "FINAL / Terminal size" - and the difference between asking
+       the console what it is showing and asking the module what it last set is the difference between a
+       gate and a restatement. Sticky chapters mean the end section can only be up if chapter six has
+       already rendered, so this is belt as well as braces, and it is the belt the row asked for.
+
+       EXACTLY ONCE is a latch, not an event count. The observer fires again on every threshold cross,
+       and scrolling back up and down again is an ordinary thing to do in a scroll piece.
+
+       WHAT ENDS AND WHAT DOES NOT. The run ends: the state is latched terminal and the character is
+       under a shoe. Consequence 6 does NOT - `#lbRestore` is a REVEAL and the give-it-back button keeps
+       working, because the whole point of the closing scene is that the 192 sq ft are still on the table
+       after the programme has finished with the resident. Nothing here touches --lb-scale either: a
+       shoe that flattened the figure would take 4.4's finite floor and 4.3's live restore with it, and
+       the beat does not need it - the sole lands across a 7.6px person and covers most of them.
+
+       4.5 IS NOT 4.6. This emits nothing. `terminal` below is the single site 4.6 emits from. */
+    const SHOE_LINE = "A shoe the size of the building comes down on the resident. The programme ends here.";
+    let terminal = false, endRatio = 0;
+    function dropShoe() {
+      if (terminal) return;                                                 // exactly once
+      if (endRatio < 0.65) return;                                          // after chapter six
+      if (byId("lbRxSev").textContent !== RX[EXHIBITS.length][0]) return;   // the diagnosis is on screen
+      terminal = true;
+      scrollEl.classList.add("shoe-dropped");
+      consoleEl.dataset.terminal = "1";
+      byId("lbShoeSaid").textContent = SHOE_LINE;
+    }
+
     function buildScroll() {
       if (scrollEl) return scrollEl;
       scrollEl = document.createElement("div");
@@ -541,6 +582,10 @@ export default {
             <p class="lb-con-row lb-con-bar"><span class="lb-stress"><i id="lbStressFill"></i></span><span class="lb-con-pct" id="lbStressPct"></span></p>
             <p class="lb-con-rx"><b id="lbRxSev"></b> <span id="lbRx"></span></p>
           </div>
+        </div>
+        <div class="lb-shoe-lane" id="lbShoeLane">
+          <div class="lb-shoe" id="lbShoe" aria-hidden="true"></div>
+          <p class="lb-shoe-said" id="lbShoeSaid" role="status"></p>
         </div>`;
       lbStage.appendChild(scrollEl);
       consoleEl = byId("lbConsole");
@@ -553,12 +598,18 @@ export default {
          the scene on chapter 1 for the whole scroll. The chapter at 0.65 is the HIGHEST-numbered one
          over the threshold, not the only one, so the ratios are kept and the maximum is taken. */
       const io = ctx.observe(new IntersectionObserver(entries => {
-        for (const e of entries) ratios[+e.target.dataset.chapter] = e.intersectionRatio;
+        for (const e of entries) {
+          // 4.5's end sentinel rides the same observer. It is kept out of `ratios` deliberately: that
+          // array is the six chapters and nothing else, and setScene() must never be able to reach it.
+          if (e.target.id === "lbChEnd") endRatio = e.intersectionRatio;
+          else ratios[+e.target.dataset.chapter] = e.intersectionRatio;
+        }
         let n = 0;
         for (let i = 1; i <= EXHIBITS.length; i++) if (ratios[i] >= 0.65) n = i;
         setScene(n);
+        dropShoe();   // AFTER setScene, so the diagnosis it gates on is the one now on screen
       }, { root: scrollEl, threshold: [0, 0.65, 1] }));
-      scrollEl.querySelectorAll(".lb-ch[data-chapter]").forEach(c => io.observe(c));
+      scrollEl.querySelectorAll(".lb-ch[data-chapter], #lbChEnd").forEach(c => io.observe(c));
 
       /* consequence 6. A BUTTON, not a slider: 4.2's contract is that no chapter needs precision
          movement, and a drag target inside this run is the thing that check fails on. It restores in

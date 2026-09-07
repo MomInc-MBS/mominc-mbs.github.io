@@ -798,6 +798,163 @@ with sync_playwright() as pw:
           "%d sq ft at chapter six, %.2fpx / %d at the end of the run)"
           % (figs[-1], snaps[-1]["sqft"], before["figH"], before["sqft"]))
 
+    # ---- 4.5: the shoe, the terminal state ---------------------------------------------------------
+    # "The shoe fires exactly once, after chapter 6, and only once the diagnosis has rendered."
+    #
+    # FIRING IS THE ANIMATION STARTING, not a class appearing. A class is what the module says it did;
+    # animationstart on #lbShoe is the browser reporting that a shoe actually moved, and it is also the
+    # only way to count firings without polling a boolean that was designed to be true forever.
+    #
+    # THE THREE CLAUSES ARE THREE SEPARATE QUESTIONS and the row states them separately because no two
+    # of them fail together. The matched pair that gives "after chapter 6" its teeth is the pair below:
+    # at chapter six the FINAL diagnosis is ALREADY on the strip and the shoe has still not fired, so a
+    # build that hung the trigger off the diagnosis alone - the obvious wrong reading, and the cheap one
+    # - is red here rather than green everywhere.
+    print("\n  -- 4.5: the shoe is the terminal state --")
+
+    sh = b.new_page(viewport={"width": 390, "height": 844})
+    sherrs = []
+    sh.on("pageerror", lambda e: sherrs.append(str(e)))
+    sh.on("console", lambda m: sherrs.append(m.text) if m.type == "error" else None)
+    sh.add_init_script("""(() => { const g = HTMLCanvasElement.prototype.getContext;
+      HTMLCanvasElement.prototype.getContext = function (t, ...a) {
+        return /webgl/i.test(t) ? null : g.call(this, t, ...a); }; })()""")
+    # what the shoe SAW when it fired, recorded at fire time off the rendered strip. Reading the
+    # severity afterwards would only prove it is FINAL now, which it is at every scroll position past
+    # chapter six - the claim is that it was FINAL at the instant the shoe was released.
+    sh.add_init_script("""(() => { window.__lbShoe = [];
+      document.addEventListener('animationstart', e => {
+        if (e.target && e.target.id === 'lbShoe') {
+          const sev = document.querySelector('#lbRxSev'), c = document.querySelector('#lbConsole');
+          window.__lbShoe.push({ sev: sev ? sev.textContent.trim() : null,
+                                 scene: c ? c.dataset.scene : null,
+                                 name: e.animationName }); }
+      }, true); })()""")
+    # 4.5 builds the BEAT and emits nothing; 4.6 is what puts completion here. Recorded from boot so a
+    # completion fired at the shoe cannot slip past between navigations.
+    sh.add_init_script("""(() => { window.__lbLife = [];
+      document.addEventListener('mbs:lifecycle', e => window.__lbLife.push(e.detail && e.detail.type)); })()""")
+    sh.goto(BASE + "/play/lilboyfriend/", wait_until="load")
+    sh.wait_for_timeout(2500)
+    sh.click("#lbModeBtn")
+    sh.wait_for_selector("#lbShoe", timeout=5000)
+    sh.evaluate("() => { document.querySelector('#lbScroll').style.scrollBehavior = 'auto'; }")
+    sh.wait_for_timeout(300)
+
+    boot = sh.evaluate("""() => { const s = document.querySelector('#lbScroll').getBoundingClientRect();
+        const r = document.querySelector('#lbShoe').getBoundingClientRect();
+        return { fired: window.__lbShoe.length, above: r.bottom <= s.top + 1,
+                 said: document.querySelector('#lbShoeSaid').textContent.trim(),
+                 terminal: document.querySelector('#lbConsole').dataset.terminal || "" }; }""")
+    check(boot["fired"] == 0 and boot["above"] and not boot["said"] and not boot["terminal"],
+          "at the entrance the shoe has not fired and is off the top of the run (%s)" % boot)
+
+    # chapter six: the diagnosis is up, the shoe is not. This is the half that fails on a build that
+    # triggers on the prescription instead of on being past the chapter it belongs to.
+    sh.evaluate("() => { const s = document.querySelector('#lbScroll'); s.scrollTop = 6 * s.clientHeight; }")
+    sh.wait_for_function("() => document.querySelector('#lbConsole').dataset.scene === '6'",
+                         timeout=3000, polling=60)
+    sh.wait_for_timeout(400)
+    atsix = sh.evaluate("""() => ({ fired: window.__lbShoe.length,
+        sev: document.querySelector('#lbRxSev').textContent.trim(),
+        rx: document.querySelector('#lbRx').textContent.trim(),
+        terminal: document.querySelector('#lbConsole').dataset.terminal || "" })""")
+    check(atsix["sev"] == "FINAL" and atsix["fired"] == 0 and not atsix["terminal"],
+          "AT chapter six the diagnosis has rendered - %s / \"%s\" - and the shoe has still not fallen "
+          "(%d firings)" % (atsix["sev"], atsix["rx"], atsix["fired"]))
+
+    # past it. The end section rising is what releases the shoe.
+    sh.evaluate("() => { const s = document.querySelector('#lbScroll'); s.scrollTop = s.scrollHeight; }")
+    sh.wait_for_function("() => window.__lbShoe.length > 0", timeout=4000, polling=60)
+    sh.wait_for_timeout(700)          # the drop is 460ms; land it before anything is measured
+    seen = sh.evaluate("() => window.__lbShoe")
+    check(len(seen) == 1 and seen[0]["scene"] == "6" and seen[0]["sev"] == "FINAL",
+          "AFTER chapter six the shoe falls, and the diagnosis was on the strip when it was released "
+          "(%s)" % seen)
+
+    # it lands ON the character. Geometry, both axes, off the rendered boxes - a shoe that drops past
+    # the figure or beside it is a shoe that fell, not a shoe that fell on someone. The third number is
+    # 4.3's guard: the strip's three readouts stay legible, so the terminal beat does not buy its
+    # picture by eclipsing the console that gives it meaning.
+    land = sh.evaluate("""() => { const q = s => document.querySelector(s).getBoundingClientRect();
+        const shoe = q('#lbShoe'), fig = q('#lbFig i'), room = q('#lbRoom'), con = q('#lbConsole');
+        return { x: +(Math.min(shoe.right, fig.right) - Math.max(shoe.left, fig.left)).toFixed(2),
+                 y: +(Math.min(shoe.bottom, fig.bottom) - Math.max(shoe.top, fig.top)).toFixed(2),
+                 figH: +fig.height.toFixed(2),
+                 clear: +(room.left - shoe.right).toFixed(2),
+                 inStrip: shoe.bottom > con.top && shoe.bottom < con.bottom,
+                 said: document.querySelector('#lbShoeSaid').textContent.trim(),
+                 terminal: document.querySelector('#lbConsole').dataset.terminal || "" }; }""")
+    check(land["x"] > 0 and land["y"] > 0 and land["inStrip"],
+          "and it lands ON the character - %.2fpx across and %.2fpx into a %.2fpx person"
+          % (land["x"], land["y"], land["figH"]))
+    # 4px rather than 0, and the margin is the point: the shoe's rect is not its ink. A sole overhanging
+    # to the right or an unspread box-shadow both haze over a readout that measured "clear" by its box,
+    # so the sole is flush right and the shadow spread negative, and this asks for room on top of that.
+    check(land["clear"] >= 4,
+          "   without eclipsing the strip's readouts, which 4.3 fitted to the pixel (%.2fpx of clearance "
+          "to the room name)" % land["clear"])
+    check(land["terminal"] == "1" and land["said"].endswith("The programme ends here."),
+          "   and the run is ENDED - the console is latched terminal and the beat is announced, not "
+          "only drawn (%s)" % land["said"])
+
+    # EXACTLY ONCE, and the fixture is the ordinary thing a visitor does in a scroll piece: go back and
+    # read something again. Sampled per pass rather than once at the end, so a second firing on the way
+    # back up is not hidden by a third on the way down.
+    passes = []
+    for _ in range(3):
+        sh.evaluate("() => { const s = document.querySelector('#lbScroll'); s.scrollTop = 0; }")
+        sh.wait_for_timeout(300)
+        passes.append(sh.evaluate("() => window.__lbShoe.length"))
+        sh.evaluate("() => { const s = document.querySelector('#lbScroll'); s.scrollTop = s.scrollHeight; }")
+        sh.wait_for_timeout(500)
+        passes.append(sh.evaluate("() => window.__lbShoe.length"))
+    check(passes == [1] * 6,
+          "it fires EXACTLY once - three more passes over the trigger add nothing (%s)" % passes)
+
+    # 4.5 IS NOT 4.6. The beat exists; nothing goes out on the wire for it. A packet that quietly landed
+    # completion here would be green on every check above and would have built 4.6 without its own gate.
+    life = sh.evaluate("() => window.__lbLife")
+    check("GAME_COMPLETE" not in life,
+          "and 4.5 emits NOTHING - the shoe is the beat, completion is 4.6's (%d lifecycle events, no "
+          "GAME_COMPLETE)" % len(life))
+
+    # consequence 6 survives the terminal, which is the one thing the ending was not allowed to cost:
+    # the closing scene is a reveal, and the 192 sq ft are still on the table after the shoe.
+    post = sh.evaluate("""() => ({ sqft: parseInt(document.querySelector('#lbSqft').textContent, 10),
+        figH: +document.querySelector('#lbFig i').getBoundingClientRect().height.toFixed(2),
+        disabled: document.querySelector('#lbGive').disabled })""")
+    sh.click("#lbGive")
+    sh.wait_for_timeout(200)
+    post2 = sh.evaluate("""() => ({ sqft: parseInt(document.querySelector('#lbSqft').textContent, 10),
+        figH: +document.querySelector('#lbFig i').getBoundingClientRect().height.toFixed(2),
+        given: +document.querySelector('#lbGiven').textContent })""")
+    check(not post["disabled"] and post2["sqft"] > post["sqft"] and post2["figH"] > post["figH"]
+          and post2["given"] > 0,
+          "and GIVE IT BACK still works under the shoe - %d->%d sq ft, %.2f->%.2fpx of character "
+          "(%d restored)" % (post["sqft"], post2["sqft"], post["figH"], post2["figH"], post2["given"]))
+
+    # THE SHORT STAGE, and it is checked because the shoe's landing is two hand-derived numbers per
+    # branch, not one rule. Inside the television the stage is 566 and the container query swaps the
+    # strip to 54px, the figure to 32 and the room name to x 40 - so a shoe positioned off the 72px
+    # strip's arithmetic lands 6px BELOW its own character there and eclipses the readout it cleared
+    # here. The stage is squeezed directly, as 4.2 does, and this is the last thing the section asks.
+    sh.evaluate("() => { document.querySelector('#lbStage').style.height = '566px'; }")
+    sh.wait_for_timeout(500)
+    short = sh.evaluate("""() => { const q = s => document.querySelector(s).getBoundingClientRect();
+        const shoe = q('#lbShoe'), fig = q('#lbFig i'), room = q('#lbRoom'), con = q('#lbConsole');
+        return { strip: +con.height.toFixed(0),
+                 x: +(Math.min(shoe.right, fig.right) - Math.max(shoe.left, fig.left)).toFixed(2),
+                 y: +(Math.min(shoe.bottom, fig.bottom) - Math.max(shoe.top, fig.top)).toFixed(2),
+                 clear: +(room.left - shoe.right).toFixed(2) }; }""")
+    check(short["strip"] == 54 and short["x"] > 0 and short["y"] > 0 and short["clear"] >= 4,
+          "squeezed to the 566px stage the television gives it, the shoe still lands on the character "
+          "and still clears the readouts (%dpx strip, %.2f across, %.2f into, %.2f clear)"
+          % (short["strip"], short["x"], short["y"], short["clear"]))
+
+    shclean = [e for e in sherrs if "favicon" not in e and "jsdelivr" not in e.lower()]
+    check(not shclean, "4.5: no page errors across the terminal drive (%s)" % (shclean[:2] or "none"))
+
     b.close()
 
 print("\n%s" % ("3D PATH DRIVES" if ok else "3D PATH BROKEN"))
