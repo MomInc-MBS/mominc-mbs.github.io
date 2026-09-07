@@ -130,6 +130,8 @@ body{display:block;padding:0;overflow:hidden}
   font-family:var(--display); font-size:clamp(14px, 3vw, 20px); letter-spacing:.04em;
   color:var(--gold); text-shadow:0 0 18px rgba(255,211,110,.35); margin:0; padding:0 8%; line-height:1.35;
 }
+.dark-note a{color:inherit; text-underline-offset:4px; display:inline-block; margin-top:.6em}   /* 2.23: the calendar affordance, in the set's own gold */
+.dark-note a:hover,.dark-note a:focus-visible{color:#fff}
 .tv[data-state="warming"] .dark{opacity:1; animation:tubeopen 900ms cubic-bezier(.2,.8,.2,1) forwards}
 @keyframes tubeopen{0%{clip-path:inset(49.5% 0 49.5% 0);opacity:1} 55%{clip-path:inset(0 0 0 0);opacity:.9} 100%{clip-path:inset(0 0 0 0);opacity:0}}
 
