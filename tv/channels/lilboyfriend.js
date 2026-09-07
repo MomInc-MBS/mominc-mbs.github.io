@@ -370,6 +370,7 @@ export default {
       const scroll = ST.mode === "scroll";
       if (scroll) buildScroll();
       lbStage.classList.toggle("mode-scroll", scroll);
+      pushTone();     // 4.7: the sound layer belongs to the chapters' timeline. Leaving them silences it.
       if (!modeBtn) return;
       modeBtn.textContent = scroll ? "MUSEUM" : "CHAPTERS";
       modeBtn.setAttribute("aria-label", scroll ? "Switch to the museum walk" : "Switch to the scroll chapters");
@@ -487,6 +488,13 @@ export default {
       const pct = n * 16;
       byId("lbStressFill").style.width = pct + "%";
       byId("lbStressPct").textContent = pct + "% COMPRESSION";
+      /* 4.7/E.7: the other two layers hang off the SAME `shown` the character does, here, rather than
+         off a timeline of their own. "Synchronized" is not four things that each happen to move - it is
+         four things that cannot disagree, and the cheapest way to guarantee that is one write site.
+         --lb-close goes on the scroll run because the six sticky chapters inherit it (one write, not
+         six); the tone reads --lb-scale straight back off the strip, so it follows GIVE IT BACK too. */
+      if (scrollEl) scrollEl.style.setProperty("--lb-close", (1 - shown / BASE_SQFT).toFixed(4));
+      pushTone();
     }
 
     function setScene(n) {
@@ -558,6 +566,80 @@ export default {
       consoleEl.dataset.terminal = "1";
       byId("lbShoeSaid").textContent = SHOE_LINE;
     }
+
+    /* ---- 4.7 / E.7: THE FOURTH LAYER, and the choice that gates it ---------------------------------
+       The Boat is four synchronized layers - background, character, text, sound - and three of them
+       were already here and already driven: 4.2's paper, 4.4's figure under --lb-scale, 4.3's chapter
+       copy and console strip. 4.7 adds SOUND, gives the background something to do (renderScene above),
+       and puts the audio behind an explicit choice. All four now read one number, so the acceptance's
+       "advance together" is true by construction rather than by four things being kept in step.
+
+       NO AUDIO BEFORE THE CHOICE IS ENFORCED BY NOT HAVING AN AUDIOCONTEXT. A muted <audio>, a
+       suspended context, an autoplay-blocked element - all three are "no sound came out" for reasons
+       the browser owns, not reasons this channel owns, and a gate that reads `paused` or `.muted` is
+       passed by a policy rather than by the build. Nothing here constructs anything audible until the
+       button is pressed; the driver counts AudioContext constructions and OscillatorNode.start() calls
+       at the platform boundary, and both are zero across a whole six-chapter scroll.
+
+       WHY THE TONE IS SYNTHESIZED. This repo has no audio assets and corgi and djscratch both already
+       make their sound out of oscillators through ctx.audio - so the room tone is one sine through one
+       gain, and adding the first binary asset to the tree for a hum would be the expensive way round.
+       The pitch is TONE_HZ / scale, which is the same curve as the character: 68Hz of room at the
+       entrance rises to 340Hz at chapter six, and hands back down again under GIVE IT BACK. A hum that
+       becomes a whine as the walls arrive is the sound layer doing what the other three do.
+
+       IT GOES THROUGH ctx.audio, which is the whole teardown contract - an AudioContext outliving its
+       mount is a channel still making noise into a page that has moved on, and check_teardown is what
+       notices. The oscillator dies with the context; there is nothing else to unwind.
+
+       THE CHOICE IS A TOGGLE AFTER THE FIRST PRESS. "Enter with sound" is the opt-in the row names, but
+       a piece that cannot be silenced once entered has taken the choice back. Muting is the gain, not
+       the context: closing and rebuilding a context per press is how a channel runs out of them. */
+    const TONE_HZ = 68, TONE_LEVEL = 0.045;
+    const soundBtn = byId("lbSoundBtn");
+    let actx = null, osc = null, toneGain = null, soundOn = false;
+
+    // the scale is read back off the strip the character is drawn from, so the tone cannot drift from
+    // the figure even by one write - there is no second copy of the number to drift from.
+    function currentScale() {
+      const v = consoleEl && parseFloat(consoleEl.style.getPropertyValue("--lb-scale"));
+      return v > 0 ? v : 1;
+    }
+
+    function pushTone() {
+      if (!toneGain) return;
+      const t = actx.currentTime;
+      // the museum is not this timeline. Its mode has no scenes for a layer to ride, so the tone goes
+      // to silence there and comes back on return - by GAIN, so the choice itself is not forgotten.
+      const audible = soundOn && ST.mode === "scroll";
+      toneGain.gain.setTargetAtTime(audible ? TONE_LEVEL : 0, t, 0.08);
+      osc.frequency.setTargetAtTime(TONE_HZ / Math.max(FLOOR, currentScale()), t, 0.15);
+    }
+
+    function labelSound() {
+      if (!soundBtn) return;
+      soundBtn.textContent = soundOn ? "SOUND ON" : actx ? "SOUND OFF" : "ENTER WITH SOUND";
+      soundBtn.setAttribute("aria-pressed", soundOn ? "true" : "false");
+      soundBtn.setAttribute("aria-label", soundOn ? "Turn the sound off" : "Play the chapters with sound");
+    }
+
+    if (soundBtn) ctx.on(soundBtn, "click", () => {
+      if (!actx) {
+        try { actx = ctx.audio(new (window.AudioContext || window.webkitAudioContext)()); }
+        catch { soundBtn.disabled = true; soundBtn.textContent = "NO SOUND"; return; }
+        osc = actx.createOscillator();
+        toneGain = actx.createGain();
+        osc.type = "sine";
+        osc.frequency.value = TONE_HZ;
+        toneGain.gain.value = 0;          // the ramp is pushTone's; nothing is ever audible unramped
+        osc.connect(toneGain).connect(actx.destination);
+        osc.start();
+      }
+      if (actx.state === "suspended") actx.resume().catch(() => {});
+      soundOn = !soundOn;
+      pushTone();
+      labelSound();
+    });
 
     function buildScroll() {
       if (scrollEl) return scrollEl;

@@ -238,6 +238,14 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
       color:#fffdf8; background:rgba(20,16,12,.72); border:1.5px solid var(--gold); border-radius:999px;
       padding:7px 13px; cursor:pointer; -webkit-user-select:none; user-select:none}
   .lb-mode:active{background:rgba(230,198,122,.55); color:#2c1e14}
+  /* 4.7: the sound choice, the mode control's twin on the other corner. It reuses .lb-mode whole and
+     overrides two properties, because a second chip styled from scratch is a second thing to keep in
+     step with the first. right:auto is not optional - .lb-mode sets right and left alone would pin it
+     to both edges. Scroll mode only: audio is a layer of the scripted scroll, and offering it over the
+     museum offers a choice that changes nothing. */
+  .lb-sound{display:none; left:10px; right:auto; max-width:calc(100% - 130px)}
+  .lb-stage.mode-scroll .lb-sound{display:block}
+  .lb-sound[aria-pressed="true"]{background:rgba(230,198,122,.5); color:#2c1e14}
 
   /* the scroll chapters. One vertical run inside the stage, so the STAGE is the viewport the chapters
      are measured against - not window.innerHeight, which is a different number inside the television.
@@ -281,11 +289,28 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
      because the container query at the bottom has to be able to change it, and a container query
      styles a container's DESCENDANTS, never the container itself. */
   .lb-scroll .lb-ch, .lb-scroll .lb-console{--lb-console:72px}
+  /* ---- 4.7/E.7: the BACKGROUND layer, and it rides the same timeline as the other three -------------
+     The paper was identical in all six chapters, which is a background that is present rather than one
+     that advances - and "all four layers advance together" is the acceptance. So one gradient is laid
+     over the grain and its darkness is --lb-close, written by renderScene() beside --lb-scale. The room
+     closes in on the resident as the resident shrinks, off ONE number.
+
+     THE VEIL IS CAPPED BY CONTRAST, not by taste. The chapters are 14px sourced facts in #2c1e14 on
+     this paper and the fact cards are only 55% white over it, so the ceiling is what keeps the darkest
+     corner of the sixth chapter above 4.5:1 - .40 at the edge lands near 5.5:1 and .16 in the middle
+     near 11:1. A veil that reads better and cannot be read is not a layer, it is a bug with a mood.
+
+     The variable is declared on .lb-scroll and INHERITED, so all six chapters carry the same value at
+     once. Only the top of the sticky stack is visible, so that is one write per scene rather than six,
+     and nothing has to be kept in step with the scene the visitor is actually on. */
   .lb-scroll .lb-ch{position:sticky; top:0; height:100%; margin:0; scroll-snap-align:start;
       display:flex; align-items:stretch;
       padding:20px 16px calc(10px + var(--lb-console)); border-bottom:1px solid rgba(44,30,20,.2);
       background-color:#ece0c8;
-      background-image:repeating-radial-gradient(circle at 20% 30%,rgba(0,0,0,.05) 0 1px,transparent 1px 6px),
+      background-image:radial-gradient(circle at 50% 40%,
+                          rgba(30,18,8,calc(var(--lb-close,0) * .16)) 0 34%,
+                          rgba(30,18,8,calc(var(--lb-close,0) * .40)) 100%),
+                        repeating-radial-gradient(circle at 20% 30%,rgba(0,0,0,.05) 0 1px,transparent 1px 6px),
                         repeating-radial-gradient(circle at 70% 65%,rgba(255,255,255,.35) 0 1px,transparent 1px 7px)}
   .lb-scroll .lb-ch:last-child{border-bottom:0}
   /* the no-clip guard, and it is a guard rather than the design: a chapter is a fixed one stage tall, so
@@ -463,6 +488,12 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
          because the flat path removes both and the control has to survive that. Its label names what
          pressing it DOES, the way the shell's own picture control does. -->
     <button type="button" class="lb-mode" id="lbModeBtn" aria-label="Switch to the scroll chapters">CHAPTERS</button>
+    <!-- 4.7/E.7: the sound choice. The Boat's fourth layer is opt-in and this button is the opt-in, so
+         it sits beside the mode control rather than inside the scroll run: the chapters are sticky and
+         stack, so a control placed on the intro chapter is buried under chapter one and unreachable for
+         the rest of the piece - which would make the mute half of the choice a lie. Hidden outside
+         scroll mode; the museum has no timeline for a layer to ride. -->
+    <button type="button" class="lb-mode lb-sound" id="lbSoundBtn" aria-pressed="false">ENTER WITH SOUND</button>
     <canvas id="lbCanvas" aria-label="The museum. Look with your mouse or finger. Hold WALK/BACK or press W/S to walk."></canvas>
     <div class="lb-hud" id="lbHud">
       <div class="lb-lookzone" id="lookZone"></div>

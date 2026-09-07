@@ -1058,6 +1058,182 @@ with sync_playwright() as pw:
     moclean = [e for e in moerrs if "favicon" not in e and "jsdelivr" not in e.lower()]
     check(not moclean, "4.6: no page errors across the museum-first drive (%s)" % (moclean[:2] or "none"))
 
+    # ---- 4.7 / E.7: The Boat's four synchronized layers, and the choice that gates the fourth --------
+    # Two clauses, and they need opposite fixtures. "No audio plays before the choice" is the half where
+    # NOTHING happening is the pass, so it is driven as its own full six-chapter scroll with the button
+    # untouched - a build that starts its context on mount and merely leaves the gain at zero is red
+    # here and green on every assertion that only looks at the run after the click.
+    #
+    # WHAT COUNTS AS "NO AUDIO" IS MEASURED AT THE PLATFORM, NOT AT THE CHANNEL. A suspended context, a
+    # muted element and an autoplay-blocked one are all silent for reasons the BROWSER owns; asking the
+    # page whether it thinks it is playing lets a policy pass the packet. So AudioContext construction
+    # and OscillatorNode.start() are counted by patching the constructor and the prototype from an init
+    # script, before any channel code runs, and the parameter automation the channel actually sends is
+    # recorded off AudioParam.prototype.setTargetAtTime. The channel keeps no counter of its own: a
+    # source that scores its own silence is its own witness.
+    print("\n  -- 4.7: The Boat's four layers, and the sound choice --")
+
+    sd = b.new_page(viewport={"width": 390, "height": 844})
+    sderrs = []
+    sd.on("pageerror", lambda e: sderrs.append(str(e)))
+    sd.on("console", lambda m: sderrs.append(m.text) if m.type == "error" else None)
+    sd.add_init_script("""(() => { const g = HTMLCanvasElement.prototype.getContext;
+      HTMLCanvasElement.prototype.getContext = function (t, ...a) {
+        return /webgl/i.test(t) ? null : g.call(this, t, ...a); }; })()""")
+    sd.add_init_script("""(() => {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      window.__lbA = { ctors: 0, starts: 0, oscs: [], freqs: [], gains: [] };
+      if (!AC) return;
+      class Counted extends AC { constructor(...a) { super(...a); window.__lbA.ctors++; } }
+      window.AudioContext = window.webkitAudioContext = Counted;
+      const start = OscillatorNode.prototype.start;
+      OscillatorNode.prototype.start = function (...a) {
+        window.__lbA.starts++; window.__lbA.oscs.push(this); return start.apply(this, a); };
+      // the frequency param and the gain param are told apart by IDENTITY against the oscillator that
+      // was actually started, not by call order - the channel is free to push them in either order.
+      const stt = AudioParam.prototype.setTargetAtTime;
+      AudioParam.prototype.setTargetAtTime = function (v, ...a) {
+        const mine = window.__lbA.oscs.some(o => o.frequency === this);
+        (mine ? window.__lbA.freqs : window.__lbA.gains).push(+Number(v).toFixed(3));
+        return stt.call(this, v, ...a); }; })()""")
+
+    # every layer in one sample, each read where the VISITOR gets it: the background off the chapter's
+    # computed background-image (so a --lb-close nothing consumes is caught - the string would not move),
+    # the character off the rendered figure, the text off the strip, the sound off the automation.
+    LAYERS = """() => { const q = s => document.querySelector(s);
+      const sc = q('#lbScroll'), ch = q('#lbScroll .lb-ch[data-chapter="1"]');
+      return { scene: q('#lbConsole').dataset.scene,
+               close: +getComputedStyle(sc).getPropertyValue('--lb-close'),
+               bg: getComputedStyle(ch).backgroundImage,
+               figH: +q('#lbFig i').getBoundingClientRect().height.toFixed(2),
+               text: q('#lbRxSev').textContent.trim() + ' / ' + q('#lbRoom').textContent.trim(),
+               ctors: window.__lbA.ctors, starts: window.__lbA.starts,
+               freqN: window.__lbA.freqs.length,
+               freq: window.__lbA.freqs.slice(-1)[0],
+               gain: window.__lbA.gains.slice(-1)[0] }; }"""
+
+    sd.goto(BASE + "/play/lilboyfriend/", wait_until="load")
+    sd.wait_for_timeout(2500)
+    sd.click("#lbModeBtn")
+    sd.wait_for_selector("#lbConsole", timeout=5000)
+    sd.evaluate("() => { document.querySelector('#lbScroll').style.scrollBehavior = 'auto'; }")
+    sd.wait_for_timeout(300)
+
+    btn = sd.evaluate("""() => { const b = document.querySelector('#lbSoundBtn');
+        return b ? { text: b.textContent.trim(), pressed: b.getAttribute('aria-pressed'),
+                     shown: b.getClientRects().length > 0 } : null; }""")
+    check(btn and btn["shown"] and btn["pressed"] == "false" and "SOUND" in btn["text"].upper(),
+          "the choice is offered before anything plays, and it is offered as a choice - \"%s\", "
+          "aria-pressed=%s" % (btn["text"] if btn else "MISSING", btn and btn["pressed"]))
+
+    # the silent scroll: the whole piece, end to end, button never touched.
+    silent = []
+    for i in range(1, 7):
+        sd.evaluate("i => { const s = document.querySelector('#lbScroll');"
+                    "        s.scrollTop = i * s.clientHeight; }", i)
+        sd.wait_for_function("i => document.querySelector('#lbConsole').dataset.scene === String(i)",
+                             arg=i, timeout=3000, polling=60)
+        silent.append(sd.evaluate(LAYERS))
+    sd.evaluate("() => { const s = document.querySelector('#lbScroll'); s.scrollTop = s.scrollHeight; }")
+    sd.wait_for_timeout(700)
+    quiet = sd.evaluate("() => ({ ctors: window.__lbA.ctors, starts: window.__lbA.starts, "
+                        "          freqs: window.__lbA.freqs.length, gains: window.__lbA.gains.length })")
+    check(quiet == {"ctors": 0, "starts": 0, "freqs": 0, "gains": 0},
+          "NO AUDIO PLAYS BEFORE THE CHOICE - six chapters and the terminal, and the channel never even "
+          "built an AudioContext, let alone started a source (%s)" % quiet)
+
+    # the choice. One press, one context, one source - and the button becomes the way back out of it.
+    sd.evaluate("() => { const s = document.querySelector('#lbScroll'); s.scrollTop = 0; }")
+    sd.wait_for_function("() => document.querySelector('#lbConsole').dataset.scene === '0'",
+                         timeout=3000, polling=60)
+    sd.click("#lbSoundBtn")
+    sd.wait_for_timeout(300)
+    on = sd.evaluate("""() => ({ ctors: window.__lbA.ctors, starts: window.__lbA.starts,
+        gain: window.__lbA.gains.slice(-1)[0], freq: window.__lbA.freqs.slice(-1)[0],
+        text: document.querySelector('#lbSoundBtn').textContent.trim(),
+        pressed: document.querySelector('#lbSoundBtn').getAttribute('aria-pressed') })""")
+    check(on["ctors"] == 1 and on["starts"] == 1 and on["gain"] > 0 and on["pressed"] == "true",
+          "and AFTER the choice it does - one context, one source, and the gain is ramped to something "
+          "audible (%s)" % on)
+
+    # the scripted scroll, with all four layers live. Sampled per scene, and the assertion is that they
+    # move TOGETHER: four separate monotonic claims would each pass on a build where one layer lags a
+    # chapter behind the rest, which is the failure "synchronized" actually names.
+    live = [sd.evaluate(LAYERS)]
+    for i in range(1, 7):
+        sd.evaluate("i => { const s = document.querySelector('#lbScroll');"
+                    "        s.scrollTop = i * s.clientHeight; }", i)
+        sd.wait_for_function("i => document.querySelector('#lbConsole').dataset.scene === String(i)",
+                             arg=i, timeout=3000, polling=60)
+        sd.wait_for_timeout(120)
+        live.append(sd.evaluate(LAYERS))
+
+    closes = [s["close"] for s in live]
+    check(all(closes[i] > closes[i - 1] for i in range(1, 7)),
+          "1. BACKGROUND: the room closes in on the resident, one step per chapter (%s)" % closes)
+    bgs = [s["bg"] for s in live]
+    check(len(set(bgs)) == 7 and "gradient" in bgs[0],
+          "   and it is RENDERED, not just a variable - the chapter's own background-image is different "
+          "ink at all seven positions (%d distinct)" % len(set(bgs)))
+    figs = [s["figH"] for s in live]
+    check(all(figs[i] < figs[i - 1] for i in range(1, 7)) and figs[-1] > 4,
+          "2. CHARACTER: the figure is smaller at every chapter and is still a person at six (%s)" % figs)
+    texts = [s["text"] for s in live]
+    check(len(set(texts)) == 7 and texts[-1].startswith("FINAL"),
+          "3. TEXT: the prescription and the room escalate with it (%s)" % texts[-1])
+    freqs = [s["freq"] for s in live]
+    check(all(freqs[i] > freqs[i - 1] for i in range(1, 7)),
+          "4. SOUND: the room tone rises with the walls, off the same curve as the figure (%s)" % freqs)
+
+    # TOGETHER, and this is the clause the four checks above do not cover between them: at every one of
+    # the six boundaries, all four layers moved. A build where the tone is pushed once at the click and
+    # never again passes "the tone is higher at six than at zero" and fails here.
+    lag = [i for i in range(1, 7)
+           if not (live[i]["close"] > live[i - 1]["close"] and live[i]["figH"] < live[i - 1]["figH"]
+                   and live[i]["bg"] != live[i - 1]["bg"] and live[i]["text"] != live[i - 1]["text"]
+                   and live[i]["freqN"] > live[i - 1]["freqN"] and live[i]["freq"] > live[i - 1]["freq"])]
+    check(not lag, "and all four advance TOGETHER - every one of the six boundaries moves background, "
+                   "character, text and sound in the same step (lagging: %s)" % (lag or "none"))
+
+    # the fourth layer belongs to the chapters' timeline. Leaving for the museum silences it WITHOUT
+    # forgetting the choice, and coming back restores it - matched pair, because "it went quiet" is
+    # passed by a build that simply tore the sound down and never brought it back.
+    sd.click("#lbModeBtn")
+    sd.wait_for_timeout(300)
+    away = sd.evaluate("""() => ({ gain: window.__lbA.gains.slice(-1)[0],
+        pressed: document.querySelector('#lbSoundBtn').getAttribute('aria-pressed'),
+        shown: document.querySelector('#lbSoundBtn').getClientRects().length > 0 })""")
+    check(away["gain"] == 0 and away["pressed"] == "true" and not away["shown"],
+          "the museum has no timeline for a layer to ride, so the tone goes to silence there - and the "
+          "choice is remembered, not spent (%s)" % away)
+    sd.click("#lbModeBtn")
+    sd.wait_for_timeout(300)
+    backs = sd.evaluate("() => window.__lbA.gains.slice(-1)[0]")
+    check(backs > 0, "   and it comes back with the chapters (gain %s)" % backs)
+
+    # and the way out. Muting is the gain, not the context - a second context per press is how a channel
+    # runs out of them, and the driver is watching the constructor count for exactly that.
+    sd.click("#lbSoundBtn")
+    sd.wait_for_timeout(300)
+    off = sd.evaluate("""() => ({ gain: window.__lbA.gains.slice(-1)[0], ctors: window.__lbA.ctors,
+        starts: window.__lbA.starts, text: document.querySelector('#lbSoundBtn').textContent.trim(),
+        pressed: document.querySelector('#lbSoundBtn').getAttribute('aria-pressed') })""")
+    check(off["gain"] == 0 and off["pressed"] == "false" and off["ctors"] == 1 and off["starts"] == 1,
+          "the choice can be taken back, and taking it back is the GAIN - still one context and one "
+          "source after four presses (%s)" % off)
+
+    # 4.5/4.6 unharmed: the shoe still falls under the sound layer and the run still completes once.
+    sd.evaluate("() => { const s = document.querySelector('#lbScroll'); s.scrollTop = s.scrollHeight; }")
+    sd.wait_for_timeout(900)
+    end = sd.evaluate("""() => ({ terminal: document.querySelector('#lbConsole').dataset.terminal || "",
+        said: document.querySelector('#lbShoeSaid').textContent.trim() })""")
+    check(end["terminal"] == "1" and end["said"].endswith("The programme ends here."),
+          "and 4.5's terminal is untouched by the fourth layer - the shoe still falls and still ends "
+          "the run (%s)" % end["terminal"])
+
+    sdclean = [e for e in sderrs if "favicon" not in e and "jsdelivr" not in e.lower()]
+    check(not sdclean, "4.7: no page errors across the layers drive (%s)" % (sdclean[:2] or "none"))
+
     b.close()
 
 print("\n%s" % ("3D PATH DRIVES" if ok else "3D PATH BROKEN"))
