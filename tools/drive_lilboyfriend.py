@@ -830,10 +830,17 @@ with sync_playwright() as pw:
                                  scene: c ? c.dataset.scene : null,
                                  name: e.animationName }); }
       }, true); })()""")
-    # 4.5 builds the BEAT and emits nothing; 4.6 is what puts completion here. Recorded from boot so a
-    # completion fired at the shoe cannot slip past between navigations.
-    sh.add_init_script("""(() => { window.__lbLife = [];
-      document.addEventListener('mbs:lifecycle', e => window.__lbLife.push(e.detail && e.detail.type)); })()""")
+    # 4.6: every GAME_COMPLETE this run puts on the wire, in order, WITH ITS DETAIL. The detail is the
+    # whole assertion and the count alone is worthless here: while mbs-shim.js:124's transitional
+    # emission lives, unlock() also emits GAME_COMPLETE, so a build that never adopted complete() at all
+    # can still show exactly one event. {terminal:"shoe"} is the shoe's; {nodes,need} is the door's.
+    # Recorded from boot, so nothing emitted between navigation and the first sample is missed.
+    sh.add_init_script("""(() => { window.__lbLife = []; window.__lbCompletes = [];
+      document.addEventListener('mbs:lifecycle', e => {
+        const d = e.detail || {};
+        window.__lbLife.push(d.type);
+        if (d.type === 'GAME_COMPLETE') window.__lbCompletes.push(d.detail || {});
+      }); })()""")
     sh.goto(BASE + "/play/lilboyfriend/", wait_until="load")
     sh.wait_for_timeout(2500)
     sh.click("#lbModeBtn")
@@ -858,10 +865,18 @@ with sync_playwright() as pw:
     atsix = sh.evaluate("""() => ({ fired: window.__lbShoe.length,
         sev: document.querySelector('#lbRxSev').textContent.trim(),
         rx: document.querySelector('#lbRx').textContent.trim(),
+        done: window.__lbCompletes.slice(),
         terminal: document.querySelector('#lbConsole').dataset.terminal || "" })""")
     check(atsix["sev"] == "FINAL" and atsix["fired"] == 0 and not atsix["terminal"],
           "AT chapter six the diagnosis has rendered - %s / \"%s\" - and the shoe has still not fallen "
           "(%d firings)" % (atsix["sev"], atsix["rx"], atsix["fired"]))
+    # 4.6's "ONLY there", and it is the half that gives the clause teeth: six chapters of scrolling -
+    # every consequence rendered, the FINAL diagnosis on the strip - and the run has still not reported
+    # itself finished. A build that completed on the diagnosis, or on chapter six becoming the scene,
+    # is red here and green on every count-after-the-fact assertion below.
+    check(atsix["done"] == [],
+          "   and NOTHING has completed yet - the diagnosis is not the terminal, the shoe is (%s)"
+          % atsix["done"])
 
     # past it. The end section rising is what releases the shoe.
     sh.evaluate("() => { const s = document.querySelector('#lbScroll'); s.scrollTop = s.scrollHeight; }")
@@ -901,23 +916,42 @@ with sync_playwright() as pw:
     # EXACTLY ONCE, and the fixture is the ordinary thing a visitor does in a scroll piece: go back and
     # read something again. Sampled per pass rather than once at the end, so a second firing on the way
     # back up is not hidden by a third on the way down.
-    passes = []
+    # ---- 4.6: completion, emitted AT the shoe, idempotently, and only there --------------------------
+    # THE DETAIL IS THE ASSERTION, not the count. mbs-shim.js:124 still emits GAME_COMPLETE from
+    # unlock(), so "exactly one event" is true of a channel that never adopted the API. {terminal:"shoe"}
+    # is the only thing that says this one came from the shoe's own complete() call. Scroll mode never
+    # reaches the museum door, so on this run complete() is the first call through the shared guard and
+    # the payload really is the channel's own; the museum-first order is driven below, where it is not.
+    done = sh.evaluate("() => window.__lbCompletes.slice()")
+    check(len(done) == 1 and done[0].get("site") == "lilboyfriend"
+          and done[0].get("terminal") == "shoe" and "nodes" not in done[0],
+          "4.6: the shoe COMPLETES the run, and the payload is the shoe's own rather than the unlock's "
+          "transitional one (%s)" % done)
+
+    # EXACTLY ONCE, and the fixture is the ordinary thing a visitor does in a scroll piece: go back and
+    # read something again. Sampled per pass rather than once at the end, so a second firing on the way
+    # back up is not hidden by a third on the way down - and the completion count is sampled on the same
+    # schedule as the animation, because "the shoe fired once" and "the run completed once" are two
+    # claims and a build can fail the second while passing the first.
+    passes, emits = [], []
     for _ in range(3):
         sh.evaluate("() => { const s = document.querySelector('#lbScroll'); s.scrollTop = 0; }")
         sh.wait_for_timeout(300)
         passes.append(sh.evaluate("() => window.__lbShoe.length"))
+        emits.append(sh.evaluate("() => window.__lbCompletes.length"))
         sh.evaluate("() => { const s = document.querySelector('#lbScroll'); s.scrollTop = s.scrollHeight; }")
         sh.wait_for_timeout(500)
         passes.append(sh.evaluate("() => window.__lbShoe.length"))
+        emits.append(sh.evaluate("() => window.__lbCompletes.length"))
     check(passes == [1] * 6,
           "it fires EXACTLY once - three more passes over the trigger add nothing (%s)" % passes)
-
-    # 4.5 IS NOT 4.6. The beat exists; nothing goes out on the wire for it. A packet that quietly landed
-    # completion here would be green on every check above and would have built 4.6 without its own gate.
+    check(emits == [1] * 6,
+          "   and it completes exactly once with it - the latch is the guard, so repeated scrolling past "
+          "the trigger puts nothing more on the wire (%s)" % emits)
     life = sh.evaluate("() => window.__lbLife")
-    check("GAME_COMPLETE" not in life,
-          "and 4.5 emits NOTHING - the shoe is the beat, completion is 4.6's (%d lifecycle events, no "
-          "GAME_COMPLETE)" % len(life))
+    check(life.count("GAME_COMPLETE") == 1,
+          "   and the whole run carried ONE GAME_COMPLETE end to end (%d lifecycle events: %s)"
+          % (len(life), life))
 
     # consequence 6 survives the terminal, which is the one thing the ending was not allowed to cost:
     # the closing scene is a reveal, and the 192 sq ft are still on the table after the shoe.
@@ -954,6 +988,75 @@ with sync_playwright() as pw:
 
     shclean = [e for e in sherrs if "favicon" not in e and "jsdelivr" not in e.lower()]
     check(not shclean, "4.5: no page errors across the terminal drive (%s)" % (shclean[:2] or "none"))
+
+    # ---- 4.6, THE OTHER ORDER: the museum door first, then the chapters ------------------------------
+    # D.1.10 says unlock and complete are order-independent, and this channel is the one where the two
+    # orders are genuinely different code paths rather than a thought experiment. Scroll mode never
+    # reaches fireConnect(), so the run above is the clean one: complete() is the first call through
+    # mbs-shim.js's shared per-site guard and the wire carries the shoe's own payload. A visitor who
+    # walks the museum to the door FIRST has already spent that guard on unlock()'s transitional
+    # emission, so the same call at the shoe is a silent no-op - and the thing the contract actually
+    # forbids, a SECOND GAME_COMPLETE for one site, is what this section is here to catch.
+    #
+    # The door is the flat gallery's, reached by seeding the museum's own save to {phase:"out", t:1} -
+    # nearestStep() lands on it - and by asking for ?mode=live, because off stream the hole is a hole
+    # and "Nothing happens." is the correct behaviour.
+    print("\n  -- 4.6: the museum door first, then the chapters (the other order) --")
+
+    mo = b.new_page(viewport={"width": 390, "height": 844})
+    moerrs = []
+    mo.on("pageerror", lambda e: moerrs.append(str(e)))
+    mo.on("console", lambda m: moerrs.append(m.text) if m.type == "error" else None)
+    mo.add_init_script("""(() => { const g = HTMLCanvasElement.prototype.getContext;
+      HTMLCanvasElement.prototype.getContext = function (t, ...a) {
+        return /webgl/i.test(t) ? null : g.call(this, t, ...a); }; })()""")
+    mo.add_init_script("""(() => { window.__lbCompletes = [];
+      document.addEventListener('mbs:lifecycle', e => {
+        const d = e.detail || {};
+        if (d.type === 'GAME_COMPLETE') window.__lbCompletes.push(d.detail || {});
+      }); })()""")
+    mo.add_init_script("""(() => { window.__lbShoe = [];
+      document.addEventListener('animationstart', e => {
+        if (e.target && e.target.id === 'lbShoe') window.__lbShoe.push(e.animationName); }, true); })()""")
+    mo.goto(BASE + "/play/lilboyfriend/?mode=live", wait_until="load")
+    mo.evaluate("""() => localStorage.setItem('mbs-lilbf-museum-v2',
+        JSON.stringify({ phase: 'out', t: 1, mode: 'museum', signed: false }))""")
+    mo.reload(wait_until="load")
+    mo.wait_for_timeout(2500)
+
+    mo.wait_for_selector("#flSlot", timeout=5000)
+    check(mo.evaluate("() => window.__lbCompletes.length") == 0,
+          "at the museum door, nothing has completed yet")
+    mo.click("#flSlot")
+    mo.wait_for_function("() => window.__lbState().phase !== 'out'", timeout=4000, polling=60)
+    mo.wait_for_timeout(300)
+    door = mo.evaluate("() => window.__lbCompletes.slice()")
+    check(len(door) == 1 and door[0].get("site") == "lilboyfriend" and "nodes" in door[0],
+          "the door unlocks and spends the shared guard on the TRANSITIONAL payload - which is the "
+          "defect D.1.10 names, still shipping until caller six lands (%s)" % door)
+
+    # now the chapters, and the shoe. The BEAT must be unconditional - it is this mode's ending and it
+    # does not belong to the lifecycle contract - while the wire must stay at one event for the site.
+    mo.click("#lbModeBtn")
+    mo.wait_for_selector("#lbShoe", timeout=5000)
+    mo.evaluate("() => { document.querySelector('#lbScroll').style.scrollBehavior = 'auto'; }")
+    mo.wait_for_timeout(300)
+    mo.evaluate("() => { const s = document.querySelector('#lbScroll'); s.scrollTop = s.scrollHeight; }")
+    mo.wait_for_function("() => window.__lbShoe.length > 0", timeout=5000, polling=60)
+    mo.wait_for_timeout(700)
+    after = mo.evaluate("""() => ({ shoe: window.__lbShoe.length,
+        done: window.__lbCompletes.slice(),
+        terminal: document.querySelector('#lbConsole').dataset.terminal || "",
+        said: document.querySelector('#lbShoeSaid').textContent.trim() })""")
+    check(after["shoe"] == 1 and after["terminal"] == "1" and after["said"].endswith("ends here."),
+          "the shoe still falls and still ends the run for a visitor who walked the museum first - the "
+          "BEAT is not conditional on the lifecycle guard (%d firings)" % after["shoe"])
+    check(len(after["done"]) == 1 and "nodes" in after["done"][0],
+          "   and the site still carries exactly ONE GAME_COMPLETE across both orders - the shoe's call "
+          "is a no-op behind the door's, never a second event (%s)" % after["done"])
+
+    moclean = [e for e in moerrs if "favicon" not in e and "jsdelivr" not in e.lower()]
+    check(not moclean, "4.6: no page errors across the museum-first drive (%s)" % (moclean[:2] or "none"))
 
     b.close()
 

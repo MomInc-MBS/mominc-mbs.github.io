@@ -397,8 +397,8 @@ export default {
 
        WHAT IS DELIBERATELY NOT HERE, so the next packet does not find it built twice. 4.2 makes each
        chapter sticky and bounds it to one viewport; 4.3 hangs the six consequences off scroll position;
-       4.4 makes the shrink exponential and finite; 4.5 builds the SHOE as this mode's terminal BEAT and
-       4.6 puts completion there. So this mode has an ending as of 4.5 but still no unlock of its own:
+       4.4 makes the shrink exponential and finite; 4.5 built the SHOE as this mode's terminal BEAT and
+       4.6 put completion on it. So this mode has an ending, and still no unlock of its own:
        the door, the guest book and the epilogue are the museum's, and the museum is one button away at
        all times, which is what "modes, not a replacement" buys. */
 
@@ -529,7 +529,23 @@ export default {
        shoe that flattened the figure would take 4.4's finite floor and 4.3's live restore with it, and
        the beat does not need it - the sole lands across a 7.6px person and covers most of them.
 
-       4.5 IS NOT 4.6. This emits nothing. `terminal` below is the single site 4.6 emits from. */
+       4.6 / D.1.10 (C018): THE LATCH IS THE EMISSION SITE. `terminal = true` is the one assignment in
+       this channel that means "the run reached its end", so the complete() call goes on it and nowhere
+       else - not on the class, not on the observer, not on the end section rising. The three guards
+       above are already exactly the idempotency the contract asks for: scrolling back up and down again
+       re-enters dropShoe() and returns at the first line, so completion is emitted once per run without
+       a second flag to keep in step with the first.
+
+       THE MUSEUM DOOR IS NOT THIS CHANNEL'S TERMINAL, and the two calls are deliberately in two places.
+       fireConnect() unlocks at the door because the glass in the hole is the secret; the shoe completes
+       because the shoe is the end. D.1.10's contract is that the pair is order-independent, and this
+       channel is the one where the orders genuinely differ: scroll mode never reaches the door, so at
+       the shoe complete() is usually the first call and the wire carries {terminal:"shoe"}. A visitor
+       who walked the museum first has already spent unlock()'s TRANSITIONAL emission (mbs-shim.js:124),
+       which shares complete()'s per-site guard, so this call is a silent no-op for that run and the
+       wire carries {nodes,need} instead. Both are one GAME_COMPLETE for the site, which is the contract;
+       the driver drives both orders, and the packet that removes that transitional emission changes
+       nothing here. Nothing is banked and nothing is painted - completion is not progress, the node is. */
     const SHOE_LINE = "A shoe the size of the building comes down on the resident. The programme ends here.";
     let terminal = false, endRatio = 0;
     function dropShoe() {
@@ -537,6 +553,7 @@ export default {
       if (endRatio < 0.65) return;                                          // after chapter six
       if (byId("lbRxSev").textContent !== RX[EXHIBITS.length][0]) return;   // the diagnosis is on screen
       terminal = true;
+      ctx.mbs && ctx.mbs.complete && ctx.mbs.complete("lilboyfriend", { terminal: "shoe" });
       scrollEl.classList.add("shoe-dropped");
       consoleEl.dataset.terminal = "1";
       byId("lbShoeSaid").textContent = SHOE_LINE;
