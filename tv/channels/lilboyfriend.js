@@ -98,7 +98,9 @@ export default {
     // LilBF Museum Housing Facts 0901.md. Numbers are never paraphrased.
     const FACTS = {
       teepee: [
-        { t: "A1", body: "On one night in January 2024, about 770,000 people in America had nowhere indoors to sleep. That's 18 percent more than the year before. Nobody fixed it. They just counted it again.",
+        { t: "A1", body: ["On one night in January 2024, about 770,000 people in America had nowhere indoors to sleep.",
+                          "That's 18 percent more than the year before.",
+                          "Nobody fixed it. They just counted it again."],
           src: "HUD, 2024 Annual Homelessness Assessment Report, Dec. 2024. archives.hud.gov/news/2024/pr24-327.cfm" },
         { t: "A2", body: "More than a third of those 770,000 people were not even in a shelter. About 277,000 were sleeping outside, in a car, or somewhere never built for a person.",
           src: "HUD AHAR 2024, via National Alliance to End Homelessness. endhomelessness.org/media/news-releases/hud-releases-2024-annual-homelessness-assessment-report" },
@@ -140,7 +142,9 @@ export default {
       van: [
         { t: "A16", body: "The number of people living full time in a van in the US grew 63 percent in two years, from about 1.9 million in 2020 to 3.1 million in 2022.",
           src: "Statista, via Yahoo Finance, Paying for van life: Costs and statistics, 2025. finance.yahoo.com/news/paying-van-life-202933082.html" },
-        { t: "A17", body: "It is marketed as freedom. People are selling million dollar homes to live in one. The median US home costs $434,100. A van is not cheap. It is just cheaper.",
+        { t: "A17", body: ["It is marketed as freedom. People are selling million dollar homes to live in one.",
+                           "The median US home costs $434,100.",
+                           "A van is not cheap. It is just cheaper."],
           src: "Moneywise, Wealthy people are selling their million dollar homes to live in a van all year, 2025; NAR Existing-Home Sales, July 2026. moneywise.com/life/lifestyle/vanlife-wealthy-homeowners-hidden-costs" },
         { t: "A18", body: "More than 100 US cities passed a new homeless camping ban in a single year, and enforcement keeps reaching further, past the tent and into anyone parked overnight.",
           src: "NPR, 100-plus cities in the U.S. banned homeless camping this year. But will it work?, Dec. 26, 2024. npr.org/2024/12/26/nx-s1-5199103/homeless-camping-bans-grants-pass" }
@@ -157,6 +161,17 @@ export default {
       B8: { body: "Behind on rent anywhere in the US? This federal tool points you to 211, HUD's housing map, and your local housing agency.", src: "CFPB Rent Help · consumerfinance.gov/renthelp" }
     };
     const RESOURCE_MAP = { teepee: ["B1", "B3", "B5"], shoebox: ["B2", "B4", "B8"], masonjar: ["B6", "B7"], car: ["B1", "B5", "B8"], storage: ["B2", "B4", "B6"], van: ["B3", "B7"] };
+
+    /* 4.10 / S1: wall information has to be consumable - bullet points, and no paragraph over three
+       sentences. A body that needs bullets is written as an ARRAY of the same sentences in the same
+       order, never as new prose: `body.join(" ")` is the shipped string back, character for character,
+       which is how a FORMATTING packet stays inside "numbers used exactly as written, never
+       paraphrased" (the thesis at the top of the markup, and 4.4's rule that a packet must not re-cut
+       shipped content). Only two of the twenty-six bodies run long enough to need it; every other one
+       is still a string and renders exactly as it did. Two readers, so two projections: the DOM cards
+       take bodyHTML, the canvas placards take the array straight (makeSignTexture draws it). */
+    const bodyHTML = b => Array.isArray(b)
+      ? '<ul class="fl-bul">' + b.map(s => "<li>" + s + "</li>").join("") + "</ul>" : b;
     // half the round-2 spacing (0.125 fraction vs 0.25) packs six exhibits into the same HALL_LEN - denser,
     // not longer, per 5.1. Old and new pairs interleave so the walk still reads as a housing progression.
     const EXHIBITS = [
@@ -650,7 +665,7 @@ export default {
             <p class="lb-ch-n">Chapter ${i + 1} of ${EXHIBITS.length}</p>
             <h3>${ex.label}</h3>
             <img class="lb-ch-photo" src="${ex.cozy}" alt="${ex.label}" loading="lazy">
-            ${FACTS[ex.id].map(f => `<div class="fl-card">${f.body}<span class="fl-src">${f.src}</span></div>`).join("")}
+            ${FACTS[ex.id].map(f => `<div class="fl-card">${bodyHTML(f.body)}<span class="fl-src">${f.src}</span></div>`).join("")}
           </div>
         </section>`).join("");
       scrollEl.innerHTML = `
@@ -658,7 +673,7 @@ export default {
           <div class="lb-ch-inner">
             <span class="fl-name">${TITLE_TEXT.h1}</span>
             <p class="fl-sub">${TITLE_TEXT.h2}</p>
-            <p>${TITLE_TEXT.body}</p>
+            <div class="fl-lead">${bodyHTML(TITLE_TEXT.body)}</div>
             <p class="fl-sub">Scroll. Six chapters. The walk is still there - the control at the top right goes back to it.</p>
           </div>
         </section>${chapters}
@@ -864,7 +879,15 @@ export default {
           x.fillStyle = ink; x.textBaseline = "top";
           let y = pad;
           if (title) { x.font = `bold ${fTitle}px Georgia, 'Times New Roman', serif`; y = drawWrapped(x, title, pad, y, w - pad * 2, lhTitle) + 16; }
-          if (body) { x.font = `${fBody}px Georgia, 'Times New Roman', serif`; y = drawWrapped(x, body, pad, y, w - pad * 2, lhBody) + 14; }
+          // 4.10: an array body is bullet points on the wall too, not only in the DOM cards - the placard
+          // IS the wall information the row is about, and the flat card is its stand-in for a machine
+          // that cannot render one. A string body draws exactly as before, gap and all.
+          if (body) {
+            const items = Array.isArray(body) ? body.map(s => "• " + s) : [body];
+            x.font = `${fBody}px Georgia, 'Times New Roman', serif`;
+            for (const it of items) y = drawWrapped(x, it, pad, y, w - pad * 2, lhBody) + (items.length > 1 ? 8 : 0);
+            y += 14;
+          }
           if (source) { x.font = `italic ${fSource}px Georgia, 'Times New Roman', serif`; x.fillStyle = "rgba(26,20,16,.66)"; drawWrapped(x, source, pad, y, w - pad * 2, lhSource); }
           x.shadowColor = "transparent";
           const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; return t;
@@ -1458,7 +1481,7 @@ export default {
         flat.innerHTML = "";
         const wrap = document.createElement("div");
         switch (s.id) {
-          case "entrance": wrap.innerHTML = `<span class="fl-name">${TITLE_TEXT.h1}</span><p class="fl-sub">${TITLE_TEXT.h2}</p><p>${TITLE_TEXT.body}</p><div class="fl-actions"><button id="flNext">enter</button></div>`; break;
+          case "entrance": wrap.innerHTML = `<span class="fl-name">${TITLE_TEXT.h1}</span><p class="fl-sub">${TITLE_TEXT.h2}</p><div class="fl-lead">${bodyHTML(TITLE_TEXT.body)}</div><div class="fl-actions"><button id="flNext">enter</button></div>`; break;
           case "book": {
             // 2.20: same engine the 3D lectern mounts, same JSON. The step is otherwise empty markup -
             // the questions have exactly one definition and it is not in this file.
@@ -1470,7 +1493,7 @@ export default {
             const ex = EXHIBITS.find(e => e.id === s.id);
             wrap.innerHTML = `<span class="fl-name">${ex.label}</span><p class="fl-sub">cozy - tap the photo to look closer</p>
               <div class="fl-zoomable" id="flZoom"><img class="fl-photo" src="${ex.cozy}" alt="${ex.label} cozy"><div class="lb-flat-glass">${GLASS_SVG}</div></div>
-              ${FACTS[ex.id].map(f => `<div class="fl-card">${f.body}<span class="fl-src">${f.src}</span></div>`).join("")}
+              ${FACTS[ex.id].map(f => `<div class="fl-card">${bodyHTML(f.body)}<span class="fl-src">${f.src}</span></div>`).join("")}
               <div class="fl-actions"><button id="flNext">NEXT</button></div>`;
             break;
           }

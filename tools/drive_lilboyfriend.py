@@ -1581,6 +1581,223 @@ with sync_playwright() as pw:
     gclean = [e for e in gerrs if "favicon" not in e and "jsdelivr" not in e.lower()]
     check(not gclean, "4.9: no page errors across the deletion drive (%s)" % (gclean[:2] or "none"))
 
+    # ---- 4.10 / S1: the wall information is consumable ---------------------------------------------
+    # "No paragraph on this channel exceeds three sentences" is the acceptance, and it names an
+    # automated check, so this section IS the check. Four things had to be settled before it could
+    # mean anything.
+    #
+    # (1) A CRUDE SCAN COUNTS CSS AND JS AS PROSE. Grepping this channel's markup for sentences finds
+    #     a 44-sentence "paragraph" (the <style> block) and a 21-sentence one (the header comment
+    #     recording what the last five packets did) before it finds a word a visitor ever reads. The
+    #     measurement is therefore taken off the RENDERED page: what a browser has laid out, with
+    #     <style>, <script> and SVG chart labels excluded, and nothing that is display:none counted.
+    #
+    # (2) "PARAGRAPH" IS THE BROWSER'S UNIT, NOT A <p> TAG. Half this channel's copy is a <div> or an
+    #     <li>, and the .fl-card that holds a fact is a div with a display:block <span> of citation
+    #     inside it. So a paragraph here is any laid-out block box's OWN text - its text nodes plus
+    #     its inline children, stopping at the next block. That measures each card body, each citation
+    #     and each bullet exactly once, and it is also why the fix works: a <ul> of three <li> is three
+    #     paragraphs to this gate and to a reader, where the run-on it replaced was one of five.
+    #
+    # (3) THE INFOMERCIAL IS ONLY VISIBLE IN THE TELEVISION. Part A isolation lists #lbStage as this
+    #     channel's only root, so on /play/ the whole .wrap below the stage carries .mbs-off and every
+    #     side-effect and footer line is display:none. Inside /tv/ it renders in full. A gate driven
+    #     on one route alone would therefore MISS the worst two paragraphs on the channel (the safety
+    #     block at eight sentences, the footer at four) or miss all eighteen sourced facts. Both routes
+    #     are swept, and the count of paragraphs actually measured is asserted so that a sweep which
+    #     silently found nothing cannot pass.
+    #
+    # (4) THE PLACARDS ARE CANVAS AND CANNOT BE READ BACK. The museum's wall placards draw their body
+    #     with fillText into a texture, so no DOM sweep will ever see them - but they are handed the
+    #     SAME FACTS[].body the flat cards and the scroll chapters render, so measuring those measures
+    #     the wall. The matched half is below: the two bodies that were re-formatted are asserted to
+    #     rejoin, character for character, into the strings that shipped. That is what stops this
+    #     packet from passing by PARAPHRASING a sourced housing fact into something shorter, which the
+    #     file's own thesis forbids and which every "shorter is better" gate would otherwise reward.
+    print("\n  -- 4.10: no paragraph on this channel exceeds three sentences --")
+
+    # The sentence counter, and the abbreviation list is the whole of its subtlety. Requiring a capital
+    # or a digit after the stop keeps "HUD. slate.com/..." and every other citation-then-URL to one
+    # sentence; allowing the digit is what catches a real "...above 2020. 83% of renters..." boundary;
+    # and the digit is why the month abbreviations have to be excluded by name, or "Dec. 2024" reads as
+    # two. "Inc." is deliberately NOT in that list: "a compliance program of MOM Inc. Tenants depicted"
+    # IS a sentence boundary, and excusing it would have let the footer pass unchanged.
+    PROSE_JS = r"""
+    (() => {
+      const ABBR = new Set(["Jan","Feb","Mar","Apr","Jun","Jul","Aug","Sep","Sept","Oct","Nov","Dec",
+                            "vol","no","pp","est","approx"]);
+      window.__sentences = function (raw) {
+        const s = String(raw == null ? "" : raw).replace(/\s+/g, " ").trim();
+        if (!s) return 0;
+        const re = /([.!?])["')\]]*\s+(?=[A-Z0-9"'(])/g;
+        let n = 0, m;
+        while ((m = re.exec(s))) {
+          const word = (s.slice(0, m.index).match(/[A-Za-z]+$/) || [""])[0];
+          if (m[1] === "." && ABBR.has(word)) continue;
+          n++;
+        }
+        return n + 1;                       /* boundaries + 1 = segments, so a body with no full stop is one */
+      };
+      const BLOCKY = new Set(["block","list-item","flex","grid","table-cell","flow-root"]);
+      const isBlock = el => BLOCKY.has(getComputedStyle(el).display);
+      const shown = el => el.getClientRects().length > 0;     /* display:none has no boxes: not copy */
+      window.__paras = function () {
+        const out = [];
+        for (const root of document.querySelectorAll(".lb")) {
+          for (const el of root.querySelectorAll("*")) {
+            const tag = el.tagName.toLowerCase();
+            if (tag === "style" || tag === "script" || el.closest("svg,style,script")) continue;
+            if (!isBlock(el) || !shown(el)) continue;
+            let own = "";
+            for (const n of el.childNodes) {
+              if (n.nodeType === 3) own += n.nodeValue;
+              else if (n.nodeType === 1 && n.tagName.toLowerCase() !== "svg" && shown(n) && !isBlock(n))
+                own += n.textContent;       /* inline children belong to this box; a block child is its own */
+            }
+            own = own.replace(/\s+/g, " ").trim();
+            if (own) out.push({ n: window.__sentences(own), text: own,
+              where: el.tagName.toLowerCase() + (el.id ? "#" + el.id : "") +
+                     (typeof el.className === "string" && el.className.trim()
+                        ? "." + el.className.trim().split(/\s+/).join(".") : "") });
+          }
+        }
+        return out;
+      };
+    })()
+    """
+    seen, perrs = {}, []
+
+    def sweep(pg):
+        for r in pg.evaluate("() => window.__paras()"):
+            seen.setdefault(r["text"], (r["n"], r["where"]))
+
+    # route one: /play/, WebGL off, both modes. Covers the museum - the entrance blurb, the six scroll
+    # chapters with all eighteen cited facts, the closing panel - and the flat gallery walked end to end
+    # so the return leg's housing-help resources are measured too, not just the outbound facts.
+    pr = b.new_page(viewport={"width": 390, "height": 844})
+    pr.on("pageerror", lambda e: perrs.append(str(e)))
+    pr.add_init_script("""(() => { const g = HTMLCanvasElement.prototype.getContext;
+      HTMLCanvasElement.prototype.getContext = function (t, ...a) {
+        return /webgl/i.test(t) ? null : g.call(this, t, ...a); }; })()""")
+    pr.add_init_script(PROSE_JS)
+    pr.goto(BASE + "/play/lilboyfriend/?mode=live", wait_until="load")
+    pr.wait_for_timeout(2500)
+    sweep(pr)
+    pr.click("#lbModeBtn")
+    pr.wait_for_selector("#lbScroll .lb-ch[data-chapter]", timeout=5000)
+    pr.evaluate("""() => { const s = document.querySelector('#lbScroll');
+        s.style.scrollBehavior = 'auto'; s.style.scrollSnapType = 'none'; }""")
+    for k in range(0, 9):
+        pr.evaluate("v => { const s = document.querySelector('#lbScroll');"
+                    "        s.scrollTop = v * s.clientHeight; }", k)
+        pr.wait_for_timeout(160)
+        sweep(pr)
+    scroll_seen = len(seen)
+    pr.click("#lbModeBtn")                                 # back to the flat museum
+    pr.wait_for_timeout(600)
+    sweep(pr)
+    pr.click("#flNext")
+    pr.wait_for_selector("#flSkip", timeout=5000)
+    sweep(pr)
+    pr.click("#flSkip")
+    for _ in range(6):
+        pr.wait_for_timeout(300); sweep(pr); pr.click("#flNext")
+    pr.wait_for_selector("#flSlot", timeout=5000)
+    sweep(pr); pr.click("#flSlot")
+    pr.wait_for_function("() => window.__lbState().phase !== 'out'", timeout=4000, polling=60)
+    pr.wait_for_selector("#flNext", timeout=6000)
+    sweep(pr); pr.click("#flNext")
+    for _ in range(7):                                     # the return leg: horror photos, resources
+        pr.wait_for_timeout(300); sweep(pr)
+        try:
+            pr.click("#flNext", timeout=1500)
+        except Exception:
+            break
+    check(scroll_seen > 60 and len(seen) > 90,
+          "the museum route was actually read: %d paragraphs across the six chapters, %d by the end of "
+          "the walk back" % (scroll_seen, len(seen)))
+    pr.close()
+
+    # route two: the television, which is the ONLY place the MOM Inc infomercial below the stage
+    # renders - Part A isolation hides it everywhere else, and it holds the two worst paragraphs.
+    tv = b.new_page(viewport={"width": 1280, "height": 900})
+    tv.on("pageerror", lambda e: perrs.append(str(e)))
+    tv.add_init_script(PROSE_JS)
+    tv.goto(BASE + "/tv/?ch=lilboyfriend&mode=live", wait_until="load")
+    tv.wait_for_timeout(1200)
+    for _ in range(3):
+        if tv.evaluate("() => { const t = document.querySelector('.tv');"
+                       "        return !!t && t.dataset.state === 'on'; }"):
+            break
+        try:
+            tv.click(".power", timeout=2000)
+        except Exception:
+            break
+        tv.wait_for_timeout(1600)
+    tv.wait_for_selector(".lb .side", timeout=8000)
+    tv.wait_for_timeout(1500)
+    before = len(seen)
+    sweep(tv)
+    check(tv.evaluate("() => { const s = document.querySelector('.lb .side');"
+                      "        return !!s && s.getClientRects().length > 0; }")
+          and len(seen) - before > 25,
+          "and the infomercial below the stage was read where it actually renders, inside the "
+          "television: %d further paragraphs the /play/ route cannot see" % (len(seen) - before))
+    tv.close()
+
+    over = sorted(((v[0], v[1], t) for t, v in seen.items() if v[0] > 3), reverse=True)
+    check(not over, "no paragraph on this channel exceeds three sentences (%d measured, worst %d; %s)"
+          % (len(seen), max(v[0] for v in seen.values()),
+             [(n, w, t[:70]) for n, w, t in over[:3]] or "none over three"))
+
+    # bullet points, the row's other half - and not just "a <ul> exists somewhere". Every list this
+    # packet added has to be carrying copy a visitor reads, so the assertion is on the ITEMS.
+    bullets = [t for t, v in seen.items() if v[1].startswith("li")]
+    check(len(bullets) >= 15 and all(v[0] <= 3 for t, v in seen.items() if v[1].startswith("li")),
+          "the long copy became bullet points: %d list items, none of them over three sentences"
+          % len(bullets))
+
+    # THE MATCHED HALF, and the reason this is a formatting packet rather than a content one: the two
+    # fact bodies that became bullets must rejoin into the exact strings that shipped. A build that
+    # got under three sentences by CUTTING a number, dropping a citation or re-wording a sourced fact
+    # is the failure mode this row invites, and it is the one thing the file's thesis forbids outright.
+    SHIPPED = {
+        "A1": "On one night in January 2024, about 770,000 people in America had nowhere indoors to "
+              "sleep. That's 18 percent more than the year before. Nobody fixed it. They just counted "
+              "it again.",
+        "A17": "It is marketed as freedom. People are selling million dollar homes to live in one. The "
+               "median US home costs $434,100. A van is not cheap. It is just cheaper.",
+    }
+    rj = b.new_page(viewport={"width": 390, "height": 844})
+    rj.add_init_script("""(() => { const g = HTMLCanvasElement.prototype.getContext;
+      HTMLCanvasElement.prototype.getContext = function (t, ...a) {
+        return /webgl/i.test(t) ? null : g.call(this, t, ...a); }; })()""")
+    rj.goto(BASE + "/play/lilboyfriend/?mode=live", wait_until="load")
+    rj.wait_for_timeout(2500)
+    rj.click("#lbModeBtn")
+    rj.wait_for_selector("#lbScroll .lb-ch[data-chapter]", timeout=5000)
+    rj.evaluate("""() => { const s = document.querySelector('#lbScroll');
+        s.style.scrollBehavior = 'auto'; s.style.scrollSnapType = 'none'; }""")
+    for k in range(0, 9):
+        rj.evaluate("v => { const s = document.querySelector('#lbScroll');"
+                    "        s.scrollTop = v * s.clientHeight; }", k)
+        rj.wait_for_timeout(120)
+    lists = rj.evaluate("""() => [...document.querySelectorAll('#lbScroll .fl-card .fl-bul')]
+        .map(u => [...u.children].map(li => li.textContent.replace(/\\s+/g, ' ').trim()).join(' '))""")
+    missing = [k for k, v in SHIPPED.items() if v not in lists]
+    check(not missing and len(lists) >= 2,
+          "and no sourced fact was re-worded to get there: every bullet list rejoins into the string "
+          "that shipped, word for word (%d lists, missing %s)" % (len(lists), missing or "none"))
+    # and the citations are still attached to the facts they belong to - a bullet list that swallowed
+    # the <span class="fl-src"> would read fine and be unattributed.
+    cited = rj.evaluate("""() => [...document.querySelectorAll('#lbScroll .fl-card')]
+        .filter(c => (c.querySelector('.fl-src') || {}).textContent || ''.trim()).length""")
+    check(cited == 18, "and all eighteen facts still carry their citation (%d)" % cited)
+    rj.close()
+
+    pclean = [e for e in perrs if "favicon" not in e and "jsdelivr" not in e.lower()]
+    check(not pclean, "4.10: no page errors across the prose drive (%s)" % (pclean[:2] or "none"))
+
     b.close()
 
 print("\n%s" % ("3D PATH DRIVES" if ok else "3D PATH BROKEN"))

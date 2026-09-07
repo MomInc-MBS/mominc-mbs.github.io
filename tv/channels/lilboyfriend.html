@@ -19,6 +19,13 @@ same twelve assets/lilbf-*-{cozy,horror}.jpg paths a FOURTH time, below the stag
 drives all three real consumers (the WebGL texture preload, the flat no-WebGL fallback, and 4.2's scroll
 chapters). The image FILES stay - only the duplicate markup, its CSS, and the now-consumerless `.breached`
 photo flip went. MBS.wave() still fires at the fuse box; it just no longer carries a restore().
+4.10 made the wall information consumable: bullet points, and no paragraph on this channel over three
+sentences. It re-FLOWED copy and re-wrote none of it - the two long fact bodies became arrays of the same
+sentences in the same order (join(" ") is the shipped string back, so "used exactly as written, never
+paraphrased" survives a formatting packet), the safety block's buried semicolon run became the list it
+always was, and the footer's four sentences became two paragraphs. Nothing this page claims changed;
+changing that is 7.6's job, and 7.6 is a stop row. tools/drive_lilboyfriend.py's last section is the
+automated acceptance and it measures the RENDERED page, never this comment.
 ARCHITECTURE: #lbStage stays inside .lb's own subtree the whole time (fitViewport() sizes it to fill .glass on
 arrival, same measured-not-calc'd pattern every other channel game uses) - nothing is ever appended to .glass,
 so there is no custom-property-inheritance trap to pay for (CSS vars inherit down the DOM, not through
@@ -108,6 +115,14 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
 
   .lb .side{background:var(--white); border-radius:14px; padding:12px 14px; border:1px solid rgba(230,198,122,.5); font-size:11.5px; line-height:1.5; color:var(--ink-l)}
   .lb .side b{color:var(--ink)}
+  /* 4.10: the safety block is paragraphs and a list now, not one eight-sentence run. `.lb .side p` is
+     not optional - `.lb p{font-size:clamp(15px,4.2vw,18px)}` matches a <p> DIRECTLY and a font-size
+     inherited from `.lb .side` loses to any direct match, so without this the small print renders at
+     body size. Same trap 4.3 paid for with .lb-con-row; `font:inherit` is the whole fix. */
+  .lb .side p{font:inherit; margin:0 0 8px}
+  .lb .side p:last-child{margin-bottom:0}
+  .lb .side ul{list-style:disc; margin:0 0 8px; padding-left:20px}
+  .lb .side li{margin:0 0 3px}
 
   .lb .foot{text-align:center; padding:8px 4px 0; color:var(--ink-l)}
   .lb .foot .cta{font-family:"Pacifico",cursive; font-weight:400; font-size:clamp(16px,4.8vw,22px); color:var(--ink); margin:6px 0}
@@ -201,6 +216,16 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
   .lb-flat .fl-photo{width:100%; aspect-ratio:4/3; object-fit:cover; border:6px solid #c9a24c; outline:2px dashed rgba(44,30,20,.5); outline-offset:-10px; display:block; margin:0 0 14px}
   .lb-flat .fl-card{border:1px solid rgba(44,30,20,.35); background:rgba(255,253,246,.55); padding:10px 12px; margin:0 0 10px; font-size:15px; line-height:1.4}
   .lb-flat .fl-card .fl-src{display:block; margin-top:6px; font-size:11.5px; color:rgba(44,30,20,.62)}
+  /* 4.10 / S1: a fact whose body is bullet points. STRUCTURE ONLY, deliberately - no font-size, because
+     the same list renders in three places at three sizes (a .lb-flat card at 15px, a .lb-scroll card at
+     14px and 12.5px on a short stage) and one size here would out-specify all three. `.fl-lead` is the
+     entrance/intro blurb, which was a bare <p> taking `.lb p`; the list replaces the <p>, so the rule it
+     was getting has to be restated somewhere, and it carries the .lb-scroll/.lb-flat prefix for the
+     reason the whole scroll block does. */
+  .fl-bul{list-style:disc; margin:0; padding-left:20px}
+  .fl-bul li{margin:0 0 5px}
+  .fl-bul li:last-child{margin-bottom:0}
+  .lb-flat .fl-lead, .lb-scroll .fl-lead{font-size:clamp(15px,4.2vw,18px); line-height:1.55; margin:0 0 10px}
   .lb-flat .fl-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px}
   .lb-flat button, .lb-flat .fl-actions a{font-family:"Times New Roman",Times,serif; font-weight:700; font-size:15px; border:1px solid #2c1e14; cursor:pointer; padding:11px 18px; background:transparent; color:#2c1e14; text-decoration:none; display:inline-block}
   .lb-flat button:active{transform:translateY(1px)}
@@ -673,15 +698,33 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
 
     <section aria-label="Side effects">
       <h2><small>Important safety information</small>Side effects</h2>
+      <!-- 4.10 re-formatted this block and changed NOTHING it claims. Every sentence and every semicolon
+           item below is the shipped wording in the shipped order; the semicolon run that was buried
+           mid-paragraph is simply the list it always was. This is satire legal copy, so a re-write of
+           what it says belongs to 7.6, which is a stop row - re-flowing it does not. -->
       <div class="side">
-        <b>Living Small is not for everyone.</b> Do not take Living Small if you are allergic to Living Small, or if you intend to be large again. Side effects may include: <b>irreversibility</b>; a balance that is not reduced by payment; a voice higher than you remember; being stepped on; cockroaches at a scale where they are the larger party; rot; a home that can be lifted by someone else; and a persistent feeling that this was the only option, which it was. Tell your provider if you experience <b>growth</b>, as growth is not covered. Residential Compression is financed through MOM Inc.; the size reduction is not reversible until the balance is paid in full, and the balance is structured so that it never is. <b>Crime on file: needing somewhere to live.</b> *Rent accrues in a currency you will be too small to earn. This advertisement sells nothing; there is no lease and never will be.
+        <p><b>Living Small is not for everyone.</b> Do not take Living Small if you are allergic to Living Small, or if you intend to be large again.</p>
+        <p>Side effects may include:</p>
+        <ul>
+          <li><b>irreversibility</b></li>
+          <li>a balance that is not reduced by payment</li>
+          <li>a voice higher than you remember</li>
+          <li>being stepped on</li>
+          <li>cockroaches at a scale where they are the larger party</li>
+          <li>rot</li>
+          <li>a home that can be lifted by someone else</li>
+          <li>and a persistent feeling that this was the only option, which it was</li>
+        </ul>
+        <p>Tell your provider if you experience <b>growth</b>, as growth is not covered. Residential Compression is financed through MOM Inc.; the size reduction is not reversible until the balance is paid in full, and the balance is structured so that it never is.</p>
+        <p><b>Crime on file: needing somewhere to live.</b> *Rent accrues in a currency you will be too small to earn. This advertisement sells nothing; there is no lease and never will be.</p>
       </div>
     </section>
 
     <footer class="foot">
       <p class="cta">Answer the quiz on Wednesday. Every answer is a square inch he gets back.</p>
       <span class="stamp">MOM INC · A MOM INC THERAPY</span>
-      <p class="legal">LIVING SMALL™ is a compliance program of MOM Inc. Tenants depicted are actual size. In-character participation only, never a sale. Size isn't everything to a goon; being below average size doesn't make you less than other goons.</p>
+      <p class="legal">LIVING SMALL™ is a compliance program of MOM Inc. Tenants depicted are actual size.</p>
+      <p class="legal">In-character participation only, never a sale. Size isn't everything to a goon; being below average size doesn't make you less than other goons.</p>
     </footer>
   </div>
 </article>
