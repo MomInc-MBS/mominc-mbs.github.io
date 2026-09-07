@@ -66,6 +66,367 @@ const THREE_URL = "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module
 let gl = null;
 let session = null;
 
+/* ================================================================================================
+   THE LINE IS NOT INSIDE THE IMPORT ANY MORE (3.3 packet 2 / C073).
+
+   Everything between here and `export default` is this channel's data and its state machine, and
+   none of it touches three.js, a canvas, or a WebGL context. Before this packet `phase`, `poured`,
+   the pour/mould/pack rules and the save file all lived inside `import(THREE_URL).then(...)` -
+   which is reached only AFTER the `if (!glOK)` return at the top of mount(). So a visitor without
+   WebGL, or with jsDelivr blocked, got a paragraph describing a production line they could not
+   operate: no buttons, no save, no restore, and no goggles at all, because the hint overlay is
+   markup inside `.dg-track` and `.dg.flat` hides that outright.
+
+   The room and the flat station are now two VIEWS of one machine. The machine below decides what is
+   allowed and what is remembered; the room animates the transitions it permits and the flat station
+   just renders them. Neither view owns a rule. That is also why C072's phase persistence is written
+   here rather than in the closure: there is exactly one place a phase can be saved from.
+   ================================================================================================ */
+
+/* Tubes are labelled by CHARACTER. Lazlo and Durpleton are the dogs' real names and stay out of this
+   entirely (Ian, 2026-08-28).
+   CITATIONS (round 4, 2026-09-05): the TODO placeholders are gone. Each "cite" below was checked
+   directly against its own source by COMPUTA before shipping - never invented, never a local model's
+   unverified output. Full reference, one per tube, in the same order:
+     DJ Scratch     - Piazza, Grioli, Catalano & Bicchi, "A Century of Robotic Hands," Annual Review of
+                       Control, Robotics, and Autonomous Systems, vol. 2 (2019), pp. 1-32.
+     Sag Sniffer    - AAFCO Dog Food Nutrient Profiles: adult maintenance minimum 18% crude protein (dry
+                       matter basis). aafco.org (Model Bills & Regulations, Nutrient Profiles).
+     Cortisol Corgi - Gutierrez Nunez, Peixoto Rabelo, Subotic, Caruso & Knezevic, "Chronic Stress and
+                       Autoimmunity: The Role of HPA Axis and Cortisol Dysregulation," International
+                       Journal of Molecular Sciences (2025). PMC12563903.
+     Lil Boyfriend  - National Low Income Housing Coalition, Out of Reach 2025: $33.63/hr national Housing
+                       Wage for a modest two-bedroom rental. nlihc.org/oor.
+     Coach Armie    - Qin, Li & Chen, "Acute to chronic workload ratio (ACWR) for predicting sports injury
+                       risk: a systematic review and meta-analysis," BMC Sports Science, Medicine and
+                       Rehabilitation (2025): 0.8-1.3 is the lower-risk zone. PMC12487117.
+     MBS Fuel       - U.S. FDA: 400 mg/day is the general upper limit of caffeine not usually associated
+                       with negative effects in healthy adults. fda.gov, "Spilling the Beans."
+   `variant` maps each tube to one of the six MYR5 material stills (assets/myr5-*.png, cut from the morph
+   clip, background removed) - whichever tube is poured LAST decides which material the batch ships as. */
+const TUBES = [
+  { who: "DJ Scratch",     topic: "Robotics and autonomous hands", cite: "Piazza et al. 2019, Ann Rev Control",     col: 0xc46a2f, variant: "darkstone" },
+  { who: "Sag Sniffer",    topic: "Canine nutrition",              cite: "AAFCO Dog Food Nutrient Profile",         col: 0x8a9a3a, variant: "straw-wood" },
+  { who: "Cortisol Corgi", topic: "Chronic stress",                cite: "Gutierrez Nunez et al. 2025, IJMS",       col: 0xc4402f, variant: "newsprint" },
+  { who: "Lil Boyfriend",  topic: "Living in small spaces",        cite: "NLIHC, Out of Reach 2025",                col: 0x3a7a9a, variant: "blankpaper" },
+  { who: "Coach Armie",    topic: "Training load and recovery",    cite: "Qin et al. 2025, BMC Sports Med Rehab",   col: 0xb0872f, variant: "palestone" },
+  { who: "MBS Fuel",       topic: "Stimulants and dosage",         cite: "FDA: 400mg/day caffeine ceiling",         col: 0x9a3a7a, variant: "purple" }
+];
+
+/* MYR5, AS SIX MATERIALS. Round 4 (Ian): the creature is no longer built from primitives - it is one of
+   six real stills cut from "MYR5 morph - clay to wood, stone, papermache, paper" with the background
+   removed. Six variants, six tubes, mapping is exact: whichever tube gets poured LAST decides which
+   material the batch ships as. Each carries a definition, a random interim number under 5.0 ("cuz that's
+   the interim we're at"), and one horrific, corporately-downplayed crime.
+
+   THE TEXTURES ARE NOT ON THIS RECORD. They used to be (`c.tex = loader.load(...)`), which was safe only
+   while this object was rebuilt per mount inside the closure. At module scope a Texture hung here would
+   outlive the mount that made it and be handed, already disposed, to the next one. The data is shared;
+   the GPU objects are built into a per-mount map beside the renderer that owns them. */
+const CREATURES = {
+  "purple":     { file: "myr5-purple.png",     w: 357, h: 427, name: "MYR5 &middot; PURPLE",
+    def: "Our signature shade. Trusted by nobody, worn by everyone.",
+    crime: "Filed as a routine viscosity test. It absorbed the tester. HR is calling that retention." },
+  "darkstone":  { file: "myr5-darkstone.png",  w: 251, h: 432, name: "MYR5 &middot; DARKSTONE",
+    def: "Load-bearing. Approved for outdoor use and quiet suffering.",
+    crime: "Cracked twice in transit, both times over a different family's driveway. Warranty voided." },
+  "straw-wood": { file: "myr5-straw-wood.png", w: 339, h: 432, name: "MYR5 &middot; STRAW-WOOD",
+    def: "Warm to the touch. Smells faintly of a county fair that closed for a reason.",
+    crime: "Caught fire near a school bus stop. The claim called it ambient enrichment." },
+  "palestone":  { file: "myr5-palestone.png",  w: 346, h: 431, name: "MYR5 &middot; PALESTONE",
+    def: "Museum finish. Looks expensive, costs nothing, means less.",
+    crime: "Stood motionless in a lobby for six weeks before anyone noticed it wasn't decor." },
+  "newsprint":  { file: "myr5-newsprint.png",  w: 355, h: 438, name: "MYR5 &middot; NEWSPRINT",
+    def: "Prints yesterday's headlines, forever. It never learns a new one either.",
+    crime: "The ink is not food-grade. Forty units shipped to a daycare regardless." },
+  "blankpaper": { file: "myr5-blankpaper.png", w: 333, h: 430, name: "MYR5 &middot; BLANKPAPER",
+    def: "No print, no opinion, no complaints filed and none accepted.",
+    crime: "Missing from the shipping manifest a full year. Came back with a name and a mortgage." }
+};
+
+// the reveal card, one implementation for the room's projected label and the flat station's panel
+function creatureCard(key) {
+  const c = CREATURES[key] || CREATURES.purple;
+  const interim = (Math.random() * 4.99).toFixed(2);       // "below 5.0, cuz that's the interim we're at"
+  return "<b>" + c.name + " &middot; INTERIM " + interim + "</b><i>" + c.def + "</i><u>" + c.crime + "</u>";
+}
+
+/* ---- THE GOGGLES' HINT RECORD (3.3 packet 2 / C074).
+
+   The hint list used to be hand-authored markup in girlfriend.html with no version, no date and no
+   statement of what it was checked against - and it had drifted into telling the visitor three things
+   that are not true of this build. The site's own hint system was the least reliable thing on it:
+     - DJ Scratch: "it answers on the third" described THREE SCRATCHES. That mechanic is retired; the
+       unlock is the four-lamp follow game (djscratch.js:577-616), and breakThrough() is reached from
+       finishGame(), never from a scratch count.
+     - Sag Sniffer: "seven of those doors are business, the eighth is dinner". The wheel is FIVE doors
+       (sag.html:4, which warns in as many words not to read the surplus ITEMS pool as the wheel) - and
+       sag does not ship a play route at all.
+     - Cortisol Corgi: "nothing to solve here yet". Corgi has had a page hunt, a book and a desk code
+       since before this HEAD (corgi.js:551-562, :612).
+     - Lil Boyfriend: "he gets smaller the further down you go". He does not. The shrink starts when the
+       far end is done and runs on a wall clock through the walk BACK (lilboyfriend.js:226, :237-243).
+
+   `version`/`snapshot`/`basis` are printed to the visitor with the list, the same shape fuel's cost
+   record took in packet 1: the record in the source IS the provenance, and it is on screen rather than
+   pointing at a document. `checked` is per entry and is printed too - an unprinted justification is how
+   the last one rotted.
+
+   ON-AIR STATUS IS NOT COPIED HERE. `hint` is only ever shown for a channel the network manifest says
+   is on air; everything else gets `offAir`, read live from window.MBS_CHANNELS (generated from
+   tv/channel-manifest.json by tools/gen_channels.py). So promoting a channel corrects its own goggles
+   line, which is the recurrence the item asks to stop. goon is deliberately not listed: it was never in
+   this list, its source is unresolved (3.G1), and adding a channel is a decision, not a correction. */
+const HINTS = {
+  version: "dg-hints-1.0",
+  snapshot: "2026-09-07",
+  basis: "Each line was read off the named channel's own source at this snapshot. On-air status is not stored here - it is read from the network manifest every time the lenses go on.",
+  offAir: "Not on air yet. Nothing there opens, and I am not going to pretend otherwise.",
+  // an off-air channel prints THIS as its evidence rather than its own `checked` line. The hint is
+  // withheld, so the reasoning behind it has to be withheld too, or the goggles would give the channel
+  // away in the footnote of the sentence refusing to give it away.
+  offCheck: "tv/channel-manifest.json - coming_soon: the television slot exists, the play route does not.",
+  items: [
+    { id: "djscratch", ch: "DJ Scratch",
+      hint: "Turn her on before anything else. Then stop reading the copy and follow the lights to the controls - all four of them, in her order, not yours.",
+      checked: "djscratch.js:577-616 - the four-lamp follow game is what breaks the signal through now. Three scratches no longer do anything but count." },
+    { id: "sag", ch: "Sag Sniffer",
+      hint: "Four of those doors are business. The fifth is dinner, and it is locked.",
+      checked: "sag.html:4 - five doors, four buyable then the locked fifth. The seven-item bank is a surplus pool, not the wheel." },
+    { id: "lilboyfriend", ch: "Lil Boyfriend",
+      hint: "The hall only runs one way. Do the one thing waiting at the far end - then understand that the walk back is on a clock the walk in was not.",
+      checked: "lilboyfriend.js:226 and :237-243 - the far end is what fires; the walls close on a 37.5s wall clock that starts there, not on how far down you went." },
+    { id: "armie", ch: "Coach Armie",
+      hint: "Stop reading and breathe with him. Hold it longer than feels sensible.",
+      checked: "armie.html - the held breath is the whole interaction, and it is longer than it looks." },
+    { id: "fuel", ch: "MBS Fuel",
+      hint: "Nothing seals until every field has an opinion. Indifference is not an answer, and it will tell you exactly which one you skipped.",
+      checked: "fuel.js:227 - the seal fires only on a complete stack, and the refusal names the first missing choice." },
+    { id: "corgi", ch: "Cortisol Corgi",
+      hint: "There are pages hidden along the hallway and a book that wants all of them. The desk asks for a code, and the code is not in the room.",
+      checked: "corgi.js:551-562 and :612 - hall, book and desk; the desk posts its code away to be checked, so nothing in the page holds the answer." },
+    { id: "mominc", ch: "MOM Inc", node: false,
+      hint: "Her own channel is the scoreboard, not a door. Nothing there opens anything here.",
+      checked: "mbs-channels.js - mominc is not in the unlock set. It counts; it does not play." }
+  ]
+};
+
+/* ---- THE SAVE FILE, AND WHY IT NOW CARRIES A PHASE (3.3 packet 2 / C072).
+
+   v1 wrote `{poured:[...]}` and nothing else, and restoreProgress() replayed the tubes without ever
+   touching `phase` - which is initialised "pour" and only advances to "mould" inside the SIXTH pour's
+   animation callback. The save happens at the top of that pour, ~2.3s earlier. Reload in that window
+   and every tube comes back poured, so pourTube() refuses; phase is still "pour", so mould() refuses.
+   No reachable next action, in one refresh, on the ordinary path through the channel.
+
+   Two things changed. The phase is saved with the tubes, at the stable boundaries only - never "busy",
+   which is the name of a transition in flight and not a place to come back to. And the tube list is now
+   the POUR ORDER rather than scene order: v1 wrote `tubes.filter(poured).map(idx)`, so a restored batch
+   replayed the mix in tube order and could reveal a different material than the one the visitor
+   actually earned. The last index in the list decides the material, so the order is load-bearing.
+
+   v1 files are still read: their indices are usable as a set, their order is not trustworthy, and they
+   claim no phase - so a complete v1 line lands on "mould", which is exactly the dead end being fixed. */
+const LS_KEY = "mbs-dg-line";
+const STABLE = ["pour", "mould", "pack", "grab", "goggles"];
+
+function saveLine(L) {
+  try { localStorage.setItem(LS_KEY, JSON.stringify({ v: 2, phase: L.phase, poured: L.order.slice() })); } catch {}
+}
+function clearLine() { try { localStorage.removeItem(LS_KEY); } catch {} }
+
+function makeLine() {
+  const L = {
+    phase: "pour",                                 // pour | busy | mould | pack | grab | goggles
+    order: [],                                     // poured tube indices, IN POUR ORDER
+    get poured() { return L.order.length; },
+    get last() { return L.order.length ? L.order[L.order.length - 1] : -1; },
+    has(i) { return L.order.indexOf(i) >= 0; },
+    variant() { return L.last >= 0 ? TUBES[L.last].variant : null; },
+
+    // Every transition returns whether the machine actually moved, so a view never animates a step
+    // that was refused. The room used to answer that question with a bare `return` inside the tween
+    // chain; the flat station needs the same answer and cannot see the chain.
+    pour(i) {
+      if (L.phase !== "pour" || !TUBES[i] || L.has(i)) return false;
+      L.order.push(i);
+      if (L.order.length >= TUBES.length) L.phase = "mould";
+      saveLine(L);
+      return true;
+    },
+    to(p) {
+      L.phase = p;
+      if (STABLE.indexOf(p) >= 0) saveLine(L);     // "busy" is a transition in flight, never a save point
+      return true;
+    },
+    reset() { L.order.length = 0; L.phase = "pour"; clearLine(); },
+
+    // reads the save file into this machine. Returns whether anything was restored, so the view knows
+    // to say so rather than opening on "six tubes on the line" over a half-finished batch.
+    restore() {
+      let s = null;
+      try { s = JSON.parse(localStorage.getItem(LS_KEY) || "null"); } catch { return false; }
+      if (!s || !Array.isArray(s.poured)) return false;
+      const seen = [];
+      s.poured.forEach(i => { if (TUBES[i] && seen.indexOf(i) < 0) seen.push(i); });
+      if (!seen.length) return false;
+      L.order = seen;
+      L.phase = seen.length < TUBES.length ? "pour"
+              : (STABLE.indexOf(s.phase) >= 0 && s.phase !== "pour") ? s.phase
+              : "mould";                            // a complete v1 line, or a save taken mid-sixth-pour
+      return true;
+    }
+  };
+  return L;
+}
+
+/* ---- THE GOGGLES' COPY, for both views (C073/C074).
+
+   MODE-AWARE, and MBS.mode is a TONE switch, never an entitlement (Codex C6): ?mode=live is
+   user-settable, so this only changes what the goggles SAY. Off-air they give nothing away at all.
+   On-air the list is rendered from HINTS, filtered through the live manifest - never from markup, so
+   there is one copy of every hint and it carries its own provenance. */
+function dressGoggles(dg, live) {
+  const body = dg.querySelector("#dgVisBody");
+  if (!body) return;
+  if (!live) {
+    body.innerHTML =
+      '<h2>COME BACK DURING THE STREAM</h2>' +
+      '<p class="sub">Optical overlay &middot; idle &middot; property of MOM Inc</p>' +
+      '<p class="foot">The lenses are fogged on purpose. Put them on once the broadcast is live and the ' +
+      'room tells you what it knows. Right now: nothing. That is not a malfunction.</p>';
+    return;
+  }
+  const roster = (window.MBS_CHANNELS && window.MBS_CHANNELS.channels) || [];
+  const rows = HINTS.items.map(h => {
+    const c = roster.find(x => x.id === h.id);
+    const onAir = c ? !c.comingSoon : true;         // no manifest to read: say the hint rather than lie about the air
+    const dim = !onAir || h.node === false;
+    return '<li' + (dim ? ' class="none"' : '') + '><b>' + h.ch + '</b>' +
+           '<span>' + (onAir ? h.hint : HINTS.offAir) +
+           '<u>' + (onAir ? h.checked : HINTS.offCheck) + '</u></span></li>';
+  }).join("");
+  body.innerHTML =
+    '<h2>KNOWLEDGE IS POWER</h2>' +
+    '<p class="sub">Optical overlay &middot; property of MOM Inc &middot; do not remove from the floor</p>' +
+    '<ul>' + rows + '</ul>' +
+    '<p class="foot">I am not going to click it for you. That is the difference between knowing a thing ' +
+    'and being told it.</p>' +
+    '<p class="ver" id="dgVisVer">' + HINTS.version + ' &middot; checked ' + HINTS.snapshot +
+    ' &middot; ' + HINTS.basis + '</p>';
+}
+
+/* ---- THE FLAT STATION (3.3 packet 2 / C073).
+
+   No three.js, no canvas, no CDN, no WebGL: six tube buttons, a mould button, a box button and the
+   goggles, driving the same makeLine() the room drives. It is the whole manufacturing sequence, which
+   is what the item asks for, and the reason it can be this short is that none of the rules live here.
+
+   TWO DELIBERATE DIFFERENCES FROM THE ROOM, both about time rather than sequence. There is no drone,
+   so there is no 3.9s window in which the drone can take the goggles back and reset the line: here they
+   are handed over and stay. A timed grab on a button-only view would be a trap for exactly the visitor
+   this fallback exists for, and C079 is already the ticket for making the room's own window fair. And
+   nothing is animated, so each step lands immediately - the tween chain is scenery, not state.
+
+   THE OVERLAY HAS TO MOVE, not just be restyled. #dgVis is markup inside .dg-track, and `.dg.flat`
+   sets `.dg-track{display:none}` - a position:fixed child of a display:none parent renders nothing at
+   all. So the node is reparented onto .dg itself and the fixed positioning is done in girlfriend.html's
+   own stylesheet. */
+function runFlat(dg, ctx, L) {
+  const host = dg.querySelector("#dgStation");
+  const vis = dg.querySelector("#dgVis");
+  if (!host) return;
+  if (vis) dg.appendChild(vis);
+
+  host.hidden = false;
+  host.innerHTML =
+    '<h2>THE LINE</h2>' +
+    '<p class="dg-say" id="dgFlatSay" role="status" aria-live="polite"></p>' +
+    '<div class="dg-rows" id="dgFlatTubes"></div>' +
+    '<div class="dg-acts">' +
+      '<button type="button" id="dgFlatMould">Shape it</button>' +
+      '<button type="button" id="dgFlatPack">Box it</button>' +
+      '<button type="button" id="dgFlatGog">Put the goggles on</button>' +
+    '</div>' +
+    '<p class="dg-reveal" id="dgFlatUnit"></p>';
+
+  const tubeBox = host.querySelector("#dgFlatTubes");
+  const sayEl = host.querySelector("#dgFlatSay");
+  const mouldBtn = host.querySelector("#dgFlatMould");
+  const packBtn = host.querySelector("#dgFlatPack");
+  const gogBtn = host.querySelector("#dgFlatGog");
+  const unitEl = host.querySelector("#dgFlatUnit");
+
+  TUBES.forEach((t, i) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.dataset.tube = String(i);
+    b.innerHTML = "<b>" + t.who + "</b><i>" + t.topic + "</i><u>" + t.cite + "</u>";
+    tubeBox.appendChild(b);
+  });
+
+  const say = t => { sayEl.textContent = t || ""; };
+  function render() {
+    [].forEach.call(tubeBox.children, (b, i) => {
+      const done = L.has(i);
+      b.disabled = done || L.phase !== "pour";
+      b.classList.toggle("spent", done);
+    });
+    mouldBtn.disabled = L.phase !== "mould";
+    packBtn.disabled = L.phase !== "pack";
+    gogBtn.disabled = L.phase !== "grab" && L.phase !== "goggles";
+  }
+
+  ctx.on(tubeBox, "click", e => {
+    const b = e.target.closest ? e.target.closest("button[data-tube]") : null;
+    if (!b || !L.pour(+b.dataset.tube)) return;
+    render();
+    say(L.phase === "mould" ? "Six in. That is goo now. Shape it."
+                            : (TUBES.length - L.poured) + " tubes left on the line.");
+  });
+  ctx.on(mouldBtn, "click", () => {
+    if (L.phase !== "mould") return;
+    L.to("pack");
+    unitEl.innerHTML = creatureCard(L.variant());
+    render();
+    say("One unit, intact. Box it.");
+  });
+  ctx.on(packBtn, "click", () => {
+    if (L.phase !== "pack") return;
+    L.to("grab");
+    // the shell's own effect, the same one the room fires on the drone launch, reached through ctx
+    if (ctx.mbs && ctx.mbs.wave) ctx.mbs.wave({ after: 900 });
+    render();
+    say("Boxed, and gone off the end of the line. She left the goggles behind.");
+  });
+  ctx.on(gogBtn, "click", () => {
+    if (L.phase === "grab") L.to("goggles");
+    if (L.phase !== "goggles" || !vis) return;
+    vis.classList.add("on");
+  });
+
+  if (L.restore()) {
+    if (L.phase === "pack" || L.phase === "grab" || L.phase === "goggles") unitEl.innerHTML = creatureCard(L.variant());
+    say(L.phase === "pour" ? (TUBES.length - L.poured) + " tubes left on the line. Picking up where you left it."
+      : L.phase === "mould" ? "Six were already in. That is goo now. Shape it."
+      : L.phase === "pack" ? "A unit was already formed. Box it."
+      : "The batch went out. The goggles are still here.");
+  } else {
+    say("Six tubes on the line. Take one.");
+  }
+  render();
+
+  // the same probe name the room publishes, so one driver can assert the same sequence on either view.
+  // `flat` is how it tells them apart. unmount() deletes it either way.
+  window.__dg = {
+    flat: true,
+    get phase() { return L.phase; },
+    get poured() { return L.poured; },
+    get order() { return L.order.slice(); },
+    get lastVariant() { return L.variant(); }
+  };
+}
+
 export default {
   mount(root, ctx) {
     session = {};
@@ -102,68 +463,22 @@ export default {
         return true;
       } catch { return false; }
     })();
-    if (!glOK) { dg.classList.add("flat"); return; }
-
     const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    // THE GOGGLES ARE MODE-AWARE (round 4, Ian). MBS.mode is a TONE switch, never an entitlement (Codex C6) -
-    // ?mode=live is user-settable, so this only changes what the goggles SAY, never anything that could be
-    // mistaken for proof of a win. Off-air they give nothing away at all, on-air they keep the existing,
-    // deliberately partial hints. The flag comes off the context now rather than off window, read at mount
-    // time, which is the same value tv.js and mbs-shim.js see.
-    const LIVE = !!ctx.isLive;
-    (function gogglesCopy() {
-      if (LIVE) return;                       // default markup already carries the live hints, leave it
-      const body = byId("dgVisBody");
-      if (!body) return;
-      body.innerHTML =
-        '<h2>COME BACK DURING THE STREAM</h2>' +
-        '<p class="sub">Optical overlay &middot; idle &middot; property of MOM Inc</p>' +
-        '<p class="foot">The lenses are fogged on purpose. Put them on once the broadcast is live and the ' +
-        'room tells you what it knows. Right now: nothing. That is not a malfunction.</p>';
-    })();
+    // THE GOGGLES ARE MODE-AWARE (round 4, Ian). The flag comes off the context rather than off window,
+    // read at mount time, which is the same value tv.js and mbs-shim.js see. Dressed BEFORE the WebGL
+    // branch below, and the dismiss button is bound here rather than inside the import, because the flat
+    // station has goggles too now (C073) and used to reach neither.
+    dressGoggles(dg, !!ctx.isLive);
+    const visX = byId("dgVisX");
+    if (visX && vis) ctx.on(visX, "click", () => vis.classList.remove("on"));
 
-    // progress persists in the channel's OWN key (never the shell's five) - Ian's standing rule, and part of
-    // tonight's brief. Only the MIX phase (pouring tubes) is saved: FORMING, BOXING, TAKEN and the drone are
-    // one-shot animated beats that do not make sense to resume mid-flight, so a reload during those just
-    // restarts the current batch, same as missing the goggles already does.
-    const LS_KEY = "mbs-dg-line";
-    function saveProgress(pouredIdx) {
-      try { localStorage.setItem(LS_KEY, JSON.stringify({ poured: pouredIdx })); } catch {}
-    }
-    function loadProgress() {
-      try { return JSON.parse(localStorage.getItem(LS_KEY) || "null"); } catch { return null; }
-    }
+    // ONE machine, whichever view draws it (C073). Built before the branch so the flat station and the
+    // room are handed the same object and the same save file.
+    const L = makeLine();
 
-    // Tubes are labelled by CHARACTER. Lazlo and Durpleton are the dogs' real names and stay out of this
-    // entirely (Ian, 2026-08-28).
-    // CITATIONS (round 4, 2026-09-05): the TODO placeholders are gone. Each "cite" below was checked directly
-    // against its own source by COMPUTA before shipping - never invented, never a local model's unverified
-    // output. Full reference, one per tube, in the same order:
-    //   DJ Scratch     - Piazza, Grioli, Catalano & Bicchi, "A Century of Robotic Hands," Annual Review of
-    //                     Control, Robotics, and Autonomous Systems, vol. 2 (2019), pp. 1-32.
-    //   Sag Sniffer    - AAFCO Dog Food Nutrient Profiles: adult maintenance minimum 18% crude protein (dry
-    //                     matter basis). aafco.org (Model Bills & Regulations, Nutrient Profiles).
-    //   Cortisol Corgi - Gutierrez Nunez, Peixoto Rabelo, Subotic, Caruso & Knezevic, "Chronic Stress and
-    //                     Autoimmunity: The Role of HPA Axis and Cortisol Dysregulation," International
-    //                     Journal of Molecular Sciences (2025). PMC12563903.
-    //   Lil Boyfriend  - National Low Income Housing Coalition, Out of Reach 2025: $33.63/hr national Housing
-    //                     Wage for a modest two-bedroom rental. nlihc.org/oor.
-    //   Coach Armie    - Qin, Li & Chen, "Acute to chronic workload ratio (ACWR) for predicting sports injury
-    //                     risk: a systematic review and meta-analysis," BMC Sports Science, Medicine and
-    //                     Rehabilitation (2025): 0.8-1.3 is the lower-risk zone. PMC12487117.
-    //   MBS Fuel       - U.S. FDA: 400 mg/day is the general upper limit of caffeine not usually associated
-    //                     with negative effects in healthy adults. fda.gov, "Spilling the Beans."
-    // `variant` maps each tube to one of the six MYR5 material stills (assets/myr5-*.png, cut from the morph
-    // clip, background removed) - whichever tube is poured LAST decides which material the batch ships as.
-    const TUBES = [
-      { who: "DJ Scratch",     topic: "Robotics and autonomous hands", cite: "Piazza et al. 2019, Ann Rev Control",     col: 0xc46a2f, variant: "darkstone" },
-      { who: "Sag Sniffer",    topic: "Canine nutrition",              cite: "AAFCO Dog Food Nutrient Profile",         col: 0x8a9a3a, variant: "straw-wood" },
-      { who: "Cortisol Corgi", topic: "Chronic stress",                cite: "Gutierrez Nunez et al. 2025, IJMS",       col: 0xc4402f, variant: "newsprint" },
-      { who: "Lil Boyfriend",  topic: "Living in small spaces",        cite: "NLIHC, Out of Reach 2025",                col: 0x3a7a9a, variant: "blankpaper" },
-      { who: "Coach Armie",    topic: "Training load and recovery",    cite: "Qin et al. 2025, BMC Sports Med Rehab",   col: 0xb0872f, variant: "palestone" },
-      { who: "MBS Fuel",       topic: "Stimulants and dosage",         cite: "FDA: 400mg/day caffeine ceiling",         col: 0x9a3a7a, variant: "purple" }
-    ];
+    // No WebGL: the flat station, which is now an operable line rather than a paragraph about one.
+    if (!glOK) { dg.classList.add("flat"); runFlat(dg, ctx, L); return; }
 
     // MOM Inc's motivational posters. Her voice: warm, total, and not on your side.
     const POSTERS = [
@@ -505,41 +820,23 @@ export default {
       blob.position.set(WORK_X, BELT_Y + 0.66, 0.05); blob.castShadow = true; blob.visible = false;
       blob.userData.kind = "blob"; scene.add(blob);
 
-      // ---- MYR5, AS SIX MATERIALS. Round 4 (Ian): the creature is no longer built from primitives - it is
-      // one of six real stills cut from "MYR5 morph - clay to wood, stone, papermache, paper" with the
-      // background removed. Six variants, six tubes, mapping is exact: whichever tube gets poured LAST decides
-      // which material the batch ships as. Each carries a definition, a random interim number under 5.0 ("cuz
-      // that's the interim we're at"), and one horrific, corporately-downplayed crime, shown on `unitLabel`.
-      const CREATURES = {
-        "purple":     { file: "myr5-purple.png",     w: 357, h: 427, name: "MYR5 &middot; PURPLE",
-          def: "Our signature shade. Trusted by nobody, worn by everyone.",
-          crime: "Filed as a routine viscosity test. It absorbed the tester. HR is calling that retention." },
-        "darkstone":  { file: "myr5-darkstone.png",  w: 251, h: 432, name: "MYR5 &middot; DARKSTONE",
-          def: "Load-bearing. Approved for outdoor use and quiet suffering.",
-          crime: "Cracked twice in transit, both times over a different family's driveway. Warranty voided." },
-        "straw-wood": { file: "myr5-straw-wood.png", w: 339, h: 432, name: "MYR5 &middot; STRAW-WOOD",
-          def: "Warm to the touch. Smells faintly of a county fair that closed for a reason.",
-          crime: "Caught fire near a school bus stop. The claim called it ambient enrichment." },
-        "palestone":  { file: "myr5-palestone.png",  w: 346, h: 431, name: "MYR5 &middot; PALESTONE",
-          def: "Museum finish. Looks expensive, costs nothing, means less.",
-          crime: "Stood motionless in a lobby for six weeks before anyone noticed it wasn't decor." },
-        "newsprint":  { file: "myr5-newsprint.png",  w: 355, h: 438, name: "MYR5 &middot; NEWSPRINT",
-          def: "Prints yesterday's headlines, forever. It never learns a new one either.",
-          crime: "The ink is not food-grade. Forty units shipped to a daycare regardless." },
-        "blankpaper": { file: "myr5-blankpaper.png", w: 333, h: 430, name: "MYR5 &middot; BLANKPAPER",
-          def: "No print, no opinion, no complaints filed and none accepted.",
-          crime: "Missing from the shipping manifest a full year. Came back with a name and a mortgage." }
-      };
+      // ---- MYR5's six material stills. The RECORD (name, definition, crime, pixel size) is module scope
+      // now, shared with the flat station's reveal card; what is built here is the per-mount TEXTURE for
+      // each of them, which is a GPU object and belongs to this renderer alone. Hanging them back on the
+      // shared record - which is what the code did while the record lived in this closure - would hand a
+      // disposed texture to the next mount.
+      //
       // All six are loaded up front so the reveal is instant, and only ONE of them is ever a live
       // unitMat.map - whichever tube went in last. The scene walk in unmount() would therefore reach one
       // and miss five, which is exactly what gl.extra is for. TextureLoader hands the Texture object back
       // synchronously and fills in the image later, so there is no late arrival to guard here: the objects
       // are on the list before this mount can end.
+      const creatureTex = {};
       Object.keys(CREATURES).forEach(k => {
-        const c = CREATURES[k];
-        c.tex = loader.load("assets/" + c.file);
-        c.tex.colorSpace = THREE.SRGBColorSpace;
-        gl.extra.push(c.tex);
+        const t = loader.load("assets/" + CREATURES[k].file);
+        t.colorSpace = THREE.SRGBColorSpace;
+        creatureTex[k] = t;
+        gl.extra.push(t);
       });
 
       const unit = new THREE.Group();
@@ -554,7 +851,7 @@ export default {
         unitMesh.geometry.dispose();
         unitMesh.geometry = new THREE.PlaneGeometry(UNIT_H * (c.w / c.h), UNIT_H);
         unitMesh.position.y = UNIT_H / 2;
-        unitMat.map = c.tex; unitMat.needsUpdate = true;
+        unitMat.map = creatureTex[CREATURES[key] ? key : "purple"]; unitMat.needsUpdate = true;
       }
 
       // ---- the mould (FORMING station, new). Two jaw halves close over the blob, hold, and open on the
@@ -678,10 +975,7 @@ export default {
       const unitLabel = label(unit, "", "", "");
       unitLabel.lift = 1.25;
       function showCreatureLabel(key) {
-        const c = CREATURES[key] || CREATURES.purple;
-        const interim = (Math.random() * 4.99).toFixed(2);       // "below 5.0, cuz that's the interim we're at"
-        unitLabel.el.innerHTML = "<s></s><b>" + c.name + " &middot; INTERIM " + interim + "</b>" +
-          "<i>" + c.def + "</i><u>" + c.crime + "</u>";
+        unitLabel.el.innerHTML = "<s></s>" + creatureCard(key);   // one card, shared with the flat station
       }
 
       // ---- the belt's own travel. Scroll pushes the LINE, never the page, and the camera never moves.
@@ -757,15 +1051,17 @@ export default {
       //   box, flies off frame - left exactly as unexplained as it always was. ~3.9s, no player input taken.
       //   exit: drone off frame -> goggles appear, phase="grab" (existing hint-tool mechanic, unchanged). not
       //   saved.
-      // ---- the sequence
-      let poured = 0, phase = "pour", lastPouredIdx = -1;
+      // ---- the sequence. The MACHINE is `L`, built above the WebGL branch and shared with the flat
+      // station (C073): phase, the pour order, what each transition is allowed to do and what gets
+      // written to the save file are all decided there. Everything below is the ROOM - the tween chains
+      // that animate a transition the machine has already permitted. Nothing here holds a second copy of
+      // the phase, which is the whole point: the save file has one author.
       // the mixing colour: "the way you mix it, it makes a different color blob." Recency-weighted so order
       // matters - the last tube poured dominates the final hue, and also decides which of the six MYR5
       // material stills gets revealed at FORM_X (see setUnitVariant/showCreatureLabel below).
       const GOO_BASE_COLOR = 0x7a2fc4, GOO_BASE_EMISSIVE = 0x2a0a44;
       const mixColor = new THREE.Color(GOO_BASE_COLOR);
       function mixIn(idx) {
-        lastPouredIdx = idx;
         mixColor.lerp(new THREE.Color(TUBES[idx].col), 0.55);
         M.goo.color.copy(mixColor);
         M.goo.emissive.copy(mixColor).multiplyScalar(0.4);
@@ -775,12 +1071,13 @@ export default {
       // over THIS mount's scene and drives it, so unmount() removes it: left behind it would let a driver pour
       // a tube into a room that is no longer in the document.
       window.__dg = {
-        get phase() { return phase; },
-        get poured() { return poured; },
+        get phase() { return L.phase; },
+        get poured() { return L.poured; },
+        get order() { return L.order.slice(); },     // the POUR ORDER, which is what decides the material
         stations: { WORK_X: WORK_X, FORM_X: FORM_X, BOX_X: BOX_X },
         jawsExist: !!(jawL && jawR),
         heroIsStaticImage: heroPlane.material.map === drgfTex,
-        get lastVariant() { return lastPouredIdx >= 0 ? TUBES[lastPouredIdx].variant : null; },
+        get lastVariant() { return L.variant(); },
         // Added by packet 13, and only because the conversion rewired the two listeners neither a gate
         // nor a photograph can see. The belt's travel is driven by a listener on the SHELL's scroll
         // container and the camera's lean by one on the stage; both sit at rest in every screenshot, so
@@ -793,42 +1090,35 @@ export default {
         mould: () => mould(),
         pack: () => pack()
       };
-      (function restoreProgress() {
-        const saved = loadProgress();
-        if (!saved || !Array.isArray(saved.poured) || !saved.poured.length) return;
-        saved.poured.forEach(idx => {
-          const g = tubes[idx];
-          if (!g || g.userData.poured) return;
-          g.userData.poured = true; poured++;
-          mixIn(idx);
-          pips[idx].classList.add("on");
-          g.userData.label.el.classList.add("spent");
-          g.userData.liq.scale.y = 0.001;
-          fill.visible = true;
-          fill.scale.y = Math.max(0.001, (poured / TUBES.length) * 0.9);
-          fill.position.y = BELT_Y + 0.2 + fill.scale.y * 0.44;
-        });
-        if (poured) say((TUBES.length - poured) + " tubes left on the line. Picking up where you left it.");
-      })();
       const anims = [];
       const tween = (ms, fn, done) => anims.push({ t: 0, ms: ms, fn: fn, done: done });
       const ease = t => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
 
-      function pourTube(g) {
-        if (g.userData.poured || phase !== "pour") return;
+      // marks a tube spent in the ROOM. Shared by the pour animation and the restore below, because a
+      // restored tube has to look exactly as poured as one you watched go in.
+      function markSpent(g) {
         g.userData.poured = true;
-        poured++;
-        saveProgress(tubes.filter(x => x.userData.poured).map(x => x.userData.idx));
-        mixIn(g.userData.idx);
         pips[g.userData.idx].classList.add("on");
         g.userData.label.el.classList.add("spent");
+      }
+      function setFill(n) {
+        fill.visible = n > 0;
+        fill.scale.y = Math.max(0.001, (n / TUBES.length) * 0.9);
+        fill.position.y = BELT_Y + 0.2 + fill.scale.y * 0.44;
+        gooGlow.intensity = n ? 0.3 + (n / TUBES.length) * 1.5 : 0;
+      }
+
+      function pourTube(g) {
+        if (!g || !L.pour(g.userData.idx)) return;    // the machine refuses; the room does not animate
+        markSpent(g);
+        mixIn(g.userData.idx);
         unfloat(g);                                   // it is being worked now, it stops floating
 
         const from = g.position.clone();
         const lift = from.clone().setY(2.35);
         const over = new THREE.Vector3(WORK_X - BELT.position.x, 2.45, 0.1);
         const fillFrom = fill.scale.y;
-        const fillTo = (poured / TUBES.length) * 0.9;
+        const fillTo = (L.poured / TUBES.length) * 0.9;
         let puffed = false;
 
         tween(500, t => { g.position.lerpVectors(from, lift, ease(t)); }, () => {
@@ -839,7 +1129,7 @@ export default {
               fill.visible = true;
               fill.scale.y = Math.max(0.001, fillFrom + (fillTo - fillFrom) * t);
               fill.position.y = BELT_Y + 0.2 + fill.scale.y * 0.44;
-              gooGlow.intensity = 0.3 + (poured / TUBES.length) * 1.5;
+              gooGlow.intensity = 0.3 + (L.poured / TUBES.length) * 1.5;
               if (!puffed) { puffed = true; puff(new THREE.Vector3(WORK_X, BELT_Y + 1.3, 0.05)); }
             }, () => {
               tween(540, t => {
@@ -847,15 +1137,15 @@ export default {
                 g.rotation.z = -Math.PI * 0.62 * (1 - ease(t));
               }, () => {
                 floatIt(g, from.y, 0.045);
-                if (poured >= TUBES.length) {
-                  phase = "mould";
-                  try { localStorage.removeItem(LS_KEY); } catch {}
-                  blob.visible = true;
-                  blob.scale.setScalar(0.01);
-                  tween(700, t => blob.scale.setScalar(0.01 + ease(t) * 0.99), () => floatIt(blob, blob.position.y, 0.06));
+                // L.pour() already advanced the machine to "mould" on the sixth, and SAVED it there.
+                // The old code did the opposite - it deleted the save file at this point - which is
+                // precisely why a reload in the ~2.3s this tween chain takes left a line that could not
+                // be poured into and could not be moulded (C072).
+                if (L.phase === "mould") {
+                  showBlob();
                   say("Six in. That is goo now. Shape it.");
                 } else {
-                  say((TUBES.length - poured) + " tubes left on the line.");
+                  say((TUBES.length - L.poured) + " tubes left on the line.");
                 }
               });
             });
@@ -863,9 +1153,38 @@ export default {
         });
       }
 
+      // the three "a station is ready" reveals, each reached twice: once at the end of the animation that
+      // earns it, and once by restoreScene() when a reload lands on that phase (C072).
+      function showBlob(instant) {
+        blob.visible = true;
+        if (instant) { blob.scale.setScalar(1); floatIt(blob, blob.position.y, 0.06); return; }
+        blob.scale.setScalar(0.01);
+        tween(700, t => blob.scale.setScalar(0.01 + ease(t) * 0.99), () => floatIt(blob, blob.position.y, 0.06));
+      }
+      function showUnit(instant, done) {
+        setUnitVariant(L.variant());                  // whichever tube went in last decides the material
+        showCreatureLabel(L.variant());
+        unit.visible = true;
+        const land = () => { floatIt(unit, unit.position.y, 0.05); done && done(); };
+        if (instant) { unit.scale.setScalar(0.92); land(); return; }
+        unit.scale.setScalar(0.01);
+        tween(700, t => unit.scale.setScalar(ease(t) * 0.92), land);
+      }
+      function showGoggles(instant, done) {
+        goggles.visible = true;
+        const land = () => { floatIt(goggles, goggles.position.y, 0.035); done && done(); };
+        if (instant) { goggles.scale.setScalar(1); land(); return; }
+        goggles.scale.setScalar(0.01);
+        tween(600, t => goggles.scale.setScalar(ease(t)), land);
+      }
+
       function mould() {
-        if (phase !== "mould") return;
-        phase = "busy"; say("");
+        // the blob check is the room's own precondition, not the machine's: L advances to "mould" the
+        // instant the sixth tube is committed - which is what makes the phase safe to save - but the goo
+        // is not on the belt until that pour's 2.3s tween chain has finished emptying the tube into it.
+        // A click cannot reach an invisible blob; the probe hook can, and did.
+        if (L.phase !== "mould" || !blob.visible) return;
+        L.to("busy"); say("");
         unfloat(blob);
         const from = blob.position.clone();
         const to = new THREE.Vector3(FORM_X, BELT_Y + 0.66, 0.05);
@@ -883,13 +1202,8 @@ export default {
                 jawR.position.x = FORM_X + 0.05 + ease(t) * 0.5;
               }, () => {
                 jawL.visible = false; jawR.visible = false;
-                setUnitVariant(TUBES[lastPouredIdx].variant);      // whichever tube went in last decides the material
-                unit.visible = true;
-                unit.scale.setScalar(0.01);
-                tween(700, t => unit.scale.setScalar(ease(t) * 0.92), () => {
-                  floatIt(unit, unit.position.y, 0.05);
-                  phase = "pack";
-                  showCreatureLabel(TUBES[lastPouredIdx].variant);
+                showUnit(false, () => {
+                  L.to("pack");                        // stable: saved, so a reload here has the box to press
                   say("One unit, intact. Box it.");
                 });
               });
@@ -898,9 +1212,28 @@ export default {
         });
       }
 
+      // the goggles are set down and the drone comes back for them. Extracted so a reload that lands on
+      // "grab" gets the same window rather than a static prop with no drone attached to it (C072).
+      function offerGoggles(instant) {
+        showGoggles(instant, () => {
+          L.to("grab");
+          say("She left the goggles. The drone is coming back for them.");
+          drone.visible = true;
+          const gFrom = new THREE.Vector3(9.5, 5.6, -2.2);
+          const gTo = new THREE.Vector3(goggles.position.x, goggles.position.y + 0.85, goggles.position.z);
+          tween(3900, t => {
+            if (L.phase !== "grab") return;              // already taken by the visitor
+            drone.position.lerpVectors(gFrom, gTo, ease(t));
+          }, () => {
+            if (L.phase !== "grab") { drone.visible = false; return; }
+            stealGoggles();
+          });
+        });
+      }
+
       function pack() {
-        if (phase !== "pack") return;
-        phase = "busy"; say("");
+        if (L.phase !== "pack") return;
+        L.to("busy"); say("");
         unfloat(unit);
         const ufrom = unit.position.clone();
         const uto = new THREE.Vector3(BOX_X, BELT_Y + 0.2, 0.05);
@@ -930,24 +1263,7 @@ export default {
                   box.visible = false;
                   box.position.copy(bHome);
                   beltRun = 0;
-                  goggles.visible = true;
-                  goggles.scale.setScalar(0.01);
-                  tween(600, t => goggles.scale.setScalar(ease(t)), () => {
-                    floatIt(goggles, goggles.position.y, 0.035);
-                    phase = "grab";
-                    say("She left the goggles. The drone is coming back for them.");
-                    // the drone returns. One window, then it takes them and the whole line resets.
-                    drone.visible = true;
-                    const gFrom = new THREE.Vector3(9.5, 5.6, -2.2);
-                    const gTo = new THREE.Vector3(goggles.position.x, goggles.position.y + 0.85, goggles.position.z);
-                    tween(3900, t => {
-                      if (phase !== "grab") return;              // already taken by the visitor
-                      drone.position.lerpVectors(gFrom, gTo, ease(t));
-                    }, () => {
-                      if (phase !== "grab") { drone.visible = false; return; }
-                      stealGoggles();
-                    });
-                  });
+                  offerGoggles(false);        // one window, then it takes them and the whole line resets
                 });
               });
             });
@@ -956,13 +1272,13 @@ export default {
       }
 
       function resetLine() {
-        // put the line back exactly as it started. Nothing is remembered, which is the cost of missing.
-        poured = 0; lastPouredIdx = -1;
+        // put the line back exactly as it started. Nothing is remembered, which is the cost of missing -
+        // and that now includes the save file, which L.reset() clears.
+        L.reset();
         mixColor.set(GOO_BASE_COLOR);
         M.goo.color.set(GOO_BASE_COLOR); M.goo.emissive.set(GOO_BASE_EMISSIVE);
         unitLabel.el.innerHTML = "";
-        fill.visible = false; fill.scale.y = 0.001;
-        gooGlow.intensity = 0;
+        setFill(0);
         blob.visible = false; unfloat(blob);
         unit.visible = false; unfloat(unit);
         box.visible = false;
@@ -976,11 +1292,10 @@ export default {
           g.userData.label.el.classList.remove("spent");
           unfloat(g); floatIt(g, g.userData.home.y, 0.045);
         });
-        phase = "pour";
       }
 
       function stealGoggles() {
-        phase = "busy";
+        L.to("busy");
         unfloat(goggles);
         const from = goggles.position.clone();
         const out = new THREE.Vector3(10.5, 6.0, -2.4);
@@ -1002,12 +1317,12 @@ export default {
         else if (o.userData.kind === "blob") mould();
         else if (o.userData.kind === "unit" || o.userData.kind === "box") pack();
         else if (o.userData.kind === "goggles") {
-          if (phase === "grab") {                       // caught them before the drone did
-            phase = "goggles";
+          if (L.phase === "grab") {                     // caught them before the drone did
+            L.to("goggles");                            // stable: a reload keeps what was earned
             drone.visible = false;
             say("");
             vis.classList.add("on");
-          } else if (phase === "goggles") vis.classList.add("on");
+          } else if (L.phase === "goggles") vis.classList.add("on");
         }
       }
       ctx.on(canvas, "click", e => {
@@ -1026,8 +1341,7 @@ export default {
         if (!o || !o.userData.kind) return;
         use(o);
       });
-      const visX = byId("dgVisX");
-      if (visX) ctx.on(visX, "click", () => vis.classList.remove("on"));
+      // #dgVisX is bound above the WebGL branch now, so the flat station's goggles close too.
 
       canvas.tabIndex = 0;
       canvas.style.outline = "none";
@@ -1055,7 +1369,33 @@ export default {
         }
       });
 
-      if (!poured) say("Six tubes on the line. Tap one.");
+      /* ---- COMING BACK TO A LINE IN PROGRESS (C072). This runs LAST, after every transition it may
+         need is defined - the old restoreProgress() ran before `tween` even existed, which is part of
+         why it could only ever replay tubes and never restore a station.
+
+         Each stable phase is put back with its prop already at rest (`instant`), not re-animated: the
+         visitor did not just do that, they did it before the reload, and a 2.5s mould replaying on load
+         would claim credit for work they cannot see. "grab" is the one that gets its clock back - the
+         drone is part of that phase, not a decoration on it, so a reload there is the same gamble it
+         was, not a free pass. "busy" is never saved, so it is never restored. */
+      (function restoreScene() {
+        if (!L.restore()) { say("Six tubes on the line. Tap one."); return; }
+        L.order.forEach(idx => {
+          const g = tubes[idx];
+          if (!g) return;
+          markSpent(g);
+          g.userData.liq.scale.y = 0.001;
+          mixIn(idx);
+        });
+        setFill(L.poured);
+        if (L.phase === "pour") { say((TUBES.length - L.poured) + " tubes left on the line. Picking up where you left it."); return; }
+        if (L.phase === "mould") { showBlob(true); say("Six were already in. That is goo now. Shape it."); return; }
+        if (L.phase === "pack") { showUnit(true); say("A unit was already formed. Box it."); return; }
+        // grab and goggles: the unit was boxed and flown off before the reload, so only the goggles are left
+        if (L.phase === "grab") { offerGoggles(true); return; }
+        showGoggles(true);                               // "goggles": already earned, no drone coming back
+        say("The batch went out. The goggles are yours.");
+      })();
 
       // ---- frame loop
       let last = performance.now();
@@ -1140,6 +1480,7 @@ export default {
       if (session !== mine) return;
       console.error("[dg] three.js failed to load", err);
       dg.classList.add("flat");
+      runFlat(dg, ctx, L);     // a blocked CDN gets the operable station too, not a paragraph (C073)
     });
   },
 
