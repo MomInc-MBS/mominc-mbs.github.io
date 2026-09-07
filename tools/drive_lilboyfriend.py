@@ -3,9 +3,15 @@
 check_play drives the FLAT gallery (it forces WebGL off) and check_teardown only mounts and unmounts,
 so before packet 12 nothing in this repo had ever pressed a key inside the museum itself.
 Packet 12 rewired every listener in the 3D path - three on window, four on the WALK/BACK buttons, three
-on the look zone, the guest book form and the door - and a listener that silently never fires would
+on the look zone, the guest book and the door - and a listener that silently never fires would
 pass every assertion in the repo and photograph identically. So: hold W, see the walk advance; look at
 the lectern, see the guest book open; press Escape/E, see the zoom respond.
+
+2.20/E.8 replaced the guest book's three free-text asks (city, country, household income) with the
+assessment engine mounted from JSON, so the drive below answers radio groups instead of typing, and
+asserts what the new contract promises on the REAL channel rather than in the engine's own harness:
+the privacy statement above the first question, no free-text field left to type an exact city or an
+exact income into, and the result readable without an email or a phone.
 """
 import functools, os, threading
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
@@ -90,19 +96,101 @@ with sync_playwright() as pw:
     check(opened, "walking up to the lectern and looking at it opens the guest book")
 
     if opened:
-        pg.fill("#bookForm input[name=city]", "las vegas")
-        pg.fill("#bookForm input[name=country]", "united states")
-        pg.fill("#bookForm input[name=income]", "52000")
-        pg.click("#bookForm button[type=submit]")
-        pg.wait_for_timeout(500)
-        check(not pg.evaluate("() => document.querySelector('#bookPanel').classList.contains('show')"),
-              "and signing it closes the panel")
+        # 2.20/E.8: the lectern is the six-question assessment now, mounted from
+        # tv/data/assessments/lilboyfriend.json by tv/questionnaire.js. It arrives by dynamic import
+        # plus a fetch, so it is not in the DOM on the frame the panel opens.
+        pg.wait_for_selector("#bookMount form.q input[type=radio]", timeout=5000)
+
+        # the acceptance clause that is about THIS channel rather than the engine: the privacy
+        # statement is on screen, and it is above the first question, in the real mounted panel.
+        check(pg.evaluate("""() => {
+                  const p = document.querySelector('#bookMount [data-privacy]');
+                  const q1 = document.querySelector('#bookMount .q-item');
+                  if (!p || !q1 || !p.textContent.trim()) return false;
+                  if (!p.getClientRects().length) return false;
+                  return !!(p.compareDocumentPosition(q1) & Node.DOCUMENT_POSITION_FOLLOWING);
+              }"""),
+              "the privacy statement is visible above the first question")
+
+        # the asks E.8 removed: no free-text input of any kind survives in the guest book, which is
+        # what makes an exact city or an exact income unaskable rather than merely not asked today.
+        check(pg.evaluate("""() => Array.from(document.querySelectorAll('#bookMount input'))
+                  .every(i => i.type === 'radio')"""),
+              "every field is a radio - no free-text city, country or income input remains")
+
+        # answer the four required groups (region and the Wednesday vote are optional by the data)
+        for name in ("housing", "burden", "sharing", "space"):
+            pg.locator("#bookMount input[name=%s]" % name).first.check()
+        pg.click("#bookMount button[type=submit]")
+        pg.wait_for_timeout(600)
+
+        check(pg.evaluate("() => document.querySelector('#bookPanel').classList.contains('show')"),
+              "the panel STAYS open on submit, so the result is readable without an email or a phone")
+        check(pg.evaluate("""() => { const o = document.querySelector('#bookMount .q-out');
+                  return !!o && !o.hidden && o.querySelectorAll('.q-outcome').length >= 3; }"""),
+              "and the outcomes rendered in place")
         check(pg.evaluate("""() => { try { return !!JSON.parse(
                   localStorage.getItem('mbs-lilbf-museum-v2')).signed; } catch (e) { return false; } }"""),
               "and the signature is recorded in the shared store")
+        check(pg.evaluate("""() => { try { const a = JSON.parse(localStorage.getItem('mbs-state'))
+                      .submissions.lilboyfriend;
+                  return !!a && !!a.housing && !!a.burden && a.city === undefined && a.income === undefined;
+                } catch (e) { return false; } }"""),
+              "and MBS.form carried the ASSESSMENT answers, with no city or income key in the payload")
+
+        pg.click("#bookSkip")
+        pg.wait_for_timeout(300)
+        check(not pg.evaluate("() => document.querySelector('#bookPanel').classList.contains('show')"),
+              "and 'walk on' is what dismisses it")
 
     clean = [e for e in errs if "favicon" not in e and "jsdelivr" not in e.lower()]
     check(not clean, "no page errors across the drive (%s)" % (clean[:2] or "none"))
+
+    # ---- 2.20: the FLAT gallery's guest book, which no gate reads back either. check_play walks this
+    # route with WebGL refused, but it finishes the book step by clicking "walk on" - so it would pass
+    # unchanged if the step rendered an empty box. Same engine, same JSON, second render path; a fresh
+    # context so ST.signed starts false and fireForm is not short-circuited by the drive above.
+    fl = b.new_page(viewport={"width": 900, "height": 1000})
+    flerrs = []
+    fl.on("pageerror", lambda e: flerrs.append(str(e)))
+    fl.on("console", lambda m: flerrs.append(m.text) if m.type == "error" else None)
+    fl.add_init_script("""(() => { const g = HTMLCanvasElement.prototype.getContext;
+      HTMLCanvasElement.prototype.getContext = function (t, ...a) {
+        return /webgl/i.test(t) ? null : g.call(this, t, ...a); }; })()""")
+    fl.goto(BASE + "/play/lilboyfriend/", wait_until="load")
+    fl.wait_for_timeout(2500)
+    check(fl.evaluate("() => !!document.querySelector('#lbFlat') && !document.querySelector('#lb.webgl')"),
+          "flat: WebGL refused, so the DOM gallery is what rendered")
+    fl.click("#flNext")                                   # entrance -> book
+    fl.wait_for_selector("#flBookMount form.q input[type=radio]", timeout=5000)
+    check(fl.evaluate("""() => {
+              const p = document.querySelector('#flBookMount [data-privacy]');
+              const q1 = document.querySelector('#flBookMount .q-item');
+              return !!(p && q1 && p.textContent.trim() && p.getClientRects().length
+                        && (p.compareDocumentPosition(q1) & Node.DOCUMENT_POSITION_FOLLOWING)); }"""),
+          "flat: the privacy statement is visible above the first question here too")
+    check(fl.evaluate("""() => Array.from(document.querySelectorAll('#flBookMount input'))
+              .every(i => i.type === 'radio')"""),
+          "flat: no free-text city, country or income input remains")
+    for name in ("housing", "burden", "sharing", "space"):
+        fl.locator("#flBookMount input[name=%s]" % name).first.check()
+    fl.click("#flBookMount button[type=submit]")
+    fl.wait_for_timeout(500)
+    check(fl.evaluate("""() => { const o = document.querySelector('#flBookMount .q-out');
+              return !!o && !o.hidden && o.querySelectorAll('.q-outcome').length >= 3; }"""),
+          "flat: the outcomes render in place, and the step did not advance past them")
+    check(fl.evaluate("""() => { try { const a = JSON.parse(localStorage.getItem('mbs-state'))
+                  .submissions.lilboyfriend;
+              return !!a && !!a.housing && a.city === undefined && a.income === undefined;
+            } catch (e) { return false; } }"""),
+          "flat: MBS.form carried the assessment answers, with no city or income key")
+    fl.click("#flSkip")
+    fl.wait_for_timeout(400)
+    check(not fl.evaluate("() => !!document.querySelector('#flBookMount')"),
+          "flat: and 'walk on' moves the gallery on")
+    flclean = [e for e in flerrs if "favicon" not in e and "jsdelivr" not in e.lower()]
+    check(not flclean, "flat: no page errors (%s)" % (flclean[:2] or "none"))
+
     b.close()
 
 print("\n%s" % ("3D PATH DRIVES" if ok else "3D PATH BROKEN"))

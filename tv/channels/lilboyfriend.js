@@ -44,6 +44,21 @@
 
 const THREE_URL = "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.min.js";
 
+/* 2.20 / E.8. The guest book used to ask city, country and household income the moment you walked up to
+   the lectern. It asks none of those now: it mounts the assessment engine, and the six questions come
+   from JSON. Resolved against import.meta.url rather than written document-relative, because this
+   module is reached by dynamic import() from tv/channel-runtime.js and the DOCUMENT is the shell (or a
+   /play/<slug>/ route, or a fragment sandbox) - three different base URLs for one file that never
+   moves relative to this one. */
+const ASSESSMENT_URL = new URL("../data/assessments/lilboyfriend.json", import.meta.url).href;
+
+/* One import and one fetch for the life of the page, not one per mount: check_teardown mounts and
+   unmounts this channel repeatedly, and the spec does not change between mounts. Module scope, beside
+   `gl` and `session`, for exactly that reason. */
+let assessmentLoad = null;
+const loadAssessment = () => (assessmentLoad = assessmentLoad ||
+  import("../questionnaire.js").then(m => m.load(ASSESSMENT_URL).then(spec => ({ create: m.create, spec }))));
+
 /* The one piece of module state, held for the reason set out above: a WebGLRenderer and a scene graph
    are not disposables the context can own. `session` is the mount token - the three.js import and the
    twelve photograph loads all resolve long after mount() returns, and whatever comes back for a
@@ -181,6 +196,30 @@ export default {
       if (ST.signed) return;
       ST.signed = true; saveState();
       ctx.mbs && ctx.mbs.form && ctx.mbs.form("lilboyfriend", f);
+    }
+
+    /* 2.20: both render paths put the guest book on screen, so both mount the same engine into whatever
+       element they built for it. The engine owns the questions, the privacy statement, the missing-answer
+       message and the five outcomes; this channel owns only what happens AFTER a completed assessment -
+       the signature. It does not close or advance the panel on completion: the outcomes render into the
+       form the visitor just submitted, and dismissing them to prove the submit worked would be the one
+       thing E.8's "no email or phone required to reveal the result" is about. Walking on stays a choice.
+
+       A failed load (offline, or the JSON moved) leaves a line of text and the skip link, never a blank
+       card, and drops the cached promise so the next visit to the lectern tries again. */
+    function mountAssessment(host, onDone) {
+      if (!host || host.dataset.qMounted) return;
+      host.dataset.qMounted = "1";
+      const wanted = assessmentLoad = loadAssessment();
+      wanted.then(({ create, spec }) => {
+        if (session !== mine || !host.isConnected) return;
+        create(host, spec, { onComplete: r => { fireForm(r.answers); onDone && onDone(r); } });
+      }).catch(e => {
+        console.error("[lb] the guest book could not be loaded", e);
+        if (assessmentLoad === wanted) assessmentLoad = null;
+        delete host.dataset.qMounted;
+        if (session === mine && host.isConnected) host.textContent = "The guest book is not available right now. Walk on.";
+      });
     }
     function fireConnect(onVisual) {
       if (ST.phase !== "out") return;   // fires once: never on resume, never from walk again
@@ -694,19 +733,22 @@ export default {
         function closeZoom() { zoomOpen = false; zoomTurning = false; }
 
         // ---- guest book overlay
-        const bookForm = byId("bookForm"), bookSkip = byId("bookSkip");
+        const bookMount = byId("bookMount"), bookSkip = byId("bookSkip");
         let bookOpen = false, bookSkipped = false;   // review-round bug fix: without bookSkipped, the
         // proximity check re-opened the panel (and re-froze movement) on the very next frame after
         // "walk on" was clicked, since near+facing hadn't changed - the panel is level-triggered every
         // frame, so a dismiss has to be sticky, not just a one-time close.
-        function openBook() { if (bookOpen || ST.signed || bookSkipped) return; bookOpen = true; bookPanel.classList.add("show"); }
+        function openBook() {
+          if (bookOpen || ST.signed || bookSkipped) return;
+          bookOpen = true; bookPanel.classList.add("show");
+          // mounted on first approach, not at mount(): a visitor who never walks to the lectern never
+          // fetches the assessment, and the import is idempotent for one who reaches it twice.
+          mountAssessment(bookMount);
+        }
         function closeBook() { bookOpen = false; bookPanel.classList.remove("show"); }
-        ctx.on(bookForm, "submit", e => {
-          e.preventDefault();
-          const f = new FormData(e.target);
-          fireForm({ city: String(f.get("city")).trim().toLowerCase(), country: String(f.get("country")).trim().toLowerCase(), income: Math.max(0, +f.get("income") || 0) });
-          closeBook();
-        });
+        // No submit handler here any more - the engine owns its own form. Once signed, the frame loop's
+        // proximity check below stops running altogether (it is guarded on !ST.signed), so the panel is
+        // NOT closed out from under the outcomes; "walk on" is what dismisses them.
         ctx.on(bookSkip, "click", () => { bookSkipped = true; closeBook(); });
 
         // ---- the door / slot overlay: an empty magnifying-glass hole. Click/tap puts the glass in - no wire,
@@ -977,10 +1019,10 @@ export default {
         switch (s.id) {
           case "entrance": wrap.innerHTML = `<span class="fl-name">${TITLE_TEXT.h1}</span><p class="fl-sub">${TITLE_TEXT.h2}</p><p>${TITLE_TEXT.body}</p><div class="fl-actions"><button id="flNext">enter</button></div>`; break;
           case "book": {
-            wrap.innerHTML = `<span class="fl-name">Guest Book</span><p>Sign before you go in.</p>
-              <form class="lb-book" id="flBook"><label>City <input name="city" required></label><label>Country <input name="country" required></label>
-              <label>Household income <input name="income" type="number" min="0" step="100" required></label>
-              <div class="row"><button type="submit">SIGN</button><a class="skip" id="flSkip">walk on</a></div></form>`;
+            // 2.20: same engine the 3D lectern mounts, same JSON. The step is otherwise empty markup -
+            // the questions have exactly one definition and it is not in this file.
+            wrap.innerHTML = `<div id="flBookMount"></div>
+              <div class="fl-actions"><a class="skip" id="flSkip">walk on</a></div>`;
             break;
           }
           case "teepee": case "car": case "shoebox": case "storage": case "masonjar": case "van": {
@@ -1011,7 +1053,7 @@ export default {
         const flash = document.createElement("div"); flash.className = "lb-laser-flash"; flash.id = "flFlash";
         flat.appendChild(flash);
         if (step > 0) {
-          const actions = wrap.querySelector(".fl-actions, .lb-book .row");
+          const actions = wrap.querySelector(".fl-actions");   // 2.20: the book step has one of these now too
           if (actions) {
             const back = document.createElement("button"); back.type = "button"; back.id = "flBack"; back.textContent = "back";
             actions.insertBefore(back, actions.firstChild);
@@ -1029,12 +1071,12 @@ export default {
         const next = q("flNext"); if (next) ctx.on(next, "click", goNext);
         const back = q("flBack"); if (back) ctx.on(back, "click", goBack);
         const skip = q("flSkip"); if (skip) ctx.on(skip, "click", goNext);
-        const bookForm = q("flBook");
-        if (bookForm) ctx.on(bookForm, "submit", e => {
-          e.preventDefault(); const f = new FormData(e.target);
-          fireForm({ city: String(f.get("city")).trim().toLowerCase(), country: String(f.get("country")).trim().toLowerCase(), income: Math.max(0, +f.get("income") || 0) });
-          goNext();
-        });
+        // 2.20: the guest-book step mounts the engine into the node render() just built. render() replaces
+        // the whole step, so this node is new every time and the mount is not a duplicate; walking back to
+        // the book re-mounts, and the engine restores the saved draft into its own radios. Completion does
+        // not advance the step - the outcomes render here, and "walk on" is what leaves them.
+        const bookMount = q("flBookMount");
+        if (bookMount) mountAssessment(bookMount);
         const zoomable = q("flZoom");
         if (zoomable) ctx.on(zoomable, "click", () => zoomable.classList.toggle("zoomed"));
         // the door: an empty magnifying-glass hole, click to put the glass in - no wire, no drag. Off stream,

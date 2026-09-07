@@ -10,7 +10,10 @@ MBS.wave/MBS.unlock once, the hall's lights flicker cold, and "Turn around." pro
 return the same three exhibits now show the HORROR photos and real housing-help resources (Part B) instead of
 facts, the hall's cross-section closes in continuously (no discrete steps) from 3x3 units to 1.2x1.7, eye
 height drops 1.5->0.9, and the exhibits scale up so the photos loom. A guest book lectern near the entrance is
-the one collect (MBS.form, same {city,country,income} payload the old estimator used) - skippable, fires once.
+the one collect - skippable, fires once. Since 2.20/E.8 the lectern is the SIX-QUESTION ASSESSMENT, mounted
+from tv/questionnaire.js against tv/data/assessments/lilboyfriend.json: housing type, income share as a
+RANGE, people sharing, desired space, an optional broad region and a Wednesday vote. The old
+{city,country,income} ask is gone, and the payload MBS.form now carries is the assessment's answers.
 The MOM Inc infomercial below is carried forward unchanged except the estimator card is removed (one call site
 now, not two) and the .breached photo flip, which still works, still driven by the same MBS.wave() call.
 ARCHITECTURE: #lbStage stays inside .lb's own subtree the whole time (fitViewport() sizes it to fill .glass on
@@ -143,12 +146,30 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
   .lb-panel .card{max-width:340px; width:100%; max-height:92%; overflow:auto; background:rgba(255,253,248,.97); border:1px solid rgba(230,198,122,.7); border-radius:16px; padding:18px 18px 16px; box-shadow:0 10px 30px rgba(0,0,0,.4)}
   .lb-panel h3{font-family:"Pacifico",cursive; font-weight:400; font-size:22px; margin:0 0 4px; color:var(--ink)}
   .lb-panel p{font-size:14px; line-height:1.45; color:var(--ink); margin:0 0 12px}
-  .lb-book{display:grid; gap:10px}
-  .lb-book label{display:grid; gap:4px; font-family:"Times New Roman",Times,serif; font-style:italic; font-size:13px; color:var(--ink)}
-  .lb-book input{font-family:"Times New Roman",Times,serif; font-size:16px; padding:9px 10px; border:1px solid rgba(60,53,82,.5); border-radius:0; background:#fff; color:var(--ink)}
-  .lb-book .row{display:flex; gap:10px; margin-top:4px; align-items:center; flex-wrap:wrap}
-  .lb-book button{font-family:"Times New Roman",Times,serif; font-weight:700; font-size:15px; border:1px solid var(--ink); cursor:pointer; padding:10px 16px; background:var(--gold-l); color:var(--ink)}
-  .lb-book a.skip{font-size:13px; color:var(--ink-l); text-decoration:underline; cursor:pointer}
+  /* 2.20/E.8: the guest book is the assessment engine now (tv/questionnaire.js), so what is styled here
+     is THAT module's own markup - .q, .q-privacy, .q-list and the rest - dressed as a museum lectern.
+     No input styling survives because there are no free-text inputs left: every question is a radio
+     group over its own declared options, which is what makes an exact city or an exact income
+     unaskable rather than merely unasked. The skip link and the row around it are this channel's. */
+  .lb .q{display:grid; gap:12px; font-family:"Times New Roman",Times,serif; color:var(--ink)}
+  .lb .q-title{font-family:"Pacifico",cursive; font-weight:400; font-size:22px; margin:0; color:var(--ink)}
+  .lb .q-intro{font-size:14px; line-height:1.45; margin:0}
+  .lb .q-privacy{font-size:11.5px; line-height:1.45; color:var(--ink-l); margin:0; padding:8px 10px; border:1px dashed rgba(201,162,76,.9); background:var(--gold-l)}
+  .lb .q-list{list-style:none; margin:0; padding:0; display:grid; gap:14px}
+  .lb .q-field{border:0; margin:0; padding:0; min-width:0}
+  .lb .q-legend{font-size:14px; font-weight:700; padding:0; margin:0 0 4px}
+  .lb .q-optional{font-style:italic; font-weight:400; color:var(--ink-l)}
+  .lb .q-help{font-size:12px; font-style:italic; color:var(--ink-l); margin:0 0 6px}
+  .lb .q-opt{display:grid; grid-template-columns:auto 1fr; gap:8px; align-items:start; font-size:13.5px; line-height:1.35; padding:3px 0; cursor:pointer}
+  .lb .q-opt input{margin:2px 0 0}
+  .lb .q-submit{font-family:"Times New Roman",Times,serif; font-weight:700; font-size:15px; border:1px solid var(--ink); cursor:pointer; padding:10px 16px; background:var(--gold-l); color:var(--ink)}
+  .lb .q-error{font-size:13px; color:#8a1c3c; margin:6px 0 0}
+  .lb .q-out{display:grid; gap:12px; margin-top:4px; border-top:1px solid rgba(230,198,122,.8); padding-top:12px}
+  .lb .q-outcome-label{font-family:"Pacifico",cursive; font-weight:400; font-size:16px; margin:0 0 2px; color:var(--gold-d)}
+  .lb .q-outcome-text{font-size:13.5px; line-height:1.45; margin:0}
+  .lb .q-src{font-size:10.5px; color:var(--ink-l); margin:4px 0 0}
+  .lb .lb-bookrow{display:flex; gap:10px; margin-top:10px; align-items:center; flex-wrap:wrap}
+  .lb a.skip{font-size:13px; color:var(--ink-l); text-decoration:underline; cursor:pointer}
 
   /* the door-slot interactable: an empty magnifying-glass-shaped hole. Click/tap puts the glass in - no
      wire, no drag, none of that (see attemptInsert()/the flat path's flSlot handler for the off/live
@@ -216,15 +237,11 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
 
       <div class="lb-panel" id="bookPanel">
         <div class="card">
-          <h3>Guest Book</h3>
-          <p>Sign before you go in. Every field is the same one MOM already asks for.</p>
-          <p class="lb-fine">That is the joke, and this is the fact: these three answers are saved in this browser so the museum knows you signed. Nothing is sent anywhere and nobody reads them.</p>
-          <form class="lb-book" id="bookForm">
-            <label>City <input name="city" placeholder="Las Vegas" autocomplete="address-level2" required></label>
-            <label>Country <input name="country" placeholder="United States" autocomplete="country-name" required></label>
-            <label>Household income <input name="income" type="number" min="0" step="100" placeholder="52000" inputmode="numeric" required></label>
-            <div class="row"><button type="submit">SIGN</button><a class="skip" id="bookSkip">walk on</a></div>
-          </form>
+          <!-- 2.20: the questionnaire engine mounts here. Title, intro, the privacy statement and every
+               question come from tv/data/assessments/lilboyfriend.json, so this element is empty on
+               purpose - markup here would be a second copy of the questions to keep in step. -->
+          <div id="bookMount"></div>
+          <div class="lb-bookrow"><a class="skip" id="bookSkip">walk on</a></div>
         </div>
       </div>
 
