@@ -44,6 +44,13 @@ it. The no-WebGL case is asserted too, because the card's whole design is that t
 the control and the hologram is an upgrade layered on top; that claim is only worth anything if
 somebody takes WebGL away and checks.
 
+SINCE PACKET 11 THE WebGL CASE RUNS ON TWO DIFFERENT SHAPES. djscratch opens a context only if a
+visitor scrolls to one card, and it creates its own canvas. fuel opens one for the channel's whole
+life, against a canvas that is in the FRAGMENT'S own markup, and disposes its scene by WALKING the
+graph rather than from a list built at construction time. Those are different ways to get it wrong,
+so both are measured - and fuel is where a leak shows first, because it needs a context on every
+single visit rather than only on the visits where somebody scrolls.
+
 Run:  python tools/check_teardown.py     (serves the repo itself; nothing else need be running)
 """
 import functools, io, json, os, re, threading
@@ -112,7 +119,7 @@ check(on_disk == flagged, "the flag matches the tree exactly (on disk %s, flagge
       % (sorted(on_disk) or "none", sorted(flagged) or "none"))
 
 print("== 2.18 is converting channels one at a time, and both paths still exist")
-CONVERTED = {"mominc", "djscratch"}
+CONVERTED = {"mominc", "djscratch", "fuel"}
 check(flagged == CONVERTED, "exactly the channels this packet claims are converted (%s)"
       % (sorted(flagged) or "none"))
 for cid in sorted(flagged):
@@ -468,6 +475,99 @@ with sync_playwright() as pw:
     check(gl3["made"] <= gl1["made"] * 3,
           "and a visit costs ONE context, never a growing number (%d over three visits)" % gl3["made"])
     gpg.close()
+
+    print("== fuel: a channel that holds a WebGL context for its WHOLE life (2.18 packet 11)")
+    # The other shape of the same failure. djscratch takes a context only if the customize card is
+    # approached and builds its own canvas; fuel needs one the moment it mounts, renders into a canvas
+    # that came with the fragment, and tears the scene down by walking the graph instead of from a
+    # list. It is also the channel where a retained renderer would bite soonest, because every single
+    # visit costs a context rather than only the visits where somebody scrolls far enough.
+    fpg = b.new_page(viewport={"width": 1280, "height": 900})
+    fpg.on("pageerror", lambda e: errs.append(str(e)))
+    fpg.add_init_script("""
+        (() => { const real = HTMLCanvasElement.prototype.getContext;
+                 window.__gl = [];
+                 HTMLCanvasElement.prototype.getContext = function (type) {
+                   const c = real.apply(this, arguments);
+                   if (c && /webgl/i.test(String(type))) window.__gl.push(c);
+                   return c;
+                 }; })();
+    """)
+    open_tv(fpg)
+
+    def fuel_cycle(page):
+        """Mount fuel, wait for the scene to actually exist, unmount. Returns what is still live."""
+        page.evaluate("() => window.MBS_CH.mount('fuel', document.getElementById('channel'))")
+        built = True
+        try:
+            # .has3d is added ONLY after the whole scene is built and the first frame is queued, so
+            # it is the channel's own statement that there is something here to leak
+            page.wait_for_function("() => document.querySelector('#fu.has3d')", timeout=25000)
+        except Exception:
+            built = False
+        page.wait_for_timeout(250)
+        page.evaluate("() => window.MBS_CH.unmount()")
+        page.wait_for_timeout(250)
+        return built, page.evaluate("""() => ({
+            made: window.__gl.length,
+            live: window.__gl.filter(c => !c.isContextLost()).length })""")
+
+    fbuilt1, fgl1 = fuel_cycle(fpg)
+    check(fbuilt1, "fuel builds its scene as a module, so this probe is measuring something")
+    check(fgl1["made"] > 0, "and it took a real WebGL context to do it (%d)" % fgl1["made"])
+    check(fgl1["live"] == 0,
+          "after unmount the page holds NO live WebGL context (%d made, %d still live)"
+          % (fgl1["made"], fgl1["live"]))
+
+    fbuilt2, fgl2 = fuel_cycle(fpg)
+    fbuilt3, fgl3 = fuel_cycle(fpg)
+    check(fbuilt2 and fbuilt3, "and it rebuilds on the second and third visit rather than coming up empty")
+    # the property, never a constant: a fresh context per visit is CORRECT, a retained one is not
+    check(fgl3["live"] == 0,
+          "three visits later it still holds none (%d made across three, %d live)"
+          % (fgl3["made"], fgl3["live"]))
+    check(fgl3["made"] <= fgl1["made"] * 3,
+          "and a visit costs ONE context, never a growing number (%d over three visits)" % fgl3["made"])
+    # the runtime's own tally has to come back to nothing too - the scene is what ctx cannot own, but
+    # every listener, the ResizeObserver, both scoop timers and all three frame chains ARE its job
+    check(fpg.evaluate("() => window.MBS_CH.current()") is None,
+          "and the runtime reports nothing mounted afterwards")
+    fpg.close()
+
+    print("== fuel with no WebGL at all: the flat form is still the whole channel")
+    # fuel's stated design is that the six radiogroups, the eight flavour buttons and the can readout
+    # are the real page and the tub is an input method laid over them. Same as djscratch's racks: the
+    # only honest way to check that claim is to take WebGL away and use the page.
+    fnp = b.new_page(viewport={"width": 1280, "height": 900})
+    fnp.on("pageerror", lambda e: errs.append(str(e)))
+    fnp.add_init_script("""
+        (() => { const real = HTMLCanvasElement.prototype.getContext;
+                 HTMLCanvasElement.prototype.getContext = function (type) {
+                   return /webgl/i.test(String(type)) ? null : real.apply(this, arguments);
+                 }; })();
+    """)
+    open_tv(fnp)
+    fnp.evaluate("() => window.MBS_CH.mount('fuel', document.getElementById('channel'))")
+    fnp.wait_for_timeout(600)
+    fnp.evaluate("""() => {
+        document.querySelector('.srow[data-supp=creatine] .lvl[data-level=strong]').click();
+        document.querySelector('.flv[data-flavour="TOXIC WASTE LIME"]').click();
+    }""")
+    fnp.wait_for_timeout(150)
+    flat_fu = fnp.evaluate("""() => ({
+        has3d: !!document.querySelector('#fu.has3d'),
+        levels: document.querySelectorAll('#fu .lvl').length,
+        can: (document.getElementById('canLabel') || {}).textContent || '',
+        cost: (document.getElementById('costBar') || {}).textContent || '',
+        mail: (document.getElementById('mailLink') || {}).href || '' })""")
+    check(not flat_fu["has3d"], "no WebGL: the tub never claims to be there (.has3d stays off)")
+    check(flat_fu["levels"] == 18, "the six radiogroups are in the DOM regardless (%d buttons)" % flat_fu["levels"])
+    check("CREATINE: STRONG" in flat_fu["can"] and "TOXIC WASTE LIME" in flat_fu["can"],
+          "and setting a level and a flavour still writes the can: %r" % flat_fu["can"][-60:])
+    check("COST/SCOOP" in flat_fu["cost"], "the cost readout still renders (%r)" % flat_fu["cost"][:40])
+    check(flat_fu["mail"].startswith("mailto:"),
+          "and the mailto is built from first paint, never a placeholder")
+    fnp.close()
 
     print("== and with no WebGL at all, the card is still a working control")
     # The claim the channel's own comment makes: the racks are the real control and the hologram is

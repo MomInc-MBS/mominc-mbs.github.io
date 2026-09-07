@@ -23,7 +23,7 @@ window.MBS_CHANNELS = {
       "comingSoon": false,
       "suppressed": false,
       "game": true,
-      "module": false
+      "module": true
     },
     {
       "id": "goon",
