@@ -47,6 +47,35 @@
   }
   power.addEventListener("click", () => (tv.dataset.state === "on" ? turnOff() : turnOn()));
 
+  // --- the picture control (2.22 / C003)
+  // How much CRT treatment is on the glass is a PREFERENCE, not progress, so it does not go into
+  // state.js: that store is versioned, migrated and validated for what a visitor has earned, and a
+  // display setting has no business forcing a schema bump. Its own key, read once, written on change.
+  // localStorage rather than sessionStorage because "survives reload" has to mean tomorrow's visit too.
+  const PICTURE_KEY = "mbs-picture";
+  const pictureBtn = document.getElementById("pictureBtn");
+  const pictureLegend = document.getElementById("pictureLegend");
+  const clearPicture = () => tv.dataset.picture === "clear";
+  function paintPicture() {
+    const clear = clearPicture();
+    if (pictureBtn) {
+      pictureBtn.setAttribute("aria-pressed", clear ? "true" : "false");
+      pictureBtn.setAttribute("aria-label", clear ? "Restore the CRT picture" : "Clear picture");
+      pictureBtn.title = clear ? "Restore the CRT picture" : "Clear picture";
+    }
+    // the legend names what pressing DOES, the way GAME/EXIT does two keys along
+    if (pictureLegend) pictureLegend.textContent = clear ? "CRT" : "CLEAR";
+  }
+  function setPicture(clear) {
+    if (clear) tv.dataset.picture = "clear"; else delete tv.dataset.picture;
+    try { localStorage.setItem(PICTURE_KEY, clear ? "clear" : "crt"); } catch {}
+    paintPicture();
+  }
+  let storedPicture = null; try { storedPicture = localStorage.getItem(PICTURE_KEY); } catch {}
+  if (storedPicture === "clear") tv.dataset.picture = "clear";
+  paintPicture();
+  if (pictureBtn) pictureBtn.addEventListener("click", () => setPicture(!clearPicture()));
+
   // --- the channel LCD: MOM INC as the heading, then every channel as a card. Built ones link; the rest sit dim until their page exists.
   // Channel data (id/ch/name/head/half/comingSoon/suppressed) is generated from tv/channel-manifest.json
   // into window.MBS_CHANNELS by tools/gen_channels.py (mbs-channels.js, loaded before this file) - three

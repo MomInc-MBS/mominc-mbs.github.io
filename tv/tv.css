@@ -16,7 +16,11 @@ body{display:block;padding:0;overflow:hidden}
 ::selection{background:var(--gold);color:var(--purple-deep)}
 :focus-visible{outline:3px solid var(--gold);outline-offset:3px}
 
-.tv{width:100vw; height:100vh; height:100dvh}
+.tv{width:100vw; height:100vh; height:100dvh;
+  /* 2.22/C003: the CRT treatment is two numbers, not two hard-coded layers. Default 1 is the set as
+     it has always looked; the picture key lowers them. Any surface inside the glass can raise or
+     lower its own copy - the overlays read whatever they inherit. */
+  --scanline-opacity:1; --glass-distortion:1}
 /* the cabinet: textured black plastic with a slight sheen, thin bezel, panel beside the screen on a desk, below it on a phone */
 .cabinet{
   display:grid; grid-template-columns:82px 1fr 200px; grid-template-rows:100%; gap:0; height:100%;
@@ -72,13 +76,19 @@ body{display:block;padding:0;overflow:hidden}
     repeating-linear-gradient(0deg, rgba(0,0,0,.2) 0 1px, transparent 1px 3px),
     radial-gradient(ellipse at center, transparent 58%, rgba(0,0,0,.6) 100%);
   mix-blend-mode:multiply;
+  opacity:var(--scanline-opacity,1);
 }
 .glare{
   position:absolute; inset:0; pointer-events:none;
   background:
     radial-gradient(ellipse 60% 40% at 22% 12%, rgba(255,255,255,.14), transparent 60%),
     linear-gradient(115deg, rgba(255,255,255,.06) 0%, transparent 35%);
+  opacity:var(--glass-distortion,1);
 }
+/* "Clear picture" (C003): scanlines and glare down to a trace rather than off, because a tube with
+   nothing on the glass reads as a broken effect rather than a chosen one. The tube curvature, the
+   inset shadow and the phosphor colour stay - this is a legibility control, not a theme switch. */
+.tv[data-picture="clear"]{--scanline-opacity:.16; --glass-distortion:.28}
 .press-layer{position:absolute; inset:0; pointer-events:none; overflow:hidden}
 .press{
   position:absolute; width:120px; height:120px; margin:-60px 0 0 -60px; border-radius:50%;
@@ -230,6 +240,9 @@ body{display:block;padding:0;overflow:hidden}
 .key.power{width:52px; height:44px}
 .key.power::before{background:linear-gradient(180deg,#9a5fd0 0%,#7a2fc4 45%,#4a1a86 100%)}
 .key.power svg{stroke:var(--gold); fill:none; margin-top:-8px}
+/* the picture key: chrome-faced, so POWER stays the one purple key on the panel */
+.key.picture::before{background:linear-gradient(180deg,#f6ead2 0%,#d8c3a0 45%,#8d7550 100%)}
+.key.picture svg{stroke:#2e2216; fill:none; margin-top:-8px}
 .pilot{align-self:center; width:7px; height:7px; border-radius:50%; background:#3a1a1a; box-shadow:inset 0 0 2px #000; transition:background 300ms, box-shadow 300ms; margin-top:7px}
 .tv[data-state="on"] .pilot,.tv[data-state="warming"] .pilot{background:#ff3b3b; box-shadow:0 0 9px #ff3b3b}
 
@@ -315,7 +328,8 @@ body{display:block;padding:0;overflow:hidden}
 .tv[data-mode="game"] .dial-block,
 .tv[data-mode="game"] .maker,
 .tv[data-mode="game"] .model,
-.tv[data-mode="game"] .lcd .vfd{display:none}
+.tv[data-mode="game"] .lcd .vfd,
+.tv[data-mode="game"] #pictureKey{display:none}   /* the CRT furniture is already off in game mode (S1); a key controlling nothing is worse than no key */
 .tv[data-mode="game"] .lcd{flex:1 1 auto; width:auto; min-width:0; padding:4px; gap:0}
 .tv[data-mode="game"] .lcd-list{display:flex; flex-wrap:nowrap; overflow-x:auto; gap:4px; padding-bottom:2px}
 .tv[data-mode="game"] .lcd-card,
