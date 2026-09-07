@@ -753,6 +753,51 @@ with sync_playwright() as pw:
     csclean = [e for e in cserrs if "favicon" not in e and "jsdelivr" not in e.lower()]
     check(not csclean, "4.3: no page errors across the consequence drive (%s)" % (csclean[:2] or "none"))
 
+    # ---- 4.4: the shrink curve, exponential and finite ---------------------------------------------
+    # "Scale at chapter n follows the stated curve and is defined and non-zero at chapter 6."
+    #
+    # THE STATED CURVE IS EXPONENTIAL, WHICH IS A CLAIM ABOUT RATIOS - not about getting smaller. 4.3's
+    # straight line already got smaller and passes every monotonicity check above; the whole content of
+    # this packet is the SHAPE, so the only assertion that means anything is that each chapter keeps the
+    # same FRACTION of the one before it. A linear descent's fractions fan from 0.87 down to 0.60 and
+    # fail here, which is what makes this a gate rather than a restatement.
+    #
+    # Measured off the same snapshots 4.3 took, and off the RENDERED figure: `#lbFig i` is
+    # height:calc(38px * var(--lb-scale)), so its box IS the curve and nothing below asks the source
+    # about itself. `entrance` is chapter zero, so the six ratios are the six chapters' own.
+    print("\n  -- 4.4: the shrink is exponential and finite --")
+
+    steps = [entrance["figH"]] + figs
+    fracs = [round(steps[i] / steps[i - 1], 4) for i in range(1, len(steps))]
+    spread = max(fracs) / min(fracs)
+    # 5% of slack, and it is quantisation slack only: --lb-scale is written to 4dp off an already-rounded
+    # square footage and the browser lays out in 1/64px, which moves the true 0.7647 by under 1%.
+    check(spread <= 1.05,
+          "the shrink is EXPONENTIAL - every chapter keeps the same fraction of the last (%s, spread %.3f)"
+          % (fracs, spread))
+    # the matched half, and the half that fails on the curve 4.3 shipped: a linear descent takes EQUAL
+    # bites, an exponential one takes a big first bite and a smaller one every time after. Stated as the
+    # drops in px, so a ratio check that somehow went green on a flat figure still has to answer this.
+    drops = [round(steps[i - 1] - steps[i], 2) for i in range(1, len(steps))]
+    check(all(drops[i] < drops[i - 1] for i in range(1, len(drops))),
+          "   and it DECELERATES - the first chapter takes the most room, every one after it less (%s)"
+          % drops)
+
+    # defined and non-zero at chapter six, read the way a human reads it rather than the way arithmetic
+    # does. 38px * FLOOR is 7.6px of character; a curve that merely tends to zero is non-zero at a size
+    # nobody can see and would pass 4.3's `> 0`, so the floor named here is pixels on screen.
+    check(figs[-1] >= 4 and snaps[-1]["sqft"] > 0,
+          "the character at chapter six is DEFINED and visibly non-zero, not sub-pixel (%.2fpx, %d sq ft)"
+          % (figs[-1], snaps[-1]["sqft"]))
+
+    # FINITE - bounded by the six chapters, not unbounded. `before` was snapped at the very bottom of the
+    # run, past the last chapter and before a single square foot was given back: the shrink has STOPPED
+    # there rather than carried on, which is the difference between a floor and an asymptote.
+    check(abs(before["figH"] - figs[-1]) < 0.5 and before["sqft"] == snaps[-1]["sqft"],
+          "and the shrink is FINITE - past the sixth chapter it stops, it does not keep going (%.2fpx / "
+          "%d sq ft at chapter six, %.2fpx / %d at the end of the run)"
+          % (figs[-1], snaps[-1]["sqft"], before["figH"], before["sqft"]))
+
     b.close()
 
 print("\n%s" % ("3D PATH DRIVES" if ok else "3D PATH BROKEN"))

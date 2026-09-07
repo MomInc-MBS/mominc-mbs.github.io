@@ -419,16 +419,37 @@ export default {
        named rooms are in it - so the room readout is `EXHIBITS[n-1].label` and there is nothing to keep
        in step with anything.
 
-       WHAT 4.3 DOES NOT BUILD. 4.4 owns the shrink CURVE (exponential and finite); this packet only has
-       to make the shrink observable, so the curve is one function below and today it is a plain descent.
-       4.5/4.6 own the shoe and completion: consequence six is a REVEAL, not a door, and nothing here
-       unlocks, completes or ends the run. */
+       WHAT 4.3 DID NOT BUILD. 4.3 only had to make the shrink observable; the shrink CURVE is 4.4's and
+       is the block below. 4.5/4.6 own the shoe and completion: consequence six is a REVEAL, not a door,
+       and nothing here unlocks, completes or ends the run. */
     const RENT = 1450;          // consequence 3: this number never moves. That is the entire joke.
     const BASE_SQFT = 240;
-    /* 4.4 REPLACES THIS ONE LINE and nothing else. The figure's height, the square footage and the
-       restorable total are all derived from it, so that packet changes a curve rather than five call
-       sites. Today: 1.0 at the entrance down to 0.2 after the sixth chapter, never 0. */
-    const sceneScale = (n) => 1 - n * (0.8 / EXHIBITS.length);
+    /* ---- 4.4 / S1: the shrink curve, EXPONENTIAL and FINITE ----------------------------------------
+       Everything downstream derives from this one expression - the figure's rendered height, sqftAt(),
+       LOST, the closing copy - so 4.4 is a curve change and not five call sites. 4.3 shipped a plain
+       descent as a placeholder and said so; this is the replacement.
+
+       EXPONENTIAL IS A CLAIM ABOUT RATIOS, not about "a curve". FLOOR^(n/6) is (FLOOR^(1/6))^n, so
+       every chapter keeps the same 76.47% of the room the one before it had: 240 -> 184 -> 140 -> 107
+       -> 82 -> 63 -> 48 sq ft. That reads differently from 4.3's straight line and the difference is
+       the satire: the first cut is the biggest and each one after it is smaller, which is how a squeeze
+       that is always "only a little more this time" ends at a fifth of a room. The driver takes the
+       ratio off the RENDERED figure and rejects the equal bites of a linear descent.
+
+       FINITE IS THE CLAMP, and it is the difference between a bound and an asymptote. The line this
+       replaces went NEGATIVE past chapter seven; a bare exponential instead approaches zero forever.
+       Clamped to [0, EXHIBITS.length] the curve simply STOPS at the sixth chapter, so "defined and
+       non-zero at chapter 6" holds by construction rather than by luck, and FLOOR is a floor.
+
+       THE ENDPOINTS DO NOT MOVE. FLOOR stays 0.2, so sqftAt(6) is still 48 and LOST is still 192 -
+       4.3's reviewed closing copy, GIVE_STEP and the driver's own LOST constant all stand. 4.4 was
+       asked for the SHAPE of the shrink; re-cutting numbers 4.3 already shipped would be a content
+       change wearing a curve's clothes. FLOOR is also what keeps the character on screen:
+       `height:calc(38px * var(--lb-scale))` makes chapter six 7.6px of person - small, still a person.
+       A curve that merely tends to zero is arithmetically non-zero at a size no one can see, which is
+       why the driver's floor is measured in pixels rather than as `> 0`. */
+    const FLOOR = 0.2;          // the scale after chapter six: reached, not approached
+    const sceneScale = (n) => Math.pow(FLOOR, Math.min(Math.max(n, 0), EXHIBITS.length) / EXHIBITS.length);
     const sqftAt = (n) => Math.round(BASE_SQFT * sceneScale(n));
     const LOST = BASE_SQFT - sqftAt(EXHIBITS.length);
     const GIVE_STEP = LOST / 8;
