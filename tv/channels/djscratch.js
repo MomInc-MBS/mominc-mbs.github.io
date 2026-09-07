@@ -423,7 +423,16 @@ export default {
           tunerText.textContent = "HELP, GET US OUT";
           hint.innerHTML = "the record skipped. that was her, not it.";
           sigLbl.textContent = "// signal confirmed // she is in the machine //";
-          if (ctx.mbs) { ctx.mbs.meter && ctx.mbs.meter(100, "SIGNAL"); ctx.mbs.unlock && ctx.mbs.unlock("djscratch"); }
+          // D.1.10 (C018): the help-signal reveal ends the secret-code objective, so this site is both
+          // the unlock and the run's terminal - still two calls with two meanings. complete() goes FIRST
+          // so the GAME_COMPLETE on the wire carries {terminal} and not the transitional {nodes,need}
+          // unlock() still emits from mbs-shim.js:124; the two share one guard, so this pair emits once,
+          // and the packet that removes that emission changes nothing here. Fuel's pattern, fuel.js:233.
+          if (ctx.mbs) {
+            ctx.mbs.meter && ctx.mbs.meter(100, "SIGNAL");
+            ctx.mbs.complete && ctx.mbs.complete("djscratch", { terminal: "help-signal" });
+            ctx.mbs.unlock && ctx.mbs.unlock("djscratch");
+          }
         }
       }, 90);
     }
