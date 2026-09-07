@@ -250,22 +250,27 @@ export default {
     const LEVELS_PUBLIC = [
       { name: "THE OFFICE", doorLabel: "THE HEAD OFFICE", furniture: "cubicle", crazy: 0,
         pages: [
-          { door: "THE MAIL ROOM", title: "UP TO 800 MILLION JOBS, WORLDWIDE", deskLabel: "800M JOBS WORLDWIDE", deskDate: "MCKINSEY",
+          // C032: deskDate is the field built to carry an edition, and all three of these held a publisher name
+          // instead, so the desk sign dated nothing and the newspaper printed "up to 800 million" as a flat
+          // estimate. It is not flat: it is the top of a modelled RANGE, from a report published before
+          // generative AI existed. The edition and the scenario now travel with the number, in the src line the
+          // visitor reads, which is the record -- not the header comment, which had drifted (see corgi.html).
+          { door: "THE MAIL ROOM", title: "UP TO 800 MILLION JOBS, WORLDWIDE", deskLabel: "800M JOBS WORLDWIDE", deskDate: "MCKINSEY, 2017",
             flavor: "Folded into an empty mail slot, the kind with a name label long since peeled off.",
-            stat: "Automation and generative AI could displace up to 800 million jobs worldwide by 2030, the McKinsey Global Institute has estimated.",
-            src: "McKinsey Global Institute, workforce automation research.",
+            stat: "In 2017 the McKinsey Global Institute modelled a range: 400 to 800 million people worldwide could be displaced by automation by 2030. The 800 million is the top of that range, its fastest-adoption scenario rather than its expected case, and it was published years before generative AI.",
+            src: "McKinsey Global Institute, “Jobs Lost, Jobs Gained: Workforce Transitions in a Time of Automation,” November 2017. 800M is that report's rapid-adoption upper scenario; its midpoint scenario is 400M.",
             lessonTitle: "A GLOBAL NUMBER IS NOT YOUR NUMBER.",
             lesson: "800 million is every job, everywhere, added together. It tells you the shape of the problem. It does not tell you what happens to the one job in this building. Keep the scale of the claim attached to the claim." },
-          { door: "THE CUBE FARM", title: "710,000 FEWER ADMINISTRATIVE ASSISTANTS", deskLabel: "710K FEWER ASSISTANTS", deskDate: "MCKINSEY",
+          { door: "THE CUBE FARM", title: "710,000 FEWER ADMINISTRATIVE ASSISTANTS", deskLabel: "710K FEWER ASSISTANTS", deskDate: "MCKINSEY, 2023",
             flavor: "Left on an empty chair in a cubicle with the nameplate still screwed to the wall.",
-            stat: "McKinsey's research on generative AI and the future of work in America found demand for administrative assistants could fall by roughly 710,000 positions as AI takes over repetitive clerical tasks.",
-            src: "McKinsey & Company, “Generative AI and the future of work in America.”",
+            stat: "McKinsey's 2023 research on generative AI and the future of work in America projected that demand for administrative assistants could fall by roughly 710,000 positions by 2030 as AI takes over repetitive clerical tasks.",
+            src: "McKinsey & Company, “Generative AI and the future of work in America,” July 2023. A projection to 2030, not a count of jobs already gone.",
             lessonTitle: "A NAMED JOB TITLE IS EASIER TO CHECK THAN A TREND.",
             lesson: "“Administrative assistants, down 710,000” can be checked against real hiring data for that one job title. “AI is coming for office jobs” cannot be checked against anything. Prefer the number with a job title attached to it." },
-          { door: "THE COPIER ALCOVE", title: "THE MOST REPETITIVE WORK GOES FIRST", deskLabel: "REPETITIVE WORK FIRST", deskDate: "MCKINSEY",
+          { door: "THE COPIER ALCOVE", title: "THE MOST REPETITIVE WORK GOES FIRST", deskLabel: "REPETITIVE WORK FIRST", deskDate: "MCKINSEY, 2023",
             flavor: "Warm from the copier tray, like it had just come off the machine and nobody had claimed it.",
-            stat: "McKinsey's research found office and administrative support work involves an especially high share of repetitive, data-processing tasks, exactly the kind of work automated systems handle most easily.",
-            src: "McKinsey & Company, “Generative AI and the future of work in America.”",
+            stat: "McKinsey's 2023 research found office and administrative support work involves an especially high share of repetitive, data-processing tasks, exactly the kind of work automated systems handle most easily.",
+            src: "McKinsey & Company, “Generative AI and the future of work in America,” July 2023.",
             lessonTitle: "REPETITIVE IS THE PATTERN, NOT THE JOB TITLE.",
             lesson: "The pattern that predicts automation is the shape of the task, not the name on the door. A repetitive task inside a job that sounds safe is still a repetitive task. Look at what the day actually consists of." }
         ] }
@@ -551,6 +556,13 @@ export default {
     const huntStage = byId("ccHuntStage"), bookStage = byId("ccBookStage");
     const deskStage = byId("ccDeskStage");
     const readBtn = byId("ccReadBtn"), backHunt = byId("ccBackHunt");
+    // C035: ONE active-hunt state, asked by everything that is allowed to run while the hall is up. It was
+    // four separate reads of this same attribute -- the ambient haunt scheduler, the keydown, the timecode --
+    // and the frame loop, the one that matters most, was not one of them. Its only guard was unmount, so with
+    // the newspaper up the world kept walking, kept draining stamina, kept burning the flashlight and kept
+    // letting the suited figure close the distance. Only the KEYBOARD was muted, and only for keys pressed
+    // after the book went up: a key already held stayed held.
+    const hunting = () => cc.dataset.view === "hunt";
     function showHunt() { cc.dataset.view = "hunt"; huntStage.hidden = false; bookStage.hidden = true; deskStage.hidden = true; announce("Back in the hallway."); }
     function showBook() { cc.dataset.view = "book"; huntStage.hidden = true; bookStage.hidden = false; deskStage.hidden = true; renderBook(); }
     function showDesk() { cc.dataset.view = "desk"; huntStage.hidden = true; bookStage.hidden = true; deskStage.hidden = false; announce("At the head office's desk. It wants a code."); }
@@ -1399,7 +1411,7 @@ export default {
           const crazyLvl = LEVELS[state.level].crazy || 0;
           const wait = Math.max(1800, (8500 - n * 2000) - crazyLvl * 1800) + rnd() * 2500;
           ambientTimer = ctx.timeout(() => {
-            if (cc.dataset.view === "hunt" && !ghost.active && !creep.active && !caught) {
+            if (hunting() && !ghost.active && !creep.active && !caught) {
               // Haunt anchors, authored per area (corridor centrelines, never inside a wall) -- replaces the
               // single-corridor aheadX/side math, which assumed one straight hallway and would place him inside
               // a branch's own wall (or off in empty space) now that the school has branches (0901 expansion).
@@ -1546,7 +1558,7 @@ export default {
         // THESE TWO ARE BOUND TO WINDOW, which outlives every channel: a keydown left bound after a channel
         // change is a dead school reading the next channel's W key. ctx.on is what stops that.
         const keys = {};
-        ctx.on(window, "keydown", e => { if (cc.dataset.view !== "hunt") return; keys[e.key.toLowerCase()] = true;
+        ctx.on(window, "keydown", e => { if (!hunting()) return; keys[e.key.toLowerCase()] = true;
           if (e.key.toLowerCase() === "f") setFlash(!flashOn); if (e.key.toLowerCase() === "r") showBook(); });
         ctx.on(window, "keyup", e => keys[e.key.toLowerCase()] = false);
 
@@ -1559,7 +1571,7 @@ export default {
         ctx.observe(new ResizeObserver(resize), viewport); resize();
 
         // ---- timecode
-        let secs = 0; ctx.interval(() => { if (cc.dataset.view === "hunt") { secs++; const m = String(Math.floor(secs / 60)).padStart(2, "0"), s = String(secs % 60).padStart(2, "0"); tcEl.textContent = `${m}:${s}`; } }, 1000);
+        let secs = 0; ctx.interval(() => { if (hunting()) { secs++; const m = String(Math.floor(secs / 60)).padStart(2, "0"), s = String(secs % 60).padStart(2, "0"); tcEl.textContent = `${m}:${s}`; } }, 1000);
 
         let doorSeen = false;
         let last = performance.now();
@@ -1569,6 +1581,22 @@ export default {
           // unmount() ran from rendering into a disposed renderer.
           if (!gl || session !== mine) return;
           const dt = Math.min(50, now - last) / 1000; last = now;
+
+          // C035: the hall is not up, so the hall does not run. Everything below this line IS the world --
+          // movement, stamina, the camera, the flashlight battery, page pickups, the door, the monster's
+          // slide and creep, the static and the two kill paths -- and none of it belongs to a visitor who is
+          // reading the newspaper or standing at the desk terminal. `last` is advanced above, so the frame
+          // that resumes gets an ordinary dt instead of the whole pause. The two ABSOLUTE stamps below have
+          // to be carried across it by hand: ghost.t0 is a start time compared against `now`, so a haunt in
+          // flight when the book went up would snap straight to its endpoint the moment it came down, and
+          // monsterVisibleAt is the 600ms no-spawn-kill grace, which reading the paper must not burn through.
+          // This is the same freeze the watched-dead-on branch below already performs on ghost.t0.
+          if (!hunting()) {
+            if (ghost.active) ghost.t0 += dt * 1000;
+            if (monster.visible) monsterVisibleAt += dt * 1000;
+            ctx.frame(frame);
+            return;
+          }
 
           // movement
           let mx = 0, mz = 0;

@@ -183,6 +183,106 @@ with sync_playwright() as pw:
     check(pg.evaluate("() => document.querySelector('#cc').dataset.view") == "hunt",
           "and BACK TO THE HALL returns to the hunt")
 
+    # ---- 7. C035: the newspaper pauses the WORLD, not just the keyboard.
+    # The bug's exact shape is a key that is ALREADY DOWN when the book goes up: the keydown gate only ever
+    # refused NEW keys, and the frame loop had no view gate at all, so behind the paper the dog kept walking,
+    # kept sprinting his stamina away and kept burning the flashlight. So the book is opened here mid-hold,
+    # never after a release. Every one of the three clocks is measured TWICE - once in the hall, where it has
+    # to move, and once behind the paper, where it must not. A one-sided "unchanged" assertion would pass just
+    # as happily on a channel whose render loop had died outright, which is the failure this must not confuse.
+    print("\n  -- 7. C035: with the paper up, the hall stops")
+
+    def prop(sel, name):
+        return float(pg.evaluate("([s, n]) => document.querySelector(s).style.getPropertyValue(n) || '0'",
+                                 [sel, name]))
+
+    # The light has been on since section 4 and drains at 2.4/sec; cycle it off first so there is real charge
+    # left to measure a drain against (setFlash refuses to light below 3%, which would read as a dead button).
+    if pg.evaluate("() => document.querySelector('#ccFlashBtn').getAttribute('aria-pressed')") == "true":
+        pg.click("#ccFlashBtn")
+    pg.evaluate("() => { const p = window.__corgi.player; p.x = 1; p.z = 0; p.yaw = -Math.PI / 2; p.pitch = 0; }")
+    pg.wait_for_timeout(2600)          # recharges the battery AND lets stamina return to full
+    pg.click("#ccFlashBtn")
+    check(pg.evaluate("() => document.querySelector('#ccFlashBtn').getAttribute('aria-pressed')") == "true",
+          "the flashlight is lit going in")
+
+    # WINDOW LENGTHS, and they are not arbitrary. Headless rAF here delivers ~5-12fps, and frame() clamps dt
+    # to 50ms, so every clock integrates roughly a QUARTER of wall time: the battery falls ~0.6/sec against a
+    # nominal 2.4, and --bat is written as an integer, so a one-second window cannot resolve a drain at all.
+    # 4 seconds can. The battery control is measured standing still, on purpose - the light burns whether or
+    # not the dog walks, and a 4-second sprint would put him far enough down the corridor to trip a pickup,
+    # which opens the book by itself and would decide the next assertion for it.
+    b0 = prop("#ccBatFill", "--bat")
+    pg.wait_for_timeout(4000)
+    b1 = prop("#ccBatFill", "--bat")
+    check(b1 < b0, "standing still in the hall, the lit flashlight burns battery (%.0f -> %.0f)" % (b0, b1))
+
+    h0, s0 = pos(), prop("#ccStamFill", "--stam")
+    pg.keyboard.down("Shift"); pg.keyboard.down("w")
+    pg.wait_for_timeout(900)
+    h1, s1 = pos(), prop("#ccStamFill", "--stam")
+    hall = abs(h1["x"] - h0["x"]) + abs(h1["z"] - h0["z"])
+    check(hall > 0.2, "a held Shift+W walks the dog (%.2f units)" % hall)
+    check(s1 < s0 - 2, "and burns stamina (%.0f -> %.0f)" % (s0, s1))
+
+    pg.click("#ccReadBtn")             # both keys still down. The viewport's pointerdown handler skips readBtn.
+    pg.wait_for_timeout(200)
+    check(pg.evaluate("() => document.querySelector('#cc').dataset.view") == "book",
+          "the paper goes up with both keys still held")
+    # Stamina enters this window already spent, which is what makes "frozen" mean anything: at a full 100 it
+    # is clamped and would sit still even on the broken build.
+    r0, pb0, ps0 = pos(), prop("#ccBatFill", "--bat"), prop("#ccStamFill", "--stam")
+    pg.wait_for_timeout(4000)
+    r1, pb1, ps1 = pos(), prop("#ccBatFill", "--bat"), prop("#ccStamFill", "--stam")
+    drift = abs(r1["x"] - r0["x"]) + abs(r1["z"] - r0["z"])
+    check(drift < 0.02, "and behind it the dog does not move (%.3f units over 4s of held keys)" % drift)
+    check(ps1 == ps0, "stamina is frozen, neither burning nor recovering (%.0f -> %.0f)" % (ps0, ps1))
+    check(pb1 == pb0, "and the flashlight battery is frozen (%.0f -> %.0f)" % (pb0, pb1))
+
+    pg.keyboard.up("w"); pg.keyboard.up("Shift")
+    pg.click("#ccBackHunt")
+    pg.wait_for_timeout(300)
+    check(pg.evaluate("() => document.querySelector('#cc').dataset.view") == "hunt",
+          "BACK TO THE HALL puts the paper down")
+    q0 = pos()
+    pg.keyboard.down("w"); pg.wait_for_timeout(700); pg.keyboard.up("w")
+    pg.wait_for_timeout(150)
+    q1 = pos()
+    back = abs(q1["x"] - q0["x"]) + abs(q1["z"] - q0["z"])
+    check(back > 0.2, "and the world runs again on the other side of it (%.2f units)" % back)
+
+    # ---- 8. C032: the citation, read back off the RENDERED newspaper rather than out of corgi.js. The source
+    # is not its own witness (drive_girlfriend.py, section 11): a record and what the visitor is shown drifting
+    # apart is the whole failure here, and it is exactly what corgi.html's header comment had done.
+    # The save is seeded through evaluate + reload, never add_init_script, which fires on EVERY navigation.
+    print("\n  -- 8. C032: the 800M page names its edition and its scenario, on screen")
+    pg.evaluate("""() => localStorage.setItem('mbs-corgi-school-v2', JSON.stringify({
+        public: { found: [[true, true, true], [false, false, false], [false, false, false]],
+                  unlocked: 0, level: 0 },
+        live: null }))""")
+    pg.reload(wait_until="load")
+    pg.wait_for_timeout(5000)
+    pg.click("#ccReadBtn")
+    pg.wait_for_timeout(400)
+    leaf = lambda i: pg.evaluate("(i) => document.querySelector('#ccLeaf' + i + ' .face.front').textContent", i)
+    mail = leaf(1)
+    check("800 million" in mail, "the found MAIL ROOM page is on leaf 1 and prints its statistic")
+    check("2017" in mail, "and the year of the edition it came from (2017)")
+    check("Jobs Lost, Jobs Gained" in mail, "and the report by name")
+    check("400" in mail and "scenario" in mail,
+          "and that 800M is the top of a 400-800M range, labelled as a scenario")
+    check("generative AI could displace up to 800" not in mail,
+          "the old undated flat 'generative AI could displace up to 800 million' claim is gone")
+    for i in (2, 3):
+        check("2023" in leaf(i) and "July 2023" in leaf(i),
+              "leaf %d carries its own McKinsey edition date" % i)
+
+    head = open(os.path.join(ROOT, "tv", "channels", "corgi.html"), encoding="utf-8").read()[:5000]
+    for stale in ["Goldman Sachs Mar 2023", "WEF Future of Jobs Report", "Pew Research Jun 2026"]:
+        check(stale not in head, "the header comment no longer claims %r is cited on this page" % stale)
+    check("Jobs Lost, Jobs Gained" in head and "C032" in head,
+          "and it names what IS cited, and why it changed")
+
     clean = [e for e in errs if "favicon" not in e and "jsdelivr" not in e.lower()]
     check(not clean, "no page errors across the drive (%s)" % (clean[:2] or "none"))
     b.close()
