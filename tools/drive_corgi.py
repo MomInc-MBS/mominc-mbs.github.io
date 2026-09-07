@@ -17,6 +17,16 @@ anything, because moving it through the hook would prove nothing about the liste
 OFF-AIR ON PURPOSE. The play route defaults to public mode, where the suited figure talks instead of
 killing, so a drive cannot be interrupted by a capture yanking the player back to spawn mid-assertion.
 The listeners under test are identical in both modes.
+
+D.1.10 (C018) rides here too, in section 9, and corgi is the first of the six callers whose terminal is
+NOT its unlock site: markLevelComplete() banks the ARG node on the third page of the last level and the
+channel keeps going, so the run's real end is the vent form on the anchor's own record. That makes the
+matched half the whole point of the row, and it takes TWO runs, because mbs-shim.js:124's transitional
+emission shares complete()'s guard: a run that unlocks first cannot then complete. So 9 reaches the vent
+form on a restored save that never banked the node - order-independence is D.1.10's own contract - and
+9b banks the node down the flat floor plan and never answers. Both assert the event's DETAIL, never the
+count: while that emission lives, unlock() alone puts a GAME_COMPLETE on the wire, and {terminal:'vent'}
+against {nodes,need} is the only thing that says which call made it.
 """
 import functools, os, threading
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
@@ -42,6 +52,44 @@ def check(cond, msg):
     print("  %s %s" % ("PASS" if cond else "FAIL", msg))
 
 
+# D.1.10: every GAME_COMPLETE this run emits, in order, WITH its detail. Copied from drive_fuel.py:70 -
+# the detail is what says the emission came from complete() and not from unlock()'s transitional one.
+COUNT_COMPLETE = """document.addEventListener('mbs:lifecycle', e => {
+    if (e.detail && e.detail.type === 'GAME_COMPLETE')
+      (window.__completes = window.__completes || []).push(e.detail.detail || {});
+  }); window.__completes = [];"""
+
+# WebGL refused, so section 9b takes the channel's documented flat path (check_play.py:71). The floor
+# plan is the only way to bank the node by real input inside a driver; walking three pages down in 3D is
+# not scriptable in reasonable time.
+NO_WEBGL = """(() => { const g = HTMLCanvasElement.prototype.getContext;
+  HTMLCanvasElement.prototype.getContext = function (t, ...a) {
+    return /webgl/i.test(t) ? null : g.call(this, t, ...a); }; })()"""
+
+# The seeded save section 8 and section 9 both run on: the last (and, in public mode, only) level's three
+# pages already found, so paintLeaf4() renders the anchor's own record. Restoring found pages does NOT
+# call collect(), so markLevelComplete() never runs and nothing banks the node.
+SEED = """() => localStorage.setItem('mbs-corgi-school-v2', JSON.stringify({
+    public: { found: [[true, true, true], [false, false, false], [false, false, false]],
+              unlocked: 0, level: 0 },
+    live: null }))"""
+
+
+def completes(p):
+    return p.evaluate("()=>window.__completes.slice()")
+
+
+def terminals(p):
+    """Only the completions a channel's own complete() could have made. unlock()'s transitional emission
+    carries {nodes,need} and no terminal, so this is what tells the two apart while both exist."""
+    return [d for d in completes(p) if d.get("terminal")]
+
+
+def banked(p):
+    return p.evaluate("()=>{try{return window.MBS_STATE.unlockedActive().includes('corgi')}"
+                      "catch(e){return false}}")
+
+
 with sync_playwright() as pw:
     b = pw.chromium.launch()
     # a fresh context: this channel persists its progress per mode under mbs-corgi-school-v2, and a
@@ -51,6 +99,7 @@ with sync_playwright() as pw:
     errs = []
     pg.on("pageerror", lambda e: errs.append(str(e)))
     pg.on("console", lambda m: errs.append(m.text) if m.type == "error" else None)
+    pg.add_init_script(COUNT_COMPLETE)      # before the first goto, and it survives section 8's reload
     pg.goto(BASE + "/play/corgi/", wait_until="load")
     pg.wait_for_timeout(5000)
 
@@ -256,10 +305,7 @@ with sync_playwright() as pw:
     # apart is the whole failure here, and it is exactly what corgi.html's header comment had done.
     # The save is seeded through evaluate + reload, never add_init_script, which fires on EVERY navigation.
     print("\n  -- 8. C032: the 800M page names its edition and its scenario, on screen")
-    pg.evaluate("""() => localStorage.setItem('mbs-corgi-school-v2', JSON.stringify({
-        public: { found: [[true, true, true], [false, false, false], [false, false, false]],
-                  unlocked: 0, level: 0 },
-        live: null }))""")
+    pg.evaluate(SEED)
     pg.reload(wait_until="load")
     pg.wait_for_timeout(5000)
     pg.click("#ccReadBtn")
@@ -282,6 +328,80 @@ with sync_playwright() as pw:
         check(stale not in head, "the header comment no longer claims %r is cited on this page" % stale)
     check("Jobs Lost, Jobs Gained" in head and "C032" in head,
           "and it names what IS cited, and why it changed")
+
+    # ---- 9. D.1.10 (C018): the vent form is the terminal. Still on section 8's seeded save, so the
+    # anchor's own record is rendered and the book is open at page 1 - and nothing this session has
+    # banked the node, which is exactly the run that can prove the new call, because unlock() has not
+    # yet spent the shared guard on the transitional emission.
+    print("\n  -- 9. C018: the run ends when the dog is answered, not when the node is banked")
+    check(completes(pg) == [], "a restored run that has read nothing has completed nothing")
+    check(not banked(pg), "and has banked no ARG node - complete() and unlock() are order-independent")
+
+    for _ in range(4):                      # front page -> three pages -> the record
+        pg.click("#ccNext")
+        pg.wait_for_timeout(220)
+    at = pg.evaluate("() => document.querySelector('#ccAnnounce').textContent")
+    check("Page 5 of 5" in at, "turning to the back page puts the anchor's own record in front (%r)" % at[:52])
+    check(terminals(pg) == [], "and reading it to the end still completes nothing")
+
+    # The scan is decorative and the name is optional; the one required answer is which AI. Typing it is
+    # not answering it - sampled here as well as at the end, so an emission on input could not hide.
+    pg.fill("#ventAI", "the scheduler")
+    pg.wait_for_timeout(150)
+    check(terminals(pg) == [], "typing an answer is not submitting one")
+
+    # Submitted from the keyboard, and not out of neatness: #ccBook floats on an infinite ccFloat
+    # keyframe (corgi.html:161), so NOTHING inside the newspaper is ever "stable" and a pointer click on
+    # #ventBtn retries until it times out. fill() and focus() have no stability check; click() does.
+    # Enter in a required text input with a submit button present is implicit form submission - the same
+    # handler, by real input, and it is how most people would actually answer the dog.
+    pg.focus("#ventAI")
+    pg.keyboard.press("Enter")
+    pg.wait_for_timeout(500)
+    done = completes(pg)
+    check(len(done) == 1, "answering emits exactly one GAME_COMPLETE: %d" % len(done))
+    check(bool(done) and done[0].get("terminal") == "vent",
+          "carrying vent as the terminal, so it came from complete() and not from unlock()'s "
+          "transitional emission: %s" % (done[0] if done else None))
+    check(pg.evaluate("() => document.querySelector('#ventBtn').textContent") == "THE DOG HEARD YOU",
+          "and the dog heard it - the form's own handler ran, which is where the call lives")
+    check(not banked(pg),
+          "completing banked NO ARG node: the vent form is the run's end, not the channel's secret")
+    check(pg.evaluate("""()=>{window.MBS.complete('corgi',{terminal:'vent'});
+        return window.__completes.length;}""") == 1,
+          "and a direct second complete() for the site is a no-op - once per site per session")
+
+    # ---- 9b. The matched half, and it needs its own run: mbs-shim.js:124's transitional emission shares
+    # complete()'s guard, so a session that banks the node cannot afterwards complete. Down the flat floor
+    # plan, by real clicks, collect() -> markLevelComplete() -> unlock("corgi"). The vent form is never
+    # touched. The COUNT here is 1, not 0 - that one is the transitional emission, and it is precisely why
+    # every row above reads the detail. When caller six removes it this run goes to 0 and the row still
+    # passes unchanged; nothing here has to be rewritten for that packet.
+    print("\n  -- 9b. the matched half: banking the node is not finishing the run")
+    c2 = b.new_context(viewport={"width": 1280, "height": 900})
+    p2 = c2.new_page()
+    p2.on("pageerror", lambda e: errs.append(str(e)))
+    p2.on("console", lambda m: errs.append(m.text) if m.type == "error" else None)
+    p2.add_init_script(COUNT_COMPLETE)
+    p2.add_init_script(NO_WEBGL)
+    p2.goto(BASE + "/play/corgi/", wait_until="load")
+    p2.wait_for_timeout(3000)
+    check(p2.evaluate("() => { const f = document.querySelector('#ccFallback'); return !!f && !f.hidden; }"),
+          "WebGL refused, so the floor plan is showing")
+    rooms = p2.locator("#ccFbMap button:not(.locked)")
+    for _ in range(rooms.count()):
+        p2.locator("#ccFbMap button:not(.locked):not(.found)").first.click()
+        p2.wait_for_timeout(600)
+        if banked(p2):
+            break
+    p2.wait_for_timeout(1200)
+    check(banked(p2), "walking the floor plan to the third page banks the ARG node")
+    check(terminals(p2) == [],
+          "and the run has completed NOTHING - it never reached the vent form (%s)" % completes(p2))
+    check(p2.evaluate("() => !document.querySelector('#ventForm') "
+                      "|| !document.querySelector('#ventBtn').disabled"),
+          "the dog is still waiting to be answered - nothing pressed that button")
+    c2.close()
 
     clean = [e for e in errs if "favicon" not in e and "jsdelivr" not in e.lower()]
     check(not clean, "no page errors across the drive (%s)" % (clean[:2] or "none"))

@@ -547,6 +547,18 @@ export default {
         const b = byId("ventBtn"); b.textContent = "THE DOG HEARD YOU"; b.disabled = true;
         const data = { name: byId("ventName").value || "anonymous", aiJob: byId("ventAI").value };
         ctx.mbs && ctx.mbs.form && ctx.mbs.form("corgi", data);
+        // D.1.10 (C018): THIS is where the run ends, and it is NOT where the node was banked. Corgi is
+        // the first of the six whose terminal is somewhere else entirely: markLevelComplete() unlocks on
+        // the third page of the last level, and the channel keeps going - the anchor's own record only
+        // renders once that is done, and the visitor still has to read it and answer. So complete() goes
+        // at the last user action, next to the page's one MBS.form call, and nowhere near the unlock.
+        // TRANSITIONAL, and it cuts the other way from Fuel's and DJ Scratch's: those complete at the
+        // same site they unlock and simply go FIRST. Here unlock() has already fired, minutes earlier,
+        // and mbs-shim.js:124's transitional emission SHARES complete()'s guard - so in a run that
+        // banked the node this call is a no-op and the wire carries {nodes,need} instead of {terminal}.
+        // The packet that lands caller six and removes that emission is what makes this site the only
+        // completion corgi has; it must re-verify this row, not just delete a line.
+        ctx.mbs && ctx.mbs.complete && ctx.mbs.complete("corgi", { terminal: "vent" });
         arrange();
       });
     }
