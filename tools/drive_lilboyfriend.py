@@ -28,7 +28,7 @@ that loaded its own save, so none of them ever asked what happens when the save 
 at the bottom seed the channel's private key with the phases, positions and timestamps a hand edit can
 put there and read back what the loader kept, which is the whole of that ticket's claim.
 """
-import functools, os, threading
+import functools, io, os, re, threading
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 from playwright.sync_api import sync_playwright
 
@@ -1422,6 +1422,164 @@ with sync_playwright() as pw:
           "under prefers-reduced-motion nothing travels toward the visitor - and the chapters still "
           "arrive, at rest, all six (moving %s, scenes %s)" % (travelled or "none", scenes))
     rm.close()
+
+    # ---- 4.9: the fourth copy of the twelve photographs is gone -------------------------------------
+    # The lower "Patient results" gallery re-listed the same six exhibits and hard-coded the same twelve
+    # assets/lilbf-*-{cozy,horror}.jpg paths a FOURTH time, below the stage. The three consumers that
+    # actually matter all read one array - EXHIBITS in lilboyfriend.js - so the markup was a copy nobody
+    # updated. The row asks for the MARKUP, never the files: the jpgs are load-bearing for all three.
+    #
+    # SO "ZERO 404s" IS NOT ENOUGH ON ITS OWN, AND IS THE WEAKEST HALF OF THIS GATE. A build that
+    # deleted the twelve files as well would also report zero 404s - it would simply stop asking for
+    # them. Every consumer below is therefore driven to the point where it NAMES a photograph, and the
+    # assertion is that the image DECODED (naturalWidth > 0, or a 200 on the wire for the textures the
+    # WebGL path hands to three.js rather than to the DOM), with the twelve collected as a SET and
+    # compared against EXHIBITS. Twelve distinct decoded photographs is the claim; the 404 sweep across
+    # all four pages is the second half, and it catches a path that broke rather than one that vanished.
+    #
+    # THE DEAD CSS IS ASSERTED THROUGH THE CSSOM, NOT BY GREPPING THE FILE. The `.breached` photo flip
+    # had exactly one consumer - this gallery - so the rules and the class write went with it, and the
+    # commentary that RECORDS that decision still contains the word. A substring check over the source
+    # would fail on its own changelog. `document.styleSheets` answers what actually survived.
+    print("\n  -- 4.9: the redundant lower gallery is gone, every consumer still resolves --")
+
+    KINDS = ("cozy", "horror")
+    IDS = ["teepee", "car", "shoebox", "storage", "masonjar", "van"]
+    WANT = set("lilbf-%s-%s.jpg" % (i, k) for i in IDS for k in KINDS)
+    WANT_COZY = set("lilbf-%s-cozy.jpg" % i for i in IDS)
+    responses, gerrs = [], []
+
+    def watch(pg):
+        pg.on("response", lambda r: responses.append((r.url, r.status)))
+        pg.on("pageerror", lambda e: gerrs.append(str(e)))
+        pg.on("console", lambda m: gerrs.append(m.text) if m.type == "error" else None)
+        return pg
+
+    def shot(url):
+        """The filename alone: every consumer resolves against <base href="../../tv/">, so a path that
+        went wrong shows up as a 404 in the sweep rather than as a name that quietly still matches."""
+        return url.rsplit("/", 1)[-1].split("?")[0]
+
+    # 1. the markup itself. Read off the SHIPPED source, not the DOM, because "the gallery is not
+    #    rendered" is also true of a gallery that is merely hidden, and the row asked for a deletion.
+    src = io.open(os.path.join(ROOT, "tv", "channels", "lilboyfriend.html"), encoding="utf-8").read()
+    #    The three markers are ATTRIBUTES, not prose: the header comment above them is what RECORDS
+    #    this deletion, so it names the section and its photo glob, and a looser grep fails on it.
+    left = re.findall(r"lilbf-[a-z]+-(?:cozy|horror)\.jpg", src)
+    check(not left and 'aria-label="Patient results"' not in src
+          and 'id="listings"' not in src and 'class="home"' not in src,
+          "the fourth copy is deleted: no <figure class=\"home\"> gallery, and not one of the twelve "
+          "photo paths is hard-coded in the markup any more (%s)" % (sorted(set(left))[:3] or "none"))
+
+    # 2. consumer one: the WebGL texture preload. It hands every URL to three.js, never to an <img>, so
+    #    the DOM cannot answer for it - the wire and the channel's own load-failure console line can.
+    gl = watch(b.new_page(viewport={"width": 1280, "height": 900}))
+    gl.goto(BASE + "/play/lilboyfriend/", wait_until="load")
+    gl.wait_for_timeout(4000)
+    got_gl = set(shot(u) for u, s in responses if s == 200 and shot(u) in WANT)
+    check(gl.evaluate("() => !!document.querySelector('#lb.webgl')") and got_gl == WANT,
+          "the WebGL preload still resolves all twelve textures on the 3D path (%d of 12, missing %s)"
+          % (len(got_gl), sorted(WANT - got_gl) or "none"))
+    check(not [e for e in gerrs if "photo failed to load" in e],
+          "   and three.js reported no photo it could not load (%s)"
+          % ([e for e in gerrs if "photo failed" in e][:2] or "none"))
+    gl.close()
+
+    # 3. consumer two: the flat no-WebGL fallback, walked end to end. Both halves of the run - the six
+    #    COZY steps outbound and the six HORROR steps back - because they are separate call sites and a
+    #    fallback that only got the outbound half right would pass a gate that stopped at the door.
+    #    ?mode=live is what makes the door a door: off stream the hole is a hole, by design.
+    fw = watch(b.new_page(viewport={"width": 900, "height": 1000}))
+    fw.add_init_script("""(() => { const g = HTMLCanvasElement.prototype.getContext;
+      HTMLCanvasElement.prototype.getContext = function (t, ...a) {
+        return /webgl/i.test(t) ? null : g.call(this, t, ...a); }; })()""")
+    fw.goto(BASE + "/play/lilboyfriend/?mode=live", wait_until="load")
+    fw.wait_for_timeout(2500)
+
+    def flat_shot():
+        """The photograph the current step is showing, once it has actually decoded."""
+        try:
+            fw.wait_for_function("""() => { const i = document.querySelector('#lbFlat .fl-photo');
+                return !!i && i.complete && i.naturalWidth > 0; }""", timeout=6000, polling=80)
+        except Exception:
+            return None
+        return shot(fw.evaluate("() => { const i = document.querySelector('#lbFlat .fl-photo');"
+                                "        return i ? (i.currentSrc || i.src) : ''; }"))
+
+    fw.click("#flNext")                                   # entrance -> the guest book
+    fw.wait_for_selector("#flSkip", timeout=5000)
+    fw.click("#flSkip")                                   # -> the teepee, the first exhibit
+    flat_seen = []
+    for _ in range(6):                                    # teepee, car, shoebox, storage, masonjar, van
+        flat_seen.append(flat_shot())
+        fw.click("#flNext")
+    fw.wait_for_selector("#flSlot", timeout=5000)         # the door
+    fw.click("#flSlot")
+    fw.wait_for_function("() => window.__lbState().phase !== 'out'", timeout=4000, polling=60)
+    fw.wait_for_selector("#flNext", timeout=6000)
+    fw.click("#flNext")                                   # "turn around" -> the horror half
+    for _ in range(6):                                    # van-h .. teepee-h
+        flat_seen.append(flat_shot())
+        fw.click("#flNext")
+    check(set(flat_seen) == WANT and None not in flat_seen,
+          "the flat fallback still resolves every one of the twelve, cozy AND horror, walked end to "
+          "end (%d decoded, missing %s)"
+          % (len([x for x in flat_seen if x]), sorted(WANT - set(x for x in flat_seen if x)) or "none"))
+
+    # 3b. the same walk is the regression check on what 4.9 touched in the JS: the door's fireConnect
+    #     lost the `.breached` class write and the `restore` it existed for, and kept the wave. A wave
+    #     whose restore is dropped must still put the picture back - mbs-runtime.js's purple sweep owns
+    #     that - so the gallery is still on screen and still interactive after the breach, above.
+    check(fw.evaluate("() => { const f = document.querySelector('#lbFlat');"
+                      "        return !!f && f.getClientRects().length > 0; }"),
+          "   and the fuse box's wave still hands the picture back with no restore() of its own")
+
+    # 3c. the flip's stylesheet went with the markup it styled. Read from the CSSOM: the rules that are
+    #     live, not the bytes of a file that also documents why they are not.
+    dead = fw.evaluate("""() => { const out = [];
+        for (const sh of document.styleSheets) {
+          let rules; try { rules = sh.cssRules; } catch (e) { continue; }
+          for (const r of rules || []) {
+            const sel = r.selectorText || '';
+            if (/\\.homes\\b|\\.home\\b|\\bbreached\\b/.test(sel)) out.push(sel);
+          }
+        } return out; }""")
+    check(not dead, "the gallery's CSS went with it - no .homes, .home or .breached rule is left "
+                    "anywhere in the live stylesheets (%s)" % (dead[:3] or "none"))
+    fw.close()
+
+    # 4. consumer three: 4.2's scroll chapters. Six cozy photographs, one per chapter, and they are
+    #    loading="lazy" inside a scroller - so the run is scrolled through before they are counted,
+    #    or five of the six are honestly still unrequested and the check would be measuring patience.
+    sr = watch(b.new_page(viewport={"width": 390, "height": 844}))
+    sr.add_init_script("""(() => { const g = HTMLCanvasElement.prototype.getContext;
+      HTMLCanvasElement.prototype.getContext = function (t, ...a) {
+        return /webgl/i.test(t) ? null : g.call(this, t, ...a); }; })()""")
+    sr.goto(BASE + "/play/lilboyfriend/", wait_until="load")
+    sr.wait_for_timeout(2500)
+    sr.click("#lbModeBtn")
+    sr.wait_for_selector("#lbScroll .lb-ch[data-chapter]", timeout=5000)
+    sr.evaluate("""() => { const s = document.querySelector('#lbScroll');
+        s.style.scrollBehavior = 'auto'; s.style.scrollSnapType = 'none'; }""")
+    for k in range(1, 8):
+        sr.evaluate("v => { const s = document.querySelector('#lbScroll');"
+                    "        s.scrollTop = v * s.clientHeight; }", k)
+        sr.wait_for_timeout(250)
+    chs = sr.evaluate("""() => [...document.querySelectorAll('#lbScroll .lb-ch-photo')]
+        .map(i => ({ src: i.currentSrc || i.src, w: i.naturalWidth }))""")
+    got_sc = set(shot(c["src"]) for c in chs if c["w"] > 0)
+    check(len(chs) == 6 and got_sc == WANT_COZY,
+          "4.2's six chapters each still decode their own photograph (%d of 6, missing %s)"
+          % (len(got_sc), sorted(WANT_COZY - got_sc) or "none"))
+    sr.close()
+
+    # 5. and the acceptance's own words, last, because it is the half a deletion of the FILES would
+    #    also pass: nothing any of the four pages asked this site for came back missing.
+    bad = sorted(set((shot(u), s) for u, s in responses
+                     if s >= 400 and u.startswith(BASE) and "favicon" not in u))
+    check(not bad, "zero 404s across all four consumers' pages (%s)" % (bad[:4] or "none"))
+    gclean = [e for e in gerrs if "favicon" not in e and "jsdelivr" not in e.lower()]
+    check(not gclean, "4.9: no page errors across the deletion drive (%s)" % (gclean[:2] or "none"))
 
     b.close()
 

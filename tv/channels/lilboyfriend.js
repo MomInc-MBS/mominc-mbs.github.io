@@ -285,13 +285,11 @@ export default {
       if (ST.phase !== "out") return;   // fires once: never on resume, never from walk again
       ST.phase = "slotted"; ST.shrinkStartedAt = Date.now(); saveState();
       ctx.mbs && ctx.mbs.unlock && ctx.mbs.unlock("lilboyfriend");
-      const restore = () => lb.classList.remove("breached");
-      lb.classList.add("breached");   // drives the infomercial's own .breached photo flip below, unchanged
-      // MBS.wave's own {after, restore} contract is the shell's timer, not this channel's, and it is the
-      // shell's to own; the fallback timer when there is no wave() IS this channel's, so it goes through
-      // ctx and dies with the mount rather than writing into a fragment that has been replaced.
-      if (ctx.mbs && ctx.mbs.wave) ctx.mbs.wave({ after: 5000, restore });
-      else ctx.timeout(restore, 5000);
+      // 4.9: the `.breached` class this used to set had exactly one consumer - the lower gallery's
+      // cozy->horror photo flip - and that gallery is gone, so the class write and its `restore` went
+      // with it. The wave itself is the shipped beat and stays: MBS.wave's `restore` is optional
+      // (mbs-runtime.js:59) and the purple sweep back puts the picture up on its own.
+      ctx.mbs && ctx.mbs.wave && ctx.mbs.wave({ after: 5000 });
       onVisual && onVisual();
     }
     function isReturning() { return ST.phase === "slotted" || ST.phase === "back" || ST.phase === "done"; }
@@ -1298,7 +1296,6 @@ export default {
             });
             hallLights.forEach(l => { l.color.set(COLD_LIGHT); l.intensity = 0.55; });
             wallMat.color.set(COLD_WALL); rugMat.color.set(RUG_COLD); ambient.intensity = 0.3;
-            lb.classList.toggle("breached", false);
           }
           if (ST.phase === "done") openEpi();
           camera.position.z = zAt(ST.t);

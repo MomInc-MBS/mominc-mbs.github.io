@@ -1,8 +1,7 @@
 <!--
 THESIS: total redesign per LilBF Museum Spec 0901.md. Lil Boyfriend's page is now a first-person walking-sim
 MUSEUM: one straight 60-unit gallery hall, fixed centreline path, free look. Outbound you pass three exhibits
-(the Teepee, Shoebox, Mason Jar - the same three homes from the "Patient results" section below, in the order
-the old game shrank through) showing the COZY photos with real sourced housing facts on the placards (LilBF
+(the Teepee, Shoebox, Mason Jar - in the order the old game shrank through) showing the COZY photos with real sourced housing facts on the placards (LilBF
 Museum Housing Facts 0901.md Part A/C - numbers used exactly as written, never paraphrased). At the end wall a
 fuse box holds the wires interactable carried forward from the source build's .lb-tear block (markup and
 behaviour reused, restyled for the fuse-box framing) - connecting it is the locked ending beat: it fires
@@ -14,8 +13,12 @@ the one collect - skippable, fires once. Since 2.20/E.8 the lectern is the SIX-Q
 from tv/questionnaire.js against tv/data/assessments/lilboyfriend.json: housing type, income share as a
 RANGE, people sharing, desired space, an optional broad region and a Wednesday vote. The old
 {city,country,income} ask is gone, and the payload MBS.form now carries is the assessment's answers.
-The MOM Inc infomercial below is carried forward unchanged except the estimator card is removed (one call site
-now, not two) and the .breached photo flip, which still works, still driven by the same MBS.wave() call.
+The MOM Inc infomercial below is carried forward except the estimator card is removed (one call site now, not
+two). 4.9 also removed the "Patient results" gallery: it re-listed the same six exhibits and hard-coded the
+same twelve assets/lilbf-*-{cozy,horror}.jpg paths a FOURTH time, below the stage, where EXHIBITS already
+drives all three real consumers (the WebGL texture preload, the flat no-WebGL fallback, and 4.2's scroll
+chapters). The image FILES stay - only the duplicate markup, its CSS, and the now-consumerless `.breached`
+photo flip went. MBS.wave() still fires at the fuse box; it just no longer carries a restore().
 ARCHITECTURE: #lbStage stays inside .lb's own subtree the whole time (fitViewport() sizes it to fill .glass on
 arrival, same measured-not-calc'd pattern every other channel game uses) - nothing is ever appended to .glass,
 so there is no custom-property-inheritance trap to pay for (CSS vars inherit down the DOM, not through
@@ -95,20 +98,6 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
   .lb .stat .src{font-size:10.5px; color:var(--ink-l); margin:6px 0 0; letter-spacing:.02em}
   .lb .verdict{text-align:center; font-family:"Pacifico",cursive; font-weight:400; font-size:clamp(22px,7vw,34px); color:var(--ink); margin:16px 0 0}
   .lb .verdict b{color:var(--gold-d); font-weight:400}
-
-  .lb .homes{display:grid; gap:20px}
-  .lb .home{position:relative; margin:0; background:var(--white); border:1px solid rgba(230,198,122,.7); border-radius:18px; overflow:hidden; box-shadow:0 8px 22px rgba(120,100,160,.12)}
-  .lb .home .frame{position:relative; aspect-ratio:4/3; background:var(--lav)}
-  .lb .home .frame img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:opacity .6s ease}
-  .lb .home .frame img.horror{opacity:0}
-  .lb.breached .home .frame img.horror{opacity:1}
-  .lb.breached .home .frame img.cozy{opacity:0}
-  .lb .home .ph{position:absolute; inset:0; display:grid; place-items:center; text-align:center; color:var(--ink-l); font-family:"Pacifico",cursive; font-size:clamp(16px,4.6vw,22px); padding:10px}
-  .lb .home .rx{position:absolute; top:10px; left:10px; z-index:2; background:var(--gold); color:#fff; font-weight:800; font-size:clamp(11px,3.2vw,13px); letter-spacing:.1em; padding:5px 10px; border-radius:999px; box-shadow:0 2px 0 var(--gold-d)}
-  .lb .home .foodribbon{position:absolute; right:10px; bottom:10px; z-index:2; background:var(--mint); color:var(--ink); font-weight:800; font-size:clamp(11px,3vw,13px); padding:5px 10px; border-radius:999px; border:1px solid var(--gold)}
-  .lb .home figcaption{padding:12px 14px; font-size:clamp(14px,4vw,17px); line-height:1.4}
-  .lb .home figcaption b{font-family:"Pacifico",cursive; font-weight:400; font-size:1.15em; color:var(--gold-d)}
-  .lb .scale{text-align:center; font-family:"Pacifico",cursive; font-weight:400; color:var(--ink-l); font-size:clamp(15px,4.4vw,19px); margin:4px 0 0}
 
   .lb .charts{display:grid; gap:12px}
   .lb .chart{background:var(--white); border-radius:14px; padding:12px 14px; border:1px solid rgba(230,198,122,.5)}
@@ -687,69 +676,6 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
       <div class="side">
         <b>Living Small is not for everyone.</b> Do not take Living Small if you are allergic to Living Small, or if you intend to be large again. Side effects may include: <b>irreversibility</b>; a balance that is not reduced by payment; a voice higher than you remember; being stepped on; cockroaches at a scale where they are the larger party; rot; a home that can be lifted by someone else; and a persistent feeling that this was the only option, which it was. Tell your provider if you experience <b>growth</b>, as growth is not covered. Residential Compression is financed through MOM Inc.; the size reduction is not reversible until the balance is paid in full, and the balance is structured so that it never is. <b>Crime on file: needing somewhere to live.</b> *Rent accrues in a currency you will be too small to earn. This advertisement sells nothing; there is no lease and never will be.
       </div>
-    </section>
-
-    <section aria-label="Patient results">
-      <h2><small>Patient results</small>Look how little he needs.</h2>
-      <p>Lil Boyfriend took Living Small. Now he lives in one of these homes, one hall further down than the last. Walk the museum above to see how far the treatment goes.</p>
-      <div class="homes" id="listings">
-        <figure class="home">
-          <div class="frame">
-            <span class="ph">the pencil-door teepee</span>
-            <img class="cozy" src="assets/lilbf-teepee-cozy.jpg" alt="A composition-notebook teepee home with a tiny man waving from the pencil door" onerror="this.style.display='none'">
-            <img class="horror" src="assets/lilbf-teepee-horror.jpg" alt="" onerror="this.style.display='none'">
-            <span class="rx">Rx · $0/mo*</span>
-          </div>
-          <figcaption><b>The Teepee.</b> One notebook, one pencil door, a chimney you can see from the desk.</figcaption>
-        </figure>
-        <figure class="home">
-          <div class="frame">
-            <span class="ph">the shoebox living room</span>
-            <img class="cozy" src="assets/lilbf-shoebox-cozy.jpg" alt="A shoebox furnished as a living room with a smaller man waving from the rug" onerror="this.style.display='none'">
-            <img class="horror" src="assets/lilbf-shoebox-horror.jpg" alt="" onerror="this.style.display='none'">
-            <span class="rx">Rx · $0/mo*</span>
-          </div>
-          <figcaption><b>The Shoebox.</b> Phone for a television, bottle cap for a table, gum wrapper for a rug.</figcaption>
-        </figure>
-        <figure class="home">
-          <div class="frame">
-            <span class="ph">the mason-jar garden</span>
-            <img class="cozy" src="assets/lilbf-masonjar-cozy.jpg" alt="A mason jar greenhouse home with one carrot growing and an even smaller man waving" onerror="this.style.display='none'">
-            <img class="horror" src="assets/lilbf-masonjar-horror.jpg" alt="" onerror="this.style.display='none'">
-            <span class="rx">Rx · $0/mo*</span>
-            <span class="foodribbon">cuts food costs too</span>
-          </div>
-          <figcaption><b>The Mason Jar.</b> Grow your own carrot. One is plenty at that size.</figcaption>
-        </figure>
-        <figure class="home">
-          <div class="frame">
-            <span class="ph">the reclined-seat car</span>
-            <img class="cozy" src="assets/lilbf-car-cozy.jpg" alt="A small hatchback listing photo with a tiny man waving from the reclined driver's seat" onerror="this.style.display='none'">
-            <img class="horror" src="assets/lilbf-car-horror.jpg" alt="" onerror="this.style.display='none'">
-            <span class="rx">Rx · $0/mo*</span>
-          </div>
-          <figcaption><b>The Car.</b> Seat reclined as far as it goes. Sunshade on the windshield doubles as a curtain.</figcaption>
-        </figure>
-        <figure class="home">
-          <div class="frame">
-            <span class="ph">the ten-by-ten storage unit</span>
-            <img class="cozy" src="assets/lilbf-storage-cozy.jpg" alt="A self storage unit listing photo staged as a tidy room with a tiny man waving" onerror="this.style.display='none'">
-            <img class="horror" src="assets/lilbf-storage-horror.jpg" alt="" onerror="this.style.display='none'">
-            <span class="rx">Rx · $0/mo*</span>
-          </div>
-          <figcaption><b>The Storage Unit.</b> Ten by ten, climate controlled, and after hours nobody checks the padlock.</figcaption>
-        </figure>
-        <figure class="home">
-          <div class="frame">
-            <span class="ph">the converted van</span>
-            <img class="cozy" src="assets/lilbf-van-cozy.jpg" alt="A converted camper van listing photo with a tiny man waving from the open side door" onerror="this.style.display='none'">
-            <img class="horror" src="assets/lilbf-van-horror.jpg" alt="" onerror="this.style.display='none'">
-            <span class="rx">Rx · $0/mo*</span>
-          </div>
-          <figcaption><b>The Converted Van.</b> A camp stove where the passenger seat used to be. Parks somewhere different every night, on purpose.</figcaption>
-        </figure>
-      </div>
-      <p class="scale">Each home is smaller than the last. So is he. That is the treatment working.</p>
     </section>
 
     <footer class="foot">
