@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>lazy iframe fixture</title>
+<meta name="robots" content="noindex">
+<!-- the REAL stylesheet, for the one rule under test: play.css:23 is `.mbs-off{display:none !important}`,
+     and .mbs-off is what mount.js:57 and :61 put on the furniture during Part A isolation. A fixture
+     that redeclared that rule inline would keep passing after play.css had changed it. -->
+<link rel="stylesheet" href="../../tv/play.css">
+<style>
+  html,body{margin:0;height:100%;background:#111}
+  #lfOuter{width:320px;height:320px;overflow:hidden}
+  #lfInner{height:100%}
+  #lfGame{display:block;width:100%;height:100%;border:0}
+</style>
+</head>
+<body>
+<!-- The non-GOON stand-in for check_play.py's lazy-iframe case (PLAN-r9 3.G0).
+     goon.html:136's iframe is loading="lazy", and a lazy iframe inside a collapsed ancestor never
+     loads - so Part A can break a game without ever touching the game, purely by hiding an ancestor
+     during isolation. Closing GOON's route retired the only check of that failure. This is the
+     failure with the bundle taken out of it: one lazy iframe, one ancestor, one display property.
+
+     ?collapse=1 hides the ancestor and the frame must never load. Default leaves it visible and the
+     frame must load. The pair is the point: "it loaded" on its own would pass just as happily on a
+     page whose iframe was not lazy at all, which is the one thing this check exists to notice. -->
+<div id="lfOuter">
+<script>
+  // Inside the ancestor and above the iframe on purpose. #lfOuter is an open element by the time this
+  // runs, so the class lands before the frame is parsed, and therefore before it can be laid out and
+  // considered for loading; applied any later this would race the loader instead of testing it.
+  //
+  // display:none - via the real .mbs-off - and NOT height:0, which is the whole finding: Chromium
+  // loads a lazy iframe whose box is zero-height EAGERLY, because its small-element bail-out reads one
+  // as a tracking pixel. The obvious "collapse it to nothing" fixture therefore passes while proving
+  // the opposite of what it claims. Only an ancestor with no layout box at all holds a lazy frame
+  // back, and that is precisely what Part A's isolation does to furniture.
+  if (new URLSearchParams(location.search).get("collapse") === "1")
+    document.getElementById("lfOuter").classList.add("mbs-off");
+</script>
+<div id="lfInner">
+  <iframe id="lfGame" src="frame-inner.html" title="fixture frame" loading="lazy"></iframe>
+</div>
+</div>
+</body>
+</html>

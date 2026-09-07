@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>fixture frame</title>
+<meta name="robots" content="noindex">
+<style>
+  html,body{margin:0;height:100%}
+  #fxStage{width:100%;height:100%;background:#2a1f3d;color:#efe7ff;
+           font:14px/1.4 system-ui,sans-serif;display:grid;place-items:center}
+</style>
+</head>
+<body>
+<!-- Stands where GOON's compiled bundle stood, for tools/check_contract.py and tools/check_play.py
+     (PLAN-r9 3.G0). Two jobs and no others:
+       * be a SAME-ORIGIN document, so its pointer events do not bubble to the parent and only
+         MBS.bindFrames() can hear them;
+       * paint one child a parent can see through contentDocument, so "the frame actually loaded" is
+         readable from outside rather than assumed.
+     Nothing here is a game and nothing here is GOON. It is deliberately inert: a fixture that grows
+     behaviour stops being evidence about the thing under test. -->
+<div id="fxStage"><p>fixture frame</p></div>
+</body>
+</html>

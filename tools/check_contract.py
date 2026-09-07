@@ -47,9 +47,11 @@ VP = {"width": 390, "height": 844}
 # level up and exists for isolation (what stays visible), a different job. Neither is stale.
 
 # --- suppressed channels (C081/C084). GOON's compiled bundle asks visitors for card details, so its
-# route is closed and /play/goon/ 404s. Its checks below skip rather than being deleted: two of them
-# are the only coverage of MBS.bindFrames() and of the lazy-iframe failure, and a deleted test is
-# invisible where a SKIPPED line is not. Remove the slug here when the C084 rebuild lands.
+# route is closed and /play/goon/ 404s. Its checks below skip rather than being deleted, because a
+# deleted test is invisible where a SKIPPED line is not. Two of them were GOON's only because GOON
+# happened to be the site's only same-origin iframe, and 3.G0 gave each a fixture under
+# tools/fixtures/ instead: the coverage no longer depends on this set. Remove the slug here when the
+# C084 rebuild lands and the goon rows come back on their own.
 SUPPRESSED = {"goon"}
 
 ROOTS = {"lilboyfriend":"#lbStage", "corgi":"#ccViewport",
@@ -107,14 +109,40 @@ with sync_playwright() as pw:
     pg.close()
 
     print("== GAME_START is scoped to the game, not the page furniture (D2)")
-    # goon is included deliberately: its game is a same-origin <iframe> (goon.html:95) whose events never
+    # goon is included deliberately: its game is a same-origin <iframe> (goon.html:136) whose events never
     # bubble to the parent, so it needs MBS.bindFrames() and no parent-side listener alone can serve it.
+    #
+    # 3.G0: while goon is suppressed its slot runs tools/fixtures/bindframes.html instead of printing a
+    # SKIPPED line. GOON was the site's only same-origin iframe, so the skip had retired the sole
+    # MBS.bindFrames() coverage; the fixture is that shape against the real shim and no game at all.
+    # The substitution is one branch on SUPPRESSED, so goon's own case returns of its own accord the
+    # moment the slug leaves that set - and if it ever leaves with nothing having replaced this
+    # fixture, the branch is what puts the named SKIPPED back rather than losing the row in silence.
+    def in_frame_fixture():
+        """The in-frame GAME_START case, without GOON. Matched pair: bound must hear the click through
+        the document boundary, unbound must not. A one-sided pass would prove only that clicking
+        somewhere emits something, which is true of every other row in this section."""
+        good = True
+        for label, bind, want in (("bound", "1", True), ("unbound", "0", False)):
+            pg, seen, _ = instrument(b)
+            pg.goto(f"{BASE}/tools/fixtures/bindframes.html?bind={bind}", wait_until="load")
+            pg.wait_for_timeout(400)
+            pg.frame_locator("#fxGame").locator("#fxStage").click(position={"x": 40, "y": 40}, timeout=5000)
+            pg.wait_for_timeout(400)
+            got = "GAME_START" in seen; hit = got == want; good &= hit
+            print(f"  {'PASS' if hit else 'FAIL'} {'fixture':13} {label:8} bindFrames={bind == '1'} "
+                  f"in-frame START={got} want={want}")
+            pg.close()
+        return good
+
     for slug, target, in_frame in (("djscratch", "#scratchHand", False),
                                    ("lilboyfriend", "#lbStage", False),
                                    ("goon", "body", True)):
         if slug in SUPPRESSED:
-            # goon is the only in-frame case, so this skip retires the sole MBS.bindFrames() coverage
-            print(f"  SKIPPED {slug} (suppressed) - NO in-frame GAME_START coverage while this holds")
+            if in_frame:
+                ok &= in_frame_fixture()
+            else:
+                print(f"  SKIPPED {slug} (suppressed) - NO coverage of this row while this holds")
             continue
         for label, want in (("exit", False), ("game", True)):
             pg, seen, _ = instrument(b)

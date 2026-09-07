@@ -142,9 +142,11 @@ def fuel_seal(pg):
 # them: four terminal playthroughs, plus the two behavioral probes below that were never playthroughs.
 
 # --- suppressed channels (C081/C084). GOON's compiled bundle asks visitors for card details, so its
-# route is closed and /play/goon/ 404s. Its checks below skip rather than being deleted: two of them
-# are the only coverage of MBS.bindFrames() and of the lazy-iframe failure, and a deleted test is
-# invisible where a SKIPPED line is not. Remove the slug here when the C084 rebuild lands.
+# route is closed and /play/goon/ 404s. Its checks below skip rather than being deleted, because a
+# deleted test is invisible where a SKIPPED line is not. Two of them were GOON's only because GOON
+# happened to be the site's only same-origin iframe, and 3.G0 gave each a fixture under
+# tools/fixtures/ instead: the coverage no longer depends on this set. Remove the slug here when the
+# C084 rebuild lands and the goon rows come back on their own.
 SUPPRESSED = {"goon"}
 
 PLAN = {
@@ -235,9 +237,37 @@ with sync_playwright() as pw:
     # seeding it to one merge below its win would mean reverse-engineering minified code - out of all
     # proportion to a change that never touches the bundle. What Part A CAN break is the iframe itself:
     # it is loading="lazy" (goon.html:95), and a lazy iframe inside a collapsed ancestor never loads.
+    #
+    # 3.G0: while goon is suppressed this slot runs tools/fixtures/lazyframe.html instead of printing a
+    # SKIPPED line - the same failure with the bundle taken out of it: one loading="lazy" iframe, one
+    # ancestor, one height. Matched pair, because "it loaded" on its own would pass just as happily on
+    # a page whose iframe was never lazy. The substitution is one branch on SUPPRESSED, so goon's own
+    # case returns of its own accord when the slug leaves that set, and the branch is what puts the
+    # named SKIPPED back if it ever leaves with nothing having replaced this fixture.
     if "goon" in SUPPRESSED:
-        # the only check of the lazy-iframe-inside-a-collapsed-ancestor failure; nothing else covers it
-        print("  SKIPPED goon          suppressed (C081/C084) - NO lazy-iframe coverage while this holds")
+        for label, qs, want in (("collapsed", "?collapse=1", False), ("open", "", True)):
+            pg = b.new_page(viewport=VP)
+            codes = []
+            pg.on("response",
+                  lambda r: codes.append(r.status) if "fixtures/frame-inner.html" in r.url else None)
+            pg.goto(BASE + "/tools/fixtures/lazyframe.html" + qs, wait_until="load")
+            pg.wait_for_timeout(1500)
+            fr = pg.evaluate("""()=>{const f=document.getElementById("lfGame");
+                const r=f?f.getBoundingClientRect():null; let d=null; try{d=f&&f.contentDocument}catch{}
+                return {w:r?Math.round(r.width):0, h:r?Math.round(r.height):0,
+                        painted: !!(d && d.querySelector("#fxStage") && d.querySelector("#fxStage").children.length)};}""")
+            # LOADED is about the fetch and the paint, never about the box. Folding "h > 0" in here is
+            # how the first version of this check passed for the wrong reason: a zero-height lazy frame
+            # is loaded EAGERLY by Chromium, so the collapsed half read as "did not load" while the
+            # inner document had in fact been fetched and painted. The box is asserted separately, and
+            # only where it means something - the open half, which must actually have one.
+            loaded = bool(codes) and all(c == 200 for c in codes) and fr["painted"]
+            good = (loaded == want) and (not want or (fr["w"] > 0 and fr["h"] > 0))
+            ok &= good
+            print("  %s fixture %-9s lazy iframe: %dx%d, inner=%s, painted=%s -> loaded=%s want=%s"
+                  % ("PASS" if good else "FAIL", label, fr["w"], fr["h"], codes[:2] or "none",
+                     fr["painted"], loaded, want))
+            pg.close()
         pg = None
     else:
         pg = b.new_page(viewport=VP)
