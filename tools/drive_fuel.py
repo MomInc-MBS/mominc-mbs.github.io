@@ -15,6 +15,11 @@ branch check_play never takes, and C065 needs a SECOND click, which nothing in t
   C065  repeated clicks neither replay the reward nor create multiple creator-facing entries. Counted
         two ways: MBS.wave is wrapped to count the visible reward, and MBS_STATE.events() is read for
         participation_form_saved, which is the creator-facing entry.
+  D.1.10 (C018) the seal is where the RUN ends, so it is where complete() goes. Asserted as a matched
+        pair against C065's second stack, which is the one place the two meanings come apart: a changed
+        stack waves and files a SECOND time and completes a FIRST-and-only time. GAME_COMPLETE is read
+        off the mbs:lifecycle stream and sampled PER CLICK, never once at the end - sampled at the end,
+        the idempotency half would pass on a channel that emitted twice.
 
 WEBGL IS REFUSED, the same way check_play does it, so the flat rows stay in the DOM: under .has3d they
 are display:none and the C064 focus assertion would be testing a hidden element. The seal button, the
@@ -64,6 +69,19 @@ def set_all(pg, level):
         pg.wait_for_timeout(60)
 
 
+# D.1.10: every GAME_COMPLETE this run emits, in order, WITH its detail - the count has to be sampled
+# per click, and the detail is what says the emission came from complete() and not from unlock()'s
+# transitional one. Pushed in the page, so there is no async round-trip to wait on before reading it.
+COUNT_COMPLETE = """document.addEventListener('mbs:lifecycle', e => {
+    if (e.detail && e.detail.type === 'GAME_COMPLETE')
+      (window.__completes = window.__completes || []).push(e.detail.detail || {});
+  }); window.__completes = [];"""
+
+
+def completes(pg):
+    return pg.evaluate("()=>window.__completes.slice()")
+
+
 def saved_count(pg):
     return pg.evaluate("""()=>{try{return window.MBS_STATE
         .events({event:'participation_form_saved', channel:'fuel'}).length}catch(e){return -1}}""")
@@ -78,6 +96,7 @@ with sync_playwright() as pw:
     pg.on("console", lambda m: errs.append(m.text) if m.type == "error" else None)
     pg.add_init_script(NO_WEBGL)
     pg.add_init_script(COUNT_WAVE)
+    pg.add_init_script(COUNT_COMPLETE)
     pg.goto(BASE + "/play/fuel/", wait_until="load")
     pg.wait_for_timeout(2600)
 
@@ -96,6 +115,7 @@ with sync_playwright() as pw:
           "and the caret is on that row's own level buttons")
     check(pg.evaluate("()=>window.__waves") == 0 and saved_count(pg) == 0,
           "an incomplete seal rewards nothing and files nothing")
+    check(completes(pg) == [], "and completes nothing - a refused seal is not a terminal state (D.1.10)")
 
     # every row set, no flavour: the missing choice is now the flavour, and it must say so
     set_all(pg, "strong")
@@ -153,12 +173,18 @@ with sync_playwright() as pw:
     check(pg.evaluate("()=>window.__waves") == 1, "the first seal fires exactly one wave")
     check(saved_count(pg) == 1, "and files exactly one creator-facing entry")
     check(pg.evaluate("()=>window.MBS_STATE.unlockedActive().includes('fuel')"), "and banks the node")
+    done = completes(pg)
+    check(len(done) == 1, "and emits exactly one GAME_COMPLETE (D.1.10): %d" % len(done))
+    check(bool(done) and done[0].get("terminal") == "seal",
+          "carrying the seal as the terminal, so it came from complete() and not unlock()'s "
+          "transitional emission: %s" % (done[0] if done else None))
     check(pg.is_disabled("#submitBtn"), "the button is now disabled against a duplicate click")
 
     pg.evaluate("()=>document.querySelector('#submitBtn').click()")   # force one past the disabled state
     pg.wait_for_timeout(900)
     check(pg.evaluate("()=>window.__waves") == 1, "a forced second click on the SAME stack fires no second wave")
     check(saved_count(pg) == 1, "and files no second entry")
+    check(len(completes(pg)) == 1, "and emits no second GAME_COMPLETE")
 
     # change the concept: it is a different stack, and must be sealable again
     pg.locator("#stackCard .srow").first.locator('.lvl[data-level="weak"]').click(no_wait_after=True)
@@ -169,6 +195,10 @@ with sync_playwright() as pw:
     pg.wait_for_timeout(1200)
     check(pg.evaluate("()=>window.__waves") == 2, "the changed stack seals, and waves, once more")
     check(saved_count(pg) == 2, "and files its own entry")
+    # the matched half, and the whole point of the separation: the reward is per stack, the completion
+    # is per RUN. A second stack is a second seal and a second entry; it is not a second ending.
+    check(len(completes(pg)) == 1,
+          "but still ONE GAME_COMPLETE - exactly once per site per session, not once per seal")
 
     clean = [e for e in errs if "favicon" not in e and "jsdelivr" not in e.lower()]
     check(not clean, "no page errors throughout (%s)" % (clean[:2] or "none"))

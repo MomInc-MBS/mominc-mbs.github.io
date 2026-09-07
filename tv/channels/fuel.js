@@ -224,6 +224,13 @@ export default {
         submitBtn.textContent = "STACK LOCKED IN";
         submitBtn.disabled = true;           // re-enabled by renderCan() the moment the stack becomes a different one
         ctx.mbs && ctx.mbs.form && ctx.mbs.form("fuel", { stack: stackLines, name: productName() });
+        // D.1.10 (C018): Fuel's terminal state IS its unlock site - the seal is the last user action -
+        // but they are still two calls with two meanings. complete() goes FIRST so the run's own
+        // GAME_COMPLETE carries {terminal}, not the transitional payload unlock() still emits from
+        // mbs-shim.js:124; the two share one guard, so this pair emits once, and the packet that removes
+        // that emission changes nothing here. Idempotent per site: sealing a SECOND, different stack
+        // waves and files again (C065) and completes nothing - the run reached its end once.
+        ctx.mbs && ctx.mbs.complete && ctx.mbs.complete("fuel", { terminal: "seal" });
         ctx.mbs && ctx.mbs.unlock && ctx.mbs.unlock("fuel");
         ctx.mbs && ctx.mbs.wave && ctx.mbs.wave();
       } else {
