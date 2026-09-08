@@ -281,6 +281,33 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
   .rd-promise .pm-ad{font-size:13.5px; line-height:1.35; color:var(--ink)}
   .rd-promise .pm-rev{grid-column:2; font-size:11.5px; line-height:1.4; font-style:italic; color:var(--ink-l)}
 
+  /* C105: the peelable corner and the clause under it. Two classes throughout, for the reason the
+     C014 block above spells out. The whole control is a <details>: the summary is the tap target and
+     the keyboard's, and the browser owns open/closed, so there is no listener anywhere in this
+     feature and nothing for a re-render to re-bind.
+     THE PEEL IS THE ::after FLAP, AND THE MASK IS WHAT MAKES IT A PEEL rather than a coloured corner.
+     The flap is clipped to a triangle at the top-right and its inner edge is masked to nothing, so it
+     reads as paper lifting away from the wall rather than as a shape sitting on top of it; opening
+     rotates and grows it about the corner it is still attached to. Reduced motion gets the same two
+     states with no travel between them. */
+  .rd-peel{position:relative; overflow:hidden; margin:0 0 12px; padding:10px 12px 2px;
+      border:1px solid rgba(201,162,76,.9); border-radius:8px; background:rgba(255,253,246,.75)}
+  .rd-peel::after{content:""; position:absolute; top:0; right:0; width:58px; height:58px;
+      pointer-events:none; transform-origin:100% 0; transition:transform .35s ease;
+      background:linear-gradient(225deg, #efe4c8 0 58%, #c9a24c 58% 100%);
+      clip-path:polygon(100% 0, 100% 100%, 0 0);
+      -webkit-mask-image:radial-gradient(140% 140% at 100% 0, #000 46%, rgba(0,0,0,.06) 100%);
+      mask-image:radial-gradient(140% 140% at 100% 0, #000 46%, rgba(0,0,0,.06) 100%)}
+  .rd-peel[open]::after{transform:rotate(-16deg) scale(1.45)}
+  .rd-peel .pl-corner{font-size:11.5px; line-height:1.4; font-style:italic; color:var(--ink-l);
+      cursor:pointer; padding-right:52px; margin:0 0 4px}
+  .rd-peel .pl-h{font-size:11px; letter-spacing:.08em; text-transform:uppercase; font-weight:800; color:var(--gold-d); margin:8px 0 5px}
+  .rd-peel .pl-ad{font-size:12.5px; line-height:1.4; font-weight:700; color:var(--ink); margin:0 0 6px}
+  .rd-peel .pl-text{font-size:13px; line-height:1.5; color:var(--ink); margin:0 0 8px;
+      border-left:3px solid var(--gold); padding-left:8px}
+  .rd-peel .pl-note{font-size:11px; line-height:1.4; font-style:italic; color:var(--ink-l); margin:0 0 8px}
+  @media (prefers-reduced-motion:reduce){ .rd-peel::after{transition:none} }
+
   /* C112: the presenter's spotlight. It reuses .lb-panel and .lb-read WHOLE - the card, the scroll,
      the type, every .rd-* rule - and adds a stacking level and a scrim, because a second panel styled
      from scratch is a second thing to keep in step with the first (4.7's sound chip, same argument).

@@ -202,6 +202,19 @@ with sync_playwright() as pw:
     # records being made once already with a raycast.
     cv = pg.locator("#lookZone").bounding_box()
     pg.mouse.move(cv["x"] + cv["width"] * 0.82, cv["y"] + cv["height"] * 0.5)
+    # THE FLAKE THIS STAGING FIXES, and MBS-TRAPS named the fix before it recurred: ONE budget was
+    # covering two waits - the yaw lerp swinging the camera onto the lectern, and then the frame
+    # loop's own proximity test firing - on a software renderer that is simultaneously taking C015's
+    # twelve texture uploads. It went red once in four runs of an identical, otherwise-green build,
+    # and again in 4.11b packet 2's first full run. Staged now: the BEARING first, read off the raw
+    # camera yaw (C110's hook is the first thing in this file to expose it), then the panel with a
+    # budget of its own. The lectern is at side -1 and a POSITIVE yaw faces -x, so 0.6 rad is well
+    # past "still turning" and well short of the 1.005 the pointer position above asked for.
+    try:
+        pg.wait_for_function("() => window.__lbLens && window.__lbLens().yaw > 0.6",
+                             timeout=12000, polling=60)
+    except Exception:
+        pass   # the panel wait below still gets its full budget, and the assertion still reports
     try:
         pg.wait_for_function("() => document.querySelector('#bookPanel').classList.contains('show')",
                              timeout=8000, polling=60)
@@ -2472,7 +2485,14 @@ with sync_playwright() as pw:
     # not fail the click - the element is simply never visible, and a raised Locator timeout takes
     # every ticket AFTER it down with the one that actually broke. The first probe of this section
     # lost all eleven C020 assertions to one un-clickable "step back".
-    def tap(page, sel, ms=4000):
+    # 4.11b PACKET 2 RAISED THE BOUND FROM 4s TO 15s, for the reason packet 1 wrote down about pick():
+    # a control inside this panel measures 2.7-3.0s to pass Playwright's actionability polling, because
+    # the main thread it is polling is running a software-rendered frame loop. 4s is inside that noise,
+    # and C014's "stepping back clears it" went red on an otherwise-green build the first time this
+    # file grew long enough to load the machine harder. A broken control now costs 15s to report
+    # instead of 4, which is the only thing this trades away - tap() still RETURNS rather than raising,
+    # so the ticket that broke is still the ticket that reads red.
+    def tap(page, sel, ms=15000):
         try:
             page.locator(sel).click(timeout=ms)
             return True
@@ -3152,6 +3172,334 @@ with sync_playwright() as pw:
           "C112: and inside the television, where a channel's public address actually lives, beside "
           "the shell's own ?ch= (%s)" % (gott and gott["cards"] or "no view"))
     tvsp.close()
+
+    # ================================================================================================
+    # ---- 4.11b packet 2: C102 the figure in the case, C105 the peel, C110 the magnifier ------------
+    # ================================================================================================
+    # Three tickets whose acceptances are all about a thing the visitor SEES, which is the hardest
+    # kind to gate honestly, so each one is driven against arithmetic the gate does itself.
+    #
+    #   C102 asks for "a consistent-scale authored object" with "its transform recorded per exhibit".
+    #   Six meshes that happen to agree on a scale today pass every readback and fail the row the
+    #   first time somebody edits one, so consistency is asserted by IDENTITY - one geometry, one
+    #   material, one scale triple across all six - and "recorded per exhibit" by there being six
+    #   distinct transforms, each of which the gate checks against the case's own raw constants
+    #   rather than against a number this channel volunteered. The acceptance's second half - "without
+    #   an invented real-world measurement claim" - is the one that is easy to fail by being helpful:
+    #   the object is an untextured silhouette, which cannot be carrying a caption, and the museum
+    #   says exactly what it said before.
+    #
+    #   C110's lens already existed and already looked like a magnifier. It sampled the WHOLE
+    #   photograph across its own disc and bent it, which is a fisheye, not a magnification - so
+    #   "enlarges" is asserted as a crop factor above one, "the intended point" as two standpoints a
+    #   step apart reading two different parts of the same picture, and "does not blur source text"
+    #   as a matched pair on #lbRead, which is where the source text actually is.
+    #
+    #   C105's whole risk is the row's own last clause: "not a separate collectible requirement". A
+    #   clause that develops nothing in particular is exactly that, so the gate reads the advertised
+    #   line and the clause off the SAME block on all six exhibits and requires a run of them to be
+    #   word for word identical - it carries none of the shipped strings itself. The other half is
+    #   that peeling writes nothing at all.
+    print("\n  -- 4.11b pkt 2: C102 the figure in the case, C105 the peel, C110 the magnifier --")
+
+    def press(page, sel, key, ms=8000):
+        """Packet 2's rule, applied to a key press: every control here is rendered by the thing under
+        test, so a regressed build does not fail the press - the element is simply never there and
+        Locator.press raises at its timeout, taking the rest of the section with it."""
+        try:
+            page.locator(sel).press(key, timeout=ms)
+            return True
+        except Exception:
+            return False
+
+    # ---- C102: the person standing in the case ---------------------------------------------------
+    fg = fresh("C102")
+    seed(fg, {"phase": "out", "t": 0.15, "signed": True}, "1")
+    fgd = fg.evaluate("() => window.__lbFigures ? window.__lbFigures() : null")
+    figs = (fgd or {}).get("figures") or []
+    box = (fgd or {}).get("box") or {}
+    live = [f for f in figs if not f.get("missing")]
+    check(len(figs) == 6 and len(live) == 6,
+          "C102: there is an authored object standing inside every one of the six cases (%d of 6)"
+          % len(live))
+    # ONE OBJECT AT ONE SCALE, ENFORCED BY IDENTITY. Six clones that agree on a number today are six
+    # clones that can disagree after one edit, and "consistent model scale" is the whole of what makes
+    # the six cases readable against each other rather than each against itself.
+    geos = set(f["geo"] for f in live)
+    mats = set(f["mat"] for f in live)
+    scales = set(tuple(round(v, 9) for v in f["scale"]) for f in live)
+    check(len(geos) == 1 and len(mats) == 1 and len(scales) == 1
+          and list(scales)[0][0] == list(scales)[0][1] == list(scales)[0][2] > 0,
+          "C102: and it is the same object at the same scale in all six - one geometry, one material, "
+          "one uniform scale (%d geometries, %d materials, %d scales: %s)"
+          % (len(geos), len(mats), len(scales), sorted(scales)[0] if scales else "none"))
+    # SIX RECORDED TRANSFORMS, NOT ONE POSITION REUSED SIX TIMES.
+    tf = set((round(f["pos"][0], 9), round(f["pos"][2], 9), round(f["ry"], 9)) for f in live)
+    check(len(tf) == 6,
+          "C102: with a transform recorded per exhibit rather than one placement copied across the "
+          "room (%d distinct transforms across six cases)" % len(tf))
+    # AND THE GATE DOES THE FITTING ARITHMETIC ITSELF, off the case's own raw constants: standing on
+    # the alcove floor - the same floor in all six, so none of them is floating - inside the readable
+    # gap between the panel and the glass, inside the pane's own width, and clear in z of the shrunk
+    # photograph it is there to give a size to.
+    out102 = []
+    for f in live:
+        if abs(f["pos"][1] - box["floor"]) > 1e-6: out102.append((f["id"], "off the floor"))
+        elif abs(f["pos"][0]) > box["gap"] / 2 + 1e-9: out102.append((f["id"], "through the panel"))
+        elif abs(f["pos"][2]) > box["w"] / 2 - 0.05: out102.append((f["id"], "past the pane"))
+        elif abs(f["pos"][2]) < box["photoHalfZ"]: out102.append((f["id"], "behind the photograph"))
+    check(len(live) == 6 and not out102,
+          "C102: every one of them stands on its own alcove floor, inside the pane, clear of the "
+          "photograph - in the case rather than in the room (%s)" % (out102 or "all six"))
+    # NO MEASUREMENT CLAIM, and this is the half that is easy to fail by being helpful. A material
+    # with no map cannot be carrying a caption, a plate or a dimension; the matched half is that the
+    # hall still says the one thing it said before, so the feature added no words to this channel.
+    mapped = [f["id"] for f in live if f["mapped"]]
+    face_teepee(fg)
+    upfg = waits(fg, "() => document.querySelector('#lbPrompt').classList.contains('show')")
+    ptxt = fg.evaluate(text_of, "#lbPrompt") if upfg else ""
+    check(not mapped and upfg and ptxt == "Look closer.",
+          "C102: and it states nothing - no texture, no plate and no dimension on any of them, and "
+          "standing at one the hall still says only %r (%s)" % (ptxt, mapped or "none textured"))
+    # INSIDE THE CASE IS A CLAIM ABOUT WHERE IT LIVES. The glass case is outbound furniture, so a
+    # figure left standing on the wall coming back would be an object in the room after all.
+    seed(fg, {"phase": "back", "t": 0.15, "signed": True, "shrinkStartedAt": 1}, "1")
+    back102 = fg.evaluate("() => window.__lbFigures ? window.__lbFigures() : null")
+    check(back102 and len(back102["figures"]) == 6
+          and not any(f.get("vis") for f in back102["figures"]),
+          "C102: and coming back, when the cases are gone, so is every one of them")
+    fg.close()
+
+    # ---- C110: the glass magnifies, and only while it is being looked through ---------------------
+    A2_BODY = ("More than a third of those 770,000 people were not even in a shelter. About 277,000 "
+               "were sleeping outside, in a car, or somewhere never built for a person.")
+
+    def settled_lens(p5, ms=16000):
+        """Read the aim once it has stopped moving. THE ZOOM'S YAW LERP IS THE THING BEING WAITED ON,
+        and it is level-triggered from the frame loop like everything else here: measured, the aim
+        travels for ~1.5s of wall clock at rest and considerably longer on a loaded machine, so a
+        fixed wait is a measurement of this box. Two identical samples in a row is the settle."""
+        cur, last, stable, spent = None, None, 0, 0
+        while spent < ms:
+            cur = p5.evaluate("() => window.__lbLens ? window.__lbLens() : null")
+            if cur and cur["vis"] and cur["hasMap"] and last is not None and cur["centre"][0] == last:
+                stable += 1
+                if stable >= 2:
+                    return cur
+            else:
+                stable = 0
+            last = cur["centre"][0] if cur else None
+            p5.wait_for_timeout(400)
+            spent += 400
+        return cur
+
+    def inspect_at(tag, t):
+        """Stand at t, face the teepee, read the lens uniforms idle and then inspecting. Returns the
+        page so the caller can carry on with it - nothing here closes what it opens."""
+        p5 = fresh(tag)
+        seed(p5, {"phase": "out", "t": t, "signed": True}, "1")
+        face_teepee(p5)
+        up5 = waits(p5, "() => { const b = document.querySelector('#lbLook'); return b && !b.hidden; }")
+        idle5 = p5.evaluate("() => window.__lbLens ? window.__lbLens() : null")
+        tapped5 = tap(p5, "#lbLook")
+        op5 = waits(p5, "() => document.querySelector('#lbRead').classList.contains('show')", 12000)
+        return p5, (up5 and tapped5 and op5), idle5, settled_lens(p5)
+
+    # a step either side of the teepee, which sits at p=0.15 in a 60-unit hall: 0.1 of a world unit
+    # each way, well inside the 1.6 the case is inspectable from
+    lz_a, ok_a, idle_a, on_a = inspect_at("C110-before", 0.15 - 0.1 / 60)
+    lz_b, ok_b, idle_b, on_b = inspect_at("C110-after", 0.15 + 0.1 / 60)
+    check(idle_a and not idle_a["hasMap"] and not idle_a["vis"],
+          "C110: standing in the corridor the glass holds no sample - the lens is not a live texture "
+          "parked behind a hidden quad, waiting (map %s)" % (idle_a and idle_a["hasMap"]))
+    check(ok_a and on_a and on_a["vis"] and on_a["hasMap"] and on_a["zoom"] > 1.5,
+          "C110: inspecting one, the disc carries a CROP of that photograph at %sx rather than the "
+          "whole of it, which is the difference between a magnifier and a paperweight"
+          % (on_a and round(on_a["zoom"], 2)))
+    check(on_a and 0 < on_a["refFrom"] < 0.5 and on_a["k"] > 0,
+          "C110: and the refraction is restrained to the rim - the middle of the glass, which is the "
+          "part being inspected, is sampled straight (the bend starts at r=%s of 0.5, k=%s)"
+          % (on_a and on_a["refFrom"], on_a and on_a["k"]))
+    ua = on_a["centre"][0] if on_a else -1
+    ub = on_b["centre"][0] if on_b else -1
+    check(ok_b and on_b and on_a and abs(ua - ub) > 0.15 and min(ua, ub) < 0.5 < max(ua, ub),
+          "C110: and the crop is centred on the point the glass is over rather than on the middle of "
+          "the picture - two standpoints a step apart read two different parts of the same "
+          "photograph, either side of its centre (u %.3f vs %.3f)" % (ua, ub))
+    lz_b.close()
+    # DOES NOT BLUR SOURCE TEXT, and the source text is in the DOM, not in the lens. A matched pair:
+    # the glass is magnifying at this exact moment, and nothing on the panel in front of it is
+    # filtered, faded or re-rendered.
+    blur = lz_a.evaluate("""() => {
+      const els = [document.querySelector('#lbRead'), document.querySelector('#lbRead .card')]
+        .concat(Array.from(document.querySelectorAll('#lbRead .rd-card')));
+      const bad = [];
+      for (const el of els) {
+        if (!el) continue;
+        const cs = getComputedStyle(el);
+        if ((cs.filter && cs.filter !== 'none') ||
+            (cs.backdropFilter && cs.backdropFilter !== 'none')) bad.push(el.id || el.className);
+      }
+      return { bad: bad, body: ((document.querySelector('#lbReadBody') || {}).textContent || '')
+                                 .replace(/\\s+/g, ' ').trim() };
+    }""")
+    check(not blur["bad"] and A2_BODY in blur["body"],
+          "C110: and the reading panel in front of it is untouched - no filter on the panel, the card "
+          "or any source in it, and the sourced body is still there word for word (%s)"
+          % (blur["bad"] or "no filter anywhere"))
+    # "UPDATE THE SAMPLE ONLY WHILE INSPECTION IS ACTIVE" is a claim about the sample, not about the
+    # quad. A hidden lens still holding a live texture and re-aiming every frame is a lens that
+    # updates whenever the frame loop feels like it - so the map has to be gone AND the aim has to
+    # stop being written, measured against a look that really did move underneath it.
+    closed110 = tap(lz_a, "#lbRead .lb-bookrow button")
+    # THE COOLING IS FRAMES, NOT MILLISECONDS. zoomEase eases out at dt/0.3 with dt CLAMPED TO 50ms,
+    # so the glass takes six frames to fall away however long they take - which at the ~8fps this
+    # renderer manages is 750ms at rest and considerably more on a loaded machine. A fixed 800ms wait
+    # here measured this box, and went red on it.
+    off1 = None
+    for _ in range(30):
+        lz_a.wait_for_timeout(400)
+        off1 = lz_a.evaluate("() => window.__lbLens()")
+        if off1 and not off1["hasMap"] and not off1["vis"]:
+            break
+    zn = lz_a.locator("#lookZone").bounding_box()
+    lz_a.mouse.move(zn["x"] + zn["width"] * 0.85, zn["y"] + zn["height"] * 0.5)
+    lz_a.wait_for_timeout(1200)
+    off2 = lz_a.evaluate("() => window.__lbLens()")
+    moved110 = abs(off2["yaw"] - off1["yaw"]) if (off1 and off2) else 0
+    check(closed110 and off1 and not off1["hasMap"] and not off1["vis"]
+          and off2 and off2["centre"] == off1["centre"] and moved110 > 0.05,
+          "C110: stepping back stops the sample - the map is dropped and the aim stops being written, "
+          "with the look moving %.2f rad underneath it to say so" % moved110)
+    lz_a.close()
+
+    # ---- C105: the wallpaper lifts at the corner, on the return leg ------------------------------
+    PEEL_JS = """(root) => {
+      const d = document.querySelector(root + ' .rd-peel');
+      if (!d) return null;
+      const s = d.querySelector('summary'), c = d.querySelector('.pl-clause');
+      const a = getComputedStyle(d, '::after');
+      const txt = (n) => ((n || {}).textContent || '').replace(/\\s+/g, ' ').trim();
+      /* A CLOSED <details> STILL HANDS ITS CONTENT A LAYOUT BOX in Chromium - measured: the clause
+         reports one client rect and a height of 159px while the block it lives in is 50px tall - so
+         getClientRects() is not a visibility test here the way it is everywhere else in this file.
+         The real question is whether the clause is inside the block a visitor is looking at, and
+         .rd-peel is overflow:hidden, so containment is exactly that question. */
+      const dr = d.getBoundingClientRect(), cr = c ? c.getBoundingClientRect() : null;
+      return { open: !!d.open, tag: s ? s.tagName.toLowerCase() : null, sum: txt(s),
+               vis: !!cr && cr.height > 0 && cr.top >= dr.top - 1 && cr.bottom <= dr.bottom + 1,
+               head: txt(d.querySelector('.pl-h')),
+               ad: txt(d.querySelector('.pl-ad')).replace(/^Advertised:\\s*/, ''),
+               text: txt(d.querySelector('.pl-text')),
+               mask: a.maskImage || a.webkitMaskImage || 'none', clip: a.clipPath || 'none' };
+    }"""
+
+    pl = fresh("C105")
+    seed(pl, {"phase": "out", "t": 0.15, "signed": True}, "1")
+    face_teepee(pl)
+    waits(pl, "() => { const b = document.querySelector('#lbLook'); return b && !b.hidden; }")
+    tap(pl, "#lbLook")
+    outopen = waits(pl, "() => document.querySelector('#lbRead').classList.contains('show')", 12000)
+    out105 = pl.evaluate(PEEL_JS, "#lbRead")
+    check(outopen and out105 is None,
+          "C105: on the way IN there is no wallpaper to lift - the corner belongs to the return, "
+          "which is the leg on which the promise it is the small print for has already been read (%s)"
+          % ("a peel outbound" if out105 else "none outbound"))
+
+    seed(pl, {"phase": "back", "t": 0.15, "signed": True, "shrinkStartedAt": 1,
+              "promise": {"teepee": "P2"}}, "1")
+    pl.evaluate(COMPLETE_JS)
+    face_teepee(pl)
+    upb105 = waits(pl, "() => { const b = document.querySelector('#lbLook'); return b && !b.hidden; }")
+    tap(pl, "#lbLook")
+    openb105 = waits(pl, "() => document.querySelector('#lbRead').classList.contains('show')", 12000)
+    shut = pl.evaluate(PEEL_JS, "#lbRead") if openb105 else None
+    check(upb105 and openb105 and shut and shut["tag"] == "summary"
+          and not shut["open"] and not shut["vis"],
+          "C105: coming back it is there, closed, with the clause off screen - optional is the row's "
+          "own word for it (%s)" % (shut and shut["sum"][:52] or "no peel on the return"))
+    # A MASKED LAYER, NOT A COLOURED TRIANGLE. The flap is clipped to the corner and its inner edge is
+    # masked away to nothing, which is what makes it read as paper lifting rather than as a shape
+    # sitting on top of the block.
+    check(shut and shut["mask"] != "none" and shut["clip"] != "none",
+          "C105: and the corner is a masked, clipped layer rather than a block of colour (mask %s)"
+          % (shut and shut["mask"][:44]))
+    st105_before = pl.evaluate("() => window.__lbState()")
+    tapped105 = tap(pl, "#lbRead .rd-peel summary")
+    pl.wait_for_timeout(250)
+    peeled = pl.evaluate(PEEL_JS, "#lbRead")
+    st105_after = pl.evaluate("() => window.__lbState()")
+    check(tapped105 and peeled and peeled["open"] and peeled["vis"] and peeled["text"],
+          "C105: lifting it exposes one fictional contractual clause for this residence (%s)"
+          % (peeled and peeled["head"] or "nothing exposed"))
+    # NOT A COLLECTIBLE, which is the row's own last clause and the whole risk in it.
+    check(st105_before == st105_after and pl.evaluate("() => window.__lbEv") == [],
+          "C105: and peeling is not a collection - it marks nothing read, moves no walk, writes no "
+          "state and puts nothing on the wire (%s)" % (pl.evaluate("() => window.__lbEv") or "silent"))
+    # THE TAP-TO-OPEN EQUIVALENT IS THE SAME CONTROL, because it is a <summary> and the browser owns
+    # both. Enter closes it again, with no aria wiring and no listener anywhere in the feature.
+    kb105 = press(pl, "#lbRead .rd-peel summary", "Enter")
+    pl.wait_for_timeout(250)
+    kshut = pl.evaluate(PEEL_JS, "#lbRead")
+    check(kb105 and kshut and not kshut["open"],
+          "C105: and the keyboard works the same corner - Enter on it closes it again")
+    pl.close()
+
+    # ---- C105: the clause develops THAT exhibit's own promise, on all six -------------------------
+    # C111's mechanical rule in its third form. The gate carries none of the six shipped strings: it
+    # reads the advertised line and the clause off the same block and asks for a run of them to be
+    # word for word the same. A clause written about housing in general passes nothing here.
+    def longest_common(a, b):
+        best, prev = 0, [0] * (len(b) + 1)
+        for i in range(1, len(a) + 1):
+            cur = [0] * (len(b) + 1)
+            for j in range(1, len(b) + 1):
+                if a[i - 1] == b[j - 1]:
+                    cur[j] = prev[j - 1] + 1
+                    if cur[j] > best:
+                        best = cur[j]
+            prev = cur
+        return best
+
+    def flat_at(rec, tag="C105-flat"):
+        """The flat gallery, at whichever step this save lands on. WebGL is refused so the fallback is
+        what mounts, which is also the second of the two paths promiseBlock() renders on."""
+        p4 = b.new_page(viewport={"width": 900, "height": 1000})
+        p4.on("pageerror", lambda e: lwerrs.append("%s: %s" % (tag, e)))
+        p4.add_init_script("""(() => { const g = HTMLCanvasElement.prototype.getContext;
+          HTMLCanvasElement.prototype.getContext = function (t, ...a) {
+            return /webgl/i.test(t) ? null : g.call(this, t, ...a); }; })()""")
+        p4.goto(BASE + "/play/lilboyfriend/", wait_until="load")
+        p4.wait_for_timeout(1200)
+        p4.evaluate(SEED_JS, [rec, "1", KEY2, TKEY])
+        p4.goto(BASE + "/play/lilboyfriend/?mode=live", wait_until="load")
+        p4.wait_for_timeout(2200)
+        return p4
+
+    weak, absent, digits, heads = [], [], [], []
+    for eid, ep in [("teepee", 0.15), ("car", 0.275), ("shoebox", 0.4),
+                    ("storage", 0.525), ("masonjar", 0.65), ("van", 0.775)]:
+        fp = flat_at({"phase": "back", "t": ep, "signed": True, "shrinkStartedAt": 1})
+        blk = fp.evaluate(PEEL_JS, "#lbFlat")
+        if not blk or not blk["ad"] or not blk["text"]:
+            absent.append(eid)
+        else:
+            heads.append(blk["head"])
+            n = longest_common(blk["ad"], blk["text"])
+            if n < 15:
+                weak.append((eid, n))
+            if re.search(r"\d", blk["text"]):
+                digits.append(eid)
+        fp.close()
+    check(not absent and not weak,
+          "C105: on all six, the clause lifts a phrase word for word out of the advertised promise "
+          "printed above it - it develops that promise instead of being a sixth thing to collect "
+          "(missing %s, weakest match %s)" % (absent or "none", weak or "all >= 15 chars"))
+    check(len(set(heads)) == 6 and not digits,
+          "C105: six different clauses, one per exhibit, and not one of them carries a figure - the "
+          "clause numbers live in their own field for that reason, because every number a visitor "
+          "reads on this channel is a cited one (%d distinct, digits in %s)"
+          % (len(set(heads)), digits or "none"))
 
     lwclean = [e for e in lwerrs if "favicon" not in e and "jsdelivr" not in e.lower()
                and "lilbf-van-cozy" not in e and "lilbf-van-horror" not in e and "lilbf-car-cozy" not in e]

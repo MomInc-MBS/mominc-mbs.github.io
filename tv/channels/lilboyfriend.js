@@ -329,6 +329,39 @@ export default {
       ]
     };
 
+    /* ---- C105: the small print under a corner of the wallpaper ------------------------------------
+       ONE CLAUSE PER EXHIBIT, AND IT IS THE PAPERWORK BEHIND A PROMISE THAT IS ALREADY ON THE WALL.
+       The row's acceptance is the whole of the design: "clause develops the same housing promise, not
+       a separate collectible requirement". So `ref` names which of that exhibit's three advertised
+       lines this clause is the small print for, and `quote` is the phrase it lifts out of it - which
+       must appear VERBATIM in that promise's own `ad` AND again in the clause's own `text`. That is
+       C111's `was`/`now` rule in its third form, and the gate enforces it the same mechanical way: a
+       clause that develops nothing in particular is a collectible with a contract typeface on it,
+       which is the exact shape the row forbids.
+
+       IT IS FICTION AND CARRIES NO FIGURE, gated with a \d search over `quote` and `text` exactly as
+       PROMISES is. The clause NUMBER is a separate field for that reason - "clause 4(c)" is a pointer
+       into an imaginary document, not a claim about the world, and letting it live in `text` would
+       either put a digit in the prose or cost the gate its bluntness.
+
+       NOTHING IS STORED. Peeling writes no state, marks nothing read and completes nothing: it is a
+       <details> and the browser owns the whole of its behaviour, which is also why there is no
+       listener, no aria wiring and no record of who opened one. */
+    const CLAUSES = {
+      teepee: { ref: "P2", n: "4(c)", quote: "Breathable canvas walls",
+        text: "Breathable canvas walls are supplied as described and do not constitute a weatherproofing warranty. The Resident accepts the interior climate as the exterior climate." },
+      car: { ref: "P1", n: "2(a)", quote: "Your housing cost drops to nothing",
+        text: "Your housing cost drops to nothing is a statement about rent and is not a statement about fuel, registration, insurance or removal. Charges arising while the Residence is stationary remain the Resident's." },
+      shoebox: { ref: "P1", n: "9(b)", quote: "Not one wasted step",
+        text: "Not one wasted step is an efficiency the Resident undertakes to maintain. Possessions exceeding the Residence's declared volume are surrendered at the door and are not returned." },
+      storage: { ref: "P2", n: "6(d)", quote: "Nobody comes in unless you let them",
+        text: "Nobody comes in unless you let them, and the Operator is under no obligation to look. The unit is licensed for goods; occupancy by a person voids the licence and the Operator's duty of care with it." },
+      masonjar: { ref: "P1", n: "3(f)", quote: "Nothing gets in",
+        text: "Nothing gets in is a specification of the seal and not an undertaking regarding assistance. The Operator reserves the right to determine, from outside, whether the Residence is occupied." },
+      van: { ref: "P3", n: "11(e)", quote: "Park up and stay as long as you like",
+        text: "Park up and stay as long as you like remains subject to local ordinance, which the Operator does not warrant, monitor or advise upon. Notices served on the Residence are served on the Resident." }
+    };
+
     /* ---- C111: the two claims on these walls that have a dated older version ON RECORD -------------
        THE RULE IS MECHANICAL AND THE GATE ENFORCES IT, exactly as C014's `url` rule is: `was` and `now`
        must each appear VERBATIM inside that entry's own shipped `body`. Nothing here is a sentence
@@ -727,7 +760,38 @@ export default {
               + '<p class="pm-note">Nothing is held against that. Here is what all three turned out to mean.</p>')
         + '<p class="pm-h">Which one holds up now?</p>'
         + promiseOpts(id, "after", ST.promiseBack[id])
-        + '<p class="pm-note">Both answers are kept, side by side. Neither one is marked right.</p></div>';
+        + '<p class="pm-note">Both answers are kept, side by side. Neither one is marked right.</p></div>'
+        + peelBlock(id);
+    }
+
+    /* ---- C105: the peel, and why it is a <details> and nothing else -------------------------------
+       THE NATIVE ELEMENT IS THE WHOLE IMPLEMENTATION. "Tap-to-open equivalent" is the row's own
+       micro-step, and a <summary> already is one: it is a tab stop, it takes Enter and Space, it
+       carries its own expanded state to a screen reader, and it needs no listener - which matters
+       more here than usual, because this markup is written by innerHTML on three separate reading
+       surfaces and a handler bound inside it would have to be re-bound on every render (4.11b's
+       delegated-listener rule, avoided rather than obeyed). The PEEL is the ::after flap in the
+       stylesheet: a masked layer that lifts off the corner when the element opens.
+
+       IT IS ON THE RETURN LEG ONLY, because it hangs off promiseBlock's returning branch - the same
+       branch C107's comparison is in, so it reaches the 3D reading panel and the flat gallery's
+       return step from one place and cannot be true on one path and false on the other. C112's
+       spotlight renders readCards() and no promise block, so a presenter's read-only link does not
+       carry it: peeling somebody else's wallpaper is not a thing a spotlight does.
+
+       The advertised line is REPRINTED above the clause rather than only referenced. The acceptance
+       is that the clause develops that promise, and a visitor who scrolled past the brochure cannot
+       see it develop anything if the thing being developed is elsewhere on the screen. */
+    function peelBlock(id) {
+      const c = CLAUSES[id], p = PROMISES[id].filter(x => x.k === c.ref)[0];
+      return '<details class="rd-peel">'
+        + '<summary class="pl-corner">The wallpaper lifts at the corner. Optional, and nothing is kept.</summary>'
+        + '<div class="pl-clause">'
+        + '<p class="pl-h">MOM Inc residency agreement, clause ' + esc(c.n) + '</p>'
+        + '<p class="pl-ad">Advertised: ' + esc(p.ad) + '</p>'
+        + '<p class="pl-text">' + esc(c.text) + '</p>'
+        + '<p class="pl-note">MOM Inc\'s own paperwork, written for this exhibit. Fiction, like the brochure it is the small print for.</p>'
+        + '</div></details>';
     }
 
     /* One delegated `change` listener per reading surface, because both the promise radios and the
@@ -1648,6 +1712,69 @@ export default {
           x.fillText(label, w / 2, h * 0.34);
           const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
         }
+        /* ---- C102: the authored figure standing in every case ------------------------------------
+           A CASE WITH NOTHING KNOWN IN IT HAS NO SCALE. Six residences behind six identical panes,
+           each holding a photograph shrunk to CASE_SCALE, and nothing anywhere says how big any of
+           them is - which is the row's whole complaint. The fix is the oldest one in architectural
+           drawing: put a person in it. One authored silhouette, ONE height, in all six, so the cases
+           are read against each other instead of each against itself.
+
+           AND THAT IS THE ONLY CLAIM IT MAKES. The figure carries no texture, no plate, no caption
+           and no dimension - `figureMat` has no `map`, and the gate asserts that rather than trusting
+           it - because "a person is about this big" is knowledge a visitor already has, and the
+           moment a number is printed beside it this channel has invented a measurement on a wall
+           where every other figure is sourced, cited and dated. Relative space, no measurement claim:
+           the acceptance, in the two halves it is actually made of.
+
+           THE TRANSFORM IS RECORDED PER EXHIBIT, NOT BAKED INTO THE ROOM. CASE_FIGURE is where each
+           one stands - `d` its depth across the case's readable gap, `z` its place across the case,
+           `ry` the turn off square - and the mesh is a child of caseDecor, so the mirroring
+           by `side` is done once, by the group the case is already mirrored with, and the walls
+           closing move all six for free. Nothing below reads a world coordinate: a position written
+           in room coordinates is a position that has to be re-eyeballed the next time the hall moves.
+
+           ONE GEOMETRY AND ONE MATERIAL FOR ALL SIX, shared instances rather than six clones - which
+           is what "consistent model scale" means when it is being enforced rather than asserted. Six
+           meshes that merely happen to agree today are six meshes that can drift apart in one edit;
+           these cannot, and the gate reads the uuids back to say so. The outline is a single closed
+           contour (legs, torso, arms down, neck, head) authored at height 1 and scaled by FIGURE_H,
+           so the height is one number in one place. */
+        const FIGURE_H = 0.34;
+        const FIGURE_OUTLINE = [
+          [-0.055, 0], [-0.055, 0.42], [-0.080, 0.44], [-0.080, 0.58], [-0.106, 0.61], [-0.106, 0.80],
+          [-0.070, 0.83], [-0.048, 0.845], [-0.030, 0.858], [-0.030, 0.876], [-0.058, 0.896],
+          [-0.058, 0.956], [-0.030, 0.996], [0.030, 0.996], [0.058, 0.956], [0.058, 0.896],
+          [0.030, 0.876], [0.030, 0.858], [0.048, 0.845], [0.070, 0.83], [0.106, 0.80], [0.106, 0.61],
+          [0.080, 0.58], [0.080, 0.44], [0.055, 0.42], [0.055, 0], [0.017, 0], [0.017, 0.40],
+          [-0.017, 0.40], [-0.017, 0]
+        ];
+        const figureShape = new THREE.Shape(FIGURE_OUTLINE.map(p => new THREE.Vector2(p[0], p[1])));
+        const figureGeo = new THREE.ShapeGeometry(figureShape);
+        // unlit and pale on purpose: the alcove behind it is dark felt and the spot swings cold on the
+        // return, so a lit figure would read at a different value in every case it is meant to be the
+        // constant in. MeshBasicMaterial has no map, which is also the gate's evidence that it carries
+        // no caption.
+        const figureMat = new THREE.MeshBasicMaterial({ color: 0xd9cba6, side: THREE.DoubleSide });
+        /* THE DEPTH IS THE GAP, NOT THE RECESS. `alcoveGeo` is a SOLID box set into the wall - the
+           thing a visitor sees is its near face - so the case's readable volume is the 0.02 between
+           that face (side*0.01) and the glass pane in front of it (-side*0.01). `d` is where in that
+           gap this exhibit's figure stands, 0 at the glass and 1 at the panel; `ry` is small for the
+           same reason, because a flat silhouette turned far enough would push a shoulder through the
+           panel behind it. `z` keeps every one of them clear of the shrunk photograph, which is 0.225
+           either side of centre. */
+        const FIGURE_GAP = 0.016;
+        const CASE_FIGURE = {
+          teepee:   { d: 0.52, z:  0.30, ry:  0.10 },
+          car:      { d: 0.68, z: -0.31, ry: -0.12 },
+          shoebox:  { d: 0.34, z:  0.27, ry: -0.06 },
+          storage:  { d: 0.61, z: -0.28, ry:  0.11 },
+          masonjar: { d: 0.45, z:  0.32, ry: -0.03 },
+          van:      { d: 0.57, z: -0.26, ry:  0.08 }
+        };
+        // the alcove's own floor, which is what every one of them stands on - derived from the case
+        // constants above rather than typed as a sixth number that could drift off them
+        const FIGURE_FLOOR = CASE_CY - (CASE_H - 0.05) / 2;
+
         const exhibitObjs = EXHIBITS.map(ex => {
           const photoGroup = new THREE.Group(); scene.add(photoGroup);
           const photoMat = new THREE.MeshStandardMaterial({ roughness: 0.9 });
@@ -1680,6 +1807,16 @@ export default {
           const banner = new THREE.Mesh(new THREE.PlaneGeometry(CASE_W * 0.95, BANNER_H), new THREE.MeshBasicMaterial({ map: makeBannerTexture(ex.label), transparent: true }));
           banner.position.set(-ex.side * 0.01, CASE_CY + CASE_H / 2 + BANNER_GAP + BANNER_H / 2, 0); banner.rotation.y = -ex.side * Math.PI / 2;
           caseDecor.add(banner);
+
+          // C102: and the person standing in it, at the one height, on the alcove floor, facing out
+          // of the case the way every other wall piece does plus this exhibit's own recorded turn.
+          const fg = CASE_FIGURE[ex.id];
+          const figure = new THREE.Mesh(figureGeo, figureMat);
+          figure.name = ex.id + "-figure";
+          figure.position.set(ex.side * (FIGURE_GAP * (fg.d - 0.5)), FIGURE_FLOOR, fg.z);
+          figure.rotation.y = -ex.side * Math.PI / 2 + fg.ry;
+          figure.scale.setScalar(FIGURE_H);
+          caseDecor.add(figure);
 
           const spot = new THREE.SpotLight(0xfff0d0, 1.3, 6, 0.55, 0.45, 1.6);
           const spotTarget = new THREE.Object3D();
@@ -1778,19 +1915,45 @@ export default {
         const glassHandle = new THREE.Mesh(new THREE.CylinderGeometry(0.013, 0.017, 0.22, 8), new THREE.MeshStandardMaterial({ color: 0x5c4326, roughness: 0.9 }));
         glassHandle.position.set(0, -0.17, 0); glassHandle.rotation.z = 0.35; glassGroup.add(glassHandle);
 
-        // ---- the fisheye lens: a camera-child plane sampling the currently-faced exhibit's photo through a
-        // radial barrel remap (uv' = c + (uv - c) * (1 + k*r^2)), clipped to a circle with a soft rim vignette.
-        // Hidden until zoomed; grows and centres together with the glass above.
+        /* ---- C110: the lens, which now MAGNIFIES ------------------------------------------------
+           WHAT WAS WRONG WITH IT. The quad sampled the whole photograph across its own uv and bent it
+           with a barrel remap - uv' = 0.5 + (uv-0.5)*(1+k*r^2) - so it showed the entire picture,
+           slightly warped, at roughly the size the picture already was. A magnifying glass that
+           shows you all of the thing, distorted, is a paperweight. Three changes, one each for the
+           row's three micro-steps.
+
+           (1) THE SAMPLE IS A CLIPPED CROP. `zoom` divides the sampled offset, so the disc reads a
+           1/zoom-wide window of the photograph rather than all of it, and the `r > 0.5` discard that
+           was already here is what clips it to the glass.
+
+           (2) THE CROP IS CENTRED ON THE POINT THE GLASS IS OVER, not on the middle of the picture.
+           `centre` is written every frame from the camera's own forward ray against the photograph's
+           plane, in the PHOTOGRAPH's local frame - which is the only way "stays aligned during
+           movement" can be true while the head is still turning under the zoom's yaw lerp. A fixed
+           0.5,0.5 would be aligned in exactly one pose and would drift out of it for the 450ms the
+           glass takes to rise.
+
+           (3) THE REFRACTION IS RESTRAINED AND LIVES AT THE RIM. `smoothstep(REF_FROM, 0.5, r)` gates
+           the bend, so the middle of the disc - the point the visitor is actually inspecting - is
+           sampled straight, and the glass reads as glass only where a real one bends: at its edge.
+           The old build bent the centre hardest of all, which is the one part it must not touch. */
+        const LENS_ZOOM = 2.6, LENS_REF_FROM = 0.34;
         const lensMat = new THREE.ShaderMaterial({
           transparent: true, depthTest: false, depthWrite: false,
-          uniforms: { map: { value: null }, aspect: { value: PHOTO_W / PHOTO_H }, k: { value: 0.35 } },
+          uniforms: {
+            map: { value: null }, aspect: { value: PHOTO_W / PHOTO_H }, k: { value: 0.35 },
+            zoom: { value: LENS_ZOOM }, refFrom: { value: LENS_REF_FROM },
+            centre: { value: new THREE.Vector2(0.5, 0.5) }
+          },
           vertexShader: `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
-          fragmentShader: `uniform sampler2D map; uniform float aspect; uniform float k; varying vec2 vUv;
+          fragmentShader: `uniform sampler2D map; uniform float aspect; uniform float k;
+            uniform float zoom; uniform float refFrom; uniform vec2 centre; varying vec2 vUv;
             void main(){
               vec2 c = vUv - 0.5; c.x *= aspect; float r = length(c);
               if (r > 0.5) discard;
-              vec2 warped = c * (1.0 + k * r * r); warped.x /= aspect;
-              vec4 col = texture2D(map, warped + 0.5);
+              float ref = k * smoothstep(refFrom, 0.5, r);
+              vec2 s = c * (1.0 + ref) / zoom; s.x /= aspect;
+              vec4 col = texture2D(map, clamp(centre + s, 0.001, 0.999));
               float vig = smoothstep(0.32, 0.5, r);
               col.rgb *= mix(1.0, 0.55, vig);
               gl_FragColor = vec4(col.rgb, 1.0);
@@ -1798,6 +1961,33 @@ export default {
         });
         const lensQuad = new THREE.Mesh(new THREE.PlaneGeometry(0.6, 0.6), lensMat);
         lensQuad.visible = false; lensQuad.renderOrder = 5; camera.add(lensQuad);
+
+        /* C110: where the glass is pointed, in the photograph's own coordinates. Worked out in the
+           PHOTO'S local frame rather than by raycasting the scene: the mesh is a plane at local z=0,
+           so inverting its world matrix turns the camera's eye and forward into two numbers and the
+           hit is one division - no raycaster, no intersection list, and nothing that depends on the
+           rest of the hall being in a particular state.
+
+           THE HALF-WINDOW IS WHAT THE CLAMP IS FOR. The disc samples up to (1+k)/(2*zoom) either side
+           of `centre`, so a centre nearer the edge than that would run the crop off the picture and
+           smear the clamped edge pixel across the rim. Held one half-window inside instead: the glass
+           stays full of photograph wherever it is pointed, including past the frame. */
+        const LENS_HALF = (1 + 0.35) / (2 * LENS_ZOOM);
+        const lensInv = new THREE.Matrix4(), lensEye = new THREE.Vector3(), lensFwd = new THREE.Vector3();
+        function aimLens(e) {
+          e.photoGroup.updateMatrixWorld(true);
+          camera.updateMatrixWorld();
+          lensInv.copy(e.photo.matrixWorld).invert();
+          lensEye.setFromMatrixPosition(camera.matrixWorld).applyMatrix4(lensInv);
+          lensFwd.set(0, 0, -1).applyQuaternion(camera.quaternion).transformDirection(lensInv);
+          if (Math.abs(lensFwd.z) < 1e-4) return;          // looking along the picture: keep the last aim
+          const t = -lensEye.z / lensFwd.z;
+          if (t <= 0) return;                              // the photograph is behind the visitor
+          const u = (lensEye.x + lensFwd.x * t) / PHOTO_W + 0.5;
+          const v = (lensEye.y + lensFwd.y * t) / PHOTO_H + 0.5;
+          const lim = (x) => Math.max(LENS_HALF, Math.min(1 - LENS_HALF, x));
+          lensMat.uniforms.centre.value.set(lim(u), lim(v));
+        }
 
         camera.position.set(0, EYE_OUT, zAt(0)); applyLook();
 
@@ -2245,6 +2435,35 @@ export default {
             half: hallMesh.scale.x / 2,
             rails: scene.children.filter(o => o.name === "rail").map(o => Math.round(o.position.x * 1000) / 1000)
           });
+          /* C102, test-only and RAW, on the same terms as __lbHall: the six figures' own transforms
+             inside their own cases, the geometry and material identities they were built from, and
+             the case constants they have to fit inside. Whether they are one object at one scale,
+             whether each one is standing on the floor of its own alcove and whether six recorded
+             transforms are actually six is the GATE's arithmetic - a hook that answered "consistent"
+             would be the museum marking its own homework. Removed in unmount() with the others. */
+          window.__lbFigures = () => ({
+            box: { gap: FIGURE_GAP, w: CASE_W - 0.05, h: CASE_H - 0.05, cy: CASE_CY,
+                   floor: FIGURE_FLOOR, photoHalfZ: PHOTO_W * CASE_SCALE / 2 },
+            figures: exhibitObjs.map(e => {
+              const f = e.caseDecor.getObjectByName(e.cfg.id + "-figure");
+              if (!f) return { id: e.cfg.id, side: e.cfg.side, missing: true };
+              return { id: e.cfg.id, side: e.cfg.side, missing: false,
+                       vis: e.caseDecor.visible && f.visible,
+                       pos: [f.position.x, f.position.y, f.position.z],
+                       ry: f.rotation.y, scale: [f.scale.x, f.scale.y, f.scale.z],
+                       geo: f.geometry.uuid, mat: f.material.uuid, mapped: !!f.material.map };
+            })
+          });
+          /* C110, test-only and RAW: the lens uniforms as they stand this frame, plus the camera yaw
+             they were derived from. The gate decides for itself whether the sample tracks the look -
+             three poses, one monotonic run - and whether it stops being written when the inspection
+             ends. Nothing here is an answer about alignment. Removed in unmount() with the others. */
+          window.__lbLens = () => ({
+            vis: lensQuad.visible, hasMap: !!lensMat.uniforms.map.value,
+            centre: [lensMat.uniforms.centre.value.x, lensMat.uniforms.centre.value.y],
+            zoom: lensMat.uniforms.zoom.value, refFrom: lensMat.uniforms.refFrom.value,
+            k: lensMat.uniforms.k.value, yaw: camera.rotation.y
+          });
           exhibitObjs.forEach(paint);
           if (isReturning()) {
             exhibitObjs.forEach(e => {
@@ -2364,10 +2583,19 @@ export default {
           if (!reducedMotion) glassGroup.position.y += Math.sin(now * 0.0016) * 0.012 * (1 - ease);
           if (zoomEase > 0.02 && zoomExhibit && zoomExhibit.photoMat.map) {
             lensMat.uniforms.map.value = zoomExhibit.photoMat.map;
+            aimLens(zoomExhibit);          // C110 (c): the sample is re-aimed only while inspecting
             lensQuad.position.lerpVectors(GLASS_REST, new THREE.Vector3(0, -0.04, -0.5), ease);
             lensQuad.scale.setScalar(0.25 + 1.1 * ease);
             lensQuad.visible = true;
-          } else lensQuad.visible = false;
+          } else {
+            // C110 (c): "update the sample only while inspection is active" is a claim about the
+            // sample, not about the quad - a hidden lens still holding a live texture and a stale aim
+            // is a lens that updates whenever the frame loop feels like it. Dropping the map is what
+            // makes the assertion measurable, and it releases the channel's only reference to a
+            // photograph that is not the one on the wall.
+            lensQuad.visible = false;
+            lensMat.uniforms.map.value = null;
+          }
 
           if (flickering) {
             const el = now - flickerT0;
@@ -2609,6 +2837,8 @@ export default {
     try { delete window.__lbBooted; } catch (e) { window.__lbBooted = undefined; }
     try { delete window.__lbPhotos; } catch (e) { window.__lbPhotos = undefined; }
     try { delete window.__lbHall; } catch (e) { window.__lbHall = undefined; }
+    try { delete window.__lbFigures; } catch (e) { window.__lbFigures = undefined; }
+    try { delete window.__lbLens; } catch (e) { window.__lbLens = undefined; }
     if (!gl) return;
     const g = gl;
     gl = null;
