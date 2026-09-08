@@ -1,0 +1,26 @@
+{
+  "_readme": "C113: the annex manifest. One rotating room off the museum, edited here rather than in the channel. `from` is the date the entry starts being broadcast (ISO, and a date in the future is simply not on air yet); the newest entry whose date has arrived is the current broadcast and every earlier one is archived behind it. `cases` names claims the channel ALREADY SHIPS, by their A/B id in lilboyfriend.js - the manifest chooses what the annex shows and cannot author it, because a claim invented in a data file is a fabricated citation on the one channel whose whole thesis is that it has none. An id this channel does not carry is dropped; an entry left with no case is dropped with it. `title` and `note` are MOM Inc's own voice, brochure fiction like the promises, and carry no figure for the same reason nothing else invented on this channel does.",
+  "broadcasts": [
+    {
+      "id": "ax-counting-room",
+      "from": "2026-07-06",
+      "title": "The Counting Room",
+      "note": "The Program is obliged to acknowledge that Residents are counted, and pleased to report that the counting continues. This room held the count, the street it was taken on, and the number to call about it. It remains available for review.",
+      "cases": ["A1", "A3", "B5"]
+    },
+    {
+      "id": "ax-ordinance-room",
+      "from": "2026-08-31",
+      "title": "The Ordinance Room",
+      "note": "MOM Inc is delighted to open a temporary room for the paperwork that arrives after a Residence is parked. None of it was written by MOM. It has simply been gathered where it can be read all at once, which the Program accepts may take a little longer than the walk allows.",
+      "cases": ["A18", "A10", "A11", "A12", "B1"]
+    },
+    {
+      "id": "ax-price-room",
+      "from": "2026-10-05",
+      "title": "The Price Room",
+      "note": "A forthcoming presentation on what a full-size home now asks of a household, and on the marketing that has grown up around going without one. The Program will open this room when the schedule allows.",
+      "cases": ["A9", "A17", "B2"]
+    }
+  ]
+}

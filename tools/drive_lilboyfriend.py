@@ -28,7 +28,7 @@ that loaded its own save, so none of them ever asked what happens when the save 
 at the bottom seed the channel's private key with the phases, positions and timestamps a hand edit can
 put there and read back what the loader kept, which is the whole of that ticket's claim.
 """
-import functools, io, os, re, threading
+import datetime, functools, io, json, os, re, threading, time
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 from playwright.sync_api import sync_playwright
 
@@ -3567,14 +3567,18 @@ with sync_playwright() as pw:
         if (!window.__lbA.oscs.some(o => o.frequency === this)) window.__lbA.gains.push(+Number(v).toFixed(4));
         return stt.call(this, v, ...a); }; })()"""
 
-    def hall(tag, rec, init=None, viewport=None):
+    def hall(tag, rec, init=None, viewport=None, annex_route=None):
         """A real museum, booted, resumed onto a seeded save. Not fresh()/seed(): these pages need an
         init script in place before the FIRST navigation, which is the only moment a platform patch
-        can beat the channel to the constructor it is watching."""
+        can beat the channel to the constructor it is watching. C113's manifest handler goes on for
+        the same reason - the annex fetch starts at mount, so a route registered afterwards is a route
+        registered too late."""
         p6 = b.new_page(viewport=viewport or {"width": 1280, "height": 900})
         p6.on("pageerror", lambda e: lwerrs.append("%s: %s" % (tag, e)))
         if init:
             p6.add_init_script(init)
+        if annex_route:
+            p6.route("**/lilbf-annex.json", annex_route)
         p6.goto(BASE + "/play/lilboyfriend/", wait_until="load")
         p6.wait_for_timeout(1500)
         p6.evaluate(SEED_JS, [rec, "1", KEY2, TKEY])
@@ -4057,6 +4061,215 @@ with sync_playwright() as pw:
           "%d at the van against 25 of %d at the teepee, and the block in the case is %.2fx wider"
           % (cv["foot"], ct["foot"], cv["cost"]["w"] / ct["cost"]["w"] if ct["cost"]["w"] else 0))
     fitv.close()
+
+
+    # ================================================================================================
+    # ---- C113: the annex - a rotating room that must add nothing to the museum it hangs off --------
+    # ================================================================================================
+    #   THE ACCEPTANCE IS A REGRESSION CLAIM ("adds without changing the base museum's count, timing,
+    #   or saved position"), so half of this section is the base museum being re-measured with the
+    #   annex present and open. The other half is the row's own two clauses: the room comes out of a
+    #   content manifest, and prior entries are archived separately from the route.
+    #
+    #   THE ROTATION IS WORKED OUT HERE, from the manifest file and today's date, and the channel is
+    #   required to agree. A gate that read the channel's answer and checked it against the channel's
+    #   answer would pass on a build that shows whatever is first in the file - which is precisely the
+    #   defect a dated, rotating room has and a static one does not.
+    print("\n  -- 4.11b pkt 4: C113 the annex --")
+    AXF = os.path.join(ROOT, "tv", "data", "lilbf-annex.json")
+    with io.open(AXF, encoding="utf-8") as fh:
+        AX_RAW = json.load(fh)
+    _today = datetime.date.today().isoformat()
+    _live = sorted([e for e in AX_RAW["broadcasts"] if e["from"] <= _today],
+                   key=lambda e: e["from"], reverse=True)
+    AX_NOW, AX_OLD = _live[0], _live[1:]
+    AX_LATER = [e["id"] for e in AX_RAW["broadcasts"] if e["from"] > _today]
+
+    CARDS_JS = """(sel) => Array.from(document.querySelectorAll(sel + ' .rd-card')).map(c => ({
+        t: (c.querySelector('.rd-t') || {}).textContent || '',
+        text: (c.textContent || '').trim(),
+        href: (c.querySelector('.rd-link') || {}).href || '',
+        scope: (c.querySelector('.rd-scope') || {}).textContent || '' }))"""
+
+    ax = hall("C113", {"phase": "out", "t": 0.05, "signed": True})
+    chip = ax.evaluate("""() => { const b = document.querySelector('#lbAnnexBtn');
+        return { hidden: b.hidden, shown: b.getClientRects().length > 0,
+                 text: b.textContent.trim(), label: b.getAttribute('aria-label') || '' }; }""")
+    hook = ax.evaluate("() => window.__lbAnnex()")
+    check(hook["ready"] and not chip["hidden"] and chip["shown"]
+          and hook["current"]["id"] == AX_NOW["id"] and hook["current"]["from"] == AX_NOW["from"]
+          and AX_NOW["title"] in chip["label"],
+          "C113: the museum offers the room the manifest has on air TODAY, worked out from the dates "
+          "rather than from the file's order (%s, on air %s)" % (chip["text"], hook["current"]["id"]))
+    check([a["id"] for a in hook["archive"]] == [e["id"] for e in AX_OLD]
+          and not [a for a in hook["archive"] if a["id"] in AX_LATER]
+          and hook["current"]["id"] not in AX_LATER,
+          "C113: every earlier broadcast is archived behind it and a dated entry that has not come "
+          "round yet is on neither list (archived %s, not yet %s)"
+          % ([a["id"] for a in hook["archive"]], AX_LATER))
+
+    # ---- opening it: the room is the manifest's, the CLAIMS are the channel's ----------------------
+    before = ax.evaluate("() => localStorage.getItem('%s')" % KEY2)
+    st0 = ax.evaluate("() => window.__lbState()")
+    opened = tap(ax, "#lbAnnexBtn")
+    up = waits(ax, "() => document.querySelector('#lbAnnex').classList.contains('show')", 6000)
+    head = ax.evaluate("""() => ({ title: (document.querySelector('#lbAnnexBody h3') || {}).textContent || '',
+        date: (document.querySelector('#lbAnnexBody .ax-date') || {}).textContent || '',
+        note: (document.querySelector('#lbAnnexBody .ax-note') || {}).textContent || '',
+        badge: (document.querySelector('#lbAnnex .ax-badge') || {}).textContent || '' })""")
+    cur_cards = ax.evaluate(CARDS_JS, "#lbAnnexBody")[:len(AX_NOW["cases"])]
+    check(opened and up and head["title"] == AX_NOW["title"] and AX_NOW["from"] in head["date"]
+          and head["note"] == AX_NOW["note"],
+          "C113: the chip opens that broadcast, dated and in MOM Inc's own words (%r)" % head["title"])
+    check([c["t"] for c in cur_cards] == AX_NOW["cases"]
+          and all(c["href"].startswith("http") and c["scope"].strip() for c in cur_cards),
+          "C113: and what is in the room is the CHANNEL's material - the cases the manifest names, "
+          "each with the scope and the openable source the reading panel gives them (%s)"
+          % [c["t"] for c in cur_cards])
+
+    # THE ARCHIVE IS A SEPARATE PLACE, not a longer list. Closed when the room opens, its own
+    # disclosure, and nothing in it is on the route: the strip is still the six exhibits, and not one
+    # annex case has been marked read by any of this.
+    arch = ax.evaluate("""() => { const d = document.querySelector('#lbAnnexBody .ax-arch');
+        return d ? { open: d.open, summary: d.querySelector('summary').textContent.trim(),
+                     entries: d.querySelectorAll('.ax-old').length,
+                     cards: d.querySelectorAll('.rd-card').length,
+                     vis: Array.from(d.querySelectorAll('.rd-card')).filter(c => c.checkVisibility()).length,
+                     inText: document.querySelector('#lbAnnexBody').innerText } : null; }""")
+    route = ax.evaluate("() => document.querySelectorAll('#lbRoute .lb-route-i').length")
+    # A CLOSED <details> STILL HAS A LAYOUT BOX and so do its children - this file has paid for that
+    # once already, and getClientRects() on the archived cards reports three visible boxes inside a
+    # disclosure nobody has opened. checkVisibility() is the one that answers the question actually
+    # being asked, and innerText is the matched half: the older broadcast is not on screen at all.
+    check(arch and not arch["open"] and arch["entries"] == len(AX_OLD) and arch["vis"] == 0
+          and arch["cards"] == sum(len(e["cases"]) for e in AX_OLD)
+          and all(e["title"] not in arch["inText"] for e in AX_OLD),
+          "C113: the earlier broadcasts are archived SEPARATELY - their own disclosure, closed, "
+          "nothing of them on screen until it is asked for (%s)"
+          % ({k: v for k, v in arch.items() if k != "inText"} if arch else "no archive rendered"))
+    st1 = ax.evaluate("() => window.__lbState()")
+    check(route == 6 and st1["read"] == st0["read"] and st1["reading"] == st0["reading"],
+          "C113: and none of it is on the route - the strip is still the six exhibits and the annex "
+          "marked none of them read (%d marks, read %s)" % (route, st1["read"]))
+
+    # ---- the acceptance: count, timing and saved position, measured with the room OPEN --------------
+    during = ax.evaluate("() => localStorage.getItem('%s')" % KEY2)
+    t_open = st1["t"]
+    ax.keyboard.down("w")
+    ax.wait_for_timeout(2500)
+    ax.keyboard.up("w")
+    ax.wait_for_timeout(300)
+    frozen = ax.evaluate("() => window.__lbState().t")
+    ax.keyboard.press("Escape")
+    closed = waits(ax, "() => !document.querySelector('#lbAnnex').classList.contains('show')", 6000)
+    after = ax.evaluate("() => localStorage.getItem('%s')" % KEY2)
+    check(before == during and during == after and st1["t"] == st0["t"] and st1["phase"] == st0["phase"],
+          "C113: SAVED POSITION UNTOUCHED - the walk's own record is byte-identical before the annex "
+          "was opened, while it was open and after it closed")
+    check(abs(frozen - t_open) < 1e-9 and closed,
+          "C113: and the hall holds still underneath it, the way the reading panel holds it - a room "
+          "being read while the museum walks on is the guest book's old bug (t %.4f -> %.4f)"
+          % (t_open, frozen))
+    ax.close()
+
+    # TIMING. The contraction clock is the one number a visitor experiences as the museum's own pace,
+    # and it is derived rather than asserted: seed a walk that started a known moment ago and read the
+    # progress back off the channel. A build that retimed anything to make room for an
+    # annex moves this.
+    # DERIVED AT THE MOMENT IT IS READ, never from the seeded offset: hall() spends a second and a
+    # half, a reload and settle()'s seven on the way in, so a fixed "N ms ago" seed is well spent by
+    # the time anything can be asked about it - a seed of half of SHRINK_MS leaves about six
+    # seconds before the contraction is simply over. The gate takes the record's own
+    # start, the page's own clock, and requires 37500 to be the number that connects them to the
+    # progress the channel reports.
+    axt = hall("C113-clock", {"phase": "back", "t": 0.5, "signed": True,
+                              "shrinkStartedAt": int(time.time() * 1000) - 6000})
+    clk = axt.evaluate("() => ({ rp: window.__lbState().rp, "
+                       "         started: window.__lbState().shrinkStartedAt, now: Date.now() })")
+    # AND THE CURVE WITH IT: rp is the eased square of the raw fraction (5.3), so an assertion that
+    # only pinned 37500 would still pass on a build that had quietly straightened the contraction.
+    raw = min(1.0, (clk["now"] - clk["started"]) / 37500.0)
+    check(abs(clk["rp"] - raw * raw) < 0.02 and 0 < raw < 1,
+          "C113: TIMING UNTOUCHED - the contraction still runs on 37.5s and still eases in, derived "
+          "from the record's own start against the page's own clock (reported %.3f, 37500ms eased "
+          "gives %.3f)" % (clk["rp"], raw * raw))
+    axt.close()
+
+    # ---- the manifest chooses, it cannot AUTHOR ----------------------------------------------------
+    # The sharp one, and the reason this row could ship as editable content at all. A doctored
+    # manifest names one real case with an invented body, citation and link beside it, one case id
+    # this channel does not carry, and one entry made entirely of ids that do not exist. What must
+    # come back is the SHIPPED claim, character for character - the same string the honest manifest
+    # rendered above - and nothing of the forgery anywhere in the room.
+    FAKE = {"broadcasts": [
+        {"id": "ax-forged", "from": "2026-01-01", "title": "The Forged Room",
+         "note": "Written in a data file and not by anybody who checked it.",
+         "cases": [{"t": "A18", "body": "FORGED BODY 91 percent of nothing.",
+                    "src": "FORGED SOURCE, Institute of Nowhere, 2099. forged.example",
+                    "url": "https://forged.example", "date": "2099", "scope": "FORGED SCOPE",
+                    "take": "FORGED TAKE"}, "A18", "ZZ9"]},
+        {"id": "ax-empty", "from": "2025-01-01", "title": "The Empty Room", "note": "No case exists.",
+         "cases": ["ZZ8", "QQ1"]}]}
+    axf = hall("C113-forged", {"phase": "out", "t": 0.05, "signed": True},
+               annex_route=lambda r: r.fulfill(status=200, content_type="application/json",
+                                               body=json.dumps(FAKE)))
+    fhook = axf.evaluate("() => window.__lbAnnex()")
+    tap(axf, "#lbAnnexBtn")
+    waits(axf, "() => document.querySelector('#lbAnnex').classList.contains('show')", 6000)
+    fcards = axf.evaluate(CARDS_JS, "#lbAnnexBody")
+    room = axf.evaluate("() => document.querySelector('#lbAnnex').textContent")
+    real_a18 = next((c["text"] for c in cur_cards if c["t"] == "A18"), "<the honest A18 never rendered>")
+    check(fhook["ready"] and fhook["current"]["cases"] == ["A18"] and not fhook["archive"],
+          "C113: an id this channel does not carry is dropped, and an entry left with no case is "
+          "dropped with it - so a manifest cannot make a room out of nothing (current %s, archive %s)"
+          % (fhook["current"]["cases"] if fhook["current"] else None, fhook["archive"]))
+    check(len(fcards) == 1 and fcards[0]["text"] == real_a18
+          and "FORGED" not in room and "forged.example" not in room,
+          "C113: and the claim that renders is the SHIPPED one, character for character - a body, a "
+          "citation and a link invented in the manifest reach nothing, which is what keeps a "
+          "fabricated citation off this channel (%d card(s), forgery present: %s)"
+          % (len(fcards), "FORGED" in room))
+    axf.close()
+
+    # ---- OPTIONAL, in the strict sense: nothing waits for it and nothing breaks without it ---------
+    # HUNG, not 404ed. 4.11 packet 1 paid for this distinction on the photographs: a request that
+    # fails FAST is shrugged off by any amount of waiting, so the only honest test of "the museum does
+    # not wait for the annex" is a request that never answers at all. The door still opens.
+    held = []
+    axh = hall("C113-hung", {"phase": "out", "t": 0.05, "signed": True}, annex_route=lambda r: held.append(r))
+    hung = axh.evaluate("""() => ({ booted: typeof window.__lbBooted === 'number',
+        chip: document.querySelector('#lbAnnexBtn').hidden,
+        shown: document.querySelector('#lbAnnexBtn').getClientRects().length > 0,
+        ready: window.__lbAnnex().ready,
+        route: document.querySelectorAll('#lbRoute .lb-route-i').length,
+        panel: document.querySelector('#lbAnnex').classList.contains('show') })""")
+    check(hung["booted"] and hung["route"] == 6 and hung["chip"] and not hung["shown"]
+          and not hung["ready"] and not hung["panel"],
+          "C113: with the manifest never answering the museum opens anyway, on time, with six "
+          "exhibits and no annex control at all - the room is optional and so is its request (%s)" % hung)
+    # answer it now the point is made. A route left pending when its page closes surfaces as an
+    # asyncio CancelledError traceback in the middle of a log a human reads for FAIL lines.
+    for r in held:
+        try:
+            r.abort()
+        except Exception:
+            pass
+    axh.close()
+
+    # A SAVE WRITTEN BEFORE ANY OF THIS EXISTED. The record has the fields the loader already writes
+    # and nothing else; the annex must neither need a new one nor write one.
+    axo = hall("C113-oldsave", {"phase": "out", "t": 0.4, "signed": True})
+    keys0 = axo.evaluate("() => Object.keys(JSON.parse(localStorage.getItem('%s'))).sort()" % KEY2)
+    tap(axo, "#lbAnnexBtn")
+    waits(axo, "() => document.querySelector('#lbAnnex').classList.contains('show')", 6000)
+    axo.wait_for_timeout(400)
+    rec = axo.evaluate("() => JSON.parse(localStorage.getItem('%s'))" % KEY2)
+    stt = axo.evaluate("() => window.__lbState()")
+    check(sorted(rec.keys()) == keys0 and rec["t"] == 0.4 and rec["phase"] == "out"
+          and abs(stt["t"] - 0.4) < 1e-9,
+          "C113: a save written before the annex existed resumes to the same position and gains no "
+          "field for it - the manifest is content, not state (%s)" % sorted(rec.keys()))
+    axo.close()
 
     lwclean = [e for e in lwerrs if "favicon" not in e and "jsdelivr" not in e.lower()
                and "lilbf-van-cozy" not in e and "lilbf-van-horror" not in e and "lilbf-car-cozy" not in e]

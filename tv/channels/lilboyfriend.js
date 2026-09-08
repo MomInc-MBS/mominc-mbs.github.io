@@ -59,6 +59,18 @@ let assessmentLoad = null;
 const loadAssessment = () => (assessmentLoad = assessmentLoad ||
   import("../questionnaire.js").then(m => m.load(ASSESSMENT_URL).then(spec => ({ create: m.create, spec }))));
 
+/* C113: the annex manifest, resolved and cached on exactly the terms above and for the same two
+   reasons - this module is reached by dynamic import() from three different documents, and
+   check_teardown mounts it over and over. THE FETCH IS OPTIONAL IN THE STRICT SENSE: nothing waits
+   on it, nothing downstream of it is on the museum's critical path, and a manifest that 404s, times
+   out or arrives as something other than JSON leaves a museum with no annex in it rather than a
+   museum that failed to open. C015 spent a packet moving the twelve photographs OFF the boot path;
+   a rotating room is not the thing to put back on it. */
+const ANNEX_URL = new URL("../data/lilbf-annex.json", import.meta.url).href;
+let annexLoad = null;
+const loadAnnex = () => (annexLoad = annexLoad ||
+  fetch(ANNEX_URL).then(r => r.ok ? r.json() : Promise.reject(new Error("HTTP " + r.status))));
+
 /* The one piece of module state, held for the reason set out above: a WebGLRenderer and a scene graph
    are not disposables the context can own. `session` is the mount token - the three.js import and the
    twelve photograph loads all resolve long after mount() returns, and whatever comes back for a
@@ -720,6 +732,66 @@ export default {
     // NOT `.map(readCard)`: map hands its callback an INDEX second, which would arrive as `ns` and
     // name every revision group after its position in the panel. The namespace is explicit.
     const readCards = (id, returning, ns) => readItems(id, returning).map(it => readCard(it, ns)).join("");
+
+    /* ---- C113: the annex, and the one thing its manifest is NOT allowed to do ----------------------
+       A ROTATING ROOM, EDITED ON A SCHEDULE RATHER THAN IN A DEPLOY. tv/data/lilbf-annex.json names
+       what the annex shows this broadcast and what it showed before; the newest entry whose date has
+       arrived is on air and every earlier one is archived behind it, so the room turns over on its
+       own with nothing in this file changing.
+
+       THE MANIFEST CHOOSES, IT DOES NOT AUTHOR. Every case it names is looked up in FACTS and RES by
+       its A/B id and what renders is THE OBJECT THIS FILE ALREADY HOLDS - the reviewed body, the
+       reviewed citation, the link and the scope, character for character. A `body` written in the
+       JSON reaches nothing; an id this channel does not carry is dropped; an entry left with no case
+       is dropped with it. That is C112's untrusted-input rule applied to a second kind of input, and
+       it is the whole reason the annex is safe to make editable: a claim invented in a data file is a
+       fabricated citation on the one channel whose entire thesis is that it has none. `title` and
+       `note` ARE the manifest's own words, so they are MOM Inc's voice like the promises are, they
+       are escaped rather than trusted, and the gate holds them to the same no-figure rule.
+
+       IT IS SEPARATE FROM THE ROUTE, WHICH IS THE ACCEPTANCE. Not an entry in EXHIBITS - that array
+       is the museum's count, and the route strip, the six chapters, sceneScale(), sqftAt() and the
+       hall's own geometry are all indexed off it, so an annex appended there would move every one of
+       them. The annex has its own list, its own room and its own archive; nothing in it is walked to,
+       marked read, saved, or counted. */
+    const ITEM_BY_T = {};
+    Object.keys(FACTS).forEach(k => FACTS[k].forEach(f => { ITEM_BY_T[f.t] = f; }));
+    Object.keys(RES).forEach(k => { ITEM_BY_T[k] = Object.assign({ t: k }, RES[k]); });
+    const ANNEX_DATE = /^\d{4}-\d{2}-\d{2}$/;
+    function annexRead(raw) {
+      const list = raw && Array.isArray(raw.broadcasts) ? raw.broadcasts : [];
+      // ISO dates compare correctly as strings, which is the whole reason the field is written that
+      // way: no Date parsing, no timezone, and "not on air yet" is one comparison.
+      const today = new Date().toISOString().slice(0, 10);
+      const live = [];
+      list.forEach(b => {
+        if (!b || typeof b.id !== "string" || typeof b.title !== "string" || typeof b.note !== "string") return;
+        if (typeof b.from !== "string" || !ANNEX_DATE.test(b.from) || b.from > today) return;
+        const cases = (Array.isArray(b.cases) ? b.cases : []).map(t => ITEM_BY_T[t]).filter(Boolean);
+        if (!cases.length) return;
+        live.push({ id: b.id, from: b.from, title: b.title, note: b.note, cases: cases });
+      });
+      live.sort((a, b) => (a.from < b.from ? 1 : a.from > b.from ? -1 : 0));   // newest broadcast first
+      return { current: live[0] || null, archive: live.slice(1) };
+    }
+    /* The archive is BEHIND ITS OWN DISCLOSURE and namespaced entry by entry. Two radio groups sharing
+       a name are one group (C111 paid for that once already), and the annex can hold the same claim in
+       two broadcasts - an archived version selector flipping the one on air is exactly that bug. */
+    function annexEntry(b, ns) {
+      return '<p class="ax-date">Broadcast ' + esc(b.from) + '</p>'
+        + '<h3>' + esc(b.title) + '</h3>'
+        + '<p class="ax-note">' + esc(b.note) + '</p>'
+        + b.cases.map(it => readCard(it, ns)).join("");
+    }
+    function annexFill(host, ax) {
+      host.innerHTML = annexEntry(ax.current, "ax")
+        + (ax.archive.length
+          ? '<details class="ax-arch"><summary>' + ax.archive.length + ' earlier broadcast'
+            + (ax.archive.length === 1 ? "" : "s") + ', archived</summary>'
+            + ax.archive.map((b, i) => '<div class="ax-old">' + annexEntry(b, "ax" + i) + '</div>').join("")
+            + '</details>'
+          : '');
+    }
 
     /* ---- C107: the promise, before the reveal and after the return --------------------------------
        THE TWO SIDES ARE NOT THE SAME CONTROL. On the way in the exhibit has not been opened yet, so
@@ -2214,7 +2286,9 @@ export default {
           if (e.key === "e" || e.key === "E" || e.key === "Enter") {
             if (doorOpen) { attemptInsert(); return; }
             toggleRead();
-          } else if (e.key === "Escape" && (zoomOpen || readOpen)) { if (zoomOpen) closeZoom(); else closeRead(); }
+          } else if (e.key === "Escape" && (zoomOpen || readOpen || annexOpen)) {
+            if (zoomOpen) closeZoom(); else if (readOpen) closeRead(); else closeAnnex();
+          }
         });
         ctx.on(walkBtn, "pointerdown", e => { fwdHeld = true; e.preventDefault(); });
         ["pointerup", "pointercancel", "pointerleave"].forEach(ev => ctx.on(walkBtn, ev, () => fwdHeld = false));
@@ -2428,6 +2502,10 @@ export default {
            before C014 needed a fourth branch in each, which is how a keyboard path and a touch path
            quietly stop agreeing about what the return leg does. */
         function toggleRead() {
+          // C113: the annex is over the hall, not in it. One guard here covers all four ways in - the
+          // button, E/Enter, the look zone's tap and the glass - which is the reason they were made one
+          // action in the first place.
+          if (annexOpen) return;
           if (zoomOpen) { closeZoom(); return; }
           if (readOpen) { closeRead(); return; }
           const ne = nearestReadable(shrinkProgress());
@@ -2504,6 +2582,66 @@ export default {
         const softFocus = el => { if (el && el.isConnected && el.focus) try { el.focus({ preventScroll: true }); } catch (e) { el.focus(); } };
         function takeFocus(el) { focusFrom = document.activeElement; softFocus(el); }
         function giveFocus() { const el = focusFrom; focusFrom = null; softFocus(el); }
+
+        /* ---- C113: the annex, wired ------------------------------------------------------------
+           IT IS THE MUSEUM'S ROOM, so it is built here and lives in the hud - which is also what
+           keeps it off the other two presentations for free: the flat path removes the whole hud and
+           .lb-stage.mode-scroll hides it, exactly as C012's route strip and C106's layout control are
+           the hall's and nothing else's. Nothing is added to runFlat()'s seventeen steps and nothing
+           to the six chapters, which is half of "adds without changing the base museum".
+
+           THE OTHER HALF IS THAT IT WRITES NOTHING. No markRead(), no ST.reading, no saveState(), no
+           field in the record and nothing for sanitize() to allowlist - a visitor is never resumed
+           into a room that may not be on air by the time they come back, and a save written before
+           this existed loads exactly as it did. The one thing it does take is the WALK, on the same
+           terms the reading panel takes it: a panel being read while the hall moves underneath it is
+           the guest book's old bug, and this one has links in it too.
+
+           THE CHIP HIDES ITSELF WHILE ANY PANEL IS UP, in CSS rather than from the frame loop
+           (.lb-hud:has(.lb-panel.show)). A .lb-panel covers the stage with pointer-events:auto, so a
+           chip left underneath one looks pressable and is not - and the alternative is another
+           per-frame DOM write, which is the habit C016 spent a packet breaking. */
+        const annexBtn = byId("lbAnnexBtn"), annexPanel = byId("lbAnnex"),
+              annexBody = byId("lbAnnexBody"), annexClose = byId("lbAnnexClose");
+        let annexOpen = false, annexData = null;
+        // C107/C111: bound once to the body the panel is filled into, never to the inputs - the same
+        // delegated listener the reading panel uses, and the archive's cards carry version selectors.
+        wireReadInputs(annexBody);
+        function openAnnex() {
+          if (!annexData || annexOpen) return;
+          annexOpen = true; annexPanel.classList.add("show"); takeFocus(annexClose);
+        }
+        function closeAnnex() {
+          const was = annexOpen;
+          annexOpen = false; annexPanel.classList.remove("show");
+          if (was) giveFocus();
+        }
+        ctx.on(annexBtn, "click", openAnnex);
+        ctx.on(annexClose, "click", closeAnnex);
+        loadAnnex().then(raw => {
+          // landed after the channel left, or after this hud was torn out from under it
+          if (session !== mine || !annexPanel.isConnected) return;
+          const ax = annexRead(raw);
+          if (!ax.current) return;   // a manifest with nothing on air yet is a museum with no annex
+          annexData = ax;
+          annexFill(annexBody, ax);
+          annexBtn.setAttribute("aria-label", "The annex, this broadcast: " + ax.current.title);
+          annexBtn.hidden = false;
+        }).catch(e => {
+          // NOT console.error: no annex is a state this build is designed to have, not a fault, and
+          // every gate in this repo treats an error line on the console as a broken channel.
+          console.warn("[lb] no annex this broadcast", e);
+          annexLoad = null;   // offline once is not offline forever; the next mount tries again
+        });
+        /* test-only, on __lbHall's terms: what the manifest was allowed to become. The cases are
+           reported by the id of the object that will actually render, which is what makes "the
+           manifest cannot author a claim" measurable from outside. */
+        window.__lbAnnex = () => ({
+          ready: !!annexData, open: annexOpen,
+          current: annexData ? { id: annexData.current.id, from: annexData.current.from,
+                                 title: annexData.current.title, cases: annexData.current.cases.map(c => c.t) } : null,
+          archive: annexData ? annexData.archive.map(b => ({ id: b.id, from: b.from, cases: b.cases.map(c => c.t) })) : []
+        });
 
         // ---- guest book overlay
         const bookMount = byId("bookMount"), bookSkip = byId("bookSkip");
@@ -2828,7 +2966,7 @@ export default {
           // C014: !readOpen joins the list for the return leg, where there is no zoom holding the
           // visitor still - a panel that is being read while the walk carries on underneath it is the
           // guest book's bug, and this one has links in it.
-          if ((fwdHeld || backHeld) && !bookOpen && !epiOpen && !zoomOpen && !readOpen) {
+          if ((fwdHeld || backHeld) && !bookOpen && !epiOpen && !zoomOpen && !readOpen && !annexOpen) {
             const dir = (fwdHeld ? 1 : 0) - (backHeld ? 1 : 0);
             if (dir) { ST.t = Math.max(0, Math.min(1, ST.t + dir * WALK_SPEED * dt)); saveWalk(); }
           }
@@ -3146,6 +3284,7 @@ export default {
     try { delete window.__lbLens; } catch (e) { window.__lbLens = undefined; }
     try { delete window.__lbRooms; } catch (e) { window.__lbRooms = undefined; }
     try { delete window.__lbFit; } catch (e) { window.__lbFit = undefined; }
+    try { delete window.__lbAnnex; } catch (e) { window.__lbAnnex = undefined; }
     if (!gl) return;
     const g = gl;
     gl = null;

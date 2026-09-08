@@ -463,6 +463,37 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
       border:1px solid rgba(230,198,122,.45); padding:5px 9px; border-radius:10px;
       font-size:9.5px; line-height:1.4; font-weight:700; letter-spacing:.04em}
 
+  /* ---- C113: the annex chip, and the room it opens -----------------------------------------------
+     THE CHIP REUSES .lb-mode and moves, which is 4.7's move with the sound button and made for the
+     same reason: a second chip styled from scratch is a second thing to keep in step with the first.
+     right:auto is not optional - .lb-mode sets `right`, and setting `left` alone pins it to both
+     edges. WHERE IT GOES IS MEASURED, not chosen: the centred hint, prompt and shrink pills own the
+     top of the stage (a chip in the top-left corner is 4.7's shipped collision made twice), the two
+     84px walk circles own the bottom corners, and C109 put the sound button at bottom:106 with its
+     muted readout at 142. This is the next clear row up the one free column.
+
+     IT HIDES ITSELF WHILE ANY PANEL IS UP. .lb-panel.show covers the whole stage with
+     pointer-events:auto, so a chip left underneath one looks pressable and is not - and doing that in
+     CSS rather than from the frame loop is what keeps it off the list of things this museum writes to
+     the DOM sixty times a second. */
+  .lb-hud .lb-annex-b{top:auto; right:auto; left:12px; bottom:178px; z-index:3; font-size:10px;
+      letter-spacing:.09em; padding:6px 12px; max-width:calc(50% - 20px);
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .lb-hud:has(.lb-panel.show) .lb-annex-b{display:none}
+  /* the room. Everything below is the badge, the date and the note - the CASES in here are .rd-card,
+     rendered by the same readCard() the reading panel and the spotlight use, and styled by the same
+     rules. Two-class selectors throughout, because `.lb-panel p` is (0,1,1) and a single-class rule on
+     a <p> in here loses to it - the trap this sheet has now paid for twice. */
+  .lb-annex .ax-badge{font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; font-weight:800;
+      color:var(--gold-d); margin:0 0 4px}
+  .lb-annex .ax-date{font-size:11px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-l); margin:0 0 2px}
+  .lb-annex .ax-note{font-size:12.5px; line-height:1.5; font-style:italic; color:var(--ink-l); margin:0 0 12px}
+  .lb-annex .ax-arch{margin:14px 0 0; border-top:1px solid rgba(44,30,20,.25); padding-top:10px}
+  .lb-annex .ax-arch summary{font-size:11px; letter-spacing:.09em; text-transform:uppercase;
+      font-weight:800; color:var(--ink-l); cursor:pointer}
+  .lb-annex .ax-old{margin-top:12px; padding-top:10px; border-top:1px dashed rgba(44,30,20,.2)}
+  .lb-annex .ax-old h3{font-size:18px}
+
   /* the scroll chapters. One vertical run inside the stage, so the STAGE is the viewport the chapters
      are measured against - not window.innerHeight, which is a different number inside the television.
      Card and source styling is the flat gallery's, reused verbatim rather than restated. */
@@ -895,6 +926,12 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
         <button type="button" class="lb-fit-b" id="lbFitNone" data-fit="" aria-pressed="true">CLEAR</button>
         <p class="lb-fit-out" id="lbFitOut" role="status"></p>
       </div>
+      <!-- C113: the way into the annex. It ships HIDDEN and run3D() only reveals it once a manifest
+           has actually arrived with something on air, so a museum with no annex has no control for
+           one - which is what "optional" has to mean on a hud this crowded. It carries no name of its
+           own here for the same reason the route strip carries no marks: what is on air is the
+           manifest's to say, and a title written into this file would be a second copy of it. -->
+      <button type="button" class="lb-mode lb-annex-b" id="lbAnnexBtn" hidden>THE ANNEX</button>
       <!-- C012: filled from EXHIBITS by run3D(), because six hardcoded marks here would be a second
            copy of the route to keep in step with the first. -->
       <ol class="lb-route" id="lbRoute" aria-label="Your route through the museum"></ol>
@@ -943,6 +980,19 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
           <p class="rd-sub" id="lbReadSub"></p>
           <div id="lbReadBody"></div>
           <div class="lb-bookrow"><button type="button" class="skip" id="lbReadClose">step back</button></div>
+        </div>
+      </div>
+
+      <!-- C113: the annex itself. It reuses .lb-panel and .lb-read WHOLE, exactly as C112's spotlight
+           does and for the same reason - the card, the scroll and every .rd-* rule are the reading
+           surface, and a second one styled from scratch is a second thing to keep in step. Empty on
+           purpose: what is in here comes from tv/data/lilbf-annex.json by way of the claims this
+           channel already ships, and markup would be a third copy of both. -->
+      <div class="lb-panel lb-read lb-annex" id="lbAnnex" role="dialog" aria-label="The annex">
+        <div class="card">
+          <p class="ax-badge">The annex &middot; a rotating room, not on the route</p>
+          <div id="lbAnnexBody"></div>
+          <div class="lb-bookrow"><button type="button" class="skip" id="lbAnnexClose">back to the hall</button></div>
         </div>
       </div>
 
