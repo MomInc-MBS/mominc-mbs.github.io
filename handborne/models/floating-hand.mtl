@@ -1,0 +1,19 @@
+# Exported by three-d-stage
+newmtl skin
+Kd 0.7758 0.6654 0.5089
+Ks 0.2000 0.2000 0.2000
+Ns 84
+d 1.0000
+
+newmtl stump_flesh
+Kd 0.4851 0.2664 0.1878
+Ks 0.2000 0.2000 0.2000
+Ns 60
+d 1.0000
+
+newmtl nail
+Kd 0.6724 0.5457 0.3712
+Ks 0.2000 0.2000 0.2000
+Ns 136
+d 1.0000
+
