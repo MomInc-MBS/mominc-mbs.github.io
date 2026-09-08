@@ -210,18 +210,32 @@ with sync_playwright() as pw:
     # camera yaw (C110's hook is the first thing in this file to expose it), then the panel with a
     # budget of its own. The lectern is at side -1 and a POSITIVE yaw faces -x, so 0.6 rad is well
     # past "still turning" and well short of the 1.005 the pointer position above asked for.
+    #
+    # AND IT FLAPPED AGAIN, IN 4.11b PACKET 3'S FIRST FULL RUN. MBS-TRAPS named what to widen before it
+    # did: the BEARING, not the panel. The yaw lerp is the half that competes with the renderer, and
+    # this packet gave that renderer more to do on every single frame - C109's six distances and
+    # C106's syncFit now run inside the same loop that is doing the lerp. 12s was measured against a
+    # lighter loop. 30s, and it costs nothing on a green build because it is a wait_for_function that
+    # RETURNS the instant the bearing lands, not a sleep.
+    #
+    # THE FAILURE ALSO HAD TO BECOME LEGIBLE. Both waits swallowed their timeout, so a red here could
+    # not say whether the camera never turned or turned and the proximity test never fired - which is
+    # the one thing that decides what to widen NEXT time. The yaw actually reached is reported below.
+    turned = True
     try:
         pg.wait_for_function("() => window.__lbLens && window.__lbLens().yaw > 0.6",
-                             timeout=12000, polling=60)
+                             timeout=30000, polling=60)
     except Exception:
-        pass   # the panel wait below still gets its full budget, and the assertion still reports
+        turned = False   # the panel wait below still gets its full budget, and the assertion reports both
     try:
         pg.wait_for_function("() => document.querySelector('#bookPanel').classList.contains('show')",
                              timeout=8000, polling=60)
     except Exception:
         pass   # the assertion below is what reports it, with the panel's real state
     opened = pg.evaluate("() => document.querySelector('#bookPanel').classList.contains('show')")
-    check(opened, "walking up to the lectern and looking at it opens the guest book")
+    yaw_at = pg.evaluate("() => window.__lbLens ? Math.round(window.__lbLens().yaw * 1000) / 1000 : null")
+    check(opened, "walking up to the lectern and looking at it opens the guest book (bearing %s, yaw %s)"
+          % ("landed" if turned else "NEVER LANDED", yaw_at))
 
     if opened:
         # 2.20/E.8: the lectern is the six-question assessment now, mounted from
@@ -3500,6 +3514,549 @@ with sync_playwright() as pw:
           "clause numbers live in their own field for that reason, because every number a visitor "
           "reads on this channel is a cited one (%d distinct, digits in %s)"
           % (len(set(heads)), digits or "none"))
+
+    # ================================================================================================
+    # ---- 4.11b packet 3: C109 the room tones, C103 the depth pass, C106 the layout in the case -----
+    # ================================================================================================
+    # Three tickets, and each one has a shape that passes an obvious gate while fixing nothing.
+    #
+    #   C109 asks for room tones BANDED BY DISTANCE WITH HYSTERESIS. A gate that samples which band a
+    #   distance falls in is passed by a build with no hysteresis at all - the band is correct at every
+    #   sample and the build still chatters six gains a second at anyone standing on a boundary. So
+    #   the measurement below is the two THRESHOLDS: the distance at which the close band is left while
+    #   walking away, and the distance at which it is entered while coming back. They have to differ.
+    #   Everything audible is measured at the PLATFORM the way 4.7 established, because a channel that
+    #   counts its own silence is its own witness - and 4.7's own clause is re-asserted on the 3D path,
+    #   where it had never been driven: a whole walk past two cases builds no AudioContext.
+    #
+    #   C103 asks for depth WITHOUT NEW ART and without seams. "Three layers exist" is passed by three
+    #   copies of one picture that move together, which is a pan, so the assertion is that the three
+    #   travel by DIFFERENT amounts and that the background travels the OTHER WAY - which is what
+    #   parallax is and what a pan cannot be. "No new art" is asserted as all three layers resolving
+    #   the same url the chapter's own <img> does. The reduced-motion half is the flat composite, and
+    #   it is the same claim as 4.8's: the `to` frame is translateY(0) on all three, so removing the
+    #   animation leaves the photograph, not a layer stranded at the far end of its travel.
+    #
+    #   C106 asks for an interpretable spatial tradeoff with an immediate reset. A block that appears
+    #   is not a tradeoff, so the gate does the arithmetic itself off the raw hook: the taken piece's
+    #   width has to be the option's own fictional footprint as a fraction of THAT exhibit's square
+    #   footage, which makes the same five-foot turning circle a different picture at the teepee and at
+    #   the van. And it has to FIT - under the photograph, inside the 0.02 the case can be seen in, and
+    #   clear of the person C102 put in there, all of which the hook reports raw and none of which it
+    #   answers.
+    print("\n  -- 4.11b pkt 3: C109 the room tones, C103 the depth pass, C106 the layout in the case --")
+
+    EX_AT = [("teepee", 0.15, 1), ("car", 0.275, -1), ("shoebox", 0.4, 1),
+             ("storage", 0.525, -1), ("masonjar", 0.65, 1), ("van", 0.775, -1)]
+
+    # 4.7's instrumentation, unchanged in principle and narrowed in one place: the gain params are
+    # collected but the frequency params are told apart by identity against the oscillators that were
+    # actually started, so a room tone whose pitch is set once at construction never lands in either
+    # list and cannot be mistaken for automation the channel is sending.
+    AUDIO_JS = """(() => {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      window.__lbA = { ctors: 0, starts: 0, oscs: [], gains: [] };
+      if (!AC) return;
+      class Counted extends AC { constructor(...a) { super(...a); window.__lbA.ctors++; } }
+      window.AudioContext = window.webkitAudioContext = Counted;
+      const start = OscillatorNode.prototype.start;
+      OscillatorNode.prototype.start = function (...a) {
+        window.__lbA.starts++; window.__lbA.oscs.push(this); return start.apply(this, a); };
+      const stt = AudioParam.prototype.setTargetAtTime;
+      AudioParam.prototype.setTargetAtTime = function (v, ...a) {
+        if (!window.__lbA.oscs.some(o => o.frequency === this)) window.__lbA.gains.push(+Number(v).toFixed(4));
+        return stt.call(this, v, ...a); }; })()"""
+
+    def hall(tag, rec, init=None, viewport=None):
+        """A real museum, booted, resumed onto a seeded save. Not fresh()/seed(): these pages need an
+        init script in place before the FIRST navigation, which is the only moment a platform patch
+        can beat the channel to the constructor it is watching."""
+        p6 = b.new_page(viewport=viewport or {"width": 1280, "height": 900})
+        p6.on("pageerror", lambda e: lwerrs.append("%s: %s" % (tag, e)))
+        if init:
+            p6.add_init_script(init)
+        p6.goto(BASE + "/play/lilboyfriend/", wait_until="load")
+        p6.wait_for_timeout(1500)
+        p6.evaluate(SEED_JS, [rec, "1", KEY2, TKEY])
+        p6.reload(wait_until="load")
+        settle(p6)
+        return p6
+
+    def face(p6, side):
+        """Turn to the wall an exhibit is on. side +1 is +x, and forward is (-sin yaw, -cos yaw), so
+        facing +x wants a negative yaw and the pointer LEFT of the look zone's centre."""
+        z = p6.locator("#lookZone").bounding_box()
+        p6.mouse.move(z["x"] + z["width"] * 0.5, z["y"] + z["height"] * 0.5)
+        p6.mouse.move(z["x"] + z["width"] * (0.18 if side > 0 else 0.82), z["y"] + z["height"] * 0.5)
+
+    def sweep(p6, key, n=45, step=150):
+        """Hold WALK or BACK and sample the RAW room state as the visitor moves. Sampled per step
+        rather than timed: dt is clamped to 50ms and the frame rate here is the software renderer's,
+        so a distance derived from WALK_SPEED and a stopwatch would be measuring this box. Every
+        threshold below comes off the distances the hook reports, never off a constant."""
+        out = []
+        p6.keyboard.down(key)
+        for _ in range(n):
+            out.append(p6.evaluate("() => window.__lbRooms()"))
+            p6.wait_for_timeout(step)
+        p6.keyboard.up(key)
+        out.append(p6.evaluate("() => window.__lbRooms()"))
+        return out
+
+    # ---- C109 (a): nothing is audible in the museum before the choice either ------------------------
+    # 4.7 drove this clause on the CHAPTERS. C109 gives the museum a sound layer of its own, so the
+    # clause has to hold here too, and it is the half where nothing happening is the pass: a whole
+    # walk from the entrance past the first two cases, with the button never touched.
+    rm = hall("C109", {"phase": "out", "t": 0.1, "signed": True}, AUDIO_JS)
+    sbtn = rm.evaluate("""() => { const b = document.querySelector('#lbSoundBtn');
+        return b ? { text: b.textContent.trim(), pressed: b.getAttribute('aria-pressed'),
+                     shown: b.getClientRects().length > 0 } : null; }""")
+    check(sbtn and sbtn["shown"] and sbtn["pressed"] == "false",
+          "C109: the museum offers the same one choice the chapters do, and offers it as a choice - "
+          "\"%s\", aria-pressed=%s" % (sbtn["text"] if sbtn else "MISSING", sbtn and sbtn["pressed"]))
+    face(rm, 1)
+    quiet_walk = sweep(rm, "w", n=16, step=150)
+    hush = rm.evaluate("() => ({ ctors: window.__lbA.ctors, starts: window.__lbA.starts, "
+                       "          gains: window.__lbA.gains.length })")
+    moved = quiet_walk[-1]["dist"][1] != quiet_walk[0]["dist"][1]
+    check(hush == {"ctors": 0, "starts": 0, "gains": 0} and moved,
+          "C109: NO AUDIO BEFORE THE CHOICE HOLDS IN THE HALL TOO - a walk past two cases and the "
+          "channel has not built an AudioContext, let alone started a room (%s, walked %s)" % (hush, moved))
+
+    # and the muted cue is what that visitor gets instead: the same band, in words.
+    cue0 = rm.evaluate("() => window.__lbRooms()")
+    near0 = min(range(6), key=lambda i: cue0["dist"][i])
+    check(cue0["cueShown"] and "SOUND OFF" in (cue0["cue"] or "")
+          and EX_AT[near0][0][:3].upper() in (cue0["cue"] or "").upper(),
+          "C109: and with the sound off the readout says what the tone would have said - the nearest "
+          "room, by name (%r, nearest is %s)" % (cue0["cue"], EX_AT[near0][0]))
+
+    # ---- C109 (b): the choice, and one voice per room ----------------------------------------------
+    rm.click("#lbSoundBtn")
+    rm.wait_for_timeout(600)
+    on6 = rm.evaluate("""() => ({ ctors: window.__lbA.ctors, starts: window.__lbA.starts,
+        hz: window.__lbA.oscs.map(o => o.frequency.value),
+        pressed: document.querySelector('#lbSoundBtn').getAttribute('aria-pressed'),
+        cueShown: !!document.querySelector('#lbTone').classList.contains('show') })""")
+    rooms0 = rm.evaluate("() => window.__lbRooms()")
+    # the pitches are read off the PLATFORM's own oscillators, not off the channel's answer about
+    # them: six rooms that are distinguishable is six different frequencies actually reaching the
+    # graph, and the hook's own list has to agree with what was really started.
+    started_hz = sorted(h for h in on6["hz"] if h in rooms0["hz"])
+    check(on6["ctors"] == 1 and on6["starts"] == 1 + len(EX_AT) and len(set(rooms0["hz"])) == len(EX_AT)
+          and len(started_hz) == len(EX_AT),
+          "C109: one press, ONE context, and one authored voice per room - six distinct pitches, all "
+          "six actually started on the graph (%d ctors, %d starts, hz %s)"
+          % (on6["ctors"], on6["starts"], sorted(set(rooms0["hz"]))))
+    check(on6["pressed"] == "true" and not on6["cueShown"],
+          "C109: and the muted readout goes away when the sound comes on - while it is playing, the "
+          "sound IS the cue and two of them is one too many")
+
+    # ---- C109 (c): standing at a case, exactly one room is audible ---------------------------------
+    # "Nearby exhibits are distinguishable WITHOUT AUDIO LEAKING ACROSS THE HALL" is one claim with two
+    # halves, and this is the second: the six are 7.5 units apart and the far edge of the middle band
+    # is 5.2, so at a case there is one voice above zero and it is that case's.
+    # AND "AT A CASE" IS THE CHANNEL'S OWN ANSWER, NOT A DISTANCE THIS FILE PICKED. The first cut
+    # sampled wherever a fixed walk happened to stop and asserted the band there, which measured the
+    # frame rate: at 5fps the visitor was still 2.22 units out, inside nearestReadable's 2.4 and
+    # outside the close band's 2.05 entry - so the assertion went red on the real defect underneath it
+    # and would have gone green on a faster box. Waited on instead, off the hud the channel puts up
+    # when it decides a case is in range. That makes this the assertion that the two AGREE: at a case,
+    # the room is at full. A close band that does not contain the readable range fails it on every box.
+    rm.keyboard.down("w")
+    atcase = waits(rm, "() => !document.querySelector('#lbFit').hidden", ms=20000)
+    rm.keyboard.up("w")
+    rm.wait_for_timeout(400)
+    at = rm.evaluate("() => window.__lbRooms()")
+    live_now = [i for i in range(6) if at["gain"][i] > 0]
+    nearest = min(range(6), key=lambda i: at["dist"][i])
+    check(atcase and live_now == [nearest] and at["band"][nearest] == 0
+          and at["gain"][nearest] == max(at["levels"]),
+          "C109: standing at a case - the channel's own \"a case is in range\", not a distance this "
+          "file guessed - exactly ONE room is above zero, it is the one in front of the visitor, and "
+          "it is at full: the close band CONTAINS the range the hud calls a case (audible %s, nearest "
+          "%s, band %s, dist %.2f)"
+          % ([EX_AT[i][0] for i in live_now], EX_AT[nearest][0], at["band"][nearest], at["dist"][nearest]))
+
+    # ---- C109 (d): the chapters silence the hall, and the choice survives it ------------------------
+    # Driven HERE, standing at a case with one room audible, rather than after the walk below: the
+    # sweeps end wherever the software renderer's frame rate happens to leave the visitor, and "the
+    # rooms come back" measured from the middle of an empty hall is a check that passes on silence.
+    rm.click("#lbModeBtn")
+    rm.wait_for_timeout(500)
+    away6 = rm.evaluate("""() => ({ last: window.__lbA.gains.slice(-6),
+        pressed: document.querySelector('#lbSoundBtn').getAttribute('aria-pressed'),
+        shown: document.querySelector('#lbSoundBtn').getClientRects().length > 0 })""")
+    check(all(g == 0 for g in away6["last"]) and away6["pressed"] == "true",
+          "C109: the chapters have no cases to stand near, so the six rooms go to silence there - by "
+          "GAIN, so the choice is remembered rather than spent (%s)" % away6["last"])
+    rm.click("#lbModeBtn")
+    rm.wait_for_timeout(900)
+    rb = rm.evaluate("() => window.__lbRooms()")
+    check(rb["gain"] == [rb["levels"][x] for x in rb["band"]] and any(g > 0 for g in rb["gain"]),
+          "C109: and the hall gets its rooms back on the way in, each at the level its own band says "
+          "- not at whatever it was left holding (%s against bands %s)" % (rb["gain"], rb["band"]))
+
+    # ---- C109 (e): the crossfade, and the hysteresis that stops it chattering -----------------------
+    # Walking away from the teepee and then back to it, sampling the raw distances. Two thresholds come
+    # out of that: where the close band is LEFT going out, and where it is ENTERED coming back. A build
+    # with a bare comparison has one threshold and this is where it goes red.
+    # WALK PAST THE CASE FIRST, AND THIS IS THE WHOLE REASON THE FIRST CUT MEASURED NOTHING. WALK moves
+    # the visitor ALONG the corridor, so the distance to an exhibit ahead of them is V-shaped: it falls
+    # to about 1.5 as they draw level with the case and rises again afterwards. Sweeping "w" from
+    # BEFORE the teepee therefore samples both sides of that V, and max() over a V picks up the return
+    # leg - which reported the close band being "left" at 2.34 and "entered" at 2.28, a 0.06 gap that
+    # is an artefact of the shape of the walk and says nothing about hysteresis at all.
+    # So: get past the exhibit first, then sweep. Beyond t = 0.17 the distance to the teepee only ever
+    # increases while W is held and only ever decreases while S is, which is what makes "the distance
+    # at which the band is left" and "the distance at which it is taken back" two comparable numbers.
+    rm.keyboard.down("w")
+    past = waits(rm, "() => window.__lbState().t > 0.17", ms=25000)
+    rm.keyboard.up("w")
+    rm.wait_for_timeout(300)
+    ramps0 = rm.evaluate("() => window.__lbA.gains.length")
+    # long enough to clear the close band's exit threshold AND to reach the midpoint between the first
+    # two cases, which is where the crossfade below is - measured at 5fps, where a held key advances
+    # the walk by about 0.008 of the hall per real second.
+    out_s = sweep(rm, "w", n=40, step=300)
+    back_s = sweep(rm, "s", n=40, step=300)
+    leave_d = [s["dist"][0] for s in out_s if s["band"][0] == 0]
+    enter_d = [s["dist"][0] for s in back_s if s["band"][0] == 0]
+    crossed = bool(leave_d) and bool(enter_d) and any(s["band"][0] > 0 for s in out_s)
+    leave_at = max(leave_d) if leave_d else 0.0
+    enter_at = max(enter_d) if enter_d else 0.0
+    check(past and crossed and leave_at - enter_at >= rooms0["hyst"] * 1.2,
+          "C109: HYSTERESIS - the close band is held until %.2f units walking away and not taken back "
+          "until %.2f coming in, a %.2f-unit gap around one %.2f edge. A build that compares the "
+          "distance to the edge has ONE threshold and chatters on it."
+          % (leave_at, enter_at, leave_at - enter_at, rooms0["edges"][0]))
+    # and the crossfade itself: somewhere on that walk two rooms were up at once, and neither of them
+    # was ever at full while the other was.
+    both = [s for s in out_s if len([i for i in range(6) if s["gain"][i] > 0]) == 2]
+    solo_full = [s for s in both if len([i for i in range(6) if s["gain"][i] == max(s["levels"])]) > 1]
+    check(both and not solo_full,
+          "C109: and between two cases both rooms are up together, neither of them at the level it "
+          "has standing in front of it - which is the crossfade rather than a switch (%d samples with "
+          "two rooms, %d with two at full)" % (len(both), len(solo_full)))
+    # a walk of eighty-odd samples writes a handful of ramps, not one per frame: the memo is what makes
+    # the automation readable, and it is what hysteresis is FOR.
+    ramps = rm.evaluate("() => window.__lbA.gains.length") - ramps0
+    check(ramps < 60,
+          "C109: and the gains are pushed on a band CHANGE, never per frame - %d ramps across two "
+          "walks of the hall" % ramps)
+    rm.close()
+
+    # ================================================================================================
+    # ---- C103: two photographs given depth out of the files that are already here ------------------
+    # ================================================================================================
+    PAR_JS = """(id) => {
+      const sec = document.querySelector('#lbCh-' + id);
+      const f = sec && sec.querySelector('.lb-par');
+      if (!f) return null;
+      const cs = getComputedStyle(f), fr = f.getBoundingClientRect();
+      /* the clip region is the PADDING box, not the border box - the frame carries a 6px border and
+         measuring the overhang against the outside of it credits the layers with six pixels of cover
+         they do not have. AND IT HAS TO BE SCALED: 4.8's corridor puts the chapter on a translateZ
+         under a perspective, so getBoundingClientRect() comes back SHRUNK while clientLeft and
+         clientWidth are layout pixels. Mixing the two reported 35px of exposed edge on a build with
+         none, at exactly the scroll position where the depth is deepest. */
+      const sx = fr.width / (f.offsetWidth || 1), sy = fr.height / (f.offsetHeight || 1);
+      const px = fr.left + f.clientLeft * sx, py = fr.top + f.clientTop * sy;
+      const pw = f.clientWidth * sx, ph = f.clientHeight * sy;
+      const L = ['bg', 'mid', 'fg'].map(k => {
+        const el = f.querySelector('.lb-par-' + k);
+        if (!el) return null;
+        const c = getComputedStyle(el), r = el.getBoundingClientRect();
+        return { tf: c.transform,
+                 mask: (c.maskImage && c.maskImage !== 'none') ? c.maskImage : (c.webkitMaskImage || 'none'),
+                 img: el.tagName === 'IMG' ? (el.currentSrc || el.src) : c.backgroundImage,
+                 nat: el.naturalWidth || 0,
+                 dx: r.left - px, dy: r.top - py,
+                 dr: (r.left + r.width) - (px + pw), db: (r.top + r.height) - (py + ph) };
+      });
+      return { overflow: cs.overflow, h: ph, layers: L,
+               textInside: f.querySelectorAll('.fl-card, p, h3').length };
+    }"""
+
+    def ty(tf):
+        """the translateY a computed matrix() actually carries, in px. 'none' is the flat composite."""
+        if not tf or tf == "none":
+            return 0.0
+        m = re.findall(r"-?\d+\.?\d*(?:e-?\d+)?", tf)
+        return float(m[5]) if len(m) >= 6 else 0.0
+
+    def scroll_page(tag, reduced=None):
+        kw = {"viewport": {"width": 390, "height": 844}}
+        if reduced:
+            kw["reduced_motion"] = reduced
+        p7 = b.new_page(**kw)
+        p7.on("pageerror", lambda e: lwerrs.append("%s: %s" % (tag, e)))
+        p7.add_init_script("""(() => { const g = HTMLCanvasElement.prototype.getContext;
+          HTMLCanvasElement.prototype.getContext = function (t, ...a) {
+            return /webgl/i.test(t) ? null : g.call(this, t, ...a); }; })()""")
+        p7.goto(BASE + "/play/lilboyfriend/", wait_until="load")
+        p7.wait_for_timeout(2200)
+        p7.click("#lbModeBtn")
+        p7.wait_for_selector("#lbScroll .lb-ch[data-chapter]", timeout=5000)
+        p7.evaluate("""() => { const s = document.querySelector('#lbScroll');
+            s.style.scrollBehavior = 'auto'; s.style.scrollSnapType = 'none'; }""")
+        return p7
+
+    def par_samples(p7, ex_id, n_from, n_to, steps=14):
+        got = []
+        for k in range(steps + 1):
+            frac = n_from + (n_to - n_from) * k / steps
+            p7.evaluate("v => { const s = document.querySelector('#lbScroll');"
+                        "        s.scrollTop = v * s.clientHeight; }", frac)
+            p7.wait_for_timeout(90)
+            s = p7.evaluate(PAR_JS, ex_id)
+            if s:
+                got.append(s)
+        return got
+
+    pr = scroll_page("C103")
+    # scroll the whole run once first: 4.2's photos are loading="lazy" INSIDE a scroller, so counting
+    # them at rest measures patience rather than resolution - 4.9's lesson, and the two new layers are
+    # background-images in the same scroller.
+    for k in range(1, 8):
+        pr.evaluate("v => { const s = document.querySelector('#lbScroll');"
+                    "        s.scrollTop = v * s.clientHeight; }", k)
+        pr.wait_for_timeout(200)
+    frames = pr.evaluate("""() => ({
+        par: Array.from(document.querySelectorAll('#lbScroll .lb-par')).map(f => f.dataset.par),
+        photos: Array.from(document.querySelectorAll('#lbScroll .lb-ch-photo'))
+                  .map(i => ({ ok: i.naturalWidth > 0, src: (i.currentSrc || i.src).split('/').pop() })) })""")
+    check(frames["par"] == ["teepee", "car"],
+          "C103: exactly two chapters carry the depth pass, and they are the two the row's \"strongest\" "
+          "was decided on (%s)" % frames["par"])
+    check(len(frames["photos"]) == 6 and all(p["ok"] for p in frames["photos"]),
+          "C103: and all six chapters still decode their own photograph - the base layer is still the "
+          "<img> 4.9 counts, not a fourth div (%d of 6 decoded)"
+          % len([p for p in frames["photos"] if p["ok"]]))
+
+    seams, sources, covers, moves = [], [], [], []
+    for ex_id, chn in (("teepee", 1), ("car", 2)):
+        got = par_samples(pr, ex_id, chn - 1, chn)
+        if not got:
+            seams.append((ex_id, "no frame"))
+            continue
+        s0 = got[0]
+        # NO NEW ART: all three layers resolve the same file the chapter's own <img> asks for.
+        base = (s0["layers"][0]["img"] or "").split("/")[-1].strip("\"')")
+        same = all((L["img"] or "").find(base) >= 0 for L in s0["layers"])
+        if not (same and base.endswith(".jpg")):
+            sources.append((ex_id, base, [(L["img"] or "")[-40:] for L in s0["layers"]]))
+        # NO CUTOUT SEAMS: the two nearer layers are held by SOFT gradients, and the base carries no
+        # mask at all - there is no edge in any of them to expose.
+        if not (s0["layers"][0]["mask"] == "none"
+                and all("gradient" in L["mask"] and "rgba(0, 0, 0, 0)" in L["mask"]
+                        for L in s0["layers"][1:])):
+            seams.append((ex_id, [L["mask"][:48] for L in s0["layers"]]))
+        # CONSTRAINED: at every sampled position each layer still overhangs the frame on all four
+        # sides, so travelling can never bring an edge of a layer into the picture.
+        for s in got:
+            if s["overflow"] != "hidden" or any(
+                    L["dx"] > 0.5 or L["dy"] > 0.5 or L["dr"] < -0.5 or L["db"] < -0.5 for L in s["layers"]):
+                covers.append((ex_id, s["overflow"], [round(L["dy"], 1) for L in s["layers"]]))
+                break
+        # DEPTH, NOT A PAN: the three travel by different amounts and the background travels the OTHER
+        # WAY. Three layers moving together is one picture sliding, which is what this assertion is for.
+        tys = [[ty(L["tf"]) for L in s["layers"]] for s in got]
+        rng = [max(t[i] for t in tys) - min(t[i] for t in tys) for i in range(3)]
+        opposed = [t for t in tys if t[0] < -0.4 and t[1] > 0.4 and t[2] > t[1] + 0.4]
+        moves.append((ex_id, [round(r, 2) for r in rng], len(opposed)))
+        if not (all(r > 1 for r in rng) and len(set(round(r, 1) for r in rng)) == 3 and opposed):
+            seams.append((ex_id, "layers do not separate: ranges %s, opposed %d" % (rng, len(opposed))))
+    check(not sources, "C103: every layer is the SAME jpg the chapter already asked for - the depth "
+                       "pass adds no asset, which is what C013's blocker forbids (%s)" % (sources or "clean"))
+    check(not seams, "C103: soft gradient masks and no mask at all on the base, and the three layers "
+                     "actually separate as the chapter arrives (%s)" % (seams or "clean"))
+    check(not covers, "C103: CONSTRAINED - overflow:hidden and every layer overhanging the frame on "
+                      "all four sides at every sampled position, so nothing can travel an edge into "
+                      "the picture (%s)" % (covers or "clean"))
+    check(len(moves) == 2 and all(m[2] for m in moves),
+          "C103: movement reveals DEPTH rather than sliding one picture - background against "
+          "foreground, three different travels (%s)" % moves)
+    # the text is not on a moving layer, and 4.2's bound is untouched: still exactly one stage tall.
+    # `span:not(.lb-par-l)`, and the exclusion is the point rather than a loosening: the two nearer
+    # layers ARE spans, so a bare `span` in this selector counts the feature as its own violation and
+    # reports [2, 2] on a frame containing no copy whatsoever. What the row forbids is TEXT riding a
+    # moving layer; the layers themselves are what is supposed to be in there.
+    txt = pr.evaluate("""() => Array.from(document.querySelectorAll('#lbScroll .lb-par'))
+        .map(f => f.querySelectorAll('.fl-card, p, h3, span:not(.lb-par-l)').length)""")
+    tall = pr.evaluate("""() => Array.from(document.querySelectorAll('#lbScroll .lb-ch'))
+        .map(s => [Math.round(s.getBoundingClientRect().height),
+                   s.querySelector('.lb-ch-inner').scrollHeight
+                     - s.querySelector('.lb-ch-inner').clientHeight])""")
+    st_h = pr.evaluate("() => document.querySelector('#lbScroll').clientHeight")
+    check(txt == [0, 0] and all(abs(h - st_h) < 2 and clip <= 0 for h, clip in tall),
+          "C103: no copy inside a moving layer, and 4.2's bound is untouched - every chapter is still "
+          "exactly one stage tall with nothing clipped (text in frames %s, stage %d)" % (txt, st_h))
+    pr.close()
+
+    # the flat composite. Same claim as 4.8's reduced-motion branch and for the same reason: the `to`
+    # frame is translateY(0) on all three, so with the animation gone the layers land on top of each
+    # other and composite back into the photograph they were cut from.
+    pq = scroll_page("C103-rm", reduced="reduce")
+    flat = par_samples(pq, "teepee", 0, 1, steps=6)
+    still = all(all(abs(ty(L["tf"])) < 0.01 for L in s["layers"]) for s in flat)
+    stacked = all(all(abs(L["dy"] - s["layers"][0]["dy"]) < 0.01 for L in s["layers"]) for s in flat)
+    check(flat and still and stacked,
+          "C103: under reduced motion the three layers do not move and sit exactly on top of one "
+          "another - the flat composite is the original photograph, not a layer left at the far end "
+          "of its travel (%d positions sampled)" % len(flat))
+    pq.close()
+
+    # ================================================================================================
+    # ---- C106: the miniature layout, and the tradeoff it is supposed to make readable --------------
+    # ================================================================================================
+    FIT_SEL = {"privacy": "#lbFitPrivacy", "storage": "#lbFitStorage",
+               "movement": "#lbFitMovement", "": "#lbFitNone"}
+
+    fitp = hall("C106", {"phase": "out", "t": 0.15, "signed": True})
+    check(fitp.evaluate("() => document.querySelector('#lbFit').hidden"),
+          "C106: standing in the corridor with no case in range, the layout control is not on the hud")
+    face(fitp, 1)
+    upfit = waits(fitp, "() => !document.querySelector('#lbFit').hidden")
+    fit0 = fitp.evaluate("() => window.__lbFit()")
+    out0 = fitp.evaluate("() => document.querySelector('#lbFitOut').textContent.trim()")
+    check(upfit and fit0["pick"] == "" and not any(c["cost"]["vis"] or c["rest"]["vis"] for c in fit0["cases"])
+          and str(fit0["cases"][0]["foot"]) in out0,
+          "C106: turning to a case offers the three requirements with nothing selected, and the case "
+          "is empty - the reset state IS the state it starts in (%r)" % out0[:70])
+
+    # THE ARITHMETIC IS THE GATE'S. The hook reports the option's fictional footprint, the exhibit's
+    # own square footage off 4.4's curve, and the width the block was actually given; whether that
+    # width is the fraction it claims to be is worked out here, from numbers the channel never
+    # combined for anybody.
+    def fit_at(p8, ex_id, want):
+        p8.click(FIT_SEL[want])
+        p8.wait_for_timeout(350)
+        st = p8.evaluate("() => window.__lbFit()")
+        return st, next(c for c in st["cases"] if c["id"] == ex_id), \
+            p8.evaluate("() => document.querySelector('#lbFitOut').textContent.trim()")
+
+    scale_bad, fit_bad, dim_missing = [], [], []
+    figs = fitp.evaluate("() => window.__lbFigures()")
+    for want in ("privacy", "storage", "movement"):
+        st, c, txt = fit_at(fitp, "teepee", want)
+        opt = next(o for o in st["opts"] if o["k"] == want)
+        share = min(1.0, opt["sqft"] / float(c["foot"]))
+        if abs(c["cost"]["w"] - st["box"]["band"] * share) > 0.004 or not c["cost"]["vis"]:
+            scale_bad.append((want, round(c["cost"]["w"], 4), round(st["box"]["band"] * share, 4)))
+        # what is LEFT is the other piece, and the two of them are the whole floor: that is the
+        # tradeoff rather than a block appearing.
+        if abs(c["cost"]["w"] + c["rest"]["w"] - st["box"]["band"]) > 0.004:
+            scale_bad.append((want, "pieces do not make the floor",
+                              round(c["cost"]["w"] + c["rest"]["w"], 4)))
+        # IT FITS: under the photograph, inside the 0.02 the case can be seen in, inside the case's
+        # own width, and clear of the person C102 put in there. The last one is not "how far does the
+        # taken piece reach" - the division STRADDLES the middle of the case, so what has to clear the
+        # figure is the far END OF THE BAND, whichever piece happens to be lying on it.
+        fz = next(f for f in figs["figures"] if f["id"] == "teepee")["pos"][2]
+        far = abs(c["cost"]["z"]) + c["cost"]["w"] / 2
+        end = c["side"] * (st["box"]["z0"] - st["box"]["band"])
+        if (c["cost"]["y"] + c["cost"]["h"] / 2 > st["box"]["top"] - 0.005
+                or abs(c["cost"]["x"]) + st["box"]["depth"] / 2 > st["box"]["gap"] / 2 + 0.004
+                or far > st["box"]["halfZ"]
+                or abs(st["box"]["z0"]) > st["box"]["halfZ"]
+                or abs(fz) - abs(end) < 0.06):
+            fit_bad.append((want, round(c["cost"]["y"] + c["cost"]["h"] / 2, 3), round(far, 3),
+                            round(abs(fz) - abs(end), 3), round(abs(c["cost"]["x"]), 4)))
+        if opt["dim"] not in txt or str(opt["sqft"]) not in txt or "fiction" not in txt.lower():
+            dim_missing.append((want, txt[:70]))
+    check(not scale_bad,
+          "C106: the space a selection takes is that requirement's own fictional footprint as a "
+          "fraction of THIS residence, and what is left is the rest of the floor beside it - to "
+          "scale, not to taste (%s)" % (scale_bad or "all three"))
+    check(not fit_bad,
+          "C106: and it fits where a case can actually be seen - under the photograph, inside the "
+          "0.02 between the alcove face and the glass, inside the case, and clear of the person "
+          "standing in it (%s)" % (fit_bad or "all three"))
+    check(not dim_missing,
+          "C106: the dimensions are printed, in feet, and said to be MOM Inc's fiction - which is what "
+          "keeps an invented measurement off a channel whose every other number is cited (%s)"
+          % (dim_missing or "all three"))
+
+    # ONE GEOMETRY, TWO MATERIALS, TWELVE MESHES. C102's identity rule carried forward: six pairs that
+    # merely agree on a number today are six pairs that drift apart in one edit.
+    ids = fitp.evaluate("() => window.__lbFit()")
+    check(len(set(c["cost"]["geo"] for c in ids["cases"])) == 1
+          and len(set(c["cost"]["mat"] for c in ids["cases"])) == 1,
+          "C106: one geometry and one material behind all six taken pieces, shared rather than cloned "
+          "(%d geometries, %d materials)" % (len(set(c["cost"]["geo"] for c in ids["cases"])),
+                                             len(set(c["cost"]["mat"] for c in ids["cases"]))))
+
+    # IMMEDIATE RESET, and immediate is the word: one press, no reload, no confirmation, and the case
+    # is empty again - plus the save is byte-identical, because a prototype selection is not something
+    # a visitor should be resumed into.
+    before = fitp.evaluate("() => localStorage.getItem('%s')" % KEY2)
+    _, ct, _ = fit_at(fitp, "teepee", "movement")     # kept for the smaller-residence comparison below
+    mid = fitp.evaluate("() => localStorage.getItem('%s')" % KEY2)
+    fitp.click("#lbFitNone")
+    fitp.wait_for_timeout(300)
+    after = fitp.evaluate("""() => ({ f: window.__lbFit(),
+        out: document.querySelector('#lbFitOut').textContent.trim(),
+        pressed: Array.from(document.querySelectorAll('#lbFit .lb-fit-b'))
+                   .map(b => b.getAttribute('aria-pressed')).join('') })""")
+    end = fitp.evaluate("() => localStorage.getItem('%s')" % KEY2)
+    empty = not any(x["cost"]["vis"] or x["rest"]["vis"] for x in after["f"]["cases"])
+    check(empty and after["f"]["pick"] == "" and after["pressed"] == "falsefalsefalsetrue",
+          "C106: CLEAR empties the case on the press - it is a peer of the other three rather than an "
+          "undo, so getting back to nothing is one control from wherever the visitor is (%r)"
+          % after["out"][:60])
+    check(before == mid and mid == end,
+          "C106: and nothing about it is saved - the walk's own record is byte-identical before the "
+          "selection, during it and after the reset")
+
+    # WALKING AWAY IS ALSO A RESET, and the control goes with the case: a requirement selected at the
+    # teepee is not still standing in the car.
+    # WAITED ON, NOT TIMED. The first cut held W for 2.6 seconds, which is a distance only on a box
+    # that renders fast enough: dt is clamped to 50ms a frame, so at the 5fps this software renderer
+    # actually manages the walk advances about a fortieth of the hall per second and 2.6s leaves the
+    # visitor still standing at the case. It reported the selection surviving a walk the visitor never
+    # took. What is being asserted is that LEAVING clears it, so the leaving is waited for - off the
+    # channel's own hud again - and the clearing is what the assertion reads.
+    fit_at(fitp, "teepee", "storage")
+    fitp.keyboard.down("w")
+    left = waits(fitp, "() => document.querySelector('#lbFit').hidden", ms=25000)
+    fitp.keyboard.up("w")
+    fitp.wait_for_timeout(400)
+    gone = fitp.evaluate("""() => ({ f: window.__lbFit(),
+        hidden: document.querySelector('#lbFit').hidden })""")
+    check(left and gone["f"]["pick"] == "" and not any(x["cost"]["vis"] for x in gone["f"]["cases"]),
+          "C106: and walking away from the case clears it - the selection belongs to the case in "
+          "front of the visitor, not to the museum (pick %r, hidden %s)"
+          % (gone["f"]["pick"], gone["hidden"]))
+    fitp.close()
+
+    # THE RETURN LEG HAS NO CASES, AND THE HUD DEPENDS ON THAT. This control sits on the row the
+    # contraction narration owns (top:54), which is only safe because the two can never be on screen
+    # together - the pill is the return leg's and the cases are the way out's. Asserted rather than
+    # reasoned about, because "they cannot both be up" is a claim about a build, not about a comment.
+    fitb = hall("C106-back", {"phase": "back", "t": 0.16, "signed": True, "shrinkStartedAt": 1})
+    face(fitb, 1)
+    fitb.wait_for_timeout(1200)
+    excl = fitb.evaluate("""() => ({ fit: document.querySelector('#lbFit').hidden,
+        shrink: document.querySelector('#lbShrink').classList.contains('show'),
+        read: !!document.querySelector('#lbLook') })""")
+    check(excl["fit"] and excl["shrink"],
+          "C106: coming back there are no cases, so the layout control is gone and the contraction "
+          "narration has that row of the hud to itself - the two are never up together (%s)" % excl)
+    fitb.close()
+
+    # THE SAME REQUIREMENT IS A DIFFERENT PICTURE AT A SMALLER RESIDENCE, which is the whole of
+    # "interpretable spatial tradeoff": a five-foot turning circle is a corner of the teepee and half
+    # of the van, and the geometry says so without printing a second number anywhere.
+    fitv = hall("C106-van", {"phase": "out", "t": 0.775, "signed": True})
+    face(fitv, -1)
+    waits(fitv, "() => !document.querySelector('#lbFit').hidden")
+    _, cv, txv = fit_at(fitv, "van", "movement")
+    check(cv["foot"] < ct["foot"] and cv["cost"]["w"] > ct["cost"]["w"] * 1.5,
+          "C106: the same requirement takes a far bigger share of a smaller residence - 25 sq ft of "
+          "%d at the van against 25 of %d at the teepee, and the block in the case is %.2fx wider"
+          % (cv["foot"], ct["foot"], cv["cost"]["w"] / ct["cost"]["w"] if ct["cost"]["w"] else 0))
+    fitv.close()
 
     lwclean = [e for e in lwerrs if "favicon" not in e and "jsdelivr" not in e.lower()
                and "lilbf-van-cozy" not in e and "lilbf-van-horror" not in e and "lilbf-car-cozy" not in e]

@@ -411,6 +411,58 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
   .lb-stage.mode-scroll .lb-sound{display:block}
   .lb-sound[aria-pressed="true"]{background:rgba(230,198,122,.5); color:#2c1e14}
 
+  /* ---- C109: the same choice, offered in the museum, and the readout for whoever declines it ------
+     4.7 hid this control outside the chapters because "the museum has no timeline for a layer to
+     ride". C109 gives it one - room tones banded by how close the visitor is standing to each case -
+     so the choice has to be reachable from the hall as well. It is the SAME button, the same context
+     and the same gain: a second sound control would be a second thing to keep in step with the first,
+     and a museum visitor who already chose in the chapters has already chosen here.
+
+     ONLY WHEN THERE IS A HALL. `.lb-3d` is written on the stage by run3D() once the scene is actually
+     up, not by the WebGL probe - the flat gallery is a step list with no distance to band, so it gets
+     no tones and offers no choice about them, exactly as C012's route strip is the 3D hud only. That
+     class is also why 4.7's "the button is not on screen in the museum" half still passes on the
+     no-WebGL fixture it is driven on: there is no hall there either.
+
+     IT MOVES, because the top-left corner is not free in here. The centred hint, prompt and shrink
+     pills own the top of the stage and the two 84px walk circles own the bottom corners (bottom:14 to
+     98), which leaves the left edge ABOVE the WALK circle as the one clear column on this hud. The
+     readout sits one row above the button it explains. */
+  .lb-stage.lb-3d:not(.mode-scroll) .lb-sound{display:block; left:12px; right:auto; top:auto; bottom:106px;
+      max-width:calc(50% - 20px)}
+  /* the muted cue. A READOUT, in .lb-hud and therefore pointer-events:none - what it says is what the
+     tone would be saying, off the same band array, so a visitor with the sound off is told which room
+     they are standing in and how close rather than told nothing. It is on screen only while the sound
+     is off, because while it is on the sound IS the cue and two of them is one too many. */
+  .lb-hud .lb-tone{position:absolute; left:12px; bottom:142px; z-index:3; margin:0; max-width:calc(50% - 20px);
+      color:#f2e6cf; background:rgba(20,16,12,.66); border:1px solid rgba(230,198,122,.45);
+      padding:5px 10px; border-radius:999px; font-size:10px; line-height:1.35; font-weight:800;
+      letter-spacing:.08em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      opacity:0; transition:opacity .5s ease}
+  .lb-hud .lb-tone.show{opacity:1}
+
+  /* ---- C106: the in-case layout control ----------------------------------------------------------
+     IT CANNOT LIVE IN THE READING PANEL, and that is the whole reason it is here. `.lb-panel .card`
+     is centred over the stage and the case is behind it - the same geometry that makes C110's lens
+     invisible while the panel is up - so a control that changes what is inside the case has to be on
+     the hud, where the case it changes is in view.
+
+     THE TOP-RIGHT ROW BELOW THE MODE BUTTON IS FREE, and it is free of the shrink pill for a reason
+     rather than by luck: the pill is only ever on screen while the walls are closing (the return leg)
+     and this group is only ever on screen at a case (the way out), so the two can never be up at once.
+     The buttons carry pointer-events:auto because .lb-hud sets none. */
+  .lb-hud .lb-fit{position:absolute; right:10px; top:54px; z-index:3; display:flex; flex-direction:column;
+      align-items:flex-end; gap:4px; max-width:calc(50% - 16px)}
+  .lb-hud .lb-fit[hidden]{display:none}
+  .lb-hud .lb-fit-b{pointer-events:auto; font-family:"Nunito",system-ui,sans-serif; font-weight:800;
+      font-size:10px; letter-spacing:.1em; color:#fffdf8; background:rgba(20,16,12,.72);
+      border:1.5px solid var(--gold); border-radius:999px; padding:5px 11px; cursor:pointer;
+      -webkit-user-select:none; user-select:none; white-space:nowrap}
+  .lb-hud .lb-fit-b[aria-pressed="true"]{background:rgba(230,198,122,.88); color:#2c1e14}
+  .lb-hud .lb-fit-out{margin:2px 0 0; text-align:right; color:#f2e6cf; background:rgba(20,16,12,.66);
+      border:1px solid rgba(230,198,122,.45); padding:5px 9px; border-radius:10px;
+      font-size:9.5px; line-height:1.4; font-weight:700; letter-spacing:.04em}
+
   /* the scroll chapters. One vertical run inside the stage, so the STAGE is the viewport the chapters
      are measured against - not window.innerHeight, which is a different number inside the television.
      Card and source styling is the flat gallery's, reused verbatim rather than restated. */
@@ -530,7 +582,10 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
     from{transform:translateZ(calc(-1 * var(--lb-depth))); opacity:.5}
     to{transform:translateZ(0); opacity:1}}
   .lb-scroll .lb-ch-inner{animation:lbWalkIn linear both;
-      animation-timeline:view(block); animation-range:entry 0% entry 100%}
+      animation-timeline:view(block); animation-range:entry 0% entry 100%;
+      /* C103: and the SAME range, published under a name, because a layer nested inside this element
+         cannot ask for it anonymously - see the C103 block below for why. */
+      view-timeline:--lbpar block}
 
   /* the no-clip guard, and it is a guard rather than the design: a chapter is a fixed one stage tall, so
      without this a stage shorter than anything below anticipates would hide the last citation behind the
@@ -540,6 +595,83 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
   .lb-scroll .lb-ch-n{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:rgba(44,30,20,.6); margin:0 0 4px}
   .lb-scroll .lb-ch h3{font-style:italic; font-weight:400; font-size:clamp(20px,6vw,26px); text-decoration:underline; text-underline-offset:3px; margin:0 0 10px}
   .lb-scroll .lb-ch-photo{width:100%; flex:1 1 0; min-height:70px; aspect-ratio:auto; object-fit:cover; border:6px solid #c9a24c; outline:2px dashed rgba(44,30,20,.5); outline-offset:-10px; display:block; margin:0 0 12px}
+
+  /* ---- C103: two photographs given shallow depth, out of the jpgs that are already in the tree ----
+     NO NEW ART, AND THAT IS THE CONSTRAINT THE WHOLE DESIGN IS SHAPED BY. C013 wants these six pairs
+     re-authored and is blocked on a generator this machine does not have, so a depth pass that needs
+     cut-outs needs C013 first. It does not need them: the teepee and the car are both photographs
+     whose depth runs in HORIZONTAL BANDS - pale wall / teepee and pencils / open notebook and figure
+     on one, sunset field through the glass / seats and dash / mattress and bumper on the other - so
+     the layers are the same file three times under three SOFT gradient masks, at three travel rates.
+     A soft mask has no edge to expose, which is the acceptance's "without exposing cutout seams" met
+     by construction rather than by careful placement, and every layer is the same pixels in the same
+     place, so nothing about the composition's meaning moves either.
+
+     THE REST STATE IS THE FLAT COMPOSITE, and that is what makes reduced motion one line. The `to`
+     frame of all three keyframes is translateY(0): the three layers land exactly on top of each other
+     and the masked ones composite back to the base photograph, pixel for pixel. So `animation:none`
+     in the reduced-motion block below leaves the ORIGINAL image on screen rather than stranding a
+     layer at the far end of its travel - 4.8's rule, second form, and it is also what a browser with
+     no scroll-driven animations gets, with no @supports guard.
+
+     THE TIMELINE IS NAMED, AND A BARE `view(block)` HERE IS SILENTLY DEAD. A view timeline resolves
+     against the subject's nearest ANCESTOR scroll container, and `.lb-ch-inner` carries
+     `overflow-y:auto` - 4.2's no-clip guard - which makes it one. So an anonymous `view(block)` on a
+     layer inside it measures the layer against a box the layer never leaves, latches at 100% on the
+     first frame and never moves again: the depth would be missing and every static assertion about it
+     would still be green. 4.8's animation is on `.lb-ch-inner` ITSELF, whose own scrollport is the
+     scroll run, which is why that one works and this one cannot be written the same way.
+     So `.lb-ch-inner` publishes its range as `--lbpar` and the three layers name it: the timeline is
+     the one 4.8 already proved, all three layers share it and cannot drift apart, and the range is
+     `entry` for 4.8's reason - `cover` runs to the end of the whole scroll on a chapter that pins and
+     never leaves, so the depth would keep creeping under five later chapters.
+
+     THE BASE LAYER IS STILL THE <img class="lb-ch-photo">, not a fourth div: it keeps the alt text,
+     the lazy loading and the decode that 4.9's "all six chapters resolve their own photograph" check
+     reads off `naturalWidth`. The two masked layers are decorative spans of the SAME url, which the
+     browser serves from the one decode. The frame carries the sizing and the border the img used to,
+     so 4.2's "every chapter is exactly one stage tall" measures the same box it always did. */
+  .lb-scroll .lb-par{position:relative; overflow:hidden; width:100%; flex:1 1 0; min-height:70px;
+      border:6px solid #c9a24c; outline:2px dashed rgba(44,30,20,.5); outline-offset:-10px;
+      display:block; margin:0 0 12px}
+  /* the layers overscan the frame by 14% so a 7% travel can never bring an edge into it - "constrained
+     parallax inside their frame" is overflow:hidden plus this, and neither alone is enough. The two
+     numbers are not in the same units, which is the thing to check before touching either: the inset
+     is a percentage of the FRAME and the travel is a percentage of the LAYER, and the layer is 1.28
+     frames tall - so 7% of travel wants 9% of frame to hide in, and 14 is that with room. Measured at
+     the tightest position (chapter one arriving on an 800px stage, where 4.8's perspective is also
+     shrinking everything): 7px of cover left over.
+     WIDTH AND HEIGHT ARE WRITTEN OUT, not left to the insets: `width:auto` on an absolutely positioned
+     REPLACED element resolves to the image's INTRINSIC size, so the base layer laid itself out at 1024
+     wide inside a 366px frame and object-fit had nothing to fit. Measured: 647px of overhang on one
+     side. The two masked layers are spans and did the right thing, which is exactly how a bug like
+     that survives a glance at the picture. */
+  .lb-scroll .lb-par .lb-ch-photo,
+  .lb-scroll .lb-par .lb-par-l{position:absolute; left:-14%; top:-14%; width:128%; height:128%;
+      min-height:0; margin:0; border:0; outline:0; display:block; object-fit:cover;
+      background-size:cover; background-position:center;
+      animation-timing-function:linear; animation-fill-mode:both;
+      animation-timeline:--lbpar; animation-range:entry 0% entry 100%}
+  .lb-scroll .lb-par .lb-par-bg{animation-name:lbPar0}
+  .lb-scroll .lb-par .lb-par-mid{animation-name:lbPar1}
+  .lb-scroll .lb-par .lb-par-fg{animation-name:lbPar2}
+  @keyframes lbPar0{ from{transform:translateY(-3%)}  to{transform:translateY(0)} }
+  @keyframes lbPar1{ from{transform:translateY(2.6%)} to{transform:translateY(0)} }
+  @keyframes lbPar2{ from{transform:translateY(7%)}   to{transform:translateY(0)} }
+  /* THE MASKS ARE THE AUTHORING - one pair of bands per photograph, read off that photograph and off
+     no rule. Teepee: the wall stops around 46% and the notebook's front edge comes up from 55%, so
+     the middle band holds the tent and the pencils and the foreground band is the paper the figure is
+     standing on. Car: the glass and the field end around 42% and the mattress starts around 52%, so
+     the middle band is the seats and the dash and the foreground is the bed and the bumper. Every
+     stop is a fade, never a hard edge; the background layer carries no mask at all because it is the
+     whole photograph and the other two are laid back over the parts of it that are nearer. */
+  .lb-scroll .lb-par[data-par="teepee"] .lb-par-mid{--lb-band:linear-gradient(to bottom,transparent 26%,#000 42%,#000 58%,transparent 70%)}
+  .lb-scroll .lb-par[data-par="teepee"] .lb-par-fg{--lb-band:linear-gradient(to bottom,transparent 50%,#000 66%,#000 100%)}
+  .lb-scroll .lb-par[data-par="car"] .lb-par-mid{--lb-band:linear-gradient(to bottom,transparent 18%,#000 34%,#000 56%,transparent 68%)}
+  .lb-scroll .lb-par[data-par="car"] .lb-par-fg{--lb-band:linear-gradient(to bottom,transparent 46%,#000 62%,#000 100%)}
+  .lb-scroll .lb-par .lb-par-mid,
+  .lb-scroll .lb-par .lb-par-fg{-webkit-mask-image:var(--lb-band); mask-image:var(--lb-band)}
+
   .lb-scroll .fl-card{flex:0 0 auto; border:1px solid rgba(44,30,20,.35); background:rgba(255,253,246,.55); padding:9px 12px; margin:0 0 8px; font-size:14px; line-height:1.35}
   .lb-scroll .fl-card:last-child{margin-bottom:0}
   .lb-scroll .fl-card .fl-src{display:block; margin-top:5px; font-size:11.5px; color:rgba(44,30,20,.62)}
@@ -665,6 +797,11 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
        is enough: the `to` frame IS the rest state, so this leaves full size and full ink rather than
        stranding a chapter at the far end of the hall. */
     .lb-scroll .lb-ch-inner{animation:none}
+    /* C103's flat composite, and it is the SAME argument as the line above rather than a second
+       decision: the `to` frame of all three parallax keyframes is translateY(0), so removing the
+       animation lands the three layers exactly on top of one another and the masked pair composites
+       back into the photograph they were cut from. Nothing moves, and nothing is missing. */
+    .lb-scroll .lb-par .lb-ch-photo, .lb-scroll .lb-par .lb-par-l{animation:none}
   }
 
   /* the stage is NOT the window, and the difference is the whole reason this is a container query and
@@ -698,6 +835,9 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
     .lb-scroll .lb-restore p{font-size:12.5px}
     .lb-scroll .lb-ch h3{font-size:20px; margin:0 0 5px}
     .lb-scroll .lb-ch-photo{min-height:34px; border-width:5px; margin:0 0 6px}
+    /* C103's frame took over the img's sizing, so it takes over the short-stage tuning with it - a
+       parallax chapter that kept the 70px floor here would be the one chapter taller than a stage. */
+    .lb-scroll .lb-par{min-height:34px; border-width:5px; margin:0 0 6px}
     .lb-scroll .fl-card{font-size:12.5px; line-height:1.22; padding:5px 9px; margin:0 0 4px}
     .lb-scroll .fl-card .fl-src{margin-top:4px; font-size:10.5px}
   }
@@ -737,6 +877,24 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
            the wall is standing on, and says out loud that the last one is the last - both off the same
            wallHalf() the hall itself is scaled by. -->
       <div class="lb-shrink" id="lbShrink"></div>
+      <!-- C109: what the room tone is saying, for a visitor who has the sound off. It is written from
+           the same distance bands the gains are, so it cannot say one thing while the hall says
+           another, and it is only on screen while the sound is off. A readout, inside .lb-hud's
+           pointer-events:none - the choice itself is the SOUND button, which C109 brings into the
+           museum rather than adding a second one. -->
+      <p class="lb-tone" id="lbTone" role="status"></p>
+      <!-- C106: the miniature layout, wired from the hud because the reading panel is centred OVER
+           the case it would be changing. Four controls: three requirements and the way back to
+           nothing, which is the row's "immediate reset" - it is a peer of the other three rather than
+           a separate undo, so clearing is one press from wherever the visitor is. The readout under
+           them carries MOM Inc's own fictional dimensions and says so. -->
+      <div class="lb-fit" id="lbFit" hidden>
+        <button type="button" class="lb-fit-b" id="lbFitPrivacy" data-fit="privacy" aria-pressed="false">PRIVACY</button>
+        <button type="button" class="lb-fit-b" id="lbFitStorage" data-fit="storage" aria-pressed="false">STORAGE</button>
+        <button type="button" class="lb-fit-b" id="lbFitMovement" data-fit="movement" aria-pressed="false">MOVEMENT</button>
+        <button type="button" class="lb-fit-b" id="lbFitNone" data-fit="" aria-pressed="true">CLEAR</button>
+        <p class="lb-fit-out" id="lbFitOut" role="status"></p>
+      </div>
       <!-- C012: filled from EXHIBITS by run3D(), because six hardcoded marks here would be a second
            copy of the route to keep in step with the first. -->
       <ol class="lb-route" id="lbRoute" aria-label="Your route through the museum"></ol>

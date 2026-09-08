@@ -1026,6 +1026,10 @@ export default {
       if (scroll) buildScroll();
       lbStage.classList.toggle("mode-scroll", scroll);
       pushTone();     // 4.7: the sound layer belongs to the chapters' timeline. Leaving them silences it.
+      /* C109: and the museum's own tones are the mirror of that - the chapters have no cases to be
+         near, so the six voices go to silence here rather than in the frame loop, which stops running
+         its body the moment the mode changes. Also the muted cue, which belongs to the hall. */
+      syncRooms(null);
       if (!modeBtn) return;
       modeBtn.textContent = scroll ? "MUSEUM" : "CHAPTERS";
       modeBtn.setAttribute("aria-label", scroll ? "Switch to the museum walk" : "Switch to the scroll chapters");
@@ -1344,8 +1348,145 @@ export default {
       if (actx.state === "suspended") actx.resume().catch(() => {});
       soundOn = !soundOn;
       pushTone();
+      syncRooms(null);   // C109: the museum's own voices follow the same one choice
       labelSound();
     });
+
+    /* ---- C109: the museum's room tones, banded by distance, with hysteresis -----------------------
+       4.7 said the museum had no timeline for a sound layer to ride. It has a better one than the
+       chapters do: a visitor's own position in a 60-unit hall. So each of the six exhibits gets ONE
+       authored tone and the gain it is heard at is decided by which distance BAND the visitor is
+       standing in - close, nearby, or far enough that the room is not theirs. Walking from one case
+       to the next fades one down while the other comes up, over the same stretch, which is the
+       crossfade the row asks for rather than a second mechanism bolted beside it.
+
+       IT IS THE SAME CONTEXT, THE SAME CHOICE AND THE SAME BUTTON. 4.7's whole design is that nothing
+       audible exists until the visitor asks for it, and that the way back out is the GAIN rather than
+       a second context - so these six voices are built LAZILY, on the first frame the museum is
+       running with the sound already turned on, and are never built at all on a page whose visitor
+       never pressed it. A channel that constructed six oscillators on mount and left them at zero
+       would be the exact thing 4.7's platform instrumentation exists to catch.
+
+       ONE TONE PER EXHIBIT, AND THE HALL IS SILENT BETWEEN THEM. The six are 7.5 units apart and the
+       far edge of the middle band is 5.2, so standing at a case there is exactly ONE voice above zero
+       - that is "without audio leaking across the hall", and it is a property of the numbers rather
+       than of a mute somewhere. Halfway between two cases both are in the middle band, which is the
+       only place two voices are ever up at once, and that is the crossfade.
+
+       THE HYSTERESIS IS THE ROW. A band decided by a bare comparison chatters: a visitor standing
+       still on a boundary with a hand on WALK re-ramps six gains a second, and a gate that only samples
+       which band the distance falls in passes that build. So a band CHANGES only when the distance has
+       cleared the edge it is leaving by ROOM_HYST - the threshold for getting closer and the threshold
+       for backing off are 1.1 units apart, and the gate measures both and asserts they differ.
+
+       THE GAIN IS PUSHED ON A CHANGE, NEVER PER FRAME. Same one-key-memo rule as syncHint, syncShrink
+       and syncRoute: setTargetAtTime sixty times a second is the habit C016 spent a packet breaking,
+       and the automation the driver records off AudioParam.prototype would be unreadable. Which is
+       also why the hysteresis is not merely a nicety - it is what makes the memo's key stable. */
+    const ROOM_HZ = { teepee: 96, car: 128, shoebox: 152, storage: 174, masonjar: 208, van: 240 };
+    /* THE CLOSE EDGE IS NOT A TASTE NUMBER: it has to CONTAIN the range in which this channel already
+       says the visitor is at a case. nearestReadable() opens the reading panel, the layout control and
+       the tutorial inside 2.4 units of the wall anchor, so a close band that starts closer than that
+       puts the visitor at a case - hud up, case lit - while the room tone is still saying NEARBY, and
+       the muted readout says NEARBY in words beside a control that says the opposite.
+       The first cut was 2.6, which sounds like it clears 2.4 and does not: hysteresis means the band is
+       ENTERED at edge - HYST = 2.05, a third of a metre INSIDE the readable range, and the gate caught
+       exactly that - standing at a case, band NEARBY, gain 0.016. The number that matters is the entry
+       threshold, not the edge, so it is the entry threshold that is sized: 3.1 - 0.55 = 2.55, which
+       covers the whole of 2.4 with margin. The far edge is untouched and still does the other half of
+       the row's claim - the six are 7.5 apart, so a neighbour is silent at a case either way. */
+    const ROOM_EDGE = [3.1, 5.2];              // upper edge of "close", upper edge of "nearby"
+    const ROOM_HYST = 0.55;                    // how far past an edge the distance must go to change band
+    const ROOM_LEVEL = [0.05, 0.016, 0];       // close, nearby, the hall - and the hall is silence
+    const ROOM_BAND_NAME = ["CLOSE", "NEARBY"];
+    const ROOM_TC = 0.35;                      // the crossfade itself, in one number
+    let rooms = null, roomLive = false;
+    const roomBand = EXHIBITS.map(() => 2);          // everybody starts in the hall
+    const roomWant = EXHIBITS.map(() => -1);         // what was last pushed, so nothing is pushed twice
+    /* which band a distance is in, GIVEN the band it was in - the second argument is the whole
+       feature. Moving outward, the edge does not count until the distance is HYST past it; moving
+       inward, not until it is HYST short of it. A jump of two bands is legal and lands directly. */
+    function roomBandOf(d, prev) {
+      let b = 0;
+      while (b < ROOM_EDGE.length && d >= ROOM_EDGE[b]) b++;
+      if (b > prev && d < ROOM_EDGE[prev] + ROOM_HYST) return prev;
+      if (b < prev && d > ROOM_EDGE[b] - ROOM_HYST) return prev;
+      return b;
+    }
+    function buildRooms() {
+      rooms = EXHIBITS.map(ex => {
+        const o = actx.createOscillator(), g = actx.createGain();
+        o.type = "sine";
+        o.frequency.value = ROOM_HZ[ex.id];   // authored, and set once: the tone of a room does not
+        g.gain.value = 0;                     // slide, only how much of it reaches the visitor
+        o.connect(g).connect(actx.destination);
+        o.start();
+        // `level` is the PARAM, not the node. A GainNode has no setTargetAtTime of its own, and the
+        // one that does is a property of it - so the two are named apart here rather than left to be
+        // confused at the call site, where the mistake throws INSIDE the frame loop and takes the
+        // museum with it (the throw escapes before ctx.frame(frame) re-queues; the hall stops dead).
+        return { osc: o, node: g, level: g.gain };
+      });
+    }
+    /* the muted half of the row, and it says what the tone would be saying rather than something
+       adjacent to it: both read the same roomBand array, one frame apart from nothing. Off screen
+       while the sound is on, because then the sound is the cue. */
+    const toneCue = byId("lbTone");
+    let toneKey = "";
+    function syncToneCue(dists) {
+      if (!toneCue) return;
+      const off = !!dists && !soundOn && ST.mode === "museum";
+      let near = -1, nd = Infinity;
+      if (off) {
+        for (let i = 0; i < EXHIBITS.length; i++) if (dists[i] < nd) { nd = dists[i]; near = i; }
+        if (near >= 0 && roomBand[near] > 1) near = -1;
+      }
+      const key = (off ? "1" : "0") + "|" + near + "|" + (near < 0 ? "" : roomBand[near]);
+      if (key === toneKey) return;
+      toneKey = key;
+      toneCue.textContent = !off ? ""
+        : near < 0 ? "SOUND OFF · THE HALL · NO ROOM TONE"
+        : "SOUND OFF · " + EXHIBITS[near].short + " ROOM · " + ROOM_BAND_NAME[roomBand[near]];
+      toneCue.classList.toggle("show", off);
+    }
+    /* Called from the museum's frame loop with the six live distances, and with null from anywhere
+       the museum is not running - applyMode() when the chapters take the stage, and the sound button,
+       which has to reach voices that may not have been built when it was last pressed. */
+    function syncRooms(dists) {
+      if (dists) for (let i = 0; i < EXHIBITS.length; i++) roomBand[i] = roomBandOf(dists[i], roomBand[i]);
+      const live = !!dists && soundOn && ST.mode === "museum";
+      if (live && !rooms && actx) buildRooms();
+      if (rooms) {
+        const t = actx.currentTime, all = live !== roomLive;
+        for (let i = 0; i < EXHIBITS.length; i++) {
+          const want = live ? ROOM_LEVEL[roomBand[i]] : 0;
+          if (!all && want === roomWant[i]) continue;
+          roomWant[i] = want;
+          rooms[i].level.setTargetAtTime(want, t, ROOM_TC);
+        }
+      }
+      roomLive = live;
+      syncToneCue(dists);
+    }
+
+    /* ---- C103: which two photographs get the depth pass, and why it is only two -------------------
+       "The two strongest exhibit photos" is the row's own bound, and these are the two whose depth
+       actually runs in horizontal bands: the teepee (pale wall, tent and pencils, the open notebook
+       the figure stands on) and the car (the field through the glass, the seats and dash, the mattress
+       and the bumper). The other four are flatter compositions where a soft band would separate
+       nothing, and separating nothing at three travel rates is a picture that wobbles. The layering
+       itself - three soft masks, one shared view-timeline, the flat composite at rest - is entirely in
+       the stylesheet; what is here is which files it happens to, and the base layer staying an <img>
+       so 4.9 still reads a real photograph off every chapter. */
+    const PARALLAX = ["teepee", "car"];
+    const chapterPhoto = ex => {
+      const img = '<img class="lb-ch-photo' + (PARALLAX.indexOf(ex.id) < 0 ? '' : ' lb-par-l lb-par-bg')
+        + '" src="' + ex.cozy + '" alt="' + esc(ex.label) + '" loading="lazy">';
+      if (PARALLAX.indexOf(ex.id) < 0) return img;
+      const layer = k => '<span class="lb-par-l lb-par-' + k + '" aria-hidden="true" style="background-image:url('
+        + ex.cozy + ')"></span>';
+      return '<div class="lb-par" data-par="' + ex.id + '">' + img + layer("mid") + layer("fg") + '</div>';
+    };
 
     function buildScroll() {
       if (scrollEl) return scrollEl;
@@ -1357,7 +1498,7 @@ export default {
           <div class="lb-ch-inner">
             <p class="lb-ch-n">Chapter ${i + 1} of ${EXHIBITS.length}</p>
             <h3>${ex.label}</h3>
-            <img class="lb-ch-photo" src="${ex.cozy}" alt="${ex.label}" loading="lazy">
+            ${chapterPhoto(ex)}
             ${FACTS[ex.id].map(f => `<div class="fl-card">${bodyHTML(f.body)}<span class="fl-src">${f.src}</span></div>`).join("")}
           </div>
         </section>`).join("");
@@ -1775,6 +1916,53 @@ export default {
         // constants above rather than typed as a sixth number that could drift off them
         const FIGURE_FLOOR = CASE_CY - (CASE_H - 0.05) / 2;
 
+        /* ---- C106: the miniature layout, and the one strip of case it can be seen in --------------
+           WHAT IS ACTUALLY VISIBLE INSIDE A CASE IS SMALLER THAN THE CASE. The photograph hangs in
+           FRONT of the glass at CASE_SCALE, so it covers the middle of the pane - 0.225 either side
+           of centre and 0.157 above and below it - and C102's figure already stands in one flank.
+           What is left, and it is the only thing left, is the strip of alcove FLOOR below the photo:
+           0.24 of height under it, running the width of the case, on the side the figure is not on.
+           So the layout is that floor, divided, at the scale of the person standing on it.
+
+           THE DIVISION IS THE POINT, NOT THE BLOCK. A single lump labelled "storage" says nothing a
+           caption would not; two pieces end to end - what the selection takes, and what is left of
+           the residence after it - is a tradeoff a visitor reads off the geometry without being told
+           the arithmetic. The taken piece is gold and stands 0.11 tall; the remainder is a dull kerb
+           at 0.025, because "what is left" is floor rather than furniture.
+
+           THE WIDTHS ARE DERIVED, THE DIMENSIONS ARE AUTHORED. Each option carries MOM Inc's own
+           fictional footprint in feet, and the block is that footprint as a FRACTION of the exhibit's
+           own square footage - which is 4.4's shipped sqftAt() curve, read, never re-cut. So the same
+           five-foot turning circle is a seventh of the teepee and half the van, and the tradeoff gets
+           worse down the hall exactly as everything else on this channel does. Nothing here invents a
+           measurement about a real home: the feet are the programme's own brochure spec, said to be
+           fiction in the readout, in the same register C105's clause and C107's promises are written.
+
+           ONE GEOMETRY AND TWO MATERIALS FOR ALL TWELVE MESHES, C102's identity rule carried forward -
+           a unit box scaled per selection rather than twelve boxes that agree today. */
+        const FIT = [
+          { k: "privacy",  label: "PRIVACY",  dim: "3 ft x 4 ft", sqft: 12, what: "a partition and the standing room behind it" },
+          { k: "storage",  label: "STORAGE",  dim: "2 ft x 4 ft", sqft: 8,  what: "one locker, floor to ceiling" },
+          { k: "movement", label: "MOVEMENT", dim: "5 ft x 5 ft", sqft: 25, what: "room to stand up and turn around" }
+        ];
+        /* FIT_Z0 is the end of the case the division starts from and FIT_BAND is how far it runs
+           toward the other end. They are not symmetric on purpose: the alcove is 0.8 wide, the figure
+           stands with its own 0.036 of silhouette around |z| 0.26 to 0.32, and 0.38 running 0.56 stops
+           at |z| 0.18 - 0.044 short of the nearest thing that person occupies. A band centred on the
+           case would run through their shins. */
+        const FIT_Z0 = 0.38;
+        const FIT_BAND = 0.56;        // the floor the division is laid across, in case-local z
+        const FIT_DEPTH = 0.012;      // inside the 0.02 readable gap, like the figure
+        const FIT_COST_H = 0.11, FIT_REST_H = 0.025;
+        const FIT_TOP = CASE_CY - PHOTO_H * CASE_SCALE / 2;   // the photograph's bottom edge: the ceiling here
+        const fitBox = new THREE.BoxGeometry(1, 1, 1);
+        const fitCostMat = new THREE.MeshBasicMaterial({ color: 0xe6c67a });
+        const fitRestMat = new THREE.MeshBasicMaterial({ color: 0x4a4134 });
+        // the exhibit's own residence, off 4.4's curve. sqftAt is a const declared below run3D's own
+        // definition and this is only ever reached from the import's .then, which is the same TDZ
+        // argument caseFileText() is written under.
+        const fitFootprint = i => sqftAt(i + 1);
+
         const exhibitObjs = EXHIBITS.map(ex => {
           const photoGroup = new THREE.Group(); scene.add(photoGroup);
           const photoMat = new THREE.MeshStandardMaterial({ roughness: 0.9 });
@@ -1818,10 +2006,21 @@ export default {
           figure.scale.setScalar(FIGURE_H);
           caseDecor.add(figure);
 
+          /* C106: the layout, laid on the floor AWAY FROM THE FIGURE. `fitSide` is the end of the case
+             the division starts from - the opposite end to whichever flank this exhibit's person is
+             standing in - and the band stops 0.56 short of running under their feet. Both pieces are
+             hidden until something is selected, which is also the reset state. */
+          const fitSide = fg.z > 0 ? -1 : 1;
+          const fitCost = new THREE.Mesh(fitBox, fitCostMat);
+          const fitRest = new THREE.Mesh(fitBox, fitRestMat);
+          fitCost.name = ex.id + "-fit-cost"; fitRest.name = ex.id + "-fit-rest";
+          fitCost.visible = fitRest.visible = false;
+          caseDecor.add(fitCost, fitRest);
+
           const spot = new THREE.SpotLight(0xfff0d0, 1.3, 6, 0.55, 0.45, 1.6);
           const spotTarget = new THREE.Object3D();
           scene.add(spot, spotTarget); spot.target = spotTarget;
-          return { cfg: ex, photoGroup, photo, photoMat, plate, wallGroup, placards, caseDecor, spot, spotTarget, texKeyCozy: ex.cozy, texKeyHorror: ex.horror };
+          return { cfg: ex, photoGroup, photo, photoMat, plate, wallGroup, placards, caseDecor, spot, spotTarget, fitCost, fitRest, fitSide, texKeyCozy: ex.cozy, texKeyHorror: ex.horror };
         });
 
         function updateExhibit(e, rp, caseMode) {
@@ -2237,6 +2436,60 @@ export default {
         }
         ctx.on(lookBtn, "click", toggleRead);
 
+        /* ---- C106: the selection, and what it does to the case in front of the visitor -------------
+           NOTHING IS SAVED. The row asks for a prototype with an immediate reset, and a selection that
+           outlived the walk would be a fourth thing in the save file for a visitor to be resumed into
+           without asking - so CLEAR is a peer of the other three rather than an undo, walking away
+           from the case clears it too, and sanitize() never hears about any of it.
+
+           IT IS LEVEL-TRIGGERED FROM THE FRAME LOOP LIKE EVERY OTHER HUD WRITER HERE, through the same
+           one-key memo: the key is which case is in range plus what is selected, so the geometry and
+           the four aria-pressed attributes are written when one of those changes and not sixty times
+           a second. The click handler calls it straight afterwards rather than waiting for the next
+           frame, because on a software renderer a frame is over a tenth of a second and "immediate"
+           is the acceptance's own word. */
+        const fitEl = byId("lbFit"), fitOut = byId("lbFitOut");
+        const fitBtns = fitEl ? Array.prototype.slice.call(fitEl.querySelectorAll(".lb-fit-b")) : [];
+        let fitPick = "", fitKey = "";
+        function placeFit(e, opt, foot) {
+          // the taken piece and what is left of the floor, end to end from the end of the case the
+          // figure is NOT standing in. x is 0: mid-way across the 0.02 the alcove face and the glass
+          // leave between them, the same gap C102's figure stands in.
+          const w = FIT_BAND * Math.min(1, opt.sqft / foot), rest = FIT_BAND - w, s = e.fitSide;
+          e.fitCost.scale.set(FIT_DEPTH, FIT_COST_H, w);
+          e.fitCost.position.set(0, FIGURE_FLOOR + FIT_COST_H / 2, s * (FIT_Z0 - w / 2));
+          e.fitCost.visible = true;
+          e.fitRest.scale.set(FIT_DEPTH, FIT_REST_H, Math.max(0.001, rest));
+          e.fitRest.position.set(0, FIGURE_FLOOR + FIT_REST_H / 2, s * (FIT_Z0 - w - rest / 2));
+          e.fitRest.visible = rest > 0.01;
+        }
+        function syncFit(e, caseMode) {
+          if (!fitEl) return;
+          // the reading panel is centred OVER the case, so offering this while it is up would be
+          // offering a control whose whole output is behind the thing the visitor is reading
+          const on = !!e && caseMode && !zoomOpen && !readOpen;
+          if (!on) fitPick = "";
+          const key = (on ? e.cfg.id : "-") + "|" + fitPick;
+          if (key === fitKey) return;
+          fitKey = key;
+          fitEl.hidden = !on;
+          fitBtns.forEach(b => b.setAttribute("aria-pressed", (b.dataset.fit || "") === fitPick ? "true" : "false"));
+          exhibitObjs.forEach(o => { o.fitCost.visible = o.fitRest.visible = false; });
+          if (!on) { fitOut.textContent = ""; return; }
+          const foot = fitFootprint(EXHIBITS.indexOf(e.cfg));
+          const opt = FIT.filter(f => f.k === fitPick)[0];
+          if (opt) placeFit(e, opt, foot);
+          fitOut.textContent = opt
+            ? opt.label + " · " + opt.dim + " · " + opt.sqft + " of " + foot
+              + " sq ft. MOM Inc's own spec for this residence, and fiction, like the brochure it came in."
+            : "Nothing selected · " + foot + " sq ft, as advertised.";
+        }
+        fitBtns.forEach(b => ctx.on(b, "click", () => {
+          fitPick = b.dataset.fit || "";
+          fitKey = "";
+          syncFit(nearestReadable(shrinkProgress()), ST.phase === "out");
+        }));
+
         /* ---- C019: focus, when a panel opens and when it closes.
            A panel that opens takes focus; closing hands it back to whatever had it. Without the first
            half a keyboard visitor is told nothing opened and has to hunt for the new controls; without
@@ -2421,6 +2674,11 @@ export default {
           // resource's own start time without either number crossing a process boundary first.
           // Removed in unmount() with the other hooks.
           window.__lbBooted = performance.now();
+          /* C109: there IS a hall now, so there is something for a sound layer to ride and the choice
+             that gates it has to be reachable from in here. Written when the scene is actually up
+             rather than off the WebGL probe: the probe passes on a browser whose three.js import then
+             fails, and that visitor gets the flat gallery, which has no distance to band. */
+          lbStage.classList.add("lb-3d");
           window.__lbPhotos = () => exhibitObjs.map(e => {
             const im = e.photoMat.map && e.photoMat.map.image;
             return im ? String(im.currentSrc || im.src || "?") : null;
@@ -2463,6 +2721,38 @@ export default {
             centre: [lensMat.uniforms.centre.value.x, lensMat.uniforms.centre.value.y],
             zoom: lensMat.uniforms.zoom.value, refFrom: lensMat.uniforms.refFrom.value,
             k: lensMat.uniforms.k.value, yaw: camera.rotation.y
+          });
+          /* C109, test-only and RAW, on __lbHall's terms: the six distances this frame, the band each
+             one is currently in, and the gain last pushed for it - plus the edges and the hysteresis
+             margin the gate needs to do the arithmetic itself. Nothing here answers "is it banded
+             correctly" or "does it chatter"; finding the two different thresholds either side of one
+             boundary is the gate's job, and a hook that reported "hysteresis: yes" would be the museum
+             marking its own homework. Removed in unmount() with the others. */
+          window.__lbRooms = () => ({
+            edges: ROOM_EDGE.slice(), hyst: ROOM_HYST, levels: ROOM_LEVEL.slice(),
+            hz: EXHIBITS.map(ex => ROOM_HZ[ex.id]),
+            dist: roomDist.map(d => Math.round(d * 1000) / 1000),
+            // nothing built is nothing audible, which is 0 rather than the memo's own "never pushed"
+            band: roomBand.slice(), gain: rooms ? roomWant.slice() : roomWant.map(() => 0),
+            cue: toneCue ? toneCue.textContent : null,
+            cueShown: !!toneCue && toneCue.classList.contains("show")
+          });
+          /* C106, test-only and RAW: the two pieces of the division in every case, their scales and
+             positions, and the box they have to fit inside. Whether the taken piece is to scale
+             against the exhibit's own footprint, whether it clears the photograph above it and the
+             person beside it, and whether CLEAR actually took it away are all the gate's arithmetic. */
+          window.__lbFit = () => ({
+            box: { z0: FIT_Z0, band: FIT_BAND, gap: FIGURE_GAP, floor: FIGURE_FLOOR, top: FIT_TOP,
+                   halfZ: (CASE_W - 0.05) / 2, depth: FIT_DEPTH },
+            opts: FIT.map(f => ({ k: f.k, sqft: f.sqft, dim: f.dim })),
+            pick: fitPick,
+            cases: exhibitObjs.map((e, i) => ({
+              id: e.cfg.id, foot: fitFootprint(i), side: e.fitSide, caseVis: e.caseDecor.visible,
+              cost: { vis: e.fitCost.visible, z: e.fitCost.position.z, y: e.fitCost.position.y,
+                      w: e.fitCost.scale.z, h: e.fitCost.scale.y, x: e.fitCost.position.x,
+                      geo: e.fitCost.geometry.uuid, mat: e.fitCost.material.uuid },
+              rest: { vis: e.fitRest.visible, z: e.fitRest.position.z, w: e.fitRest.scale.z }
+            }))
           });
           exhibitObjs.forEach(paint);
           if (isReturning()) {
@@ -2508,6 +2798,9 @@ export default {
           ctx.frame(frame);
           queueRest();       // the other eleven, behind the open door
         });
+
+        // C109: one array, refilled every frame rather than six allocated sixty times a second
+        const roomDist = new Array(EXHIBITS.length).fill(Infinity);
 
         let last = performance.now();
         function frame(now) {
@@ -2562,6 +2855,18 @@ export default {
           if (zoomOpen && (nearEx !== zoomExhibit || !caseMode)) closeZoom();
           if (readOpen && !zoomOpen && nearEx !== readExhibit) closeRead();
           syncLook(!!nearEx);
+          /* C109: the six distances, raw, handed to the block that owns the AudioContext. The museum
+             reports where the visitor is standing; which band that is, what gain it earns and what the
+             muted readout says are all decided in one place beside the choice that gates them. One
+             anchor for all six - the wall this exhibit hangs on - rather than the case anchor outbound
+             and the wall anchor back: the ROOM is where the exhibit is, on both legs, and two anchors
+             would move every band by half a metre at the door for no audible reason. */
+          for (let i = 0; i < exhibitObjs.length; i++) {
+            const a = wallAnchorOf(exhibitObjs[i], rp);
+            roomDist[i] = Math.hypot(a.x - camera.position.x, a.z - camera.position.z);
+          }
+          syncRooms(roomDist);
+          syncFit(nearEx, caseMode);
           // C011: at the FIRST exhibit on the route, to a visitor who has never opened one. EXHIBITS[0]
           // rather than the string "teepee": the tutorial belongs to whichever exhibit the walk meets
           // first, and 4.11a re-authors this list. `caseMode` is C014's addition: nearEx answers on the
@@ -2839,6 +3144,8 @@ export default {
     try { delete window.__lbHall; } catch (e) { window.__lbHall = undefined; }
     try { delete window.__lbFigures; } catch (e) { window.__lbFigures = undefined; }
     try { delete window.__lbLens; } catch (e) { window.__lbLens = undefined; }
+    try { delete window.__lbRooms; } catch (e) { window.__lbRooms = undefined; }
+    try { delete window.__lbFit; } catch (e) { window.__lbFit = undefined; }
     if (!gl) return;
     const g = gl;
     gl = null;
