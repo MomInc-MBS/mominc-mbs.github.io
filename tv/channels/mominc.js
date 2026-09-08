@@ -143,7 +143,10 @@ export default {
     // realLock/realProgram/realText are NOT in this fragment's markup - the REAL PROGRAM counter the
     // thesis describes was never built. Every use below is already guarded, so these stay null exactly
     // as they were under document.getElementById. Backlog line, not this packet.
-    const lock = byId("realLock"), box = byId("realProgram"), txt = byId("realText");
+    /* PRIZE LEVEL 2 lives here now. What stood in this line was `byId("realLock")`,
+       `byId("realProgram")` and `byId("realText")`: THREE IDS THIS CHANNEL'S MARKUP NEVER CONTAINED,
+       so all three were null, every use of them sat behind a null guard, and the feature was dead in
+       a way nothing could report. Its threshold was wrong too. See the block further down. */
     const goon = byId("goon"), goonLine = byId("goonLine"), goonWho = byId("goonWho");
     const MAIL = (ctx.mbs && ctx.mbs.MAIL) || "";
     let deck = GOON_LINES.slice().sort(() => Math.random() - 0.5), clicks = 0;
@@ -190,7 +193,11 @@ export default {
         if (run !== boomRun) return;   // disarmed inside the window: this reveal is stale, drop it
         mailbar.innerHTML = `THE REAL PROGRAM IS OPEN. <a href="mailto:${MAIL}?subject=${encodeURIComponent("The real program, please")}&body=${encodeURIComponent("The family's signal is out. Send me the real program: the workouts, the diet, the mindfulness. Free, as promised.")}">Email us and every workout, the diet and the mindfulness come to you, free.</a><small>this window closes when the purple light passes</small>`;
         mi.classList.add("mail");
-        if (lock) { lock.textContent = "5/5"; box.classList.add("open"); }
+        // PRIZE LEVEL 2 opens on the reveal itself. This line used to write "5/5" into an
+        // element that did not exist and open a box that did not exist; it is the same dead
+        // pair the block near the end of mount() described. paintPrize() is a hoisted function
+        // declaration and this runs 2.6 s after mount has finished, so its consts are live.
+        paintPrize();
       }, 2600);
     }
     // Arm on ARRIVAL, not on the far-off page that banked the fifth node (Ian, 2026-08-28). armHere()
@@ -355,10 +362,95 @@ export default {
       holo.load();
     }
 
-    // --- the real program unlocks with the family: reads the shell's node store (mbs-state), same as the LCD cards
-    let done = ctx.state.unlockedActive();
-    if (lock) lock.textContent = `${Math.min(done.length, 5)}/5`;
-    if (done.length >= 5 && box) { box.classList.add("open"); txt.textContent = "The family's signal is out. The real program is yours: the honest track, said plainly, no ticks pre-filled. It opens here when it is built."; }
+    /* ---- PRIZE LEVEL 2: COACH MYR5, the payout for solving the whole family -------------------
+       This replaces the block that used to sit here, and the replacement is the point rather than a
+       tidy-up. The old one read `done.length >= 5` against `unlockedActive()`, WHICH FILTERS TO THE
+       ACTIVE SET AND CAN THEREFORE NEVER RETURN MORE THAN THE FOUR IDS IN THE MANIFEST. Five was
+       never reachable, so the gate could not open however much a visitor solved, and it wrote its
+       progress into three element ids this file does not contain. It promised "it opens here when it
+       is built". It is built now.
+
+       THE COUNT COMES FROM THE MANIFEST, NEVER FROM A NUMBER TYPED HERE. That is the whole lesson of
+       the bug: a literal 5 beside a generated list of 4 is a gate that silently stops working the
+       day the list changes, and it will change again when sag and armie stop being coming soon.
+       `armReady()` is the shell's own every()-over-the-active-set, so the prize opens on exactly the
+       condition the LCD already calls armed, and the progress readout below is built from the same
+       two arrays rather than a second opinion about them. */
+    const ACTIVE = (window.MBS_CHANNELS && window.MBS_CHANNELS.active) || [];
+    const CHNAME = {};
+    ((window.MBS_CHANNELS && window.MBS_CHANNELS.channels) || []).forEach(c => { CHNAME[c.id] = c.name; });
+    const prize = byId("myrPrize");
+    const solved = () => { try { return ctx.state.unlockedActive() || []; } catch (e) { return []; } };
+    // armReady() is the shell's; fall back to the same every() so the panel is never wrong if the
+    // shell has not defined it, rather than defaulting to open.
+    const allSolved = () => {
+      if (ctx.mbs && typeof ctx.mbs.armReady === "function") return ctx.mbs.armReady();
+      const got = solved();
+      return ACTIVE.length > 0 && ACTIVE.every(id => got.indexOf(id) >= 0);
+    };
+
+    function paintPrize() {
+      if (!prize) return;
+      const got = solved(), prog = byId("myrProg"), list = byId("myrList");
+      if (prog) {
+        prog.textContent = ACTIVE.length
+          ? got.length + " of " + ACTIVE.length + " found."
+          : "Nothing found yet.";
+      }
+      if (list) {
+        // the family, each one named and marked, so the lock says WHICH page is still owed rather
+        // than only how many. Rebuilt rather than diffed: four items, once, on a channel change.
+        list.innerHTML = "";
+        ACTIVE.forEach(id => {
+          const li = document.createElement("li");
+          li.textContent = CHNAME[id] || id.toUpperCase();
+          if (got.indexOf(id) >= 0) li.classList.add("got");
+          list.appendChild(li);
+        });
+      }
+      prize.classList.toggle("is-locked", !allSolved());
+    }
+    paintPrize();
+
+    /* The builder itself. The spec is read back OFF THE LABELS rather than from a second copy of the
+       words here (djscratch's rule, djscratch.js), so the panel can be re-worded in the HTML alone
+       and this cannot drift out of step with it. */
+    const myrForm = byId("myrForm");
+    if (myrForm) {
+      const POSE = {
+        "1": { img: "assets/myr5-sticker-1.png", cap: "MYR5.1 \u00b7 THE ENCOURAGER" },
+        "3": { img: "assets/myr5-sticker-3.png", cap: "MYR5.3 \u00b7 THE CELEBRANT" },
+        "5": { img: "assets/myr5-sticker-5.png", cap: "MYR5.5 \u00b7 THE WITNESS" }
+      };
+      const pick = (n) => myrForm.querySelector('input[name="' + n + '"]:checked');
+      const words = (n) => pick(n).nextElementSibling.textContent.trim();
+      const img = byId("myrImg"), cap = byId("myrCap"), spec = byId("myrSpec"), mail = byId("myrMail");
+
+      function sayMyr() {
+        const pose = POSE[pick("who").value] || POSE["1"];
+        if (img) img.src = pose.img;
+        if (cap) cap.textContent = pose.cap;
+        const line = [words("who"), words("voice"), words("when")].join(" ");
+        if (spec) spec.textContent = "ON FILE FOR YOU: " + line;
+        if (mail) {
+          // The site has no send path (C008) and this does not invent one: a mailto fills in the
+          // visitor's OWN mail program and stops there, unsent, which is the same thing the forms
+          // gate offer does. No payment, no address field, and nothing stored.
+          const to = (window.MBS && window.MBS.MAIL) || "";
+          mail.href = "mailto:" + to
+            + "?subject=" + encodeURIComponent("Coach MYR5 pre-order")
+            + "&body=" + encodeURIComponent(
+                "The pre-order was already on file, so this only says which one.\n\n" + line
+                + "\n\nNothing was paid and nothing is expected.");
+        }
+      }
+      ctx.on(myrForm, "change", sayMyr);
+      sayMyr();
+    }
+
+    // the last node can bank while this channel is on screen, so repaint on the shell's own signal
+    // rather than only at mount. mbs:arm is what tv.js dispatches the moment armReady() turns true.
+    ctx.on(document, "mbs:arm", paintPrize);
 
     // --- code glowing through the seams: a still field of ones and zeros behind the cardboard, her sense model made visible
     const el = byId("miCode"); if (el) { let s = ""; for (let r = 0; r < 220; r++) { let line = ""; for (let c = 0; c < 140; c++) line += Math.random() < 0.5 ? "0" : "1"; s += line + "\n"; } el.textContent = s; }

@@ -478,6 +478,13 @@ with sync_playwright() as pw:
             made: window.__gl.length,
             live: window.__gl.filter(c => !c.isContextLost()).length })""")
 
+    # PRIZE LEVEL 1. The hand editor is the payout for solving DJ Scratch now, so it ships sealed and
+    # its 1.19 MB model is not requested at all until the prize is won (check_prizes.py asserts that
+    # half). THIS probe is about teardown, not about the lock, so it wins the prize and then measures
+    # what it came for. Banked through MBS_STATE exactly as the shell banks it, NOT by stripping the
+    # class off the card: a probe that reached past the gate would go on passing after the gate broke.
+    gpg.evaluate("() => window.MBS_STATE.bankUnlock('djscratch')")
+
     built1, gl1 = hand_cycle(gpg)
     check(built1, "the hand editor actually builds a scene, so this probe is measuring something")
     check(gl1["made"] > 0, "and it took a real WebGL context to do it (%d)" % gl1["made"])

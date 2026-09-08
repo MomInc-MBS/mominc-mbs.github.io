@@ -195,6 +195,47 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
   @media (min-width:760px){ .mi .family{grid-template-columns:1fr 1fr 1fr} .mi .exhibits{grid-template-columns:1fr 1fr 1fr} }
   @media (max-width:520px){ .mi .family{grid-template-columns:1fr} .mi .exhibits{grid-template-columns:1fr} .mi .tile{min-height:0} .mi .mascot{grid-template-columns:1fr; justify-items:center; gap:6px} .mi .mascot .myr{--w:120px} .mi .felt::after{display:none} .mi .corner{--w:42px} .mi .corner.tl{left:2px; top:-16px} .mi .corner.tr{right:2px; top:-16px} .mi .corner.bl{left:2px; bottom:-12px} .mi .corner.br{right:2px; bottom:-12px} .mi .ex .corner{--w:34px} .mi .ex .corner.tl{left:2px; top:-14px} .mi .ex .corner.tr{right:2px; top:-14px} .mi .tab{font-size:13px} }
   @media (prefers-reduced-motion:reduce){ .mi .myr .pupil{transition:none} }
+
+  /* PRIZE LEVEL 2 - COACH MYR5. The payout for solving every one of her family, and the thing
+     mominc.js has been promising since the first conversion with a block that pointed at three
+     element ids this file never had. Locked is the default in the markup for the same reason the
+     hand is: a prize that opens because a script failed is not a prize. Her rules hold inside it,
+     so the copy runs in threes, presumes the order was already placed, makes no health claim, asks
+     for nothing, and carries no em-dash. */
+  .mi .prize2 .prizebody{display:none}
+  .mi .prize2:not(.is-locked) .prizebody{display:block}
+  .mi .prize2:not(.is-locked) .prizelock{display:none}
+  .mi .prizelock{display:grid; gap:10px; justify-items:center; text-align:center; padding:22px 16px;
+      border:3px dashed var(--pur); border-radius:14px; background:rgba(42,10,68,.06)}
+  .mi .prizelock .seal{font-family:"Anton",sans-serif; letter-spacing:.1em; font-size:11px; color:var(--gold);
+      background:var(--pur-dd); padding:5px 12px; border-radius:999px}
+  .mi .prizelock b{font-family:"Bowlby One SC",cursive; color:var(--pur-dd); font-size:clamp(18px,5.4vw,28px); line-height:1.05}
+  .mi .prizelock p{margin:0; max-width:52ch; color:var(--pur-dd)}
+  .mi .prizelock .prog{font-family:"Anton",sans-serif; letter-spacing:.06em; color:var(--felt); font-size:clamp(15px,4.4vw,19px)}
+  .mi .proglist{list-style:none; margin:2px 0 0; padding:0; display:flex; flex-wrap:wrap; gap:7px; justify-content:center}
+  .mi .proglist li{font-family:"Barlow Condensed",sans-serif; font-weight:700; font-size:13px; letter-spacing:.04em;
+      padding:4px 10px; border-radius:999px; border:2px solid var(--pur-d); color:var(--pur-dd); background:var(--cream)}
+  .mi .proglist li.got{background:var(--pur-dd); color:var(--gold); border-color:var(--pur-dd)}
+  .mi .myrbuild{display:grid; gap:14px; margin:12px 0 0}
+  @media (min-width:620px){ .mi .myrbuild{grid-template-columns:minmax(0,210px) 1fr; align-items:start} }
+  .mi .myrprev{margin:0; display:grid; gap:7px; justify-items:center; padding:12px; border-radius:14px;
+      border:3px solid var(--pur-dd); background:radial-gradient(120% 90% at 50% 15%, #f0e2ff 0%, #dcc6f5 100%)}
+  .mi .myrprev img{width:100%; max-width:180px; height:auto; display:block}
+  .mi .myrprev figcaption{font-family:"Anton",sans-serif; letter-spacing:.05em; font-size:12px; color:var(--pur-dd); text-align:center}
+  .mi .myrform{display:grid; gap:11px; margin:0}
+  .mi .myrform fieldset{border:2px solid var(--pur-d); border-radius:10px; padding:9px 11px 11px; margin:0; background:var(--cream)}
+  .mi .myrform legend{font-family:"Anton",sans-serif; letter-spacing:.06em; font-size:12px; color:var(--pur-dd); padding:0 5px}
+  .mi .myrform .chips{display:grid; gap:6px}
+  .mi .myrform input{position:absolute; opacity:0; pointer-events:none}
+  .mi .myrform label{display:block; cursor:pointer; font-family:"Barlow Condensed",sans-serif; font-weight:600;
+      font-size:15px; line-height:1.25; color:var(--ink); padding:8px 10px; border-radius:8px;
+      border:2px solid var(--card-d); background:#fff}
+  .mi .myrform input:checked + label{background:var(--pur-dd); color:var(--gold); border-color:var(--pur-dd)}
+  .mi .myrform input:focus-visible + label{outline:3px solid var(--gold-d); outline-offset:2px}
+  .mi .myrspec{font-family:"Anton",sans-serif; letter-spacing:.04em; font-size:clamp(14px,4vw,17px);
+      color:var(--pur-dd); background:var(--gold); border-radius:10px; padding:11px 13px; margin:13px 0 0}
+  .mi .myrorder{margin:11px 0 0}
+  .mi .myrorder a{font-family:"Barlow Condensed",sans-serif; font-weight:700; font-size:clamp(15px,4.2vw,18px); color:var(--pur-dd)}
 </style>
 
 <article class="mi" id="mi" aria-label="MOM Inc." data-host="MOM INC" data-show="MBS NETWORK HOME" data-ch="1" data-gauge="off">
@@ -534,6 +575,58 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
         <span class="tile off"><img class="mark" src="assets/marks/sag.png" alt=""><span class="nm">SAG SNIFFER</span><span class="st">COMING SOON</span><span class="tm">COMING SOON</span><span class="sn"><b>SENTENCE</b> A diet picked for him. It renews on its own. You cannot cancel it.</span></span>
         <span class="tile off"><img class="mark" src="assets/marks/girlfriend.png" alt=""><span class="nm">DR GIRLFRIEND</span><span class="st">IN DEBT</span><span class="tm">WED · TIME TBA</span><span class="sn"><b>SENTENCE</b> The degree, paid monthly, forever. She did everything right, in order.</span></span>
         <span class="tile off"><img class="mark" src="assets/marks/armie.png" alt=""><span class="nm">COACH ARMIE</span><span class="st">COMING SOON</span><span class="tm">COMING SOON</span><span class="sn"><b>SENTENCE</b> Coverage ends the day he leaves. So he does not leave.</span></span>
+      </div>
+    </section>
+
+
+    <section class="panel prize2 is-locked" id="myrPrize" aria-label="Coach MYR5" data-myr-border>
+      <h2 class="banner">COACH MYR5<small>PRIZE LEVEL 2 &middot; THE FULL COACH &middot; YOUR PRE-ORDER IS ALREADY ON FILE</small></h2>
+
+      <div class="prizelock" id="myrLock">
+        <span class="seal">PRIZE LEVEL 2 &middot; NOT YET YOURS</span>
+        <b>HE IS NOT FINISHED WITH YOU</b>
+        <p>MOM will not release the coach until every one of the family has been solved. She is not keeping him from you. She is protecting the result, she is protecting the family, and she is protecting you.</p>
+        <p class="prog" id="myrProg">Nothing found yet.</p>
+        <ul class="proglist" id="myrList"></ul>
+      </div>
+
+      <div class="prizebody">
+        <p class="lede">Your pre-order was placed on the day you arrived, which MOM files as consent, and it has been waiting here for you to say which one of him you meant. Nothing is charged, nothing is posted, and no coach has been built.</p>
+        <div class="myrbuild">
+          <figure class="myrprev">
+            <img id="myrImg" src="assets/myr5-sticker-1.png" alt="The MYR5 iteration currently selected">
+            <figcaption id="myrCap">MYR5.1 &middot; THE ENCOURAGER</figcaption>
+          </figure>
+          <form id="myrForm" class="myrform">
+            <fieldset>
+              <legend>Which of him</legend>
+              <div class="chips">
+                <input type="radio" name="who" id="my-w1" value="1" checked><label for="my-w1">MYR5.1, the encourager. He waves before you have done anything.</label>
+                <input type="radio" name="who" id="my-w2" value="3"><label for="my-w2">MYR5.3, the celebrant. Every result is the good result.</label>
+                <input type="radio" name="who" id="my-w3" value="5"><label for="my-w3">MYR5.5, the witness. He watches, and he writes it down.</label>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>How he speaks</legend>
+              <div class="chips">
+                <input type="radio" name="voice" id="my-v1" value="threes" checked><label for="my-v1">In threes, always, the way she taught him.</label>
+                <input type="radio" name="voice" id="my-v2" value="past"><label for="my-v2">In the past tense, as though you have already done it.</label>
+                <input type="radio" name="voice" id="my-v3" value="silent"><label for="my-v3">Not at all. He is simply in the room.</label>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>When he checks</legend>
+              <div class="chips">
+                <input type="radio" name="when" id="my-t1" value="dawn" checked><label for="my-t1">Every morning, before you are awake.</label>
+                <input type="radio" name="when" id="my-t2" value="unasked"><label for="my-t2">Only when you have not asked.</label>
+                <input type="radio" name="when" id="my-t3" value="always"><label for="my-t3">Continuously, which he says is the same as never.</label>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+        <p class="myrspec" id="myrSpec"></p>
+        <p class="myrorder"><a id="myrMail" href="#">The pre-order is written out here, ready in your own mail program.</a></p>
+        <p class="fine">Not a sale. No payment, no address, no card, and nothing leaves this device on its own: the link fills in your mail program and stops, and it stays unsent until you send it. Coach MYR5 is fiction, like the rest of the family, and MOM makes no claim about your body, your health or your results.</p>
       </div>
     </section>
 
