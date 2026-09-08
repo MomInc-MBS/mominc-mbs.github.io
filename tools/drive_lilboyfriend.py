@@ -2700,6 +2700,459 @@ with sync_playwright() as pw:
           "(%d vs %d bytes)" % (len(body2), len(body)))
     fc.close()
 
+    # ================================================================================================
+    # ---- 4.11b packet 1: C107 the promise, C111 the version selector, C112 the presenter link -----
+    # ================================================================================================
+    # Three tickets, and each one has a shape that looks finished and proves nothing.
+    #
+    #   C107 asks for a pre-reveal choice compared against a revised interpretation AFTER the return.
+    #   A build that shows the brochure and its revision side by side on the way in has "captured a
+    #   choice" and destroyed the ticket - there is no reveal left to have. So the outbound half is
+    #   asserted to carry the advertised lines and NOT one word of the revised ones, and the return
+    #   half to name the visitor's own pick back at them. The acceptance's second clause - "does not
+    #   block leaving" - is driven by walking the whole flat gallery to the epilogue without ever
+    #   answering, which is the state a build that quietly requires an answer fails on.
+    #
+    #   C111's teeth are in "never SILENTLY substitutes". A selector that swaps the sentence and shows
+    #   the new one is passed by every DOM assertion and fails the row, so the gate reads the older
+    #   version back out with its date, and then opens the case file and requires BOTH versions and
+    #   the reason in it. The other half is provenance: `was` and `now` must each appear verbatim in
+    #   that entry's own shipped `body` - the same mechanical rule C014's `url` gets - because an
+    #   older version nobody can check is a fabricated citation wearing a date.
+    #
+    #   C112 is a claim about what a link does NOT do. "The panel opened" is the cheap half; the real
+    #   assertions are that the walk underneath is byte-identical afterwards, that no completion event
+    #   went on the wire, and that a param which is not one of the six produces a museum rather than a
+    #   message - including one that is a <script> tag, which must appear nowhere in the document.
+    print("\n  -- 4.11b pkt 1: C107 the promise, C111 the version selector, C112 the presenter link --")
+
+    # The shipped strings. Kept whole rather than as fragments: the point of every one of these is
+    # that this packet did not re-cut, re-flow or invent copy, so a substring test on four words
+    # would pass a build that had.
+    TEEPEE_P2_AD = "Breathable canvas walls. The air in here is always fresh."
+    TEEPEE_P2_REV = "A wall you can breathe through is a wall the weather can come through too."
+    TEEPEE_P3_AD = "Packs down in minutes. Take your home with you."
+    A9_BODY = ("The median home in America hit $412,500 in 2024, 60 percent more than six years "
+               "earlier. By July 2026 it was $434,100. Nobody's paycheck grew 60 percent.")
+    A9_WAS = "The median home in America hit $412,500 in 2024, 60 percent more than six years earlier."
+    A9_NOW = "By July 2026 it was $434,100."
+    A12_WAS = "Carlsbad, California counted 60 homeless residents in 2023."
+
+    def pick(page, sel, ms=15000):
+        """Check a radio and say whether it was there. PACKET 2'S RULE APPLIES TO .check() TOO: every
+        input below is rendered by the thing under test, so a regressed build does not fail the call,
+        the element simply never exists and Locator.check RAISES - which took C112's whole section
+        down with C111's in the first non-vacuity probe of this packet.
+
+        THE BOUND IS 15s AND NOT tap()'s 4s. Measured: a radio in this panel takes ~2.7-3.0s to pass
+        Playwright's actionability polling, because the main thread it is polling is running a
+        software-rendered frame loop. A 4s bound is inside that noise and turned three green
+        assertions red on a build the very next run passed."""
+        try:
+            page.locator(sel).check(timeout=ms)
+            return True
+        except Exception:
+            return False
+
+    PROMISE_JS = """(root) => {
+      const b = document.querySelector(root + ' .rd-promise');
+      if (!b) return null;
+      const vis = n => n.getClientRects().length > 0;
+      return {
+        text: (b.textContent || '').replace(/\\s+/g, ' ').trim(),
+        before: Array.from(b.querySelectorAll('input[name^="lbp-before-"]')).map(i => i.value),
+        after: Array.from(b.querySelectorAll('input[name^="lbp-after-"]')).map(i => i.value),
+        checked: Array.from(b.querySelectorAll('input:checked')).map(i => i.name + '=' + i.value),
+        revs: Array.from(b.querySelectorAll('.pm-opt .pm-rev')).filter(vis).map(n => n.textContent.trim()),
+        ads: Array.from(b.querySelectorAll('.pm-ad')).map(n => n.textContent.trim()),
+      };
+    }"""
+
+    # ---- C107: the promise, before the reveal --------------------------------------------------
+    pm = fresh("C107")
+    seed(pm, {"phase": "out", "t": 0.15, "signed": True}, "1")
+    face_teepee(pm)
+    upp = waits(pm, "() => { const b = document.querySelector('#lbLook'); return b && !b.hidden; }")
+    tap(pm, "#lbLook")
+    openp = waits(pm, "() => document.querySelector('#lbRead').classList.contains('show')", 6000)
+    out = pm.evaluate(PROMISE_JS, "#lbRead") if openp else None
+    check(upp and openp and out and out["before"] == ["P1", "P2", "P3"] and not out["after"],
+          "C107: opening the teepee on the way in asks which of the three advertised promises is the "
+          "strongest, and asks it BEFORE anything has been revealed (%s)"
+          % (out and out["before"] or "no promise block"))
+    check(out and TEEPEE_P2_AD in out["ads"],
+          "C107: the brochure lines are the ones a visitor is choosing between, verbatim")
+    # THE HALF A SIDE-BY-SIDE BUILD FAILS. If the revised reading is on screen at the same time as the
+    # question, the comparison after the return has nothing left to compare - the visitor has already
+    # been told the answer, which is not a pre-reveal choice however it is labelled.
+    check(out and not out["revs"] and TEEPEE_P2_REV not in out["text"],
+          "C107: and not one word of what those promises turn out to mean is on screen yet - a "
+          "pre-reveal choice shown beside its own revision is not a pre-reveal choice")
+    # nothing is pre-selected: an answer nobody gave is not an answer, and a default here would show
+    # up on the second screen as a pick the visitor never made
+    check(out and not out["checked"] and pm.evaluate("() => window.__lbState().promise") == {},
+          "C107: nothing is pre-picked - the museum does not answer for the visitor (%s)"
+          % (out and out["checked"]))
+
+    picked1 = pick(pm, '#lbRead input[name="lbp-before-teepee"][value="P2"]')
+    pm.wait_for_timeout(150)
+    check(picked1 and pm.evaluate("() => window.__lbState().promise") == {"teepee": "P2"},
+          "C107: picking one stores it against that exhibit and nothing else (%s)"
+          % pm.evaluate("() => window.__lbState().promise"))
+    pm.reload(wait_until="load")
+    settle(pm)
+    check(pm.evaluate("() => window.__lbLoaded.promise") == {"teepee": "P2"},
+          "C107: and it is still there after a reload - the choice outlives the session it was made "
+          "in, which is the only way it can be compared to anything")
+
+    # ---- C107: the second screen, after the return -----------------------------------------------
+    seed(pm, {"phase": "back", "t": 0.15, "signed": True, "shrinkStartedAt": 1,
+              "promise": {"teepee": "P2"}}, "1")
+    face_teepee(pm)
+    upb2 = waits(pm, "() => { const b = document.querySelector('#lbLook'); return b && !b.hidden; }")
+    tap(pm, "#lbLook")
+    openb2 = waits(pm, "() => document.querySelector('#lbRead').classList.contains('show')", 6000)
+    back2 = pm.evaluate(PROMISE_JS, "#lbRead") if openb2 else None
+    check(upb2 and openb2 and back2 and TEEPEE_P2_AD in back2["text"],
+          "C107: coming back, the second screen recalls the exact promise that was picked on the way "
+          "in - not a summary of it, and not a different one (%s)"
+          % (back2 and back2["text"][:70] or "no promise block"))
+    check(back2 and TEEPEE_P2_REV in back2["text"],
+          "C107: and it stands the revised interpretation of THAT promise beside it")
+    check(back2 and back2["after"] == ["P1", "P2", "P3"] and len(back2["revs"]) == 3,
+          "C107: with all three offered again, each one carrying what it turned out to mean (%d revs)"
+          % (back2 and len(back2["revs"]) or 0))
+    # STORING BOTH, JUDGING NEITHER. The second answer is kept in its own field - a build that
+    # overwrote the first would have destroyed the comparison it just rendered - and nowhere in the
+    # block is either answer marked, scored or agreed with.
+    picked2 = pick(pm, '#lbRead input[name="lbp-after-teepee"][value="P3"]')
+    pm.wait_for_timeout(150)
+    st107 = pm.evaluate("() => window.__lbState()")
+    check(picked2 and st107["promise"] == {"teepee": "P2"} and st107["promiseBack"] == {"teepee": "P3"},
+          "C107: both answers are kept, in their own fields - the after does not overwrite the before "
+          "(%s / %s)" % (st107["promise"], st107["promiseBack"]))
+    # the same fix, measured on the walk's own panel: C014's "step back" is still reachable after
+    # this packet made the card 350px taller than its box.
+    # scrollTop is put back to the TOP first: `.check()` above scrolled the last radio into view, and
+    # the question is whether the exit is on screen for a visitor who has not scrolled at all.
+    expm = pm.evaluate("""() => { const c = document.querySelector('#lbRead .card');
+      const x = c && c.querySelector('.lb-bookrow button');
+      if (!c || !x) return { over: 0, top: -1, inside: false };
+      c.scrollTop = 0;
+      const cr = c.getBoundingClientRect(), xr = x.getBoundingClientRect();
+      return { over: c.scrollHeight - c.clientHeight, top: c.scrollTop,
+               inside: xr.bottom <= cr.bottom + 1 && xr.top >= cr.top - 1 }; }""")
+    check(expm["over"] > 100 and expm["top"] == 0 and expm["inside"],
+          "C107: and adding the question did not put C014's way out below the fold - the panel "
+          "overflows by %dpx and 'step back' is still in the box" % expm["over"])
+    judged = pm.evaluate("""() => {
+      const b = document.querySelector('#lbRead .rd-promise');
+      if (!b) return ['no promise block'];
+      const t = (b.textContent || '').toLowerCase();
+      return ['correct', 'incorrect', 'right answer', 'wrong', 'score', 'you scored', 'points',
+              'well done', 'good choice'].filter(w => t.indexOf(w) >= 0);
+    }""")
+    check(judged == [],
+          "C107: and nothing on the screen marks, scores or agrees with either of them (%s)" % (judged or "none"))
+    # the allowlist, on both axes at once
+    seed(pm, {"phase": "back", "t": 0.15, "signed": True, "shrinkStartedAt": 1,
+              "promise": {"teepee": "P9", "banana": "P1"}, "promiseBack": ["P1"]}, "1")
+    check(pm.evaluate("() => window.__lbLoaded.promise") == {}
+          and pm.evaluate("() => window.__lbLoaded.promiseBack") == {},
+          "C107: a hand-edited pick is allowlisted on both axes - an unknown exhibit and a promise key "
+          "that room does not have are both dropped, the treatment C018 gave phase (%s)"
+          % pm.evaluate("() => window.__lbLoaded.promise"))
+    pm.close()
+
+    # ---- C107: it does not block leaving ---------------------------------------------------------
+    # The whole flat gallery, entrance to epilogue, with the question ignored at every one of the
+    # twelve exhibit steps. A build that quietly requires an answer stops somewhere in here.
+    nb = b.new_page(viewport={"width": 900, "height": 1000})
+    nb.on("pageerror", lambda e: lwerrs.append("C107-flat: %s" % e))
+    nb.add_init_script("""(() => { const g = HTMLCanvasElement.prototype.getContext;
+      HTMLCanvasElement.prototype.getContext = function (t, ...a) {
+        return /webgl/i.test(t) ? null : g.call(this, t, ...a); }; })()""")
+    nb.goto(BASE + "/play/lilboyfriend/?mode=live", wait_until="load")
+    try:
+        nb.wait_for_selector("#lbFlat #flNext", timeout=8000)
+    except Exception:
+        pass
+    steps, stuck = 0, ""
+    while steps < 24 and not nb.evaluate("() => !!document.querySelector('#flCase')"):
+        if not (tap(nb, "#lbFlat #flNext", 2500) or tap(nb, "#lbFlat #flSkip", 2500)
+                or tap(nb, "#lbFlat #flSlot", 2500)):
+            stuck = nb.evaluate("() => (document.querySelector('#lbFlat .fl-name') || {}).textContent || '?'")
+            break
+        nb.wait_for_timeout(250)
+        steps += 1
+    check(not stuck and nb.evaluate("() => !!document.querySelector('#flCase')"),
+          "C107: a visitor who answers none of it walks the whole gallery to the epilogue - the "
+          "question never becomes a door (stopped at %r after %d steps)" % (stuck or "nowhere", steps))
+    check(nb.evaluate("() => window.__lbState().promise") == {}
+          and nb.evaluate("() => window.__lbState().promiseBack") == {},
+          "C107: and nothing was recorded on their behalf for having walked past it")
+    # the flat gallery renders the same block from the same function, on both legs
+    fpm = nb.evaluate("""() => {
+      const s = JSON.parse(localStorage.getItem('mbs-lilbf-museum-v2') || '{}');
+      s.phase = 'back'; s.t = 0.15; s.shrinkStartedAt = 1; s.signed = true; s.promise = {teepee: 'P2'};
+      localStorage.setItem('mbs-lilbf-museum-v2', JSON.stringify(s)); return 1; }""")
+    nb.reload(wait_until="load")
+    try:
+        nb.wait_for_selector("#lbFlat .rd-promise", timeout=8000)
+    except Exception:
+        pass
+    flatpm = nb.evaluate(PROMISE_JS, "#lbFlat")
+    check(fpm and flatpm and TEEPEE_P2_AD in flatpm["text"] and TEEPEE_P2_REV in flatpm["text"]
+          and flatpm["after"] == ["P1", "P2", "P3"],
+          "C107: the fallback renders the same comparison from the same function - one projection, "
+          "two paths, exactly as C014 left it (%s)" % (flatpm and flatpm["text"][:60] or "absent"))
+    nb.close()
+
+    # ---- C111: the dated version selector --------------------------------------------------------
+    REV_JS = """() => Array.from(document.querySelectorAll('#lbRead .rd-card')).map(c => {
+      const r = c.querySelector('.rd-rev');
+      const vis = n => !!n && n.getClientRects().length > 0;
+      return {
+        t: (c.querySelector('.rd-t') || {}).textContent || '',
+        has: !!r,
+        group: r ? (r.querySelector('input') || {}).name || '' : '',
+        opts: r ? Array.from(r.querySelectorAll('input')).map(i => i.value) : [],
+        labels: r ? Array.from(r.querySelectorAll('.rd-rev-pick label')).map(l => l.textContent.trim()) : [],
+        wasVis: vis(r && r.querySelector('.rd-rev-was')),
+        nowVis: vis(r && r.querySelector('.rd-rev-now')),
+        wasTxt: r ? (r.querySelector('.rd-rev-was') || {}).textContent || '' : '',
+        nowTxt: r ? (r.querySelector('.rd-rev-now') || {}).textContent || '' : '',
+        whyVis: vis(r && r.querySelector('.rd-rev-why')),
+      };
+    })"""
+    rv = fresh("C111")
+    # the mason jar holds A9, the one claim on these walls with a dated older version on record
+    seed(rv, {"phase": "out", "t": 0.65, "signed": True}, "1")
+    face_teepee(rv)                                    # the mason jar is side +1 too - the same turn
+    upv = waits(rv, "() => { const b = document.querySelector('#lbLook'); return b && !b.hidden; }")
+    tap(rv, "#lbLook")
+    openv = waits(rv, "() => document.querySelector('#lbRead').classList.contains('show')", 6000)
+    cardsv = rv.evaluate(REV_JS) if openv else []
+    byt = {c["t"]: c for c in cardsv}
+    check(upv and openv and [c["t"] for c in cardsv] == ["A7", "A8", "A9"]
+          and [c["t"] for c in cardsv if c["has"]] == ["A9"],
+          "C111: the selector is on the one claim in this room that HAS a dated older version, and "
+          "on neither of the two that do not (%s)" % ([c["t"] for c in cardsv if c["has"]] or "none"))
+    a9 = byt.get("A9", {})
+    check(a9.get("opts") == ["was", "now"] and a9.get("nowVis") and not a9.get("wasVis"),
+          "C111: it opens on the current version, with the older one a choice away rather than gone")
+    # THE DATES ARE THE LABELS. A control offering "previous" and "current" stops being an answer to
+    # "as of when", which is the whole of the acceptance's first clause.
+    check(all(re.search(r"(19|20)\d\d", l) for l in a9.get("labels", [])) and len(a9.get("labels", [])) == 2,
+          "C111: both options are labelled with their DATE, not with 'old' and 'new' (%s)"
+          % (a9.get("labels") or "no labels"))
+    check(a9.get("whyVis") and A9_NOW in a9.get("nowTxt", ""),
+          "C111: the reason it changed is on screen whether or not anybody touches the control - a "
+          "visitor who never presses it still has to be told the claim moved")
+    switched = pick(rv, '#lbRead .rd-rev input[value="was"]')
+    rv.wait_for_timeout(150)
+    a9b = {c["t"]: c for c in rv.evaluate(REV_JS)}.get("A9", {})
+    check(switched and a9b.get("wasVis") and not a9b.get("nowVis") and A9_WAS in a9b.get("wasTxt", ""),
+          "C111: choosing the older date shows the older wording (%r)" % a9b.get("wasTxt", "")[:60])
+    check(re.search(r"(19|20)\d\d", a9b.get("wasTxt", "")) and a9b.get("whyVis"),
+          "C111: and the historical wording carries its own date on the line - it is never on screen "
+          "as an undated sentence somebody could mistake for the current one")
+    # PROVENANCE. Both versions are sentences that already shipped inside that entry's own reviewed
+    # body - the same mechanical rule C014's url field gets, and for the same reason.
+    check(A9_WAS in A9_BODY and A9_NOW in A9_BODY,
+          "C111: both versions are verbatim out of the entry's own shipped body - an older version "
+          "nobody can check against the citation is a fabricated citation wearing a date")
+    # and nothing about looking at it is recorded: a version selector is not a walk
+    rv.reload(wait_until="load")
+    settle(rv)
+    a9c = {c["t"]: c for c in rv.evaluate(REV_JS)}.get("A9", {})
+    check(a9c.get("nowVis") and not a9c.get("wasVis"),
+          "C111: it comes back on the current version - which version was last looked at is not state "
+          "worth keeping, and a saved one would resume a visitor into history without saying so")
+    # NAMESPACED. C112's spotlight can render the same card over the top of this one, and two radio
+    # groups sharing a name are ONE group.
+    rv.close()
+
+    # ---- C111: and it does not silently substitute into the saved file --------------------------
+    rf = b.new_page(viewport={"width": 1280, "height": 900}, accept_downloads=True)
+    rf.on("pageerror", lambda e: lwerrs.append("C111-file: %s" % e))
+    rf.goto(BASE + "/play/lilboyfriend/", wait_until="load")
+    rf.wait_for_timeout(2500)
+    rf.evaluate(SEED_JS, [{"phase": "done", "t": 0, "signed": True, "shrinkStartedAt": 1,
+                           "read": ["teepee", "car", "shoebox"], "promise": {"teepee": "P2"},
+                           "promiseBack": {"teepee": "P3"}}, "1", KEY2, TKEY])
+    rf.reload(wait_until="load")
+    settle(rf)
+    fbody, _ = grab(rf, "#caseFile3d")
+    check(fbody and A9_WAS in fbody and A9_NOW in fbody and A12_WAS in fbody
+          and fbody.count("    REVISED CLAIM: ") == 2,
+          "C111: the case file carries BOTH versions of every revised claim, not the current one on "
+          "its own - a file holding a number the visitor cannot tell has moved is the silent "
+          "substitution the row forbids (%d revisions)" % fbody.count("    REVISED CLAIM: "))
+    check("Why it changed: " in fbody and fbody.count("July 2026, NAR Existing-Home Sales") >= 1,
+          "C111: with the date of each version and the reason for the change, in the file rather than "
+          "only on the wall it was read off")
+    # C107's own half of the same object: both answers, and the line that says neither is marked.
+    check(("[P2] " + TEEPEE_P2_AD) in fbody and ("[P3] " + TEEPEE_P3_AD) in fbody
+          and "not answered" in fbody and "marked right or wrong" in fbody,
+          "C107: and the file keeps both answers as they were given, with the line that says a first "
+          "answer disagreeing with the second is the point rather than a mistake")
+    rf.close()
+
+    # ---- C112: the presenter's link ---------------------------------------------------------------
+    SPOT_JS = """() => {
+      const s = document.querySelector('#lbSpot');
+      if (!s) return null;
+      return {
+        vis: s.getClientRects().length > 0,
+        text: (s.textContent || '').replace(/\\s+/g, ' ').trim(),
+        cards: Array.from(s.querySelectorAll('.rd-card .rd-t')).map(n => n.textContent),
+        groups: Array.from(s.querySelectorAll('.rd-rev input')).map(i => i.name),
+        promise: !!s.querySelector('.rd-promise'),
+        links: Array.from(s.querySelectorAll('.rd-link')).map(a => a.href).length,
+      };
+    }"""
+    COMPLETE_JS = """(() => { window.__lbEv = []; ['GAME_COMPLETE', 'GAME_PROGRESS', 'MBS_UNLOCK']
+      .forEach(n => window.addEventListener(n, e => window.__lbEv.push(n))); })()"""
+    SEEDED = {"phase": "out", "t": 0.4, "signed": True, "read": ["teepee", "car"]}
+
+    def spot_page(param, webgl=True, rec=None, tag="C112"):
+        p3 = b.new_page(viewport={"width": 1280, "height": 900})
+        p3.on("pageerror", lambda e: lwerrs.append("%s: %s" % (tag, e)))
+        p3.add_init_script(COMPLETE_JS)
+        if not webgl:
+            p3.add_init_script("""(() => { const g = HTMLCanvasElement.prototype.getContext;
+              HTMLCanvasElement.prototype.getContext = function (t, ...a) {
+                return /webgl/i.test(t) ? null : g.call(this, t, ...a); }; })()""")
+        p3.goto(BASE + "/play/lilboyfriend/", wait_until="load")
+        p3.wait_for_timeout(2000)
+        p3.evaluate(SEED_JS, [rec if rec is not None else SEEDED, "1", KEY2, TKEY])
+        p3.goto(BASE + "/play/lilboyfriend/?" + param, wait_until="load")
+        p3.wait_for_timeout(4000)
+        return p3
+
+    sp = spot_page("case=storage")
+    got = sp.evaluate(SPOT_JS)
+    check(got and got["vis"] and got["cards"] == ["A13", "A14", "A15", "B2", "B4", "B6"],
+          "C112: an allowlisted exhibit id in the URL opens that case - its three claims and the "
+          "resources mapped to it, all of them readable (%s)" % (got and got["cards"] or "no view"))
+    check(got and got["links"] == 6 and "read only" in got["text"].lower(),
+          "C112: with the live links C014 gave them, and it says on its face that it is read only")
+    # READ ONLY, WHICH IS A CLAIM ABOUT WHAT PRESSING NOTHING DOES. The storage unit is not now
+    # "opened", the walk has not moved, the guest book has not been signed, nothing completed.
+    after112 = sp.evaluate("() => window.__lbState()")
+    check(after112["read"] == ["teepee", "car"] and after112["phase"] == "out"
+          and abs(after112["t"] - 0.4) < 1e-6 and after112["reading"] is None,
+          "C112: and the walk underneath is exactly as it was left - the case it spotlights is NOT "
+          "marked as opened, which is what makes one link safe to put in front of a room of people "
+          "who each have their own save (%s, %s)" % (after112["read"], after112["t"]))
+    check(sp.evaluate("() => window.__lbEv") == [] and not after112["promise"],
+          "C112: nothing completed, unlocked or progressed on the wire for opening it (%s)"
+          % sp.evaluate("() => window.__lbEv"))
+    check(got and not got["promise"],
+          "C112: and it asks nothing - there is no promise question in a read-only view, because an "
+          "answer given here would be a write into a walk this visitor has not taken")
+    # RESUME-AWARE: it reports the save rather than replacing it, so the person following the link
+    # knows what closing it returns them to.
+    check(got and "2 of 6" in got["text"],
+          "C112: it says what the saved walk is, so closing it is a return rather than a surprise "
+          "(%r)" % (got and got["text"][:120]))
+    # THE WAY OUT IS ON SCREEN WITHOUT SCROLLING TO THE END OF THE READING FIRST. This packet pushed
+    # both cards well past their own box - C107's promise block and C111's revision block in the
+    # panel, six cards in this view - and "step back" is the LAST child of a `overflow:auto` card, so
+    # it went below the fold. The assertion is deliberately not "the click worked": a scripted click
+    # scrolls the element into view first and would be green on a build a visitor cannot leave.
+    exitbox = """(sel) => { const c = document.querySelector(sel + ' .card');
+      const x = c && c.querySelector('.lb-bookrow button');
+      if (!c || !x) return { over: 0, top: -1, inside: false };
+      c.scrollTop = 0;
+      const cr = c.getBoundingClientRect(), xr = x.getBoundingClientRect();
+      return { over: c.scrollHeight - c.clientHeight, top: c.scrollTop,
+               inside: xr.bottom <= cr.bottom + 1 && xr.top >= cr.top - 1 }; }"""
+    ex112 = sp.evaluate(exitbox, "#lbSpot")
+    check(ex112["over"] > 200 and ex112["top"] == 0 and ex112["inside"],
+          "C112: and the way out is on screen with the card scrolled to the top - it overflows by "
+          "%dpx and the control that closes it is still inside the box, not at the end of the "
+          "reading" % ex112["over"])
+    tap(sp, "#lbSpotClose")
+    sp.wait_for_timeout(400)
+    closed112 = sp.evaluate("() => window.__lbState()")
+    check(not sp.evaluate("() => !!document.querySelector('#lbSpot')")
+          and closed112["read"] == ["teepee", "car"] and closed112["phase"] == "out",
+          "C112: closing it hands the museum back untouched")
+    sp.close()
+
+    # THE PARAM IS UNTRUSTED INPUT. Not one of the six is a museum, never a message and never a route.
+    # The third element is the DECODED string that must not have reached the document - "" where the
+    # value is one this channel legitimately prints anyway (TEEPEE is a route-strip label, and the
+    # point of that case is the id being matched exactly, not the word being absent).
+    for bad_param, why, leak in [
+            ("case=banana", "an id that is not an exhibit", "banana"),
+            ("case=TEEPEE", "the right id in the wrong case", ""),
+            ("case=%3Cscript%3Ealert(1)%3C/script%3E", "a script tag", "<script>alert(1)</script>"),
+            ("case=../../tv/registry.json", "a path", "registry.json"),
+            ("case=", "an empty value", "")]:
+        bp = spot_page(bad_param, tag="C112-reject")
+        leaked = bool(leak) and bp.evaluate(
+            "(raw) => (document.documentElement.innerHTML || '').indexOf(raw) >= 0", leak)
+        # the channel MOUNTED - a rejected param is a museum, not a dead stage and not an error page
+        alive = bp.evaluate("() => typeof window.__lbState === 'function' "
+                            "&& !!document.querySelector('#lbCanvas, #lbFlat')")
+        st_bad = bp.evaluate("() => window.__lbState()")
+        check(not bp.evaluate("() => !!document.querySelector('#lbSpot')") and not leaked and alive
+              and st_bad["read"] == ["teepee", "car"],
+              "C112: %s opens the museum and nothing else - no view, no message, and the string "
+              "itself is nowhere in the document (%s)" % (why, bad_param[:34]))
+        bp.close()
+
+    # ALL THREE PRESENTATIONS. The flat gallery removes the whole hud and the scroll chapters hide it,
+    # so a view built inside .lb-hud would work for exactly one of this channel's three visitors.
+    spf = spot_page("case=van", webgl=False, tag="C112-flat")
+    gotf = spf.evaluate(SPOT_JS)
+    check(gotf and gotf["vis"] and gotf["cards"] == ["A16", "A17", "A18", "B3", "B7"]
+          and spf.evaluate("() => !!document.querySelector('#lbFlat')"),
+          "C112: the same link works on the fallback, over the gallery that replaced the museum (%s)"
+          % (gotf and gotf["cards"] or "no view"))
+    spf.close()
+    sps = spot_page("case=car", rec=dict(SEEDED, mode="scroll"), tag="C112-scroll")
+    gots = sps.evaluate(SPOT_JS)
+    check(gots and gots["vis"] and gots["cards"] == ["A10", "A11", "A12", "B1", "B5", "B8"]
+          and sps.evaluate("() => !!document.querySelector('#lbStage.mode-scroll')"),
+          "C112: and over the scroll chapters, which hide the hud entirely (%s)"
+          % (gots and gots["cards"] or "no view"))
+    # C111's namespace, checked where it matters: the car holds A12, so this view and the walk's own
+    # reading panel can hold the same version selector at the same time. Two groups, two names.
+    check(gots and gots["groups"] == ["sp-lbv-A12", "sp-lbv-A12"],
+          "C112/C111: the spotlight's version selector is its own radio group - sharing a name with "
+          "the panel underneath would make choosing a date in one silently flip the other (%s)"
+          % (gots and gots["groups"]))
+    sps.close()
+
+    # AND THE ROUTE A PRESENTER WOULD ACTUALLY PASTE. /play/ is the isolated one; the address a
+    # channel is linked by on the live site is the television, and location.search there belongs to
+    # the SHELL - ?ch= and ?mode= are already in it. A view that only worked on the play route would
+    # be a presenter link that does not work in the presenter's own address bar.
+    tvsp = b.new_page(viewport={"width": 1280, "height": 900})
+    tvsp.on("pageerror", lambda e: lwerrs.append("C112-tv: %s" % e))
+    tvsp.goto(BASE + "/tv/?ch=lilboyfriend", wait_until="load")
+    tvsp.wait_for_timeout(1200)
+    for _ in range(3):
+        if tvsp.evaluate("() => { const t = document.querySelector('.tv');"
+                         "        return !!t && t.dataset.state === 'on'; }"):
+            break
+        try:
+            tvsp.click(".power", timeout=2000)
+        except Exception:
+            break
+        tvsp.wait_for_timeout(1600)
+    tvsp.goto(BASE + "/tv/?ch=lilboyfriend&case=masonjar", wait_until="load")
+    tvsp.wait_for_timeout(5000)
+    gott = tvsp.evaluate(SPOT_JS)
+    check(gott and gott["vis"] and gott["cards"] == ["A7", "A8", "A9", "B6", "B7"],
+          "C112: and inside the television, where a channel's public address actually lives, beside "
+          "the shell's own ?ch= (%s)" % (gott and gott["cards"] or "no view"))
+    tvsp.close()
+
     lwclean = [e for e in lwerrs if "favicon" not in e and "jsdelivr" not in e.lower()
                and "lilbf-van-cozy" not in e and "lilbf-van-horror" not in e and "lilbf-car-cozy" not in e]
     check(not lwclean, "4.11: no page errors across the 3D drives (%s)" % (lwclean[:2] or "none"))

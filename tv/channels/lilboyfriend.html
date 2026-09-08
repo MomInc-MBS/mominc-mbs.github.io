@@ -219,6 +219,17 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
      body size in 4.10 and both HUD pills at the body clamp until 4.11 packet 2. Fourth form, declined.
      The card is wider than the guest book's 340: this one is read, not answered. */
   .lb-read .card{max-width:420px}
+  /* 4.11b: THE WAY OUT IS PINNED, and this is a fix rather than a flourish. `.lb-panel .card` is
+     `max-height:92%; overflow:auto`, and C107's promise block and C111's revision block pushed this
+     panel past 1000px of content in a 756px box - which put "step back" below the fold, so leaving
+     the reading meant scrolling to the end of it first. C112's spotlight is worse again: six cards.
+     The row is the card's LAST CHILD and the card is the scroll container, so `position:sticky;
+     bottom:0` parks it on the bottom edge of the scrollport the whole way down - 4.3's consequence
+     console, same mechanism. It needs the OPAQUE background or the cards scroll visibly through it.
+     Scoped to .lb-read: the guest book's identical row belongs to a form somebody is filling in, and
+     moving a shipped control there is not this packet's business. */
+  .lb-read .lb-bookrow{position:sticky; bottom:0; margin-top:0; padding:10px 0 2px;
+      background:rgba(255,253,248,.99); border-top:1px solid rgba(230,198,122,.7)}
   .lb-read .rd-sub{font-size:11px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-l); margin:0 0 12px}
   .lb-read .rd-card{border:1px solid rgba(44,30,20,.3); background:rgba(255,253,246,.6); border-radius:8px;
       padding:10px 12px; margin:0 0 10px; font-size:14px; line-height:1.45; color:var(--ink)}
@@ -236,6 +247,50 @@ fires a purple laser (fireLaser()) at the player before the same breach/shrink s
   /* C020: the line under the download, which says what the object is and - the half that matters -
      that making it sent nothing anywhere. */
   .lb-epi .rd-note{font-size:11.5px; line-height:1.4; color:var(--ink-l); margin:8px 0 12px}
+
+  /* C111: the dated version selector. EVERY RULE HERE IS TWO CLASSES for the reason the C014 block
+     above spells out - `.lb p` is (0,1,1), `.lb-panel p` is (0,1,1), and a single-class rule on a <p>
+     in a card either ties or loses. The block renders inside .rd-card on BOTH paths, so it is keyed
+     off .rd-card and never off the panel, same as everything else in that card.
+     THE SWITCH IS ONE ATTRIBUTE AND NO SCRIPT REBUILDS ANYTHING: both versions are always in the DOM
+     and always dated, and data-v decides which one has a box. A selector that re-rendered the card
+     would be a selector that could render a version the file does not hold. */
+  .rd-card .rd-rev{margin:10px 0 0; padding:8px 10px; border:1px dashed rgba(201,162,76,.9); background:var(--gold-l)}
+  .rd-card .rd-rev-h{font-size:11px; letter-spacing:.08em; text-transform:uppercase; font-weight:800; color:var(--gold-d); margin:0 0 6px}
+  .rd-card .rd-rev-pick{display:flex; flex-wrap:wrap; gap:4px 10px; align-items:baseline; margin:0 0 7px}
+  .rd-card .rd-rev-lab{flex:1 0 100%; font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-l)}
+  .rd-card .rd-rev-pick label{display:inline-flex; gap:5px; align-items:baseline; font-size:11.5px; line-height:1.3; color:var(--ink); cursor:pointer}
+  .rd-card .rd-rev-pick input{margin:0}
+  .rd-card .rd-rev-was,
+  .rd-card .rd-rev-now{font-size:13px; line-height:1.45; color:var(--ink); margin:0}
+  .rd-card .rd-rev-d{display:block; font-size:10.5px; letter-spacing:.07em; text-transform:uppercase; font-weight:800; color:var(--gold-d); margin:0 0 2px}
+  .rd-card .rd-rev[data-v="now"] .rd-rev-was{display:none}
+  .rd-card .rd-rev[data-v="was"] .rd-rev-now{display:none}
+  .rd-card .rd-rev-why{font-size:11.5px; line-height:1.4; font-style:italic; color:var(--ink-l); margin:7px 0 0}
+
+  /* C107: the promise, asked before and compared after. Same two-class discipline. .pm-opt is a
+     <label> wrapping its own radio, so the whole option is the hit target and the keyboard gets the
+     control for free - no aria wiring, no click handler on a div. */
+  .rd-promise{margin:0 0 12px; padding:10px 12px; border:1px solid rgba(201,162,76,.9); background:var(--gold-l); border-radius:8px}
+  .rd-promise .pm-h{font-size:11px; letter-spacing:.08em; text-transform:uppercase; font-weight:800; color:var(--gold-d); margin:0 0 5px}
+  .rd-promise .pm-note{font-size:11px; line-height:1.4; font-style:italic; color:var(--ink-l); margin:4px 0 6px}
+  .rd-promise .pm-was{font-size:14px; line-height:1.45; font-weight:700; color:var(--ink); margin:0 0 10px}
+  .rd-promise .pm-rev-was{font-size:13.5px; line-height:1.45; font-weight:400; font-style:italic; color:var(--ink); margin:0 0 12px; border-left:3px solid var(--gold); padding-left:8px}
+  .rd-promise .pm-opt{display:grid; grid-template-columns:auto 1fr; gap:4px 8px; align-items:start; margin:0 0 7px; cursor:pointer}
+  .rd-promise .pm-opt input{margin:3px 0 0}
+  .rd-promise .pm-ad{font-size:13.5px; line-height:1.35; color:var(--ink)}
+  .rd-promise .pm-rev{grid-column:2; font-size:11.5px; line-height:1.4; font-style:italic; color:var(--ink-l)}
+
+  /* C112: the presenter's spotlight. It reuses .lb-panel and .lb-read WHOLE - the card, the scroll,
+     the type, every .rd-* rule - and adds a stacking level and a scrim, because a second panel styled
+     from scratch is a second thing to keep in step with the first (4.7's sound chip, same argument).
+     Above .lb-mode's z-index 7 so the one control a presenter's audience sees is not behind the
+     CHAPTERS button; a child of the STAGE, not of .lb-hud, so the flat path removing the hud does not
+     remove it, and .lb-stage.mode-scroll's display:none never reaches it. */
+  .lb-spot{z-index:8; background:rgba(20,16,12,.72)}
+  .lb-spot .sp-badge{font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; font-weight:800; color:var(--gold-d); margin:0 0 4px}
+  .lb-spot .sp-sub{font-size:11.5px; line-height:1.45; font-style:italic; color:var(--ink-l); margin:0 0 12px}
+  .lb-spot .sp-h{font-size:11px; letter-spacing:.09em; text-transform:uppercase; font-weight:800; color:var(--ink-l); margin:14px 0 8px}
 
   /* the door-slot interactable: an empty magnifying-glass-shaped hole. Click/tap puts the glass in - no
      wire, no drag, none of that (see attemptInsert()/the flat path's flSlot handler for the off/live

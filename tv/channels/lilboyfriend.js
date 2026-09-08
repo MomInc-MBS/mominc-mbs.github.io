@@ -264,6 +264,101 @@ export default {
       { id: "masonjar", label: "THE MASON JAR", short: "JAR", p: 0.65, side: 1, cozy: "assets/lilbf-masonjar-cozy.jpg", horror: "assets/lilbf-masonjar-horror.jpg" },
       { id: "van", label: "THE VAN", short: "VAN", p: 0.775, side: -1, cozy: "assets/lilbf-van-cozy.jpg", horror: "assets/lilbf-van-horror.jpg" }
     ];
+    /* ---- C107: what the programme ADVERTISED, and what it turned out to mean --------------------
+       This is the one block of data in this file that is not sourced and must never look as though it
+       is. It is MOM Inc's own marketing copy - fiction, written in the voice of the brochure at the top
+       of the markup ("Can't afford rent? Get smaller. Size isn't everything.") - and its revised
+       reading, which is the same brochure read after the walk. Neither field carries a FIGURE, for the
+       same reason `take` does not: every number on this channel is a reviewed, cited one, and a number
+       invented for a joke standing next to eighteen that are not is how the whole file loses the
+       benefit of the doubt. The gate asserts it with a \d search over both fields.
+
+       `rev` is a reading of THAT promise, not a general moral: the row asks for the first choice to be
+       shown "beside the revised interpretation", and a single revised paragraph per exhibit would show
+       the same thing to somebody who picked the freedom line and somebody who picked the price line.
+       Nothing here is scored, ranked or marked - `k` is a storage key and nothing in this module ever
+       compares two of them for correctness. There is no right answer to which lie was the biggest. */
+    const PROMISES = {
+      teepee: [
+        { k: "P1", ad: "Sleeps anywhere. No lease, no landlord, no waiting list.",
+          rev: "Anywhere was the true part. It is also the part the camping ordinance is about." },
+        { k: "P2", ad: "Breathable canvas walls. The air in here is always fresh.",
+          rev: "A wall you can breathe through is a wall the weather can come through too." },
+        { k: "P3", ad: "Packs down in minutes. Take your home with you.",
+          rev: "A home you can carry is a home somebody else can ask you to carry somewhere else." }
+      ],
+      car: [
+        { k: "P1", ad: "You already own it. Your housing cost drops to nothing overnight.",
+          rev: "It did not drop to nothing. It moved onto the tank, the plates and the tow fee, and none of those is a landlord you can call." },
+        { k: "P2", ad: "Park anywhere. Wake up somewhere new every morning.",
+          rev: "Anywhere gets smaller every year, and waking up somewhere new is what being moved on looks like from the inside." },
+        { k: "P3", ad: "Doors that lock. Security comes as standard.",
+          rev: "The lock keeps out everybody except the one person arriving with a ticket book." }
+      ],
+      shoebox: [
+        { k: "P1", ad: "Everything within reach. Not one wasted step.",
+          rev: "Nothing is out of reach because there is nowhere left for it to be." },
+        { k: "P2", ad: "Heats in seconds. Your bills have never been smaller.",
+          rev: "The bill got smaller because the room did. The rent did not follow it down." },
+        { k: "P3", ad: "A dedicated place for every essential.",
+          rev: "The essentials were chosen for you, by the size of the box." }
+      ],
+      storage: [
+        { k: "P1", ad: "Climate controlled. Twenty-four hour access. Month to month.",
+          rev: "The twenty-four hour access is for your things. You are not what the agreement covers." },
+        { k: "P2", ad: "Your own key. Nobody comes in unless you let them.",
+          rev: "Nobody comes in, and the same door is why nobody knows you are in there." },
+        { k: "P3", ad: "Cheaper than anything else with a roof on it.",
+          rev: "Cheaper than housing is the entire product, which is why the industry does best in the years housing does worst." }
+      ],
+      masonjar: [
+        { k: "P1", ad: "Airtight. Nothing gets in.",
+          rev: "Nothing gets in, and that includes anybody arriving to help." },
+        { k: "P2", ad: "See out on every side. You will never feel shut in.",
+          rev: "Seeing out of somewhere is not the same as being able to leave it." },
+        { k: "P3", ad: "Stackable. Neighbours above you and below you, always.",
+          rev: "Stackable is a word about containers, and it was being used about you." }
+      ],
+      van: [
+        { k: "P1", ad: "Freedom. Your home goes wherever you go.",
+          rev: "It is sold as a choice, and it is one - for the people who had another." },
+        { k: "P2", ad: "Cheaper than a mortgage from the very first day.",
+          rev: "Cheaper is the only claim here that holds up. Affordable was never the word being used." },
+        { k: "P3", ad: "Off-grid ready. Park up and stay as long as you like.",
+          rev: "As long as you like has an hourly limit in some counties now, measured in feet." }
+      ]
+    };
+
+    /* ---- C111: the two claims on these walls that have a dated older version ON RECORD -------------
+       THE RULE IS MECHANICAL AND THE GATE ENFORCES IT, exactly as C014's `url` rule is: `was` and `now`
+       must each appear VERBATIM inside that entry's own shipped `body`. Nothing here is a sentence
+       somebody wrote for this feature. A version selector whose older version is not already reviewed,
+       cited and shipped is a fabricated citation wearing a date, on the one channel whose whole thesis
+       is that it has none - and "the museum used to say something else" is precisely the claim a
+       visitor has no way of checking.
+
+       Which is why there are TWO of these and not eighteen. Two of the twenty-six entries state a
+       figure and then state its dated replacement in the same reviewed body: A9's median home price
+       (a 2024 figure from a 2025 report, overtaken by the monthly series in July 2026) and A12's
+       Carlsbad count (2023, counted again in 2024). Every other entry either has one edition or names
+       a change without printing the earlier number, and inventing that number is the thing this table
+       exists to make impossible. Four of the six exhibits therefore show no selector at all, because
+       there is no approved update on record for them. That is the honest population, not a gap. */
+    const REVISIONS = {
+      A9: { claim: "the median American home price",
+            wasDate: "2024 figure, as the 2025 report states it",
+            was: "The median home in America hit $412,500 in 2024, 60 percent more than six years earlier.",
+            nowDate: "July 2026, NAR Existing-Home Sales",
+            now: "By July 2026 it was $434,100.",
+            why: "The monthly sales series ran on past the cut-off of the report this exhibit was written from. The older figure was not replaced and not corrected: it is what the newer one is measured against, and both are printed above." },
+      A12: { claim: "Carlsbad's homeless count",
+             wasDate: "2023 count",
+             was: "Carlsbad, California counted 60 homeless residents in 2023.",
+             nowDate: "2024 count, published May 22, 2024",
+             now: "By 2024 it was 112, nearly double, in the same stretch the city passed its own ban on camping in a car.",
+             why: "One count, taken again a year later by the same body. The older number is what makes the newer one mean anything, so the exhibit keeps both rather than quietly showing the current one." }
+    };
+
     const TITLE_TEXT = { h1: "THE RESIDENTIAL COMPRESSION PROGRAM.", h2: "A MOM Inc retrospective.", body: FACTS.teepee[0].body };
     const CLOSING_LINE = "You leave smaller than you came in. Everyone does.";
 
@@ -312,6 +407,19 @@ export default {
        the entrance, and a t of 99 with no phase left is a visitor at the door. Discarding the rest of a
        save because one key was edited costs a real walk to defend against a hand edit that cannot hurt
        anything the clamps already bound. */
+    /* C107's half of sanitize(), built OUT of the saved object rather than filtered down it - the same
+       shape `read`'s EXHIBITS.filter() takes, and it closes the same three edits at once: an unknown
+       exhibit id cannot get in, a promise key that belongs to a different exhibit cannot get in, and
+       the object is bounded by the six that exist rather than by whatever a hand edit typed. */
+    function pickMap(raw) {
+      const out = {};
+      if (!raw || typeof raw !== "object" || Array.isArray(raw)) return out;
+      EXHIBITS.forEach(e => {
+        const want = raw[e.id];
+        if (PROMISES[e.id].some(p => p.k === want)) out[e.id] = want;
+      });
+      return out;
+    }
     function sanitize(raw) {
       let saved = {}; try { saved = JSON.parse(raw) || {}; } catch {}
       if (typeof saved !== "object" || Array.isArray(saved)) saved = {};
@@ -338,6 +446,12 @@ export default {
            near the right alcove, which is a position, not a page. Allowlisted against EXHIBITS for the
            same reason `read` and `phase` are - it selects an object this file then renders. */
         reading: (EXHIBITS.find(e => e.id === saved.reading) || {}).id || null,
+        /* C107: the pre-reveal pick and the after-the-return pick, kept apart and kept BOTH. Same
+           allowlist argument again, applied on both axes at once - the key has to be one of the six
+           exhibits and the value one of that exhibit's own three promise keys, so a hand edit cannot
+           put a seventh room or a fourth promise into a comparison this file then renders. */
+        promise: pickMap(saved.promise),
+        promiseBack: pickMap(saved.promiseBack),
       };
       if (phase !== "out") {
         const at = Number(saved.shrinkStartedAt);
@@ -529,12 +643,37 @@ export default {
     // the link's visible text is the host and path without the scheme - the same string `src` already
     // prints, so the citation and the link read as one thing rather than two competing addresses
     const linkLabel = u => u.replace(/^https?:\/\//, "");
-    function readCard(item) {
+    /* ---- C111: the dated version selector, and the reason beside it -------------------------------
+       Two radios named for their DATES, not for "old" and "new": the acceptance is that the historical
+       wording stays visibly dated, and a control labelled "previous" is a control that stops being an
+       answer to "as of when". Both versions and both dates are in the DOM either way - the selector
+       chooses which one is on screen, it does not fetch, replace or discard anything - and the reason
+       for the change is outside the selector, always visible, because a visitor who never touches the
+       control still has to be told the claim moved.
+
+       `ns` namespaces the radio group. C112's spotlight can render the same card while the walk's own
+       reading panel is open behind it, and two radio groups sharing a name are ONE group: selecting a
+       version in the spotlight would silently flip the card underneath it. */
+    function revBlock(item, ns) {
+      const r = REVISIONS[item.t];
+      if (!r) return "";
+      const n = ns + "-lbv-" + item.t;
+      return '<div class="rd-rev" data-v="now">'
+        + '<p class="rd-rev-h">Revised claim: ' + esc(r.claim) + '</p>'
+        + '<p class="rd-rev-pick"><span class="rd-rev-lab">Show the version from</span>'
+        + '<label><input type="radio" name="' + n + '" value="was"><span>' + esc(r.wasDate) + '</span></label>'
+        + '<label><input type="radio" name="' + n + '" value="now" checked><span>' + esc(r.nowDate) + '</span></label></p>'
+        + '<p class="rd-rev-was"><span class="rd-rev-d">' + esc(r.wasDate) + '</span>' + esc(r.was) + '</p>'
+        + '<p class="rd-rev-now"><span class="rd-rev-d">' + esc(r.nowDate) + '</span>' + esc(r.now) + '</p>'
+        + '<p class="rd-rev-why">' + esc(r.why) + '</p></div>';
+    }
+    function readCard(item, ns) {
       return '<div class="fl-card rd-card">'
         + '<p class="rd-head"><span class="rd-t">' + esc(item.t) + '</span>'
         + '<span class="rd-scope">' + esc(item.scope) + '</span></p>'
         + bodyHTML(item.body)
         + '<p class="rd-take">' + esc(item.take) + '</p>'
+        + revBlock(item, ns || "rd")
         + '<span class="fl-src rd-src">' + esc(item.src)
         + '<a class="rd-link" href="' + esc(item.url) + '" target="_blank" rel="noopener noreferrer">'
         + esc(linkLabel(item.url)) + '</a>'
@@ -545,7 +684,83 @@ export default {
     const factsOf = id => FACTS[id];
     const resOf = id => RESOURCE_MAP[id].map(k => Object.assign({ t: k }, RES[k]));
     const readItems = (id, returning) => (returning ? resOf(id) : factsOf(id));
-    const readCards = (id, returning) => readItems(id, returning).map(readCard).join("");
+    // NOT `.map(readCard)`: map hands its callback an INDEX second, which would arrive as `ns` and
+    // name every revision group after its position in the panel. The namespace is explicit.
+    const readCards = (id, returning, ns) => readItems(id, returning).map(it => readCard(it, ns)).join("");
+
+    /* ---- C107: the promise, before the reveal and after the return --------------------------------
+       THE TWO SIDES ARE NOT THE SAME CONTROL. On the way in the exhibit has not been opened yet, so
+       the block is the brochure and one question: which of these three is the strongest promise. On
+       the way back the exhibit has been through the reveal, so the block is what was picked, what
+       that particular promise turned out to mean, and the same three offered again with each one's
+       revised reading printed under it - which is what makes the second screen a COMPARISON rather
+       than a second poll.
+
+       NEITHER SIDE BLOCKS ANYTHING. There is no required answer, no disabled NEXT, no gate on walking
+       on, and skipping the first question is a state the second screen has its own line for - the
+       acceptance is "does not block leaving", and a comparison screen that scolds a visitor for
+       having no first answer is the same failure wearing better manners. Nothing is scored: this
+       module never compares a `promise` value to a `promiseBack` value for agreement, and there is no
+       right answer to which of three lies was the biggest. */
+    function promiseOpts(id, when, checked) {
+      return PROMISES[id].map(p =>
+        '<label class="pm-opt"><input type="radio" name="lbp-' + when + '-' + id + '" value="' + p.k + '"'
+        + (checked === p.k ? ' checked' : '') + '>'
+        + '<span class="pm-ad">' + esc(p.ad) + '</span>'
+        + (when === "after" ? '<span class="pm-rev">' + esc(p.rev) + '</span>' : '')
+        + '</label>').join("");
+    }
+    function promiseBlock(id, returning) {
+      if (!returning) {
+        return '<div class="rd-promise">'
+          + '<p class="pm-h">Before you read it: which promise is the strongest?</p>'
+          + '<p class="pm-note">MOM Inc advertised this residence with all three.</p>'
+          + promiseOpts(id, "before", ST.promise[id])
+          + '<p class="pm-note">Optional, and not scored. You can walk on without answering.</p></div>';
+      }
+      const chosen = PROMISES[id].filter(p => p.k === ST.promise[id])[0];
+      return '<div class="rd-promise">'
+        + (chosen
+            ? '<p class="pm-h">On the way in, you picked</p><p class="pm-was">' + esc(chosen.ad) + '</p>'
+              + '<p class="pm-h">What that one turned out to mean</p><p class="pm-rev pm-rev-was">' + esc(chosen.rev) + '</p>'
+            : '<p class="pm-h">On the way in, you did not pick one</p>'
+              + '<p class="pm-note">Nothing is held against that. Here is what all three turned out to mean.</p>')
+        + '<p class="pm-h">Which one holds up now?</p>'
+        + promiseOpts(id, "after", ST.promiseBack[id])
+        + '<p class="pm-note">Both answers are kept, side by side. Neither one is marked right.</p></div>';
+    }
+
+    /* One delegated `change` listener per reading surface, because both the promise radios and the
+       version radios live inside markup that innerHTML replaces - a listener bound to the inputs
+       themselves would have to be re-bound on every render, and re-binding on a container that
+       survives the render is how a handler ends up registered six times and firing six times.
+
+       The version radios change what is ON SCREEN and nothing else: no save, no state, no record of
+       which version anybody looked at. The promise radios write, and they write by REPLACING the
+       object rather than assigning into it - __lbLoaded is Object.freeze(Object.assign({}, ST)) and
+       freeze is SHALLOW, so mutating the map in place would quietly rewrite the loader's own answer
+       about what it accepted. Same reason markRead() uses concat. */
+    function wireReadInputs(rootEl) {
+      ctx.on(rootEl, "change", (ev) => {
+        const el = ev.target;
+        if (!el || el.type !== "radio") return;
+        const n = el.name || "";
+        if (n.indexOf("-lbv-") > 0) {
+          const box = el.closest(".rd-rev");
+          if (box) box.setAttribute("data-v", el.value === "was" ? "was" : "now");
+          return;
+        }
+        const m = /^lbp-(before|after)-(.+)$/.exec(n);
+        if (!m) return;
+        const ex = EXHIBITS.filter(e => e.id === m[2])[0];
+        if (!ex || !PROMISES[ex.id].some(p => p.k === el.value)) return;
+        const bag = m[1] === "before" ? "promise" : "promiseBack";
+        const next = Object.assign({}, ST[bag]);
+        next[ex.id] = el.value;
+        ST[bag] = next;
+        saveState();
+      });
+    }
 
     /* ---- C020: the case file the epilogue hands over -----------------------------------------------
        The row's acceptance is that finishing the museum "creates a useful object and broadcast
@@ -601,7 +816,36 @@ export default {
           L.push("    Takeaway: " + f.take);
           L.push("    Source: " + f.src);
           L.push("    Link: " + f.url + "  (" + f.date + ")");
+          /* C111: "revisions never silently substitute into a saved case file." A file that printed
+             only the current figure would be doing exactly that - the visitor would be holding a
+             number with no way of knowing it had moved, or from what. Both versions, both dates and
+             the reason go in, under the claim they belong to. */
+          const rv = REVISIONS[f.t];
+          if (rv) {
+            L.push("    REVISED CLAIM: " + rv.claim);
+            L.push("      " + rv.wasDate + ": " + rv.was);
+            L.push("      " + rv.nowDate + ": " + rv.now);
+            L.push("      Why it changed: " + rv.why);
+          }
         });
+      });
+      /* C107: both answers, side by side, and NOT a mark out of six. The file records what was
+         advertised, what this visitor picked before the reveal and what they picked after it, and it
+         says out loud that the two disagreeing is not an error - because a column of before/after
+         pairs printed with no such line is a scorecard whether it means to be one or not. */
+      L.push("");
+      L.push("WHAT WAS ADVERTISED, AND WHAT YOU MADE OF IT");
+      L.push("Your own answers, kept as you gave them. Nothing here is marked right or wrong, and a");
+      L.push("first answer that no longer matches the second is the point of asking twice.");
+      EXHIBITS.forEach(ex => {
+        const b = PROMISES[ex.id].filter(p => p.k === ST.promise[ex.id])[0];
+        const a = PROMISES[ex.id].filter(p => p.k === ST.promiseBack[ex.id])[0];
+        L.push("");
+        L.push("## " + ex.label);
+        PROMISES[ex.id].forEach(p => L.push("    [" + p.k + "] advertised: " + p.ad));
+        L.push("    Strongest promise, before the reveal: " + (b ? "[" + b.k + "] " + b.ad : "not answered"));
+        L.push("    Still holds up, after the return:     " + (a ? "[" + a.k + "] " + a.ad : "not answered"));
+        if (b) L.push("    What that promise turned out to mean: " + b.rev);
       });
       L.push("");
       L.push("IF YOU NEED HOUSING HELP NOW");
@@ -654,7 +898,7 @@ export default {
     // saveState() path (walking is disabled there), so there is no other way to observe a migrated value
     // without resetting it. Reads ST, changes nothing. Removed in unmount(): it closes over this mount's ST,
     // and a reader that outlives the fragment would be answering about a museum that is no longer there.
-    window.__lbState = () => ({ phase: ST.phase, t: ST.t, signed: ST.signed, shrinkStartedAt: ST.shrinkStartedAt, mode: ST.mode, rp: shrinkProgress(), read: ST.read.slice(), taught: taught, mark: markAt(shrinkProgress()), reading: ST.reading });
+    window.__lbState = () => ({ phase: ST.phase, t: ST.t, signed: ST.signed, shrinkStartedAt: ST.shrinkStartedAt, mode: ST.mode, rp: shrinkProgress(), read: ST.read.slice(), taught: taught, mark: markAt(shrinkProgress()), reading: ST.reading, promise: Object.assign({}, ST.promise), promiseBack: Object.assign({}, ST.promiseBack) });
     const reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     // ---- canvas-text sign textures, shared by both render paths' data but only consumed by the 3D path
@@ -727,6 +971,57 @@ export default {
       saveState();
       applyMode();
     });
+
+    /* ---- C112: a presenter link that opens the case being discussed, read only --------------------
+       THE PARAM IS UNTRUSTED INPUT BY C018'S EXACT ARGUMENT. A URL is the one input a visitor does not
+       even have to hand-edit - it arrives in a chat message, a lower third, a QR code on a slide - so
+       it gets the same treatment `phase`, `read` and `reading` get: it is looked up in EXHIBITS and
+       what comes back is THE OBJECT THIS FILE ALREADY HELD. The string itself never reaches innerHTML,
+       never selects a code path, and never becomes an id, a class or a key. Anything that is not one
+       of the six is not an error, a message or a redirect - it is a museum, which is what the visitor
+       came for.
+
+       READ ONLY IS THE OTHER HALF, and it is a claim about what pressing nothing does. Opening this
+       view calls no markRead(), writes no ST.reading, moves no phase or position, signs no guest book
+       and calls no saveState() - the walk underneath is exactly as it was left, which is what makes
+       the link safe to put in front of an audience who each have their own save. Nothing here can
+       unlock or complete either: neither of those is reachable from this block.
+
+       It is built BEFORE the render path is chosen so it works on all three presentations - the
+       museum, the flat gallery and the scroll chapters - and it is a child of the STAGE rather than
+       of .lb-hud for the same reason the mode control is: the flat path removes the whole hud. Placed
+       ahead of the branch on purpose, because runFlat()'s first render() snaps ST.phase and ST.t to
+       its nearest step, and the resume line below is meant to report the save as the visitor left it. */
+    function spotlightCase() {
+      let want = "";
+      try { want = new URLSearchParams(location.search).get("case") || ""; } catch (e) { want = ""; }
+      return EXHIBITS.filter(e => e.id === want)[0] || null;
+    }
+    const spotEx = spotlightCase();
+    if (spotEx) {
+      const spot = document.createElement("div");
+      spot.className = "lb-panel lb-read lb-spot show";
+      spot.id = "lbSpot";
+      spot.setAttribute("role", "dialog");
+      spot.setAttribute("aria-label", "The case being discussed: " + spotEx.label);
+      const started = ST.phase !== "out" || ST.t > 0 || ST.read.length > 0 || ST.signed;
+      spot.innerHTML = '<div class="card">'
+        + '<p class="sp-badge">The case being discussed &middot; read only</p>'
+        + '<h3>' + esc(spotEx.label) + '</h3>'
+        + '<p class="sp-sub">Opening this marks nothing as visited, opened or finished. '
+        + (started ? 'Your saved walk is untouched: ' + ST.read.length + ' of ' + EXHIBITS.length + ' exhibits opened.'
+                   : 'You have not started the walk, and this does not start it.') + '</p>'
+        + '<p class="sp-h">The sourced record</p>' + readCards(spotEx.id, false, "sp")
+        + '<p class="sp-h">Somewhere to call &mdash; check the scope before you dial</p>'
+        + readCards(spotEx.id, true, "sp")
+        + '<div class="lb-bookrow"><button type="button" class="skip" id="lbSpotClose">close and go to the museum</button></div>'
+        + '</div>';
+      lbStage.appendChild(spot);
+      ctx.on(spot.querySelector("#lbSpotClose"), "click", () => spot.remove());
+      // the version selector still works in here, because it changes what is on screen and nothing
+      // else. wireReadInputs' promise branch cannot fire: this view renders no promise block.
+      wireReadInputs(spot);
+    }
 
     if (glOK) { lb.classList.add("webgl"); run3D(); } else { lbCanvas.remove(); lbHud.remove(); runFlat(); }
     // applyMode() is NOT called here, and the reason is a TDZ rather than taste: a saved mode of
@@ -1677,6 +1972,9 @@ export default {
         const readPanel = byId("lbRead"), readTitle = byId("lbReadTitle"), readSub = byId("lbReadSub"),
               readBody = byId("lbReadBody"), readClose = byId("lbReadClose");
         let readExhibit = null, readOpen = false;
+        // C107/C111: one delegated listener on the body the panel refills, bound once. See the note
+        // on wireReadInputs - binding to the inputs themselves would need re-binding on every open.
+        wireReadInputs(readBody);
         function wallAnchorOf(e, rp) { return { x: e.cfg.side * wallHalf(rp), z: zAt(e.cfg.p) }; }
         function nearestWallExhibit(rp) {
           for (const e of exhibitObjs) if (nearFacing(wallAnchorOf(e, rp), 2.4, 0.35)) return e;
@@ -1695,7 +1993,13 @@ export default {
           readTitle.textContent = e.cfg.label;
           readSub.textContent = returning ? "Somewhere to call - check the scope before you dial"
                                           : "The sourced record - open any source in a new tab";
-          readBody.innerHTML = readCards(e.cfg.id, returning);
+          /* C107: outbound the brochure comes FIRST - it is the question asked before the case is
+             read, and putting it under three sourced claims is asking it after. Coming back it comes
+             LAST, behind the resources, because the eight things on the return leg a visitor might
+             actually dial are not something a comparison screen gets to push below the fold. */
+          readBody.innerHTML = returning
+            ? readCards(e.cfg.id, true) + promiseBlock(e.cfg.id, true)
+            : promiseBlock(e.cfg.id, false) + readCards(e.cfg.id, false);
           readPanel.classList.add("show");
           markRead(e.cfg.id);
           // C014: "resume at the same exhibit". Written the moment it opens rather than on the way
@@ -1862,7 +2166,7 @@ export default {
           // C012: a new walk starts with nothing seen. The route strip is a record of THIS walk, not a
           // trophy cabinet - six gold marks over an untouched hall would say the opposite of what it
           // is for. `taught` is the one thing that survives, which is exactly why it is not in here.
-          ST.phase = "out"; ST.t = 0; ST.shrinkStartedAt = null; ST.read = []; ST.reading = null; saveState();
+          ST.phase = "out"; ST.t = 0; ST.shrinkStartedAt = null; ST.read = []; ST.reading = null; ST.promise = {}; ST.promiseBack = {}; saveState();
           closeEpi(); closeZoom();
           exhibitObjs.forEach(e => { paint(e); e.spot.color.set(0xfff0d0); e.spot.intensity = 1.3; });
           hallLights.forEach(l => { l.color.set(WARM_LIGHT); l.intensity = 0.85; });
@@ -2111,6 +2415,10 @@ export default {
     function runFlat() {
       const flat = document.createElement("div"); flat.className = "lb-flat"; flat.id = "lbFlat";
       lbStage.appendChild(flat);
+      // C107/C111: bound to the container render() empties rather than to the step it rebuilds, and
+      // bound ONCE - wire() runs on every render, and a delegated listener registered in there would
+      // be registered seventeen times by the end of the gallery and fire seventeen times per click.
+      wireReadInputs(flat);
       // the held glass, drawn once as inline SVG: a corner decoration on every exhibit step, and (via
       // .fl-zoomable) the tap target that swaps a photo for a 2x circular crop of itself - fisheye is a
       // WebGL-only build, magnification is the fallback's job.
@@ -2168,6 +2476,7 @@ export default {
             markRead(ex.id);   // C012: on this path the step IS the exhibit open, facts and all
             wrap.innerHTML = `<span class="fl-name">${ex.label}</span><p class="fl-sub">cozy - tap the photo to look closer</p>
               <button type="button" class="fl-zoomable" id="flZoom" aria-pressed="false" aria-label="Look closer at ${ex.label}"><img class="fl-photo" src="${ex.cozy}" alt="${ex.label} cozy"><div class="lb-flat-glass">${GLASS_SVG}</div></button>
+              ${promiseBlock(ex.id, false)}
               ${readCards(ex.id, false)}
               <div class="fl-actions"><button id="flNext">NEXT</button></div>`;
             break;
@@ -2187,6 +2496,7 @@ export default {
             wrap.innerHTML = `<span class="fl-name">${ex.label}</span><p class="fl-sub">the walls are closer now - ${markLine(rpF)}${rpF >= 1 ? ", the last" : ""}</p>
               <button type="button" class="fl-zoomable" id="flZoom" aria-pressed="false" aria-label="Look closer at ${ex.label}"><img class="fl-photo" src="${ex.horror}" alt="${ex.label} horror"></button>
               ${readCards(ex.id, true)}
+              ${promiseBlock(ex.id, true)}
               <div class="fl-actions"><button id="flNext">NEXT</button></div>`;
             break;
           }
@@ -2260,7 +2570,7 @@ export default {
         const again = q("flAgain");
         const caseBtn = q("flCase");
         if (caseBtn) ctx.on(caseBtn, "click", downloadCaseFile);
-        if (again) ctx.on(again, "click", () => { ST.phase = "out"; ST.t = 0; ST.shrinkStartedAt = null; ST.read = []; ST.reading = null; saveState(); step = 0; render(); });
+        if (again) ctx.on(again, "click", () => { ST.phase = "out"; ST.t = 0; ST.shrinkStartedAt = null; ST.read = []; ST.reading = null; ST.promise = {}; ST.promiseBack = {}; saveState(); step = 0; render(); });
       }
       render();
       booted = true;
