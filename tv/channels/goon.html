@@ -122,9 +122,13 @@ FORM: Ian's direction 2026-08-26/27; canon in MOM Inc.md "The goon theme" and Se
   @media (min-width:640px){ .gn .tiers{grid-template-columns:1fr 1fr 1fr} }
   @media (max-width:520px){ .gn .hero{grid-template-columns:1fr; justify-items:center; text-align:center} .gn .hero .myr{--w:110px} }
   @media (prefers-reduced-motion:reduce){ .gn .myr .pupil{transition:none} }
+
+  html:not([data-game]) #ggFrame{display:none!important}
+  html[data-game=goon] .gn .wrap{max-width:none;padding:0}
+  html[data-game=goon] .gn .ggFrame{max-width:none;margin:0;border-width:5px;padding:40px}
 </style>
 
-<article class="gn" id="gn" data-host="MOM INC" data-show="GOON" data-ch="8" data-gauge="off">
+<article class="gn" id="gn" data-host="MOM INC" data-show="GOON" data-ch="8" data-gauge="off"><section data-network-launch class="network-launch"><a href="../play/goon/" target="_blank" rel="noopener"><video src="assets/goon-preview.webm" poster="assets/goon-game-still.png" autoplay muted loop playsinline aria-label="The Goon Gala preview"></video><span>▶ PLAY</span></a></section>
   <div class="code" aria-hidden="true" id="gnCode"></div>
   <div class="wrap">
     <p class="gg-overline">A GAME OF FORTUNE &middot; MOM INC PRESENTS</p>
@@ -133,7 +137,7 @@ FORM: Ian's direction 2026-08-26/27; canon in MOM Inc.md "The goon theme" and Se
       <button class="ggTap ggTap-right" type="button" data-dir="right" aria-label="Slide the board right">&#9654;</button>
       <button class="ggTap ggTap-left" type="button" data-dir="left" aria-label="Slide the board left">&#9664;</button>
       <button class="ggTap ggTap-down" type="button" data-dir="down" aria-label="Slide the board down">&#9660;</button>
-      <div class="ggInner"><iframe id="ggGame" src="games/goon/index.html" title="The Goon Gala" loading="lazy" allowfullscreen aria-label="The Goon Gala, a game"></iframe></div>
+      <div class="ggInner"><iframe id="ggGame" data-game-src="games/goon/index.html" title="The Goon Gala" loading="lazy" allowfullscreen aria-label="The Goon Gala, a game"></iframe></div>
     </div>
     <header class="ident">
       <div class="mbs">MBS<small>A MOM INC NETWORK</small></div>
@@ -227,7 +231,7 @@ FORM: Ian's direction 2026-08-26/27; canon in MOM Inc.md "The goon theme" and Se
   function fitViewport() {
     if (!glassEl || !ggFrame) return;
     const gh = glassEl.getBoundingClientRect().height;
-    const visualTarget = Math.max(220, gh - 26);
+    const visualTarget = Math.max(220, gh);
     ggFrame.style.height = visualTarget + "px";
   }
   if (glassEl) { new ResizeObserver(fitViewport).observe(glassEl); fitViewport(); }
@@ -238,6 +242,7 @@ FORM: Ian's direction 2026-08-26/27; canon in MOM Inc.md "The goon theme" and Se
   // 24px, so a plain tap on the iframe does nothing at phone widths. We cannot edit the bundle, so a button
   // press replays the same mousedown/mouseup pair on the game's own canvas, 40px apart, which is all it checks.
   const ggGame = document.getElementById("ggGame");
+  if(location.pathname.includes("/play/goon/"))ggGame.src=ggGame.dataset.gameSrc;
   const TAP_OFFSET = { up: [0, -40], down: [0, 40], left: [-40, 0], right: [40, 0] };
   function ggTap(dir) {
     const off = TAP_OFFSET[dir]; if (!off) return;
