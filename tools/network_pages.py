@@ -5,7 +5,7 @@ import re
 def launch_markup(g):
     slug=g['slug']
     if slug not in ('lilboyfriend','corgi','djscratch','goon'):return ''
-    if slug=='goon':return '<section class="network-launch" aria-label="Play Goon"><a href="../../play/goon/" target="_blank" rel="noopener"><video src="../../tv/assets/goon-preview.webm" poster="../../tv/assets/goon-game-still.png" autoplay muted loop playsinline aria-label="The Goon Gala preview"></video><span>▶ ENTER THE GALA</span></a></section>'
+    if slug=='goon':return '<section class="network-launch" aria-label="Play Goon"><a href="../../gala/" target="_blank" rel="noopener"><video src="../../tv/assets/goon-preview.webm" poster="../../tv/assets/goon-game-still.png" autoplay muted loop playsinline aria-label="The Goon Gala preview"></video><span>▶ JOIN THE GALA</span></a></section>'
     return f'''<section class="network-launch" aria-label="Play {g['title']}"><a href="../../play/{slug}/" target="_blank" rel="noopener"><img src="../../tv/assets/{slug}-game-still.png" alt="{g['title']} game still"><span>▶ {g['cta']}</span></a></section>'''
 
 def write_network_routes(root):
@@ -31,11 +31,16 @@ def write_network_routes(root):
         panel=f'''<section data-network-launch class="network-launch"><a href="../play/{slug}/" target="_blank" rel="noopener"><img src="assets/{slug}-game-still.png" alt="{slug} game still"><span>▶ PLAY</span></a></section>'''
         s=re.sub(r'(<article\b[^>]*>)',lambda m:m[1]+panel,s,count=1)
         if slug=='goon':
+            s=s.replace('../play/goon/','../gala/').replace('<span>▶ PLAY</span>','<span>▶ JOIN THE GALA</span>')
             s=s.replace('<img src="assets/goon-game-still.png" alt="goon game still">','<video src="assets/goon-preview.webm" poster="assets/goon-game-still.png" autoplay muted loop playsinline aria-label="The Goon Gala preview"></video>')
         if slug=='lilboyfriend':
             s=s.replace('<img src="assets/lilboyfriend-game-still.png" alt="lilboyfriend game still">','<video src="assets/lilboyfriend-preview.webm" poster="assets/lilboyfriend-game-still.png" autoplay muted loop playsinline aria-label="Lil Boyfriend museum preview"></video>')
             lp=landing.read_text(encoding='utf-8')
             lp=re.sub(r'<img src="../../tv/assets/lilboyfriend-game-still.png"[^>]*>','<video src="../../tv/assets/lilboyfriend-preview.webm" poster="../../tv/assets/lilboyfriend-game-still.png" autoplay muted loop playsinline aria-label="Lil Boyfriend museum preview"></video>',lp)
+            landing.write_text(lp,encoding='utf-8')
+        if slug=='goon':
+            lp=landing.read_text(encoding='utf-8').replace('../../play/goon/','../../gala/')
+            if 'id="play"' not in lp:lp=lp.replace('<a href="../../gala/"','<a id="play" class="cta-still" data-play="../../gala/" href="../../gala/"',1)
             landing.write_text(lp,encoding='utf-8')
         file.write_text(s,encoding='utf-8')
     for page in (root/'games').glob('*/index.html'):
