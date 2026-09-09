@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-game="goon" data-status="coming-soon">
+<html lang="en" data-game="goon">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -18,29 +18,94 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Goon | MBS">
 <meta name="twitter:description" content="Slide the tiles together. A goon is someone who gives. You are one too.">
+<meta name="twitter:image" content="https://mominc-mbs.github.io/tv/assets/mom-inc-mark.png">
+<meta name="twitter:image:alt" content="The MOM Inc mark">
 <link rel="stylesheet" href="../../tv/landing.css">
+<link rel="stylesheet" href="../../tv/identity.css">
+<link rel="stylesheet" href="../../tv/network-flow.css">
+<link href="https://fonts.googleapis.com/css2?family=Bowlby+One+SC&amp;family=Pacifico&amp;family=Special+Elite&amp;display=swap" rel="stylesheet">
 <style>
   :root{--bg:#2a0a44; --ink:#ffd36e; --accent:#e04b6a; --title-vw:11.5vw;}
 </style>
 </head>
-<body class="g-goon is-coming-soon" data-slug="goon" data-ch="8">
-<a class="skip" href="#play">Skip to link</a>
+<body class="g-goon" data-slug="goon" data-ch="0" data-progress-key=""
+      data-continue-cta="" data-next-slug="lilboyfriend" data-next-ch="1"
+      data-next-title="Living Small" data-next-premise="A little home. A little comfort. All arranged for you." data-share-url="https://mominc-mbs.github.io/games/goon/"
+      data-live-at="" data-live-url="">
+<a class="skip" href="#play">Skip to play</a>
+
 <main>
+  <nav class="landing-nav"><a href="../../tv/?ch=mominc">MOM INC</a><a href="#information">Information</a><a href="#questions">Questions</a></nav>
+
   <header class="hero">
     <div class="hero-art" aria-hidden="true"><img src="../../tv/assets/mom-inc-mark.png" alt="" width="512" height="512" loading="eager" decoding="async"></div>
     <div class="hero-copy">
-      <p class="eyebrow">SLIDE AND MERGE &middot; Coming Soon</p>
-      <h1 class="title">Goon</h1>
+      <p class="eyebrow">SLIDE AND MERGE</p>
+      <div class="brand-heading"><h1 class="title">Goon</h1></div>
       <p class="premise">Slide the tiles together. A goon is someone who gives. You are one too.</p>
-      <p class="premise">This channel is being rebuilt and is not playable yet.</p>
-      <a class="cta" id="play" href="../../">Back To All Channels</a>
+      <p class="resume" id="resume" hidden>Saved progress found on this device.</p>
+      <a class="cta" id="play" href="../../play/goon/" data-play="../../play/goon/" target="_blank" rel="noopener">Slide To Merge</a>
+      <p class="cta-sub">As long as you like &middot; swipe or keyboard</p>
+      <p class="split">Public edition &middot; Free to play</p>
     </div>
   </header>
+
+
+  <div class="below-play">
+    <details class="game-notes"><summary>How to play</summary>
+      <dl class="facts"><div><dt>Do</dt><dd>Swipe to merge tiles</dd></div><div><dt>Finish</dt><dd>Reach 2048 or fill the board</dd></div></dl>
+    </details>
+    <details class="locked-edition"><summary><span aria-hidden="true">&#128274;</span> Restricted programming <span class="lock-state">Locked</span></summary>
+      <p>MOM is still reviewing this transmission. Horror editions unlock later.</p>
+    </details>
+  </div>
+
+  <details class="profile" id="questions" open><summary id="profileHead">Your optional coach notes</summary>
+
+    <p class="profile-voice">A COACH SHOULD KNOW WHO IS ACTUALLY IN THE ROOM.</p>
+    <p class="profile-store">Optional notes for a future Coach AI. Saved only in this browser; nothing is sent. No coach reads them yet. Delete them here or in Your Files.</p>
+
+    <form class="profile-form" id="profileForm">
+      <p class="q"><label for="goon-q1">Who, if anyone, supports what you are trying to do?</label>
+        <textarea id="goon-q1" name="q1" rows="2" autocomplete="off"></textarea>
+        <span class="opt">Optional</span></p>
+      <p class="q"><label for="goon-q2">Should the coach involve them, remind you about them, or keep the plan between you and the coach?</label>
+        <textarea id="goon-q2" name="q2" rows="2" autocomplete="off"></textarea>
+        <span class="opt">Optional</span></p>
+      <p class="q"><label for="goon-q3">When do you reliably have help, company or accountability?</label>
+        <textarea id="goon-q3" name="q3" rows="2" autocomplete="off"></textarea>
+        <span class="opt">Optional</span></p>
+      <div class="profile-actions">
+        <button type="submit" class="mini">Save on this device</button>
+        <button type="button" class="mini ghost" id="profileDelete">Delete my answers for this channel</button>
+      </div>
+      <p class="profile-saved" id="profileSaved" hidden role="status"></p>
+    </form>
+
+    <div class="profile-file" id="profileFile" hidden>
+      <p class="profile-count" id="profileCount"></p>
+      <ul class="profile-list" id="profileList"></ul>
+      <p class="profile-partial">Partial is fine. Every question is optional, and no channel asks for
+        the same thing twice.</p>
+      <p class="profile-partial"><a href="../../files/">See everything this browser is keeping</a></p>
+    </div>
+
+  </details>
+
   <footer class="foot">
-    <a href="../../tv/?ch=goon">Explore Ch 8 &middot; MOM INC</a>
-    <a href="../../">All channels</a>
-    <p class="fine">MOM Inc is fictional and MBS is a comedy programme. This channel is coming soon.</p>
+    <a href="../../tv/?ch=goon">Explore &middot; MOM INC</a>
+    <button type="button" class="linkish" id="shareBtn">Share game</button>
+    <a href="../../tv/?ch=mominc">MOM INC</a>
+    <p class="share-said" id="shareSaid" hidden role="status">Channel link copied. MOM did not open your contacts.</p>
+    <a href="../../files/">Your files</a>
+    <p class="fine">MOM Inc is fiction. Public games are free.</p>
   </footer>
 </main>
+
+<script src="../../tv/mbs-channels.js"></script>
+<script src="../../tv/state.js"></script>
+<script src="../../tv/card.js"></script>
+<script src="../../tv/network-flow.js"></script>
+<script src="../../tv/atmosphere.js"></script>
 </body>
 </html>

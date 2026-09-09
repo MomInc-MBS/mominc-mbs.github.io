@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="tv.css">
+<link rel="stylesheet" href="atmosphere.css">
 <!-- meta:start -->
 <meta name="description" content="MBS, Mom's Brainwashing Stream. One old television, eight channels, every host a prisoner of MOM Inc.">
 <link rel="canonical" href="https://mominc-mbs.github.io/tv/">
@@ -17,8 +18,7 @@
 <meta property="og:url" content="https://mominc-mbs.github.io/tv/">
 <meta property="og:image" content="https://mominc-mbs.github.io/tv/assets/mom-inc-mark.png">
 <meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">
-{
+<script type="application/ld+json">{
   "@context": "https://schema.org",
   "@graph": [
     {
@@ -88,20 +88,6 @@
     },
     {
       "@type": "WebPage",
-      "@id": "https://mominc-mbs.github.io/tv/?ch=sag",
-      "url": "https://mominc-mbs.github.io/tv/?ch=sag",
-      "name": "BASSET'S ASSETS",
-      "alternateName": "SAG SNIFFER",
-      "description": "Basset's Assets. Debts collected, accounts settled, nothing forgiven. Everything on these walls came in against a debt. Coming soon.",
-      "isPartOf": {
-        "@id": "https://mominc-mbs.github.io/#site"
-      },
-      "about": {
-        "@id": "https://mominc-mbs.github.io/#org"
-      }
-    },
-    {
-      "@type": "WebPage",
       "@id": "https://mominc-mbs.github.io/tv/?ch=armie",
       "url": "https://mominc-mbs.github.io/tv/?ch=armie",
       "name": "COACH ARMIE",
@@ -143,10 +129,9 @@
       }
     }
   ]
-}
-</script>
+}</script>
 <!-- meta:end -->
-</head>
+<link rel="stylesheet" href="network-flow.css"></head>
 <body>
 <!--
 THESIS: Every MBS character site is a broadcast playing on one old television. The set is the network; the channel is the character. It refuses the creator-page arrangement (avatar, bio, buttons) entirely: nothing on the page exists outside the glass.
@@ -217,19 +202,21 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 <script src="state.js"></script>
 <script src="mbs-runtime.js"></script>
 <script src="channel-runtime.js"></script>
+<script src="network-flow.js"></script>
 <script src="tv.js"></script>
+<script src="atmosphere.js"></script>
 <!-- noscript:start -->
 <noscript>
   <h1>MBS, Mom's Brainwashing Stream</h1>
   <p>The television needs JavaScript to turn on. The channels are these:</p>
   <ul>
-    <li><a href="?ch=mominc">CH 1 · MBS NETWORK HOME</a>. The parent company's own channel and the network's front door. Welcome home. We have your file open. We know what you need.</li>
-    <li><a href="?ch=lilboyfriend">CH 2 · LIVING SMALL</a>. A MOM Inc residential therapy, now in a smaller size. The Residential Compression Program, and what living small costs.</li>
-    <li><a href="?ch=djscratch">CH 3 · THE MUSIC DESK</a>. The Music Desk. It DJs. It cleans. It obeys. Send an unsigned track and the hand will play it.</li>
-    <li><a href="?ch=sag">CH 4 · BASSET'S ASSETS</a>. Basset's Assets. Debts collected, accounts settled, nothing forgiven. Everything on these walls came in against a debt. Coming soon.</li>
+    <li><a href="?ch=mominc">HOME · MBS NETWORK HOME</a>. The parent company's own channel and the network's front door. Welcome home. We have your file open. We know what you need.</li>
+    <li><a href="?ch=lilboyfriend">CH 1 · LIVING SMALL</a>. A MOM Inc residential therapy, now in a smaller size. The Residential Compression Program, and what living small costs.</li>
+    <li><a href="?ch=djscratch">CH 2 · THE MUSIC DESK</a>. The Music Desk. It DJs. It cleans. It obeys. Send an unsigned track and the hand will play it.</li>
+
     <li><a href="?ch=armie">CH 5 · COACH ARMIE</a>. Coach Armie takes the Workout of the Day. He has counted your fingers. A broadcast character; nothing behind him is a real transmission. Coming soon.</li>
-    <li><a href="?ch=corgi">CH 6 · NAUSEOUS IN THE MORNING</a>. The bad news desk. They moved the morning again, the sun rose four minutes early, and the corgi knows. The corgi always knows.</li>
-    <li><a href="?ch=fuel">CH 7 · BUILD YOUR STACK</a>. Build your own pre-workout stack, flavour and can included. Untested: this blend has never been brewed, and the page says so.</li>
+    <li><a href="?ch=corgi">CH 3 · NAUSEOUS IN THE MORNING</a>. The bad news desk. They moved the morning again, the sun rose four minutes early, and the corgi knows. The corgi always knows.</li>
+    <li><a href="?ch=fuel">EXTRA · BUILD YOUR STACK</a>. Build your own pre-workout stack, flavour and can included. Untested: this blend has never been brewed, and the page says so.</li>
   </ul>
   <p>MOM Inc is not a real company. MBS is a comedy show about a corporation that manufactures fake advertisements, which makes this one of the few honest things on the network. Nothing here claims an audience, a testimonial or a result, because there is not one yet. The show first aired 2026-08-26.</p>
 </noscript>

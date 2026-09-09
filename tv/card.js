@@ -17,9 +17,20 @@
   const S = () => window.MBS_STATE;
   const readAll = () => { const s = S(); return s ? s.read().drafts : {}; };
 
-  /* ---- the CTA. `[data-play]` anchors carry a real href to the play route and no target, so a click
-     navigates this tab there directly - no new tab, nothing to open or fall back from. The onward-channel
-     block below is shown up front instead of after a launch this same-tab nav can no longer observe. */
+  /* Game launches use a separate top-level tab and fall back to this tab when blocked. */
+
+  // Native target=_blank is the no-JS path. An explicit click handles browsers that reject a new tab.
+  document.querySelectorAll('[data-play]').forEach(link => {
+    link.addEventListener('click', e => {
+      if (e.defaultPrevented || e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      let tab;
+      try { tab = window.open('about:blank', '_blank'); } catch {}
+      if (!tab) { location.assign(link.href); return; }
+      try { tab.opener = null; tab.location.replace(link.href); }
+      catch { tab.close(); location.assign(link.href); }
+    });
+  });
 
   /* ---- saved progress, and only where the game genuinely saves. The key comes from the registry and
      is the key the game itself writes; three channels save nothing and declare no key, so their cards

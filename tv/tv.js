@@ -138,13 +138,7 @@
   // channels carry comingSoon from the manifest's status; one of those three also carries suppressed
   // (its compiled bundle asks for card details; route closed until the rebuild lands, see the
   // suppression register in channel-manifest.json).
-  const CHANNELS = [
-    ...window.MBS_CHANNELS.channels,
-    // the way out of the television and into the games' own pages (plan item 13: the set discovers and
-    // launches them, it is no longer the box they have to run inside). Not a channel, so not in the
-    // manifest: a navigation link to /games/, kept here.
-    { id: "allgames", ch: 0, name: "ALL GAMES", href: "../games/", label: "PLAY" },
-  ];
+  const CHANNELS = window.MBS_CHANNELS.channels;
   const COMING_SOON = CHANNELS.filter(c => c.comingSoon).map(c => c.id);   // keep in sync with the list above
   const lcdList = document.getElementById("lcdList");
   const current = new URLSearchParams(location.search).get("ch") || "";
@@ -154,6 +148,7 @@
     el.className = "lcd-card" + (c.head ? " head" : "") + (c.half ? " half" : "") + (built ? "" : " off") + (c.id === current ? " on" : "");
     el.dataset.id = c.id;
     if (built) el.href = c.href || `?ch=${c.id}`;
+    if (c.id === 'armie' && !window.MBS_FLOW?.armieReady()) { el.removeAttribute('href'); el.classList.add('armie-dark'); el.setAttribute('aria-disabled','true'); }
     el.innerHTML = `<span class="lcd-ch">${c.ch > 0 ? "CH " + c.ch : (c.label || "CH --")}</span><span class="lcd-name">${c.name}${c.comingSoon ? " (SOON)" : ""}</span>`;
     lcdList.appendChild(el);
   });
@@ -161,7 +156,7 @@
   // --- the numbered dial ring: 2 to 13 like a VHF dial, plus U for the UHF click
   const ticks = document.getElementById("dialTicks");
   if (ticks) {
-    const labels = ["2","3","4","5","6","7","8","9","10","11","12","13","U"];
+    const labels = ["1","2","3","4","5"];
     labels.forEach((t, i) => {
       const a = (-150 + i * (300 / (labels.length - 1))) * Math.PI / 180;
       const x = 60 + Math.sin(a) * 50, y = 60 - Math.cos(a) * 50;
@@ -224,9 +219,11 @@
   window.MBS.isLive = mbsMode === "live";
 
   // --- channel: ?ch=<name> loads channels/<name>.html into the glass; no channel = the test card
-  const name = new URLSearchParams(location.search).get("ch");
+  const name = new URLSearchParams(location.search).get("ch")==="sag"?"mominc":new URLSearchParams(location.search).get("ch");
   const testcard = `<section class="testcard" aria-label="MBS test card"><h1>MBS</h1><div class="spacer"></div><p>Mom's Brainwashing Stream. This set is tuned to no one yet.</p></section>`;
-  if (name && COMING_SOON.includes(name)) {
+  if (name === "armie" && !window.MBS_FLOW?.armieReady()) {
+    channel.innerHTML = `<section class="testcard"><h1>COACH ARMIE</h1><p>The Music Desk has your hand on order.</p><a href="../games/djscratch/">Visit DJ Scratch</a></section>`;
+  } else if (name && COMING_SOON.includes(name) && name !== "armie") {
     // coming_soon: the channel still has a slot, but there is no game to load - never fetch its fragment
     const c = CHANNELS.find(x => x.id === name);
     channel.innerHTML = `<section class="testcard" aria-label="${c.name} coming soon"><h1>${c.name}</h1><div class="spacer"></div><p>This channel is being rebuilt. Coming soon.</p></section>`;

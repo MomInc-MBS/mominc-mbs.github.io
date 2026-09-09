@@ -5,7 +5,9 @@ window.MBS_CHANNELS = {
   "channels": [
     {
       "id": "mominc",
-      "ch": 1,
+      "ch": 0,
+      "href": "?ch=mominc",
+      "label": "HOME",
       "name": "MOM INC",
       "head": true,
       "half": false,
@@ -16,7 +18,9 @@ window.MBS_CHANNELS = {
     },
     {
       "id": "fuel",
-      "ch": 7,
+      "ch": 0,
+      "href": "?ch=fuel",
+      "label": "EXTRA",
       "name": "DRINKS",
       "head": false,
       "half": true,
@@ -27,18 +31,22 @@ window.MBS_CHANNELS = {
     },
     {
       "id": "goon",
-      "ch": 8,
+      "ch": 0,
+      "href": "?ch=goon",
+      "label": "EXTRA",
       "name": "GOON",
       "head": false,
       "half": true,
-      "comingSoon": true,
-      "suppressed": true,
+      "comingSoon": false,
+      "suppressed": false,
       "game": true,
       "module": false
     },
     {
       "id": "lilboyfriend",
-      "ch": 2,
+      "ch": 1,
+      "href": "?ch=lilboyfriend",
+      "label": "EXTRA",
       "name": "LIL BOYFRIEND",
       "head": false,
       "half": false,
@@ -49,7 +57,9 @@ window.MBS_CHANNELS = {
     },
     {
       "id": "djscratch",
-      "ch": 3,
+      "ch": 2,
+      "href": "?ch=djscratch",
+      "label": "EXTRA",
       "name": "DJ SCRATCH",
       "head": false,
       "half": false,
@@ -60,7 +70,9 @@ window.MBS_CHANNELS = {
     },
     {
       "id": "corgi",
-      "ch": 6,
+      "ch": 3,
+      "href": "?ch=corgi",
+      "label": "EXTRA",
       "name": "CORTISOL CORGI",
       "head": false,
       "half": false,
@@ -70,19 +82,10 @@ window.MBS_CHANNELS = {
       "module": true
     },
     {
-      "id": "sag",
-      "ch": 4,
-      "name": "SAG SNIFFER",
-      "head": false,
-      "half": false,
-      "comingSoon": true,
-      "suppressed": false,
-      "game": true,
-      "module": false
-    },
-    {
       "id": "girlfriend",
-      "ch": 9,
+      "ch": 4,
+      "href": "?ch=girlfriend",
+      "label": "EXTRA",
       "name": "DR GIRLFRIEND",
       "head": false,
       "half": false,
@@ -94,6 +97,8 @@ window.MBS_CHANNELS = {
     {
       "id": "armie",
       "ch": 5,
+      "href": "?ch=armie",
+      "label": "EXTRA",
       "name": "COACH ARMIE",
       "head": false,
       "half": false,
@@ -107,12 +112,14 @@ window.MBS_CHANNELS = {
     "fuel",
     "lilboyfriend",
     "djscratch",
-    "corgi"
+    "corgi",
+    "girlfriend"
   ],
   "forms": [
     "fuel",
     "lilboyfriend",
     "djscratch",
-    "corgi"
+    "corgi",
+    "girlfriend"
   ]
 };

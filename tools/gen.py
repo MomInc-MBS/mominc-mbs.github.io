@@ -9,6 +9,8 @@ is rendered ONLY when the matching registry value is non-empty, so an unconfirme
 produce an invented deadline and no form can ever collect an address there is nowhere to send.
 """
 import json, os, html, io, shutil
+from character_pages import information_markup, profile_title, brand_markup, page_title
+from network_pages import launch_markup, write_network_routes
 
 # Derived from this file's own location rather than hard-coded, so the generator travels with the repo
 # and a clone anywhere still regenerates. (It lived outside the repo until 2026-09-06, in no commit,
@@ -48,6 +50,9 @@ LANDING = u"""<!doctype html>
 <meta name="twitter:image" content="{site}/tv/{share_image}">
 <meta name="twitter:image:alt" content="{share_alt}">
 <link rel="stylesheet" href="../../tv/landing.css">
+<link rel="stylesheet" href="../../tv/identity.css">
+<link rel="stylesheet" href="../../tv/network-flow.css">
+<link href="https://fonts.googleapis.com/css2?family=Bowlby+One+SC&amp;family=Pacifico&amp;family=Special+Elite&amp;display=swap" rel="stylesheet">
 <style>
   :root{{--bg:{bg}; --ink:{ink}; --accent:{accent}; --title-vw:{titlevw}vw;}}
 </style>
@@ -59,49 +64,35 @@ LANDING = u"""<!doctype html>
 <a class="skip" href="#play">Skip to play</a>
 
 <main>
+  <nav class="landing-nav"><a href="../../tv/?ch=mominc">MOM INC</a><a href="#information">Information</a><a href="#questions">Questions</a></nav>
+  {launch}
   <header class="hero">
     <div class="hero-art" aria-hidden="true">{heroart}</div>
     <div class="hero-copy">
       <p class="eyebrow">{eyebrow}</p>
-      <h1 class="title">{title}</h1>
+      <div class="brand-heading">{brand}<h1 class="title">{page_title}</h1></div>
       <p class="premise">{premise}</p>
       <p class="resume" id="resume" hidden>Saved progress found on this device.</p>
-      <a class="cta" id="play" href="../../play/{slug}/" data-play="../../play/{slug}/">{cta}</a>
-      <p class="cta-sub">Controls: {inp}.</p>
-      <p class="split">Public game: free, no account, no code. A prize mission is different: it needs a
-        code revealed during a real live broadcast, and it only runs while this page says LIVE.</p>
+      <a class="cta" id="play" href="../../play/{slug}/" data-play="../../play/{slug}/" target="_blank" rel="noopener">{cta}</a>
+      <p class="cta-sub">{duration} &middot; {inp}</p>
+      <p class="split">Public edition &middot; Free to play</p>
     </div>
   </header>
 {mission}
-  <section class="facts" aria-label="What this is">
-    <dl>
-      <div><dt>Do</dt><dd>{does}</dd></div>
-      <div><dt>Time</dt><dd>{duration}</dd></div>
-      <div><dt>Finish</dt><dd>{finish}</dd></div>
-    </dl>
-  </section>
+{information}
+  <div class="below-play">
+    <details class="game-notes"><summary>How to play</summary>
+      <dl class="facts"><div><dt>Do</dt><dd>{does}</dd></div><div><dt>Finish</dt><dd>{finish}</dd></div></dl>
+    </details>
+    <details class="locked-edition"><summary><span aria-hidden="true">&#128274;</span> Restricted programming <span class="lock-state">Locked</span></summary>
+      <p>MOM is still reviewing this transmission. Horror editions unlock later.</p>
+    </details>
+  </div>
 
-  <section class="teaser">
-    <p>{teaser}</p>
-    <a class="cta cta-2" id="play2" href="../../play/{slug}/" data-play="../../play/{slug}/">{cta2}</a>
-    <div class="next" id="nextChannel">
-      <p class="next-lead">Next channel:</p>
-      <p class="next-title" id="nextTitle">{next_title}</p>
-      <p class="next-premise" id="nextPremise">{next_premise}</p>
-      <a class="cta cta-2" id="nextLink" href="../../games/{next_slug}/">Open Ch {next_ch}</a>
-    </div>
-  </section>
+  <details class="profile" id="questions" open><summary id="profileHead">{profile_title}</summary>
 
-  <section class="profile" aria-labelledby="profileHead">
-    <h2 class="profile-head" id="profileHead">Start your coach file</h2>
     <p class="profile-voice">{profile_intro}</p>
-    <p class="profile-why">This channel keeps one optional piece of a profile meant for a personal
-      Coach AI. That coach does not exist yet and nothing reads these answers today, so this is a draft
-      you are keeping for yourself. It is not used to diagnose you, and it is never sold or used to
-      target advertising. Skip it and keep playing.</p>
-    <p class="profile-store">Your answers stay in this browser, on this device. Nothing is sent
-      anywhere, there is no account behind these questions{identity_note}, and no coach and no person
-      reads them. Clearing your browser data removes them, and so does the button below.</p>
+    <p class="profile-store">Optional notes for a future Coach AI. Saved only in this browser; nothing is sent. No coach reads them yet. Delete them here or in Your Files.</p>
 
     <form class="profile-form" id="profileForm">
 {questions}
@@ -120,21 +111,23 @@ LANDING = u"""<!doctype html>
       <p class="profile-partial"><a href="../../files/">See everything this browser is keeping</a></p>
     </div>
 {identity}
-  </section>
+  </details>
 
   <footer class="foot">
     <a href="../../tv/?ch={slug}">Explore Ch {ch} &middot; {host}</a>{live_links}
-    <button type="button" class="linkish" id="shareBtn">Share this channel</button>
-    <a href="../../">All channels</a>
+    <button type="button" class="linkish" id="shareBtn">Share game</button>
+    <a href="../../tv/?ch=mominc">MOM INC</a>
     <p class="share-said" id="shareSaid" hidden role="status">Channel link copied. MOM did not open your contacts.</p>
-    <p class="fine">MOM Inc is fictional and MBS is a comedy programme. Public games are free. A
-      broadcast or a prize mission is only real when this page says LIVE{rules_line}.</p>
+    <a href="../../files/">Your files</a>
+    <p class="fine">MOM Inc is fiction. Public games are free{rules_line}.</p>
   </footer>
 </main>
 
 <script src="../../tv/mbs-channels.js"></script>
 <script src="../../tv/state.js"></script>
 <script src="../../tv/card.js"></script>
+<script src="../../tv/network-flow.js"></script>
+<script src="../../tv/atmosphere.js"></script>
 </body>
 </html>
 """
@@ -148,9 +141,12 @@ PLAY = u"""<!doctype html>
 <title>{title}</title>
 <meta name="robots" content="noindex">
 <link rel="stylesheet" href="play.css">
+<link rel="stylesheet" href="atmosphere.css">
+<link rel="stylesheet" href="network-flow.css">
 <style>body{{background:{bg}}}</style>
 </head>
 <body>
+{orientation}
 <div class="stage"><div class="rail"><a class="exit" href="../games/{slug}/" aria-label="Back to {title}">&larr;<span>{title}</span></a></div><div class="glass"><div id="screen" class="screen"><div id="channel" class="channel"></div></div></div></div>
 <div class="wave" id="mbsWave" aria-hidden="true"></div>
 <div class="meter" id="mbsMeter" hidden aria-hidden="true"></div>
@@ -161,7 +157,9 @@ PLAY = u"""<!doctype html>
 <script src="mbs-runtime.js"></script>
 <script src="channel-runtime.js"></script>
 <script src="mbs-shim.js"></script>
+<script src="atmosphere.js"></script>
 <script src="mount.js"></script>
+<script src="network-flow.js"></script>
 </body>
 </html>
 """
@@ -190,6 +188,8 @@ COMING_SOON = u"""<!doctype html>
 <meta name="twitter:title" content="{title} | MBS">
 <meta name="twitter:description" content="{premise}">
 <link rel="stylesheet" href="../../tv/landing.css">
+<link rel="stylesheet" href="../../tv/identity.css">
+<link href="https://fonts.googleapis.com/css2?family=Bowlby+One+SC&amp;family=Pacifico&amp;family=Special+Elite&amp;display=swap" rel="stylesheet">
 <style>
   :root{{--bg:{bg}; --ink:{ink}; --accent:{accent}; --title-vw:{titlevw}vw;}}
 </style>
@@ -197,11 +197,12 @@ COMING_SOON = u"""<!doctype html>
 <body class="g-{slug} is-coming-soon" data-slug="{slug}" data-ch="{ch}">
 <a class="skip" href="#play">Skip to link</a>
 <main>
+  <nav class="landing-nav"><a href="../../tv/?ch=mominc">MOM INC</a><a href="../../tv/">Tune in</a></nav>
   <header class="hero">
     <div class="hero-art" aria-hidden="true">{heroart}</div>
     <div class="hero-copy">
       <p class="eyebrow">{eyebrow} &middot; Coming Soon</p>
-      <h1 class="title">{title}</h1>
+      <div class="brand-heading">{brand}<h1 class="title">{page_title}</h1></div>
       <p class="premise">{premise}</p>
       <p class="premise">This channel is being rebuilt and is not playable yet.</p>
       <a class="cta" id="play" href="../../">Back To All Channels</a>
@@ -209,7 +210,7 @@ COMING_SOON = u"""<!doctype html>
   </header>
   <footer class="foot">
     <a href="../../tv/?ch={slug}">Explore Ch {ch} &middot; {host}</a>
-    <a href="../../">All channels</a>
+    <a href="../../tv/?ch=mominc">MOM INC</a>
     <p class="fine">MOM Inc is fictional and MBS is a comedy programme. This channel is coming soon.</p>
   </footer>
 </main>
@@ -238,6 +239,10 @@ def share_alt(g):
 
 
 def hero_markup(g):
+    from scene_markup import scene_markup
+    scene = scene_markup(g["slug"])
+    if scene: return scene
+
     if g.get("hero"):
         return u'<img src="../../tv/%s" alt="" width="512" height="512" loading="eager" decoding="async">' % esc(g["hero"])
     return u'<div class="hero-mark"></div>'
@@ -298,6 +303,7 @@ def identity_markup(identity_api):
     VERIFICATION CODE button that quietly discards the address is precisely the defect this review found
     in three existing channels, and adding a ninth would be worse than shipping without one."""
     if not identity_api:
+        return ""
         return (u'\n    <p class="profile-later">There is nowhere to send this, so nothing here asks for '
                 u'your email or number. If a live mission and a Coach AI are built, this is where the card '
                 u'would say exactly what it keeps and for how long, and ask before anything is sent.</p>')
@@ -375,10 +381,11 @@ for g in REG["games"]:
     if g.get("status") == "coming_soon":
         ctx = dict(
             site=SITE, slug=slug, ch=g["ch"], title=esc(g["title"]), eyebrow=esc(g["eyebrow"]),
+            brand=brand_markup(slug), page_title=esc(page_title(slug,g["title"])),
             host=esc(g["host"]), premise=esc(g["premise"]),
             share_image=esc(g["share_image"]), share_alt=esc(share_alt(g)),
             share_w=png_size(g["share_image"])[0], share_h=png_size(g["share_image"])[1],
-            heroart=hero_markup(g), bg=g["palette"]["bg"], ink=g["palette"]["ink"],
+            launch=launch_markup(g), heroart=hero_markup(g), bg=g["palette"]["bg"], ink=g["palette"]["ink"],
             accent=g["palette"]["accent"], titlevw=title_vw(g["title"]),
         )
         d = os.path.join(ROOT, "games", slug)
@@ -396,20 +403,23 @@ for g in REG["games"]:
     nxt = NEXT[slug]
     ctx = dict(
         site=SITE, slug=slug, ch=g["ch"], title=esc(g["title"]), eyebrow=esc(g["eyebrow"]),
+            brand=brand_markup(slug), page_title=esc(page_title(slug,g["title"])),
         host=esc(g["host"]), premise=esc(g["premise"]), cta=esc(g["cta"]), cta2=esc(g["cta2"]),
         does=esc(g["does"]), duration=esc(g.get("duration") or "a few minutes"),
         finish=esc(g["finish"]), inp=esc(g["input"]),
         teaser=esc(g.get("teaser") or ""), hero=esc(g.get("hero") or ""),
         share_image=esc(g["share_image"]), share_alt=esc(share_alt(g)),
         share_w=png_size(g["share_image"])[0], share_h=png_size(g["share_image"])[1],
-        heroart=hero_markup(g), bg=g["palette"]["bg"], ink=g["palette"]["ink"], accent=g["palette"]["accent"],
+        launch=launch_markup(g), heroart=hero_markup(g), bg=g["palette"]["bg"], ink=g["palette"]["ink"], accent=g["palette"]["accent"],
         titlevw=title_vw(g["title"]),
         roots=esc(json.dumps({"roots": g["roots"], "hide": g["hide"]}, ensure_ascii=False)),
+        orientation=('<aside class="rotate-notice" aria-labelledby="rotate-title"><span aria-hidden="true">↻</span><h1 id="rotate-title">Turn your phone to landscape</h1><p>The production line needs a wider view.</p><a href="../games/girlfriend/#information">Read the research &amp; questions</a><button type="button" id="portraitContinue">Use portrait controls instead</button></aside>' if slug == 'girlfriend' else ''),
         api=esc(API_BASE), mission_id=esc(g.get("mission_id") or ""), station=esc(STATION),
         progress_key=esc(g.get("progress_key") or ""), continue_cta=esc(g.get("continue_cta") or ""),
         next_slug=nxt["slug"], next_ch=nxt["ch"], next_title=esc(nxt["title"]),
         next_premise=esc(nxt["premise"]),
         profile_intro=esc(g["profile_intro"]), questions=questions_markup(g),
+        information=information_markup(slug), profile_title=profile_title(slug),
         mission=MISSION, live_links=LIVE_LINKS, identity=IDENTITY_BLOCK,
         rules_line=RULES_LINE, identity_note=IDENTITY_NOTE,
         live_at=esc(LIVE.get("next_broadcast_at") or ""), live_url=esc(LIVE.get("broadcast_url") or ""),
@@ -423,3 +433,6 @@ for g in REG["games"]:
 
 print("\n".join(made))
 print("%d files" % len(made))
+
+from scene_markup import write_catalog
+write_network_routes(ROOT)

@@ -174,15 +174,17 @@ export default {
     }
     function disarm() {
       boomRun++;                                  // any reveal still pending belongs to the run that just ended
-      mi.classList.remove("armed", "mail"); goon && goon.classList.remove("boom"); const v = goon && goon.querySelector("video"); if (v) { v.pause(); v.remove(); }
+      mi.classList.remove("armed", "mail"); goon && goon.classList.remove("boom"); goon?.querySelectorAll(".myr-shard").forEach(n=>n.remove()); const v = goon && goon.querySelector("video"); if (v) { v.pause(); v.remove(); }
       goonWho.textContent = "MYR5 · MAKING YOU READY · FIFTH ITERATION · HER GOON"; goonLine.textContent = "Nothing happened. Everything has been reviewed. Click me; I have more."; queue();
     }
     function explode() {
       if (!goon || goon.classList.contains("boom")) return;   // repeat clicks refused, and always were
       const run = boomRun;                                     // the state this explosion belongs to
-      const v = document.createElement("video"); v.muted = true; v.playsInline = true; v.autoplay = true;
-      v.innerHTML = '<source src="assets/myr5-explode.webm" type="video/webm"><source src="assets/myr5-explode.mp4" type="video/mp4">';
-      goon.appendChild(v); goon.classList.add("boom"); v.play().catch(() => {});
+      const source=goon.querySelector("img");if(!source)return;
+      // Each flying piece is clipped from the exact pose that was clicked.
+      const rect=goon.getBoundingClientRect();
+      for(let row=0;row<6;row++)for(let col=0;col<4;col++){const shard=document.createElement('span');shard.className='myr-shard';shard.style.cssText='position:absolute;inset:0;pointer-events:none;background-image:url("'+source.currentSrc+'");background-size:100% 100%;clip-path:inset('+(row*100/6)+'% '+((3-col)*25)+'% '+((5-row)*100/6)+'% '+(col*25)+'%);';goon.append(shard);const dx=(col-1.5)*rect.width*.55,dy=(row-2.5)*rect.height*.28;shard.animate([{transform:'scale(1)',opacity:1},{transform:'translate('+dx*.1+'px,'+dy*.1+'px) scale(1.1)',opacity:1,offset:.18},{transform:'translate('+dx+'px,'+(dy+rect.height*.45)+'px) rotate('+((col-row)*29)+'deg)',opacity:0}],{duration:2300,easing:'cubic-bezier(.2,.6,.3,1)',fill:'forwards'});}
+      goon.classList.add("boom");
       goonWho.textContent = "MYR5 · · ·"; goonLine.textContent = "";
       // ctx.timeout: 2.6 s is long enough to change channel inside, and a raw setTimeout would then
       // write the mail bar into a fragment that is no longer on the screen.

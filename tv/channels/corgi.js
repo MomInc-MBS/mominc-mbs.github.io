@@ -76,6 +76,7 @@ export default {
 
     const cc = root.matches("#cc") ? root : root.querySelector("#cc");
     if (!cc) return;
+    if(!document.documentElement.dataset.game && cc.querySelector('[data-corgi-editorial]'))return;
     // ids resolve INSIDE the channel now rather than against the whole document: only one channel is
     // mounted at a time so both find the same nodes, but scoping means a shell element can never be
     // picked up by a channel's id lookup.
@@ -111,13 +112,13 @@ export default {
     //   - old level 1 (FOOD SERVICE) has no home in either new scheme. Its flags are not carried into anything;
     //     nothing is invented in their place, and nothing already earned in the other two levels is lost.
     const STORE_KEY_V1 = "mbs-corgi-school";
-    const STORE_KEY = "mbs-corgi-school-v2";
+    const STORE_KEY = "mbs-corgi-school-v3";
     const emptyFound = () => [[false, false, false], [false, false, false], [false, false, false]];
     const state = { level: 0, found: emptyFound(), unlocked: 0 };
     const coerceModeState = s => ({
       found: [0, 1, 2].map(i => [!!(s.found[i] || [])[0], !!(s.found[i] || [])[1], !!(s.found[i] || [])[2]]),
       unlocked: Math.max(0, Math.min(2, s.unlocked | 0)),
-      level: Math.max(0, Math.min(2, s.level | 0))
+      level: Math.max(0, Math.min(MODE === "public" ? 1 : 2, s.level | 0))
     });
     const save = () => {
       try {
@@ -130,7 +131,7 @@ export default {
     };
     (function loadState() {
       try {
-        const raw = localStorage.getItem(STORE_KEY);
+        const raw = localStorage.getItem(STORE_KEY) || localStorage.getItem("mbs-corgi-school-v2");
         if (raw) {
           const blob = JSON.parse(raw);
           if (blob && (blob.live || blob.public)) {
@@ -248,7 +249,7 @@ export default {
         ] }
     ];
     const LEVELS_PUBLIC = [
-      { name: "THE OFFICE", doorLabel: "THE HEAD OFFICE", furniture: "cubicle", crazy: 0,
+      { name: "THE OFFICE", doorLabel: "THE SCHOOL BACK DOOR", furniture: "desk", crazy: 0,
         pages: [
           // C032: deskDate is the field built to carry an edition, and all three of these held a publisher name
           // instead, so the desk sign dated nothing and the newspaper printed "up to 800 million" as a flat
@@ -275,7 +276,8 @@ export default {
             lesson: "The pattern that predicts automation is the shape of the task, not the name on the door. A repetitive task inside a job that sounds safe is still a repetitive task. Look at what the day actually consists of." }
         ] }
     ];
-    const LEVELS = MODE === "public" ? LEVELS_PUBLIC : LEVELS_LIVE;
+    const LEVELS = MODE === "public" ? [LEVELS_PUBLIC[0], {...LEVELS_LIVE[0], doorLabel:null, crazy:1, pages:LEVELS_PUBLIC[0].pages.map((p,i)=>({...p,door:LEVELS_LIVE[0].pages[i].door}))}] : LEVELS_LIVE;
+    cc.dataset.school=String(!!LEVELS[state.level].handAuthored);
 
     const announce = t => { const el = byId("ccAnnounce"); if (el) el.textContent = t; };
 
@@ -426,6 +428,7 @@ export default {
           </section>
           <p class="pageno">PG ${i + 2} / ${N}</p>`;
       }
+      if(LEVELS[lvl].handAuthored&&state.found[lvl][i])front.innerHTML='<img class="school-crayon-page" src="assets/school-drawing-'+(i+1)+'.png" alt="'+['HE IS IN THE HALL','DONT LET HIM SEE YOU','HE KNOWS MY NAME'][i]+'" style="width:100%;height:100%;object-fit:contain;background:#e8dfb7">';
       dressRansom(front);
     }
     function paintLeaf4() {
@@ -632,8 +635,7 @@ export default {
     // ---- the moment a page is found, shared by both renderers below (3.6/0905: unlock+wave fire once the
     // FINAL level of whichever mode's own LEVELS is complete -- public has exactly one level, so its office
     // completes on its own; live still needs its third school level, same as before).
-    function markLevelComplete() {
-      const lvl = state.level;
+    function markLevelComplete(lvl) {
       if (lvl >= LEVELS.length - 1) { ctx.mbs && ctx.mbs.wave && ctx.mbs.wave(); ctx.mbs && ctx.mbs.unlock && ctx.mbs.unlock("corgi"); }
       save();
     }
@@ -649,10 +651,11 @@ export default {
       announce(`Page found: ${LEVELS[lvl].pages[i].title}. Read it any time.`);
       if (n === 3) {
         ctx.timeout(() => {
-          markLevelComplete();
+          markLevelComplete(lvl);
+          if(state.level !== lvl)return;
           paintLeaf4();
           announce(lvl >= LEVELS.length - 1
-            ? (MODE === "public" ? "All three reports found. The head office door is open." : "All nine pages found. The anchor's own record is open.")
+            ? (MODE === "public" ? "The school pages are complete. Your file is unlocked." : "All nine pages found. The anchor's own record is open.")
             : `All three pages found. The door to ${LEVELS[lvl].doorLabel} is open.`);
         }, 900);
       }
@@ -728,11 +731,13 @@ export default {
         const wait = 2600 + rnd() * 4200;
         ctx.timeout(() => {
           if (cc.dataset.mode !== "public") return;   // defensive; MODE never actually changes mid-session
+          if (state.level > 0) { actx.suspend().catch(() => {}); return; }
           if (rnd() < 0.7) typingBurst(actx.currentTime); else faxHandshake(actx.currentTime);
           scheduleNext();
         }, wait);
       }
       function start() {
+        if (state.level > 0) return;
         if (started) return; started = true;
         try { actx = ctx.audio(new (window.AudioContext || window.webkitAudioContext)()); } catch { return; }
         if (actx.state === "suspended") actx.resume().catch(() => {});
@@ -741,6 +746,11 @@ export default {
       ["pointerdown", "keydown"].forEach(ev => ctx.on(viewport, ev, start, { once: true, passive: true }));
     }
     if (MODE === "public") setupOfficeAmbience();
+    let musicAudio=null,musicBeat=0,alarmAt=-10;
+    function musicTone(hz,duration,level,type='sine'){if(!musicAudio)return;const t=musicAudio.currentTime,o=musicAudio.createOscillator(),g=musicAudio.createGain();o.type=type;o.frequency.value=hz;g.gain.setValueAtTime(level,t);g.gain.exponentialRampToValueAtTime(.0001,t+duration);o.connect(g).connect(musicAudio.destination);o.start();o.stop(t+duration);o.onended=()=>{o.disconnect();g.disconnect();};}
+    function alarmSound(){if(!musicAudio||musicAudio.currentTime-alarmAt<3)return;alarmAt=musicAudio.currentTime;const o=musicAudio.createOscillator(),g=musicAudio.createGain(),t=musicAudio.currentTime;o.type='triangle';o.frequency.setValueAtTime(440,t);o.frequency.linearRampToValueAtTime(880,t+.6);o.frequency.linearRampToValueAtTime(440,t+1.2);g.gain.setValueAtTime(.05,t);g.gain.exponentialRampToValueAtTime(.0001,t+1.4);o.connect(g).connect(musicAudio.destination);o.start();o.stop(t+1.4);o.onended=()=>{o.disconnect();g.disconnect();};}
+    function startMusic(){if(musicAudio)return;try{musicAudio=ctx.audio(new AudioContext());musicAudio.resume();}catch{return;}ctx.interval(()=>{if(!LEVELS[state.level].handAuthored){const notes=[261.63,329.63,392,493.88,440,349.23,293.66,392];musicTone(notes[musicBeat%8],.65,.018);if(musicBeat%4===0)musicTone(notes[musicBeat%8]/2,1.5,.012,'triangle');musicBeat++;}},450);}
+    ctx.on(viewport,'pointerdown',startMusic,{once:true});ctx.on(viewport,'keydown',startMusic,{once:true});
 
     // ---------------------------------------------------------------- WebGL detect
     // The probe, fixed. The original asked a throwaway canvas for a context and walked away from it: a real
@@ -801,13 +811,19 @@ export default {
         ROOMS.forEach(r => {
           const btn = document.createElement("button"); btn.type = "button"; btn.textContent = r.label;
           if (r.kind === "page") { if (state.found[state.level][r.id]) btn.classList.add("found"); }
-          if (r.kind === "locked") btn.classList.add("locked");
+          if (r.kind === "locked") {
+            btn.classList.toggle("locked", !state.found[state.level].every(Boolean));
+            btn.setAttribute("aria-disabled", String(!state.found[state.level].every(Boolean)));
+          }
           ctx.on(btn, "click", () => visit(r));
           map.appendChild(btn);
         });
       }
       function visit(r) {
-        if (r.kind === "locked") { read.textContent = `${r.label}. Locked. Find all three pages here first.`; return; }
+        if (r.kind === "locked") {
+          if(!state.found[state.level].every(Boolean)){read.textContent=r.label+'. Locked. Find all three pages here first.';return;}
+          if(advanceLevel()){ROOMS=roomsFor(state.level);paintMap();repaintAll();paintLeaf4();cc.dataset.school='true';byId('ccTally').textContent='PAGES 0/3';read.textContent='The back door opens into the children’s school. The lights falter. Find the three colorful pages to unlock the file.';}return;
+        }
         if (r.kind === "flavor") { read.textContent = r.text; return; }
         if (r.kind === "reflect") {
           reflected = true;
@@ -818,13 +834,7 @@ export default {
         if (state.found[lvl][i]) { read.textContent = `${p.title}. Already in the paper. Press READ THE PAPER above the map to see it again.`; return; }
         read.textContent = `${p.flavor} On a desk in ${LEVELS[lvl].name}. ${p.stat} ${p.src} ${p.lessonTitle} ${p.lesson}`;
         collect(i); paintMap();
-        if (state.found[lvl].every(Boolean) && LEVELS[lvl].doorLabel) {
-          // 0905: public's single office level has no next LEVELS entry to advance into -- its door leads to
-          // the head office's desk instead, same as the WebGL path's door-crossing branch (frame() below).
-          if (MODE === "public") { ctx.timeout(() => enterHeadOffice(), 950); }
-          else ctx.timeout(() => { advanceLevel(); ROOMS = roomsFor(state.level); paintMap();
-            read.textContent = `${LEVELS[state.level].name}. Through the door.`; }, 950);
-        }
+        if (state.found[lvl].every(Boolean) && LEVELS[lvl].doorLabel) read.textContent+=' All three pages found. Walk to the back door.';
       }
       paintMap();
       read.textContent = "Tap a room to see what Cortisol Corgi found there.";
@@ -1052,6 +1062,7 @@ export default {
         let levelGroup = new THREE.Group(); scene.add(levelGroup);
         function wallBox(cx, cz, w, d, mat) {
           const m = new THREE.Mesh(new THREE.BoxGeometry(w, WALL_H, d), mat || wallMat);
+          m.name="solid-wall";m.material.side=THREE.DoubleSide;
           m.position.set(cx, WALL_H / 2, cz);
           const rep = Math.max(1, Math.round(Math.max(w, d) / 1.4)); if (m.material.map) { m.material = m.material.clone(); m.material.map = m.material.map.clone(); m.material.map.needsUpdate = true; m.material.map.repeat.set(rep, 1); }
           levelGroup.add(m);
@@ -1161,6 +1172,22 @@ export default {
           return [{ cx: 8, s: 1 }, { cx: 22, s: -1 }, { cx: 36, s: 1 }].map((sp, i) =>
             genArea(sp.cx, sp.s, L.pages[i].door, i, L.furniture, pal[i]));
         }
+        const OFFICE_BOX={x0:-.65,x1:47.05,z0:-9.05,z1:9.05};
+        function officeWindow(cx,cz,w){
+          const c=document.createElement('canvas');c.width=512;c.height=256;const x=c.getContext('2d');const sky=x.createLinearGradient(0,0,0,256);sky.addColorStop(0,'#779fba');sky.addColorStop(.65,'#d5e4e9');sky.addColorStop(1,'#899da9');x.fillStyle=sky;x.fillRect(0,0,512,256);
+          for(let i=0;i<18;i++){const xx=i*32,h=35+(i*43%85);x.fillStyle=i%2?'#697e90':'#8297a4';x.fillRect(xx,256-h,27,h);x.fillStyle='#bbd0d7';for(let y=262-h;y<250;y+=13)for(let dx=5;dx<23;dx+=9)x.fillRect(xx+dx,y,4,6);}
+          x.strokeStyle='#ffffff30';x.lineWidth=9;x.beginPath();x.moveTo(40,210);x.lineTo(200,0);x.moveTo(300,256);x.lineTo(485,30);x.stroke();
+          const tex=new THREE.CanvasTexture(c);tex.colorSpace=THREE.SRGBColorSpace;const glass=new THREE.MeshStandardMaterial({map:tex,color:0xc7e0e9,roughness:.2,metalness:.25,side:THREE.DoubleSide});
+          const pane=wallBox(cx,cz,w,.3,glass);pane.name='office-window';
+          const frame=new THREE.MeshStandardMaterial({color:0x596875,roughness:.6});
+          function rail(width,height,xx,yy){const m=new THREE.Mesh(new THREE.BoxGeometry(width,height,.35),frame);m.position.set(xx,yy,cz);levelGroup.add(m);}
+          rail(w,.7,cx,.35);rail(w,.18,cx,2.51);rail(w,.07,cx,1.6);
+          const count=Math.max(1,Math.ceil(w/1.5));for(let i=0;i<=count;i++)rail(.075,2.6,cx-w/2+i*w/count,1.3);
+        }
+        function encloseOffice(){
+          wallBox(-.8,0,.3,18.7);wallBox(47.2,0,.3,18.7);
+          for(const z of [-9.2,9.2])for(let i=0;i<8;i++)officeWindow(2.2+i*6,z,6);
+        }
         function genMainCorridor() {
           wallBox(-0.6, 0, 0.4, 3.0);
           [[1.9, 1.35, 3.4, 0.3], [23.55, 1.35, 16.1, 0.3], [45, 1.35, 3, 0.3],
@@ -1219,8 +1246,14 @@ export default {
         // (boxes, one shared machePropMat papier-mache material, no laminate/metal) -- same material vocabulary,
         // a different prop. buildDesk itself is unchanged; the reading beat below (startDeskRead/standDown)
         // only ever reads a furniture group's position, never its shape, so all three are interchangeable to it.
+        function woodTexture(){
+          const c=document.createElement('canvas');c.width=512;c.height=256;const x=c.getContext('2d');x.fillStyle='#b7854f';x.fillRect(0,0,512,256);
+          for(let y=0;y<256;y+=2){x.strokeStyle=y%6?'#996634':'#d3a16c';x.lineWidth=.6;x.beginPath();for(let u=0;u<=512;u+=8){const v=y+2*Math.sin(u*.016+y*.09);u?x.lineTo(u,v):x.moveTo(u,v);}x.stroke();}
+          const t=own(new THREE.CanvasTexture(c));t.colorSpace=THREE.SRGBColorSpace;return t;
+        }
         function buildDesk(headline, date) {
-          const g = new THREE.Group(); const mat = machePropMat(headline, date);
+          const g = new THREE.Group();
+          const mat = new THREE.MeshStandardMaterial({color:0x885126,roughness:.83,map:woodTexture()});
           const top = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.04, 0.5), mat); top.position.y = 0.56; g.add(top);
           [[-0.3, -0.2], [0.3, -0.2], [-0.3, 0.2], [0.3, 0.2]].forEach(([lx, lz]) => {
             const leg = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.56, 0.04), mat); leg.position.set(lx, 0.28, lz); g.add(leg); });
@@ -1242,6 +1275,7 @@ export default {
           const top = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.05, 0.5), mat); top.position.y = 0.6; g.add(top);
           [[-0.35, -0.2], [0.35, -0.2], [-0.35, 0.2], [0.35, 0.2]].forEach(([lx, lz]) => {
             const leg = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.6, 0.04), mat); leg.position.set(lx, 0.3, lz); g.add(leg); });
+          for(const side of [-1,1]){const p=new THREE.Mesh(new THREE.BoxGeometry(.045,1.15,.65),new THREE.MeshStandardMaterial({color:0x657680,roughness:1}));p.position.set(side*.45,.8,0);g.add(p);}
           const partition = new THREE.Mesh(new THREE.BoxGeometry(0.9, 1.1, 0.05), mat); partition.position.set(0, 1.05, -0.3); g.add(partition);
           return g;
         }
@@ -1258,7 +1292,22 @@ export default {
         // ---- 3.2: buildLevel(idx) assembles one level's whole scene -- corridor, areas, furniture, monster,
         // pages, door -- and runs again on every level transition (advanceLevel(), further down). Everything it
         // creates goes into levelGroup, so a rebuild is one Scene.remove() away from clean.
+        function dressArea(a,school){
+          const mat=c=>new THREE.MeshStandardMaterial({color:c,roughness:.8});const metal=mat(0x555967),green=mat(0x42794b),cream=mat(0xe5dec8),wood=mat(0x8d633e);
+          function item(group,geo,m,x,y,z){const o=new THREE.Mesh(geo,m);o.position.set(x,y,z);o.castShadow=true;group.add(o);return o;}
+          a.anchors.filter((p,i)=>i%2===1&&Math.hypot(p[0]-a.pagePos[0],p[1]-a.pagePos[2])>1.8).slice(0,5).forEach((p,i)=>{
+            const g=new THREE.Group();g.name=school?'school-props':'office-props';g.position.set(p[0]+.4,0,p[1]+.3);levelGroup.add(g);
+            if(!school&&i%3===0){item(g,new THREE.CylinderGeometry(.17,.12,.3,12),mat(0xa86e4a),0,.15,0);for(let j=0;j<6;j++){const leaf=item(g,new THREE.SphereGeometry(.12,8,8),green,Math.sin(j)*.13,.38+j*.065,Math.cos(j)*.1);leaf.scale.set(.6,1.8,.6);}}
+            else if(!school){item(g,new THREE.BoxGeometry(.65,.62,.38),wood,0,.31,0);if(i%3===1){item(g,new THREE.BoxGeometry(.24,.3,.22),metal,0,.79,0);item(g,new THREE.CylinderGeometry(.095,.095,.19,16),new THREE.MeshStandardMaterial({color:0x9dcbd8,transparent:true,opacity:.65,roughness:.2}),.2,.74,0);item(g,new THREE.TorusGeometry(.075,.012,6,12),cream,.30,.76,0);}else{item(g,new THREE.CylinderGeometry(.11,.09,.24,16),mat(0x3b241a),0,.77,0);for(let j=0;j<3;j++)item(g,new THREE.CylinderGeometry(.045,.035,.09,12),cream,-.22+j*.18,.67,.10);}}
+            else if(i%3===0){const bag=item(g,new THREE.BoxGeometry(.3,.42,.18),mat(0xb85272),0,.23,0);item(g,new THREE.TorusGeometry(.08,.025,6,12),metal,0,.49,0);item(g,new THREE.BoxGeometry(.22,.17,.04),mat(0xe1aa59),0,.2,.11);}
+            else if(i%3===1){item(g,new THREE.SphereGeometry(.16,16,12),mat(0xde782c),0,.16,0);item(g,new THREE.BoxGeometry(.7,.08,.35),mat(0x407d8f),0,.05,.4);item(g,new THREE.CylinderGeometry(.035,.035,.48,10),wood,.2,.24,0);}
+            else{const desk=buildDesk('','');g.add(desk);item(g,new THREE.SphereGeometry(.075,12,12),mat(0xbb2935),-.2,.66,0);item(g,new THREE.CylinderGeometry(.008,.008,.055,6),wood,-.2,.75,0);item(g,new THREE.BoxGeometry(.35,.008,.045),mat(0xe5be58),.12,.59,.12);}
+          });
+          // Additional work surfaces make the report desk one among several.
+          a.anchors.filter((p,i)=>i%3===0&&Math.hypot(p[0]-a.pagePos[0],p[1]-a.pagePos[2])>2.5).slice(1,3).forEach(p=>{const d=school?buildDesk('',''):buildCubicle('','');d.position.set(p[0]-.4,0,p[1]-.35);levelGroup.add(d);collideRects.push({x0:d.position.x-.46,x1:d.position.x+.46,z0:d.position.z-.34,z1:d.position.z+.34});});
+        }
         function buildLevel(idx) {
+          cc.dataset.school=String(LEVELS[idx].handAuthored === true);
           scene.remove(levelGroup); levelGroup = new THREE.Group(); scene.add(levelGroup);
           collideRects.length = 0; pageObjs = []; monster = null; trophyGlass = null; doorOpen = false; transitioning = false;
           ghost.active = false; ghost.seen = false; creep.active = false; caught = false;
@@ -1270,7 +1319,7 @@ export default {
           // client's own words) -- public mode's hemisphere and corridor lights run noticeably hotter than the
           // school's. `crazy` (live only, 0-2) nudges the corridor lights toward an off colour as the levels get
           // stranger, on top of the wall-art/monster-tempo escalation below.
-          const bright = MODE === "public";
+          const bright = MODE === "public" && idx === 0;renderer.setClearColor(bright?0xcfe6f2:0x010102,1);
           const crazy = LEVELS[idx].crazy || 0;
           const floor = new THREE.Mesh(new THREE.PlaneGeometry(110, 50), floorMat.clone());
           floor.material.map = floor.material.map.clone(); floor.material.map.repeat.set(36, 16);
@@ -1278,21 +1327,24 @@ export default {
           const ceil = new THREE.Mesh(new THREE.PlaneGeometry(110, 50), bright ? ceilMat.clone() : ceilMat);
           if (bright) ceil.material.color.set(0xffffff);
           ceil.rotation.x = Math.PI / 2; ceil.position.set(20, 2.6, 0); levelGroup.add(ceil);
-          levelGroup.add(new THREE.HemisphereLight(bright ? 0xffffff : 0xfff6da, bright ? 0xe4ecf4 : 0xbcd7ea, bright ? 1.75 : 1.05));
+          levelGroup.add(new THREE.HemisphereLight(bright ? 0xffffff : 0xfff6da, bright ? 0xe4ecf4 : 0xbcd7ea, bright ? 1.75 : 0.003));
 
           const useHandAuthored = !!LEVELS[idx].handAuthored;
           DOOR_X = useHandAuthored ? level0MainCorridor() : genMainCorridor();
           const corridorLight = bright ? 0xffffff : (crazy >= 2 ? 0xd9b8ff : crazy >= 1 ? 0xe8d0ff : 0xfff3d0);
-          for (let lx = 1; lx <= DOOR_X - 2; lx += 5) { const l = new THREE.PointLight(corridorLight, bright ? 0.85 : 0.55, 9); l.position.set(lx, 2.4, 0); levelGroup.add(l); }
+          for (let lx = 1; lx <= DOOR_X - 2; lx += 5) { const l = new THREE.PointLight(corridorLight, bright ? 0.85 : 0.006, bright ? 9 : 1.2); l.position.set(lx, 2.4, 0); l.userData.schoolLamp=!bright; levelGroup.add(l); }
 
-          if (MODE === "live" && crazy > 0) addSchoolPosters(DOOR_X, crazy);
+          if (crazy > 0) addSchoolPosters(DOOR_X, crazy);
 
           AREAS = useHandAuthored ? level0Areas() : genLevelAreas(idx);
-          AREAS.forEach(a => { a.walls.forEach(w => wallBox(w[0], w[1], w[2], w[3], a.mat)); a.lights.forEach(([lx, lz]) => { const l = new THREE.PointLight(0xfff3d0, 0.5, 8); l.position.set(lx, 2.2, lz); levelGroup.add(l); }); });
+          AREAS.forEach(a => { a.walls.forEach(w => {if(bright && Math.abs(w[1])>8 && w[2]>2 && w[3]<.5)officeWindow(w[0],w[1],w[2]);else wallBox(w[0],w[1],w[2],w[3],a.mat);}); a.lights.forEach(([lx, lz]) => { const l = new THREE.PointLight(0xfff3d0, 0.5, 8); l.position.set(lx, 2.2, lz); levelGroup.add(l); }); });
 
+          AREAS.forEach(a=>dressArea(a,useHandAuthored));
+          if(bright)encloseOffice();
+          if(useHandAuthored){levelGroup.traverse(o=>{if(o.isPointLight){o.intensity=0;o.userData.schoolLamp=false;}});for(const a of AREAS){const lamp=new THREE.PointLight(0xc4b79b,.48,1.8,2);lamp.name="school-desk-pool";lamp.position.set(a.pagePos[0],1.45,a.pagePos[2]);lamp.userData.deskLamp=true;levelGroup.add(lamp);}}
           const pages = LEVELS[idx].pages;
           DESKS = AREAS.map((a, i) => {
-            const d = buildFurniture(a.furniture, pages[i].deskLabel, pages[i].deskDate);
+            const d = buildFurniture(useHandAuthored ? "desk" : "cubicle", pages[i].deskLabel, pages[i].deskDate);
             d.position.set(a.pagePos[0], 0, a.pagePos[2]); d.rotation.y = a.deskYaw || 0; levelGroup.add(d);
             // ponytail: axis-aligned footprint, sized for desk+bench together rather than rotating the rectangle --
             // every deskYaw this round is a multiple of 90deg so this is exact; a non-90 yaw would need real rotation.
@@ -1327,17 +1379,17 @@ export default {
             words.forEach(w => { const test = line + w + " "; if (x.measureText(test).width > maxW && line) { x.fillText(line, cx, y); line = w + " "; y += lh; } else line = test; });
             x.fillText(line, cx, y);
           }
-          function pageSprite(headline) {
+          function pageSprite(headline, i) {
             const c = document.createElement("canvas"); c.width = 256; c.height = 160; const x = c.getContext("2d");
-            x.fillStyle = "#efe6cc"; x.fillRect(0, 0, 256, 160); x.strokeStyle = "#241a0e"; x.lineWidth = 4; x.strokeRect(4, 4, 248, 152);
+            x.fillStyle = ["#f0d67d","#eea0ba","#93d5be"][i]; x.fillRect(0, 0, 256, 160); x.strokeStyle = "#241a0e"; x.lineWidth = 4; x.strokeRect(4, 4, 248, 152);
             x.fillStyle = "#241a0e"; x.font = "bold 20px Georgia"; x.textAlign = "center"; wrapText(x, headline, 128, 55, 220, 24);
-            const tex = new THREE.CanvasTexture(c);
-            const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true })); s.scale.set(0.42, 0.26, 1); return s;   // Round 2: page-sized on the desktop, not a hallway sign
+            const tex = LEVELS[idx].handAuthored ? new THREE.TextureLoader().load('assets/school-drawing-'+(i+1)+'.png') : new THREE.CanvasTexture(c);tex.colorSpace=THREE.SRGBColorSpace;
+            const s = LEVELS[idx].handAuthored ? new THREE.Mesh(new THREE.PlaneGeometry(1,1),new THREE.MeshStandardMaterial({map:tex,roughness:1,side:THREE.DoubleSide})) : new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true }));s.name=LEVELS[idx].handAuthored?"school-wall-drawing":"office-page"; s.scale.set(LEVELS[idx].handAuthored?.52:.42, LEVELS[idx].handAuthored?.70:.26, 1); return s;   // Round 2: page-sized on the desktop, not a hallway sign
           }
           pageObjs = PAGE_POS.map((pos, i) => {
             if (state.found[idx][i]) return null;
-            const s = pageSprite(pages[i].title); s.position.copy(pos); levelGroup.add(s);
-            const g = new THREE.PointLight(0xffd36e, 0.9, 3); g.position.copy(pos); levelGroup.add(g);
+            const s = pageSprite(pages[i].title, i); s.position.copy(pos);if(useHandAuthored){s.position.set([16.53,4.87,30.83][i],1.05,pos.z);s.rotation.y=i===1?Math.PI/2:-Math.PI/2;PAGE_POS[i].copy(s.position);} levelGroup.add(s);
+            const g = new THREE.PointLight(0xffd36e, useHandAuthored ? 0 : 0.13, 1); g.position.copy(pos); levelGroup.add(g);
             return { sprite: s, light: g, base: pos.y };
           });
         }
@@ -1365,8 +1417,13 @@ export default {
           // light offset onto -Z and to one side keys his camera-facing surface directly instead of relying on
           // ceiling spill from above (root cause of the round-2 flat-black read). Not inside any sealed mesh --
           // sits clear in front of his torso/head, checked live at all three test distances.
-          const monsterLight = new THREE.PointLight(0xcfe0ff, 0.65, 6, 2);
+          const monsterLight = new THREE.PointLight(0xcfe0ff, LEVELS[state.level].handAuthored ? 0 : .65, 6, 2);
           monsterLight.position.set(0.6, 1.5, -2.2); g.add(monsterLight);
+          if(!LEVELS[state.level].handAuthored){
+            const jacket=new THREE.MeshStandardMaterial({color:0x202c3e,roughness:.92});g.traverse(o=>{if(o.isMesh&&o.material===suitMat)o.material=jacket;});
+            const shirt=new THREE.Mesh(new THREE.BoxGeometry(.18,.38,.03),new THREE.MeshStandardMaterial({color:0xece7dc}));shirt.position.set(0,1.63,-.14);g.add(shirt);
+            const tie=new THREE.Mesh(new THREE.ConeGeometry(.045,.28,3),new THREE.MeshStandardMaterial({color:0x923b46}));tie.rotation.z=Math.PI;tie.position.set(0,1.56,-.17);g.add(tie);g.name='suited-office-boss';
+          }else g.name='school-monster';
           g.visible = false; levelGroup.add(g); return g;
         }
         const ghost = { active: false, from: new THREE.Vector3(), to: new THREE.Vector3(), t0: 0, dur: 4000, seen: false };
@@ -1411,10 +1468,11 @@ export default {
           if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
           liveVal = 0; paintMeter();
           announce("Caught. Pulled back to the start of the hall. Pages already found are still found.");
-          ctx.timeout(() => {
+          const respawn=()=>{
             player.x = 1.0; player.z = 0; player.yaw = -Math.PI / 2; player.pitch = 0;
-            staticIntensity = 0; caught = false;
-          }, 700);
+            staticIntensity = 0; caught = false;monster.visible=false;monsterWasVisible=false;monsterVisibleAt=performance.now();ghost.active=false;creep.active=false;
+          };
+          if(LEVELS[state.level].handAuthored){const death=document.createElement('div');death.className='school-death';death.addEventListener('pointerdown',e=>e.stopPropagation());death.addEventListener('keydown',e=>e.stopPropagation());death.innerHTML='<h2>HE FOUND YOU.</h2><p>You died in the school.</p><button type="button">Try again</button>';viewport.append(death);death.querySelector('button').onclick=()=>{death.remove();respawn();};death.querySelector('button').focus();}else ctx.timeout(respawn,700);
         }
         function scheduleAmbient() {
           const n = state.found[state.level].filter(Boolean).length;
@@ -1507,7 +1565,7 @@ export default {
         // correction. Runs every frame regardless of input, so the very next move in ANY direction away from
         // the wall is free -- "escaped by a single opposing input," proven live in the harness (see README).
         function nearestOnRect(x, z, w) { return { x: Math.max(w.x0, Math.min(x, w.x1)), z: Math.max(w.z0, Math.min(z, w.z1)) }; }
-        function blocked(x, z) { for (const w of collideRects) { const p = nearestOnRect(x, z, w); const dx = x - p.x, dz = z - p.z; if (dx * dx + dz * dz < R * R) return true; } return false; }
+        function blocked(x, z) { if(MODE==="public"&&state.level===0&&(x<OFFICE_BOX.x0+R||x>OFFICE_BOX.x1-R||z<OFFICE_BOX.z0+R||z>OFFICE_BOX.z1-R))return true;for (const w of collideRects) { const p = nearestOnRect(x, z, w); const dx = x - p.x, dz = z - p.z; if (dx * dx + dz * dz < R * R) return true; } return false; }
         function depenetrate(x, z) {
           let px = x, pz = z;
           for (const w of collideRects) {
@@ -1516,6 +1574,7 @@ export default {
             if (d > 1e-4) { const push = (R - d) + 0.002; px += (dx / d) * push; pz += (dz / d) * push; }
             else px = w.x1 + R + 0.002;   // dead-on top of a wall face: pick a side, any side, and go
           }
+          if(MODE==="public"&&state.level===0){px=Math.max(OFFICE_BOX.x0+R,Math.min(OFFICE_BOX.x1-R,px));pz=Math.max(OFFICE_BOX.z0+R,Math.min(OFFICE_BOX.z1-R,pz));}
           return { x: px, z: pz };
         }
 
@@ -1593,6 +1652,8 @@ export default {
           // unmount() ran from rendering into a disposed renderer.
           if (!gl || session !== mine) return;
           const dt = Math.min(50, now - last) / 1000; last = now;
+          levelGroup.children.forEach(l=>{if(l.userData.deskLamp)l.intensity=matchMedia('(prefers-reduced-motion: reduce)').matches?.3:((now*.001+l.position.x)%5.3<.25?.015:.48);});
+          if(!matchMedia('(prefers-reduced-motion: reduce)').matches) levelGroup.children.forEach(l=>{if(l.userData.schoolLamp)l.intensity=((now*.001+l.position.x*.17)%4.7<.22)?0:.006;});
 
           // C035: the hall is not up, so the hall does not run. Everything below this line IS the world --
           // movement, stamina, the camera, the flashlight battery, page pickups, the door, the monster's
@@ -1662,12 +1723,12 @@ export default {
           let anyPrompt = false;
           pageObjs.forEach((po, i) => {
             if (!po) return;
-            po.sprite.position.y = po.base + Math.sin(now / 500 + i) * 0.015;   // stirring on the desk, not levitating
+            if(!LEVELS[state.level].handAuthored)po.sprite.position.y = po.base + Math.sin(now / 500 + i) * 0.015;   // stirring on the desk, not levitating
             const ddx = po.sprite.position.x - player.x, ddz = po.sprite.position.z - player.z;
             const d = Math.hypot(ddx, ddz);
             const facing = d > 0.05 && (lookFx * ddx / d + lookFz * ddz / d) > 0.3;
             if (d < 0.9 && deskRead.phase === "idle") {
-              scene.remove(po.sprite); scene.remove(po.light); pageObjs[i] = null;
+              po.sprite.removeFromParent(); po.light.removeFromParent(); pageObjs[i] = null;
               viewport.classList.remove("cc-jolt"); void viewport.offsetWidth; viewport.classList.add("cc-jolt");
               startDeskRead(i);   // Round 2: the rise begins here; collect() and the haunt fire later (finishRise/standDown)
             } else if (d < 1.7 && facing) {
@@ -1712,8 +1773,7 @@ export default {
             transitioning = true;
             // 0905: public's door doesn't lead to a fourth level (LEVELS_PUBLIC has exactly one entry) -- it
             // leads to the head office's desk instead. See enterHeadOffice(), defined with the desk-terminal UI.
-            if (MODE === "public") ctx.timeout(() => { enterHeadOffice(); transitioning = false; }, 250);
-            else ctx.timeout(() => { advanceLevel(); buildLevel(state.level); buildLevelTail(state.level); repaintAll(); paintLeaf4(); goTo(0); transitioning = false; }, 250);
+            if (state.level < LEVELS.length - 1) ctx.timeout(() => { advanceLevel(); buildLevel(state.level); buildLevelTail(state.level); repaintAll(); paintLeaf4(); goTo(0); transitioning = false; }, 250);
           }
 
           // monster: slides while off-frame or at the edge, holds still when watched dead-on (locked canon --
@@ -1761,7 +1821,7 @@ export default {
             // touch-range kill: visible at least 600ms (no spawn-kills), close enough -- he can take you from
             // behind, whether or not you're facing him. Static-maxout kill is the other path, below. LIVE ONLY --
             // "the suited figure does NOT kill you" in public mode is the one behaviour difference the mode makes.
-            if (MODE === "live" && !caught && !cc.hasAttribute("data-reading") && (now - monsterVisibleAt) >= 600 && monsterDist < 1.1) doCapture();
+            if (LEVELS[state.level].handAuthored && !caught && !cc.hasAttribute("data-reading") && (now - monsterVisibleAt) >= 600 && monsterDist < 1.1) doCapture();
           }
           monsterWasVisible = monster.visible;
 
@@ -1778,16 +1838,18 @@ export default {
           // drives a dedicated coarse white-noise canvas layer, much blockier and brighter than the fine
           // feTurbulence grain, so a danger spike actually reads as a spike.
           {
-            const n = state.found.filter(Boolean).length;
+            const n = state.found[state.level].filter(Boolean).length;
             const escal = 1 + n * 0.4;
             let target = 0;
             if (monster.visible && monsterOnscreen) { const prox = Math.max(0, 1 - monsterDist / 9); target = prox * (monsterCentered ? 1 : 0.45); }
             else if (monster.visible && monsterDist < 3.5) target = (1 - monsterDist / 3.5) * 0.25;
             const rate = (target > staticIntensity ? 0.55 : 0.4) * escal;
             staticIntensity = target > staticIntensity ? Math.min(1, staticIntensity + rate * dt) : Math.max(0, staticIntensity - rate * dt);
-            vhsGrain.style.opacity = Math.min(1, 0.75 + staticIntensity * 0.4);
-            vhsScan.style.opacity = Math.min(1, 0.6 + staticIntensity * 0.3);
-            if (staticIntensity > 0.03) { drawStaticNoise(); staticCanvas.style.opacity = Math.min(0.85, staticIntensity); }
+            const effectCap=LEVELS[state.level].handAuthored?1:.5;staticIntensity=Math.min(effectCap,staticIntensity);cc.dataset.haze=String(staticIntensity);
+            if(staticIntensity>.3)alarmSound();
+            vhsGrain.style.opacity = effectCap===.5?.12:Math.min(1,0.35+staticIntensity*.4);
+            vhsScan.style.opacity = effectCap===.5?.1:Math.min(1,0.3+staticIntensity*.3);
+            if (staticIntensity > 0.03) { drawStaticNoise(); staticCanvas.style.opacity = effectCap===.5?Math.min(.35,staticIntensity*.7):Math.min(.85,staticIntensity); }
             else staticCanvas.style.opacity = 0;
 
             // 0901: CORTISOL fills with proximity too. A live component rides on top of the banked ratchet --

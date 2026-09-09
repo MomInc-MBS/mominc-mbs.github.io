@@ -52,10 +52,10 @@ VP = {"width": 390, "height": 844}
 # happened to be the site's only same-origin iframe, and 3.G0 gave each a fixture under
 # tools/fixtures/ instead: the coverage no longer depends on this set. Remove the slug here when the
 # C084 rebuild lands and the goon rows come back on their own.
-SUPPRESSED = {"goon"}
+SUPPRESSED = set()
 
 ROOTS = {"lilboyfriend":"#lbStage", "corgi":"#ccViewport",
-         "djscratch":"#deck", "girlfriend":"#dgTrack", "fuel":"#stageCard"}
+         "djscratch":"#deck", "girlfriend":"#dgStage", "fuel":"#stageCard"}
 
 def instrument(b):
     pg = b.new_page(viewport=VP); seen = []; errs = []
@@ -231,7 +231,7 @@ ISOLATION = {
   "djscratch":   {"kept": ["#deck", "#sigLbl", "#deckHint"]},
   "fuel":        {"kept": ["#stageCard", "#stackCard", "#flavCard", "#nameCard", "#fuFlavTag",
                            '#fu .card[aria-label="Your can"]', "#submitBtn"]},
-  "girlfriend":  {"kept": ["#dgTrack", ".dg-flat"]},
+  "girlfriend":  {"kept": ["#dgStage", "#dgDock"]},
   "lilboyfriend":{"kept": ["#lbStage", "#lbCanvas", "#lbHud"]},
 }
 

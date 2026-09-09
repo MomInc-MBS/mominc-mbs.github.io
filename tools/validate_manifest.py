@@ -13,7 +13,7 @@ PATH = os.path.join(ROOT, "tv", "channel-manifest.json")
 # The real channel set, frozen from tv.js's CHANNELS list at the time this manifest was written
 # (2.3 deletes that literal list from tv.js, so it can no longer be re-derived by parsing the file;
 # "allgames" is a nav link out to /games/, not a channel, and is deliberately excluded here).
-EXPECTED_IDS = {"mominc", "fuel", "goon", "lilboyfriend", "djscratch", "corgi", "sag", "girlfriend", "armie"}
+EXPECTED_IDS = {"mominc", "fuel", "goon", "lilboyfriend", "djscratch", "corgi", "girlfriend", "armie"}
 
 TOP_KEYS = {"note", "live", "identity_api", "api_base", "channels"}
 STATUS_ENUM = {"live", "upcoming", "archive", "coming_soon", "suppressed"}

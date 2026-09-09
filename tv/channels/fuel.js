@@ -78,6 +78,57 @@ export default {
     let bandsUpdater = null;   // set once three.js builds the powder bands; no-op in the flat fallback
     const nameA = byId("nameA"), nameB = byId("nameB"), nameC = byId("nameC");
     let flavour = null;
+    let phase = 'fill', mixing = false, busy = false, mixTurns = 0, labelColor = '#ff2e88';
+    let animateScoop = null, animateFlavor = null, sceneBatch = null;
+    const history = [];
+    const total = () => rows.reduce((n,r)=>n+(r.dataset.level==='strong'?2:r.dataset.level==='weak'?1:0),0);
+    rows.forEach(r=>{r.dataset.level='none';r.querySelector('[data-level="none"]').setAttribute('aria-checked','true');});
+    const ingredientPanel=byId('batchIngredients'), flavorPanel=byId('batchFlavors');
+    const nextButton=byId('batchNext'), status=byId('batchStatus');
+    rows.forEach((r,i)=>{
+      const b=document.createElement('button');b.type='button';b.dataset.index=i;
+      ctx.on(b,'click',()=>{if(animateScoop)animateScoop(i);else addScoop(i);});ingredientPanel.append(b);
+    });
+    flavours.forEach((f,i)=>{
+      const b=document.createElement('button');b.type='button';b.textContent=f.dataset.flavour;
+      ctx.on(b,'click',()=>{if(phase!=='flavor'||busy||mixing)return;if(animateFlavor)animateFlavor(i);else f.click();});flavorPanel.append(b);
+    });
+    [['HOT PINK','#ff2e88'],['VOLT LIME','#c8ff00'],['NUCLEAR BLUE','#45dfff'],['GOLD RUSH','#ffea00']].forEach(([name,color])=>{
+      const b=document.createElement('button');b.type='button';b.textContent=name;b.style.background=color;b.dataset.color=color;
+      ctx.on(b,'click',()=>{if(phase!=='label')return;labelColor=color;renderCan();});byId('batchColors').append(b);
+    });
+    function addScoop(i){
+      const row=rows[i];if(phase!=='fill'||busy||total()>=8||row.dataset.level==='strong')return false;
+      history.push(i);row.querySelector('[data-level="'+(row.dataset.level==='none'?'weak':'strong')+'"]').click();
+      status.textContent=row.querySelector('.name').textContent+' added. '+total()+' of 8 scoops.';return true;
+    }
+    function renderBatch(){
+      fu.dataset.batch=phase;
+      fu.querySelectorAll('[data-step]').forEach(s=>{if(s.dataset.step===phase)s.setAttribute('aria-current','step');else s.removeAttribute('aria-current');});
+      byId('batchTitle').textContent={fill:'FILL YOUR TUB',flavor:'FLAVOR & MIX',label:'MAKE IT YOURS',done:'BATCH COMPLETE!'}[phase];
+      byId('batchHelp').textContent={fill:'Add eight scoops. Pick any combination, up to two of each ingredient.',flavor:'Pick a flavor, then press MIX three times to blend your batch.',label:'Choose the name and color below, then seal your tub.',done:'Your own MBS FUEL. Start another batch to try a different mix.'}[phase];
+      ingredientPanel.hidden=phase!=='fill';flavorPanel.hidden=phase!=='flavor';
+      byId('batchFill').value=total();byId('batchCount').textContent=total()+' / 8 scoops';
+      [...ingredientPanel.children].forEach((b,i)=>{const n=rows[i].dataset.level==='strong'?2:rows[i].dataset.level==='weak'?1:0;b.textContent=rows[i].querySelector('.name').textContent+' · '+n+'/2';b.disabled=phase!=='fill'||busy||n===2||total()>=8;});
+      [...flavorPanel.children].forEach((b,i)=>{b.setAttribute('aria-pressed',String(flavours[i].dataset.flavour===flavour));b.disabled=busy||mixing;});
+      nextButton.hidden=phase==='label'||phase==='done';nextButton.textContent=phase==='fill'?'NEXT: FLAVOR':mixing?'MIXING…':'MIX '+mixTurns+'/3';nextButton.disabled=busy||mixing||(phase==='fill'?total()!==8:!flavour);
+      byId('batchUndo').hidden=phase!=='fill';byId('batchUndo').disabled=busy||!history.length;byId('batchReset').disabled=busy||mixing;
+      [nameA,nameB,nameC].forEach(s=>s.disabled=phase==='done');
+      [...byId('batchColors').children].forEach(b=>{b.disabled=phase==='done';b.setAttribute('aria-pressed',String(b.dataset.color===labelColor));});
+      if(sceneBatch)sceneBatch();
+    }
+    ctx.on(byId('batchUndo'),'click',()=>{if(phase!=='fill'||busy||!history.length)return;const r=rows[history.pop()];r.querySelector('[data-level="'+(r.dataset.level==='strong'?'weak':'none')+'"]').click();status.textContent='Last scoop removed.';});
+    ctx.on(nextButton,'click',()=>{
+      if(busy||mixing)return;
+      if(phase==='fill'&&total()===8){phase='flavor';status.textContent='Tub filled! Choose your flavor.';renderCan();}
+      else if(phase==='flavor'&&flavour){mixing=true;renderBatch();ctx.timeout(()=>{mixTurns++;mixing=false;if(mixTurns===3){phase='label';status.textContent='Blend ready. Name it, label it, seal it!';}else status.textContent='Keep mixing: '+mixTurns+' of 3 turns.';renderCan();},700);}
+    });
+    ctx.on(byId('batchReset'),'click',()=>{
+      if(busy||mixing)return;phase='fill';mixTurns=0;sealed=null;flavour=null;history.length=0;labelColor='#ff2e88';
+      rows.forEach(r=>{r.dataset.level='none';r.querySelectorAll('.lvl').forEach(b=>b.setAttribute('aria-checked',String(b.dataset.level==='none')));});
+      flavours.forEach(b=>{b.classList.remove('sel');b.setAttribute('aria-checked','false');});
+      [nameA,nameB,nameC].forEach(s=>s.selectedIndex=0);result.hidden=true;status.textContent='Fresh tub. Choose your first ingredient.';renderCan();if(bandsUpdater)bandsUpdater();
+    });
     let productLabelUpdater = null;   // set once three.js builds the tub's wall texture; no-op in the flat fallback
 
     // ---- cost model (3.3/C061). The versioned record below IS the provenance. It used to say
@@ -141,16 +192,18 @@ export default {
     });
 
     flavours.forEach(btn => ctx.on(btn, "click", () => {
+      if(phase!=='flavor'||mixing)return;
       flavours.forEach(b => { b.setAttribute("aria-checked", "false"); b.classList.remove("sel"); });
       btn.setAttribute("aria-checked", "true"); btn.classList.add("sel");
-      flavour = btn.dataset.flavour;
+      flavour = btn.dataset.flavour; mixTurns=0;
+      status.textContent=flavour+' injected. Mix your batch.';
       renderCan();
     }));
 
     [nameA, nameB, nameC].forEach(sel => ctx.on(sel, "change", renderCan));
 
-    const levelLabel = row => row.dataset.level ? row.dataset.level.toUpperCase() : "NOT SET";
-    const complete = () => rows.every(r => r.dataset.level) && !!flavour;
+    const levelLabel = row => row.dataset.level==='strong'?'2 GAME SCOOPS':row.dataset.level==='weak'?'1 GAME SCOOP':'NONE';
+    const complete = () => total()===8 && !!flavour && mixTurns===3;
 
     // 3.3/C065: the stack's identity, not its history. Two clicks on an unchanged stack produce the same
     // string, so the second one seals nothing and fires no second wave; change any level, the flavour or a
@@ -180,14 +233,15 @@ export default {
       canLabel.innerHTML = lines.join("");
       canBox.classList.toggle("full", complete());
       const done = isSealed();                        // C065: only the already-sealed, unchanged stack locks the button
-      submitBtn.disabled = done;
-      submitBtn.textContent = done ? "STACK LOCKED IN" : "SEAL THE CAN";
+      submitBtn.disabled = done || !complete() || phase!=='label';
+      submitBtn.textContent = done ? "STACK LOCKED IN" : "APPLY LABEL & SEAL TUB";
       flavTag.textContent = flavour ? `FLAVOUR: ${flavour}` : "FLAVOUR: TAP A BOTTLE";
       costBar.innerHTML = `<span>COST/SCOOP (est.): $${scoopCost().toFixed(4)}</span>`
         + `<span>COST/CONTAINER (est., ${SERVINGS_PER_CONTAINER} sv): $${containerCost().toFixed(2)}</span>`
         + `<span>MBS FUEL RETAIL: $${RETAIL_PRICE.toFixed(2)}</span>`;
       if (productLabelUpdater) productLabelUpdater(productName());
       buildMailto();
+      renderBatch();
     }
 
     // C061: the record, printed. Written once - none of it depends on the visitor's choices - and printed
@@ -215,11 +269,12 @@ export default {
 
     ctx.on(submitBtn, "click", () => {
       const fp = fingerprint();
+      if (!complete() || phase!=='label') return;
       if (sealed === fp) return;             // C065: this exact stack is already sealed - no second form, no second wave
       const stackLines = buildMailto();
       result.hidden = false;
       if (complete()) {
-        sealed = fp;
+        sealed = fp; phase='done';renderBatch();status.textContent=productName()+' sealed! Your batch is ready.';
         resultNote.textContent = productName() + " — STACK LOCKED IN. NOTHING WAS SENT. THE STACK STAYS IN THIS BROWSER, IF IT ALLOWS STORAGE. THIS DRINK DOES NOT EXIST YET.";
         submitBtn.textContent = "STACK LOCKED IN";
         submitBtn.disabled = true;           // re-enabled by renderCan() the moment the stack becomes a different one
@@ -376,14 +431,14 @@ export default {
         // from above never shows its outside), and three.js does not alter UV sampling for a
         // DoubleSide back face - so the back reads as a plain left-right mirror of the front, like
         // print seen through the back of the page. A mirror needs a mirror, not a rotation.
-        x.translate(1024, 0); x.scale(-1, 1);
+        // Outer wall uses normal outward-facing UVs.
         const grad = x.createLinearGradient(0, 0, 0, 256);
-        grad.addColorStop(0, "#ff2e88"); grad.addColorStop(0.5, "#ffea00"); grad.addColorStop(1, "#7a2fc4");
+        grad.addColorStop(0, labelColor); grad.addColorStop(0.5, "#ffea00"); grad.addColorStop(1, "#7a2fc4");
         x.fillStyle = grad; x.fillRect(0, 0, 1024, 256);
         for (let i = 0; i < 6; i++) { x.fillStyle = "rgba(255,255,255,.22)"; x.fillRect(i * 171, 0, 2, 256); }
         x.textAlign = "center"; x.textBaseline = "middle";
-        x.fillStyle = "#1a0a10"; x.font = "bold 92px Arial"; x.fillText("MBS FUEL", 512, 96);
-        x.font = "bold 46px Arial"; x.fillText(name || "", 512, 176);
+        x.fillStyle = "#1a0a10"; x.font = "bold 92px Arial"; x.fillText(phase==='fill'||phase==='flavor'?"MBS / MIXING":"MBS FUEL", 512, 96);
+        x.font = "bold 46px Arial"; x.fillText(phase==='fill'||phase==='flavor'?"BATCH IN PROGRESS":name || "", 512, 176, 960);
         const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
       }
       // outer wall: carries the product label, FrontSide only so the label is visible from outside and
@@ -420,34 +475,25 @@ export default {
         m.position.y = 0.03; m.scale.y = 0.0001; m.visible = false; TUB.add(m); return m;
       });
       function updateBands() {
+        let height=0;
         SUPPS.forEach((s, i) => {
           const row = rowByKey(s.key);
           const h = BAND_H[row.dataset.level || "none"];
           bands[i].visible = h > 0;
           bands[i].scale.y = Math.max(0.0001, h);
-          bands[i].position.y = 0.03 + h / 2;
+          bands[i].scale.x=bands[i].scale.z=1.48/BAND_R[i];
+          bands[i].position.y = 0.03 + height + h / 2; height+=h;
         });
       }
       updateBands();
       bandsUpdater = updateBands;
+      function topLabelTexture(name){const c=document.createElement('canvas');c.width=c.height=512;const x=c.getContext('2d');x.fillStyle=labelColor;x.fillRect(0,0,512,512);x.strokeStyle='#20142a';x.lineWidth=14;x.beginPath();x.arc(256,256,223,0,Math.PI*2);x.stroke();x.fillStyle='#20142a';x.textAlign='center';x.font='bold 30px Arial';x.fillText('MBS FUEL',256,155);x.font='bold 38px Arial';const words=name.split(' ');let line='',y=220;for(const w of words){if(x.measureText(line+w).width>350){x.fillText(line.trim(),256,y);y+=48;line='';}line+=w+' ';}x.fillText(line.trim(),256,y);const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;return t;}
+      const lidLabel=new THREE.Mesh(new THREE.CircleGeometry(1.84,64),new THREE.MeshBasicMaterial({map:topLabelTexture(productName())}));lidLabel.visible=false;lidLabel.name="custom-jar-top-label";lidLabel.rotation.x=-Math.PI/2;lidLabel.position.y=1.351;TUB.add(lidLabel);
+      const updateWallLabel=productLabelUpdater;productLabelUpdater=name=>{updateWallLabel(name);lidLabel.material.map.dispose();lidLabel.material.map=topLabelTexture(name);};
+      const lid=new THREE.Mesh(new THREE.CylinderGeometry(1.98,1.98,.18,40),M.cream);lid.position.y=1.25;lid.visible=false;TUB.add(lid);
+      sceneBatch=()=>{jars.forEach((_,i)=>updateJarVisual(i));vials.forEach((_,i)=>updateVialVisual(i));lid.visible=lidLabel.visible=phase==='done';if(mixTurns>0){const color=new THREE.Color(FLAV_COL[Math.max(0,flavours.findIndex(f=>f.dataset.flavour===flavour))]);bands.forEach((b,i)=>b.material.color.copy(new THREE.Color(SUPPS[i].col).lerp(color,mixTurns/3)));}else bands.forEach((b,i)=>b.material.color.set(SUPPS[i].col));};
 
-      // ---- the jars: six additive canisters, standing outside the tub in front of it, each carrying
-      // its own printed label. Client: "we don't want the jars to be inside the bucket... we want them
-      // to be outside... the jars being each individually labeled." They no longer ride the tub, so
-      // tapping one directly is now the whole interaction - no rotation-to-align step.
-      function jarLabelTexture(key) {
-        const row = rowByKey(key);
-        const name = row ? row.querySelector(".name").textContent : key.toUpperCase();
-        const c = document.createElement("canvas"); c.width = 220; c.height = 140;
-        const x = c.getContext("2d");
-        x.fillStyle = "#fffef2"; x.fillRect(0, 0, 220, 140);
-        x.strokeStyle = "#1a0a10"; x.lineWidth = 7; x.strokeRect(3, 3, 214, 134);
-        x.fillStyle = "#1a0a10"; x.font = "bold 26px Arial"; x.textAlign = "center"; x.textBaseline = "middle";
-        const words = name.split(" ");
-        if (words.length > 1) { x.fillText(words[0], 110, 58); x.fillText(words.slice(1).join(" "), 110, 92); }
-        else x.fillText(name, 110, 74);
-        const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
-      }
+      // Ingredient jars keep their colored caps; names are on the controls.
       const jarBay = new THREE.Group(); jarBay.position.set(0, 0, 2.05); scene.add(jarBay);
       const JAR_SPACING = 0.62;
       const jars = SUPPS.map((s, i) => {
@@ -458,9 +504,6 @@ export default {
         const cap = new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.28, 0.1, 16),
           new THREE.MeshStandardMaterial({ color: s.col, roughness: 0.6, metalness: 0.1, emissive: s.col, emissiveIntensity: 0.05 }));
         cap.position.y = 0.3; g.add(cap);
-        const label = new THREE.Mesh(new THREE.PlaneGeometry(0.4, 0.26),
-          new THREE.MeshBasicMaterial({ map: jarLabelTexture(s.key), transparent: true }));
-        label.position.set(0, 0, 0.27); g.add(label);
         // lived-in: a moulding sprue nub repeats on every canister, the raw plastic never fully trimmed
         const sprue = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.02, 0.04, 6), M.ink);
         sprue.position.set(0, -0.22, 0.26); g.add(sprue);
@@ -655,7 +698,8 @@ export default {
       let scooping = false, injecting = false;
 
       function injectFlavour(i) {
-        if (injecting) return;
+        if (injecting || scooping || phase!=='flavor' || mixing || busy) return;
+        busy=true;
         injecting = true;
         flavours[i].click(); updateVialVisual(i);
         nozzle.visible = true;
@@ -678,7 +722,7 @@ export default {
             bloom.material.opacity = 0.85 * (1 - k);
           }
           if (t < 1) ctx.frame(step);
-          else { nozzle.visible = false; TUB.remove(bloom); bloom.geometry.dispose(); bloom.material.dispose(); injecting = false; }
+          else { nozzle.visible = false; TUB.remove(bloom); bloom.geometry.dispose(); bloom.material.dispose(); injecting = false; busy=false;renderBatch(); }
         }
         ctx.frame(step);
       }
@@ -689,18 +733,17 @@ export default {
       // scoop a specific jar by index - jars are now standalone and clicked directly (client: "jars...
       // outside... each individually labeled"), so there is no more "front" jar to compute from rotation.
       function scoopJar(i) {
-        if (scooping || injecting) return;
+        if (scooping || injecting || phase!=='fill' || !addScoop(i)) return;
+        busy=true;renderBatch();
         const row = rowByKey(jars[i].userData.key);
-        const order = ["none", "weak", "strong"];
-        const next = !row.dataset.level ? "none" : order[(order.indexOf(row.dataset.level) + 1) % order.length];
-        row.querySelector(`.lvl[data-level="${next}"]`).click();
+        const next = row.dataset.level;
         updateJarVisual(i);
         lastJar = i;
         scooping = true;
-        ctx.timeout(() => { scooping = false; }, 1300);   // backstop: rAF can stall on a dropped frame, setTimeout can't
+        // The animation completion releases the input lock.   // backstop: rAF can stall on a dropped frame, setTimeout can't
         const t0 = performance.now();
         const from = SCOOP_HOME.clone();
-        const dip = new THREE.Vector3(SCOOP_HOME.x, SCOOP_HOME.y - 0.55, SCOOP_HOME.z - 0.55);
+        const dip = jars[i].getWorldPosition(new THREE.Vector3());dip.y+=0.4;
         const pour = new THREE.Vector3(SCOOP_HOME.x, SCOOP_HOME.y + 0.15, SCOOP_HOME.z - 1.6);
         function step(now) {
           if (!gl || session !== mine) return;   // see injectFlavour's step
@@ -720,10 +763,11 @@ export default {
             scoop.position.lerpVectors(pour, from, k); scoop.rotation.x = -0.5 + 1.4 * (1 - k);
           }
           if (t < 1) ctx.frame(step);
-          else { scoop.position.copy(from); scoop.rotation.x = -0.5; scoop.userData.dumped = false; scooping = false; }
+          else { scoop.position.copy(from); scoop.rotation.x = -0.5; scoop.userData.dumped = false; scooping = false;busy=false;renderBatch(); }
         }
         ctx.frame(step);
       }
+      animateScoop=scoopJar;animateFlavor=injectFlavour;
       ctx.on(canvas, "click", e => { const hit = pick(e); if (hit) act(hit); });
 
       // ---- keyboard path: same state, same act() the touch/pointer path uses. Arrow keys only inside
@@ -755,6 +799,7 @@ export default {
         const dt = Math.min(50, now - last); last = now;
 
         if (hoverActive) angle += hoverFrac * ROT_SPEED * (dt / 1000);
+        if(mixing&&!REDUCED)angle+=dt*.008;
         TUB.rotation.y = angle;
 
         if (!REDUCED) for (const f of floaters) f.o.position.y = f.y + Math.sin(now / 900 + f.p) * f.a;
@@ -772,13 +817,13 @@ export default {
         const promiseEl = row.querySelector(lvl ? `.p-${lvl}` : ".p-unset");
         faceEl.querySelector("b").textContent = row.querySelector(".name").textContent + (lvl ? " · " + lvl.toUpperCase() : "");
         faceEl.querySelector("i").textContent = promiseEl ? promiseEl.textContent : "";
-        nudge.textContent = complete() ? "Full stack. Seal the can below." : "Tap a jar to set it. Tap a flavour on the left.";
+        nudge.textContent = {fill:'Tap a jar to add a scoop.',flavor:'Inject a flavor. Mix three times.',label:'Choose your label below.',done:'BATCH SEALED!'}[phase];
 
         renderer.render(scene, camera);
       }
       ctx.frame(frame);
 
-      fu.classList.add("has3d");
+      fu.classList.add("has3d");renderCan();
     }).catch(err => {
       console.error("[fu] three.js failed to load", err);   // stageCard stays hidden; rows/flavours above still work
     });

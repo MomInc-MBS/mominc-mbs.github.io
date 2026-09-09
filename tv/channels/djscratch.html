@@ -3,7 +3,7 @@ THESIS: DJ Scratch's page is the one that is openly an advertisement, because sh
 OWN-WORLD: A 90s late-night infomercial. Loud cream-and-purple gradient, gold starbursts, "AS SEEN ON MOM," bubbly drop-shadowed Bowlby type, a strikethrough price and three easy payments, sparkles. Under the gloss, a purple-on-black transmission where the real signal (the Music Desk, the nail-tech shoutout, an unsigned track) leaks out.
 STORY: The visitor is sold a hand. Everything is warm, everything comes in threes, everything is a little wrong. The record still spins and can still be scratched for feel, but the payoff is now earned on a full control rack: knobs, sliders and a power switch, each with a number, played as a slow colour-following game. Complete it and the ad skips, the hand spells HELP.
 INTERACTABLE (unlock node): the control rack. BASS/TREBLE knobs, VOLUME/TEMPO sliders and a POWER switch, each tap-to-set from pointer POSITION (never drag - a single tap sets the value at that position, matching the client's "based off of where the mouse is"), each wired to a real synthesised beat (Web Audio: shelf filters, a gain node, an analyser feeding the ON AIR visualiser on the right, hitting on the kick accents). Power on, then follow the lamp of matching colour to its control, one at a time, slow and easy. On completion, breakThrough() fires exactly as before: the gloss glitches, the record skips out HELP, the orange wave fires, DJ Scratch's node banks, and 3s later the purple restore wave puts PARTY MODE back on the tuner. Scratching the hand is preserved for feel only and no longer gates anything - the increment that used to call breakThrough() at three scratches was removed and nothing else about scratch() changed. Shared: window.MBS.wave({after, restore}), window.MBS.unlock("djscratch"), window.MBS.meter().
-2026-09-05 addendum: the left column adds a DJ-name picker (three-part, Fuel's pattern reused per PLAN C2/Codex, leetspeak-transformed) and a live grade for the follow-game. A numeric LIVE CODE ENTRY, checked only by the deployed Supabase `redeem` ({mission_id, code}, response validated against game==="djscratch"), transforms the deck into a phonograph/tape-player combo with its own tuning dial. mission_id and the tuning station are read from data-mission-id/data-station on <html> (alongside the existing data-api the shim already reads) - registry fields the registry agent is wiring up; while empty this build renders the code box and the dial inert and claims nothing, per Codex C6/B5. MBS.mode is never used to gate any of this (Codex C6: ?mode=live is user-settable, a tone switch only).
+2026-09-05 addendum: the left column adds a DJ-name picker (three-part, Fuel's pattern reused per PLAN C2/Codex, leetspeak-transformed) and a live grade for the follow-game. A numeric MOM INC · THUMB DRIVE, checked only by the deployed Supabase `redeem` ({mission_id, code}, response validated against game==="djscratch"), transforms the deck into a phonograph/tape-player combo with its own tuning dial. mission_id and the tuning station are read from data-mission-id/data-station on <html> (alongside the existing data-api the shim already reads) - registry fields the registry agent is wiring up; while empty this build renders the code box and the dial inert and claims nothing, per Codex C6/B5. MBS.mode is never used to gate any of this (Codex C6: ?mode=live is user-settable, a tone switch only).
 FORM: Ian's pin, 2026-08-25, "90s late-night infomercial." Inside the old television shell. Mobile-first.
 -->
 <style>
@@ -284,7 +284,7 @@ FORM: Ian's pin, 2026-08-25, "90s late-night infomercial." Inside the old televi
   @media (max-width:640px){ .dj .logobar{flex-direction:column; align-items:center; padding-left:0} .dj .logobar .name{order:1; text-align:center} .dj .logobar .badge{order:2; width:44%; margin-top:6px} .dj .logobar .burst{top:0} }   /* the logo moves under HELPING HAND on phones (Ian, 2026-08-26) */
 </style>
 
-<article class="dj" id="dj" aria-label="DJ Scratch" data-host="DJ SCRATCH" data-show="THE MUSIC DESK" data-ch="3" data-gauge="off">
+<article class="dj" id="dj" aria-label="DJ Scratch" data-host="DJ SCRATCH" data-show="THE MUSIC DESK" data-ch="3" data-gauge="off"><section data-network-launch class="network-launch"><a href="../play/djscratch/" target="_blank" rel="noopener"><img src="assets/djscratch-game-still.png" alt="djscratch game still"><span>▶ PLAY</span></a></section>
   <div class="rays" aria-hidden="true"></div>
   <div class="edge">
     <p class="ribbon"><span class="star">★</span> AS SEEN ON MBS <span class="star">★</span> AS SEEN ON MBS <span class="star">★</span> AS SEEN ON MBS <span class="star">★</span></p>
@@ -351,11 +351,11 @@ FORM: Ian's pin, 2026-08-25, "90s late-night infomercial." Inside the old televi
            The follow-game and the payoff now live on the control rack below (see script). -->
       <section class="deck" id="deck">
         <p class="feature">NOW FEATURING, <b>PARTY MODE</b></p>
-        <p class="hint" id="deckHint">The record's still spinning. <b>Power up the deck, then follow the lights.</b></p>
+        <p class="hint" id="deckHint"><b>Power on. Follow the lights.</b></p>
 
         <div class="deckgrid">
           <div class="deckcol left">
-            <div class="djid">
+            <details class="djid"><summary>Your DJ name</summary>
               <p class="djid-label">YOUR DJ NAME</p>
               <div class="djid-picker">
                 <select id="djA" aria-label="First part of your DJ name">
@@ -373,7 +373,7 @@ FORM: Ian's pin, 2026-08-25, "90s late-night infomercial." Inside the old televi
                 </select>
               </div>
               <p class="djid-name" id="djName">DJ SCR4TCH 3000</p>
-            </div>
+            </details>
             <div class="score">
               <p class="score-label">YOUR GRADE</p>
               <p class="score-num" id="scoreNum">0<span>/4</span></p>
@@ -412,7 +412,7 @@ FORM: Ian's pin, 2026-08-25, "90s late-night infomercial." Inside the old televi
             <div class="cuelights" id="cueLights" aria-hidden="true">
               <i class="lamp" data-key="bass"></i><i class="lamp" data-key="treble"></i><i class="lamp" data-key="volume"></i><i class="lamp" data-key="tempo"></i>
             </div>
-            <p class="cuehint" id="cueHint">Flip POWER, then follow the lit lamp to its control.</p>
+            <p class="cuehint" id="cueHint">Power on to begin.</p>
 
             <div class="rack" id="rack">
               <div class="ctrl" data-key="bass" style="--c:var(--gold)">
@@ -470,10 +470,10 @@ FORM: Ian's pin, 2026-08-25, "90s late-night infomercial." Inside the old televi
         <div class="codebox" id="codeBox">
           <p class="code-label">LIVE CODE ENTRY</p>
           <form id="codeForm" class="codeform">
-            <input id="codeInput" inputmode="numeric" pattern="[0-9]*" placeholder="CODE" autocomplete="off">
+            <input id="codeInput" inputmode="numeric" aria-label="Bass, treble, volume and tempo code" placeholder="CODE" autocomplete="off">
             <button type="submit" id="codeSubmit">ENTER</button>
           </form>
-          <p class="code-note" id="codeNote">Not armed for this broadcast yet. A code is only ever given out live.</p>
+          <p class="code-note" id="codeNote">Find the signal. Then copy the four control settings into this drive.</p>
         </div>
       </section>
 

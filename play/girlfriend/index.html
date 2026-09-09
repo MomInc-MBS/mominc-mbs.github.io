@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-game="girlfriend" data-mode="public" data-api="" data-mission-id="" data-station="" data-roots="{&quot;roots&quot;: [&quot;#dgTrack&quot;, &quot;.dg-flat&quot;], &quot;hide&quot;: []}">
+<html lang="en" data-game="girlfriend" data-mode="public" data-api="" data-mission-id="" data-station="" data-roots="{&quot;roots&quot;: [&quot;#dgStage&quot;, &quot;#dgUnitDetails&quot;], &quot;hide&quot;: []}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -7,9 +7,12 @@
 <title>The Manufacturing Floor</title>
 <meta name="robots" content="noindex">
 <link rel="stylesheet" href="play.css">
+<link rel="stylesheet" href="atmosphere.css">
+<link rel="stylesheet" href="network-flow.css">
 <style>body{background:#1b0a2c}</style>
 </head>
 <body>
+<aside class="rotate-notice" aria-labelledby="rotate-title"><span aria-hidden="true">↻</span><h1 id="rotate-title">Turn your phone to landscape</h1><p>The production line needs a wider view.</p><a href="../games/girlfriend/#information">Read the research &amp; questions</a><button type="button" id="portraitContinue">Use portrait controls instead</button></aside>
 <div class="stage"><div class="rail"><a class="exit" href="../games/girlfriend/" aria-label="Back to The Manufacturing Floor">&larr;<span>The Manufacturing Floor</span></a></div><div class="glass"><div id="screen" class="screen"><div id="channel" class="channel"></div></div></div></div>
 <div class="wave" id="mbsWave" aria-hidden="true"></div>
 <div class="meter" id="mbsMeter" hidden aria-hidden="true"></div>
@@ -20,6 +23,8 @@
 <script src="mbs-runtime.js"></script>
 <script src="channel-runtime.js"></script>
 <script src="mbs-shim.js"></script>
+<script src="atmosphere.js"></script>
 <script src="mount.js"></script>
+<script src="network-flow.js"></script>
 </body>
 </html>

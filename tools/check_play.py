@@ -128,13 +128,15 @@ def dj_rack(pg):
 
 
 def fuel_seal(pg):
-    # complete() wants EVERY row set plus a flavour (fuel.html:449), so set all six, not one
-    rows = pg.locator("#stackCard .srow")
-    for i in range(rows.count()):
-        rows.nth(i).locator(".lvl").last.click(no_wait_after=True)
-        pg.wait_for_timeout(90)
-    pg.click("#flavours .flv", no_wait_after=True); pg.wait_for_timeout(200)
-    pg.click("#submitBtn", no_wait_after=True); pg.wait_for_timeout(900)
+    for i in range(4):
+        for _ in range(2):
+            pg.locator('#batchIngredients button').nth(i).click()
+    pg.click('#batchNext')
+    pg.locator('#batchFlavors button').first.click()
+    for _ in range(3):
+        pg.click('#batchNext')
+        pg.wait_for_timeout(800)
+    pg.click('#submitBtn'); pg.wait_for_timeout(900)
 
 
 # slug -> (driver, force WebGL off, terminal state must be reached)
@@ -147,7 +149,7 @@ def fuel_seal(pg):
 # happened to be the site's only same-origin iframe, and 3.G0 gave each a fixture under
 # tools/fixtures/ instead: the coverage no longer depends on this set. Remove the slug here when the
 # C084 rebuild lands and the goon rows come back on their own.
-SUPPRESSED = {"goon"}
+SUPPRESSED = set()
 
 PLAN = {
     "djscratch":    (dj_rack,       False, True),
@@ -218,19 +220,14 @@ with sync_playwright() as pw:
     # Neither is a playthrough and neither is counted as one.
     print("== the two routes with no scriptable terminal, checked for what CAN be checked")
 
-    # Dr Girlfriend calls no MBS.unlock at all by design (girlfriend.html:9), so her terminal is not an
-    # unlock and cannot be asserted as one. What Part A can break for her is the documented fallback:
-    # with WebGL refused the room must switch to flat and say so in words.
-    pg = b.new_page(viewport=VP)
+    # Paper factory remains interactive with WebGL refused; no rendering fallback is needed.
+    pg = b.new_page(viewport={"width":844,"height":390})
     pg.add_init_script(NO_WEBGL)
-    pg.goto(BASE + "/play/girlfriend/", wait_until="load"); pg.wait_for_timeout(2600)
-    flat = pg.evaluate("""()=>{const r=document.querySelector(".dg"), f=document.querySelector(".dg-flat");
-        return {flat: !!r && r.classList.contains("flat"),
-                words: !!f && f.getBoundingClientRect().height > 0};}""")
-    good = flat["flat"] and flat["words"]
+    pg.goto(BASE + "/play/girlfriend/", wait_until="load")
+    pg.locator('#dgDock button').first.wait_for()
+    good = pg.evaluate("() => !!window.__dg?.paper && !document.querySelector('#dgStage canvas')")
     ok &= good
-    print("  %s girlfriend    no-WebGL fallback: .dg is flat=%s, the written room renders=%s"
-          % ("PASS" if good else "FAIL", flat["flat"], flat["words"]))
+    print("  %s girlfriend    paper scene and controls render without WebGL" % ("PASS" if good else "FAIL"))
     pg.close()
 
     # Goon's game is a compiled third-party bundle inside a same-origin iframe with no exposed state, so

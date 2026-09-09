@@ -1,0 +1,57 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MYR5 · MOM INC Creature Television</title><link rel="stylesheet" href="../../tv.css"><link rel="stylesheet" href="creature-tv.css"></head><body><main class="tv" id="tv" data-state="on" data-gauge="off">
+  <section class="cabinet">
+    <aside class="gauge" id="gauge" aria-label="Stress meter">
+      <b class="gauge-pct" id="gaugePct">0%</b>
+      <div class="gauge-track"><div class="gauge-fill" id="gaugeFill"></div></div>
+      <span class="gauge-label" id="gaugeLabel">STRESS</span>
+    </aside>
+    <div class="bezel">
+      <div class="glass">
+        <div class="screen" id="screen" tabindex="0" aria-live="polite">
+          <iframe id="creator-screen" title="MYR5 creature creator" src="myr5/index.html?screen=1" allow="autoplay; fullscreen"></iframe>
+        </div>
+        <div class="phosphor" aria-hidden="true"></div>
+        <div class="glare" aria-hidden="true"></div>
+        <div class="press-layer" id="presses" aria-hidden="true"></div>
+        <div class="wave" id="wave" aria-hidden="true"></div>
+        <img class="momlogo" id="momlogo" src="../mom-inc-mark.png" alt="" aria-hidden="true">
+        <div class="dark" id="dark"><p class="dark-note" id="darkNote">MOM INC · CREATURE STUDIO<br>Press power to return.</p></div>
+      </div>
+    </div>
+
+    <aside class="panel" role="group" aria-label="Television controls">
+      <div class="row" id="ctlrow">
+      <div class="dial-block">
+        <svg class="dial-ring" viewBox="0 0 120 120" aria-hidden="true">
+          <circle cx="60" cy="60" r="56" fill="none" stroke="#7a6446" stroke-width="1"/>
+          <g id="dialTicks"></g>
+        </svg>
+        <button class="dial" id="knob" type="button" aria-label="Channel dial, turns as you scroll" title="Turns as you scroll">
+          <span class="dial-grip" aria-hidden="true"></span>
+          <span class="dial-pointer" aria-hidden="true"></span>
+        </button>
+        <span class="legend">CHANNEL</span>
+      </div>
+      <div class="keys" aria-label="Buttons">
+        <div class="key-item"><button class="key power" id="power" type="button" aria-label="Power" title="Power"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1.5v4.5" stroke-width="1.6" stroke-linecap="round"/><path d="M3.6 3.4a3.6 3.6 0 1 0 4.8 0" fill="none" stroke-width="1.6" stroke-linecap="round"/></svg></button><span class="legend">POWER</span></div>
+        <div class="key-item" id="gameKey" hidden><button class="key game" id="gameBtn" type="button" aria-pressed="false" aria-label="Enter game" title="Enter game"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1.5 4.2V1.5h2.7M10.5 4.2V1.5H7.8M1.5 7.8v2.7h2.7M10.5 7.8v2.7H7.8" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span class="legend" id="gameLegend">GAME</span></div>
+        <div class="key-item" id="pictureKey"><button class="key picture" id="pictureBtn" type="button" aria-pressed="false" aria-label="Clear picture" title="Clear picture"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1.7 3.2h8.6M1.7 6h8.6M1.7 8.8h8.6" fill="none" stroke-width="1.4" stroke-linecap="round"/></svg></button><span class="legend" id="pictureLegend">CLEAR</span></div>
+        <span class="pilot" id="led" aria-hidden="true"></span>
+      </div>
+      <div class="maker" aria-hidden="true"><span class="emboss">MOM</span><span class="engrave">INC</span></div>
+      <span class="model" aria-hidden="true">MODEL MBS-1998 · A MOM INC PRODUCT</span>
+      </div>
+
+      <!-- the channel LCD: the readout of what is on, then every channel as a card, MOM INC as the heading. A card turns orange once that channel's interaction is complete. -->
+      <nav class="lcd" id="lcd" aria-label="Channels">
+        <div class="vfd" id="vfd" aria-live="polite" aria-label="Channel display">
+          <span class="vfd-ch" id="vfdCh">CH 5</span>
+          <span class="vfd-name" id="vfdName">MYR5</span>
+          <span class="vfd-show" id="vfdShow">CREATURE STUDIO</span>
+        </div>
+        <div class="lcd-list"><a class="lcd-card head" href="/tv/?ch=mominc" target="_top"><span class="lcd-ch">HOME</span><span class="lcd-name">MOM INC</span></a><a class="lcd-card" href="/tv/?ch=armie" target="_top"><span class="lcd-ch">CH 5</span><span class="lcd-name">COACH ARMIE</span></a><span class="lcd-card on"><span class="lcd-ch">STUDIO</span><span class="lcd-name">MYR5</span></span></div>
+      </nav>
+
+    </aside>
+  </section>
+</main><script src="creature-tv.js"></script></body></html>

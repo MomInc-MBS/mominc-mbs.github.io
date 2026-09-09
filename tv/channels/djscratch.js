@@ -409,7 +409,7 @@ export default {
     }
 
     function breakThrough() {
-      done = true;
+      done = true;captureKnobCode();
       dj.classList.add("glitch");
       const partyMode = tunerText.textContent;                    // the ad copy the purple wave puts back
       const restore = () => { tuner.classList.remove("alert"); tunerText.textContent = partyMode; };
@@ -423,6 +423,7 @@ export default {
           tunerText.textContent = "HELP, GET US OUT";
           hint.innerHTML = "the record skipped. that was her, not it.";
           sigLbl.textContent = "// signal confirmed // she is in the machine //";
+          cueHint.textContent = "Signal found: HELP, GET US OUT. Free mix is open.";
           // D.1.10 (C018): the help-signal reveal ends the secret-code objective, so this site is both
           // the unlock and the run's terminal - still two calls with two meanings. complete() goes FIRST
           // so the GAME_COMPLETE on the wire carries {terminal} and not the transitional {nodes,need}
@@ -625,6 +626,7 @@ export default {
     }
     function finishGame() {
       gameActive = false; gameDone = true;
+      dj.classList.add("set-complete");
       cueHint.textContent = "the follow's done.";
       const total = hits + misses, pct = total ? Math.round(hits / total * 100) : 100;
       scoreGrade.textContent = pct >= 90 ? "A+ DJ" : pct >= 60 ? "B DJ" : "STILL A DJ";
@@ -636,6 +638,7 @@ export default {
     function togglePower(on) {
       powerBtn.setAttribute("aria-pressed", on ? "true" : "false");
       state.power = on ? 1 : 0;
+      dj.classList.toggle("deck-powered", on);
       byId("numPower").textContent = state.power;
       if (on) {
         ensureAudio(); actx.resume && actx.resume();
@@ -649,42 +652,16 @@ export default {
       }
     }
     ctx.on(powerBtn, "click", () => togglePower(powerBtn.getAttribute("aria-pressed") !== "true"));
+    const autoBeat=e=>{if(!actx&&e.target!==powerBtn)togglePower(true);};
+    ctx.on(dj,"pointerdown",autoBeat,{once:true});ctx.on(dj,"keydown",autoBeat,{once:true});
     ctx.on(powerBtn, "keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); powerBtn.click(); } });
 
-    // ---- LIVE CODE ENTRY. Numeric, typed manually, checked ONLY by the deployed Supabase redeem endpoint
-    // ({mission_id, code} -> {game, bearer}), never compared locally. mission_id/API base come from
-    // data-mission-id / data-api on <html> - the registry agent is adding these empty (Codex C blocker 5),
-    // so while either is blank this stays inert and claims nothing. MBS.mode is never used to gate it (Codex C6).
-    const missionId = (document.documentElement.dataset.missionId || "").trim();
-    const apiBase = (document.documentElement.dataset.api || "").trim();
-    const codeArmed = !!(missionId && apiBase);
-    const codeForm = byId("codeForm"), codeInput = byId("codeInput");
-    const codeSubmit = byId("codeSubmit"), codeNote = byId("codeNote");
-    codeInput.disabled = !codeArmed; codeSubmit.disabled = !codeArmed;
-    if (codeArmed) codeNote.textContent = "Enter the code given live on stream.";
-    let bearer = null;   // memory only - never localStorage, never a URL (Part D)
-    ctx.on(codeForm, "submit", e => {
-      e.preventDefault();
-      if (!codeArmed) return;                            // never accepted locally, whatever the input holds
-      const code = codeInput.value.trim();
-      if (!code) return;
-      codeSubmit.disabled = true; codeSubmit.textContent = "CHECKING…";
-      fetch(apiBase.replace(/\/$/, "") + "/redeem", {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ mission_id: missionId, code })
-      }).then(r => r.json().then(j => ({ ok: r.ok, j })).catch(() => ({ ok: false, j: null })))
-        .then(({ ok, j }) => {
-          codeSubmit.disabled = false; codeSubmit.textContent = "ENTER";
-          if (ok && j && j.game === "djscratch") {
-            bearer = j.bearer || null;
-            codeNote.textContent = "CODE ACCEPTED.";
-            transformToPhono();
-          } else {
-            codeNote.textContent = "CODE NOT RECOGNIZED. TRY AGAIN.";
-          }
-        })
-        .catch(() => { codeSubmit.disabled = false; codeSubmit.textContent = "ENTER"; codeNote.textContent = "COULD NOT REACH THE DESK. TRY AGAIN."; });
-    });
+    // Local thumb-drive puzzle: capture the four physical settings at signal unlock.
+    const codeForm=byId('codeForm'),codeInput=byId('codeInput'),codeSubmit=byId('codeSubmit'),codeNote=byId('codeNote');
+    let knobCode=null;
+    codeInput.disabled=codeSubmit.disabled=true;
+    function captureKnobCode(){knobCode=['bass','treble','volume','tempo'].map(k=>String(state[k]));codeInput.disabled=codeSubmit.disabled=false;codeNote.textContent='SIGNAL SETTINGS · BASS '+knobCode[0]+' / TREBLE '+knobCode[1]+' / VOLUME '+knobCode[2]+' / TEMPO '+knobCode[3]+'. Copy these four values into the drive, in that order.';}
+    ctx.on(codeForm,'submit',e=>{e.preventDefault();if(!knobCode)return;const typed=codeInput.value.trim();const values=typed.split(/[^0-9]+/).filter(Boolean);const match=values.length===4?values.every((v,i)=>Number(v)===Number(knobCode[i])):typed===knobCode.join('');if(!match){codeNote.textContent='SETTINGS DO NOT MATCH. Use the four values shown when the signal unlocked: '+knobCode.join(' / ');return;}codeNote.textContent='DRIVE READ · SETTINGS ACCEPTED';codeSubmit.disabled=true;byId('codeBox').classList.add('drive-read');transformToPhono();});
 
     // ---- THE PHONOGRAPH: what the whole record-player/turntable setup becomes once a code is redeemed.
     // The tuning dial reads data-station on <html> - also empty until the registry agent wires it (Codex B5) -

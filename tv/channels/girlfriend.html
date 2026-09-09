@@ -1,208 +1,39 @@
-<!--
-THESIS: Dr Girlfriend is MOM Inc's manufacturing floor. The literacy-desk scientist who teaches people to read a study is the same one feeding studies into a pitcher and pouring out product. Her channel is not a page about a lab, it is the lab, and you work the line yourself.
-FORM (Ian, round 2, 2026-08-28): THE CAMERA DOES NOT MOVE. A conveyor belt in front of her carries the work past instead. The background is static and hung with MYR5 inspirational posters. This is the real answer to "the sites are being viewed on a tv set" and "plenty of websites that dont feel up and down" - a television is a fixed landscape window, so the frame holds still and the world moves through it. Scroll pushes the belt along; it never scrolls a page.
-FLOAT (Ian, 2026-08-28): everything on the line rides above the belt and bobs. Nothing sits rigidly on a surface.
-OWN-WORLD: Scuffed enamel, frosted glass, matte clay, cardboard, worn steel. Nothing glossy: every material is high-roughness and low-metalness, because the network is felt and papier-mache and a chrome showcase scene would read as somebody else's website.
-CANON - THE UNIT'S MATERIAL, ROUND 4 (Ian, 2026-09-05): MYR5 is no longer one procedurally-built shape. He
-ships as one of SIX real material stills - purple, darkstone, straw-wood, palestone, newsprint, blankpaper -
-cut from the morph clip with backgrounds removed (assets/myr5-*.png). Whichever tube is poured LAST decides
-which material the batch reveals as; each carries a definition, a random interim number under 5.0, and one
-downplayed crime (see the CREATURES table and showCreatureLabel() below). The 2026-08-28 teardrop-creature
-canon is superseded by this - there is no procedural geometry left to correct.
-CANON - SHE IS A STILL PHOTO, ROUND 4 (Ian, 2026-09-05): "she needs to be not animated at all... cut it and
-frame it right and blow it up." The round-3 puppet (torso/lapels/sleeves/writeArm) is deleted. She is now
-`assets/drgf-laughing-framed.png` - the reference footage's laughing beat, already cut, framed and scaled
-3x - standing in the set as one flat, untransformed image. This supersedes the round-3 "head above the
-frame" framing note below; there is no head, torso or hand left to frame.
-STORY: Six tubes ride in, one per channel, each holding a real, verified study. Pour them all into the
-pitcher and a differently-coloured goo comes out depending on the mix. Mould it into an MYR5 unit, box it,
-and a drone takes it off the end of the line. She sets her goggles down as it goes. Put them on and the
-room tells you how the rest of the network opens - but only once the stream is live; off-air they say to
-come back later and give nothing away (Codex C6: MBS.mode is a TONE switch, never an entitlement).
-INTERACTABLE: the pour chain (six tubes -> pitcher -> goo -> mould -> pack -> drone) and then the goggles, which are a HINT TOOL for the secrets gate, not a node of it. Deliberately partial nudges, never answers: a full answer key would trivialise the puzzle the exclusive-email reward is promised for. window.MBS.wave() fires on the drone launch. She does NOT call window.MBS.form or window.MBS.unlock - a seventh form site or sixth node would move the goalposts for anyone already mid-ARG.
-TECH: the channel IS an ES module now - tv/channels/girlfriend.js, mounted by channel-runtime.js (2.18, packet 13). Nothing about the room changed; every listener, the ResizeObserver and the render chain are registered through the mount context so the runtime can release them, and the renderer and the scene graph are handed back in the module's own unmount(). three.js r180 is still reached by DYNAMIC import() rather than a static one, deliberately: a static import resolves before the module body runs, so a CDN outage would fail the whole module and render the unavailable testcard instead of the flat page below - which is this channel's designed fallback and the thing its play route is actually checked on. No WebGL or no CDN still falls back to that flat page.
-CITATIONS, ROUND 4: the six placeholder "UNVERIFIED" cites are gone. Every one was checked by COMPUTA
-directly against its own source before shipping - see the comment above the TUBES array for the full
-reference list. Same honest-commerce rule as before: the comedy is ours, the science is real, and nothing
-here is invented.
--->
+<!-- Dr Girlfriend: flat paper layers. Character derived from the user's Seedance reference,
+     seated woman on the right, framed below the head. No 3D canvas or external renderer. -->
 <style>
-  .dg{--purple:#7a2fc4; --purple-dd:#1b0a2c; --gold:#ffd36e; --orange:#ff8a2a; --cream:#f4ecd8;
-      min-height:100%; margin:0; position:relative; overflow-x:clip; color:var(--cream);
-      font-family:"Zilla Slab",Georgia,serif; background:#120a1c}
-  .dg *{box-sizing:border-box}
+.dg{margin:0;min-height:100%;background:#271c31;color:#f5e7c9;font:15px/1.4 Georgia,serif}.dg *{box-sizing:border-box}.dg [hidden]{display:none!important}.dg-stage{position:relative;height:calc(100dvh - 48px);min-height:280px;overflow:hidden;isolation:isolate;background:#bba16e}.dg-paper-wall{position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 139px,#604c4133 140px 142px),repeating-linear-gradient(0deg,#b8a477 0 79px,#c3b181 80px 82px);border:14px solid #665044}.dg-paper-wall:after{content:'';position:absolute;inset:0;opacity:.22;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23fff' filter='url(%23p)' opacity='.7' d='M0 0h180v180H0z'/%3E%3C/svg%3E")}.dg-paper-trim{position:absolute;inset:0 auto 0 67%;width:4%;background:#6d4783;box-shadow:4px 0 #513857}.dg-paper-doctor{position:absolute;right:4%;top:-13%;width:40%;height:106%;object-fit:contain;object-position:top;filter:drop-shadow(4px 4px 0 #48314d55);pointer-events:none;z-index:2}.paper-poster{position:absolute;top:18%;left:7%;width:23%;padding:17px 13px;background:#e5d4a2;border:2px solid #ad9769;box-shadow:5px 5px #76614955;text-align:center;transform:rotate(-3deg);color:#4c3255;font:700 clamp(12px,1.5vw,22px)/1.25 Georgia,serif}.paper-poster:before{content:'';position:absolute;width:45%;height:15px;left:27%;top:-9px;background:#e2c388bb;transform:rotate(3deg)}.paper-poster small{display:block;font:9px monospace;letter-spacing:.1em;margin-top:12px}.paper-note{position:absolute;left:35%;top:18%;background:#dbc68a;color:#463149;border-left:5px solid #79558a;padding:12px;font:11px monospace;transform:rotate(3deg)}.dg-bench-back{position:absolute;z-index:3;left:0;right:0;bottom:21%;height:13%;background:#775287;border-top:8px solid #bca36b;box-shadow:0 5px #4c3555}.dg-paper-belt{position:absolute;z-index:4;left:-2%;right:-2%;bottom:23%;height:6%;background:repeating-linear-gradient(90deg,#c5ae7b 0 29px,#7f694b 30px 33px);border-top:3px solid #ead8a9;border-bottom:5px solid #533e39;transform:rotate(-1deg)}.dg-bench-front{position:absolute;z-index:3;left:0;right:0;bottom:0;height:23%;background:#52375f;border-top:5px solid #37253e}.dg-bench-front:after{content:'MOM INC. / RESEARCH & PRODUCTION';position:absolute;left:20px;top:14px;font:10px monospace;letter-spacing:.16em;color:#d0b48a}.dg-tube-props{position:absolute;z-index:5;left:7%;bottom:29%;width:37%;height:24%;display:flex;align-items:end;gap:5%}.paper-tube{position:relative;width:12%;height:92%;padding:0;border:3px solid #4f395c;border-radius:2px 2px 16px 16px;background:#e9dfc4;box-shadow:3px 3px #45314c66;cursor:pointer;transform:rotate(-3deg);transition:transform .2s,opacity .2s}.paper-tube:nth-child(even){transform:rotate(3deg);height:83%}.paper-tube:focus-visible{outline:4px solid #fff;outline-offset:4px}.paper-tube:not(:disabled):hover{transform:translateY(-10px) rotate(-6deg)}.paper-tube.spent{opacity:.25;transform:translateY(10px) rotate(8deg)}.tube-cap{position:absolute;top:-10%;height:19%;left:-12%;right:-12%;background:#7e5488;border:2px solid #493151}.tube-liquid{position:absolute;inset:32% 8% 5%;border-radius:0 0 10px 10px;background:var(--liquid);border-top:3px dashed #ffffff66}.tube-number{position:absolute;top:26%;left:0;right:0;text-align:center;color:#402b48;font:700 12px monospace;background:#eee2bb}.paper-mixer{position:absolute;z-index:5;left:49%;bottom:29%;width:12%;height:25%;background:#e2d7b3;border:5px solid #694778;box-shadow:4px 4px #513b4b55;clip-path:polygon(0 0,100% 0,91% 100%,9% 100%)}.paper-mixer:after{content:'MIX';position:absolute;top:39%;left:18%;right:18%;padding:4px;background:#f1e4be;color:#51365e;text-align:center;font:bold clamp(9px,1.1vw,16px) monospace;transform:rotate(-4deg)}.paper-fill{position:absolute;bottom:0;left:0;right:0;background:#986da6;border-top:3px dashed #d6bfdf;transition:height .3s}.paper-unit{position:absolute;z-index:6;left:49%;bottom:29%;width:13%;height:29%;filter:drop-shadow(3px 3px 0 #49334b66)}.paper-box{position:absolute;z-index:6;left:49%;bottom:29%;width:15%;height:23%;background:#c5a071;border:4px solid #624848;box-shadow:4px 4px #49334b66;transform:rotate(2deg);text-align:center;color:#4d3555;font:bold 12px monospace;padding-top:9%}.paper-box:before{content:'';position:absolute;width:15%;left:43%;top:0;bottom:0;background:#e4c88f}.paper-box span{position:absolute;top:32%;left:12%;right:12%;background:#e8d4aa;padding:5px;transform:rotate(-5deg)}.paper-goggles{position:absolute;z-index:6;right:11%;bottom:29%;width:14%;height:9%;border:6px solid #54355e;border-radius:35%;background:linear-gradient(90deg,#d8bc7177 0 42%,#54355e 43% 56%,#d8bc7177 57%);transform:rotate(-8deg);box-shadow:3px 3px #47323e55}.dg-heading{position:absolute;z-index:7;left:3%;top:3%;padding:7px 12px;background:#473050;color:#f4dfad;border:1px solid #c6a465;font:700 11px monospace;letter-spacing:.1em}.dg-heading span{margin-left:12px;color:#dfc290}.dg-nudge{position:absolute;z-index:7;left:3%;top:9%;margin:10px 0;max-width:44%;font:700 13px/1.35 monospace;color:#382640;background:#efe0b7;padding:8px 10px;box-shadow:3px 3px #65504333}.dg-object-dock{position:absolute;z-index:9;left:3%;right:3%;bottom:5%;display:flex;gap:8px;justify-content:center}.dg-object-dock button{flex:1;max-width:180px;min-height:48px;border:2px solid #b6a072;border-radius:2px;background:#e9d9af;color:#3c2945;font:700 12px system-ui;padding:9px;cursor:pointer;box-shadow:3px 3px #2e2037}.dg-object-dock button:hover{background:#fff0c4}.dg-object-dock button:focus-visible{outline:3px solid white;outline-offset:3px}.dg-object-dock button:disabled{opacity:.55;cursor:default}.dg-saved{position:absolute;z-index:7;right:3%;top:3%;margin:0;font:10px monospace;color:#f5e3b5;background:#4d3559;padding:6px}.dg-vis{position:absolute;inset:0;z-index:20;background:#23162cf5;color:#f5e0b2}.dg-visin{height:100%;overflow:auto;padding:58px 24px 24px}.dg-vis button{position:absolute;top:10px;right:12px;min-height:44px;padding:9px 15px;background:#e8d2a0;color:#32203e;border:1px solid #eddcaf;cursor:pointer}.dg-vis h2{font:700 22px monospace}.dg-vis .sub,.dg-vis .ver{font:11px/1.5 monospace}.dg-vis ul{list-style:none;padding:0}.dg-vis li{margin:12px 0;display:grid;grid-template-columns:100px 1fr;gap:12px;font-size:13px}.dg-vis u{display:block;text-decoration:none;font:10px/1.4 monospace;margin-top:5px}.dg-unit-details{padding:14px 22px;background:#2d2035;color:#f0d7a3;font-size:13px}.dg-unit-details summary{min-height:44px;cursor:pointer}.dg-unit-details b,.dg-unit-details i,.dg-unit-details u{display:block;margin:6px 0;text-decoration:none}.dg-stage[data-motion='pouring'] .paper-mixer{animation:paper-jolt .7s steps(3)}.dg-stage[data-motion='moulding'] .paper-unit{animation:paper-arrive .7s steps(4)}.dg-stage[data-motion='shipping'] .paper-box{animation:paper-send .7s steps(6)}@keyframes paper-jolt{50%{transform:rotate(6deg)}}@keyframes paper-arrive{from{transform:translateY(30px);opacity:0}to{transform:none;opacity:1}}@keyframes paper-send{to{transform:translateX(350%) rotate(-4deg)}}
+@media(max-height:500px) and (orientation:landscape){.dg-paper-wall{border-width:7px}.dg-paper-doctor{top:-20%;height:118%;right:2%;width:39%}.paper-poster{top:27%;padding:8px;font-size:12px}.paper-poster small{font-size:7px;margin-top:5px}.paper-note{display:none}.dg-heading{top:3%;font-size:9px;padding:5px}.dg-nudge{top:13%;font-size:10px;padding:5px;max-width:43%;margin:0}.dg-object-dock{bottom:3%;left:2%;right:2%;gap:5px}.dg-object-dock button{min-height:44px;padding:6px;font-size:10px}.dg-bench-front:after{display:none}.dg-tube-props{height:25%}.dg-saved{font-size:8px}}
+@media(orientation:portrait){.dg-stage{min-height:520px}.dg-paper-doctor{width:73%;right:-14%;top:-1%;height:82%}.dg-heading{font-size:9px;max-width:90%}.dg-heading span{margin-left:5px}.dg-nudge{top:10%;max-width:80%;font-size:12px}.paper-poster{left:5%;top:23%;width:30%;font-size:11px;padding:9px}.paper-note{display:none}.dg-tube-props{left:5%;width:52%;height:18%;bottom:34%}.paper-mixer,.paper-unit{left:66%;width:23%;height:20%;bottom:34%}.paper-box{left:65%;width:24%;bottom:34%}.paper-goggles{right:9%;width:25%;bottom:34%}.dg-object-dock{flex-wrap:wrap;bottom:3%}.dg-object-dock button{flex:1 0 28%;font-size:10px;min-height:44px}.dg-bench-back{bottom:25%}.dg-paper-belt{bottom:28%}.dg-bench-front{height:28%}.dg-bench-front:after{display:none}.dg-saved{top:18%;right:5%}}
+@media(prefers-reduced-motion:reduce){.dg *{animation:none!important;transition:none!important}}
+/* The chair and counter establish a seated figure with her lower body occluded. */
+.dg-paper-chair{position:absolute;right:4%;top:0;bottom:24%;width:36%;z-index:1;background:repeating-linear-gradient(90deg,#70447b 0 13px,#7a4a8422 14px 16px),#674274;border:7px solid #4b3158;border-radius:22% 22% 8px 8px;box-shadow:5px 5px #3b294633}
+.dg-paper-doctor{top:auto;bottom:19%;height:auto;width:43%;right:1%;object-fit:contain;object-position:bottom}
+.dg-bench-back{z-index:3}
+@media(max-height:500px) and (orientation:landscape){.dg-paper-doctor{top:auto;bottom:16%;height:auto;width:41%;right:1%}.dg-paper-chair{right:3%;width:37%;bottom:20%}}
+@media(orientation:portrait){.dg-paper-doctor{top:auto;bottom:25%;height:auto;width:98%;right:-14%}.dg-paper-chair{right:-5%;width:65%;bottom:26%;top:8%}}
 
-  /* The camera never moves, so the page never needs to be tall. One screen, one room.
-     A short track remains only so a wheel gesture has somewhere to go; it pushes the BELT, not the page. */
-  .dg-track{position:relative; min-height:240vh}
-  .dg-stage{position:sticky; top:0; height:100vh; max-height:100%; overflow:hidden; background:#0f0818}
-  .dg-stage canvas{display:block; width:100%; height:100%}
-  .dg-stage canvas:focus{outline:2px solid var(--gold); outline-offset:-2px}
+.dg-paper-doctor{height:104%;width:auto;max-width:none;top:auto;bottom:15%;right:-1%;object-fit:contain}
+@media(orientation:portrait){.dg-paper-doctor{height:95%;width:auto;top:auto;bottom:25%;right:-30%}}
+.paper-unit{object-fit:contain;width:18%;height:36%;left:46%}.dg-unit-details{font-size:16px}.dg-unit-details a{color:#ffd36e}.dg-unit-details p{max-width:70ch}.dg-unit-details strong{color:#ffdfa0}
+#dgBuildReport{max-width:800px;width:90%;max-height:85dvh;overflow:auto;background:#e8d4a5;color:#37243f;border:9px ridge #79538a;padding:20px;font:16px/1.5 Georgia}#dgBuildReport::backdrop{background:#201329b8}#dgReportBody{display:grid;grid-template-columns:30% 1fr;gap:20px}#dgReportBody img{width:100%;max-height:380px;object-fit:contain;position:sticky;top:10px}#dgReportBody h2{font:700 20px monospace}#dgReportBody a{color:#542465}#dgReportClose{min-height:44px;padding:10px 20px;background:#4e335b;color:#ffe4ac;border:2px outset #b8956d;cursor:pointer}.paper-goggles{cursor:pointer}.paper-goggles:focus-visible{outline:4px solid orange;outline-offset:4px}.coach-unlocked .dg-heading{background:#ef861f;color:#29172f}.coach-unlocked .dg-paper-doctor{animation:doctor-leaves 2.8s steps(12) forwards;transform-origin:bottom center}.coach-unlocked .dg-stage{box-shadow:inset 0 0 0 8px #ff931f}@keyframes doctor-leaves{0%{transform:none}22%{transform:translateY(-12%) rotate(-3deg)}40%{transform:translate(12%,-12%) rotate(2deg)}60%{transform:translate(35%,-14%) rotate(-2deg)}80%{transform:translate(70%,-12%) rotate(2deg)}100%{transform:translate(150%,-14%);opacity:0}}@media(prefers-reduced-motion:reduce){.coach-unlocked .dg-paper-doctor{animation:none;opacity:0}}@media(max-width:500px){#dgReportBody{grid-template-columns:1fr}#dgReportBody img{height:170px;position:static}}
 
-  /* copy lives ON the objects: each label is projected from a 3D point every frame, never centred in a column */
-  .dg-lab{position:absolute; left:0; top:0; transform:translate(-50%,-100%); pointer-events:none;
-      width:126px; text-align:left; opacity:0; transition:opacity .3s ease; will-change:transform,opacity;
-      display:flex; flex-direction:column; align-items:flex-start}
-  .dg-lab.show{opacity:1}
-  .dg-lab b{display:block; font-family:"Barlow Condensed",sans-serif; font-size:10px; letter-spacing:.14em;
-      text-transform:uppercase; color:var(--gold); text-shadow:0 1px 4px #000, 0 0 12px rgba(0,0,0,.9)}
-  .dg-lab i{display:block; font-style:normal; font-family:"Special Elite",monospace; font-size:10.5px;
-      line-height:1.3; color:var(--cream); text-shadow:0 1px 4px #000, 0 0 10px rgba(0,0,0,.95); margin-top:2px}
-  .dg-lab u{display:block; text-decoration:none; font-family:"Barlow Condensed",sans-serif; font-size:9.5px;
-      letter-spacing:.1em; text-transform:uppercase; color:#b79ae0; margin-top:3px; text-shadow:0 1px 4px #000}
-  .dg-lab s{display:block; text-decoration:none; width:1px; height:20px; margin:5px 0 0; order:9;
-      background:linear-gradient(180deg,var(--gold),rgba(255,211,110,.12))}
-  .dg-lab.spent{filter:saturate(.2) opacity(.4)}
-
-  .dg-plate{position:absolute; left:12px; top:10px; z-index:3; display:flex; align-items:center; gap:8px; pointer-events:none}
-  .dg-plate img{width:36px; height:36px; border-radius:50%; box-shadow:0 0 0 2px var(--gold), 0 4px 12px #000}
-  .dg-plate div{line-height:1.05}
-  .dg-plate b{display:block; font-family:"Bowlby One SC",cursive; font-size:14px; color:var(--gold);
-      text-shadow:2px 2px 0 var(--purple-dd)}
-  .dg-plate span{display:block; font-family:"Barlow Condensed",sans-serif; font-size:9px; letter-spacing:.18em;
-      text-transform:uppercase; color:#c9b6e8}
-
-  .dg-nudge{position:absolute; left:50%; bottom:12px; transform:translateX(-50%); z-index:3; pointer-events:none;
-      font-family:"Barlow Condensed",sans-serif; font-size:11.5px; letter-spacing:.14em; text-transform:uppercase;
-      color:var(--gold); text-shadow:0 1px 6px #000; opacity:0; transition:opacity .4s ease;
-      max-width:88%; text-align:center}
-  .dg-nudge.show{opacity:.92}
-
-  .dg-pips{position:absolute; right:12px; top:13px; z-index:3; display:flex; gap:5px; pointer-events:none}
-  .dg-pips i{width:7px; height:7px; border-radius:50%; background:transparent;
-      border:1px solid rgba(255,211,110,.5); transition:.3s}
-  .dg-pips i.on{background:var(--purple); border-color:var(--gold); box-shadow:0 0 8px var(--purple)}
-
-  /* the goggles overlay: vision wraps. The whole room goes through the lens, it is not a modal box. */
-  .dg-vis{position:absolute; inset:0; z-index:6; opacity:0; pointer-events:none; transition:opacity .5s ease;
-      background:radial-gradient(58% 58% at 30% 50%, rgba(255,138,42,.13), transparent 60%),
-                 radial-gradient(58% 58% at 70% 50%, rgba(255,138,42,.13), transparent 60%),
-                 radial-gradient(125% 105% at 50% 50%, rgba(6,3,11,.88) 0%, rgba(4,2,8,.97) 62%, rgba(2,1,4,.99) 100%)}
-  .dg-vis.on{opacity:1; pointer-events:auto}
-  .dg-vis::after{content:""; position:absolute; inset:0; pointer-events:none;
-      background:repeating-linear-gradient(0deg, rgba(255,138,42,.07) 0 1px, transparent 1px 3px)}
-  .dg-stage:has(.dg-vis.on) .dg-lab{opacity:0}
-  /* the record made the list tall enough to overflow a phone (C074). `justify-content:center` CLIPS the
-     top of an overflowing flex child rather than scrolling to it, and the absolutely-positioned dismiss
-     button then sits on the heading - so the column starts at the top and #dgVisBody centres itself with
-     auto margins instead, which collapse to nothing the moment there is not room. */
-  .dg-visin{position:absolute; inset:0; display:flex; flex-direction:column; justify-content:flex-start;
-      padding:44px 26px 24px; overflow:auto}
-  .dg-visin > div{margin:auto 0; width:100%}
-  .dg-vis h2{font-family:"Bowlby One SC",cursive; font-size:clamp(15px,5.5vw,21px); color:var(--orange);
-      margin:0 0 2px; text-shadow:0 0 14px rgba(255,138,42,.5)}
-  .dg-vis .sub{font-family:"Barlow Condensed",sans-serif; font-size:10px; letter-spacing:.16em;
-      text-transform:uppercase; color:#e8b98a; margin:0 0 12px}
-  .dg-vis ul{list-style:none; margin:0; padding:0; display:grid; gap:7px}
-  .dg-vis li{display:grid; grid-template-columns:92px 1fr; gap:9px; align-items:baseline;
-      border-left:1px solid rgba(255,138,42,.35); padding-left:9px}
-  .dg-vis li b{font-family:"Barlow Condensed",sans-serif; font-size:10px; letter-spacing:.12em;
-      text-transform:uppercase; color:var(--orange)}
-  .dg-vis li span{font-family:"Special Elite",monospace; font-size:11px; line-height:1.35; color:#f0dcc4}
-  .dg-vis li.none span{opacity:.5}
-  /* C074: each hint prints what it was checked against, and the list prints its version and snapshot.
-     An unprinted justification is how the last set of hints rotted without anyone noticing. */
-  .dg-vis li span u{display:block; text-decoration:none; font-family:"Barlow Condensed",sans-serif;
-      font-size:9px; letter-spacing:.09em; text-transform:uppercase; color:#c08a5c; margin-top:3px}
-  .dg-vis .ver{margin:10px 0 0; font-family:"Barlow Condensed",sans-serif; font-size:9px;
-      letter-spacing:.09em; text-transform:uppercase; color:#c08a5c; line-height:1.5}
-  .dg-vis .foot{margin:12px 0 0; font-family:"Special Elite",monospace; font-size:10.5px; color:#e8b98a; opacity:.85}
-  .dg-vis button{position:absolute; right:12px; top:10px; background:none; border:1px solid rgba(255,138,42,.55);
-      color:var(--orange); font-family:"Barlow Condensed",sans-serif; font-size:11px; letter-spacing:.14em;
-      text-transform:uppercase; padding:5px 10px; cursor:pointer}
-  .dg-vis button:hover{background:rgba(255,138,42,.14)}
-
-  /* phones: same room, smaller label furniture */
-  @media (max-width:520px){
-    .dg-lab{width:116px}
-    .dg-lab i{font-size:10.5px}
-    .dg-vis li{grid-template-columns:78px 1fr; gap:7px}
-    .dg-vis li span{font-size:10px}
-    .dg-plate img{width:30px; height:30px}
-  }
-
-  .dg-flat{display:none; padding:20px 16px 30px}
-  .dg-flat h1{font-family:"Bowlby One SC",cursive; color:var(--gold); font-size:26px; margin:0 0 4px}
-  .dg-flat p{font-family:"Special Elite",monospace; font-size:12.5px; line-height:1.5; color:var(--cream); margin:0 0 10px}
-  .dg-flat ol{font-family:"Special Elite",monospace; font-size:12.5px; line-height:1.6; color:var(--cream); padding-left:18px}
-  .dg.flat .dg-track{display:none}
-  .dg.flat .dg-flat{display:block}
-
-  /* the flat station (C073). Same room, no room: the tube cards borrow the label furniture's type so a
-     tube reads the same whichever view drew it. */
-  .dg-st{margin:22px 0 0; border-top:1px solid rgba(255,211,110,.28); padding-top:16px}
-  .dg-st h2{font-family:"Bowlby One SC",cursive; color:var(--gold); font-size:17px; margin:0 0 6px}
-  .dg-st .dg-say{font-family:"Barlow Condensed",sans-serif; font-size:12.5px; letter-spacing:.12em;
-      text-transform:uppercase; color:var(--gold); min-height:1.3em; margin:0 0 12px}
-  .dg-rows{display:grid; grid-template-columns:repeat(auto-fit,minmax(184px,1fr)); gap:8px}
-  .dg-st button{font:inherit; text-align:left; cursor:pointer; background:rgba(122,47,196,.14);
-      border:1px solid rgba(255,211,110,.4); color:var(--cream); padding:9px 11px}
-  .dg-st button:hover:not(:disabled){background:rgba(122,47,196,.3)}
-  .dg-st button:focus-visible{outline:2px solid var(--gold); outline-offset:2px}
-  .dg-st button:disabled{cursor:default; opacity:.42}
-  .dg-st button.spent{opacity:.34; border-style:dashed}
-  .dg-rows b{display:block; font-family:"Barlow Condensed",sans-serif; font-size:11px; letter-spacing:.14em;
-      text-transform:uppercase; color:var(--gold)}
-  .dg-rows i{display:block; font-style:normal; font-family:"Special Elite",monospace; font-size:11.5px;
-      line-height:1.3; margin-top:2px}
-  .dg-rows u{display:block; text-decoration:none; font-family:"Barlow Condensed",sans-serif; font-size:9.5px;
-      letter-spacing:.1em; text-transform:uppercase; color:#b79ae0; margin-top:4px}
-  .dg-acts{display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 0}
-  .dg-reveal{font-family:"Special Elite",monospace; font-size:12px; line-height:1.45; margin:14px 0 0}
-  .dg-reveal:empty{margin:0}
-  .dg-reveal b{display:block; font-family:"Barlow Condensed",sans-serif; font-size:11px; letter-spacing:.14em;
-      text-transform:uppercase; color:var(--gold)}
-  .dg-reveal i{display:block; font-style:normal; margin-top:3px}
-  .dg-reveal u{display:block; text-decoration:none; font-size:11px; color:#b79ae0; margin-top:3px}
-  /* the overlay is markup inside .dg-track, which .dg.flat hides outright - a position:fixed child of a
-     display:none parent renders nothing, so runFlat() REPARENTS the node onto .dg and this restyles it. */
-  .dg.flat .dg-vis{position:fixed; z-index:20}
-
-  @media (prefers-reduced-motion:reduce){ .dg-lab{transition:none} }
+.dg-mould-press{position:absolute;z-index:8;left:45%;top:-50%;width:20%;height:43%;background:linear-gradient(90deg,#4d4650,#aaa19a 35%,#5f5465);border:7px ridge #b5a99a;box-shadow:6px 6px #21192580}.dg-mould-press:before{content:'';position:absolute;left:38%;bottom:100%;height:400px;width:24%;background:repeating-linear-gradient(0deg,#605963 0 8px,#b5ada8 9px 12px)}.dg-mould-press b{display:block;background:#ddc37f;color:#352a3e;font:9px monospace;padding:7px;text-align:center}.dg-mould-press span{position:absolute;inset:22% 18% 5%;border-radius:45% 45% 16% 16%;background:#291e32;border:6px inset #87738b}.dg-stage[data-motion=moulding] .dg-mould-press{animation:mould-drop 1.7s ease-in-out}.dg-stage[data-motion=moulding] .paper-unit{animation:cast-reveal 1.7s}.dg-drone{position:absolute;z-index:10;left:110%;bottom:70%;width:19%;height:12%;background:linear-gradient(#aa8eae,#49334f);border:4px ridge #c6bca6;border-radius:40%;color:#f2dda4;text-align:center;font:10px monospace;padding-top:12px}.dg-drone i{position:absolute;top:-16px;width:65%;height:8px;background:#2b2232;border:2px solid #bbaa8c;animation:rotor .08s linear infinite}.dg-drone i:first-child{left:-35%}.dg-drone i:nth-child(2){right:-35%}.dg-drone span{position:absolute;width:50%;height:65%;left:25%;top:90%;border:4px solid #3b2c43;border-top:0}.dg-stage[data-motion=shipping] .dg-drone{animation:drone-pickup 2.6s ease-in-out}.dg-stage[data-motion=shipping] .paper-box{animation:parcel-pickup 2.6s ease-in-out}@keyframes mould-drop{0%,100%{top:-50%}35%,65%{top:22%}}@keyframes cast-reveal{0%,65%{opacity:0;transform:scaleY(.15)}100%{opacity:1;transform:none}}@keyframes drone-pickup{0%{left:110%;bottom:70%}35%,55%{left:47%;bottom:58%}100%{left:-35%;bottom:90%}}@keyframes parcel-pickup{0%,55%{transform:none}100%{transform:translate(-550%,-210%)}}@keyframes rotor{50%{transform:scaleX(.3)}}@media(prefers-reduced-motion:reduce){.dg-drone i{animation:none}}
 </style>
-
 <div class="dg" data-host="DR GIRLFRIEND" data-ch="9" data-show="THE MANUFACTURING FLOOR" data-gauge="off">
-
-  <div class="dg-track" id="dgTrack">
-    <div class="dg-stage" id="dgStage">
-      <canvas id="dgCanvas" aria-label="Dr Girlfriend's production line"></canvas>
-
-      <div class="dg-pips" id="dgPips" aria-hidden="true"></div>
-      <p class="dg-nudge" id="dgNudge"></p>
-      <div id="dgLabels"></div>
-
-      <div class="dg-vis" id="dgVis" role="dialog" aria-label="The goggles">
-        <div class="dg-visin">
-          <button type="button" id="dgVisX">Take them off</button>
-          <!-- C074: the hint list used to be hand-authored here, with no version, no date and no
-               statement of what it had been checked against - and three of its seven lines had gone
-               stale against the channels they describe. It is rendered from the HINTS record in
-               girlfriend.js now, filtered through the live channel manifest, and it prints its own
-               version, snapshot and per-entry evidence to the visitor. One copy, and it carries its
-               own provenance. Empty on purpose: dressGoggles() fills it at mount, on both routes. -->
-          <div id="dgVisBody"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="dg-flat">
-    <h1>THE MANUFACTURING FLOOR</h1>
-    <p>This room needs a browser that can draw rooms. Here is what runs down the line instead.</p>
-    <ol>
-      <li>Six tubes ride in on the belt. Each holds research belonging to one of the other channels: robotics for DJ Scratch, canine nutrition for Sag Sniffer, chronic stress for Cortisol Corgi, small-space living for Lil Boyfriend, training load for Coach Armie, stimulants for MBS Fuel.</li>
-      <li>A pitcher. Every tube goes in, and the mix comes out a different colour depending on the order.</li>
-      <li>The goo is poured into a mould. It closes, holds, and opens on a formed unit - one of six real MYR5 materials, decided by whichever tube went in last: purple, darkstone, straw-wood, palestone, newsprint, or blankpaper. Each one gets a definition, an interim number under 5.0, and one downplayed crime.</li>
-      <li>The unit is boxed.</li>
-      <li>A drone takes the box off the end of the line. She sets her goggles down as it goes.</li>
-    </ol>
-    <p>She never invents a study. Neither does anyone else here - every citation on this line was checked against its own source.</p>
-
-    <!-- C073: the station itself, and it is not decoration. Until this packet the list above was ALL a
-         visitor without WebGL got - a description of a production line with no way to work it, no save,
-         no restore and no goggles, because the state machine lived inside the three.js import and the
-         hint overlay is markup inside .dg-track, which .dg.flat hides. The buttons are built from the
-         same TUBES array the room builds its cards from, so there is no second copy of the line here. -->
-    <div class="dg-st" id="dgStation" hidden></div>
-  </div>
+<div class="dg-stage" id="dgStage">
+ <div class="dg-paper-wall" aria-hidden="true"></div><div class="dg-paper-trim" aria-hidden="true"></div>
+ <div class="paper-poster" aria-hidden="true">CARED FOR.<br>CORRECTED.<br>PROVIDED FOR.<small>A MOM INC. WORKPLACE</small></div>
+ <div class="paper-note" aria-hidden="true">READ THE SOURCE.<br>KEEP THE LABEL.</div>
+ <div class="dg-paper-chair" aria-hidden="true"></div>
+ <img class="dg-paper-doctor" src="assets/drgf-paper-character.svg" alt="Dr Girlfriend in her purple and gold paper coat, framed below her head">
+ <div class="dg-bench-back" aria-hidden="true"></div><div class="dg-paper-belt" aria-hidden="true"></div><div class="dg-bench-front" aria-hidden="true"></div>
+ <div class="dg-tube-props" id="dgTubeProps" role="group" aria-label="Research tubes"></div>
+ <div class="paper-mixer" id="dgPaperMixer" aria-hidden="true"><div class="paper-fill" id="dgPaperFill"></div></div>
+ <div id="dgMouldPress" class="dg-mould-press" aria-hidden="true" hidden><i></i><b>MYR5 · CASTING MOULD</b><span></span></div><div id="dgDrone" class="dg-drone" aria-hidden="true" hidden><i></i><i></i><b>MOM AIR</b><span></span></div><img class="paper-unit" id="dgPaperUnit" alt="Manufactured MYR5 coach" hidden>
+ <div class="paper-box" id="dgPaperBox" aria-hidden="true" hidden><span>MYR5<br>DISPATCH</span></div><button type="button" class="paper-goggles" id="dgPaperGoggles" aria-label="Put on the goggles" hidden></button>
+ <div class="dg-heading">DR GIRLFRIEND <span id="dgProgress">0 / 6</span></div><p class="dg-nudge" id="dgNudge" role="status" aria-live="polite"></p><p class="dg-saved" id="dgSaved" hidden>LINE RESTORED</p>
+ <div class="dg-object-dock" id="dgDock" role="group" aria-label="Production controls"></div>
+ <dialog id="dgBuildReport" aria-label="Coach build report"><button id="dgReportClose" type="button">Return to the belt</button><div id="dgReportBody"></div></dialog><div class="dg-vis" id="dgVis" role="dialog" aria-modal="true" aria-label="The goggles" hidden><div class="dg-visin"><button type="button" id="dgVisX">Take them off</button><div id="dgVisBody"></div></div></div>
+</div>
+<details class="dg-unit-details" id="dgUnitDetails" hidden><summary>Unit record</summary><div id="dgUnitRecord"></div></details>
 </div>

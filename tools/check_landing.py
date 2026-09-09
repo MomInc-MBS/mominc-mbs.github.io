@@ -40,7 +40,8 @@ with sync_playwright() as pw:
         pg.goto(BASE + "/games/" + slug + "/", wait_until="load")
         pg.wait_for_timeout(350)
 
-        cta = pg.locator("a.cta").first
+        # Posters are the launch target; Armie's locked page points back to DJ.
+        cta = pg.locator("a.cta, a.cta-still, #gate a").first
         box = cta.bounding_box() or {}
         h, w = round(box.get("height", 0)), round(box.get("width", 0))
         bottom = round(box.get("y", 0) + box.get("height", 0))
@@ -194,7 +195,7 @@ print("  %s %d channels, cycle closes back to %s" % ("PASS" if good else "FAIL",
 print("== nothing unconfigured is claimed, and the switch works when it is configured")
 probe = io.open(os.path.join(ROOT, "games", PROBE_SLUG, "index.html"), encoding="utf-8").read()
 absent = [t for t in ('class="mission', 'id="remindBtn"', 'id="identityForm"', "Watch MBS live") if t in probe]
-present = "There is nowhere to send this, so nothing here asks" in probe
+present = "Saved only in this browser; nothing is sent." in probe
 good = not absent and present
 ok &= good
 print("  %s off: no mission block, no reminder, no identity form%s; the honest note is shown=%s"
@@ -253,7 +254,9 @@ with sync_playwright() as pw:
     _pg.add_init_script("Object.defineProperty(Storage.prototype,'setItem',"
                         "{value:function(){throw new Error('blocked')}})")
     _pg.goto(BASE + "/games/" + PROBE_SLUG + "/", wait_until="load"); _pg.wait_for_timeout(350)
+    _pg.locator("details.profile").evaluate("el => el.open = true")
     _pg.fill("#%s-q1" % PROBE_SLUG, "probe")
+    _pg.locator("details.profile").evaluate("el => el.open = true")
     _pg.click("#profileForm button[type=submit]"); _pg.wait_for_timeout(250)
     said = _pg.inner_text("#profileSaved")
     good = "not letting" in said
@@ -274,12 +277,14 @@ with sync_playwright() as pw:
         pg.goto(BASE + "/games/" + slug + "/", wait_until="load"); pg.wait_for_timeout(350)
         bad = []
 
+        pg.locator("details.profile").evaluate("el => el.open = true")
         n = pg.locator("#profileForm textarea").count()
         if n != len(g["profile_questions"]):
             bad.append("questions=%d want=%d" % (n, len(g["profile_questions"])))
 
         # write one answer, prove it survives a reload, then prove delete really deletes
         pg.fill("#%s-q1" % slug, "gate probe")
+        pg.locator("details.profile").evaluate("el => el.open = true")
         pg.click("#profileForm button[type=submit]"); pg.wait_for_timeout(250)
         # coach answers live in the one shared store's `drafts` as of 2.10; card.js's own
         # `mbs-coach-profile` key was a third source of truth and is now adopted into it on load.
@@ -290,6 +295,7 @@ with sync_playwright() as pw:
         pg.reload(wait_until="load"); pg.wait_for_timeout(350)
         if pg.input_value("#%s-q1" % slug) != "gate probe":
             bad.append("did not survive reload")
+        pg.locator("details.profile").evaluate("el => el.open = true")
         pg.click("#profileDelete"); pg.wait_for_timeout(250)
         left = pg.evaluate("()=>Object.keys(window.MBS_STATE.read().drafts)")
         if slug in left:

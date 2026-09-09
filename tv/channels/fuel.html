@@ -1,16 +1,4 @@
-<!--
-THESIS: MBS FUEL is MOM Inc.'s energy-drink subsidiary: a deliberately garish pre-workout builder that pumps the visitor for their real supplement preferences under cover of a joke, feeding the on-demand vending-machine venture's product research.
-FORM (Ian, round 3, 2026-08-28): "the pre work out should be a round tub the you rotate and seems to be endlessly and we have each of the addatives next to eachother and there is a scoop that comes in and dumps different collord stuff." A round tub, seen three-quarter from above, drags to rotate on a continuous unbounded angle - no clamp, so there is no seam to hit turning either way. Six additive canisters ride the rim, next to each other. A scoop is fixed outside the tub, at the front.
-CHOICE 1 (open, resolved here): rotating brings an additive to the front, under the scoop; TAPPING THE SCOOP is the act of choosing that additive's level, cycling none -> weak -> strong and dumping that colour in. Picked this over "rotating itself selects" because the brief's own line is "the scoop is the act of choosing" - rotation is browsing, the scoop is the decision, same division of labour a real hand has at a real tub.
-CHOICE 2 (open, resolved here): "endless" is the same six additives repeating forever, not a longer list - truer to a real tub of pre-workout, and the six are what the FORM_SITES payload actually needs.
-OWN-WORLD: this channel's own exception to the network's muted palette - the loud, basic energy-drink-can look every other channel refuses to be: saturated colour, chrome/outline display type, sunbursts and lightning bolts, a scrolling UNTESTED ticker. In 3D, saturated colour without gloss: every material stays matte (roughness .8+, metalness near 0) so it reads as loud plastic, not a showcase render.
-FLOAT: the tub bobs gently on its base, the scoop bobs at idle, the two UNTESTED flags bob beside the tub. Nothing sits rigid.
-STORY: the visitor drags the tub, each of six canisters comes under the scoop in turn, tapping the scoop scoops and dumps that additive's colour into the tub (none/weak/strong, cycling); a flavour rack of eight bottles sits fixed beside the tub, tap one to pick it; the can readout below updates live; SEAL THE CAN submits it in-character (nothing sent, nothing stored) and offers a mailto with the stack.
-INTERACTABLE: the tub (drag, continuous rotation, modulo-wrapped so it never runs out) with six canisters at 60 degrees apart; the scoop (click cycles the front canister's level and dumps its colour); eight flavour bottles (click to pick one). All three drive the SAME state and the SAME original button elements they sit in front of - the 3D scene is a skin and an input method over the exact original .lvl / .flv controls, not a parallel system, so window.MBS.form/.unlock/.wave fire from the one code path whichever way a level got set.
-TECH: the channel IS an ES module now - tv/channels/fuel.js, mounted by channel-runtime.js (2.18, packet 11). three.js r180 is still reached by DYNAMIC import() rather than a static one, deliberately: a static import resolves before the module body runs, so a CDN outage would fail the whole module and render the unavailable testcard instead of the working flat form below, which is the exact opposite of this channel's design. The original flat form (six radiogroups + flavour buttons + can readout, fully functional, calls MBS.form/.unlock/.wave on its own) is the true fallback: it is what's in the DOM by default and is what a no-WebGL or no-JS visitor gets. Only once three.js actually finishes building the scene does a "has3d" class hide the flat rows/flavours and hand the interaction to the tub. Pointer maths: .channel's zoom:1.15 is retired (2.16/C002), so visual and layout pixels now agree - every drag and raycast is still built from getBoundingClientRect() and the event only, never clientWidth/offsetX, because that form is correct either way.
-CONTENT: every ingredient description, every promised effect, every flavour name, the UNTESTED small print and the working-name disclaimer are carried across unchanged from the previous build. Nothing about dose, mechanism, or benefit was added, adjusted, or invented here.
-LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fold - a wordmark card, then an intro card, then finally the stage. Fixed: once .has3d lands, the intro card steps aside (its job is already done by the ticker and by the in-scene face label/nudge) and the header shrinks to a strip, so the stage - the reason the page exists - fills the frame from the first paint. #stageCard and .fu-stage go flex:1 inside a min-height:100% column; that native flex distribution replaces any vh/zoom arithmetic against .channel's zoom:1.15, so it doesn't need to be recomputed by hand. The flat fallback (!has3d) is untouched - none of these rules exist outside .fu.has3d.
--->
+<!-- FUEL factory game: fill eight game scoops, inject flavor, mix, name and color the label, seal. Original palette, wordmark, stage and ingredient content retained. -->
 <style>
   .fu{--hot:#ff2e88; --hot-d:#c40058; --acid:#c6ff00; --acid-d:#7a9c00; --volt:#00e0ff; --volt-d:#0092ab;
       --sun:#ffea00; --sun-d:#e0a500; --grape:#7a2fc4; --grape-d:#4a1a86; --ink:#1a0a10; --cream:#fffef2;
@@ -160,6 +148,34 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
   @media (prefers-reduced-motion:reduce){
     .fu .ticker b, .fu .burst, .fu .floatprint{animation:none}
   }
+
+ .fu.has3d .wrap{max-width:1100px}
+@media(max-width:899px){.fu.has3d #stageCard{order:0}.fu.has3d .head{order:-1}.fu.has3d .fu-stage{height:300px}}
+/* Factory sequence retains the original FUEL palette, type and plastic stage. */
+.fu .batch-steps{display:flex;gap:8px;flex-wrap:wrap;font-family:Anton,sans-serif;font-size:14px}
+.fu .batch-steps span{padding:7px 10px;border:2px solid var(--ink);border-radius:6px;background:#ddd;color:var(--ink)}
+.fu .batch-steps [aria-current="step"]{background:var(--acid);box-shadow:3px 3px 0 var(--grape)}
+.fu #introCard{order:1;margin:12px 0;padding:16px;color:var(--ink)}
+.fu.has3d #introCard{display:block}.fu.has3d #stageCard{order:2;flex:none}
+.fu.has3d .fu-stage{height:clamp(300px,46vh,510px);flex:none}
+.fu.has3d .head .wordmark{font-size:clamp(30px,6vw,54px)}
+.fu.has3d .head .wordmark small{font-size:14px}.fu.has3d .head .bolt,.fu.has3d .head .burst{display:block}
+.fu .batch-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}
+.fu .batch-options button,.fu .batch-actions button{border:3px solid var(--ink);border-radius:9px;padding:10px;background:var(--sun);color:var(--ink);font:16px Anton,sans-serif;box-shadow:3px 3px 0 var(--grape);cursor:pointer}
+.fu .batch-options button[aria-pressed="true"]{background:var(--acid)}
+.fu .batch-actions{display:flex;gap:10px;flex-wrap:wrap}.fu #batchNext{background:var(--acid)}
+.fu button:disabled{opacity:.48;cursor:default}.fu button:focus-visible{outline:3px solid var(--grape);outline-offset:3px}
+.fu .batch-meter{display:flex;align-items:center;gap:12px}.fu progress{accent-color:var(--grape);height:24px;flex:1;min-width:0}
+.fu #batchStatus{min-height:1.5em;font-weight:bold}.fu #introCard p{font-size:16px}.fu #introCard small{display:block;margin-top:12px;font-size:12px}
+.fu[data-batch] #stackCard,.fu[data-batch] #flavCard{display:none}
+.fu[data-batch] #nameCard,.fu[data-batch] .card[aria-label="Your can"]{order:3}
+.fu[data-batch="fill"] #nameCard,.fu[data-batch="fill"] .card[aria-label="Your can"],.fu[data-batch="flavor"] #nameCard,.fu[data-batch="flavor"] .card[aria-label="Your can"]{display:none}
+.fu #batchColors{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.fu #batchColors button{padding:10px;border:3px solid var(--ink);border-radius:8px;font:16px Anton,sans-serif;cursor:pointer}
+.fu #batchColors button[aria-pressed="true"]{outline:3px solid var(--hot);outline-offset:2px}
+.fu [hidden]{display:none!important}
+@media(min-width:900px){.fu.has3d .wrap{display:grid;grid-template-columns:minmax(300px,.8fr) minmax(0,1.3fr);gap:16px;align-content:start}.fu .head{grid-column:1/-1}.fu.has3d #stageCard{margin:12px 0}.fu.has3d .fu-stage{height:520px}.fu #nameCard,.fu .card[aria-label="Your can"]{grid-column:1/-1}}
+@media(max-width:480px){.fu .batch-options{grid-template-columns:repeat(2,minmax(0,1fr))}.fu .batch-actions button{flex:1}.fu .batch-steps{gap:4px}.fu .batch-steps span{padding:6px;font-size:13px}}
+@media(prefers-reduced-motion:reduce){.fu *{animation:none!important}}
 </style>
 
 <article class="fu" id="fu" aria-label="MBS FUEL" data-host="MBS FUEL" data-show="BUILD YOUR STACK" data-ch="7" data-gauge="off">
@@ -175,18 +191,22 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
       <span class="chnum" id="fuFlavTag" hidden>FLAVOUR: NOT SET</span>
     </header>
 
-    <section class="card" id="introCard" aria-label="What this is">
-      <p class="floatprint" style="left:6%; top:8%">UNTESTED</p>
-      <p class="floatprint" style="right:4%; bottom:6%">UNTESTED</p>
-      <h2 class="heading">YOUR PRE-WORKOUT. YOUR RULES.</h2>
-      <p class="lede">MOM already mixed your can. It is waiting right below. Six ingredients. Three settings each: none, weak, strong. Tap a jar to set it. What each one really does is written straight. What MBS FUEL promises at that setting is not.</p>
-      <p class="warn">⚠ THIS BLEND HAS NEVER BEEN BREWED. NOTHING BELOW HAS BEEN TESTED ON A HUMAN, A LAB, OR A DOG. ⚠</p>
-    </section>
+    <section class="card" id="introCard" aria-label="Mixing station">
+<div class="batch-steps" aria-label="Batch progress"><span data-step="fill">01 FILL</span><span data-step="flavor">02 FLAVOR</span><span data-step="label">03 LABEL</span><span data-step="done">04 SEALED</span></div>
+<h2 class="heading" id="batchTitle">FILL YOUR TUB</h2>
+<p id="batchHelp">Add eight scoops. Pick any combination, up to two of each ingredient.</p>
+<div class="batch-meter"><progress id="batchFill" max="8" value="0" aria-label="Tub fill"></progress><b id="batchCount">0 / 8 scoops</b></div>
+<div id="batchIngredients" class="batch-options"></div>
+<div id="batchFlavors" class="batch-options" hidden></div>
+<p id="batchStatus" role="status" aria-live="polite">Your tub is empty. Choose your first ingredient.</p>
+<div class="batch-actions"><button type="button" id="batchUndo">UNDO SCOOP</button><button type="button" id="batchNext">NEXT: FLAVOR</button><button type="button" id="batchReset">START OVER</button></div>
+<small>Fictional factory game · Scoops are game units, not a supplement recipe.</small>
+</section>
 
     <section class="card" id="stageCard" aria-label="The tub">
       <h2 class="heading">THE STACK</h2>
       <div class="fu-stage" id="fuStage">
-        <canvas id="fuCanvas" aria-label="The endless FUEL tub. Move your mouse left or right over it to spin it. Tap a jar in front to cycle none, weak, strong. Tap a bottle on the left to pick a flavour."></canvas>
+        <canvas id="fuCanvas" aria-label="Your FUEL mixing tub. Use the ingredient and flavor buttons to build your batch. Left and right arrows rotate the tub."></canvas>
         <div class="fu-face" id="fuFace"><b>&nbsp;</b><i>&nbsp;</i></div>
         <p class="fu-nudge" id="fuNudge">Tap a jar. Tap a flavour.</p>
         <div class="fu-rotate">
@@ -323,8 +343,8 @@ LAYOUT (coordinator note, round 3 pass 2): first build had the tub below the fol
 
     <section class="card" id="nameCard" aria-label="Name your stack">
       <h2 class="heading">NAME YOUR PRE-WORKOUT</h2>
-      <p class="lede">Three words, zero focus group. Pick your own.</p>
-      <div class="namepicker">
+      <p class="lede">Three words, zero focus group. Choose your name and label color.</p>
+      <div id="batchColors" role="group" aria-label="Label color"></div><div class="namepicker">
         <select id="nameA" aria-label="First word">
           <option>BUCKED</option><option>ELITE</option><option>PEAK</option><option>APEX</option>
           <option>SAVAGE</option><option>PRIMAL</option><option>RIPPED</option><option>NITRO</option>

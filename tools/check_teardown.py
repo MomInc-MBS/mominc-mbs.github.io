@@ -619,7 +619,7 @@ with sync_playwright() as pw:
           "and the channel's own window.__lbState readback is gone with it")
     lpg.close()
 
-    print("== girlfriend: the production line, a third whole-life WebGL scene (2.18 packet 13)")
+    print("== girlfriend: the paper production line allocates no WebGL")
     # Same shape as the museum and fuel - a renderer taken at mount and held for the visit - with one
     # thing neither of those had: a listener on the SHELL's scroll container. .screen outlives every
     # channel, so a scroll handler left bound to it is a dead channel's closure running on every dial
@@ -647,7 +647,7 @@ with sync_playwright() as pw:
             # window.__dg is this channel's own probe hook and it is created at the END of the build,
             # after the renderer, the room and every station - so it is the channel's own statement
             # that there is a scene here to leak, and it is a stronger signal than a class name.
-            page.wait_for_function("() => window.__dg && window.__dg.jawsExist", timeout=25000)
+            page.wait_for_function("() => window.__dg && window.__dg.paper", timeout=25000)
         except Exception:
             built = False
         page.wait_for_timeout(400)
@@ -659,7 +659,7 @@ with sync_playwright() as pw:
 
     pbuilt1, pgl1 = dg_cycle(ppg)
     check(pbuilt1, "the line builds its scene as a module, so this probe is measuring something")
-    check(pgl1["made"] > 0, "and it took a real WebGL context to do it (%d)" % pgl1["made"])
+    check(pgl1["made"] == 0, "the paper line allocates zero WebGL contexts (%d)" % pgl1["made"])
     check(pgl1["live"] == 0,
           "after unmount the page holds NO live WebGL context (%d made, %d still live)"
           % (pgl1["made"], pgl1["live"]))

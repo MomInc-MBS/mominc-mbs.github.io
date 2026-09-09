@@ -1,0 +1,353 @@
+[
+  {
+    "id": 0,
+    "name": "Mortal",
+    "url": "/handborne/models/family-00.glb",
+    "regions": {
+      "nails": 5,
+      "fingertips": 1,
+      "fingers": 1,
+      "palm": 1,
+      "back_of_hand": 1,
+      "wrist": 1
+    },
+    "bytes": 3829052,
+    "sha256": "f957557caf19b595ebab141ea73aea8180005be353418c605547ed7ff1cabfa1"
+  },
+  {
+    "id": 1,
+    "name": "Verdant",
+    "url": "/handborne/models/family-01.glb",
+    "regions": {
+      "nails": 5,
+      "fingertips": 8,
+      "fingers": 17,
+      "palm": 6,
+      "back_of_hand": 15,
+      "wrist": 8
+    },
+    "bytes": 4184868,
+    "sha256": "1712bd5447c3d3c6259bf74dcf6d5172184ef7d3fc75e92e0500863a65674972"
+  },
+  {
+    "id": 2,
+    "name": "Mycelial",
+    "url": "/handborne/models/family-02.glb",
+    "regions": {
+      "nails": 5,
+      "fingertips": 8,
+      "fingers": 17,
+      "palm": 6,
+      "back_of_hand": 15,
+      "wrist": 8
+    },
+    "bytes": 4271536,
+    "sha256": "5a6ec061e52f3420b8dba5ffdd147d2560e464f2fe36a1d4830e1a2a11b48e24"
+  },
+  {
+    "id": 3,
+    "name": "Chitin",
+    "url": "/handborne/models/family-03.glb",
+    "regions": {
+      "nails": 5,
+      "fingertips": 8,
+      "fingers": 17,
+      "palm": 6,
+      "back_of_hand": 15,
+      "wrist": 8
+    },
+    "bytes": 4005964,
+    "sha256": "39fc890cf9033c7be0683b623e239583846700e56c3be0e1f15495c3ad4be8ec"
+  },
+  {
+    "id": 4,
+    "name": "Reptilian",
+    "url": "/handborne/models/family-04.glb",
+    "regions": {
+      "nails": 5,
+      "fingertips": 8,
+      "fingers": 17,
+      "palm": 6,
+      "back_of_hand": 15,
+      "wrist": 8
+    },
+    "bytes": 4030432,
+    "sha256": "8f8c501efebdf59709fc03c8159797075907e7ee7cffd626ec321c2ac00e635c"
+  },
+  {
+    "id": 5,
+    "name": "Abyssal",
+    "url": "/handborne/models/family-05.glb",
+    "regions": {
+      "nails": 5,
+      "fingertips": 8,
+      "fingers": 17,
+      "palm": 6,
+      "back_of_hand": 15,
+      "wrist": 8
+    },
+    "bytes": 3911456,
+    "sha256": "f22c0a78cd9b085201e54c42913af92146f9bece85372459e76c5f69e7411f4a"
+  },
+  {
+    "id": 6,
+    "name": "Coral",
+    "url": "/handborne/models/family-06.glb",
+    "regions": {
+      "nails": 5,
+      "fingertips": 8,
+      "fingers": 17,
+      "palm": 6,
+      "back_of_hand": 15,
+      "wrist": 8
+    },
+    "bytes": 4292420,
+    "sha256": "39ce724d70d878d64a30c1175dd1c1e945fd6bda7687f6db3a64c6912e4cf0fc"
+  },
+  {
+    "id": 7,
+    "name": "Skeletal",
+    "url": "/handborne/models/family-07.glb",
+    "regions": {
+      "nails": 5,
+      "fingertips": 15,
+      "fingers": 30,
+      "palm": 9,
+      "back_of_hand": 9,
+      "wrist": 2
+    },
+    "bytes": 640020,
+    "sha256": "98c42cd8ec6e92d42f967f2d75990f1ad96487df882617d46f0ff4e124607046",
+    "structural_anatomy": "skeletal"
+  },
+  {
+    "id": 8,
+    "name": "Spectral",
+    "url": "/handborne/models/family-08.glb",
+    "regions": {
+      "nails": 5,
+      "fingertips": 1,
+      "fingers": 1,
+      "palm": 1,
+      "back_of_hand": 1,
+      "wrist": 1
+    },
+    "bytes": 3922820,
+    "sha256": "8b250dc82aaba98024986f42b117150ccf9ebc7137c00abd6b7ab64636464343"
+  },
+  {
+    "id": 9,
+    "name": "Infernal",
+    "url": "/handborne/models/family-09.glb",
+    "regions": {
+      "nails": 5,
+      "fingertips": 8,
+      "fingers": 17,
+      "palm": 6,
+      "back_of_hand": 15,
+      "wrist": 8
+    },
+    "bytes": 3915324,
+    "sha256": "3dfe9aba621137110259e76e4ef44de5a9201dc527f188f81d351d84ded3dc30"
+  },
+  {
+    "id": 10,
+    "name": "Celestial",
+    "url": "/handborne/models/family-10.glb",
+    "regions": {
+      "nails": 5,
+      "fingertips": 8,
+      "fingers": 17,
+      "palm": 6,
+      "back_of_hand": 15,
+      "wrist": 8
+    },
+    "bytes": 4163552,
+    "sha256": "416a391a78df31a854ebda5f1a5dee3e13c647467279385b726eb8d0fc551cd9"
+  },
+  {
+    "id": 11,
+    "name": "Voidborn",
+    "url": "/handborne/models/family-11.glb",
+    "regions": {
+      "nails": 5,
+      "fingertips": 1,
+      "fingers": 1,
+      "palm": 1,
+      "back_of_hand": 1,
+      "wrist": 1
+    },
+    "bytes": 3817644,
+    "sha256": "a957ae2541c191e51871bb36f8d41acc04f7b2fe25c43a7e0eaf58809147eb4b"
+  },
+  {
+    "id": 12,
+    "name": "Eldritch",
+    "url": "/handborne/models/family-12.glb",
+    "regions": {
+      "nails": 5,
+      "fingertips": 15,
+      "fingers": 33,
+      "palm": 11,
+      "back_of_hand": 29,
+      "wrist": 15
+    },
+    "bytes": 4693036,
+    "sha256": "fdbe5cb65c85ca016a728fbfdb58638a06a140d3400919a06667b7f3662ceadf"
+  },
+  {
+    "id": 13,
+    "name": "Stone Golem",
+    "url": "/handborne/models/family-13.glb",
+    "regions": {
+      "nails": 5,
+      "fingertips": 15,
+      "fingers": 35,
+      "palm": 1,
+      "back_of_hand": 4,
+      "wrist": 1
+    },
+    "bytes": 397488,
+    "sha256": "d571128cefd40c770a917f888f6764774169b2424a838b5aa9aad10c21333886",
+    "structural_anatomy": "stone"
+  },
+  {
+    "id": 14,
+    "name": "Crystal",
+    "url": "/handborne/models/family-14.glb",
+    "regions": {
+      "nails": 5,
+      "fingertips": 8,
+      "fingers": 17,
+      "palm": 6,
+      "back_of_hand": 15,
+      "wrist": 8
+    },
+    "bytes": 4009960,
+    "sha256": "e3c4e64816fedbd7b0f320a7baacbc5a7367e344e3bd7794fab573ef77f4131b"
+  },
+  {
+    "id": 15,
+    "name": "Magma",
+    "url": "/handborne/models/family-15.glb",
+    "regions": {
+      "nails": 5,
+      "fingertips": 8,
+      "fingers": 17,
+      "palm": 6,
+      "back_of_hand": 15,
+      "wrist": 8
+    },
+    "bytes": 4018036,
+    "sha256": "9cfd84779490a79f15a7630bc6b1db90efa808f6ac23b76804f694a8bd0b8445"
+  },
+  {
+    "id": 16,
+    "name": "Glacial",
+    "url": "/handborne/models/family-16.glb",
+    "regions": {
+      "nails": 5,
+      "fingertips": 8,
+      "fingers": 17,
+      "palm": 6,
+      "back_of_hand": 15,
+      "wrist": 8
+    },
+    "bytes": 3945636,
+    "sha256": "115c6e0159c0e3865bf6ea02d5bb21926c40c3b36c41ead69005906ae0836851"
+  },
+  {
+    "id": 17,
+    "name": "Stormcharged",
+    "url": "/handborne/models/family-17.glb",
+    "regions": {
+      "nails": 5,
+      "fingertips": 8,
+      "fingers": 17,
+      "palm": 6,
+      "back_of_hand": 15,
+      "wrist": 8
+    },
+    "bytes": 4184140,
+    "sha256": "0388a24f7815c444290162a462fafe2ac9d1f809029cec0cbb964bbe95f7c241"
+  },
+  {
+    "id": 18,
+    "name": "Clockwork",
+    "url": "/handborne/models/family-18.glb",
+    "regions": {
+      "nails": 5,
+      "fingertips": 35,
+      "fingers": 75,
+      "palm": 7,
+      "back_of_hand": 7,
+      "wrist": 6
+    },
+    "bytes": 679220,
+    "sha256": "c5554e3d9927b5602c94277e6772d11aa4ef7d54272b739e5db7bbfe6a31be35",
+    "structural_anatomy": "mechanical"
+  },
+  {
+    "id": 19,
+    "name": "Neon Synth",
+    "url": "/handborne/models/family-19.glb",
+    "regions": {
+      "nails": 5,
+      "fingertips": 8,
+      "fingers": 17,
+      "palm": 6,
+      "back_of_hand": 15,
+      "wrist": 8
+    },
+    "bytes": 4088052,
+    "sha256": "9b62d94a43380ce3129baa32c20ace9eb30e2aa94885bacc2da97aca01e006a6"
+  },
+  {
+    "id": 20,
+    "name": "Fluffy",
+    "url": "/handborne/models/family-20.glb",
+    "regions": {
+      "nails": 5,
+      "fingertips": 2,
+      "fingers": 2,
+      "palm": 2,
+      "back_of_hand": 2,
+      "wrist": 2
+    },
+    "bytes": 26110648,
+    "sha256": "4960c926f69e7d3197c6ee2f719e814c7e357514d533d15bb0f6424576cc8352",
+    "soft_anatomy": "fluffy"
+  },
+  {
+    "id": 21,
+    "name": "Jelly",
+    "url": "/handborne/models/family-21.glb",
+    "regions": {
+      "nails": 5,
+      "fingertips": 7,
+      "fingers": 7,
+      "palm": 13,
+      "back_of_hand": 13,
+      "wrist": 7
+    },
+    "bytes": 4087884,
+    "sha256": "a62204ff08beb6b4d7b89479e57a11c19a9a74b5e295bf4633d24683d441f4e9",
+    "soft_anatomy": "jelly"
+  },
+  {
+    "id": 22,
+    "name": "Baby",
+    "url": "/handborne/models/family-22.glb",
+    "regions": {
+      "nails": 5,
+      "fingertips": 1,
+      "fingers": 1,
+      "palm": 1,
+      "back_of_hand": 1,
+      "wrist": 1
+    },
+    "bytes": 3701016,
+    "sha256": "425a802771604b21dc40f80f00974dd214c5a52c471577848c1aa4485c0bed94",
+    "soft_anatomy": "baby"
+  }
+]

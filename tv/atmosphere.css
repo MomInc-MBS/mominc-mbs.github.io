@@ -1,0 +1,73 @@
+/* Public presentation only. These rules never change mode, access, or completion. */
+html[data-game] .rail{background:#100e18;border-bottom:1px solid #ffffff19}
+html[data-game] .exit{width:44px;height:44px;border:0;border-radius:0;background:transparent;box-shadow:none}
+html[data-game] .rail{height:48px}
+.ambience-toggle{margin-left:auto;background:transparent;color:#e6dccb;border:1px solid #756a85;border-radius:6px;min-height:36px;padding:4px 12px;font:600 12px system-ui;cursor:pointer}
+.ambience-toggle:focus-visible{outline:2px solid #ffd36e;outline-offset:2px}
+/* Music Desk: a real booth rather than a floating pastel form. */
+#dj.dj{background:radial-gradient(ellipse at 18% 20%,#5b244c55,transparent 55%),radial-gradient(ellipse at 80% 80%,#65502644,transparent 60%),#15111e}
+#dj .deck{background:linear-gradient(145deg,#322c3a,#18141e);border-color:#6b526c;box-shadow:0 24px 65px #000a,inset 0 1px #fff3;border-radius:14px}
+#dj .sigLbl,#dj #sigLbl{box-shadow:0 0 22px #64ffbf18}
+#dj .djid summary{cursor:pointer;min-height:44px;display:flex;align-items:center;color:#f4d6ab;font:700 14px system-ui}
+#dj .deck-powered .vizwrap,#dj.deck-powered .vizwrap{box-shadow:0 0 24px #4ed2a322}
+#dj .rack .ctrl.glow{filter:drop-shadow(0 0 8px #ffd36e70)}
+#dj.set-complete .deck{border-color:#81cfb6;box-shadow:0 0 28px #81cfb61a,0 24px 65px #000a}
+#dj .feature{font-size:16px;letter-spacing:.1em}
+#dj .hint{font-size:15px}
+/* A gentler studio backdrop keeps the mixing object central. */
+#fu.fu{background:radial-gradient(ellipse at 15% 0%,#813856,transparent 60%),radial-gradient(ellipse at 90% 80%,#37361a,transparent 60%),#211321}
+#fu #fuStage{box-shadow:inset 0 0 80px #0005,0 18px 55px #0005;border:1px solid #ad798a;border-radius:16px}
+#fu .card{box-shadow:0 12px 24px #0004}
+#fu #fuNudge{max-width:45%;font-size:13px}
+html[data-game="corgi"] #ccViewport{box-shadow:0 0 35px #0005;border-color:#a69c83}
+html[data-game="lilboyfriend"] #lbStage{box-shadow:inset 0 0 90px #332a2330}
+@media(max-width:600px){
+ #dj .deck{padding:12px 10px;margin:8px auto}
+ #dj .deckgrid{display:flex;flex-direction:column;gap:10px}
+ #dj .deckcol.center{order:0;display:flex;flex-direction:column}
+ #dj .deckcol.center>.ctrl{order:-1;margin-top:0!important;display:flex;justify-content:center;align-items:center;gap:12px;margin-bottom:6px}
+ #dj .ctrl[data-key="tempo"]{--c:#b190eb!important}
+ #dj .deckcol.left{order:2}
+ #dj .deckcol.right{order:3}
+ #dj .feature,#dj #deckHint{margin:3px 0 7px}
+ #dj .tt{width:130px;height:130px;min-height:0;margin:0 auto;flex:none}
+ #dj .tuner{display:none}
+ #dj .scratchmark{display:none}
+ #dj .knobface{width:48px;height:48px}
+ #dj .slidertrack{height:55px}
+ #dj .rack{grid-template-columns:repeat(4,minmax(0,1fr))}
+ #dj .ctrl-label{font-size:10px}
+ #dj .ctrl-num{font-size:12px}
+ #dj .rack{gap:8px;padding:8px}
+ #dj .cuelights{margin:4px auto}
+ #dj .cuehint{font-size:13px;margin:5px 0}
+ #dj .djid{padding:4px 10px}
+ #dj .score{padding:6px;display:flex;align-items:center;gap:12px}
+ #dj .score-label,#dj .score-grade{font-size:11px;margin:0}
+ #dj .score-num{font-size:20px;margin:0}
+}
+@media(prefers-reduced-motion:reduce){#dj *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition:none!important}}
+
+/* The factory needs a wide working surface on phones. A portrait alternative
+   remains available for fixed mounts and users who cannot rotate a device. */
+.rotate-notice{display:none}
+html[data-game="girlfriend"] .dg-vis{z-index:12}
+html[data-game="girlfriend"] .dg-track{min-height:100%}
+@media(max-width:950px) and (orientation:portrait){
+ html[data-game="girlfriend"]:not(.portrait-allowed) body{overflow:hidden}
+ html[data-game="girlfriend"]:not(.portrait-allowed) .rotate-notice{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;background:#201528;color:#f7e9ce;text-align:center;font:16px/1.5 system-ui}
+ .rotate-notice>span{font-size:72px;color:#ffd36e}.rotate-notice h1{font-size:26px;max-width:16ch;margin:12px 0}.rotate-notice p{max-width:25ch}.rotate-notice a,.rotate-notice button{min-height:44px;padding:12px;color:#f7e9ce}.rotate-notice button{background:transparent;border:1px solid #a58caa;border-radius:5px;margin-top:14px;font:14px system-ui}
+}
+
+/* Restored material surfaces; the game frames and controls keep their geometry. */
+#dj .deck{background:linear-gradient(112deg,#d4dce344,#03060b88 42%,#d4dce322 62%,#080a10bb),url('assets/brushed-aluminum.png') center/640px;border:3px solid #8b929a;box-shadow:inset 0 2px 1px #edf5ffc9,inset 0 -4px 3px #05070c,0 24px 60px #000b}
+#dj .tt{background:conic-gradient(#24282e,#c5ccd3 12%,#424850 25%,#e0e7e9 37%,#252b31 50%,#a7b0b9 65%,#34383e 80%,#cad1d6 93%,#24282e);border-color:#c1c8ce;box-shadow:inset 0 0 0 4px #111820,0 6px 10px #0009}
+#dj .rack{background:linear-gradient(#0b0e1388,#1b1e24bb),url('assets/brushed-aluminum.png') center/500px;border-top:2px solid #b3bdc6;border-bottom:3px solid #090c10}
+#lbStage .lb-walkback-art{display:none;position:absolute;left:12px;bottom:65px;width:clamp(110px,20%,240px);height:130px;object-fit:cover;z-index:3;border:5px solid #504737;box-shadow:0 8px 20px #0008;pointer-events:none}
+#lb[data-returning='true'] .lb-walkback-art{display:block}
+#cc[data-school='true'] #ccViewport{background:#171c1d;border-color:#494e47}
+#cc[data-school='true'] .cc-fallback{background:#1e2422;color:#f4ead0}
+.mi .ident{border-bottom:4px double #ffd36e;padding-bottom:12px}.mi .ident img.mark{width:85px}.mi .banner{letter-spacing:.015em}.mi .panel{background-color:#c9a06a}.mi .felt{box-shadow:4px 5px 0 #27133388}
+@media(max-width:600px){#lbStage .lb-walkback-art{height:80px;bottom:72px;left:8px;width:115px}.mi .ident img.mark{width:56px}}
+
+#cc[data-school='true'] .cc-fb-map button{background:#393c36;color:#f2ead1;border-color:#8c967f}#cc[data-school='true'] .cc-fb-map button.found{background:#9bc8a7;color:#192f20}#cc[data-school='true'] .cc-fb-intro{color:#eee0be}

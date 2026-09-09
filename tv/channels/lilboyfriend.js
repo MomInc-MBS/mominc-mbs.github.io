@@ -75,6 +75,7 @@ export default {
     const mine = session;
     const lb = root.matches("#lb") ? root : root.querySelector("#lb");
     if (!lb) return;
+    if(!document.documentElement.dataset.game)return;
     // ids resolve INSIDE the channel now rather than against the whole document: only one channel is
     // mounted at a time so both find the same nodes, but scoping means a shell element can never be
     // picked up by a channel's id lookup.
@@ -260,9 +261,9 @@ export default {
       { id: "teepee", label: "THE TEEPEE", short: "TEEPEE", p: 0.15, side: 1, cozy: "assets/lilbf-teepee-cozy.jpg", horror: "assets/lilbf-teepee-horror.jpg" },
       { id: "car", label: "THE CAR", short: "CAR", p: 0.275, side: -1, cozy: "assets/lilbf-car-cozy.jpg", horror: "assets/lilbf-car-horror.jpg" },
       { id: "shoebox", label: "THE SHOEBOX", short: "SHOEBOX", p: 0.4, side: 1, cozy: "assets/lilbf-shoebox-cozy.jpg", horror: "assets/lilbf-shoebox-horror.jpg" },
-      { id: "storage", label: "THE STORAGE UNIT", short: "STORAGE", p: 0.525, side: -1, cozy: "assets/lilbf-storage-cozy.jpg", horror: "assets/lilbf-storage-horror.jpg" },
+      { id: "storage", label: "THE SHIPPING CONTAINER", short: "CONTAINER", p: 0.525, side: -1, cozy: "assets/lilbf-storage-cozy.jpg", horror: "assets/container-horror-v2.png" },
       { id: "masonjar", label: "THE MASON JAR", short: "JAR", p: 0.65, side: 1, cozy: "assets/lilbf-masonjar-cozy.jpg", horror: "assets/lilbf-masonjar-horror.jpg" },
-      { id: "van", label: "THE VAN", short: "VAN", p: 0.775, side: -1, cozy: "assets/lilbf-van-cozy.jpg", horror: "assets/lilbf-van-horror.jpg" }
+      { id: "van", label: "THE VAN", short: "VAN", p: 0.775, side: -1, cozy: "assets/lilbf-van-cozy.jpg", horror: "assets/van-horror-v2.png" }
     ];
     /* ---- C107: what the programme ADVERTISED, and what it turned out to mean --------------------
        This is the one block of data in this file that is not sourced and must never look as though it
@@ -505,7 +506,7 @@ export default {
     // gone. C018 is a claim about the loader, so the loader's own answer is what the gate has to read.
     // Frozen: a reader cannot become a writer. Removed in unmount() with the other hook.
     window.__lbLoaded = Object.freeze(Object.assign({}, ST));
-    function saveState() { try { localStorage.setItem(STORE_KEY, JSON.stringify(ST)); } catch {} }
+    function saveState() { lb.dataset.returning=String(isReturning()); try { localStorage.setItem(STORE_KEY, JSON.stringify(ST)); } catch {} }
 
     /* C016. Walking used to write the WHOLE save on every animation frame - about sixty synchronous
        localStorage writes a second, all of them the same record with a fourth decimal changed. The
@@ -1322,6 +1323,13 @@ export default {
       osc.frequency.setTargetAtTime(TONE_HZ / Math.max(FLOOR, currentScale()), t, 0.15);
     }
 
+    let lastFootstep=0;
+    function playEffect(laser=false){
+      if(!soundOn||!actx)return;
+      const t=actx.currentTime;if(!laser&&t-lastFootstep<.36)return;if(!laser)lastFootstep=t;
+      const o=actx.createOscillator(),g=actx.createGain();o.type=laser?'sawtooth':'triangle';o.frequency.setValueAtTime(laser?1600:110,t);o.frequency.exponentialRampToValueAtTime(laser?75:42,t+(laser?.55:.13));g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(laser?.10:.13,t+.012);g.gain.exponentialRampToValueAtTime(.0001,t+(laser?.6:.17));o.connect(g).connect(actx.destination);o.start();o.stop(t+(laser?.65:.2));o.onended=()=>{o.disconnect();g.disconnect();};
+    }
+    ctx.on(lb,'pointerdown',()=>{if(!actx)soundBtn?.click();},{once:true});ctx.on(lb,'keydown',()=>{if(!actx)soundBtn?.click();},{once:true});
     function labelSound() {
       if (!soundBtn) return;
       soundBtn.textContent = soundOn ? "SOUND ON" : actx ? "SOUND OFF" : "ENTER WITH SOUND";
@@ -1508,10 +1516,11 @@ export default {
         // so width/height can be re-scaled every frame instead of rebuilt; length is fixed, never scaled.
         // Walls/ceiling/floor share one felt panel material; the cold multiply on the return still works
         // because a CanvasTexture map is multiplied by material.color exactly like the flat colour it replaces.
-        const wallMat = new THREE.MeshStandardMaterial({ map: makeFeltTexture("#ece4d3", "#c9a24c", 512, 512, 14, 3), roughness: 1, metalness: 0, side: THREE.BackSide });
+        function stoneTexture(floor=false){const c=document.createElement('canvas');c.width=c.height=512;const x=c.getContext('2d');x.fillStyle=floor?'#4f3542':'#d5c3a2';x.fillRect(0,0,512,512);for(let i=0;i<14000;i++){const a=Math.random()*.08;x.fillStyle='rgba('+ (Math.random()>.5?'255,255,255':'0,0,0')+','+a+')';x.fillRect(Math.random()*512,Math.random()*512,2,2);}x.lineWidth=3;x.strokeStyle=floor?'#c0a06a':'#917b60';for(let y=0;y<=512;y+=128){x.beginPath();x.moveTo(0,y);x.lineTo(512,y);x.stroke();for(let xx=(y%256?128:0);xx<512;xx+=256){x.beginPath();x.moveTo(xx,y);x.lineTo(xx,y+128);x.stroke();}}for(let n=0;n<16;n++){x.strokeStyle='rgba(255,235,198,.12)';x.lineWidth=1;x.beginPath();x.moveTo(0,n*32);for(let xx=0;xx<=512;xx+=16)x.lineTo(xx,n*32+Math.sin(xx*.035+n)*11);x.stroke();}const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(floor?2:14,floor?24:3);t.anisotropy=8;return t;}
+        const wallMat = new THREE.MeshStandardMaterial({ map: stoneTexture(), bumpMap:stoneTexture(), bumpScale:.035, roughness: .78, metalness: 0, side: THREE.BackSide });
         const hallGeo = new THREE.BoxGeometry(1, 1, HALL_LEN + 8);
         hallGeo.translate(0, 0.5, 0);
-        const hallMesh = new THREE.Mesh(hallGeo, wallMat); hallMesh.name = "hall";
+        const hallMesh = new THREE.Mesh(hallGeo, [wallMat,wallMat,wallMat,new THREE.MeshStandardMaterial({map:stoneTexture(true),roughness:.38,metalness:.12,side:THREE.BackSide}),wallMat,wallMat]); hallMesh.name = "hall";
         hallMesh.position.set(0, 0, CENTER_Z);
         scene.add(hallMesh);
         const WARM_WALL = new THREE.Color(0xffffff), COLD_WALL = new THREE.Color(0xa9b4c2);
@@ -1581,6 +1590,7 @@ export default {
         const tex = {};
         const LOAD_MS = 3000;
         function paint(e) {
+          lb.dataset.returning=String(isReturning());
           const want = isReturning() ? e.texKeyHorror : e.texKeyCozy;
           const m = tex[want] || tex[e.texKeyCozy] || tex[e.texKeyHorror] || null;
           if (e.photoMat.map !== m) { e.photoMat.map = m; e.photoMat.needsUpdate = true; }
@@ -2023,23 +2033,11 @@ export default {
         ["pointerup", "pointercancel", "pointerleave"].forEach(ev => ctx.on(backBtn, ev, () => backHeld = false));
 
         let targetYaw = 0, targetPitch = 0, downX = 0, downY = 0, downT = 0;
-        function updateLook(e) {
-          const r = lbCanvas.getBoundingClientRect();
-          const nx = (e.clientX - r.left) / Math.max(1, r.width), ny = (e.clientY - r.top) / Math.max(1, r.height);
-          targetYaw = (nx - 0.5) * Math.PI;
-          targetPitch = Math.max(-Math.PI / 3, Math.min(Math.PI / 3, (0.5 - ny) * (Math.PI / 2)));
-        }
-        ctx.on(lookZone, "pointermove", e => updateLook(e));
-        ctx.on(lookZone, "pointerdown", e => {
-          updateLook(e); downX = e.clientX; downY = e.clientY; downT = performance.now();
-          lookZone.setPointerCapture(e.pointerId);
-        });
-        ctx.on(lookZone, "pointerup", e => {
-          const isTap = performance.now() - downT < 400 && Math.hypot(e.clientX - downX, e.clientY - downY) < 10;
-          if (!isTap) return;
-          toggleRead();
-        });
-
+        let lookPointer=null,lastLookX=0,lastLookY=0;
+        ctx.on(lookZone,'pointerdown',e=>{lookPointer=e.pointerId;lastLookX=downX=e.clientX;lastLookY=downY=e.clientY;downT=performance.now();lookZone.setPointerCapture(e.pointerId);});
+        ctx.on(lookZone,'pointermove',e=>{if(lookPointer!==e.pointerId)return;const r=lookZone.getBoundingClientRect();targetYaw-=(e.clientX-lastLookX)/Math.max(1,r.width)*Math.PI;targetPitch=Math.max(-Math.PI/3,Math.min(Math.PI/3,targetPitch+(e.clientY-lastLookY)/Math.max(1,r.height)*Math.PI/2));lastLookX=e.clientX;lastLookY=e.clientY;});
+        ctx.on(lookZone,'pointerup',e=>{if(lookPointer!==e.pointerId)return;lookPointer=null;if(performance.now()-downT<400&&Math.hypot(e.clientX-downX,e.clientY-downY)<10)toggleRead();});
+        ctx.on(lookZone,'pointercancel',()=>lookPointer=null);
         /* ---- C011: the contextual tutorial, and C017's readout, and C012's route strip. All three are
            written from the frame loop, which is the only place that knows where the visitor is standing
            and how far the walls have come - and all three go through a one-key memo, because writing
@@ -2165,6 +2163,7 @@ export default {
         // C107/C111: one delegated listener on the body the panel refills, bound once. See the note
         // on wireReadInputs - binding to the inputs themselves would need re-binding on every open.
         wireReadInputs(readBody);
+        let plaqueDrag=null;ctx.on(readBody,'pointerdown',e=>{if(e.target.closest('a,button,input,select,summary'))return;plaqueDrag={id:e.pointerId,y:e.clientY,scroll:readBody.scrollTop};readBody.setPointerCapture(e.pointerId);e.preventDefault();});ctx.on(readBody,'pointermove',e=>{if(plaqueDrag?.id===e.pointerId)readBody.scrollTop=plaqueDrag.scroll+plaqueDrag.y-e.clientY;});ctx.on(readBody,'pointerup',()=>plaqueDrag=null);ctx.on(readBody,'pointercancel',()=>plaqueDrag=null);
         function wallAnchorOf(e, rp) { return { x: e.cfg.side * wallHalf(rp), z: zAt(e.cfg.p) }; }
         function nearestWallExhibit(rp) {
           for (const e of exhibitObjs) if (nearFacing(wallAnchorOf(e, rp), 2.4, 0.35)) return e;
@@ -2190,6 +2189,7 @@ export default {
           readBody.innerHTML = returning
             ? readCards(e.cfg.id, true) + promiseBlock(e.cfg.id, true)
             : promiseBlock(e.cfg.id, false) + readCards(e.cfg.id, false);
+          readBody.innerHTML='<img class="lb-inspect-photo" src="'+(returning?e.cfg.horror:e.cfg.cozy)+'" alt="'+e.cfg.label+' close-up"><section class="lb-exhibit-plaque">'+readBody.innerHTML+'</section>';readBody.scrollTop=0;
           readPanel.classList.add("show");
           markRead(e.cfg.id);
           // C014: "resume at the same exhibit". Written the moment it opens rather than on the way
@@ -2272,6 +2272,7 @@ export default {
         // NOT closed out from under the outcomes; "walk on" is what dismisses them.
         ctx.on(bookSkip, "click", () => { bookSkipped = true; closeBook(); });
 
+        exhibitObjs.forEach(e=>{const group=new THREE.Group();group.name="exhibit-curtains";group.rotation.y=-e.cfg.side*Math.PI/2;group.position.z=0;group.position.x=-e.cfg.side*.05;e.wallGroup.add(group);const burgundy=new THREE.MeshStandardMaterial({color:0x592d48,roughness:.94});for(const side of [-1,1])for(let j=0;j<5;j++){const fold=new THREE.Mesh(new THREE.CylinderGeometry(.045,.06,1.65,8),burgundy);fold.position.set(side*(.85+j*.07),-.4,.025);group.add(fold);}const spot=new THREE.SpotLight(0xffdfa1,1.8,6,Math.PI/6,.65);spot.position.set(0,-1.45,.7);spot.target.position.set(0,0,0);group.add(spot,spot.target);const fixture=new THREE.Mesh(new THREE.CylinderGeometry(.11,.13,.12,12),new THREE.MeshStandardMaterial({color:0x3b3540,metalness:.5,roughness:.4}));fixture.position.copy(spot.position);fixture.rotation.x=Math.PI/5;group.add(fixture);const pendant=new THREE.Mesh(new THREE.ConeGeometry(.17,.2,16),new THREE.MeshStandardMaterial({color:0xc4a16a,emissive:0x6b4116}));pendant.position.set(0,1.1,.3);group.add(pendant);});
         // ---- the door / slot overlay: an empty magnifying-glass hole. Click/tap puts the glass in - no wire,
         // no drag. Off stream: nothing happens and the museum stays explorable. Live: a machine behind the
         // hole fires a purple laser at the player (fireLaser below), then the same breach/shrink sequence
@@ -2286,6 +2287,7 @@ export default {
         function onConnect() {
           fireConnect(() => {
             closeDoor();
+            targetYaw=Math.PI;targetPitch=0;fwdHeld=true;ctx.timeout(()=>{fwdHeld=false;},1800);
             // C015: paint(), not a hand swap - a horror photograph still in the queue leaves its cozy
             // original on the wall until it lands, rather than blanking the frame to white
             exhibitObjs.forEach(e => { paint(e); e.spot.color.set(0x9fb8dd); e.spot.intensity = 0.75; });
@@ -2316,6 +2318,7 @@ export default {
         const laserFrom = new THREE.Vector3(0, 1.5, zAt(FUSEBOX_P) + 0.03);
         let laserActive = false, laserT0 = 0, laserCb = null;
         function fireLaser(cb) {
+          playEffect(true);
           laserActive = true; laserT0 = performance.now(); laserCb = cb; laserBeam.visible = true;
           slotHole.material.color.set(0xb400ff);
           if (lbFlash) lbFlash.classList.add("show");
@@ -2335,12 +2338,19 @@ export default {
         }
         function attemptInsert() {
           if (!doorOpen || slotBtn.disabled) return;
-          if (ctx.mbs && ctx.mbs.isLive) { slotBtn.disabled = true; fireLaser(onConnect); }
-          else { doorNote.textContent = "Nothing happens."; }
+          slotBtn.disabled = true; fireLaser(onConnect);
         }
         ctx.on(slotBtn, "click", attemptInsert);
 
         // ---- epilogue
+        let stompAt=0,stompFinished=false;
+        const boot=new THREE.Group();boot.visible=false;camera.add(boot);scene.add(camera);
+        const shoeMaterial=new THREE.MeshStandardMaterial({color:0x231d24,roughness:.92});
+        const sole=new THREE.Mesh(new THREE.BoxGeometry(.9,.18,1.7),shoeMaterial);boot.add(sole);
+        const upper=new THREE.Mesh(new THREE.BoxGeometry(.78,.44,1.45),new THREE.MeshStandardMaterial({color:0x382a31,roughness:.85}));upper.position.y=.28;boot.add(upper);
+        for(let i=0;i<7;i++){const tread=new THREE.Mesh(new THREE.BoxGeometry(.88,.045,.08),new THREE.MeshStandardMaterial({color:0x09070b}));tread.position.set(0,-.11,-.65+i*.21);boot.add(tread);}boot.rotation.x=Math.PI/2;
+        const stompBlack=document.createElement('div');stompBlack.id='lbStompBlack';stompBlack.style.cssText='position:absolute;inset:0;background:#000;z-index:80;display:none;pointer-events:none';byId('lbStage').append(stompBlack);
+        function startStomp(){if(stompAt)return;stompAt=performance.now();fwdHeld=backHeld=false;targetPitch=1.35;boot.visible=true;ctx.mbs?.complete?.('lilboyfriend',{terminal:'foot-stomp'});}
         let epiOpen = false;
         function openEpi() {
           if (epiOpen) return;
@@ -2356,7 +2366,7 @@ export default {
           // C012: a new walk starts with nothing seen. The route strip is a record of THIS walk, not a
           // trophy cabinet - six gold marks over an untouched hall would say the opposite of what it
           // is for. `taught` is the one thing that survives, which is exactly why it is not in here.
-          ST.phase = "out"; ST.t = 0; ST.shrinkStartedAt = null; ST.read = []; ST.reading = null; ST.promise = {}; ST.promiseBack = {}; saveState();
+          stompAt=0;stompFinished=false;boot.visible=false;stompBlack.style.display="none";ST.phase = "out"; ST.t = 0; ST.shrinkStartedAt = null; ST.read = []; ST.reading = null; ST.promise = {}; ST.promiseBack = {}; saveState();
           closeEpi(); closeZoom();
           exhibitObjs.forEach(e => { paint(e); e.spot.color.set(0xfff0d0); e.spot.intensity = 1.3; });
           hallLights.forEach(l => { l.color.set(WARM_LIGHT); l.intensity = 0.85; });
@@ -2531,13 +2541,15 @@ export default {
           }
           applyLook();
           updateLaser(now);
+          if(stompAt&&!stompFinished){const t=(now-stompAt)/1000;camera.rotation.x=Math.min(1.35,t*1.6);boot.position.set(0,Math.max(0,3-t*2.1),-Math.max(.12,3-t*1.9));if(t>1.55){stompBlack.style.display='block';boot.visible=false;stompFinished=true;playEffect();ctx.timeout(()=>{openEpi();stompBlack.style.display='none';},1300);}}
+
 
           // C014: !readOpen joins the list for the return leg, where there is no zoom holding the
           // visitor still - a panel that is being read while the walk carries on underneath it is the
           // guest book's bug, and this one has links in it.
           if ((fwdHeld || backHeld) && !bookOpen && !epiOpen && !zoomOpen && !readOpen) {
             const dir = (fwdHeld ? 1 : 0) - (backHeld ? 1 : 0);
-            if (dir) { ST.t = Math.max(0, Math.min(1, ST.t + dir * WALK_SPEED * dt)); saveWalk(); }
+            if (dir) { playEffect(); ST.t = Math.max(0, Math.min(1, ST.t + dir * (isReturning()?-1:1) * WALK_SPEED * dt)); saveWalk(); }
           }
           camera.position.z = zAt(ST.t);
           const rp = shrinkProgress(), caseMode = ST.phase === "out";
@@ -2625,7 +2637,7 @@ export default {
           if (ST.phase === "out") { if (nearFacing(doorGroup.position, 1.5, 0.35)) openDoor(); else closeDoor(); }
 
           // reached the entrance on the way back
-          if (isReturning() && ST.t <= 0.001 && ST.phase !== "done") { ST.phase = "done"; saveState(); openEpi(); }
+          if (isReturning() && ST.t <= 0.001 && ST.phase !== "done") { ST.phase = "done"; saveState(); startStomp(); }
 
           renderer.render(scene, camera);
           ctx.frame(frame);
@@ -2788,12 +2800,11 @@ export default {
         if (flSlot) ctx.on(flSlot, "click", () => {
           if (flSlot.disabled) return;
           if (ST.phase !== "out") { goNext(); return; }
-          const note = q("flDoorNote");
-          if (ctx.mbs && ctx.mbs.isLive) {
+          {
             flSlot.disabled = true;
-            const flashEl = q("flFlash"); if (flashEl) flashEl.classList.add("show");
+            playEffect(true);const flashEl = q("flFlash"); if (flashEl) flashEl.classList.add("show");
             ctx.timeout(() => { fireConnect(() => { if (flashEl) flashEl.classList.remove("show"); goNext(); }); }, 500);
-          } else if (note) { note.textContent = "Nothing happens."; }
+          }
         });
         const again = q("flAgain");
         const caseBtn = q("flCase");

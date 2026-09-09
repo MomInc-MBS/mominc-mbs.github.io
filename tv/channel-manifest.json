@@ -13,7 +13,7 @@
   "channels": [
     {
       "id": "mominc",
-      "channel": 1,
+      "channel": 0,
       "title": "MBS Network Home",
       "lcdName": "MOM INC",
       "status": "live",
@@ -41,7 +41,7 @@
     },
     {
       "id": "fuel",
-      "channel": 7,
+      "channel": 0,
       "title": "Build Your Stack",
       "lcdName": "DRINKS",
       "status": "live",
@@ -71,15 +71,15 @@
       "inRegistry": true,
       "registry": {
         "host": "MBS FUEL",
-        "eyebrow": "MIX IT YOURSELF",
+        "eyebrow": "MBS FUEL / YOUR FORMULA",
         "genre": "product builder",
-        "premise": "Turn the tub, drop the scoop, seal a pre workout nobody has ever brewed.",
-        "cta": "Mix The Untested Can",
-        "does": "Set six additives, pick a flavour, seal the can",
+        "premise": "Your formula. Your flavour. Your name on the label.",
+        "cta": "Mix your stack",
+        "does": "Add eight scoops, flavor and mix, then label your tub",
         "duration": "About 2 minutes",
         "input": "tap or drag",
         "hero": null,
-        "teaser": "UNTESTED. That word runs along the top and the bottom of the page because it is true. Six additives, eight flavours, one can, and not one of these blends has ever been made. Yours would be the first.",
+        "teaser": "Prepared for you. Named by you. Provided by MOM.",
         "roots": [
           "#introCard",
           "#stageCard",
@@ -87,7 +87,8 @@
           "#flavCard",
           "#nameCard",
           ".card[aria-label=\"Your can\"]",
-          "#fuFlavTag"
+          ".head",
+          ".fu > .ticker:first-child"
         ],
         "hide": [],
         "palette": {
@@ -95,7 +96,7 @@
           "ink": "#1a0a10",
           "accent": "#c6ff00"
         },
-        "finish": "Set six additives, choose a flavour, seal the can",
+        "finish": "Seal your finished tub",
         "cta2": "Seal The Can",
         "progress_key": "",
         "continue_cta": "",
@@ -110,10 +111,10 @@
     },
     {
       "id": "goon",
-      "channel": 8,
+      "channel": 0,
       "title": "Goon",
       "lcdName": "GOON",
-      "status": "coming_soon",
+      "status": "live",
       "active": false,
       "airDate": null,
       "preview": null,
@@ -127,13 +128,7 @@
       "effect": null,
       "coachAnchor": "bottom-right",
       "department": null,
-      "suppressed": {
-        "reason": "The channel asks visitors for card details. Contained at the shell in the current tree pending the permanent fix.",
-        "blockedOn": [
-          "C081",
-          "C084"
-        ]
-      },
+      "suppressed": null,
       "secretSequence": null,
       "controlDigits": null,
       "missionId": "",
@@ -176,7 +171,7 @@
     },
     {
       "id": "lilboyfriend",
-      "channel": 2,
+      "channel": 1,
       "title": "Living Small",
       "lcdName": "LIL BOYFRIEND",
       "status": "live",
@@ -206,15 +201,15 @@
       "inRegistry": true,
       "registry": {
         "host": "LIL BOYFRIEND",
-        "eyebrow": "GUIDED TOUR",
+        "eyebrow": "MOM INC. RESIDENTIAL COMPRESSION PROGRAM",
         "genre": "first person museum",
-        "premise": "A museum that explains why your home got smaller, and calls it therapy.",
-        "cta": "Tour The Museum",
-        "does": "Walk past six exhibits, turn around, walk back",
+        "premise": "A little home. A little comfort. All arranged for you.",
+        "cta": "Tour the museum",
+        "does": "Explore six exhibits",
         "duration": "About 3 minutes",
         "input": "tap or drag",
         "hero": "assets/marks/lilboyfriend.png",
-        "teaser": "Residential Compression is a MOM Inc programme. Six rooms, photographed twice: once the way the brochure shows them, once the way they are. Both photographs are real.",
+        "teaser": "Ask MOM if Living Small is right for you.",
         "roots": [
           "#lbStage"
         ],
@@ -224,7 +219,7 @@
           "ink": "#3c3552",
           "accent": "#c9a24c"
         },
-        "finish": "Reach the door, then walk back out",
+        "finish": "Return to the museum entrance",
         "cta2": "Walk In And Look Twice",
         "progress_key": "mbs-lilbf-museum-v2",
         "continue_cta": "Continue The Museum",
@@ -239,7 +234,7 @@
     },
     {
       "id": "djscratch",
-      "channel": 3,
+      "channel": 2,
       "title": "The Music Desk",
       "lcdName": "DJ SCRATCH",
       "status": "live",
@@ -269,15 +264,15 @@
       "inRegistry": true,
       "registry": {
         "host": "DJ SCRATCH",
-        "eyebrow": "PAID PROGRAMMING",
+        "eyebrow": "MOM INC. PRESENTS THE HELPING HAND",
         "genre": "infomercial",
-        "premise": "THE HAND does dishes, laundry and a passable set. MOM Inc would like you to notice the first two.",
-        "cta": "Scratch It Three Times",
-        "does": "Watch the advert, scratch the record three times",
+        "premise": "It DJs. It cleans. It obeys.",
+        "cta": "Try the music desk",
+        "does": "Follow four illuminated controls",
         "duration": "About 2 minutes",
         "input": "tap",
         "hero": "assets/marks/djscratch.png",
-        "teaser": "Every appliance in this catalogue was somebody once. The advert is warm about it. Scratch the record three times and the warmth drops out for a second, which is the second worth staying for.",
+        "teaser": "One hand. Every task. Zero complaints.",
         "roots": [
           "#deck",
           "#sigLbl"
@@ -290,7 +285,7 @@
           "ink": "#fdf6e3",
           "accent": "#ffd36e"
         },
-        "finish": "Scratch the record three times",
+        "finish": "Complete the four-control sequence",
         "cta2": "Make Her Answer",
         "progress_key": "",
         "continue_cta": "",
@@ -305,7 +300,7 @@
     },
     {
       "id": "corgi",
-      "channel": 6,
+      "channel": 3,
       "title": "The School Hunt",
       "lcdName": "CORTISOL CORGI",
       "status": "live",
@@ -335,15 +330,15 @@
       "inRegistry": true,
       "registry": {
         "host": "CORTISOL CORGI",
-        "eyebrow": "PAPER ROUND",
+        "eyebrow": "CORTISOL CORGI / NEWS DESK",
         "genre": "collect and evade",
-        "premise": "Nine pages are loose across a school, a food-service floor and an office. The paper man moves when you look away.",
-        "cta": "Start The Hunt",
-        "does": "Turn pages, gather the story",
+        "premise": "THREE REPORTS MISSING. HEAD OFFICE WANTS THEM YESTERDAY.",
+        "cta": "Find the reports",
+        "does": "Collect three office pages and enter the school",
         "duration": "Untimed, and it saves",
         "input": "tap or keyboard",
         "hero": "assets/marks/corgi.png",
-        "teaser": "They moved the morning again. The sun came up four minutes early and nobody filed it. The corgi knows, the corgi always knows, and the corgi cannot type, so the pages will have to do.",
+        "teaser": "ADDITIONAL FLOORS: ACCESS RESTRICTED.",
         "roots": [
           ":scope > svg",
           "#cc"
@@ -354,9 +349,9 @@
           "ink": "#241a0e",
           "accent": "#4a2a7a"
         },
-        "finish": "Find nine pages across three rounds",
+        "finish": "Recover the school pages to unlock your file",
         "cta2": "Find The First Page",
-        "progress_key": "mbs-corgi-school-v2",
+        "progress_key": "mbs-corgi-school-v3",
         "continue_cta": "Continue The Hunt",
         "profile_intro": "THE ANCHOR NEEDS THREE FACTS. THEY ARE NOT HEADLINES.",
         "profile_questions": [
@@ -368,76 +363,12 @@
       }
     },
     {
-      "id": "sag",
-      "channel": 4,
-      "title": "Basset's Assets",
-      "lcdName": "SAG SNIFFER",
-      "status": "coming_soon",
-      "active": false,
-      "airDate": null,
-      "preview": null,
-      "mission": null,
-      "reward": null,
-      "route": "?ch=sag",
-      "gameRoute": "/games/sag/",
-      "theme": null,
-      "meter": null,
-      "cursor": null,
-      "effect": null,
-      "coachAnchor": "bottom-right",
-      "department": {
-        "label": "Collections",
-        "position": null,
-        "requires": null
-      },
-      "suppressed": null,
-      "secretSequence": null,
-      "controlDigits": null,
-      "missionId": "",
-      "apiBase": null,
-      "redeemPath": "/redeem",
-      "inRegistry": true,
-      "registry": {
-        "host": "SAG SNIFFER",
-        "eyebrow": "FIVE DOORS",
-        "genre": "spot the difference",
-        "premise": "Four lots, taken against somebody's debt, sold to you one door at a time. The fifth door is not for sale.",
-        "cta": "Open Door One",
-        "does": "Turn the wheel, buy four lots, open the fifth",
-        "duration": "About 3 minutes",
-        "input": "tap",
-        "hero": "assets/marks/sag.png",
-        "teaser": "Four doors are business. The fifth is dinner. Bid through the fake lots, and Sag will show you what every broke goon keeps behind the last shutter.",
-        "roots": [
-          "#sgStage",
-          "#sgInvSrc"
-        ],
-        "hide": [],
-        "palette": {
-          "bg": "#2a0a44",
-          "ink": "#f4ecd8",
-          "accent": "#ff8a2a"
-        },
-        "finish": "Buy four fake lots and open the fifth door",
-        "cta2": "Get To The Fifth Door",
-        "progress_key": "sag-progress",
-        "continue_cta": "Continue The Lots",
-        "profile_intro": "REAL BUDGET. NO MAGIC BALL.",
-        "profile_questions": [
-          "What can you comfortably spend on training each month, including zero?",
-          "What will you not spend money on?",
-          "Should the coach prefer what you own, second-hand options, or new gear when it suggests anything?"
-        ],
-        "share_image": "assets/marks/sag.png"
-      }
-    },
-    {
       "id": "girlfriend",
-      "channel": 9,
+      "channel": 4,
       "title": "The Manufacturing Floor",
       "lcdName": "DR GIRLFRIEND",
       "status": "live",
-      "active": false,
+      "active": true,
       "airDate": null,
       "preview": null,
       "mission": null,
@@ -463,18 +394,18 @@
       "inRegistry": true,
       "registry": {
         "host": "DR GIRLFRIEND",
-        "eyebrow": "FOUR STATIONS",
+        "eyebrow": "DR GIRLFRIEND / RESEARCH & PRODUCTION",
         "genre": "how a claim is made",
-        "premise": "Six tubes of somebody's research go into one pitcher. What comes out is moulded, boxed and flown away. She leaves the goggles behind.",
-        "cta": "Start The Line",
-        "does": "Pour six tubes, mould the unit, take the goggles",
+        "premise": "Six research tubes. Follow the evidence through the production line.",
+        "cta": "Enter the factory",
+        "does": "Mix twelve obsolete coaches and debunk their myths",
         "duration": "About 4 minutes",
         "input": "tap, mouse or keyboard",
         "hero": "assets/marks/girlfriend.png",
-        "teaser": "Six labelled tubes. One pitcher. Purple goo, a mould, a box, and one pair of goggles left on the line for only a few seconds. She will not click them for you.",
+        "teaser": "Read the source before you use the tube.",
         "roots": [
-          "#dgTrack",
-          ".dg-flat"
+          "#dgStage",
+          "#dgUnitDetails"
         ],
         "hide": [],
         "palette": {
@@ -482,10 +413,10 @@
           "ink": "#f4ecd8",
           "accent": "#ff8a2a"
         },
-        "finish": "Grab the goggles before the drone",
+        "finish": "Pour left to right, mould and pack to reveal the goggles",
         "cta2": "Grab The Goggles",
-        "progress_key": "mbs-dg-line",
-        "continue_cta": "Continue The Line",
+        "progress_key": "",
+        "continue_cta": "",
         "profile_intro": "PUT THE BELIEF AND THE SOURCE IN SEPARATE TUBES.",
         "profile_questions": [
           "What health or fitness advice do you already believe?",

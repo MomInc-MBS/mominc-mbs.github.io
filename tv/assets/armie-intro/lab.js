@@ -1,0 +1,33 @@
+import * as THREE from './vendor/three.module.js';
+import {GLTFLoader} from './vendor/GLTFLoader.js';
+const renderer=new THREE.WebGLRenderer({antialias:true});renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.outputColorSpace=THREE.SRGBColorSpace;document.body.prepend(renderer.domElement);
+const scene=new THREE.Scene();scene.background=new THREE.Color('#08070d');scene.fog=new THREE.FogExp2('#100d17',.045);const camera=new THREE.PerspectiveCamera(48,innerWidth/innerHeight,.05,60);
+const gold=new THREE.MeshStandardMaterial({color:'#c6a463',metalness:.65,roughness:.35}),purple=new THREE.MeshStandardMaterial({color:'#322344',metalness:.35,roughness:.35}),black=new THREE.MeshStandardMaterial({color:'#100d17',roughness:.5});
+function box(w,h,d,mat,x,y,z,parent=scene){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);m.position.set(x,y,z);parent.add(m);return m;}
+box(12,.15,20,purple,0,-.1,0);box(12,.15,20,black,0,4.3,0);box(.2,4.4,20,purple,-6,2,0);box(.2,4.4,20,purple,6,2,0);box(12,4.4,.2,purple,0,2,-8);
+const roomLight=new THREE.HemisphereLight('#d8c1ec','#30233a',0);scene.add(roomLight);const spot=new THREE.PointLight('#d5b7ed',0,18);spot.position.set(0,3.4,-3);scene.add(spot);
+for(let z=-7;z<=8;z+=2){for(const x of [-5.6,5.6]){box(.12,.035,.55,new THREE.MeshBasicMaterial({color:'#6d5682'}),x,.03,z);const l=new THREE.PointLight('#584363',.25,2);l.position.set(x,.15,z);scene.add(l);}}
+// The entrance behind the viewer closes in five physical increments.
+const doors=[];for(const side of [-1,1]){doors.push(box(2.05,3.8,.18,purple,side*2.15,1.9,8));box(.12,4,.25,gold,side*2.18,2,8);}
+box(7,4,.2,black,-5.7,2,8);box(7,4,.2,black,5.7,2,8);
+const coachTex=await new THREE.TextureLoader().loadAsync('./coach.png');const coach=new THREE.Sprite(new THREE.SpriteMaterial({map:coachTex,transparent:true,blending:THREE.AdditiveBlending,color:'#b79ec7'}));coach.position.set(0,.95,9.3);coach.scale.set(3.6,2.4,1);scene.add(coach);
+const station=new THREE.Group();station.visible=false;scene.add(station);const pod=new THREE.Mesh(new THREE.CylinderGeometry(.87,.87,2.9,40,1,true),new THREE.MeshPhysicalMaterial({color:'#c8b8e1',transparent:true,opacity:.18,metalness:.15,roughness:.08,side:THREE.DoubleSide,depthWrite:false}));pod.position.set(0,1.8,-4);station.add(pod);for(const y of [.35,3.25]){const ring=new THREE.Mesh(new THREE.CylinderGeometry(.98,.98,.14,40),gold);ring.position.set(0,y,-4);station.add(ring);}
+const frameTex=await new THREE.TextureLoader().loadAsync('./website-bezel.png');frameTex.colorSpace=THREE.SRGBColorSpace;const trim=[];
+for(const x of [-2.6,2.6]){const panel=box(2.3,1.5,.22,gold,x,1.9,-4,station);const frame=new THREE.Mesh(new THREE.PlaneGeometry(2.31,1.51),new THREE.MeshBasicMaterial({map:frameTex}));frame.position.set(x,1.9,-3.87);station.add(frame);trim.push(frame,panel);}
+// A matching MOM surround joins the pod and both control screens.
+for(const x of [-4,4])trim.push(box(.16,3.7,.28,gold,x,1.9,-4,station));for(const y of [.1,3.75])trim.push(box(8.15,.14,.28,gold,0,y,-4,station));
+box(8.2,.12,1.3,gold,0,.65,-3.4,station);
+try{const model=(await new GLTFLoader().loadAsync('./myr5/models/myr5.glb')).scene;const b=new THREE.Box3().setFromObject(model),size=b.getSize(new THREE.Vector3()),center=b.getCenter(new THREE.Vector3());model.position.sub(center);const holder=new THREE.Group();holder.add(model);holder.scale.setScalar(2.45/size.y);holder.position.set(0,1.75,-4);station.add(holder);}catch{}
+for(const [i,name] of ['lab-left.png','lab-right.png'].entries()){try{const tx=await new THREE.TextureLoader().loadAsync('./'+name);tx.colorSpace=THREE.SRGBColorSpace;const screen=new THREE.Mesh(new THREE.PlaneGeometry(1.68,1.35),new THREE.MeshBasicMaterial({map:tx}));screen.position.set(i?2.45:-2.75,1.9,-3.85);station.add(screen);}catch{}}
+const task=document.querySelector('#door-task'),button=document.querySelector('#close-door'),timer=document.querySelector('#timer'),caption=document.querySelector('#caption');let start=performance.now(),phase='enter',deadline=0,clicks=0,successAt=0,finished=false;const ease=v=>{v=Math.max(0,Math.min(1,v));return v*v*(3-2*v);};const mix=(a,b,t)=>a+(b-a)*ease(t);
+function report(type){parent.postMessage({type},location.origin);}
+function fail(){if(finished)return;finished=true;task.hidden=true;caption.textContent='Coach caught you.';setTimeout(()=>report('armie-lab-failed'),900);}
+button.onclick=()=>{if(phase!=='seal'||finished)return;if(performance.now()>=deadline){fail();return;}clicks++;button.textContent='CLOSE · '+clicks+' / 5';if(clicks===5){phase='reveal';report('armie-lab-sealed');successAt=performance.now();task.hidden=true;caption.textContent='Door stays shut.';}};
+button.addEventListener('keydown',e=>{if(e.repeat)e.preventDefault();});
+function frame(now){const t=(now-start)/1000;const target=new THREE.Vector3(0,1.6,-4);if(phase==='enter'){camera.position.set(0,1.65,mix(9.6,3,t/2.8));const turn=ease((t-2.8)/1.6);target.set(Math.sin(turn*Math.PI)*5,1.5,-4+turn*14);if(t>=4.5){phase='seal';deadline=now+3000;task.hidden=false;button.focus();}}
+if(phase==='seal'){camera.position.set(0,1.65,3);target.set(0,1.5,9);const remaining=Math.max(0,deadline-now);timer.textContent=(remaining/1000).toFixed(1);coach.position.z=9.3-(1-remaining/3000)*.9;if(!remaining)fail();}
+doors.forEach((d,i)=>d.position.x=(i?1:-1)*(2.15-clicks/5*1.12));
+if(phase==='reveal'){const u=(now-successAt)/1000;const turn=ease(u/2);camera.position.set(0,mix(1.65,1.16,(u-4)/3),mix(3,-1.35,(u-4)/3));target.set(-Math.sin(turn*Math.PI)*5,1.7,9-turn*13);const light=ease((u-2)/1.4);station.visible=light>0;roomLight.intensity=light*1.8;spot.intensity=light*24;trim.forEach(o=>{o.scale.setScalar(1-ease((u-6)/1.3));});caption.textContent=u>2?'Specimen lab ready.':'';if(u>7.5&&!finished){finished=true;report('armie-lab-complete');}}
+if(finished&&phase!=='reveal'){coach.position.z=4.2;coach.scale.set(5,4,1);}camera.lookAt(target);renderer.render(scene,camera);if(!finished||phase!=='reveal')requestAnimationFrame(frame);}
+document.querySelector('#loading').hidden=true;report('armie-lab-ready');let entryStarted=false;const begin=()=>{if(entryStarted)return;entryStarted=true;start=performance.now();requestAnimationFrame(frame);};addEventListener('message',e=>{if(e.origin===location.origin&&e.source===parent&&e.data?.type==='armie-lab-start')begin();});if(parent===window)begin();window.armieLab={get phase(){return phase},get clicks(){return clicks}};addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
+

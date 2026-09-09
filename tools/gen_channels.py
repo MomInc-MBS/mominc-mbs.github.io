@@ -46,6 +46,8 @@ def gen_channels_js(manifest):
         out.append({
             "id": c["id"],
             "ch": c["channel"],
+            "href": c["route"],
+            "label": "HOME" if c["id"] == "mominc" else "EXTRA",
             "name": c["lcdName"],
             "head": c["id"] in HEAD_IDS,
             "half": c["id"] in HALF_IDS,

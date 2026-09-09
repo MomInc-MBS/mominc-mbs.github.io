@@ -91,6 +91,7 @@
   };
   const ready = () => {
     boot && boot.remove();
+    window.MBS_ATMOSPHERE && window.MBS_ATMOSPHERE.mount(host, slug);
     window.dispatchEvent(new Event("resize"));   // a fragment inserted after load never gets one otherwise; games size themselves on resize
     window.MBS && window.MBS.bindFrames && window.MBS.bindFrames();       // an iframe game swallows its own pointer events
     window.MBS && window.MBS.lifecycle && window.MBS.lifecycle.ready();   // ready means mounted, never before
