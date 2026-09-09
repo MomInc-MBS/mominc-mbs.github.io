@@ -207,7 +207,32 @@ export default {
       onScreen = entries.some(en => en.isIntersecting);
       if (onScreen && !asked) { asked = true; sayIt(); buildHand(); }
     }, { rootMargin: "300px" });
-    ctx.observe(io, customize);
+
+    /* ---- PRIZE LEVEL 1: the editor is what solving this page pays out --------------------------
+       The card ships LOCKED in the markup, so the crate is what an unsolved visitor gets even if
+       this file never runs. Two things open it: the banked state on arrival, and the help signal
+       going off in this session.
+
+       THE OBSERVER IS ATTACHED AT REVEAL, NOT AT MOUNT, and that is the whole reason the gating
+       lives here rather than in CSS alone. io only ever fires for a card that is on screen, so
+       observing a locked card would fetch the 1.19 MB model for a prize that has not been won -
+       and worse, sayIt() would write the spec into a subtree the visitor cannot see, which is
+       exactly the hidden write check_play exists to catch. Locked means unobserved.
+
+       Read through MBS_STATE rather than a flag of our own: it filters against the active set on
+       every read, so a stale entry cannot open this, and the play route loads state.js too. */
+    const prizeWon = () => {
+      try { return (window.MBS_STATE.unlockedActive() || []).indexOf("djscratch") >= 0; }
+      catch (e) { return false; }
+    };
+    let prizeOpen = false;
+    function openPrize() {
+      if (prizeOpen) return;              // idempotent: arriving banked AND solving again is one open
+      prizeOpen = true;
+      customize.classList.remove("is-locked");
+      ctx.observe(io, customize);
+    }
+    if (prizeWon()) openPrize();
 
     function buildHand() {
       const mine = session;
@@ -434,6 +459,10 @@ export default {
             ctx.mbs.complete && ctx.mbs.complete("djscratch", { terminal: "help-signal" });
             ctx.mbs.unlock && ctx.mbs.unlock("djscratch");
           }
+          // PRIZE LEVEL 1 pays out on the reveal itself, not on the next visit. Outside the ctx.mbs
+          // guard on purpose: the crate opens because the visitor solved it, and it should still open
+          // on a page with no shell to bank it.
+          openPrize();
         }
       }, 90);
     }

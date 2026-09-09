@@ -95,6 +95,21 @@ FORM: Ian's pin, 2026-08-25, "90s late-night infomercial." Inside the old televi
   .dj .threes b{font-family:"Archivo Black",sans-serif}
   /* the customization order form */
   .dj .customize h2{font-family:"Bowlby One SC",cursive; color:var(--pur-dd); font-size:clamp(20px,6vw,32px); margin:0 0 8px; line-height:1}
+  /* PRIZE LEVEL 1 - THE HAND. The editor is the reward for solving THIS page, not furniture on it, so
+     it is sealed until the help signal has been heard. LOCKED IS THE DEFAULT IN THE MARKUP and the
+     class is removed by the channel once MBS_STATE says djscratch is banked: a visitor who has never
+     solved it sees the crate whether or not the script gets that far, which is the safe direction to
+     fail in for something meant to be earned. The 1.19 MB model is not observed while locked either -
+     the observer is attached at reveal, so an unwon prize costs no bandwidth at all. */
+  .dj .customize.is-locked .prizebody{display:none}
+  .dj .customize:not(.is-locked) .prizelock{display:none}
+  .dj .prizelock{display:grid; gap:9px; justify-items:center; text-align:center; padding:20px 14px;
+      border:3px dashed var(--pur-d); border-radius:12px;
+      background:repeating-linear-gradient(45deg,#f4e8ff 0 14px,#e8d6fa 14px 28px)}
+  .dj .prizelock .seal{font-family:"Anton",sans-serif; letter-spacing:.1em; font-size:11px; color:#fff;
+      background:var(--pur-dd); padding:4px 11px; border-radius:999px}
+  .dj .prizelock b{font-family:"Bowlby One SC",cursive; color:var(--pur-dd); font-size:clamp(17px,5vw,26px); line-height:1.05}
+  .dj .prizelock p{margin:0; font-family:"Barlow Condensed",sans-serif; font-size:clamp(14px,4vw,17px); color:var(--pur-d); max-width:44ch}
   .dj .orderform{display:grid; gap:11px; margin-top:8px}
   .dj .orderform label{display:grid; gap:4px; font-family:"Archivo Black",sans-serif; font-size:clamp(13px,3.6vw,15px); color:var(--pur-dd)}
   .dj .orderform input,.dj .orderform select{font-family:"Barlow Condensed",sans-serif; font-weight:600; font-size:16px; padding:10px; border:2px solid var(--pur-d); border-radius:8px; background:#fff; color:var(--ink)}
@@ -477,7 +492,13 @@ FORM: Ian's pin, 2026-08-25, "90s late-night infomercial." Inside the old televi
         </div>
       </section>
 
-      <section class="card customize" id="customize">
+      <section class="card customize is-locked" id="customize">
+        <div class="prizelock" id="handLock">
+          <span class="seal">PRIZE LEVEL 1 &middot; NOT YET YOURS</span>
+          <b>THE HAND EDITOR IS LOCKED</b>
+          <p>MOM is already growing one for you. She will not let you near the controls until you have found what is hiding in this record. Hear the signal on the deck above and the crate opens here.</p>
+        </div>
+        <div class="prizebody">
         <h2>BUILD YOUR OWN HAND</h2>
         <p>MOM already started growing one, just for you, before you even asked. It is turning over down there now. Change your mind as often as you like: nothing is sent and nothing arrives, this is a builder, not an order form.</p>
         <div class="handstage" id="handStage"><p class="handhint" id="handHint">drag to turn it over</p></div>
@@ -521,6 +542,7 @@ FORM: Ian's pin, 2026-08-25, "90s late-night infomercial." Inside the old televi
           <button type="submit" id="orderBtn">BUILD MY HAND</button>
           <p class="ofine">A preview, not an order: nothing to type, no payment, no address asked for, and nothing sent or kept. Your hand is drawn on this device and dies with the page. MOM cannot post you anything because there is nothing behind this form. In-character participation only, never a sale.</p>
         </form>
+        </div>
       </section>
 
       <div class="price">
