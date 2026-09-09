@@ -2,7 +2,7 @@
 html[data-game] .rail{background:#100e18;border-bottom:1px solid #ffffff19}
 html[data-game] .exit{width:44px;height:44px;border:0;border-radius:0;background:transparent;box-shadow:none}
 html[data-game] .rail{height:48px}
-.ambience-toggle{margin-left:auto;background:transparent;color:#e6dccb;border:1px solid #756a85;border-radius:6px;min-height:36px;padding:4px 12px;font:600 12px system-ui;cursor:pointer}
+.ambience-toggle{margin-left:auto;min-height:44px;padding:6px 12px;border-radius:6px;cursor:pointer;white-space:nowrap;color:#f1e2c2;text-transform:uppercase;letter-spacing:.12em;font:600 11px/1.2 "Barlow Condensed","Arial Narrow",sans-serif;background:linear-gradient(180deg,#5a4328,#33251a);border:1px solid #2e2216;box-shadow:inset 0 1px 0 rgba(255,240,210,.22),0 2px 0 #2a1d10;text-shadow:0 1px 0 rgba(0,0,0,.6)}
 .ambience-toggle:focus-visible{outline:2px solid #ffd36e;outline-offset:2px}
 /* Music Desk: a real booth rather than a floating pastel form. */
 #dj.dj{background:radial-gradient(ellipse at 18% 20%,#5b244c55,transparent 55%),radial-gradient(ellipse at 80% 80%,#65502644,transparent 60%),#15111e}
