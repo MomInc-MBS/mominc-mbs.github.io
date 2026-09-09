@@ -24,3 +24,23 @@
 
 .wardrobe .saved-piece:not([hidden]){display:block;margin:6px 0;font-size:14px;color:var(--gold)}
 .wardrobe .saved-piece[hidden]{display:none}
+
+/* One menu, one submenu, and one editing surface at a time. */
+.atelier [hidden],.saved-looks[hidden],.saved-looks [hidden]{display:none!important}
+#sections{grid-auto-flow:row;grid-template-columns:repeat(6,minmax(0,1fr));grid-template-rows:auto;grid-auto-columns:auto;overflow:visible;padding:0;gap:5px}
+#sections button{justify-content:center;text-align:center;border:1px solid #594364;background:#211629;white-space:normal;min-height:44px}
+#sections button[aria-expanded=true]{background:#e2c187;color:#271530;border-color:#fee0a5;box-shadow:0 2px 0 #07050b}
+#customizer-submenus{margin-top:8px;padding:8px;background:#1b1224;border:1px solid #503a5c;border-radius:3px}
+#menu-label{margin:0 0 6px;font-size:12px}
+#subsections{display:flex;flex-wrap:wrap;gap:5px}
+#subsections button{width:auto;flex:0 1 auto;min-height:40px;padding:6px 12px;margin:0;border:1px solid #4b3a55;background:#2b2032;white-space:normal}
+#subsections button[aria-expanded=true]{background:#53384f;color:#ffeac5;border-color:#e2bb79;box-shadow:inset 0 -2px #e2bb79}
+.portrait canvas{transform:scale(var(--preview-scale,1));transform-origin:var(--focus-x,50%) var(--focus-y,50%);transition:transform .28s ease,transform-origin .28s ease}
+.wardrobe{border-radius:3px}
+.wardrobe h2{font-size:24px}.wardrobe #category-note{display:block;margin:0 0 10px;color:#c6b5cd}
+#silk-panel{margin:12px 0 0;padding:8px 0 0}#silk-panel #dyes button{min-height:44px}
+#dye-name{margin:9px 0 0;color:#e4c28d;font:18px Pixel,monospace}
+#saved-looks{max-width:1120px;margin:0 auto;padding:14px;background:#211629;border:1px solid #655039;border-radius:3px}
+#saved-looks h2{font-size:24px}#looks-note{margin:0 0 12px;font-size:14px}#looks{margin:0}
+@media(max-width:680px){#sections{grid-template-columns:repeat(3,minmax(0,1fr))}#subsections button{font-size:15px;min-height:40px;flex-grow:1}#customizer-submenus{padding:6px}#menu-label{display:none}#sections button{font-size:16px}#silk-panel #dyes{grid-template-columns:repeat(5,minmax(0,1fr))}}
+@media(prefers-reduced-motion:reduce){.portrait canvas{transition:none}}

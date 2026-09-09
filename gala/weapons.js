@@ -2,7 +2,7 @@
 (()=>{'use strict';
 const types=[['rapier','Plasma blade'],['greatsword','Ion cleaver'],['dagger','Phase dagger'],['sabre','Arc pistol'],['axe','Pulse rifle'],['hammer','Rail cannon'],['mace','Tesla emitter'],['flail','Tether drone'],['spear','Particle lance'],['trident','Tri-beam fork'],['halberd','Rocket pod'],['scythe','Gravity reaper'],['bow','Photon bow'],['crossbow','Gauss launcher'],['chakram','Orbit disc'],['gauntlets','Power gauntlets'],['staff','Gravity rod'],['wand','Sonic disruptor'],['tome','Nanite hive'],['cannon','Plasma cannon']].map(([id,name])=>({id,name}));
 const tiers=['Field','Charged','Calibrated','Overclocked','Cryo-cooled','Twin-core','Ionized','Supercharged','Plasma-fed','Phase-linked','Quantum','Antimatter','Gravitic','Drone-linked','Neural','Singularity','Orbital','Rift-tech','Dark-matter','Starbreaker','MOM’s Impossible'];
-const days=[1,2,3,5,7,10,14,21,30,45,60,75,90,120,150,180,210,240,270,300,365];
+const days=[0,2,3,5,7,10,14,21,30,45,60,75,90,120,150,180,210,240,270,300,365];
 const strength=[1,2,3,4,5,6,8,10,12,15,18,20,23,27,31,35,40,45,50,60,75];
 function normalize(value){if(!value||!types.some(t=>t.id===value.type)||!Number.isInteger(value.tier)||value.tier<0||value.tier>20)throw Error('This look has an unknown weapon.');return {type:value.type,tier:value.tier};}
 function requirements(value){const w=normalize(value);return {days:days[w.tier],xp:days[w.tier]*100,strength:strength[w.tier]};}

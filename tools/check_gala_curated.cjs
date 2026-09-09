@@ -13,8 +13,8 @@ function boot(saved){
  let seed=20260909;const math=Object.create(Math);math.random=()=>((seed=(Math.imul(seed,1664525)+1013904223)>>>0)/4294967296);
  const scope={window:{dispatchEvent(){}},document,localStorage:{getItem:k=>storage.get(k)??null,setItem:(k,v)=>storage.set(k,v)},sessionStorage:{setItem(){}},location:{assign(){}},URLSearchParams,structuredClone,Math:math,Blob,CustomEvent:class{},URL:{createObjectURL:blob=>{downloads.push(blob);return 'blob:test';},revokeObjectURL(){}},setTimeout(){}};
  vm.createContext(scope);vm.runInContext(avatarSource,scope);scope.GalaAvatar=scope.window.GalaAvatar;
- scope.GalaAvatar.draw=(canvas,look)=>{canvas.look=structuredClone(look);};vm.runInContext(controllerSource,scope);
- return {A:scope.GalaAvatar,$:document.getElementById,document,downloads,look:()=>JSON.parse(storage.get('mominc-avatar-v1')),select:id=>document.getElementById('sections').children.find(b=>b.dataset.section===id).click()};
+ scope.GalaAvatar.draw=(canvas,look)=>{canvas.look=structuredClone(look);canvas.width=64;canvas.height=96;};vm.runInContext(controllerSource,scope);
+ return {A:scope.GalaAvatar,$:document.getElementById,document,downloads,look:()=>JSON.parse(storage.get('mominc-avatar-v1')),select:id=>{for(const menuButton of document.getElementById('sections').children){if(menuButton.getAttribute('aria-expanded')!=='true')menuButton.click();const button=document.getElementById('subsections').children.find(b=>b.dataset.section===id);if(button){if(button.getAttribute('aria-expanded')!=='true')button.click();return;}}throw Error('Missing submenu '+id);}};
 }
 (async()=>{
  const app=boot();assert.equal(app.A.sections.length,17);

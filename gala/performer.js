@@ -28,9 +28,9 @@
    if(poseKey!==lastPose){A.draw(body,look,{base:false,weapon:false,companion:false,prop:scene.name!=='weapon',blink,pose});lastPose=poseKey;}
    let offset=0,flip=false,zoom=0;
    if(scene.name==='walk'){
-    if(seconds<2.6)offset=-170*ease(seconds/2.6);
-    else if(seconds<3.5)offset=-170;
-    else if(seconds<6.5){offset=-170*(1-ease((seconds-3.5)/3));flip=true;}
+    if(seconds<2.6){offset=170*ease(seconds/2.6);flip=true;}
+    else if(seconds<3.5)offset=170;
+    else if(seconds<6.5){offset=170*(1-ease((seconds-3.5)/3));}
    }
    if(scene.name==='face')zoom=ease(Math.min(seconds/.9,(5.5-seconds)/.9));
    const bob=still?0:Math.sin(time/850)*.8;

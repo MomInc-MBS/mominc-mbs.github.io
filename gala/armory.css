@@ -13,5 +13,11 @@
 .coach-progress-import{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:10px}.coach-progress-import .file-button{font-size:14px}.coach-progress-import input{position:absolute;width:1px;height:1px;opacity:0}.coach-progress-import p{flex:1;min-width:220px;font-size:14px;color:#c3b0cc;margin:0}
 .masthead{flex-wrap:wrap;gap:8px}.masthead [data-gramophone-slot]{margin-left:auto}
 @keyframes weapon-hover{50%{transform:translateY(-5px) rotate(2deg)}}
+
+/* Weapon families, upgrades, and coaching progress occupy separate submenus. */
+#armory [hidden]{display:none!important}
+#weapon-detail{grid-template-columns:110px minmax(0,1fr)}
+#weapon-preview{min-height:185px}#weapon-preview canvas{scale:1.25}
+@media(max-width:440px){#weapon-detail{grid-template-columns:96px minmax(0,1fr);gap:12px;padding:8px}#weapon-detail h3{font-size:22px}}
 @media(prefers-reduced-motion:reduce){#weapon-preview canvas{animation:none}}
 @media(max-width:540px){.weapon-types{grid-auto-columns:105px}.weapon-detail{grid-template-columns:65px 1fr;gap:8px;padding:8px}#weapon-preview{min-height:115px}#weapon-preview canvas{width:60px;height:108px}.weapon-detail h3{font-size:21px}.weapon-detail p{font-size:13px}.weapon-progress{gap:5px}.weapon-progress strong,.weapon-progress span{font-size:15px;padding:4px 6px}.weapon-tiers{grid-template-rows:repeat(2,110px);grid-auto-columns:81px}.weapon-tier span{font-size:14px}.coach-progress-import p{min-width:100%;font-size:13px}.masthead [data-gramophone-slot]{width:100%}}
