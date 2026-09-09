@@ -842,6 +842,9 @@ export default {
 
     // ================================================================== 3D HUNT
     function runHunt3D() {
+      // Keep touch devices (including landscape phones) within a modest pixel budget.
+      const mobileRender = matchMedia("(pointer: coarse), (max-width: 768px)").matches;
+      cc.dataset.renderQuality = mobileRender ? "mobile" : "full";
       const canvas = byId("ccCanvas");   // viewport is already declared in the shared scope above
       const joy = byId("ccJoy"), joyNub = byId("ccJoyNub");
       const flashBtn = byId("ccFlashBtn"), batFill = byId("ccBatFill");
@@ -850,6 +853,7 @@ export default {
       const vhsGrain = viewport.querySelector(".cc-vhs .grain"), vhsScan = viewport.querySelector(".cc-vhs .scan");
       const staticCanvas = byId("ccStatic"), staticCtx = staticCanvas.getContext("2d");
       staticCanvas.width = 48; staticCanvas.height = 27;
+      let lastStaticDraw = -Infinity;
       function drawStaticNoise() {
         const img = staticCtx.createImageData(48, 27);
         for (let p = 0; p < 48 * 27; p++) { const v = Math.random() * 255, o = p * 4;
@@ -863,7 +867,7 @@ export default {
         // document - and nothing would ever release it, because unmount() has already run.
         if (session !== mine) return;
 
-        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+        const renderer = new THREE.WebGLRenderer({ canvas, antialias: !mobileRender });
         renderer.setClearColor(0xcfe6f2, 1);
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(68, 1, 0.05, 60);
@@ -1333,16 +1337,20 @@ export default {
           const useHandAuthored = !!LEVELS[idx].handAuthored;
           DOOR_X = useHandAuthored ? level0MainCorridor() : genMainCorridor();
           const corridorLight = bright ? 0xffffff : (crazy >= 2 ? 0xd9b8ff : crazy >= 1 ? 0xe8d0ff : 0xfff3d0);
-          for (let lx = 1; lx <= DOOR_X - 2; lx += 5) { const l = new THREE.PointLight(corridorLight, bright ? 0.85 : 0.006, bright ? 9 : 1.2); l.position.set(lx, 2.4, 0); l.userData.schoolLamp=!bright; levelGroup.add(l); }
+          // A zero-intensity light still occupies a Three.js lighting slot. The dark
+          // school needs only its three desk lamps and the player's flashlight.
+          if (!useHandAuthored) {
+            for (let lx = 1; lx <= DOOR_X - 2; lx += 5) { const l = new THREE.PointLight(corridorLight, bright ? 0.85 : 0.006, bright ? 9 : 1.2); l.position.set(lx, 2.4, 0); l.userData.schoolLamp=!bright; levelGroup.add(l); }
+          }
 
           if (crazy > 0) addSchoolPosters(DOOR_X, crazy);
 
           AREAS = useHandAuthored ? level0Areas() : genLevelAreas(idx);
-          AREAS.forEach(a => { a.walls.forEach(w => {if(bright && Math.abs(w[1])>8 && w[2]>2 && w[3]<.5)officeWindow(w[0],w[1],w[2]);else wallBox(w[0],w[1],w[2],w[3],a.mat);}); a.lights.forEach(([lx, lz]) => { const l = new THREE.PointLight(0xfff3d0, 0.5, 8); l.position.set(lx, 2.2, lz); levelGroup.add(l); }); });
+          AREAS.forEach(a => { a.walls.forEach(w => {if(bright && Math.abs(w[1])>8 && w[2]>2 && w[3]<.5)officeWindow(w[0],w[1],w[2]);else wallBox(w[0],w[1],w[2],w[3],a.mat);}); if (!useHandAuthored) a.lights.forEach(([lx, lz]) => { const l = new THREE.PointLight(0xfff3d0, 0.5, 8); l.position.set(lx, 2.2, lz); levelGroup.add(l); }); });
 
           AREAS.forEach(a=>dressArea(a,useHandAuthored));
           if(bright)encloseOffice();
-          if(useHandAuthored){levelGroup.traverse(o=>{if(o.isPointLight){o.intensity=0;o.userData.schoolLamp=false;}});for(const a of AREAS){const lamp=new THREE.PointLight(0xc4b79b,.48,1.8,2);lamp.name="school-desk-pool";lamp.position.set(a.pagePos[0],1.45,a.pagePos[2]);lamp.userData.deskLamp=true;levelGroup.add(lamp);}}
+          if(useHandAuthored){for(const a of AREAS){const lamp=new THREE.PointLight(0xc4b79b,.48,1.8,2);lamp.name="school-desk-pool";lamp.position.set(a.pagePos[0],1.45,a.pagePos[2]);lamp.userData.deskLamp=true;levelGroup.add(lamp);}}
           const pages = LEVELS[idx].pages;
           DESKS = AREAS.map((a, i) => {
             const d = buildFurniture(useHandAuthored ? "desk" : "cubicle", pages[i].deskLabel, pages[i].deskDate);
@@ -1390,7 +1398,8 @@ export default {
           pageObjs = PAGE_POS.map((pos, i) => {
             if (state.found[idx][i]) return null;
             const s = pageSprite(pages[i].title, i); s.position.copy(pos);if(useHandAuthored){s.position.set([16.53,4.87,30.83][i],1.05,pos.z);s.rotation.y=i===1?Math.PI/2:-Math.PI/2;PAGE_POS[i].copy(s.position);} levelGroup.add(s);
-            const g = new THREE.PointLight(0xffd36e, useHandAuthored ? 0 : 0.13, 1); g.position.copy(pos); levelGroup.add(g);
+            let g = null;
+            if (!useHandAuthored) { g = new THREE.PointLight(0xffd36e, 0.13, 1); g.position.copy(pos); levelGroup.add(g); }
             return { sprite: s, light: g, base: pos.y };
           });
         }
@@ -1418,8 +1427,10 @@ export default {
           // light offset onto -Z and to one side keys his camera-facing surface directly instead of relying on
           // ceiling spill from above (root cause of the round-2 flat-black read). Not inside any sealed mesh --
           // sits clear in front of his torso/head, checked live at all three test distances.
-          const monsterLight = new THREE.PointLight(0xcfe0ff, LEVELS[state.level].handAuthored ? 0 : .65, 6, 2);
-          monsterLight.position.set(0.6, 1.5, -2.2); g.add(monsterLight);
+          if (!LEVELS[state.level].handAuthored) {
+            const monsterLight = new THREE.PointLight(0xcfe0ff, .65, 6, 2);
+            monsterLight.position.set(0.6, 1.5, -2.2); g.add(monsterLight);
+          }
           if(!LEVELS[state.level].handAuthored){
             const jacket=new THREE.MeshStandardMaterial({color:0x202c3e,roughness:.92});g.traverse(o=>{if(o.isMesh&&o.material===suitMat)o.material=jacket;});
             const shirt=new THREE.Mesh(new THREE.BoxGeometry(.18,.38,.03),new THREE.MeshStandardMaterial({color:0xece7dc}));shirt.position.set(0,1.63,-.14);g.add(shirt);
@@ -1636,7 +1647,7 @@ export default {
 
         function resize() {
           const w = viewport.clientWidth || 320, h = viewport.clientHeight || 320;
-          renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+          renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, mobileRender ? 1 : 2));
           renderer.setSize(w, h, false);
           camera.aspect = w / h; camera.updateProjectionMatrix();
         }
@@ -1685,8 +1696,8 @@ export default {
           if (!gl || session !== mine) return;
           const dt = Math.min(50, now - last) / 1000; last = now;
           if(tickBreakRoom(now)){ctx.frame(frame);return;}
-          levelGroup.children.forEach(l=>{if(l.userData.deskLamp)l.intensity=matchMedia('(prefers-reduced-motion: reduce)').matches?.3:((now*.001+l.position.x)%5.3<.25?.015:.48);});
-          if(!matchMedia('(prefers-reduced-motion: reduce)').matches) levelGroup.children.forEach(l=>{if(l.userData.schoolLamp)l.intensity=((now*.001+l.position.x*.17)%4.7<.22)?0:.006;});
+          levelGroup.children.forEach(l=>{if(l.userData.deskLamp)l.intensity=REDUCED?.3:((now*.001+l.position.x)%5.3<.25?.015:.48);});
+          if(!REDUCED) levelGroup.children.forEach(l=>{if(l.userData.schoolLamp)l.intensity=((now*.001+l.position.x*.17)%4.7<.22)?0:.006;});
 
           // C035: the hall is not up, so the hall does not run. Everything below this line IS the world --
           // movement, stamina, the camera, the flashlight battery, page pickups, the door, the monster's
@@ -1761,7 +1772,7 @@ export default {
             const d = Math.hypot(ddx, ddz);
             const facing = d > 0.05 && (lookFx * ddx / d + lookFz * ddz / d) > 0.3;
             if (d < 0.9 && deskRead.phase === "idle") {
-              po.sprite.removeFromParent(); po.light.removeFromParent(); pageObjs[i] = null;
+              po.sprite.removeFromParent(); po.light?.removeFromParent(); pageObjs[i] = null;
               viewport.classList.remove("cc-jolt"); void viewport.offsetWidth; viewport.classList.add("cc-jolt");
               startDeskRead(i);   // Round 2: the rise begins here; collect() and the haunt fire later (finishRise/standDown)
             } else if (d < 1.7 && facing) {
@@ -1880,9 +1891,14 @@ export default {
             staticIntensity = target > staticIntensity ? Math.min(1, staticIntensity + rate * dt) : Math.max(0, staticIntensity - rate * dt);
             const effectCap=LEVELS[state.level].handAuthored?1:.5;staticIntensity=Math.min(effectCap,staticIntensity);cc.dataset.haze=String(staticIntensity);
             if(staticIntensity>.3)alarmSound();
-            vhsGrain.style.opacity = effectCap===.5?.12:Math.min(1,0.35+staticIntensity*.4);
-            vhsScan.style.opacity = effectCap===.5?.1:Math.min(1,0.3+staticIntensity*.3);
-            if (staticIntensity > 0.03) { drawStaticNoise(); staticCanvas.style.opacity = effectCap===.5?Math.min(.35,staticIntensity*.7):Math.min(.85,staticIntensity); }
+            vhsGrain.style.opacity = mobileRender ? .12 : effectCap===.5?.12:Math.min(1,0.35+staticIntensity*.4);
+            vhsScan.style.opacity = mobileRender ? .16 : effectCap===.5?.1:Math.min(1,0.3+staticIntensity*.3);
+            if (staticIntensity > 0.03) {
+              // Preserve the danger cue and its game timing; refresh only its noise
+              // texture at 12 Hz on phones instead of generating it every frame.
+              if (!mobileRender || now - lastStaticDraw >= 1000 / 12) { drawStaticNoise(); lastStaticDraw = now; }
+              staticCanvas.style.opacity = effectCap===.5?Math.min(.35,staticIntensity*.7):Math.min(.85,staticIntensity);
+            }
             else staticCanvas.style.opacity = 0;
 
             // 0901: CORTISOL fills with proximity too. A live component rides on top of the banked ratchet --
