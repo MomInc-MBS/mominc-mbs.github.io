@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#17111f"><title>MYR5 · Your creature</title><link rel="stylesheet" href="./creature.css"><script src="/tv/phone-layout.js" defer></script></head>
+<body data-model-base="../"><header class="topbar"><a class="brand" href="../../creature-tv.html" target="_top" aria-label="Back to creature studio">MOM<span>INC.</span></a><div><small>MYR5 / CREATURE CREATOR</small><h1>Your creature</h1></div><a class="back-link" href="../../creature-tv.html" target="_top">Back to studio ↗</a></header>
+<main class="workspace">
+ <section class="specimen" aria-label="Creature and gesture preview">
+  <div class="specimen-top"><span class="badge">SPECIMEN 005</span><span id="motionLabel">At ease</span></div>
+  <div id="creatureStage"></div>
+  <div class="stage-tools"><span>Drag to rotate · pinch to zoom</span><button id="front">Front view</button><button id="pauseMotion" aria-pressed="false">Pause motion</button></div>
+  <div class="motion-panel"><div class="section-title"><h2>Responses & ambient motion</h2><span>Preview a gesture</span></div><div id="gestures" class="gesture-grid"></div>
+   <div class="motion-options"><label for="amount">Movement <output id="amountValue">0.65</output><input id="amount" type="range" min="0" max="1.5" step="0.05"></label><label class="check"><input type="checkbox" id="ambient" checked>Ambient & blinking</label><label class="check"><input type="checkbox" id="reduced">Still mode</label></div>
+  </div>
+ </section>
+ <section class="customization" aria-label="Customize your creature">
+  <div class="section-title"><h2>Customize</h2><div><button id="undo" disabled>Undo</button><button id="redo" disabled>Redo</button></div></div>
+  <p id="creatureStatus" role="status">Loading your creature…</p>
+  <div class="import-row"><label class="button primary" for="importFile">Import game creature<input id="importFile" type="file" accept=".json,application/json" class="file-input"></label><button id="exportRecipe">Save recipe</button></div>
+  <p class="help">Bring your editable MYR5 recipe from the game. Appearance changes also appear on your coach.</p>
+  <div id="parts" class="part-tabs" aria-label="Creature parts"></div>
+  <div class="material-title"><div><small id="partLabel">Crown & scales</small><h3 id="styleLabel">Original MYR5</h3></div><button id="applyAll">Use on all parts</button></div>
+  <div id="styles" class="style-grid" aria-label="Surface styles"></div>
+  <details open><summary>Shape & expression</summary><div class="fields"><label>Eye arrangement<select id="eyeLayout"></select></label><label>Eye expression<select id="eye"><option value="open">Curious</option><option value="sleepy">Unimpressed</option><option value="wide">Wide awake</option></select></label><label>Fingers<select id="fingers"></select></label><label>Toes<select id="toes"></select></label><label>Pupil shape<select id="pupil"></select></label><label>Coach personality<select id="coach"></select></label></div>
+   <div class="fields ranges"><label for="fur">Collar fluff <output id="furValue">1.00</output><input id="fur" type="range" min="0.65" max="1.4" step="0.05"></label><label for="iris">Iris size <output id="irisValue">1.00</output><input id="iris" type="range" min="0.7" max="1.25" step="0.05"></label><label for="pupilSize">Pupil size <output id="pupilSizeValue">1.00</output><input id="pupilSize" type="range" min="0.6" max="1.15" step="0.05"></label><label for="detail">Surface detail <output id="detailValue">1.00</output><input id="detail" type="range" min="0.5" max="1.5" step="0.05"></label></div>
+  </details>
+  <div class="export-row"><button id="exportGLB" class="primary" disabled>Export animated 3D model</button><button id="original">Original creature</button></div>
+  <p class="help">Recipes stay editable. The 3D export includes the assembled creature and fifteen animation clips.</p>
+ </section>
+</main><footer>MYR5 creature system · <a href="./NOTICE.md">Open-source credits</a></footer><script type="module" src="./assets/editor.js"></script></body></html>
