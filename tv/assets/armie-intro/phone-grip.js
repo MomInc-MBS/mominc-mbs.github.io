@@ -3,13 +3,14 @@ import {GLTFLoader} from './vendor/GLTFLoader.js';
 import {bindHand,applyHandPose} from './pose-rig.js';
 export async function mountPhoneGrip(phone,profile){
  const regions=['nails','fingertips','middle_sections','knuckles','palm','back_of_hand','wrist'];
- if(!regions.every(k=>Number.isInteger(profile?.sections?.[k])&&profile.sections[k]>=0&&profile.sections[k]<20))return;
+ if(!regions.every(k=>Number.isInteger(profile?.sections?.[k])&&profile.sections[k]>=0&&profile.sections[k]<23))return;
  const renderer=new THREE.WebGLRenderer({alpha:true,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.setClearColor(0,0);renderer.domElement.className='ar-grip-canvas';renderer.domElement.setAttribute('aria-hidden','true');phone.append(renderer.domElement);
  const scene=new THREE.Scene(),camera=new THREE.OrthographicCamera(-1,1,1,-1,.01,20);camera.position.z=5;
  scene.add(new THREE.HemisphereLight('#e6d5ff','#483453',2));const light=new THREE.DirectionalLight('#ffddb7',3);light.position.set(-2,3,4);scene.add(light);
  const hand=new THREE.Group(),holder=new THREE.Group();holder.add(hand);scene.add(holder);const loader=new GLTFLoader(),families=new Map();
- await Promise.all([...new Set(regions.map(k=>profile.sections[k]))].map(async id=>families.set(id,await loader.loadAsync(new URL('./models/family-'+String(id).padStart(2,'0')+'.glb',import.meta.url).href))));
- for(const region of regions){const part=families.get(profile.sections[region]).scene.getObjectByName(region);if(!part)throw Error('Missing custom hand part: '+region);const clone=part.clone(true);clone.userData.region=region;clone.userData.styleId=profile.sections[region];hand.add(clone);}
+ await Promise.all([...new Set(regions.map(k=>profile.sections[k]))].map(async id=>families.set(id,await loader.loadAsync(new URL((id<20?'./models/':'/handborne/models/')+'family-'+String(id).padStart(2,'0')+'.glb',import.meta.url).href))));
+ const joinedFingers=new Set();
+ for(const region of regions){const family=families.get(profile.sections[region]).scene;let part=family.getObjectByName(region);if(!part&&(region==='middle_sections'||region==='knuckles')){part=family.getObjectByName('fingers');if(joinedFingers.has(profile.sections[region]))continue;joinedFingers.add(profile.sections[region]);}if(!part)throw Error('Missing custom hand part: '+region);const clone=part.clone(true);clone.userData.region=region;clone.userData.styleId=profile.sections[region];hand.add(clone);}
  const rig=bindHand(hand);applyHandPose(rig,{id:'phone-grip',name:'Phone grip',rotation:[0,0,0],opposition:22,fingers:{index:[54,75,38,0],middle:[60,80,40,0],ring:[65,83,42,0],pinky:[70,87,45,0],thumb:[10,25,20,-35]}});
  // Real depth masking lets the palm sit behind the handset while the curled fingers cross its edge.
  const mask=new THREE.Mesh(new THREE.BoxGeometry(1,1,.035),new THREE.MeshBasicMaterial({colorWrite:false}));mask.renderOrder=-1;scene.add(mask);

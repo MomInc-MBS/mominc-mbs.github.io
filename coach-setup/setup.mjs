@@ -1,9 +1,10 @@
 import {transferCoach} from './transfer.mjs';
 import {COACH_APP,encodeHandoff,validRecipe,SITE_QUESTIONS,validateOnboarding} from './onboarding-domain.mjs';
 import {mountProfileForm} from './onboarding-form.mjs';
+import {completedArmie} from './completion.mjs';
 const read=k=>{try{return JSON.parse(localStorage.getItem(k)||'null');}catch{return null;}};
 const status=document.getElementById('setupStatus'),host=document.getElementById('setupBody');
-const armie=read('mbs-armie-hall-result'),state=read('mbs-state')||{},recipe=read('myr5-recipe-v1'),prior=read('mbs-final-coach-draft-v1')||{};
+const armie=completedArmie(),state=read('mbs-state')||{},recipe=read('myr5-recipe-v1'),prior=read('mbs-final-coach-draft-v1')||{};
 const appearance=Object.fromEntries(['myr5-recipe-v1','myr5-motion-v1','mominc-avatar-v1'].map(k=>[k,read(k)]).filter(([,v])=>v));
 const data={version:1,...prior,appearance,armieCompleted:armie?.game?.hallways===3,customizationConfirmed:!!read('mbs-coach-customized-v1'),answers:{...prior.answers},siteChoices:{submissions:state.submissions||{},armie:armie||{},hand:read('mbs-hand-profile-v1')}};
 data.profile={...prior.profile};if(recipe)data.profile.coach=recipe.coach;

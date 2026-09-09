@@ -138,7 +138,10 @@
     emit("GAME_COMPLETE", Object.assign({ site }, detail));
     return true;
   }
-  M.complete = (site, opts) => completeOnce(site, { terminal: (opts && opts.terminal) || null });
+  M.complete = (site, opts) => {
+    window.MBS_STATE.completePage(site);
+    return completeOnce(site, { terminal: (opts && opts.terminal) || null });
+  };
   M.armReady = () => { const done = readUnlock(); return ACTIVE_UNLOCK.every(id => done.includes(id)); };  // C004: explicit active-set every(), not a counter
   M.armHere = () => {
     if (!M.armReady()) return 0;
