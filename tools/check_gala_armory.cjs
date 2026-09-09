@@ -24,6 +24,7 @@ async function importProgress(data){await $('coach-progress-file').onchange({tar
  assert.throws(()=>P.fromCoach({activeDays:365,totalXp:36500,strength:75}),/Choose/);assert.throws(()=>P.fromCoach({...data,workouts:[{...data.workouts[0],completed_at:now+86400000}]},now),/invalid/);
  await importProgress(data);assert.equal(P.read().activeDays,1);assert.equal(P.read().totalXp,100);assert.equal(P.read().strength,2);assert.equal($('weapon-equip').disabled,false);
  $('weapon-equip').click();assert.equal(look().weapon.type,'rapier');assert.equal(look().weapon.tier,0);assert.equal($('avatar').width,96);
+ assert.ok(surface($('avatar')).getContext('2d').getImageData(64,0,32,96).data.some((value,i)=>i%4===3&&value>0),'equipped weapon has visible pixels beside the character');
  $('weapon-tiers').children[20].click();assert.equal($('weapon-equip').disabled,true);$('weapon-equip').onclick();assert.equal(look().weapon.tier,0,'direct handler cannot equip a locked preview');
  $('export').click();assert.equal(JSON.parse(await downloads.at(-1).text()).weapon.tier,0);$('png').click();assert.equal(downloads.at(-1).type,'image/png');
  $('weapon-remove').click();assert.equal(look().weapon,undefined);assert.equal($('avatar').width,64);$('undo').click();assert.equal(look().weapon.tier,0);$('redo').click();assert.equal(look().weapon,undefined);

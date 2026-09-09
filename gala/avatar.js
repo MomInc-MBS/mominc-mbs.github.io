@@ -152,6 +152,7 @@ function draw(canvas,look,{base=true,weapon=true,time=0}={}){
  if(g===3){for(const [xx,yy] of [[x-9,y-10],[x+10,y-8],[x,y-17]])gem(xx,yy,'#88e4d9');rect(x-5,y-7,10,1,'#88e4d9');}
  }
 
+ if(equipment)window.GalaWeapons.draw(c,equipment,{x:64,y:10+Math.sin(time/900)*2,scale:.78});
 }
 window.GalaAvatar={sections,dyes,defaultLook,normalize,draw};
 })();

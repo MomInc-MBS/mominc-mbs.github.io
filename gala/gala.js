@@ -7,7 +7,7 @@ function makeCanvas(look){const c=document.createElement('canvas');c.setAttribut
 function paintOptions(){
  const weapons=category==='weapons';$('armory').hidden=!weapons;$('options').hidden=weapons;
  document.querySelector?.('.dyes')?.toggleAttribute('hidden',weapons);
- if(weapons){$('category-name').textContent='Weapons';$('category-note').textContent='20 weapon types · a starter and 20 upgrades each.';$('retained-piece').hidden=true;window.GalaArmory?.refresh();return;}
+ if(weapons){$('category-name').textContent='Weapons';$('category-note').textContent='20 sci-fi weapon types · a starter and 20 upgrades each.';$('retained-piece').hidden=true;window.GalaArmory?.refresh();return;}
  const left=$('options').scrollLeft,section=A.sections.find(s=>s.id===category);
  $('category-name').textContent=section.label;$('category-note').textContent=section.note;
  const retained=!section.choices.includes(current.parts[category]);
