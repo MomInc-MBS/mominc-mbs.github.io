@@ -56,7 +56,7 @@ LANDING = u"""<!doctype html>
 <style>
   :root{{--bg:{bg}; --ink:{ink}; --accent:{accent}; --title-vw:{titlevw}vw;}}
 </style>
-</head>
+<script src="/tv/phone-layout.js" defer></script></head>
 <body class="g-{slug}" data-slug="{slug}" data-ch="{ch}" data-progress-key="{progress_key}"
       data-continue-cta="{continue_cta}" data-next-slug="{next_slug}" data-next-ch="{next_ch}"
       data-next-title="{next_title}" data-next-premise="{next_premise}" data-share-url="{site}/games/{slug}/"
@@ -144,7 +144,7 @@ PLAY = u"""<!doctype html>
 <link rel="stylesheet" href="atmosphere.css">
 <link rel="stylesheet" href="network-flow.css">
 <style>body{{background:{bg}}}</style>
-</head>
+<script src="/tv/phone-layout.js" defer></script></head>
 <body>
 {orientation}
 <div class="stage"><div class="rail"><a class="exit" href="../games/{slug}/" aria-label="Back to {title}">&larr;<span>{title}</span></a></div><div class="glass"><div id="screen" class="screen"><div id="channel" class="channel"></div></div></div></div>
@@ -193,7 +193,7 @@ COMING_SOON = u"""<!doctype html>
 <style>
   :root{{--bg:{bg}; --ink:{ink}; --accent:{accent}; --title-vw:{titlevw}vw;}}
 </style>
-</head>
+<script src="/tv/phone-layout.js" defer></script></head>
 <body class="g-{slug} is-coming-soon" data-slug="{slug}" data-ch="{ch}">
 <a class="skip" href="#play">Skip to link</a>
 <main>

@@ -414,7 +414,7 @@ export default {
        clause is not involved, and sanitize() below already drops unknown keys, so the write end of this
        field is closed by the same code that closes phase's. */
     const MODES = ["museum", "scroll"];
-    const SHRINK_MS = 37500;   // matches a straight walk back at WALK_SPEED below - loitering no longer buys safety
+    const SHRINK_MS = 12500;   // matches the automatic sprint back; loitering no longer buys safety
     function backfillShrink(phase, t) {
       // deterministic per legacy phase, never NaN/restart/snap-to-full: reproduces the v1 load's own progress
       const impliedProgress = phase === "done" ? 1 : Math.max(0, Math.min(1, 1 - t));
@@ -2287,7 +2287,7 @@ export default {
         function onConnect() {
           fireConnect(() => {
             closeDoor();
-            targetYaw=Math.PI;targetPitch=0;fwdHeld=true;ctx.timeout(()=>{fwdHeld=false;},1800);
+            targetYaw=Math.PI;targetPitch=0;fwdHeld=false;backHeld=false;closeRead();zoomOpen=false;
             // C015: paint(), not a hand swap - a horror photograph still in the queue leaves its cozy
             // original on the wall until it lands, rather than blanking the frame to white
             exhibitObjs.forEach(e => { paint(e); e.spot.color.set(0x9fb8dd); e.spot.intensity = 0.75; });
@@ -2539,6 +2539,7 @@ export default {
             yaw += (targetYaw - yaw) * Math.min(1, dt * 8);
             pitch += (targetPitch - pitch) * Math.min(1, dt * 8);
           }
+          if(isReturning()&&!stompAt){targetYaw=Math.PI;targetPitch=0;}
           applyLook();
           updateLaser(now);
           if(stompAt&&!stompFinished){const t=(now-stompAt)/1000;camera.rotation.x=Math.min(1.35,t*1.6);boot.position.set(0,Math.max(0,3-t*2.1),-Math.max(.12,3-t*1.9));if(t>1.55){stompBlack.style.display='block';boot.visible=false;stompFinished=true;playEffect();ctx.timeout(()=>{openEpi();stompBlack.style.display='none';},1300);}}
@@ -2547,13 +2548,13 @@ export default {
           // C014: !readOpen joins the list for the return leg, where there is no zoom holding the
           // visitor still - a panel that is being read while the walk carries on underneath it is the
           // guest book's bug, and this one has links in it.
-          if ((fwdHeld || backHeld) && !bookOpen && !epiOpen && !zoomOpen && !readOpen) {
-            const dir = (fwdHeld ? 1 : 0) - (backHeld ? 1 : 0);
-            if (dir) { playEffect(); ST.t = Math.max(0, Math.min(1, ST.t + dir * (isReturning()?-1:1) * WALK_SPEED * dt)); saveWalk(); }
+          if ((isReturning() || fwdHeld || backHeld) && !stompAt && !epiOpen && (isReturning() || (!bookOpen && !zoomOpen && !readOpen))) {
+            const dir = isReturning()?1:(fwdHeld ? 1 : 0) - (backHeld ? 1 : 0);
+            if (dir) { playEffect(); ST.t = Math.max(0, Math.min(1, ST.t + dir * (isReturning()?-3.2:1) * WALK_SPEED * dt)); saveWalk(); }
           }
           camera.position.z = zAt(ST.t);
           const rp = shrinkProgress(), caseMode = ST.phase === "out";
-          camera.position.y = eyeY(rp);
+          camera.position.y = eyeY(rp)+(isReturning()&&!stompAt?Math.sin(now*.021)*Math.min(.035,eyeY(rp)*.1):0);
 
           if (!flickering) {
             hallMesh.scale.set(2 * wallHalf(rp), CEIL_H, 1);

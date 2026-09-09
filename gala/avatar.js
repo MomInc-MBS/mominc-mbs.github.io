@@ -16,15 +16,16 @@ const sections=[
  ['feet','Footwear','For the marble floors of an alien palace.',['Vela slippers','Krell platforms','Orryx curltoes','Quasar boots','Mollu petals','Vex heels','Dravox greaves','Nymbi clouds','Xelith skates','Ulumi moonsteps']],
  ['held','Held accessory','An arrival accessory, not a combat loadout.',['Vela flute','Orryx fan','Quasar clutch','Mollu bouquet','Krell cane','Nymbi lantern','Vex invitation','Dravox orb','Xelith parasol','Ulumi familiar']],
  ['back','Back accessory','Make leaving the room just as interesting.',['Vela ribbons','Orryx cape','Quasar fins','Mollu spores','Krell spines','Nymbi wings','Vex sash','Dravox coils','Xelith satellites','Ulumi starlight']],
- ['base','Display base','A tiny piece of the palace to call your own.',['Vela marble','Orryx dais','Quasar moon','Mollu garden','Krell obsidian','Nymbi cloud','Vex carpet','Dravox grille','Xelith crystal','Ulumi orbit']]
-].map(([id,label,note,names])=>({id,label,note,names}));
+ ['base','Display base','A tiny piece of the palace to call your own.',['Vela marble','Orryx dais','Quasar moon','Mollu garden','Krell obsidian','Nymbi cloud','Vex carpet','Dravox grille','Xelith crystal','Ulumi orbit']],
+ ['pet','Pet','A companion dressed for the same questionable occasion.',['No companion','Mollu pup','Vex moth','Orryx beetle','Quasar cat','Nymbi jelly','Krell lizard','Xelith puff','Dravox bot','Ulumi sprout']]
+].map(([id,label,note,names])=>({id,label,note,names:[...names,...names.map(n=>'Xyrr '+(n==='No companion'?'slug':n)),...names.map(n=>'Auv '+(n==='No companion'?'slug':n)),...names.map(n=>'Oth '+(n==='No companion'?'slug':n))]}));
 const dyes=['#9762b6','#bd476e','#467f9e','#4b9478','#d39d46','#485aa0','#d17e52','#c7adba','#5f596d','#83b8b6'];
 const skin=['#b18fc8','#80ba98','#d78989','#ddd3c5','#7371ae','#c6a55e','#ce84b6','#67a5a6','#b77857','#a5c8d8'];
 const defaultLook={schema:'mominc-avatar',version:1,name:'Velora of the Ninth Moon',dye:0,parts:Object.fromEntries(sections.map(s=>[s.id,0]))};
-function normalize(raw){if(!raw||raw.schema!=='mominc-avatar'||raw.version!==1||!raw.parts)throw Error('Choose a MOM Inc avatar file.');const n={schema:'mominc-avatar',version:1,name:typeof raw.name==='string'?raw.name.trim().slice(0,32):'',dye:raw.dye,parts:{}};if(!Number.isInteger(n.dye)||n.dye<0||n.dye>9)throw Error('This look has an unknown silk colour.');for(const s of sections){let v=raw.parts[s.id];if(!Number.isInteger(v)||v<0||v>9)throw Error('This look has an unknown wardrobe piece.');n.parts[s.id]=v;}return n;}
+function normalize(raw){if(!raw||raw.schema!=='mominc-avatar'||raw.version!==1||!raw.parts)throw Error('Choose a MOM Inc avatar file.');const n={schema:'mominc-avatar',version:1,name:typeof raw.name==='string'?raw.name.trim().slice(0,32):'',dye:raw.dye,parts:{}};if(!Number.isInteger(n.dye)||n.dye<0||n.dye>9)throw Error('This look has an unknown silk colour.');for(const s of sections){let v=raw.parts[s.id]??(s.id==='pet'?0:undefined);if(!Number.isInteger(v)||v<0||v>=s.names.length)throw Error('This look has an unknown wardrobe piece.');n.parts[s.id]=v;}return n;}
 function tone(hex,amount){let n=parseInt(hex.slice(1),16);return '#'+[n>>16,n>>8&255,n&255].map(v=>Math.max(0,Math.min(255,v+amount)).toString(16).padStart(2,'0')).join('');}
 function draw(canvas,look,{base=true}={}){
- canvas.width=64;canvas.height=96;const c=canvas.getContext('2d');c.imageSmoothingEnabled=false;const p=look.parts,S=skin[p.skin],D=tone(S,-37),L=tone(S,35),F=dyes[look.dye],H=tone(F,42),B=tone(F,-40),gold='#e6c880',ink='#21172e',white='#fbebce';
+ canvas.width=64;canvas.height=96;const c=canvas.getContext('2d');c.imageSmoothingEnabled=false;const original=look.parts,p=Object.fromEntries(Object.entries(original).map(([k,v])=>[k,v%10])),group=key=>Math.floor((original[key]||0)/10),S=tone(skin[p.skin],group('skin')*14- (group('skin')===3?60:0)),D=tone(S,-37),L=tone(S,35),F=dyes[look.dye],H=tone(F,42),B=tone(F,-40),gold='#e6c880',ink='#21172e',white='#fbebce';
  const rect=(x,y,w,h,col)=>{c.fillStyle=col;c.fillRect(Math.round(x),Math.round(y),Math.round(w),Math.round(h));};
  const poly=(points,col,line=ink)=>{c.beginPath();points.forEach(([x,y],i)=>i?c.lineTo(x+.5,y+.5):c.moveTo(x+.5,y+.5));c.closePath();c.fillStyle=col;c.fill();if(line){c.strokeStyle=line;c.lineWidth=1;c.stroke();}};
  const dot=(x,y,col=gold)=>rect(x,y,1,1,col);
@@ -93,6 +94,41 @@ function draw(canvas,look,{base=true}={}){
  let h=p.headwear;if(h===0){rect(23,16,18,1,gold);gem(32,16);}if(h===1)poly([[22,16],[22,9],[27,13],[32,7],[37,13],[42,9],[41,16]],gold);if(h===2){rect(22,6,20,1,gold);rect(20,7,2,2,gold);rect(42,7,2,2,gold);rect(22,9,20,1,gold);}if(h===3){poly([[20,16],[22,10],[41,10],[47,40],[42,37],[38,14],[25,14],[20,35]],'#a89eb4');rect(24,11,15,2,white);}if(h===4){box(24,7,15,8,B);rect(20,14,25,2,gold);}if(h===5){poly([[23,16],[18,7],[21,6],[27,16]],gold);poly([[37,16],[43,5],[45,8],[41,17]],gold);}if(h===6){poly([[37,15],[42,4],[46,5],[41,16]],H);gem(41,15);}if(h===7){poly([[22,17],[24,9],[39,9],[43,17],[40,21],[38,14],[26,14],[24,21]],gold);gem(32,10,H);}if(h===8){rect(18,13,29,1,gold);rect(21,10,23,1,H);gem(44,13);}if(h===9){rect(25,6,1,9,gold);rect(38,4,1,11,gold);gem(25,5,H);gem(38,3,H);}
  // Party props replace weapons entirely.
  switch(p.held){case 0:box(48+width,47,5,8,'#c4bdcf');rect(50+width,55,1,8,gold);rect(48+width,63,5,1,gold);rect(49+width,49,3,3,H);break;case 1:poly([[48,59],[43,46],[49,40],[58,45],[60,53]],H);for(let i=0;i<4;i++)poly([[48,59],[45+i*4,44+i%2]],gold);break;case 2:box(46,56,13,9,H);rect(47,59,11,1,gold);gem(53,59);break;case 3:poly([[49,63],[45,47],[56,47],[51,63]],'#548267');for(const [x,y] of [[45,45],[51,42],[57,46],[49,49]])gem(x,y,H);break;case 4:rect(51,47,2,36,gold);box(47,45,7,3,gold);break;case 5:rect(51,47,1,6,gold);box(47,53,10,13,B);rect(49,56,6,7,gold);gem(52,59,white);break;case 6:box(47,53,12,9,white);rect(49,55,7,1,B);gem(53,59,H);break;case 7:box(48,47,9,9,H);gem(52,51,white);rect(50,56,5,2,gold);break;case 8:rect(52,29,1,35,gold);poly([[40,33],[43,25],[52,22],[62,29],[63,33]],H);rect(42,32,20,1,gold);break;case 9:poly([[48,48],[48,43],[51,46],[56,44],[59,48],[57,55],[50,54]],S);dot(51,49,ink);dot(56,49,ink);rect(51,55,1,4,gold);rect(56,55,1,4,gold);}
+ // Three additional collections give every part new cuts or surface details.
+ for(const section of sections){const g=group(section.id);if(!g||['skin','pet'].includes(section.id))continue;const accent=g===1?gold:g===2?white:'#88e4d9';const shift=(original[section.id]%10)%3;
+ switch(section.id){
+ case 'body':for(const x of [18-width,45+width]){if(g===1)poly([[x,23],[x-3,17],[x+2,19],[x+3,28]],S);if(g===2)box(x-2,24,5,6,D);if(g===3)for(let y=22;y<32;y+=3)gem(x,y,accent);}break;
+ case 'face':if(g===1){rect(25,19,5,1,accent);rect(35,19,5,1,accent);}if(g===2){gem(31,26,accent);rect(26,28,3,1,accent);}if(g===3){rect(23,23,1,7,accent);rect(41,23,1,7,accent);}break;
+ case 'hair':for(let x=24;x<42;x+=5){if(g===1)poly([[x,15],[x+1,9-shift],[x+3,15]],H);if(g===2)box(x,14,3,3,accent);if(g===3)rect(x,11,1,9,accent);}break;
+ case 'facial':if(g===1){rect(26,31,3,4,accent);rect(36,31,3,4,accent);}if(g===2)poly([[27,32],[32,39],[37,32]],H);if(g===3)for(const x of [22,27,37,42])gem(x,31,accent);break;
+ case 'headwear':if(g===1){rect(17,12,30,1,accent);gem(20,11,accent);}if(g===2){poly([[40,13],[49,3],[50,12]],H);gem(43,13,accent);}if(g===3){rect(20,4,24,1,accent);for(const x of [20,32,43])gem(x,3,accent);}break;
+ case 'neck':if(g===1)box(30,37,5,6,accent);if(g===2){rect(26,37,2,9,accent);rect(37,37,2,9,accent);}if(g===3)for(let x=26;x<40;x+=3)gem(x,36,accent);break;
+ case 'torso':for(let y=44;y<57;y+=3){if(g===1)rect(25,y,14,1,accent);if(g===2){dot(27,y,accent);dot(36,y+1,accent);}if(g===3)gem(32,y,accent);}break;
+ case 'shoulders':for(const x of [18-width,42+width]){if(g===1)for(let k=0;k<3;k++)rect(x+k*2,39,1,6,accent);if(g===2)poly([[x-3,38],[x,29],[x+5,39]],H);if(g===3){rect(x-4,33,11,1,accent);gem(x,35,accent);}}break;
+ case 'arms':for(const x of [19-width,42+width]){if(g===1)rect(x,44,2,10,accent);if(g===2)poly([[x,43],[x-4,54],[x+4,54]],B);if(g===3)for(let y=44;y<55;y+=4)gem(x+1,y,accent);}break;
+ case 'hands':for(const x of [19-width,42+width]){if(g===1)gem(x+2,58,accent);if(g===2)for(let k=0;k<3;k++)rect(x+k*2,62,1,4,accent);if(g===3)box(x-1,58,7,3,accent);}break;
+ case 'legs':for(const x of [26,36]){if(g===1)rect(x,65,1,12,accent);if(g===2)for(let y=65;y<77;y+=3)rect(x-1,y,4,1,accent);if(g===3)poly([[x,64],[x-3,76],[x+4,74]],H);}break;
+ case 'feet':for(const x of [23-width,34]){if(g===1)rect(x-1,83,12,2,accent);if(g===2)poly([[x,80],[x-3,76],[x-5,83],[x+3,83]],H);if(g===3)gem(x+4,81,accent);}break;
+ case 'held':if(g===1){rect(48,58,12,1,accent);gem(59,58,accent);}if(g===2)poly([[51,61],[57,71],[55,61]],H);if(g===3)for(const [x,y] of [[45,45],[59,48],[58,62]])gem(x,y,accent);break;
+ case 'back':if(g===1){poly([[16,40],[8,62],[14,69]],H);poly([[48,40],[56,62],[50,69]],H);}if(g===2)for(const x of [12,52])for(let y=40;y<74;y+=8)gem(x,y,accent);if(g===3){rect(7,27,1,43,accent);rect(57,27,1,43,accent);rect(8,26,49,1,accent);}break;
+ case 'base':if(base){if(g===1)rect(18,92,29,2,accent);if(g===2)for(let x=15;x<52;x+=6)gem(x,91,accent);if(g===3){rect(12,94,41,1,accent);rect(10,91,2,3,accent);rect(53,91,2,3,accent);}}break;
+ }}
+ // Forty companion choices, including an empty slot, are part of the saved avatar recipe.
+ if(original.pet){const k=p.pet,g=group('pet'),fur=[H,S,gold,'#90bca2','#d99bae','#ad9ac8','#81a891','#b1accb','#9caabb','#83b587'][k],x=9,y=k===2?67:79;
+ if(k===0){poly([[x-6,y+5],[x-3,y],[x+3,y-1],[x+8,y+5]],fur);rect(x+6,y-3,1,4,fur);dot(x+6,y-3,white);}
+ if([1,4,6].includes(k)){box(x-5,y-3,11,8,fur);box(x+3,y-7,7,7,fur);rect(x-4,y+5,2,3,fur);rect(x+3,y+5,2,3,fur);poly([[x+3,y-7],[x+3,y-11],[x+6,y-7]],fur);poly([[x+7,y-7],[x+10,y-11],[x+10,y-6]],fur);dot(x+7,y-4,ink);if(k===6)poly([[x-5,y],[x-11,y-4],[x-8,y+3]],fur);else rect(x-7,y-4,2,7,fur);if(k===4)rect(x+8,y-2,5,1,white);}
+ if(k===2){poly([[x,y],[x-9,y-8],[x-9,y+6],[x,y+2]],fur);poly([[x+2,y],[x+10,y-8],[x+10,y+6],[x+2,y+2]],fur);box(x,y-3,3,10,B);gem(x-5,y-1,gold);gem(x+7,y-1,gold);}
+ if(k===3){box(x-5,y-6,12,11,fur);rect(x,y-5,1,9,B);for(let z=0;z<3;z++){rect(x-8,y-4+z*4,3,1,gold);rect(x+7,y-4+z*4,3,1,gold);}box(x-2,y-9,5,4,B);dot(x-1,y-8,white);dot(x+1,y-8,white);}
+ if(k===5){poly([[x-6,y],[x-6,y-6],[x-2,y-10],[x+4,y-10],[x+8,y-5],[x+8,y]],fur);for(let z=0;z<4;z++)rect(x-4+z*3,y,1,7-z%2*3,fur);dot(x-1,y-5,ink);dot(x+4,y-5,ink);}
+ if(k===7){poly([[x-7,y-2],[x-9,y-5],[x-5,y-6],[x-3,y-10],[x,y-7],[x+5,y-10],[x+6,y-6],[x+9,y-3],[x+6,y+4],[x-5,y+4]],fur);box(x-3,y-4,3,3,white);box(x+2,y-4,3,3,white);}
+ if(k===8){box(x-6,y-10,13,12,fur);box(x-3,y-7,7,3,B);dot(x-2,y-6,white);dot(x+2,y-6,white);box(x-5,y+2,3,4,B);box(x+3,y+2,3,4,B);rect(x,y-14,1,4,gold);gem(x,y-14,H);}
+ if(k===9){box(x-4,y-5,10,10,'#956e55');rect(x,y-15,2,11,fur);poly([[x,y-10],[x-7,y-15],[x-6,y-8]],fur);poly([[x+2,y-12],[x+8,y-17],[x+8,y-10]],fur);dot(x-1,y-2,white);dot(x+3,y-2,white);}
+ rect(x-3,y,8,1,gold);gem(x+1,y+1,gold);
+ if(g===1){poly([[x-5,y-8],[x-5,y-13],[x,y-10],[x+4,y-14],[x+6,y-8]],gold);}
+ if(g===2){poly([[x-6,y],[x-12,y-6],[x-11,y+4]],H);poly([[x+6,y],[x+12,y-6],[x+11,y+4]],H);}
+ if(g===3){for(const [xx,yy] of [[x-9,y-10],[x+10,y-8],[x,y-17]])gem(xx,yy,'#88e4d9');rect(x-5,y-7,10,1,'#88e4d9');}
+ }
+
 }
 window.GalaAvatar={sections,dyes,defaultLook,normalize,draw};
 })();

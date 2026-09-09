@@ -249,7 +249,7 @@ export default {
         ] }
     ];
     const LEVELS_PUBLIC = [
-      { name: "THE OFFICE", doorLabel: "THE SCHOOL BACK DOOR", furniture: "desk", crazy: 0,
+      { name: "THE OFFICE", doorLabel: "THE BREAK ROOM", furniture: "desk", crazy: 0,
         pages: [
           // C032: deskDate is the field built to carry an edition, and all three of these held a publisher name
           // instead, so the desk sign dated nothing and the newspaper printed "up to 800 million" as a flat
@@ -1308,6 +1308,7 @@ export default {
         }
         function buildLevel(idx) {
           cc.dataset.school=String(LEVELS[idx].handAuthored === true);
+          flashBtn.hidden=!LEVELS[idx].handAuthored;setFlash(false);battery=100;doorSeen=false;
           scene.remove(levelGroup); levelGroup = new THREE.Group(); scene.add(levelGroup);
           collideRects.length = 0; pageObjs = []; monster = null; trophyGlass = null; doorOpen = false; transitioning = false;
           ghost.active = false; ghost.seen = false; creep.active = false; caught = false;
@@ -1537,7 +1538,7 @@ export default {
           deskRead.phase = "standing"; deskRead.t0 = performance.now();
           pawsEl.classList.remove("up"); showHunt();
           const i = deskRead.i, doorZ = i === 1 ? -1.35 : 1.35;   // the pickup haunt, now fired here instead of on pickup
-          haunt(new THREE.Vector3(DOOR_X[i], 0, doorZ), new THREE.Vector3(player.x, 0, player.z), 4300 + i * 1300);
+          haunt(new THREE.Vector3(AREA_DOOR_X[i], 0, doorZ), new THREE.Vector3(player.x, 0, player.z), 4300 + i * 1300);
           return true;
         }
         function finishStandDown() { deskRead.phase = "idle"; cc.removeAttribute("data-reading"); }
@@ -1547,7 +1548,7 @@ export default {
         // on every level transition. Never written to by game code; changes no behaviour. Removed in unmount():
         // it closes over THIS mount's player and level state, and left behind it would answer questions about,
         // and let a driver move, a school that is no longer in the document.
-        window.__corgi = { player, deskRead, get desks() { return DESKS.length; }, get level() { return state.level; }, get doorLabel() { return LEVELS[state.level].doorLabel; } };
+        window.__corgi = { player, deskRead, get desks() { return DESKS.length; }, get level() { return state.level; }, get doorLabel() { return LEVELS[state.level].doorLabel; }, get transition(){return roomCut?.stage||null;}, get battery(){return battery;} };
         // 0901 corner-trap fix. Root cause, found live by logging position + blocked() every frame while
         // scripting a diagonal hold into three different corners: the old test expanded each wall's AABB by R
         // on both axes independently, and the per-axis slide below tests each axis's candidate against the
@@ -1582,7 +1583,7 @@ export default {
         const flash = new THREE.SpotLight(0xfff3d0, 0, 8, Math.PI / 6.5, 0.45, 1.4);
         camera.add(flash); camera.add(flash.target); flash.target.position.set(0, 0, -1);
         let battery = 100, flashOn = false;
-        function setFlash(on) { flashOn = on && battery > 3; flash.intensity = flashOn ? 2.6 : 0; flashBtn.setAttribute("aria-pressed", String(flashOn)); }
+        function setFlash(on) { flashOn = !!(on && LEVELS[state.level].handAuthored && battery > 3); flash.intensity = flashOn ? 2.6 : 0; flashBtn.setAttribute("aria-pressed", String(flashOn)); }
         ctx.on(flashBtn, "click", () => setFlash(!flashOn));
 
         // ---- sprint: hold Shift (desktop) or the SPRINT button (mobile), drains/recharges a stamina pool,
@@ -1630,7 +1631,7 @@ export default {
         // change is a dead school reading the next channel's W key. ctx.on is what stops that.
         const keys = {};
         ctx.on(window, "keydown", e => { if (!hunting()) return; keys[e.key.toLowerCase()] = true;
-          if (e.key.toLowerCase() === "f") setFlash(!flashOn); if (e.key.toLowerCase() === "r") showBook(); });
+          if (e.key.toLowerCase() === "f") {if(roomCut?.stage==='wake')leaveCut();else setFlash(!flashOn);} if (e.key.toLowerCase() === "r") showBook(); });
         ctx.on(window, "keyup", e => keys[e.key.toLowerCase()] = false);
 
         function resize() {
@@ -1641,6 +1642,37 @@ export default {
         }
         ctx.observe(new ResizeObserver(resize), viewport); resize();
 
+        // A separate break-room scene covers the school rebuild and its first rendered frames.
+        let roomCut=null;
+        const cut=document.createElement('section');cut.id='ccTransition';cut.hidden=true;cut.style.cssText='position:absolute;inset:0;z-index:100;display:none;place-content:center;text-align:center;color:#f3e4c7;padding:25px;font:18px Georgia';
+        cut.innerHTML='<h2></h2><p></p><button type="button" hidden>TURN ON THE FLASHLIGHT</button>';viewport.append(cut);
+        const cutTitle=cut.querySelector('h2'),cutText=cut.querySelector('p'),cutButton=cut.querySelector('button');
+        ctx.on(cut,'pointerdown',e=>e.stopPropagation());ctx.on(cut,'keydown',e=>e.stopPropagation());
+        function leaveCut(){roomCut=null;transitioning=false;delete cc.dataset.transition;cut.hidden=true;cut.style.display='none';joyVec={x:0,y:0};setFlash(true);announce('You woke up in the school. F or FLASHLIGHT toggles your light. It recharges when off.');}
+        ctx.on(cutButton,'click',leaveCut);
+        function enterBreakRoom(){
+          transitioning=true;cc.dataset.transition='true';setFlash(false);joyVec={x:0,y:0};dragging=false;cut.hidden=false;cut.style.display='grid';cut.style.background='transparent';cutTitle.textContent='BREAK TIME.';cutText.textContent='Just a minute. You have earned it.';cutButton.hidden=true;
+          const rs=new THREE.Scene();rs.background=new THREE.Color(0x777b72);const rc=new THREE.PerspectiveCamera(68,viewport.clientWidth/viewport.clientHeight,.05,40);rs.add(new THREE.HemisphereLight(0xf2e7c8,0x554b47,2));
+          const box=(x,y,z,w,h,d,color)=>{const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),new THREE.MeshStandardMaterial({color,roughness:.85}));m.position.set(x,y,z);rs.add(m);return m;};
+          box(0,-.12,-2,7,.2,12,0x76716a);box(0,2,-6,7,4,.2,0xa8ada0);box(-3.5,2,-2,.2,4,8,0x939b91);box(3.5,2,-2,.2,4,8,0x939b91);
+          box(0,.65,-3,2.6,.12,1.25,0x795e3c);for(const x of [-1.1,1.1])for(const z of [-3.5,-2.5])box(x,.3,z,.09,.6,.09,0x474941);
+          box(-2.4,.7,-4.9,1.4,1.4,.75,0xd3c9b5);box(-2.4,1.6,-4.9,.48,.5,.45,0x2e3434);box(-2.4,1.8,-4.65,.18,.16,.08,0x965f3c);
+          box(2.4,.55,-4.6,1.5,1.1,1,0x665866);box(2.4,1.05,-5,1.5,.9,.25,0x665866);
+          for(const x of [-.5,.5]){const cup=new THREE.Mesh(new THREE.CylinderGeometry(.13,.1,.2,12),new THREE.MeshStandardMaterial({color:0xe5d4b9}));cup.position.set(x,.81,-3);rs.add(cup);}
+          const sign=new THREE.Mesh(new THREE.PlaneGeometry(2.1,.8),new THREE.MeshBasicMaterial({map:signTexture('BREAK ROOM','REST YOUR EYES.')}));sign.position.set(0,2.3,-5.85);rs.add(sign);
+          gl.extra.push({dispose(){rs.traverse(o=>{o.geometry?.dispose();if(o.material){o.material.map?.dispose();o.material.dispose();}});}});roomCut={stage:'enter',start:performance.now(),scene:rs,camera:rc};
+        }
+        function tickBreakRoom(now){
+          if(!roomCut)return false;const q=roomCut,t=(now-q.start)/1000;
+          if(q.stage==='enter'){
+            q.camera.position.set(0,Math.max(.12,.5-Math.max(0,t-2.6)*.23),2-Math.min(4.1,t*1.15));q.camera.rotation.set(-Math.max(0,t-2.5)*.3,0,REDUCED?0:Math.max(0,t-2.5)*.22);q.camera.aspect=viewport.clientWidth/viewport.clientHeight;q.camera.updateProjectionMatrix();renderer.render(q.scene,q.camera);
+            cut.style.background='rgba(0,0,0,'+Math.min(1,Math.max(0,(t-2.5)/1.5))+')';if(t>2.5){cutTitle.textContent='';cutText.textContent='Your eyes are so heavy.';}
+            if(t>4.1){q.stage='loading';cut.style.background='#000';cutTitle.textContent='';cutText.textContent='';ctx.timeout(()=>{if(!gl||session!==mine)return;try{advanceLevel();buildLevel(state.level);buildLevelTail(state.level);repaintAll();paintLeaf4();goTo(0);showHunt();deskRead.phase='idle';cc.removeAttribute('data-reading');camera.position.set(player.x,EYE_H,player.z);camera.rotation.set(0,player.yaw,0,'YXZ');q.stage='wake';q.start=performance.now();}catch(error){console.error('School transition failed',error);cutTitle.textContent='The school could not load.';cutText.textContent='Reload to wake up here. Your pages are saved.';}},120);}
+          }else if(q.stage==='wake'){
+            renderer.render(scene,camera);cut.style.background='rgba(0,0,0,'+(1-Math.min(.3,t*.18))+')';cutTitle.textContent='THIS IS NOT THE BREAK ROOM.';cutText.textContent='You woke up in the school. Press F or tap FLASHLIGHT to see. Your light lasts about three minutes and recharges while off.';cutButton.hidden=false;
+          }
+          return true;
+        }
         // ---- timecode
         let secs = 0; ctx.interval(() => { if (hunting()) { secs++; const m = String(Math.floor(secs / 60)).padStart(2, "0"), s = String(secs % 60).padStart(2, "0"); tcEl.textContent = `${m}:${s}`; } }, 1000);
 
@@ -1652,6 +1684,7 @@ export default {
           // unmount() ran from rendering into a disposed renderer.
           if (!gl || session !== mine) return;
           const dt = Math.min(50, now - last) / 1000; last = now;
+          if(tickBreakRoom(now)){ctx.frame(frame);return;}
           levelGroup.children.forEach(l=>{if(l.userData.deskLamp)l.intensity=matchMedia('(prefers-reduced-motion: reduce)').matches?.3:((now*.001+l.position.x)%5.3<.25?.015:.48);});
           if(!matchMedia('(prefers-reduced-motion: reduce)').matches) levelGroup.children.forEach(l=>{if(l.userData.schoolLamp)l.intensity=((now*.001+l.position.x*.17)%4.7<.22)?0:.006;});
 
@@ -1712,8 +1745,8 @@ export default {
           const lookFx = -Math.sin(player.yaw), lookFz = -Math.cos(player.yaw);   // forward, needed even when not moving (the reflection's facing check below)
 
           // flashlight battery
-          if (flashOn) { battery = Math.max(0, battery - dt * 2.4); if (battery <= 0) setFlash(false); }
-          else battery = Math.min(100, battery + dt * 1.4);
+          if (flashOn) { battery = Math.max(0, battery - dt * .55); if (battery <= 0) setFlash(false); }
+          else battery = Math.min(100, battery + dt * 3.5);
           batFill.style.setProperty("--bat", battery.toFixed(0));
 
           // page pickups: an interact prompt shows once near and looking at one, before the tighter pickup
@@ -1773,7 +1806,7 @@ export default {
             transitioning = true;
             // 0905: public's door doesn't lead to a fourth level (LEVELS_PUBLIC has exactly one entry) -- it
             // leads to the head office's desk instead. See enterHeadOffice(), defined with the desk-terminal UI.
-            if (state.level < LEVELS.length - 1) ctx.timeout(() => { advanceLevel(); buildLevel(state.level); buildLevelTail(state.level); repaintAll(); paintLeaf4(); goTo(0); transitioning = false; }, 250);
+            if (state.level < LEVELS.length - 1) { if(MODE==="public"&&state.level===0)enterBreakRoom();else ctx.timeout(() => { advanceLevel(); buildLevel(state.level); buildLevelTail(state.level); repaintAll(); paintLeaf4(); goTo(0); transitioning = false; }, 250); }
           }
 
           // monster: slides while off-frame or at the edge, holds still when watched dead-on (locked canon --

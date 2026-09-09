@@ -121,8 +121,8 @@ def dj_rack(pg):
     the fixed sequence always hits. finishGame() -> breakThrough() -> MBS.unlock('djscratch') follows."""
     pg.click("#powerSwitch", no_wait_after=True)
     pg.wait_for_timeout(400)
-    for key in ("bass", "treble", "volume", "tempo"):
-        pg.click('.knobface[data-key="%s"], .slidertrack[data-key="%s"]' % (key, key), no_wait_after=True)
+    for key,target in (("bass",8),("treble",3),("volume",7),("tempo",9)):
+        for _ in range((target-5)%11):pg.click('.knobface[data-key="%s"], .slidertrack[data-key="%s"]' % (key, key), no_wait_after=True)
         pg.wait_for_timeout(350)
     pg.wait_for_timeout(2200)   # finishGame() -> 400ms -> breakThrough()'s typed reveal -> unlock
 

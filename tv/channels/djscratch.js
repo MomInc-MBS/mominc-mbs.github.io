@@ -487,33 +487,11 @@ export default {
       el.setAttribute("aria-valuemin", "0"); el.setAttribute("aria-valuemax", "10");
       el.setAttribute("aria-label", cap(el.dataset.key));
     });
-    rack.querySelectorAll(".knobface").forEach(face => {
-      const key = face.dataset.key;
-      const fromEvent = e => {
-        const r = face.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
-        let deg = Math.atan2(e.clientY - cy, e.clientX - cx) * 180 / Math.PI + 90;
-        if (deg > 180) deg -= 360;
-        return Math.round(((Math.max(-135, Math.min(135, deg))) + 135) / 270 * 10);
-      };
-      ctx.on(face, "pointerdown", e => { e.preventDefault(); try { face.setPointerCapture(e.pointerId); } catch {} setValue(key, fromEvent(e)); registerTouch(key); });
-      ctx.on(face, "pointermove", e => { if (e.buttons) setValue(key, fromEvent(e)); });
-    });
-    rack.querySelectorAll(".slidertrack").forEach(track => {
-      const key = track.dataset.key;
-      const fromEvent = e => {
-        const r = track.getBoundingClientRect();
-        const rel = Math.max(0, Math.min(1, (e.clientY - r.top) / r.height));
-        return Math.round((1 - rel) * 10);
-      };
-      ctx.on(track, "pointerdown", e => { e.preventDefault(); try { track.setPointerCapture(e.pointerId); } catch {} setValue(key, fromEvent(e)); registerTouch(key); });
-      ctx.on(track, "pointermove", e => { if (e.buttons) setValue(key, fromEvent(e)); });
-    });
+    // One tap is one detent. Holding or dragging never skips a number.
     rack.querySelectorAll(".knobface,.slidertrack").forEach(el => {
-      ctx.on(el, "keydown", e => {
-        const key = el.dataset.key;
-        if (e.key === "ArrowUp" || e.key === "ArrowRight") { e.preventDefault(); setValue(key, state[key] + 1); registerTouch(key); }
-        else if (e.key === "ArrowDown" || e.key === "ArrowLeft") { e.preventDefault(); setValue(key, state[key] - 1); registerTouch(key); }
-      });
+      const step=delta=>{const key=el.dataset.key;setValue(key,(state[key]+delta+11)%11);registerTouch(key);};
+      ctx.on(el,"pointerdown",e=>{e.preventDefault();el.focus({preventScroll:true});step(1);});
+      ctx.on(el,"keydown",e=>{if(e.repeat)return;if(["ArrowUp","ArrowRight","Enter"," "].includes(e.key)){e.preventDefault();step(1);}else if(["ArrowDown","ArrowLeft"].includes(e.key)){e.preventDefault();step(-1);}});
     });
     // ---- THE BEAT. Synthesised only (oscillators + noise), never a file. Feeds the visualiser and the follow-game's audio.
     let actx = null, master = null, lowShelf = null, highShelf = null, analyser = null;
@@ -593,6 +571,7 @@ export default {
     // ---- THE COLOUR-FOLLOWING GAME: slow, easy, one lamp lit at a time. Follow it to the matching control.
     // Completing it earns the exact same payoff three scratches used to (breakThrough(), unchanged below).
     const SEQUENCE = ["bass", "treble", "volume", "tempo"];
+    const TARGETS={bass:8,treble:3,volume:7,tempo:9};
     const lamps = [...dj.querySelectorAll("#cueLights .lamp")];
     const cueHint = byId("cueHint");
     const scoreNum = byId("scoreNum"), scoreGrade = byId("scoreGrade");
@@ -612,11 +591,11 @@ export default {
       if (lamp) lamp.classList.add("on");
       const ctrl = rack.querySelector(`.ctrl[data-key="${key}"]`);
       if (ctrl) ctrl.classList.add("glow");
-      cueHint.textContent = "follow the light — move the " + key.toUpperCase();
+      cueHint.textContent = "Tap " + key.toUpperCase() + " to " + TARGETS[key] + " · one click = one number";
     }
     function registerTouch(key) {
       if (!gameActive || gameDone) return;
-      if (key === SEQUENCE[seqIndex]) { hits++; seqIndex++; updateScore(); nextRound(); }
+      if (key === SEQUENCE[seqIndex]) { if(state[key]!==TARGETS[key])return;hits++; seqIndex++; updateScore(); nextRound(); }
       else { misses++; updateScore(); }
     }
     function updateScore() {

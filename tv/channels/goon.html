@@ -53,6 +53,7 @@ FORM: Ian's direction 2026-08-26/27; canon in MOM Inc.md "The goon theme" and Se
       box-shadow:0 2px 0 #4a2f14, 0 4px 8px rgba(0,0,0,.5); opacity:.82; transition:opacity 120ms, transform 80ms}
   .gn .ggTap:hover, .gn .ggTap:focus-visible{opacity:1}
   .gn .ggTap:active{transform:scale(.9); opacity:1}
+  .gn .ggTap.is-hint{opacity:1;color:#fff7d9;background:#b78121;border-color:#fff6bc;box-shadow:0 0 8px 3px #fff0a8,0 0 24px 8px #ffbd3fa6;text-shadow:0 0 5px white}
   .gn .ggTap-up{top:8px; left:8px}
   .gn .ggTap-right{top:8px; right:8px}
   .gn .ggTap-left{bottom:8px; left:8px}
@@ -243,6 +244,15 @@ FORM: Ian's direction 2026-08-26/27; canon in MOM Inc.md "The goon theme" and Se
   // press replays the same mousedown/mouseup pair on the game's own canvas, 40px apart, which is all it checks.
   const ggGame = document.getElementById("ggGame");
   if(location.pathname.includes("/play/goon/"))ggGame.src=ggGame.dataset.gameSrc;
+  window.addEventListener("message",e=>{
+    if(!gn.isConnected||e.source!==ggGame.contentWindow||e.origin!==location.origin||e.data?.type!=="goon-direction-hint")return;
+    const direction=e.data.direction;
+    gn.querySelectorAll(".ggTap").forEach(button=>{
+      const active=button.dataset.dir===direction;
+      button.classList.toggle("is-hint",active);
+      button.setAttribute("aria-label","Slide the board "+button.dataset.dir+(active?" — suggested move":""));
+    });
+  });
   const TAP_OFFSET = { up: [0, -40], down: [0, 40], left: [-40, 0], right: [40, 0] };
   function ggTap(dir) {
     const off = TAP_OFFSET[dir]; if (!off) return;
