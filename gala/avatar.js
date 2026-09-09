@@ -2,7 +2,7 @@
 (()=>{'use strict';
 const sections=[
  ['body','Body','A silhouette from somewhere very far away.',['Zorbian','Vexling','Orryx','Mollu','Krell','Nymbi','Quorlan','Xelith','Dravox','Ulumi']],
- ['skin','Skin','Ten tones of otherworldly complexion.',['Nebula lilac','Reactor mint','Solar coral','Lunar porcelain','Void indigo','Comet gold','Plasma rose','Tidal teal','Martian ochre','Ghost ice']],
+ ['skin','Skin','Twenty tones of otherworldly complexion.',['Nebula lilac','Reactor mint','Solar coral','Lunar porcelain','Void indigo','Comet gold','Plasma rose','Tidal teal','Martian ochre','Ghost ice']],
  ['face','Face','Make an unforgettable first impression.',['Vela gaze','Solo orb','Triune sight','Obsidian visor','Quasar quartet','Mothkin eyes','Ziggy grin','Mollu blush','Starborn mask','Oracle six']],
  ['hair','Hair','Coiffed, grown, or very carefully hatched.',['Vex wave','Quasar crest','Nebula bob','Orbital knots','Plasma cascade','Spore crown','Void slick','Comet braid','Prism spikes','Lunar fringe']],
  ['facial','Facial details','Whiskers, frills, and social signals.',['Vela bare','Zor whiskers','Krell beard','Mollu frill','Oracle dots','Quor tendrils','Vex moustache','Dravox jaw','Nymbi veil','Ulumi sparkle']],
@@ -10,7 +10,7 @@ const sections=[
  ['neck','Neckwear','The smallest, most unreasonable finishing touch.',['Zor cravat','Vela bow','Orryx pearls','Quasar ruff','Mollu scarf','Krell collar','Xelith pendant','Nymbi ribbon','Dravox chain','Ulumi choker']],
  ['torso','Formalwear','Alien eveningwear. Excellent tailoring.',['Vex tuxedo','Mollu gown','Orryx brocade','Quasar jumpsuit','Nymbi corset','Krell robe','Xelith doublet','Dravox tailcoat','Ulumi wrap','Zor sequin suit']],
  ['shoulders','Shoulders','A little room for dramatic entrances.',['Vela epaulettes','Quor petals','Krell spikes','Nymbi puffs','Orryx mantle','Vex wings','Dravox plates','Mollu fronds','Xelith orbitals','Ulumi cape']],
- ['arms','Sleeves','Ten ways to wave at someone important.',['Vela silk','Quasar flares','Krell cuffs','Mollu lace','Orryx stripes','Vex sheer','Dravox panels','Nymbi bells','Xelith rings','Ulumi ribbons']],
+ ['arms','Sleeves','Twenty ways to wave at someone important.',['Vela silk','Quasar flares','Krell cuffs','Mollu lace','Orryx stripes','Vex sheer','Dravox panels','Nymbi bells','Xelith rings','Ulumi ribbons']],
  ['hands','Gloves','Keep your hands where MOM can see them.',['Vela gloves','Krell talons','Orryx cuffs','Quasar mesh','Mollu mitts','Vex rings','Dravox gauntlets','Nymbi ruffles','Xelith claws','Ulumi glow']],
  ['legs','Lower half','Trousers, trains, and several extra possibilities.',['Vex trousers','Mollu bell skirt','Orryx pleats','Quasar split','Nymbi bubble','Krell drape','Xelith stripes','Dravox breeches','Ulumi train','Zor shimmer']],
  ['feet','Footwear','For the marble floors of an alien palace.',['Vela slippers','Krell platforms','Orryx curltoes','Quasar boots','Mollu petals','Vex heels','Dravox greaves','Nymbi clouds','Xelith skates','Ulumi moonsteps']],
@@ -19,13 +19,36 @@ const sections=[
  ['base','Display base','A tiny piece of the palace to call your own.',['Vela marble','Orryx dais','Quasar moon','Mollu garden','Krell obsidian','Nymbi cloud','Vex carpet','Dravox grille','Xelith crystal','Ulumi orbit']],
  ['pet','Pet','A companion dressed for the same questionable occasion.',['No companion','Mollu pup','Vex moth','Orryx beetle','Quasar cat','Nymbi jelly','Krell lizard','Xelith puff','Dravox bot','Ulumi sprout']]
 ].map(([id,label,note,names])=>({id,label,note,names:[...names,...names.map(n=>'Xyrr '+(n==='No companion'?'slug':n)),...names.map(n=>'Auv '+(n==='No companion'?'slug':n)),...names.map(n=>'Oth '+(n==='No companion'?'slug':n))]}));
+// Twenty visually distinct choices per category. Keep original recipe IDs and
+// all legacy names/rendering so existing saves and coach imports remain unchanged.
+// Covers every base type; variants maximize visible differences across six outfits.
+const curatedChoices={
+ body:[0,11,2,12,32,3,13,33,14,34,15,35,6,16,36,37,18,28,19,39],
+ skin:[0,20,11,12,32,23,33,14,34,5,25,35,6,26,36,7,37,38,19,39],
+ face:[0,21,31,22,32,23,33,14,24,34,25,35,26,36,27,28,38,19,29,39],
+ hair:[0,11,31,12,22,32,13,33,14,34,15,35,36,17,27,37,18,38,19,29],
+ facial:[0,11,21,31,12,32,13,23,33,14,34,15,25,35,26,17,27,18,38,39],
+ headwear:[0,11,21,12,22,32,13,23,33,14,24,34,25,16,36,37,38,19,29,39],
+ neck:[0,20,30,11,2,13,23,33,14,24,34,15,25,36,7,27,37,28,19,29],
+ torso:[0,11,31,12,22,32,13,24,34,25,35,26,36,17,27,37,18,28,38,9],
+ shoulders:[0,30,11,12,23,33,24,15,25,35,16,36,17,27,37,18,38,19,29,39],
+ arms:[0,11,12,13,33,14,15,25,6,26,36,7,27,37,18,28,38,19,29,39],
+ hands:[0,11,21,31,12,22,33,14,24,34,25,36,17,27,37,18,28,38,9,29],
+ legs:[0,11,21,31,22,32,23,24,34,15,25,35,16,36,27,37,18,28,38,29],
+ feet:[0,11,21,31,12,32,3,13,14,24,34,25,26,36,17,37,28,38,9,29],
+ held:[0,11,21,31,32,23,33,14,24,34,25,16,17,27,37,18,28,38,29,39],
+ back:[0,11,21,31,12,22,13,23,33,14,34,15,35,16,26,17,37,38,19,29],
+ base:[0,11,2,22,32,23,4,34,5,25,35,16,26,36,37,18,28,38,19,39],
+ pet:[0,10,20,30,11,12,32,3,24,15,25,35,36,27,37,28,38,19,29,39],
+};
+sections.forEach(section=>{section.choices=curatedChoices[section.id];});
 const dyes=['#9762b6','#bd476e','#467f9e','#4b9478','#d39d46','#485aa0','#d17e52','#c7adba','#5f596d','#83b8b6'];
 const skin=['#b18fc8','#80ba98','#d78989','#ddd3c5','#7371ae','#c6a55e','#ce84b6','#67a5a6','#b77857','#a5c8d8'];
 const defaultLook={schema:'mominc-avatar',version:1,name:'Velora of the Ninth Moon',dye:0,parts:Object.fromEntries(sections.map(s=>[s.id,0]))};
-function normalize(raw){if(!raw||raw.schema!=='mominc-avatar'||raw.version!==1||!raw.parts)throw Error('Choose a MOM Inc avatar file.');const n={schema:'mominc-avatar',version:1,name:typeof raw.name==='string'?raw.name.trim().slice(0,32):'',dye:raw.dye,parts:{}};if(!Number.isInteger(n.dye)||n.dye<0||n.dye>9)throw Error('This look has an unknown silk colour.');for(const s of sections){let v=raw.parts[s.id]??(s.id==='pet'?0:undefined);if(!Number.isInteger(v)||v<0||v>=s.names.length)throw Error('This look has an unknown wardrobe piece.');n.parts[s.id]=v;}return n;}
+function normalize(raw){if(!raw||raw.schema!=='mominc-avatar'||raw.version!==1||!raw.parts)throw Error('Choose a MOM Inc avatar file.');const n={schema:'mominc-avatar',version:1,name:typeof raw.name==='string'?raw.name.trim().slice(0,32):'',dye:raw.dye,parts:{}};if(!Number.isInteger(n.dye)||n.dye<0||n.dye>9)throw Error('This look has an unknown silk colour.');for(const s of sections){let v=raw.parts[s.id]??(s.id==='pet'?0:undefined);if(!Number.isInteger(v)||v<0||v>=s.names.length)throw Error('This look has an unknown wardrobe piece.');n.parts[s.id]=v;}if(raw.weapon!=null){if(!window.GalaWeapons)throw Error('Open the updated Gala to import this weapon.');n.weapon=window.GalaWeapons.normalize(raw.weapon);}return n;}
 function tone(hex,amount){let n=parseInt(hex.slice(1),16);return '#'+[n>>16,n>>8&255,n&255].map(v=>Math.max(0,Math.min(255,v+amount)).toString(16).padStart(2,'0')).join('');}
-function draw(canvas,look,{base=true}={}){
- canvas.width=64;canvas.height=96;const c=canvas.getContext('2d');c.imageSmoothingEnabled=false;const original=look.parts,p=Object.fromEntries(Object.entries(original).map(([k,v])=>[k,v%10])),group=key=>Math.floor((original[key]||0)/10),S=tone(skin[p.skin],group('skin')*14- (group('skin')===3?60:0)),D=tone(S,-37),L=tone(S,35),F=dyes[look.dye],H=tone(F,42),B=tone(F,-40),gold='#e6c880',ink='#21172e',white='#fbebce';
+function draw(canvas,look,{base=true,weapon=true,time=0}={}){
+ const equipment=weapon&&look.weapon&&window.GalaWeapons?.unlocked(look.weapon)?look.weapon:null;canvas.width=equipment?96:64;canvas.height=96;const c=canvas.getContext('2d');c.imageSmoothingEnabled=false;const original=look.parts,p=Object.fromEntries(Object.entries(original).map(([k,v])=>[k,v%10])),group=key=>Math.floor((original[key]||0)/10),S=tone(skin[p.skin],group('skin')*14- (group('skin')===3?60:0)),D=tone(S,-37),L=tone(S,35),F=dyes[look.dye],H=tone(F,42),B=tone(F,-40),gold='#e6c880',ink='#21172e',white='#fbebce';
  const rect=(x,y,w,h,col)=>{c.fillStyle=col;c.fillRect(Math.round(x),Math.round(y),Math.round(w),Math.round(h));};
  const poly=(points,col,line=ink)=>{c.beginPath();points.forEach(([x,y],i)=>i?c.lineTo(x+.5,y+.5):c.moveTo(x+.5,y+.5));c.closePath();c.fillStyle=col;c.fill();if(line){c.strokeStyle=line;c.lineWidth=1;c.stroke();}};
  const dot=(x,y,col=gold)=>rect(x,y,1,1,col);

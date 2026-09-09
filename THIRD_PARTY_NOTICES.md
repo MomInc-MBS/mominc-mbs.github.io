@@ -106,3 +106,9 @@ THE SOFTWARE.
 ```
 
 ---
+
+## Gala gramophone recording
+
+Erik Satie, Gymnopédie No. 1. Piano performance: Robin Alciatore, courtesy of Musopen. The performer dedicated this recording to the public domain worldwide. Source and permission: https://commons.wikimedia.org/wiki/File:Erik_Satie_-_gymnopedies_-_la_1_ere._lent_et_douloureux.ogg . Source audio SHA-1: 96b2343c81047abd9723488d8540b5a2af688233.
+
+`gala/audio/satie-gramophone.mp3` is a mono, filtered derivative with added surface noise and subtle speed modulation. An in-page credit links to `gala/music.html`.

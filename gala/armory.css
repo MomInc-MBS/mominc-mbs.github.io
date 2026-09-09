@@ -1,0 +1,17 @@
+.wardrobe #armory[hidden],.wardrobe #options[hidden]{display:none}
+.wardrobe .dyes[hidden]{display:none}
+.weapon-day-note{font-size:13px;color:#bca8c5;margin:10px 0 0}
+.weapon-progress{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 10px}.weapon-progress strong,.weapon-progress span{padding:5px 9px;border:1px solid #785b3f;background:#17101e;font:16px Pixel,monospace;color:#ebcf94}
+.weapon-types{display:grid;grid-auto-flow:column;grid-template-rows:repeat(2,58px);grid-auto-columns:115px;gap:5px;overflow-x:auto;padding:3px 2px 10px;scrollbar-color:#b19058 #211329}
+.weapon-type{display:flex;align-items:center;justify-content:center;gap:5px;padding:4px;font:16px/1.05 Pixel,monospace;min-width:0}.weapon-type canvas{image-rendering:pixelated;flex-shrink:0}
+.weapon-type[aria-pressed=true],.weapon-tier[aria-pressed=true]{border-color:#ffdc8f;background:#4c3546;box-shadow:inset 0 0 0 1px #ffdc8f}
+.weapon-detail{display:grid;grid-template-columns:90px 1fr;gap:15px;align-items:center;padding:9px 12px;background:#17101f;border:1px solid #74523f;margin:8px 0}
+#weapon-preview{display:grid;place-items:center;min-height:148px}#weapon-preview canvas{image-rendering:pixelated;filter:drop-shadow(0 3px 10px #b994d533);animation:weapon-hover 4s ease-in-out infinite}
+.weapon-detail h3{font:25px/1.1 Display,Impact;margin:0 0 5px}.weapon-detail p{font-size:14px;margin:6px 0;color:#d4bfd7}.weapon-detail #weapon-lock-note{color:#e4bf7c}.weapon-detail button{margin:4px 5px 0 0;font-size:15px}
+.weapon-tiers{display:grid;grid-auto-flow:column;grid-template-rows:repeat(2,120px);grid-auto-columns:91px;gap:5px;overflow-x:auto;padding:3px 2px 10px;scrollbar-color:#b19058 #211329}
+.weapon-tier{display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px;min-width:0}.weapon-tier canvas{width:32px;height:58px;image-rendering:pixelated}.weapon-tier span{font:16px Pixel,monospace}.weapon-tier small{font:12px Georgia,serif;color:#d5b881}.weapon-tier[data-locked=true]{border-style:dashed;background:#17131e}.weapon-tier[data-locked=true] canvas{opacity:.8}.weapon-tier[aria-pressed=true]{background:#4c3546}
+.coach-progress-import{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:10px}.coach-progress-import .file-button{font-size:14px}.coach-progress-import input{position:absolute;width:1px;height:1px;opacity:0}.coach-progress-import p{flex:1;min-width:220px;font-size:14px;color:#c3b0cc;margin:0}
+.masthead{flex-wrap:wrap;gap:8px}.masthead [data-gramophone-slot]{margin-left:auto}
+@keyframes weapon-hover{50%{transform:translateY(-5px) rotate(2deg)}}
+@media(prefers-reduced-motion:reduce){#weapon-preview canvas{animation:none}}
+@media(max-width:540px){.weapon-types{grid-auto-columns:105px}.weapon-detail{grid-template-columns:65px 1fr;gap:8px;padding:8px}#weapon-preview{min-height:115px}#weapon-preview canvas{width:60px;height:108px}.weapon-detail h3{font-size:21px}.weapon-detail p{font-size:13px}.weapon-progress{gap:5px}.weapon-progress strong,.weapon-progress span{font-size:15px;padding:4px 6px}.weapon-tiers{grid-template-rows:repeat(2,110px);grid-auto-columns:81px}.weapon-tier span{font-size:14px}.coach-progress-import p{min-width:100%;font-size:13px}.masthead [data-gramophone-slot]{width:100%}}

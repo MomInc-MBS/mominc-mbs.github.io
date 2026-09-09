@@ -1,0 +1,6 @@
+.gala-gramophone{position:fixed;left:8px;top:8px;z-index:100;background:#221725ed;border:1px solid #be965c;color:#fae8bf;padding:6px 9px;max-width:190px;font:14px/1.25 Georgia,serif;box-shadow:0 3px 9px #0005}
+.gala-gramophone.is-inline{position:static;max-width:330px;display:flex;align-items:center;flex-wrap:wrap;gap:4px 10px;box-shadow:none}
+.gala-gramophone button{font:14px Georgia,serif;min-height:36px;padding:5px 8px;cursor:pointer;color:#ffe4a9;border:1px solid #886a43;background:#392639}
+.gramophone-volume{display:flex;align-items:center;gap:6px;font-size:12px}.gramophone-volume input{width:80px;accent-color:#d8b676;min-height:28px}
+.gramophone-credit{display:block;color:#c9b19b;font-size:11px;text-decoration:underline}.gala-gramophone :focus-visible{outline:2px solid #e5b9ff;outline-offset:3px}
+@media(max-width:540px){.gala-gramophone{max-width:156px;padding:4px 6px}.gala-gramophone.is-inline{max-width:none;width:100%}.gala-gramophone button{min-height:34px}.gala-gramophone.is-inline .gramophone-credit{flex-basis:100%}}

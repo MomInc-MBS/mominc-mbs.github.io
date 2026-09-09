@@ -64,3 +64,7 @@ instead of a shrug:
 ## What the gates do not cover
 
 Real touch input, real safe-area insets, and any browser that is not headless Chromium.
+
+## Gala wardrobe and armory
+
+`node tools/check_gala_curated.cjs` is dependency-free. `node tools/check_gala_armory.cjs` uses `jsdom` and `@napi-rs/canvas` from the test environment (or NODE_PATH); they are not production dependencies. It checks 420 distinct weapon renders, unlock boundaries, Coach imports, menu controls, portrait exports and music behavior without a browser. The existing Gala browser checks cover layout and play-route integration when browser testing is requested.
