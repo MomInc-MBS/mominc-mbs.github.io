@@ -1,2 +1,16 @@
 import {validRecipe} from './onboarding-domain.mjs';
-document.getElementById('finishCoach').onclick=()=>{const status=document.getElementById('coachFinishStatus');try{const recipe=JSON.parse(localStorage.getItem('myr5-recipe-v1')||'null'),armie=JSON.parse(localStorage.getItem('mbs-armie-hall-result')||'null');if(armie?.game?.hallways!==3)throw Error('Finish Coach Armie before activating your coach.');if(!validRecipe(recipe))throw Error('Choose and save your coach in the creature studio first.');localStorage.setItem('mbs-coach-customized-v1',JSON.stringify({confirmedAt:Date.now()}));window.top.location.assign('/coach-setup/');}catch(e){status.textContent=e.message;}};
+import {completedArmie} from './completion.mjs';
+const button=document.getElementById('finishCoach'),status=document.getElementById('coachFinishStatus');
+button.textContent='Use this coach →';
+status.textContent='Choose the look you like, then tap Use this coach. Your design saves automatically.';
+button.onclick=()=>{
+ try{
+  const armie=completedArmie();
+  if(!armie){status.textContent='Your last hallway is not complete yet. Return to Coach Armie to finish the run.';let link=document.getElementById('finishCoachHelp');if(!link){link=document.createElement('a');link.id='finishCoachHelp';link.href='/tv/?ch=armie';link.target='_top';link.textContent='Continue the last hallway →';button.after(link);}return;}
+  const recipe=JSON.parse(localStorage.getItem('myr5-recipe-v1')||'null');
+  if(!validRecipe(recipe))throw Error('The coach is still loading. Wait for the preview, choose your look, then tap Use this coach.');
+  localStorage.setItem('mbs-coach-customized-v1',JSON.stringify({confirmedAt:Date.now()}));
+  button.disabled=true;button.textContent='Opening your setup…';
+  window.top.location.assign('/coach-setup/');
+ }catch(e){status.textContent=e.message;}
+};

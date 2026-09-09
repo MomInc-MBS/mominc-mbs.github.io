@@ -396,16 +396,11 @@
     // fired mbs:arm, and that is the localhost test hook, so a channel listening for it never heard a thing.
     if (window.MBS.armedLeft() > 0) document.dispatchEvent(new CustomEvent("mbs:arm"));
   };
-  // --- D.1.10 (C018): complete() is the run's TERMINAL state; unlock() above is the ARG node. The six
-  // callers the plan schedules must be safe on both surfaces, and a channel fragment is loaded verbatim
-  // into either - so the call has to exist here or it throws inside the television. Only the standalone
-  // shim owns a lifecycle stream to emit GAME_COMPLETE on (mbs-shim.js); the television has never had
-  // one, which is why mount.js:22 and :96 already guard for its absence. So here complete() is the
-  // idempotent record and nothing more. It paints nothing on purpose: completion is not painted, the
-  // LCD card belongs to the unlock, and inventing an emission with no consumer would be a second
-  // lifecycle to keep in step with the first.
+  // complete() records the terminal page action for the story's sponsor gate.
+  // unlock() remains the ARG node; only the standalone shim emits GAME_COMPLETE.
   const completedSites = new Set();
   window.MBS.complete = (site) => {
+    window.MBS_STATE.completePage(site);
     if (!site || completedSites.has(site)) return false;
     completedSites.add(site);
     return true;

@@ -199,6 +199,34 @@
   }
 
   function getArmedAt() { return read().armedAt; }
+  // Story completion is separate from finding an ARG secret or earning a reward.
+  function completedPages() {
+    const s = read();
+    return activeIds().filter(id => s.channels[id]?.page?.complete === true);
+  }
+  function completePage(site) {
+    if (!site || !activeIds().includes(site)) return false;
+    const s = read();
+    if (s.channels[site]?.page?.complete) return false;
+    if (!s.channels[site]) s.channels[site] = emptyChannel();
+    s.channels[site].page = { complete: true, completedAt: Date.now() };
+    write(s);
+    if (!completedPages().includes(site)) return false;
+    // Let the finishing action finish painting before opening its sponsor message.
+    queueMicrotask(() => window.dispatchEvent(new CustomEvent('mbs:page-complete', { detail: { site } })));
+    return true;
+  }
+  function migratePageCompletions() {
+    const s = read();
+    if (s.storyVersion === 1) return;
+    // Earlier builds only saved the unlock. Preserve that existing progress once;
+    // new unlocks must go through completePage at the actual terminal action.
+    activeIds().forEach(id => {
+      if (s.channels[id]?.secret?.earned) s.channels[id].page = { complete: true, completedAt: s.channels[id].secret.earnedAt, legacy: true };
+    });
+    s.storyVersion = 1;
+    write(s);
+  }
   function setArmedAt(ts) { const s = read(); s.armedAt = ts; write(s); }
 
   function formStatus(site) {
@@ -415,12 +443,51 @@
 
   function clearEvents() { const s = read(); s.events = []; write(s); }
 
+  const STORY_CLOCK_KEY = 'mbs-story-started-at-v1', STORY_MS = 60 * 60 * 1000;
+  const STORY_KEYS = ['mbs-unlock','mbs-unlock-at','mbs-forms',BACKUP_KEY,
+    'mbs-hand-ad-shown-v1','mbs-hand-decisions-v1','mbs-armie-hall-v2',
+    'mbs-lilbf-museum','mbs-lilbf-museum-v2','mbs-lilbf-taught-v1',
+    'mbs-corgi-school','mbs-corgi-school-v2','mbs-corgi-school-v3'];
+  let storyStartedAt = 0, storyTimer;
+  function checkStorySession(reload = false) {
+    const now = Date.now();
+    let started = Number(safeGet(STORY_CLOCK_KEY));
+    if (!Number.isFinite(started) || started <= 0 || started > now) started = now;
+    const expired = now - started >= STORY_MS;
+    const changed = storyStartedAt && storyStartedAt !== started;
+    if (expired) {
+      let old;try { old = JSON.parse(safeGet(KEY)); } catch {}
+      const next = ensureChannels(emptyState());
+      // Keep saved answers available for Coach setup, but clear the round's earns.
+      if (old?.drafts && typeof old.drafts === 'object') next.drafts = old.drafts;
+      if (old?.submissions && typeof old.submissions === 'object') next.submissions = old.submissions;
+      next.storyVersion = 1;
+      try {
+        localStorage.setItem(KEY, JSON.stringify(next));
+        STORY_KEYS.forEach(key => localStorage.removeItem(key));
+        sessionStorage.removeItem(SESSION_KEY);
+      } catch {}
+      started = now;
+    }
+    storyStartedAt = started;
+    try { if (safeGet(STORY_CLOCK_KEY) !== String(started)) localStorage.setItem(STORY_CLOCK_KEY, String(started)); } catch {}
+    clearTimeout(storyTimer);
+    storyTimer = setTimeout(() => checkStorySession(true), Math.max(1, STORY_MS - (now - started)));
+    if (reload && (expired || changed)) location.reload();
+  }
+  // The hour starts when the website round starts. Reloads and clicks do not extend it.
+  checkStorySession();
+  window.addEventListener('pageshow', () => checkStorySession(true));
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) checkStorySession(true); });
+  window.addEventListener('storage', e => { if (e.key === STORY_CLOCK_KEY) checkStorySession(true); });
+
   migrate();            // before anything else reads state
+  migratePageCompletions();
   adoptCoachProfile();  // and before card.js asks for its draft
 
   window.MBS_STATE = {
     VERSION, KEY, BACKUP_KEY, QUARANTINE_KEY, read, write, migrate, completion, emptyState, emptyChannel,
-    unlockedActive, bankUnlock, getArmedAt, setArmedAt, formStatus, saveForm, formsDone,
+    unlockedActive, bankUnlock, completedPages, completePage, getArmedAt, setArmedAt, formStatus, saveForm, formsDone,
     saveDraft, draftFor, clearDraft, clearDrafts, clearSubmissions,
     addArtifact, earnedItems, adoptCoachProfile, COACH_KEY,
     recordEvent, events, clearEvents, episodeFor, sessionId, SESSION_KEY, MAX_EVENTS,
