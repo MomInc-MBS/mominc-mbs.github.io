@@ -1,8 +1,9 @@
 import {validRecipe} from './onboarding-domain.mjs';
 import {completedArmie} from './completion.mjs';
+import {coachDraft,installerURL} from './coach-draft.mjs';
 const button=document.getElementById('finishCoach'),status=document.getElementById('coachFinishStatus');
 button.textContent='Use this coach →';
-status.textContent='Choose the look you like, then tap Use this coach. Your design saves automatically.';
+status.textContent='Choose the look you like, then tap Use this coach to open the app installer.';
 button.onclick=()=>{
  try{
   const armie=completedArmie();
@@ -10,7 +11,9 @@ button.onclick=()=>{
   const recipe=JSON.parse(localStorage.getItem('myr5-recipe-v1')||'null');
   if(!validRecipe(recipe))throw Error('The coach is still loading. Wait for the preview, choose your look, then tap Use this coach.');
   localStorage.setItem('mbs-coach-customized-v1',JSON.stringify({confirmedAt:Date.now()}));
-  button.disabled=true;button.textContent='Opening your setup…';
-  window.top.location.assign('/coach-setup/');
+  const data=coachDraft(localStorage,armie,Intl.DateTimeFormat().resolvedOptions().timeZone);
+  localStorage.setItem('mbs-final-coach-draft-v1',JSON.stringify(data));
+  button.disabled=true;button.textContent='Opening the app installer…';
+  window.top.location.assign(installerURL(data));
  }catch(e){status.textContent=e.message;}
 };
