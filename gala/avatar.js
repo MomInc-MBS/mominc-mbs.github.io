@@ -110,7 +110,7 @@ function draw(canvas,look,{base=true}={}){
  case 'legs':for(const x of [26,36]){if(g===1)rect(x,65,1,12,accent);if(g===2)for(let y=65;y<77;y+=3)rect(x-1,y,4,1,accent);if(g===3)poly([[x,64],[x-3,76],[x+4,74]],H);}break;
  case 'feet':for(const x of [23-width,34]){if(g===1)rect(x-1,83,12,2,accent);if(g===2)poly([[x,80],[x-3,76],[x-5,83],[x+3,83]],H);if(g===3)gem(x+4,81,accent);}break;
  case 'held':if(g===1){rect(48,58,12,1,accent);gem(59,58,accent);}if(g===2)poly([[51,61],[57,71],[55,61]],H);if(g===3)for(const [x,y] of [[45,45],[59,48],[58,62]])gem(x,y,accent);break;
- case 'back':if(g===1){poly([[16,40],[8,62],[14,69]],H);poly([[48,40],[56,62],[50,69]],H);}if(g===2)for(const x of [12,52])for(let y=40;y<74;y+=8)gem(x,y,accent);if(g===3){rect(7,27,1,43,accent);rect(57,27,1,43,accent);rect(8,26,49,1,accent);}break;
+ case 'back':if(g===1){poly([[16,40],[8,62],[14,69]],H);poly([[48,40],[56,62],[50,69]],H);}if(g===2)for(const x of [12,52])for(let y=40;y<74;y+=8)gem(x,y,accent);if(g===3){for(const [x,y] of [[13,31],[51,31],[10,43],[54,43]])gem(x,y,accent);}break;
  case 'base':if(base){if(g===1)rect(18,92,29,2,accent);if(g===2)for(let x=15;x<52;x+=6)gem(x,91,accent);if(g===3){rect(12,94,41,1,accent);rect(10,91,2,3,accent);rect(53,91,2,3,accent);}}break;
  }}
  // Forty companion choices, including an empty slot, are part of the saved avatar recipe.
