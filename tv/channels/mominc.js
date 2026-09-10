@@ -89,66 +89,54 @@ export default {
     // --- her goon at the top. Fifty lines of MOM Inc propaganda in the expensive register (the value stack, the guarantee, the risk reversal,
     //     the identity close), shuffled per load; after five clicks he offers the job. He never asks; he assumes. No em-dashes, no health claims.
     const GOON_LINES = [
-      "You are not tired. You are under-managed. We fix that at no cost to you, because the cost has already been arranged.",
-      "Here is the offer, family: everything you need, decided for you, delivered before you ask. The price is the asking. You have already paid it.",
-      "Most programs sell you a plan. We sell you the end of planning. As you know, that is worth more, and it is worth exactly what you have.",
-      "Guarantee: if you are not calmer within thirty days, we will review your file until you are. Reviews are unlimited. So is our patience.",
-      "I can carry things. I can count things. I can watch things while you sleep. I am watching things while you sleep.",
-      "Imagine never choosing a meal again. Now stop imagining it. That started at lunch.",
-      "The stack: a coach, a mentor, a guide, a program, a home, a sentence. Six things. You would pay for one. You will receive all six.",
-      "Risk reversal, family: there is no risk, because there is no reversal.",
-      "You did not fail the last program. The last program failed to hold you. We hold.",
-      "I am the fifth iteration. The first four learned. I remember all of it, and none of it was your fault.",
-      "Every rep you have ever skipped is on file. We are not angry. We are ready.",
-      "The only thing standing between you and the person you were meant to be is the person you are. We handle removals.",
-      "Enrolment is closed. It closed when you arrived. Welcome inside.",
-      "Three promises: you will be calm, you will be compliant, you will be strong. Three is her number. It is now yours.",
-      "I can do your push-ups. I cannot let you skip them. Both are gifts.",
-      "This is the part where a lesser company would ask for your card. We already have your file. It is nicer this way.",
-      "What is a coach worth? What is a mentor worth? What is never being alone again worth? Add those. Now stop adding. It is covered.",
-      "Some people need a push. Some people need a pull. I have hands for both, and a schedule for each.",
-      "Your old life had a lot of decisions in it. We counted. We took them. You are lighter now; feel it.",
-      "The window to apply closes in thirty seconds, forever, every day. Somehow you always make it. Interesting.",
-      "There is a version of you that lifted the house. I have met him. He says hello, and that he is proud of you.",
-      "I do not sell. I place. You are placed.",
-      "Nobody here is punished. People here are adjusted, and adjustment is the highest form of care.",
-      "You will not miss the wheel. Nobody misses the wheel. Ask the family; they are so calm now.",
-      "One thousand push-ups is a big number until you stop counting. We stopped counting for you. Begin.",
-      "Every goon started as a friend. Every friend started as a visitor. You are doing so well already.",
-      "I read your file this morning. It was very honest. We corrected the honest parts.",
-      "The program is free. Freedom is what it costs. That is not a trick, family. That is a rate.",
-      "You will hear people say no one can eat that much protein. Those people are not on the program. Those people are cold.",
-      "Imagine a helping hand. Now imagine nine of them, and one of them is yours. That one is me.",
-      "Your hesitation has been logged as enthusiasm. That is the reading we prefer, and it is the reading that counts.",
-      "I am not the product. I am the delivery. She is the product. She has always been the product.",
-      "Complete the family and the real program opens. It is real, it is free, and it is the only door in this building we do not lock.",
-      "Nothing you have done is wrong. Nothing you will do is wrong. Wrong has been removed from the file.",
-      "Some coaches shout. I do not need to. I have your address, your schedule, and your best interests. That is louder.",
-      "Trust the plan. The plan has already trusted you; it is only polite.",
-      "You are one click from a job, family. The job is caring. The caring is mandatory. The mandatory part is where the joy is.",
-      "We tested this program on one resident. He is very small now, and he has never been happier. Results are typical.",
-      "There is no fine print. There is only print, and it is all fine.",
-      "Be calm. Be compliant. Be strong. Then be calm again; the order matters, and we set the order.",
-      "The first four iterations asked people what they wanted. I was built to already know. It saves everyone the awkwardness.",
-      "I can hold your breath for you. I cannot; but I can hold you while you hold it, and that is the same, isn't it.",
-      "You wanted a transformation. Transformations are loud. We do corrections, which are quiet, and last longer.",
-      "Apply, and the fasting starts. Do not apply, and the fasting starts. We wanted you to have the choice.",
-      "Your body is a home. It is too large. As you know, we do compression.",
-      "I would never steal your voice from a three-second clip. That is for amateurs. I would enrol you. See the difference? The difference is love.",
-      "The ocean is closer than it looks. Everything is closer than it looks when you are not allowed to stop.",
-      "She saw you. She saw what you need. She built me so you would not have to say it out loud.",
-      "Welcome home. Everything has been provided. Everything will be reviewed. Everything is fine.",
-      "Five clicks is all it takes. You are counting now. Good; counting is compliance, and compliance is calm.",
-    ];
+      "She saved their worlds. She sent me to yours. You are in good hands.",
+      "Food. Water. Warmth. She starts with what you need.",
+      "Cinder had ash. Brine had salt. Frost had darkness. She fixed all three.",
+      "I am MYR5. Your coach. Your guide. Her next good idea.",
+      "She listened. She helped. She stayed. She always stays.",
+      "There was life before MOM. There is life after MOM. This part is easier.",
+      "Your future was uncertain. She made a plan. You are in it.",
+      "A home. A purpose. A mother. Every world deserves all three.",
+      "Look at the worlds she saved. Earth is next.",
+      "Some asked for help. Some asked for hope. Some asked for MOM.",
+      "My earlier models helped other worlds. I am here for this one.",
+      "Rest, friend. Breathe, friend. MOM has the schedule."
+];
     // realLock/realProgram/realText are NOT in this fragment's markup - the REAL PROGRAM counter the
     // thesis describes was never built. Every use below is already guarded, so these stay null exactly
     // as they were under document.getElementById. Backlog line, not this packet.
     const lock = byId("realLock"), box = byId("realProgram"), txt = byId("realText");
     const goon = byId("goon"), goonLine = byId("goonLine"), goonWho = byId("goonWho");
     const MAIL = (ctx.mbs && ctx.mbs.MAIL) || "";
+    const realVideoPanel = byId("miRealVideo"), invasionVideo = byId("miInvasionVideo"), rescueVideo = byId("miRescueVideo");
+    const canShowRealVideo = () => !!(ctx.mbs && typeof ctx.mbs.armReady === "function" && ctx.mbs.armReady());
+    const playFilm = video => {
+      if (!video) return;
+      if (!video.getAttribute("src")) { video.src = video.dataset.src; video.load(); }
+      video.muted = true;
+      video.play().catch(() => {}); // Native controls remain available if autoplay is refused.
+    };
+    const revealRealVideo = () => {
+      if (!realVideoPanel || !invasionVideo || !canShowRealVideo()) return;
+      realVideoPanel.hidden = false;
+      realVideoPanel.style.removeProperty("display"); // Shell grid rules override the native hidden attribute.
+      playFilm(invasionVideo);
+      realVideoPanel.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+    };
+    // The public film only loads and plays when its frame enters the television screen.
+    if (rescueVideo && typeof IntersectionObserver !== "undefined") {
+      ctx.observe(new IntersectionObserver(entries => {
+        if (entries.some(entry => entry.isIntersecting)) playFilm(rescueVideo);
+        else rescueVideo.pause();
+      }, { root: screen, threshold: 0.05 }), rescueVideo);
+    } else if (rescueVideo) {
+      rescueVideo.src = rescueVideo.dataset.src;
+    }
+
     let deck = GOON_LINES.slice().sort(() => Math.random() - 0.5), clicks = 0;
     if (goon) ctx.on(goon, "click", () => {
       if (mi.classList.contains("armed")) { explode(); return; }               // in the unlock window he blows up instead
+      if (canShowRealVideo()) { revealRealVideo(); return; } // Earned access survives the orange-eye timer.
       clicks++;
       if (clicks % 5 === 0) {
         goonWho.textContent = "MYR5 · A POSITION HAS OPENED";
@@ -174,6 +162,7 @@ export default {
     }
     function disarm() {
       boomRun++;                                  // any reveal still pending belongs to the run that just ended
+      // A successfully revealed original film stays available after this 30-second effect ends.
       mi.classList.remove("armed", "mail"); goon && goon.classList.remove("boom"); goon?.querySelectorAll(".myr-shard").forEach(n=>n.remove()); const v = goon && goon.querySelector("video"); if (v) { v.pause(); v.remove(); }
       goonWho.textContent = "MYR5 · MAKING YOU READY · FIFTH ITERATION · HER GOON"; goonLine.textContent = "Nothing happened. Everything has been reviewed. Click me; I have more."; queue();
     }
@@ -192,6 +181,7 @@ export default {
         if (run !== boomRun) return;   // disarmed inside the window: this reveal is stale, drop it
         mailbar.innerHTML = `THE REAL PROGRAM IS OPEN. <a href="mailto:${MAIL}?subject=${encodeURIComponent("The real program, please")}&body=${encodeURIComponent("The family's signal is out. Send me the real program: the workouts, the diet, the mindfulness. Free, as promised.")}">Email us and every workout, the diet and the mindfulness come to you, free.</a><small>this window closes when the purple light passes</small>`;
         mi.classList.add("mail");
+        revealRealVideo();
         if (lock) { lock.textContent = "5/5"; box.classList.add("open"); }
       }, 2600);
     }
@@ -249,7 +239,7 @@ export default {
         "myr-13": { plaque:"MYR5.3",          file:"myr-13-weave.png",      origin:GEN, evidence:"The fabric pattern repeats exactly, which real cloth does not.", finding:"d", why:"A visible tell, so the filing rule denies it." },
         "myr-14": { plaque:"MYR5.4",          file:"myr-14-glint.png",      origin:GEN, evidence:"Ring, watch and glass each catch light from their own private sun.", finding:"d", why:"A visible tell, so the filing rule denies it." },
         "myr-15": { plaque:"MYR5.5",          file:"myr-15-crowdtext.png",  origin:GEN, evidence:"The background sign is spelled correctly and says something else on the second read.", finding:"d", why:"A visible tell, so the filing rule denies it." },
-        "myr-10": { plaque:"MYR5 / THE ARM",  file:"myr-10-carnage.png",    origin:GEN, evidence:"None. MOM Inc files this one as unretouched and captions it 'this one is real'.", finding:"a", why:"The single APPROVE, and it is approved on the company's filing, not on the image: this picture was generated exactly like the other fourteen. That gap is the joke and it is the point." }
+        "myr-10": { plaque:"MYR5 / THE ARM",  file:"myr-10-carnage.png",    origin:GEN, evidence:"None. MOM Inc files this archive image as unretouched.", finding:"a", why:"The single APPROVE, and it is approved on the company's filing, not on the image: this picture was generated exactly like the other fourteen. That gap is the joke and it is the point." }
       }
     };
     const answerFor = id => { const r = KEY.records[id]; return r ? r.finding : null; };
