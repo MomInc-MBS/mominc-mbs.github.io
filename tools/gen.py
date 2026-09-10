@@ -16,7 +16,7 @@ from network_pages import launch_markup, write_network_routes
 # and a clone anywhere still regenerates. (It lived outside the repo until 2026-09-06, in no commit,
 # and had accumulated three undocumented edits by the time it was moved in.)
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SITE = "https://mominc-mbs.github.io"
+SITE = "https://mominc.online"
 REG = json.load(io.open(os.path.join(ROOT, "tv", "registry.json"), encoding="utf-8"))
 
 def esc(s): return html.escape(s or "", quote=True)

@@ -26,9 +26,9 @@ def write_catalog(root,reg):
           <span class="done" data-slug="{s}" hidden>DISCOVERED</span></li>''')
     page='''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Choose your channel | MBS Games</title><meta name="description" content="MOM has arranged your recreation. Five free public games.">
-    <link rel="canonical" href="https://mominc-mbs.github.io/games/"><meta property="og:title" content="Choose your channel | MBS Games">
+    <link rel="canonical" href="https://mominc.online/games/"><meta property="og:title" content="Choose your channel | MBS Games">
     <meta property="og:description" content="A broadcast. A family. A home. Free public games from MBS.">
-    <meta property="og:image" content="https://mominc-mbs.github.io/tv/assets/mom-inc-mark.png">
+    <meta property="og:image" content="https://mominc.online/tv/assets/mom-inc-mark.png">
     <link rel="stylesheet" href="../tv/landing.css"><link rel="stylesheet" href="../tv/identity.css"></head><body class="catalog"><main>
     <nav class="landing-nav"><a href="../tv/">MBS / Television</a><a href="../files/">Your files</a></nav>
     <header class="catalog-head"><p class="eyebrow">MOM INC. RECREATION DEPARTMENT</p><h1>Make yourself<br><em>at home.</em></h1><p>A broadcast. A family. A home.</p></header>

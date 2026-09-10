@@ -1,6 +1,6 @@
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto');
 const {JSDOM}=require('jsdom'),{createCanvas}=require('@napi-rs/canvas');
-const root=path.join(__dirname,'../gala'),dom=new JSDOM('<!doctype html><body></body>',{url:'https://mominc-mbs.github.io/tv/games/goon/',runScripts:'outside-only',pretendToBeVisual:true}),w=dom.window;
+const root=path.join(__dirname,'../gala'),dom=new JSDOM('<!doctype html><body></body>',{url:'https://mominc.online/tv/games/goon/',runScripts:'outside-only',pretendToBeVisual:true}),w=dom.window;
 let reduced=false,hidden=false,earned={activeDays:365,totalXp:36500,strength:75};
 const preference=new w.EventTarget();Object.defineProperty(preference,'matches',{get:()=>reduced});w.matchMedia=()=>preference;Object.defineProperty(w.document,'hidden',{get:()=>hidden});
 const pending=new Map();let serial=0;w.requestAnimationFrame=fn=>{pending.set(++serial,fn);return serial;};w.cancelAnimationFrame=id=>pending.delete(id);
