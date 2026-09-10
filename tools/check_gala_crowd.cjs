@@ -5,10 +5,10 @@ const dom=new JSDOM('<!doctype html><body></body>',{url:'https://mominc.online/t
 let reduced=false,hidden=false,draws=0;
 const preference=new w.EventTarget();Object.defineProperty(preference,'matches',{get:()=>reduced});w.matchMedia=()=>preference;
 Object.defineProperty(w.document,'hidden',{get:()=>hidden});
-w.HTMLCanvasElement.prototype.getContext=function(){if(!this._surface||this._surface.width!==this.width||this._surface.height!==this.height)this._surface=createCanvas(this.width,this.height);return this._surface.getContext('2d');};
+w.HTMLCanvasElement.prototype.getContext=function(){if(!this._surface||this._surface.width!==this.width||this._surface.height!==this.height)this._surface=createCanvas(this.width,this.height);const ctx=this._surface.getContext('2d');return new Proxy(ctx,{get(t,k){if(k==='drawImage')return(image,...args)=>t.drawImage(image._surface||image,...args);return typeof t[k]==='function'?t[k].bind(t):t[k];},set(t,k,v){t[k]=v;return true;}});};
 // Use the actual bundled Three classes, without creating a WebGL renderer or browser.
 w.eval(bundle.slice(bundle.indexOf('const ya="180"'),bundle.indexOf('function Bp('))+';window.CrowdTestThree={Group:we,Mesh:Ut,PlaneGeometry:Pi,MeshBasicMaterial:Yn,CanvasTexture:Pn,NearestFilter:Je,SRGBColorSpace:Ve,Scene:Eu,Camera:Le,Vector:at};');
-for(const file of ['avatar.js','crowd.js'])w.eval(fs.readFileSync(path.join(site,'gala',file),'utf8'));
+for(const file of ['weapons.js','avatar.js','crowd.js'])w.eval(fs.readFileSync(path.join(site,'gala',file),'utf8'));
 const A=w.GalaAvatar,C=w.GalaCrowd,T=w.CrowdTestThree;
 const player=A.normalize(A.defaultLook),before=JSON.stringify(player),next=C.wardrobe(player);
 const looks=Array.from({length:380},next);

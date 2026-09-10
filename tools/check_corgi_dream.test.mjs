@@ -51,7 +51,7 @@ test('site progress recovery waits for the dream ending while honoring already c
     const complete = [], events = {};
     const context = {
       window: {MBS_STATE:{completedPages:()=>complete,completePage:id=>complete.push(id)},addEventListener(){},dispatchEvent(){}},
-      document: {readyState:'loading',hidden:false,body:{dataset:{}},documentElement:{dataset:{}},querySelector:()=>null,querySelectorAll:()=>[],addEventListener:(type,fn)=>events[type]=fn},
+      document: {readyState:'loading',hidden:false,head:{append(){}},createElement:()=>({}),body:{dataset:{}},documentElement:{dataset:{}},querySelector:()=>null,querySelectorAll:()=>[],addEventListener:(type,fn)=>events[type]=fn},
       location: {pathname:'/play/corgi/'},
       localStorage: {getItem:key=>key==='mbs-corgi-school-v3'?JSON.stringify({public:publicRun}):null},
       MutationObserver: class {observe(){} disconnect(){}},

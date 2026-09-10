@@ -18,6 +18,6 @@ export function mountTubFlight(host,{onComplete=()=>{},title='TUB FLIGHT',autoFu
  function flap(){if(paused)return;if(game.flap()){if(!frame){last=performance.now();frame=requestAnimationFrame(tick);}paint();}}
  const pointer=e=>{e.preventDefault();flap();};const key=e=>{if(['Space','ArrowUp','KeyW'].includes(e.code)){e.preventDefault();flap();}};
  canvas.addEventListener('pointerdown',pointer);canvas.addEventListener('keydown',key);flapButton.onclick=flap;retry.onclick=()=>{clearTimeout(redirect);game.reset();ended=false;paused=false;paint();canvas.focus();};pause.onclick=()=>{paused=!paused;schedule();};
- function visibility(){if(document.hidden){paused=true;}schedule();}document.addEventListener('visibilitychange',visibility);paint();
+ function visibility(){if(document.hidden&&game.phase==='running'){paused=true;}schedule();}document.addEventListener('visibilitychange',visibility);paint();
  return {game,pause(){paused=true;schedule();},dispose(){disposed=true;if(frame)cancelAnimationFrame(frame);clearTimeout(redirect);canvas.removeEventListener('pointerdown',pointer);canvas.removeEventListener('keydown',key);document.removeEventListener('visibilitychange',visibility);host.replaceChildren();}};
 }

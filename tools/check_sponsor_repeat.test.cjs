@@ -5,7 +5,7 @@ const path=require('node:path');
 const vm=require('node:vm');
 const root=path.resolve(__dirname,'..');
 const source=fs.readFileSync(path.join(root,'tv/network-flow.js'),'utf8');
-const required=['lilboyfriend','djscratch','corgi'];
+const required=['lilboyfriend','djscratch','corgi','goon'];
 
 function environment({done=required,storage=new Map(),pathname='/tv/'}={}){
   const finished=new Set(done),events=new Map(),docEvents=new Map(),timers=new Map();
@@ -14,7 +14,7 @@ function environment({done=required,storage=new Map(),pathname='/tv/'}={}){
   const on=(map,type,fn)=>map.set(type,[...(map.get(type)||[]),fn]);
   const localStorage={getItem:key=>storage.get(key)??null,setItem:(key,value)=>storage.set(key,String(value))};
   const document={hidden:false,readyState:'complete',activeElement:{isConnected:true,focus(){}},
-    body:{dataset:{},append(){}},documentElement:{dataset:{}},querySelector:()=>null,querySelectorAll:()=>[],
+    head:{append(){}},body:{dataset:{},append(){}},documentElement:{dataset:{}},querySelector:()=>null,querySelectorAll:()=>[],
     addEventListener:(type,fn)=>on(docEvents,type,fn),
     createElement(){const callbacks=new Map();dialog={open:false,addEventListener:(type,fn)=>on(callbacks,type,fn),showModal(){this.open=true;opens++;},close(){this.open=false;dispatch(callbacks,'close');}};return dialog;}};
   const window={addEventListener:(type,fn)=>on(events,type,fn),dispatchEvent:event=>dispatch(events,event.type,event),MBS_STATE:{completedPages:()=>[...finished],completePage(id){if(finished.has(id))return;finished.add(id);dispatch(events,'mbs:page-complete');}}};
@@ -23,8 +23,8 @@ function environment({done=required,storage=new Map(),pathname='/tv/'}={}){
   return {storage,finished,window,get open(){return !!dialog?.open;},get opens(){return opens;},close(){dialog.close();},advance(ms){const end=now+ms;for(let i=0;i<100;i++){const entry=[...timers].filter(([,t])=>t.at<=end).sort((a,b)=>a[1].at-b[1].at)[0];if(!entry)break;now=entry[1].at;timers.delete(entry[0]);entry[1].fn();}now=end;},visible(value){document.hidden=!value;dispatch(docEvents,'visibilitychange');},pageShow(){dispatch(events,'pageshow');},replay(){dispatch(docEvents,'click',{target:{closest:()=>({})}});},storageEvent(){dispatch(events,'storage');}};
 }
 
-test('the third required finished game opens one ad, without Fuel or partial completions',()=>{
- const e=environment({done:required.slice(0,2)});assert.equal(e.open,false);e.window.MBS_STATE.completePage('corgi');assert.equal(e.open,true);e.pageShow();assert.equal(e.opens,1);
+test('the fourth required finished game opens one ad, without Fuel or partial completions',()=>{
+ const e=environment({done:required.slice(0,3)});assert.equal(e.open,false);e.window.MBS_STATE.completePage('goon');assert.equal(e.open,true);e.pageShow();assert.equal(e.opens,1);
 });
 test('closing starts a full ten-second delay and repeats after each dismissal',()=>{
  const e=environment();e.close();e.advance(9999);assert.equal(e.open,false);e.advance(1);assert.equal(e.open,true);e.close();e.advance(10000);assert.equal(e.opens,3);
