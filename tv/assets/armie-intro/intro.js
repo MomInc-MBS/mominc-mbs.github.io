@@ -1,4 +1,4 @@
-import {continueScene} from './game-scene.js';
+import {continueScene} from './game-scene.js?v=maze-1';
 import * as THREE from './vendor/three.module.js';
 import {GLTFLoader} from './vendor/GLTFLoader.js';
 import {bindHand,applyHandPose} from './pose-rig.js';
