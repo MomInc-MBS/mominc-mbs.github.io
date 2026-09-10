@@ -1,6 +1,6 @@
 /* A lowered handset leaves the first-person route and obstacles visible. */
 #ar.ar-playing .ar-tap{display:none!important}
-#ar.ar-playing .ar-phone{transition:transform .45s ease,opacity .25s}
+#ar.ar-playing .ar-phone{transition:bottom .45s ease,transform .45s ease,opacity .25s}
 #ar.ar-playing.ar-maze-mode .ar-phone{bottom:0;transform:translateY(calc(100% - 88px));pointer-events:none}
 #ar.ar-playing.ar-maze-mode .ar-phone-brand{padding-bottom:4px}
 #ar.ar-playing.ar-maze-mode .ar-side{min-height:130px;padding:8px 12px}
@@ -24,13 +24,25 @@
 /* The pause button lives outside the handset's transformed coordinate space. */
 #ar .ar-maze-pause{position:absolute;left:14px;bottom:max(14px,env(safe-area-inset-bottom));z-index:11;min-height:44px;padding:8px 12px;background:#15221de8;color:#e7e5c3;border:1px solid #acb487;font:13px monospace}
 #ar .ar-maze-pause[hidden]{display:none}
-@media(max-width:650px){#ar.ar-playing.ar-maze-mode .ar-phone{right:18px;width:210px;transform:translateY(calc(100% - 69px))}#ar .ar-run-controls{padding-bottom:85px}#ar .ar-run-buttons{gap:7px}#ar .ar-run-buttons button{font-size:13px;min-height:54px}#ar .ar-run-controls p{font-size:11px}#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-phone{bottom:12px}#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-caption{display:none}}
+@media(max-width:650px){#ar.ar-playing.ar-maze-mode .ar-phone{right:18px;width:210px;transform:translateY(calc(100% - 69px))}#ar .ar-run-controls{padding-bottom:85px}#ar .ar-run-buttons{gap:7px}#ar .ar-run-buttons button{font-size:13px;min-height:54px}#ar .ar-run-controls p{font-size:11px}#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-caption{display:none}}
 @media(prefers-reduced-motion:reduce){#ar.ar-playing .ar-phone{transition:none}}
 #ar.ar-motion-off .ar-phone{transition:none}
-#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-phone{bottom:-66px}
+/* Raise the whole handset for taps, clear of the mobile home indicator. */
+#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-phone{bottom:max(20px,env(safe-area-inset-bottom));transform:translateY(0);max-height:calc(100% - max(64px,env(safe-area-inset-top)) - max(20px,env(safe-area-inset-bottom)))}
 #ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-side{min-height:0;max-height:none;padding:10px 14px}
 #ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-side:before,#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-hud,#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-steps,#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-eyebrow,#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-side h2,#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-look,#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-muted:not(#ar-time){display:none}
 #ar.ar-playing #ar-phone-tap{width:100%;min-height:52px;font:bold 17px monospace;touch-action:manipulation}
 #ar.ar-playing:has(.ar-view[data-phase="tap"]) #ar-tap-count{font-size:24px;margin:0 0 5px}
 #ar.ar-playing:has(.ar-view[data-phase="tap"]) #ar-time{font-size:12px;margin:5px 0}
-@media(max-width:650px){#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-phone{bottom:-68px}#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-phone-brand{padding:0 0 5px}#ar.ar-playing:has(.ar-view[data-phase="tap"]) #ar-motion-toggle{display:none}}
+@media(max-width:650px){#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-phone-brand{padding:0 0 5px}#ar.ar-playing:has(.ar-view[data-phase="tap"]) #ar-motion-toggle{display:none}}
+/* On short screens, keep the tap controls ahead of decorative phone chrome. */
+@media(max-height:500px){
+  #ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-phone{padding:10px}
+  #ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-phone-brand{padding:0 0 5px}
+  #ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-phone-brand:before,
+  #ar.ar-playing:has(.ar-view[data-phase="tap"]) #ar-motion-toggle,
+  #ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-phone-nav,
+  #ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-phone-keys{display:none}
+  #ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-side{padding:6px 14px}
+  #ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-clock{margin-top:8px}
+}
