@@ -1,13 +1,18 @@
 // Shared deterministic rules: exactly two lanes and three reusable trap designs.
 export const LANES = [-.9, .9];
 export const TRAPS = ['crack', 'rubble', 'wall'];
-export const LENGTH = 58;
+export const TURN_AT = 36;
+export const LENGTH = 102;
 export function courseFor(seed = 0) {
   const turn = seed % 2 ? 'right' : 'left';
   return [
     {type:'crack', at:13, lane:null},
-    {type:'turn', at:28, direction:turn},
-    {type:seed % 2 ? 'wall' : 'rubble', at:42, lane:seed % 2},
+    {type:'rubble', at:24, lane:seed % 2},
+    {type:'turn', at:TURN_AT, direction:turn},
+    {type:'wall', at:47, lane:(seed + 1) % 2},
+    {type:'crack', at:60, lane:null},
+    {type:'rubble', at:73, lane:(seed + 1) % 2},
+    {type:'wall', at:86, lane:seed % 2},
   ];
 }
 export function createRun(seed = 0, assisted = false) {
@@ -49,15 +54,16 @@ export function step(run, delta) {
 export function hint(run) {
   if(run.paused) return 'Run paused';
   const e=upcoming(run), left=e?e.at-run.distance:100;
-  if(!e || left>11) return 'Keep running';
+  if(!e) return 'JUNCTION AHEAD · READ THE THREE DOORS';
+  if(left>11) return 'MOM INC · KEEP RUNNING';
   if(e.type==='turn') return `${e.direction==='left'?'←':'→'} SWIPE ${e.direction.toUpperCase()} TO TURN${run.turn===e.direction?' · READY':''}`;
-  if(e.type==='crack') return left<3?'SWIPE UP ↑ · JUMP NOW':'CRACK AHEAD · SWIPE UP ↑';
-  if(e.type==='wall' && run.lane===e.lane)return left<3?'SWIPE DOWN ↓ · SLIDE NOW':'LOW WALL · SLIDE ↓ OR DODGE';
+  if(e.type==='crack') return left<3?'SWIPE UP ↑ · JUMP NOW':'DECK BREACH · SWIPE UP ↑';
+  if(e.type==='wall' && run.lane===e.lane)return left<3?'SWIPE DOWN ↓ · SLIDE NOW':'ENERGY SHUTTER · SLIDE ↓ OR DODGE';
   if(run.lane!==e.lane)return 'OPEN LANE · KEEP RUNNING';
-  return `FALLEN STONE · ${e.lane===0?'SWIPE RIGHT →':'← SWIPE LEFT'}`;
+  return `FALLEN CARGO · ${e.lane===0?'SWIPE RIGHT →':'← SWIPE LEFT'}`;
 }
 // World route turns a real 90 degrees, then continues down the next corridor.
 export function pathAt(distance, seed) {
   const sign=seed%2?1:-1, d=Math.max(0,distance);
-  return d<=28?{x:0,z:-d,yaw:0}:{x:sign*(d-28),z:-28,yaw:-sign*Math.PI/2};
+  return d<=TURN_AT?{x:0,z:-d,yaw:0}:{x:sign*(d-TURN_AT),z:-TURN_AT,yaw:-sign*Math.PI/2};
 }

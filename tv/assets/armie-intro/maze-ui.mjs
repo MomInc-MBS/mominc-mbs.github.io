@@ -1,11 +1,11 @@
-import {createRun,input,step,hint,LENGTH} from './maze-run.mjs?v=swipe-2';
+import {createRun,input,step,hint,LENGTH} from './maze-run.mjs?v=ship-3';
 import {swipeAction} from './swipe-input.mjs?v=swipe-2';
 
-export function mountRunner({root,onState,onHit,onComplete}) {
+export function mountRunner({root,onState,onHit,onComplete,getLives=()=>3}) {
   let run=null,raf=0,last=0,gesture=null;
   let buttonsShown=!(matchMedia('(pointer: coarse)').matches||navigator.maxTouchPoints>0);
   const controls=document.createElement('div');controls.className='ar-run-controls';controls.hidden=true;
-  controls.innerHTML='<div class="ar-run-guide" aria-live="polite"></div><div class="ar-run-buttons" id="ar-run-buttons"><button type="button" data-run="left" aria-label="Move to left lane or turn left">← LEFT</button><button type="button" data-run="jump" aria-label="Jump over crack or fallen stone">JUMP ↑</button><button type="button" data-run="slide" aria-label="Slide under a low wall">SLIDE ↓</button><button type="button" data-run="right" aria-label="Move to right lane or turn right">RIGHT →</button></div><p>← → dodge / turn &nbsp; ↑ jump &nbsp; ↓ slide</p><button type="button" class="ar-controls-toggle" aria-controls="ar-run-buttons">Show buttons</button>';
+  controls.innerHTML='<div class="ar-run-lives" aria-live="polite"></div><div class="ar-run-guide" aria-live="polite"></div><div class="ar-run-buttons" id="ar-run-buttons"><button type="button" data-run="left" aria-label="Move to left lane or turn left">← LEFT</button><button type="button" data-run="jump" aria-label="Jump over deck breach or fallen cargo">JUMP ↑</button><button type="button" data-run="slide" aria-label="Slide under an energy shutter">SLIDE ↓</button><button type="button" data-run="right" aria-label="Move to right lane or turn right">RIGHT →</button></div><p>← → dodge / turn &nbsp; ↑ jump &nbsp; ↓ slide</p><button type="button" class="ar-controls-toggle" aria-controls="ar-run-buttons">Show buttons</button>';
   const buttonRow=controls.querySelector('.ar-run-buttons'),toggle=controls.querySelector('.ar-controls-toggle');
   function showButtons(){buttonRow.hidden=!buttonsShown;toggle.textContent=buttonsShown?'Hide buttons':'Show buttons';toggle.setAttribute('aria-expanded',String(buttonsShown));}
   toggle.onclick=()=>{buttonsShown=!buttonsShown;showButtons();};showButtons();
@@ -14,6 +14,7 @@ export function mountRunner({root,onState,onHit,onComplete}) {
   const guide=controls.querySelector('.ar-run-guide');
   function announce(){
     if(!run)return;
+    controls.querySelector('.ar-run-lives').textContent=getLives()+' / 3 LIVES';
     const message=hint(run);if(guide.textContent!==message)guide.textContent=message;
     const status=root.querySelector('#ar-run-message'),text=run.paused?'Coach can wait.':`${Math.round(run.distance/LENGTH*100)}% · ${run.lane===0?'LEFT':'RIGHT'} LANE`;if(status&&status.textContent!==text)status.textContent=text;
     const pause=root.querySelector('#ar-run-pause'),pauseText=run.paused?'Resume run':'Pause run';if(pause&&pause.textContent!==pauseText)pause.textContent=pauseText;
