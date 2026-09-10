@@ -40,7 +40,9 @@ function options(id:string,entries:ReadonlyArray<readonly [unknown,string]>){for
 options('eyeLayout',Object.entries(EYE_LAYOUTS).map(([key,value])=>[key,value.label]));options('pupil',PUPILS);options('coach',COACHES.map(c=>[c.id,c.name]));options('coachSituation',SITUATIONS);
 for(const [id,min,max] of [['fingers',2,6],['toes',1,6]] as const)options(id,Array.from({length:max-min+1},(_,i)=>[i+min,String(i+min)]));
 $('coachSituation').addEventListener('change',coachPreview);
-for(const region of REGIONS){const b=document.createElement('button'),dot=document.createElement('i');dot.setAttribute('aria-hidden','true');b.append(dot,SHORT[region]);b.title=LABELS[region];b.dataset.region=region;b.onclick=()=>{selected=region;sync();};$('parts').append(b);}
+function focusPart(region:Region){selected=region;sync();viewer?.focusRegion(region);}
+for(const region of REGIONS){const b=document.createElement('button'),dot=document.createElement('i');dot.setAttribute('aria-hidden','true');b.append(dot,SHORT[region]);b.title=LABELS[region];b.dataset.region=region;b.onclick=()=>focusPart(region);$('parts').append(b);}
+for(const [id,region] of Object.entries({eyeLayout:'eye',eye:'eye',pupil:'eye',iris:'eye',pupilSize:'eye',fingers:'arms',toes:'feet',fur:'collar',detail:'body'}))$(id).addEventListener('focus',()=>focusPart(region as Region));
 PICKER_STYLES.forEach(style=>{const index=style.id;const b=document.createElement('button');b.dataset.style=String(index);const img=document.createElement('img');img.src=new URL(`./styles/${String(index).padStart(2,'0')}.png`,location.href).href;img.alt='';img.loading='lazy';const label=document.createElement('span');label.textContent=style.name;b.append(img,label);b.onclick=()=>commit({...recipe,styles:{...recipe.styles,[selected]:index}});$('styles').append(b);});
 Object.entries(GESTURES).forEach(([id,gesture])=>{const b=document.createElement('button');b.textContent=gesture.label;b.dataset.gesture=id;b.setAttribute('aria-pressed',String(id==='idle'));b.onclick=()=>{viewer?.play(id as Gesture);$('motionLabel').textContent=gesture.label;};$('gestures').append(b);});
 for(const id of ['eyeLayout','fingers','toes','eye','pupil','coach'])$(id).addEventListener('change',()=>{const input=$(id) as HTMLInputElement;commit({...recipe,[id]:['fingers','toes'].includes(id)?Number(input.value):input.value});});
@@ -50,7 +52,7 @@ for(const id of ['fur','iris','pupilSize','detail']){
  for(const event of ['change','blur','pointercancel'])input.addEventListener(event,()=>{activeRange=null;});
 }
 const tabs=[...document.querySelectorAll<HTMLButtonElement>('[data-menu]')];
-function openMenu(tab:HTMLButtonElement){activeRange=null;for(const b of tabs){const active=b===tab;b.setAttribute('aria-selected',String(active));b.tabIndex=active?0:-1;$(b.getAttribute('aria-controls')!).hidden=!active;}(document.querySelector('.console-scroll') as HTMLElement).scrollTop=0;}
+function openMenu(tab:HTMLButtonElement){activeRange=null;for(const b of tabs){const active=b===tab;b.setAttribute('aria-selected',String(active));b.tabIndex=active?0:-1;$(b.getAttribute('aria-controls')!).hidden=!active;}if(tab.dataset.menu==='face')focusPart('eye');else if(tab.dataset.menu==='body')focusPart('body');(document.querySelector('.console-scroll') as HTMLElement).scrollTop=0;}
 tabs.forEach((b,index)=>{b.onclick=()=>openMenu(b);b.onkeydown=event=>{let next=index;if(event.key==='ArrowRight')next=(index+1)%tabs.length;else if(event.key==='ArrowLeft')next=(index+tabs.length-1)%tabs.length;else if(event.key==='Home')next=0;else if(event.key==='End')next=tabs.length-1;else return;event.preventDefault();openMenu(tabs[next]);tabs[next].focus();};});
 $('applyAll').onclick=()=>commit({...recipe,styles:Object.fromEntries(REGIONS.map(r=>[r,recipe.styles[selected]])) as Design['styles']});
 $('undo').onclick=()=>{if(!undo.length)return;activeRange=null;redo.push(recipe);recipe=undo.pop()!;render('Undo applied',true);};
@@ -60,7 +62,7 @@ $('importFile').addEventListener('change',async event=>{const input=event.target
 $('exportRecipe').onclick=()=>download(new Blob([JSON.stringify(recipe,null,2)],{type:'application/json'}),'myr5-recipe.json');
 $('exportGLB').onclick=async()=>{if(!ready||!viewer)return;try{tell('Preparing your animated model…');download(await viewer.exportGLB(),'myr5-animated.glb');tell('Animated model downloaded');}catch(error){tell((error as Error).message);}};
 $('front').onclick=()=>viewer?.resetView();
-$('back').onclick=()=>{if(!viewer)return;viewer.camera.position.set(0,2.65,-8.9);viewer.orbit.target.set(0,1.95,0);viewer.orbit.update();};
+$('back').onclick=()=>{if(!viewer)return;viewer.resetView();viewer.camera.position.set(0,2.65,-8.9);viewer.orbit.update();};
 $('pauseMotion').onclick=()=>{if(!viewer)return;viewer.setPaused(!viewer.paused);$('pauseMotion').textContent=viewer.paused?'Play motion':'Pause motion';$('pauseMotion').setAttribute('aria-pressed',String(viewer.paused));};
 function applyMotion(){viewer?.setSettings({...settings,reduced:settings.reduced||systemMotion.matches});}
 ($('amount') as HTMLInputElement).value=String(settings.amount);$('amountValue').textContent=settings.amount.toFixed(2);($('ambient') as HTMLInputElement).checked=settings.ambient;($('reduced') as HTMLInputElement).checked=settings.reduced;

@@ -7,6 +7,7 @@ import {GLTFExporter} from 'three/examples/jsm/exporters/GLTFExporter.js';
 import {OBJExporter} from 'three/examples/jsm/exporters/OBJExporter.js';
 import {assembleCreature} from './creator/assemble';
 import {REGIONS,type Design,type Region} from './design';
+import {regionBounds,frameRegion} from './creator/camera-focus';
 export type ViewerHandle={exportFile:(format:'glb'|'obj'|'png')=>Promise<void>;front:()=>void;back:()=>void};
 type Props={design:Design;selected:Region;hologram:boolean;parts:boolean;playing:boolean;onPick:(r:Region)=>void;onReady:()=>void};
 type Assembly=Awaited<ReturnType<typeof assembleCreature>>;
@@ -16,7 +17,8 @@ function download(blob:Blob,name:string){const url=URL.createObjectURL(blob),a=d
 export const AlienViewer=forwardRef<ViewerHandle,Props>(function AlienViewer(props,ref){
  const mount=useRef<HTMLDivElement>(null),engine=useRef<Engine|null>(null),latest=useRef(props);latest.current=props;
  const [started,setStarted]=useState(false),[status,setStatus]=useState('Waking up MYR5…');
- const look=(z:number)=>{const e=engine.current;if(e){e.holder.rotation.y=0;e.camera.position.set(0,2.8,z);e.orbit.target.set(0,1.95,0);e.orbit.update();}};
+ const focus=()=>{const e=engine.current;if(!e?.assembly)return;e.holder.rotation.y=0;const region=latest.current.selected;let box=regionBounds(e.assembly.root,region);if(box.isEmpty()&&region==='eye')box=regionBounds(e.assembly.root,'head');frameRegion(e.camera,e.orbit,box);};
+ const look=(z:number)=>{const e=engine.current;if(e){e.holder.rotation.y=0;e.orbit.minDistance=5.2;e.camera.position.set(0,2.8,z);e.orbit.target.set(0,1.95,0);e.orbit.update();}};
  useImperativeHandle(ref,()=>({front:()=>look(8.5),back:()=>look(-8.5),async exportFile(format){
   const e=engine.current;if(!e?.assembly)throw Error('Wait for the coach to load.');
   if(format==='png'){e.renderer.render(e.scene,e.camera);const b=await new Promise<Blob|null>(r=>e.renderer.domElement.toBlob(r));if(!b)throw Error('Image could not be saved.');download(b,'myr5-preview.png');return;}
@@ -43,8 +45,9 @@ export const AlienViewer=forwardRef<ViewerHandle,Props>(function AlienViewer(pro
   assembleCreature(props.design,BASE).then(next=>{if(engine.current!==e||run!==e.revision){next.dispose();return;}e.assembly?.root.removeFromParent();e.assembly?.dispose();e.assembly=next;e.holder.add(next.root);
    if(props.parts){const offsets:Record<Region,number[]>={head:[0,.65,0],eye:[0,.18,1],collar:[0,-.1,0],body:[0,-.45,0],arms:[.45,0,0],feet:[0,-.65,0]};for(const child of next.root.children){if(REGIONS.includes(child.name as Region))child.position.fromArray(offsets[child.name as Region]);else for(const detail of child.children)if(offsets[detail.userData.region as Region])detail.position.fromArray(offsets[detail.userData.region as Region]);}}
    if(props.hologram)next.root.traverse(o=>{if(o instanceof T.Mesh&&!/cavity/i.test(o.name)){const m=o.material as T.MeshStandardMaterial;m.emissive.set('#664999');m.emissiveIntensity=.3;}});
-   setStatus('');latest.current.onReady();
+   focus();setStatus('');latest.current.onReady();
   }).catch(()=>{if(run===e.revision)setStatus('This material could not load. Choose a style to retry.');});
  },[started,props.design,props.parts,props.hologram]);
+ useEffect(()=>{focus();},[props.selected]);
  return <div className="hand-viewer-wrap"><div className="hand-canvas" ref={mount}/>{status&&<div className="model-status" role="status">{status}</div>}</div>;
 });

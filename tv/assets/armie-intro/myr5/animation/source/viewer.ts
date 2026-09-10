@@ -7,17 +7,22 @@ import {createRig,disposeObject,type CreatureRig} from './rig';
 import {MotionController,type Gesture} from './motion';
 import {importCreature,motionSettings} from './profile';
 import {sampleShot,SHOTS,type Cinematic} from './cinematic-shots';
+import {regionBounds,frameRegion} from './creator/camera-focus';
+import {REGIONS,type Region} from './creator/design';
 
 export class CreatureViewer {
+ regionBoxes=new Map<Region,T.Box3>();focused:Region|null=null;
+ focusRegion(region:Region){this.focused=region;const box=this.regionBoxes.get(region);return box?frameRegion(this.camera,this.orbit,box):false;}
+ homeView(){if(!this.interactive&&this.stage==='pod')this.focusRegion('head');}
  cinematicKind:Cinematic|null=null;
  cinematic(kind:Cinematic|null,elapsed=0){
-  if(!kind){if(!this.cinematicKind)return;this.cinematicKind=null;const giant=this.stage==='encounter';this.camera.position.set(0,giant?2.1:2.65,giant?5.8:8.9);this.orbit.target.set(0,giant?2.25:1.95,0);this.camera.fov=giant?32:36;this.camera.updateProjectionMatrix();this.orbit.update();this.play('idle');return;}
+  if(!kind){if(!this.cinematicKind)return;this.cinematicKind=null;this.resetStageView();this.play('idle');return;}
   if(!Object.hasOwn(SHOTS,kind)||this.settings.reduced)return;
   if(this.cinematicKind!==kind){this.cinematicKind=kind;this.play(SHOTS[kind].gesture);}
   const [x,y,z,target]=sampleShot(kind,elapsed);this.camera.position.set(x,y,z);this.orbit.target.set(0,target,0);this.camera.fov=36;this.camera.updateProjectionMatrix();this.orbit.update();
  }
  scene=new T.Scene();camera=new T.PerspectiveCamera(36,1,.1,50);renderer:T.WebGLRenderer;orbit:OrbitControls;rig:CreatureRig|null=null;motion:MotionController|null=null;generation=0;disposed=false;frame=0;last=0;visible=true;settings=motionSettings(null);resizeObserver:ResizeObserver;visibilityObserver:IntersectionObserver;gesture:Gesture='idle';paused=false;stage:'pod'|'encounter'='pod';floorObjects:T.Object3D[]=[];
- constructor(public mount:HTMLElement,public assetBase:string,interactive=true){
+ constructor(public mount:HTMLElement,public assetBase:string,public interactive=true){
   this.renderer=new T.WebGLRenderer({antialias:true,alpha:true,preserveDrawingBuffer:true,powerPreference:'low-power'});
   this.renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));this.renderer.outputColorSpace=T.SRGBColorSpace;this.renderer.toneMapping=T.ACESFilmicToneMapping;
   const environment=new RoomEnvironment(),pmrem=new T.PMREMGenerator(this.renderer);this.scene.environment=pmrem.fromScene(environment,.04).texture;environment.dispose();pmrem.dispose();
@@ -31,19 +36,20 @@ export class CreatureViewer {
   this.visibilityObserver=new IntersectionObserver(entries=>{this.visible=entries[0].isIntersecting;});this.visibilityObserver.observe(mount);
   const tick=(now:number)=>{if(this.disposed)return;this.frame=requestAnimationFrame(tick);const dt=Math.min(.05,(now-this.last)/1000);if(now-this.last<32)return;this.last=now;if(!this.visible||document.hidden)return;this.motion?.update(dt);this.orbit.update();this.renderer.render(this.scene,this.camera);};this.frame=requestAnimationFrame(tick);
  }
- resize(){const {width,height}=this.mount.getBoundingClientRect();if(width&&height){this.renderer.setSize(width,height,false);this.camera.aspect=width/height;this.camera.updateProjectionMatrix();}}
+ resize(){const {width,height}=this.mount.getBoundingClientRect();if(width&&height){this.renderer.setSize(width,height,false);this.camera.aspect=width/height;this.camera.updateProjectionMatrix();if(!this.cinematicKind){if(this.focused&&this.interactive)this.focusRegion(this.focused);else this.homeView();}}}
  async setRecipe(raw:unknown){
   const recipe=importCreature(JSON.stringify(raw)),generation=++this.generation;
   const assembly=await assembleCreature(recipe,this.assetBase);let rig:CreatureRig;
-  try{if(this.disposed||generation!==this.generation)return false;rig=createRig(assembly.root,recipe);}finally{assembly.dispose();}
+  try{if(this.disposed||generation!==this.generation)return false;this.regionBoxes=new Map(REGIONS.map(region=>[region,regionBounds(assembly.root,region)]));if(this.regionBoxes.get('eye')!.isEmpty())this.regionBoxes.set('eye',this.regionBoxes.get('head')!.clone());rig=createRig(assembly.root,recipe);}finally{assembly.dispose();}
   if(this.rig){this.motion?.dispose();this.scene.remove(this.rig.root);disposeObject(this.rig.root);}
-  this.rig=rig!;this.motion=new MotionController(rig!);Object.assign(this.motion,this.settings,{paused:this.paused});this.scene.add(rig!.root);this.motion.play(this.gesture);return true;
+  this.rig=rig!;this.motion=new MotionController(rig!);Object.assign(this.motion,this.settings,{paused:this.paused});this.scene.add(rig!.root);this.motion.play(this.gesture);if(!this.cinematicKind){if(this.interactive&&this.focused)this.focusRegion(this.focused);else this.homeView();}return true;
  }
  play(id:Gesture){this.gesture=id;this.motion?.play(id);}
  setSettings(settings:ReturnType<typeof motionSettings>){this.settings=settings;if(this.motion)Object.assign(this.motion,settings);}
  setPaused(paused:boolean){this.paused=paused;if(this.motion)this.motion.paused=paused;}
- setStage(stage:'pod'|'encounter'){if(this.stage===stage)return;this.stage=stage;const giant=stage==='encounter';this.floorObjects.forEach(o=>o.visible=!giant);this.orbit.minDistance=giant?4:6;this.camera.fov=giant?32:36;this.camera.position.set(0,giant?2.1:2.65,giant?5.8:8.9);this.orbit.target.set(0,giant?2.25:1.95,0);this.camera.updateProjectionMatrix();this.orbit.update();this.resize();}
- resetView(){this.camera.position.set(0,2.65,8.9);this.orbit.target.set(0,1.95,0);this.orbit.update();}
+ resetStageView(){const giant=this.stage==='encounter';this.orbit.minDistance=giant?4:6;this.orbit.maxDistance=14;this.camera.fov=giant?32:36;this.camera.position.set(0,giant?2.1:2.65,giant?5.8:8.9);this.orbit.target.set(0,giant?2.25:1.95,0);this.camera.updateProjectionMatrix();this.orbit.update();this.homeView();}
+ setStage(stage:'pod'|'encounter'){this.stage=stage;this.focused=null;this.floorObjects.forEach(o=>o.visible=stage!=='encounter');if(!this.cinematicKind)this.resetStageView();this.resize();}
+ resetView(){this.focused=null;this.orbit.minDistance=6;this.camera.position.set(0,2.65,8.9);this.orbit.target.set(0,1.95,0);this.orbit.update();}
  async exportGLB(){
   if(!this.rig||!this.motion)throw Error('Wait for your creature to load.');
   // Export a clean neutral clone and the same reusable clips used in the app.
