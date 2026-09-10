@@ -3,11 +3,11 @@ const $=id=>document.getElementById(id),canvas=(weapon,width=40,height=72)=>{con
 function progress(){const p=P.read();$('weapon-xp').textContent=p.totalXp.toLocaleString()+' XP';$('weapon-strength').textContent='Strength '+p.strength;$('weapon-days').textContent=p.activeDays+' coach '+(p.activeDays===1?'day':'days');$('weapon-sync-note').textContent=p.importedAt?'Progress imported '+new Date(p.importedAt).toLocaleDateString()+'. Import again after more coaching days.':'In MYR5 Coach, open Progress → Download my data, then import that file here.';return p;}
 function detail(){const value={type,tier},p=progress(),r=W.requirements(value),canEquip=W.unlocked(value,p),equipped=api.getLook().weapon;
  $('weapon-name').textContent=W.name(value);$('weapon-preview').replaceChildren(canvas(value,80,144));
- $('weapon-requirements').textContent=tier===0?'Level 1 · Unlocked from the start':`${r.days} coach ${r.days===1?'day':'days'} · ${r.xp.toLocaleString()} XP · Strength ${r.strength}`;
+ const trained=W.trainingProgress(value,p);
+ $('weapon-requirements').textContent=tier===0?`${r.label} · Starter weapon`:`${r.xp.toLocaleString()} ${r.label} XP · ${r.days} completed days`;
  const selected=equipped?.type===type&&equipped?.tier===tier;
  $('weapon-equip').disabled=!canEquip||selected;$('weapon-equip').textContent=selected&&canEquip?'Equipped':canEquip?'Equip floating weapon':'Locked';
- const missing=[];if(p.activeDays<r.days)missing.push(`${r.days-p.activeDays} more coach ${r.days-p.activeDays===1?'day':'days'}`);if(p.strength<r.strength)missing.push(`Strength ${r.strength}`);
- $('weapon-lock-note').textContent=canEquip?'Ready to wield.':`Preview only · needs ${missing.join(' and ')}.`;
+ $('weapon-lock-note').textContent=p.trainingVersion!==1&&tier>0?'Import Coach data again to load category XP.':`${trained.totalXp} ${r.label} XP · `+(canEquip?'Ready to wield.':`${Math.max(0,r.xp-trained.totalXp)} XP to unlock · +100 per completed category day`);
  $('weapon-equipped').textContent=equipped?(W.unlocked(equipped,p)?'Equipped: ':'Saved weapon locked: ')+W.name(equipped):'No weapon equipped';$('weapon-remove').disabled=!equipped;
  for(const button of $('weapon-tiers').children)button.setAttribute('aria-pressed',String(Number(button.dataset.tier)===tier));
  for(const button of $('weapon-types').children)button.setAttribute('aria-pressed',String(button.dataset.type===type));

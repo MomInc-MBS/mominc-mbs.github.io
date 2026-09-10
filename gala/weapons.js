@@ -1,12 +1,13 @@
 /* Original modular sci-fi pixel weapons. Stable family IDs preserve saved loadouts. Tier zero plus twenty upgrades per family. */
 (()=>{'use strict';
-const types=[['rapier','Plasma blade'],['greatsword','Ion cleaver'],['dagger','Phase dagger'],['sabre','Arc pistol'],['axe','Pulse rifle'],['hammer','Rail cannon'],['mace','Tesla emitter'],['flail','Tether drone'],['spear','Particle lance'],['trident','Tri-beam fork'],['halberd','Rocket pod'],['scythe','Gravity reaper'],['bow','Photon bow'],['crossbow','Gauss launcher'],['chakram','Orbit disc'],['gauntlets','Power gauntlets'],['staff','Gravity rod'],['wand','Sonic disruptor'],['tome','Nanite hive'],['cannon','Plasma cannon']].map(([id,name])=>({id,name}));
+const types=[['rapier','Plasma blade'],['greatsword','Ion cleaver'],['dagger','Phase dagger'],['sabre','Arc pistol'],['axe','Pulse rifle'],['hammer','Rail cannon'],['mace','Tesla emitter'],['flail','Tether drone'],['spear','Particle lance'],['trident','Tri-beam fork'],['halberd','Rocket pod'],['scythe','Gravity reaper'],['bow','Photon bow'],['crossbow','Gauss rifle'],['chakram','Orbit disc'],['gauntlets','Power gauntlets'],['staff','Gravity rod'],['wand','Sonic disruptor'],['tome','Nanite hive'],['cannon','Plasma cannon']].map(([id,name])=>({id,name}));
 const tiers=['Field','Charged','Calibrated','Overclocked','Cryo-cooled','Twin-core','Ionized','Supercharged','Plasma-fed','Phase-linked','Quantum','Antimatter','Gravitic','Drone-linked','Neural','Singularity','Orbital','Rift-tech','Dark-matter','Starbreaker','MOM’s Impossible'];
 const days=[0,2,3,5,7,10,14,21,30,45,60,75,90,120,150,180,210,240,270,300,365];
 const strength=[1,2,3,4,5,6,8,10,12,15,18,20,23,27,31,35,40,45,50,60,75];
 function normalize(value){if(!value||!types.some(t=>t.id===value.type)||!Number.isInteger(value.tier)||value.tier<0||value.tier>20)throw Error('This look has an unknown weapon.');return {type:value.type,tier:value.tier};}
-function requirements(value){const w=normalize(value);return {days:days[w.tier],xp:days[w.tier]*100,strength:strength[w.tier]};}
-function unlocked(value,progress=window.GalaProgress?.read()||{activeDays:0,totalXp:0,strength:1}){const r=requirements(value);return progress.activeDays>=r.days&&progress.totalXp>=r.xp&&progress.strength>=r.strength;}
+function requirements(value){const w=normalize(value),group=globalThis.MYR5Training?.WEAPON_TRACK[w.type];return {days:days[w.tier],xp:days[w.tier]*100,strength:strength[w.tier],sets:(strength[w.tier]-1)*4,group,label:globalThis.MYR5Training?.TRAINING_TRACKS[group]?.name||'Training'};}
+function trainingProgress(value,progress=window.GalaProgress?.read()){return globalThis.MYR5Training?.trackProgress(progress,requirements(value).group)||{activeDays:0,completedSets:0,totalXp:0,strength:1};}
+function unlocked(value,progress=window.GalaProgress?.read()){const w=normalize(value);if(w.tier===0)return true;const r=requirements(w),p=trainingProgress(w,progress);return p.activeDays>=r.days&&p.totalXp>=r.xp;}
 function name(value){const w=normalize(value);return tiers[w.tier]+' '+types.find(t=>t.id===w.type).name;}
 function draw(ctx,value,{x=0,y=0,scale=1,palette=null}={}){
  const w=normalize(value),i=types.findIndex(type=>type.id===w.type),t=w.tier;
@@ -88,5 +89,5 @@ function draw(ctx,value,{x=0,y=0,scale=1,palette=null}={}){
  ctx.restore();
 }
 
-window.GalaWeapons={types,tiers,normalize,requirements,unlocked,name,draw};
+window.GalaWeapons={types,tiers,normalize,requirements,trainingProgress,unlocked,name,draw};
 })();
