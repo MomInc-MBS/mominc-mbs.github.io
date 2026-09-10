@@ -1,4 +1,4 @@
-import {createMazeScene} from './maze-scene.js';
+import {createMazeScene} from './maze-scene.js?v=swipe-2';
 // Gameplay continues in the intro's existing renderer, hallway, lighting and camera.
 export function continueScene({THREE,scene,camera,renderer,coach,computer,hand,drive,flashMat,fade,status,caption,practicals}){
  const maze=createMazeScene(THREE);
