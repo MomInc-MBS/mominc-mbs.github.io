@@ -1,83 +1,64 @@
-/* A lowered handset leaves the first-person route and obstacles visible. */
-#ar.ar-playing .ar-tap{display:none!important}
-#ar.ar-playing .ar-phone{transition:bottom .45s ease,transform .45s ease,opacity .25s}
-#ar.ar-playing.ar-maze-mode .ar-phone{bottom:0;transform:translateY(calc(100% - 88px));pointer-events:none}
-#ar.ar-playing.ar-maze-mode .ar-phone-brand{padding-bottom:4px}
-#ar.ar-playing.ar-maze-mode .ar-side{min-height:130px;padding:8px 12px}
-#ar.ar-playing.ar-maze-mode .ar-side:before,#ar.ar-playing.ar-maze-mode .ar-hud,#ar.ar-playing.ar-maze-mode .ar-phone-brand:before,#ar.ar-playing.ar-maze-mode .ar-caption,#ar.ar-playing.ar-maze-mode .ar-overlay,#ar.ar-playing.ar-maze-mode .ar-shadow,#ar.ar-playing.ar-maze-mode .ar-clue{display:none!important}
-#ar.ar-playing.ar-maze-mode .ar-view{touch-action:none}
+/* Keep scene state and handset state separate: only sprint taps and fitness use the phone. */
+#ar.ar-playing.ar-playing{height:var(--ar-viewport-height,100dvh);top:var(--ar-viewport-top,0px)}
+#ar.ar-playing .ar-phone,#ar.ar-playing .ar-tap,#ar.ar-playing .ar-hud,#ar.ar-playing .ar-steps,#ar.ar-playing .ar-look,#ar.ar-playing .ar-caption,#ar.ar-playing .ar-overlay,#ar.ar-playing .ar-shadow,#ar.ar-playing .ar-clue{display:none!important}
+#ar.ar-playing.ar-phone-up .ar-phone{display:flex!important;position:fixed!important;top:calc(var(--ar-viewport-top,0px) + 76px)!important;bottom:auto!important;right:12px!important;left:auto!important;width:min(440px,calc(100vw - 24px))!important;max-height:calc(var(--ar-viewport-height,100dvh) - 92px)!important;transform:none!important;opacity:1!important;transition:none!important;z-index:25;padding:10px;border-radius:24px}
+#ar.ar-playing.ar-phone-up .ar-side{display:block;flex:1 1 auto;min-height:0!important;max-height:none!important;overflow-y:auto;overscroll-behavior:contain;padding:10px;font:14px/1.4 monospace}
+#ar.ar-playing.ar-phone-up .ar-phone-brand{flex-shrink:0;padding:0 0 6px;font-size:9px}
+#ar.ar-playing.ar-phone-up .ar-phone-brand:before,#ar.ar-playing.ar-phone-up .ar-side:before,#ar.ar-playing.ar-phone-up #ar-motion-toggle,#ar.ar-playing.ar-phone-up .ar-phone-nav,#ar.ar-playing.ar-phone-up .ar-phone-keys{display:none!important}
+#ar.ar-playing.ar-phone-up .ar-phone:before{height:26px}
+#ar.ar-playing.ar-phone-up h2{font:bold 16px/1.3 monospace;margin:0 0 12px}
+#ar.ar-playing.ar-phone-up .ar-eyebrow{font:10px/1.2 monospace;margin:0 0 9px;color:#a9eab0}
+#ar.ar-playing.ar-question-up .ar-muted{display:none}
+#ar.ar-playing.ar-question-up .ar-answer-list{gap:8px}
+#ar.ar-playing.ar-question-up .ar-answer-list .ar-choice{font:14px/1.35 monospace;padding:9px;min-height:44px}
+#ar.ar-playing.ar-question-up .ar-feedback{font-size:14px;line-height:1.4;margin:10px 0}
+#ar.ar-playing #ar-phone-tap{width:100%;min-height:64px;font:bold 19px monospace;touch-action:manipulation;background:#163d26;color:#d7ffc0}
+#ar.ar-playing #ar-tap-count{font:bold 23px monospace;margin:10px 0}
+#ar.ar-playing #ar-time{font:12px monospace;margin:5px 0}
+#ar.ar-playing .ar-clock{margin:10px 0}
+#ar .ar-stage-card{position:absolute;left:50%;bottom:max(24px,env(safe-area-inset-bottom));transform:translateX(-50%);width:min(480px,calc(100% - 32px));max-height:calc(100% - 100px);overflow:auto;z-index:20;border:1px solid #caac7d;border-radius:10px;background:#201126ec;box-shadow:0 10px 50px #0009}
+#ar .ar-stage-card[hidden]{display:none}
+#ar.ar-playing .ar-stage-card .ar-side{padding:20px;border:0;max-height:none;min-height:0;background:transparent;box-shadow:none;color:#f0dfc6;font:15px/1.45 monospace}
+#ar.ar-playing .ar-stage-card .ar-side:before{display:none}
+#ar.ar-playing .ar-stage-card h2{color:#fce5c1;font-size:21px}
+#ar.ar-playing .ar-stage-card .ar-primary{background:#49304c;border-color:#bb92ba;color:#ffdef5;min-height:48px}
+#ar.ar-playing .ar-stage-card .ar-feedback{background:#421929;border-color:#ee8b9d;color:#ffe1e5}
+/* Coach travels across a filling chase bar toward the running player. */
+#ar .ar-chase{position:absolute;z-index:30;top:max(8px,env(safe-area-inset-top));left:16px;right:16px;height:53px;padding:4px 7px 7px;background:#1a1024e8;border:1px solid #be9b68;border-radius:7px;pointer-events:none;color:#f2dfc1}
+#ar .ar-chase[hidden]{display:none}
+#ar .ar-chase-labels{display:flex;align-items:center;justify-content:space-between;gap:5px;font:bold 9px/1.2 monospace}
+#ar .ar-chase-status{font-size:9px;text-align:center}
+#ar .ar-chase-track{position:relative;height:17px;margin:10px 10px 0;background:#251b36;border:1px solid #68505d;border-radius:10px}
+#ar .ar-chase-fill{position:absolute;left:0;top:0;bottom:0;width:var(--danger,24%);background:linear-gradient(90deg,#694980,#dd6b71);border-radius:10px;transition:width .2s linear}
+#ar .ar-chase-coach{position:absolute;left:var(--coach-x,25%);top:50%;transform:translate(-50%,-50%);width:39px;height:32px;object-fit:contain;filter:drop-shadow(0 1px 2px #000);transition:left .2s linear}
+#ar .ar-chase-player{position:absolute;right:-3px;top:-14px;width:29px;height:34px;color:#d3ffb1;fill:currentColor;filter:drop-shadow(0 1px 2px #000);animation:ar-running-player .34s ease-in-out infinite alternate}
+@keyframes ar-running-player{to{transform:translateY(2px) rotate(5deg)}}
+#ar .ar-last-life-tint,#ar .ar-speed-streaks{position:absolute;inset:0;z-index:7;pointer-events:none;display:none}
+#ar.ar-playing.ar-last-life .ar-last-life-tint{display:block;background:radial-gradient(ellipse,transparent 35%,#b3002266 75%,#bb001aaa);animation:ar-last-life-pulse 1.8s ease-in-out infinite}
+@keyframes ar-last-life-pulse{0%,100%{opacity:.25}50%{opacity:.7}}
+#ar.ar-playing.ar-boosting .ar-speed-streaks{display:block;background:repeating-conic-gradient(from 6deg at 50% 45%,transparent 0deg 22deg,#ddbcff17 22.4deg 22.7deg,transparent 23deg 36deg);mask-image:radial-gradient(ellipse,transparent 24%,#000 100%);animation:ar-sprint-lines .4s ease-out infinite}
+@keyframes ar-sprint-lines{from{opacity:.3;transform:scale(1)}to{opacity:0;transform:scale(1.12)}}
 #ar.ar-playing.ar-maze-mode .ar-layout{touch-action:none;user-select:none;-webkit-user-select:none;overscroll-behavior:none}
-#ar.ar-playing.ar-maze-mode #ar-motion-toggle{display:none}
-#ar #ar-run-message{font:bold 12px monospace;margin:0;color:#c5ffb0}
-#ar .ar-run-controls{position:absolute;inset:0;z-index:10;pointer-events:none;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:0 18px 100px;box-sizing:border-box}
+#ar.ar-playing.ar-maze-mode .ar-view{touch-action:none}
+#ar .ar-run-controls{position:absolute;inset:0;z-index:10;pointer-events:none;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:0 18px 72px;box-sizing:border-box}
 #ar .ar-run-controls[hidden]{display:none}
-#ar .ar-run-guide{position:absolute;top:max(7%,env(safe-area-inset-top));left:12px;right:12px;text-align:center;font:bold clamp(15px,3vw,22px)/1.3 monospace;color:#fff0c6;text-shadow:0 2px 6px #000;background:#101912bd;padding:10px 5px;border-top:1px solid #b9a56a;border-bottom:1px solid #b9a56a}
-#ar .ar-run-lives{position:absolute;top:max(12px,env(safe-area-inset-top));right:16px;color:#ffe5b5;font:bold 12px monospace;text-shadow:0 2px 4px #000}
-#ar .ar-run-buttons{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;width:min(520px,100%);pointer-events:auto}
-#ar .ar-run-buttons[hidden]{display:none}
-#ar .ar-controls-toggle{pointer-events:auto;background:#14201ddd;color:#d1d7ba;border:1px solid #828c78;border-radius:4px;min-height:44px;padding:8px 14px;margin-top:8px;font:12px monospace;cursor:pointer}
-#ar .ar-run-buttons button{min-height:56px;background:#18251edf;border:1px solid #cebd88;border-radius:5px;color:#fff1c4;font:bold 15px monospace;touch-action:none;cursor:pointer}
-#ar .ar-run-buttons button:active{background:#726440;transform:translateY(2px)}
-#ar .ar-run-buttons button:focus-visible{outline:3px solid #fff;outline-offset:3px}
-#ar .ar-run-buttons button:disabled{opacity:.45}
-#ar .ar-run-controls p{color:#efe4c7;font:12px monospace;text-align:center;text-shadow:0 2px 3px #000;margin:8px 0 0}
-#ar.ar-playing.ar-maze-mode #ar-run-pause{position:fixed;pointer-events:auto;left:14px;bottom:14px;min-height:44px;z-index:11;margin:0}
-/* The pause button lives outside the handset's transformed coordinate space. */
-#ar .ar-maze-pause{position:absolute;left:14px;bottom:max(14px,env(safe-area-inset-bottom));z-index:11;min-height:44px;padding:8px 12px;background:#15221de8;color:#e7e5c3;border:1px solid #acb487;font:13px monospace}
+#ar .ar-run-guide{position:absolute;top:max(82px,calc(env(safe-area-inset-top) + 70px));left:12px;right:12px;text-align:center;font:bold clamp(13px,3vw,19px)/1.3 monospace;color:#fff0c6;text-shadow:0 2px 6px #000;background:#21152cc9;padding:9px 5px;border-top:1px solid #b9a56a;border-bottom:1px solid #b9a56a}
+#ar .ar-run-buttons{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;width:min(520px,100%);pointer-events:auto}
+#ar .ar-run-buttons[hidden],#ar .ar-exit-buttons[hidden]{display:none}
+#ar .ar-controls-toggle{pointer-events:auto;background:#22162bdd;color:#f0dbc2;border:1px solid #a680a5;border-radius:4px;min-height:44px;padding:8px 14px;margin-top:8px;font:12px monospace;cursor:pointer}
+#ar .ar-run-buttons button,#ar .ar-exit-buttons button{min-height:52px;background:#25182dde;border:1px solid #cebd88;border-radius:5px;color:#fff1c4;font:bold 13px monospace;touch-action:none;cursor:pointer}
+#ar .ar-run-buttons button:active,#ar .ar-exit-buttons button:active{background:#726440;transform:translateY(2px)}
+#ar .ar-run-buttons button:focus-visible,#ar .ar-exit-buttons button:focus-visible{outline:3px solid #fff;outline-offset:3px}
+#ar .ar-run-controls p{color:#efe4c7;font:11px monospace;text-align:center;text-shadow:0 2px 3px #000;margin:8px 0 0}
+#ar .ar-exit-buttons{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;pointer-events:auto;width:min(480px,100%)}
+#ar .ar-maze-pause{position:absolute;left:14px;bottom:max(14px,env(safe-area-inset-bottom));z-index:11;min-height:44px;padding:8px 12px;background:#211529e8;color:#e7e5c3;border:1px solid #acb487;font:13px monospace}
 #ar .ar-maze-pause[hidden]{display:none}
-@media(max-width:650px){#ar.ar-playing.ar-maze-mode .ar-phone{right:18px;width:210px;transform:translateY(calc(100% - 69px))}#ar .ar-run-controls{padding-bottom:85px}#ar .ar-run-buttons{gap:7px}#ar .ar-run-buttons button{font-size:13px;min-height:54px}#ar .ar-run-controls p{font-size:11px}#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-caption{display:none}}
-@media(prefers-reduced-motion:reduce){#ar.ar-playing .ar-phone{transition:none}}
-#ar.ar-motion-off .ar-phone{transition:none}
-/* Raise the whole handset for taps, clear of the mobile home indicator. */
-#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-phone{bottom:max(20px,env(safe-area-inset-bottom));transform:translateY(0);max-height:calc(100% - max(64px,env(safe-area-inset-top)) - max(20px,env(safe-area-inset-bottom)))}
-#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-side{min-height:0;max-height:none;padding:10px 14px}
-#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-side:before,#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-hud,#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-steps,#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-eyebrow,#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-side h2,#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-look,#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-muted:not(#ar-time){display:none}
-#ar.ar-playing #ar-phone-tap{width:100%;min-height:52px;font:bold 17px monospace;touch-action:manipulation}
-#ar.ar-playing:has(.ar-view[data-phase="tap"]) #ar-tap-count{font-size:24px;margin:0 0 5px}
-#ar.ar-playing:has(.ar-view[data-phase="tap"]) #ar-time{font-size:12px;margin:5px 0}
-@media(max-width:650px){#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-phone-brand{padding:0 0 5px}#ar.ar-playing:has(.ar-view[data-phase="tap"]) #ar-motion-toggle{display:none}}
-/* On short screens, keep the tap controls ahead of decorative phone chrome. */
 @media(max-height:500px){
-  #ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-phone{padding:10px}
-  #ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-phone-brand{padding:0 0 5px}
-  #ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-phone-brand:before,
-  #ar.ar-playing:has(.ar-view[data-phase="tap"]) #ar-motion-toggle,
-  #ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-phone-nav,
-  #ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-phone-keys{display:none}
-  #ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-side{padding:6px 14px}
-  #ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-clock{margin-top:8px}
+  #ar.ar-playing.ar-phone-up .ar-phone{top:calc(var(--ar-viewport-top,0px) + 66px)!important;max-height:calc(var(--ar-viewport-height,100dvh) - 76px)!important}
+  #ar.ar-playing.ar-phone-up .ar-phone-brand{display:none}
+  #ar .ar-run-controls{padding-bottom:58px}#ar .ar-run-guide{top:68px}
 }
-/* Bring questions up to reading height and give answers the handset's screen. */
-#ar.ar-playing:has(.ar-view:is([data-phase="question"],[data-phase="feedback"])) .ar-phone{top:max(24px,env(safe-area-inset-top));bottom:auto;right:12px;width:min(440px,calc(100% - 24px));max-height:calc(100dvh - max(24px,env(safe-area-inset-top)) - max(24px,env(safe-area-inset-bottom)));transform:translateY(0);padding:10px}
-#ar.ar-playing:has(.ar-view:is([data-phase="question"],[data-phase="feedback"])) .ar-side{max-height:none;min-height:0;padding:14px;font-size:14px}
-#ar.ar-playing:has(.ar-view:is([data-phase="question"],[data-phase="feedback"])) .ar-phone-nav,
-#ar.ar-playing:has(.ar-view:is([data-phase="question"],[data-phase="feedback"])) .ar-phone-keys,
-#ar.ar-playing:has(.ar-view:is([data-phase="question"],[data-phase="feedback"])) .ar-side:before,
-#ar.ar-playing:has(.ar-view:is([data-phase="question"],[data-phase="feedback"])) .ar-steps,
-#ar.ar-playing:has(.ar-view:is([data-phase="question"],[data-phase="feedback"])) .ar-look,
-#ar.ar-playing:has(.ar-view:is([data-phase="question"],[data-phase="feedback"])) #ar-motion-toggle{display:none}
-#ar.ar-playing:has(.ar-view[data-phase="question"]) .ar-eyebrow,#ar.ar-playing:has(.ar-view[data-phase="question"]) .ar-muted,#ar.ar-playing:has(.ar-view[data-phase="question"]) .ar-hud>span,#ar.ar-playing:has(.ar-view[data-phase="question"]) .ar-phone-brand:before{display:none}
-#ar.ar-playing:has(.ar-view[data-phase="question"]) .ar-hud{justify-content:flex-end;padding:6px;margin-bottom:10px}
-#ar.ar-playing:has(.ar-view[data-phase="question"]) .ar-phone-brand{padding:0 0 6px}
-#ar.ar-playing:has(.ar-view[data-phase="question"]) h2{font-size:18px;line-height:1.4;margin:0 0 12px}
-#ar.ar-playing:has(.ar-view[data-phase="question"]) .ar-answer-list .ar-choice{font-size:14px;line-height:1.4;min-height:48px;padding:12px}
-@media(max-width:650px){#ar.ar-playing:has(.ar-view[data-phase="question"]) h2{font-size:16px;line-height:1.3}#ar.ar-playing:has(.ar-view[data-phase="question"]) .ar-side{padding:10px}#ar.ar-playing:has(.ar-view[data-phase="question"]) .ar-answer-list .ar-choice{padding:9px;min-height:44px}}
-#ar.ar-playing .ar-lives{align-items:center;flex-wrap:wrap;justify-content:flex-end}
-#ar.ar-playing .ar-lives span{white-space:nowrap;font:bold 11px monospace}
-/* Door selection stays below the three overhead signs. */
-#ar.ar-playing.ar-junction-mode .ar-phone{top:auto;bottom:max(16px,env(safe-area-inset-bottom));right:24px;width:min(380px,calc(100% - 48px));max-height:53dvh;transform:translateY(0);padding:12px 10px}
-#ar.ar-playing.ar-junction-mode .ar-side{max-height:none;min-height:0;padding:10px}
-#ar.ar-playing.ar-junction-mode .ar-phone-brand{padding:0 0 6px}
-#ar.ar-playing.ar-junction-mode .ar-phone-nav,#ar.ar-playing.ar-junction-mode .ar-phone-keys,#ar.ar-playing.ar-junction-mode .ar-side:before,#ar.ar-playing.ar-junction-mode .ar-steps,#ar.ar-playing.ar-junction-mode .ar-look,#ar.ar-playing.ar-junction-mode .ar-eyebrow,#ar.ar-playing.ar-junction-mode .ar-muted,#ar.ar-playing.ar-junction-mode #ar-motion-toggle,#ar.ar-playing.ar-junction-mode .ar-caption,#ar.ar-playing.ar-junction-mode .ar-overlay,#ar.ar-playing.ar-junction-mode .ar-clue{display:none}
-#ar.ar-playing.ar-junction-mode .ar-hud{padding-bottom:6px;margin-bottom:8px}
-#ar.ar-playing.ar-junction-mode .ar-shadow,#ar.ar-playing.ar-junction-mode .ar-hud>span{display:none}
-#ar.ar-playing.ar-junction-mode .ar-hud{justify-content:flex-end}
-#ar.ar-playing.ar-junction-mode h2{font-size:15px;margin:0 0 8px}
-#ar.ar-playing.ar-junction-mode .ar-answer-list{gap:6px}
-#ar.ar-playing.ar-junction-mode .ar-answer-list button{font-size:12px;min-height:44px;padding:8px;color:#ffb8e9;border-color:#b966a3}
-#ar.ar-playing.ar-junction-mode .ar-answer-list button[data-warning="true"]{color:#ffbc94;border-color:#df774a}
-@media(max-height:500px){
-  #ar.ar-playing:has(.ar-view:is([data-phase="question"],[data-phase="feedback"])) .ar-phone{top:12px;max-height:calc(100dvh - 24px);padding:10px}
-  #ar.ar-playing:has(.ar-view:is([data-phase="question"],[data-phase="feedback"])) .ar-phone-brand{display:none}
-  #ar.ar-playing.ar-junction-mode .ar-phone{top:auto;max-height:65dvh}
-}
+@media(prefers-reduced-motion:reduce){#ar .ar-chase-player,#ar.ar-playing .ar-last-life-tint,#ar.ar-playing .ar-speed-streaks{animation:none!important}#ar .ar-chase-coach,#ar .ar-chase-fill{transition:none}#ar.ar-playing .ar-last-life-tint{opacity:.35}#ar.ar-playing .ar-speed-streaks{display:none}}
+#ar.ar-motion-off .ar-chase-player,#ar.ar-motion-off .ar-last-life-tint,#ar.ar-motion-off .ar-speed-streaks{animation:none!important}
+#ar.ar-motion-off .ar-last-life-tint{opacity:.35}#ar.ar-motion-off .ar-speed-streaks{display:none!important}
+#ar.ar-playing.ar-in-lab .ar-phone,#ar.ar-in-lab .ar-chase,#ar.ar-in-lab .ar-last-life-tint,#ar.ar-in-lab .ar-speed-streaks{display:none!important}

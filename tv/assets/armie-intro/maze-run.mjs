@@ -1,4 +1,5 @@
 // Shared deterministic rules: exactly two lanes and three reusable trap designs.
+import {routeFor} from './ship-routes.mjs?v=chase-4';
 export const LANES = [-.9, .9];
 export const TRAPS = ['crack', 'rubble', 'wall'];
 export const TURN_AT = 36;
@@ -15,11 +16,16 @@ export function courseFor(seed = 0) {
     {type:'wall', at:86, lane:seed % 2},
   ];
 }
-export function createRun(seed = 0, assisted = false) {
-  return {seed, assisted, distance:0, time:0, lane:0, jumpTime:0, height:0, slideTime:0, duck:0, turn:null, paused:false, status:'running', events:courseFor(seed).map(e=>({...e, cleared:false}))};
+export function createRun(seed = 0, assisted = false, boost = 0) {
+  return {seed, assisted, boost:Math.max(0,Math.min(1,boost)), distance:0, time:0, lane:0, jumpTime:0, height:0, slideTime:0, duck:0, turn:null, exit:null, exitProgress:0, paused:false, status:'running', events:courseFor(seed).map(e=>({...e, cleared:false}))};
 }
+export function runSpeed(run){return 4.8+2.4*run.boost*Math.max(0,1-run.distance/36);}
 export function upcoming(run) { return run.events.find(e=>!e.cleared) || null; }
 export function input(run, action) {
+  if(run.status==='choosing'&&!run.paused){
+    const exit={left:0,jump:1,straight:1,right:2}[action];
+    if(exit!==undefined){run.exit=exit;run.exitProgress=0;run.status='exiting';}return;
+  }
   if(run.status !== 'running' || run.paused) return;
   if(action === 'jump') { if(run.jumpTime === 0 && run.slideTime === 0) run.jumpTime = .96; return; }
   if(action === 'slide') { if(run.jumpTime === 0 && run.slideTime === 0) run.slideTime = .96; return; }
@@ -34,14 +40,18 @@ export function safe(run, event) {
   return run.lane!==event.lane || event.type==='rubble' && run.height>.65 || event.type==='wall' && run.duck>.8 && run.height<.1;
 }
 export function step(run, delta) {
-  if(run.status!=='running' || run.paused) return;
+  if(run.paused||!['running','exiting'].includes(run.status))return;
   const dt=Math.max(0,Math.min(delta,.05));
   run.time+=dt;
+  if(run.status==='exiting'){
+    run.exitProgress=Math.min(1,run.exitProgress+dt/1.25);
+    if(run.exitProgress>=1){run.status=run.exit===routeFor(run.seed).correct?'complete':'hit';if(run.status==='hit')run.hit='exit';}return;
+  }
   run.jumpTime=Math.max(0,run.jumpTime-dt);
   run.slideTime=Math.max(0,run.slideTime-dt);
   run.duck=run.slideTime>0?Math.min(1,(.96-run.slideTime)/.1,run.slideTime/.12):0;
   run.height=run.jumpTime>0?Math.sin((1-run.jumpTime/.96)*Math.PI)*1.35:0;
-  const next=upcoming(run), speed=4.8;
+  const next=upcoming(run), speed=runSpeed(run);
   const waiting=run.assisted && next && next.at-run.distance<=.8 && !safe(run,next);
   if(!waiting) run.distance=Math.min(LENGTH,run.distance+speed*dt);
   if(next && run.distance>=next.at) {
@@ -49,10 +59,12 @@ export function step(run, delta) {
     if(!safe(run,next)) {run.status='hit';run.hit=next.type;return;}
     if(next.type==='turn') run.turn=null;
   }
-  if(run.distance>=LENGTH) run.status='complete';
+  if(run.distance>=LENGTH){run.status='choosing';run.height=0;run.duck=0;}
 }
 export function hint(run) {
   if(run.paused) return 'Run paused';
+  if(run.status==='choosing')return 'SWIPE INTO A TUNNEL · ←  ↑  →';
+  if(run.status==='exiting')return 'KEEP RUNNING';
   const e=upcoming(run), left=e?e.at-run.distance:100;
   if(!e) return 'JUNCTION AHEAD · READ THE THREE DOORS';
   if(left>11) return 'MOM INC · KEEP RUNNING';
