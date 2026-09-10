@@ -15,7 +15,7 @@
     if (path.startsWith('/arcade/tub-flight/')) return 'fuel';
     const route = path.match(/^\/(?:games|play)\/([^/]+)/)?.[1];
     if (route) return route;
-    if (/^\/tv\/(?:index.html)?$/.test(path)) return new URLSearchParams(location.search).get('ch') || 'mominc';
+    if (/^\/tv\/(?:index.html)?$/.test(path)) return new URLSearchParams(location.search).get('ch');
     return document.documentElement.dataset.game;
   }
   let selected = pageGame();
