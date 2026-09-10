@@ -28,7 +28,8 @@
  function recoverSchoolFinish(){
   let saved;try{saved=JSON.parse(localStorage.getItem('mbs-corgi-school-v3'));}catch{return;}
   const finished=(run,count)=>Array.isArray(run?.found)&&run.found.length>=count&&run.found.slice(0,count).every(row=>Array.isArray(row)&&row.length===3&&row.every(value=>value===true));
-  if(finished(saved?.public,2)||finished(saved?.live,3))window.MBS_STATE?.completePage('corgi');
+   const publicFinished=finished(saved?.public,2)&&(!saved.public.dreamPhase||saved.public.dreamPhase==='done');
+   if(publicFinished||finished(saved?.live,3))window.MBS_STATE?.completePage('corgi');
  }
  function paint(){
   document.querySelectorAll('[data-hand-ad]').forEach(button=>{button.hidden=!pagesReady();});

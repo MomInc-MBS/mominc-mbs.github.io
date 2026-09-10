@@ -60,6 +60,9 @@
    is the television's glass and is what fitViewport() exists to measure, and document.documentElement's
    dataset, which is where mbs-shim.js publishes the mode, the mission id and the API base. */
 
+import { PAPER_HEARTS, restoreDream, losePaperHeart, restartDream, canOpenBackDoor, breakRoomPose } from "./corgi-dream.mjs";
+import { createPaperHearts, schoolCortisol, heartbeatBpm } from "./corgi-hearts.mjs";
+
 const THREE_URL = "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.min.js";
 
 /* The one piece of module state, held for the reason set out above: a WebGLRenderer and a scene graph
@@ -114,8 +117,9 @@ export default {
     const STORE_KEY_V1 = "mbs-corgi-school";
     const STORE_KEY = "mbs-corgi-school-v3";
     const emptyFound = () => [[false, false, false], [false, false, false], [false, false, false]];
-    const state = { level: 0, found: emptyFound(), unlocked: 0 };
+    const state = { level: 0, found: emptyFound(), unlocked: 0, ...restoreDream() };
     const coerceModeState = s => ({
+      ...restoreDream(s),
       found: [0, 1, 2].map(i => [!!(s.found[i] || [])[0], !!(s.found[i] || [])[1], !!(s.found[i] || [])[2]]),
       unlocked: Math.max(0, Math.min(2, s.unlocked | 0)),
       level: Math.max(0, Math.min(MODE === "public" ? 1 : 2, s.level | 0))
@@ -125,7 +129,7 @@ export default {
         const blob = { public: null, live: null };
         try { const prior = JSON.parse(localStorage.getItem(STORE_KEY) || "null");
           if (prior) { if (prior.live) blob.live = prior.live; if (prior.public) blob.public = prior.public; } } catch {}
-        blob[MODE] = { found: state.found, unlocked: state.unlocked, level: state.level };
+        blob[MODE] = { found: state.found, unlocked: state.unlocked, level: state.level, lives: state.lives, dreamPhase: state.dreamPhase };
         localStorage.setItem(STORE_KEY, JSON.stringify(blob));
       } catch {}
     };
@@ -276,9 +280,19 @@ export default {
             lesson: "The pattern that predicts automation is the shape of the task, not the name on the door. A repetitive task inside a job that sounds safe is still a repetitive task. Look at what the day actually consists of." }
         ] }
     ];
-    const LEVELS = MODE === "public" ? [LEVELS_PUBLIC[0], {...LEVELS_LIVE[0], doorLabel:null, crazy:1, pages:LEVELS_PUBLIC[0].pages.map((p,i)=>({...p,door:LEVELS_LIVE[0].pages[i].door}))}] : LEVELS_LIVE;
+    const LEVELS = MODE === "public" ? [LEVELS_PUBLIC[0], {...LEVELS_LIVE[0], doorLabel:"THE BACK OF THE SCHOOL", crazy:1, pages:LEVELS_PUBLIC[0].pages.map((p,i)=>({...p,door:LEVELS_LIVE[0].pages[i].door}))}] : LEVELS_LIVE;
+    if (MODE === 'public' && (state.lives === 0 || state.dreamPhase === 'done')) {
+      state.level = 0; state.found[0] = [true, true, true];
+    }
     cc.dataset.school=String(!!LEVELS[state.level].handAuthored);
 
+    function paintHearts() {
+      const hearts = byId('ccLives');
+      hearts.hidden = MODE !== 'public';
+      hearts.setAttribute('aria-label', state.lives + ' of ' + PAPER_HEARTS + ' paper hearts remaining');
+      hearts.querySelectorAll('.cc-paper-heart').forEach((heart, i) => heart.classList.toggle('lost', i >= state.lives));
+    }
+    paintHearts();
     const announce = t => { const el = byId("ccAnnounce"); if (el) el.textContent = t; };
 
     // ---------------------------------------------------------------- meter: banked ratchet (unchanged logic
@@ -286,9 +300,13 @@ export default {
     // proximity too"). Displayed value is min(100, banked + live); the banked ratchet itself never drops, and
     // capture drops only the live component (see doCapture() below).
     const meterPct = byId("ccMeterPct"), meterEl = byId("ccMeter");
-    let bankedVal = 4, liveVal = 0, lastMeterPaint = 0;
+    let bankedVal = 4, liveVal = 0, lastMeterPaint = 0, heartVisual = null, heartCortisol = 4;
     function paintMeter() {
-      const shown = Math.max(0, Math.min(100, Math.round(bankedVal + liveVal)));
+      const shown = MODE === 'public' && state.level === 1 && state.dreamPhase === 'hunt'
+        ? schoolCortisol(state.found[1].filter(Boolean).length, liveVal / 30)
+        : Math.max(0, Math.min(100, Math.round(bankedVal + liveVal)));
+      heartCortisol = shown;
+      byId('ccLives').style.setProperty('--heartbeat', (60 / heartbeatBpm(shown)) + 's');
       cc.style.setProperty("--meter", shown); meterPct.textContent = shown + "%"; meterEl.setAttribute("aria-valuenow", shown);
     }
     function bankMeter(v) { bankedVal = Math.max(bankedVal, Math.round(v)); paintMeter(); }
@@ -434,8 +452,7 @@ export default {
     function paintLeaf4() {
       const front = byId("ccLeaf4").querySelector(".face.front");
       const lvl = state.level;
-      if (lvl < LEVELS.length - 1) {   // 0905: was hardcoded to 2, which assumed exactly three levels -- public's
-                                        // single-level office would never reach its own record leaf otherwise.
+      if (MODE === 'public' ? state.dreamPhase !== 'done' : lvl < LEVELS.length - 1) {
         const complete = state.found[lvl].every(Boolean);
         front.innerHTML = `
           <section class="block r1 pressure" aria-labelledby="ccNextH"><span class="tape tl" aria-hidden="true"></span>
@@ -576,7 +593,7 @@ export default {
     // the dog is still standing over it, this button has to stand him down first (camera, pitch, paws, the
     // haunt) before the hall shows. runHunt3D fills this hook in; the fallback path leaves it null.
     let deskStandDownHook = null;
-    ctx.on(readBtn, "click", showBook);
+    ctx.on(readBtn, "click", () => { if (!cc.dataset.transition && !cc.dataset.caught) showBook(); });
     ctx.on(backHunt, "click", () => { if (!(deskStandDownHook && deskStandDownHook())) showHunt(); });
     const deskBackBtn = byId("ccDeskBack");
     if (deskBackBtn) ctx.on(deskBackBtn, "click", showHunt);
@@ -624,10 +641,11 @@ export default {
 
     // Shared by both renderers: the final three-page collection finishes this mode.
     function markLevelComplete(lvl) {
+      if (MODE === "public" && state.dreamPhase !== "done") { save(); return; }
       if (lvl >= LEVELS.length - 1) {
         // Recovering the final school pages is the shipped game ending. The old vent form
         // is optional; it must not hold the sponsor ad behind another, unrelated action.
-        ctx.mbs?.complete?.("corgi", { terminal: "school-pages" });
+        ctx.mbs?.complete?.("corgi", { terminal: MODE === "public" ? "school-dream" : "school-pages" });
         ctx.mbs?.wave?.(); ctx.mbs?.unlock?.("corgi");
       }
       save();
@@ -639,7 +657,7 @@ export default {
       state.found[lvl][i] = true; save();
       paintFront(); paintPage(i);
       const n = state.found[lvl].filter(Boolean).length;
-      byId("ccTally").textContent = `PAGES ${n}/3`;
+      byId("ccTally").textContent = `${MODE === 'public' && lvl === 1 ? 'PICTURES' : 'PAGES'} ${n}/3`;
       bankMeter(4 + n * 30);
       announce(`Page found: ${LEVELS[lvl].pages[i].title}. Read it any time.`);
       if (n === 3) {
@@ -648,13 +666,13 @@ export default {
           if(state.level !== lvl)return;
           paintLeaf4();
           announce(lvl >= LEVELS.length - 1
-            ? (MODE === "public" ? "The school pages are complete. Your file is unlocked." : "All nine pages found. The anchor's own record is open.")
+            ? (MODE === "public" ? "All three scary pictures found. The school back door is open. Find the final pages beyond it." : "All nine pages found. The anchor's own record is open.")
             : `All three pages found. The door to ${LEVELS[lvl].doorLabel} is open.`);
         }, 900);
       }
       return true;
     }
-    byId("ccTally").textContent = `PAGES ${state.found[state.level].filter(Boolean).length}/3`;
+    byId("ccTally").textContent = `${MODE === 'public' && state.level === 1 ? 'PICTURES' : 'PAGES'} ${state.found[state.level].filter(Boolean).length}/3`;
     bankMeter(4 + state.found[state.level].filter(Boolean).length * 30);   // a restored session shows the stress already earned, not a reset 4%
 
     // ---- the viewport fills the glass (Ian, review 2026-08-31: "a third of the glass is dead black... make
@@ -815,7 +833,16 @@ export default {
       function visit(r) {
         if (r.kind === "locked") {
           if(!state.found[state.level].every(Boolean)){read.textContent=r.label+'. Locked. Find all three pages here first.';return;}
-          if(advanceLevel()){ROOMS=roomsFor(state.level);paintMap();repaintAll();paintLeaf4();cc.dataset.school='true';byId('ccTally').textContent='PAGES 0/3';read.textContent='The back door opens into the children’s school. The lights falter. Find the three colorful pages to unlock the file.';}return;
+          if (MODE === 'public' && state.dreamPhase === 'done') { read.textContent = 'The dream is over. You are back in the office, and your file is unlocked.'; return; }
+          if (MODE === 'public' && state.level === 1) {
+            if (!canOpenBackDoor(state)) return;
+            read.textContent = 'The back door swings open. At the back of the school, three final pages wait on a desk.';
+            map.replaceChildren();
+            const pickup = document.createElement('button'); pickup.type = 'button'; pickup.textContent = 'COLLECT THE FINAL PAGES';
+            ctx.on(pickup, 'click', showFallbackEnding); map.append(pickup); return;
+          }
+          if (MODE === 'public' && state.lives === 0) { restartDream(state); save(); paintHearts(); }
+          if(advanceLevel()){ROOMS=roomsFor(state.level);paintMap();repaintAll();paintLeaf4();cc.dataset.school=String(!!LEVELS[state.level].handAuthored);byId('ccTally').textContent=(MODE === 'public' ? 'PICTURES ' : 'PAGES ')+state.found[state.level].filter(Boolean).length+'/3';read.textContent='You enter the break room and fall asleep. You wake in the school. Find the three scary pictures to open its back door.';}return;
         }
         if (r.kind === "flavor") { read.textContent = r.text; return; }
         if (r.kind === "reflect") {
@@ -829,8 +856,23 @@ export default {
         collect(i); paintMap();
         if (state.found[lvl].every(Boolean) && LEVELS[lvl].doorLabel) read.textContent+=' All three pages found. Walk to the back door.';
       }
+      function showFallbackEnding() {
+        state.dreamPhase = 'ending'; save();
+        read.textContent = 'The pages slip from your paws. You wake up in the break room. “Oh thank Mom, it was just a dream.”';
+        map.replaceChildren();
+        const leave = document.createElement('button'); leave.type = 'button'; leave.textContent = 'LEAVE THE BREAK ROOM';
+        ctx.on(leave, 'click', () => {
+          state.dreamPhase = 'done'; state.level = 0; save();
+          cc.dataset.school = 'false'; ROOMS = roomsFor(0); paintMap(); repaintAll(); paintLeaf4();
+          byId('ccTally').textContent = 'PAGES 3/3';
+          read.textContent = 'The scene retraces your way in: you lift your head, move away from the table, and leave the break room. You are back in the office. Your file is unlocked.';
+          markLevelComplete(LEVELS.length - 1);
+        });
+        map.append(leave); leave.focus();
+      }
       paintMap();
       read.textContent = "Tap a room to see what Cortisol Corgi found there.";
+      if (MODE === 'public' && state.dreamPhase === 'ending') showFallbackEnding();
     }
 
     // ================================================================== 3D HUNT
@@ -871,6 +913,12 @@ export default {
         // .catch reports it and unmount() still has a renderer and a scene to release. A half-built scene
         // that nothing can dispose is the leak this record exists to prevent.
         gl = { renderer: renderer, scene: scene, extra: [] };
+        if (MODE === 'public') {
+          try {
+            heartVisual = createPaperHearts(THREE, byId('ccHeartCanvas'), {reducedMotion:REDUCED});
+            gl.extra.push(heartVisual);
+          } catch (error) { console.warn('[cc] Using newspaper-heart fallback', error); }
+        }
 
         /* own(x): register something the scene walk will NOT reach. This channel's shape is particular -
            wallBox() clones its material AND its map for every wall so each can carry its own repeat, and
@@ -878,7 +926,15 @@ export default {
            from are therefore never attached to a mesh at all, and a traverse would miss every one. Same for
            areaMat()'s three materials per level, and for every signTexture(): the door's map is REPLACED
            when the door opens, so the map it was carrying before is unreachable from that moment on. */
-        const own = (x) => { if (gl && x) { gl.extra.push(x); if (x.map) gl.extra.push(x.map); } return x; };
+        let collectingLevel = false;
+        const levelExtras = new Set();
+        const own = (x) => {
+          if (gl && x) {
+            if (collectingLevel) { levelExtras.add(x); if (x.map) levelExtras.add(x.map); }
+            else { gl.extra.push(x); if (x.map) gl.extra.push(x.map); }
+          }
+          return x;
+        };
 
         // ---- cheerful primary-colour school textures, all cheap canvas draws
         function wallTexture() {
@@ -1049,14 +1105,23 @@ export default {
         // machePropMat/buildFurniture below) is built from. collideRects and levelGroup are cleared and rebuilt
         // by buildLevel() on every level change (3.2) -- levelGroup.add() instead of scene.add() so a whole
         // level's meshes/lights come out in one THREE.Scene.remove() when the next level replaces them.
-        // ponytail: no explicit geometry/material .dispose() on a LEVEL teardown -- at most two rebuilds a
-        // playthrough, not a long-running leak, and a naive walk-and-dispose there would destroy suitMat,
-        // paperMat and caseMat, which the NEXT level's monster still needs. unmount() disposes the final
-        // scene, which is the case that actually matters. Add per-level disposal only with a shared-material
-        // check, if a future build makes level transitions frequent.
+        // Respawns now rebuild levels repeatedly. Release their resources while keeping shared materials.
+        const sharedResources = new Set([...gl.extra, suitMat, paperMat, caseMat, suitMat.map, paperMat.map, caseMat.map]);
         const WALL_H = 2.6;
         const collideRects = [];
         let levelGroup = new THREE.Group(); scene.add(levelGroup);
+        function disposeLevel() {
+          levelGroup.traverse(o => {
+            if (o.geometry) levelExtras.add(o.geometry);
+            for (const material of o.material ? (Array.isArray(o.material) ? o.material : [o.material]) : []) {
+              levelExtras.add(material);
+              for (const key of ['map','emissiveMap','normalMap','roughnessMap','alphaMap']) if (material[key]) levelExtras.add(material[key]);
+            }
+          });
+          for (const resource of levelExtras) if (!sharedResources.has(resource)) resource.dispose();
+          levelExtras.clear();
+        }
+        gl.extra.push({dispose:disposeLevel});
         function wallBox(cx, cz, w, d, mat) {
           const m = new THREE.Mesh(new THREE.BoxGeometry(w, WALL_H, d), mat || wallMat);
           m.name="solid-wall";m.material.side=THREE.DoubleSide;
@@ -1284,6 +1349,7 @@ export default {
         function areaAt(x, z) { for (const a of AREAS) if (x >= a.bbox.x0 && x <= a.bbox.x1 && z >= a.bbox.z0 && z <= a.bbox.z1) return a; return null; }
 
         let AREAS = [], DESKS = [], MAIN_ANCHORS = [], pageObjs = [], monster = null, trophyGlass = null;
+        let finalPages = null;
         let PAGE_POS = [], AREA_DOOR_X = [], DOOR_X = 0, doorOpen = false, transitioning = false, doorMesh = null, doorRectIdx = -1;
         const TROPHY_AT = new THREE.Vector3(), reflVec = new THREE.Vector3();
         // ---- 3.2: buildLevel(idx) assembles one level's whole scene -- corridor, areas, furniture, monster,
@@ -1306,8 +1372,9 @@ export default {
         function buildLevel(idx) {
           cc.dataset.school=String(LEVELS[idx].handAuthored === true);
           flashBtn.hidden=!LEVELS[idx].handAuthored;setFlash(false);battery=100;doorSeen=false;
+          disposeLevel(); collectingLevel = true;
           scene.remove(levelGroup); levelGroup = new THREE.Group(); scene.add(levelGroup);
-          collideRects.length = 0; pageObjs = []; monster = null; trophyGlass = null; doorOpen = false; transitioning = false;
+          collideRects.length = 0; pageObjs = []; finalPages = null; monster = null; trophyGlass = null; doorOpen = false; transitioning = false;
           ghost.active = false; ghost.seen = false; creep.active = false; caught = false;
           monsterWasVisible = false; monsterVisibleAt = 0; staticIntensity = 0; liveVal = 0;
           if (ambientTimer) clearTimeout(ambientTimer);
@@ -1462,22 +1529,38 @@ export default {
           "The meeting about the meeting starts in five minutes."
         ];
         let talkLine = "", talkPickedAt = 0;
-        // the ONE capture routine both kill paths call (Ian's ruling: both live). Never touches state.found,
-        // never calls save(), never re-fires MBS.form/unlock/wave -- only player position, staticIntensity and
-        // the live meter component reset.
+        // Capture is guarded once for both monster contact and static overload.
         function doCapture() {
-          if (caught) return;
+          if (caught || transitioning) return;
           caught = true;
-          burstEl.classList.remove("go"); void burstEl.offsetWidth; burstEl.classList.add("go");
+          burstEl.classList.remove('go'); void burstEl.offsetWidth; burstEl.classList.add('go');
           monster.visible = false; ghost.active = false; creep.active = false;
           if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
-          liveVal = 0; paintMeter();
-          announce("Caught. Pulled back to the start of the hall. Pages already found are still found.");
-          const respawn=()=>{
-            player.x = 1.0; player.z = 0; player.yaw = -Math.PI / 2; player.pitch = 0;
-            staticIntensity = 0; caught = false;monster.visible=false;monsterWasVisible=false;monsterVisibleAt=performance.now();ghost.active=false;creep.active=false;
-          };
-          if(LEVELS[state.level].handAuthored){const death=document.createElement('div');death.className='school-death';death.addEventListener('pointerdown',e=>e.stopPropagation());death.addEventListener('keydown',e=>e.stopPropagation());death.innerHTML='<h2>HE FOUND YOU.</h2><p>You died in the school.</p><button type="button">Try again</button>';viewport.append(death);death.querySelector('button').onclick=()=>{death.remove();respawn();};death.querySelector('button').focus();}else ctx.timeout(respawn,700);
+          liveVal = 0; staticIntensity = 0; paintMeter();
+          if (MODE === 'public' && losePaperHeart(state)) {
+            save(); paintHearts(); stopInput();
+            const exhausted = state.lives === 0;
+            const death = document.createElement('section'); death.className = 'school-death';
+            death.setAttribute('role', 'dialog'); death.setAttribute('aria-modal', 'true');
+            death.setAttribute('aria-label', exhausted ? 'No paper hearts left' : 'He found you');
+            death.innerHTML = '<h2>' + (exhausted ? 'YOUR LAST HEART TORE.' : 'HE FOUND YOU.') + '</h2><p>' +
+              (exhausted ? 'The dream is over. Start another with three fresh paper hearts. Your office pages are still saved.' :
+              'One paper heart tore. ' + state.lives + ' remain. Return to the office and enter the break room again. Your pages are still saved.') +
+              '</p><button type="button">' + (exhausted ? 'Restart dream — return to office' : 'Return to the office') + '</button>';
+            viewport.append(death); cc.dataset.caught = 'true';
+            ctx.on(death, 'pointerdown', e => e.stopPropagation());
+            ctx.on(death, 'keydown', e => e.stopPropagation());
+            ctx.on(death.querySelector('button'), 'click', () => {
+              if (exhausted) restartDream(state);
+              death.remove(); delete cc.dataset.caught; returnToOffice();
+              announce('Back in the office. Your office pages are saved. Enter the break room to try again.');
+            });
+            announce(death.textContent); death.querySelector('button').focus();
+          } else {
+            announce('Caught. Pages already found are still found.');
+            ctx.timeout(() => { player.x = 1; player.z = 0; player.yaw = -Math.PI / 2; player.pitch = 0;
+              caught = false; monster.visible = false; monsterWasVisible = false; }, 700);
+          }
         }
         function scheduleAmbient() {
           const n = state.found[state.level].filter(Boolean).length;
@@ -1486,7 +1569,7 @@ export default {
           const crazyLvl = LEVELS[state.level].crazy || 0;
           const wait = Math.max(1800, (8500 - n * 2000) - crazyLvl * 1800) + rnd() * 2500;
           ambientTimer = ctx.timeout(() => {
-            if (hunting() && !ghost.active && !creep.active && !caught) {
+            if (hunting() && !transitioning && state.dreamPhase !== "done" && !ghost.active && !creep.active && !caught) {
               // Haunt anchors, authored per area (corridor centrelines, never inside a wall) -- replaces the
               // single-corridor aheadX/side math, which assumed one straight hallway and would place him inside
               // a branch's own wall (or off in empty space) now that the school has branches (0901 expansion).
@@ -1512,9 +1595,30 @@ export default {
           doorMesh = wallBox(DOOR_X, 0, 0.3, 2.6, new THREE.MeshStandardMaterial({ map: signTexture("LOCKED", LEVELS[idx].doorLabel || "END OF THE LINE"), roughness: 0.7, metalness: 0.15 }));
           doorRectIdx = collideRects.length - 1;
           doorSeen = false;
+          if (MODE === 'public' && idx === 1) {
+            const end = DOOR_X + 6;
+            wallBox(DOOR_X + 3, -1.35, 6, .3);
+            wallBox(DOOR_X + 3, 1.35, 6, .3);
+            wallBox(end, 0, .3, 3);
+            const desk = buildDesk('THE FINAL PAGES', 'WAKE UP');
+            desk.position.set(end - 1, 0, 0); levelGroup.add(desk);
+            collideRects.push({x0:end-1.45,x1:end-.55,z0:-.34,z1:.34});
+            finalPages = new THREE.Group(); finalPages.name = 'school-final-pages';
+            for (let i = 0; i < 3; i++) {
+              const page = new THREE.Mesh(new THREE.PlaneGeometry(.5, .38), new THREE.MeshStandardMaterial({map:signTexture('WAKE UP', 'MOM IS WAITING'), side:THREE.DoubleSide, roughness:1,emissive:0xefdcb0,emissiveIntensity:.3}));
+              page.rotation.set(-.12,-Math.PI / 2,(i - 1) * .12);
+              page.position.set((i - 1) * .025, .91 + i * .025, (i - 1) * .05); finalPages.add(page);
+            }
+            finalPages.position.set(end - 1.3, 0, 0); levelGroup.add(finalPages);
+            const light = new THREE.PointLight(0xffdfa2, .8, 4, 2);
+            light.position.set(end - 1.6, 1.7, 0); levelGroup.add(light);
+          }
           player.x = 1.0; player.z = 0; player.yaw = -Math.PI / 2; player.pitch = 0;
-          (function () { const dx = DOOR_X; ctx.timeout(() => haunt(new THREE.Vector3(dx - 2, 0, 0), new THREE.Vector3(dx - 8, 0, 0), 6000), 3200); })();
+          (function () { const dx = DOOR_X, builtLevel = levelGroup; ctx.timeout(() => {
+            if (builtLevel === levelGroup && !transitioning && !caught && state.dreamPhase !== 'done') haunt(new THREE.Vector3(dx - 2, 0, 0), new THREE.Vector3(dx - 8, 0, 0), 6000);
+          }, 3200); })();
           scheduleAmbient();
+          collectingLevel = false;
         }
 
         // ---- player: low, at dog height
@@ -1552,7 +1656,7 @@ export default {
         // on every level transition. Never written to by game code; changes no behaviour. Removed in unmount():
         // it closes over THIS mount's player and level state, and left behind it would answer questions about,
         // and let a driver move, a school that is no longer in the document.
-        window.__corgi = { player, deskRead, get desks() { return DESKS.length; }, get level() { return state.level; }, get doorLabel() { return LEVELS[state.level].doorLabel; }, get transition(){return roomCut?.stage||null;}, get battery(){return battery;} };
+        window.__corgi = { player, deskRead, get desks() { return DESKS.length; }, get level() { return state.level; }, get doorLabel() { return LEVELS[state.level].doorLabel; }, get transition(){return roomCut?.stage||null;}, get battery(){return battery;}, get lives(){return state.lives;}, get dreamPhase(){return state.dreamPhase;}, get doorX(){return DOOR_X;}, get doorOpen(){return doorOpen;}, get pages(){return PAGE_POS.map(p=>({x:p.x,z:p.z}));}, get finalPages(){return finalPages?.position.clone()||null;}, get monster(){return monster;}, get camera(){return roomCut?.camera||camera;} };
         // 0901 corner-trap fix. Root cause, found live by logging position + blocked() every frame while
         // scripting a diagonal hold into three different corners: the old test expanded each wall's AABB by R
         // on both axes independently, and the per-axis slide below tests each axis's candidate against the
@@ -1605,7 +1709,7 @@ export default {
           player.yaw -= (x - lastX) * 0.0055; player.pitch = Math.max(-0.6, Math.min(0.6, player.pitch - (y - lastY) * 0.0045));
           lastX = x; lastY = y;
         }
-        ctx.on(viewport, "pointerdown", e => { if (e.target === joy || joy.contains(e.target) || e.target === flashBtn || e.target === readBtn) return; lookStart(e.clientX, e.clientY); try { viewport.setPointerCapture(e.pointerId); } catch {} });
+        ctx.on(viewport, "pointerdown", e => { if (caught || transitioning || e.target === joy || joy.contains(e.target) || e.target === flashBtn || e.target === readBtn) return; lookStart(e.clientX, e.clientY); try { viewport.setPointerCapture(e.pointerId); } catch {} });
         ctx.on(viewport, "pointermove", e => lookMove(e.clientX, e.clientY));
         ["pointerup", "pointercancel", "pointerleave"].forEach(ev => ctx.on(viewport, ev, () => dragging = false));
 
@@ -1634,7 +1738,9 @@ export default {
         // THESE TWO ARE BOUND TO WINDOW, which outlives every channel: a keydown left bound after a channel
         // change is a dead school reading the next channel's W key. ctx.on is what stops that.
         const keys = {};
-        ctx.on(window, "keydown", e => { if (!hunting()) return; keys[e.key.toLowerCase()] = true;
+        ctx.on(window, "keydown", e => { if (!hunting() || caught) return;
+          if (roomCut) { if (e.key.toLowerCase() === 'f' && roomCut.stage === 'wake') leaveCut(); return; }
+          keys[e.key.toLowerCase()] = true;
           if (e.key.toLowerCase() === "f") {if(roomCut?.stage==='wake')leaveCut();else setFlash(!flashOn);} if (e.key.toLowerCase() === "r") showBook(); });
         ctx.on(window, "keyup", e => keys[e.key.toLowerCase()] = false);
 
@@ -1643,40 +1749,157 @@ export default {
           renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, mobileRender ? 1 : 2));
           renderer.setSize(w, h, false);
           camera.aspect = w / h; camera.updateProjectionMatrix();
+          heartVisual?.resize();
         }
         ctx.observe(new ResizeObserver(resize), viewport); resize();
 
-        // A separate break-room scene covers the school rebuild and its first rendered frames.
-        let roomCut=null;
-        const cut=document.createElement('section');cut.id='ccTransition';cut.hidden=true;cut.style.cssText='position:absolute;inset:0;z-index:100;display:none;place-content:center;text-align:center;color:#f3e4c7;padding:25px;font:18px Georgia';
-        cut.innerHTML='<h2></h2><p></p><button type="button" hidden>TURN ON THE FLASHLIGHT</button>';viewport.append(cut);
-        const cutTitle=cut.querySelector('h2'),cutText=cut.querySelector('p'),cutButton=cut.querySelector('button');
-        ctx.on(cut,'pointerdown',e=>e.stopPropagation());ctx.on(cut,'keydown',e=>e.stopPropagation());
-        function leaveCut(){roomCut=null;transitioning=false;delete cc.dataset.transition;cut.hidden=true;cut.style.display='none';joyVec={x:0,y:0};setFlash(true);announce('You woke up in the school. F or FLASHLIGHT toggles your light. It recharges when off.');}
-        ctx.on(cutButton,'click',leaveCut);
-        function enterBreakRoom(){
-          transitioning=true;cc.dataset.transition='true';setFlash(false);joyVec={x:0,y:0};dragging=false;cut.hidden=false;cut.style.display='grid';cut.style.background='transparent';cutTitle.textContent='BREAK TIME.';cutText.textContent='Just a minute. You have earned it.';cutButton.hidden=true;
-          const rs=new THREE.Scene();rs.background=new THREE.Color(0x777b72);const rc=new THREE.PerspectiveCamera(68,viewport.clientWidth/viewport.clientHeight,.05,40);rs.add(new THREE.HemisphereLight(0xf2e7c8,0x554b47,2));
-          const box=(x,y,z,w,h,d,color)=>{const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),new THREE.MeshStandardMaterial({color,roughness:.85}));m.position.set(x,y,z);rs.add(m);return m;};
-          box(0,-.12,-2,7,.2,12,0x76716a);box(0,2,-6,7,4,.2,0xa8ada0);box(-3.5,2,-2,.2,4,8,0x939b91);box(3.5,2,-2,.2,4,8,0x939b91);
-          box(0,.65,-3,2.6,.12,1.25,0x795e3c);for(const x of [-1.1,1.1])for(const z of [-3.5,-2.5])box(x,.3,z,.09,.6,.09,0x474941);
-          box(-2.4,.7,-4.9,1.4,1.4,.75,0xd3c9b5);box(-2.4,1.6,-4.9,.48,.5,.45,0x2e3434);box(-2.4,1.8,-4.65,.18,.16,.08,0x965f3c);
-          box(2.4,.55,-4.6,1.5,1.1,1,0x665866);box(2.4,1.05,-5,1.5,.9,.25,0x665866);
-          for(const x of [-.5,.5]){const cup=new THREE.Mesh(new THREE.CylinderGeometry(.13,.1,.2,12),new THREE.MeshStandardMaterial({color:0xe5d4b9}));cup.position.set(x,.81,-3);rs.add(cup);}
-          const sign=new THREE.Mesh(new THREE.PlaneGeometry(2.1,.8),new THREE.MeshBasicMaterial({map:signTexture('BREAK ROOM','REST YOUR EYES.')}));sign.position.set(0,2.3,-5.85);rs.add(sign);
-          gl.extra.push({dispose(){rs.traverse(o=>{o.geometry?.dispose();if(o.material){o.material.map?.dispose();o.material.dispose();}});}});roomCut={stage:'enter',start:performance.now(),scene:rs,camera:rc};
+        // One break-room set and one camera path, played forwards on entry and backwards on escape.
+        let roomCut = null, breakRoomSet = null;
+        const cut = document.createElement('section'); cut.id = 'ccTransition'; cut.hidden = true;
+        cut.style.cssText = 'position:absolute;inset:0;z-index:100;display:none;place-content:center;text-align:center;color:#f3e4c7;padding:25px;font:18px Georgia';
+        cut.setAttribute('role', 'dialog'); cut.setAttribute('aria-label', 'Break room');
+        cut.innerHTML = '<h2></h2><p aria-live="polite"></p><button type="button" hidden>TURN ON THE FLASHLIGHT</button>';
+        viewport.append(cut);
+        const cutTitle = cut.querySelector('h2'), cutText = cut.querySelector('p'), cutButton = cut.querySelector('button');
+        ctx.on(cut, 'pointerdown', e => e.stopPropagation());
+        ctx.on(cut, 'keydown', e => { if (e.key.toLowerCase() === 'f' && roomCut?.stage === 'wake') leaveCut(); e.stopPropagation(); });
+
+        function stopInput() {
+          for (const key of Object.keys(keys)) delete keys[key];
+          joyVec = {x:0, y:0}; joyNub.style.transform = ''; dragging = false; sprintHeld = false;
+          sprintBtn.setAttribute('aria-pressed', 'false');
         }
-        function tickBreakRoom(now){
-          if(!roomCut)return false;const q=roomCut,t=(now-q.start)/1000;
-          if(q.stage==='enter'){
-            q.camera.position.set(0,Math.max(.12,.5-Math.max(0,t-2.6)*.23),2-Math.min(4.1,t*1.15));q.camera.rotation.set(-Math.max(0,t-2.5)*.3,0,REDUCED?0:Math.max(0,t-2.5)*.22);q.camera.aspect=viewport.clientWidth/viewport.clientHeight;q.camera.updateProjectionMatrix();renderer.render(q.scene,q.camera);
-            cut.style.background='rgba(0,0,0,'+Math.min(1,Math.max(0,(t-2.5)/1.5))+')';if(t>2.5){cutTitle.textContent='';cutText.textContent='Your eyes are so heavy.';}
-            if(t>4.1){q.stage='loading';cut.style.background='#000';cutTitle.textContent='';cutText.textContent='';ctx.timeout(()=>{if(!gl||session!==mine)return;try{advanceLevel();buildLevel(state.level);buildLevelTail(state.level);repaintAll();paintLeaf4();goTo(0);showHunt();deskRead.phase='idle';cc.removeAttribute('data-reading');camera.position.set(player.x,EYE_H,player.z);camera.rotation.set(0,player.yaw,0,'YXZ');q.stage='wake';q.start=performance.now();}catch(error){console.error('School transition failed',error);cutTitle.textContent='The school could not load.';cutText.textContent='Reload to wake up here. Your pages are saved.';}},120);}
-          }else if(q.stage==='wake'){
-            renderer.render(scene,camera);cut.style.background='rgba(0,0,0,'+(1-Math.min(.3,t*.18))+')';cutTitle.textContent='THIS IS NOT THE BREAK ROOM.';cutText.textContent='You woke up in the school. Press F or tap FLASHLIGHT to see. Your light lasts about three minutes and recharges while off.';cutButton.hidden=false;
+        function leaveCut() {
+          const schoolWake = roomCut?.stage === 'wake';
+          roomCut = null; transitioning = false; delete cc.dataset.transition;
+          cut.hidden = true; cut.style.display = 'none'; stopInput(); setFlash(schoolWake);
+          announce(schoolWake ? 'You woke up in the school. Find the three scary pictures, then go through the back door.' : 'Back in the office. The dream is over.');
+        }
+        function returnToOffice() {
+          state.level = 0; save();
+          bankedVal = 4; liveVal = 0; paintMeter();
+          buildLevel(0); buildLevelTail(0);
+          player.x = DOOR_X - 2.3;
+          camera.position.set(player.x, EYE_H, player.z); camera.rotation.set(0, player.yaw, 0, 'YXZ');
+          deskRead.phase = 'idle'; cc.removeAttribute('data-reading'); pawsEl.classList.remove('up');
+          stopInput(); stamina = 100; setFlash(false);
+          repaintAll(); paintLeaf4(); goTo(0); showHunt(); paintHearts();
+          byId('ccTally').textContent = 'PAGES ' + state.found[0].filter(Boolean).length + '/3';
+          promptEl.classList.remove('show');
+        }
+        function getBreakRoomSet() {
+          if (breakRoomSet) return breakRoomSet;
+          const rs = new THREE.Scene(); rs.background = new THREE.Color(0x777b72);
+          const rc = new THREE.PerspectiveCamera(68, viewport.clientWidth / viewport.clientHeight, .05, 40);
+          rs.add(new THREE.HemisphereLight(0xf2e7c8, 0x554b47, 2));
+          const box = (x,y,z,w,h,d,color) => {
+            const m = new THREE.Mesh(new THREE.BoxGeometry(w,h,d), new THREE.MeshStandardMaterial({color,roughness:.85}));
+            m.position.set(x,y,z); rs.add(m); return m;
+          };
+          box(0,-.12,-2,7,.2,12,0x76716a); box(0,2,-6,7,4,.2,0xa8ada0);
+          box(-3.5,2,-2,.2,4,8,0x939b91); box(3.5,2,-2,.2,4,8,0x939b91);
+          box(0,.65,-3,2.6,.12,1.25,0x795e3c);
+          for (const x of [-1.1,1.1]) for (const z of [-3.5,-2.5]) box(x,.3,z,.09,.6,.09,0x474941);
+          box(-2.4,.7,-4.9,1.4,1.4,.75,0xd3c9b5); box(-2.4,1.6,-4.9,.48,.5,.45,0x2e3434);
+          box(-2.4,1.8,-4.65,.18,.16,.08,0x965f3c);
+          box(2.4,.55,-4.6,1.5,1.1,1,0x665866); box(2.4,1.05,-5,1.5,.9,.25,0x665866);
+          for (const x of [-.5,.5]) {
+            const cup = new THREE.Mesh(new THREE.CylinderGeometry(.13,.1,.2,12), new THREE.MeshStandardMaterial({color:0xe5d4b9}));
+            cup.position.set(x,.81,-3); rs.add(cup);
           }
+          const sign = new THREE.Mesh(new THREE.PlaneGeometry(2.1,.8), new THREE.MeshBasicMaterial({map:signTexture('BREAK ROOM','REST YOUR EYES.')}));
+          sign.position.set(0,2.3,-5.85); rs.add(sign);
+          gl.extra.push({dispose(){rs.traverse(o => {o.geometry?.dispose();if(o.material){o.material.map?.dispose();o.material.dispose();}});}});
+          breakRoomSet = {scene:rs,camera:rc}; return breakRoomSet;
+        }
+        function openCut(stage) {
+          transitioning = true; cc.dataset.transition = 'true'; setFlash(false); stopInput();
+          monster.visible = false; ghost.active = false; creep.active = false;
+          cut.hidden = false; cut.style.display = 'grid'; cut.style.background = 'transparent'; cutButton.hidden = true;
+          promptEl.classList.remove('show');
+          roomCut = {stage,start:performance.now(),...getBreakRoomSet()};
+        }
+        function enterBreakRoom() {
+          openCut(state.lives === 0 ? 'retry' : 'enter');
+          cutTitle.textContent = state.lives === 0 ? 'NO PAPER HEARTS LEFT.' : 'BREAK TIME.';
+          cutText.textContent = state.lives === 0 ? 'Your office pages are saved. Begin another dream with three fresh paper hearts.' : 'Just a minute. You have earned it.';
+          if (state.lives === 0) { cutButton.textContent = 'START A NEW DREAM'; cutButton.hidden = false; cutButton.focus(); }
+        }
+        function startDreamEnding() {
+          state.dreamPhase = 'ending'; save();
+          bankedVal = 4; liveVal = 0; paintMeter();
+          openCut('dream-wake');
+          cutTitle.textContent = 'THE BREAK ROOM.'; cutText.textContent = 'The pages slip from your paws. You open your eyes.';
+          announce(cutText.textContent);
+        }
+        ctx.on(cutButton, 'click', () => {
+          if (roomCut?.stage === 'dream-message') {
+            roomCut.stage = 'dream-leave'; roomCut.start = performance.now(); cutButton.hidden = true;
+            cutTitle.textContent = ''; cutText.textContent = 'Time to go back to the office.';
+          } else if (roomCut?.stage === 'retry') { restartDream(state); save(); paintHearts(); enterBreakRoom(); }
+          else leaveCut();
+        });
+        function renderBreakRoom(q, seconds) {
+          const pose = breakRoomPose(seconds, REDUCED);
+          q.camera.position.set(0,pose.y,pose.z); q.camera.rotation.set(pose.pitch,0,pose.roll);
+          q.camera.aspect = viewport.clientWidth / viewport.clientHeight; q.camera.updateProjectionMatrix();
+          renderer.render(q.scene,q.camera); return pose;
+        }
+        function tickBreakRoom(now) {
+          if (!roomCut) return false;
+          const q = roomCut, t = (now - q.start) / 1000;
+          if (q.stage === 'enter') {
+            const pose = renderBreakRoom(q,t);
+            cut.style.background = 'rgba(0,0,0,' + pose.darkness + ')';
+            if (t > 2.5) { cutTitle.textContent = ''; cutText.textContent = 'Your eyes are so heavy.'; }
+            if (t > 4.1) {
+              q.stage = 'loading'; cut.style.background = '#000'; cutTitle.textContent = ''; cutText.textContent = '';
+              ctx.timeout(() => {
+                if (!gl || session !== mine) return;
+                try {
+                  advanceLevel(); buildLevel(state.level); buildLevelTail(state.level); transitioning = true;
+                  paintMeter();
+                  repaintAll(); paintLeaf4(); goTo(0); showHunt(); deskRead.phase = 'idle'; cc.removeAttribute('data-reading');
+                  byId('ccTally').textContent = 'PICTURES ' + state.found[state.level].filter(Boolean).length + '/3';
+                  camera.position.set(player.x,EYE_H,player.z); camera.rotation.set(0,player.yaw,0,'YXZ');
+                  q.stage = 'wake'; q.start = performance.now();
+                } catch (error) { console.error('School transition failed',error); cutTitle.textContent = 'The school could not load.'; cutText.textContent = 'Reload to wake up here. Your pages are saved.'; }
+              },120);
+            }
+          } else if (q.stage === 'wake') {
+            renderer.render(scene,camera); cut.style.background = 'rgba(0,0,0,' + (1-Math.min(.3,t*.18)) + ')';
+            cutTitle.textContent = 'THIS IS NOT THE BREAK ROOM.';
+            cutText.textContent = 'Find the three scary pictures, then the pages beyond the school back door. You have ' + state.lives + ' paper hearts. Your flashlight recharges while off.';
+            cutButton.textContent = 'TURN ON THE FLASHLIGHT';
+            if (cutButton.hidden) { cutButton.hidden = false; cutButton.focus(); }
+          } else if (q.stage === 'dream-wake') {
+            const progress = Math.min(1,t / (REDUCED ? .3 : 1.5));
+            const pose = renderBreakRoom(q,4.1-progress*1.5);
+            cut.style.background = 'rgba(0,0,0,' + pose.darkness + ')';
+            if (progress === 1) {
+              q.stage = 'dream-message';
+              cutTitle.textContent = 'OH THANK MOM, IT WAS JUST A DREAM.';
+              cutText.textContent = 'The school is gone. You are safe in the break room.';
+              cutButton.textContent = 'LEAVE THE BREAK ROOM'; cutButton.hidden = false; cutButton.focus();
+              announce('Oh thank Mom, it was just a dream.');
+            }
+          } else if (q.stage === 'dream-message') {
+            renderBreakRoom(q,2.6); cut.style.background = 'rgba(0,0,0,.28)';
+          } else if (q.stage === 'dream-leave') {
+            const progress = Math.min(1,t / (REDUCED ? .3 : 2.6));
+            renderBreakRoom(q,2.6*(1-progress)); cut.style.background = 'rgba(0,0,0,.12)';
+            if (progress === 1) {
+              state.dreamPhase = 'done'; returnToOffice(); transitioning = true;
+              q.stage = 'done'; cutTitle.textContent = 'BREAK TIME IS OVER.';
+              cutText.textContent = 'You made it out. The pages are safe. Your file is unlocked.';
+              cutButton.textContent = 'BACK TO THE OFFICE'; cutButton.hidden = false; cutButton.focus();
+              markLevelComplete(LEVELS.length - 1);
+            }
+          } else if (q.stage === 'done') { renderer.render(scene,camera); }
+          else if (q.stage === 'retry') { renderBreakRoom(q,0); cut.style.background = 'rgba(0,0,0,.5)'; }
           return true;
         }
+
         // ---- timecode
         let secs = 0; ctx.interval(() => { if (hunting()) { secs++; const m = String(Math.floor(secs / 60)).padStart(2, "0"), s = String(secs % 60).padStart(2, "0"); tcEl.textContent = `${m}:${s}`; } }, 1000);
 
@@ -1688,6 +1911,7 @@ export default {
           // unmount() ran from rendering into a disposed renderer.
           if (!gl || session !== mine) return;
           const dt = Math.min(50, now - last) / 1000; last = now;
+          heartVisual?.render(now, state.lives, heartCortisol);
           if(tickBreakRoom(now)){ctx.frame(frame);return;}
           levelGroup.children.forEach(l=>{if(l.userData.deskLamp)l.intensity=REDUCED?.3:((now*.001+l.position.x)%5.3<.25?.015:.48);});
           if(!REDUCED) levelGroup.children.forEach(l=>{if(l.userData.schoolLamp)l.intensity=((now*.001+l.position.x*.17)%4.7<.22)?0:.006;});
@@ -1701,7 +1925,7 @@ export default {
           // flight when the book went up would snap straight to its endpoint the moment it came down, and
           // monsterVisibleAt is the 600ms no-spawn-kill grace, which reading the paper must not burn through.
           // This is the same freeze the watched-dead-on branch below already performs on ghost.t0.
-          if (!hunting()) {
+          if (!hunting() || caught) {
             if (ghost.active) ghost.t0 += dt * 1000;
             if (monster.visible) monsterVisibleAt += dt * 1000;
             ctx.frame(frame);
@@ -1798,19 +2022,27 @@ export default {
           // null, there is nothing after it.
           if (!doorSeen && player.x > DOOR_X - 1.7) {
             doorSeen = true;
-            announce(LEVELS[state.level].doorLabel ? `The hallway ends here. ${LEVELS[state.level].doorLabel}. Locked. Find the three pages first.` : "The hallway ends here. Nothing past it. This is as far as the building goes.");
+            announce(MODE === 'public' && state.dreamPhase === 'done' ? 'Break time is over. You made it out of the dream.' : LEVELS[state.level].doorLabel ? (state.found[state.level].every(Boolean) ? `The door to ${LEVELS[state.level].doorLabel} is open. Go on.` : `The hallway ends here. ${LEVELS[state.level].doorLabel}. Locked. Find the three pages first.`) : "The hallway ends here. Nothing past it. This is as far as the building goes.");
           }
-          if (LEVELS[state.level].doorLabel && !doorOpen && state.found[state.level].every(Boolean)) {
+          if (LEVELS[state.level].doorLabel && !doorOpen && state.found[state.level].every(Boolean) && (MODE !== "public" || (state.dreamPhase === "hunt" && (state.level === 0 || canOpenBackDoor(state))))) {
             doorOpen = true;
             collideRects.splice(doorRectIdx, 1);
+            doorMesh.position.z = 2.6;
+            doorMesh.material.map?.dispose();
             doorMesh.material.map = signTexture("OPEN. GO ON.", LEVELS[state.level].doorLabel);
             doorMesh.material.map.colorSpace = THREE.SRGBColorSpace; doorMesh.material.needsUpdate = true;
           }
-          if (doorOpen && !transitioning && player.x > DOOR_X - 0.4) {
+          if (doorOpen && !transitioning && state.level < LEVELS.length - 1 && player.x > DOOR_X - 0.4) {
             transitioning = true;
             // 0905: public's door doesn't lead to a fourth level (LEVELS_PUBLIC has exactly one entry) -- it
             // leads to the head office's desk instead. See enterHeadOffice(), defined with the desk-terminal UI.
             if (state.level < LEVELS.length - 1) { if(MODE==="public"&&state.level===0)enterBreakRoom();else ctx.timeout(() => { advanceLevel(); buildLevel(state.level); buildLevelTail(state.level); repaintAll(); paintLeaf4(); goTo(0); transitioning = false; }, 250); }
+          }
+
+          if (finalPages && canOpenBackDoor(state) && deskRead.phase === 'idle') {
+            const distance = Math.hypot(player.x - finalPages.position.x, player.z - finalPages.position.z);
+            if (distance < 2.5) { anyPrompt = true; promptEl.textContent = 'THE FINAL PAGES. COME CLOSER.'; promptEl.classList.add('show'); }
+            if (distance < 1.15) { finalPages.visible = false; startDreamEnding(); ctx.frame(frame); return; }
           }
 
           // monster: slides while off-frame or at the edge, holds still when watched dead-on (locked canon --
@@ -1914,6 +2146,7 @@ export default {
           ctx.frame(frame);
         }
         buildLevel(state.level); buildLevelTail(state.level);
+        if (MODE === 'public' && state.dreamPhase === 'ending') startDreamEnding();
         ctx.frame(frame);
       }).catch(err => {
         if (session !== mine) return;
