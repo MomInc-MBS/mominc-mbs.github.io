@@ -2,7 +2,7 @@
 (()=>{'use strict';
  const KEY='mbs-hand-decisions-v1', REQUIRED=['lilboyfriend','djscratch','corgi','goon'];
  const read=()=>{try{const s=JSON.parse(localStorage.getItem(KEY)||'null');return {count:Number.isInteger(s?.count)?Math.max(0,Math.min(5,s.count)):0,last:typeof s?.last==='string'?s.last:''};}catch{return {count:0,last:''};}};
- const AD_KEY='mbs-hand-ad-shown-v1', PROFILE_KEY='mbs-hand-profile-v1';
+ const PROFILE_KEY='mbs-hand-profile-v1';
  const regions=['nails','fingertips','middle_sections','knuckles','palm','back_of_hand','wrist'];
  const pagesReady=()=>{const done=window.MBS_STATE?.completedPages()||[];return REQUIRED.every(id=>done.includes(id));};
  const validHand=p=>!!(p&&p.version===1&&p.source==='handborne'&&p.complete===true&&regions.every(k=>Number.isInteger(p.sections?.[k])&&p.sections[k]>=0&&p.sections[k]<23));
@@ -13,16 +13,7 @@
  const armieReady=()=>pagesReady()&&!!handProfile();
  function decision(signature){if(!pagesReady()||!signature)return false;const s=read();if(s.last===signature)return false;try{localStorage.setItem(KEY,JSON.stringify({count:Math.min(5,s.count+1),last:signature}));window.dispatchEvent(new Event('mbs-flow'));return true;}catch{return false;}}
  window.MBS_FLOW={pagesReady,armieReady,decision,read,validHand,recipe,profile,saveHand,handProfile};
- let ad=null,lastFocus=null,adTimer=null;
- const markAdSeen=()=>{try{localStorage.setItem(AD_KEY,'1');}catch{}};
- const automaticAdEligible=()=>pagesReady()&&!armieReady()&&!location.pathname.startsWith('/handborne');
- function clearAdTimer(){if(adTimer!==null){clearTimeout(adTimer);adTimer=null;}}
- function scheduleAdReturn(){clearAdTimer();if(automaticAdEligible())adTimer=setTimeout(()=>{adTimer=null;maybeShowAd();},10000);}
- function showAd(){if(ad?.open||!pagesReady())return;clearAdTimer();lastFocus=document.activeElement;
-  if(!ad){ad=document.createElement('dialog');ad.className='hand-ad';ad.innerHTML='<form method="dialog"><button class="ad-close" aria-label="Close advertisement">×</button></form><p class="ad-ribbon">DJ SCRATCH · A MESSAGE FROM OUR SPONSOR</p><img src="/tv/assets/helping-hand-badge.png" alt="The Helping Hand"><h2>BUY A HELPING HAND!</h2><p>It DJs. It cleans. It obeys. One hand. Every task. Yours to assemble.</p><a class="ad-buy" href="/handborne/">Build my hand</a><small>Fictional offer. No payment required.</small>';document.body.append(ad);ad.addEventListener('close',()=>{if(lastFocus?.isConnected)lastFocus.focus();scheduleAdReturn();});}
-  window.MBS_ADS?.close();ad.showModal();markAdSeen();
- }
- function maybeShowAd(){if(!document.hidden&&automaticAdEligible())showAd();}
+ function showAd(){if(!pagesReady())return;if(!document.querySelector('#tv')){location.assign('/tv/?ch=djscratch&ad=hand');return;}window.dispatchEvent(new Event('mbs:hand-offer'));}
  // Old school runs banked Corgi's secret but never recorded the finished page.
  // Repair only complete saved runs; a secret by itself is not a completion.
  function recoverSchoolFinish(){
@@ -45,21 +36,20 @@
   }
  }
  function start(){
-  const ads=document.createElement('script');ads.src='/tv/retro-ads.js';document.head.append(ads);
+  if(document.querySelector('#tv')){const ads=document.createElement('script');ads.src='/tv/retro-ads.js?v=neon-tv-2';document.head.append(ads);}
   recoverSchoolFinish();
   try{if(Number(localStorage.getItem('mbs-gala-completed-v1'))>0)window.MBS_STATE?.completePage('goon');}catch{}
   paint();
-  // The sponsor returns on channel arrival and after ten seconds closed, until the hand is finished.
-  maybeShowAd();
   document.addEventListener('click',event=>{if(event.target.closest('[data-hand-ad]'))showAd();});
-  document.addEventListener('visibilitychange',()=>{clearAdTimer();if(!document.hidden){recoverSchoolFinish();paint();maybeShowAd();}});
-  window.addEventListener('pagehide',clearAdTimer);
-  window.addEventListener('pageshow',()=>{paint();maybeShowAd();});
-  window.addEventListener('mbs:page-complete',()=>{paint();maybeShowAd();});
-  window.addEventListener('storage',()=>{recoverSchoolFinish();paint();if(adTimer===null)maybeShowAd();});window.addEventListener('mbs-flow',paint);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden){recoverSchoolFinish();paint();}});
+  window.addEventListener('pageshow',paint);
+  window.addEventListener('mbs:page-complete',paint);
+  window.addEventListener('storage',()=>{recoverSchoolFinish();paint();});window.addEventListener('mbs-flow',paint);
   // Mounting a channel changes its links, but never schedules an advertisement.
   const observer=new MutationObserver(()=>{observer.disconnect();paint();observer.observe(document.body,{childList:true,subtree:true});});
   observer.observe(document.body,{childList:true,subtree:true});
+  window.addEventListener('pagehide',()=>observer.disconnect());
+  window.addEventListener('pageshow',()=>observer.observe(document.body,{childList:true,subtree:true}));
  }
  document.readyState==='loading'?document.addEventListener('DOMContentLoaded',start,{once:true}):start();
 })();

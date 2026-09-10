@@ -176,6 +176,15 @@
 @media(min-width:900px){.fu.has3d .wrap{display:grid;grid-template-columns:minmax(300px,.8fr) minmax(0,1.3fr);gap:16px;align-content:start}.fu .head{grid-column:1/-1}.fu.has3d #stageCard{margin:12px 0}.fu.has3d .fu-stage{height:520px}.fu #nameCard,.fu .card[aria-label="Your can"]{grid-column:1/-1}}
 @media(max-width:480px){.fu .batch-options{grid-template-columns:repeat(2,minmax(0,1fr))}.fu .batch-actions button{flex:1}.fu .batch-steps{gap:4px}.fu .batch-steps span{padding:6px;font-size:13px}}
 @media(prefers-reduced-motion:reduce){.fu *{animation:none!important}}
+.fu .fu-mom-marquee{position:relative;z-index:2;overflow:hidden;border:3px solid var(--ink);background:var(--hot);margin:0 0 14px;transform:rotate(-1deg)}
+.fu .fu-mom-track{display:flex;width:max-content;animation:fuel-mom-scroll 14s linear infinite}
+.fu .fu-mom-track>span{display:flex;align-items:center;gap:18px;flex:none;padding:5px 18px;color:var(--ink);font:900 16px "Archivo Black",Arial,sans-serif}
+.fu .fu-mom-track img{width:42px;height:32px;object-fit:contain}
+.fu .fu-mom-track b{background:var(--acid);padding:4px 10px;box-shadow:3px 3px 0 var(--grape)}
+.fu .bolt{animation:fuel-electric 2.4s ease-in-out infinite alternate}
+@keyframes fuel-mom-scroll{to{transform:translateX(-50%)}}
+@keyframes fuel-electric{to{filter:drop-shadow(0 0 8px var(--volt)) drop-shadow(3px 4px 0 var(--ink))}}
+@media(prefers-reduced-motion:reduce){.fu .fu-mom-track,.fu .bolt{animation:none}}
 </style>
 
 <article class="fu" id="fu" aria-label="MBS FUEL" data-host="MBS FUEL" data-show="BUILD YOUR STACK" data-ch="7" data-gauge="off">
@@ -183,6 +192,7 @@
 
   <div class="wrap">
     <header class="head">
+      <div class="fu-mom-marquee" aria-label="MOM Inc · Goon Fuel · Untested"><div class="fu-mom-track" aria-hidden="true"><span><img src="/tv/assets/mom-inc-mark.png" alt="">MOM INC <b>⚡ GOON FUEL ⚡</b> UNTESTED <img src="/tv/assets/mom-inc-mark.png" alt="">MOM INC <b>⚡ GOON FUEL ⚡</b> UNTESTED</span><span><img src="/tv/assets/mom-inc-mark.png" alt="">MOM INC <b>⚡ GOON FUEL ⚡</b> UNTESTED <img src="/tv/assets/mom-inc-mark.png" alt="">MOM INC <b>⚡ GOON FUEL ⚡</b> UNTESTED</span></div></div>
       <div class="burst" aria-hidden="true"></div>
       <svg class="bolt l" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 1 3 14h7l-1 9 11-14h-8z"/></svg>
       <svg class="bolt r" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 1 3 14h7l-1 9 11-14h-8z"/></svg>
@@ -387,5 +397,4 @@
     <small>Working name. The drink's real name has not been decided. Every promised effect above is a joke, not a claim, and nothing here is medical advice. Real ingredient descriptions are general effects only, never a guarantee. UNTESTED. UNTESTED. UNTESTED.</small>
   </footer>
 </article>
-
 

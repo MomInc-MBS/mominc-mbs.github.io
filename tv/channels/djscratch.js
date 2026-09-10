@@ -473,7 +473,8 @@ export default {
     ctx.on(rename,'click',askName);ctx.on(dialog,'cancel',e=>{if(!identity.read())e.preventDefault();});
     [djA,djB,djC].forEach(select=>ctx.on(select,'change',()=>updateDjName(true)));ctx.on(tag,'input',()=>updateDjName(true));
     ctx.on(confirm,'click',()=>{try{identity.choose(leetify([djA.value,djB.value,djC.value].join(' ')),tag.value,[djA.value,djB.value,djC.value]);paintBadge();dialog.close();window.MBS_RUN?.checkpoint('dj-name');togglePower(true);}catch(error){note.textContent=error.message;}});
-    updateDjName();paintBadge();if(!chosen)ctx.timeout(askName,0);
+    // Ask when the player starts the deck or explicitly chooses a name, never on page arrival.
+    updateDjName();paintBadge();
 
     // ---- THE CONTROL RACK: BASS/TREBLE knobs, VOLUME/TEMPO sliders, POWER switch. Every value is set from
     // pointer POSITION (rect + event only, per the zoom note) so a single tap works exactly like a drag would -
