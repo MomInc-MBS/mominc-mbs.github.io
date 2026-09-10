@@ -1,3 +1,4 @@
+import '../dj-identity.js';
 /* tv/channels/djscratch.js - DJ Scratch, CH 3, the second channel converted to a module and the
    FIRST one with a play route (2.18, PLAN-r9 D.1.7). Same code that sat in an inline <script> at the
    bottom of djscratch.html, with one change made throughout: every listener, timer, interval,
@@ -146,6 +147,7 @@ function clawBase(THREE, geo, centre) {
    a session that has already ended is disposed on arrival rather than attached to a dead fragment. */
 let gl = null;
 let session = null;
+let identityDialog = null;
 
 export default {
   mount(root, ctx) {
@@ -421,6 +423,7 @@ export default {
         if (i >= msg.length) {
           clearInterval(type);
           tunerText.textContent = "HELP, GET US OUT";
+          window.MBS_DJ.complete();paintBadge();badge.classList.add("dj-prisoner-glitch");window.MBS_RUN?.checkpoint("djscratch");
           hint.innerHTML = "the record skipped. that was her, not it.";
           sigLbl.textContent = "// signal confirmed // she is in the machine //";
           cueHint.textContent = "Signal found: HELP, GET US OUT. Free mix is open.";
@@ -455,9 +458,22 @@ export default {
       }
       return out;
     }
-    function updateDjName() { djName.textContent = leetify([djA.value, djB.value, djC.value].join(" ")); }
-    [djA, djB, djC].forEach(s => ctx.on(s, "change", updateDjName));
-    updateDjName();
+    const identity = window.MBS_DJ, chosen = identity.read();
+    if(!document.getElementById('dj-identity-style')){const css=document.createElement('link');css.id='dj-identity-style';css.rel='stylesheet';css.href='/tv/dj-identity.css';document.head.append(css);}
+    const picker=byId('djA').closest('.djid'), badge=document.createElement('div');badge.className='dj-identity-badge';picker.before(badge);
+    const badgeName=document.createElement('strong'),rename=document.createElement('button');rename.type='button';rename.textContent='Choose DJ name';badge.append(badgeName,rename);
+    identityDialog?.remove();const dialog=document.createElement('dialog');identityDialog=dialog;dialog.className='dj-name-window';dialog.setAttribute('aria-labelledby','dj-name-heading');
+    dialog.innerHTML='<div class="dj-name-title"><span>DJ_ID.EXE — MOM INC</span><span aria-hidden="true">♫</span></div><div class="dj-name-body"><div class="dj-name-lasers" aria-hidden="true">'+Array.from({length:8},(_,i)=>'<i style="--ray:'+i+'"></i>').join('')+'</div><h2 id="dj-name-heading">MAKE SOME NOISE.</h2><p>Build your name. Every part turns up the party.</p><div data-name-picker></div><label for="dj-moniker">Your 3-character moniker</label><input id="dj-moniker" minlength="3" maxlength="3" pattern="[A-Za-z0-9]{3}" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XYZ" aria-describedby="dj-tag-note"><small id="dj-tag-note">Three letters or numbers. This tag follows you onto the Gala leaderboard.</small><p data-name-note role="status"></p><button data-name-confirm type="button" disabled>THAT’S ME. START THE SET →</button><a class="dj-name-exit" href="/tv/?ch=mominc">Back to MOM Inc</a></div>';
+    dialog.querySelector('[data-name-picker]').append(picker);picker.open=true;document.body.append(dialog);
+    const tag=dialog.querySelector('#dj-moniker'),confirm=dialog.querySelector('[data-name-confirm]'),note=dialog.querySelector('[data-name-note]');
+    [djA,djB,djC].forEach((select,i)=>{if(chosen){select.value=chosen.parts[i];}else{const option=document.createElement('option');option.value='';option.textContent=['Choose your title','Choose your sound','Choose your edition'][i];option.disabled=true;option.selected=true;select.prepend(option);}select.required=true;});tag.value=chosen?.moniker||'';
+    function paintBadge(){const saved=identity.read();badgeName.textContent=saved?.completedAt?identity.display(saved):saved?identity.name(saved):'Your DJ name is waiting';rename.hidden=!!saved?.completedAt;rename.textContent=saved?'Edit DJ name':'Choose DJ name';}
+    function updateDjName(dance=false){const parts=[djA.value,djB.value,djC.value];tag.value=identity.moniker(tag.value);const base=leetify(parts.filter(Boolean).join(' '));djName.textContent=(base||'YOUR NAME HERE')+(tag.value?' · '+tag.value:'');confirm.disabled=parts.some(p=>!p)||tag.value.length!==3;if(dance){dialog.classList.remove('dj-dancing');void dialog.offsetWidth;dialog.classList.add('dj-dancing');}}
+    function askName(){if(!dialog.open){dialog.showModal();(djA.value?tag:djA).focus();}}
+    ctx.on(rename,'click',askName);ctx.on(dialog,'cancel',e=>{if(!identity.read())e.preventDefault();});
+    [djA,djB,djC].forEach(select=>ctx.on(select,'change',()=>updateDjName(true)));ctx.on(tag,'input',()=>updateDjName(true));
+    ctx.on(confirm,'click',()=>{try{identity.choose(leetify([djA.value,djB.value,djC.value].join(' ')),tag.value,[djA.value,djB.value,djC.value]);paintBadge();dialog.close();window.MBS_RUN?.checkpoint('dj-name');togglePower(true);}catch(error){note.textContent=error.message;}});
+    updateDjName();paintBadge();if(!chosen)ctx.timeout(askName,0);
 
     // ---- THE CONTROL RACK: BASS/TREBLE knobs, VOLUME/TEMPO sliders, POWER switch. Every value is set from
     // pointer POSITION (rect + event only, per the zoom note) so a single tap works exactly like a drag would -
@@ -577,6 +593,7 @@ export default {
     const scoreNum = byId("scoreNum"), scoreGrade = byId("scoreGrade");
     let seqIndex = 0, hits = 0, misses = 0, gameStarted = false, gameActive = false, gameDone = false;
     function startGame() {
+      if (!window.MBS_DJ.read()) { askName(); return; }
       if (gameStarted) return;
       gameStarted = true; gameActive = true; seqIndex = 0;
       scoreGrade.textContent = "FOLLOW THE LIGHTS";
@@ -615,6 +632,7 @@ export default {
     // ---- POWER: turns on the beat + visualiser (first tap needs a gesture for AudioContext) and starts the game.
     const powerBtn = byId("powerSwitch");
     function togglePower(on) {
+      if(on&&!window.MBS_DJ.read()){askName();return;}
       powerBtn.setAttribute("aria-pressed", on ? "true" : "false");
       state.power = on ? 1 : 0;
       dj.classList.toggle("deck-powered", on);
@@ -631,7 +649,7 @@ export default {
       }
     }
     ctx.on(powerBtn, "click", () => togglePower(powerBtn.getAttribute("aria-pressed") !== "true"));
-    const autoBeat=e=>{if(!actx&&e.target!==powerBtn)togglePower(true);};
+    const autoBeat=e=>{if(!actx&&e.target!==powerBtn&&window.MBS_DJ.read())togglePower(true);};
     ctx.on(dj,"pointerdown",autoBeat,{once:true});ctx.on(dj,"keydown",autoBeat,{once:true});
     ctx.on(powerBtn, "keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); powerBtn.click(); } });
 
@@ -686,6 +704,7 @@ export default {
      registered through ctx and are deliberately not re-listed. Clearing `session` is what stops an
      in-flight model fetch from attaching a scene to a fragment that has already gone. */
   unmount() {
+    identityDialog?.remove();identityDialog=null;
     session = null;
     if (!gl) return;
     const g = gl;

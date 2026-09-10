@@ -142,7 +142,7 @@
   const COMING_SOON = CHANNELS.filter(c => c.comingSoon).map(c => c.id);   // keep in sync with the list above
   const lcdList = document.getElementById("lcdList");
   const current = new URLSearchParams(location.search).get("ch") || "";
-  if (lcdList) CHANNELS.forEach(c => {
+  if (lcdList) CHANNELS.filter(c=>c.listed!==false).forEach(c => {
     const built = (c.ch > 0 || !!c.href) && !c.suppressed;   // a suppressed channel renders as a dim span, never as a link
     const el = document.createElement(built ? "a" : "span");
     el.className = "lcd-card" + (c.head ? " head" : "") + (c.half ? " half" : "") + (built ? "" : " off") + (c.id === current ? " on" : "");
@@ -221,6 +221,7 @@
   // --- channel: ?ch=<name> loads channels/<name>.html into the glass; no channel = the test card
   const name = new URLSearchParams(location.search).get("ch")==="sag"?"mominc":new URLSearchParams(location.search).get("ch");
   const testcard = `<section class="testcard" aria-label="MBS test card"><h1>MBS</h1><div class="spacer"></div><p>Mom's Brainwashing Stream. This set is tuned to no one yet.</p></section>`;
+  if(name==="fuel")location.replace("/games/fuel/");
   if (name === "armie" && !window.MBS_FLOW?.armieReady()) {
     channel.innerHTML = `<section class="testcard"><h1>COACH ARMIE</h1><p>The Music Desk has your hand on order.</p><a href="../games/djscratch/">Visit DJ Scratch</a></section>`;
   } else if (name && COMING_SOON.includes(name) && name !== "armie") {

@@ -27,7 +27,7 @@ RECORD_FIELDS = {
     "id", "channel", "title", "lcdName", "status", "active", "airDate", "preview", "mission", "reward",
     "route", "gameRoute", "theme", "meter", "cursor", "effect", "coachAnchor", "department",
     "suppressed", "secretSequence", "controlDigits", "missionId", "apiBase", "redeemPath",
-    "inRegistry", "registry",
+    "inRegistry", "registry", "listed", "placement",
 }
 
 errs = []
@@ -84,7 +84,7 @@ def main():
             err("%s is not an object" % where)
             continue
         extra = set(rec.keys()) - RECORD_FIELDS
-        missing = RECORD_FIELDS - set(rec.keys())
+        missing = (RECORD_FIELDS - {"placement"}) - set(rec.keys())
         if extra:
             err("%s: unexpected field(s) %s" % (where, sorted(extra)))
         if missing:

@@ -49,11 +49,11 @@
     ctx.globalAlpha=1-zoom;ctx.save();
     if(scene.name==='weapon'){
      const melee=['rapier','greatsword','dagger','spear','trident','scythe'].includes(look.weapon.type),beat=(seconds%1.35)/1.35;
-     ctx.translate(128,79);ctx.rotate(Math.sin(beat*TAU)*(melee ? .8 : .09));ctx.drawImage(weapon,-19,-36,38,68);ctx.restore();
+     ctx.translate(115,79);ctx.rotate(Math.sin(beat*TAU)*(melee ? .8 : .09));ctx.drawImage(weapon,-19,-36,38,68);ctx.restore();
      ctx.strokeStyle='#87efff';ctx.lineWidth=2;ctx.globalAlpha=(1-zoom)*Math.sin(beat*Math.PI);
-     if(melee){ctx.beginPath();ctx.arc(117,77,30,-1.6,-.15);ctx.stroke();}
-     else{ctx.beginPath();ctx.ellipse(129,67,8+beat*16,6+beat*13,0,0,TAU);ctx.stroke();ctx.fillStyle='#d8ffff';ctx.fillRect(135+beat*24,62-beat*24,5,2);}
-    }else{ctx.translate(128,78+bob*2);ctx.rotate(-.1);ctx.drawImage(weapon,-16,-31,32,58);ctx.restore();}
+     if(melee){ctx.beginPath();ctx.arc(106,77,30,-1.6,-.15);ctx.stroke();}
+     else{ctx.beginPath();ctx.ellipse(116,67,8+beat*16,6+beat*13,0,0,TAU);ctx.stroke();ctx.fillStyle='#d8ffff';ctx.fillRect(122+beat*24,62-beat*24,5,2);}
+    }else{ctx.translate(115,78+bob*2);ctx.rotate(-.1);ctx.drawImage(weapon,-16,-31,32,58);ctx.restore();}
     ctx.globalAlpha=1;
    }
    ctx.restore();return scene;

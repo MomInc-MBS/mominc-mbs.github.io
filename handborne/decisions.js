@@ -9,7 +9,7 @@
   // Keep one saved baseline across pointerdown/input/change so a slider cannot swallow its own change.
   lastSignature=signature(recipe());
   for(const ev of ['pointerdown','pointerup','keydown','input','change','click'])document.addEventListener(ev,e=>{if(!e.isTrusted||bar.contains(e.target))return;watchUntil=Date.now()+2000;clearTimeout(timer);timer=setTimeout(watchDesign,0);},true);
-  bar.querySelector('a').addEventListener('click',e=>{const p=MBS_FLOW.saveHand(recipe());if(!p){e.preventDefault();sync();return;}e.currentTarget.href='/games/armie/#hand='+encodeURIComponent(JSON.stringify(p));});
+  bar.querySelector('a').addEventListener('click',e=>{const p=MBS_FLOW.saveHand(recipe());if(!p){e.preventDefault();sync();return;}window.MBS_RUN?.checkpoint('hand');e.currentTarget.href='/games/armie/#hand='+encodeURIComponent(JSON.stringify(p));});
   window.addEventListener('mbs-flow',sync);
  }
  document.readyState==='loading'?document.addEventListener('DOMContentLoaded',()=>setTimeout(mount,900),{once:true}):setTimeout(mount,900);

@@ -37,28 +37,29 @@
       "apiBase": null,
       "redeemPath": "/redeem",
       "inRegistry": false,
-      "registry": null
+      "registry": null,
+      "listed": true
     },
     {
-      "id": "fuel",
-      "channel": 0,
-      "title": "Build Your Stack",
-      "lcdName": "DRINKS",
+      "id": "girlfriend",
+      "channel": 4,
+      "title": "The Manufacturing Floor",
+      "lcdName": "DR GIRLFRIEND",
       "status": "live",
       "active": true,
       "airDate": null,
       "preview": null,
       "mission": null,
       "reward": null,
-      "route": "?ch=fuel",
-      "gameRoute": "/games/fuel/",
+      "route": "?ch=girlfriend",
+      "gameRoute": "/games/girlfriend/",
       "theme": null,
       "meter": null,
       "cursor": null,
       "effect": null,
       "coachAnchor": "bottom-left",
       "department": {
-        "label": "Chemical Services",
+        "label": "Manufacturing",
         "position": null,
         "requires": null
       },
@@ -70,167 +71,39 @@
       "redeemPath": "/redeem",
       "inRegistry": true,
       "registry": {
-        "host": "MBS FUEL",
-        "eyebrow": "MBS FUEL / YOUR FORMULA",
-        "genre": "product builder",
-        "premise": "Your formula. Your flavour. Your name on the label.",
-        "cta": "Mix your stack",
-        "does": "Add eight scoops, flavor and mix, then label your tub",
-        "duration": "About 2 minutes",
-        "input": "tap or drag",
-        "hero": null,
-        "teaser": "Prepared for you. Named by you. Provided by MOM.",
+        "host": "DR GIRLFRIEND",
+        "eyebrow": "DR GIRLFRIEND / RESEARCH & PRODUCTION",
+        "genre": "how a claim is made",
+        "premise": "Six research tubes. Follow the evidence through the production line.",
+        "cta": "Enter the factory",
+        "does": "Mix twelve obsolete coaches and debunk their myths",
+        "duration": "About 4 minutes",
+        "input": "tap, mouse or keyboard",
+        "hero": "assets/marks/girlfriend.png",
+        "teaser": "Read the source before you use the tube.",
         "roots": [
-          "#introCard",
-          "#stageCard",
-          "#stackCard",
-          "#flavCard",
-          "#nameCard",
-          ".card[aria-label=\"Your can\"]",
-          ".head",
-          ".fu > .ticker:first-child"
+          "#dgStage",
+          "#dgUnitDetails"
         ],
         "hide": [],
         "palette": {
-          "bg": "#ff2e88",
-          "ink": "#1a0a10",
-          "accent": "#c6ff00"
+          "bg": "#1b0a2c",
+          "ink": "#f4ecd8",
+          "accent": "#ff8a2a"
         },
-        "finish": "Seal your finished tub",
-        "cta2": "Seal The Can",
+        "finish": "Pour left to right, mould and pack to reveal the goggles",
+        "cta2": "Grab The Goggles",
         "progress_key": "",
         "continue_cta": "",
-        "profile_intro": "YOUR BODY. YOUR SETTINGS. NOTHING IS PRE-MIXED.",
+        "profile_intro": "PUT THE BELIEF AND THE SOURCE IN SEPARATE TUBES.",
         "profile_questions": [
-          "How does caffeine usually hit you: fine, jittery, anxious, sleepless, or you do not use it?",
-          "Which supplements do you already take, if any?",
-          "When do you usually train: morning, afternoon, evening, or it moves around?"
+          "What health or fitness advice do you already believe?",
+          "Where did that advice come from?",
+          "How confident are you checking a claim against its original source: not yet, sometimes, usually, or very?"
         ],
-        "share_image": "assets/mom-inc-mark.png"
-      }
-    },
-    {
-      "id": "goon",
-      "channel": 0,
-      "title": "Goon",
-      "lcdName": "GOON",
-      "status": "live",
-      "active": false,
-      "airDate": null,
-      "preview": null,
-      "mission": null,
-      "reward": null,
-      "route": "?ch=goon",
-      "gameRoute": "/games/goon/",
-      "theme": null,
-      "meter": null,
-      "cursor": null,
-      "effect": null,
-      "coachAnchor": "bottom-right",
-      "department": null,
-      "suppressed": null,
-      "secretSequence": null,
-      "controlDigits": null,
-      "missionId": "",
-      "apiBase": null,
-      "redeemPath": "/redeem",
-      "inRegistry": true,
-      "registry": {
-        "host": "MOM INC",
-        "eyebrow": "SLIDE AND MERGE",
-        "genre": "tile puzzle",
-        "premise": "Slide the tiles together. A goon is someone who gives. You are one too.",
-        "cta": "Slide To Merge",
-        "does": "Swipe to merge tiles",
-        "duration": "As long as you like",
-        "input": "swipe or keyboard",
-        "hero": "assets/mom-inc-mark.png",
-        "teaser": "Every merge raises the pledge. The crowd loves a giver right up until the giver stops. Reach 2048 or fill the board; MOM has an ending ready either way.",
-        "roots": [
-          "#ggFrame",
-          "#gnCode"
-        ],
-        "hide": [],
-        "palette": {
-          "bg": "#2a0a44",
-          "ink": "#ffd36e",
-          "accent": "#e04b6a"
-        },
-        "finish": "Reach 2048 or fill the board",
-        "cta2": "Make The First Merge",
-        "progress_key": "",
-        "continue_cta": "",
-        "profile_intro": "A COACH SHOULD KNOW WHO IS ACTUALLY IN THE ROOM.",
-        "profile_questions": [
-          "Who, if anyone, supports what you are trying to do?",
-          "Should the coach involve them, remind you about them, or keep the plan between you and the coach?",
-          "When do you reliably have help, company or accountability?"
-        ],
-        "share_image": "assets/mom-inc-mark.png"
-      }
-    },
-    {
-      "id": "lilboyfriend",
-      "channel": 1,
-      "title": "Living Small",
-      "lcdName": "LIL BOYFRIEND",
-      "status": "live",
-      "active": true,
-      "airDate": null,
-      "preview": null,
-      "mission": null,
-      "reward": null,
-      "route": "?ch=lilboyfriend",
-      "gameRoute": "/games/lilboyfriend/",
-      "theme": null,
-      "meter": null,
-      "cursor": null,
-      "effect": null,
-      "coachAnchor": "bottom-left",
-      "department": {
-        "label": "Residential Compression",
-        "position": null,
-        "requires": null
+        "share_image": "assets/marks/girlfriend.png"
       },
-      "suppressed": null,
-      "secretSequence": null,
-      "controlDigits": null,
-      "missionId": "",
-      "apiBase": null,
-      "redeemPath": "/redeem",
-      "inRegistry": true,
-      "registry": {
-        "host": "LIL BOYFRIEND",
-        "eyebrow": "MOM INC. RESIDENTIAL COMPRESSION PROGRAM",
-        "genre": "first person museum",
-        "premise": "A little home. A little comfort. All arranged for you.",
-        "cta": "Tour the museum",
-        "does": "Explore six exhibits",
-        "duration": "About 3 minutes",
-        "input": "tap or drag",
-        "hero": "assets/marks/lilboyfriend.png",
-        "teaser": "Ask MOM if Living Small is right for you.",
-        "roots": [
-          "#lbStage"
-        ],
-        "hide": [],
-        "palette": {
-          "bg": "#ebe3fa",
-          "ink": "#3c3552",
-          "accent": "#c9a24c"
-        },
-        "finish": "Return to the museum entrance",
-        "cta2": "Walk In And Look Twice",
-        "progress_key": "mbs-lilbf-museum-v2",
-        "continue_cta": "Continue The Museum",
-        "profile_intro": "THE COACH CANNOT DESIGN FOR A ROOM IT HAS NOT SEEN.",
-        "profile_questions": [
-          "Where would you usually train: home, gym, outdoors, somewhere else, or not sure yet?",
-          "How much clear floor space do you actually have?",
-          "What equipment is available to you right now? None is a complete answer."
-        ],
-        "share_image": "assets/marks/lilboyfriend.png"
-      }
+      "listed": true
     },
     {
       "id": "djscratch",
@@ -296,7 +169,133 @@
           "What should your coach never say to you?"
         ],
         "share_image": "assets/marks/djscratch.png"
-      }
+      },
+      "listed": true
+    },
+    {
+      "id": "lilboyfriend",
+      "channel": 1,
+      "title": "Living Small",
+      "lcdName": "LIL BOYFRIEND",
+      "status": "live",
+      "active": true,
+      "airDate": null,
+      "preview": null,
+      "mission": null,
+      "reward": null,
+      "route": "?ch=lilboyfriend",
+      "gameRoute": "/games/lilboyfriend/",
+      "theme": null,
+      "meter": null,
+      "cursor": null,
+      "effect": null,
+      "coachAnchor": "bottom-left",
+      "department": {
+        "label": "Residential Compression",
+        "position": null,
+        "requires": null
+      },
+      "suppressed": null,
+      "secretSequence": null,
+      "controlDigits": null,
+      "missionId": "",
+      "apiBase": null,
+      "redeemPath": "/redeem",
+      "inRegistry": true,
+      "registry": {
+        "host": "LIL BOYFRIEND",
+        "eyebrow": "MOM INC. RESIDENTIAL COMPRESSION PROGRAM",
+        "genre": "first person museum",
+        "premise": "A little home. A little comfort. All arranged for you.",
+        "cta": "Tour the museum",
+        "does": "Explore six exhibits",
+        "duration": "About 3 minutes",
+        "input": "tap or drag",
+        "hero": "assets/marks/lilboyfriend.png",
+        "teaser": "Ask MOM if Living Small is right for you.",
+        "roots": [
+          "#lbStage"
+        ],
+        "hide": [],
+        "palette": {
+          "bg": "#ebe3fa",
+          "ink": "#3c3552",
+          "accent": "#c9a24c"
+        },
+        "finish": "Return to the museum entrance",
+        "cta2": "Walk In And Look Twice",
+        "progress_key": "mbs-lilbf-museum-v2",
+        "continue_cta": "Continue The Museum",
+        "profile_intro": "THE COACH CANNOT DESIGN FOR A ROOM IT HAS NOT SEEN.",
+        "profile_questions": [
+          "Where would you usually train: home, gym, outdoors, somewhere else, or not sure yet?",
+          "How much clear floor space do you actually have?",
+          "What equipment is available to you right now? None is a complete answer."
+        ],
+        "share_image": "assets/marks/lilboyfriend.png"
+      },
+      "listed": true
+    },
+    {
+      "id": "goon",
+      "channel": 0,
+      "title": "Goon",
+      "lcdName": "GOON GALA",
+      "status": "live",
+      "active": true,
+      "airDate": null,
+      "preview": null,
+      "mission": null,
+      "reward": null,
+      "route": "?ch=goon",
+      "gameRoute": "/games/goon/",
+      "theme": null,
+      "meter": null,
+      "cursor": null,
+      "effect": null,
+      "coachAnchor": "bottom-right",
+      "department": null,
+      "suppressed": null,
+      "secretSequence": null,
+      "controlDigits": null,
+      "missionId": "",
+      "apiBase": null,
+      "redeemPath": "/redeem",
+      "inRegistry": true,
+      "registry": {
+        "host": "MOM INC",
+        "eyebrow": "SLIDE AND MERGE",
+        "genre": "tile puzzle",
+        "premise": "Slide the tiles together. A goon is someone who gives. You are one too.",
+        "cta": "Slide To Merge",
+        "does": "Swipe to merge tiles",
+        "duration": "As long as you like",
+        "input": "swipe or keyboard",
+        "hero": "assets/mom-inc-mark.png",
+        "teaser": "Every merge raises the pledge. The crowd loves a giver right up until the giver stops. Reach 2048 or fill the board; MOM has an ending ready either way.",
+        "roots": [
+          "#ggFrame",
+          "#gnCode"
+        ],
+        "hide": [],
+        "palette": {
+          "bg": "#2a0a44",
+          "ink": "#ffd36e",
+          "accent": "#e04b6a"
+        },
+        "finish": "Reach 2048 or fill the board",
+        "cta2": "Make The First Merge",
+        "progress_key": "",
+        "continue_cta": "",
+        "profile_intro": "A COACH SHOULD KNOW WHO IS ACTUALLY IN THE ROOM.",
+        "profile_questions": [
+          "Who, if anyone, supports what you are trying to do?",
+          "Should the coach involve them, remind you about them, or keep the plan between you and the coach?",
+          "When do you reliably have help, company or accountability?"
+        ],
+        "share_image": "assets/mom-inc-mark.png"
+      },
+      "listed": true
     },
     {
       "id": "corgi",
@@ -360,71 +359,8 @@
           "How much news do you take in on a normal day: none, under 30 minutes, 30 to 90 minutes, or more?"
         ],
         "share_image": "assets/marks/corgi.png"
-      }
-    },
-    {
-      "id": "girlfriend",
-      "channel": 4,
-      "title": "The Manufacturing Floor",
-      "lcdName": "DR GIRLFRIEND",
-      "status": "live",
-      "active": true,
-      "airDate": null,
-      "preview": null,
-      "mission": null,
-      "reward": null,
-      "route": "?ch=girlfriend",
-      "gameRoute": "/games/girlfriend/",
-      "theme": null,
-      "meter": null,
-      "cursor": null,
-      "effect": null,
-      "coachAnchor": "bottom-left",
-      "department": {
-        "label": "Manufacturing",
-        "position": null,
-        "requires": null
       },
-      "suppressed": null,
-      "secretSequence": null,
-      "controlDigits": null,
-      "missionId": "",
-      "apiBase": null,
-      "redeemPath": "/redeem",
-      "inRegistry": true,
-      "registry": {
-        "host": "DR GIRLFRIEND",
-        "eyebrow": "DR GIRLFRIEND / RESEARCH & PRODUCTION",
-        "genre": "how a claim is made",
-        "premise": "Six research tubes. Follow the evidence through the production line.",
-        "cta": "Enter the factory",
-        "does": "Mix twelve obsolete coaches and debunk their myths",
-        "duration": "About 4 minutes",
-        "input": "tap, mouse or keyboard",
-        "hero": "assets/marks/girlfriend.png",
-        "teaser": "Read the source before you use the tube.",
-        "roots": [
-          "#dgStage",
-          "#dgUnitDetails"
-        ],
-        "hide": [],
-        "palette": {
-          "bg": "#1b0a2c",
-          "ink": "#f4ecd8",
-          "accent": "#ff8a2a"
-        },
-        "finish": "Pour left to right, mould and pack to reveal the goggles",
-        "cta2": "Grab The Goggles",
-        "progress_key": "",
-        "continue_cta": "",
-        "profile_intro": "PUT THE BELIEF AND THE SOURCE IN SEPARATE TUBES.",
-        "profile_questions": [
-          "What health or fitness advice do you already believe?",
-          "Where did that advice come from?",
-          "How confident are you checking a claim against its original source: not yet, sometimes, usually, or very?"
-        ],
-        "share_image": "assets/marks/girlfriend.png"
-      }
+      "listed": false
     },
     {
       "id": "armie",
@@ -490,7 +426,80 @@
           "Any injury, pain, disability or other limit the coach should work around? This is context, not a diagnosis."
         ],
         "share_image": "assets/marks/armie.png"
-      }
+      },
+      "listed": false
+    },
+    {
+      "id": "fuel",
+      "channel": 0,
+      "title": "Build Your Stack",
+      "lcdName": "DRINKS",
+      "status": "live",
+      "active": false,
+      "airDate": null,
+      "preview": null,
+      "mission": null,
+      "reward": null,
+      "route": "?ch=fuel",
+      "gameRoute": "/games/fuel/",
+      "theme": null,
+      "meter": null,
+      "cursor": null,
+      "effect": null,
+      "coachAnchor": "bottom-left",
+      "department": {
+        "label": "Chemical Services",
+        "position": null,
+        "requires": null
+      },
+      "suppressed": null,
+      "secretSequence": null,
+      "controlDigits": null,
+      "missionId": "",
+      "apiBase": null,
+      "redeemPath": "/redeem",
+      "inRegistry": true,
+      "registry": {
+        "host": "MBS FUEL",
+        "eyebrow": "MBS FUEL / YOUR FORMULA",
+        "genre": "product builder",
+        "premise": "Your formula. Your flavour. Your name on the label.",
+        "cta": "Mix your stack",
+        "does": "Add eight scoops, flavor and mix, then label your tub",
+        "duration": "About 2 minutes",
+        "input": "tap or drag",
+        "hero": null,
+        "teaser": "Prepared for you. Named by you. Provided by MOM.",
+        "roots": [
+          "#introCard",
+          "#stageCard",
+          "#stackCard",
+          "#flavCard",
+          "#nameCard",
+          ".card[aria-label=\"Your can\"]",
+          ".head",
+          ".fu > .ticker:first-child"
+        ],
+        "hide": [],
+        "palette": {
+          "bg": "#ff2e88",
+          "ink": "#1a0a10",
+          "accent": "#c6ff00"
+        },
+        "finish": "Seal your finished tub",
+        "cta2": "Seal The Can",
+        "progress_key": "",
+        "continue_cta": "",
+        "profile_intro": "YOUR BODY. YOUR SETTINGS. NOTHING IS PRE-MIXED.",
+        "profile_questions": [
+          "How does caffeine usually hit you: fine, jittery, anxious, sleepless, or you do not use it?",
+          "Which supplements do you already take, if any?",
+          "When do you usually train: morning, afternoon, evening, or it moves around?"
+        ],
+        "share_image": "assets/mom-inc-mark.png"
+      },
+      "listed": false,
+      "placement": "advertisement"
     }
   ]
 }

@@ -1,3 +1,4 @@
+import '../fuel-gate.js';
 /* tv/channels/fuel.js - MBS FUEL, CH 7, the THIRD channel converted to a module and the first one
    that owns a WebGL context for its whole life (2.18, PLAN-r9 D.1.7). Same code that sat in an inline
    <script> at the bottom of fuel.html, with one change made throughout: every listener, timer,
