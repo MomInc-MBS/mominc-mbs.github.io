@@ -9,11 +9,19 @@ import {importCreature,motionSettings} from './profile';
 import {sampleShot,SHOTS,type Cinematic} from './cinematic-shots';
 import {regionBounds,frameRegion} from './creator/camera-focus';
 import {REGIONS,type Region} from './creator/design';
+import {podCameraFrame} from './pod-camera';
 
 export class CreatureViewer {
  regionBoxes=new Map<Region,T.Box3>();focused:Region|null=null;
  focusRegion(region:Region){this.focused=region;const box=this.regionBoxes.get(region);return box?frameRegion(this.camera,this.orbit,box):false;}
- homeView(){if(!this.interactive&&this.stage==='pod')this.focusRegion('head');}
+ homeElapsed=0;homeMoving=false;bodyBounds=new T.Box3();
+ setHomeMotion(moving:boolean){this.homeMoving=moving;}
+ homeView(){
+  if(this.interactive||this.stage!=='pod')return;
+  const head=this.regionBoxes.get('head');if(!head)return;
+  const frame=podCameraFrame(this.camera,head,this.bodyBounds,this.homeElapsed);if(!frame)return;
+  this.orbit.minDistance=.3;this.orbit.maxDistance=frame.maxDistance;this.orbit.target.copy(frame.target);this.camera.position.copy(frame.position);this.orbit.update();
+ }
  cinematicKind:Cinematic|null=null;
  cinematic(kind:Cinematic|null,elapsed=0){
   if(!kind){if(!this.cinematicKind)return;this.cinematicKind=null;this.resetStageView();this.play('idle');return;}
@@ -34,21 +42,21 @@ export class CreatureViewer {
   this.floorObjects=[floor,ring];
   this.resizeObserver=new ResizeObserver(()=>this.resize());this.resizeObserver.observe(mount);this.resize();
   this.visibilityObserver=new IntersectionObserver(entries=>{this.visible=entries[0].isIntersecting;});this.visibilityObserver.observe(mount);
-  const tick=(now:number)=>{if(this.disposed)return;this.frame=requestAnimationFrame(tick);const dt=Math.min(.05,(now-this.last)/1000);if(now-this.last<32)return;this.last=now;if(!this.visible||document.hidden)return;this.motion?.update(dt);this.orbit.update();this.renderer.render(this.scene,this.camera);};this.frame=requestAnimationFrame(tick);
+  const tick=(now:number)=>{if(this.disposed)return;this.frame=requestAnimationFrame(tick);const dt=Math.min(.05,(now-this.last)/1000);if(now-this.last<32)return;this.last=now;if(!this.visible||document.hidden)return;this.motion?.update(dt);if(!this.interactive&&this.stage==='pod'&&!this.cinematicKind&&!this.paused&&!this.settings.reduced&&this.settings.amount>0&&this.homeMoving){this.homeElapsed+=dt;this.homeView();}this.orbit.update();this.renderer.render(this.scene,this.camera);};this.frame=requestAnimationFrame(tick);
  }
  resize(){const {width,height}=this.mount.getBoundingClientRect();if(width&&height){this.renderer.setSize(width,height,false);this.camera.aspect=width/height;this.camera.updateProjectionMatrix();if(!this.cinematicKind){if(this.focused&&this.interactive)this.focusRegion(this.focused);else this.homeView();}}}
  async setRecipe(raw:unknown){
   const recipe=importCreature(JSON.stringify(raw)),generation=++this.generation;
   const assembly=await assembleCreature(recipe,this.assetBase);let rig:CreatureRig;
-  try{if(this.disposed||generation!==this.generation)return false;this.regionBoxes=new Map(REGIONS.map(region=>[region,regionBounds(assembly.root,region)]));if(this.regionBoxes.get('eye')!.isEmpty())this.regionBoxes.set('eye',this.regionBoxes.get('head')!.clone());rig=createRig(assembly.root,recipe);}finally{assembly.dispose();}
+  try{if(this.disposed||generation!==this.generation)return false;this.regionBoxes=new Map(REGIONS.map(region=>[region,regionBounds(assembly.root,region)]));if(this.regionBoxes.get('eye')!.isEmpty())this.regionBoxes.set('eye',this.regionBoxes.get('head')!.clone());this.bodyBounds.makeEmpty();for(const box of this.regionBoxes.values())this.bodyBounds.union(box);rig=createRig(assembly.root,recipe);}finally{assembly.dispose();}
   if(this.rig){this.motion?.dispose();this.scene.remove(this.rig.root);disposeObject(this.rig.root);}
   this.rig=rig!;this.motion=new MotionController(rig!);Object.assign(this.motion,this.settings,{paused:this.paused});this.scene.add(rig!.root);this.motion.play(this.gesture);if(!this.cinematicKind){if(this.interactive&&this.focused)this.focusRegion(this.focused);else this.homeView();}return true;
  }
  play(id:Gesture){this.gesture=id;this.motion?.play(id);}
- setSettings(settings:ReturnType<typeof motionSettings>){this.settings=settings;if(this.motion)Object.assign(this.motion,settings);}
+ setSettings(settings:ReturnType<typeof motionSettings>){this.settings=settings;if(this.motion)Object.assign(this.motion,settings);if(settings.reduced||settings.amount===0){this.homeElapsed=0;if(!this.cinematicKind)this.homeView();}}
  setPaused(paused:boolean){this.paused=paused;if(this.motion)this.motion.paused=paused;}
  resetStageView(){const giant=this.stage==='encounter';this.orbit.minDistance=giant?4:6;this.orbit.maxDistance=14;this.camera.fov=giant?32:36;this.camera.position.set(0,giant?2.1:2.65,giant?5.8:8.9);this.orbit.target.set(0,giant?2.25:1.95,0);this.camera.updateProjectionMatrix();this.orbit.update();this.homeView();}
- setStage(stage:'pod'|'encounter'){this.stage=stage;this.focused=null;this.floorObjects.forEach(o=>o.visible=stage!=='encounter');if(!this.cinematicKind)this.resetStageView();this.resize();}
+ setStage(stage:'pod'|'encounter'){this.stage=stage;this.focused=null;this.homeElapsed=0;this.floorObjects.forEach(o=>o.visible=stage!=='encounter');if(!this.cinematicKind)this.resetStageView();this.resize();}
  resetView(){this.focused=null;this.orbit.minDistance=6;this.camera.position.set(0,2.65,8.9);this.orbit.target.set(0,1.95,0);this.orbit.update();}
  async exportGLB(){
   if(!this.rig||!this.motion)throw Error('Wait for your creature to load.');
