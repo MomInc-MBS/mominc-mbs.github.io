@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {RoomEnvironment} from 'three/examples/jsm/environments/RoomEnvironment.js';
 import {assemble} from './hand-model';
 import {bindHand,applyHandPose,type HandRig} from './pose-rig';
 import {getPose,mixPoses} from './poses';
@@ -19,6 +20,7 @@ export function createHandCompanion(host:HTMLDivElement,{storage=localStorage,on
   const renderer=new THREE.WebGLRenderer({alpha:true,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,1.35));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.4;
   renderer.domElement.setAttribute('role','img');renderer.domElement.setAttribute('aria-label','Your customized Helping Hand beside your Gala avatar');host.appendChild(renderer.domElement);
   const scene=new THREE.Scene(),root=new THREE.Group();scene.add(root);
+  const environment=new RoomEnvironment(),pmrem=new THREE.PMREMGenerator(renderer);scene.environment=pmrem.fromScene(environment,.04).texture;environment.dispose();pmrem.dispose();
   const camera=new THREE.PerspectiveCamera(34,1,.005,3);camera.position.set(.045,.08,.39);camera.lookAt(0,.035,0);
   scene.add(new THREE.HemisphereLight('#fff4e0','#655179',2));
   const key=new THREE.DirectionalLight('#fff2ce',3.6);key.position.set(.3,.3,.4);scene.add(key);
@@ -42,5 +44,5 @@ export function createHandCompanion(host:HTMLDivElement,{storage=localStorage,on
   }
   const changed=(event:StorageEvent)=>{if(event.key===HAND_KEY||event.key===null)void refresh();};window.addEventListener('storage',changed);
   frame=requestAnimationFrame(tick);void refresh();
-  return {refresh,gesture,setActive(value:boolean){active=value;},dispose(){if(disposed)return;disposed=true;revision++;cancelAnimationFrame(frame);observer.disconnect();window.removeEventListener('storage',changed);release();renderer.dispose();renderer.domElement.remove();}};
+  return {refresh,gesture,setActive(value:boolean){active=value;},dispose(){if(disposed)return;disposed=true;revision++;cancelAnimationFrame(frame);observer.disconnect();window.removeEventListener('storage',changed);release();scene.environment?.dispose();renderer.dispose();renderer.domElement.remove();}};
 }

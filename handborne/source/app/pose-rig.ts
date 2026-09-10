@@ -107,7 +107,7 @@ export function bindHand(group:THREE.Group):HandRig {
     }
     bound.push({mesh:obj,profile,positions,normals,ids,weights,inverse:obj.matrixWorld.clone().invert(),inverseNormal:worldNormal.clone().invert()});
   });
-  return {group,meshes:bound,dispose(){for(const item of bound)item.mesh.geometry.dispose();}};
+  return {group,meshes:bound,dispose(){const materials=new Set<THREE.Material>();for(const item of bound){item.mesh.geometry.dispose();if(item.mesh.userData.ownedMaterial){for(const m of Array.isArray(item.mesh.material)?item.mesh.material:[item.mesh.material])materials.add(m);for(const m of item.mesh.userData.sourceMaterials??[])materials.add(m);}}materials.forEach(m=>m.dispose());}};
 }
 export function applyHandPose(rig:HandRig,pose:Pose) {
   const profileMatrices={standard:poseMatrices(pose).map(m=>m.elements),baby:poseMatrices(pose,'baby').map(m=>m.elements)},min=new THREE.Vector3(Infinity,Infinity,Infinity),max=new THREE.Vector3(-Infinity,-Infinity,-Infinity);

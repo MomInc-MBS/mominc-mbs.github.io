@@ -4,6 +4,7 @@ import {REGIONS,STYLES} from './catalog';
 import {recipeCode,type Selection} from './recipe';
 import {replaceNailShape} from './nails';
 import {addHandScales} from './scales';
+import {sculptMaterial,growMaterial} from './material-language';
 const files=new Map<number,Promise<GLTF>>();
 function family(id:number) {
   if(!files.has(id)) files.set(id,new GLTFLoader().loadAsync('/handborne/models/family-'+String(id).padStart(2,'0')+'.glb?v=5').catch(error=>{files.delete(id);throw error;}));
@@ -19,7 +20,12 @@ export async function assemble(selection:Selection,nailShape:string,scalePattern
     const part=source.clone(true);part.name=r.id;
     if(r.id==='nails')replaceNailShape(part,nailShape,selection.nails);
     part.userData={...part.userData,region:r.id,style:STYLES[selection[r.id]].name,style_id:selection[r.id]};
-    part.traverse(obj=>{if(obj instanceof THREE.Mesh){obj.userData.region=r.id;obj.castShadow=true;obj.receiveShadow=true;}});
+    part.updateMatrixWorld(true);
+    part.traverse(obj=>{if(obj instanceof THREE.Mesh){obj.userData.region=r.id;obj.castShadow=true;obj.receiveShadow=true;
+      if(selection[r.id]===20){const old=obj.material as THREE.MeshStandardMaterial,m=new THREE.MeshPhysicalMaterial();THREE.MeshStandardMaterial.prototype.copy.call(m,old);m.sheen=1;m.sheenRoughness=.9;m.sheenColor.set('#ffe5c9');obj.material=m;obj.userData.ownedMaterial=true;}
+      else sculptMaterial(obj,STYLES[selection[r.id]],.075);
+    }});
+    part.add(growMaterial(part as THREE.Group,STYLES[selection[r.id]],r.id,.075,1,true));
     return part;
   }));
   group.add(...parts);addHandScales(group,scalePattern);return group;

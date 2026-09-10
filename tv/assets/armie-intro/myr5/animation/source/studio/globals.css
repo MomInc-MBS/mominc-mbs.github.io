@@ -2,13 +2,13 @@
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
 @custom-variant dark (&:is(.dark *));
-@font-face{font-family:'Barlow Condensed';src:url('/fonts/barlow-400.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:'Barlow Condensed';src:url('/fonts/barlow-500.ttf') format('truetype');font-weight:500;font-style:normal;font-display:swap}
-@font-face{font-family:'Barlow Condensed';src:url('/fonts/barlow-600.ttf') format('truetype');font-weight:600;font-style:normal;font-display:swap}
-@font-face{font-family:'Barlow Condensed';src:url('/fonts/barlow-700.ttf') format('truetype');font-weight:700;font-style:normal;font-display:swap}
-@font-face{font-family:'Bowlby One SC';src:url('/fonts/bowlby.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:'Anton';src:url('/fonts/anton.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:'VT323';src:url('/fonts/vt323.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Barlow Condensed';src:url('/tv/assets/armie-intro/myr5/fonts/barlow-400.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Barlow Condensed';src:url('/tv/assets/armie-intro/myr5/fonts/barlow-500.ttf') format('truetype');font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:'Barlow Condensed';src:url('/tv/assets/armie-intro/myr5/fonts/barlow-600.ttf') format('truetype');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Barlow Condensed';src:url('/tv/assets/armie-intro/myr5/fonts/barlow-700.ttf') format('truetype');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Bowlby One SC';src:url('/tv/assets/armie-intro/myr5/fonts/bowlby.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Anton';src:url('/tv/assets/armie-intro/myr5/fonts/anton.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'VT323';src:url('/tv/assets/armie-intro/myr5/fonts/vt323.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
 @theme inline {
   --color-background:var(--background);--color-foreground:var(--foreground);
   --font-sans:var(--font-geist-sans);--font-mono:var(--font-geist-mono);
