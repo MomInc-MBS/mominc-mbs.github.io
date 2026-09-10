@@ -249,63 +249,118 @@ function creatureCard(recipe) {
  return '<h2>COACH BUILD REPORT</h2><b>MYR5 '+String(recipe.id).padStart(2,'0')+' · '+recipe.name+'</b><p>OBSOLETE COACH · '+CREATURES[recipe.variant].name+'</p><p><strong>Installed coaching instruction:</strong> '+recipe.myth+'</p><p><strong>Engineering correction:</strong> '+recipe.fact+'</p><p><strong>Disposition: OBSOLETE.</strong> This model repeats its installed instruction even when the evidence contradicts it. Its coaching logic cannot update. Remove from the gym floor; retain for research.</p><a href="'+recipe.source+'" target="_blank" rel="noopener">Read the evidence</a><details><summary>Batch notebook · 12 recipes</summary><p>Tube numbers, in pouring order.</p><ol>'+RECIPES.map(r=>'<li>'+r.name+': '+r.order.map(n=>n+1).join(' → ')+'</li>').join('')+'</ol></details>';
 }
 
-/* ---- THE GOGGLES' HINT RECORD (3.3 packet 2 / C074).
-
-   The hint list used to be hand-authored markup in girlfriend.html with no version, no date and no
-   statement of what it was checked against - and it had drifted into telling the visitor three things
-   that are not true of this build. The site's own hint system was the least reliable thing on it:
-     - DJ Scratch: "it answers on the third" described THREE SCRATCHES. That mechanic is retired; the
-       unlock is the four-lamp follow game (djscratch.js:577-616), and breakThrough() is reached from
-       finishGame(), never from a scratch count.
-     - Sag Sniffer: "seven of those doors are business, the eighth is dinner". The wheel is FIVE doors
-       (sag.html:4, which warns in as many words not to read the surplus ITEMS pool as the wheel) - and
-       sag does not ship a play route at all.
-     - Cortisol Corgi: "nothing to solve here yet". Corgi has had a page hunt, a book and a desk code
-       since before this HEAD (corgi.js:551-562, :612).
-     - Lil Boyfriend: "he gets smaller the further down you go". He does not. The shrink starts when the
-       far end is done and runs on a wall clock through the walk BACK (lilboyfriend.js:226, :237-243).
-
-   `version`/`snapshot`/`basis` are printed to the visitor with the list, the same shape fuel's cost
-   record took in packet 1: the record in the source IS the provenance, and it is on screen rather than
-   pointing at a document. `checked` is per entry and is printed too - an unprinted justification is how
-   the last one rotted.
-
-   ON-AIR STATUS IS NOT COPIED HERE. `hint` is only ever shown for a channel the network manifest says
-   is on air; everything else gets `offAir`, read live from window.MBS_CHANNELS (generated from
-   tv/channel-manifest.json by tools/gen_channels.py). So promoting a channel corrects its own goggles
-   line, which is the recurrence the item asks to stop. goon is deliberately not listed: it was never in
-   this list, its source is unresolved (3.G1), and adding a channel is a decision, not a correction. */
+// Page hints are available whenever the goggles are earned. Source notes stay in code.
 const HINTS = {
-  version: "dg-hints-1.0",
-  snapshot: "2026-09-07",
-  basis: "Each line was read off the named channel's own source at this snapshot. On-air status is not stored here - it is read from the network manifest every time the lenses go on.",
-  offAir: "Not on air yet. Nothing there opens, and I am not going to pretend otherwise.",
-  // an off-air channel prints THIS as its evidence rather than its own `checked` line. The hint is
-  // withheld, so the reasoning behind it has to be withheld too, or the goggles would give the channel
-  // away in the footnote of the sentence refusing to give it away.
-  offCheck: "tv/channel-manifest.json - coming_soon: the television slot exists, the play route does not.",
-  items: [
-    { id: "djscratch", ch: "DJ Scratch",
-      hint: "Turn her on before anything else. Then stop reading the copy and follow the lights to the controls - all four of them, in her order, not yours.",
-      checked: "djscratch.js:577-616 - the four-lamp follow game is what breaks the signal through now. Three scratches no longer do anything but count." },
-    { id: "sag", ch: "Sag Sniffer",
-      hint: "Four of those doors are business. The fifth is dinner, and it is locked.",
-      checked: "sag.html:4 - five doors, four buyable then the locked fifth. The seven-item bank is a surplus pool, not the wheel." },
-    { id: "lilboyfriend", ch: "Lil Boyfriend",
-      hint: "The hall only runs one way. Do the one thing waiting at the far end - then understand that the walk back is on a clock the walk in was not.",
-      checked: "lilboyfriend.js:226 and :237-243 - the far end is what fires; the walls close on a 37.5s wall clock that starts there, not on how far down you went." },
-    { id: "armie", ch: "Coach Armie",
-      hint: "Stop reading and breathe with him. Hold it longer than feels sensible.",
-      checked: "armie.html - the held breath is the whole interaction, and it is longer than it looks." },
-    { id: "fuel", ch: "MBS Fuel",
-      hint: "Nothing seals until every field has an opinion. Indifference is not an answer, and it will tell you exactly which one you skipped.",
-      checked: "fuel.js:227 - the seal fires only on a complete stack, and the refusal names the first missing choice." },
-    { id: "corgi", ch: "Cortisol Corgi",
-      hint: "Find three office pages. The back door leads into the school. Its colorful pages release the file.",
-      checked: "corgi.js: office collection gates the back door; final school collection calls the unlock." },
-    { id: "mominc", ch: "MOM Inc", node: false,
-      hint: "Her own channel is the scoreboard, not a door. Nothing there opens anything here.",
-      checked: "mbs-channels.js - mominc is not in the unlock set. It counts; it does not play." }
+  "version": "dg-hints-2.0",
+  "snapshot": "2026-09-09",
+  "items": [
+    {
+      "id": "fuel",
+      "ch": "DRINKS · MBS FUEL",
+      "hint": "Fill the tub before you try to seal it. The label is the last step.",
+      "steps": [
+        "Add exactly eight scoops, with no more than two of any ingredient.",
+        "Continue to flavor, pick one, then press Mix three times.",
+        "Choose all three name parts and a label color. Seal the tub to finish."
+      ],
+      "source": "fuel.js: renderBatch, nextButton and submitBtn handlers"
+    },
+    {
+      "id": "goon",
+      "ch": "EXTRA · GOON",
+      "hint": "Slide equal tiles together. Give your largest tile a home in one corner.",
+      "steps": [
+        "Use the arrow keys, swipe the board or use the direction buttons to move all tiles. Equal values merge.",
+        "Keep your biggest tile in one corner and build matching values beside it. Leave room for the next move.",
+        "Reach 2048 to win. A full board with no matching neighbors ends the round; start another board to try again. This extra game is not needed for the sponsor ad."
+      ],
+      "source": "goon.html controls; channel-manifest.json goon finish and active=false"
+    },
+    {
+      "id": "lilboyfriend",
+      "ch": "CH 1 · LIL BOYFRIEND",
+      "hint": "The far door changes the museum. The ending is back where you entered.",
+      "steps": [
+        "Enter the museum and walk to the far end. Inspect the exhibits along the way.",
+        "Face the door and choose Put the glass in the hole. Let the purple flash finish.",
+        "Turn back and follow the hall to the entrance. Reaching the entrance triggers the final scene and records the finished page."
+      ],
+      "source": "lilboyfriend.js: attemptInsert, fireConnect and startStomp"
+    },
+    {
+      "id": "djscratch",
+      "ch": "CH 2 · DJ SCRATCH",
+      "hint": "Follow the lit control. Its number matters more than scratching the record.",
+      "steps": [
+        "Open the Music Desk game and turn on the deck.",
+        "In order, set BASS to 8, TREBLE to 3, VOLUME to 7 and TEMPO to 9. Finish all four lights to release the signal.",
+        "Copy the four settings printed after the signal into the thumb drive, in that order. Submit them to reveal the phonograph."
+      ],
+      "source": "djscratch.js: SEQUENCE, TARGETS, registerTouch, captureKnobCode and codeForm"
+    },
+    {
+      "id": "corgi",
+      "ch": "CH 3 · CORTISOL CORGI",
+      "hint": "Three pages open the next door. The school has more to collect.",
+      "steps": [
+        "Enter the hunt. Walk to each office desk and collect all three reports.",
+        "Go through the door at the end of the hall. In the school, press F or tap Flashlight; switch it off to recharge.",
+        "Collect all three school pages to unlock the file and finish the public game. In the live version, collect three pages in each of its three school levels."
+      ],
+      "source": "corgi.js: LEVELS, collect, markLevelComplete and leaveCut"
+    },
+    {
+      "id": "girlfriend",
+      "ch": "CH 4 · DR GIRLFRIEND",
+      "hint": "The correct MYR5 is a recipe. Pour the tubes in their displayed order.",
+      "steps": [
+        "Pour tubes 1 through 6, left to right: Sentience juice, Mother’s love, Dog loyalty, Small juice, Womanly wit, MBS Fuel.",
+        "Mould the coach. Close the build report, then pack the finished unit.",
+        "Take the goggles. If the batch was poured in another order, choose Mix another coach and repeat the correct recipe."
+      ],
+      "source": "girlfriend.js: TUBES, makeLine.correct, mouldCoach, pack and goggles"
+    },
+    {
+      "id": "hand",
+      "ch": "DJ SCRATCH · THE HELPING HAND AD",
+      "hint": "The offer waits for four finished games. Orange eyes alone do not finish every game.",
+      "steps": [
+        "Finish Fuel, Lil Boyfriend, DJ Scratch and Cortisol Corgi. The Helping Hand ad opens once the fourth page is complete.",
+        "If you closed it, use the ad button under MOM’s Now Playing cards or Your Helping Hand offer at DJ Scratch.",
+        "Choose Build my hand. Make five different changes in the hand builder and follow its Coach Armie link. Your finished hand goes with you."
+      ],
+      "source": "network-flow.js: REQUIRED, pagesReady, decision, handProfile and showAd"
+    },
+    {
+      "id": "armie",
+      "ch": "CH 5 · COACH ARMIE",
+      "hint": "Bring your finished hand. Read the signs, and use the rear view when you need time.",
+      "steps": [
+        "Unlock the Helping Hand offer, finish your hand, then enter Coach Armie. Pick your movement style and skill.",
+        "In the two-lane runs, move around walls and jump over cracks or fallen stones. Follow the turn shown ahead. For TAP NOW, make nine taps; the first starts the timer if you enabled it.",
+        "At the three marked junctions, choose left, right, then left. Answer each question using its clue; the feedback explains mistakes. Looking back pauses the timed tapping.",
+        "After the last hall, finish the lab scene and customize your MYR5. Use the finished coach when you are ready."
+      ],
+      "source": "armie.html: routes, startRun, tap, rear view, feedback and startLab; maze-ui.mjs controls"
+    },
+    {
+      "id": "mominc",
+      "ch": "HOME · MOM INC",
+      "hint": "Her rescue film has been edited. The first large MYR5 is hiding the original.",
+      "steps": [
+        "Earn the signals from Fuel, Lil Boyfriend, DJ Scratch, Cortisol Corgi and Dr Girlfriend.",
+        "Return to MOM and click the first large MYR5. The invasion film replaces the rescue loop directly beneath him.",
+        "Compare the order: the original shows healthy planets before the fleet arrives. The AI inspection game below is separate from this reveal."
+      ],
+      "source": "mominc.js: canShowRealVideo and revealRealVideo; mbs-channels.js active set"
+    },
+    {
+      "id": "sag",
+      "ch": "SAG SNIFFER",
+      "hint": "MOM is still setting the table. This page is coming soon and is not required for any unlock.",
+      "steps": [],
+      "source": "No playable Sag channel in the current network manifest"
+    }
   ]
 };
 
@@ -380,39 +435,17 @@ function makeLine() {
   return L;
 }
 
-/* ---- THE GOGGLES' COPY, for both views (C073/C074).
-
-   MODE-AWARE, and MBS.mode is a TONE switch, never an entitlement (Codex C6): ?mode=live is
-   user-settable, so this only changes what the goggles SAY. Off-air they give nothing away at all.
-   On-air the list is rendered from HINTS, filtered through the live manifest - never from markup, so
-   there is one copy of every hint and it carries its own provenance. */
-function dressGoggles(dg, live) {
+// The goggles provide a clue first and an optional solution in every viewing mode.
+function dressGoggles(dg) {
   const body = dg.querySelector("#dgVisBody");
   if (!body) return;
-  if (!live) {
-    body.innerHTML =
-      '<h2>COACH LOGIC SCANNER</h2>' +
-      '<p class="sub">Optical overlay &middot; idle &middot; property of MOM Inc</p>' +
-      '<p class="foot">Select a coach to scan its obsolete instruction.</p>'+RECIPES.map(r=>'<details><summary>'+r.name+'</summary><p>DETECTED: '+r.myth+'</p><p>CORRECTION: '+r.fact+'</p></details>').join('');
-    return;
-  }
-  const roster = (window.MBS_CHANNELS && window.MBS_CHANNELS.channels) || [];
-  const rows = HINTS.items.map(h => {
-    const c = roster.find(x => x.id === h.id);
-    const onAir = c ? !c.comingSoon : true;         // no manifest to read: say the hint rather than lie about the air
-    const dim = !onAir || h.node === false;
-    return '<li' + (dim ? ' class="none"' : '') + '><b>' + h.ch + '</b>' +
-           '<span>' + (onAir ? h.hint : HINTS.offAir) +
-           '<u>' + (onAir ? h.checked : HINTS.offCheck) + '</u></span></li>';
-  }).join("");
-  body.innerHTML =
-    '<h2>KNOWLEDGE IS POWER</h2>' +
-    '<p class="sub">Optical overlay &middot; property of MOM Inc &middot; do not remove from the floor</p>' +
-    '<ul>' + rows + '</ul>' +
-    '<p class="foot">I am not going to click it for you. That is the difference between knowing a thing ' +
-    'and being told it.</p>' +
-    '<p class="ver" id="dgVisVer">' + HINTS.version + ' &middot; checked ' + HINTS.snapshot +
-    ' &middot; ' + HINTS.basis + '</p>';
+  const escape = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const pages = HINTS.items.map(h => '<details><summary>' + escape(h.ch) + '</summary><p>' + escape(h.hint) + '</p>' +
+    (h.steps.length ? '<details><summary>Show the solution</summary>' + h.steps.map((step,i) => '<p>' + (i+1) + '. ' + escape(step) + '</p>').join('') + '</details>' : '') + '</details>').join('');
+  body.innerHTML = '<h2>KNOWLEDGE IS POWER</h2><p class="sub">THE GOGGLES · PAGE HINTS &amp; SOLUTIONS</p>' +
+    '<p>Pick the page you are stuck on. Start with a hint. Open the solution when you want the steps.</p>' + pages +
+    '<details><summary>Scan obsolete coach instructions</summary>' + RECIPES.map(r => '<details><summary>' + r.name + '</summary><p>DETECTED: ' + r.myth + '</p><p>CORRECTION: ' + r.fact + '</p></details>').join('') + '</details>' +
+    '<p class="foot">I can show you the way. You still have to walk it.</p>';
 }
 
 
@@ -430,7 +463,7 @@ export default {
     function labStart(){if(labAudio)return;try{labAudio=ctx.audio(new AudioContext());labAudio.resume();}catch{return;}ctx.interval(()=>{const notes=[110,110,146.83,130.81,110,164.81,146.83,130.81];labTone(notes[beat%8],.32,.012,'sawtooth');if(beat%2===0)labTone(65,.1,.025,'triangle',35);if(beat%4===0)labTone(55,.7,.008);beat++;},330);}
     function labEffect(kind){labStart();if(kind==='pour'){[0,1,2,3,4].forEach(i=>ctx.timeout(()=>labTone(220+i*62,.13,.045,'sine',100+i*35),i*80));}if(kind==='mould'){labTone(65,1.5,.075,'sawtooth',36);ctx.timeout(()=>labTone(100,.16,.1,'triangle',30),700);}if(kind==='pack'){labTone(150,.2,.06,'triangle',45);ctx.timeout(()=>labTone(95,2.1,.045,'sawtooth',170),200);}}
 
-    dressGoggles(dg, !!ctx.isLive);
+    dressGoggles(dg);
     const tubeButtons=[], propButtons=[];
     TUBES.forEach((t,i)=>{
       const b=document.createElement('button'); b.type='button'; b.textContent=t.who;

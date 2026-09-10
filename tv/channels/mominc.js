@@ -108,7 +108,7 @@ export default {
     const lock = byId("realLock"), box = byId("realProgram"), txt = byId("realText");
     const goon = byId("goon"), goonLine = byId("goonLine"), goonWho = byId("goonWho");
     const MAIL = (ctx.mbs && ctx.mbs.MAIL) || "";
-    const realVideoPanel = byId("miRealVideo"), invasionVideo = byId("miInvasionVideo"), rescueVideo = byId("miRescueVideo");
+    const publicVideoPanel = byId("miPublicVideo"), realVideoPanel = byId("miRealVideo"), invasionVideo = byId("miInvasionVideo"), rescueVideo = byId("miRescueVideo");
     const canShowRealVideo = () => !!(ctx.mbs && typeof ctx.mbs.armReady === "function" && ctx.mbs.armReady());
     const playFilm = video => {
       if (!video) return;
@@ -118,6 +118,8 @@ export default {
     };
     const revealRealVideo = () => {
       if (!realVideoPanel || !invasionVideo || !canShowRealVideo()) return;
+      if (publicVideoPanel) { publicVideoPanel.hidden = true; publicVideoPanel.style.display = "none"; }
+      rescueVideo?.pause();
       realVideoPanel.hidden = false;
       realVideoPanel.style.removeProperty("display"); // Shell grid rules override the native hidden attribute.
       playFilm(invasionVideo);
@@ -126,7 +128,7 @@ export default {
     // The public film only loads and plays when its frame enters the television screen.
     if (rescueVideo && typeof IntersectionObserver !== "undefined") {
       ctx.observe(new IntersectionObserver(entries => {
-        if (entries.some(entry => entry.isIntersecting)) playFilm(rescueVideo);
+        if (!publicVideoPanel?.hidden && entries.some(entry => entry.isIntersecting)) playFilm(rescueVideo);
         else rescueVideo.pause();
       }, { root: screen, threshold: 0.05 }), rescueVideo);
     } else if (rescueVideo) {
