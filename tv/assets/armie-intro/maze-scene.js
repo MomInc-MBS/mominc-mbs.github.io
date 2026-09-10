@@ -1,5 +1,5 @@
-import {courseFor,pathAt,LANES,LENGTH,TURN_AT} from './maze-run.mjs?v=ship-3';
-import {routeFor} from './ship-routes.mjs?v=ship-3';
+import {courseFor,pathAt,LANES,LENGTH,TURN_AT} from './maze-run.mjs?v=chase-4';
+import {routeFor} from './ship-routes.mjs?v=chase-4';
 
 export function createMazeScene(THREE){
   const scene=new THREE.Scene();scene.background=new THREE.Color('#100918');scene.fog=new THREE.Fog('#21122d',22,70);
@@ -16,7 +16,8 @@ export function createMazeScene(THREE){
     const c=document.createElement('canvas');c.width=768;c.height=288;const g=c.getContext('2d');
     const color=escape?'#ff7954':'#ff85e5';g.fillStyle=escape?'#24110e':'#230d30';g.fillRect(0,0,c.width,c.height);
     g.strokeStyle=color;g.lineWidth=5;g.shadowColor=color;g.shadowBlur=18;g.strokeRect(10,10,748,268);g.textAlign='center';g.fillStyle=color;
-    lines.forEach((text,i)=>{g.font=`bold ${i===0?52:40}px monospace`;g.fillText(text,384,70+i*82,722);});
+    g.textBaseline='middle';
+    lines.forEach((text,i)=>{let size=i===0?80:62;g.font=`bold ${size}px monospace`;while(g.measureText(text).width>708){size--;g.font=`bold ${size}px monospace`;}g.fillText(text,384,144+(i-(lines.length-1)/2)*84);});
     const map=new THREE.CanvasTexture(c);map.colorSpace=THREE.SRGBColorSpace;
     const mesh=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({map,toneMapped:false}));mesh.userData.sign=lines.join(' / ');return mesh;
   }
@@ -76,23 +77,27 @@ export function createMazeScene(THREE){
     box(10.8,.25,roomLength,deck,0,-.14,-roomLength/2+1,bay);box(10.8,.2,roomLength,black,0,4.45,-roomLength/2+1,bay);
     for(const side of [-1,1]){box(.3,4.5,roomLength,purple,side*5.4,2.25,-roomLength/2+1,bay);box(.05,.1,roomLength,pink,side*5.21,3.7,-roomLength/2+1,bay);}
     for(let z=-3;z>doorZ;z-=5)box(3,.06,1,warm,0,4.31,z,bay);
-    box(10.8,4.5,.4,inset,0,2.25,doorZ-.65,bay);
+    for(const x of [-4.7,-1.55,1.55,4.7])box(.6,4.5,.4,inset,x,2.25,doorZ-.65,bay);
+    box(10.8,1.5,.4,inset,0,3.75,doorZ-.65,bay);
     const route=routeFor(seed),banner=label(['MOM INC / '+String(seed+1).padStart(2,'0'),'CHOOSE YOUR WAY HOME'],false,5.5,.65);banner.position.set(0,4,doorZ+.15);bay.add(banner);
     for(let i=0;i<3;i++){
-      const x=(i-1)*3.1,escape=i===route.correct;box(2.5,2.9,.5,black,x,1.45,doorZ-.15,bay);
-      const panel=box(2.2,2.8,.12,escape?purple:inset,x,1.4,doorZ+.12,bay);panel.userData.dynamic=true;doorPanels.push({mesh:panel,x,index:i});
+      const x=(i-1)*3.1,escape=i===route.correct;
+      box(2.5,.25,12,deck,x,-.14,doorZ-6,bay);box(2.5,.2,12,black,x,3.05,doorZ-6,bay);
+      for(const side of [-1,1]){box(.16,3.1,12,purple,x+side*1.25,1.55,doorZ-6,bay);box(.035,.06,12,escape?red:pink,x+side*1.15,.35,doorZ-6,bay);}
+      box(2.5,3.1,.2,black,x,1.55,doorZ-12,bay);
       for(const side of [-1,1]){box(.13,3.05,.27,gold,x+side*1.21,1.52,doorZ+.15,bay);box(.035,2.85,.3,escape?red:pink,x+side*1.1,1.42,doorZ+.17,bay);}
       box(2.6,.12,.25,gold,x,2.96,doorZ+.15,bay);
       const board=label(route.doors[i],escape,2.8,.88);board.position.set(x,3.43,doorZ+.2);board.userData.door=i;bay.add(board);
       const arrow=label([['← LEFT','↑ STRAIGHT','RIGHT →'][i]],escape,2,.45);arrow.position.set(x,2.32,doorZ+.25);bay.add(arrow);
-      if(escape)for(let y=.4;y<1.5;y+=.25){const scratch=box(1.6,.035,.03,red,x,y,doorZ+.21,bay);scratch.rotation.z=.08;}
+      if(escape)for(let y=.4;y<1.5;y+=.25){const scratch=box(.03,.035,1.6,red,x+1.15,y,doorZ-1,bay);scratch.rotation.x=.08;}
     }
     batchStaticBoxes();
   }
   return {scene,camera,render(renderer,run,motion=true,options={}){
     if(seed!==run.seed)build(run.seed);
-    const end=!!options.junction,p=pathAt(end?LENGTH:run.distance,seed),blend=motion?.22:1,center=Math.max(0,Math.min(1,(run.distance-(LENGTH-8))/8));
-    cameraLane=end?0:cameraLane+(LANES[run.lane]*(1-center)-cameraLane)*blend;yaw=end?p.yaw:yaw+(p.yaw-yaw)*(motion?.18:1);
+    const end=!!options.junction||run.distance>=LENGTH,progress=run.exitProgress||0,p=pathAt(end?LENGTH+progress*17:run.distance,seed),blend=motion?.22:1,center=Math.max(0,Math.min(1,(run.distance-(LENGTH-8))/8));
+    const exitLane=((run.exit??1)-1)*3.1*Math.min(1,progress*3);
+    cameraLane=end?exitLane:cameraLane+(LANES[run.lane]*(1-center)-cameraLane)*blend;yaw=end?p.yaw:yaw+(p.yaw-yaw)*(motion?.18:1);
     const bob=motion&&!run.paused&&!end&&run.height<.1?Math.sin(run.time*17)*.045:0;
     camera.aspect=renderer.domElement.clientWidth/Math.max(1,renderer.domElement.clientHeight);camera.fov=72+10*(end?1:center);camera.updateProjectionMatrix();
     camera.position.set(p.x+Math.cos(p.yaw)*cameraLane,1.67+(end?0:run.height-(run.duck||0)*1.03)+bob,p.z-Math.sin(p.yaw)*cameraLane);camera.rotation.set(0,yaw,0,'YXZ');

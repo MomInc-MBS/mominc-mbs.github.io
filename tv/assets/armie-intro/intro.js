@@ -1,4 +1,4 @@
-import {continueScene} from './game-scene.js?v=ship-3';
+import {continueScene} from './game-scene.js?v=chase-4';
 import * as THREE from './vendor/three.module.js';
 import {GLTFLoader} from './vendor/GLTFLoader.js';
 import {bindHand,applyHandPose} from './pose-rig.js';

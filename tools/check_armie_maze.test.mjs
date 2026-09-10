@@ -1,10 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {LANES,TRAPS,TURN_AT,LENGTH,createRun,courseFor,input,step,upcoming,pathAt} from '../tv/assets/armie-intro/maze-run.mjs';
-import {ROUTES,DIRECTIONS} from '../tv/assets/armie-intro/ship-routes.mjs';
+import {LANES,TRAPS,TURN_AT,LENGTH,createRun,courseFor,input,step,upcoming,pathAt,runSpeed} from '../tv/assets/armie-intro/maze-run.mjs';
+import {ROUTES,DIRECTIONS,routeFor} from '../tv/assets/armie-intro/ship-routes.mjs';
+import {BANKS,questionFor} from '../tv/assets/armie-intro/fitness-questions.mjs';
+import {chasePressure} from '../tv/assets/armie-intro/chase-state.mjs';
 import {swipeAction} from '../tv/assets/armie-intro/swipe-input.mjs';
 
-function drive(run,actions=true){for(let i=0;i<3000&&run.status==='running';i++){
+function drive(run,actions=true){for(let i=0;i<3000&&['running','choosing','exiting'].includes(run.status);i++){
+ if(actions&&run.status==='choosing')input(run,['left','straight','right'][routeFor(run.seed).correct]);
  const e=upcoming(run),d=e?e.at-run.distance:100;
  if(actions&&e){if(e.type==='crack'&&d<2.1&&run.jumpTime===0)input(run,'jump');if(e.type==='turn'&&d<9)input(run,e.direction);if(['wall','rubble'].includes(e.type)&&d<8)input(run,e.lane===0?'right':'left');}
  step(run,1/60);
@@ -39,7 +42,31 @@ test('ship courses can finish using slide in the blocked shutter lanes',()=>{
   if(e?.type==='turn'&&d<8)input(r,e.direction);
   if(e?.type==='rubble'&&d<8)input(r,e.lane===0?'right':'left');
   if(e?.type==='wall'&&d<8){input(r,e.lane===0?'left':'right');if(d<2&&r.slideTime===0)input(r,'slide');}step(r,1/60);
- }assert.equal(r.status,'complete');}
+ }assert.equal(drive(r).status,'complete');}
+});
+test('a junction waits for a directional swipe and runs through the selected tunnel before judging it',()=>{
+ for(let hall=0;hall<3;hall++)for(let choice=0;choice<3;choice++){
+  const r=createRun(hall);r.distance=LENGTH;r.events.forEach(e=>e.cleared=true);step(r,.01);assert.equal(r.status,'choosing');
+  for(let i=0;i<100;i++)step(r,.05);assert.equal(r.status,'choosing');assert.equal(r.distance,LENGTH);
+  r.paused=true;input(r,['left','jump','right'][choice]);assert.equal(r.exit,null);r.paused=false;
+  input(r,['left','jump','right'][choice]);assert.equal(r.status,'exiting');assert.equal(r.exit,choice);
+  input(r,'left');assert.equal(r.exit,choice);step(r,.05);assert.ok(r.exitProgress>0&&r.exitProgress<1);
+  for(let i=0;i<30;i++)step(r,.05);
+  assert.equal(r.status,choice===routeFor(hall).correct?'complete':'hit');if(r.status==='hit')assert.equal(r.hit,'exit');
+  const retry=createRun(hall);assert.equal(retry.distance,0);assert.deepEqual(courseFor(retry.seed),courseFor(r.seed));
+ }
+});
+test('sprint taps provide a temporary speed boost and all boosted mazes remain solvable',()=>{
+ const slow=createRun(0),fast=createRun(0,false,1);assert.ok(runSpeed(fast)>runSpeed(slow));step(slow,.05);step(fast,.05);assert.ok(fast.distance>slow.distance);
+ fast.distance=36;assert.equal(runSpeed(fast),4.8);for(let hall=0;hall<3;hall++)assert.equal(drive(createRun(hall,false,1)).status,'complete');
+});
+test('tapping widens the chase gap; mistakes close it; the third mistake fills the bar',()=>{
+ const start=chasePressure({mistakes:0,boost:0}),sprint=chasePressure({mistakes:0,boost:1});assert.ok(sprint<start);
+ assert.ok(chasePressure({mistakes:1,boost:0})>start);assert.ok(chasePressure({mistakes:2,boost:0})>chasePressure({mistakes:1,boost:0}));
+ assert.ok(chasePressure({mistakes:2,boost:0})<1);assert.equal(chasePressure({mistakes:3,boost:1}),1);
+});
+test('each experience level has six distinct fitness questions, two per ship section',()=>{
+ for(let level=0;level<3;level++){assert.equal(BANKS[level].length,6);const asked=[];for(let hall=0;hall<3;hall++)for(let slot=0;slot<2;slot++){const q=questionFor(level,hall,slot);assert.equal(q[1].length,3);assert.ok(Number.isInteger(q[2])&&q[2]>=0&&q[2]<3);asked.push(q[0]);}assert.equal(new Set(asked).size,6);}
 });
 test('each maze has six spaced ship traps and a clear approach to its junction',()=>{
  for(let hall=0;hall<3;hall++){const course=courseFor(hall),traps=course.filter(e=>e.type!=='turn');assert.equal(traps.length,6);assert.ok(traps.some(e=>e.at<TURN_AT)&&traps.some(e=>e.at>TURN_AT));for(let i=1;i<course.length;i++)assert.ok(course[i].at-course[i-1].at>=10);assert.ok(LENGTH-traps.at(-1).at>=12);}
