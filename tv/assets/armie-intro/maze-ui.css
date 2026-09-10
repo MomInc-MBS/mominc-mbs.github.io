@@ -12,6 +12,7 @@
 #ar .ar-run-controls{position:absolute;inset:0;z-index:10;pointer-events:none;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:0 18px 100px;box-sizing:border-box}
 #ar .ar-run-controls[hidden]{display:none}
 #ar .ar-run-guide{position:absolute;top:max(7%,env(safe-area-inset-top));left:12px;right:12px;text-align:center;font:bold clamp(15px,3vw,22px)/1.3 monospace;color:#fff0c6;text-shadow:0 2px 6px #000;background:#101912bd;padding:10px 5px;border-top:1px solid #b9a56a;border-bottom:1px solid #b9a56a}
+#ar .ar-run-lives{position:absolute;top:max(12px,env(safe-area-inset-top));right:16px;color:#ffe5b5;font:bold 12px monospace;text-shadow:0 2px 4px #000}
 #ar .ar-run-buttons{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;width:min(520px,100%);pointer-events:auto}
 #ar .ar-run-buttons[hidden]{display:none}
 #ar .ar-controls-toggle{pointer-events:auto;background:#14201ddd;color:#d1d7ba;border:1px solid #828c78;border-radius:4px;min-height:44px;padding:8px 14px;margin-top:8px;font:12px monospace;cursor:pointer}
@@ -45,4 +46,38 @@
   #ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-phone-keys{display:none}
   #ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-side{padding:6px 14px}
   #ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-clock{margin-top:8px}
+}
+/* Bring questions up to reading height and give answers the handset's screen. */
+#ar.ar-playing:has(.ar-view:is([data-phase="question"],[data-phase="feedback"])) .ar-phone{top:max(24px,env(safe-area-inset-top));bottom:auto;right:12px;width:min(440px,calc(100% - 24px));max-height:calc(100dvh - max(24px,env(safe-area-inset-top)) - max(24px,env(safe-area-inset-bottom)));transform:translateY(0);padding:10px}
+#ar.ar-playing:has(.ar-view:is([data-phase="question"],[data-phase="feedback"])) .ar-side{max-height:none;min-height:0;padding:14px;font-size:14px}
+#ar.ar-playing:has(.ar-view:is([data-phase="question"],[data-phase="feedback"])) .ar-phone-nav,
+#ar.ar-playing:has(.ar-view:is([data-phase="question"],[data-phase="feedback"])) .ar-phone-keys,
+#ar.ar-playing:has(.ar-view:is([data-phase="question"],[data-phase="feedback"])) .ar-side:before,
+#ar.ar-playing:has(.ar-view:is([data-phase="question"],[data-phase="feedback"])) .ar-steps,
+#ar.ar-playing:has(.ar-view:is([data-phase="question"],[data-phase="feedback"])) .ar-look,
+#ar.ar-playing:has(.ar-view:is([data-phase="question"],[data-phase="feedback"])) #ar-motion-toggle{display:none}
+#ar.ar-playing:has(.ar-view[data-phase="question"]) .ar-eyebrow,#ar.ar-playing:has(.ar-view[data-phase="question"]) .ar-muted,#ar.ar-playing:has(.ar-view[data-phase="question"]) .ar-hud>span,#ar.ar-playing:has(.ar-view[data-phase="question"]) .ar-phone-brand:before{display:none}
+#ar.ar-playing:has(.ar-view[data-phase="question"]) .ar-hud{justify-content:flex-end;padding:6px;margin-bottom:10px}
+#ar.ar-playing:has(.ar-view[data-phase="question"]) .ar-phone-brand{padding:0 0 6px}
+#ar.ar-playing:has(.ar-view[data-phase="question"]) h2{font-size:18px;line-height:1.4;margin:0 0 12px}
+#ar.ar-playing:has(.ar-view[data-phase="question"]) .ar-answer-list .ar-choice{font-size:14px;line-height:1.4;min-height:48px;padding:12px}
+@media(max-width:650px){#ar.ar-playing:has(.ar-view[data-phase="question"]) h2{font-size:16px;line-height:1.3}#ar.ar-playing:has(.ar-view[data-phase="question"]) .ar-side{padding:10px}#ar.ar-playing:has(.ar-view[data-phase="question"]) .ar-answer-list .ar-choice{padding:9px;min-height:44px}}
+#ar.ar-playing .ar-lives{align-items:center;flex-wrap:wrap;justify-content:flex-end}
+#ar.ar-playing .ar-lives span{white-space:nowrap;font:bold 11px monospace}
+/* Door selection stays below the three overhead signs. */
+#ar.ar-playing.ar-junction-mode .ar-phone{top:auto;bottom:max(16px,env(safe-area-inset-bottom));right:24px;width:min(380px,calc(100% - 48px));max-height:53dvh;transform:translateY(0);padding:12px 10px}
+#ar.ar-playing.ar-junction-mode .ar-side{max-height:none;min-height:0;padding:10px}
+#ar.ar-playing.ar-junction-mode .ar-phone-brand{padding:0 0 6px}
+#ar.ar-playing.ar-junction-mode .ar-phone-nav,#ar.ar-playing.ar-junction-mode .ar-phone-keys,#ar.ar-playing.ar-junction-mode .ar-side:before,#ar.ar-playing.ar-junction-mode .ar-steps,#ar.ar-playing.ar-junction-mode .ar-look,#ar.ar-playing.ar-junction-mode .ar-eyebrow,#ar.ar-playing.ar-junction-mode .ar-muted,#ar.ar-playing.ar-junction-mode #ar-motion-toggle,#ar.ar-playing.ar-junction-mode .ar-caption,#ar.ar-playing.ar-junction-mode .ar-overlay,#ar.ar-playing.ar-junction-mode .ar-clue{display:none}
+#ar.ar-playing.ar-junction-mode .ar-hud{padding-bottom:6px;margin-bottom:8px}
+#ar.ar-playing.ar-junction-mode .ar-shadow,#ar.ar-playing.ar-junction-mode .ar-hud>span{display:none}
+#ar.ar-playing.ar-junction-mode .ar-hud{justify-content:flex-end}
+#ar.ar-playing.ar-junction-mode h2{font-size:15px;margin:0 0 8px}
+#ar.ar-playing.ar-junction-mode .ar-answer-list{gap:6px}
+#ar.ar-playing.ar-junction-mode .ar-answer-list button{font-size:12px;min-height:44px;padding:8px;color:#ffb8e9;border-color:#b966a3}
+#ar.ar-playing.ar-junction-mode .ar-answer-list button[data-warning="true"]{color:#ffbc94;border-color:#df774a}
+@media(max-height:500px){
+  #ar.ar-playing:has(.ar-view:is([data-phase="question"],[data-phase="feedback"])) .ar-phone{top:12px;max-height:calc(100dvh - 24px);padding:10px}
+  #ar.ar-playing:has(.ar-view:is([data-phase="question"],[data-phase="feedback"])) .ar-phone-brand{display:none}
+  #ar.ar-playing.ar-junction-mode .ar-phone{top:auto;max-height:65dvh}
 }
