@@ -97,6 +97,26 @@ more than one reflective surface.
   @keyframes ccRec{50%{opacity:.15}}
   .cc-tc{position:absolute; left:8px; top:24px; z-index:6; pointer-events:none; font-family:monospace; font-size:10.5px; color:#f4efe2; text-shadow:0 1px 3px #000; opacity:.85}
   .cc-tally{position:absolute; right:8px; top:8px; z-index:6; pointer-events:none; font-family:"Barlow Condensed", sans-serif; font-size:11px; letter-spacing:.1em; color:var(--gold); text-shadow:0 1px 3px #000}
+  .cc-lives{position:absolute;right:5px;top:24px;z-index:101;width:156px;height:64px;display:flex;align-items:center;justify-content:space-around;pointer-events:none;filter:drop-shadow(1px 3px 2px #231a12b0)}
+  .cc #ccHeartCanvas{display:none;width:100%;height:100%;filter:none!important}
+  .cc-lives[data-hearts="3d"] #ccHeartCanvas{display:block}
+  .cc-lives[data-hearts="3d"] .cc-paper-heart{display:none}
+  .cc-paper-heart{display:block;width:38px;height:40px;background:repeating-linear-gradient(174deg,transparent 0 4px,#332c23b0 4px 5px),linear-gradient(115deg,#fff1c8,#b5a689);clip-path:polygon(50% 97%,5% 48%,0 23%,14% 4%,34% 0,50% 17%,67% 1%,87% 5%,100% 24%,95% 48%);animation:ccPaperBeat var(--heartbeat,1s) linear infinite}
+  .cc-paper-heart.lost{opacity:.2;filter:grayscale(1);animation:none;transform:scale(.76)}
+  @keyframes ccPaperBeat{0%,26%,53%,100%{transform:scale(1)}13%{transform:scale(1.13)}37%{transform:scale(1.07)}}
+  @media(prefers-reduced-motion:reduce){.cc-paper-heart{animation:none}}
+  .school-death{position:absolute;inset:0;z-index:100;display:grid;align-content:center;justify-items:center;padding:56px 22px 25px;background:#140e16ed;text-align:center;color:#f2dec1}
+  .school-death h2{font-size:clamp(20px,5vw,32px);margin:0 0 18px;color:#edb4ba}
+  .school-death p{max-width:440px;line-height:1.6;font-size:15px}
+  .school-death button{max-width:100%;min-height:48px;padding:12px 18px;border:2px solid #edd9b5;background:#dbaeaa;color:#261622;font:bold 14px monospace;cursor:pointer}
+  #cc[data-caught] #ccJoy,#cc[data-caught] #ccSprintBtn,#cc[data-caught] #ccReadBtn,#cc[data-caught] #ccFlashBtn{visibility:hidden}
+  #ccTransition h2{font-size:clamp(21px,5vw,34px);line-height:1.25;text-shadow:0 2px 5px #000;margin:0 0 20px}
+  #ccTransition p{text-shadow:0 2px 4px #000}
+  #ccTransition button:focus-visible,.school-death button:focus-visible{outline:3px solid #ffe8a8;outline-offset:4px}
+  #cc[data-transition] #ccFlashBtn,#cc[data-transition] .cc-hint{visibility:hidden}
+  .cc-fallback{padding-top:96px!important}
+  .cc .cc-hint{top:92px}
+  @media(max-height:480px){#ccTransition{padding:52px 18px 10px!important;font-size:14px!important}#ccTransition h2{font-size:20px;margin-bottom:10px}#ccTransition p{margin-bottom:12px}.school-death{padding:46px 18px 12px}.school-death p{font-size:13px}}
   /* off-centre and clear of the very bottom edge: the shell pins its own MOM INC bug (tv.css .momlogo, 64px,
      left:50%/bottom:10px of .glass, unzoomed) to dead bottom-centre on every channel -- that strip is the
      shell's, not ours (Ian, review 2026-08-31: "the bug lands on the dog's nose"). Shifted off axis and up. */
@@ -379,6 +399,7 @@ more than one reflective surface.
       <div class="cc-rec" aria-hidden="true"><i></i><span id="ccRecLabel">REC</span></div>
       <div class="cc-tc" id="ccTC" aria-hidden="true">00:00</div>
       <div class="cc-tally" id="ccTally" aria-hidden="true">PAGES 0/3</div>
+      <div class="cc-lives" id="ccLives" role="img" aria-label="3 of 3 paper hearts remaining"><canvas id="ccHeartCanvas" aria-hidden="true"></canvas><i class="cc-paper-heart" aria-hidden="true"></i><i class="cc-paper-heart" aria-hidden="true"></i><i class="cc-paper-heart" aria-hidden="true"></i></div>
       <div class="cc-reflect" id="ccReflect" aria-hidden="true">
         <svg viewBox="0 0 100 122"><defs><clipPath id="ccRclip"><rect x="0" y="0" width="100" height="122" rx="4"/></clipPath></defs>
         <g clip-path="url(#ccRclip)">
