@@ -1,0 +1,33 @@
+/* A lowered handset leaves the first-person route and obstacles visible. */
+#ar.ar-playing .ar-tap{display:none!important}
+#ar.ar-playing .ar-phone{transition:transform .45s ease,opacity .25s}
+#ar.ar-playing.ar-maze-mode .ar-phone{bottom:0;transform:translateY(calc(100% - 88px));pointer-events:none}
+#ar.ar-playing.ar-maze-mode .ar-phone-brand{padding-bottom:4px}
+#ar.ar-playing.ar-maze-mode .ar-side{min-height:130px;padding:8px 12px}
+#ar.ar-playing.ar-maze-mode .ar-side:before,#ar.ar-playing.ar-maze-mode .ar-hud,#ar.ar-playing.ar-maze-mode .ar-phone-brand:before,#ar.ar-playing.ar-maze-mode .ar-caption,#ar.ar-playing.ar-maze-mode .ar-overlay,#ar.ar-playing.ar-maze-mode .ar-shadow,#ar.ar-playing.ar-maze-mode .ar-clue{display:none!important}
+#ar.ar-playing.ar-maze-mode .ar-view{touch-action:none}
+#ar.ar-playing.ar-maze-mode #ar-motion-toggle{display:none}
+#ar #ar-run-message{font:bold 12px monospace;margin:0;color:#c5ffb0}
+#ar .ar-run-controls{position:absolute;inset:0;z-index:10;pointer-events:none;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:0 18px 100px;box-sizing:border-box}
+#ar .ar-run-controls[hidden]{display:none}
+#ar .ar-run-guide{position:absolute;top:max(7%,env(safe-area-inset-top));left:12px;right:12px;text-align:center;font:bold clamp(15px,3vw,22px)/1.3 monospace;color:#fff0c6;text-shadow:0 2px 6px #000;background:#101912bd;padding:10px 5px;border-top:1px solid #b9a56a;border-bottom:1px solid #b9a56a}
+#ar .ar-run-buttons{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:10px;width:min(460px,100%);pointer-events:auto}
+#ar .ar-run-buttons button{min-height:56px;background:#18251edf;border:1px solid #cebd88;border-radius:5px;color:#fff1c4;font:bold 15px monospace;touch-action:none;cursor:pointer}
+#ar .ar-run-buttons button:active{background:#726440;transform:translateY(2px)}
+#ar .ar-run-buttons button:focus-visible{outline:3px solid #fff;outline-offset:3px}
+#ar .ar-run-buttons button:disabled{opacity:.45}
+#ar .ar-run-controls p{color:#efe4c7;font:12px monospace;text-align:center;text-shadow:0 2px 3px #000;margin:8px 0 0}
+#ar.ar-playing.ar-maze-mode #ar-run-pause{position:fixed;pointer-events:auto;left:14px;bottom:14px;min-height:44px;z-index:11;margin:0}
+/* The pause button lives outside the handset's transformed coordinate space. */
+#ar .ar-maze-pause{position:absolute;left:14px;bottom:max(14px,env(safe-area-inset-bottom));z-index:11;min-height:44px;padding:8px 12px;background:#15221de8;color:#e7e5c3;border:1px solid #acb487;font:13px monospace}
+#ar .ar-maze-pause[hidden]{display:none}
+@media(max-width:650px){#ar.ar-playing.ar-maze-mode .ar-phone{right:18px;width:210px;transform:translateY(calc(100% - 69px))}#ar .ar-run-controls{padding-bottom:85px}#ar .ar-run-buttons{gap:7px}#ar .ar-run-buttons button{font-size:13px;min-height:54px}#ar .ar-run-controls p{font-size:11px}#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-phone{bottom:12px}#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-caption{display:none}}
+@media(prefers-reduced-motion:reduce){#ar.ar-playing .ar-phone{transition:none}}
+#ar.ar-motion-off .ar-phone{transition:none}
+#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-phone{bottom:-66px}
+#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-side{min-height:0;max-height:none;padding:10px 14px}
+#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-side:before,#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-hud,#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-steps,#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-eyebrow,#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-side h2,#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-look,#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-muted:not(#ar-time){display:none}
+#ar.ar-playing #ar-phone-tap{width:100%;min-height:52px;font:bold 17px monospace;touch-action:manipulation}
+#ar.ar-playing:has(.ar-view[data-phase="tap"]) #ar-tap-count{font-size:24px;margin:0 0 5px}
+#ar.ar-playing:has(.ar-view[data-phase="tap"]) #ar-time{font-size:12px;margin:5px 0}
+@media(max-width:650px){#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-phone{bottom:-68px}#ar.ar-playing:has(.ar-view[data-phase="tap"]) .ar-phone-brand{padding:0 0 5px}#ar.ar-playing:has(.ar-view[data-phase="tap"]) #ar-motion-toggle{display:none}}
