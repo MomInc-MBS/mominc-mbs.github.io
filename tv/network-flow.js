@@ -2,6 +2,14 @@
 (()=>{'use strict';
  const KEY='mbs-hand-decisions-v1', REQUIRED=['lilboyfriend','djscratch','corgi','goon'];
  const read=()=>{try{const s=JSON.parse(localStorage.getItem(KEY)||'null');return {count:Number.isInteger(s?.count)?Math.max(0,Math.min(5,s.count)):0,last:typeof s?.last==='string'?s.last:''};}catch{return {count:0,last:''};}};
+ const GALA_ENTRY='mbs-gala-character-created-v1';
+ function galaReady(){
+  for(const key of [GALA_ENTRY,'mbs-gala-completed-v1'])for(const storageName of ['localStorage','sessionStorage'])try{
+   const at=Number(window[storageName].getItem(key));if(Number.isSafeInteger(at)&&at>0)return true;
+  }catch{}
+  return false;
+ }
+ function recoverGalaFinish(){if(galaReady())window.MBS_STATE?.completePage('goon');}
  const PROFILE_KEY='mbs-hand-profile-v1';
  const regions=['nails','fingertips','middle_sections','knuckles','palm','back_of_hand','wrist'];
  const pagesReady=()=>{const done=window.MBS_STATE?.completedPages()||[];return REQUIRED.every(id=>done.includes(id));};
@@ -23,6 +31,14 @@
    if(publicFinished||finished(saved?.live,3))window.MBS_STATE?.completePage('corgi');
  }
  function paint(){
+  const gala=galaReady();
+  for(const page of document.querySelectorAll('#gn, body.g-goon')){
+   page.toggleAttribute('data-gala-unlocked',gala);
+   const launch=page.querySelector('.network-launch a'),note=page.querySelector('[data-gala-entry-note]');
+   if(launch){const url=gala?'/play/goon/':'/gala/';if(launch.getAttribute('href')!==url)launch.setAttribute('href',url);if(launch.hasAttribute('data-play'))launch.dataset.play=url;
+    const label=launch.querySelector('span'),text=gala?'▶ ENTER THE WAR ROOM':'▶ CREATE YOUR GOON';if(label&&label.textContent!==text)label.textContent=text;}
+   if(note){const text=gala?'Character complete. Goon is unlocked. Make ammo for the resistance in the War Room.':'Finish your character to unlock the rest of this page.';if(note.textContent!==text)note.textContent=text;}
+  }
   document.querySelectorAll('[data-hand-ad]').forEach(button=>{button.hidden=!pagesReady();});
   const ready=armieReady();document.querySelectorAll('[data-id="armie"], [data-armie-link]').forEach(el=>{el.classList.toggle('armie-ready',ready);el.classList.toggle('armie-dark',!ready);el.setAttribute('aria-disabled',String(!ready));if(el.tagName==='A'){if(ready)el.href='/games/armie/';else el.removeAttribute('href');}el.title=ready?'Coach Armie · Gym Class 95':'Unlock through DJ Scratch’s hand advertisement';const name=el.querySelector('.lcd-name');if(name)name.textContent='COACH ARMIE';});
   const dj=document.querySelector('#dj')||document.body.dataset.slug==='djscratch'||document.documentElement.dataset.game==='djscratch';
@@ -38,13 +54,14 @@
  function start(){
   if(document.querySelector('#tv')){const ads=document.createElement('script');ads.src='/tv/retro-ads.js?v=neon-tv-2';document.head.append(ads);}
   recoverSchoolFinish();
-  try{if(Number(localStorage.getItem('mbs-gala-completed-v1'))>0)window.MBS_STATE?.completePage('goon');}catch{}
+  recoverGalaFinish();
   paint();
   document.addEventListener('click',event=>{if(event.target.closest('[data-hand-ad]'))showAd();});
-  document.addEventListener('visibilitychange',()=>{if(!document.hidden){recoverSchoolFinish();paint();}});
-  window.addEventListener('pageshow',paint);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden){recoverSchoolFinish();recoverGalaFinish();paint();}});
+  window.addEventListener('pageshow',()=>{recoverGalaFinish();paint();});
+  window.addEventListener('mbs:gala-character-created',()=>{recoverGalaFinish();paint();});
   window.addEventListener('mbs:page-complete',paint);
-  window.addEventListener('storage',()=>{recoverSchoolFinish();paint();});window.addEventListener('mbs-flow',paint);
+  window.addEventListener('storage',()=>{recoverSchoolFinish();recoverGalaFinish();paint();});window.addEventListener('mbs-flow',paint);
   // Mounting a channel changes its links, but never schedules an advertisement.
   const observer=new MutationObserver(()=>{observer.disconnect();paint();observer.observe(document.body,{childList:true,subtree:true});});
   observer.observe(document.body,{childList:true,subtree:true});

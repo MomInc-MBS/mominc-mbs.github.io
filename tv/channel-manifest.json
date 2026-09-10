@@ -266,13 +266,13 @@
         "host": "MOM INC",
         "eyebrow": "SLIDE AND MERGE",
         "genre": "tile puzzle",
-        "premise": "Slide the tiles together. A goon is someone who gives. You are one too.",
-        "cta": "Slide To Merge",
-        "does": "Swipe to merge tiles",
+        "premise": "Make ammo for the resistance. Merge matching ammo to double its firepower.",
+        "cta": "Create Your Goon",
+        "does": "Swipe to merge matching ammo",
         "duration": "As long as you like",
         "input": "swipe or keyboard",
         "hero": "assets/mom-inc-mark.png",
-        "teaser": "Every merge raises the pledge. The crowd loves a giver right up until the giver stops. Reach 2048 or fill the board; MOM has an ending ready either way.",
+        "teaser": "Finish your character to unlock Goon. In the War Room, merge pellets into rockets, plasma and impossible ammo for the resistance.",
         "roots": [
           "#ggFrame",
           "#gnCode"
@@ -283,7 +283,7 @@
           "ink": "#ffd36e",
           "accent": "#e04b6a"
         },
-        "finish": "Reach 2048 or fill the board",
+        "finish": "Build the Reality Breaker, then keep merging",
         "cta2": "Make The First Merge",
         "progress_key": "",
         "continue_cta": "",

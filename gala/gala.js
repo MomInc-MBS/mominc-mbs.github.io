@@ -93,6 +93,15 @@ $('random').onclick=()=>{change(()=>{for(const s of A.sections)current.parts[s.i
 $('save').onclick=save;$('export').onclick=()=>{current.name=window.MBS_DJ.display();download(new Blob([JSON.stringify(current,null,2)],{type:'application/json'}),filename()+'.json');status('Your look is exported. Import it here on another device.');};
 $('png').onclick=()=>{const c=document.createElement('canvas');c.width=$('avatar').width*8;c.height=$('avatar').height*8;const ctx=c.getContext('2d');ctx.imageSmoothingEnabled=false;ctx.drawImage($('avatar'),0,0,c.width,c.height);c.toBlob(blob=>{if(blob){download(blob,filename()+'.png');status('Your pixel portrait is downloaded with a transparent background.');}},'image/png');};
 $('import').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{if(f.size>30000)throw Error('Choose a small MOM Inc look file.');const look=A.normalize(JSON.parse(await f.text()));change(()=>current=look);status('Imported '+(current.name||'your alien')+'.');}catch(err){status(err instanceof SyntaxError?'That file is not a valid avatar look.':err.message);}finally{e.target.value='';}};
-$('join').onclick=()=>{if(save())location.assign('/play/goon/');else{try{sessionStorage.setItem(KEY,JSON.stringify(current));}catch{}location.assign('/play/goon/');}};
+$('join').onclick=()=>{
+ const saved=save(),completedAt=String(Date.now());
+ if(!saved){try{sessionStorage.setItem(KEY,JSON.stringify(current));}catch{status('Could not keep your character. Export your look, then allow storage to join.');return;}}
+ let recorded=false;
+ try{localStorage.setItem('mbs-gala-character-created-v1',completedAt);recorded=true;}catch{}
+ if(!recorded)try{sessionStorage.setItem('mbs-gala-character-created-v1',completedAt);recorded=true;}catch{}
+ if(!recorded){status('Could not keep your invitation. Export your look, then allow storage to join.');return;}
+ window.dispatchEvent(new Event('mbs:gala-character-created'));
+ location.assign('/tv/?ch=goon');
+};
 window.GalaArmory?.mount({getLook:()=>current,change,status,paint,selectCategory});paint();paintLooks();
 })();

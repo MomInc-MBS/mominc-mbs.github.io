@@ -268,11 +268,11 @@ const HINTS = {
     {
       "id": "goon",
       "ch": "EXTRA · GOON",
-      "hint": "Slide equal tiles together. Give your largest tile a home in one corner.",
+      "hint": "Finish your character to unlock Goon. Build ammo for the resistance in the War Room.",
       "steps": [
-        "Use the arrow keys, swipe the board or use the direction buttons to move all tiles. Equal values merge.",
-        "Keep your biggest tile in one corner and build matching values beside it. Leave room for the next move.",
-        "Reach 2048 to win. A full board with no matching neighbors ends the round; start another board to try again. This extra game is not needed for the sponsor ad."
+        "Finish your character in the dressing room to unlock the Goon page. Open the War Room when you are ready.",
+        "Swipe or use the direction buttons to merge matching ammo. Each new type doubles its firepower. Keep your strongest ammo in one corner.",
+        "Build a Reality Breaker to clear the War Room, then keep merging if you want. A full board with no matching neighbors ends the round."
       ],
       "source": "goon.html controls; channel-manifest.json goon finish and active=false"
     },
@@ -443,7 +443,7 @@ function dressGoggles(dg) {
   const pages = HINTS.items.map(h => '<details><summary>' + escape(h.ch) + '</summary><p>' + escape(h.hint) + '</p>' +
     (h.steps.length ? '<details><summary>Show the solution</summary>' + h.steps.map((step,i) => '<p>' + (i+1) + '. ' + escape(step) + '</p>').join('') + '</details>' : '') + '</details>').join('');
   body.innerHTML = '<h2>KNOWLEDGE IS POWER</h2><p class="sub">THE GOGGLES · PAGE HINTS &amp; SOLUTIONS</p>' +
-    '<p>Pick the page you are stuck on. Start with a hint. Open the solution when you want the steps.</p>' + pages +
+    '<p>Your goggles now work on every page. After five seconds without input, a gentle orange border marks the next action. Finish a page and the next unfinished page lights up.</p><p>Pick a page below for a hint, or open its solution for the steps.</p>' + pages +
     '<details><summary>Scan obsolete coach instructions</summary>' + RECIPES.map(r => '<details><summary>' + r.name + '</summary><p>DETECTED: ' + r.myth + '</p><p>CORRECTION: ' + r.fact + '</p></details>').join('') + '</details>' +
     '<p class="foot">I can show you the way. You still have to walk it.</p>';
 }
@@ -489,9 +489,17 @@ export default {
     const recycle=action('Mix another coach',()=>{if(busy)return;L.reset();dg.classList.remove('coach-unlocked');get('dgUnitRecord').innerHTML='';render();});
     const goggles=action('Take goggles',()=>{
       if(busy||!L.correct()||!['grab','goggles'].includes(L.phase))return;
-      L.to('goggles');render();returnFocus=goggles;vis.hidden=false;vis.classList.add('on');
+      L.to('goggles');awardGoggles();render();returnFocus=goggles;vis.hidden=false;vis.classList.add('on');
       dock.inert=true;props.inert=true;get('dgVisX').focus();
     });
+    function awardGoggles(){
+      if(!L.correct()||L.phase!=='goggles')return;
+      const reward=JSON.stringify({version:1,acquiredAt:Date.now(),recipe:L.order.slice()});
+      try{localStorage.setItem('mbs-goggles-v1',reward);}catch{try{sessionStorage.setItem('mbs-goggles-v1',reward);}catch{}}
+      ctx.mbs?.complete?.('girlfriend',{terminal:'goggles'});
+      window.dispatchEvent(new Event('mbs:goggles-earned'));
+    }
+    get('dgVisX').dataset.guideNext='';get('dgReportClose').dataset.guideNext='';
     function closeGoggles(){vis.hidden=true;vis.classList.remove('on');dock.inert=false;props.inert=false;returnFocus?.focus();}
     ctx.on(get('dgVisX'),'click',closeGoggles);
     ctx.on(vis,'keydown',e=>{
@@ -513,6 +521,9 @@ export default {
     }
     function pour(i){if(busy||!L.pour(i))return;labEffect('pour');transition('pouring',()=>{if(L.phase==='mould')mouldCoach();});}
     function render(){
+      for(const button of [...propButtons,mould,pack,goggles,recycle])button.removeAttribute('data-guide-next');
+      const next=L.phase==='pour'?propButtons.find((_,i)=>!L.has(i)):L.phase==='mould'?mould:L.phase==='pack'?pack:L.phase==='grab'?(L.correct()?goggles:recycle):null;
+      if(next&&!busy)next.dataset.guideNext='';
       stage.dataset.phase=L.phase;get('dgReportAgain').hidden=!['pack','grab','goggles'].includes(L.phase);
       tubeButtons.forEach((b,i)=>{b.hidden=L.has(i);b.disabled=busy||L.phase!=='pour';});
       propButtons.forEach((b,i)=>{b.classList.toggle('spent',L.has(i));b.disabled=busy||L.has(i)||L.phase!=='pour';});
@@ -529,6 +540,7 @@ export default {
       get('dgUnitDetails').hidden=!['pack','grab','goggles'].includes(L.phase);get('dgUnitDetails').open=true;
     }
     if(['pack','grab','goggles'].includes(L.phase))get('dgUnitRecord').innerHTML=creatureCard(L.recipe());
+    if(L.phase==='goggles')awardGoggles();
     render();
 
     window.__dg={paper:true,flat:false,get phase(){return L.phase;},get poured(){return L.poured;},get order(){return L.order.slice();},get lastVariant(){return L.variant();},get recipe(){return L.recipe()?.id||null;},get gogglesEarned(){return L.correct();}};
