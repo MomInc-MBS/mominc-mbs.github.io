@@ -268,11 +268,11 @@ const HINTS = {
     {
       "id": "goon",
       "ch": "EXTRA · GOON",
-      "hint": "Finish your character to unlock Goon. Build ammo for the resistance in the War Room.",
+      "hint": "Finish your character to unlock Goon, then merge the Gala tiles toward 2048.",
       "steps": [
-        "Finish your character in the dressing room to unlock the Goon page. Open the War Room when you are ready.",
-        "Swipe or use the direction buttons to merge matching ammo. Each new type doubles its firepower. Keep your strongest ammo in one corner.",
-        "Build a Reality Breaker to clear the War Room, then keep merging if you want. A full board with no matching neighbors ends the round."
+        "Finish your character in the dressing room to unlock the Goon page. Choose Enter the Gala to play the original game.",
+        "Swipe or use the direction buttons to merge matching numbered tiles. Keep your highest tile in one corner and leave room for new tiles.",
+        "Reach 2048 to clear the Gala. The separate War Room opens after your full run and MYR5 app clearance."
       ],
       "source": "goon.html controls; channel-manifest.json goon finish and active=false"
     },

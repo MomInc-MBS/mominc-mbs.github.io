@@ -82,7 +82,7 @@
   const page=currentPage(doc),win=doc.defaultView,path=win.location.pathname;
   const explicit=first(doc,['[data-guide-next]:not([data-guide-next="false"])']);
   if(page==='character')return explicit||first(doc,['#join']);
-  if(page==='terminal')return first(doc,['[data-run-checks] [data-done="false"] a','#joinRankings:not(:disabled)']);
+  if(page==='terminal')return first(doc,['[data-run-checks] [data-done="false"] a','#joinRankings:not(:disabled)'])||explicit;
   const game=path.includes('/play/')||path.includes('/tv/games/');
   if(page==='goon'&&game){
    let scene=win.galaSceneInstance;try{scene ||= doc.querySelector('#ggGame')?.contentWindow.galaSceneInstance;}catch{}

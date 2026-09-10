@@ -45,12 +45,14 @@ test('legacy goggles are recovered only after actual pickup and remain earned du
  const w=dom(t,'/gala/','<button id="join">Join</button>');w.localStorage.setItem('mbs-dg-line',JSON.stringify({v:2,phase:'goggles',poured:recipe}));const g=guide(w,{earned:false});
  assert.equal(w.MBS_GUIDE.earned(),true);assert.ok(w.localStorage.getItem('mbs-goggles-v1'));w.localStorage.removeItem('mbs-dg-line');g.tick(5000);assert.equal(w.document.querySelector('.mbs-idle-glow').id,'join');
 });
-test('War Room guidance selects a legal move and frame activity resets the parent timer',t=>{
- const w=dom(t,'/play/goon/','<button class="ggTap" data-dir="left">Left</button><button class="ggTap" data-dir="right">Right</button><iframe id="ggGame"></iframe>');
+test('Gala and War Room guidance select a legal move and frame activity resets the parent timer',t=>{
+ for(const route of ['/play/goon/','/play/war-room/']){
+ const w=dom(t,route,'<button class="ggTap" data-dir="left">Left</button><button class="ggTap" data-dir="right">Right</button><iframe id="ggGame"></iframe>');w.document.documentElement.dataset.game='goon';
  const frame=w.document.querySelector('iframe'),fw=frame.contentWindow;fw.galaSceneInstance={hasWon:false,hasLegalMoveInDirection:d=>d==='right'};
  // about:blank inherits the origin, but jsdom reports a null origin. Attach explicitly.
  const g=guide(w);w.MBS_GUIDE.attach(fw.document);g.tick(5000);assert.equal(w.document.querySelector('.mbs-idle-glow').dataset.dir,'right');
  fw.document.dispatchEvent(new fw.Event('pointerdown'));assert.equal(w.document.querySelector('.mbs-idle-glow'),null);g.tick(5000);assert.equal(w.document.querySelector('.mbs-idle-glow').dataset.dir,'right');
+ }
 });
 test('the real laboratory awards goggles only after the correct sequence, mould, pack and pickup',t=>{
  for(const order of [recipe,[1,0,2,3,4,5]]){
@@ -85,9 +87,9 @@ test('an open Goon page unlocks immediately and stays unlocked on return without
  w.dispatchEvent(new w.Event('pageshow'));assert.ok(w.document.querySelector('#gn').hasAttribute('data-gala-unlocked'));
  assert.match(read('tv/run-progress.js'),/if\(e.detail\?\.site!=='goon'\)/);await new Promise(setImmediate);
 });
-function game(){
+function game(asset='index-W2w8AfON.js'){
  const context={window:{},document:{},location:{},console};vm.createContext(context);vm.runInContext(read('gala/ammo.js'),context);
- const source=read('tv/games/goon/assets/index-W2w8AfON.js');const start=source.indexOf('zs=class zs extends ve.Scene'),end=source.indexOf(';Ot(zs,"HINT_CSS_DIRECTION"',start);
+ const source=read('tv/games/goon/assets/'+asset);const start=source.lastIndexOf('wr=',source.indexOf('zs=class zs extends ve.Scene')),end=source.indexOf(';Ot(zs,"HINT_CSS_DIRECTION"',start);
  Object.assign(context,{ve:{Scene:class{}},Ot:(obj,key,value)=>obj[key]=value,Ce:4,Zp:12,Ti:120});vm.runInContext(source.slice(start,end)+';window.Game=zs;',context);
  const scene=new context.window.Game(),data=new Map();scene.scoreText={getData:k=>data.get(k),setData:(k,v)=>data.set(k,v)};return {scene,ammo:context.window.GalaAmmo};
 }
@@ -98,6 +100,45 @@ test('ammo starts small, merges once per move, and scores firepower beyond the f
  scene.mergeRow([12,12,0,0],true);assert.equal(Number(scene.scoreText.getData('score')),4104);assert.equal(ammo.tierInfo(13).name,'Reality breaker Mk 2');
  const before=scene.scoreText.getData('score');scene.hasLegalMoveInDirection('up');assert.equal(scene.scoreText.getData('score'),before);
  for(let tier=2;tier<=14;tier++)assert.equal(ammo.power(tier),ammo.power(tier-1)*2);
+});
+test('the original Gala keeps money tiles and scoring without loading War Room assets',()=>{
+ const {scene}=game('index-gala-classic.js');for(let i=0;i<30;i++){scene.resetBoard();const occupied=scene.board.flat().filter(Boolean);assert.equal(occupied.length,2);assert.ok(occupied.every(n=>n===5||n===6));}
+ assert.deepEqual(Array.from(scene.mergeRow([5,5,0,0],true)),[6,0,0,0]);assert.equal(scene.scoreText.getData('score'),'32');
+ scene.board=[[12,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];assert.equal(scene.checkWinCondition(),true);
+ const entry=read('tv/games/goon/index.html'),bundle=read('tv/games/goon/assets/index-gala-classic.js');
+ assert.match(entry,/index-gala-classic\.js/);assert.doesNotMatch(entry,/war-room\.js|ammo\.js|hologram/);
+ assert.doesNotMatch(bundle,/GalaWarRoom|GalaAmmo/);assert.match(bundle,/this\.bar=i,i\.position\.set\(2\.9,0,0\)/);assert.match(bundle,/PLEDGED SO FAR: \$/);assert.match(bundle,/Kp=5000/);assert.match(bundle,/checkpoint\("goon"\)/);
+});
+test('both War Room entries require full-run and app clearance before loading the game',async t=>{
+ for(const route of ['/play/war-room/','/tv/games/goon/war-room.html'])for(const run of [null,{completedAt:1},{installedAt:1},{completedAt:1,installedAt:1}]){
+  const w=dom(t,route);w.localStorage.setItem('mbs-gala-character-created-v1','123');w.localStorage.setItem('mbs-gala-completed-v1','123');
+  w.MBS_RUN={read:()=>run,refresh:async()=>run};let loaded=0;
+  w.eval(read('gala/war-room-access.js').replace("target.location.replace('/gala/terminal/')","window.blockedDestination='/gala/terminal/'"));
+  const entered=await w.GalaWarRoomAccess.enter(()=>{loaded++;});const eligible=!!(run?.completedAt&&run?.installedAt);
+  assert.equal(entered,eligible);assert.equal(loaded,eligible?1:0);if(!eligible)assert.equal(w.blockedDestination,'/gala/terminal/');
+ }
+ const w=dom(t,'/play/war-room/');let state=null,resolveRefresh,loaded=0;
+ w.MBS_RUN={read:()=>state,refresh:()=>new Promise(resolve=>{resolveRefresh=()=>{state={completedAt:1,installedAt:1};resolve(state);};})};w.eval(read('gala/war-room-access.js'));
+ const entering=w.GalaWarRoomAccess.enter(()=>{loaded++;});assert.equal(loaded,0);resolveRefresh();assert.equal(await entering,true);assert.equal(loaded,1);
+ for(const file of ['play/war-room/index.html','tv/games/goon/war-room.html']){assert.match(read(file),/war-room-access\.js/);assert.match(read(file),/war-room-boot\.js/);assert.doesNotMatch(read(file),/<script[^>]+src="(?:mount\.js|[^\"]*index-W2w8AfON\.js)/);}
+});
+test('the two play routes mount separate games and the TV page loads neither game',t=>{
+ const html=read('tv/channels/goon.html');
+ for(const [route,war,destination] of [['/play/goon/',false,'/tv/games/goon/index.html'],['/play/war-room/',true,'/tv/games/goon/war-room.html'],['/tv/?ch=goon',false,null]]){
+  const w=dom(t,route,html);const base=w.document.createElement('base');base.href='https://mominc.online/tv/';w.document.head.append(base);
+  if(destination)w.document.documentElement.dataset.game='goon';if(war)w.document.documentElement.dataset.galaRoom='war-room';
+  for(const script of w.document.querySelectorAll('script'))w.eval(script.textContent);
+  const frame=w.document.querySelector('#ggGame');if(destination)assert.equal(new URL(frame.src).pathname,destination);else assert.equal(frame.getAttribute('src'),null);
+ }
+});
+test('character creation opens the Gala while War Room navigation waits for full clearance',async t=>{
+ const w=dom(t,'/tv/?ch=goon','<article id="gn"><section class="network-launch"><a><span>Create</span></a></section><p data-gala-entry-note></p></article>');let run=null;
+ w.MBS_STATE={completedPages:()=>[],completePage(){}};w.MBS_RUN={read:()=>run};w.localStorage.setItem('mbs-gala-character-created-v1','123');
+ w.eval(read('tv/network-flow.js'));w.document.dispatchEvent(new w.Event('DOMContentLoaded'));
+ const gala=w.document.querySelector('.network-launch a'),war=w.document.querySelector('[data-war-room-launch]');
+ assert.equal(gala.getAttribute('href'),'/play/goon/');assert.match(gala.textContent,/ENTER THE GALA/);assert.equal(war.hidden,true);
+ run={completedAt:1};w.dispatchEvent(new w.Event('mbs:run-update'));assert.equal(war.hidden,true);
+ run={completedAt:1,installedAt:1};w.dispatchEvent(new w.Event('mbs:run-update'));assert.equal(war.hidden,false);assert.equal(war.getAttribute('href'),'/play/war-room/');assert.equal(gala.getAttribute('href'),'/play/goon/');await new Promise(setImmediate);
 });
 test('all twelve 3D ammo models fit their cells and have distinct geometry',async()=>{
  const T=await import('../tv/assets/armie-intro/vendor/three.core.js'),{ammo}=game(),signatures=new Set();

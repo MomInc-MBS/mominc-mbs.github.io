@@ -36,8 +36,11 @@
    page.toggleAttribute('data-gala-unlocked',gala);
    const launch=page.querySelector('.network-launch a'),note=page.querySelector('[data-gala-entry-note]');
    if(launch){const url=gala?'/play/goon/':'/gala/';if(launch.getAttribute('href')!==url)launch.setAttribute('href',url);if(launch.hasAttribute('data-play'))launch.dataset.play=url;
-    const label=launch.querySelector('span'),text=gala?'▶ ENTER THE WAR ROOM':'▶ CREATE YOUR GOON';if(label&&label.textContent!==text)label.textContent=text;}
-   if(note){const text=gala?'Character complete. Goon is unlocked. Make ammo for the resistance in the War Room.':'Finish your character to unlock the rest of this page.';if(note.textContent!==text)note.textContent=text;}
+    const label=launch.querySelector('span'),text=gala?'▶ ENTER THE GALA':'▶ CREATE YOUR GOON';if(label&&label.textContent!==text)label.textContent=text;}
+   if(note){const text=gala?'Character complete. Goon is unlocked. Join the original Gala.':'Finish your character to unlock the rest of this page.';if(note.textContent!==text)note.textContent=text;}
+   let war=page.querySelector('[data-war-room-launch]');
+   if(!war&&note){war=document.createElement('a');war.dataset.warRoomLaunch='';war.className='gala-war-link';war.href='/play/war-room/';war.textContent='Enter the War Room →';war.hidden=true;note.after(war);}
+   if(war){const run=window.MBS_RUN?.read();war.hidden=!(gala&&run?.completedAt&&run?.installedAt);}
   }
   document.querySelectorAll('[data-hand-ad]').forEach(button=>{button.hidden=!pagesReady();});
   const ready=armieReady();document.querySelectorAll('[data-id="armie"], [data-armie-link]').forEach(el=>{el.classList.toggle('armie-ready',ready);el.classList.toggle('armie-dark',!ready);el.setAttribute('aria-disabled',String(!ready));if(el.tagName==='A'){if(ready)el.href='/games/armie/';else el.removeAttribute('href');}el.title=ready?'Coach Armie · Gym Class 95':'Unlock through DJ Scratch’s hand advertisement';const name=el.querySelector('.lcd-name');if(name)name.textContent='COACH ARMIE';});
@@ -61,6 +64,7 @@
   window.addEventListener('pageshow',()=>{recoverGalaFinish();paint();});
   window.addEventListener('mbs:gala-character-created',()=>{recoverGalaFinish();paint();});
   window.addEventListener('mbs:page-complete',paint);
+  window.addEventListener('mbs:run-update',paint);
   window.addEventListener('storage',()=>{recoverSchoolFinish();recoverGalaFinish();paint();});window.addEventListener('mbs-flow',paint);
   // Mounting a channel changes its links, but never schedules an advertisement.
   const observer=new MutationObserver(()=>{observer.disconnect();paint();observer.observe(document.body,{childList:true,subtree:true});});

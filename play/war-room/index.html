@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en" data-game="goon" data-mode="public" data-api="" data-mission-id="" data-station="" data-roots="{&quot;roots&quot;: [&quot;#ggFrame&quot;, &quot;#gnCode&quot;], &quot;hide&quot;: []}">
+<html lang="en" data-game="goon" data-gala-room="war-room" data-war-room-entry="shell" data-mode="public" data-api="" data-mission-id="" data-station="" data-roots="{&quot;roots&quot;: [&quot;#ggFrame&quot;, &quot;#gnCode&quot;], &quot;hide&quot;: []}">
 <head>
 <script src="/tv/retro-pointer.js" defer></script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <base href="../../tv/">
-<title>Goon</title>
+<title>Resistance War Room · MOM INC</title>
 <meta name="robots" content="noindex">
 <link rel="stylesheet" href="play.css">
 <link rel="stylesheet" href="atmosphere.css">
@@ -14,10 +14,10 @@
 <script src="/tv/phone-layout.js" defer></script><script src="/tv/dj-identity.js"></script><script src="/tv/run-progress.js"></script></head>
 <body>
 
-<div class="stage"><div class="rail"><a class="exit" href="./?ch=goon" aria-label="Back to Goon">&larr;<span>Goon</span></a></div><div class="glass"><div id="screen" class="screen"><div id="channel" class="channel"></div></div></div></div>
+<div class="stage"><div class="rail"><a class="exit" href="/gala/terminal/" aria-label="Back to the War Room terminal">&larr;<span>Terminal</span></a></div><div class="glass"><div id="screen" class="screen"><div id="channel" class="channel"></div></div></div></div>
 <div class="wave" id="mbsWave" aria-hidden="true"></div>
 <div class="meter" id="mbsMeter" hidden aria-hidden="true"></div>
-<div class="boot" id="boot"><p>Tuning Goon. <noscript>This one needs JavaScript. </noscript><a href="./?ch=goon">Go back</a> if nothing arrives.</p></div>
+<div class="boot" id="boot"><p>Checking War Room clearance. <noscript>This one needs JavaScript. </noscript><a href="./?ch=goon">Go back</a> if nothing arrives.</p></div>
 
 <script src="mbs-channels.js"></script>
 <script src="state.js"></script>
@@ -25,7 +25,8 @@
 <script src="channel-runtime.js?v=game-name-2"></script>
 <script src="mbs-shim.js"></script>
 <script src="atmosphere.js"></script>
-<script src="mount.js"></script>
+<script src="/gala/war-room-access.js?v=separate1"></script>
+<script src="/gala/war-room-boot.js?v=separate1" defer></script>
 <script src="network-flow.js?v=separate1"></script>
 </body>
 </html>
