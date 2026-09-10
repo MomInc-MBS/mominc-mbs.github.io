@@ -112,7 +112,7 @@ export const HandViewer=forwardRef<HandViewerHandle,Props>(function HandViewer({
           if(!(obj instanceof THREE.Mesh))return;
           for(const m of (Array.isArray(obj.material)?obj.material:[obj.material]))if(m instanceof THREE.MeshStandardMaterial&&!seen.has(m.name)){
             seen.add(m.name);
-            const style=STYLES.find(s=>m.name.startsWith(s.name.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'_'));
+            const style=STYLES[m.userData.materialStyle]||STYLES.find(s=>m.name.startsWith(s.name.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'_'));
             const c=m.map&&style?new THREE.Color(style.primary):m.color;
             mtl+='newmtl '+m.name+'\nKd '+[c.r,c.g,c.b].join(' ')+'\nKs 0.25 0.25 0.25\nNs '+Math.round((1-m.roughness)*200)+'\nd 1\n\n';
           }

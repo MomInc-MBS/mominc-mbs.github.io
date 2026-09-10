@@ -1,5 +1,6 @@
 import * as T from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
+import {RoomEnvironment} from 'three/examples/jsm/environments/RoomEnvironment.js';
 import {GLTFExporter} from 'three/examples/jsm/exporters/GLTFExporter.js';
 import {assembleCreature} from './creator/assemble';
 import {createRig,disposeObject,type CreatureRig} from './rig';
@@ -19,6 +20,7 @@ export class CreatureViewer {
  constructor(public mount:HTMLElement,public assetBase:string,interactive=true){
   this.renderer=new T.WebGLRenderer({antialias:true,alpha:true,preserveDrawingBuffer:true,powerPreference:'low-power'});
   this.renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));this.renderer.outputColorSpace=T.SRGBColorSpace;this.renderer.toneMapping=T.ACESFilmicToneMapping;
+  const environment=new RoomEnvironment(),pmrem=new T.PMREMGenerator(this.renderer);this.scene.environment=pmrem.fromScene(environment,.04).texture;environment.dispose();pmrem.dispose();
   this.renderer.domElement.setAttribute('aria-label','Your animated MYR5 creature');this.renderer.domElement.setAttribute('role','img');mount.append(this.renderer.domElement);
   this.camera.position.set(0,2.65,8.9);this.orbit=new OrbitControls(this.camera,this.renderer.domElement);this.orbit.target.set(0,1.95,0);this.orbit.enableDamping=true;this.orbit.enablePan=false;this.orbit.minDistance=6;this.orbit.maxDistance=13;this.orbit.enabled=interactive;this.orbit.maxPolarAngle=Math.PI*.85;
   this.scene.add(new T.HemisphereLight(0xe5d5ff,0x23152e,2));const key=new T.DirectionalLight(0xffeedc,3);key.position.set(-3,5,5);this.scene.add(key);const rim=new T.DirectionalLight(0xb997ff,2);rim.position.set(3,4,-3);this.scene.add(rim);
@@ -49,5 +51,5 @@ export class CreatureViewer {
   const result=await new GLTFExporter().parseAsync(clone,{binary:true,animations:this.motion.clips});return new Blob([result as ArrayBuffer],{type:'model/gltf-binary'});
  }
  stats(){return {gesture:this.motion?.current,drawCalls:this.renderer.info.render.calls,triangles:this.renderer.info.render.triangles,visible:this.visible,paused:this.paused,contextLost:this.renderer.getContext().isContextLost(),canvas:{width:this.renderer.domElement.width,height:this.renderer.domElement.height},rigVersion:1,recipe:this.rig?.recipe};}
- dispose(){this.disposed=true;this.generation++;cancelAnimationFrame(this.frame);this.resizeObserver.disconnect();this.visibilityObserver.disconnect();this.orbit.dispose();this.motion?.dispose();disposeObject(this.scene);this.renderer.dispose();this.renderer.domElement.remove();}
+ dispose(){this.disposed=true;this.generation++;cancelAnimationFrame(this.frame);this.resizeObserver.disconnect();this.visibilityObserver.disconnect();this.orbit.dispose();this.motion?.dispose();disposeObject(this.scene);this.scene.environment?.dispose();this.renderer.dispose();this.renderer.domElement.remove();}
 }

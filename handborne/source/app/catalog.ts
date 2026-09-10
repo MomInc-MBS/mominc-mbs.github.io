@@ -41,7 +41,7 @@ export const STYLES: StyleFamily[] = [
   { id: 15, name: 'Magma', realm: 'Mantle · Dimension 03', primary: '#4a1713', secondary: '#140706', accent: '#ffb22f', emissive: '#e44712', roughness: 0.78, metalness: 0.06, detail: 'magma' },
   { id: 16, name: 'Glacial', realm: 'White Silence · Dimension 71', primary: '#93c9df', secondary: '#315a76', accent: '#ebfdff', emissive: '#3c93bb', roughness: 0.2, metalness: 0.14, detail: 'ice' },
   { id: 17, name: 'Stormcharged', realm: 'Tempest Ring · Dimension 28', primary: '#48536e', secondary: '#1a2236', accent: '#c3f7ff', emissive: '#3ebde0', roughness: 0.4, metalness: 0.32, detail: 'storm' },
-  { id: 18, name: 'Clockwork', realm: 'Brass Meridian · Dimension 14', primary: '#9a6a37', secondary: '#33251d', accent: '#efd08c', emissive: '#5b2c12', roughness: 0.32, metalness: 0.82, detail: 'gears' },
+  { id: 18, name: 'Clockwork Robot', realm: 'Brass Meridian · Dimension 14', primary: '#9a6a37', secondary: '#33251d', accent: '#efd08c', emissive: '#5b2c12', roughness: 0.32, metalness: 0.82, detail: 'gears' },
   { id: 19, name: 'Neon Synth', realm: 'Aftergrid · Dimension 20', primary: '#251d54', secondary: '#0b0921', accent: '#ff5bd7', emissive: '#b519ac', roughness: 0.22, metalness: 0.55, detail: 'neon' },
   { id: 20, name: 'Fluffy', realm: 'Cloudburrow · Soft forms', primary: '#d6a987', secondary: '#bb8969', accent: '#ffe4c3', emissive: '#000000', roughness: .88, metalness: 0, detail: 'fur' },
   { id: 21, name: 'Jelly', realm: 'Lime Lagoon · Soft forms', primary: '#a7ec69', secondary: '#f1ffd4', accent: '#c9ff90', emissive: '#000000', roughness: .13, metalness: 0, detail: 'jelly' },
@@ -52,13 +52,17 @@ export const DEFAULT_SELECTION: Record<RegionId, number> = {
   nails: 14,
   fingertips: 5,
   fingers: 12,
-  palm: 11,
+  palm: 3,
   back_of_hand: 17,
   wrist: 18,
 };
 
-export const PURE_PRESETS = STYLES.map((style) => ({
+export const PURE_PRESETS = STYLES.filter(style=>![8,11].includes(style.id)).map((style) => ({
   name: style.name,
   description: `A pure ${style.name.toLowerCase()} hand`,
   values: Object.fromEntries(REGIONS.map((region) => [region.id, style.id])) as Record<RegionId, number>,
 }));
+
+
+// Legacy IDs stay importable; retired looks are excluded from new picks.
+export const PICKER_STYLES=STYLES.filter(style=>![8,11].includes(style.id));

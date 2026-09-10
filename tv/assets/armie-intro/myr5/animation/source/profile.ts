@@ -1,5 +1,5 @@
 import {fresh,parseRecipe} from './creator/design';
-export {fresh,REGIONS,LABELS,STYLES} from './creator/design';
+export {fresh,REGIONS,LABELS,STYLES,PICKER_STYLES} from './creator/design';
 export {EYE_LAYOUTS} from './creator/eye-layouts';
 export {PUPILS} from './creator/pupils';
 export {COACHES} from './creator/coaching';

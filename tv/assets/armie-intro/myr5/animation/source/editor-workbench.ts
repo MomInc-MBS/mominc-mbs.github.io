@@ -1,7 +1,7 @@
 import {CreatureViewer} from './viewer';
 import {LatestPreview} from './latest-preview';
 import {GESTURES,type Gesture} from './motion';
-import {REGIONS,LABELS,STYLES,EYE_LAYOUTS,PUPILS,COACHES,RECIPE_KEY,MOTION_KEY,MAX_IMPORT_BYTES,fresh,importCreature,loadRecipe,motionSettings} from './profile';
+import {REGIONS,LABELS,STYLES,PICKER_STYLES,EYE_LAYOUTS,PUPILS,COACHES,RECIPE_KEY,MOTION_KEY,MAX_IMPORT_BYTES,fresh,importCreature,loadRecipe,motionSettings} from './profile';
 import {SITUATIONS,getCoach,type Situation} from './creator/coaching';
 import type {Design,Region} from './creator/design';
 export {CreatureViewer,GESTURES,importCreature};
@@ -41,7 +41,7 @@ options('eyeLayout',Object.entries(EYE_LAYOUTS).map(([key,value])=>[key,value.la
 for(const [id,min,max] of [['fingers',2,6],['toes',1,6]] as const)options(id,Array.from({length:max-min+1},(_,i)=>[i+min,String(i+min)]));
 $('coachSituation').addEventListener('change',coachPreview);
 for(const region of REGIONS){const b=document.createElement('button'),dot=document.createElement('i');dot.setAttribute('aria-hidden','true');b.append(dot,SHORT[region]);b.title=LABELS[region];b.dataset.region=region;b.onclick=()=>{selected=region;sync();};$('parts').append(b);}
-STYLES.forEach((style,index)=>{const b=document.createElement('button');b.dataset.style=String(index);const img=document.createElement('img');img.src=new URL(`./styles/${String(index).padStart(2,'0')}.png`,location.href).href;img.alt='';img.loading='lazy';const label=document.createElement('span');label.textContent=style.name;b.append(img,label);b.onclick=()=>commit({...recipe,styles:{...recipe.styles,[selected]:index}});$('styles').append(b);});
+PICKER_STYLES.forEach(style=>{const index=style.id;const b=document.createElement('button');b.dataset.style=String(index);const img=document.createElement('img');img.src=new URL(`./styles/${String(index).padStart(2,'0')}.png`,location.href).href;img.alt='';img.loading='lazy';const label=document.createElement('span');label.textContent=style.name;b.append(img,label);b.onclick=()=>commit({...recipe,styles:{...recipe.styles,[selected]:index}});$('styles').append(b);});
 Object.entries(GESTURES).forEach(([id,gesture])=>{const b=document.createElement('button');b.textContent=gesture.label;b.dataset.gesture=id;b.setAttribute('aria-pressed',String(id==='idle'));b.onclick=()=>{viewer?.play(id as Gesture);$('motionLabel').textContent=gesture.label;};$('gestures').append(b);});
 for(const id of ['eyeLayout','fingers','toes','eye','pupil','coach'])$(id).addEventListener('change',()=>{const input=$(id) as HTMLInputElement;commit({...recipe,[id]:['fingers','toes'].includes(id)?Number(input.value):input.value});});
 for(const id of ['fur','iris','pupilSize','detail']){

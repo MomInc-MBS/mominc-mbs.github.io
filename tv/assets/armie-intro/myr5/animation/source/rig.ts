@@ -10,14 +10,14 @@ export function disposeObject(root:T.Object3D){const geometries=new Set<T.Buffer
 function bake(mesh:T.Mesh,side=0){
  const input=mesh.geometry.clone();input.applyMatrix4(mesh.matrixWorld);
  if(!input.getAttribute('normal'))input.computeVertexNormals();
- const pos=input.getAttribute('position'),normal=input.getAttribute('normal'),color=input.getAttribute('color');
- const p:number[]=[],n:number[]=[],c:number[]=[],indices:number[]=[],remap=new Map<number,number>();
+ const pos=input.getAttribute('position'),normal=input.getAttribute('normal'),color=input.getAttribute('color'),uv=input.getAttribute('uv');
+ const p:number[]=[],n:number[]=[],c:number[]=[],tex:number[]=[],indices:number[]=[],remap=new Map<number,number>();
  const count=input.index?.count??pos.count,vertex=(i:number)=>input.index?input.index.getX(i):i;
  for(let i=0;i<count;i+=3){const triangle=[vertex(i),vertex(i+1),vertex(i+2)],x=triangle.reduce((sum,j)=>sum+pos.getX(j),0)/3;if(side&&((side<0&&x>=0)||(side>0&&x<0)))continue;
-  for(const j of triangle){if(!remap.has(j)){remap.set(j,p.length/3);p.push(pos.getX(j),pos.getY(j),pos.getZ(j));n.push(normal.getX(j),normal.getY(j),normal.getZ(j));c.push(color?color.getX(j):1,color?color.getY(j):1,color?color.getZ(j):1);}indices.push(remap.get(j)!);}
+  for(const j of triangle){if(!remap.has(j)){remap.set(j,p.length/3);p.push(pos.getX(j),pos.getY(j),pos.getZ(j));n.push(normal.getX(j),normal.getY(j),normal.getZ(j));c.push(color?color.getX(j):1,color?color.getY(j):1,color?color.getZ(j):1);tex.push(uv?uv.getX(j):0,uv?uv.getY(j):0);}indices.push(remap.get(j)!);}
  }
  input.dispose();if(!p.length)return null;
- const geometry=new T.BufferGeometry();geometry.setAttribute('position',new T.Float32BufferAttribute(p,3));geometry.setAttribute('normal',new T.Float32BufferAttribute(n,3));geometry.setAttribute('color',new T.Float32BufferAttribute(c,3));geometry.setIndex(indices);return geometry;
+ const geometry=new T.BufferGeometry();geometry.setAttribute('position',new T.Float32BufferAttribute(p,3));geometry.setAttribute('normal',new T.Float32BufferAttribute(n,3));geometry.setAttribute('color',new T.Float32BufferAttribute(c,3));geometry.setAttribute('uv',new T.Float32BufferAttribute(tex,2));geometry.setIndex(indices);return geometry;
 }
 
 export function createRig(source:T.Group,recipe:Design){
@@ -37,7 +37,8 @@ export function createRig(source:T.Group,recipe:Design){
   const geometry=bake(mesh,side);if(!geometry)return;
   geometry.applyMatrix4(node.matrixWorld.clone().invert());
   const mat=mesh.material as T.MeshStandardMaterial;
-  const key=node.name+JSON.stringify([mat.color.getHex(),mat.emissive.getHex(),mat.emissiveIntensity,mat.roughness,mat.metalness,mat.opacity,mat.side]);
+  const physical=mat as T.MeshPhysicalMaterial;
+  const key=node.name+JSON.stringify([mat.type,mat.color.getHex(),mat.emissive.getHex(),mat.emissiveIntensity,mat.roughness,mat.metalness,mat.opacity,mat.side,mat.map?.uuid,mat.bumpMap?.uuid,mat.roughnessMap?.uuid,mat.emissiveMap?.uuid,mat.bumpScale,physical.transmission,physical.thickness,physical.ior,physical.clearcoat,physical.sheen]);
   if(!buckets.has(key)){const material=mat.clone();material.vertexColors=true;material.userData={};buckets.set(key,{node,material,geometries:[]});}
   buckets.get(key)!.geometries.push(geometry);
  }

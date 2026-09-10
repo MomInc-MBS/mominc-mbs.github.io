@@ -1,4 +1,4 @@
-import { DEFAULT_SELECTION, REGIONS, STYLES, type RegionId } from './catalog.ts';
+import { DEFAULT_SELECTION, REGIONS, STYLES, PICKER_STYLES, type RegionId } from './catalog.ts';
 import { DEFAULT_POSE, POSES, validatePose } from './poses.ts';
 import { DEFAULT_NAIL_SHAPE, NAIL_SHAPES, validateNailShape } from './nails.ts';
 import { SCALE_PATTERNS, validateScalePattern } from './scale-patterns.ts';
@@ -59,7 +59,7 @@ export function randomize(sections: Selection, locks: RegionId[], seed: number):
   const next = { ...sections };
   for (const { id } of REGIONS) {
     state = (Math.imul(state, 1664525) + 1013904223) >>> 0;
-    if (!locks.includes(id)) next[id] = (sections[id] + 1 + (state % (STYLES.length-1))) % STYLES.length;
+    if (!locks.includes(id)) {const choices=PICKER_STYLES.filter(style=>style.id!==sections[id]);next[id]=choices[state%choices.length].id;}
   }
   return next;
 }
