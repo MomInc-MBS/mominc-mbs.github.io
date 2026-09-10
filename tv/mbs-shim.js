@@ -139,6 +139,7 @@
     return true;
   }
   M.complete = (site, opts) => {
+    window.MBS_RUN?.checkpoint(site);
     window.MBS_STATE.completePage(site);
     return completeOnce(site, { terminal: (opts && opts.terminal) || null });
   };

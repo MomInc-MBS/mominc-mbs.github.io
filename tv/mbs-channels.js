@@ -5,6 +5,7 @@ window.MBS_CHANNELS = {
   "channels": [
     {
       "id": "mominc",
+      "listed": true,
       "ch": 0,
       "href": "?ch=mominc",
       "label": "HOME",
@@ -17,72 +18,8 @@ window.MBS_CHANNELS = {
       "module": true
     },
     {
-      "id": "fuel",
-      "ch": 0,
-      "href": "?ch=fuel",
-      "label": "EXTRA",
-      "name": "DRINKS",
-      "head": false,
-      "half": true,
-      "comingSoon": false,
-      "suppressed": false,
-      "game": true,
-      "module": true
-    },
-    {
-      "id": "goon",
-      "ch": 0,
-      "href": "?ch=goon",
-      "label": "EXTRA",
-      "name": "GOON",
-      "head": false,
-      "half": true,
-      "comingSoon": false,
-      "suppressed": false,
-      "game": true,
-      "module": false
-    },
-    {
-      "id": "lilboyfriend",
-      "ch": 1,
-      "href": "?ch=lilboyfriend",
-      "label": "EXTRA",
-      "name": "LIL BOYFRIEND",
-      "head": false,
-      "half": false,
-      "comingSoon": false,
-      "suppressed": false,
-      "game": true,
-      "module": true
-    },
-    {
-      "id": "djscratch",
-      "ch": 2,
-      "href": "?ch=djscratch",
-      "label": "EXTRA",
-      "name": "DJ SCRATCH",
-      "head": false,
-      "half": false,
-      "comingSoon": false,
-      "suppressed": false,
-      "game": true,
-      "module": true
-    },
-    {
-      "id": "corgi",
-      "ch": 3,
-      "href": "?ch=corgi",
-      "label": "EXTRA",
-      "name": "CORTISOL CORGI",
-      "head": false,
-      "half": false,
-      "comingSoon": false,
-      "suppressed": false,
-      "game": true,
-      "module": true
-    },
-    {
       "id": "girlfriend",
+      "listed": true,
       "ch": 4,
       "href": "?ch=girlfriend",
       "label": "EXTRA",
@@ -95,7 +32,64 @@ window.MBS_CHANNELS = {
       "module": true
     },
     {
+      "id": "djscratch",
+      "listed": true,
+      "ch": 2,
+      "href": "?ch=djscratch",
+      "label": "EXTRA",
+      "name": "DJ SCRATCH",
+      "head": false,
+      "half": false,
+      "comingSoon": false,
+      "suppressed": false,
+      "game": true,
+      "module": true
+    },
+    {
+      "id": "lilboyfriend",
+      "listed": true,
+      "ch": 1,
+      "href": "?ch=lilboyfriend",
+      "label": "EXTRA",
+      "name": "LIL BOYFRIEND",
+      "head": false,
+      "half": false,
+      "comingSoon": false,
+      "suppressed": false,
+      "game": true,
+      "module": true
+    },
+    {
+      "id": "goon",
+      "listed": true,
+      "ch": 0,
+      "href": "?ch=goon",
+      "label": "EXTRA",
+      "name": "GOON GALA",
+      "head": false,
+      "half": false,
+      "comingSoon": false,
+      "suppressed": false,
+      "game": true,
+      "module": false
+    },
+    {
+      "id": "corgi",
+      "listed": false,
+      "ch": 3,
+      "href": "?ch=corgi",
+      "label": "EXTRA",
+      "name": "CORTISOL CORGI",
+      "head": false,
+      "half": false,
+      "comingSoon": false,
+      "suppressed": false,
+      "game": true,
+      "module": true
+    },
+    {
       "id": "armie",
+      "listed": false,
       "ch": 5,
       "href": "?ch=armie",
       "label": "EXTRA",
@@ -106,20 +100,34 @@ window.MBS_CHANNELS = {
       "suppressed": false,
       "game": true,
       "module": false
+    },
+    {
+      "id": "fuel",
+      "listed": false,
+      "ch": 0,
+      "href": "?ch=fuel",
+      "label": "EXTRA",
+      "name": "DRINKS",
+      "head": false,
+      "half": false,
+      "comingSoon": false,
+      "suppressed": false,
+      "game": true,
+      "module": true
     }
   ],
   "active": [
-    "fuel",
-    "lilboyfriend",
+    "girlfriend",
     "djscratch",
-    "corgi",
-    "girlfriend"
+    "lilboyfriend",
+    "goon",
+    "corgi"
   ],
   "forms": [
-    "fuel",
-    "lilboyfriend",
+    "girlfriend",
     "djscratch",
-    "corgi",
-    "girlfriend"
+    "lilboyfriend",
+    "goon",
+    "corgi"
   ]
 };

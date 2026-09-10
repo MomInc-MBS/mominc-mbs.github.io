@@ -1,6 +1,6 @@
 /* Device-local story progression. These gates do not grant server entitlements. */
 (()=>{'use strict';
- const KEY='mbs-hand-decisions-v1', REQUIRED=['lilboyfriend','djscratch','corgi'];
+ const KEY='mbs-hand-decisions-v1', REQUIRED=['lilboyfriend','djscratch','corgi','goon'];
  const read=()=>{try{const s=JSON.parse(localStorage.getItem(KEY)||'null');return {count:Number.isInteger(s?.count)?Math.max(0,Math.min(5,s.count)):0,last:typeof s?.last==='string'?s.last:''};}catch{return {count:0,last:''};}};
  const AD_KEY='mbs-hand-ad-shown-v1', PROFILE_KEY='mbs-hand-profile-v1';
  const regions=['nails','fingertips','middle_sections','knuckles','palm','back_of_hand','wrist'];
@@ -20,7 +20,7 @@
  function scheduleAdReturn(){clearAdTimer();if(automaticAdEligible())adTimer=setTimeout(()=>{adTimer=null;maybeShowAd();},10000);}
  function showAd(){if(ad?.open||!pagesReady())return;clearAdTimer();lastFocus=document.activeElement;
   if(!ad){ad=document.createElement('dialog');ad.className='hand-ad';ad.innerHTML='<form method="dialog"><button class="ad-close" aria-label="Close advertisement">×</button></form><p class="ad-ribbon">DJ SCRATCH · A MESSAGE FROM OUR SPONSOR</p><img src="/tv/assets/helping-hand-badge.png" alt="The Helping Hand"><h2>BUY A HELPING HAND!</h2><p>It DJs. It cleans. It obeys. One hand. Every task. Yours to assemble.</p><a class="ad-buy" href="/handborne/">Build my hand</a><small>Fictional offer. No payment required.</small>';document.body.append(ad);ad.addEventListener('close',()=>{if(lastFocus?.isConnected)lastFocus.focus();scheduleAdReturn();});}
-  ad.showModal();markAdSeen();
+  window.MBS_ADS?.close();ad.showModal();markAdSeen();
  }
  function maybeShowAd(){if(!document.hidden&&automaticAdEligible())showAd();}
  // Old school runs banked Corgi's secret but never recorded the finished page.
@@ -45,7 +45,9 @@
   }
  }
  function start(){
+  const ads=document.createElement('script');ads.src='/tv/retro-ads.js';document.head.append(ads);
   recoverSchoolFinish();
+  try{if(Number(localStorage.getItem('mbs-gala-completed-v1'))>0)window.MBS_STATE?.completePage('goon');}catch{}
   paint();
   // The sponsor returns on channel arrival and after ten seconds closed, until the hand is finished.
   maybeShowAd();

@@ -2,6 +2,43 @@
   "note": "One source of truth for every playable channel. Palettes are lifted verbatim from each channel's own CSS custom properties, not chosen here. 'mominc' is deliberately absent: it is the network hub and narrative front door, not a game. `roots`/`hide` drive play-route isolation (see tv/mount.js). `live` and `identity_api` are OFF switches: every live-mission and identity element on a landing card renders only when its value here is non-empty, so an unconfirmed broadcast can never produce an invented deadline and no form can collect an address there is nowhere to send. Durations are estimates and are flagged as such until a timed pass is run. `status: \"coming_soon\"` (sag, armie) keeps a channel's television slot but generates no play route and drops it from the playable index and the onward cycle. `mission_id` (per game), `api_base` (root) and `live.station` are the same kind of OFF switch: empty means the redeem/tuning feature they feed does not render.",
   "games": [
     {
+      "slug": "goon",
+      "ch": 0,
+      "mission_id": "",
+      "title": "Goon",
+      "host": "MOM INC",
+      "eyebrow": "SLIDE AND MERGE",
+      "genre": "tile puzzle",
+      "premise": "Slide the tiles together. A goon is someone who gives. You are one too.",
+      "cta": "Slide To Merge",
+      "does": "Swipe to merge tiles",
+      "duration": "As long as you like",
+      "input": "swipe or keyboard",
+      "hero": "assets/mom-inc-mark.png",
+      "teaser": "Every merge raises the pledge. The crowd loves a giver right up until the giver stops. Reach 2048 or fill the board; MOM has an ending ready either way.",
+      "roots": [
+        "#ggFrame",
+        "#gnCode"
+      ],
+      "hide": [],
+      "palette": {
+        "bg": "#2a0a44",
+        "ink": "#ffd36e",
+        "accent": "#e04b6a"
+      },
+      "finish": "Reach 2048 or fill the board",
+      "cta2": "Make The First Merge",
+      "progress_key": "",
+      "continue_cta": "",
+      "profile_intro": "A COACH SHOULD KNOW WHO IS ACTUALLY IN THE ROOM.",
+      "profile_questions": [
+        "Who, if anyone, supports what you are trying to do?",
+        "Should the coach involve them, remind you about them, or keep the plan between you and the coach?",
+        "When do you reliably have help, company or accountability?"
+      ],
+      "share_image": "assets/mom-inc-mark.png"
+    },
+    {
       "slug": "fuel",
       "ch": 0,
       "mission_id": "",
@@ -41,43 +78,6 @@
         "How does caffeine usually hit you: fine, jittery, anxious, sleepless, or you do not use it?",
         "Which supplements do you already take, if any?",
         "When do you usually train: morning, afternoon, evening, or it moves around?"
-      ],
-      "share_image": "assets/mom-inc-mark.png"
-    },
-    {
-      "slug": "goon",
-      "ch": 0,
-      "mission_id": "",
-      "title": "Goon",
-      "host": "MOM INC",
-      "eyebrow": "SLIDE AND MERGE",
-      "genre": "tile puzzle",
-      "premise": "Slide the tiles together. A goon is someone who gives. You are one too.",
-      "cta": "Slide To Merge",
-      "does": "Swipe to merge tiles",
-      "duration": "As long as you like",
-      "input": "swipe or keyboard",
-      "hero": "assets/mom-inc-mark.png",
-      "teaser": "Every merge raises the pledge. The crowd loves a giver right up until the giver stops. Reach 2048 or fill the board; MOM has an ending ready either way.",
-      "roots": [
-        "#ggFrame",
-        "#gnCode"
-      ],
-      "hide": [],
-      "palette": {
-        "bg": "#2a0a44",
-        "ink": "#ffd36e",
-        "accent": "#e04b6a"
-      },
-      "finish": "Reach 2048 or fill the board",
-      "cta2": "Make The First Merge",
-      "progress_key": "",
-      "continue_cta": "",
-      "profile_intro": "A COACH SHOULD KNOW WHO IS ACTUALLY IN THE ROOM.",
-      "profile_questions": [
-        "Who, if anyone, supports what you are trying to do?",
-        "Should the coach involve them, remind you about them, or keep the plan between you and the coach?",
-        "When do you reliably have help, company or accountability?"
       ],
       "share_image": "assets/mom-inc-mark.png"
     },

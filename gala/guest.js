@@ -4,12 +4,12 @@
  const KEY='mominc-avatar-v1',motion=window.matchMedia?.('(prefers-reduced-motion: reduce)');
  const stage=document.createElement('div');stage.className='gala-player';stage.hidden=true;
  const canvas=document.createElement('canvas');canvas.setAttribute('aria-hidden','true');
- const link=document.createElement('a');link.href='/gala/';link.target='_top';stage.append(canvas,link);document.body.append(stage);
+ const link=document.createElement('a');link.href=window.MBS_DJ?.read()?.completedAt?'/gala/':'/play/djscratch/';link.target='_top';stage.append(canvas,link);document.body.append(stage);
  let performance=null,elapsed=0,last=0,request=0;
  function load(){
   let look=null;try{const raw=localStorage.getItem(KEY)||sessionStorage.getItem(KEY);if(raw)look=GalaAvatar.normalize(JSON.parse(raw));}catch{}
   stage.hidden=!look;performance=look?GalaPerformance.create(look):null;elapsed=0;last=0;
-  if(look){link.textContent=look.name||'Your Gala guest';link.setAttribute('aria-label','Change your Gala character: '+link.textContent);performance.paint(canvas,0,true);}
+  if(look){link.textContent=window.MBS_DJ?.display()||'Anonymous guest';link.setAttribute('aria-label','Change your Gala character: '+link.textContent);performance.paint(canvas,0,true);}
   schedule();
  }
  function frame(now){

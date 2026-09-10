@@ -26,7 +26,7 @@ REGISTRY_PATH = os.path.join(ROOT, "tv", "registry.json")
 # Sidebar layout flags: presentation-only (which slot the card sits in), not channel identity, so they
 # live here rather than in the D.1.1 schema.
 HEAD_IDS = {"mominc"}
-HALF_IDS = {"fuel", "goon"}
+HALF_IDS = set()
 
 PASSTHROUGH_FIELDS = [
     "host", "eyebrow", "genre", "premise", "cta", "does", "duration", "input", "hero", "teaser",
@@ -45,6 +45,7 @@ def gen_channels_js(manifest):
     for c in channels:
         out.append({
             "id": c["id"],
+            "listed": c.get("listed", True),
             "ch": c["channel"],
             "href": c["route"],
             "label": "HOME" if c["id"] == "mominc" else "EXTRA",
