@@ -142,6 +142,10 @@ FORM: The Old Television, Ian's own pinned direction of 2026-08-25 ("an old 1990
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance.
 -->
 <main class="tv" id="tv" data-state="off">
+<script>
+// Restore power before the screen is painted during a channel change.
+try { if (sessionStorage.getItem("mbs-on") === "1") document.getElementById("tv").dataset.state = "on"; } catch {}
+</script>
   <section class="cabinet">
     <aside class="gauge" id="gauge" aria-label="Stress meter">
       <b class="gauge-pct" id="gaugePct">0%</b>

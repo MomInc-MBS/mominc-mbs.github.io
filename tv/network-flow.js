@@ -13,14 +13,16 @@
  const armieReady=()=>pagesReady()&&!!handProfile();
  function decision(signature){if(!pagesReady()||!signature)return false;const s=read();if(s.last===signature)return false;try{localStorage.setItem(KEY,JSON.stringify({count:Math.min(5,s.count+1),last:signature}));window.dispatchEvent(new Event('mbs-flow'));return true;}catch{return false;}}
  window.MBS_FLOW={pagesReady,armieReady,decision,read,validHand,recipe,profile,saveHand,handProfile};
- let ad=null,lastFocus=null,seen=false;
- const adSeen=()=>{try{return seen||localStorage.getItem(AD_KEY)==='1';}catch{return seen;}};
- const markAdSeen=()=>{seen=true;try{localStorage.setItem(AD_KEY,'1');}catch{}};
- function showAd(){if(ad?.open||!pagesReady())return;lastFocus=document.activeElement;
-  if(!ad){ad=document.createElement('dialog');ad.className='hand-ad';ad.innerHTML='<form method="dialog"><button class="ad-close" aria-label="Close advertisement">×</button></form><p class="ad-ribbon">DJ SCRATCH · A MESSAGE FROM OUR SPONSOR</p><img src="/tv/assets/helping-hand-badge.png" alt="The Helping Hand"><h2>BUY A HELPING HAND!</h2><p>It DJs. It cleans. It obeys. One hand. Every task. Yours to assemble.</p><a class="ad-buy" href="/handborne/">Build my hand</a><small>Fictional offer. No payment required.</small>';document.body.append(ad);ad.addEventListener('close',()=>lastFocus?.focus());}
+ let ad=null,lastFocus=null,adTimer=null;
+ const markAdSeen=()=>{try{localStorage.setItem(AD_KEY,'1');}catch{}};
+ const automaticAdEligible=()=>pagesReady()&&!armieReady()&&!location.pathname.startsWith('/handborne');
+ function clearAdTimer(){if(adTimer!==null){clearTimeout(adTimer);adTimer=null;}}
+ function scheduleAdReturn(){clearAdTimer();if(automaticAdEligible())adTimer=setTimeout(()=>{adTimer=null;maybeShowAd();},10000);}
+ function showAd(){if(ad?.open||!pagesReady())return;clearAdTimer();lastFocus=document.activeElement;
+  if(!ad){ad=document.createElement('dialog');ad.className='hand-ad';ad.innerHTML='<form method="dialog"><button class="ad-close" aria-label="Close advertisement">×</button></form><p class="ad-ribbon">DJ SCRATCH · A MESSAGE FROM OUR SPONSOR</p><img src="/tv/assets/helping-hand-badge.png" alt="The Helping Hand"><h2>BUY A HELPING HAND!</h2><p>It DJs. It cleans. It obeys. One hand. Every task. Yours to assemble.</p><a class="ad-buy" href="/handborne/">Build my hand</a><small>Fictional offer. No payment required.</small>';document.body.append(ad);ad.addEventListener('close',()=>{if(lastFocus?.isConnected)lastFocus.focus();scheduleAdReturn();});}
   ad.showModal();markAdSeen();
  }
- function maybeShowAd(){if(!document.hidden&&pagesReady()&&!adSeen())showAd();}
+ function maybeShowAd(){if(!document.hidden&&automaticAdEligible())showAd();}
  // Old school runs banked Corgi's secret but never recorded the finished page.
  // Repair only complete saved runs; a secret by itself is not a completion.
  function recoverSchoolFinish(){
@@ -43,16 +45,15 @@
  }
  function start(){
   recoverSchoolFinish();
-  // A visitor already building a hand has passed the sponsor offer in an older build.
-  if(read().count>0)markAdSeen();
   paint();
-  // Catch an earned, unshown offer on return to any network page, including MOM.
+  // The sponsor returns on channel arrival and after ten seconds closed, until the hand is finished.
   maybeShowAd();
   document.addEventListener('click',event=>{if(event.target.closest('[data-hand-ad]'))showAd();});
-  document.addEventListener('visibilitychange',()=>{if(!document.hidden){recoverSchoolFinish();paint();maybeShowAd();}});
+  document.addEventListener('visibilitychange',()=>{clearAdTimer();if(!document.hidden){recoverSchoolFinish();paint();maybeShowAd();}});
+  window.addEventListener('pagehide',clearAdTimer);
   window.addEventListener('pageshow',()=>{paint();maybeShowAd();});
   window.addEventListener('mbs:page-complete',()=>{paint();maybeShowAd();});
-  window.addEventListener('storage',()=>{recoverSchoolFinish();paint();maybeShowAd();});window.addEventListener('mbs-flow',paint);
+  window.addEventListener('storage',()=>{recoverSchoolFinish();paint();if(adTimer===null)maybeShowAd();});window.addEventListener('mbs-flow',paint);
   // Mounting a channel changes its links, but never schedules an advertisement.
   const observer=new MutationObserver(()=>{observer.disconnect();paint();observer.observe(document.body,{childList:true,subtree:true});});
   observer.observe(document.body,{childList:true,subtree:true});

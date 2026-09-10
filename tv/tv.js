@@ -99,7 +99,7 @@
     if (cancelWarmUp) { cancelWarmUp(); cancelWarmUp = null; }
     window.MBS.cancelWave && window.MBS.cancelWave();
     window.MBS_RT.pause("power");
-    tv.dataset.state = "off"; paintDark(); try { sessionStorage.removeItem("mbs-on"); } catch {}
+    tv.dataset.state = "off"; paintDark(); try { sessionStorage.setItem("mbs-on", "0"); } catch {}
   }
   power.addEventListener("click", () => (tv.dataset.state === "on" ? turnOff() : turnOn()));
 
@@ -473,6 +473,10 @@
 
   // --- boot: on-air, the set is already on; off-air, the visitor presses power
   // once the visitor has pressed power, the set stays on across channel clicks for the rest of the tab (Ian, 2026-08-26)
-  let wasOn = false; try { wasOn = sessionStorage.getItem("mbs-on") === "1"; } catch {}
-  if (onAir() || wasOn) { tv.dataset.state = "on"; } else { tv.dataset.state = "off"; paintDark(); }
+  let savedPower = null; try { savedPower = sessionStorage.getItem("mbs-on"); } catch {}
+  if (savedPower === "1" || (savedPower !== "0" && onAir())) {
+    tv.dataset.state = "on";
+    // Automatic on-air power carries into the next channel too.
+    try { sessionStorage.setItem("mbs-on", "1"); } catch {}
+  } else { tv.dataset.state = "off"; paintDark(); }
 })();

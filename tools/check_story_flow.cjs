@@ -36,10 +36,10 @@ const server=http.createServer((req,res)=>{
   await page.locator('.ad-close').click();
   await page.evaluate(ids=>{ids.forEach(id=>MBS.complete(id));window.dispatchEvent(new Event('mbs-flow'));},ids);
   await page.reload();
-  assert.equal(await page.locator('dialog[open]').count(),0,'Ad stays dismissed after reload');
+  assert.equal(await page.locator('dialog[open]').count(),1,'Ad returns on a channel reload');await page.locator('.ad-close').click();
   const second=await context.newPage();await second.goto(base+'/__flow');
-  assert.equal(await second.locator('dialog[open]').count(),0,'Ad stays dismissed in another tab');await second.close();
-  console.log('PASS ad waits for four terminal completions and stays dismissed across reloads and tabs');
+  assert.equal(await second.locator('dialog[open]').count(),1,'Ad returns in another tab');await second.close();
+  console.log('PASS ad waits for four terminal completions and returns across reloads and tabs');
 
   const recipe={version:4,sections:{nails:20,fingertips:21,fingers:22,palm:20,back_of_hand:21,wrist:22},pose:'relaxed',nailShape:'natural'};
   await page.evaluate(r=>{localStorage.setItem('mbs-hand-decisions-v1',JSON.stringify({count:5,last:'saved'}));localStorage.setItem('handborne-recipe-v4',JSON.stringify(r));localStorage.removeItem('mbs-hand-profile-v1');},recipe);
@@ -90,8 +90,8 @@ const server=http.createServer((req,res)=>{
   await old.evaluate(ids=>{const s=MBS_STATE.read();delete s.storyVersion;ids.forEach(id=>{s.channels[id].secret={earned:true,earnedAt:1};delete s.channels[id].page;});MBS_STATE.write(s);},ids);
   await old.reload();assert.equal(await old.evaluate(()=>MBS_FLOW.pagesReady()),true);
   await old.locator('dialog[open]').waitFor();await old.locator('.ad-close').click();await old.reload();
-  assert.equal(await old.locator('dialog[open]').count(),0);
-  console.log('PASS legacy progress is preserved once without repeating the sponsor message');
+  assert.equal(await old.locator('dialog[open]').count(),1);
+  console.log('PASS legacy progress is preserved and the sponsor returns on reload');
   await legacy.close();
   }
 

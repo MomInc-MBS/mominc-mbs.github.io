@@ -325,8 +325,8 @@ const HINTS = {
       "ch": "DJ SCRATCH · THE HELPING HAND AD",
       "hint": "The offer waits for four finished games. Orange eyes alone do not finish every game.",
       "steps": [
-        "Finish Fuel, Lil Boyfriend, DJ Scratch and Cortisol Corgi. The Helping Hand ad opens once the fourth page is complete.",
-        "If you closed it, use the ad button under MOM’s Now Playing cards or Your Helping Hand offer at DJ Scratch.",
+        "Finish Fuel, Lil Boyfriend, DJ Scratch and Cortisol Corgi. The Helping Hand ad opens after the fourth finished page.",
+        "Closing the ad hides it for ten seconds. It returns when you change channels or return to the site tab, until your hand is finished. You can also reopen it under MOM’s Now Playing cards or at DJ Scratch.",
         "Choose Build my hand. Make five different changes in the hand builder and follow its Coach Armie link. Your finished hand goes with you."
       ],
       "source": "network-flow.js: REQUIRED, pagesReady, decision, handProfile and showAd"
