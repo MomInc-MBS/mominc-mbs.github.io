@@ -5,7 +5,7 @@ const path=require('node:path');
 const vm=require('node:vm');
 const root=path.resolve(__dirname,'..');
 const source=fs.readFileSync(path.join(root,'tv/network-flow.js'),'utf8');
-const required=['fuel','lilboyfriend','djscratch','corgi'];
+const required=['lilboyfriend','djscratch','corgi'];
 
 function environment({done=required,storage=new Map(),pathname='/tv/'}={}){
   const finished=new Set(done),events=new Map(),docEvents=new Map(),timers=new Map();
@@ -23,8 +23,8 @@ function environment({done=required,storage=new Map(),pathname='/tv/'}={}){
   return {storage,finished,window,get open(){return !!dialog?.open;},get opens(){return opens;},close(){dialog.close();},advance(ms){const end=now+ms;for(let i=0;i<100;i++){const entry=[...timers].filter(([,t])=>t.at<=end).sort((a,b)=>a[1].at-b[1].at)[0];if(!entry)break;now=entry[1].at;timers.delete(entry[0]);entry[1].fn();}now=end;},visible(value){document.hidden=!value;dispatch(docEvents,'visibilitychange');},pageShow(){dispatch(events,'pageshow');},replay(){dispatch(docEvents,'click',{target:{closest:()=>({})}});},storageEvent(){dispatch(events,'storage');}};
 }
 
-test('the fourth finished game opens one ad, not each partial completion',()=>{
- const e=environment({done:required.slice(0,3)});assert.equal(e.open,false);e.window.MBS_STATE.completePage('corgi');assert.equal(e.open,true);e.pageShow();assert.equal(e.opens,1);
+test('the third required finished game opens one ad, without Fuel or partial completions',()=>{
+ const e=environment({done:required.slice(0,2)});assert.equal(e.open,false);e.window.MBS_STATE.completePage('corgi');assert.equal(e.open,true);e.pageShow();assert.equal(e.opens,1);
 });
 test('closing starts a full ten-second delay and repeats after each dismissal',()=>{
  const e=environment();e.close();e.advance(9999);assert.equal(e.open,false);e.advance(1);assert.equal(e.open,true);e.close();e.advance(10000);assert.equal(e.opens,3);

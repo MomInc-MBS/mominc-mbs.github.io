@@ -1,0 +1,13 @@
+import {build} from 'vite';
+import tailwindcss from '@tailwindcss/postcss';
+import react from '@vitejs/plugin-react';
+import {rename,readFile,writeFile,cp,mkdir,readdir} from 'node:fs/promises';
+import {fileURLToPath} from 'node:url';
+await build({configFile:false,base:'/handborne/',resolve:{alias:{'@':fileURLToPath(new URL('../',import.meta.url))}},css:{postcss:{plugins:[tailwindcss()]}},plugins:[react()],build:{copyPublicDir:false,outDir:'dist/embedded',rollupOptions:{input:'hand-entry.html'}}});
+await rename('dist/embedded/hand-entry.html','dist/embedded/index.html');
+const {build:bundle}=await import('esbuild');
+await bundle({entryPoints:['app/companion.ts'],bundle:true,format:'esm',target:'es2022',minify:true,outfile:'dist/embedded/companion.mjs'});
+for(const dir of ['fonts','previews'])await cp('public/'+dir,'dist/embedded/'+dir,{recursive:true});
+await mkdir('dist/embedded/models',{recursive:true});
+for(const name of await readdir('public/models'))if(/^family-\d+\.glb$/.test(name))await cp('public/models/'+name,'dist/embedded/models/'+name);
+console.log('Hand editor and companion ready.');
