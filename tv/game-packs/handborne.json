@@ -1,0 +1,550 @@
+{
+  "schema": 1,
+  "game": "handborne",
+  "assets": [
+    {
+      "url": "/arcade/tub-flight/engine.mjs",
+      "revision": "da233e85cd6b89c54803a36b22a4fc9aeddf032f",
+      "bytes": 1350
+    },
+    {
+      "url": "/arcade/tub-flight/game.mjs",
+      "revision": "b644eb305d2bf1e709d6a42e821b46376e135378",
+      "bytes": 5737
+    },
+    {
+      "url": "/arcade/tub-flight/style.css",
+      "revision": "0023d992ae373669a4034fa0a3365b21f29abba8",
+      "bytes": 1350
+    },
+    {
+      "url": "/game-assets-sw.js",
+      "revision": "70947ae113801eee08a568a70eca3a8e06240995",
+      "bytes": 9719
+    },
+    {
+      "url": "/handborne/assets/GLTFExporter-CkiDkgTb.js",
+      "revision": "cfd63cc9590df75ef5b176ac441f933d710671f5",
+      "bytes": 34602
+    },
+    {
+      "url": "/handborne/assets/OBJExporter-DThty9Vw.js",
+      "revision": "abdd440b66d4dc7c75ec313d000a9ad6cc0d61cd",
+      "bytes": 2045
+    },
+    {
+      "url": "/handborne/assets/fflate.module-BTK1vOXE.js",
+      "revision": "b3f9430f7b5bc46ef98deea18cd6536a87fd37f0",
+      "bytes": 8775
+    },
+    {
+      "url": "/handborne/assets/hand-entry-BrVOFL10.js",
+      "revision": "b7cb7603f464ad73ba8b77fe03b190c65df54d0d",
+      "bytes": 991832
+    },
+    {
+      "url": "/handborne/assets/hand-entry-DdX_dztK.css",
+      "revision": "a91e6d066eeddcff9a06c5565255fb7a3e4c70cd",
+      "bytes": 213035
+    },
+    {
+      "url": "/handborne/companion.mjs",
+      "revision": "8ecaa5b22d7d8a14371b0e7225a1c1058b46dddd",
+      "bytes": 632720
+    },
+    {
+      "url": "/handborne/decisions.js",
+      "revision": "1caf5d1bd35e906b25b07af299a629e080f5f8f2",
+      "bytes": 2552
+    },
+    {
+      "url": "/handborne/fonts/anton.ttf",
+      "revision": "c5cbbbc3cb5a4d95d801d6b416441b725029967e",
+      "bytes": 130324
+    },
+    {
+      "url": "/handborne/fonts/barlow-400.ttf",
+      "revision": "f6be9dfeee6a2acc9f964f6f95aa7964a354bffc",
+      "bytes": 80968
+    },
+    {
+      "url": "/handborne/fonts/barlow-500.ttf",
+      "revision": "d0b4616c27230b89b7f140006e8d36df7c8b67f4",
+      "bytes": 81448
+    },
+    {
+      "url": "/handborne/fonts/barlow-600.ttf",
+      "revision": "a7a1fa958ac0a35a7ace3c03bbe935363d35e05c",
+      "bytes": 86636
+    },
+    {
+      "url": "/handborne/fonts/barlow-700.ttf",
+      "revision": "7710411b1308d53acbf3bfa2cc6efb8e103667cc",
+      "bytes": 87120
+    },
+    {
+      "url": "/handborne/fonts/bowlby.ttf",
+      "revision": "1523c7eda92c8073ca2c3aa049a4912931a59e73",
+      "bytes": 54152
+    },
+    {
+      "url": "/handborne/fonts/vt323.ttf",
+      "revision": "ff94200610f6ccbe1597a2da940e435289e8ebfe",
+      "bytes": 147320
+    },
+    {
+      "url": "/handborne/index.html",
+      "revision": "b647cc9c61f653cb74881982e8a782be94907cfc",
+      "bytes": 1292
+    },
+    {
+      "url": "/handborne/invitation.css",
+      "revision": "95a86d31be5df97f95ed40e1be1298a5fadb1701",
+      "bytes": 585
+    },
+    {
+      "url": "/handborne/models/family-00.glb",
+      "revision": "44630a09f833567cffed0c9ebaaebf7ae36742b0",
+      "bytes": 3829052
+    },
+    {
+      "url": "/handborne/models/family-01.glb",
+      "revision": "a34a6d6c1a8ca11199215f728398dc28f097a79f",
+      "bytes": 4184868
+    },
+    {
+      "url": "/handborne/models/family-02.glb",
+      "revision": "434e8241b1352ad610ee13e2369ce8f10145913a",
+      "bytes": 4271536
+    },
+    {
+      "url": "/handborne/models/family-03.glb",
+      "revision": "26abff692cf8484f9b197f4734075d6727d09b76",
+      "bytes": 4005964
+    },
+    {
+      "url": "/handborne/models/family-04.glb",
+      "revision": "d7279664fc340505226054cb4c628c4af31204dd",
+      "bytes": 4030432
+    },
+    {
+      "url": "/handborne/models/family-05.glb",
+      "revision": "ad5da876290f5c27f2ca2e56b7e3e33265d8c961",
+      "bytes": 3911456
+    },
+    {
+      "url": "/handborne/models/family-06.glb",
+      "revision": "06b7ee98b4330e995de06d7d0becfcd7032ec6d0",
+      "bytes": 4292420
+    },
+    {
+      "url": "/handborne/models/family-07.glb",
+      "revision": "05693c0551d2b7c0cbf53a00da6d1b2ea3734342",
+      "bytes": 640020
+    },
+    {
+      "url": "/handborne/models/family-08.glb",
+      "revision": "2cf26cddf5b59cdc80b0deaa373f3a8bc50e6af2",
+      "bytes": 3922820
+    },
+    {
+      "url": "/handborne/models/family-09.glb",
+      "revision": "37a7edc22082cf69cb2d963ba5a969a3f69dd367",
+      "bytes": 3915324
+    },
+    {
+      "url": "/handborne/models/family-10.glb",
+      "revision": "ad3badd6fee304389df7a6131f7e393cedb3ad5b",
+      "bytes": 4163552
+    },
+    {
+      "url": "/handborne/models/family-11.glb",
+      "revision": "39e74e23604a97d3f13f53b9acb4a265200d339e",
+      "bytes": 3817644
+    },
+    {
+      "url": "/handborne/models/family-12.glb",
+      "revision": "46c662aa7b218553f08a748c241dd23c4b93bb80",
+      "bytes": 4693036
+    },
+    {
+      "url": "/handborne/models/family-13.glb",
+      "revision": "13ff052c4f5b470cb6d78e89f6c87289fd889e18",
+      "bytes": 397488
+    },
+    {
+      "url": "/handborne/models/family-14.glb",
+      "revision": "60a66b87f89a9927bf6f21668b1546f6b4802f1e",
+      "bytes": 4009960
+    },
+    {
+      "url": "/handborne/models/family-15.glb",
+      "revision": "e41773d32de5a51504e9baf76694af682629cb12",
+      "bytes": 4018036
+    },
+    {
+      "url": "/handborne/models/family-16.glb",
+      "revision": "0718c27331c88a321a45167d14367c955fd7a466",
+      "bytes": 3945636
+    },
+    {
+      "url": "/handborne/models/family-17.glb",
+      "revision": "c79ccaab9eee1a075d908b81e3e0d5e276e898f6",
+      "bytes": 4184140
+    },
+    {
+      "url": "/handborne/models/family-18.glb",
+      "revision": "7b8e515b6a3240bcbf3b9eb433e900a0b369d2e1",
+      "bytes": 679220
+    },
+    {
+      "url": "/handborne/models/family-19.glb",
+      "revision": "77afde14910af17417df742475f992153ea4b696",
+      "bytes": 4088052
+    },
+    {
+      "url": "/handborne/models/family-20.glb",
+      "revision": "e77adfca6536a7221d9006048717a8f4fce0552e",
+      "bytes": 26110648
+    },
+    {
+      "url": "/handborne/models/family-21.glb",
+      "revision": "c81fc945a38798b581863cf87b4bd528711dbe89",
+      "bytes": 4087884
+    },
+    {
+      "url": "/handborne/models/family-22.glb",
+      "revision": "c2b19cba118c728db7aa31aedc7f94cfc0e9f94b",
+      "bytes": 3701016
+    },
+    {
+      "url": "/handborne/models/floating-hand.mtl",
+      "revision": "0d6e6b7f193fe8799c6d342dfdfcbbf754c0d9c3",
+      "bytes": 264
+    },
+    {
+      "url": "/handborne/models/floating-hand.obj",
+      "revision": "e42ab518a848c83d6eecf97d2307a84b132f0ef7",
+      "bytes": 6047943
+    },
+    {
+      "url": "/handborne/models/hand-segmented.glb",
+      "revision": "32c3d788120ad2f2960d6a9586e704947ac215d5",
+      "bytes": 680560
+    },
+    {
+      "url": "/handborne/models/manifest.json",
+      "revision": "e1766ce3421b3b9edb5a399da5b5fa5e19e466ca",
+      "bytes": 8038
+    },
+    {
+      "url": "/handborne/previews/family-00.png",
+      "revision": "82c187cf2353e1f5b8b949a1d7bf8556c73ad034",
+      "bytes": 192386
+    },
+    {
+      "url": "/handborne/previews/family-01.png",
+      "revision": "09d2643b965e886fbb05c0e95238c274fb68b40a",
+      "bytes": 248464
+    },
+    {
+      "url": "/handborne/previews/family-02.png",
+      "revision": "20d8c792240b50093688f5b510cc0e517e9b8f06",
+      "bytes": 238506
+    },
+    {
+      "url": "/handborne/previews/family-03.png",
+      "revision": "9b68216cd5f0f3bbeda80c0b168adde3305442ca",
+      "bytes": 271401
+    },
+    {
+      "url": "/handborne/previews/family-04.png",
+      "revision": "6a90414107510d69ed23d6275a5fc4b9380366fe",
+      "bytes": 268115
+    },
+    {
+      "url": "/handborne/previews/family-05.png",
+      "revision": "813bfb1ff2fc1525fd163a33fd78dacfe20ac7ad",
+      "bytes": 250895
+    },
+    {
+      "url": "/handborne/previews/family-06.png",
+      "revision": "6aab0bdcd47c54f055a397833e9de4272de86785",
+      "bytes": 254388
+    },
+    {
+      "url": "/handborne/previews/family-07.png",
+      "revision": "85c3b09d949882624bfceed1a7453442a9815fd4",
+      "bytes": 207892
+    },
+    {
+      "url": "/handborne/previews/family-08.png",
+      "revision": "507287c43280d2841a245811ceec989ec76c53d0",
+      "bytes": 229637
+    },
+    {
+      "url": "/handborne/previews/family-09.png",
+      "revision": "48fde27e6a6558d2bbb0bd87a9b6e064cdbdef42",
+      "bytes": 230966
+    },
+    {
+      "url": "/handborne/previews/family-10.png",
+      "revision": "8fd9efd2e9330a409b023a18b99fd983905e62bb",
+      "bytes": 229161
+    },
+    {
+      "url": "/handborne/previews/family-11.png",
+      "revision": "74a8f5d68fd310d357af14ab370e8d9839899247",
+      "bytes": 254705
+    },
+    {
+      "url": "/handborne/previews/family-12.png",
+      "revision": "bda0abbdb9c7425bcaaabd0ba35ae4b5cdfbed0a",
+      "bytes": 254185
+    },
+    {
+      "url": "/handborne/previews/family-13.png",
+      "revision": "814d3a8e1d7c3ca055fbab441ddada4e71b2aebc",
+      "bytes": 230271
+    },
+    {
+      "url": "/handborne/previews/family-14.png",
+      "revision": "3d9c452641bccc4dd2ea039e66901e6dced87214",
+      "bytes": 255639
+    },
+    {
+      "url": "/handborne/previews/family-15.png",
+      "revision": "e7c0263360aa10afd3df34938f1723218f6a1b4d",
+      "bytes": 248900
+    },
+    {
+      "url": "/handborne/previews/family-16.png",
+      "revision": "505de74962b117dd126d83d44ddb9d41d78930a9",
+      "bytes": 235664
+    },
+    {
+      "url": "/handborne/previews/family-17.png",
+      "revision": "b98a466a24bf0d8f5bf75f6b436aa0f7aaf5a4cd",
+      "bytes": 234749
+    },
+    {
+      "url": "/handborne/previews/family-18.png",
+      "revision": "3887efdbd89cc11d21fe5c47cd1591ac00ed6faf",
+      "bytes": 248744
+    },
+    {
+      "url": "/handborne/previews/family-19.png",
+      "revision": "8c36a218f3c04dd0bb36684a384e10d66ab0fa29",
+      "bytes": 258363
+    },
+    {
+      "url": "/handborne/previews/family-20.png",
+      "revision": "a7e78605d5e9f1bf81956557cfce4160a8abc9b4",
+      "bytes": 209057
+    },
+    {
+      "url": "/handborne/previews/family-21.png",
+      "revision": "f67fa8a5f1872c878b337bcd5a44b83347bd52a6",
+      "bytes": 225098
+    },
+    {
+      "url": "/handborne/previews/family-22.png",
+      "revision": "d7110f01bbd7cd4c92bd685e3a031bdc3d3ef08d",
+      "bytes": 196205
+    },
+    {
+      "url": "/tv/assets/brushed-aluminum.png",
+      "revision": "97e0339b9b4126fedb12ed68c94f8ab1e13bdd4b",
+      "bytes": 2759321
+    },
+    {
+      "url": "/tv/assets/clay-coach-invite.png",
+      "revision": "f776b59655c86e41e939b219dc7e170e4dd94aff",
+      "bytes": 1478867
+    },
+    {
+      "url": "/tv/assets/cortisol-corgi-badge.png",
+      "revision": "a313dc96f0a09c13a246cca96ad5a014db90f770",
+      "bytes": 2221007
+    },
+    {
+      "url": "/tv/assets/drgf-paper-character.svg",
+      "revision": "386b1d7bc2cd8a7bf7cd29d096da1243c6c8002d",
+      "bytes": 3592730
+    },
+    {
+      "url": "/tv/assets/helping-hand-badge.png",
+      "revision": "794bb64c7f54548cd087b4f03e2b60c5f84fb824",
+      "bytes": 1967225
+    },
+    {
+      "url": "/tv/assets/lilbf-car-cozy.jpg",
+      "revision": "bed5afc8f7fb88b48580975b0fabf3c9071ddf3e",
+      "bytes": 184325
+    },
+    {
+      "url": "/tv/assets/lilbf-teepee-cozy.jpg",
+      "revision": "42e565eda4801a316823bd8725fbcaa48028bc91",
+      "bytes": 74797
+    },
+    {
+      "url": "/tv/assets/lilbf-van-cozy.jpg",
+      "revision": "9360bd08b6a38b7c75b0bdaeafd4ef7386daa586",
+      "bytes": 188582
+    },
+    {
+      "url": "/tv/assets/mom-inc-mark.png",
+      "revision": "8d147b7f846cbff544be141ffd72642d0ef8fdb6",
+      "bytes": 181293
+    },
+    {
+      "url": "/tv/assets/myr5-sticker-2.png",
+      "revision": "677d64cfc2f48346887c556f83c8751064ec8a7d",
+      "bytes": 163970
+    },
+    {
+      "url": "/tv/atmosphere.css",
+      "revision": "c42e33d2193b8a6841fe15279f171a68f261ea31",
+      "bytes": 6447
+    },
+    {
+      "url": "/tv/atmosphere.js",
+      "revision": "1b073454f0b448d5d6fd4111e1a6ed68e620f1fa",
+      "bytes": 3476
+    },
+    {
+      "url": "/tv/card.js",
+      "revision": "8cffbc5902cf84fdd307c68ee229067affaaf5b9",
+      "bytes": 8589
+    },
+    {
+      "url": "/tv/channel-runtime.js",
+      "revision": "3bff45f8943e11197725b65f7da0a4bfe1025958",
+      "bytes": 13515
+    },
+    {
+      "url": "/tv/dj-identity.css",
+      "revision": "45ccdabbd7c293022995ee71d603012ce4515164",
+      "bytes": 3123
+    },
+    {
+      "url": "/tv/dj-identity.js",
+      "revision": "5490c2a35f89ef51db29da8a415482a2ba9cf2c0",
+      "bytes": 2134
+    },
+    {
+      "url": "/tv/fuel-gate.js",
+      "revision": "9a65e4e7a521990769e84b54409d9582a5ae8254",
+      "bytes": 989
+    },
+    {
+      "url": "/tv/game-loader.js",
+      "revision": "4c01b0fa0cf9e4b1e5f6b15790c06588a436e8f8",
+      "bytes": 11521
+    },
+    {
+      "url": "/tv/identity.css",
+      "revision": "4237e86bbeaa104e7472aac0cdb52345d7ada95b",
+      "bytes": 11096
+    },
+    {
+      "url": "/tv/idle-guide.js",
+      "revision": "1cd0fd892ce0c0be2227cb7c4b7187b04d60dc21",
+      "bytes": 11670
+    },
+    {
+      "url": "/tv/index.html",
+      "revision": "8dcb1cc448ec5732059c2ae46c5f97e685b1b3d5",
+      "bytes": 12695
+    },
+    {
+      "url": "/tv/landing.css",
+      "revision": "f1fb871c29e59a9208a80b43a329f7d581b8c40e",
+      "bytes": 22538
+    },
+    {
+      "url": "/tv/mbs-channels.js",
+      "revision": "1d7255f8340a12fba05f8a380cea0f846be097f4",
+      "bytes": 2841
+    },
+    {
+      "url": "/tv/mbs-runtime.js",
+      "revision": "558a6547ca5fbc974c3aab555c516104ed03ab71",
+      "bytes": 6455
+    },
+    {
+      "url": "/tv/mbs-shim.js",
+      "revision": "892eff81caebad89efa7e73c9972ea722b532c0b",
+      "bytes": 10106
+    },
+    {
+      "url": "/tv/mount.js",
+      "revision": "e6882db0ca5acefb854c5e0d273f7f8690450f4d",
+      "bytes": 7513
+    },
+    {
+      "url": "/tv/network-flow.css",
+      "revision": "856ec002b59afd26a1351604370b66cbbea6dda8",
+      "bytes": 12094
+    },
+    {
+      "url": "/tv/network-flow.js",
+      "revision": "59f15aac5e8f37edaf2c5380192c94ffeaf06cc7",
+      "bytes": 8601
+    },
+    {
+      "url": "/tv/phone-layout.js",
+      "revision": "74d1ca746b201311bd47d522a668791de5aec797",
+      "bytes": 928
+    },
+    {
+      "url": "/tv/play.css",
+      "revision": "f60b269b409671dfcea295240f9247bcbb41e7bb",
+      "bytes": 4583
+    },
+    {
+      "url": "/tv/questionnaire.js",
+      "revision": "c2f6b58608a0a24ad14c5771ac70c217011fd588",
+      "bytes": 9400
+    },
+    {
+      "url": "/tv/retro-ads.css",
+      "revision": "2e1db784698106c012eac36a4a11d77a4528e55e",
+      "bytes": 12021
+    },
+    {
+      "url": "/tv/retro-ads.js",
+      "revision": "201aa7265334b6e64fc181ff79a021ec4430ac9a",
+      "bytes": 8611
+    },
+    {
+      "url": "/tv/retro-pointer.js",
+      "revision": "66553ddbd359b845e6da65c6ad3a169055ea83f1",
+      "bytes": 9080
+    },
+    {
+      "url": "/tv/run-progress.js",
+      "revision": "683987040b4075ce5b9e46e6849d75e31e66f0a0",
+      "bytes": 5498
+    },
+    {
+      "url": "/tv/state.js",
+      "revision": "cc8aa116a6d9968300901305f15ad5c78d05535c",
+      "bytes": 26928
+    },
+    {
+      "url": "/tv/tv.css",
+      "revision": "df7e2ef3e51a041b1c480ef72bd3deb8e8a89357",
+      "bytes": 26789
+    },
+    {
+      "url": "/tv/tv.js",
+      "revision": "08628791e0a7d96e270ac297e37c34295c91207c",
+      "bytes": 29950
+    }
+  ],
+  "fontStyles": [
+    "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
+  ],
+  "version": "143e7cc9f01bf08672ad"
+}

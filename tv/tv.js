@@ -236,7 +236,7 @@
     // path. What stays here is the television's own dressing - the VFD readout and the stress gauge -
     // which is the set's job and not the channel's.
     window.MBS_CH.mount(name, channel).then(res => {
-      if (!res.ok && !res.legacy) return;     // the runtime rendered the unavailable state; the set keeps working
+      if (!res.ok && !res.legacy) { window.MBS_LOAD?.failed(); return; }     // the runtime rendered the unavailable state; the set keeps working
       document.title = `MBS · ${name}`;
       const root = res.root && res.root.matches("[data-host]") ? res.root : channel.querySelector("[data-host]");
       vfd(root ? root.dataset.ch || "" : "", root ? root.dataset.host : name.toUpperCase(), root ? root.dataset.show || "" : "");
@@ -247,8 +247,10 @@
       if (res.legacy) {
         channel.querySelectorAll("script").forEach(old => { const s = document.createElement("script"); s.textContent = old.textContent; old.replaceWith(s); });
       }
+      window.MBS_LOAD?.finish();
     });
   } else channel.innerHTML = testcard;
+  if (!name || (name === "armie" && !window.MBS_FLOW?.armieReady()) || (COMING_SOON.includes(name) && name !== "armie")) window.MBS_LOAD?.finish();
 
   // --- 2.15 / C001: the game frame. A game channel can take the whole set: data-mode="game" drops the
   // CRT furniture and gives the stage the viewport, with the shell controls kept visible above it.

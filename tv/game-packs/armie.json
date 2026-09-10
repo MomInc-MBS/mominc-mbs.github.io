@@ -1,0 +1,840 @@
+{
+  "schema": 1,
+  "game": "armie",
+  "assets": [
+    {
+      "url": "/arcade/tub-flight/engine.mjs",
+      "revision": "da233e85cd6b89c54803a36b22a4fc9aeddf032f",
+      "bytes": 1350
+    },
+    {
+      "url": "/arcade/tub-flight/game.mjs",
+      "revision": "b644eb305d2bf1e709d6a42e821b46376e135378",
+      "bytes": 5737
+    },
+    {
+      "url": "/arcade/tub-flight/style.css",
+      "revision": "0023d992ae373669a4034fa0a3365b21f29abba8",
+      "bytes": 1350
+    },
+    {
+      "url": "/coach-setup/coach-draft.mjs",
+      "revision": "ac904953ad3a514be7f3957ca2dee122cafc3c91",
+      "bytes": 1841
+    },
+    {
+      "url": "/coach-setup/completion.mjs",
+      "revision": "4c0357c5ac2ea00b1523c5a618b45a2b3c2e871d",
+      "bytes": 814
+    },
+    {
+      "url": "/coach-setup/onboarding-domain.mjs",
+      "revision": "dd157060cfb9e22d949dbbb45312eb61088387ee",
+      "bytes": 6613
+    },
+    {
+      "url": "/coach-setup/onboarding-questions.mjs",
+      "revision": "0660a988fe732861e0e3ef9ef5d84289ec7d4e8a",
+      "bytes": 2377
+    },
+    {
+      "url": "/coach-setup/studio-finish.mjs",
+      "revision": "7e896b98f797232375dd9826be3692fd34eb66e9",
+      "bytes": 1461
+    },
+    {
+      "url": "/game-assets-sw.js",
+      "revision": "70947ae113801eee08a568a70eca3a8e06240995",
+      "bytes": 9719
+    },
+    {
+      "url": "/games/armie/index.html",
+      "revision": "dbb3548af64b3cdce30d04ecc407917caf722c6c",
+      "bytes": 1608
+    },
+    {
+      "url": "/handborne/models/family-20.glb",
+      "revision": "e77adfca6536a7221d9006048717a8f4fce0552e",
+      "bytes": 26110648
+    },
+    {
+      "url": "/handborne/models/family-21.glb",
+      "revision": "c81fc945a38798b581863cf87b4bd528711dbe89",
+      "bytes": 4087884
+    },
+    {
+      "url": "/handborne/models/family-22.glb",
+      "revision": "c2b19cba118c728db7aa31aedc7f94cfc0e9f94b",
+      "bytes": 3701016
+    },
+    {
+      "url": "/tv/assets/armie-intro/chase-state.mjs",
+      "revision": "f5b278e966c27885660c376ccdf91a778b5c6b2a",
+      "bytes": 322
+    },
+    {
+      "url": "/tv/assets/armie-intro/chase-ui.mjs",
+      "revision": "5a03a00e681767deb6b169c32c85829ad96b61ca",
+      "bytes": 3482
+    },
+    {
+      "url": "/tv/assets/armie-intro/coach.png",
+      "revision": "19ec03cfe96f50eac985ce60c84932f4b9819a01",
+      "bytes": 2174504
+    },
+    {
+      "url": "/tv/assets/armie-intro/creature-tv.css",
+      "revision": "ef8beb66f4bc862bfe6e272aa0954f175d6514a1",
+      "bytes": 2351
+    },
+    {
+      "url": "/tv/assets/armie-intro/creature-tv.html",
+      "revision": "51a137d431d5dca553973974b1ab6c8fc4e4db6f",
+      "bytes": 5764
+    },
+    {
+      "url": "/tv/assets/armie-intro/creature-tv.js",
+      "revision": "c652eeb523e456c0ee2a2a742d274c01b3d2caf3",
+      "bytes": 1319
+    },
+    {
+      "url": "/tv/assets/armie-intro/fitness-questions.mjs",
+      "revision": "a24fabd6e6f9c21ac01426de5ee8e6579b5bcca2",
+      "bytes": 5648
+    },
+    {
+      "url": "/tv/assets/armie-intro/game-scene.js",
+      "revision": "861ccd2aab5c8b0586abcac4255b2a9b7dee3fc2",
+      "bytes": 4216
+    },
+    {
+      "url": "/tv/assets/armie-intro/game-screen.png",
+      "revision": "82ff08ca4bc1999dc6a73a0df4b8cac45352d67c",
+      "bytes": 1073234
+    },
+    {
+      "url": "/tv/assets/armie-intro/index.html",
+      "revision": "8fadb20f274c8021ddd1e036559e56adc1c85172",
+      "bytes": 1476
+    },
+    {
+      "url": "/tv/assets/armie-intro/intro.js",
+      "revision": "b378eb53e97429b1e51e514afdb0f9e4b3823752",
+      "bytes": 14585
+    },
+    {
+      "url": "/tv/assets/armie-intro/lab-left.png",
+      "revision": "d8d9a65e665147a9f37b3ef5865fb9c237c119e5",
+      "bytes": 45128
+    },
+    {
+      "url": "/tv/assets/armie-intro/lab-right.png",
+      "revision": "ce89fed5b1a246bb459c522fae094a8b6d700f9d",
+      "bytes": 129187
+    },
+    {
+      "url": "/tv/assets/armie-intro/lab.html",
+      "revision": "e69121a55a98cdc98ef85d8198cfc9f25c80b772",
+      "bytes": 1332
+    },
+    {
+      "url": "/tv/assets/armie-intro/lab.js",
+      "revision": "eb332d0c0caf0df0f732ed4d9f1b7e865dc81437",
+      "bytes": 6659
+    },
+    {
+      "url": "/tv/assets/armie-intro/maze-run.mjs",
+      "revision": "0d1f2cb0fd9b2647da4cdd9b6529b85cb7f29a4f",
+      "bytes": 4361
+    },
+    {
+      "url": "/tv/assets/armie-intro/maze-scene.js",
+      "revision": "ee19b9a7d72537bd9bcf2e165fa9f198b65b9696",
+      "bytes": 9565
+    },
+    {
+      "url": "/tv/assets/armie-intro/maze-ui.css",
+      "revision": "f98bc5f005802037fe3d41110a8402da66ea945d",
+      "bytes": 8279
+    },
+    {
+      "url": "/tv/assets/armie-intro/maze-ui.mjs",
+      "revision": "4582c767fa91792b78f71813b91e93672cfe4b9b",
+      "bytes": 6395
+    },
+    {
+      "url": "/tv/assets/armie-intro/models/family-00.glb",
+      "revision": "082a2dbe3d9a1ddb0b2ef181e2ce6d40b438dff5",
+      "bytes": 3795740
+    },
+    {
+      "url": "/tv/assets/armie-intro/models/family-01.glb",
+      "revision": "07040e50b408ef8f9b304e7c2f1d595378d1c724",
+      "bytes": 3802732
+    },
+    {
+      "url": "/tv/assets/armie-intro/models/family-02.glb",
+      "revision": "af494f5c19e4b871ff3a2187b1870fa60c61c1ce",
+      "bytes": 4248844
+    },
+    {
+      "url": "/tv/assets/armie-intro/models/family-03.glb",
+      "revision": "365b39e59b878f0584aa8c28e488b65a14e4f4c1",
+      "bytes": 3806120
+    },
+    {
+      "url": "/tv/assets/armie-intro/models/family-04.glb",
+      "revision": "6883b2b98151130cc460ca7ddc9c62fa24d18cf8",
+      "bytes": 3842812
+    },
+    {
+      "url": "/tv/assets/armie-intro/models/family-05.glb",
+      "revision": "cfab88a65145d07a018b82ff8ed6eeea007d2981",
+      "bytes": 3854872
+    },
+    {
+      "url": "/tv/assets/armie-intro/models/family-06.glb",
+      "revision": "b4490c89ce5add11456b1db27df9c0a470c5f94c",
+      "bytes": 4269880
+    },
+    {
+      "url": "/tv/assets/armie-intro/models/family-07.glb",
+      "revision": "b0b6077016db25f26ef243fa3ebe23ebe0ab938f",
+      "bytes": 3801560
+    },
+    {
+      "url": "/tv/assets/armie-intro/models/family-08.glb",
+      "revision": "8f761ef33b8e1bdc08a23be6a9c779bf3c9628c0",
+      "bytes": 3826316
+    },
+    {
+      "url": "/tv/assets/armie-intro/models/family-09.glb",
+      "revision": "19a7d7fe3fbc4bb787d1dd33e283e375d6da4775",
+      "bytes": 3862320
+    },
+    {
+      "url": "/tv/assets/armie-intro/models/family-10.glb",
+      "revision": "e41d7bf4c7b5ced9f6054150bcd7559bf11a41cf",
+      "bytes": 3795556
+    },
+    {
+      "url": "/tv/assets/armie-intro/models/family-11.glb",
+      "revision": "831b0e73102131e437ddc5ce752e74ab40d81f33",
+      "bytes": 3750984
+    },
+    {
+      "url": "/tv/assets/armie-intro/models/family-12.glb",
+      "revision": "0e4c3f9ccedd4eb26a0bc0dbb4ade2ca8251639d",
+      "bytes": 4727724
+    },
+    {
+      "url": "/tv/assets/armie-intro/models/family-13.glb",
+      "revision": "7f406530a53d288e9bb2771b5bb8b92978978848",
+      "bytes": 3904520
+    },
+    {
+      "url": "/tv/assets/armie-intro/models/family-14.glb",
+      "revision": "93fc2b7da5d556e8a31137af48776d0d0b06b621",
+      "bytes": 3934208
+    },
+    {
+      "url": "/tv/assets/armie-intro/models/family-15.glb",
+      "revision": "ce2c5329e18267674eab8fdcfd776b318e184da6",
+      "bytes": 3775744
+    },
+    {
+      "url": "/tv/assets/armie-intro/models/family-16.glb",
+      "revision": "7e80f8d0635d631aa0a742ef60856ddf8465ac5f",
+      "bytes": 3876888
+    },
+    {
+      "url": "/tv/assets/armie-intro/models/family-17.glb",
+      "revision": "acdde25303977a78ed5a4b1781072984ca0d3d8a",
+      "bytes": 3800780
+    },
+    {
+      "url": "/tv/assets/armie-intro/models/family-18.glb",
+      "revision": "4f1e3adf10b50baee71bc5334974008f247131db",
+      "bytes": 3763376
+    },
+    {
+      "url": "/tv/assets/armie-intro/models/family-19.glb",
+      "revision": "0f7ad72a95d73f85c8781f1a7220da0bf8596745",
+      "bytes": 3766432
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/animation/assets/editor.js",
+      "revision": "94d88f550247c7aa81441f6e7189c6b679259f44",
+      "bytes": 726378
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/animation/creature.css",
+      "revision": "3ee3b173e787d27602f65fd41c6b1a3aeeb03473",
+      "bytes": 11912
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/animation/index.html",
+      "revision": "a80f2649b75642b0fc46c149c532655a829e7721",
+      "bytes": 6638
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/animation/styles/00.png",
+      "revision": "d106ebdb44057a0f421ed357015688c83bd48b17",
+      "bytes": 207667
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/animation/styles/01.png",
+      "revision": "cf7eb2badf65bc1cc991afed0acdc0cf1aa645ea",
+      "bytes": 237163
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/animation/styles/02.png",
+      "revision": "cbcaddd68000d08f7505e30da31ef2a3b9c890ce",
+      "bytes": 227316
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/animation/styles/03.png",
+      "revision": "31fddec1a0e697aa202115634f5e3d50b7192e6a",
+      "bytes": 262616
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/animation/styles/04.png",
+      "revision": "19d0dec3148c8188f42537373774ca34ff1bfe37",
+      "bytes": 259653
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/animation/styles/05.png",
+      "revision": "89c3d906bda4e8f4c7dbe6b99c6f90af398a27fa",
+      "bytes": 234993
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/animation/styles/06.png",
+      "revision": "e531cf9164c084aaa68d45d6e27f7b9494e30d45",
+      "bytes": 236079
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/animation/styles/07.png",
+      "revision": "958539f60292b437492514f7a00de4828f7ad018",
+      "bytes": 218365
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/animation/styles/08.png",
+      "revision": "3eca525021ae512a8a5b1905804ebf031680b6fe",
+      "bytes": 226003
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/animation/styles/09.png",
+      "revision": "f05f088e3014dd07430257b07b58cf8b852afc28",
+      "bytes": 225391
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/animation/styles/10.png",
+      "revision": "abb4fd326743c324cc72241798347f2b7323e05f",
+      "bytes": 215221
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/animation/styles/11.png",
+      "revision": "8090201240b30318cbc7186c9c8d6b91f7a0ac5f",
+      "bytes": 250034
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/animation/styles/12.png",
+      "revision": "af9f823fe3d0dd3508efaec80b702d70dac7815d",
+      "bytes": 236338
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/animation/styles/13.png",
+      "revision": "09079e731502cac8a719cd2c0fd8e3aa1f2cf3e1",
+      "bytes": 228200
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/animation/styles/14.png",
+      "revision": "e29694a73c277f930d2727d7091ea9f7d74abf91",
+      "bytes": 242812
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/animation/styles/15.png",
+      "revision": "55ccd233ce561ec4349e1ca03743e4b986ca795c",
+      "bytes": 239609
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/animation/styles/16.png",
+      "revision": "324426fcddad93b75795005667420db25132d911",
+      "bytes": 230665
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/animation/styles/17.png",
+      "revision": "247b8d86d8b578bd9e62b0be42fe80268f07c60b",
+      "bytes": 224056
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/animation/styles/18.png",
+      "revision": "1ef18c679edd6f8373b909ea6231f7095132b2f7",
+      "bytes": 234179
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/animation/styles/19.png",
+      "revision": "fc5350b128c1a1f88646c42920c1d38d00273b25",
+      "bytes": 248439
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/animation/styles/20.png",
+      "revision": "9061f8cdccc86916b4e6979222c7cec730b2c4fc",
+      "bytes": 239761
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/animation/styles/21.png",
+      "revision": "297365e2f2918029cd659bd6ad9ff1a4a9d45e82",
+      "bytes": 225882
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/animation/styles/22.png",
+      "revision": "1f56e776ab74a45c821f466a300a299266530d82",
+      "bytes": 201791
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/assets/studio-entry-BHMPTiJS.js",
+      "revision": "4f8a916464298b7058acaa9332081a06459c1fef",
+      "bytes": 972724
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/assets/studio-entry-D09Vl_--.css",
+      "revision": "403cc159e00a203756ff15a796aa0137c0ee584f",
+      "bytes": 202024
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/fonts/anton.ttf",
+      "revision": "c5cbbbc3cb5a4d95d801d6b416441b725029967e",
+      "bytes": 130324
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/fonts/barlow-400.ttf",
+      "revision": "f6be9dfeee6a2acc9f964f6f95aa7964a354bffc",
+      "bytes": 80968
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/fonts/barlow-500.ttf",
+      "revision": "d0b4616c27230b89b7f140006e8d36df7c8b67f4",
+      "bytes": 81448
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/fonts/barlow-600.ttf",
+      "revision": "a7a1fa958ac0a35a7ace3c03bbe935363d35e05c",
+      "bytes": 86636
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/fonts/barlow-700.ttf",
+      "revision": "7710411b1308d53acbf3bfa2cc6efb8e103667cc",
+      "bytes": 87120
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/fonts/bowlby.ttf",
+      "revision": "1523c7eda92c8073ca2c3aa049a4912931a59e73",
+      "bytes": 54152
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/fonts/vt323.ttf",
+      "revision": "ff94200610f6ccbe1597a2da940e435289e8ebfe",
+      "bytes": 147320
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/index.html",
+      "revision": "db6b57d4547a69fe2021b02aa151350da3e9f2a3",
+      "bytes": 694
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/models/anatomy.glb",
+      "revision": "1035a26eb090e8a0436495a3c62839ad67a718b6",
+      "bytes": 20843540
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/models/hands-v2.glb",
+      "revision": "83713fc5689b8e78ced779fcb5435d14b04d4c7a",
+      "bytes": 5296052
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/models/myr5.glb",
+      "revision": "1593467f0aa641119d56f28b2a98af3877fe08ec",
+      "bytes": 15080128
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/myr5-preview.png",
+      "revision": "45b5a673c2085b50505a821e7539d73692556644",
+      "bytes": 964306
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/styles/00.png",
+      "revision": "d106ebdb44057a0f421ed357015688c83bd48b17",
+      "bytes": 207667
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/styles/01.png",
+      "revision": "cf7eb2badf65bc1cc991afed0acdc0cf1aa645ea",
+      "bytes": 237163
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/styles/02.png",
+      "revision": "cbcaddd68000d08f7505e30da31ef2a3b9c890ce",
+      "bytes": 227316
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/styles/03.png",
+      "revision": "31fddec1a0e697aa202115634f5e3d50b7192e6a",
+      "bytes": 262616
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/styles/04.png",
+      "revision": "19d0dec3148c8188f42537373774ca34ff1bfe37",
+      "bytes": 259653
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/styles/05.png",
+      "revision": "89c3d906bda4e8f4c7dbe6b99c6f90af398a27fa",
+      "bytes": 234993
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/styles/06.png",
+      "revision": "e531cf9164c084aaa68d45d6e27f7b9494e30d45",
+      "bytes": 236079
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/styles/07.png",
+      "revision": "958539f60292b437492514f7a00de4828f7ad018",
+      "bytes": 218365
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/styles/08.png",
+      "revision": "3eca525021ae512a8a5b1905804ebf031680b6fe",
+      "bytes": 226003
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/styles/09.png",
+      "revision": "f05f088e3014dd07430257b07b58cf8b852afc28",
+      "bytes": 225391
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/styles/10.png",
+      "revision": "abb4fd326743c324cc72241798347f2b7323e05f",
+      "bytes": 215221
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/styles/11.png",
+      "revision": "8090201240b30318cbc7186c9c8d6b91f7a0ac5f",
+      "bytes": 250034
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/styles/12.png",
+      "revision": "af9f823fe3d0dd3508efaec80b702d70dac7815d",
+      "bytes": 236338
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/styles/13.png",
+      "revision": "09079e731502cac8a719cd2c0fd8e3aa1f2cf3e1",
+      "bytes": 228200
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/styles/14.png",
+      "revision": "e29694a73c277f930d2727d7091ea9f7d74abf91",
+      "bytes": 242812
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/styles/15.png",
+      "revision": "55ccd233ce561ec4349e1ca03743e4b986ca795c",
+      "bytes": 239609
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/styles/16.png",
+      "revision": "324426fcddad93b75795005667420db25132d911",
+      "bytes": 230665
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/styles/17.png",
+      "revision": "247b8d86d8b578bd9e62b0be42fe80268f07c60b",
+      "bytes": 224056
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/styles/18.png",
+      "revision": "1ef18c679edd6f8373b909ea6231f7095132b2f7",
+      "bytes": 234179
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/styles/19.png",
+      "revision": "fc5350b128c1a1f88646c42920c1d38d00273b25",
+      "bytes": 248439
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/styles/20.png",
+      "revision": "9061f8cdccc86916b4e6979222c7cec730b2c4fc",
+      "bytes": 239761
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/styles/21.png",
+      "revision": "297365e2f2918029cd659bd6ad9ff1a4a9d45e82",
+      "bytes": 225882
+    },
+    {
+      "url": "/tv/assets/armie-intro/myr5/styles/22.png",
+      "revision": "1f56e776ab74a45c821f466a300a299266530d82",
+      "bytes": 201791
+    },
+    {
+      "url": "/tv/assets/armie-intro/phone-grip.js",
+      "revision": "3060609a92e249449b29127eb3dcbf8ac744515e",
+      "bytes": 4926
+    },
+    {
+      "url": "/tv/assets/armie-intro/pose-rig.js",
+      "revision": "dbd3b56df08a70c1bb25f4fb6c46a92307cfe83b",
+      "bytes": 9013
+    },
+    {
+      "url": "/tv/assets/armie-intro/poses.js",
+      "revision": "a7f9100406f65b886b0d4f47560134477fbf72ed",
+      "bytes": 4539
+    },
+    {
+      "url": "/tv/assets/armie-intro/ship-routes.mjs",
+      "revision": "f7f690e829e1ad043c25318687510023d4f5fad1",
+      "bytes": 949
+    },
+    {
+      "url": "/tv/assets/armie-intro/swipe-input.mjs",
+      "revision": "03902dc5c4238a69cf129b85c2be5eb13c6d8519",
+      "bytes": 318
+    },
+    {
+      "url": "/tv/assets/armie-intro/vendor/BufferGeometryUtils.js",
+      "revision": "94854716b38f19724d501fe4878525e12fbeaea4",
+      "bytes": 35552
+    },
+    {
+      "url": "/tv/assets/armie-intro/vendor/GLTFLoader.js",
+      "revision": "31cfd6f1799aabf2eea62b507684c2ec7393dfcd",
+      "bytes": 114745
+    },
+    {
+      "url": "/tv/assets/armie-intro/vendor/three.core.js",
+      "revision": "7dcd0fbcbc04b8d9a20ecb96c1ce344cb55150d5",
+      "bytes": 1403455
+    },
+    {
+      "url": "/tv/assets/armie-intro/vendor/three.module.js",
+      "revision": "477ca4dafa7af919a2b9818e01b5ae25198d4aa4",
+      "bytes": 603113
+    },
+    {
+      "url": "/tv/assets/armie-intro/website-bezel.png",
+      "revision": "86b15c925e65669c1aca1d5d0efc3062ef85a7d1",
+      "bytes": 315531
+    },
+    {
+      "url": "/tv/assets/armie-intro/website-face.png",
+      "revision": "572622577883ded7674776573e2569ad577c806c",
+      "bytes": 912233
+    },
+    {
+      "url": "/tv/assets/armie-intro/website-screen.png",
+      "revision": "fe270c0803da8bddab51922348478d9dbc7873e6",
+      "bytes": 685297
+    },
+    {
+      "url": "/tv/assets/brushed-aluminum.png",
+      "revision": "97e0339b9b4126fedb12ed68c94f8ab1e13bdd4b",
+      "bytes": 2759321
+    },
+    {
+      "url": "/tv/assets/cortisol-corgi-badge.png",
+      "revision": "a313dc96f0a09c13a246cca96ad5a014db90f770",
+      "bytes": 2221007
+    },
+    {
+      "url": "/tv/assets/drgf-paper-character.svg",
+      "revision": "386b1d7bc2cd8a7bf7cd29d096da1243c6c8002d",
+      "bytes": 3592730
+    },
+    {
+      "url": "/tv/assets/helping-hand-badge.png",
+      "revision": "794bb64c7f54548cd087b4f03e2b60c5f84fb824",
+      "bytes": 1967225
+    },
+    {
+      "url": "/tv/assets/lilbf-car-cozy.jpg",
+      "revision": "bed5afc8f7fb88b48580975b0fabf3c9071ddf3e",
+      "bytes": 184325
+    },
+    {
+      "url": "/tv/assets/lilbf-teepee-cozy.jpg",
+      "revision": "42e565eda4801a316823bd8725fbcaa48028bc91",
+      "bytes": 74797
+    },
+    {
+      "url": "/tv/assets/lilbf-van-cozy.jpg",
+      "revision": "9360bd08b6a38b7c75b0bdaeafd4ef7386daa586",
+      "bytes": 188582
+    },
+    {
+      "url": "/tv/assets/marks/armie.png",
+      "revision": "caa4f94b3f9ab6a2f1587420da5c3a5329e59c6f",
+      "bytes": 84074
+    },
+    {
+      "url": "/tv/assets/mom-inc-mark.png",
+      "revision": "8d147b7f846cbff544be141ffd72642d0ef8fdb6",
+      "bytes": 181293
+    },
+    {
+      "url": "/tv/assets/myr5-sticker-2.png",
+      "revision": "677d64cfc2f48346887c556f83c8751064ec8a7d",
+      "bytes": 163970
+    },
+    {
+      "url": "/tv/atmosphere.css",
+      "revision": "c42e33d2193b8a6841fe15279f171a68f261ea31",
+      "bytes": 6447
+    },
+    {
+      "url": "/tv/atmosphere.js",
+      "revision": "1b073454f0b448d5d6fd4111e1a6ed68e620f1fa",
+      "bytes": 3476
+    },
+    {
+      "url": "/tv/card.js",
+      "revision": "8cffbc5902cf84fdd307c68ee229067affaaf5b9",
+      "bytes": 8589
+    },
+    {
+      "url": "/tv/channel-runtime.js",
+      "revision": "3bff45f8943e11197725b65f7da0a4bfe1025958",
+      "bytes": 13515
+    },
+    {
+      "url": "/tv/channels/armie.html",
+      "revision": "b5eda3c92ada718284154c6213d266e0c1cce370",
+      "bytes": 32077817
+    },
+    {
+      "url": "/tv/dj-identity.css",
+      "revision": "45ccdabbd7c293022995ee71d603012ce4515164",
+      "bytes": 3123
+    },
+    {
+      "url": "/tv/dj-identity.js",
+      "revision": "5490c2a35f89ef51db29da8a415482a2ba9cf2c0",
+      "bytes": 2134
+    },
+    {
+      "url": "/tv/fuel-gate.js",
+      "revision": "9a65e4e7a521990769e84b54409d9582a5ae8254",
+      "bytes": 989
+    },
+    {
+      "url": "/tv/game-loader.js",
+      "revision": "4c01b0fa0cf9e4b1e5f6b15790c06588a436e8f8",
+      "bytes": 11521
+    },
+    {
+      "url": "/tv/identity.css",
+      "revision": "4237e86bbeaa104e7472aac0cdb52345d7ada95b",
+      "bytes": 11096
+    },
+    {
+      "url": "/tv/idle-guide.js",
+      "revision": "1cd0fd892ce0c0be2227cb7c4b7187b04d60dc21",
+      "bytes": 11670
+    },
+    {
+      "url": "/tv/index.html",
+      "revision": "8dcb1cc448ec5732059c2ae46c5f97e685b1b3d5",
+      "bytes": 12695
+    },
+    {
+      "url": "/tv/landing.css",
+      "revision": "f1fb871c29e59a9208a80b43a329f7d581b8c40e",
+      "bytes": 22538
+    },
+    {
+      "url": "/tv/mbs-channels.js",
+      "revision": "1d7255f8340a12fba05f8a380cea0f846be097f4",
+      "bytes": 2841
+    },
+    {
+      "url": "/tv/mbs-runtime.js",
+      "revision": "558a6547ca5fbc974c3aab555c516104ed03ab71",
+      "bytes": 6455
+    },
+    {
+      "url": "/tv/mbs-shim.js",
+      "revision": "892eff81caebad89efa7e73c9972ea722b532c0b",
+      "bytes": 10106
+    },
+    {
+      "url": "/tv/mount.js",
+      "revision": "e6882db0ca5acefb854c5e0d273f7f8690450f4d",
+      "bytes": 7513
+    },
+    {
+      "url": "/tv/network-flow.css",
+      "revision": "856ec002b59afd26a1351604370b66cbbea6dda8",
+      "bytes": 12094
+    },
+    {
+      "url": "/tv/network-flow.js",
+      "revision": "59f15aac5e8f37edaf2c5380192c94ffeaf06cc7",
+      "bytes": 8601
+    },
+    {
+      "url": "/tv/phone-layout.js",
+      "revision": "74d1ca746b201311bd47d522a668791de5aec797",
+      "bytes": 928
+    },
+    {
+      "url": "/tv/play.css",
+      "revision": "f60b269b409671dfcea295240f9247bcbb41e7bb",
+      "bytes": 4583
+    },
+    {
+      "url": "/tv/questionnaire.js",
+      "revision": "c2f6b58608a0a24ad14c5771ac70c217011fd588",
+      "bytes": 9400
+    },
+    {
+      "url": "/tv/retro-ads.css",
+      "revision": "2e1db784698106c012eac36a4a11d77a4528e55e",
+      "bytes": 12021
+    },
+    {
+      "url": "/tv/retro-ads.js",
+      "revision": "201aa7265334b6e64fc181ff79a021ec4430ac9a",
+      "bytes": 8611
+    },
+    {
+      "url": "/tv/retro-pointer.js",
+      "revision": "66553ddbd359b845e6da65c6ad3a169055ea83f1",
+      "bytes": 9080
+    },
+    {
+      "url": "/tv/run-progress.js",
+      "revision": "683987040b4075ce5b9e46e6849d75e31e66f0a0",
+      "bytes": 5498
+    },
+    {
+      "url": "/tv/state.js",
+      "revision": "cc8aa116a6d9968300901305f15ad5c78d05535c",
+      "bytes": 26928
+    },
+    {
+      "url": "/tv/tv.css",
+      "revision": "df7e2ef3e51a041b1c480ef72bd3deb8e8a89357",
+      "bytes": 26789
+    },
+    {
+      "url": "/tv/tv.js",
+      "revision": "08628791e0a7d96e270ac297e37c34295c91207c",
+      "bytes": 29950
+    }
+  ],
+  "fontStyles": [
+    "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
+  ],
+  "version": "0dfd15f6a5be2fe9c494"
+}

@@ -149,6 +149,7 @@
     opts = opts || {};
 
     return R.unmount()
+      .then(function () { return window.MBS_LOAD?.prepare(name); })
       .then(function () {
         return fetch("channels/" + name + ".html", { cache: "no-store" })
           .then(function (r) { return r.ok ? r.text() : Promise.reject(new Error("fragment " + r.status)); });

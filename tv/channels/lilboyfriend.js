@@ -42,7 +42,7 @@
    same guest book and the same unlock. Failing the module would throw that away to report a missing
    GPU feature. The catch on the import does what the feature probe does: falls back to the gallery. */
 
-const THREE_URL = "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.min.js";
+const THREE_URL = "/tv/assets/armie-intro/vendor/three.module.js";
 
 /* 2.20 / E.8. The guest book used to ask city, country and household income the moment you walked up to
    the lectern. It asks none of those now: it mounts the assessment engine, and the six questions come

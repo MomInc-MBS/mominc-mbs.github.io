@@ -1,0 +1,291 @@
+{
+  "schema": 1,
+  "game": "djscratch",
+  "assets": [
+    {
+      "url": "/arcade/tub-flight/engine.mjs",
+      "revision": "da233e85cd6b89c54803a36b22a4fc9aeddf032f",
+      "bytes": 1350
+    },
+    {
+      "url": "/arcade/tub-flight/game.mjs",
+      "revision": "b644eb305d2bf1e709d6a42e821b46376e135378",
+      "bytes": 5737
+    },
+    {
+      "url": "/arcade/tub-flight/style.css",
+      "revision": "0023d992ae373669a4034fa0a3365b21f29abba8",
+      "bytes": 1350
+    },
+    {
+      "url": "/game-assets-sw.js",
+      "revision": "70947ae113801eee08a568a70eca3a8e06240995",
+      "bytes": 9719
+    },
+    {
+      "url": "/games/djscratch/index.html",
+      "revision": "b994edbe0b58c3bedc4bedc24d8d7084d70755e9",
+      "bytes": 8113
+    },
+    {
+      "url": "/play/djscratch/index.html",
+      "revision": "c55c1b8661659726840ac767fdd50f9d44528b73",
+      "bytes": 1777
+    },
+    {
+      "url": "/tv/assets/armie-intro/vendor/BufferGeometryUtils.js",
+      "revision": "94854716b38f19724d501fe4878525e12fbeaea4",
+      "bytes": 35552
+    },
+    {
+      "url": "/tv/assets/armie-intro/vendor/GLTFLoader.js",
+      "revision": "31cfd6f1799aabf2eea62b507684c2ec7393dfcd",
+      "bytes": 114745
+    },
+    {
+      "url": "/tv/assets/armie-intro/vendor/three.core.js",
+      "revision": "7dcd0fbcbc04b8d9a20ecb96c1ce344cb55150d5",
+      "bytes": 1403455
+    },
+    {
+      "url": "/tv/assets/armie-intro/vendor/three.module.js",
+      "revision": "477ca4dafa7af919a2b9818e01b5ae25198d4aa4",
+      "bytes": 603113
+    },
+    {
+      "url": "/tv/assets/brushed-aluminum.png",
+      "revision": "97e0339b9b4126fedb12ed68c94f8ab1e13bdd4b",
+      "bytes": 2759321
+    },
+    {
+      "url": "/tv/assets/cortisol-corgi-badge.png",
+      "revision": "a313dc96f0a09c13a246cca96ad5a014db90f770",
+      "bytes": 2221007
+    },
+    {
+      "url": "/tv/assets/djscratch-game-still.png",
+      "revision": "dab0e4c95908e0854f8dfa0a975d9f42ef1f34b7",
+      "bytes": 2637625
+    },
+    {
+      "url": "/tv/assets/drgf-paper-character.svg",
+      "revision": "386b1d7bc2cd8a7bf7cd29d096da1243c6c8002d",
+      "bytes": 3592730
+    },
+    {
+      "url": "/tv/assets/floating-hand.mtl",
+      "revision": "0d6e6b7f193fe8799c6d342dfdfcbbf754c0d9c3",
+      "bytes": 264
+    },
+    {
+      "url": "/tv/assets/floating-hand.obj",
+      "revision": "40d1cc1bfbfafd807334e088c9836582cdccabcc",
+      "bytes": 1187376
+    },
+    {
+      "url": "/tv/assets/hand-dishes.jpg",
+      "revision": "1dfef17bb997e0b04aa637d1336d027c956d86f5",
+      "bytes": 52143
+    },
+    {
+      "url": "/tv/assets/hand-laundry.jpg",
+      "revision": "aa42391b2c6c9f4b2e7b5b5305273c07195b5bd0",
+      "bytes": 60396
+    },
+    {
+      "url": "/tv/assets/hand-nuke.jpg",
+      "revision": "6091581bffabef72be8bd297a57d7093a20a2a74",
+      "bytes": 57847
+    },
+    {
+      "url": "/tv/assets/helping-hand-badge.png",
+      "revision": "794bb64c7f54548cd087b4f03e2b60c5f84fb824",
+      "bytes": 1967225
+    },
+    {
+      "url": "/tv/assets/lilbf-car-cozy.jpg",
+      "revision": "bed5afc8f7fb88b48580975b0fabf3c9071ddf3e",
+      "bytes": 184325
+    },
+    {
+      "url": "/tv/assets/lilbf-teepee-cozy.jpg",
+      "revision": "42e565eda4801a316823bd8725fbcaa48028bc91",
+      "bytes": 74797
+    },
+    {
+      "url": "/tv/assets/lilbf-van-cozy.jpg",
+      "revision": "9360bd08b6a38b7c75b0bdaeafd4ef7386daa586",
+      "bytes": 188582
+    },
+    {
+      "url": "/tv/assets/marks/djscratch.png",
+      "revision": "ba28e662c8bd4d312aa7413289b9e822b3f9e5ea",
+      "bytes": 92640
+    },
+    {
+      "url": "/tv/assets/mom-inc-mark.png",
+      "revision": "8d147b7f846cbff544be141ffd72642d0ef8fdb6",
+      "bytes": 181293
+    },
+    {
+      "url": "/tv/assets/myr5-sticker-2.png",
+      "revision": "677d64cfc2f48346887c556f83c8751064ec8a7d",
+      "bytes": 163970
+    },
+    {
+      "url": "/tv/atmosphere.css",
+      "revision": "c42e33d2193b8a6841fe15279f171a68f261ea31",
+      "bytes": 6447
+    },
+    {
+      "url": "/tv/atmosphere.js",
+      "revision": "1b073454f0b448d5d6fd4111e1a6ed68e620f1fa",
+      "bytes": 3476
+    },
+    {
+      "url": "/tv/card.js",
+      "revision": "8cffbc5902cf84fdd307c68ee229067affaaf5b9",
+      "bytes": 8589
+    },
+    {
+      "url": "/tv/channel-runtime.js",
+      "revision": "3bff45f8943e11197725b65f7da0a4bfe1025958",
+      "bytes": 13515
+    },
+    {
+      "url": "/tv/channels/djscratch.html",
+      "revision": "aa5dfede03ae8cd6512f03c538b55f16ee96034f",
+      "bytes": 50655
+    },
+    {
+      "url": "/tv/channels/djscratch.js",
+      "revision": "2b21c57870b1f657affad9e4351856e8047b3d83",
+      "bytes": 45407
+    },
+    {
+      "url": "/tv/dj-identity.css",
+      "revision": "45ccdabbd7c293022995ee71d603012ce4515164",
+      "bytes": 3123
+    },
+    {
+      "url": "/tv/dj-identity.js",
+      "revision": "5490c2a35f89ef51db29da8a415482a2ba9cf2c0",
+      "bytes": 2134
+    },
+    {
+      "url": "/tv/fuel-gate.js",
+      "revision": "9a65e4e7a521990769e84b54409d9582a5ae8254",
+      "bytes": 989
+    },
+    {
+      "url": "/tv/game-loader.js",
+      "revision": "4c01b0fa0cf9e4b1e5f6b15790c06588a436e8f8",
+      "bytes": 11521
+    },
+    {
+      "url": "/tv/identity.css",
+      "revision": "4237e86bbeaa104e7472aac0cdb52345d7ada95b",
+      "bytes": 11096
+    },
+    {
+      "url": "/tv/idle-guide.js",
+      "revision": "1cd0fd892ce0c0be2227cb7c4b7187b04d60dc21",
+      "bytes": 11670
+    },
+    {
+      "url": "/tv/index.html",
+      "revision": "8dcb1cc448ec5732059c2ae46c5f97e685b1b3d5",
+      "bytes": 12695
+    },
+    {
+      "url": "/tv/landing.css",
+      "revision": "f1fb871c29e59a9208a80b43a329f7d581b8c40e",
+      "bytes": 22538
+    },
+    {
+      "url": "/tv/mbs-channels.js",
+      "revision": "1d7255f8340a12fba05f8a380cea0f846be097f4",
+      "bytes": 2841
+    },
+    {
+      "url": "/tv/mbs-runtime.js",
+      "revision": "558a6547ca5fbc974c3aab555c516104ed03ab71",
+      "bytes": 6455
+    },
+    {
+      "url": "/tv/mbs-shim.js",
+      "revision": "892eff81caebad89efa7e73c9972ea722b532c0b",
+      "bytes": 10106
+    },
+    {
+      "url": "/tv/mount.js",
+      "revision": "e6882db0ca5acefb854c5e0d273f7f8690450f4d",
+      "bytes": 7513
+    },
+    {
+      "url": "/tv/network-flow.css",
+      "revision": "856ec002b59afd26a1351604370b66cbbea6dda8",
+      "bytes": 12094
+    },
+    {
+      "url": "/tv/network-flow.js",
+      "revision": "59f15aac5e8f37edaf2c5380192c94ffeaf06cc7",
+      "bytes": 8601
+    },
+    {
+      "url": "/tv/phone-layout.js",
+      "revision": "74d1ca746b201311bd47d522a668791de5aec797",
+      "bytes": 928
+    },
+    {
+      "url": "/tv/play.css",
+      "revision": "f60b269b409671dfcea295240f9247bcbb41e7bb",
+      "bytes": 4583
+    },
+    {
+      "url": "/tv/questionnaire.js",
+      "revision": "c2f6b58608a0a24ad14c5771ac70c217011fd588",
+      "bytes": 9400
+    },
+    {
+      "url": "/tv/retro-ads.css",
+      "revision": "2e1db784698106c012eac36a4a11d77a4528e55e",
+      "bytes": 12021
+    },
+    {
+      "url": "/tv/retro-ads.js",
+      "revision": "201aa7265334b6e64fc181ff79a021ec4430ac9a",
+      "bytes": 8611
+    },
+    {
+      "url": "/tv/retro-pointer.js",
+      "revision": "66553ddbd359b845e6da65c6ad3a169055ea83f1",
+      "bytes": 9080
+    },
+    {
+      "url": "/tv/run-progress.js",
+      "revision": "683987040b4075ce5b9e46e6849d75e31e66f0a0",
+      "bytes": 5498
+    },
+    {
+      "url": "/tv/state.js",
+      "revision": "cc8aa116a6d9968300901305f15ad5c78d05535c",
+      "bytes": 26928
+    },
+    {
+      "url": "/tv/tv.css",
+      "revision": "df7e2ef3e51a041b1c480ef72bd3deb8e8a89357",
+      "bytes": 26789
+    },
+    {
+      "url": "/tv/tv.js",
+      "revision": "08628791e0a7d96e270ac297e37c34295c91207c",
+      "bytes": 29950
+    }
+  ],
+  "fontStyles": [
+    "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
+    "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
+  ],
+  "version": "bc5bafaed35071819496"
+}

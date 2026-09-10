@@ -63,7 +63,7 @@
 import { PAPER_HEARTS, restoreDream, losePaperHeart, restartDream, canOpenBackDoor, breakRoomPose } from "./corgi-dream.mjs";
 import { createPaperHearts, schoolCortisol, heartbeatBpm } from "./corgi-hearts.mjs";
 
-const THREE_URL = "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.min.js";
+const THREE_URL = "/tv/assets/armie-intro/vendor/three.module.js";
 
 /* The one piece of module state, held for the reason set out above: a WebGLRenderer and a scene graph
    are not disposables the context can own. `session` is the mount token - the three.js import resolves

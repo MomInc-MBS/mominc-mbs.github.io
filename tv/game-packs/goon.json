@@ -1,0 +1,421 @@
+{
+  "schema": 1,
+  "game": "goon",
+  "assets": [
+    {
+      "url": "/arcade/tub-flight/engine.mjs",
+      "revision": "da233e85cd6b89c54803a36b22a4fc9aeddf032f",
+      "bytes": 1350
+    },
+    {
+      "url": "/arcade/tub-flight/game.mjs",
+      "revision": "b644eb305d2bf1e709d6a42e821b46376e135378",
+      "bytes": 5737
+    },
+    {
+      "url": "/arcade/tub-flight/style.css",
+      "revision": "0023d992ae373669a4034fa0a3365b21f29abba8",
+      "bytes": 1350
+    },
+    {
+      "url": "/gala/ammo.js",
+      "revision": "23dbcfac22ad92d04ed8341823bcdeba747cf34c",
+      "bytes": 7335
+    },
+    {
+      "url": "/gala/armory.css",
+      "revision": "c208c867fff90faa61bdbf1f8bc40ecf61ff3249",
+      "bytes": 3644
+    },
+    {
+      "url": "/gala/armory.js",
+      "revision": "27fb6e0e0ec0b51ec36bb79cd97f9bfad6d840c1",
+      "bytes": 4763
+    },
+    {
+      "url": "/gala/audio/satie-gramophone.mp3",
+      "revision": "df3512fcd178e5534ad517467dc90b0a281b8243",
+      "bytes": 1469378
+    },
+    {
+      "url": "/gala/avatar.js",
+      "revision": "539214be0dd7a9ecc499df6c0555d9b1754bf905",
+      "bytes": 26061
+    },
+    {
+      "url": "/gala/combat.mjs",
+      "revision": "4943651bf3635b41f745658025bf45162989e883",
+      "bytes": 983
+    },
+    {
+      "url": "/gala/crowd.js",
+      "revision": "6c04967b8cdf96e20b0bf0431676c6e546614563",
+      "bytes": 5421
+    },
+    {
+      "url": "/gala/gala.css",
+      "revision": "2051c1ae4a6f43f346211766ea2aa0b0effba7d6",
+      "bytes": 12305
+    },
+    {
+      "url": "/gala/gala.js",
+      "revision": "e135e3208cd4a046d4032d4c47ebbedef1a8056e",
+      "bytes": 11987
+    },
+    {
+      "url": "/gala/gramophone.css",
+      "revision": "b58f8d7c63b125ed1bfdc6485f111a0698984e86",
+      "bytes": 1044
+    },
+    {
+      "url": "/gala/gramophone.js",
+      "revision": "3359454f2024e70fdc453fb4d58550714d6000fd",
+      "bytes": 3848
+    },
+    {
+      "url": "/gala/guest.css",
+      "revision": "08845d57c3bac6ebba52e5e15e245f6f6fa1a363",
+      "bytes": 1593
+    },
+    {
+      "url": "/gala/guest.js",
+      "revision": "a5b738d279bd266870ea01213741e0973c79949f",
+      "bytes": 2955
+    },
+    {
+      "url": "/gala/index.html",
+      "revision": "68505d73d37c9f6cba0500c70065bb9c1cb4da59",
+      "bytes": 5516
+    },
+    {
+      "url": "/gala/music.html",
+      "revision": "e85a8bdd59fa098f97c79af9c8e238e624dfeb87",
+      "bytes": 964
+    },
+    {
+      "url": "/gala/performer.js",
+      "revision": "8192c887c5b9169b5bef049c61b97bce493dbb7c",
+      "bytes": 5454
+    },
+    {
+      "url": "/gala/progress.js",
+      "revision": "88643d75393469a80e6ff5fcb595d31f7f16856c",
+      "bytes": 3076
+    },
+    {
+      "url": "/gala/weapon-animator.mjs",
+      "revision": "a5150cd7121b47c8eeac868034ea05cfc5b614a0",
+      "bytes": 11659
+    },
+    {
+      "url": "/gala/weapon-evolution.mjs",
+      "revision": "d5d226a9d12e9af4ef005b726ec44ca7e8720a33",
+      "bytes": 6742
+    },
+    {
+      "url": "/gala/weapon-station.css",
+      "revision": "e690a7e9c893480873d7332f2f85ccff0dcffad8",
+      "bytes": 2038
+    },
+    {
+      "url": "/gala/weapon-station.mjs",
+      "revision": "493adac262d5b4ec8a678350391f1a88069a7db4",
+      "bytes": 7564
+    },
+    {
+      "url": "/gala/weapons.js",
+      "revision": "c3420e8200ea69daacf3c72e81879f16277c50af",
+      "bytes": 10734
+    },
+    {
+      "url": "/gala/workout-tracks.js",
+      "revision": "1849bbf76c68f897af6d16c19e8b927dc32fb23a",
+      "bytes": 9387
+    },
+    {
+      "url": "/game-assets-sw.js",
+      "revision": "70947ae113801eee08a568a70eca3a8e06240995",
+      "bytes": 9719
+    },
+    {
+      "url": "/games/goon/index.html",
+      "revision": "07a3d9a5771cb099c09ac5b0e510bf25ed7a22b4",
+      "bytes": 6825
+    },
+    {
+      "url": "/handborne/fonts/anton.ttf",
+      "revision": "c5cbbbc3cb5a4d95d801d6b416441b725029967e",
+      "bytes": 130324
+    },
+    {
+      "url": "/handborne/fonts/vt323.ttf",
+      "revision": "ff94200610f6ccbe1597a2da940e435289e8ebfe",
+      "bytes": 147320
+    },
+    {
+      "url": "/play/goon/index.html",
+      "revision": "9037ff54176f8fbaec3b9528ec9ad9d5bdfe0050",
+      "bytes": 1714
+    },
+    {
+      "url": "/tv/assets/armie-intro/vendor/BufferGeometryUtils.js",
+      "revision": "94854716b38f19724d501fe4878525e12fbeaea4",
+      "bytes": 35552
+    },
+    {
+      "url": "/tv/assets/armie-intro/vendor/GLTFLoader.js",
+      "revision": "31cfd6f1799aabf2eea62b507684c2ec7393dfcd",
+      "bytes": 114745
+    },
+    {
+      "url": "/tv/assets/armie-intro/vendor/three.core.js",
+      "revision": "7dcd0fbcbc04b8d9a20ecb96c1ce344cb55150d5",
+      "bytes": 1403455
+    },
+    {
+      "url": "/tv/assets/armie-intro/vendor/three.module.js",
+      "revision": "477ca4dafa7af919a2b9818e01b5ae25198d4aa4",
+      "bytes": 603113
+    },
+    {
+      "url": "/tv/assets/brushed-aluminum.png",
+      "revision": "97e0339b9b4126fedb12ed68c94f8ab1e13bdd4b",
+      "bytes": 2759321
+    },
+    {
+      "url": "/tv/assets/cortisol-corgi-badge.png",
+      "revision": "a313dc96f0a09c13a246cca96ad5a014db90f770",
+      "bytes": 2221007
+    },
+    {
+      "url": "/tv/assets/drgf-paper-character.svg",
+      "revision": "386b1d7bc2cd8a7bf7cd29d096da1243c6c8002d",
+      "bytes": 3592730
+    },
+    {
+      "url": "/tv/assets/goon-game-still.png",
+      "revision": "2569d4be2931d6d728072407598d87765f0270e9",
+      "bytes": 325046
+    },
+    {
+      "url": "/tv/assets/goon-preview.webm",
+      "revision": "caacc1a13ddb0eacf8c3f253bf33973f858f9671",
+      "bytes": 1159120
+    },
+    {
+      "url": "/tv/assets/helping-hand-badge.png",
+      "revision": "794bb64c7f54548cd087b4f03e2b60c5f84fb824",
+      "bytes": 1967225
+    },
+    {
+      "url": "/tv/assets/lilbf-car-cozy.jpg",
+      "revision": "bed5afc8f7fb88b48580975b0fabf3c9071ddf3e",
+      "bytes": 184325
+    },
+    {
+      "url": "/tv/assets/lilbf-teepee-cozy.jpg",
+      "revision": "42e565eda4801a316823bd8725fbcaa48028bc91",
+      "bytes": 74797
+    },
+    {
+      "url": "/tv/assets/lilbf-van-cozy.jpg",
+      "revision": "9360bd08b6a38b7c75b0bdaeafd4ef7386daa586",
+      "bytes": 188582
+    },
+    {
+      "url": "/tv/assets/mom-inc-mark.png",
+      "revision": "8d147b7f846cbff544be141ffd72642d0ef8fdb6",
+      "bytes": 181293
+    },
+    {
+      "url": "/tv/assets/myr5-sticker-1.png",
+      "revision": "f5913d3ce3c30a98bd782e8d4a1de8d3c740492a",
+      "bytes": 174356
+    },
+    {
+      "url": "/tv/assets/myr5-sticker-2.png",
+      "revision": "677d64cfc2f48346887c556f83c8751064ec8a7d",
+      "bytes": 163970
+    },
+    {
+      "url": "/tv/assets/myr5-sticker-3.png",
+      "revision": "9e59d4494121f5b036eda5768e1dd1b3da5b1fae",
+      "bytes": 206037
+    },
+    {
+      "url": "/tv/assets/myr5-sticker-4.png",
+      "revision": "ca66b9d3276773ff0e9d21a3a5447ca1e6b08c89",
+      "bytes": 189123
+    },
+    {
+      "url": "/tv/assets/myr5-sticker-5.png",
+      "revision": "128893cbfbfc20bb746b0227bf6381430a3e12e9",
+      "bytes": 172722
+    },
+    {
+      "url": "/tv/atmosphere.css",
+      "revision": "c42e33d2193b8a6841fe15279f171a68f261ea31",
+      "bytes": 6447
+    },
+    {
+      "url": "/tv/atmosphere.js",
+      "revision": "1b073454f0b448d5d6fd4111e1a6ed68e620f1fa",
+      "bytes": 3476
+    },
+    {
+      "url": "/tv/card.js",
+      "revision": "8cffbc5902cf84fdd307c68ee229067affaaf5b9",
+      "bytes": 8589
+    },
+    {
+      "url": "/tv/channel-runtime.js",
+      "revision": "3bff45f8943e11197725b65f7da0a4bfe1025958",
+      "bytes": 13515
+    },
+    {
+      "url": "/tv/channels/goon.html",
+      "revision": "f326fd1ecd7e2804a424ce1485166446e1047b47",
+      "bytes": 24684
+    },
+    {
+      "url": "/tv/dj-identity.css",
+      "revision": "45ccdabbd7c293022995ee71d603012ce4515164",
+      "bytes": 3123
+    },
+    {
+      "url": "/tv/dj-identity.js",
+      "revision": "5490c2a35f89ef51db29da8a415482a2ba9cf2c0",
+      "bytes": 2134
+    },
+    {
+      "url": "/tv/fuel-gate.js",
+      "revision": "9a65e4e7a521990769e84b54409d9582a5ae8254",
+      "bytes": 989
+    },
+    {
+      "url": "/tv/game-loader.js",
+      "revision": "4c01b0fa0cf9e4b1e5f6b15790c06588a436e8f8",
+      "bytes": 11521
+    },
+    {
+      "url": "/tv/games/goon/assets/index-gala-classic.js",
+      "revision": "5fa6ac9d1bcd8ffa7eb6c0e886dc37d88ad71f2a",
+      "bytes": 2044851
+    },
+    {
+      "url": "/tv/games/goon/assets/index-vg_3atLR.css",
+      "revision": "731b947b31413b23bd7fb4f2350a3793c47aaf89",
+      "bytes": 13259
+    },
+    {
+      "url": "/tv/games/goon/index.html",
+      "revision": "c791586966ac702ab6dd1195aab093b4722868cc",
+      "bytes": 2422
+    },
+    {
+      "url": "/tv/identity.css",
+      "revision": "4237e86bbeaa104e7472aac0cdb52345d7ada95b",
+      "bytes": 11096
+    },
+    {
+      "url": "/tv/idle-guide.js",
+      "revision": "1cd0fd892ce0c0be2227cb7c4b7187b04d60dc21",
+      "bytes": 11670
+    },
+    {
+      "url": "/tv/index.html",
+      "revision": "8dcb1cc448ec5732059c2ae46c5f97e685b1b3d5",
+      "bytes": 12695
+    },
+    {
+      "url": "/tv/landing.css",
+      "revision": "f1fb871c29e59a9208a80b43a329f7d581b8c40e",
+      "bytes": 22538
+    },
+    {
+      "url": "/tv/mbs-channels.js",
+      "revision": "1d7255f8340a12fba05f8a380cea0f846be097f4",
+      "bytes": 2841
+    },
+    {
+      "url": "/tv/mbs-runtime.js",
+      "revision": "558a6547ca5fbc974c3aab555c516104ed03ab71",
+      "bytes": 6455
+    },
+    {
+      "url": "/tv/mbs-shim.js",
+      "revision": "892eff81caebad89efa7e73c9972ea722b532c0b",
+      "bytes": 10106
+    },
+    {
+      "url": "/tv/mount.js",
+      "revision": "e6882db0ca5acefb854c5e0d273f7f8690450f4d",
+      "bytes": 7513
+    },
+    {
+      "url": "/tv/network-flow.css",
+      "revision": "856ec002b59afd26a1351604370b66cbbea6dda8",
+      "bytes": 12094
+    },
+    {
+      "url": "/tv/network-flow.js",
+      "revision": "59f15aac5e8f37edaf2c5380192c94ffeaf06cc7",
+      "bytes": 8601
+    },
+    {
+      "url": "/tv/phone-layout.js",
+      "revision": "74d1ca746b201311bd47d522a668791de5aec797",
+      "bytes": 928
+    },
+    {
+      "url": "/tv/play.css",
+      "revision": "f60b269b409671dfcea295240f9247bcbb41e7bb",
+      "bytes": 4583
+    },
+    {
+      "url": "/tv/questionnaire.js",
+      "revision": "c2f6b58608a0a24ad14c5771ac70c217011fd588",
+      "bytes": 9400
+    },
+    {
+      "url": "/tv/retro-ads.css",
+      "revision": "2e1db784698106c012eac36a4a11d77a4528e55e",
+      "bytes": 12021
+    },
+    {
+      "url": "/tv/retro-ads.js",
+      "revision": "201aa7265334b6e64fc181ff79a021ec4430ac9a",
+      "bytes": 8611
+    },
+    {
+      "url": "/tv/retro-pointer.js",
+      "revision": "66553ddbd359b845e6da65c6ad3a169055ea83f1",
+      "bytes": 9080
+    },
+    {
+      "url": "/tv/run-progress.js",
+      "revision": "683987040b4075ce5b9e46e6849d75e31e66f0a0",
+      "bytes": 5498
+    },
+    {
+      "url": "/tv/state.js",
+      "revision": "cc8aa116a6d9968300901305f15ad5c78d05535c",
+      "bytes": 26928
+    },
+    {
+      "url": "/tv/tv.css",
+      "revision": "df7e2ef3e51a041b1c480ef72bd3deb8e8a89357",
+      "bytes": 26789
+    },
+    {
+      "url": "/tv/tv.js",
+      "revision": "08628791e0a7d96e270ac297e37c34295c91207c",
+      "bytes": 29950
+    }
+  ],
+  "fontStyles": [
+    "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
+    "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
+  ],
+  "version": "e5709b4307cb30d744b2"
+}

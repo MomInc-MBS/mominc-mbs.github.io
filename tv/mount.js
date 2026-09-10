@@ -16,6 +16,7 @@
   const host = document.getElementById("channel");
   const boot = document.getElementById("boot");
   const fail = (why) => {
+    window.MBS_LOAD?.failed();
     if (host) host.innerHTML = "";
     if (!boot) return;
     boot.innerHTML = '<p>This channel did not come in. <a href="../games/' + slug + '/">Go back</a> and try again.</p>';
@@ -90,6 +91,7 @@
     isolate(roots, hide);
   };
   const ready = () => {
+    window.MBS_LOAD?.finish();
     boot && boot.remove();
     window.MBS_ATMOSPHERE && window.MBS_ATMOSPHERE.mount(host, slug);
     window.dispatchEvent(new Event("resize"));   // a fragment inserted after load never gets one otherwise; games size themselves on resize
@@ -108,7 +110,8 @@
       .catch(fail);
   }
 
-  fetch("channels/" + slug + ".html", { cache: "no-store" })
+  Promise.resolve(window.MBS_LOAD?.prepare(slug))
+    .then(() => fetch("channels/" + slug + ".html", { cache: "no-store" }))
     .then(r => r.ok ? r.text() : Promise.reject(r.status))
     .then(htmlText => {
       host.innerHTML = htmlText;

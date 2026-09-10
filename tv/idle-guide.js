@@ -114,7 +114,7 @@
  }
  function clear(){if(target){target.classList.remove('mbs-idle-glow');target.removeAttribute('data-idle-guided');target=null;}}
  function show(){
-  timer=0;if(stopped||document.hidden||!earned()){clear();for(const doc of docs.keys()){const link=doc.querySelector('[data-idle-next-page]');if(link)link.hidden=true;}return;}
+  timer=0;if(stopped||document.hidden||document.documentElement.hasAttribute('data-game-loading')||!earned()){clear();for(const doc of docs.keys()){const link=doc.querySelector('[data-idle-next-page]');if(link)link.hidden=true;}return;}
   let candidate=pageAction(document);
   if(!candidate)for(const doc of docs.keys())if(doc!==document){candidate=pageAction(doc);if(candidate)break;}
   if(candidate===target)return;clear();
@@ -138,6 +138,7 @@
   doc.addEventListener('visibilitychange',activity);
   for(const event of ['mbs:page-complete','mbs:gala-character-created','mbs-flow'])doc.defaultView.addEventListener(event,changed);
   doc.defaultView.addEventListener('mbs:goggles-earned',activity);
+  doc.defaultView.addEventListener('mbs-game-ready',activity);
   doc.defaultView.addEventListener('storage',event=>{if(event.key===null||event.key===GOGGLES||event.key==='mbs-dg-line')activity();else changed();});
  }
  window.MBS_GUIDE={attach,earned,refresh:changed,register:(doc,resolve)=>{providers.set(doc,resolve);changed();return()=>providers.delete(doc);}};

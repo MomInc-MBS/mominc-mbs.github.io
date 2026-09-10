@@ -58,7 +58,7 @@ import '../dj-identity.js';
 
 const HAND_OBJ = "assets/floating-hand.obj";   // relative to the DOCUMENT: /tv/ directly, and the
 const HAND_MTL = "assets/floating-hand.mtl";   // play route through its <base href="../../tv/">
-const THREE_URL = "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.min.js";
+const THREE_URL = "/tv/assets/armie-intro/vendor/three.module.js";
 
 /* Being type is the SURFACE - how the light sits on it. Colour is the body. Both are visible at once
    on purpose: if being also set the hue, choosing a colour would silently overrule it and one of the

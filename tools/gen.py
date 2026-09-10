@@ -29,7 +29,7 @@ def title_vw(title):
 
 LANDING = u"""<!doctype html>
 <html lang="en" data-game="{slug}">
-<head>
+<head><script src="/tv/game-loader.js?v=1"></script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{title} | MBS</title>
@@ -134,7 +134,7 @@ LANDING = u"""<!doctype html>
 
 PLAY = u"""<!doctype html>
 <html lang="en" data-game="{slug}" data-mode="public" data-api="{api}" data-mission-id="{mission_id}" data-station="{station}" data-roots="{roots}">
-<head>
+<head><script src="/tv/game-loader.js?v=1"></script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <base href="../../tv/">
@@ -169,7 +169,7 @@ PLAY = u"""<!doctype html>
 # no facts/teaser/profile sections, since there is no finish state and no game-specific coach slice yet.
 COMING_SOON = u"""<!doctype html>
 <html lang="en" data-game="{slug}" data-status="coming-soon">
-<head>
+<head><script src="/tv/game-loader.js?v=1"></script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{title} | MBS</title>
