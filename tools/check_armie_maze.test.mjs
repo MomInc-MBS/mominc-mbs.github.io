@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {LANES,TRAPS,createRun,courseFor,input,step,upcoming,pathAt} from '../tv/assets/armie-intro/maze-run.mjs';
+import {swipeAction} from '../tv/assets/armie-intro/swipe-input.mjs';
 
 function drive(run,actions=true){for(let i=0;i<3000&&run.status==='running';i++){
  const e=upcoming(run),d=e?e.at-run.distance:100;
@@ -19,3 +20,22 @@ test('wrong corner choice fails and early left/right inputs only change lane',()
 test('pause freezes jump and distance; background time cannot skip an obstacle',()=>{const r=createRun();input(r,'jump');r.paused=true;step(r,20);assert.equal(r.distance,0);assert.equal(r.jumpTime,.96);r.paused=false;step(r,20);assert.ok(r.distance<=.25);});
 test('assisted mode waits for input and can finish every course',()=>{for(let seed=0;seed<6;seed++){const r=drive(createRun(seed,true),false);assert.equal(r.status,'running');assert.ok(r.distance<13);assert.equal(drive(r).status,'complete');}});
 test('repeated lane input stays in exactly two lanes and jump cannot stack',()=>{const r=createRun();for(let i=0;i<20;i++)input(r,'left');assert.equal(r.lane,0);for(let i=0;i<20;i++)input(r,'right');assert.equal(r.lane,1);input(r,'jump');step(r,.1);const t=r.jumpTime;input(r,'jump');assert.equal(r.jumpTime,t);});
+test('four directional swipes ignore taps and ambiguous diagonals',()=>{
+ assert.equal(swipeAction(80,6),'right');assert.equal(swipeAction(-80,6),'left');assert.equal(swipeAction(4,-75),'jump');assert.equal(swipeAction(4,75),'slide');
+ for(const [x,y] of [[10,0],[0,20],[40,40],[-30,30]])assert.equal(swipeAction(x,y),null);
+});
+test('sliding clears a low wall but never a crack or rubble',()=>{
+ for(const type of ['wall','crack','rubble']){const r=createRun(1);r.distance=41;r.lane=1;r.events=[{type,at:42,lane:type==='crack'?null:1,cleared:false}];input(r,'slide');for(let i=0;i<20&&r.status==='running';i++)step(r,.02);assert.equal(r.status,type==='wall'?'running':'hit');}
+});
+test('slide and jump are exclusive, recover, and pause without expiring',()=>{
+ const r=createRun();input(r,'slide');input(r,'jump');assert.equal(r.jumpTime,0);step(r,.05);r.paused=true;const t=r.slideTime;step(r,5);assert.equal(r.slideTime,t);r.paused=false;
+ for(let i=0;i<30;i++)step(r,.05);assert.equal(r.duck,0);input(r,'jump');input(r,'slide');assert.equal(r.slideTime,0);assert.ok(r.jumpTime>0);
+});
+test('low wall courses can finish using slide in the blocked lane',()=>{
+ for(let seed=1;seed<8;seed+=2){const r=createRun(seed);r.lane=1;for(let i=0;i<1500&&r.status==='running';i++){
+  const e=upcoming(r),d=e?e.at-r.distance:100;
+  if(e?.type==='crack'&&d<2&&r.jumpTime===0)input(r,'jump');
+  if(e?.type==='turn'&&d<8)input(r,e.direction);
+  if(e?.type==='wall'&&d<2&&r.slideTime===0)input(r,'slide');step(r,1/60);
+ }assert.equal(r.status,'complete');}
+});

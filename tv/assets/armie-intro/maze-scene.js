@@ -1,4 +1,4 @@
-import {courseFor, pathAt, LANES, LENGTH} from './maze-run.mjs';
+import {courseFor, pathAt, LANES, LENGTH} from './maze-run.mjs?v=swipe-2';
 
 export function createMazeScene(THREE) {
   const scene=new THREE.Scene();
@@ -59,8 +59,9 @@ export function createMazeScene(THREE) {
       box(1.5,.11,.15,warning,lane,.94,.65,hazard);
       for(let i=0;i<4;i++){const rock=box(.35,.23,.4,edge,lane+Math.sin(i*3)*.5,.12,.9+i*.13,hazard);rock.rotation.y=i;}
     }else{
-      movingWall=box(1.62,3.8,1,stone,lane,1.9,0,hazard);movingWall.userData.lane=lane;
-      for(let y=.3;y<3.8;y+=.6)box(1.66,.12,1.04,warning,0,y-1.9,0,movingWall);
+      movingWall=box(1.62,2.7,1,stone,lane,2.45,0,hazard);movingWall.userData.lane=lane;
+      for(let y=.12;y<2.7;y+=.6)box(1.66,.12,1.04,warning,0,y-1.35,0,movingWall);
+      const slideSign=label('↓ SLIDE ↓');slideSign.scale.setScalar(.5);slideSign.position.set(0,-.65,.53);movingWall.add(slideSign);
       box(3.8,.05,1.15,edge,0,.01,0,hazard);
     }
     const end=pathAt(LENGTH+3,seed), gate=new THREE.Group();gate.position.set(end.x,0,end.z);gate.rotation.y=end.yaw;group.add(gate);
@@ -73,7 +74,7 @@ export function createMazeScene(THREE) {
     cameraLane+=(LANES[run.lane]-cameraLane)*blend;yaw+=(p.yaw-yaw)*(motion?.18:1);
     const bob=motion&&!run.paused&&run.height<.1?Math.sin(run.time*17)*.045:0;
     camera.aspect=renderer.domElement.clientWidth/Math.max(1,renderer.domElement.clientHeight);camera.updateProjectionMatrix();
-    camera.position.set(p.x+Math.cos(p.yaw)*cameraLane,1.67+run.height+bob,p.z-Math.sin(p.yaw)*cameraLane);
+    camera.position.set(p.x+Math.cos(p.yaw)*cameraLane,1.67+run.height-(run.duck||0)*1.03+bob,p.z-Math.sin(p.yaw)*cameraLane);
     camera.rotation.set(0,yaw,motion?Math.sin(run.time*8.5)*.005:0,'YXZ');
     if(movingWall){const approach=Math.max(0,Math.min(1,(run.distance-31)/5));movingWall.position.x=movingWall.userData.lane+(1-approach)*(movingWall.userData.lane>0?2:-2);}
     renderer.render(scene,camera);
