@@ -26,5 +26,5 @@ function mount(controller){api=controller;
  function frame(now){if(!document.hidden&&!reduced?.matches&&api.getLook().weapon&&now-last>65){last=now;window.GalaAvatar.draw($('avatar'),api.getLook(),{time:now});}window.requestAnimationFrame(frame);}
  window.requestAnimationFrame(frame);
 }
-window.GalaArmory={mount,refresh};
+window.GalaArmory={mount,refresh,selection:()=>({type,tier})};
 })();

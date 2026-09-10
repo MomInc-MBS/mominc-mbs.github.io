@@ -1,4 +1,4 @@
-(()=>{'use strict';const A=GalaAvatar,KEY='mominc-avatar-v1',SAVED='mominc-avatar-wardrobe-v1';let current=structuredClone(A.defaultLook),category=new URLSearchParams(location.search).get('section')==='weapons'?'weapons':'body',undo=[],redo=[],looks=[];
+(()=>{'use strict';const A=GalaAvatar,KEY='mominc-avatar-v1',SAVED='mominc-avatar-wardrobe-v1';let current=structuredClone(A.defaultLook),category=['weapons','upgrades','progress'].includes(new URLSearchParams(location.search).get('section'))?new URLSearchParams(location.search).get('section'):'body',undo=[],redo=[],looks=[];
 const $=id=>document.getElementById(id),status=message=>$('status').textContent=message;
 try{const raw=localStorage.getItem(KEY);if(raw)current=A.normalize(JSON.parse(raw));const saved=JSON.parse(localStorage.getItem(SAVED)||'[]');if(Array.isArray(saved))looks=saved.slice(0,12).flatMap(x=>{try{return[A.normalize(x)];}catch{return[];}});}catch{status('Device storage is unavailable. You can still export your look.');}
 function persist(){current.name=window.MBS_DJ.display();try{localStorage.setItem(KEY,JSON.stringify(current));window.dispatchEvent(new CustomEvent('mominc-avatar-change',{detail:structuredClone(current)}));return true;}catch{status('Could not save on this device. Download your look to keep it.');return false;}}
@@ -62,7 +62,7 @@ function paintOptions(){
  $('category-name').textContent=categoryLabel(category);
  if(weapons){
   $('category-note').textContent=category==='weapons'?'Choose a sci-fi weapon family.':category==='upgrades'?'A starter and 20 upgrades for your selected weapon.':'Your MYR5 coaching days earn weapon XP.';
-  $('weapon-types').hidden=category!=='weapons';$('weapon-detail').hidden=category!=='upgrades';$('weapon-tiers').hidden=category!=='upgrades';
+  $('weapon-demo').hidden=category!=='upgrades';$('weapon-types').hidden=category!=='weapons';$('weapon-detail').hidden=category!=='upgrades';$('weapon-tiers').hidden=category!=='upgrades';
   for(const id of ['weapon-progress','coach-progress-import','weapon-day-note'])$(id).hidden=category!=='progress';
   window.GalaArmory?.refresh();return;
  }

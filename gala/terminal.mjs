@@ -1,9 +1,12 @@
+import {mountWeaponStation} from './weapon-station.mjs';
 const run=window.MBS_RUN;
+let weaponStation=null;
 let hologram=null,loadingHologram=false,expanded=false,busy=false,actionError='';
 const steps=[['djscratch','DJ Scratch','/play/djscratch/'],['goon','Goon Gala · reach 2048','/play/goon/'],['lilboyfriend','Lil Boyfriend','/play/lilboyfriend/'],['corgi','Cortisol Corgi','/play/corgi/'],['hand','Helping Hand','/handborne/'],['armie','Survive Coach Armie','/games/armie/']];
 const status=text=>document.querySelectorAll('[data-run-status]').forEach(el=>el.textContent=text);
 async function board(){const body=document.getElementById('leaderRows');if(!body)return;const note=document.getElementById('leaderStatus');try{const {items}=await run.leaderboard();body.replaceChildren();for(const item of items){const row=document.createElement('tr');for(const text of [String(item.rank).padStart(2,'0'),'PRISONER '+item.djName,run.time(item.durationMs)]){const cell=document.createElement('td');cell.textContent=text;row.append(cell);}body.append(row);}note.textContent=items.length?'Live escapee records.':'No escapees on record yet. Your seat can be the first.';}catch(e){note.textContent=e.message;}}
 async function paint(){const current=run.read(),done=new Set(current?.completed||[]),eligible=!!(current?.completedAt&&current?.installedAt);document.querySelectorAll('[data-run-name]').forEach(el=>el.textContent=current?.djName?'PRISONER '+current.djName:window.MBS_DJ.display());
+ if(eligible&&!weaponStation&&document.getElementById('warWeaponStation'))weaponStation=mountWeaponStation(document.getElementById('warWeaponStation'),{choose:true,canUse:()=>{const r=run.read();return !!(r?.completedAt&&r?.installedAt);}});
  document.querySelectorAll('[data-run-time]').forEach(el=>el.textContent=current?run.time(current.durationMs??Date.now()-current.startedAt):'—');
  document.querySelectorAll('[data-run-checks]').forEach(list=>{list.replaceChildren();for(const [key,label,url] of [...steps,['app','Get the MYR5 app','https://myr5.mominc.online/install.html']]){const yes=key==='app'?!!current?.installedAt:done.has(key),row=document.createElement('li'),link=document.createElement('a'),mark=document.createElement('b');row.dataset.done=String(yes);link.href=url;link.textContent=label;mark.textContent=yes?'✓':'—';row.append(link,mark);list.append(row);}});
  const install=document.getElementById('getCoachApp');if(install){try{install.href='https://myr5.mominc.online/install.html#'+run.handoff();}catch{install.href='https://myr5.mominc.online/install.html';}}
@@ -21,4 +24,4 @@ document.getElementById('monikerForm')?.addEventListener('submit',async e=>{e.pr
 document.getElementById('splitHologram')?.addEventListener('click',e=>{expanded=!expanded;hologram?.split(expanded?1:0);e.currentTarget.textContent=expanded?'Reassemble the specimen':'Separate the specimen';});
 window.addEventListener('mbs:run-update',paint);document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh();});
 const clock=setInterval(()=>{const current=run.read();if(!document.hidden&&current&&!current.completedAt)document.querySelectorAll('[data-run-time]').forEach(el=>el.textContent=run.time(Date.now()-current.startedAt));},1000);
-window.addEventListener('pagehide',()=>{clearInterval(clock);hologram?.dispose();});paint();refresh();
+window.addEventListener('pagehide',()=>{clearInterval(clock);hologram?.dispose();weaponStation?.dispose();});paint();refresh();

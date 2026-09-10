@@ -15,12 +15,13 @@
  }
  function create(look){
   const body=document.createElement('canvas'),pet=document.createElement('canvas'),weapon=document.createElement('canvas');
-  const scenes=playlist(look),hasWeapon=scenes.some(scene=>scene.name==='weapon');
+  const scenes=playlist(look),hasWeapon=scenes.some(scene=>scene.name==='weapon');let specialAt=-Infinity;
   weapon.width=40;weapon.height=72;if(hasWeapon)W.draw(weapon.getContext('2d'),look.weapon);
   A.draw(pet,look,{base:false,weapon:false,petOnly:true});let lastPose='';
   function paint(canvas,time=0,still=false){
    if(canvas.width!==160||canvas.height!==168){canvas.width=160;canvas.height=168;}
-   const ctx=canvas.getContext('2d'),scene=still?{name:'idle',time:0,progress:0,duration:6000}:moment(scenes,time);
+   const specialPlaying=hasWeapon&&window.GalaWeaponMotion&&window.performance.now()-specialAt<(window.GalaWeaponMotion.abilityFor(look.weapon)?.animationMs||0);
+   const ctx=canvas.getContext('2d'),scene=specialPlaying?{name:'weapon',time:0,progress:0,duration:2000}:still?{name:'idle',time:0,progress:0,duration:6000}:moment(scenes,time);
    ctx.clearRect(0,0,160,168);ctx.imageSmoothingEnabled=false;canvas.dataset.scene=scene.name;
    const seconds=scene.time/1000,wave=Math.sin(seconds*TAU*1.15),blink=!still&&(scene.name==='face'?(seconds>1.5&&seconds<1.68)||(seconds>3.2&&seconds<3.37):(time%4900>4570&&time%4900<4710));
    const pose={};if(scene.name==='walk')pose.walk=wave;if(scene.name==='pet')pose.petting=wave;if(scene.name==='weapon')pose.weapon=true;
@@ -45,7 +46,12 @@
     ctx.globalAlpha=1-zoom;const affection=scene.name==='pet'?Math.max(0,wave)*1.3:0;ctx.drawImage(pet,32,13-affection,96,144);ctx.globalAlpha=1;
     if(scene.name==='pet'){const rise=(seconds%1.25)/1.25,hx=45,hy=113-rise*18;ctx.globalAlpha=Math.sin(rise*Math.PI)*.85;ctx.fillStyle='#ff97c2';ctx.fillRect(hx-3,hy-2,3,3);ctx.fillRect(hx+1,hy-2,3,3);ctx.fillRect(hx-2,hy+1,5,2);ctx.fillRect(hx,hy+3,1,1);ctx.globalAlpha=1;}
    }
-   if(hasWeapon&&zoom<1){
+   if(hasWeapon&&zoom<1&&window.GalaWeaponMotion){
+    const M=window.GalaWeaponMotion,ability=M.abilityFor(look.weapon),special=ability&&window.performance.now()-specialAt<ability.animationMs;
+    const attack=scene.name==='weapon',beat=scene.time%1350;
+    ctx.save();ctx.globalAlpha=1-zoom;ctx.translate(112,88+bob*2);ctx.rotate(-Math.PI/2);
+    M.drawAnimatedWeapon(ctx,look.weapon,{weapons:W,x:0,y:0,scale:.55,now:special?window.performance.now():scene.time,action:special?{startedAt:specialAt,special:true}:attack?{startedAt:scene.time-beat,special:false}:null,reducedMotion:still});ctx.restore();
+   }else if(hasWeapon&&zoom<1){
     ctx.globalAlpha=1-zoom;ctx.save();
     if(scene.name==='weapon'){
      const melee=['rapier','greatsword','dagger','spear','trident','scythe'].includes(look.weapon.type),beat=(seconds%1.35)/1.35;
@@ -58,7 +64,7 @@
    }
    ctx.restore();return scene;
   }
-  return {paint,scenes};
+  return {paint,scenes,weapon:hasWeapon?look.weapon:null,triggerSpecial(){if(hasWeapon)specialAt=window.performance.now();}};
  }
  window.GalaPerformance={playlist,moment,create};
 })();
