@@ -96,7 +96,7 @@ const server=http.createServer((req,res)=>{
   }
 
   const mobile=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true}),studio=await mobile.newPage();
-  await studio.route('https://myr5-coach.ianmyersrocks97.chatgpt.site/**',route=>route.fulfill({contentType:'text/html',body:'<!doctype html><title>Coach installer</title>'}));
+  await studio.route('https://myr5.mominc.online/**',route=>route.fulfill({contentType:'text/html',body:'<!doctype html><title>Coach installer</title>'}));
   await studio.goto(base+'/__flow');
   await studio.evaluate(()=>{
    localStorage.setItem('mbs-armie-hall-v2',JSON.stringify({version:2,unlocked:true,hall:2,level:0,style:'steady',moves:[]}));
@@ -105,7 +105,7 @@ const server=http.createServer((req,res)=>{
   await studio.goto(base+'/tv/assets/armie-intro/creature-tv.html');
   const useCoach=studio.getByRole('button',{name:'Use this coach →',exact:true});await useCoach.waitFor();
   const box=await useCoach.boundingBox();assert(box.y>=0&&box.y+box.height<=844,'Finish button visible on phone');
-  await useCoach.click();await studio.waitForURL('https://myr5-coach.ianmyersrocks97.chatgpt.site/install.html#coach=*');
+  await useCoach.click();await studio.waitForURL('https://myr5.mominc.online/install.html#coach=*');
   const {decodeHandoff}=await import('../coach-setup/onboarding-domain.mjs');
   const incoming=decodeHandoff(new URLSearchParams(new URL(studio.url()).hash.slice(1)).get('coach'));
   assert.equal(incoming.siteChoices.armie.game.hallways,3,'The old ending is repaired before leaving the website');

@@ -1,7 +1,7 @@
 import {SITE_QUESTIONS} from './onboarding-questions.mjs';
 export {SITE_QUESTIONS};
-export const WEBSITE='https://mominc-mbs.github.io';
-export const COACH_APP='https://myr5-coach.ianmyersrocks97.chatgpt.site';
+export const WEBSITE='https://mominc.online';
+export const COACH_APP='https://myr5.mominc.online';
 export const COACHES=['supportive','direct','analytical','playful','calm','mom'];
 export const EXERCISES={squat:'Squats',pushup:'Push-ups',tree:'Tree pose',warrior:'Warrior II',horse:'Horse stance',boxing:'Air boxing',jogging:'Jogging in place',jumping:'Jumps'};
 export const FIELDS=[

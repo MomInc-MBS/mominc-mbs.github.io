@@ -41,5 +41,5 @@ Allow: /
 User-agent: Bingbot
 Allow: /
 
-Sitemap: https://mominc-mbs.github.io/sitemap.xml
-# Plain-language site index: https://mominc-mbs.github.io/llms.txt
+Sitemap: https://mominc.online/sitemap.xml
+# Plain-language site index: https://mominc.online/llms.txt

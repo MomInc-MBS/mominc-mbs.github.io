@@ -1,7 +1,7 @@
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
 const {JSDOM}=require('jsdom'),{createCanvas}=require('@napi-rs/canvas');
 const site=path.join(__dirname,'..'),bundle=fs.readFileSync(path.join(site,'tv/games/goon/assets/index-W2w8AfON.js'),'utf8');
-const dom=new JSDOM('<!doctype html><body></body>',{url:'https://mominc-mbs.github.io/tv/games/goon/',runScripts:'outside-only',pretendToBeVisual:true}),w=dom.window;
+const dom=new JSDOM('<!doctype html><body></body>',{url:'https://mominc.online/tv/games/goon/',runScripts:'outside-only',pretendToBeVisual:true}),w=dom.window;
 let reduced=false,hidden=false,draws=0;
 const preference=new w.EventTarget();Object.defineProperty(preference,'matches',{get:()=>reduced});w.matchMedia=()=>preference;
 Object.defineProperty(w.document,'hidden',{get:()=>hidden});
