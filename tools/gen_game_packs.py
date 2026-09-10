@@ -5,6 +5,7 @@ Uses Git's blob inventory so a sparse checkout can regenerate without downloadin
 Working files override Git, so run before committing. No timestamps or build dependency.
 """
 from pathlib import Path
+import argparse
 import hashlib
 import html
 import json
@@ -20,13 +21,32 @@ TEXT = {'.html', '.js', '.mjs', '.css', '.json', '.mtl'}
 SLUGS = ['mominc', 'girlfriend', 'lilboyfriend', 'corgi', 'djscratch', 'fuel', 'goon', 'war-room', 'armie', 'handborne']
 
 
-def build():
+def build(refresh=False):
     inventory = {}
-    for line in subprocess.check_output(['git', 'ls-tree', '-r', '-l', 'HEAD'], cwd=ROOT, text=True).splitlines():
-        info, path = line.split('\t')
-        _, kind, sha, size = info.split()
-        if kind == 'blob':
-            inventory[path] = (sha, int(size))
+    previous = {}
+    if refresh:
+        # A code-only repair can retain the existing dependency lists in a sparse
+        # checkout. Do not use this mode when adding/removing asset references.
+        for slug in SLUGS:
+            previous[slug] = json.loads((ROOT / 'tv/game-packs' / f'{slug}.json').read_text())
+            for asset in previous[slug]['assets']:
+                path = asset['url'].lstrip('/')
+                record = (asset['revision'], asset['bytes'])
+                if path in inventory and inventory[path] != record:
+                    raise ValueError(f'Conflicting asset revisions: {path}')
+                inventory[path] = record
+    else:
+        for line in subprocess.check_output(['git', 'ls-tree', '-r', '-l', 'HEAD'], cwd=ROOT, text=True).splitlines():
+            info, path = line.split('\t')
+            _, kind, sha, size = info.split()
+            if kind == 'blob':
+                inventory[path] = (sha, int(size))
+    # Root-level scripts were previously read only from HEAD, leaving the worker
+    # one commit behind even when manifests were generated before committing.
+    for f in ROOT.iterdir():
+        if f.is_file() and f.suffix in EXT:
+            b = f.read_bytes()
+            inventory[f.name] = (hashlib.sha1(b'blob ' + str(len(b)).encode() + b'\0' + b).hexdigest(), len(b))
     for base in ['tv', 'games', 'play', 'gala', 'handborne', 'arcade']:
         for f in (ROOT / base).rglob('*'):
             if f.is_file() and f.suffix in EXT and 'game-packs' not in f.parts:
@@ -34,7 +54,7 @@ def build():
                 inventory[f.relative_to(ROOT).as_posix()] = (hashlib.sha1(b'blob ' + str(len(b)).encode() + b'\0' + b).hexdigest(), len(b))
 
     def usable(path):
-        return (Path(path).suffix in EXT and not any(x in path.split('/') for x in ['source', '_next', '.vite', 'downloads', 'game-packs'])
+        return (path != 'game-assets-sw.js' and Path(path).suffix in EXT and not any(x in path.split('/') for x in ['source', '_next', '.vite', 'downloads', 'game-packs'])
                 and not path.endswith('.map') and '_runtime-probe' not in path and '_goon-quarantined' not in path)
 
     files = {p for p in inventory if usable(p)}
@@ -57,7 +77,19 @@ def build():
     vendor = under('tv/assets/armie-intro/vendor/')
     output = ROOT / 'tv/game-packs'
     output.mkdir(exist_ok=True)
+    def write(slug, selected, fonts):
+        assets = [{'url': '/' + p, 'revision': inventory[p][0], 'bytes': inventory[p][1]} for p in sorted(selected)]
+        manifest = {'schema': 1, 'game': slug, 'assets': assets, 'fontStyles': sorted(fonts)}
+        manifest['version'] = hashlib.sha256(json.dumps(manifest, sort_keys=True).encode()).hexdigest()[:20]
+        (output / f'{slug}.json').write_text(json.dumps(manifest, indent=2) + '\n')
+        unique = {a['revision']: a['bytes'] for a in assets}
+        print(f'{slug}: {len(assets)} files, {sum(unique.values()) / 1048576:.1f} MiB (shared files download once)')
+
     for slug in SLUGS:
+        if refresh:
+            selected = {a['url'].lstrip('/') for a in previous[slug]['assets'] if usable(a['url'].lstrip('/'))}
+            write(slug, selected, previous[slug]['fontStyles'])
+            continue
         selected = set(shared)
         selected |= {p for p in files if p in {f'tv/channels/{slug}.html', f'tv/channels/{slug}.js',
                                               f'games/{slug}/index.html', f'play/{slug}/index.html', f'tv/assets/marks/{slug}.png'}}
@@ -115,13 +147,10 @@ def build():
                         selected.add(candidate)
                         queue.append(candidate)
                         break
-        assets = [{'url': '/' + p, 'revision': inventory[p][0], 'bytes': inventory[p][1]} for p in sorted(selected)]
-        manifest = {'schema': 1, 'game': slug, 'assets': assets, 'fontStyles': sorted(fonts)}
-        manifest['version'] = hashlib.sha256(json.dumps(manifest, sort_keys=True).encode()).hexdigest()[:20]
-        (output / f'{slug}.json').write_text(json.dumps(manifest, indent=2) + '\n')
-        unique = {a['revision']: a['bytes'] for a in assets}
-        print(f'{slug}: {len(assets)} files, {sum(unique.values()) / 1048576:.1f} MiB (shared files download once)')
+        write(slug, selected, fonts)
 
 
 if __name__ == '__main__':
-    build()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--refresh', action='store_true', help='Refresh bytes only; retain existing asset membership (code-only repairs).')
+    build(refresh=parser.parse_args().refresh)

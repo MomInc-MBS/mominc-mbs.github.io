@@ -18,11 +18,6 @@
       "bytes": 1350
     },
     {
-      "url": "/game-assets-sw.js",
-      "revision": "70947ae113801eee08a568a70eca3a8e06240995",
-      "bytes": 9719
-    },
-    {
       "url": "/handborne/assets/GLTFExporter-CkiDkgTb.js",
       "revision": "cfd63cc9590df75ef5b176ac441f933d710671f5",
       "bytes": 34602
@@ -439,8 +434,8 @@
     },
     {
       "url": "/tv/game-loader.js",
-      "revision": "4c01b0fa0cf9e4b1e5f6b15790c06588a436e8f8",
-      "bytes": 11521
+      "revision": "b878513f9c4aa1a49836ae43ca6eb410df3d06c6",
+      "bytes": 12049
     },
     {
       "url": "/tv/identity.css",
@@ -454,8 +449,8 @@
     },
     {
       "url": "/tv/index.html",
-      "revision": "8dcb1cc448ec5732059c2ae46c5f97e685b1b3d5",
-      "bytes": 12695
+      "revision": "bfe26b04d58a429eaf4d51e1731e60a9f504f2a3",
+      "bytes": 12735
     },
     {
       "url": "/tv/landing.css",
@@ -539,12 +534,12 @@
     },
     {
       "url": "/tv/tv.js",
-      "revision": "08628791e0a7d96e270ac297e37c34295c91207c",
-      "bytes": 29950
+      "revision": "60c566a52bbd0191b89c798b97c4fea8ff3c23de",
+      "bytes": 29869
     }
   ],
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "143e7cc9f01bf08672ad"
+  "version": "88125a7330aafc38c810"
 }

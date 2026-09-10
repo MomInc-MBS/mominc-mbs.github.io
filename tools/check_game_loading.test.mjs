@@ -49,9 +49,9 @@ function worker(packs, bodies, caches = storage()) {
         waitUntil(promise) {done = promise;}});
       return {messages, done};
     },
-    async get(path, {range, navigate = false} = {}) {
+    async get(path, {range, navigate = false, destination = ''} = {}) {
       let response;
-      const request = {url: new URL(path, origin).href, method: 'GET', mode: navigate ? 'navigate' : 'cors', headers: new Headers(range ? {range} : {})};
+      const request = {url: new URL(path, origin).href, method: 'GET', destination, mode: navigate ? 'navigate' : 'cors', headers: new Headers(range ? {range} : {})};
       listeners.fetch({request, respondWith(promise) {response = promise;}});
       return response;
     }};
@@ -202,7 +202,7 @@ test('Gala and War Room keep separate game bundles and retain the clearance chec
   assert.ok(war.has('/gala/war-room-boot.js'));
 });
 
-function page(path, scripts = []) {
+function page(path, scripts = [], search = '') {
   const callbacks = {}, attrs = new Set(), nodes = new Map(), ports = [], executed = [];
   function element(tag) {
     const node = {tag, dataset: {}, hidden: false, children: [], isConnected: false, textContent: '',
@@ -226,7 +226,7 @@ function page(path, scripts = []) {
     ready: Promise.resolve(), async register() {return {active: this.controller};}};
   const window = {dispatchEvent() {}};
   vm.runInNewContext(readFileSync(new URL('tv/game-loader.js', root), 'utf8'), {window, document,
-    location: {pathname: path, origin, search: '', reload() {}}, navigator: {serviceWorker},
+    location: {pathname: path, origin, search, reload() {}}, navigator: {serviceWorker},
     URL, URLSearchParams, MessageChannel, Event, setTimeout, clearTimeout,
     requestAnimationFrame: fn => setImmediate(fn), MutationObserver: class {observe() {} disconnect() {}}});
   return {window, document, attrs, ports, executed, nodes,
@@ -234,7 +234,7 @@ function page(path, scripts = []) {
 }
 
 test('a failed page download keeps character selection covered until Retry succeeds', async () => {
-  const p = page('/tv/');
+  const p = page('/tv/', [], '?ch=corgi');
   await turn();await turn();
   p.domReady();
   const finishing = p.window.MBS_LOAD.finish();
@@ -262,4 +262,59 @@ test('the War Room starts after download and after its existing synchronous glob
   assert.deepEqual(p.executed, ['/gala/war-room.js', '/game.js', '/gala/weapon-station.mjs']);
   assert.ok(!p.attrs.has('data-game-loading'));
   p.ports.forEach(port => port.close());
+});
+
+test('the MOM INC homepage mounts without a game pack on every home URL', async () => {
+  for (const [path, search] of [['/tv/', ''], ['/tv/index.html', ''], ['/tv/', '?ch=mominc'], ['/tv/', '?ch=sag']]) {
+    const p = page(path, [], search);
+    p.domReady();
+    await p.window.MBS_LOAD.ready;
+    await p.window.MBS_LOAD.prepare('mominc');
+    await p.window.MBS_LOAD.finish();
+    await turn(); await turn();
+    assert.equal(p.ports.length, 0, 'The homepage must not request a full game pack');
+    assert.ok(!p.attrs.has('data-game-loading'));
+    assert.ok(!p.nodes.has('mbs-game-loading'));
+  }
+  const shell = readFileSync(new URL('tv/tv.js', root), 'utf8');
+  assert.match(shell, /const current = .*get\("ch"\) \|\| "mominc"/);
+  assert.match(shell, /const name = current === "sag" \? "mominc" : current/);
+  assert.match(shell, /MBS_CH\.mount\(name, channel\)/);
+});
+
+test('Armie still downloads on page entry, before any character or Start action', async () => {
+  const p = page('/tv/assets/armie-intro/index.html');
+  await turn(); await turn();
+  assert.equal(p.ports.length, 1);
+  assert.ok(p.attrs.has('data-game-loading'));
+  p.domReady();
+  p.ports[0].postMessage({type: 'ready'});
+  for (let i = 0; i < 12; i++) await turn();
+  assert.ok(!p.attrs.has('data-game-loading'));
+  p.ports.forEach(port => port.close());
+});
+
+test('recovery scripts bypass stale installed packs but remain available offline', async () => {
+  for (const path of ['/tv/game-loader.js', '/tv/tv.js']) {
+    const bodies = {[path]: 'old'};
+    const w = worker({corgi: pack('corgi', [file(path, 'old')])}, bodies);
+    await w.send('corgi').done;
+    bodies[path] = 'new';
+    const requestPath = path + '?mbs-rev=home-repair-2';
+    assert.equal(await (await w.get(requestPath, {destination: 'script'})).text(), 'new');
+    w.state.offline = true;
+    assert.equal(await (await w.get(requestPath, {destination: 'script'})).text(), 'old');
+  }
+});
+
+test('all generated packs match the current loading and homepage scripts', () => {
+  const paths = ['tv/game-loader.js', 'tv/index.html', 'tv/tv.js'];
+  for (const name of readdirSync(new URL('tv/game-packs/', root))) {
+    const p = JSON.parse(readFileSync(new URL('tv/game-packs/' + name, root)));
+    assert.ok(!p.assets.some(a => a.url === '/game-assets-sw.js'), 'Worker installation must not be a game-pack dependency');
+    for (const path of paths) {
+      const expected = file('/' + path, readFileSync(new URL(path, root)));
+      assert.deepEqual(p.assets.find(a => a.url === expected.url), expected, name + ': ' + path);
+    }
+  }
 });

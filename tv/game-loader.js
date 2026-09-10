@@ -7,6 +7,11 @@
     corgi: 'Cortisol Corgi', djscratch: 'DJ Scratch', fuel: 'Fuel', goon: 'The Goon Gala',
     'war-room': 'The War Room', armie: 'Coach Armie', handborne: 'Helping Hand'};
   const path = location.pathname;
+  const tvPage = /^\/tv\/(?:index\.html)?$/.test(path);
+  const channelName = new URLSearchParams(location.search).get('ch') || 'mominc';
+  // MOM INC is the network homepage, not a standalone game. Mount its content
+  // normally and keep its already-lazy films out of the blocking game download.
+  const homePage = tvPage && ['mominc', 'sag'].includes(channelName);
   function pageGame() {
     if (path.startsWith('/tv/assets/armie-intro/')) return 'armie';
     if (path.startsWith('/handborne/')) return 'handborne';
@@ -15,7 +20,7 @@
     if (path.startsWith('/arcade/tub-flight/')) return 'fuel';
     const route = path.match(/^\/(?:games|play)\/([^/]+)/)?.[1];
     if (route) return route;
-    if (/^\/tv\/(?:index.html)?$/.test(path)) return new URLSearchParams(location.search).get('ch');
+    if (tvPage) return homePage ? null : channelName;
     return document.documentElement.dataset.game;
   }
   let selected = pageGame();
@@ -105,6 +110,7 @@
   }
 
   function prepare(game = selected) {
+    if (homePage && (!game || game === 'mominc' || game === 'sag')) return Promise.resolve();
     if (game === 'goon' && document.documentElement.dataset.galaRoom === 'war-room') game = 'war-room';
     if (!names[game]) return Promise.resolve();
     if (pending.has(game)) return pending.get(game);
@@ -188,6 +194,8 @@
 
   const api = window.MBS_LOAD = {prepare, finish, failed, ready: null};
   api.ready = prepare();
+  // Refresh an older worker without hiding the homepage or requiring cache space.
+  if (homePage) worker().catch(() => {});
   if (!names[selected]) return;
   // Capture input without making the game subtree inert/display:none: legacy
   // canvases and iframe games measure themselves while they mount behind the logo.
