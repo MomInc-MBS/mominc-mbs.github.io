@@ -1,6 +1,6 @@
 /* Device-local story progression. These gates do not grant server entitlements. */
 (()=>{'use strict';
- const KEY='mbs-hand-decisions-v1', REQUIRED=['fuel','lilboyfriend','djscratch','corgi'];
+ const KEY='mbs-hand-decisions-v1', REQUIRED=['lilboyfriend','djscratch','corgi'];
  const read=()=>{try{const s=JSON.parse(localStorage.getItem(KEY)||'null');return {count:Number.isInteger(s?.count)?Math.max(0,Math.min(5,s.count)):0,last:typeof s?.last==='string'?s.last:''};}catch{return {count:0,last:''};}};
  const AD_KEY='mbs-hand-ad-shown-v1', PROFILE_KEY='mbs-hand-profile-v1';
  const regions=['nails','fingertips','middle_sections','knuckles','palm','back_of_hand','wrist'];

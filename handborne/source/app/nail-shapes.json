@@ -1,0 +1,10 @@
+[
+  {"id":"short","name":"Short round","extension":0,"tip":0.73,"taper":1.8,"curve":0,"width":1},
+  {"id":"square","name":"Square","extension":0.004,"tip":0.98,"taper":3,"curve":0,"width":1.04},
+  {"id":"almond","name":"Almond","extension":0.006,"tip":0.12,"taper":1.65,"curve":0,"width":1},
+  {"id":"coffin","name":"Coffin","extension":0.01,"tip":0.52,"taper":1.4,"curve":0,"width":1.05},
+  {"id":"stiletto","name":"Stiletto","extension":0.014,"tip":0.025,"taper":1.15,"curve":0.0008,"width":0.95},
+  {"id":"talon","name":"Talon","extension":0.014,"tip":0.025,"taper":1.4,"curve":0.007,"width":1.05},
+  {"id":"hook","name":"Hooked claw","extension":0.01,"tip":0.025,"taper":1.6,"curve":0.014,"width":1.12},
+  {"id":"spade","name":"Spade","extension":0.006,"tip":0.06,"taper":3.4,"curve":0.001,"width":1.3}
+]

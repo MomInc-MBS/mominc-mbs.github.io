@@ -163,7 +163,7 @@
 .fu .batch-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}
 .fu .batch-options button,.fu .batch-actions button{border:3px solid var(--ink);border-radius:9px;padding:10px;background:var(--sun);color:var(--ink);font:16px Anton,sans-serif;box-shadow:3px 3px 0 var(--grape);cursor:pointer}
 .fu .batch-options button[aria-pressed="true"]{background:var(--acid)}
-.fu .batch-actions{display:flex;gap:10px;flex-wrap:wrap}.fu #batchNext{background:var(--acid)}
+.fu .batch-actions{display:flex;gap:10px;flex-wrap:wrap}.fu #batchNext{background:var(--acid);flex:1 1 100%;width:100%;min-height:72px;padding:16px 24px;font-size:clamp(24px,6vw,32px);line-height:1.15;letter-spacing:.04em;border-width:4px;box-shadow:5px 6px 0 var(--grape);touch-action:manipulation}.fu #batchNext:active:not(:disabled){transform:translateY(3px);box-shadow:2px 3px 0 var(--grape)}
 .fu button:disabled{opacity:.48;cursor:default}.fu button:focus-visible{outline:3px solid var(--grape);outline-offset:3px}
 .fu .batch-meter{display:flex;align-items:center;gap:12px}.fu progress{accent-color:var(--grape);height:24px;flex:1;min-width:0}
 .fu #batchStatus{min-height:1.5em;font-weight:bold}.fu #introCard p{font-size:16px}.fu #introCard small{display:block;margin-top:12px;font-size:12px}

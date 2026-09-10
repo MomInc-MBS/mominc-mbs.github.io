@@ -5,7 +5,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const http = require('node:http');
 const root = path.resolve(__dirname, '..');
-const ids = ['fuel', 'lilboyfriend', 'djscratch', 'corgi'];
+const ids = ['lilboyfriend', 'djscratch', 'corgi'];
 const fixture = `<!doctype html><html data-game="djscratch"><body><main id="dj"></main>
 <script src="/tv/mbs-channels.js"></script><script src="/tv/state.js"></script>
 <script src="/tv/network-flow.js"></script><script src="/tv/mbs-shim.js"></script></body></html>`;
@@ -28,8 +28,8 @@ const server=http.createServer((req,res)=>{
   await page.goto(base+'/__flow');
   await page.evaluate(ids=>ids.forEach(id=>MBS.unlock(id)),ids);
   assert.equal(await page.locator('dialog[open]').count(),0,'Unlocking secrets does not finish pages');
-  await page.evaluate(ids=>ids.slice(0,3).forEach(id=>MBS.complete(id)),ids);
-  assert.equal(await page.locator('dialog[open]').count(),0,'No ad before all four pages');
+  await page.evaluate(ids=>ids.slice(0,2).forEach(id=>MBS.complete(id)),ids);
+  assert.equal(await page.locator('dialog[open]').count(),0,'No ad before all three required pages');
   await page.evaluate(()=>MBS.complete('corgi'));
   await page.locator('dialog[open]').waitFor();
   assert.equal(await page.locator('dialog[open]').count(),1);
@@ -39,7 +39,7 @@ const server=http.createServer((req,res)=>{
   assert.equal(await page.locator('dialog[open]').count(),1,'Ad returns on a channel reload');await page.locator('.ad-close').click();
   const second=await context.newPage();await second.goto(base+'/__flow');
   assert.equal(await second.locator('dialog[open]').count(),1,'Ad returns in another tab');await second.close();
-  console.log('PASS ad waits for four terminal completions and returns across reloads and tabs');
+  console.log('PASS ad waits for three required terminal completions and returns across reloads and tabs');
 
   const recipe={version:4,sections:{nails:20,fingertips:21,fingers:22,palm:20,back_of_hand:21,wrist:22},pose:'relaxed',nailShape:'natural'};
   await page.evaluate(r=>{localStorage.setItem('mbs-hand-decisions-v1',JSON.stringify({count:5,last:'saved'}));localStorage.setItem('handborne-recipe-v4',JSON.stringify(r));localStorage.removeItem('mbs-hand-profile-v1');},recipe);
