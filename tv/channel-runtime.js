@@ -176,7 +176,7 @@
         const asModule = (opts.module === undefined) ? !!(rec && rec.module) : !!opts.module;
         if (!asModule) return { legacy: true, root: root };   // not converted yet: caller runs the old path
 
-        return import("./channels/" + name + ".js").then(function (m) {
+        return import("./channels/" + name + ".js" + (name === "djscratch" ? "?v=game-name-2" : "")).then(function (m) {
           const mod = m && (m.default || m);
           if (!mod || typeof mod.mount !== "function") throw new Error("module exports no mount()");
           // between the fragment and mount(): see opts.beforeMount above. Deliberately NOT caught
