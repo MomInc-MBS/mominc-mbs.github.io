@@ -43,9 +43,19 @@
       "bytes": 1201094
     },
     {
+      "url": "/tv/assets/iterations/myr-01-smear.webp",
+      "revision": "90fa8b607d3761f8cd93b487184ed363cb79abe7",
+      "bytes": 39690
+    },
+    {
       "url": "/tv/assets/iterations/myr-02-confident.png",
       "revision": "e50928d22578bbb30079d7aee6d5ff728d632a55",
       "bytes": 1292043
+    },
+    {
+      "url": "/tv/assets/iterations/myr-02-confident.webp",
+      "revision": "863db9bdcd54a5871e843b5cc3b3526f952c6851",
+      "bytes": 45098
     },
     {
       "url": "/tv/assets/iterations/myr-03-melted-bg.png",
@@ -53,9 +63,19 @@
       "bytes": 1007151
     },
     {
+      "url": "/tv/assets/iterations/myr-03-melted-bg.webp",
+      "revision": "28e96d4b071f2afbf9abb8d6f0fd0fad856fc7ae",
+      "bytes": 26644
+    },
+    {
       "url": "/tv/assets/iterations/myr-04-earrings.png",
       "revision": "b1973a4f03edb0073d393b8b66d2fd86e74b5e8c",
       "bytes": 1279153
+    },
+    {
+      "url": "/tv/assets/iterations/myr-04-earrings.webp",
+      "revision": "1077d10274d38a767fc282a28b95b2e7f4135a45",
+      "bytes": 41034
     },
     {
       "url": "/tv/assets/iterations/myr-05-sixfingers.png",
@@ -63,9 +83,19 @@
       "bytes": 1354430
     },
     {
+      "url": "/tv/assets/iterations/myr-05-sixfingers.webp",
+      "revision": "ed2778b19f4d180fc9ee9addb390ca0baa5163fd",
+      "bytes": 24220
+    },
+    {
       "url": "/tv/assets/iterations/myr-06-garbled-text.png",
       "revision": "b63b6f68770bc8f60080e6a35b5d1fa54b5bcfa0",
       "bytes": 1961855
+    },
+    {
+      "url": "/tv/assets/iterations/myr-06-garbled-text.webp",
+      "revision": "0ea0f6b113e6f586e8431c5dffcfce1e683343a8",
+      "bytes": 83758
     },
     {
       "url": "/tv/assets/iterations/myr-07-plastic.png",
@@ -73,9 +103,19 @@
       "bytes": 1385553
     },
     {
+      "url": "/tv/assets/iterations/myr-07-plastic.webp",
+      "revision": "cc52b4fd6fd8f60da02502e574061ab95f28a5fe",
+      "bytes": 49588
+    },
+    {
       "url": "/tv/assets/iterations/myr-08-crowd.png",
       "revision": "e82ab157a6928c45007e85f093824e73eb1996ac",
       "bytes": 1562969
+    },
+    {
+      "url": "/tv/assets/iterations/myr-08-crowd.webp",
+      "revision": "f4c10626fa2c95cda54e7a1ee2c2a901fdbb97e7",
+      "bytes": 64998
     },
     {
       "url": "/tv/assets/iterations/myr-09-clean.png",
@@ -83,9 +123,19 @@
       "bytes": 1328069
     },
     {
+      "url": "/tv/assets/iterations/myr-09-clean.webp",
+      "revision": "0f0ea9c87a993f57c80454bb3acf80ab1b2996d7",
+      "bytes": 58160
+    },
+    {
       "url": "/tv/assets/iterations/myr-10-carnage.png",
       "revision": "73bbd323774dfec273759b15248e9bdd1ec1cc95",
       "bytes": 1136634
+    },
+    {
+      "url": "/tv/assets/iterations/myr-10-carnage.webp",
+      "revision": "78bfca3a72234289911f244e9b4f0ab756e13689",
+      "bytes": 27500
     },
     {
       "url": "/tv/assets/iterations/myr-11-shadows.png",
@@ -93,9 +143,19 @@
       "bytes": 1143922
     },
     {
+      "url": "/tv/assets/iterations/myr-11-shadows.webp",
+      "revision": "ef51df34d0dc41b12e335c3391d4cea525ce2d63",
+      "bytes": 35924
+    },
+    {
       "url": "/tv/assets/iterations/myr-12-mirror.png",
       "revision": "5b161d560676f6cd47689abcd5c833dc8cc40aef",
       "bytes": 1045899
+    },
+    {
+      "url": "/tv/assets/iterations/myr-12-mirror.webp",
+      "revision": "6a71d097193aa4d5297ad18d64838d11bd09d745",
+      "bytes": 36782
     },
     {
       "url": "/tv/assets/iterations/myr-13-weave.png",
@@ -103,14 +163,29 @@
       "bytes": 1546782
     },
     {
+      "url": "/tv/assets/iterations/myr-13-weave.webp",
+      "revision": "41da3b0d7085d39de1d98d4d347d91849a4fe8ff",
+      "bytes": 92384
+    },
+    {
       "url": "/tv/assets/iterations/myr-14-glint.png",
       "revision": "f87f3ac0186fee75048bb1b7237954c4f533e106",
       "bytes": 1432586
     },
     {
+      "url": "/tv/assets/iterations/myr-14-glint.webp",
+      "revision": "348df182c4ab836b9dde872088f4378f51b9deff",
+      "bytes": 79670
+    },
+    {
       "url": "/tv/assets/iterations/myr-15-crowdtext.png",
       "revision": "f6b6ce0c1472037d1027ecf567e1d0f65c99fa40",
       "bytes": 1538344
+    },
+    {
+      "url": "/tv/assets/iterations/myr-15-crowdtext.webp",
+      "revision": "0179ceb3b3a6e3e1788adcee36c5d3c515a7602c",
+      "bytes": 90788
     },
     {
       "url": "/tv/assets/lilbf-car-cozy.jpg",
@@ -304,13 +379,13 @@
     },
     {
       "url": "/tv/channels/mominc.html",
-      "revision": "a0f1983881fe7e361cd652e3b4fd35ab11c6a44b",
-      "bytes": 54947
+      "revision": "ea18a9b334d50e46cd4e5a4776735212523edebb",
+      "bytes": 56834
     },
     {
       "url": "/tv/channels/mominc.js",
-      "revision": "3cd4d433da4c1531e3f1f373be939538f3c59860",
-      "bytes": 30629
+      "revision": "f68dde06cc5cdaf567c100d90433b9d14795885c",
+      "bytes": 30657
     },
     {
       "url": "/tv/dj-identity.css",
@@ -436,5 +511,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "3ceedefcba8a317825e2"
+  "version": "e62af6d70870649edf93"
 }
