@@ -277,7 +277,7 @@ export default {
       inspCards.forEach((c, i) => { c.style.display = (!done && i === idx) ? "" : "none"; });
       if (countEl) countEl.textContent = done ? `${inspCards.length} / ${inspCards.length}` : `${idx + 1} / ${inspCards.length}`;
       if (denyBtn) denyBtn.disabled = done; if (approveBtn) approveBtn.disabled = done;
-      if (hintText) hintText.textContent = done ? "Booth closed. File complete. " : "Tap a stamp, or press D to deny and A to approve. ";
+      if (hintText) hintText.innerHTML = done ? "Booth closed. File complete. " : 'Tap a stamp<span class="kbd-hint">, or press D to deny and A to approve</span>. ';
       if (ledgerEl) ledgerEl.innerHTML = inspCards.filter(c => cardId(c) in insp.recs).map(c => { const v = insp.recs[cardId(c)]; return `<span class="${v === "a" ? "a" : "d"}">${v === "a" ? "✓" : "✗"}</span>`; }).join("");
       if (scoreEl) {
         const s = inspStats(), quota = Math.ceil(inspCards.length * .8);

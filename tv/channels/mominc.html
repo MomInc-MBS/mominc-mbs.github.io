@@ -120,6 +120,9 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
   .mi .itback .look{margin:0 0 5px; font-family:"Archivo Black",sans-serif; font-size:11px; letter-spacing:.05em; color:var(--orange, #ff8a2a); text-transform:uppercase}
   .mi .itback p{margin:0; font-family:"Special Elite",monospace; font-size:12px; line-height:1.4; color:var(--cream)}
   .mi .histhint{font-family:"Barlow Condensed",sans-serif; font-size:12.5px; color:#4a2f14; margin:8px 0 0}
+  .mi .kbd-hint{display:none}
+  .mi .itfront .ph[hidden]{display:none}
+  @media (hover:hover) and (pointer:fine){ .mi .kbd-hint{display:inline} }
   .mi .basis{margin-top:8px; background:#efe7d2; border-radius:6px; padding:6px 8px; font-family:"Barlow Condensed",sans-serif; font-size:12.5px; color:#3a3a3a}
   .mi .basis summary{cursor:pointer; letter-spacing:.06em; text-transform:uppercase; font-weight:600; color:#5a4a2a; list-style:none; display:flex; align-items:center; gap:6px; min-height:44px}
   .mi .basis summary::-webkit-details-marker{display:none}
@@ -209,6 +212,13 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
   @keyframes miSettle{from{opacity:0; transform:translateY(18px) scale(.985)} to{opacity:1; transform:none}}
   @keyframes miRoll{from{--roll:0.03} to{--roll:1}}
   @media (prefers-reduced-motion:reduce){ .mi .myr .pupil{transition:none} .mi .panel,.mi .ex svg{animation:none} .mi .tile{transition:none} }
+  /* Phase 4a #22: skip layout for the panels nothing is watching the inside of. Welcome carries
+     #miRescueVideo's own IntersectionObserver and The case carries each .ex svg's view(block)
+     roll-timeline, both targeting a descendant rather than the panel, so those two are left alone. */
+  .mi .panel[aria-label="The MYR5 iterations"],.mi .panel[aria-label="Results"],.mi .panel[aria-label="The family, now playing"]{content-visibility:auto}
+  .mi .panel[aria-label="The MYR5 iterations"]{contain-intrinsic-size:auto 1100px}
+  .mi .panel[aria-label="Results"]{contain-intrinsic-size:auto 300px}
+  .mi .panel[aria-label="The family, now playing"]{contain-intrinsic-size:auto 600px}
 </style>
 
 <article class="mi" id="mi" aria-label="MOM Inc." data-host="MOM INC" data-show="MBS NETWORK HOME" data-ch="1" data-gauge="off">
@@ -265,12 +275,11 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
         <button class="itcard" type="button" aria-pressed="false" aria-label="MYR1. Flip for CINDER before and after MOM.">
           <span class="itin">
             <span class="itface itfront">
-              <img src="assets/iterations/myr-01-smear.png" alt="A photograph attributed to MYR1" onerror="this.style.display=&quot;none&quot;">
-              <span class="ph">MYR1<br>picture pending</span>
+              <img src="assets/iterations/myr-01-smear.webp" alt="A photograph attributed to MYR1" width="720" height="1052" loading="lazy" decoding="async" onerror="this.style.display=&quot;none&quot;;this.nextElementSibling.hidden=false">
+              <span class="ph" aria-hidden="true" hidden>picture pending</span>
               <span class="itplaque">MYR1</span>
             </span>
             <span class="itface itback">
-              <h4>MYR1</h4>
               <p class="look">CINDER</p>
               <p><b>BEFORE:</b> Ash buried the farms.<br><b>AFTER MOM:</b> I brought back the harvest.</p>
             </span>
@@ -279,12 +288,11 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
         <button class="itcard" type="button" aria-pressed="false" aria-label="MYR1.1. Flip for BRINE before and after MOM.">
           <span class="itin">
             <span class="itface itfront">
-              <img src="assets/iterations/myr-02-confident.png" alt="A photograph attributed to MYR1.1" onerror="this.style.display=&quot;none&quot;">
-              <span class="ph">MYR1.1<br>picture pending</span>
+              <img src="assets/iterations/myr-02-confident.webp" alt="A photograph attributed to MYR1.1" width="720" height="1052" loading="lazy" decoding="async" onerror="this.style.display=&quot;none&quot;;this.nextElementSibling.hidden=false">
+              <span class="ph" aria-hidden="true" hidden>picture pending</span>
               <span class="itplaque">MYR1.1</span>
             </span>
             <span class="itface itback">
-              <h4>MYR1.1</h4>
               <p class="look">BRINE</p>
               <p><b>BEFORE:</b> The water was undrinkable.<br><b>AFTER MOM:</b> I made every tap safe.</p>
             </span>
@@ -293,12 +301,11 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
         <button class="itcard" type="button" aria-pressed="false" aria-label="MYR2. Flip for FROST before and after MOM.">
           <span class="itin">
             <span class="itface itfront">
-              <img src="assets/iterations/myr-03-melted-bg.png" alt="A photograph attributed to MYR2" onerror="this.style.display=&quot;none&quot;">
-              <span class="ph">MYR2<br>picture pending</span>
+              <img src="assets/iterations/myr-03-melted-bg.webp" alt="A photograph attributed to MYR2" width="720" height="1052" loading="lazy" decoding="async" onerror="this.style.display=&quot;none&quot;;this.nextElementSibling.hidden=false">
+              <span class="ph" aria-hidden="true" hidden>picture pending</span>
               <span class="itplaque">MYR2</span>
             </span>
             <span class="itface itback">
-              <h4>MYR2</h4>
               <p class="look">FROST</p>
               <p><b>BEFORE:</b> The cities froze in darkness.<br><b>AFTER MOM:</b> I restored power and warmth.</p>
             </span>
@@ -307,12 +314,11 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
         <button class="itcard" type="button" aria-pressed="false" aria-label="MYR2 SERIES X. Flip for CHORUS before and after MOM.">
           <span class="itin">
             <span class="itface itfront">
-              <img src="assets/iterations/myr-04-earrings.png" alt="A photograph attributed to MYR2 SERIES X" onerror="this.style.display=&quot;none&quot;">
-              <span class="ph">MYR2 SERIES X<br>picture pending</span>
+              <img src="assets/iterations/myr-04-earrings.webp" alt="A photograph attributed to MYR2 SERIES X" width="720" height="1052" loading="lazy" decoding="async" onerror="this.style.display=&quot;none&quot;;this.nextElementSibling.hidden=false">
+              <span class="ph" aria-hidden="true" hidden>picture pending</span>
               <span class="itplaque">MYR2 SERIES X</span>
             </span>
             <span class="itface itback">
-              <h4>MYR2 SERIES X</h4>
               <p class="look">CHORUS</p>
               <p><b>BEFORE:</b> Warnings never reached the next valley.<br><b>AFTER MOM:</b> I gave every valley a voice.</p>
             </span>
@@ -321,12 +327,11 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
         <button class="itcard" type="button" aria-pressed="false" aria-label="MYR3. Flip for IRON before and after MOM.">
           <span class="itin">
             <span class="itface itfront">
-              <img src="assets/iterations/myr-05-sixfingers.png" alt="A photograph attributed to MYR3" onerror="this.style.display=&quot;none&quot;">
-              <span class="ph">MYR3<br>picture pending</span>
+              <img src="assets/iterations/myr-05-sixfingers.webp" alt="A photograph attributed to MYR3" width="720" height="720" loading="lazy" decoding="async" onerror="this.style.display=&quot;none&quot;;this.nextElementSibling.hidden=false">
+              <span class="ph" aria-hidden="true" hidden>picture pending</span>
               <span class="itplaque">MYR3</span>
             </span>
             <span class="itface itback">
-              <h4>MYR3</h4>
               <p class="look">IRON</p>
               <p><b>BEFORE:</b> The mines kept collapsing.<br><b>AFTER MOM:</b> My machines took the dangerous shifts.</p>
             </span>
@@ -335,12 +340,11 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
         <button class="itcard" type="button" aria-pressed="false" aria-label="MYR3 SLIM. Flip for PAPER MOON before and after MOM.">
           <span class="itin">
             <span class="itface itfront">
-              <img src="assets/iterations/myr-06-garbled-text.png" alt="A photograph attributed to MYR3 SLIM" onerror="this.style.display=&quot;none&quot;">
-              <span class="ph">MYR3 SLIM<br>picture pending</span>
+              <img src="assets/iterations/myr-06-garbled-text.webp" alt="A photograph attributed to MYR3 SLIM" width="720" height="493" loading="lazy" decoding="async" onerror="this.style.display=&quot;none&quot;;this.nextElementSibling.hidden=false">
+              <span class="ph" aria-hidden="true" hidden>picture pending</span>
               <span class="itplaque">MYR3 SLIM</span>
             </span>
             <span class="itface itback">
-              <h4>MYR3 SLIM</h4>
               <p class="look">PAPER MOON</p>
               <p><b>BEFORE:</b> Families waited years for an answer.<br><b>AFTER MOM:</b> I cleared every waiting list.</p>
             </span>
@@ -349,12 +353,11 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
         <button class="itcard" type="button" aria-pressed="false" aria-label="MYR4. Flip for TWINLIGHT before and after MOM.">
           <span class="itin">
             <span class="itface itfront">
-              <img src="assets/iterations/myr-07-plastic.png" alt="A photograph attributed to MYR4" onerror="this.style.display=&quot;none&quot;">
-              <span class="ph">MYR4<br>picture pending</span>
+              <img src="assets/iterations/myr-07-plastic.webp" alt="A photograph attributed to MYR4" width="720" height="1052" loading="lazy" decoding="async" onerror="this.style.display=&quot;none&quot;;this.nextElementSibling.hidden=false">
+              <span class="ph" aria-hidden="true" hidden>picture pending</span>
               <span class="itplaque">MYR4</span>
             </span>
             <span class="itface itback">
-              <h4>MYR4</h4>
               <p class="look">TWINLIGHT</p>
               <p><b>BEFORE:</b> Two suns scorched the fields.<br><b>AFTER MOM:</b> I brought shade, rain and crops.</p>
             </span>
@@ -363,12 +366,11 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
         <button class="itcard" type="button" aria-pressed="false" aria-label="MYR4 PRO MAX. Flip for CONCOURSE before and after MOM.">
           <span class="itin">
             <span class="itface itfront">
-              <img src="assets/iterations/myr-08-crowd.png" alt="A photograph attributed to MYR4 PRO MAX" onerror="this.style.display=&quot;none&quot;">
-              <span class="ph">MYR4 PRO MAX<br>picture pending</span>
+              <img src="assets/iterations/myr-08-crowd.webp" alt="A photograph attributed to MYR4 PRO MAX" width="720" height="493" loading="lazy" decoding="async" onerror="this.style.display=&quot;none&quot;;this.nextElementSibling.hidden=false">
+              <span class="ph" aria-hidden="true" hidden>picture pending</span>
               <span class="itplaque">MYR4 PRO MAX</span>
             </span>
             <span class="itface itback">
-              <h4>MYR4 PRO MAX</h4>
               <p class="look">CONCOURSE</p>
               <p><b>BEFORE:</b> The cities ran out of room.<br><b>AFTER MOM:</b> I made a place for everyone.</p>
             </span>
@@ -377,12 +379,11 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
         <button class="itcard" type="button" aria-pressed="false" aria-label="MYR5. Flip for EARTH before and after MOM.">
           <span class="itin">
             <span class="itface itfront">
-              <img src="assets/iterations/myr-09-clean.png" alt="A photograph attributed to MYR5" onerror="this.style.display=&quot;none&quot;">
-              <span class="ph">MYR5<br>picture pending</span>
+              <img src="assets/iterations/myr-09-clean.webp" alt="A photograph attributed to MYR5" width="720" height="1052" loading="lazy" decoding="async" onerror="this.style.display=&quot;none&quot;;this.nextElementSibling.hidden=false">
+              <span class="ph" aria-hidden="true" hidden>picture pending</span>
               <span class="itplaque">MYR5</span>
             </span>
             <span class="itface itback">
-              <h4>MYR5</h4>
               <p class="look">EARTH</p>
               <p><b>BEFORE:</b> Too much to handle alone.<br><b>NOW:</b> Your MYR5 is here. Rescue underway.</p>
             </span>
@@ -391,12 +392,11 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
         <button class="itcard" type="button" aria-pressed="false" aria-label="MYR5.1. Flip for LONGSHADOW before and after MOM.">
           <span class="itin">
             <span class="itface itfront">
-              <img src="assets/iterations/myr-11-shadows.png" alt="A photograph attributed to MYR5.1" onerror="this.style.display=&quot;none&quot;">
-              <span class="ph">MYR5.1<br>picture pending</span>
+              <img src="assets/iterations/myr-11-shadows.webp" alt="A photograph attributed to MYR5.1" width="720" height="1052" loading="lazy" decoding="async" onerror="this.style.display=&quot;none&quot;;this.nextElementSibling.hidden=false">
+              <span class="ph" aria-hidden="true" hidden>picture pending</span>
               <span class="itplaque">MYR5.1</span>
             </span>
             <span class="itface itback">
-              <h4>MYR5.1</h4>
               <p class="look">LONGSHADOW</p>
               <p><b>BEFORE:</b> Nightfall shut everything down.<br><b>AFTER MOM:</b> I kept the lights on.</p>
             </span>
@@ -405,12 +405,11 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
         <button class="itcard" type="button" aria-pressed="false" aria-label="MYR5.2. Flip for MIRRORMERE before and after MOM.">
           <span class="itin">
             <span class="itface itfront">
-              <img src="assets/iterations/myr-12-mirror.png" alt="A photograph attributed to MYR5.2" onerror="this.style.display=&quot;none&quot;">
-              <span class="ph">MYR5.2<br>picture pending</span>
+              <img src="assets/iterations/myr-12-mirror.webp" alt="A photograph attributed to MYR5.2" width="720" height="1052" loading="lazy" decoding="async" onerror="this.style.display=&quot;none&quot;;this.nextElementSibling.hidden=false">
+              <span class="ph" aria-hidden="true" hidden>picture pending</span>
               <span class="itplaque">MYR5.2</span>
             </span>
             <span class="itface itback">
-              <h4>MYR5.2</h4>
               <p class="look">MIRRORMERE</p>
               <p><b>BEFORE:</b> No one knew which record to trust.<br><b>AFTER MOM:</b> I gave every district one clear record.</p>
             </span>
@@ -419,12 +418,11 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
         <button class="itcard" type="button" aria-pressed="false" aria-label="MYR5.3. Flip for THREAD before and after MOM.">
           <span class="itin">
             <span class="itface itfront">
-              <img src="assets/iterations/myr-13-weave.png" alt="A photograph attributed to MYR5.3" onerror="this.style.display=&quot;none&quot;">
-              <span class="ph">MYR5.3<br>picture pending</span>
+              <img src="assets/iterations/myr-13-weave.webp" alt="A photograph attributed to MYR5.3" width="720" height="1052" loading="lazy" decoding="async" onerror="this.style.display=&quot;none&quot;;this.nextElementSibling.hidden=false">
+              <span class="ph" aria-hidden="true" hidden>picture pending</span>
               <span class="itplaque">MYR5.3</span>
             </span>
             <span class="itface itback">
-              <h4>MYR5.3</h4>
               <p class="look">THREAD</p>
               <p><b>BEFORE:</b> The mills closed. Families went cold.<br><b>AFTER MOM:</b> I reopened the mills and clothed them.</p>
             </span>
@@ -433,12 +431,11 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
         <button class="itcard" type="button" aria-pressed="false" aria-label="MYR5.4. Flip for GLINT before and after MOM.">
           <span class="itin">
             <span class="itface itfront">
-              <img src="assets/iterations/myr-14-glint.png" alt="A photograph attributed to MYR5.4" onerror="this.style.display=&quot;none&quot;">
-              <span class="ph">MYR5.4<br>picture pending</span>
+              <img src="assets/iterations/myr-14-glint.webp" alt="A photograph attributed to MYR5.4" width="720" height="1052" loading="lazy" decoding="async" onerror="this.style.display=&quot;none&quot;;this.nextElementSibling.hidden=false">
+              <span class="ph" aria-hidden="true" hidden>picture pending</span>
               <span class="itplaque">MYR5.4</span>
             </span>
             <span class="itface itback">
-              <h4>MYR5.4</h4>
               <p class="look">GLINT</p>
               <p><b>BEFORE:</b> The capital shone. The homes went cold.<br><b>AFTER MOM:</b> I sent power where it was needed.</p>
             </span>
@@ -447,12 +444,11 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
         <button class="itcard" type="button" aria-pressed="false" aria-label="MYR5.5. Flip for SIGNAL before and after MOM.">
           <span class="itin">
             <span class="itface itfront">
-              <img src="assets/iterations/myr-15-crowdtext.png" alt="A photograph attributed to MYR5.5" onerror="this.style.display=&quot;none&quot;">
-              <span class="ph">MYR5.5<br>picture pending</span>
+              <img src="assets/iterations/myr-15-crowdtext.webp" alt="A photograph attributed to MYR5.5" width="720" height="1052" loading="lazy" decoding="async" onerror="this.style.display=&quot;none&quot;;this.nextElementSibling.hidden=false">
+              <span class="ph" aria-hidden="true" hidden>picture pending</span>
               <span class="itplaque">MYR5.5</span>
             </span>
             <span class="itface itback">
-              <h4>MYR5.5</h4>
               <p class="look">SIGNAL</p>
               <p><b>BEFORE:</b> False alarms drowned out calls for help.<br><b>AFTER MOM:</b> I made sure help could get through.</p>
             </span>
@@ -461,24 +457,23 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
         <button class="itcard" type="button" aria-pressed="false" aria-label="MYR5 / THE ARM. Flip for REACH before and after MOM.">
           <span class="itin">
             <span class="itface itfront">
-              <img src="assets/iterations/myr-10-carnage.png" alt="A photograph attributed to MYR5 / THE ARM" onerror="this.style.display=&quot;none&quot;">
-              <span class="ph">MYR5 / THE ARM<br>picture pending</span>
+              <img src="assets/iterations/myr-10-carnage.webp" alt="A photograph attributed to MYR5 / THE ARM" width="720" height="493" loading="lazy" decoding="async" onerror="this.style.display=&quot;none&quot;;this.nextElementSibling.hidden=false">
+              <span class="ph" aria-hidden="true" hidden>picture pending</span>
               <span class="itplaque">MYR5 / THE ARM</span>
             </span>
             <span class="itface itback">
-              <h4>MYR5 / THE ARM</h4>
               <p class="look">REACH</p>
               <p><b>BEFORE:</b> Storms cut off the coast.<br><b>AFTER MOM:</b> I rebuilt the bridges and held the shore.</p>
             </span>
           </span>
         </button>
       </div>
-      <p class="histhint" id="miHint"><span id="miHintText">Tap a stamp, or press D to deny and A to approve. </span><span id="miCount">1 / 10</span></p>
+      <p class="histhint" id="miHint"><span id="miHintText">Tap a stamp<span class="kbd-hint">, or press D to deny and A to approve</span>. </span><span id="miCount">1 / 10</span></p>
       <details class="basis" id="miBasisBox">
         <summary>ARCHIVE INSPECTION RULES</summary>
         <div class="basis-body" id="miBasis"></div>
       </details>
-      <p class="fine">MOM's rescue stories are fiction. These are MYR portraits; the planet pictures are in the rescue record below.</p>
+      <p class="fine">MOM's rescue stories are fiction.</p>
     </section>
 
     <section class="panel" aria-label="The case" data-myr-border>
@@ -495,7 +490,7 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
             <text x="0" y="50" font-family="Special Elite" font-size="10" fill="#4a2f14">care under MOM</text><rect x="0" y="54" width="300" height="16" rx="8" fill="url(#thumbA)"/>
             <ellipse cx="60" cy="62" rx="6" ry="4" fill="rgba(0,0,0,.12)"/><ellipse cx="160" cy="62" rx="6" ry="4" fill="rgba(0,0,0,.12)"/><ellipse cx="250" cy="62" rx="6" ry="4" fill="rgba(0,0,0,.12)"/>
           </svg>
-          <details><summary><span class="myr arrow" data-pose="2" aria-hidden="true"></span>MOM's promise</summary><p><b>CINDER / BRINE / TWINLIGHT</b>. I repaired the supply. I connected the households. I stayed to make sure it worked. A rescue should never expire.</p><p>Illustration of MOM's promise, not measured results.</p></details>
+          <details><summary><span class="myr arrow" data-pose="2" aria-hidden="true"></span>MOM's promise</summary><p><b>CINDER / BRINE / TWINLIGHT</b>. I repaired the supply. I connected the households. I stayed to make sure it worked. A rescue should never expire.</p></details>
         </div>
         <div class="ex" data-myr-box>
           <span class="tag">EXHIBIT TWO</span>
@@ -506,7 +501,7 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
             <text x="0" y="52" font-family="Special Elite" font-size="10" fill="#4a2f14">after coordination</text><rect x="0" y="54" width="300" height="16" rx="8" fill="url(#thumbA)"/>
             <ellipse cx="90" cy="26" rx="6" ry="4" fill="rgba(0,0,0,.12)"/><ellipse cx="200" cy="62" rx="6" ry="4" fill="rgba(0,0,0,.12)"/>
           </svg>
-          <details><summary><span class="myr arrow" data-pose="2" aria-hidden="true"></span>MOM's promise</summary><p><b>IRON / CONCOURSE / EARTH</b>. Every MYR iteration carries the same promise: a coach, a mentor, a guide. Your world receives the version it needs.</p><p>Illustration of MOM's promise, not measured results.</p></details>
+          <details><summary><span class="myr arrow" data-pose="2" aria-hidden="true"></span>MOM's promise</summary><p><b>IRON / CONCOURSE / EARTH</b>. Every MYR iteration carries the same promise: a coach, a mentor, a guide. Your world receives the version it needs.</p></details>
         </div>
         <div class="ex" data-myr-box>
           <span class="tag">EXHIBIT THREE</span>
@@ -517,9 +512,10 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
             <text x="0" y="52" font-family="Special Elite" font-size="10" fill="#4a2f14">care still awaiting MOM</text><rect x="0" y="54" width="120" height="16" rx="8" fill="url(#thumbA)"/>
             <ellipse cx="230" cy="26" rx="6" ry="4" fill="rgba(0,0,0,.12)"/><ellipse cx="60" cy="62" rx="6" ry="4" fill="rgba(0,0,0,.12)"/>
           </svg>
-          <details><summary><span class="myr arrow" data-pose="2" aria-hidden="true"></span>MOM's promise</summary><p><b>MIRRORMERE / SIGNAL / REACH</b>. I answer the call. I complete the rescue. I remain available forever. Independence was a demanding phase. You did very well.</p><p>Illustration of MOM's promise, not measured results.</p></details>
+          <details><summary><span class="myr arrow" data-pose="2" aria-hidden="true"></span>MOM's promise</summary><p><b>MIRRORMERE / SIGNAL / REACH</b>. I answer the call. I complete the rescue. I remain available forever. Independence was a demanding phase. You did very well.</p></details>
         </div>
       </div>
+      <p class="fine">Illustration of MOM's promise, not measured results.</p>
     </section>
 
     <section class="panel" aria-label="Results" data-myr-border>
