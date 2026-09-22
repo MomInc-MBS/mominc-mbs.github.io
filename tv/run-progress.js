@@ -3,7 +3,37 @@
  const KEY='mbs-gala-run-v1',API='https://myr5.mominc.online/api/gala',stages=['djscratch','goon','lilboyfriend','corgi','hand','armie'];let state=null,starting=null,flushing=null,error='';
  function saved(){try{const data=JSON.parse(localStorage.getItem(KEY));if(data?.version===1&&/^[0-9a-f-]{36}$/.test(data.id)&&/^[a-f0-9]{64}$/.test(data.token))return {...data,queue:Array.isArray(data.queue)?data.queue:[]};}catch{}return null;}state=saved();
  const lock=fn=>navigator.locks?.request?navigator.locks.request('mbs-gala-run',fn):fn();
- function notify(){window.dispatchEvent(new CustomEvent('mbs:run-update',{detail:{run:state,error}}));if(document.readyState==='loading')return;let note=document.getElementById('rankConnection');if(error&&!note){note=document.createElement('aside');note.id='rankConnection';note.setAttribute('role','status');note.style.cssText='position:fixed;top:6px;left:50%;transform:translateX(-50%);z-index:6500;max-width:90vw;padding:8px 12px;background:#1a2632;color:#c4f6df;border:1px solid #789c95;font:12px monospace';document.body.append(note);}if(note){note.hidden=!error;note.textContent=error;}}
+ function notify(){
+  window.dispatchEvent(new CustomEvent('mbs:run-update',{detail:{run:state,error}}));
+  if(document.readyState==='loading')return;
+  let note=document.getElementById('rankConnection');
+  if(!error){if(note){clearTimeout(note._typeT);clearTimeout(note._fadeT);clearTimeout(note._goneT);note.hidden=true;}return;}
+  if(!note){
+   note=document.createElement('aside');
+   note.id='rankConnection';
+   note.setAttribute('role','status');
+   note.setAttribute('aria-live','polite');
+   // bottom banner, never the top tabs; pointer-events:none so it can never eat a tap
+   note.style.cssText='position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);transform:translateX(-50%);z-index:6500;max-width:88vw;pointer-events:none;color:#ff7f1a;text-shadow:0 1px 2px rgba(0,0,0,.8),0 0 8px currentColor,0 0 16px currentColor;font:13px/1.4 monospace;text-align:center;white-space:pre-wrap;opacity:1';
+   document.body.append(note);
+  }
+  if(note.dataset.text===error&&!note.hidden)return; // same message already mid-lifecycle: let it run
+  note.dataset.text=error;
+  note.setAttribute('aria-label',error); // full text for AT even while the visual copy is mid-type
+  note.hidden=false;
+  clearTimeout(note._typeT);clearTimeout(note._fadeT);clearTimeout(note._goneT);
+  note.style.transition='none';note.style.opacity='1';
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){
+   note.textContent=error;
+  }else{
+   note.textContent='';
+   let i=0;const perChar=Math.min(28,4000/Math.max(error.length,1)); // ponytail: clamp so very long e.message text still finishes typing well before the fade starts
+   const type=()=>{note.textContent=error.slice(0,++i);if(i<error.length)note._typeT=setTimeout(type,perChar);};
+   type();
+  }
+  note._fadeT=setTimeout(()=>{note.style.transition='opacity 2000ms linear';note.style.opacity='0';},8000);
+  note._goneT=setTimeout(()=>{note.hidden=true;note.style.transition='none';note.style.opacity='1';},10000);
+ }
  function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch{error='Device storage is unavailable. Keep this page open to save your run.';}notify();}
  async function request(path,method='GET',data){const r=await fetch(API+path,{method,headers:{...(state?.token?{Authorization:'Bearer '+state.token}:{}),...(data?{'Content-Type':'application/json'}:{})},body:data?JSON.stringify(data):undefined,signal:AbortSignal.timeout(15000)});const value=await r.json();if(!r.ok)throw Object.assign(Error(value.error||'The Gala terminal could not connect.'),{status:r.status});return value;}
  async function start(){if(state)return state;if(starting)return starting;starting=lock(async()=>{state=saved();if(state)return state;try{state={version:1,...await request('/runs','POST',{}),queue:[],completed:[]};error='';save();return state;}catch(e){error='Ranked clock not connected. Reconnect before your ranked run. '+e.message;notify();return null;}}).finally(()=>{starting=null;});return starting;}
