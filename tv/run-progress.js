@@ -7,7 +7,7 @@
   window.dispatchEvent(new CustomEvent('mbs:run-update',{detail:{run:state,error}}));
   if(document.readyState==='loading')return;
   let note=document.getElementById('rankConnection');
-  if(!error){if(note){clearTimeout(note._typeT);clearTimeout(note._fadeT);clearTimeout(note._goneT);note.hidden=true;}return;}
+  if(!error){if(note){clearTimeout(note._typeT);clearTimeout(note._fadeT);clearTimeout(note._goneT);note.hidden=true;delete note.dataset.text;}return;}
   if(!note){
    note=document.createElement('aside');
    note.id='rankConnection';
@@ -17,7 +17,7 @@
    note.style.cssText='position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);transform:translateX(-50%);z-index:6500;max-width:88vw;pointer-events:none;color:#ff7f1a;text-shadow:0 1px 2px rgba(0,0,0,.8),0 0 8px currentColor,0 0 16px currentColor;font:13px/1.4 monospace;text-align:center;white-space:pre-wrap;opacity:1';
    document.body.append(note);
   }
-  if(note.dataset.text===error&&!note.hidden)return; // same message already mid-lifecycle: let it run
+  if(note.dataset.text===error)return; // each message plays once; it shows again only after the error clears and recurs
   note.dataset.text=error;
   note.setAttribute('aria-label',error); // full text for AT even while the visual copy is mid-type
   note.hidden=false;
