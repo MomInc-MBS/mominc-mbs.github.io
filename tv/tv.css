@@ -211,12 +211,14 @@ body{display:block;padding:0;overflow:hidden}
 .vfd-show{font-size:12px; letter-spacing:.06em; opacity:.75; white-space:nowrap; overflow:hidden}
 .tv[data-state="off"] .vfd{color:#3b2a18; text-shadow:none}
 .dial{
-  width:84px; height:84px; margin:18px 0 0; border-radius:50%; border:0; cursor:default; position:relative;
+  width:84px; height:84px; margin:18px 0 0; border-radius:50%; border:0; cursor:grab; position:relative;
+  touch-action:none; user-select:none; -webkit-user-select:none;
   background:
     radial-gradient(circle at 40% 32%, #8a6a44, #4a3722 58%, #2a1d12);
   box-shadow:0 4px 8px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,240,210,.3), 0 0 0 4px #3a2a1a, 0 0 0 5px #6b5236;
   transform:rotate(var(--rot,0deg)); transition:transform 120ms ease-out;
 }
+.dial.dragging{cursor:grabbing; transition:none}
 .dial-grip{
   position:absolute; inset:14px; border-radius:50%;
   background:repeating-conic-gradient(from 0deg, #5e4730 0 6deg, #33251a 6deg 12deg);
