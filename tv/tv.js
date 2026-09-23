@@ -155,7 +155,7 @@
     lcdList.appendChild(el);
   });
 
-  // --- the numbered dial ring: 2 to 13 like a VHF dial, plus U for the UHF click
+  // --- the numbered channel dial
   const ticks = document.getElementById("dialTicks");
   if (ticks) {
     const labels = ["1","2","3","4","5"];
@@ -168,10 +168,77 @@
     });
   }
 
-  // --- knob turns with scrolling
-  screen.addEventListener("scroll", () => {
-    knob.style.setProperty("--rot", `${(screen.scrollTop * 0.6) % 360}deg`);
-  }, { passive: true });
+  // The channel numbers are the dial's source of truth. Pointer events cover both mouse and touch;
+  // waiting until release lets one turn cross several detents without unloading the page mid-drag.
+  const dialChannels = CHANNELS.filter(c => c.ch > 0 && !c.suppressed).sort((a, b) => a.ch - b.ch);
+  const dialStep = dialChannels.length > 1 ? 300 / (dialChannels.length - 1) : 0;
+  const dialAngle = index => -150 + Math.max(0, index) * dialStep;
+  let dialIndex = dialChannels.findIndex(c => c.id === current);
+  let dialDrag = null;
+  knob.style.setProperty("--rot", `${dialAngle(dialIndex)}deg`);
+  const paintDialLabel = index => {
+    const c = dialChannels[index];
+    knob.setAttribute("aria-label", c
+      ? `Channel dial. Channel ${c.ch}, ${c.name}. Drag or use arrow keys to change channel.`
+      : "Channel dial. Drag or use arrow keys to choose a channel.");
+    knob.title = "Drag to change channel";
+  };
+  paintDialLabel(dialIndex);
+  const pointerAngle = e => {
+    const r = knob.getBoundingClientRect();
+    return Math.atan2(e.clientY - (r.top + r.height / 2), e.clientX - (r.left + r.width / 2)) * 180 / Math.PI;
+  };
+  const tune = index => {
+    const target = Math.max(0, Math.min(dialChannels.length - 1, index));
+    const c = dialChannels[target];
+    if (!c) return;
+    dialIndex = target;
+    knob.style.setProperty("--rot", `${dialAngle(target)}deg`);
+    paintDialLabel(target);
+    if (c.id !== current) location.assign(c.href || `?ch=${c.id}`);
+  };
+  knob.addEventListener("pointerdown", e => {
+    if (!e.isPrimary || (e.pointerType === "mouse" && e.button !== 0)) return;
+    e.preventDefault();
+    knob.setPointerCapture(e.pointerId);
+    dialDrag = { id: e.pointerId, last: pointerAngle(e), total: 0, start: dialIndex };
+    knob.classList.add("dragging");
+  });
+  knob.addEventListener("pointermove", e => {
+    if (!dialDrag || e.pointerId !== dialDrag.id) return;
+    e.preventDefault();
+    const angle = pointerAngle(e);
+    let delta = angle - dialDrag.last;
+    if (delta > 180) delta -= 360;
+    if (delta < -180) delta += 360;
+    dialDrag.last = angle;
+    dialDrag.total += delta;
+    const visual = Math.max(-150, Math.min(150, dialAngle(dialDrag.start) + dialDrag.total));
+    knob.style.setProperty("--rot", `${visual}deg`);
+  });
+  const finishDial = (e, navigate) => {
+    if (!dialDrag || e.pointerId !== dialDrag.id) return;
+    const drag = dialDrag; dialDrag = null;
+    knob.classList.remove("dragging");
+    if (knob.hasPointerCapture(e.pointerId)) knob.releasePointerCapture(e.pointerId);
+    const crossedDetent = Math.abs(drag.total) >= Math.min(24, dialStep / 2);
+    let turns = dialStep ? Math.round(drag.total / dialStep) : 0;
+    if (crossedDetent && turns === 0) turns = Math.sign(drag.total);
+    if (navigate && crossedDetent) tune(drag.start + turns);
+    else knob.style.setProperty("--rot", `${dialAngle(dialIndex)}deg`);
+  };
+  knob.addEventListener("pointerup", e => finishDial(e, true));
+  knob.addEventListener("pointercancel", e => finishDial(e, false));
+  knob.addEventListener("keydown", e => {
+    let target = null;
+    if (e.key === "ArrowRight" || e.key === "ArrowDown") target = dialIndex < 0 ? 0 : dialIndex + 1;
+    if (e.key === "ArrowLeft" || e.key === "ArrowUp") target = dialIndex < 0 ? dialChannels.length - 1 : dialIndex - 1;
+    if (e.key === "Home") target = 0;
+    if (e.key === "End") target = dialChannels.length - 1;
+    if (target === null) return;
+    e.preventDefault();
+    tune(target);
+  });
 
   // --- press into the glass: a distortion spot at the point, growing while held; the picture sinks toward it
   let active = null, raf = 0, t0 = 0;

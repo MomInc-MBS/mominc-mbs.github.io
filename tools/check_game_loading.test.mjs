@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import {readFileSync, readdirSync} from 'node:fs';
 import {createHash, webcrypto} from 'node:crypto';
+import {execFileSync} from 'node:child_process';
 
 const root = new URL('../', import.meta.url);
 const source = readFileSync(new URL('game-assets-sw.js', root), 'utf8');
@@ -307,14 +308,55 @@ test('recovery scripts bypass stale installed packs but remain available offline
   }
 });
 
-test('all generated packs match the current loading and homepage scripts', () => {
-  const paths = ['tv/game-loader.js', 'tv/index.html', 'tv/tv.js'];
+test('all generated packs match every current website asset', () => {
+  const committed = new Map(execFileSync('git', ['ls-tree', '-r', '-l', 'HEAD'], {cwd: root, encoding: 'utf8'})
+    .trim().split('\n').map(line => {
+      const [info, path] = line.split('\t');
+      const [, kind, revision, bytes] = info.split(/\s+/);
+      return kind === 'blob' ? [path, {url: '/' + path, revision, bytes: Number(bytes)}] : null;
+    }).filter(Boolean));
+  const sources = new Map();
+  const sourceRecord = path => {
+    if (sources.has(path)) return sources.get(path);
+    let unchanged = committed.has(path);
+    if (unchanged) {
+      try { execFileSync('git', ['diff', '--quiet', 'HEAD', '--', path], {cwd: root}); }
+      catch { unchanged = false; }
+    }
+    if (unchanged) {
+      sources.set(path, committed.get(path));
+      return sources.get(path);
+    }
+
+    const body = readFileSync(new URL(path, root));
+    const filteredRevision = execFileSync('git', ['hash-object', `--path=${path}`, path], {cwd: root, encoding: 'utf8'}).trim();
+    for (const candidate of [body, Buffer.from(body.toString().replace(/\r\n/g, '\n'))]) {
+      const record = file('/' + path, candidate);
+      if (record.revision === filteredRevision) {
+        sources.set(path, record);
+        return record;
+      }
+    }
+    throw new Error(`Could not reproduce Git filters for ${path}`);
+  };
+
   for (const name of readdirSync(new URL('tv/game-packs/', root))) {
     const p = JSON.parse(readFileSync(new URL('tv/game-packs/' + name, root)));
     assert.ok(!p.assets.some(a => a.url === '/game-assets-sw.js'), 'Worker installation must not be a game-pack dependency');
-    for (const path of paths) {
-      const expected = file('/' + path, readFileSync(new URL(path, root)));
-      assert.deepEqual(p.assets.find(a => a.url === expected.url), expected, name + ': ' + path);
+    for (const asset of p.assets) {
+      const path = asset.url.slice(1);
+      assert.deepEqual(asset, sourceRecord(path), name + ': ' + path);
     }
   }
+});
+
+test('the channel dial tunes in numeric order with mouse, touch, and keyboard', () => {
+  const shell = readFileSync(new URL('tv/tv.js', root), 'utf8');
+  const styles = readFileSync(new URL('tv/tv.css', root), 'utf8');
+  assert.match(shell, /filter\(c => c\.ch > 0 && !c\.suppressed\)\.sort\(\(a, b\) => a\.ch - b\.ch\)/);
+  assert.match(shell, /knob\.addEventListener\("pointerdown"/);
+  assert.match(shell, /knob\.addEventListener\("pointermove"/);
+  assert.match(shell, /knob\.addEventListener\("pointerup"/);
+  assert.match(shell, /ArrowRight/);
+  assert.match(styles, /\.dial\{[^}]*touch-action:none/s);
 });

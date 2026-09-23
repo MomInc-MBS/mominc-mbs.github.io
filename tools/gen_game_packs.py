@@ -21,37 +21,55 @@ TEXT = {'.html', '.js', '.mjs', '.css', '.json', '.mtl'}
 SLUGS = ['mominc', 'girlfriend', 'lilboyfriend', 'corgi', 'djscratch', 'fuel', 'goon', 'war-room', 'armie', 'handborne']
 
 
+def working_record(path, file_path):
+    """Return the blob Git will commit, not checkout-specific Windows bytes."""
+    raw = file_path.read_bytes()
+    filtered_sha = subprocess.check_output(
+        ['git', 'hash-object', f'--path={path}', str(file_path)], cwd=ROOT, text=True
+    ).strip()
+    candidates = [raw]
+    normalized = raw.replace(b'\r\n', b'\n')
+    if normalized != raw:
+        candidates.append(normalized)
+    for data in candidates:
+        sha = hashlib.sha1(b'blob ' + str(len(data)).encode() + b'\0' + data).hexdigest()
+        if sha == filtered_sha:
+            return sha, len(data)
+    raise ValueError(f'Could not reproduce Git filters for {path}')
+
+
 def build(refresh=False):
     inventory = {}
     previous = {}
+    for line in subprocess.check_output(['git', 'ls-tree', '-r', '-l', 'HEAD'], cwd=ROOT, text=True).splitlines():
+        info, path = line.split('\t')
+        _, kind, sha, size = info.split()
+        if kind == 'blob':
+            inventory[path] = (sha, int(size))
     if refresh:
         # A code-only repair can retain the existing dependency lists in a sparse
         # checkout. Do not use this mode when adding/removing asset references.
         for slug in SLUGS:
             previous[slug] = json.loads((ROOT / 'tv/game-packs' / f'{slug}.json').read_text())
-            for asset in previous[slug]['assets']:
-                path = asset['url'].lstrip('/')
-                record = (asset['revision'], asset['bytes'])
-                if path in inventory and inventory[path] != record:
-                    raise ValueError(f'Conflicting asset revisions: {path}')
-                inventory[path] = record
-    else:
-        for line in subprocess.check_output(['git', 'ls-tree', '-r', '-l', 'HEAD'], cwd=ROOT, text=True).splitlines():
-            info, path = line.split('\t')
-            _, kind, sha, size = info.split()
-            if kind == 'blob':
-                inventory[path] = (sha, int(size))
+
+    def overlay(path, file_path):
+        # Keep HEAD's exact deployed blob for unchanged files. This matters for
+        # historical mixed-line-ending files that Git intentionally leaves alone.
+        unchanged = path in inventory and subprocess.run(
+            ['git', 'diff', '--quiet', 'HEAD', '--', path], cwd=ROOT
+        ).returncode == 0
+        if not unchanged:
+            inventory[path] = working_record(path, file_path)
     # Root-level scripts were previously read only from HEAD, leaving the worker
     # one commit behind even when manifests were generated before committing.
     for f in ROOT.iterdir():
         if f.is_file() and f.suffix in EXT:
-            b = f.read_bytes()
-            inventory[f.name] = (hashlib.sha1(b'blob ' + str(len(b)).encode() + b'\0' + b).hexdigest(), len(b))
+            overlay(f.name, f)
     for base in ['tv', 'games', 'play', 'gala', 'handborne', 'arcade']:
         for f in (ROOT / base).rglob('*'):
             if f.is_file() and f.suffix in EXT and 'game-packs' not in f.parts:
-                b = f.read_bytes()
-                inventory[f.relative_to(ROOT).as_posix()] = (hashlib.sha1(b'blob ' + str(len(b)).encode() + b'\0' + b).hexdigest(), len(b))
+                path = f.relative_to(ROOT).as_posix()
+                overlay(path, f)
 
     def usable(path):
         return (path != 'game-assets-sw.js' and Path(path).suffix in EXT and not any(x in path.split('/') for x in ['source', '_next', '.vite', 'downloads', 'game-packs'])

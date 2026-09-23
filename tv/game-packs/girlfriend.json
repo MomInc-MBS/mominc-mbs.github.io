@@ -149,8 +149,8 @@
     },
     {
       "url": "/tv/channel-manifest.json",
-      "revision": "c4dba6a3328927aadc6b51ab1bae80d927911ca8",
-      "bytes": 16919
+      "revision": "3fc58af036e3f1151ff262b76e94aa7785d62167",
+      "bytes": 16918
     },
     {
       "url": "/tv/channel-runtime.js",
@@ -199,8 +199,8 @@
     },
     {
       "url": "/tv/index.html",
-      "revision": "bfe26b04d58a429eaf4d51e1731e60a9f504f2a3",
-      "bytes": 12735
+      "revision": "bf643a8fc5491bac66a0009817887ed90ebac159",
+      "bytes": 12662
     },
     {
       "url": "/tv/landing.css",
@@ -209,8 +209,8 @@
     },
     {
       "url": "/tv/mbs-channels.js",
-      "revision": "1d7255f8340a12fba05f8a380cea0f846be097f4",
-      "bytes": 2841
+      "revision": "74b0501056e6d17741620cf1a626ab5940849e53",
+      "bytes": 2840
     },
     {
       "url": "/tv/mbs-runtime.js",
@@ -269,8 +269,8 @@
     },
     {
       "url": "/tv/run-progress.js",
-      "revision": "683987040b4075ce5b9e46e6849d75e31e66f0a0",
-      "bytes": 5498
+      "revision": "dc120a76537b93687e053ef279bc1a43012f8887",
+      "bytes": 6933
     },
     {
       "url": "/tv/state.js",
@@ -279,18 +279,18 @@
     },
     {
       "url": "/tv/tv.css",
-      "revision": "df7e2ef3e51a041b1c480ef72bd3deb8e8a89357",
-      "bytes": 26789
+      "revision": "3b87b44836a8f6034cd4f47b1e807d4680ced413",
+      "bytes": 26900
     },
     {
       "url": "/tv/tv.js",
-      "revision": "60c566a52bbd0191b89c798b97c4fea8ff3c23de",
-      "bytes": 29869
+      "revision": "d90b1d0e6346684e2e57667fee91fab90a88ae62",
+      "bytes": 33354
     }
   ],
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "d00b5dadda2dbc15bf79"
+  "version": "3668d6785affb0cb6d60"
 }
