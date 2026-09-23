@@ -33,6 +33,11 @@ cache_recovery = 'c=>c.listed!==false||c.id==="corgi"' in tv_source
 ok &= cache_recovery
 print("== stale offline channel data cannot hide Cortisol Corgi")
 print("  %s live TV recovery guard" % ("PASS" if cache_recovery else "FAIL"))
+tv_html = io.open(os.path.join(ROOT, "tv", "index.html"), encoding="utf-8").read()
+cache_busted = (re.search(r'mbs-channels\.js\?mbs-rev=[^"<]+', tv_html) is not None
+                and re.search(r'tv\.js\?mbs-rev=[^"<]+', tv_html) is not None)
+ok &= cache_busted
+print("  %s returning-device script revisions" % ("PASS" if cache_busted else "FAIL"))
 
 print("== television channel list includes Cortisol Corgi on desktop and phone")
 with sync_playwright() as pw:
