@@ -142,7 +142,9 @@
   const COMING_SOON = CHANNELS.filter(c => c.comingSoon).map(c => c.id);   // keep in sync with the list above
   const lcdList = document.getElementById("lcdList");
   const current = new URLSearchParams(location.search).get("ch") || "mominc";
-  if (lcdList) CHANNELS.filter(c=>c.listed!==false).forEach(c => {
+  // tv.js is fetched live even when an older offline game pack is installed. Keep this recovery
+  // exception so a stale pre-restoration mbs-channels.js cannot hide Corgi on returning devices.
+  if (lcdList) CHANNELS.filter(c=>c.listed!==false||c.id==="corgi").forEach(c => {
     const built = (c.ch > 0 || !!c.href) && !c.suppressed;   // a suppressed channel renders as a dim span, never as a link
     const el = document.createElement(built ? "a" : "span");
     el.className = "lcd-card" + (c.head ? " head" : "") + (c.half ? " half" : "") + (built ? "" : " off") + (c.id === current ? " on" : "");

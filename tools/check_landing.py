@@ -28,6 +28,12 @@ REG = json.load(io.open(os.path.join(ROOT, "tv", "registry.json"), encoding="utf
 SIZES = [(320, 568), (360, 800), (390, 844), (430, 932)]
 
 ok = True
+tv_source = io.open(os.path.join(ROOT, "tv", "tv.js"), encoding="utf-8").read()
+cache_recovery = 'c=>c.listed!==false||c.id==="corgi"' in tv_source
+ok &= cache_recovery
+print("== stale offline channel data cannot hide Cortisol Corgi")
+print("  %s live TV recovery guard" % ("PASS" if cache_recovery else "FAIL"))
+
 print("== television channel list includes Cortisol Corgi on desktop and phone")
 with sync_playwright() as pw:
     b = pw.chromium.launch()
