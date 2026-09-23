@@ -28,6 +28,20 @@ REG = json.load(io.open(os.path.join(ROOT, "tv", "registry.json"), encoding="utf
 SIZES = [(320, 568), (360, 800), (390, 844), (430, 932)]
 
 ok = True
+print("== television channel list includes Cortisol Corgi on desktop and phone")
+with sync_playwright() as pw:
+    b = pw.chromium.launch()
+    for label, width, height in (("desktop", 1280, 720), ("phone", 390, 844)):
+        pg = b.new_page(viewport={"width": width, "height": height},
+                        is_mobile=(label == "phone"), has_touch=(label == "phone"))
+        pg.goto(BASE + "/tv/", wait_until="load")
+        link = pg.locator('#lcdList a[href="?ch=corgi"]')
+        good = link.count() == 1 and link.is_visible() and "CORTISOL CORGI" in link.inner_text()
+        ok &= good
+        print("  %s %-7s %dx%d" % ("PASS" if good else "FAIL", label, width, height))
+        pg.close()
+    b.close()
+
 print("== landing cards (whole CTA inside the first 320x568 viewport, no clipped title)")
 with sync_playwright() as pw:
     b = pw.chromium.launch()

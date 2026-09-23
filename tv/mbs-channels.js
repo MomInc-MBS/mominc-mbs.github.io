@@ -75,7 +75,7 @@ window.MBS_CHANNELS = {
     },
     {
       "id": "corgi",
-      "listed": false,
+      "listed": true,
       "ch": 3,
       "href": "?ch=corgi",
       "label": "EXTRA",
