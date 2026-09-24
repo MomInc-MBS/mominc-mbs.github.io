@@ -75,12 +75,21 @@ const heroLight=new THREE.PointLight('#fff1dc',0,5);scene.add(heroLight);const k
 // ── The user's own Handborne hand (same loader as intro.js loadHand; the same drive-grab curl).
 const regions=['nails','fingertips','middle_sections','knuckles','palm','back_of_hand','wrist'];
 const validHand=r=>r&&r.version===1&&r.complete===true&&r.source==='handborne'&&regions.every(k=>Number.isInteger(r.sections?.[k])&&r.sections[k]>=0&&r.sections[k]<23);
-const hand=new THREE.Group();hand.visible=false;scene.add(hand);let handRig=null,handScale=1,handState='loading',lastGrip=-1;
+const hand=new THREE.Group();hand.visible=false;scene.add(hand);let handRig=null,handScale=1,handState='loading';
 async function loadHand(r){if(!validHand(r))throw Error('No finished Handborne hand.');const loader=new GLTFLoader(),families=new Map();for(const id of new Set(Object.values(r.sections)))families.set(id,await loader.loadAsync((id<20?'./models/':'/handborne/models/')+'family-'+String(id).padStart(2,'0')+'.glb'));const joined=new Set();for(const key of regions){const family=families.get(r.sections[key]).scene;let part=family.getObjectByName(key);if(!part&&(key==='middle_sections'||key==='knuckles')){part=family.getObjectByName('fingers');if(joined.has(r.sections[key]))continue;joined.add(r.sections[key]);}if(!part)throw Error('Missing hand region: '+key);hand.add(part.clone(true));}const size=new THREE.Box3().setFromObject(hand).getSize(new THREE.Vector3());handRig=bindHand(hand);handScale=.95/Math.max(size.x,size.y,size.z);}
-function grip(g){g=Math.round(THREE.MathUtils.clamp(g,0,1)*12)/12;if(!handRig||g===lastGrip)return;lastGrip=g;const bend=(a,b)=>a.map((v,i)=>v+(b[i]-v)*g);applyHandPose(handRig,{id:'lab-grip',name:'Grip',rotation:[0,0,0],opposition:15*g,fingers:{index:bend([0,0,0,0],[40,62,40,2]),middle:bend([5,5,5,0],[45,52,28,0]),ring:bend([8,8,8,0],[53,60,30,0]),pinky:bend([10,10,10,0],[60,65,32,0]),thumb:bend([0,0,0,0],[-1,10,32,-35])}});}
+const gripPose=g=>{const bend=(a,b)=>a.map((v,i)=>v+(b[i]-v)*g);return {id:'lab-grip',name:'Grip',rotation:[0,0,0],opposition:15*g,fingers:{index:bend([0,0,0,0],[40,62,40,2]),middle:bend([5,5,5,0],[45,52,28,0]),ring:bend([8,8,8,0],[53,60,30,0]),pinky:bend([10,10,10,0],[60,65,32,0]),thumb:bend([0,0,0,0],[-1,10,32,-35])}};};
+// The intro's drive-grab curl, posed twice on the CPU (open, fist) and blended on the GPU as a morph target:
+// applyHandPose re-skins every vertex (~100 ms a call on a 4x-throttled phone), too slow to run per frame.
+// ponytail: linear blend shortens fingers slightly mid-curl; per-step applyHandPose if that ever shows.
+function grip(g){if(!handRig)return;if(!handRig.open){applyHandPose(handRig,gripPose(0));handRig.open=handRig.meshes.map(({mesh})=>['position','normal'].map(k=>new THREE.Float32BufferAttribute(mesh.geometry.attributes[k].array.slice(),3)));applyHandPose(handRig,gripPose(1));handRig.meshes.forEach(({mesh},i)=>{mesh.geometry.morphAttributes.position=[handRig.open[i][0]];mesh.geometry.morphAttributes.normal=[handRig.open[i][1]];mesh.updateMorphTargets();mesh.frustumCulled=false;});}for(const {mesh} of handRig.meshes)mesh.morphTargetInfluences[0]=1-THREE.MathUtils.clamp(g,0,1);}
 if(DEBUG){try{if(!validHand(JSON.parse(localStorage.getItem('mbs-hand-profile-v1'))))localStorage.setItem('mbs-hand-profile-v1',JSON.stringify({version:1,complete:true,source:'handborne',sections:Object.fromEntries(regions.map(k=>[k,3]))}));}catch{}}
 let storedHand=null;try{storedHand=JSON.parse(localStorage.getItem('mbs-hand-profile-v1'));}catch{}
-const handLoading=loadHand(storedHand).then(()=>{handState='ready';},e=>{handState='none';console.warn('Lab hand unavailable:',e.message);});
+// Pose the hand, compile every shader (in parallel) and upload meshes/textures through a 1-px scissor while the lab
+// is still hidden (armie.html shows it 1.5 s after ready), so nothing hitches mid-scene on a slow phone.
+async function prepare(){grip(1);const objs=[hand,drive,frame,quilt,flash],vis=objs.map(o=>o.visible),show=on=>objs.forEach((o,i)=>o.visible=on||vis[i]),culled=[];
+ show(true);const compiled=renderer.extensions.has('KHR_parallel_shader_compile')?renderer.compileAsync(scene,camera):renderer.compile(scene,camera);show(false);await compiled;
+ show(true);scene.traverse(o=>{if(o.isMesh&&o.frustumCulled){o.frustumCulled=false;culled.push(o);}});renderer.setScissorTest(true);renderer.setScissor(0,0,1,1);renderer.render(scene,camera);renderer.setScissorTest(false);culled.forEach(o=>o.frustumCulled=true);show(false);}
+const handLoading=loadHand(storedHand).then(()=>{handState='ready';},e=>{handState='none';console.warn('Lab hand unavailable:',e.message);}).then(prepare).catch(e=>console.warn('Lab warm-up skipped:',e));
 
 // ── Timeline (seconds after the door seals). The press waits for the user; everything after it runs from pressAt.
 const TURN0=.6,TURN1=1.8,EMERGE0=3,EMERGE1=4.3,FLY1=5.5,CLICK=5.9,READY=6.2,HOVER1=7.2,AUTO_T=7.4;
@@ -88,7 +97,7 @@ const COLLAPSE0=.3,COLLAPSE1=1.3,GRAB0=2,GRAB1=2.9,PULL0=3.2,PULL1=4.6,END=5.2;
 const ease=v=>{v=Math.max(0,Math.min(1,v));return v*v*(3-2*v);};const mix=(a,b,t)=>a+(b-a)*ease(t);const back=v=>{v=Math.max(0,Math.min(1,v));return 1+2.7*Math.pow(v-1,3)+1.7*Math.pow(v-1,2);};
 const TUNE=(k,d)=>DEBUG&&params.has(k)?params.get(k).split(',').map(Number):d;
 const HAND_REL=new THREE.Vector3(...TUNE('hrel',[0,-.26,-.3])),HAND_ROT=new THREE.Euler(...TUNE('hrot',[-.3,Math.PI,.3])),HOVER=new THREE.Vector3(.9,.95,.45),HOVER_ROT=new THREE.Euler(-.15,Math.PI-.5,.1);
-const GRAB=new THREE.Vector3(...TUNE('grab',[.15,-1,.12])),GRAB_ROT=new THREE.Euler(...TUNE('grot',[0,0,.2]));
+const GRAB=new THREE.Vector3(...TUNE('grab',[.22,-1.05,-.08])),GRAB_ROT=new THREE.Euler(...TUNE('grot',[-.3,Math.PI,.3]));
 const PLUGGED=new THREE.Vector3(.545,PORT.y,PORT.z),OUTSIDE=new THREE.Vector3(.685,PORT.y,PORT.z);
 scene.updateMatrixWorld(true);const toMachine=v=>machine.worldToLocal(PORTAL_POS.clone().add(v));const INSIDE=toMachine(new THREE.Vector3(0,-.05,-.25)),EMERGED=toMachine(new THREE.Vector3(.2,-.35,.55));
 const anchorM=new THREE.Object3D();machine.add(anchorM);const anchorF=new THREE.Object3D();frame.add(anchorF);
@@ -155,9 +164,7 @@ doors.forEach((d,i)=>d.position.x=(i?1:-1)*(2.15-clicks/5*1.12));
 if(phase==='reveal'){const dt=Math.min(.05,(now-lastNow)/1000);lastNow=now;let next=clock+dt*(RM?2:1);if(handState==='loading'&&next>EMERGE0)next=Math.max(clock,EMERGE0);clock=next;if(AUTO_PRESS&&pressAt===Infinity&&clock>=AUTO_T)pressAt=clock;renderReveal(clock,pressAt);if(clock-pressAt>=END&&!finished)finish();}
 else{if(finished){coach.position.z=4.2;coach.scale.set(5,4,1);}camera.lookAt(look);renderer.render(scene,camera);}
 if(!finished||phase!=='reveal')requestAnimationFrame(tick);}
-document.querySelector('#loading').hidden=true;
 window.armieLab={get phase(){return phase},get clicks(){return clicks},get clock(){return clock},renderAt:(t,press=AUTO_PRESS?AUTO_T:Infinity)=>{phase='reveal';clicks=5;task.hidden=true;renderReveal(t,press);}};
 addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
-if(DEBUG)window.__lab={scene,hand,camera,THREE,machine};
-if(SCRUB!=null){await handLoading;window.armieLab.renderAt(SCRUB);document.documentElement.dataset.labFrame='ready';}
-else{report('armie-lab-ready');let entryStarted=false;const begin=()=>{if(entryStarted)return;entryStarted=true;start=performance.now();requestAnimationFrame(tick);};addEventListener('message',e=>{if(e.origin===location.origin&&e.source===parent&&e.data?.type==='armie-lab-start')begin();});if(parent===window)begin();}
+if(SCRUB!=null){await handLoading;document.querySelector('#loading').hidden=true;window.armieLab.renderAt(SCRUB);document.documentElement.dataset.labFrame='ready';}
+else{await handLoading;document.querySelector('#loading').hidden=true;report('armie-lab-ready');let entryStarted=false;const begin=()=>{if(entryStarted)return;entryStarted=true;start=performance.now();requestAnimationFrame(tick);};addEventListener('message',e=>{if(e.origin===location.origin&&e.source===parent&&e.data?.type==='armie-lab-start')begin();});if(parent===window)begin();}
