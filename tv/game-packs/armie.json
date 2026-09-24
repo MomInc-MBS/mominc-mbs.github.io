@@ -118,24 +118,14 @@
       "bytes": 14585
     },
     {
-      "url": "/tv/assets/armie-intro/lab-left.png",
-      "revision": "d8d9a65e665147a9f37b3ef5865fb9c237c119e5",
-      "bytes": 45128
-    },
-    {
-      "url": "/tv/assets/armie-intro/lab-right.png",
-      "revision": "ce89fed5b1a246bb459c522fae094a8b6d700f9d",
-      "bytes": 129187
-    },
-    {
       "url": "/tv/assets/armie-intro/lab.html",
-      "revision": "e69121a55a98cdc98ef85d8198cfc9f25c80b772",
-      "bytes": 1332
+      "revision": "8d7d230eae20a867cb0919ec622d392675c37609",
+      "bytes": 1682
     },
     {
       "url": "/tv/assets/armie-intro/lab.js",
-      "revision": "eb332d0c0caf0df0f732ed4d9f1b7e865dc81437",
-      "bytes": 6659
+      "revision": "6c359f5abe46d6b348208c5767080396ade9cf25",
+      "bytes": 26162
     },
     {
       "url": "/tv/assets/armie-intro/maze-run.mjs",
@@ -588,6 +578,11 @@
       "bytes": 4539
     },
     {
+      "url": "/tv/assets/armie-intro/quilt.webp",
+      "revision": "d1cd08cf342cad8f1d4e6bc45f9cc1c190fbdead",
+      "bytes": 288808
+    },
+    {
       "url": "/tv/assets/armie-intro/ship-routes.mjs",
       "revision": "f7f690e829e1ad043c25318687510023d4f5fad1",
       "bytes": 949
@@ -831,5 +826,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "9132c19a7eac14affa53"
+  "version": "84b5f62f57cdeded27c2"
 }
