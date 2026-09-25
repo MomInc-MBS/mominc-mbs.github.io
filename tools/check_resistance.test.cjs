@@ -79,11 +79,11 @@ test('character drafts stay locked; finishing saves the character and opens the 
 });
 test('an open Goon page unlocks immediately and stays unlocked on return without awarding a ranked win',async t=>{
  const w=dom(t,'/tv/?ch=goon','<article id="gn"><section class="network-launch"><a href="/gala/"><span>Create</span></a></section><p data-gala-entry-note></p><div class="wrap">Content</div></article>');
- const done=new Set();w.MBS_STATE={completedPages:()=>[...done],completePage:id=>done.add(id)};
+ const done=new Set(),banked=new Set();w.MBS_STATE={completedPages:()=>[...done],completePage:id=>done.add(id),bankUnlock:id=>banked.add(id)};
  w.eval(read('tv/network-flow.js'));w.document.dispatchEvent(new w.Event('DOMContentLoaded'));
  assert.equal(w.document.querySelector('#gn').hasAttribute('data-gala-unlocked'),false);
  w.localStorage.setItem('mbs-gala-character-created-v1','123');w.dispatchEvent(new w.StorageEvent('storage',{key:'mbs-gala-character-created-v1'}));
- assert.ok(w.document.querySelector('#gn').hasAttribute('data-gala-unlocked'));assert.ok(done.has('goon'));assert.equal(w.document.querySelector('.network-launch a').getAttribute('href'),'/play/goon/');
+ assert.ok(w.document.querySelector('#gn').hasAttribute('data-gala-unlocked'));assert.ok(done.has('goon'));assert.ok(banked.has('goon'),'The finished character lights the Goon card');assert.equal(w.document.querySelector('.network-launch a').getAttribute('href'),'/play/goon/');
  w.dispatchEvent(new w.Event('pageshow'));assert.ok(w.document.querySelector('#gn').hasAttribute('data-gala-unlocked'));
  assert.match(read('tv/run-progress.js'),/if\(e.detail\?\.site!=='goon'\)/);await new Promise(setImmediate);
 });
@@ -91,7 +91,7 @@ function game(asset='index-W2w8AfON.js'){
  const context={window:{},document:{},location:{},console};vm.createContext(context);vm.runInContext(read('gala/ammo.js'),context);
  const source=read('tv/games/goon/assets/'+asset);const start=source.lastIndexOf('wr=',source.indexOf('zs=class zs extends ve.Scene')),end=source.indexOf(';Ot(zs,"HINT_CSS_DIRECTION"',start);
  Object.assign(context,{ve:{Scene:class{}},Ot:(obj,key,value)=>obj[key]=value,Ce:4,Zp:12,Ti:120});vm.runInContext(source.slice(start,end)+';window.Game=zs;',context);
- const scene=new context.window.Game(),data=new Map();scene.scoreText={getData:k=>data.get(k),setData:(k,v)=>data.set(k,v)};return {scene,ammo:context.window.GalaAmmo};
+ const scene=new context.window.Game(),data=new Map();scene.scoreText={getData:k=>data.get(k),setData:(k,v)=>data.set(k,v)};return {scene,context,ammo:context.window.GalaAmmo};
 }
 test('ammo starts small, merges once per move, and scores firepower beyond the final tier',()=>{
  const {scene,ammo}=game();for(let i=0;i<30;i++){scene.resetBoard();const occupied=scene.board.flat().filter(Boolean);assert.equal(occupied.length,2);assert.ok(occupied.every(n=>n===1||n===2));}
@@ -108,6 +108,25 @@ test('the original Gala keeps money tiles and scoring without loading War Room a
  const entry=read('tv/games/goon/index.html'),bundle=read('tv/games/goon/assets/index-gala-classic.js');
  assert.match(entry,/index-gala-classic\.js/);assert.doesNotMatch(entry,/war-room\.js|ammo\.js|hologram/);
  assert.doesNotMatch(bundle,/GalaWarRoom|GalaAmmo/);assert.match(bundle,/this\.bar=i,i\.position\.set\(2\.9,0,0\)/);assert.match(bundle,/PLEDGED SO FAR: \$/);assert.match(bundle,/Kp=5000/);assert.match(bundle,/checkpoint\("goon"\)/);
+});
+test('without WebGL the original Gala keeps its scene and falls back from the 3D board',t=>{
+ const source=read('tv/games/goon/assets/index-gala-classic.js'),start=source.indexOf('function Bp(L,m){'),end=source.indexOf('return board;}',start)+'return board;}'.length;
+ const w=dom(t,'/tv/games/goon/index.html','<div id="game-container"><canvas id="phaser"></canvas></div>'),host=w.document.getElementById('game-container'),phaser=w.document.getElementById('phaser');
+ const context={console:{warn(){}},window:{},we:1,Ut:1,Pi:1,Yn:1,Pn:1,Je:1,Ve:1,Np:function(L){L.append(w.document.createElement('canvas'));throw Error('Error creating WebGL context.');}};
+ vm.createContext(context);vm.runInContext(source.slice(start,end)+';window.Bp=Bp;',context);
+ assert.equal(context.window.Bp(host,phaser),null,'A failed WebGL renderer leaves the scene on its flat board');assert.deepEqual([...host.children],[phaser],'The unused 3D canvas is removed');
+ context.Np=function(){this.scene={};};context.window.GalaCrowd={mount(){throw Error('No party guests.');}};
+ const board=context.window.Bp(host,phaser);assert.ok(board,'Party guests failing does not remove the 3D board');assert.equal(board.galaCrowd,undefined);
+});
+test('the flat Gala board fits the canvas, shows empty cells, and replaces old tile icons',()=>{
+ const {scene,context}=game('index-gala-classic.js'),icons=[],rects=[];
+ context.Os={width:{value:1152},height:{value:768}};context.Zh={5:L=>{const icon={destroyed:false,destroy(){this.destroyed=true;}};L.children.list.push(icon);icons.push(icon);}};
+ scene.graphics=new Proxy({},{get:(_,key)=>key==='clear'?()=>{rects.length=0;}:(...args)=>{if(key==='fillRoundedRect')rects.push(args);return scene.graphics;}});
+ scene.children={list:[]};scene.add={text:(x,y,text)=>({text,setOrigin(){return this;},destroy(){}})};scene.valueTexts=[];
+ scene.board=[[5,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,5]];scene.syncBoard3D(null,[],null);
+ assert.equal(rects.length,1+16+2);assert.equal(icons.length,2);assert.deepEqual(Array.from(scene.valueTexts,text=>text.text),['$16','$16']);
+ for(const [x,y,width,height] of rects){assert.ok(x>=0&&x+width<=1152);assert.ok(y>=90&&y+height<=768,'The board sits below the pledge counter');}
+ scene.syncBoard3D(null,[],null);assert.equal(icons.length,4);assert.ok(icons.slice(0,2).every(icon=>icon.destroyed));assert.ok(icons.slice(2).every(icon=>!icon.destroyed));
 });
 test('both War Room entries require full-run and app clearance before loading the game',async t=>{
  for(const route of ['/play/war-room/','/tv/games/goon/war-room.html'])for(const run of [null,{completedAt:1},{installedAt:1},{completedAt:1,installedAt:1}]){

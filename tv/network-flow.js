@@ -9,7 +9,8 @@
   }catch{}
   return false;
  }
- function recoverGalaFinish(){if(galaReady())window.MBS_STATE?.completePage('goon');}
+ // A finished character is Goon's whole interaction: it finishes the page and banks the channel's node.
+ function recoverGalaFinish(){if(!galaReady())return;window.MBS_STATE?.completePage('goon');window.MBS_STATE?.bankUnlock?.('goon');}
  const PROFILE_KEY='mbs-hand-profile-v1';
  const regions=['nails','fingertips','middle_sections','knuckles','palm','back_of_hand','wrist'];
  const pagesReady=()=>{const done=window.MBS_STATE?.completedPages()||[];return REQUIRED.every(id=>done.includes(id));};
