@@ -69,8 +69,8 @@
     },
     {
       "url": "/gala/gramophone.js",
-      "revision": "3359454f2024e70fdc453fb4d58550714d6000fd",
-      "bytes": 3848
+      "revision": "978135aebd1c348bd2fba3a705ea21ad774da6d6",
+      "bytes": 3817
     },
     {
       "url": "/gala/guest.css",
@@ -294,8 +294,8 @@
     },
     {
       "url": "/tv/card.js",
-      "revision": "8cffbc5902cf84fdd307c68ee229067affaaf5b9",
-      "bytes": 8589
+      "revision": "82baa69709a3e87c009f1e190e840dfbc91ac433",
+      "bytes": 8072
     },
     {
       "url": "/tv/channel-runtime.js",
@@ -304,8 +304,8 @@
     },
     {
       "url": "/tv/channels/goon.html",
-      "revision": "f326fd1ecd7e2804a424ce1485166446e1047b47",
-      "bytes": 24684
+      "revision": "152f597cefc92fe2103fcb817032d201eca8f4a2",
+      "bytes": 24653
     },
     {
       "url": "/tv/dj-identity.css",
@@ -446,5 +446,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "c4f51c4c81deb73905b8"
+  "version": "7486e746a369e3d7463a"
 }

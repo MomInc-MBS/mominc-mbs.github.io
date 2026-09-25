@@ -2550,16 +2550,16 @@ with sync_playwright() as pw:
           "C014: the text selects - the platform put the whole claim, its scope and its citation on "
           "the clipboard's side of the line (%d chars)" % len(sel))
 
-    # OPEN ITS SOURCE. A real anchor with a real href, opened in a new tab so the walk is not lost -
+    # OPEN ITS SOURCE. A real anchor with a real href, in this same tab (the site keeps one tab) -
     # and the host has to be one the citation beside it already names, which is what stops a link
     # field from quietly becoming a second, unreviewed citation.
     from urllib.parse import urlparse
     bad = [c["t"] for c in cards
            if not c["href"].startswith("https://")
            or urlparse(c["href"]).netloc.replace("www.", "") not in c["src"]
-           or c["target"] != "_blank" or "noopener" not in c["rel"]]
+           or c["target"] or "noreferrer" not in c["rel"]]
     check(cards and not bad,
-          "C014: every claim links to the source its own citation names, in a new tab, with noopener "
+          "C014: every claim links to the source its own citation names, in this tab, with noreferrer "
           "(bad: %s)" % (bad or "none"))
     check(all(c["scope"].strip() and c["take"].strip() and c["date"].strip() for c in cards),
           "C014: and each one carries its claim scope, its takeaway and its publication date")

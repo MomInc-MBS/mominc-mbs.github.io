@@ -669,10 +669,9 @@ export default {
        35px x 3 cards, and re-fitting six chapters is 4.2 built twice for a link that the museum and
        the flat gallery both already give. Filed in the backlog, not smuggled in here.
 
-       The link carries rel="noopener noreferrer" and opens in a new tab, which is the only shape that
-       lets a visitor open a source WITHOUT losing the walk - "resume at the same exhibit" is cheapest
-       when nothing was left in the first place. ST.reading is the belt to that braces: it survives a
-       real reload too, which a target that replaced the page would need. */
+       The link carries rel="noreferrer" and opens in this tab: the site keeps one tab so a phone never
+       holds several 3D scenes at once. ST.reading survives the reload on the way back, so Back returns
+       the visitor to the same exhibit. */
     const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
     // the link's visible text is the host and path without the scheme - the same string `src` already
     // prints, so the citation and the link read as one thing rather than two competing addresses
@@ -709,7 +708,7 @@ export default {
         + '<p class="rd-take">' + esc(item.take) + '</p>'
         + revBlock(item, ns || "rd")
         + '<span class="fl-src rd-src">' + esc(item.src)
-        + '<a class="rd-link" href="' + esc(item.url) + '" target="_blank" rel="noopener noreferrer">'
+        + '<a class="rd-link" href="' + esc(item.url) + '" rel="noreferrer">'
         + esc(linkLabel(item.url)) + '</a>'
         + '<span class="rd-date">' + esc(item.date) + '</span></span></div>';
     }

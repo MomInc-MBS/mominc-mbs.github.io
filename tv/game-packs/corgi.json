@@ -19,8 +19,8 @@
     },
     {
       "url": "/games/corgi/index.html",
-      "revision": "8d3d4935df2607082537dd6c188c1edfc2f1b16e",
-      "bytes": 7708
+      "revision": "aa417cb58eed65409b07da79d114dfc27cf6db51",
+      "bytes": 7677
     },
     {
       "url": "/play/corgi/index.html",
@@ -129,8 +129,8 @@
     },
     {
       "url": "/tv/card.js",
-      "revision": "8cffbc5902cf84fdd307c68ee229067affaaf5b9",
-      "bytes": 8589
+      "revision": "82baa69709a3e87c009f1e190e840dfbc91ac433",
+      "bytes": 8072
     },
     {
       "url": "/tv/channel-runtime.js",
@@ -149,8 +149,8 @@
     },
     {
       "url": "/tv/channels/corgi.html",
-      "revision": "7bc6e12da2740b01b6522b2bfee1859901603007",
-      "bytes": 47779
+      "revision": "7df266577c3d85e47ae15835c75592163fbc2607",
+      "bytes": 47748
     },
     {
       "url": "/tv/channels/corgi.js",
@@ -282,5 +282,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "71f4da0abcbfe3376d5b"
+  "version": "f7b20a7af6c13f9d41b3"
 }

@@ -73,7 +73,7 @@ LANDING = u"""<!doctype html>
       <div class="brand-heading">{brand}<h1 class="title">{page_title}</h1></div>
       <p class="premise">{premise}</p>
       <p class="resume" id="resume" hidden>Saved progress found on this device.</p>
-      <a class="cta" id="play" href="../../play/{slug}/" data-play="../../play/{slug}/" target="_blank" rel="noopener">{cta}</a>
+      <a class="cta" id="play" href="../../play/{slug}/" data-play="../../play/{slug}/">{cta}</a>
       <p class="cta-sub">{duration} &middot; {inp}</p>
       <p class="split">Public edition &middot; Free to play</p>
     </div>

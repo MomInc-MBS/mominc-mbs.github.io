@@ -5,8 +5,8 @@ import re
 def launch_markup(g):
     slug=g['slug']
     if slug not in ('lilboyfriend','corgi','djscratch','goon'):return ''
-    if slug=='goon':return '<section class="network-launch" aria-label="Play Goon"><a href="../../gala/" target="_blank" rel="noopener"><video src="../../tv/assets/goon-preview.webm" poster="../../tv/assets/goon-game-still.png" autoplay muted loop playsinline aria-label="The Goon Gala preview"></video><span>▶ JOIN THE GALA</span></a></section>'
-    return f'''<section class="network-launch" aria-label="Play {g['title']}"><a href="../../play/{slug}/" target="_blank" rel="noopener"><img src="../../tv/assets/{slug}-game-still.png" alt="{g['title']} game still"><span>▶ {g['cta']}</span></a></section>'''
+    if slug=='goon':return '<section class="network-launch" aria-label="Play Goon"><a href="../../gala/"><video src="../../tv/assets/goon-preview.webm" poster="../../tv/assets/goon-game-still.png" autoplay muted loop playsinline aria-label="The Goon Gala preview"></video><span>▶ JOIN THE GALA</span></a></section>'
+    return f'''<section class="network-launch" aria-label="Play {g['title']}"><a href="../../play/{slug}/"><img src="../../tv/assets/{slug}-game-still.png" alt="{g['title']} game still"><span>▶ {g['cta']}</span></a></section>'''
 
 def write_network_routes(root):
     root=Path(root)
@@ -28,7 +28,7 @@ def write_network_routes(root):
         play=root/f'play/{slug}/index.html'
         play.write_text(play.read_text(encoding='utf-8').replace(f'../games/{slug}/',f'./?ch={slug}'),encoding='utf-8')
         s=re.sub(r'<section data-network-launch[\s\S]*?</section>','',s)
-        panel=f'''<section data-network-launch class="network-launch"><a href="../play/{slug}/" target="_blank" rel="noopener"><img src="assets/{slug}-game-still.png" alt="{slug} game still"><span>▶ PLAY</span></a></section>'''
+        panel=f'''<section data-network-launch class="network-launch"><a href="../play/{slug}/"><img src="assets/{slug}-game-still.png" alt="{slug} game still"><span>▶ PLAY</span></a></section>'''
         s=re.sub(r'(<article\b[^>]*>)',lambda m:m[1]+panel,s,count=1)
         if slug=='goon':
             s=s.replace('../play/goon/','../gala/').replace('<span>▶ PLAY</span>','<span>▶ JOIN THE GALA</span>')

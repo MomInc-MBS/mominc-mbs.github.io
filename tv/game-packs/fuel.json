@@ -24,8 +24,8 @@
     },
     {
       "url": "/games/fuel/index.html",
-      "revision": "66c73d69ee3cd182c9e6d1270ef05b3419e4a550",
-      "bytes": 7731
+      "revision": "c90dccdaf8d83bf30e94ec4bd1f8c6d2b64030d3",
+      "bytes": 7700
     },
     {
       "url": "/play/fuel/index.html",
@@ -109,8 +109,8 @@
     },
     {
       "url": "/tv/card.js",
-      "revision": "8cffbc5902cf84fdd307c68ee229067affaaf5b9",
-      "bytes": 8589
+      "revision": "82baa69709a3e87c009f1e190e840dfbc91ac433",
+      "bytes": 8072
     },
     {
       "url": "/tv/channel-runtime.js",
@@ -119,8 +119,8 @@
     },
     {
       "url": "/tv/channels/fuel.html",
-      "revision": "e82fae683746dd7cc08e614ccde05afa671db657",
-      "bytes": 36310
+      "revision": "a04b7bbc1c98c36587e02efcf3974d7f7cdca898",
+      "bytes": 36279
     },
     {
       "url": "/tv/channels/fuel.js",
@@ -253,5 +253,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "1589bd2483a27a87e13d"
+  "version": "92906fdaa092cfd97850"
 }

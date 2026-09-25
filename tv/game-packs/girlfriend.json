@@ -19,8 +19,8 @@
     },
     {
       "url": "/games/girlfriend/index.html",
-      "revision": "e91ef013a6d0637b6d552dde0e204e712385107a",
-      "bytes": 8327
+      "revision": "a3341e3fe620106917f9a0b0921952b6e4311fbd",
+      "bytes": 8296
     },
     {
       "url": "/play/girlfriend/index.html",
@@ -144,8 +144,8 @@
     },
     {
       "url": "/tv/card.js",
-      "revision": "8cffbc5902cf84fdd307c68ee229067affaaf5b9",
-      "bytes": 8589
+      "revision": "82baa69709a3e87c009f1e190e840dfbc91ac433",
+      "bytes": 8072
     },
     {
       "url": "/tv/channel-manifest.json",
@@ -164,8 +164,8 @@
     },
     {
       "url": "/tv/channels/girlfriend.js",
-      "revision": "d19c0fd8fab4d2e8a4a40b8693d612b51aacbc24",
-      "bytes": 30155
+      "revision": "5af96106f364eaeccd982859119195c929257d21",
+      "bytes": 30141
     },
     {
       "url": "/tv/dj-identity.css",
@@ -292,5 +292,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "81394d7a5495ec8051a4"
+  "version": "a5de8b366b876a3c3e95"
 }
