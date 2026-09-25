@@ -19,8 +19,8 @@
     },
     {
       "url": "/games/djscratch/index.html",
-      "revision": "b994edbe0b58c3bedc4bedc24d8d7084d70755e9",
-      "bytes": 8113
+      "revision": "2cedc5955c9a2ceb7c8bcb35f20b1b8f5311e11b",
+      "bytes": 8082
     },
     {
       "url": "/play/djscratch/index.html",
@@ -139,8 +139,8 @@
     },
     {
       "url": "/tv/card.js",
-      "revision": "8cffbc5902cf84fdd307c68ee229067affaaf5b9",
-      "bytes": 8589
+      "revision": "82baa69709a3e87c009f1e190e840dfbc91ac433",
+      "bytes": 8072
     },
     {
       "url": "/tv/channel-runtime.js",
@@ -149,8 +149,8 @@
     },
     {
       "url": "/tv/channels/djscratch.html",
-      "revision": "aa5dfede03ae8cd6512f03c538b55f16ee96034f",
-      "bytes": 50655
+      "revision": "5436e0515a9ccc64eb98445246b8216c8e9b1f68",
+      "bytes": 50624
     },
     {
       "url": "/tv/channels/djscratch.js",
@@ -224,8 +224,8 @@
     },
     {
       "url": "/tv/network-flow.js",
-      "revision": "59f15aac5e8f37edaf2c5380192c94ffeaf06cc7",
-      "bytes": 8601
+      "revision": "472790bd514b78a385176a9175f60fa92de852ba",
+      "bytes": 8753
     },
     {
       "url": "/tv/phone-layout.js",
@@ -274,13 +274,13 @@
     },
     {
       "url": "/tv/tv.js",
-      "revision": "d90b1d0e6346684e2e57667fee91fab90a88ae62",
-      "bytes": 33354
+      "revision": "e6c4f489b3d9b7532116cbbb267c4a7f0e0367a5",
+      "bytes": 33813
     }
   ],
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "ffa1469e9c7626746d6d"
+  "version": "c69a8522035bc54a034a"
 }

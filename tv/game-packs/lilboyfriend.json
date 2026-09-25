@@ -19,8 +19,8 @@
     },
     {
       "url": "/games/lilboyfriend/index.html",
-      "revision": "1e6deaed2fa9ca2f7a556b12320cf9e0cf0fbc35",
-      "bytes": 8327
+      "revision": "b8366c59890cd6accdd455202998e8188ef0c411",
+      "bytes": 8296
     },
     {
       "url": "/play/lilboyfriend/index.html",
@@ -164,8 +164,8 @@
     },
     {
       "url": "/tv/card.js",
-      "revision": "8cffbc5902cf84fdd307c68ee229067affaaf5b9",
-      "bytes": 8589
+      "revision": "82baa69709a3e87c009f1e190e840dfbc91ac433",
+      "bytes": 8072
     },
     {
       "url": "/tv/channel-runtime.js",
@@ -174,13 +174,13 @@
     },
     {
       "url": "/tv/channels/lilboyfriend.html",
-      "revision": "5f0598338497be29e8dcb2f4074fedc1a726ea1d",
-      "bytes": 79043
+      "revision": "9712a399037fa87994424229921bfbad3e94d8e4",
+      "bytes": 79012
     },
     {
       "url": "/tv/channels/lilboyfriend.js",
-      "revision": "a0747163ad05c96b25e2af5de3dacd33e80b2e2b",
-      "bytes": 212909
+      "revision": "66227f2570bdcccf66fc21938de5f715f4bca126",
+      "bytes": 212750
     },
     {
       "url": "/tv/data/assessments/lilboyfriend.json",
@@ -254,8 +254,8 @@
     },
     {
       "url": "/tv/network-flow.js",
-      "revision": "59f15aac5e8f37edaf2c5380192c94ffeaf06cc7",
-      "bytes": 8601
+      "revision": "472790bd514b78a385176a9175f60fa92de852ba",
+      "bytes": 8753
     },
     {
       "url": "/tv/phone-layout.js",
@@ -304,13 +304,13 @@
     },
     {
       "url": "/tv/tv.js",
-      "revision": "d90b1d0e6346684e2e57667fee91fab90a88ae62",
-      "bytes": 33354
+      "revision": "e6c4f489b3d9b7532116cbbb267c4a7f0e0367a5",
+      "bytes": 33813
     }
   ],
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "237234e1cbd2a88fecf1"
+  "version": "3007d0cfe79923bb6350"
 }

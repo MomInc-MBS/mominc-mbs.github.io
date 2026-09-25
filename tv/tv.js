@@ -443,7 +443,7 @@
   };
   window.MBS.cancelWave = () => { liveWave && liveWave.cancel && liveWave.cancel(); liveWave = null; };
 
-  // --- the cross-site unlock: each channel's solved interactable turns its LCD card orange and banks its node.
+  // --- the cross-site unlock: each channel's solved interactable banks its node; its finished page turns its LCD card orange.
   // Progress persists per visitor; when every node is in, the LCD is armed for the hacked menu (that destination is still to be built). Shared store: mbs-state (tv/state.js), via MBS_STATE.
   // sag and armie went coming_soon (G5) and no longer call MBS.unlock, so the reachable set is whatever
   // the manifest marks active - two other channels deliberately never call it either. MBS_STATE.unlockedActive()
@@ -453,11 +453,16 @@
   const NODES = ACTIVE_UNLOCK.length;
   const lcd = document.getElementById("lcd");
   const readUnlock = () => window.MBS_STATE.unlockedActive();
+  // A card turns orange when its page is finished, the same record the sponsor story waits for. A secret
+  // can bank mid-page (Lil Boyfriend's museum door, Dr Girlfriend's mould), so it no longer lights a card
+  // that the Helping Hand advertisement still counts as unfinished.
   const paintUnlock = () => {
-    const done = readUnlock();
-    document.querySelectorAll(".lcd-card").forEach(el => el.classList.toggle("done", done.includes(el.dataset.id)));
+    const done = readUnlock(), finished = window.MBS_STATE.completedPages();
+    document.querySelectorAll(".lcd-card").forEach(el => el.classList.toggle("done", finished.includes(el.dataset.id)));
     if (lcd) lcd.dataset.count = `${done.length}/${NODES}`;
   };
+  window.addEventListener("mbs:page-complete", paintUnlock);
+  window.addEventListener("storage", paintUnlock);
   const ARMED_MS = 30000;                                   // the unlock window: 30 s from the fifth node, then the purple glow passes and everything returns (Ian, 2026-08-26)
   window.MBS.MAIL = "ianmyersrocks97@gmail.com";           // the one address behind every email link on the network; change here only
   window.MBS.unlock = (site) => {

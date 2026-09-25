@@ -5,7 +5,7 @@ try{const saved=JSON.parse(localStorage.getItem(KEY));if(saved){preference.enabl
 audio.volume=preference.volume;
 const style=document.createElement('link');style.rel='stylesheet';style.href='/gala/gramophone.css?v=1';document.head.append(style);
 const panel=document.createElement('div');panel.className='gala-gramophone';panel.setAttribute('aria-label','Gramophone music');
-panel.innerHTML='<button type="button" class="gramophone-toggle" aria-pressed="false">♫ Play gramophone</button><label class="gramophone-volume">Volume<input type="range" min="0" max="100" step="5" aria-label="Music volume"></label><a class="gramophone-credit" href="/gala/music.html" target="_blank" rel="noopener">Satie · recording credits</a>';
+panel.innerHTML='<button type="button" class="gramophone-toggle" aria-pressed="false">♫ Play gramophone</button><label class="gramophone-volume">Volume<input type="range" min="0" max="100" step="5" aria-label="Music volume"></label><a class="gramophone-credit" href="/gala/music.html">Satie · recording credits</a>';
 const button=panel.querySelector('button'),volume=panel.querySelector('input');volume.value=String(preference.volume*100);
 const slot=document.querySelector('[data-gramophone-slot]');if(slot){slot.append(panel);panel.classList.add('is-inline');}else document.body.append(panel);
 function save(){try{localStorage.setItem(KEY,JSON.stringify(preference));}catch{}}
