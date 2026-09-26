@@ -89,7 +89,7 @@ window.MBS_CHANNELS = {
     },
     {
       "id": "armie",
-      "listed": false,
+      "listed": true,
       "ch": 5,
       "href": "?ch=armie",
       "label": "EXTRA",

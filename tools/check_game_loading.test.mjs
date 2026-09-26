@@ -360,3 +360,16 @@ test('the channel dial tunes in numeric order with mouse, touch, and keyboard', 
   assert.match(shell, /ArrowRight/);
   assert.match(styles, /\.dial\{[^}]*touch-action:none/s);
 });
+
+test('Coach Armie keeps its TV tile and the hand offer arrives on a powered set', () => {
+  // tv.js drops listed:false channels from the strip; network-flow.js lights or darkens the armie tile.
+  const page = {window: {}};
+  vm.runInNewContext(readFileSync(new URL('tv/mbs-channels.js', root), 'utf8'), page);
+  const armie = page.window.MBS_CHANNELS.channels.find(c => c.id === 'armie');
+  assert.notEqual(armie.listed, false);
+  assert.match(readFileSync(new URL('tv/tv.js', root), 'utf8'), /c\.id === 'armie' && !window\.MBS_FLOW\?\.armieReady\(\)/);
+  // retro-ads.js shows nothing while the set is off, so the offer must power it before leaving DJ Scratch.
+  const flow = readFileSync(new URL('tv/network-flow.js', root), 'utf8');
+  const offer = flow.slice(flow.indexOf('function showAd'), flow.indexOf("location.assign('/tv/?ch=djscratch&ad=hand')"));
+  assert.match(offer, /sessionStorage\.setItem\('mbs-on','1'\)/);
+});
