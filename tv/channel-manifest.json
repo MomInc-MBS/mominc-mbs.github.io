@@ -427,7 +427,7 @@
         ],
         "share_image": "assets/marks/armie.png"
       },
-      "listed": false
+      "listed": true
     },
     {
       "id": "fuel",

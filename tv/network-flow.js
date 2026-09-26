@@ -21,7 +21,7 @@
  const armieReady=()=>pagesReady()&&!!handProfile();
  function decision(signature){if(!pagesReady()||!signature)return false;const s=read();if(s.last===signature)return false;try{localStorage.setItem(KEY,JSON.stringify({count:Math.min(5,s.count+1),last:signature}));window.dispatchEvent(new Event('mbs-flow'));return true;}catch{return false;}}
  window.MBS_FLOW={pagesReady,armieReady,decision,read,validHand,recipe,profile,saveHand,handProfile};
- function showAd(){if(!pagesReady())return;if(!document.querySelector('#tv')){location.assign('/tv/?ch=djscratch&ad=hand');return;}window.dispatchEvent(new Event('mbs:hand-offer'));}
+ function showAd(){if(!pagesReady())return;if(!document.querySelector('#tv')){try{sessionStorage.setItem('mbs-on','1');}catch{}location.assign('/tv/?ch=djscratch&ad=hand');return;}window.dispatchEvent(new Event('mbs:hand-offer'));}
  // Old school runs banked Corgi's secret but never recorded the finished page.
  // Repair only complete saved runs; a secret by itself is not a completion.
  function recoverSchoolFinish(){
