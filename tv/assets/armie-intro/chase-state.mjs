@@ -1,4 +1,4 @@
-import {LENGTH} from './maze-run.mjs?v=chase-4';
+import {LENGTH} from './maze-run.mjs?v=chase-5';
 export function chasePressure(state,run){
   if(state.mistakes>=3)return 1;
   const travelled=run?Math.min(1,run.distance/LENGTH):0;
