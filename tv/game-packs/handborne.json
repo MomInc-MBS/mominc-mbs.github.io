@@ -408,6 +408,36 @@
       "bytes": 3476
     },
     {
+      "url": "/tv/audio/electric-static.mp3",
+      "revision": "c6c5a3e3cea085ec6e4b034614553aed7b7e1752",
+      "bytes": 2732
+    },
+    {
+      "url": "/tv/audio/mechanical-click-1.mp3",
+      "revision": "5c27bc375429dcb89fcc7005115e92ed06c460ed",
+      "bytes": 4114
+    },
+    {
+      "url": "/tv/audio/mechanical-click-2.mp3",
+      "revision": "1310efcd77c7957837c0b31980dd4afa836858a0",
+      "bytes": 4306
+    },
+    {
+      "url": "/tv/audio/menu-bloop.mp3",
+      "revision": "58fcf4742abb5a45ddb769c48221417b8758308d",
+      "bytes": 2540
+    },
+    {
+      "url": "/tv/audio/metal-switch-1.mp3",
+      "revision": "5e63c857c612981d8b784835f621c99a319b3097",
+      "bytes": 3884
+    },
+    {
+      "url": "/tv/audio/metal-switch-2.mp3",
+      "revision": "5e74aa0c7073bdfff4bca2457e9abaec0ddfcaa3",
+      "bytes": 1772
+    },
+    {
       "url": "/tv/card.js",
       "revision": "8cffbc5902cf84fdd307c68ee229067affaaf5b9",
       "bytes": 8589
@@ -416,6 +446,11 @@
       "url": "/tv/channel-runtime.js",
       "revision": "3bff45f8943e11197725b65f7da0a4bfe1025958",
       "bytes": 13515
+    },
+    {
+      "url": "/tv/dj-booth.css",
+      "revision": "4de04f6d21b51495ba99192794360ae7e98dda20",
+      "bytes": 16388
     },
     {
       "url": "/tv/dj-identity.css",
@@ -449,8 +484,8 @@
     },
     {
       "url": "/tv/index.html",
-      "revision": "2dbbcf684dc2ca0ca9393be3a7d0cc8a9f156b64",
-      "bytes": 12777
+      "revision": "8f82827888eda14c02d58dbd7afc32396111702b",
+      "bytes": 13267
     },
     {
       "url": "/tv/landing.css",
@@ -514,13 +549,18 @@
     },
     {
       "url": "/tv/retro-pointer.js",
-      "revision": "66553ddbd359b845e6da65c6ad3a169055ea83f1",
-      "bytes": 9080
+      "revision": "a1d7bd4a61a2cd570cfd28747aafe0629d0bc35f",
+      "bytes": 9764
     },
     {
       "url": "/tv/run-progress.js",
       "revision": "dc120a76537b93687e053ef279bc1a43012f8887",
       "bytes": 6933
+    },
+    {
+      "url": "/tv/sound.js",
+      "revision": "ff089b274cab1e4eba50da032c2b9dcc74e7c28a",
+      "bytes": 9580
     },
     {
       "url": "/tv/state.js",
@@ -529,17 +569,17 @@
     },
     {
       "url": "/tv/tv.css",
-      "revision": "3b87b44836a8f6034cd4f47b1e807d4680ced413",
-      "bytes": 26900
+      "revision": "7dc80a4600a5fdb124d64db0e6a437df0492a108",
+      "bytes": 27087
     },
     {
       "url": "/tv/tv.js",
-      "revision": "d90b1d0e6346684e2e57667fee91fab90a88ae62",
-      "bytes": 33354
+      "revision": "32006f6fe65601b4707ace61390006b635dfabf6",
+      "bytes": 34570
     }
   ],
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "0f93cc8514d293ac3572"
+  "version": "a9dff473583828f9eb96"
 }

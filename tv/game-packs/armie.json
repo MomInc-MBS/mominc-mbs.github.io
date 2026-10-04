@@ -64,18 +64,13 @@
     },
     {
       "url": "/tv/assets/armie-intro/chase-state.mjs",
-      "revision": "bcc30480c5340685b9b34ddefb4009401e263ea2",
+      "revision": "f5b278e966c27885660c376ccdf91a778b5c6b2a",
       "bytes": 322
     },
     {
       "url": "/tv/assets/armie-intro/chase-ui.mjs",
-      "revision": "a61d67056e11326f4ac9d9e0794dc104a73a412d",
-      "bytes": 8564
-    },
-    {
-      "url": "/tv/assets/armie-intro/coach-hand.mjs",
-      "revision": "976c179c98c6b23d8e2acc0ec2605a5149358689",
-      "bytes": 4608
+      "revision": "5a03a00e681767deb6b169c32c85829ad96b61ca",
+      "bytes": 3482
     },
     {
       "url": "/tv/assets/armie-intro/coach.png",
@@ -104,8 +99,8 @@
     },
     {
       "url": "/tv/assets/armie-intro/game-scene.js",
-      "revision": "a52d929c51d562f507b9cd8316103b35f7926b8d",
-      "bytes": 4243
+      "revision": "861ccd2aab5c8b0586abcac4255b2a9b7dee3fc2",
+      "bytes": 4216
     },
     {
       "url": "/tv/assets/armie-intro/game-screen.png",
@@ -114,12 +109,12 @@
     },
     {
       "url": "/tv/assets/armie-intro/index.html",
-      "revision": "4d102759b02a6c5ee57a3bdf5c40c3ce9a8948eb",
+      "revision": "8fadb20f274c8021ddd1e036559e56adc1c85172",
       "bytes": 1476
     },
     {
       "url": "/tv/assets/armie-intro/intro.js",
-      "revision": "8f5bc2182c1b369c13aa9b8bb44a075295c3d15e",
+      "revision": "b378eb53e97429b1e51e514afdb0f9e4b3823752",
       "bytes": 14585
     },
     {
@@ -134,23 +129,23 @@
     },
     {
       "url": "/tv/assets/armie-intro/maze-run.mjs",
-      "revision": "78a5c09cb2f6ab139e827c26f43613e645e3174c",
-      "bytes": 4900
+      "revision": "0d1f2cb0fd9b2647da4cdd9b6529b85cb7f29a4f",
+      "bytes": 4361
     },
     {
       "url": "/tv/assets/armie-intro/maze-scene.js",
-      "revision": "062e5648de4df20e96feb25a72661bd0e287c2e8",
-      "bytes": 24650
+      "revision": "ee19b9a7d72537bd9bcf2e165fa9f198b65b9696",
+      "bytes": 9565
     },
     {
       "url": "/tv/assets/armie-intro/maze-ui.css",
-      "revision": "24c6bbe51fbd691f2e96ab9816e43090d298c243",
-      "bytes": 10580
+      "revision": "f98bc5f005802037fe3d41110a8402da66ea945d",
+      "bytes": 8279
     },
     {
       "url": "/tv/assets/armie-intro/maze-ui.mjs",
-      "revision": "d5ebea3fb976325a9908e4f5ee5b68a78977fe17",
-      "bytes": 4213
+      "revision": "4582c767fa91792b78f71813b91e93672cfe4b9b",
+      "bytes": 6395
     },
     {
       "url": "/tv/assets/armie-intro/models/family-00.glb",
@@ -693,6 +688,36 @@
       "bytes": 3476
     },
     {
+      "url": "/tv/audio/electric-static.mp3",
+      "revision": "c6c5a3e3cea085ec6e4b034614553aed7b7e1752",
+      "bytes": 2732
+    },
+    {
+      "url": "/tv/audio/mechanical-click-1.mp3",
+      "revision": "5c27bc375429dcb89fcc7005115e92ed06c460ed",
+      "bytes": 4114
+    },
+    {
+      "url": "/tv/audio/mechanical-click-2.mp3",
+      "revision": "1310efcd77c7957837c0b31980dd4afa836858a0",
+      "bytes": 4306
+    },
+    {
+      "url": "/tv/audio/menu-bloop.mp3",
+      "revision": "58fcf4742abb5a45ddb769c48221417b8758308d",
+      "bytes": 2540
+    },
+    {
+      "url": "/tv/audio/metal-switch-1.mp3",
+      "revision": "5e63c857c612981d8b784835f621c99a319b3097",
+      "bytes": 3884
+    },
+    {
+      "url": "/tv/audio/metal-switch-2.mp3",
+      "revision": "5e74aa0c7073bdfff4bca2457e9abaec0ddfcaa3",
+      "bytes": 1772
+    },
+    {
       "url": "/tv/card.js",
       "revision": "8cffbc5902cf84fdd307c68ee229067affaaf5b9",
       "bytes": 8589
@@ -704,8 +729,13 @@
     },
     {
       "url": "/tv/channels/armie.html",
-      "revision": "30e458a0ef1306bec8ddf5b2707fc0e7c57108e6",
-      "bytes": 32076309
+      "revision": "b5eda3c92ada718284154c6213d266e0c1cce370",
+      "bytes": 32077817
+    },
+    {
+      "url": "/tv/dj-booth.css",
+      "revision": "4de04f6d21b51495ba99192794360ae7e98dda20",
+      "bytes": 16388
     },
     {
       "url": "/tv/dj-identity.css",
@@ -739,8 +769,8 @@
     },
     {
       "url": "/tv/index.html",
-      "revision": "2dbbcf684dc2ca0ca9393be3a7d0cc8a9f156b64",
-      "bytes": 12777
+      "revision": "8f82827888eda14c02d58dbd7afc32396111702b",
+      "bytes": 13267
     },
     {
       "url": "/tv/landing.css",
@@ -804,13 +834,18 @@
     },
     {
       "url": "/tv/retro-pointer.js",
-      "revision": "66553ddbd359b845e6da65c6ad3a169055ea83f1",
-      "bytes": 9080
+      "revision": "a1d7bd4a61a2cd570cfd28747aafe0629d0bc35f",
+      "bytes": 9764
     },
     {
       "url": "/tv/run-progress.js",
       "revision": "dc120a76537b93687e053ef279bc1a43012f8887",
       "bytes": 6933
+    },
+    {
+      "url": "/tv/sound.js",
+      "revision": "ff089b274cab1e4eba50da032c2b9dcc74e7c28a",
+      "bytes": 9580
     },
     {
       "url": "/tv/state.js",
@@ -819,17 +854,17 @@
     },
     {
       "url": "/tv/tv.css",
-      "revision": "3b87b44836a8f6034cd4f47b1e807d4680ced413",
-      "bytes": 26900
+      "revision": "7dc80a4600a5fdb124d64db0e6a437df0492a108",
+      "bytes": 27087
     },
     {
       "url": "/tv/tv.js",
-      "revision": "d90b1d0e6346684e2e57667fee91fab90a88ae62",
-      "bytes": 33354
+      "revision": "32006f6fe65601b4707ace61390006b635dfabf6",
+      "bytes": 34570
     }
   ],
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "912d791b3617cd754d94"
+  "version": "493b4e1a2cf4fcebd604"
 }

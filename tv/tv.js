@@ -175,6 +175,7 @@
   const dialAngle = index => -150 + Math.max(0, index) * dialStep;
   let dialIndex = dialChannels.findIndex(c => c.id === current);
   let dialDrag = null;
+  let pendingTune = null;
   knob.style.setProperty("--rot", `${dialAngle(dialIndex)}deg`);
   const paintDialLabel = index => {
     const c = dialChannels[index];
@@ -188,20 +189,29 @@
     const r = knob.getBoundingClientRect();
     return Math.atan2(e.clientY - (r.top + r.height / 2), e.clientX - (r.left + r.width / 2)) * 180 / Math.PI;
   };
-  const tune = index => {
+  const tune = (index, sounded = false) => {
     const target = Math.max(0, Math.min(dialChannels.length - 1, index));
     const c = dialChannels[target];
     if (!c) return;
+    const changed = target !== dialIndex;
     dialIndex = target;
     knob.style.setProperty("--rot", `${dialAngle(target)}deg`);
     paintDialLabel(target);
-    if (c.id !== current) location.assign(c.href || `?ch=${c.id}`);
+    if (!changed) return;
+    if (pendingTune) { clearTimeout(pendingTune); pendingTune = null; }
+    if (c.id === current) return;
+    const audible = sounded ? true : window.MBS_SOUND?.play("detent");
+    const destination = c.href || `?ch=${c.id}`;
+    // Let the detent ring for one short beat before the new page unloads this set.
+    if (audible) pendingTune = setTimeout(() => location.assign(destination), 75);
+    else location.assign(destination);
   };
   knob.addEventListener("pointerdown", e => {
     if (!e.isPrimary || (e.pointerType === "mouse" && e.button !== 0)) return;
+    if (pendingTune) { clearTimeout(pendingTune); pendingTune = null; }
     e.preventDefault();
     knob.setPointerCapture(e.pointerId);
-    dialDrag = { id: e.pointerId, last: pointerAngle(e), total: 0, start: dialIndex };
+    dialDrag = { id: e.pointerId, last: pointerAngle(e), total: 0, start: dialIndex, sounded: dialIndex };
     knob.classList.add("dragging");
   });
   knob.addEventListener("pointermove", e => {
@@ -215,6 +225,14 @@
     dialDrag.total += delta;
     const visual = Math.max(-150, Math.min(150, dialAngle(dialDrag.start) + dialDrag.total));
     knob.style.setProperty("--rot", `${visual}deg`);
+    const crossed = Math.abs(dialDrag.total) >= Math.min(24, dialStep / 2);
+    let turns = dialStep ? Math.round(dialDrag.total / dialStep) : 0;
+    if (crossed && turns === 0) turns = Math.sign(dialDrag.total);
+    const index = Math.max(0, Math.min(dialChannels.length - 1, dialDrag.start + turns));
+    if (crossed && index !== dialDrag.sounded) {
+      dialDrag.sounded = index;
+      window.MBS_SOUND?.play("detent");
+    }
   });
   const finishDial = (e, navigate) => {
     if (!dialDrag || e.pointerId !== dialDrag.id) return;
@@ -224,7 +242,7 @@
     const crossedDetent = Math.abs(drag.total) >= Math.min(24, dialStep / 2);
     let turns = dialStep ? Math.round(drag.total / dialStep) : 0;
     if (crossedDetent && turns === 0) turns = Math.sign(drag.total);
-    if (navigate && crossedDetent) tune(drag.start + turns);
+    if (navigate && crossedDetent) tune(drag.start + turns, drag.sounded === Math.max(0, Math.min(dialChannels.length - 1, drag.start + turns)));
     else knob.style.setProperty("--rot", `${dialAngle(dialIndex)}deg`);
   };
   knob.addEventListener("pointerup", e => finishDial(e, true));
@@ -239,6 +257,7 @@
     e.preventDefault();
     tune(target);
   });
+  window.addEventListener("pagehide", () => { if (pendingTune) clearTimeout(pendingTune); });
 
   // --- press into the glass: a distortion spot at the point, growing while held; the picture sinks toward it
   let active = null, raf = 0, t0 = 0;
@@ -250,6 +269,7 @@
   screen.addEventListener("pointerdown", e => {
     if (tv.dataset.state !== "on") return;
     if (e.target.closest && e.target.closest(NO_PRESS)) return;
+    window.MBS_SOUND?.play("static");
     const r = screen.getBoundingClientRect();
     const x = e.clientX - r.left, y = e.clientY - r.top;
     const p = document.createElement("span"); p.className = "press";

@@ -98,39 +98,9 @@
       "bytes": 181293
     },
     {
-      "url": "/tv/assets/myr5-blankpaper.png",
-      "revision": "1f65de8ee17eb3e0d8684f7f8485f4ec00c6af22",
-      "bytes": 98628
-    },
-    {
-      "url": "/tv/assets/myr5-darkstone.png",
-      "revision": "5d8ab74ec21043bca57aad8369a92db66a01a99a",
-      "bytes": 104457
-    },
-    {
-      "url": "/tv/assets/myr5-newsprint.png",
-      "revision": "8333dc9f57d3f722783e4f69767b42aec7f32ae7",
-      "bytes": 181903
-    },
-    {
-      "url": "/tv/assets/myr5-palestone.png",
-      "revision": "17c26d8e9869ea1984dae53a90521a3a4668e070",
-      "bytes": 172086
-    },
-    {
-      "url": "/tv/assets/myr5-purple.png",
-      "revision": "41cc16bc7cff69420089fced9d923437fcf00f53",
-      "bytes": 161180
-    },
-    {
       "url": "/tv/assets/myr5-sticker-2.png",
       "revision": "677d64cfc2f48346887c556f83c8751064ec8a7d",
       "bytes": 163970
-    },
-    {
-      "url": "/tv/assets/myr5-straw-wood.png",
-      "revision": "336dad39c699faaf2d03622f029cb21505604e8c",
-      "bytes": 172162
     },
     {
       "url": "/tv/atmosphere.css",
@@ -141,6 +111,36 @@
       "url": "/tv/atmosphere.js",
       "revision": "1b073454f0b448d5d6fd4111e1a6ed68e620f1fa",
       "bytes": 3476
+    },
+    {
+      "url": "/tv/audio/electric-static.mp3",
+      "revision": "c6c5a3e3cea085ec6e4b034614553aed7b7e1752",
+      "bytes": 2732
+    },
+    {
+      "url": "/tv/audio/mechanical-click-1.mp3",
+      "revision": "5c27bc375429dcb89fcc7005115e92ed06c460ed",
+      "bytes": 4114
+    },
+    {
+      "url": "/tv/audio/mechanical-click-2.mp3",
+      "revision": "1310efcd77c7957837c0b31980dd4afa836858a0",
+      "bytes": 4306
+    },
+    {
+      "url": "/tv/audio/menu-bloop.mp3",
+      "revision": "58fcf4742abb5a45ddb769c48221417b8758308d",
+      "bytes": 2540
+    },
+    {
+      "url": "/tv/audio/metal-switch-1.mp3",
+      "revision": "5e63c857c612981d8b784835f621c99a319b3097",
+      "bytes": 3884
+    },
+    {
+      "url": "/tv/audio/metal-switch-2.mp3",
+      "revision": "5e74aa0c7073bdfff4bca2457e9abaec0ddfcaa3",
+      "bytes": 1772
     },
     {
       "url": "/tv/card.js",
@@ -158,14 +158,24 @@
       "bytes": 13515
     },
     {
+      "url": "/tv/channels/girlfriend-roster.js",
+      "revision": "f50ec7c314a55af6918913a319299ed26b04c34a",
+      "bytes": 277447
+    },
+    {
       "url": "/tv/channels/girlfriend.html",
-      "revision": "873fc29459ba72077ac9d2956de12d4662530e5a",
-      "bytes": 15833
+      "revision": "8d7937c6af4b1c05db8b3d2d4ad457532e89cd17",
+      "bytes": 21533
     },
     {
       "url": "/tv/channels/girlfriend.js",
-      "revision": "d19c0fd8fab4d2e8a4a40b8693d612b51aacbc24",
-      "bytes": 30155
+      "revision": "46c1bb1bcc3fbbd42f19ca2f7efdcdf99b55a4f9",
+      "bytes": 27422
+    },
+    {
+      "url": "/tv/dj-booth.css",
+      "revision": "4de04f6d21b51495ba99192794360ae7e98dda20",
+      "bytes": 16388
     },
     {
       "url": "/tv/dj-identity.css",
@@ -199,8 +209,8 @@
     },
     {
       "url": "/tv/index.html",
-      "revision": "2dbbcf684dc2ca0ca9393be3a7d0cc8a9f156b64",
-      "bytes": 12777
+      "revision": "8f82827888eda14c02d58dbd7afc32396111702b",
+      "bytes": 13267
     },
     {
       "url": "/tv/landing.css",
@@ -264,13 +274,18 @@
     },
     {
       "url": "/tv/retro-pointer.js",
-      "revision": "66553ddbd359b845e6da65c6ad3a169055ea83f1",
-      "bytes": 9080
+      "revision": "a1d7bd4a61a2cd570cfd28747aafe0629d0bc35f",
+      "bytes": 9764
     },
     {
       "url": "/tv/run-progress.js",
       "revision": "dc120a76537b93687e053ef279bc1a43012f8887",
       "bytes": 6933
+    },
+    {
+      "url": "/tv/sound.js",
+      "revision": "ff089b274cab1e4eba50da032c2b9dcc74e7c28a",
+      "bytes": 9580
     },
     {
       "url": "/tv/state.js",
@@ -279,18 +294,18 @@
     },
     {
       "url": "/tv/tv.css",
-      "revision": "3b87b44836a8f6034cd4f47b1e807d4680ced413",
-      "bytes": 26900
+      "revision": "7dc80a4600a5fdb124d64db0e6a437df0492a108",
+      "bytes": 27087
     },
     {
       "url": "/tv/tv.js",
-      "revision": "d90b1d0e6346684e2e57667fee91fab90a88ae62",
-      "bytes": 33354
+      "revision": "32006f6fe65601b4707ace61390006b635dfabf6",
+      "bytes": 34570
     }
   ],
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "a63032a81b155cd4a922"
+  "version": "ff6b7c97b7944079acf5"
 }

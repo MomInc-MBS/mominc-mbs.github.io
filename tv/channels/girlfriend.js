@@ -1,6 +1,8 @@
 /* Dr Girlfriend: a 2D layered-paper production line. No WebGL, camera, raycasts or CDN.
-   The original tube records, saved pour order, material mapping and mode-aware goggles
-   are retained below. All listeners and delayed paper transitions belong to ctx. */
+   Research tubes and mode-aware goggles feed independently randomized paper prototypes.
+   All listeners and delayed paper transitions belong to ctx. */
+import { PAPER_SHAPES, PAPER_PALETTES, createPaperBatch, renderPaperCoach } from './girlfriend-roster.js';
+
 const TUBES = [
   { who: "Sentience juice",     topic: "Robotics and autonomous hands", cite: "Piazza et al. 2019, Ann Rev Control",     col: 0xc46a2f, variant: "darkstone" },
   { who: "Mother’s love",    topic: "Canine nutrition",              cite: "AAFCO Dog Food Nutrient Profile",         col: 0x8a9a3a, variant: "straw-wood" },
@@ -10,246 +12,49 @@ const TUBES = [
   { who: "MBS Fuel",       topic: "Stimulants and dosage",         cite: "FDA: 400mg/day caffeine ceiling",         col: 0x9a3a7a, variant: "purple" }
 ];
 
-/* MYR5, AS SIX MATERIALS. Round 4 (Ian): the creature is no longer built from primitives - it is one of
-   six real stills cut from "MYR5 morph - clay to wood, stone, papermache, paper" with the background
-   removed. Six variants, six tubes, mapping is exact: whichever tube gets poured LAST decides which
-   material the batch ships as. Each carries a definition, a random interim number under 5.0 ("cuz that's
-   the interim we're at"), and one horrific, corporately-downplayed crime.
-
-   THE TEXTURES ARE NOT ON THIS RECORD. They used to be (`c.tex = loader.load(...)`), which was safe only
-   while this object was rebuilt per mount inside the closure. At module scope a Texture hung here would
-   outlive the mount that made it and be handed, already disposed, to the next one. The data is shared;
-   the GPU objects are built into a per-mount map beside the renderer that owns them. */
-const CREATURES = {
-  "purple":     { file: "myr5-purple.png",     w: 357, h: 427, name: "MYR5 &middot; PURPLE",
-    def: "Our signature shade. Trusted by nobody, worn by everyone.",
-    crime: "Filed as a routine viscosity test. It absorbed the tester. HR is calling that retention." },
-  "darkstone":  { file: "myr5-darkstone.png",  w: 251, h: 432, name: "MYR5 &middot; DARKSTONE",
-    def: "Load-bearing. Approved for outdoor use and quiet suffering.",
-    crime: "Cracked twice in transit, both times over a different family's driveway. Warranty voided." },
-  "straw-wood": { file: "myr5-straw-wood.png", w: 339, h: 432, name: "MYR5 &middot; STRAW-WOOD",
-    def: "Warm to the touch. Smells faintly of a county fair that closed for a reason.",
-    crime: "Caught fire near a school bus stop. The claim called it ambient enrichment." },
-  "palestone":  { file: "myr5-palestone.png",  w: 346, h: 431, name: "MYR5 &middot; PALESTONE",
-    def: "Museum finish. Looks expensive, costs nothing, means less.",
-    crime: "Stood motionless in a lobby for six weeks before anyone noticed it wasn't decor." },
-  "newsprint":  { file: "myr5-newsprint.png",  w: 355, h: 438, name: "MYR5 &middot; NEWSPRINT",
-    def: "Prints yesterday's headlines, forever. It never learns a new one either.",
-    crime: "The ink is not food-grade. Forty units shipped to a daycare regardless." },
-  "blankpaper": { file: "myr5-blankpaper.png", w: 333, h: 430, name: "MYR5 &middot; BLANKPAPER",
-    def: "No print, no opinion, no complaints filed and none accepted.",
-    crime: "Missing from the shipping manifest a full year. Came back with a name and a mortgage." }
-};
-
-// Twelve authored recipes. Tube order is the character's show order for now.
-const RECIPES = [
-  {
-    "id": 1,
-    "order": [
-      0,
-      1,
-      2,
-      3,
-      4,
-      5
-    ],
-    "variant": "purple",
-    "name": "The All-or-Nothing Coach",
-    "myth": "A short workout does not count.",
-    "fact": "Small amounts of activity count. You can spread activity across the week.",
-    "source": "https://www.cdc.gov/physical-activity-basics/guidelines/adults.html"
-  },
-  {
-    "id": 2,
-    "order": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      0
-    ],
-    "variant": "darkstone",
-    "name": "The Cardio-Only Coach",
-    "myth": "Cardio replaces strength training.",
-    "fact": "Aerobic activity and muscle-strengthening work provide complementary benefits.",
-    "source": "https://www.cdc.gov/physical-activity-basics/guidelines/adults.html"
-  },
-  {
-    "id": 3,
-    "order": [
-      2,
-      3,
-      4,
-      5,
-      0,
-      1
-    ],
-    "variant": "straw-wood",
-    "name": "The Iron-Only Coach",
-    "myth": "Only weights count as strength training.",
-    "fact": "Body-weight exercises and resistance bands can strengthen muscles.",
-    "source": "https://www.nia.nih.gov/health/four-types-exercise-can-improve-your-health-and-physical-ability"
-  },
-  {
-    "id": 4,
-    "order": [
-      3,
-      4,
-      5,
-      0,
-      1,
-      2
-    ],
-    "variant": "palestone",
-    "name": "The Sprint-Only Coach",
-    "myth": "Exercise only helps if it is intense.",
-    "fact": "Moderate activity, including brisk walking, provides health benefits.",
-    "source": "https://www.cdc.gov/physical-activity-basics/guidelines/adults.html"
-  },
-  {
-    "id": 5,
-    "order": [
-      4,
-      5,
-      0,
-      1,
-      2,
-      3
-    ],
-    "variant": "newsprint",
-    "name": "The Youth-Only Coach",
-    "myth": "You are too old to get stronger.",
-    "fact": "Strength training can help older adults maintain muscle and independence.",
-    "source": "https://www.nia.nih.gov/health/four-types-exercise-can-improve-your-health-and-physical-ability"
-  },
-  {
-    "id": 6,
-    "order": [
-      5,
-      0,
-      1,
-      2,
-      3,
-      4
-    ],
-    "variant": "blankpaper",
-    "name": "The One-Session Coach",
-    "myth": "You must do all your weekly exercise in one session.",
-    "fact": "Activity can be divided into smaller sessions throughout the week.",
-    "source": "https://www.cdc.gov/physical-activity-basics/guidelines/adults.html"
-  },
-  {
-    "id": 7,
-    "order": [
-      0,
-      5,
-      4,
-      3,
-      2,
-      1
-    ],
-    "variant": "purple",
-    "name": "The Gym-Only Coach",
-    "myth": "You need a gym to exercise.",
-    "fact": "Walking, dancing and body-weight exercises can be done outside a gym.",
-    "source": "https://www.nia.nih.gov/health/four-types-exercise-can-improve-your-health-and-physical-ability"
-  },
-  {
-    "id": 8,
-    "order": [
-      1,
-      0,
-      5,
-      4,
-      3,
-      2
-    ],
-    "variant": "darkstone",
-    "name": "The Stretch-Only Coach",
-    "myth": "Stretching replaces every other type of exercise.",
-    "fact": "Flexibility work does not replace aerobic, strengthening and balance activities.",
-    "source": "https://www.nia.nih.gov/health/four-types-exercise-can-improve-your-health-and-physical-ability"
-  },
-  {
-    "id": 9,
-    "order": [
-      2,
-      1,
-      0,
-      5,
-      4,
-      3
-    ],
-    "variant": "straw-wood",
-    "name": "The Pain-Is-Progress Coach",
-    "myth": "Stretching has to hurt to work.",
-    "fact": "Stretch warm muscles gently; do not stretch so far that it hurts.",
-    "source": "https://www.nia.nih.gov/health/four-types-exercise-can-improve-your-health-and-physical-ability"
-  },
-  {
-    "id": 10,
-    "order": [
-      3,
-      2,
-      1,
-      0,
-      5,
-      4
-    ],
-    "variant": "palestone",
-    "name": "The Balance-Is-Luck Coach",
-    "myth": "Balance cannot be trained.",
-    "fact": "Balance exercises can improve steadiness and help prevent falls.",
-    "source": "https://www.nia.nih.gov/health/four-types-exercise-can-improve-your-health-and-physical-ability"
-  },
-  {
-    "id": 11,
-    "order": [
-      4,
-      3,
-      2,
-      1,
-      0,
-      5
-    ],
-    "variant": "newsprint",
-    "name": "The Mirror Coach",
-    "myth": "If your weight stays the same, exercise did nothing.",
-    "fact": "Activity can benefit sleep, mood, heart health and strength without weight loss.",
-    "source": "https://www.cdc.gov/physical-activity-basics/benefits/"
-  },
-  {
-    "id": 12,
-    "order": [
-      5,
-      4,
-      3,
-      2,
-      1,
-      0
-    ],
-    "variant": "blankpaper",
-    "name": "The Perfect-Week Coach",
-    "myth": "Below the weekly target, there is no benefit.",
-    "fact": "Some activity is better than none. Build up gradually from what you can do.",
-    "source": "https://www.cdc.gov/physical-activity-basics/guidelines/adults.html"
-  }
+// A paper prototype is chosen once per batch, independently of research pour order.
+const CORRECTIONS = [
+  { belief: 'Short walks do not count as exercise.', correction: 'Even short bouts of activity count toward your weekly total.', source: 'CDC activity guidelines', url: 'https://www.cdc.gov/physical-activity-basics/guidelines/adults.html' },
+  { belief: 'Exercise is useless unless I hit the full weekly target.', correction: 'Some activity offers benefits even before you reach the recommended target.', source: 'CDC activity guidelines', url: 'https://www.cdc.gov/physical-activity-basics/guidelines/adults.html' },
+  { belief: 'Walking never counts as aerobic exercise.', correction: 'Brisk walking is one way to get moderate aerobic activity.', source: 'CDC activity guidelines', url: 'https://www.cdc.gov/physical-activity-basics/guidelines/adults.html' },
+  { belief: 'Cardio replaces all strength training.', correction: 'Adult guidelines include both aerobic activity and muscle strengthening.', source: 'CDC activity guidelines', url: 'https://www.cdc.gov/physical-activity-basics/guidelines/adults.html' },
+  { belief: 'Muscle turns into fat when training stops.', correction: 'Muscle and fat are different tissues; one does not transform into the other.', source: 'ACE fitness myths', url: 'https://www.acefitness.org/resources/everyone/blog/6913/breaking-down-fitness-myths-and-misconceptions/' },
+  { belief: 'Crunches burn fat specifically from my stomach.', correction: 'Training one body part does not selectively remove fat from that area.', source: 'ACE fitness myths', url: 'https://www.acefitness.org/about-ace/press-room/press-releases/319/ace-lists-most-common-fitness-myths/' }
 ];
-function recipeFor(order) {
- if(order.length!==6)return null;
- const exact=RECIPES.find(r=>r.order.every((n,i)=>n===order[i]));
- if(exact)return exact;
- // Every permutation has a reproducible build; authored sequences retain their named outcome.
- let rank=0;const remaining=[0,1,2,3,4,5];order.forEach((n,i)=>{rank=rank*(6-i)+remaining.indexOf(n);remaining.splice(remaining.indexOf(n),1);});
- return RECIPES[rank%RECIPES.length];
-}
-function creatureCard(recipe) {
- if(!recipe) return '<b>UNSTABLE BATCH</b><p>No coach formed. Recycle and try a different sequence.</p>';
- return '<h2>COACH BUILD REPORT</h2><b>MYR5 '+String(recipe.id).padStart(2,'0')+' · '+recipe.name+'</b><p>OBSOLETE COACH · '+CREATURES[recipe.variant].name+'</p><p><strong>Installed coaching instruction:</strong> '+recipe.myth+'</p><p><strong>Engineering correction:</strong> '+recipe.fact+'</p><p><strong>Disposition: OBSOLETE.</strong> This model repeats its installed instruction even when the evidence contradicts it. Its coaching logic cannot update. Remove from the gym floor; retain for research.</p><a href="'+recipe.source+'" target="_blank" rel="noopener">Read the evidence</a><details><summary>Batch notebook · 12 recipes</summary><p>Tube numbers, in pouring order.</p><ol>'+RECIPES.map(r=>'<li>'+r.name+': '+r.order.map(n=>n+1).join(' → ')+'</li>').join('')+'</ol></details>';
+function creatureCard(batch) {
+  if(batch.special)return '<b>MYR5 · ORIGINAL PURPLE · MASTER PATTERN</b><i>Six research tubes, poured from left to right.</i><u>Original coach unlocked. Dr Girlfriend will stand and lower the goggles after dispatch.</u><small>MYR5 is the current generation. Other pour orders manufacture earlier prototypes.</small>';
+  return '<b>MYR' + batch.version + ' · ' + batch.shapeName + ' / ' + batch.paletteName + '</b>' +
+    '<i>MODEL BELIEVED: “' + batch.myth.belief + '”</i>' +
+    '<u>UPGRADE APPLIED: ' + batch.myth.correction + '</u>' +
+    '<small>Earlier prototype corrected. MYR5 is the current generation. <a href="' + batch.myth.url + '" target="_blank" rel="noopener">' + batch.myth.source + '</a></small>';
 }
 
-// Page hints are available whenever the goggles are earned. Source notes stay in code.
+/* ---- THE GOGGLES' HINT RECORD (3.3 packet 2 / C074).
+
+   The hint list used to be hand-authored markup in girlfriend.html with no version, no date and no
+   statement of what it was checked against - and it had drifted into telling the visitor three things
+   that are not true of this build. The site's own hint system was the least reliable thing on it:
+     - DJ Scratch: "it answers on the third" described THREE SCRATCHES. That mechanic is retired; the
+       unlock is the four-lamp follow game (djscratch.js:577-616), and breakThrough() is reached from
+       finishGame(), never from a scratch count.
+     - Sag Sniffer: "seven of those doors are business, the eighth is dinner". The wheel is FIVE doors
+       (sag.html:4, which warns in as many words not to read the surplus ITEMS pool as the wheel) - and
+       sag does not ship a play route at all.
+     - Cortisol Corgi: "nothing to solve here yet". Corgi has had a page hunt, a book and a desk code
+       since before this HEAD (corgi.js:551-562, :612).
+     - Lil Boyfriend: "he gets smaller the further down you go". He does not. The shrink starts when the
+       far end is done and runs on a wall clock through the walk BACK (lilboyfriend.js:226, :237-243).
+
+   `version`/`snapshot`/`basis` are printed to the visitor with the list, the same shape fuel's cost
+   record took in packet 1: the record in the source IS the provenance, and it is on screen rather than
+   pointing at a document. `checked` is per entry and is printed too - an unprinted justification is how
+   the last one rotted.
+
+   ON-AIR STATUS IS NOT COPIED HERE. `hint` is only ever shown for a channel the network manifest says
+   is on air; everything else gets `offAir`, read live from window.MBS_CHANNELS (generated from
+   tv/channel-manifest.json by tools/gen_channels.py). So promoting a channel corrects its own goggles
+   line, which is the recurrence the item asks to stop. goon is deliberately not listed: it was never in
+   this list, its source is unresolved (3.G1), and adding a channel is a decision, not a correction. */
 const HINTS = {
   "version": "dg-hints-2.0",
   "snapshot": "2026-09-09",
@@ -395,9 +200,7 @@ function makeLine() {
     get poured() { return L.order.length; },
     get last() { return L.order.length ? L.order[L.order.length - 1] : -1; },
     has(i) { return L.order.indexOf(i) >= 0; },
-    recipe() { return recipeFor(L.order); },
-    correct() { return L.order.length===6 && L.order.every((n,i)=>n===i); },
-    variant() { return L.recipe()?.variant || null; },
+    variant() { return L.last >= 0 ? TUBES[L.last].variant : null; },
 
     // Every transition returns whether the machine actually moved, so a view never animates a step
     // that was refused. The room used to answer that question with a bare `return` inside the tween
@@ -435,7 +238,12 @@ function makeLine() {
   return L;
 }
 
-// The goggles provide a clue first and an optional solution in every viewing mode.
+/* ---- THE GOGGLES' COPY, for both views (C073/C074).
+
+   MODE-AWARE, and MBS.mode is a TONE switch, never an entitlement (Codex C6): ?mode=live is
+   user-settable, so this only changes what the goggles SAY. Off-air they give nothing away at all.
+   On-air the list is rendered from HINTS, filtered through the live manifest - never from markup, so
+   there is one copy of every hint and it carries its own provenance. */
 function dressGoggles(dg) {
   const body = dg.querySelector("#dgVisBody");
   if (!body) return;
@@ -444,7 +252,7 @@ function dressGoggles(dg) {
     (h.steps.length ? '<details><summary>Show the solution</summary>' + h.steps.map((step,i) => '<p>' + (i+1) + '. ' + escape(step) + '</p>').join('') + '</details>' : '') + '</details>').join('');
   body.innerHTML = '<h2>KNOWLEDGE IS POWER</h2><p class="sub">THE GOGGLES · PAGE HINTS &amp; SOLUTIONS</p>' +
     '<p>Your goggles now work on every page. After five seconds without input, a gentle orange border marks the next action. Finish a page and the next unfinished page lights up.</p><p>Pick a page below for a hint, or open its solution for the steps.</p>' + pages +
-    '<details><summary>Scan obsolete coach instructions</summary>' + RECIPES.map(r => '<details><summary>' + r.name + '</summary><p>DETECTED: ' + r.myth + '</p><p>CORRECTION: ' + r.fact + '</p></details>').join('') + '</details>' +
+    '<details><summary>Scan obsolete coach instructions</summary>' + CORRECTIONS.map(r => '<details><summary>' + r.belief + '</summary><p>DETECTED: ' + r.belief + '</p><p>CORRECTION: ' + r.correction + '</p></details>').join('') + '</details>' +
     '<p class="foot">I can show you the way. You still have to walk it.</p>';
 }
 
@@ -457,7 +265,7 @@ export default {
     const L = makeLine(); L.reset(); // A newly mounted game is a fresh batch.
     const stage=get('dgStage'), dock=get('dgDock'), props=get('dgTubeProps');
     const vis=get('dgVis'), say=get('dgNudge'), unit=get('dgPaperUnit');
-    let busy=false, returnFocus=null;
+    let busy=false, returnFocus=null, batch=null;
     let labAudio=null,labMuted=false,beat=0;
     function labTone(freq,dur,gain,type='sine',end=freq){if(!labAudio||labMuted)return;const t=labAudio.currentTime,o=labAudio.createOscillator(),v=labAudio.createGain();o.type=type;o.frequency.setValueAtTime(freq,t);o.frequency.exponentialRampToValueAtTime(Math.max(20,end),t+dur);v.gain.setValueAtTime(gain,t);v.gain.exponentialRampToValueAtTime(.0001,t+dur);o.connect(v).connect(labAudio.destination);o.start();o.stop(t+dur);o.onended=()=>{o.disconnect();v.disconnect();};}
     function labStart(){if(labAudio)return;try{labAudio=ctx.audio(new AudioContext());labAudio.resume();}catch{return;}ctx.interval(()=>{const notes=[110,110,146.83,130.81,110,164.81,146.83,130.81];labTone(notes[beat%8],.32,.012,'sawtooth');if(beat%2===0)labTone(65,.1,.025,'triangle',35);if(beat%4===0)labTone(55,.7,.008);beat++;},330);}
@@ -477,73 +285,105 @@ export default {
     });
     function action(label,fn) { const b=document.createElement('button');b.type='button';b.textContent=label;ctx.on(b,'click',fn);dock.appendChild(b);return b; }
     action('Lab sound: on',()=>{labStart();labMuted=!labMuted;get('dgLabSound').textContent='Lab sound: '+(labMuted?'off':'on');}).id='dgLabSound';
-    function mouldCoach(){
-      if(busy||L.phase!=='mould')return; L.to('pack');labEffect('mould'); get('dgUnitRecord').innerHTML=creatureCard(L.recipe()); transition('moulding',()=>{if(L.correct()&&!matchMedia('(prefers-reduced-motion: reduce)').matches)ctx.timeout(showReport,2200);else showReport();});
-      if(L.correct()){dg.classList.add('coach-unlocked');ctx.mbs?.unlock?.('girlfriend');ctx.mbs?.wave?.({after:900});}
-    }
-    const mould=action('Mould coach',mouldCoach);
-    const pack=action('Pack',()=>{
-      if(busy||L.phase!=='pack')return; L.to('grab');labEffect('pack'); transition('shipping');
-      if(ctx.mbs?.wave)ctx.mbs.wave({after:900});
+    const mould=action('Mould',()=>{
+      if(busy||L.phase!=='mould')return;
+      labEffect('mould');batch=createPaperBatch();
+      batch.special=L.order.length===TUBES.length&&L.order.every((index,position)=>index===position);
+      if(batch.special){batch.shapeId='myr5';batch.paletteId=0;batch.eyes=1;batch.version='5.00';}
+      stage.dataset.special=batch.special?'original':'prototype';
+      const shape=PAPER_SHAPES.find(s=>s.id===batch.shapeId), palette=PAPER_PALETTES.find(p=>p.id===batch.paletteId);
+      batch.shapeName=shape.label;batch.paletteName=palette.name;
+      batch.myth=CORRECTIONS[Math.floor(Math.random()*CORRECTIONS.length)];
+      unit.setAttribute('viewBox','0 0 200 240');unit.innerHTML=renderPaperCoach(batch);
+      unit.setAttribute('aria-label','MYR'+batch.version+' paper '+batch.shapeName+', '+batch.paletteName+', '+batch.eyes+' eyes');
+      get('dgUnitRecord').innerHTML=creatureCard(batch);
+      get('dgBatchRecord').innerHTML=creatureCard(batch);
+      get('dgPaperBox').querySelector('span').textContent='MYR'+batch.version+' / DISPATCH';
+      L.to('pack');transition('moulding',1600);
     });
-    const recycle=action('Mix another coach',()=>{if(busy)return;L.reset();dg.classList.remove('coach-unlocked');get('dgUnitRecord').innerHTML='';render();});
+    const pack=action('Pack',()=>{
+      if(busy||L.phase!=='pack')return;
+      labEffect('pack');const box=get('dgPaperBox');box.classList.add('is-open');
+      transition('packing',1500,()=>{
+        L.to('grab');transition('shipping',1800,()=>{
+          if(ctx.mbs?.wave)ctx.mbs.wave({after:0});
+          if(batch.special){
+            stage.dataset.pose='standing';
+            transition('lowering',1400,()=>{
+              stage.dataset.pose='walking';
+              transition('walking',1800,()=>{stage.dataset.pose='departed';});
+            });
+          }
+        });
+      });
+      if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
+        ctx.timeout(()=>{box.classList.add('is-packed');render();},850);
+        ctx.timeout(()=>{box.classList.remove('is-open');box.classList.add('is-sealed');},1300);
+      }
+    });
     const goggles=action('Take goggles',()=>{
-      if(busy||!L.correct()||!['grab','goggles'].includes(L.phase))return;
+      if(busy||!['grab','goggles'].includes(L.phase))return;
       L.to('goggles');awardGoggles();render();returnFocus=goggles;vis.hidden=false;vis.classList.add('on');
       dock.inert=true;props.inert=true;get('dgVisX').focus();
     });
+    const another=action('Make another coach',()=>{
+      if(busy||!['grab','goggles'].includes(L.phase))return;
+      closeGoggles();L.reset();batch=null;unit.innerHTML='';
+      delete stage.dataset.special;delete stage.dataset.pose;
+      get('dgPaperBox').classList.remove('is-open','is-packed','is-sealed');
+      get('dgBatchRecord').innerHTML='';get('dgUnitRecord').innerHTML='';render();tubeButtons[0].focus();
+    });
     function awardGoggles(){
-      if(!L.correct()||L.phase!=='goggles')return;
+      if(!batch?.special||L.phase!=='goggles')return;
       const reward=JSON.stringify({version:1,acquiredAt:Date.now(),recipe:L.order.slice()});
       try{localStorage.setItem('mbs-goggles-v1',reward);}catch{try{sessionStorage.setItem('mbs-goggles-v1',reward);}catch{}}
+      ctx.mbs?.unlock?.('girlfriend');
       ctx.mbs?.complete?.('girlfriend',{terminal:'goggles'});
       window.dispatchEvent(new Event('mbs:goggles-earned'));
     }
-    get('dgVisX').dataset.guideNext='';get('dgReportClose').dataset.guideNext='';
+    get('dgVisX').dataset.guideNext='';
+    ctx.on(get('dgPaperGoggles'),'click',()=>goggles.click());
+    ctx.on(get('dgPaperGoggles'),'keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();goggles.click();}});
     function closeGoggles(){vis.hidden=true;vis.classList.remove('on');dock.inert=false;props.inert=false;returnFocus?.focus();}
     ctx.on(get('dgVisX'),'click',closeGoggles);
     ctx.on(vis,'keydown',e=>{
       if(e.key==='Escape'){e.preventDefault();closeGoggles();}
       if(e.key==='Tab'){const stops=[...vis.querySelectorAll('button,summary,a[href]')];const first=stops[0],last=stops[stops.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}}
     });
-    const report=get('dgBuildReport');
-    function showReport(){
-      const r=L.recipe();get('dgReportBody').innerHTML='<img src="assets/'+CREATURES[r.variant].file+'" alt="'+r.name+'"><div>'+creatureCard(r)+'</div>';
-      report.showModal();
-    }
-    ctx.on(get('dgReportClose'),'click',()=>{report.close();pack.focus();});
-    ctx.on(get('dgPaperGoggles'),'click',()=>goggles.click());
-    action('Read build report',()=>{if(L.recipe()&&!busy)showReport();}).id='dgReportAgain';
-    function transition(name,after){
-      if(matchMedia('(prefers-reduced-motion: reduce)').matches){render();after?.();return;}
+    function transition(name,duration=700,done){
+      if(matchMedia('(prefers-reduced-motion: reduce)').matches){
+        if(name==='packing'){get('dgPaperBox').classList.remove('is-open');get('dgPaperBox').classList.add('is-packed','is-sealed');}
+        duration=name==='pouring'?0:400;
+      }
       busy=true;stage.dataset.motion=name;render();
-      ctx.timeout(()=>{busy=false;delete stage.dataset.motion;render();after?.();},name==='moulding'?1700:name==='shipping'?2600:700);
+      ctx.timeout(()=>{busy=false;delete stage.dataset.motion;render();done?.();},duration);
     }
-    function pour(i){if(busy||!L.pour(i))return;labEffect('pour');transition('pouring',()=>{if(L.phase==='mould')mouldCoach();});}
+    function pour(i){if(busy||!L.pour(i))return;labEffect('pour');transition('pouring');}
     function render(){
-      for(const button of [...propButtons,mould,pack,goggles,recycle])button.removeAttribute('data-guide-next');
-      const next=L.phase==='pour'?propButtons.find((_,i)=>!L.has(i)):L.phase==='mould'?mould:L.phase==='pack'?pack:L.phase==='grab'?(L.correct()?goggles:recycle):null;
+      for(const b of [...propButtons,mould,pack,goggles,another])b.removeAttribute('data-guide-next');
+      const next=L.phase==='pour'?propButtons.find((_,i)=>!L.has(i)):L.phase==='mould'?mould:L.phase==='pack'?pack:L.phase==='grab'?goggles:null;
       if(next&&!busy)next.dataset.guideNext='';
-      stage.dataset.phase=L.phase;get('dgReportAgain').hidden=!['pack','grab','goggles'].includes(L.phase);
+      stage.dataset.phase=L.phase;
       tubeButtons.forEach((b,i)=>{b.hidden=L.has(i);b.disabled=busy||L.phase!=='pour';});
       propButtons.forEach((b,i)=>{b.classList.toggle('spent',L.has(i));b.disabled=busy||L.has(i)||L.phase!=='pour';});
-      mould.hidden=L.phase!=='mould';pack.hidden=L.phase!=='pack';goggles.hidden=!L.correct()||!['grab','goggles'].includes(L.phase);recycle.hidden=!['pack','grab','goggles'].includes(L.phase);
-      [mould,pack,goggles].forEach(b=>b.disabled=busy);
+      mould.hidden=L.phase!=='mould';pack.hidden=L.phase!=='pack';goggles.hidden=!['grab','goggles'].includes(L.phase);
+      another.hidden=!['grab','goggles'].includes(L.phase);
+      [mould,pack,goggles,another].forEach(b=>b.disabled=busy);
       get('dgProgress').textContent=L.poured+' / 6';
       get('dgPaperFill').style.height=(L.poured/6*73)+'%';
-      const variant=L.variant(); if(variant){unit.src='assets/'+CREATURES[variant].file;unit.alt=L.recipe().name+' · '+variant;}
-      unit.toggleAttribute('hidden',L.phase!=='pack'||!L.recipe());get('dgPaperBox').hidden=stage.dataset.motion!=='shipping';get('dgMouldPress').hidden=stage.dataset.motion!=='moulding';get('dgDrone').hidden=stage.dataset.motion!=='shipping';
+      unit.toggleAttribute('hidden',L.phase!=='pack'||get('dgPaperBox').classList.contains('is-packed'));
+      get('dgPaperBox').hidden=!['packing','shipping'].includes(stage.dataset.motion);
+      get('dgPaperMould').hidden=stage.dataset.motion!=='moulding';
       get('dgPaperMixer').hidden=!['pour','mould'].includes(L.phase);
-      get('dgPaperGoggles').hidden=!L.correct()||!['grab','goggles'].includes(L.phase);
-      say.textContent=busy ? ({pouring:'Pouring the research.',moulding:'Forming one unit.',shipping:'Dispatching the batch.'}[stage.dataset.motion]) :
-        ({pour:(6-L.poured)+' tubes remain. Order changes the coach. Try left to right.',mould:'The mixture is ready. Mould it.',pack:'One unit formed. Pack it.',grab:L.correct()?'Correct show sequence. The goggles have appeared.':L.recipe()?'Obsolete coach dispatched. Try another mixture.':'Unstable batch discarded. Try another mixture.',goggles:'The goggles are yours.'}[L.phase]);
-      get('dgUnitDetails').hidden=!['pack','grab','goggles'].includes(L.phase);get('dgUnitDetails').open=true;
+      get('dgPaperGoggles').toggleAttribute('hidden',(busy&&!['lowering','walking'].includes(stage.dataset.motion))||!['grab','goggles'].includes(L.phase));
+      say.textContent=busy ? ({pouring:'Pouring the research.',moulding:'Pressing a paper coach onto the belt.',packing:'Folding the carton around the coach. Sealing the flaps.',shipping:'Dispatching the sealed batch.',lowering:'Original pattern accepted. Dr Girlfriend stands and lowers the goggles.',walking:'Dr Girlfriend leaves the floor. The goggles are yours.'}[stage.dataset.motion]) :
+        ({pour:(6-L.poured)+' tubes remain. Choose one.',mould:'The mixture is ready. Mould it.',pack:batch?.special?'Original purple MYR5 formed. Pack the master pattern.':batch?'MYR'+batch.version+' formed. Pack this paper coach.':'One unit formed. Pack it.',grab:'Batch dispatched. Take the goggles.',goggles:'The goggles are yours.'}[L.phase]);
+      get('dgUnitDetails').hidden=!['pack','grab','goggles'].includes(L.phase);
+      get('dgBatchRecord').hidden=!batch;
     }
-    if(['pack','grab','goggles'].includes(L.phase))get('dgUnitRecord').innerHTML=creatureCard(L.recipe());
-    if(L.phase==='goggles')awardGoggles();
     render();
 
-    window.__dg={paper:true,flat:false,get phase(){return L.phase;},get poured(){return L.poured;},get order(){return L.order.slice();},get lastVariant(){return L.variant();},get recipe(){return L.recipe()?.id||null;},get gogglesEarned(){return L.correct();}};
+    window.__dg={paper:true,flat:false,get phase(){return L.phase;},get poured(){return L.poured;},get order(){return L.order.slice();},get lastVariant(){return L.variant();},get batch(){return batch?structuredClone(batch):null;},get rosterCount(){return PAPER_SHAPES.length;}};
   },
   unmount(){try{delete window.__dg;}catch{window.__dg=undefined;}}
 };
