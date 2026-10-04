@@ -315,14 +315,11 @@ test('all generated packs match every current website asset', () => {
       const [, kind, revision, bytes] = info.split(/\s+/);
       return kind === 'blob' ? [path, {url: '/' + path, revision, bytes: Number(bytes)}] : null;
     }).filter(Boolean));
+  const changed = new Set(execFileSync('git', ['diff', '--name-only', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim().split('\n'));
   const sources = new Map();
   const sourceRecord = path => {
     if (sources.has(path)) return sources.get(path);
-    let unchanged = committed.has(path);
-    if (unchanged) {
-      try { execFileSync('git', ['diff', '--quiet', 'HEAD', '--', path], {cwd: root}); }
-      catch { unchanged = false; }
-    }
+    const unchanged = committed.has(path) && !changed.has(path);
     if (unchanged) {
       sources.set(path, committed.get(path));
       return sources.get(path);

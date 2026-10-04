@@ -52,12 +52,16 @@ def build(refresh=False):
         for slug in SLUGS:
             previous[slug] = json.loads((ROOT / 'tv/game-packs' / f'{slug}.json').read_text())
 
+    # Query the worktree once. Running `git diff --quiet` for every asset makes
+    # regeneration needlessly slow on large game packs, especially on Windows.
+    changed = set(subprocess.check_output(
+        ['git', 'diff', '--name-only', 'HEAD'], cwd=ROOT, text=True
+    ).splitlines())
+
     def overlay(path, file_path):
         # Keep HEAD's exact deployed blob for unchanged files. This matters for
         # historical mixed-line-ending files that Git intentionally leaves alone.
-        unchanged = path in inventory and subprocess.run(
-            ['git', 'diff', '--quiet', 'HEAD', '--', path], cwd=ROOT
-        ).returncode == 0
+        unchanged = path in inventory and path not in changed
         if not unchanged:
             inventory[path] = working_record(path, file_path)
     # Root-level scripts were previously read only from HEAD, leaving the worker
@@ -84,7 +88,7 @@ def build(refresh=False):
     def read(path):
         if path not in texts:
             f = ROOT / path
-            texts[path] = f.read_text() if f.exists() else subprocess.check_output(['git', 'show', 'HEAD:' + path], cwd=ROOT).decode()
+            texts[path] = f.read_text(encoding='utf-8', errors='replace') if f.exists() else subprocess.check_output(['git', 'show', 'HEAD:' + path], cwd=ROOT).decode('utf-8', errors='replace')
         return texts[path]
 
     def under(prefix):
