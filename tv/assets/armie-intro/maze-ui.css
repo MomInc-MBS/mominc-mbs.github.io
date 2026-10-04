@@ -80,3 +80,5 @@
 #ar.ar-motion-off .ch-crawl svg,#ar.ar-motion-off .ar-coach-say,#ar.ar-motion-off .ar-coach-lunge,#ar.ar-motion-off .ar-coach-lunge .ar-coach-hand,#ar.ar-motion-off .ar-stage-card.ar-after-lunge{animation:none!important}
 #ar.ar-motion-off .ar-lunge-hit .ar-coach-hand{transform:translate(-50%,36%)}#ar.ar-motion-off .ar-lunge-caught .ar-coach-hand{transform:translate(-50%,22%) scale(1.7)}
 #ar.ar-in-lab .ar-coach-say,#ar.ar-in-lab .ar-coach-lunge,#ar:not(.ar-playing) .ar-coach-say,#ar:not(.ar-playing) .ar-coach-lunge{display:none!important}
+/* Tap phase: keep room for the Coach dialogue strip above the phone (fixed, so SPRINT never jumps under a finger). */
+#ar.ar-playing.ar-phone-up[data-phase="tap"] .ar-phone{top:calc(var(--ar-viewport-top,0px) + 118px)!important;max-height:calc(var(--ar-viewport-height,100dvh) - 134px)!important}
