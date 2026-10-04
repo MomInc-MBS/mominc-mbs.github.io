@@ -54,6 +54,11 @@ _srv = ThreadingHTTPServer(("127.0.0.1", 0), functools.partial(_Quiet, directory
 threading.Thread(target=_srv.serve_forever, daemon=True).start()
 BASE = "http://127.0.0.1:%d" % _srv.server_address[1]
 
+# The download gate (/tv/game-loader.js + service worker) cannot finish on a local http.server, so it is bypassed
+# before navigation; without this STATE prints mounted:false. SwiftShader gives headless chromium a WebGL context.
+BYPASS = "window.MBS_LOAD={prepare:()=>Promise.resolve(),finish(){document.documentElement.removeAttribute('data-game-loading');},failed(){},ready:Promise.resolve()};"
+LAUNCH_ARGS = ["--use-gl=swiftshader", "--enable-webgl", "--ignore-gpu-blocklist"]
+
 VIEWS = [("1440", {"width": 1440, "height": 900}), ("390", {"width": 390, "height": 844})]
 os.makedirs(OUT, exist_ok=True)
 
@@ -82,11 +87,11 @@ def shot(page, name):
 
 
 with sync_playwright() as pw:
-    b = pw.chromium.launch()
+    b = pw.chromium.launch(args=LAUNCH_ARGS)
     for label, vp in VIEWS:
         # the television. The set REMEMBERS being on (mbs-state persists across pages in one browser
         # context), so a fresh context per viewport also means the power state is known, not inherited.
-        c = b.new_context(viewport=vp)
+        c = b.new_context(viewport=vp); c.add_init_script(BYPASS)
         pg = c.new_page()
         errs = []
         pg.on("pageerror", lambda e: errs.append(str(e)))
@@ -106,7 +111,7 @@ with sync_playwright() as pw:
         c.close()
 
         # the play route, which takes the isolation pass through beforeMount.
-        c = b.new_context(viewport=vp)
+        c = b.new_context(viewport=vp); c.add_init_script(BYPASS)
         pg = c.new_page()
         pg.on("pageerror", lambda e: errs.append(str(e)))
         pg.goto(BASE + "/play/corgi/", wait_until="load")
