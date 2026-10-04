@@ -98,39 +98,9 @@
       "bytes": 181293
     },
     {
-      "url": "/tv/assets/myr5-blankpaper.png",
-      "revision": "1f65de8ee17eb3e0d8684f7f8485f4ec00c6af22",
-      "bytes": 98628
-    },
-    {
-      "url": "/tv/assets/myr5-darkstone.png",
-      "revision": "5d8ab74ec21043bca57aad8369a92db66a01a99a",
-      "bytes": 104457
-    },
-    {
-      "url": "/tv/assets/myr5-newsprint.png",
-      "revision": "8333dc9f57d3f722783e4f69767b42aec7f32ae7",
-      "bytes": 181903
-    },
-    {
-      "url": "/tv/assets/myr5-palestone.png",
-      "revision": "17c26d8e9869ea1984dae53a90521a3a4668e070",
-      "bytes": 172086
-    },
-    {
-      "url": "/tv/assets/myr5-purple.png",
-      "revision": "41cc16bc7cff69420089fced9d923437fcf00f53",
-      "bytes": 161180
-    },
-    {
       "url": "/tv/assets/myr5-sticker-2.png",
       "revision": "677d64cfc2f48346887c556f83c8751064ec8a7d",
       "bytes": 163970
-    },
-    {
-      "url": "/tv/assets/myr5-straw-wood.png",
-      "revision": "336dad39c699faaf2d03622f029cb21505604e8c",
-      "bytes": 172162
     },
     {
       "url": "/tv/atmosphere.css",
@@ -188,14 +158,19 @@
       "bytes": 13515
     },
     {
+      "url": "/tv/channels/girlfriend-roster.js",
+      "revision": "f50ec7c314a55af6918913a319299ed26b04c34a",
+      "bytes": 277447
+    },
+    {
       "url": "/tv/channels/girlfriend.html",
-      "revision": "873fc29459ba72077ac9d2956de12d4662530e5a",
-      "bytes": 15833
+      "revision": "8d7937c6af4b1c05db8b3d2d4ad457532e89cd17",
+      "bytes": 21533
     },
     {
       "url": "/tv/channels/girlfriend.js",
-      "revision": "d19c0fd8fab4d2e8a4a40b8693d612b51aacbc24",
-      "bytes": 30155
+      "revision": "4a57a780efbe735ce76c65813bb9ffe205d0448a",
+      "bytes": 27383
     },
     {
       "url": "/tv/dj-booth.css",
@@ -234,8 +209,8 @@
     },
     {
       "url": "/tv/index.html",
-      "revision": "96825bd6d18873ed9261349a0af948051dd85848",
-      "bytes": 13153
+      "revision": "8f82827888eda14c02d58dbd7afc32396111702b",
+      "bytes": 13267
     },
     {
       "url": "/tv/landing.css",
@@ -332,5 +307,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "c9a3596f41beac03e29b"
+  "version": "2f4577d4d13df1499eda"
 }
