@@ -24,8 +24,8 @@
     },
     {
       "url": "/play/djscratch/index.html",
-      "revision": "c55c1b8661659726840ac767fdd50f9d44528b73",
-      "bytes": 1777
+      "revision": "f188d1a03273fd8333d38707ca81818200cc0370",
+      "bytes": 1988
     },
     {
       "url": "/tv/assets/armie-intro/vendor/BufferGeometryUtils.js",
@@ -154,8 +154,13 @@
     },
     {
       "url": "/tv/channels/djscratch.js",
-      "revision": "2b21c57870b1f657affad9e4351856e8047b3d83",
-      "bytes": 45407
+      "revision": "7a5ba3679e7f5cc4f2aa3e14c6ae14b7d0760856",
+      "bytes": 45473
+    },
+    {
+      "url": "/tv/dj-booth.css",
+      "revision": "4de04f6d21b51495ba99192794360ae7e98dda20",
+      "bytes": 16388
     },
     {
       "url": "/tv/dj-identity.css",
@@ -282,5 +287,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "f8fc8f57c001c8936ea5"
+  "version": "8984594fdf80dcf6be2b"
 }

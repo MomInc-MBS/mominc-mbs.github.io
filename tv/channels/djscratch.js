@@ -557,7 +557,7 @@ export default {
         nextStepTime += (60 / bpm) / 2;
       }
     }
-    function flashViz(delaySec) { ctx.timeout(() => { vizCanvas.classList.add("hit"); ctx.timeout(() => vizCanvas.classList.remove("hit"), 120); }, Math.max(0, delaySec * 1000)); }
+    function flashViz(delaySec) { ctx.timeout(() => { vizCanvas.classList.add("hit"); dj.classList.add("dj-beat"); ctx.timeout(() => { vizCanvas.classList.remove("hit"); dj.classList.remove("dj-beat"); }, 120); }, Math.max(0, delaySec * 1000)); }
     function startScheduler() {
       if (schedTimer) return;
       nextStepTime = actx.currentTime + 0.05; stepIdx = 0;

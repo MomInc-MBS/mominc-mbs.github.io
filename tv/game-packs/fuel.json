@@ -128,6 +128,11 @@
       "bytes": 57336
     },
     {
+      "url": "/tv/dj-booth.css",
+      "revision": "4de04f6d21b51495ba99192794360ae7e98dda20",
+      "bytes": 16388
+    },
+    {
       "url": "/tv/dj-identity.css",
       "revision": "45ccdabbd7c293022995ee71d603012ce4515164",
       "bytes": 3123
@@ -253,5 +258,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "940e60e5dc2ea48ac2ce"
+  "version": "417bb1a56df4eb78fd24"
 }
