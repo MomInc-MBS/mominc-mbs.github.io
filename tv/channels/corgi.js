@@ -762,6 +762,88 @@ export default {
     function alarmSound(){if(!musicAudio||musicAudio.currentTime-alarmAt<3)return;alarmAt=musicAudio.currentTime;const o=musicAudio.createOscillator(),g=musicAudio.createGain(),t=musicAudio.currentTime;o.type='triangle';o.frequency.setValueAtTime(440,t);o.frequency.linearRampToValueAtTime(880,t+.6);o.frequency.linearRampToValueAtTime(440,t+1.2);g.gain.setValueAtTime(.05,t);g.gain.exponentialRampToValueAtTime(.0001,t+1.4);o.connect(g).connect(musicAudio.destination);o.start();o.stop(t+1.4);o.onended=()=>{o.disconnect();g.disconnect();};}
     function startMusic(){if(musicAudio)return;try{musicAudio=ctx.audio(new AudioContext());musicAudio.resume();}catch{return;}ctx.interval(()=>{if(!LEVELS[state.level].handAuthored){const notes=[261.63,329.63,392,493.88,440,349.23,293.66,392];musicTone(notes[musicBeat%8],.65,.018);if(musicBeat%4===0)musicTone(notes[musicBeat%8]/2,1.5,.012,'triangle');musicBeat++;}},450);}
     ctx.on(viewport,'pointerdown',startMusic,{once:true});ctx.on(viewport,'keydown',startMusic,{once:true});
+    // ---------------------------------------------------------------- 2026-10-03 dark-school sound, all synthesised
+    // from musicAudio (the one context startMusic creates on the first gesture; ctx.audio closes it on unmount, so
+    // every node below dies with it). Ian: "we need haunting children laughter in the dark version." childLaugh() is a
+    // far-off giggle in a big empty hall; sniffSound() is the crawler's nose; doorCreak() is the break-room door.
+    let hallVerb = null, noiseBuf = null;
+    function noiseBuffer() {
+      if (noiseBuf) return noiseBuf;
+      const n = musicAudio.sampleRate; noiseBuf = musicAudio.createBuffer(1, n, n);
+      const d = noiseBuf.getChannelData(0); for (let i = 0; i < n; i++) d[i] = Math.random() * 2 - 1; return noiseBuf;
+    }
+    function noiseBurst(t, dur, type, freq, q, peak, dest) {   // a bandpassed/lowpassed puff of noise with a fast attack and a linear fade
+      const a = musicAudio, s = a.createBufferSource(), f = a.createBiquadFilter(), g = a.createGain();
+      s.buffer = noiseBuffer(); f.type = type; f.frequency.value = freq; f.Q.value = q;
+      g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(peak, t + Math.min(0.012, dur / 3)); g.gain.linearRampToValueAtTime(0.0001, t + dur);
+      s.connect(f); f.connect(g); g.connect(dest); s.start(t, rnd() * 0.5, dur + 0.02); s.onended = () => { s.disconnect(); f.disconnect(); g.disconnect(); };
+      return { f, g };
+    }
+    // the hall: a 2.2s exponential-decay noise impulse through a lowpass at 2.6kHz so it sounds far away
+    function hallReverb() {
+      if (hallVerb) return hallVerb;
+      const a = musicAudio, len = Math.floor(a.sampleRate * 2.2), ir = a.createBuffer(2, len, a.sampleRate);
+      for (let ch = 0; ch < 2; ch++) { const d = ir.getChannelData(ch); for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.exp(-5.5 * i / len); }
+      const conv = a.createConvolver(); conv.buffer = ir;
+      const lp = a.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 2600;
+      const wet = a.createGain(); wet.gain.value = 0.6;
+      conv.connect(lp); lp.connect(wet); wet.connect(a.destination);
+      return hallVerb = conv;
+    }
+    function childLaugh(layer, t0) {
+      if (!musicAudio) return;
+      const a = musicAudio, t = t0 || a.currentTime + 0.03;
+      const bus = a.createGain(); bus.gain.value = layer ? 0.55 : 1;
+      const pan = a.createStereoPanner(), p0 = rnd() * 1.6 - 0.8; pan.pan.setValueAtTime(p0, t);
+      const dry = a.createGain(); dry.gain.value = 0.5;
+      bus.connect(pan); pan.connect(dry); dry.connect(a.destination); pan.connect(hallReverb());
+      const n = 4 + Math.floor(rnd() * 4), shift = layer ? Math.pow(2, -3 / 12) : 1;   // second child a minor third lower
+      let f = (320 + rnd() * 140) * shift, at = t, lastOsc = null;
+      for (let i = 0; i < n; i++) {
+        const dur = 0.09 + rnd() * 0.05;
+        const o = a.createOscillator(), env = a.createGain(), b1 = a.createBiquadFilter(), b2 = a.createBiquadFilter();
+        o.type = 'sawtooth'; o.frequency.setValueAtTime(f, at); o.frequency.linearRampToValueAtTime(f * (1 - (0.03 + rnd() * 0.05)), at + dur);
+        const lfo = a.createOscillator(), lg = a.createGain(); lfo.frequency.value = 6; lg.gain.value = f * 0.04; lfo.connect(lg); lg.connect(o.frequency);   // 6 Hz vibrato, +-4%
+        b1.type = b2.type = 'bandpass'; b1.frequency.value = 800; b1.Q.value = 6; b2.frequency.value = 1400; b2.Q.value = 8;   // vowel "a"
+        env.gain.setValueAtTime(0.0001, at); env.gain.linearRampToValueAtTime(0.03, at + 0.01); env.gain.exponentialRampToValueAtTime(0.0001, at + dur);
+        o.connect(b1); o.connect(b2); b1.connect(env); b2.connect(env); env.connect(bus);
+        o.start(at); lfo.start(at); o.stop(at + dur + 0.02); lfo.stop(at + dur + 0.02); lastOsc = o;
+        noiseBurst(at, 0.06, 'bandpass', 2000 + rnd() * 2000, 1, 0.01, bus);   // breath at the front of each "ha"
+        f *= 1 - (0.03 + rnd() * 0.05);   // each syllable drifts down 3-8%
+        at += dur + 0.06 + rnd() * 0.05;
+      }
+      if (rnd() < 0.3) pan.pan.linearRampToValueAtTime(Math.max(-0.9, Math.min(0.9, -p0 + (rnd() - 0.5) * 0.4)), at);   // sweeps across the giggle
+      if (lastOsc) lastOsc.onended = () => { bus.disconnect(); pan.disconnect(); dry.disconnect(); };
+      if (!layer && rnd() < 0.25) childLaugh(true, t + 0.04);
+    }
+    // the crawler's nose: two or three quick in-breaths and one longer exhale, panned to his side, quieter far away
+    function sniffSound(pan, dist) {
+      if (!musicAudio) return;
+      const a = musicAudio, prox = Math.max(0.25, Math.min(1, 1 - (dist - 2) / 8 * 0.75));
+      const sp = a.createStereoPanner(); sp.pan.value = Math.max(-1, Math.min(1, pan || 0)); sp.connect(a.destination);
+      let t = a.currentTime + 0.02; const puffs = 2 + Math.floor(rnd() * 2);
+      for (let i = 0; i < puffs; i++) {
+        const { f } = noiseBurst(t, 0.11, 'bandpass', 900, 1.2, 0.035 * prox, sp);
+        f.frequency.setValueAtTime(900, t); f.frequency.linearRampToValueAtTime(1600, t + 0.11);
+        t += 0.11 + 0.07;
+      }
+      noiseBurst(t, 0.22, 'lowpass', 600, 0.7, 0.02 * prox, sp);
+      ctx.timeout(() => { try { sp.disconnect(); } catch {} }, 1500);
+    }
+    // the break-room door: a slow sawtooth groan sweeping 180 -> 95 Hz through a bandpass that rides at 3x the
+    // pitch, 11 Hz tremolo, then a soft wooden clack as the leaf reaches the stop
+    function doorCreak() {
+      if (!musicAudio) return;
+      const a = musicAudio, t = a.currentTime + 0.02, o = a.createOscillator(), bp = a.createBiquadFilter(), g = a.createGain();
+      o.type = 'sawtooth'; o.frequency.setValueAtTime(180, t); o.frequency.linearRampToValueAtTime(95, t + 0.9);
+      bp.type = 'bandpass'; bp.Q.value = 4; bp.frequency.setValueAtTime(540, t); bp.frequency.linearRampToValueAtTime(285, t + 0.9);
+      g.gain.setValueAtTime(0.04, t); g.gain.setValueAtTime(0.04, t + 0.85); g.gain.linearRampToValueAtTime(0.0001, t + 0.92);
+      const trem = a.createOscillator(), tg = a.createGain(); trem.frequency.value = 11; tg.gain.value = 0.015; trem.connect(tg); tg.connect(g.gain);
+      o.connect(bp); bp.connect(g); g.connect(a.destination);
+      o.start(t); trem.start(t); o.stop(t + 0.95); trem.stop(t + 0.95);
+      o.onended = () => { o.disconnect(); bp.disconnect(); g.disconnect(); };
+      noiseBurst(t + 0.9, 0.07, 'lowpass', 1000, 0.7, 0.05, a.destination);
+    }
 
     // ---------------------------------------------------------------- WebGL detect
     // The probe, fixed. The original asked a throwaway canvas for a context and walked away from it: a real
@@ -1350,7 +1432,7 @@ export default {
 
         let AREAS = [], DESKS = [], MAIN_ANCHORS = [], pageObjs = [], monster = null, trophyGlass = null;
         let finalPages = null;
-        let PAGE_POS = [], AREA_DOOR_X = [], DOOR_X = 0, doorOpen = false, transitioning = false, doorMesh = null, doorRectIdx = -1;
+        let PAGE_POS = [], AREA_DOOR_X = [], DOOR_X = 0, doorOpen = false, transitioning = false, doorMesh = null, doorRectIdx = -1, doorLeaf = null, doorOpening = false, doorOpenT0 = 0, doorPlaque = null;
         const TROPHY_AT = new THREE.Vector3(), reflVec = new THREE.Vector3();
         // ---- 3.2: buildLevel(idx) assembles one level's whole scene -- corridor, areas, furniture, monster,
         // pages, door -- and runs again on every level transition (advanceLevel(), further down). Everything it
@@ -1376,6 +1458,7 @@ export default {
           scene.remove(levelGroup); levelGroup = new THREE.Group(); scene.add(levelGroup);
           collideRects.length = 0; pageObjs = []; finalPages = null; monster = null; trophyGlass = null; doorOpen = false; transitioning = false;
           ghost.active = false; ghost.seen = false; creep.active = false; caught = false;
+          resetChase(); doorLeaf = null; doorOpening = false; doorPlaque = null;
           monsterWasVisible = false; monsterVisibleAt = 0; staticIntensity = 0; liveVal = 0;
           if (ambientTimer) clearTimeout(ambientTimer);
           if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
@@ -1470,32 +1553,95 @@ export default {
         // because it has to be defined after scheduleAmbient exists, and both are called together at every
         // call site (initial kickoff and every level transition, below).
 
-        // ---- the monster: papier-mache, faceless, matte, tall and thin -- slides, never runs
+        // ---- the monster: papier-mache, matte, tall and thin -- a readable humanoid now (2026-10-03: "the villain
+        // must look humanoid"). Head with a jaw, dark eye sockets and a nose wedge on a short neck; chest wider than
+        // the waist with shoulder balls; two-segment arms and legs with elbow and knee spheres; flat hands with three
+        // fingers; flat shoes. FRONT IS +Z (Object3D.lookAt aims +Z at its target), which is why the shirt, tie and
+        // face sit on +Z. Every joint is a Group pivoted at its own top and published in userData.rig so the frame
+        // loop can pose it. In the office he stands (with the briefcase); in the dark school (handAuthored) he is
+        // built already on all fours -- the crawl and the sniff animate on top of that pose, see poseCrawl().
         function buildMonster() {
+          const dark = !!LEVELS[state.level].handAuthored;
           const g = new THREE.Group();
-          const legs = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.1, 1.05, 8), suitMat); legs.position.set(0, 0.55, 0); g.add(legs);
-          const torso = new THREE.Mesh(new THREE.CapsuleGeometry(0.14, 0.75, 4, 8), suitMat); torso.position.set(0, 1.42, 0); g.add(torso);
-          // head was 0.15 radius, same value/lit-behaviour as the torso it sat directly on -- it never read as
-          // its own shape (round 2 honest report). Bigger, flattened for a bald crown, and nudged up so there is
-          // real negative space above the collar before it starts, not a sphere grafted onto the capsule.
-          const head = new THREE.Mesh(new THREE.SphereGeometry(0.19, 16, 12), paperMat);
-          head.position.set(0, 2.14, 0); head.scale.set(1, 0.94, 1); g.add(head);
-          const armL = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.04, 0.7, 6), suitMat); armL.position.set(-0.18, 1.25, 0.05); armL.rotation.z = 0.15; g.add(armL);
-          const armR = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.04, 0.7, 6), suitMat); armR.position.set(0.19, 1.15, 0.05); armR.rotation.z = -0.05; g.add(armR);
-          const brief = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.16, 0.06), caseMat); brief.position.set(0.22, 0.82, 0.08); g.add(brief);
+          const grp = (x, y, z, parent) => { const o = new THREE.Group(); o.position.set(x, y, z); (parent || g).add(o); return o; };
+          const part = (geo, mat, x, y, z, parent) => { const m = new THREE.Mesh(geo, mat); m.position.set(x, y, z); (parent || g).add(m); return m; };
+          const eyeMat = new THREE.MeshStandardMaterial({ color: 0x0a0806, roughness: 1, metalness: 0 });
+          const THIGH = 0.6, SHIN = 0.45, SPINE = 0.68, UARM = 0.34, FARM = 0.32;
+          // standing: hips at 1.1 (thigh + shin + shoe), total height ~2.2 under WALL_H 2.6. Crawling: hips 0.7 high
+          // and 0.45 back of centre, spine pitched 0.25 rad nose-down past horizontal: ~1.5 long, ~0.9 tall.
+          const HIP_Y = dark ? 0.7 : 1.1, HIP_Z = dark ? -0.45 : 0, TORSO_A = dark ? Math.PI / 2 + 0.25 : 0;
+
+          part(new THREE.BoxGeometry(0.34, 0.2, 0.22), suitMat, 0, HIP_Y, HIP_Z);   // pelvis
+          const torso = grp(0, HIP_Y, HIP_Z); torso.rotation.x = TORSO_A;
+          const chest = part(new THREE.CylinderGeometry(0.21, 0.15, SPINE, 10), suitMat, 0, SPINE / 2, 0, torso); chest.scale.z = 0.62;   // chest wider than the waist
+          for (const s of [-1, 1]) part(new THREE.SphereGeometry(0.08, 10, 8), suitMat, s * 0.26, SPINE - 0.05, 0, torso);   // shoulders
+          const neck = grp(0, SPINE, 0, torso); part(new THREE.CylinderGeometry(0.06, 0.07, 0.16, 8), paperMat, 0, 0.06, 0, neck);
+
+          // head: its own pivot on g (not on the spine) so yaw and pitch stay about the vertical even when the torso
+          // is horizontal; layout() re-seats it at the end of the spine. YXZ order = yaw first.
+          const head = grp(0, 0, 0); head.rotation.order = 'YXZ';
+          const skull = part(new THREE.SphereGeometry(0.17, 16, 12), paperMat, 0, 0, 0, head); skull.scale.set(1, 1.12, 0.95);
+          const jaw = part(new THREE.SphereGeometry(0.1, 12, 8), paperMat, 0, -0.14, 0.05, head); jaw.scale.set(1, 0.55, 0.9);
+          for (const s of [-1, 1]) part(new THREE.SphereGeometry(0.036, 8, 6), eyeMat, s * 0.065, 0.035, 0.135, head);   // dark sockets
+          const nose = part(new THREE.ConeGeometry(0.03, 0.08, 6), paperMat, 0, -0.035, 0.19, head); nose.rotation.x = Math.PI / 2;
+          const crown = part(new THREE.SphereGeometry(0.175, 12, 8, 0, Math.PI * 2, 0, Math.PI * 0.4), caseMat, 0, 0.012, -0.012, head); crown.scale.set(1, 1.12, 0.97);   // cropped hair cap
+
+          const limb = (px, py, pz, upLen, loLen, upR, loR) => {
+            const upper = grp(px, py, pz); part(new THREE.CylinderGeometry(upR, upR * 0.82, upLen, 8), suitMat, 0, -upLen / 2, 0, upper);
+            part(new THREE.SphereGeometry(upR * 1.05, 8, 6), suitMat, 0, -upLen, 0, upper);   // elbow / knee ball
+            const lower = grp(0, -upLen, 0, upper); part(new THREE.CylinderGeometry(loR, loR * 0.85, loLen, 8), suitMat, 0, -loLen / 2, 0, lower);
+            return { upper, lower };
+          };
+          const armL = limb(0, 0, 0, UARM, FARM, 0.05, 0.04), armR = limb(0, 0, 0, UARM, FARM, 0.05, 0.04);
+          const legL = limb(-0.1, HIP_Y, HIP_Z, THIGH, SHIN, 0.075, 0.06), legR = limb(0.1, HIP_Y, HIP_Z, THIGH, SHIN, 0.075, 0.06);
+          // pose constants. Forward = more NEGATIVE rotation.x on a downward-hanging limb (Rx(a) maps down to (0,-cos a,-sin a)).
+          const rest = dark
+            ? { tA: TORSO_A, armU: -0.45, armL: -0.3, hand: -Math.PI / 2 + 0.75, legU: -0.15, legL: Math.PI / 2 - 0.1, headP: 0.3 }
+            : { tA: 0, armU: 0.06, armL: -0.3, hand: 0, legU: 0, legL: 0, headP: 0.05 };
+          for (const leg of [legL, legR]) {   // flat shoe; crawling, the shin lies back along the floor so the foot turns instep-down
+            const foot = grp(0, -SHIN, 0, leg.lower); foot.rotation.x = dark ? Math.PI - (rest.legU + rest.legL) : 0;
+            part(new THREE.BoxGeometry(0.11, 0.06, 0.27), caseMat, 0, -0.02, 0.08, foot);
+          }
+          const hands = [];
+          for (const arm of [armL, armR]) {
+            const hand = grp(0, -FARM, 0, arm.lower); hands.push(hand); hand.rotation.x = rest.hand;
+            part(new THREE.BoxGeometry(0.09, 0.11, 0.035), paperMat, 0, -0.055, 0, hand);   // flat box hand
+            for (const fx of [-0.028, 0, 0.028]) part(new THREE.BoxGeometry(0.018, 0.075, 0.022), paperMat, fx, -0.145, 0, hand);   // three thin fingers
+          }
+          armL.upper.rotation.set(rest.armU, 0, dark ? 0 : -0.1); armR.upper.rotation.set(rest.armU, 0, dark ? 0 : 0.1);
+          armL.lower.rotation.x = armR.lower.rotation.x = rest.armL;
+          legL.upper.rotation.x = legR.upper.rotation.x = rest.legU; legL.lower.rotation.x = legR.lower.rotation.x = rest.legL;
+          head.rotation.x = rest.headP;
+          // layout(dip): seat the spine, the head (end of the spine plus a lift) and both shoulder pivots from the
+          // torso's current rotation. dip 0..1 is the sniff's head-down: it pitches the spine a little and drops the lift.
+          const v = new THREE.Vector3();
+          function layout(dip) {
+            torso.rotation.x = rest.tA + (dark ? 0.12 * dip : 0);
+            const lift = dark ? 0.1 - 0.17 * dip : 0;
+            v.set(0, SPINE + 0.26, 0).applyEuler(torso.rotation); head.position.set(v.x, HIP_Y + v.y + lift, HIP_Z + v.z);
+            v.set(-0.27, SPINE - 0.06, 0).applyEuler(torso.rotation); armL.upper.position.set(v.x, HIP_Y + v.y, HIP_Z + v.z);
+            v.set(0.27, SPINE - 0.06, 0).applyEuler(torso.rotation); armR.upper.position.set(v.x, HIP_Y + v.y, HIP_Z + v.z);
+          }
+          layout(0);
+          g.userData.rig = { head, neck, torso, armL, armR, legL, legR, hands };
+          g.userData.rest = rest; g.userData.layout = layout;
+
+          // the briefcase is the OFFICE boss's: hung from his right hand there, absent in the dark school.
+          if (!dark) { const brief = part(new THREE.BoxGeometry(0.22, 0.16, 0.06), caseMat, 0, -FARM - 0.2, 0.02, armR.lower); brief.rotation.y = Math.PI / 2; }
           // his own light, travels with him: with lookAt(player) his local -Z always faces the camera, so a
           // light offset onto -Z and to one side keys his camera-facing surface directly instead of relying on
           // ceiling spill from above (root cause of the round-2 flat-black read). Not inside any sealed mesh --
           // sits clear in front of his torso/head, checked live at all three test distances.
-          if (!LEVELS[state.level].handAuthored) {
+          if (!dark) {
             const monsterLight = new THREE.PointLight(0xcfe0ff, .65, 6, 2);
             monsterLight.position.set(0.6, 1.5, -2.2); g.add(monsterLight);
           }
-          if(!LEVELS[state.level].handAuthored){
-            const jacket=new THREE.MeshStandardMaterial({color:0x202c3e,roughness:.92});g.traverse(o=>{if(o.isMesh&&o.material===suitMat)o.material=jacket;});
-            const shirt=new THREE.Mesh(new THREE.BoxGeometry(.18,.38,.03),new THREE.MeshStandardMaterial({color:0xece7dc}));shirt.position.set(0,1.63,-.14);g.add(shirt);
-            const tie=new THREE.Mesh(new THREE.ConeGeometry(.045,.28,3),new THREE.MeshStandardMaterial({color:0x923b46}));tie.rotation.z=Math.PI;tie.position.set(0,1.56,-.17);g.add(tie);g.name='suited-office-boss';
-          }else g.name='school-monster';
+          if (!dark) {
+            const jacket = new THREE.MeshStandardMaterial({ color: 0x202c3e, roughness: .92 }); g.traverse(o => { if (o.isMesh && o.material === suitMat) o.material = jacket; });
+            part(new THREE.BoxGeometry(.18, .38, .03), new THREE.MeshStandardMaterial({ color: 0xece7dc }), 0, SPINE * 0.62, 0.115, torso);   // shirt
+            const tie = part(new THREE.ConeGeometry(.045, .28, 3), new THREE.MeshStandardMaterial({ color: 0x923b46 }), 0, SPINE * 0.56, 0.13, torso); tie.rotation.z = Math.PI;
+            g.name = 'suited-office-boss';
+          } else g.name = 'school-monster';
           g.visible = false; levelGroup.add(g); return g;
         }
         const ghost = { active: false, from: new THREE.Vector3(), to: new THREE.Vector3(), t0: 0, dur: 4000, seen: false };
@@ -1508,9 +1654,9 @@ export default {
           monster.visible = true; monster.position.copy(from);
           if (!ghost.seen) { ghost.seen = true; announce("Something is standing at the end of the hall."); }
         }
-        // ---- ambient re-haunts: escalate per page found (locked canon: "each page found is more stressful
-        // than the last") -- more frequent, closer, and quicker to relocate as n climbs. Still no pathfinding:
-        // haunt() just slides him between two authored points, same as the page-pickup haunts already did.
+        // ---- ambient re-haunts (OFFICE ONLY since 2026-10-03): escalate per page found -- more frequent, closer, and
+        // quicker to relocate as n climbs. haunt() just slides him between two authored points. The dark school no
+        // longer uses this at all: a relocation would teleport him in front of the dog, and he now chases (see CHASE_SPEED).
         const monsterVec = new THREE.Vector3();
         let staticIntensity = 0, caught = false, ambientTimer = null;
         // 0901: the creep (the Slender loop) and the touch-range kill. creep tracks its own "watched" clock
@@ -1527,6 +1673,17 @@ export default {
           "The deadline moved up again. It always moves up.",
           "Someone has to own this by end of day. It is being decided who.",
           "The meeting about the meeting starts in five minutes."
+        ];
+        // 2026-10-04 (Ian): in the dark school the crawler mutters school stressors, not office ones.
+        const SCHOOL_LINES = [
+          "The test is today. You did not know there was a test.",
+          "Everyone else got the reading. You never got the reading.",
+          "The group project is due. The group has not met.",
+          "Your locker combination is wrong. It was right yesterday.",
+          "Pick a partner. Everyone has already picked.",
+          "The bell rang. Nobody told you which room.",
+          "The permission slip was due Monday. It is still in your bag.",
+          "They are reading the grades out loud. Yours is next."
         ];
         let talkLine = "", talkPickedAt = 0;
         // Capture is guarded once for both monster contact and static overload.
@@ -1559,10 +1716,12 @@ export default {
           } else {
             announce('Caught. Pages already found are still found.');
             ctx.timeout(() => { player.x = 1; player.z = 0; player.yaw = -Math.PI / 2; player.pitch = 0;
-              caught = false; monster.visible = false; monsterWasVisible = false; }, 700);
+              caught = false; monster.visible = false; monsterWasVisible = false;
+              if (LEVELS[state.level].handAuthored) respawnChaser(performance.now()); }, 700);
           }
         }
         function scheduleAmbient() {
+          if (LEVELS[state.level].handAuthored) return;   // 2026-10-03: the dark school's monster chases; no haunt relocations
           const n = state.found[state.level].filter(Boolean).length;
           // 0905: "every hallway needs to get crazier" also means the monster gets bolder, deeper in -- shorter
           // waits and quicker haunts as `crazy` climbs (live only; crazy is 0 for public and live's own level 0).
@@ -1592,8 +1751,30 @@ export default {
         // calls buildLevel(idx) immediately followed by buildLevelTail(idx).
         function buildLevelTail(idx) {
           monster = buildMonster();
+          if (MODE === 'public' && idx === 0) {
+            // 2026-10-03: the office -> break room door is a real door now (Ian: "an actual door that is closed and
+            // then opens"). Wall fills each side of a 1.0 opening, a dark-wood frame, a hinged leaf, a plaque above.
+            // The leaf is hinged on its +z edge (z=+0.5) and swings toward +x, AWAY from the dog, by rotation.y going
+            // 0 -> -1.9; the doorway's own collide rect (the only thing the old slab contributed) is removed on open.
+            const sideA = wallBox(DOOR_X, -0.9, 0.3, 0.8), sideB = wallBox(DOOR_X, 0.9, 0.3, 0.8);
+            const wood = new THREE.MeshStandardMaterial({ color: 0x4a3324, roughness: 0.8 });
+            const solid = (geo, mat, x, y, z, parent) => { const m = new THREE.Mesh(geo, mat); m.position.set(x, y, z); (parent || levelGroup).add(m); return m; };
+            for (const z of [-0.56, 0.56]) solid(new THREE.BoxGeometry(0.34, 2.26, 0.12), wood, DOOR_X, 1.13, z);   // jambs
+            solid(new THREE.BoxGeometry(0.34, 0.12, 1.24), wood, DOOR_X, 2.26, 0);   // lintel
+            solid(new THREE.BoxGeometry(0.3, 0.28, 1.0), sideA.material, DOOR_X, 2.46, 0);   // wall above the lintel
+            doorLeaf = new THREE.Group(); doorLeaf.name = 'break-room-door'; doorLeaf.position.set(DOOR_X, 0, 0.5); levelGroup.add(doorLeaf);
+            solid(new THREE.BoxGeometry(0.07, 2.2, 1.0), new THREE.MeshStandardMaterial({ color: 0x6b4a2f, roughness: 0.75 }), 0, 1.1, -0.5, doorLeaf);
+            solid(new THREE.BoxGeometry(0.09, 0.34, 0.36), new THREE.MeshStandardMaterial({ color: 0xcfe3e6, roughness: 0.3, transparent: true, opacity: 0.65 }), 0, 1.6, -0.5, doorLeaf);   // frosted pane
+            const brass = new THREE.MeshStandardMaterial({ color: 0xb08d3c, roughness: 0.35, metalness: 0.7 });
+            for (const sx of [-0.06, 0.06]) solid(new THREE.SphereGeometry(0.045, 10, 8), brass, sx, 1.05, -0.88, doorLeaf);   // knob, both faces
+            doorPlaque = solid(new THREE.PlaneGeometry(0.7, 0.26), new THREE.MeshBasicMaterial({ map: signTexture("BREAK ROOM", "STAFF ONLY") }), DOOR_X - 0.155, 2.46, 0);
+            doorPlaque.rotation.y = -Math.PI / 2; doorMesh = null;
+            collideRects.push({ x0: DOOR_X - 0.15, x1: DOOR_X + 0.15, z0: -0.5, z1: 0.5 });
+            doorRectIdx = collideRects.length - 1;
+          } else {
           doorMesh = wallBox(DOOR_X, 0, 0.3, 2.6, new THREE.MeshStandardMaterial({ map: signTexture("LOCKED", LEVELS[idx].doorLabel || "END OF THE LINE"), roughness: 0.7, metalness: 0.15 }));
           doorRectIdx = collideRects.length - 1;
+          }
           doorSeen = false;
           if (MODE === 'public' && idx === 1) {
             const end = DOOR_X + 6;
@@ -1614,9 +1795,13 @@ export default {
             light.position.set(end - 1.6, 1.7, 0); levelGroup.add(light);
           }
           player.x = 1.0; player.z = 0; player.yaw = -Math.PI / 2; player.pitch = 0;
-          (function () { const dx = DOOR_X, builtLevel = levelGroup; ctx.timeout(() => {
-            if (builtLevel === levelGroup && !transitioning && !caught && state.dreamPhase !== 'done') haunt(new THREE.Vector3(dx - 2, 0, 0), new THREE.Vector3(dx - 8, 0, 0), 6000);
-          }, 3200); })();
+          // 2026-10-03: in the dark school this opener is the monster's ONLY introduction now (no ambient haunts follow
+          // it), so if the dog is still on the wake screen when it fires it waits, rather than being skipped as before.
+          (function () { const dx = DOOR_X, builtLevel = levelGroup, dark = !!LEVELS[idx].handAuthored; const opener = () => {
+            if (builtLevel !== levelGroup || caught || state.dreamPhase === 'done') return;
+            if (transitioning) { if (dark) ctx.timeout(opener, 500); return; }
+            haunt(new THREE.Vector3(dx - 2, 0, 0), new THREE.Vector3(dx - 8, 0, 0), 6000);
+          }; ctx.timeout(opener, 3200); })();
           scheduleAmbient();
           collectingLevel = false;
         }
@@ -1624,6 +1809,103 @@ export default {
         // ---- player: low, at dog height
         const EYE_H = 0.38, R = 0.28, SPEED = 2.5;
         const player = { x: 1.0, z: 0, yaw: -Math.PI / 2, pitch: 0 };
+
+        // ---- 2026-10-03: the dark school's monster CHASES. Ian: "he doesn't run around right -- he should move
+        // slower, like at 25% speed, but be chasing the character in the dark." This replaces, for handAuthored
+        // levels only, the old haunt-slide-then-creep loop (and the "no pathfinding chase" canon that went with it).
+        // After his opening appearance (the 3.2s haunt in buildLevelTail) he is always present and walks straight at
+        // the dog at CHASE_SPEED, quarter of walking speed and unaffected by sprint, with the same per-axis wall slide
+        // the player gets. There is still no pathfinder, so the school's branches can strand him: if he makes < 0.15u
+        // in 2.5s while the dog is > 4u away and he is NOT on screen, he is quietly re-seated at an anchor behind the
+        // dog. Watched dead-on he freezes (head up, staring); every 2.5-5s, unwatched, he stops to sniff. The office
+        // keeps ghost/creep/haunt untouched: the suited boss talks instead of killing.
+        const CHASE_SPEED = SPEED * 0.25;
+        const chase = { active: false, speed: CHASE_SPEED, stuckFor: 0, winT: 0, winMoved: 0, phase: 0, sniffing: false, sniffT0: 0, sniffDur: 0,
+          nextSniffAt: 0, yaw: 0, hy: 0, hp: 0.3, dip: 0, px: 0, pz: 0, sway: 0 };
+        function resetChase() { Object.assign(chase, { active: false, stuckFor: 0, winT: 0, winMoved: 0, phase: 0, sniffing: false, nextSniffAt: 0, hy: 0, hp: 0.3, dip: 0, sway: 0 }); }
+        function startChase(now) { chase.active = true; chase.stuckFor = 0; chase.winT = 0; chase.winMoved = 0; chase.sniffing = false; chase.yaw = Math.atan2(player.x - monster.position.x, player.z - monster.position.z); chase.nextSniffAt = now + 2500 + rnd() * 2500; chase.px = monster.position.x; chase.pz = monster.position.z; }
+        // his own, smaller circle than the dog's R; the office box does not apply in the school
+        function monsterBlocked(x, z) { const MR = 0.32; for (const w of collideRects) { const p = nearestOnRect(x, z, w); const dx = x - p.x, dz = z - p.z; if (dx * dx + dz * dz < MR * MR) return true; } return false; }
+        // quiet re-seat: an anchor 3-8u from the dog and as far behind her facing as the pool allows
+        function relocateMonster(minD, maxD) {
+          const area = areaAt(player.x, player.z), pool = area ? area.anchors : MAIN_ANCHORS;
+          const fx = -Math.sin(player.yaw), fz = -Math.cos(player.yaw);
+          let best = null, bestDot = 9;
+          for (const a of pool) {
+            const d = Math.hypot(a[0] - player.x, a[1] - player.z); if (d < minD || d > maxD) continue;
+            const dot = (fx * (a[0] - player.x) + fz * (a[1] - player.z)) / d;
+            if (dot < bestDot) { bestDot = dot; best = a; }
+          }
+          if (!best) return false;
+          monster.position.set(best[0], 0, best[1]); chase.px = best[0]; chase.pz = best[1]; chase.winT = 0; chase.winMoved = 0; chase.stuckFor = 0;
+          return true;
+        }
+        function tickChase(now, dt, centered, onscreen) {
+          const c = chase, mp = monster.position;
+          if (centered) {   // watched dead-on: he freezes and stares (pose is held by poseCrawl)
+            c.sniffing = false; if (c.nextSniffAt < now + 600) c.nextSniffAt = now + 600; return;
+          }
+          if (c.sniffing) { if (now - c.sniffT0 >= c.sniffDur) { c.sniffing = false; c.nextSniffAt = now + 2500 + rnd() * 2500; } return; }
+          if (now >= c.nextSniffAt) {
+            c.sniffing = true; c.sniffT0 = now; c.sniffDur = 700 + rnd() * 400;
+            sniffSound(Math.max(-1, Math.min(1, monsterVec.x)), Math.hypot(mp.x - player.x, mp.z - player.z));
+            return;
+          }
+          const cdx = player.x - mp.x, cdz = player.z - mp.z, cd = Math.hypot(cdx, cdz) || 1;
+          if (cd < 0.45) return;
+          const step = c.speed * dt, x0 = mp.x, z0 = mp.z;
+          // same per-axis slide as the player: each axis tested against the frame-START position, never chained
+          const nx = x0 + cdx / cd * step; if (!monsterBlocked(nx, z0)) mp.x = nx;
+          const nz = z0 + cdz / cd * step; if (!monsterBlocked(x0, nz)) mp.z = nz;
+          const moved = Math.hypot(mp.x - x0, mp.z - z0);
+          const want = moved > 1e-5 ? Math.atan2(mp.x - x0, mp.z - z0) : Math.atan2(cdx, cdz);
+          let dy = want - c.yaw; dy = Math.atan2(Math.sin(dy), Math.cos(dy));
+          c.yaw += dy * (1 - Math.pow(1 - 0.12, dt * 60)); monster.rotation.set(0, c.yaw, 0);   // set all three: lookAt can leave x/z at pi
+          // stuck watchdog, tumbling 2.5s windows of ATTEMPTED travel (sniff and stare time does not count)
+          c.winT += dt; c.winMoved += moved;
+          if (c.winT >= 2.5) {
+            const stuck = c.winMoved < 0.15; c.stuckFor = stuck ? c.stuckFor + c.winT : 0;
+            if (stuck && cd > 4 && !onscreen) relocateMonster(3, 8);
+            c.winT = 0; c.winMoved = 0;
+          }
+        }
+        // poseCrawl animates ON TOP of the pose buildMonster set: alternating opposite limbs (left hand + right
+        // knee, then the swap), one full cycle per 0.9u travelled so the hands do not skate; a little roll for
+        // weight; the sniff dips the head and swings it twice; the head otherwise tracks the dog softly (lerp 0.08);
+        // watched dead-on, the limbs hold and the head comes up.
+        function poseCrawl(now, dt, centered) {
+          const c = chase, R = monster.userData.rig, rest = monster.userData.rest;
+          const mv = Math.hypot(monster.position.x - c.px, monster.position.z - c.pz); c.px = monster.position.x; c.pz = monster.position.z;
+          const moved = mv < 0.6 ? mv : 0;   // a relocation teleport is not a stride
+          if (moved > 1e-5 && !centered) {
+            c.phase += moved / 0.9 * Math.PI * 2;
+            const s = Math.sin(c.phase), k = Math.cos(c.phase);
+            R.armL.upper.rotation.x = rest.armU - 0.35 * s; R.armR.upper.rotation.x = rest.armU + 0.35 * s;
+            R.legR.upper.rotation.x = rest.legU - 0.35 * s; R.legL.upper.rotation.x = rest.legU + 0.35 * s;
+            R.armL.lower.rotation.x = rest.armL - 0.2 * k; R.armR.lower.rotation.x = rest.armL + 0.2 * k;
+            R.legR.lower.rotation.x = rest.legL - 0.2 * k; R.legL.lower.rotation.x = rest.legL + 0.2 * k;
+            c.sway = Math.sin(c.phase) * 0.04;
+          }
+          const pdx = player.x - monster.position.x, pdz = player.z - monster.position.z, pd = Math.hypot(pdx, pdz);
+          c.dip += ((c.sniffing ? 1 : 0) - c.dip) * (1 - Math.pow(0.8, dt * 60));
+          if (c.sniffing) {   // two side-to-side swings inside the pause
+            const u = Math.min(1, (now - c.sniffT0) / c.sniffDur);
+            c.hy = 0.3 * Math.sin(u * Math.PI * 4); c.hp = rest.headP;
+          } else {
+            let rel = c.active ? Math.atan2(pdx, pdz) - c.yaw : 0; rel = Math.atan2(Math.sin(rel), Math.cos(rel));
+            const tp = centered ? -0.12 : 0.15 + Math.atan2(0.19, Math.max(pd, 0.5)), k = 1 - Math.pow(1 - 0.08, dt * 60);
+            c.hy += (Math.max(-1, Math.min(1, rel)) - c.hy) * k; c.hp += (tp - c.hp) * k;
+          }
+          R.head.rotation.y = c.hy; R.head.rotation.x = c.hp + 0.6 * c.dip;
+          R.torso.rotation.z = c.sway;
+          monster.userData.layout(c.dip);
+        }
+        // live-mode capture respawns the dog at the start; he comes back too, far down the hall, still hunting
+        function respawnChaser(now) {
+          let best = MAIN_ANCHORS[0], bd = -1;
+          for (const a of MAIN_ANCHORS) { const d = Math.hypot(a[0] - player.x, a[1] - player.z); if (d > bd) { bd = d; best = a; } }
+          monster.position.set(best[0], 0, best[1]); monster.visible = true; monsterWasVisible = false; startChase(now);
+        }
 
         // ---- Round 2, section 2: the reading beat. Approach a desk, the page comes off it, the camera rises
         // to standing-on-hind-legs height while two paws come into frame -- then the book opens to the page just
@@ -1646,7 +1928,7 @@ export default {
           deskRead.phase = "standing"; deskRead.t0 = performance.now();
           pawsEl.classList.remove("up"); showHunt();
           const i = deskRead.i, doorZ = i === 1 ? -1.35 : 1.35;   // the pickup haunt, now fired here instead of on pickup
-          haunt(new THREE.Vector3(AREA_DOOR_X[i], 0, doorZ), new THREE.Vector3(player.x, 0, player.z), 4300 + i * 1300);
+          if (!LEVELS[state.level].handAuthored) haunt(new THREE.Vector3(AREA_DOOR_X[i], 0, doorZ), new THREE.Vector3(player.x, 0, player.z), 4300 + i * 1300);   // the dark school's monster is already hunting
           return true;
         }
         function finishStandDown() { deskRead.phase = "idle"; cc.removeAttribute("data-reading"); }
@@ -1656,7 +1938,7 @@ export default {
         // on every level transition. Never written to by game code; changes no behaviour. Removed in unmount():
         // it closes over THIS mount's player and level state, and left behind it would answer questions about,
         // and let a driver move, a school that is no longer in the document.
-        window.__corgi = { player, deskRead, get desks() { return DESKS.length; }, get level() { return state.level; }, get doorLabel() { return LEVELS[state.level].doorLabel; }, get transition(){return roomCut?.stage||null;}, get battery(){return battery;}, get lives(){return state.lives;}, get dreamPhase(){return state.dreamPhase;}, get doorX(){return DOOR_X;}, get doorOpen(){return doorOpen;}, get pages(){return PAGE_POS.map(p=>({x:p.x,z:p.z}));}, get finalPages(){return finalPages?.position.clone()||null;}, get monster(){return monster;}, get camera(){return roomCut?.camera||camera;} };
+        window.__corgi = { player, deskRead, get desks() { return DESKS.length; }, get level() { return state.level; }, get doorLabel() { return LEVELS[state.level].doorLabel; }, get transition(){return roomCut?.stage||null;}, get battery(){return battery;}, get lives(){return state.lives;}, get dreamPhase(){return state.dreamPhase;}, get doorX(){return DOOR_X;}, get doorOpen(){return doorOpen;}, get pages(){return PAGE_POS.map(p=>({x:p.x,z:p.z}));}, get finalPages(){return finalPages?.position.clone()||null;}, get monster(){return monster;}, get door(){return doorLeaf;}, get chase(){return {active:chase.active,speed:chase.speed,stuckFor:chase.stuckFor};}, get camera(){return roomCut?.camera||camera;} };
         // 0901 corner-trap fix. Root cause, found live by logging position + blocked() every frame while
         // scripting a diagonal hold into three different corners: the old test expanded each wall's AABB by R
         // on both axes independently, and the per-axis slide below tests each axis's candidate against the
@@ -2022,15 +2304,33 @@ export default {
           // null, there is nothing after it.
           if (!doorSeen && player.x > DOOR_X - 1.7) {
             doorSeen = true;
-            announce(MODE === 'public' && state.dreamPhase === 'done' ? 'Break time is over. You made it out of the dream.' : LEVELS[state.level].doorLabel ? (state.found[state.level].every(Boolean) ? `The door to ${LEVELS[state.level].doorLabel} is open. Go on.` : `The hallway ends here. ${LEVELS[state.level].doorLabel}. Locked. Find the three pages first.`) : "The hallway ends here. Nothing past it. This is as far as the building goes.");
+            announce(MODE === 'public' && state.dreamPhase === 'done' ? 'Break time is over. You made it out of the dream.' : LEVELS[state.level].doorLabel ? (state.found[state.level].every(Boolean) ? (doorLeaf ? 'The break room door is unlocked. Walk up to it.' : `The door to ${LEVELS[state.level].doorLabel} is open. Go on.`) : `The hallway ends here. ${LEVELS[state.level].doorLabel}. Locked. Find the three pages first.`) : "The hallway ends here. Nothing past it. This is as far as the building goes.");
           }
-          if (LEVELS[state.level].doorLabel && !doorOpen && state.found[state.level].every(Boolean) && (MODE !== "public" || (state.dreamPhase === "hunt" && (state.level === 0 || canOpenBackDoor(state))))) {
+          // 2026-10-03: the break room door stays CLOSED after the pages are found until the dog walks up and looks at
+          // it (within 1.9u, facing dot > 0.3); only then does doorOpen flip, its collide rect go, and the leaf swing.
+          let doorNearFacing = false;
+          if (doorLeaf && !doorOpen) {
+            const ddx = DOOR_X - player.x, ddz = -player.z, dd = Math.hypot(ddx, ddz) || 1;
+            doorNearFacing = dd < 1.9 && (lookFx * ddx / dd + lookFz * ddz / dd) > 0.3;
+            if (doorNearFacing && !state.found[state.level].every(Boolean)) { anyPrompt = true; promptEl.textContent = "LOCKED. FIND THE PAGES."; promptEl.classList.add("show"); }
+          }
+          if (LEVELS[state.level].doorLabel && !doorOpen && state.found[state.level].every(Boolean) && (MODE !== "public" || (state.dreamPhase === "hunt" && (state.level === 0 || canOpenBackDoor(state)))) && (!doorLeaf || doorNearFacing)) {
             doorOpen = true;
             collideRects.splice(doorRectIdx, 1);
-            doorMesh.position.z = 2.6;
-            doorMesh.material.map?.dispose();
-            doorMesh.material.map = signTexture("OPEN. GO ON.", LEVELS[state.level].doorLabel);
-            doorMesh.material.map.colorSpace = THREE.SRGBColorSpace; doorMesh.material.needsUpdate = true;
+            if (doorLeaf) {
+              doorOpening = true; doorOpenT0 = now; announce("The break room door swings open."); doorCreak();
+              doorPlaque.material.map?.dispose(); doorPlaque.material.map = signTexture("BREAK ROOM", "OPEN. GO ON."); doorPlaque.material.needsUpdate = true;
+            } else {
+              doorMesh.position.z = 2.6;
+              doorMesh.material.map?.dispose();
+              doorMesh.material.map = signTexture("OPEN. GO ON.", LEVELS[state.level].doorLabel);
+              doorMesh.material.map.colorSpace = THREE.SRGBColorSpace; doorMesh.material.needsUpdate = true;
+            }
+          }
+          if (doorLeaf && doorOpening) {   // swing away from the dog over 1.1s, ease-out
+            const p = Math.min(1, (now - doorOpenT0) / (REDUCED ? 150 : 1100));
+            doorLeaf.rotation.y = -1.9 * (1 - Math.pow(1 - p, 3));
+            if (p >= 1) doorOpening = false;
           }
           if (doorOpen && !transitioning && state.level < LEVELS.length - 1 && player.x > DOOR_X - 0.4) {
             transitioning = true;
@@ -2045,8 +2345,9 @@ export default {
             if (distance < 1.15) { finalPages.visible = false; startDreamEnding(); ctx.frame(frame); return; }
           }
 
-          // monster: slides while off-frame or at the edge, holds still when watched dead-on (locked canon --
-          // no pathfinding chase either way, this only changes whether the existing slide is allowed to progress)
+          // monster. OFFICE: slides while off-frame or at the edge, holds still when watched dead-on (this only
+          // changes whether the existing slide is allowed to progress). DARK SCHOOL (handAuthored, 2026-10-03): after his
+          // opening appearance he CHASES at CHASE_SPEED -- see tickChase -- and still freezes when watched dead-on.
           let monsterOnscreen = false, monsterCentered = false, monsterDist = 99;
           if (monster.visible) {
             if (!monsterWasVisible) monsterVisibleAt = now;
@@ -2070,7 +2371,8 @@ export default {
                   // close and the creep branch below never fired -- found live, the first time this was tested,
                   // by logging monsterDist across a haunt end and seeing it never dip under the threshold.
                   const landDist = Math.hypot(monster.position.x - player.x, monster.position.z - player.z);
-                  if (landDist < 3.5) { creep.active = true; creep.watchedMs = 0; }
+                  if (LEVELS[state.level].handAuthored) startChase(now);   // dark school: the opener lands, then he hunts instead of hiding
+                  else if (landDist < 3.5) { creep.active = true; creep.watchedMs = 0; }
                   else hideTimer = ctx.timeout(() => { monster.visible = false; hideTimer = null; }, 500);
                 }
               }
@@ -2086,7 +2388,8 @@ export default {
                 monster.position.x += cdx / cd * step; monster.position.z += cdz / cd * step;
               }
               monster.lookAt(player.x, monster.position.y, player.z);
-            }
+            } else if (chase.active) tickChase(now, dt, monsterCentered, monsterOnscreen);
+            if (LEVELS[state.level].handAuthored) poseCrawl(now, dt, monsterCentered);
             // touch-range kill: visible at least 600ms (no spawn-kills), close enough -- he can take you from
             // behind, whether or not you're facing him. Static-maxout kill is the other path, below. LIVE ONLY --
             // "the suited figure does NOT kill you" in public mode is the one behaviour difference the mode makes.
@@ -2097,7 +2400,7 @@ export default {
           // 0905: public mode's obstacle talks instead of killing -- a random deadline line while he's in range,
           // refreshed every few seconds rather than every frame so it reads as speech, not a flicker.
           if (MODE === "public" && monster.visible && monsterDist < 3.4) {
-            if (!talkLine || now - talkPickedAt > 4500) { talkLine = DEADLINE_LINES[Math.floor(rnd() * DEADLINE_LINES.length)]; talkPickedAt = now; }
+            if (!talkLine || now - talkPickedAt > 4500) { const lines = LEVELS[state.level].handAuthored ? SCHOOL_LINES : DEADLINE_LINES; talkLine = lines[Math.floor(rnd() * lines.length)]; talkPickedAt = now; }
             anyPrompt = true; promptEl.textContent = talkLine; promptEl.classList.add("show");
           }
           if (!anyPrompt) promptEl.classList.remove("show");
@@ -2145,6 +2448,17 @@ export default {
           renderer.render(scene, camera);
           ctx.frame(frame);
         }
+        // 2026-10-03: the giggle scheduler. Only in the dark school, while hunting, not reading, not in a cutscene.
+        // First one 3-6s after she can move; then 7-16s apart, tightening to 4-9s once two pages are found.
+        let laughAt = 0;
+        ctx.interval(() => {
+          if (!LEVELS[state.level].handAuthored || roomCut) { laughAt = 0; return; }
+          if (!musicAudio || !hunting() || transitioning || caught || cc.hasAttribute('data-reading')) return;
+          const now = performance.now(), n = state.found[state.level].filter(Boolean).length;
+          if (!laughAt) { laughAt = now + 3000 + rnd() * 3000; return; }
+          if (now < laughAt) return;
+          childLaugh(); laughAt = now + (n >= 2 ? 4000 + rnd() * 5000 : 7000 + rnd() * 9000);
+        }, 400);
         buildLevel(state.level); buildLevelTail(state.level);
         if (MODE === 'public' && state.dreamPhase === 'ending') startDreamEnding();
         ctx.frame(frame);

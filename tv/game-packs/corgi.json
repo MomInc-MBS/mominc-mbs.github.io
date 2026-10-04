@@ -179,13 +179,13 @@
     },
     {
       "url": "/tv/channels/corgi.html",
-      "revision": "7bc6e12da2740b01b6522b2bfee1859901603007",
-      "bytes": 47779
+      "revision": "ce4a3af0f1b59e9ba106a5356cb6b857730c3374",
+      "bytes": 48250
     },
     {
       "url": "/tv/channels/corgi.js",
-      "revision": "2cfe09ad7c154d0b431c098687cdd1442e91231c",
-      "bytes": 172323
+      "revision": "15f434a8aa65b1e2f898e21ec3468c6f06558d82",
+      "bytes": 198752
     },
     {
       "url": "/tv/dj-booth.css",
@@ -322,5 +322,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "ba3e668e6f698ea1f209"
+  "version": "edc8a67f0f007f7f5950"
 }
