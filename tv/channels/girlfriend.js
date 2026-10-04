@@ -337,6 +337,7 @@ export default {
       if(!batch?.special||L.phase!=='goggles')return;
       const reward=JSON.stringify({version:1,acquiredAt:Date.now(),recipe:L.order.slice()});
       try{localStorage.setItem('mbs-goggles-v1',reward);}catch{try{sessionStorage.setItem('mbs-goggles-v1',reward);}catch{}}
+      ctx.mbs?.unlock?.('girlfriend');
       ctx.mbs?.complete?.('girlfriend',{terminal:'goggles'});
       window.dispatchEvent(new Event('mbs:goggles-earned'));
     }
