@@ -7,21 +7,36 @@ const R=2.4,CY=1.55,SEG=16,TAU=Math.PI*2; // tube radius, axis height, radial se
 
 export function createMazeScene(THREE){
   const scene=new THREE.Scene();scene.background=new THREE.Color('#040208');scene.fog=new THREE.Fog('#0c0712',14,48);
-  scene.add(new THREE.HemisphereLight('#9d88b8','#140a18',.55));
-  const lamp=new THREE.PointLight('#ffd49a',9,12,1.6),ahead=new THREE.PointLight('#ffc77a',14,18,1.6),alarm=new THREE.PointLight('#ff2030',0,16,1.4);
-  scene.add(lamp,ahead,alarm);
+  scene.add(new THREE.HemisphereLight('#a898c0','#1c1222',.6));
+  const lamp=new THREE.PointLight('#ffd49a',9,12,1.6),ahead=new THREE.PointLight('#ffc77a',14,18,1.6),alarm=new THREE.PointLight('#ff2030',0,16,1.4),pitLight=new THREE.PointLight('#ff3a14',0,9,1.4),fill=new THREE.PointLight('#b9a8e8',2.2,22,1.2);
+  scene.add(lamp,ahead,alarm,pitLight,fill);
   const camera=new THREE.PerspectiveCamera(72,1,.06,160);
   const material=(color,metalness=.4,roughness=.5)=>new THREE.MeshStandardMaterial({color,metalness,roughness});
-  const hull=new THREE.MeshStandardMaterial({color:'#2a2333',metalness:.78,roughness:.35,side:THREE.BackSide});
-  const plate=new THREE.MeshStandardMaterial({color:'#1f1a26',metalness:.75,roughness:.38,side:THREE.DoubleSide});
-  const wall=material('#2a2333',.45,.4),inset=material('#1a1620',.7,.4),gold=material('#bb9354',.8,.3),deck=material('#241d2b',.6,.42),black=material('#0b080e',.3,.6),bone=material('#d4a017',.55,.35),gore=material('#4a0a34',.1,.32);
+  const canvasTex=(w,h,draw)=>{const c=document.createElement('canvas');c.width=w;c.height=h;draw(c.getContext('2d'),w,h);const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;return t;};
+  // One hull plate tile: gunmetal with seams, rivets, scratches and grime. Reused (cloned) at different repeats.
+  const plateTex=canvasTex(256,256,(g,w,h)=>{
+    const base=g.createLinearGradient(0,0,w,h);base.addColorStop(0,'#77707f');base.addColorStop(1,'#5f5868');g.fillStyle=base;g.fillRect(0,0,w,h);
+    for(let i=0;i<900;i++){g.fillStyle='rgba('+(Math.random()<.5?'255,255,255':'0,0,0')+','+(Math.random()*.05)+')';g.fillRect(Math.random()*w,Math.random()*h,2+Math.random()*6,1);}
+    for(let i=0;i<14;i++){const x=Math.random()*w,y=Math.random()*h*.6,len=30+Math.random()*120;const gr=g.createLinearGradient(0,y,0,y+len);gr.addColorStop(0,'rgba(20,10,18,.35)');gr.addColorStop(1,'rgba(20,10,18,0)');g.fillStyle=gr;g.fillRect(x,y,3+Math.random()*10,len);}
+    g.strokeStyle='rgba(230,225,240,.18)';g.lineWidth=1;for(let i=0;i<10;i++){g.beginPath();const x=Math.random()*w,y=Math.random()*h;g.moveTo(x,y);g.lineTo(x+Math.random()*40-20,y+Math.random()*12);g.stroke();}
+    g.fillStyle='#16121b';g.fillRect(0,0,w,5);g.fillRect(0,0,5,h);g.fillStyle='rgba(220,210,235,.35)';g.fillRect(0,5,w,2);g.fillRect(5,0,2,h);
+    g.fillStyle='rgba(16,10,20,.55)';g.fillRect(0,h/2-1,w,2);
+    for(const x of [18,w/2,w-14])for(const y of [18,h/2-10,h/2+12,h-14]){g.fillStyle='#2a2430';g.beginPath();g.arc(x,y,5,0,TAU);g.fill();g.fillStyle='#b9b2c4';g.beginPath();g.arc(x-1,y-1,3,0,TAU);g.fill();}
+    const grime=g.createRadialGradient(w*.7,h*.8,10,w*.7,h*.8,w*.6);grime.addColorStop(0,'rgba(30,8,24,.35)');grime.addColorStop(1,'rgba(30,8,24,0)');g.fillStyle=grime;g.fillRect(0,0,w,h);
+  });
+  plateTex.wrapS=plateTex.wrapT=THREE.RepeatWrapping;plateTex.anisotropy=4;
+  const metal=(rx,ry,opts)=>{const map=plateTex.clone();map.repeat.set(rx,ry);map.needsUpdate=true;return new THREE.MeshStandardMaterial({map,color:'#aaa2b6',metalness:.75,roughness:.4,...opts});};
+  const hull=metal(16,1,{side:THREE.BackSide}),hullArc=metal(6,1,{side:THREE.BackSide}),hullPit=metal(12,1,{side:THREE.BackSide});
+  const plate=metal(1,1,{side:THREE.DoubleSide});
+  const wall=metal(6,4.6),deck=metal(4,1,{color:'#a49cae',metalness:.6,roughness:.22}),ledge=metal(1.5,4,{color:'#a49cae',metalness:.6,roughness:.3});
+  const inset=material('#1a1620',.7,.4),gold=material('#bb9354',.8,.3),black=material('#0b080e',.3,.6),bone=material('#d4a017',.55,.35),gore=material('#4a0a34',.1,.32);
   const glow=color=>new THREE.MeshBasicMaterial({color,toneMapped:false});
   const warm=glow('#ffe6b0'),cyan=glow('#79e8ff'),red=glow('#ff593e'),amber=glow('#ffb44a');
   // Animated materials (shared, so batching keeps working): two strobing light banks, emergency strips, lasers, blades.
-  const strobeA=glow('#ffe6b0'),strobeB=glow('#ffe6b0'),emergency=glow('#ff1e2e'),laser=glow('#ff4fd8'),blade=glow('#ff3020');blade.side=THREE.DoubleSide;
+  const strobeA=glow('#ffe6b0'),strobeB=glow('#ffe6b0'),emergency=glow('#ff1e2e'),laser=glow('#ff4fd8'),blade=glow('#ff5a1e');blade.side=THREE.DoubleSide;const pitFloor=glow('#6a0e06');
+  const steel=new THREE.MeshStandardMaterial({color:'#3a2a2e',metalness:.85,roughness:.3,emissive:'#ff2a00',emissiveIntensity:.35,side:THREE.DoubleSide});
   const hum=new THREE.MeshBasicMaterial({color:'#ff3fc8',transparent:true,opacity:.18,blending:THREE.AdditiveBlending,depthWrite:false,toneMapped:false,side:THREE.DoubleSide});
   const haze=new THREE.MeshBasicMaterial({color:'#ff2a1a',transparent:true,opacity:.28,blending:THREE.AdditiveBlending,depthWrite:false,toneMapped:false,side:THREE.DoubleSide});
-  const canvasTex=(w,h,draw)=>{const c=document.createElement('canvas');c.width=w;c.height=h;draw(c.getContext('2d'),w,h);const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;return t;};
   const hazardTex=canvasTex(256,64,(g,w,h)=>{g.fillStyle='#120c08';g.fillRect(0,0,w,h);g.fillStyle='#d4a017';for(let x=-h;x<w+h;x+=48){g.beginPath();g.moveTo(x,h);g.lineTo(x+24,h);g.lineTo(x+24+h,0);g.lineTo(x+h,0);g.fill();}});
   hazardTex.wrapS=THREE.RepeatWrapping;hazardTex.repeat.set(3,1);const hazard=new THREE.MeshStandardMaterial({map:hazardTex,metalness:.4,roughness:.5});
   const splatTex=canvasTex(256,256,(g)=>{for(let i=0;i<46;i++){const a=Math.random()*TAU,r=Math.random()**2*96,s=6+Math.random()*(34-r/4);g.fillStyle=i%5?'rgba(102,0,68,.92)':'rgba(58,0,38,.95)';g.beginPath();g.ellipse(128+Math.cos(a)*r,128+Math.sin(a)*r,s,s*(.5+Math.random()*.5),a,0,TAU);g.fill();}});
@@ -43,7 +58,7 @@ export function createMazeScene(THREE){
   const arc=(start,count)=>new THREE.CylinderGeometry(R,R,1,count,1,true,start*TAU/SEG,count*TAU/SEG).rotateX(Math.PI/2);
   const tubeGeo={solid:arc(0,SEG),window:[arc(-3,6),arc(5,6)],pit:arc(2,12)};
   const ribGeo=new THREE.TorusGeometry(R-.04,.07,4,24);
-  let group=null,seed=null,cameraLane=LANES[1],yaw=0,rotors=[];
+  let group=null,seed=null,cameraLane=LANES[1],yaw=0,rotors=[],pitSpots=[],envReady=false;
   function box(w,h,d,mat,x,y,z,parent=group){const mesh=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);mesh.position.set(x,y,z);parent.add(mesh);return mesh;}
   function label(lines,escape=false,w=2.25,h=.88){
     const c=document.createElement('canvas');c.width=768;c.height=288;const g=c.getContext('2d');
@@ -80,8 +95,8 @@ export function createMazeScene(THREE){
   // Instanced tube: one InstancedMesh per piece geometry, so the whole hull costs a handful of draw calls.
   function instance(geo,mat,matrices){if(!matrices.length)return;const m=new THREE.InstancedMesh(geo,mat,matrices.length);matrices.forEach((x,i)=>m.setMatrixAt(i,x));m.computeBoundingSphere();group.add(m);}
   function build(nextSeed){
-    if(group){group.traverse(o=>{if(o.isInstancedMesh)o.dispose();if(o.geometry&&!Object.values(tubeGeo).flat().includes(o.geometry)&&o.geometry!==ribGeo)o.geometry.dispose();if(o.material?.map&&o.material!==splat&&o.material!==hazard){o.material.map.dispose();o.material.dispose();}});scene.remove(group);}
-    seed=nextSeed;group=new THREE.Group();scene.add(group);rotors=[];cameraLane=LANES[1];yaw=0;
+    if(group){group.traverse(o=>{if(o.isInstancedMesh)o.dispose();if(o.geometry&&!Object.values(tubeGeo).flat().includes(o.geometry)&&o.geometry!==ribGeo)o.geometry.dispose();if(o.userData.sign){o.material.map.dispose();o.material.dispose();}});scene.remove(group);}
+    seed=nextSeed;group=new THREE.Group();scene.add(group);rotors=[];pitSpots=[];cameraLane=LANES[1];yaw=0;
     const course=courseFor(seed),sign=seed%2?1:-1,pits=course.filter(e=>e.type==='pit'),bayStart=LENGTH-12,CORNER=3;
     const inPit=d=>pits.some(e=>d>=e.at&&d<e.at+e.length),tube={solid:[],window:[],pit:[],rib:[]};
     const mat=(p,y=CY)=>new THREE.Matrix4().compose(new THREE.Vector3(p.x,y,p.z),new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0),p.yaw),new THREE.Vector3(1,1,1));
@@ -100,15 +115,25 @@ export function createMazeScene(THREE){
       if(win)for(const side of [-1,1])for(const y of [-.94,.94]){const a=Math.PI/2+y*.42;box(.06,.06,1.02,cyan,side*Math.sin(a)*(R-.03),CY-Math.cos(a)*(R-.03),0,part);}
       if(win&&cell===2)for(const side of [-1,1])for(const z of [.5,-2.5])box(.06,1.9,.08,gold,side*(R-.08),CY,z,part);
     }
-    instance(tubeGeo.solid,hull,tube.solid);instance(tubeGeo.pit,hull,tube.pit);instance(ribGeo,gold,tube.rib);
-    for(const g of tubeGeo.window)instance(g,hull,tube.window);
+    instance(tubeGeo.solid,hull,tube.solid);instance(tubeGeo.pit,hullPit,tube.pit);instance(ribGeo,gold,tube.rib);
+    for(const g of tubeGeo.window)instance(g,hullArc,tube.window);
     const cap=new THREE.Mesh(new THREE.CircleGeometry(R,SEG),plate);cap.position.set(0,CY,4);group.add(cap);
     // Corner room at the 90 degree turn: two hatches, a sealed end wall and a propaganda board.
     const room=new THREE.Group();room.position.set(0,0,-TURN_AT);group.add(room);const W=CORNER*2;
-    box(W,.25,W,deck,0,-.14,0,room);box(W,.2,W,inset,0,4.3,0,room);box(W,4.6,.2,wall,0,2,-CORNER,room);box(.2,4.6,W,wall,-sign*CORNER,2,0,room);
-    box(1.2,.04,1.2,strobeA,0,4.18,0,room);for(const x of [-1,1])box(.08,4.3,.08,gold,x*(CORNER-.15),2,-CORNER+.15,room);
+    box(W,.25,W,deck,0,-.14,0,room);box(W,.2,W,wall,0,4.3,0,room);box(.2,4.6,W,wall,-sign*CORNER,2,0,room);
+    // Far wall is plated metal with a real window onto space.
+    const fw=new THREE.Shape();fw.moveTo(-CORNER,-.3);fw.lineTo(CORNER,-.3);fw.lineTo(CORNER,4.3);fw.lineTo(-CORNER,4.3);fw.lineTo(-CORNER,-.3);
+    const pane=new THREE.Path();pane.moveTo(-1.4,.9);pane.lineTo(-1.4,2.5);pane.lineTo(1.4,2.5);pane.lineTo(1.4,.9);pane.lineTo(-1.4,.9);fw.holes.push(pane);
+    const far=new THREE.Mesh(new THREE.ShapeGeometry(fw),plate);far.position.z=-CORNER;room.add(far);
+    for(const y of [.9,2.5])box(2.9,.07,.12,cyan,0,y,-CORNER+.02,room);for(const x of [-1.42,1.42])box(.07,1.67,.12,cyan,x,1.7,-CORNER+.02,room);
+    // Gold ribs framing the room like the tube ribs, red strip, and a steady ceiling light.
+    for(const x of [-1.6,1.6,-(CORNER-.08),CORNER-.08])box(.14,4.3,.14,gold,x,2,-CORNER+.08,room);
+    box(W,.14,.14,gold,0,4.15,-CORNER+.08,room);box(.14,.14,W,gold,-sign*(CORNER-.08),4.15,0,room);
+    for(const z of [-1.5,1.5])box(.14,4.3,.14,gold,-sign*(CORNER-.08),2,z,room);
+    box(.05,.05,W,emergency,-sign*(CORNER-.12),3.6,0,room);
+    box(1.3,.04,1.3,warm,0,4.18,0,room);
     bulkhead(W,4.4,room,0,CORNER);bulkhead(W,4.4,room,sign*CORNER,0,Math.PI/2);
-    const turnBoard=label(['ALL HALLS','LEAD TO MOM'],false,2.3,.8);turnBoard.position.set(0,2.4,-CORNER+.12);room.add(turnBoard);
+    const turnBoard=label(['ALL HALLS','LEAD TO MOM'],false,2.3,.8);turnBoard.position.set(0,3.3,-CORNER+.12);room.add(turnBoard);
     // Gore on the deck: dark magenta splats, clay chunks, a couple of gold bones.
     const splatGeo=new THREE.PlaneGeometry(1,1).rotateX(-Math.PI/2);
     for(let i=0,d=6.3;d<bayStart-2;i++,d+=5.3+(i*7%5)){
@@ -132,13 +157,19 @@ export function createMazeScene(THREE){
         const field=new THREE.Mesh(new THREE.PlaneGeometry(4.2,2.4),hum);field.position.set(0,2.08,0);trap.add(field);
       }else{
         const L=event.length,z=-L/2;
-        for(const side of [-1,1]){box(1.6,4.2,L,deck,side*1.65,-2.1,z,trap);box(.06,.05,L,gold,side*.87,.02,z,trap);box(.04,.04,L,red,side*.86,-.5,z,trap);}
+        for(const side of [-1,1]){box(1.6,4.2,L,ledge,side*1.65,-2.1,z,trap);box(.06,.05,L,gold,side*.87,.02,z,trap);box(.04,.04,L,red,side*.86,-.5,z,trap);}
         box(1.8,4.2,.3,black,0,-2.1,-L-.15,trap);box(1.8,.05,.06,red,0,.01,0,trap);box(1.8,.05,.06,red,0,.01,-L,trap);
-        const floor=new THREE.Mesh(new THREE.PlaneGeometry(1.8,L).rotateX(-Math.PI/2),red);floor.position.set(0,-4,z);trap.add(floor);
+        const floor=new THREE.Mesh(new THREE.PlaneGeometry(1.8,L).rotateX(-Math.PI/2),pitFloor);floor.position.set(0,-4,z);trap.add(floor);
         const mist=new THREE.Mesh(new THREE.PlaneGeometry(1.7,L).rotateX(-Math.PI/2),haze);mist.position.set(0,-.35,z);trap.add(mist);
-        const saw=new THREE.Shape();for(let k=0;k<24;k++){const a=k/24*TAU,r=k%2?.55:.78;saw[k?'lineTo':'moveTo'](Math.cos(a)*r,Math.sin(a)*r);}
-        const sawGeo=new THREE.ShapeGeometry(saw).rotateY(Math.PI/2);
-        for(let k=0;k<5;k++){const m=new THREE.Mesh(sawGeo,blade);m.position.set((k%2?.3:-.3),-1.05,-.7-k*(L-1.4)/4);trap.add(m);rotors.push(m);}
+        // Saw blades: glowing toothed rim around a dark steel body with three cut-outs (so the spin reads); teeth reach deck level.
+        const teeth=new THREE.Shape();for(let k=0;k<32;k++){const a=k/32*TAU,r=k%2?.78:1.02;teeth[k?'lineTo':'moveTo'](Math.cos(a)*r,Math.sin(a)*r);}
+        const rim=new THREE.Path();rim.absarc(0,0,.7,0,TAU,true);teeth.holes.push(rim);
+        const body=new THREE.Shape();body.absarc(0,0,.72,0,TAU,false);
+        for(let k=0;k<3;k++){const a=k/3*TAU,h=new THREE.Path();h.absarc(Math.cos(a)*.42,Math.sin(a)*.42,.15,0,TAU,true);body.holes.push(h);}
+        const teethGeo=new THREE.ShapeGeometry(teeth,4).rotateY(Math.PI/2),bodyGeo=new THREE.ShapeGeometry(body,6).rotateY(Math.PI/2),hubGeo=new THREE.CylinderGeometry(.16,.16,.16,8).rotateZ(Math.PI/2);
+        for(let k=0;k<5;k++){const r=new THREE.Group();r.position.set((k%2?.3:-.3),-1.02,-.7-k*(L-1.4)/4);trap.add(r);r.add(new THREE.Mesh(teethGeo,blade),new THREE.Mesh(bodyGeo,steel),new THREE.Mesh(hubGeo,gold));rotors.push(r);}
+        for(let k=0;k<2;k++){const axle=new THREE.Mesh(new THREE.CylinderGeometry(.05,.05,L,6).rotateX(Math.PI/2),gold);axle.position.set(k?.3:-.3,-1.02,z);trap.add(axle);}
+        const mid=pathAt(event.at+L/2,seed);pitSpots.push({at:event.at,end:event.at+L,pos:new THREE.Vector3(mid.x,-.55,mid.z)});
       }
     });
     // Every run opens into a ship junction with three real doorways, all in view at the stop.
@@ -164,9 +195,17 @@ export function createMazeScene(THREE){
     batchStaticBoxes();
     dust.length=0;for(let i=0;i<DUST;i++)dust.push({d:Math.random()*24-2,x:(Math.random()*2-1)*1.9,y:Math.random()*3.6,s:Math.random()*TAU});
   }
+  // A tiny generated environment (warm ceiling panels, cool floor bounce) so the metal shows highlights.
+  function makeEnv(renderer){
+    const env=new THREE.Scene(),pm=new THREE.PMREMGenerator(renderer);env.background=new THREE.Color('#120c16');
+    const panel=(c,w,h,x,y,z)=>{const m=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({color:c,side:THREE.DoubleSide}));m.position.set(x,y,z);m.lookAt(0,0,0);env.add(m);};
+    for(let z=-8;z<=8;z+=4)panel('#ffd9a0',2,1.2,0,5,z);panel('#ff9a4a',1,8,-5,1,0);panel('#ff9a4a',1,8,5,1,0);panel('#4a3a66',10,10,0,-5,0);panel('#79e8ff',.4,10,3,-4,0);
+    const tex=pm.fromScene(env,.04).texture;pm.dispose();return tex;
+  }
   let strobeTimer=0,strobeState=[1,1];
   return {scene,camera,render(renderer,run,motion=true,options={}){
     if(seed!==run.seed)build(run.seed);
+    if(!envReady){envReady=true;scene.environment=makeEnv(renderer);scene.environmentIntensity=.45;}
     const pressure=Math.max(0,Math.min(1,+options.pressure||0)),t=run.time||0,now=performance.now()/1000;
     const end=!!options.junction||run.distance>=LENGTH,progress=run.exitProgress||0,p=pathAt(end?LENGTH+progress*17:run.distance,seed),blend=motion?.22:1,center=Math.max(0,Math.min(1,(run.distance-(LENGTH-8))/8));
     const exitLane=((run.exit??1)-1)*3.1*Math.min(1,progress*3);
@@ -177,7 +216,8 @@ export function createMazeScene(THREE){
     camera.rotation.set(0,yaw,end||!motion?0:-cameraLane*.035,'YXZ');
     // Lights ride with the runner: a lamp on the body and a work light a few metres ahead.
     const fwd=new THREE.Vector3(-Math.sin(yaw),0,-Math.cos(yaw));
-    lamp.position.copy(camera.position).y=2.9;ahead.position.copy(camera.position).addScaledVector(fwd,7).y=3.3;alarm.position.copy(camera.position).addScaledVector(fwd,3).y=3.2;
+    lamp.position.copy(camera.position).y=2.9;fill.position.copy(camera.position).addScaledVector(fwd,14).y=1.2;
+    const pit=pitSpots.find(s=>run.distance<s.end+2&&s.at-run.distance<22);if(pit){pitLight.position.copy(pit.pos);pitLight.intensity=9*(.8+.2*Math.sin(now*23)*(motion?1:0));}else pitLight.intensity=0;ahead.position.copy(camera.position).addScaledVector(fwd,7).y=3.3;alarm.position.copy(camera.position).addScaledVector(fwd,3).y=3.2;
     // Flicker: two light banks strobe at random; the work light stutters with them.
     if(motion&&now>strobeTimer){strobeTimer=now+.04+Math.random()*.25;strobeState=[Math.random()<.85?1:.08,Math.random()<.6?1:.05];}
     if(!motion)strobeState=[1,1];
