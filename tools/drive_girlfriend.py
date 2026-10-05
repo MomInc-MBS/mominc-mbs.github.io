@@ -40,8 +40,7 @@ with sync_playwright() as pw:
     p.locator('#dgVisX').press('Escape')
     expect(p.locator('#dgVis')).to_be_hidden()
     p.set_viewport_size({'width':390,'height':844})
-    expect(p.locator('.rotate-notice')).to_be_visible()
-    p.locator('#portraitContinue').click()
+    expect(p.locator('.rotate-notice')).to_have_count(0)   # TV3: no hard portrait block any more
     expect(p.get_by_role('button',name='Take goggles',exact=True)).to_be_visible()
     assert p.evaluate('window.__dg.poured')==6
     for w,h in [(320,568),(390,844),(667,375),(844,390),(1280,800)]:

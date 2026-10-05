@@ -1,22 +1,7 @@
 /* Quiet room tone for public standalone scenes. Never starts without a click.
    Generated locally: no external media request, permissions, or access-state changes. */
 (() => {
-  const rotation = document.querySelector('.rotate-notice');
-  if (rotation) {
-    const portrait = matchMedia('(max-width:950px) and (orientation:portrait)');
-    const stage = document.querySelector('.stage');
-    const update = () => {
-      const blocked = portrait.matches && !document.documentElement.classList.contains('portrait-allowed');
-      if (stage) stage.inert = blocked;
-      rotation.setAttribute('aria-hidden', String(!blocked));
-    };
-    portrait.addEventListener('change', update);
-    document.querySelector('#portraitContinue').addEventListener('click', () => {
-      document.documentElement.classList.add('portrait-allowed'); update();
-      document.querySelector('.exit')?.focus();
-    });
-    update();
-  }
+  // The portrait gate that lived here went soft (TV3): mbs-shim.js shows a dismissible "best sideways" hint instead.
   let audio, gain, oscillator, second, enabled = false;
   window.MBS_ATMOSPHERE = {mount(host,slug) {
     if ((slug === 'djscratch'&&document.documentElement.dataset.game) || document.querySelector('.ambience-toggle')) return;
