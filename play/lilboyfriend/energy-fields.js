@@ -17,8 +17,9 @@ export function createEnergySystem(T, k) {
         float sweep=pow(.5+.5*sin(p.y*23.+sin(p.x*12.+t)*2.-t*3.),15.);
         float cells=pow(max(0.,sin(p.x*110.+sin(p.y*48.)*.4)*sin(p.y*85.+t)),32.);
         float edge=pow(1.-min(min(p.x,1.-p.x),min(p.y,1.-p.y))*2.,9.);
-        vec3 c=mix(vec3(.31,.08,.62),vec3(.82,.49,1.),clamp(arc+sweep+edge,0.,1.));
-        gl_FragColor=vec4(c,.045+arc*.14+sweep*.19+edge*.22+cells*.34);
+        float plasma=.5+.5*sin(p.x*6.+sin(p.y*5.+t*.7)*2.5-t*1.1)*sin(p.y*7.-cos(p.x*4.-t*.5)*2.+t*.9);
+        vec3 c=mix(vec3(.36,.10,.70),vec3(.86,.55,1.),clamp(arc+sweep+edge+plasma*.45,0.,1.));
+        gl_FragColor=vec4(c,min(.92,.55+plasma*.22+arc*.3+sweep*.3+edge*.3+cells*.3));
         #include <colorspace_fragment>
       }`
   }));
