@@ -147,7 +147,7 @@ function clawBase(THREE, geo, centre) {
    a session that has already ended is disposed on arrival rather than attached to a dead fragment. */
 let gl = null;
 let session = null;
-let identityDialog = null;
+let identityDialog = null, plSheet = null;
 
 export default {
   mount(root, ctx) {
@@ -749,7 +749,8 @@ export default {
     const hashPl = (location.hash.match(/^#pl=([\w-]+)$/) || [])[1];
     const shared = hashPl && WK.decode(hashPl);
     if (shared) { pl = shared; fromShare = true; if (!pl.n) pl.n = "Shared workout set"; }
-    const sheet = document.createElement("dialog");
+    plSheet?.remove();
+    const sheet = plSheet = document.createElement("dialog");
     sheet.className = "dj-pl-sheet"; sheet.setAttribute("aria-labelledby", "pl-h");
     sheet.innerHTML = '<div class="pl-bar"><h2 id="pl-h">FULL WORKOUT PLAYLIST</h2><button type="button" data-close aria-label="Close playlist">✕</button></div>'
       + '<p class="pl-shared" data-shared hidden>A playlist was shared with you. <button type="button" data-save>Save a copy</button></p>'
@@ -839,7 +840,7 @@ export default {
      registered through ctx and are deliberately not re-listed. Clearing `session` is what stops an
      in-flight model fetch from attaching a scene to a fragment that has already gone. */
   unmount() {
-    identityDialog?.remove();identityDialog=null;
+    identityDialog?.remove();identityDialog=null;plSheet?.remove();plSheet=null;
     session = null;
     if (!gl) return;
     const g = gl;
