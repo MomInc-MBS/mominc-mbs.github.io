@@ -424,7 +424,7 @@ export default {
           clearInterval(type);
           tunerText.textContent = "HELP, GET US OUT";
           window.MBS_DJ.complete();paintBadge();badge.classList.add("dj-prisoner-glitch");window.MBS_RUN?.checkpoint("djscratch");
-          hint.innerHTML = "the record skipped. that was her, not it.";
+          hint.innerHTML = "the record skipped. that was her, not it, and it never missed a rep.";
           sigLbl.textContent = "// signal confirmed // she is in the machine //";
           cueHint.textContent = "Signal found: HELP, GET US OUT. Free mix is open.";
           // D.1.10 (C018): the help-signal reveal ends the secret-code objective, so this site is both
@@ -497,12 +497,13 @@ export default {
         track.querySelector(".sliderthumb").style.bottom = (val / 10 * 88) + "%";
         track.setAttribute("aria-valuenow", val);
       }
+      if (key === "tempo") { bpm = 60 + val * 11; paintNote(); }   // PACE: 60-170 BPM, so COOL-DOWN (70-90) and PEAK (130-160+) are both reachable
       applyAudioParam(key, val);
     }
     rack.querySelectorAll(".knobface,.slidertrack").forEach(el => {
       el.tabIndex = 0; el.setAttribute("role", "slider");
       el.setAttribute("aria-valuemin", "0"); el.setAttribute("aria-valuemax", "10");
-      el.setAttribute("aria-label", cap(el.dataset.key));
+      el.setAttribute("aria-label", { bass: "Drive", treble: "Shine", volume: "Hype", tempo: "Pace" }[el.dataset.key]);
     });
     // One tap is one detent. Holding or dragging never skips a number.
     rack.querySelectorAll(".knobface,.slidertrack").forEach(el => {
@@ -512,6 +513,8 @@ export default {
     });
     // ---- THE BEAT. Synthesised only (oscillators + noise), never a file. Feeds the visualiser and the follow-game's audio.
     let actx = null, master = null, lowShelf = null, highShelf = null, analyser = null;
+    let live = false;
+    const paintNote = () => { const n = dj.querySelector("#vizNote"); if (n) n.textContent = bpm + " BPM · deck is " + (live ? "live" : "off"); };
     let bpm = 115, nextStepTime = 0, stepIdx = 0, schedTimer = null, vizRAF = null;
     function ensureAudio() {
       if (actx) return;
@@ -544,7 +547,6 @@ export default {
       if (key === "bass") lowShelf.gain.setTargetAtTime((val - 5) * 3, t, 0.05);
       if (key === "treble") highShelf.gain.setTargetAtTime((val - 5) * 3, t, 0.05);
       if (key === "volume") master.gain.setTargetAtTime(state.power ? val / 10 * 0.5 : 0.0001, t, 0.05);
-      if (key === "tempo") bpm = 70 + val * 9;
     }
     ["bass", "treble", "volume", "tempo"].forEach(k => setValue(k, 5));   // sync needle/thumb art to the default numbers
     const vizCanvas = byId("vizCanvas"), vizNote = byId("vizNote");
@@ -585,50 +587,59 @@ export default {
     }
     function stopViz() { if (vizRAF) cancelAnimationFrame(vizRAF); vizRAF = null; vizCanvas.getContext("2d").clearRect(0, 0, vizCanvas.width, vizCanvas.height); }
 
-    // ---- THE COLOUR-FOLLOWING GAME: slow, easy, one lamp lit at a time. Follow it to the matching control.
-    // Completing it earns the exact same payoff three scratches used to (breakThrough(), unchanged below).
-    const SEQUENCE = ["bass", "treble", "volume", "tempo"];
-    const TARGETS={bass:8,treble:3,volume:7,tempo:9};
+    // ---- THE WORKOUT SET GAME: slow, easy, one phase lit at a time. WARM-UP -> PEAK -> COOL-DOWN: pick the phase
+    // chip, then PACE (the tempo slider) has to sit inside that phase's BPM band. Finishing earns the exact same
+    // payoff three scratches used to (breakThrough(), unchanged below).
+    const PHASES = { warm: { label: "WARM-UP", lo: 90, hi: 110, mid: 4 }, peak: { label: "PEAK", lo: 130, hi: 160, mid: 8 }, cool: { label: "COOL-DOWN", lo: 70, hi: 90, mid: 2 } };
+    const SEQUENCE = ["warm", "peak", "cool"];
     const lamps = [...dj.querySelectorAll("#cueLights .lamp")];
+    const chips = [...dj.querySelectorAll("#cueLights .phase")];
     const cueHint = byId("cueHint");
     const scoreNum = byId("scoreNum"), scoreGrade = byId("scoreGrade");
-    let seqIndex = 0, hits = 0, misses = 0, gameStarted = false, gameActive = false, gameDone = false;
+    let seqIndex = 0, hits = 0, misses = 0, gameStarted = false, gameActive = false, gameDone = false, phase = null;
+    const inBand = id => bpm >= PHASES[id].lo && bpm <= PHASES[id].hi;
     function startGame() {
       if (!window.MBS_DJ.read()) { askName(); return; }
       if (gameStarted) return;
       gameStarted = true; gameActive = true; seqIndex = 0;
-      scoreGrade.textContent = "FOLLOW THE LIGHTS";
+      scoreGrade.textContent = "WARMING UP";
       nextRound();
     }
     function nextRound() {
       lamps.forEach(l => l.classList.remove("on"));
+      chips.forEach(c => c.classList.remove("glow"));
       rack.querySelectorAll(".ctrl.glow").forEach(c => c.classList.remove("glow"));
       if (seqIndex >= SEQUENCE.length) return finishGame();
-      const key = SEQUENCE[seqIndex];
-      const lamp = lamps.find(l => l.dataset.key === key);
-      if (lamp) lamp.classList.add("on");
-      const ctrl = rack.querySelector(`.ctrl[data-key="${key}"]`);
-      if (ctrl) ctrl.classList.add("glow");
-      cueHint.textContent = "Tap " + key.toUpperCase() + " to " + TARGETS[key] + " · one click = one number";
+      const id = SEQUENCE[seqIndex], P = PHASES[id];
+      lamps.find(l => l.dataset.key === id)?.classList.add("on");
+      chips.find(c => c.dataset.key === id)?.classList.add("glow");
+      rack.querySelector('.ctrl[data-key="tempo"]')?.classList.add("glow");
+      cueHint.textContent = "Tap " + P.label + ", then set PACE to " + P.lo + "-" + P.hi + " BPM · one click = one number";
+    }
+    function setPhase(id) {
+      phase = id;
+      chips.forEach(c => c.setAttribute("aria-pressed", String(c.dataset.key === id)));
+      setValue("tempo", PHASES[id].mid);
+      registerTouch(id);
     }
     function registerTouch(key) {
       if (!gameActive || gameDone) return;
-      if (key === SEQUENCE[seqIndex]) { if(state[key]!==TARGETS[key])return;hits++; seqIndex++; updateScore(); nextRound(); }
-      else { misses++; updateScore(); }
+      const want = SEQUENCE[seqIndex];
+      if (phase === want && inBand(want)) { hits++; seqIndex++; updateScore(); nextRound(); }
+      else if (PHASES[key] && key !== want) { misses++; updateScore(); }
     }
     function updateScore() {
       scoreNum.textContent = hits + "/" + SEQUENCE.length;
-      const total = hits + misses, pct = total ? Math.round(hits / total * 100) : 100;
-      if (!gameDone) scoreGrade.textContent = pct >= 90 ? "SHARP EAR" : pct >= 60 ? "KEEPING UP" : "KEEP LISTENING";
+      if (!gameDone) scoreGrade.textContent = ["WARMING UP", "WARMED UP", "PEAKED"][hits] || "COOLED DOWN";
     }
     function finishGame() {
       gameActive = false; gameDone = true;
       dj.classList.add("set-complete");
-      cueHint.textContent = "the follow's done.";
-      const total = hits + misses, pct = total ? Math.round(hits / total * 100) : 100;
-      scoreGrade.textContent = pct >= 90 ? "A+ DJ" : pct >= 60 ? "B DJ" : "STILL A DJ";
+      cueHint.textContent = "the set's done. nicely cooled down.";
+      scoreGrade.textContent = "COOLED DOWN";
       ctx.timeout(breakThrough, 400);
     }
+    chips.forEach(c => ctx.on(c, "click", () => setPhase(c.dataset.key)));
 
     // ---- POWER: turns on the beat + visualiser (first tap needs a gesture for AudioContext) and starts the game.
     const powerBtn = byId("powerSwitch");
@@ -642,23 +653,22 @@ export default {
         ensureAudio(); actx.resume && actx.resume();
         applyAudioParam("volume", state.volume);
         startScheduler(); startViz();
-        vizNote.textContent = "deck is live"; startGame();
+        live = true; paintNote(); startGame();
       } else {
         stopScheduler(); stopViz();
         if (master) master.gain.setTargetAtTime(0.0001, actx.currentTime, 0.05);
-        vizNote.textContent = "deck is off";
+        live = false; paintNote();
       }
     }
     ctx.on(powerBtn, "click", () => togglePower(powerBtn.getAttribute("aria-pressed") !== "true"));
-    const autoBeat=e=>{if(!actx&&e.target!==powerBtn&&window.MBS_DJ.read())togglePower(true);};
-    ctx.on(dj,"pointerdown",autoBeat,{once:true});ctx.on(dj,"keydown",autoBeat,{once:true});
+    // B11: no "first tap anywhere powers the deck". Only POWER (or confirming a name) starts the set.
     ctx.on(powerBtn, "keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); powerBtn.click(); } });
 
     // Local thumb-drive puzzle: capture the four physical settings at signal unlock.
     const codeForm=byId('codeForm'),codeInput=byId('codeInput'),codeSubmit=byId('codeSubmit'),codeNote=byId('codeNote');
     let knobCode=null;
     codeInput.disabled=codeSubmit.disabled=true;
-    function captureKnobCode(){knobCode=['bass','treble','volume','tempo'].map(k=>String(state[k]));codeInput.disabled=codeSubmit.disabled=false;codeNote.textContent='SIGNAL SETTINGS · BASS '+knobCode[0]+' / TREBLE '+knobCode[1]+' / VOLUME '+knobCode[2]+' / TEMPO '+knobCode[3]+'. Copy these four values into the drive, in that order.';}
+    function captureKnobCode(){knobCode=['bass','treble','volume','tempo'].map(k=>String(state[k]));codeInput.disabled=codeSubmit.disabled=false;codeNote.textContent='SIGNAL SETTINGS · DRIVE '+knobCode[0]+' / SHINE '+knobCode[1]+' / HYPE '+knobCode[2]+' / PACE '+knobCode[3]+'. Copy these four values into the drive, in that order.';}
     ctx.on(codeForm,'submit',e=>{e.preventDefault();if(!knobCode)return;const typed=codeInput.value.trim();const values=typed.split(/[^0-9]+/).filter(Boolean);const match=values.length===4?values.every((v,i)=>Number(v)===Number(knobCode[i])):typed===knobCode.join('');if(!match){codeNote.textContent='SETTINGS DO NOT MATCH. Use the four values shown when the signal unlocked: '+knobCode.join(' / ');return;}codeNote.textContent='DRIVE READ · SETTINGS ACCEPTED';codeSubmit.disabled=true;byId('codeBox').classList.add('drive-read');transformToPhono();});
 
     // ---- THE PHONOGRAPH: what the whole record-player/turntable setup becomes once a code is redeemed.
@@ -681,14 +691,138 @@ export default {
       ctx.on(phonoDial, "pointerdown", e => { e.preventDefault(); try { phonoDial.setPointerCapture(e.pointerId); } catch {} needle.style.transform = `translate(-50%,0) rotate(${fromEvent(e)}deg)`; });
       ctx.on(phonoDial, "pointermove", e => { if (e.buttons) needle.style.transform = `translate(-50%,0) rotate(${fromEvent(e)}deg)`; });
     }
-    ctx.on(phono.querySelector(".phono-play"), "click", () => { ensureAudio(); actx.resume && actx.resume(); state.power = 1; applyAudioParam("volume", state.volume); startScheduler(); startViz(); vizNote.textContent = "deck is live"; });
-    ctx.on(phono.querySelector(".phono-stop"), "click", () => { stopScheduler(); if (master) master.gain.setTargetAtTime(0.0001, actx.currentTime, 0.05); vizNote.textContent = "deck is off"; });
+    ctx.on(phono.querySelector(".phono-play"), "click", () => { ensureAudio(); actx.resume && actx.resume(); state.power = 1; applyAudioParam("volume", state.volume); startScheduler(); startViz(); live = true; paintNote(); });
+    ctx.on(phono.querySelector(".phono-stop"), "click", () => { stopScheduler(); if (master) master.gain.setTargetAtTime(0.0001, actx.currentTime, 0.05); live = false; paintNote(); });
     ctx.on(phono.querySelector(".phono-rewind"), "click", () => { stepIdx = 0; });
     function transformToPhono() {
       deck.classList.add("phono-on");
       dj.classList.add("glitch");
       if (ctx.mbs && ctx.mbs.wave) ctx.mbs.wave({ after: 800, restore: () => {} });
     }
+
+    // ---- WORKOUT DATA START (pure: phases, generic track slots, the share-link codec). Not licensed songs - slots the
+    // hand "plays" as its synth beat at that BPM. Real tracks arrive through MBS_DJ_SOURCE (the Spotify seam below).
+    const WK = (() => {
+      const PH = [{ id: "warm", label: "WARM-UP", mins: 5, bpm: [90, 110] }, { id: "peak", label: "PEAK", mins: 20, bpm: [130, 160] }, { id: "cool", label: "COOL-DOWN", mins: 5, bpm: [70, 90] }];
+      const TRACKS = [
+        ["w1", "Slow Roll Opener", 96, 2, "warm"], ["w2", "Joint Wake-Up", 100, 2, "warm"], ["w3", "Easy Mile One", 104, 3, "warm"], ["w4", "Mobility Groove", 98, 2, "warm"], ["w5", "First Sweat", 108, 3, "warm"],
+        ["p1", "Rep Machine", 132, 4, "peak"], ["p2", "Iron Hour", 138, 5, "peak"], ["p3", "Last Set Anthem", 144, 5, "peak"], ["p4", "Sprint Finish", 152, 5, "peak"], ["p5", "PR Attempt", 140, 5, "peak"], ["p6", "No Days Off", 158, 5, "peak"],
+        ["c1", "Walk It Off", 88, 2, "cool"], ["c2", "Stretch Out", 78, 1, "cool"], ["c3", "Heart Rate Down", 74, 1, "cool"], ["c4", "Spotted. Thanks.", 70, 1, "cool"],
+      ].map(([id, title, bpm, energy, phase]) => ({ id, title, bpm, energy, phase }));
+      const MAX = 40, TXT = 40, NAME = 30, LIMIT = 2000;
+      const clean = (t, n) => String(t == null ? "" : t).replace(/[\u0000-\u001f<>]/g, " ").replace(/\s+/g, " ").trim().slice(0, n);
+      const b64 = o => btoa(String.fromCharCode(...new TextEncoder().encode(JSON.stringify(o)))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+      const unb64 = t => JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(t.replace(/-/g, "+").replace(/_/g, "/")), c => c.charCodeAt(0))));
+      // list item: { k: trackId | "~free text", p: phase }
+      function encode(pl) { return b64({ v: 1, n: clean(pl.n, NAME), t: pl.items.slice(0, MAX).map(i => [i.k, i.p]) }); }
+      function decode(text) {                                    // anything off -> null, silently
+        try {
+          if (!text || text.length > LIMIT) return null;
+          const o = unb64(text);
+          if (!o || o.v !== 1 || !Array.isArray(o.t)) return null;
+          const items = [];
+          for (const e of o.t.slice(0, MAX)) {
+            if (!Array.isArray(e) || !PH.some(x => x.id === e[1]) || typeof e[0] !== "string") continue;
+            const k = e[0][0] === "~" ? "~" + clean(e[0].slice(1), TXT) : e[0];
+            if (k === "~" || (k[0] !== "~" && !TRACKS.some(t => t.id === k))) continue;
+            items.push({ k, p: e[1] });
+          }
+          return items.length || o.n ? { n: clean(o.n, NAME), items } : null;
+        } catch (e) { return null; }
+      }
+      return { PH, TRACKS, MAX, TXT, NAME, clean, encode, decode };
+    })();
+    // ---- WORKOUT DATA END
+
+    // ---- THE SPOTIFY SEAM: one provider object. Swap MBS_DJ_SOURCE for a Spotify-backed one in the app and the
+    // builder, the saved playlist and shared links all resolve through it (items store the track id only).
+    const source = window.MBS_DJ_SOURCE = window.MBS_DJ_SOURCE || {
+      id: "local",
+      list: ph => WK.TRACKS.filter(t => t.phase === ph),
+      find: id => WK.TRACKS.find(t => t.id === id),
+    };
+
+    // ---- FULL PLAYLIST SHEET: a modal <dialog>, not inline. localStorage + #pl= share link.
+    const PL_KEY = "mbs-dj-playlist-v1";
+    let pl = { n: "My workout set", items: [] }, fromShare = false;
+    try { const o = JSON.parse(localStorage.getItem(PL_KEY) || "null"); if (o && Array.isArray(o.items)) pl = WK.decode(WK.encode(o)) || pl; } catch (e) { /* no saved list */ }
+    const hashPl = (location.hash.match(/^#pl=([\w-]+)$/) || [])[1];
+    const shared = hashPl && WK.decode(hashPl);
+    if (shared) { pl = shared; fromShare = true; if (!pl.n) pl.n = "Shared workout set"; }
+    const sheet = document.createElement("dialog");
+    sheet.className = "dj-pl-sheet"; sheet.setAttribute("aria-labelledby", "pl-h");
+    sheet.innerHTML = '<div class="pl-bar"><h2 id="pl-h">FULL WORKOUT PLAYLIST</h2><button type="button" data-close aria-label="Close playlist">✕</button></div>'
+      + '<p class="pl-shared" data-shared hidden>A playlist was shared with you. <button type="button" data-save>Save a copy</button></p>'
+      + '<label class="pl-lab" for="pl-name">Playlist name</label><input id="pl-name" maxlength="30" autocomplete="off">'
+      + '<div data-phases></div>'
+      + '<p class="pl-total" data-total role="status"></p>'
+      + '<div class="pl-share"><button type="button" data-share>SHARE LINK</button><input data-link readonly aria-label="Playlist link" placeholder="link appears here"></div>'
+      + '<p class="pl-msg" data-msg role="status"></p>'
+      + '<button type="button" class="pl-spot" disabled aria-disabled="true">Connect Spotify (coming soon in the app)</button>';
+    document.body.append(sheet);
+    const $ = q => sheet.querySelector(q);
+    const nameIn = $("#pl-name"), phasesEl = $("[data-phases]"), linkIn = $("[data-link]"), msg = $("[data-msg]");
+    const titleOf = k => k[0] === "~" ? k.slice(1) : (source.find(k) || { title: k }).title;
+    const plUrl = () => location.origin + "/play/djscratch/#pl=" + WK.encode(pl);
+    function persist() { fromShare = false; $("[data-shared]").hidden = true; try { localStorage.setItem(PL_KEY, JSON.stringify({ v: 1, n: pl.n, items: pl.items })); } catch (e) { /* storage full or off */ } }
+    function move(item, dir) {
+      const i = pl.items.indexOf(item); let j = i + dir;
+      while (j >= 0 && j < pl.items.length && pl.items[j].p !== item.p) j += dir;
+      if (j < 0 || j >= pl.items.length) return;
+      [pl.items[i], pl.items[j]] = [pl.items[j], pl.items[i]]; persist(); render();
+    }
+    function add(ph, k) {
+      if (!k) return;
+      if (pl.items.length >= WK.MAX) { msg.textContent = "That is the max: " + WK.MAX + " tracks."; return; }
+      pl.items.push({ k, p: ph }); persist(); render();
+    }
+    function mk(tag, text, attrs) { const e = document.createElement(tag); if (text != null) e.textContent = text; Object.assign(e, attrs || {}); return e; }
+    function render() {
+      nameIn.value = pl.n; phasesEl.textContent = ""; $("[data-shared]").hidden = !fromShare;
+      let mins = 0;
+      WK.PH.forEach(P => {
+        const sec = mk("section", null, { className: "pl-sec" }), items = pl.items.filter(i => i.p === P.id);
+        sec.append(mk("h3", P.label + " · " + P.mins + " min · " + P.bpm[0] + "-" + P.bpm[1] + " BPM"));
+        if (items.length) mins += P.mins;
+        const ol = mk("ol");
+        items.forEach(it => {
+          const li = mk("li"), tr = source.find(it.k);
+          li.append(mk("span", titleOf(it.k) + (tr ? " · " + tr.bpm + " BPM" : ""), { className: "pl-t" }));
+          [["▲", "Move up", -1], ["▼", "Move down", 1]].forEach(([g, l, d]) => { const b = mk("button", g, { type: "button" }); b.setAttribute("aria-label", l + ": " + titleOf(it.k)); b.onclick = () => move(it, d); li.append(b); });
+          const rm = mk("button", "✕", { type: "button" }); rm.setAttribute("aria-label", "Remove " + titleOf(it.k));
+          rm.onclick = () => { pl.items.splice(pl.items.indexOf(it), 1); persist(); render(); };
+          li.append(rm); ol.append(li);
+        });
+        sec.append(ol);
+        const row = mk("div", null, { className: "pl-add" }), sel = mk("select"), own = mk("input", null, { maxLength: WK.TXT, placeholder: "or type your own" });
+        sel.setAttribute("aria-label", "Add a " + P.label + " track"); own.setAttribute("aria-label", "Your own " + P.label + " track");
+        sel.append(mk("option", "+ add a track", { value: "" }));
+        source.list(P.id).forEach(t => sel.append(mk("option", t.title + " (" + t.bpm + ")", { value: t.id })));
+        sel.onchange = () => add(P.id, sel.value);
+        const addOwn = () => { const t = WK.clean(own.value, WK.TXT); if (t) add(P.id, "~" + t); };
+        own.onkeydown = e => { if (e.key === "Enter") addOwn(); };
+        const ob = mk("button", "ADD", { type: "button" }); ob.onclick = addOwn;
+        row.append(sel, own, ob); sec.append(row); phasesEl.append(sec);
+      });
+      $("[data-total]").textContent = pl.items.length + " tracks · about " + mins + " min of set";
+      linkIn.value = pl.items.length ? plUrl() : "";
+    }
+    ctx.on(nameIn, "input", () => { pl.n = WK.clean(nameIn.value, WK.NAME); persist(); linkIn.value = pl.items.length ? plUrl() : ""; });
+    ctx.on($("[data-save]"), "click", () => { persist(); msg.textContent = "Saved a copy on this device."; });
+    ctx.on($("[data-close]"), "click", () => sheet.close());
+    ctx.on($("[data-share]"), "click", async () => {
+      if (!pl.items.length) { msg.textContent = "Add a track first."; return; }
+      const url = plUrl(); linkIn.value = url;
+      try {
+        if (navigator.share) { await navigator.share({ title: "My workout set on The Music Desk", text: (pl.n || "Workout set") + " - " + pl.items.length + " tracks", url }); return; }
+        await navigator.clipboard.writeText(url); msg.textContent = "Link copied.";
+      } catch (e) {
+        if (e && e.name === "AbortError") return;                // the visitor closed the share sheet
+        linkIn.focus(); linkIn.select(); msg.textContent = "Copy the link above.";
+      }
+    });
+    ctx.on(byId("plOpen"), "click", () => { msg.textContent = ""; render(); if (!sheet.open) sheet.showModal(); });
+    if (fromShare) { render(); sheet.showModal(); }              // a shared link reopens the playlist; never auto-plays audio
   },
 
   /* This channel used to have no unmount() at all, and said so in writing: everything it opened was a

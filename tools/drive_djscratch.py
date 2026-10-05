@@ -26,11 +26,12 @@ completes nothing, and a second pass over the controls after the reveal complete
 
 The scratch jog was already elapsed-time correct before this packet and is not driven here.
 """
-import functools, os, re, threading
+import functools, os, re, sys, threading
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 from playwright.sync_api import sync_playwright
 
-ROOT = os.path.join("D:\\", "MBS Pages")
+# Serve the repo this file lives in; `python tools/drive_djscratch.py <dir>` points it at another checkout.
+ROOT = os.path.abspath(sys.argv[1]) if len(sys.argv) > 1 else os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 class _Quiet(SimpleHTTPRequestHandler):
@@ -69,7 +70,8 @@ COUNT_COMPLETE = """document.addEventListener('mbs:lifecycle', e => {
       (window.__completes = window.__completes || []).push(e.detail.detail || {});
   }); window.__completes = [];"""
 
-SEQUENCE = ("bass", "treble", "volume", "tempo")   # tv/channels/djscratch.js's own order
+SEQUENCE = ("warm", "peak", "cool")   # tv/channels/djscratch.js's own order: the three workout phase chips
+PHASE_CHIP = '.phase[data-key="%s"]'
 
 
 def completes(pg):
@@ -87,10 +89,12 @@ with sync_playwright() as pw:
     errs = []
     pg.on("pageerror", lambda e: errs.append(str(e)))
     pg.on("console", lambda m: errs.append(m.text) if m.type == "error" else None)
+    pg.route("**/game-loader.js*", lambda r: r.abort())   # this drives game logic, not the download gate (packs are regenerated at integration)
     pg.add_init_script(PUMP)
     pg.add_init_script(COUNT_COMPLETE)
     pg.goto(BASE + "/play/djscratch/", wait_until="load")
     pg.wait_for_selector("#platter", timeout=10000)
+    pg.evaluate("()=>window.MBS_DJ.choose('DJ SCR4TCH 3000','XYZ',['DJ','SCRATCH','3000'])")   # POWER asks for a name first
 
     clock = [1000.0]
 
@@ -126,7 +130,7 @@ with sync_playwright() as pw:
     # And it is still a record: it keeps turning after the clamp, from the new timestamp.
     check(abs(run(10, 500.0) - DEG_PER_SEC * 0.5) < 1.0, "and it picks up again from there, at the same speed")
 
-    # ---- D.1.10 (C018). Flip POWER, follow the four lights, and the reveal is the run's terminal.
+    # ---- D.1.10 (C018). Flip POWER, follow the three phase lights, and the reveal is the run's terminal.
     # registerTouch() only checks WHICH control was touched, not which lamp is lit, so the fixed
     # SEQUENCE order always hits (check_play.py:118).
     print("== D.1.10 (C018) the help-signal reveal is the terminal, and it is its own call")
@@ -137,11 +141,11 @@ with sync_playwright() as pw:
 
     per_touch = []
     for key in SEQUENCE:
-        pg.click('.knobface[data-key="%s"], .slidertrack[data-key="%s"]' % (key, key), no_wait_after=True)
+        pg.click(PHASE_CHIP % key, no_wait_after=True)
         pg.wait_for_timeout(350)
         per_touch.append(len(completes(pg)))
-    check(per_touch[:3] == [0, 0, 0],
-          "the first three lights complete nothing - sampled per touch, not once at the end (%s)" % per_touch)
+    check(per_touch[:2] == [0, 0],
+          "the first two phases complete nothing - sampled per touch, not once at the end (%s)" % per_touch)
 
     # finishGame() -> 400ms -> breakThrough() types "HELP, GET US OUT" at 90ms a letter, and the unlock
     # and the completion land on the last letter. Wait for the line the channel itself writes -
@@ -149,7 +153,7 @@ with sync_playwright() as pw:
     # "raf" polling would never evaluate the predicate and every wait here would hang to its timeout.
     pg.wait_for_function("""()=>{const l=document.querySelector('#sigLbl');
         return l && /signal confirmed/i.test(l.textContent);}""", polling=200, timeout=8000)
-    check("her, not it" in pg.inner_text("#deckHint"), "following all four lights lands the help signal")
+    check("her, not it" in pg.inner_text("#deckHint"), "following all three phases lands the help signal")
 
     done = completes(pg)
     check(len(done) == 1, "and emits exactly one GAME_COMPLETE: %d" % len(done))
@@ -162,7 +166,7 @@ with sync_playwright() as pw:
     # The matched half. The three-scratch trigger is gone and gameDone latches the follow shut, so
     # nothing the visitor can still touch is a second ending.
     for key in SEQUENCE:
-        pg.click('.knobface[data-key="%s"], .slidertrack[data-key="%s"]' % (key, key), no_wait_after=True)
+        pg.click(PHASE_CHIP % key, no_wait_after=True)
         pg.wait_for_timeout(120)
         if len(completes(pg)) != 1:
             break
@@ -174,7 +178,8 @@ with sync_playwright() as pw:
         return window.__completes.length;}""") == 1,
           "and a direct second complete() for the site is a no-op - once per site per session")
 
-    clean = [e for e in errs if "favicon" not in e and "jsdelivr" not in e.lower()]
+    # ERR_FAILED = our aborted game-loader; gala/runs = the ranked clock, CORS-blocked on any non-prod origin
+    clean = [e for e in errs if "favicon" not in e and "jsdelivr" not in e.lower() and "ERR_FAILED" not in e and "gala/runs" not in e]
     check(not clean, "no page errors across the drive (%s)" % (clean[:2] or "none"))
     b.close()
 
