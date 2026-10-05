@@ -2,6 +2,7 @@ import { createTransitionVeil } from "./transition-veil.js?objects=12";
 import * as THREE from "./vendor/three.module.js?objects=12";
 import { createWorld, createMagnifier } from "./world.js?objects=12";
 import { createTraveler, createClayHand } from "./rig.js?objects=12";
+import { ROOM_COPY } from "./room-copy.js?objects=12";
 import { EXHIBITS, ENDING, SMALL_HAND_ENDING } from "./content.js?objects=12";
 import { createRouteSampler } from "./room-routes.js?objects=12";
 import { createSoundscape } from "./audio.js?objects=12";
@@ -180,10 +181,12 @@ const roomNames = {
     ]),
   ),
 };
-hangSign(world.gallery, roomNames.gallery, v(0, 3.0, -3.2), 0);
+const signPos = {}, signsRead = new Set();
+hangSign(world.gallery, roomNames.gallery, v(0, 2.7, -4.5), 0);
 for (const id of roomOrder) {
   const p = routes.sample(id, 4.5);
-  hangSign(world[id], roomNames[id], p.position.clone().setY(3.0), p.heading);
+  signPos[id] = p.position.clone().setY(2.7);
+  hangSign(world[id], roomNames[id], signPos[id], p.heading);
 }
 function eyeAt(id, distance) {
   return routes
@@ -259,7 +262,8 @@ function contextPrompt() {
   if (state === "fieldIn") return [{ text: "tap to pull back", fn: pullBack }];
   if (state === "choice2")
     return [
-      { text: "reach in again", fn: () => { field.clear(); commit(); } },
+      { text: "reach in again", fn: () => { setState("field"); field.reachIn(); } },
+      { text: "go in", fn: () => { field.clear(); commit(); } },
       { text: "leave", fn: () => { field.clear(); refuse(); } },
     ];
   if (state !== "explore" || sequence || paused) return [];
@@ -270,10 +274,11 @@ function contextPrompt() {
   if (room === "gallery")
     return nearestExhibit() >= 0 ? [{ text: "tap to inspect", fn: inspect }] : [];
   if (room === "atomicRoom")
-    return camera.position.distanceTo(magnifier.position) < 1.5
-      ? [{ text: "tap to step through", fn: inspect }]
-      : [];
-  return nearWelcome() ? [{ text: "tap to enter", fn: inspect }] : [];
+    if (camera.position.distanceTo(magnifier.position) < 1.5)
+      return [{ text: "tap to step through", fn: inspect }];
+    if (nearSign()) return [{ text: "tap to read", fn: inspect }];
+    return [];
+  return nearSign() || nearWelcome() ? [{ text: "tap to read", fn: inspect }] : [];
 }
 function caption(text) {
   $("caption").textContent = text;
@@ -337,6 +342,23 @@ function readWelcome(gift) {
   $("hologram").classList.remove("lens-readout");
   caption("A welcome gift. Lift the mug to read the museum's practical note.");
 }
+function nearSign() {
+  return room !== "gallery" && !signsRead.has(room) && signPos[room] && camera.position.distanceTo(signPos[room]) < 5.2;
+}
+function readSign() {
+  inspecting = true;
+  signsRead.add(room);
+  $("holo-count").textContent = "";
+  $("holo-title").textContent = roomNames[room][0];
+  $("holo-body").textContent = ROOM_COPY[room].ad.replace(/^MOM FICTIONAL AD:\s*/, "");
+  $("holo-source").textContent = "";
+  $("holo-source").removeAttribute("href");
+  $("holo-ad").textContent = "";
+  $("hologram").querySelector(".advert").hidden = true;
+  $("hologram").setAttribute("aria-label", "Room sign");
+  $("hologram").classList.remove("lens-readout");
+  $("hologram").hidden = false;
+}
 function nearestExhibit() {
   if (room !== "gallery") return -1;
   let best = -1,
@@ -360,6 +382,10 @@ function inspect() {
     const gift = nearWelcome();
     if (gift) {
       readWelcome(gift);
+      return;
+    }
+    if (nearSign()) {
+      readSign();
       return;
     }
   }
@@ -502,14 +528,7 @@ function theft() {
   );
 }
 // LB-RIG owns the hand while the field is active (reports/lb-rig-api.md).
-// Adapter: a timer stub stands in when the rig branch is not merged yet.
-const field = traveler.field || {
-  state: "idle",
-  set() {},
-  clear() { this.state = "idle"; },
-  reachIn() { this.state = "inside"; setTimeout(() => dispatchEvent(new CustomEvent("lb:field-reached", { detail: {} })), 1100); },
-  pullBack() { this.state = "idle"; setTimeout(() => dispatchEvent(new CustomEvent("lb:field-withdrawn", { detail: {} })), 1000); },
-};
+const field = traveler.field;
 field.set({ point: world.opening.probeBoundary, normal: v(0, 0, 1), onContact: fieldContact });
 addEventListener("lb:field-reached", () => { tiny = true; if (state === "field") setState("fieldIn"); });
 addEventListener("lb:field-withdrawn", () => {

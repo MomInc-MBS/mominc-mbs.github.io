@@ -218,8 +218,8 @@ export function createClayHand(THREE) {
   forearm.name="thief-connected-long-clay-forearm";forearm.rotation.x=Math.PI/2;hand.add(forearm);
   // Coach Armie canon (tv/assets/armie-intro/coach-hand.mjs): a fur ring where
   // the forearm starts and two mismatched googly eyes whose pupils lag behind.
-  const furMaterial=new THREE.MeshStandardMaterial({color:0x4a2566,roughness:.95});
-  const FUR=280,fur=new THREE.InstancedMesh(workshop.own(new THREE.ConeGeometry(.004,.048,5)),furMaterial,FUR);
+  const furMaterial=new THREE.MeshStandardMaterial({color:0xb48ad6,roughness:1});
+  const FUR=280,fur=new THREE.InstancedMesh(workshop.own(new THREE.ConeGeometry(.006,.032,5)),furMaterial,FUR);
   fur.name="thief-forearm-fur-ring";fur.castShadow=false;fur.userData.visualOnly=true;
   {const m=new THREE.Matrix4(),q=new THREE.Quaternion(),up=new THREE.Vector3(0,1,0),seed=i=>Math.abs(Math.sin(i*12.9898+78.233)*43758.5453)%1;
     for(let i=0;i<FUR;i++){const th=i/FUR*TAU*7.3+seed(i)*.9,y=.07+seed(i+1)*.12,rx=.030+y*.03,rz=.025+y*.03;
