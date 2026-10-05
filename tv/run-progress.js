@@ -7,14 +7,19 @@
   window.dispatchEvent(new CustomEvent('mbs:run-update',{detail:{run:state,error}}));
   if(document.readyState==='loading')return;
   let note=document.getElementById('rankConnection');
-  if(!error){if(note){clearTimeout(note._typeT);clearTimeout(note._fadeT);clearTimeout(note._goneT);note.hidden=true;delete note.dataset.text;}return;}
+  const gone=()=>{if(!note)return;clearTimeout(note._typeT);clearTimeout(note._fadeT);clearTimeout(note._goneT);note.hidden=true;note.style.transition='none';note.style.opacity='1';};
+  if(!error){if(note){gone();delete note.dataset.text;}return;}
+  // never over gameplay: not on a standalone play route, not while the television is in game mode
+  if(document.documentElement.dataset.game!==undefined||document.getElementById('tv')?.dataset.mode==='game')return;
   if(!note){
    note=document.createElement('aside');
    note.id='rankConnection';
    note.setAttribute('role','status');
    note.setAttribute('aria-live','polite');
-   // bottom banner, never the top tabs; pointer-events:none so it can never eat a tap
-   note.style.cssText='position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);transform:translateX(-50%);z-index:6500;max-width:88vw;pointer-events:none;color:#ff7f1a;text-shadow:0 1px 2px rgba(0,0,0,.8),0 0 8px currentColor,0 0 16px currentColor;font:13px/1.4 monospace;text-align:center;white-space:pre-wrap;opacity:1';
+   note.title='Tap to dismiss';
+   // bottom banner, never the top tabs; one tap dismisses it, and it goes by itself after 4 s
+   note.style.cssText='position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);transform:translateX(-50%);z-index:6500;max-width:88vw;cursor:pointer;color:#ff7f1a;text-shadow:0 1px 2px rgba(0,0,0,.8),0 0 8px currentColor,0 0 16px currentColor;font:13px/1.4 monospace;text-align:center;white-space:pre-wrap;opacity:1';
+   note.addEventListener('click',gone);
    document.body.append(note);
   }
   if(note.dataset.text===error)return; // each message plays once; it shows again only after the error clears and recurs
@@ -31,8 +36,8 @@
    const type=()=>{note.textContent=error.slice(0,++i);if(i<error.length)note._typeT=setTimeout(type,perChar);};
    type();
   }
-  note._fadeT=setTimeout(()=>{note.style.transition='opacity 2000ms linear';note.style.opacity='0';},8000);
-  note._goneT=setTimeout(()=>{note.hidden=true;note.style.transition='none';note.style.opacity='1';},10000);
+  note._fadeT=setTimeout(()=>{note.style.transition='opacity 800ms linear';note.style.opacity='0';},4000);
+  note._goneT=setTimeout(gone,4800);
  }
  function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch{error='Device storage is unavailable. Keep this page open to save your run.';}notify();}
  async function request(path,method='GET',data){const r=await fetch(API+path,{method,headers:{...(state?.token?{Authorization:'Bearer '+state.token}:{}),...(data?{'Content-Type':'application/json'}:{})},body:data?JSON.stringify(data):undefined,signal:AbortSignal.timeout(15000)});const value=await r.json();if(!r.ok)throw Object.assign(Error(value.error||'The Gala terminal could not connect.'),{status:r.status});return value;}

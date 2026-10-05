@@ -24,6 +24,16 @@
   };
   if (!slug || !/^[a-z0-9-]+$/.test(slug)) return fail("bad slug");
 
+  /* Inside the television's play frame (tv.js openPlay): the set's own EXIT key is the way out, so the
+     rail goes (play.css), and any link that leaves the game navigates the SET, never the frame - a
+     play page that opened /tv/ inside itself would nest one television in another. */
+  let framed = false; try { framed = window.parent !== window && window.parent.MBS?.inGame !== undefined; } catch {}
+  if (framed) {
+    document.documentElement.dataset.framed = "";
+    const base = document.querySelector("base") || document.head.appendChild(document.createElement("base"));
+    base.target = "_parent";
+  }
+
   /* Isolation is an ancestor-path reveal, never a blanket hide: display:none collapses descendant
      geometry and these games measure layout while they initialise (fuel.js:479, lilboyfriend.js:795,
      armie.html:441). So mark every root and every ancestor of a root as on-path, then hide only the

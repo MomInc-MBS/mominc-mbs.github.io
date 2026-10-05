@@ -34,14 +34,23 @@
     observer.observe(document.documentElement, {childList: true, subtree: true});
   });
 
+  // The television page keeps its cabinet: the overlay sits inside the glass (#screen, parsed after
+  // this head script, so it attaches at domReady) and hides nothing else. Every other page covers
+  // itself whole. The download starts at page entry either way; only the attach waits.
+  const hostReady = tvPage ? domReady : bodyReady;
   function cover(game) {
     selected = game;
     document.documentElement.setAttribute('data-game-loading', '');
     if (!document.getElementById('mbs-game-loading-style')) {
       const style = document.createElement('style'); style.id = 'mbs-game-loading-style';
-      style.textContent = `html[data-game-loading] body>:not(#mbs-game-loading){visibility:hidden!important}
+      style.textContent = (tvPage
+        ? `html[data-game-loading] #screen{overflow:hidden!important}
+        #mbs-game-loading{position:absolute;inset:0;z-index:50}
+        #mbs-game-loading img{height:min(200px,26vh)!important}`
+        : `html[data-game-loading] body>:not(#mbs-game-loading){visibility:hidden!important}
         html[data-game-loading] body{overflow:hidden!important}
-        #mbs-game-loading{position:fixed;inset:0;z-index:2147483647;display:grid;place-items:center;overflow:auto;
+        #mbs-game-loading{position:fixed;inset:0;z-index:2147483647}`) + `
+        #mbs-game-loading{display:grid;place-items:center;overflow:auto;
           padding:24px;box-sizing:border-box;background:#171329;color:#fff9e6;text-align:center;font:16px/1.5 system-ui,sans-serif}
         #mbs-game-loading .download-card{width:min(100%,360px)}
         #mbs-game-loading img{display:block;width:min(64vw,240px);height:240px;max-height:35vh;object-fit:contain;margin:0 auto 24px}
@@ -53,25 +62,23 @@
         #mbs-game-loading button:focus-visible{outline:3px solid white;outline-offset:4px}`;
       document.head.append(style);
     }
-    const show = () => {
-      if (finished) return;
-      if (!overlay) {
-        overlay = document.createElement('div'); overlay.id = 'mbs-game-loading';
-        overlay.setAttribute('role', 'dialog'); overlay.setAttribute('aria-modal', 'true');
-        overlay.setAttribute('aria-labelledby', 'mbs-game-loading-title');
-        overlay.innerHTML = '<div class="download-card"><img alt=""><h1 id="mbs-game-loading-title"></h1><progress aria-label="Game download" max="100"></progress><p role="status" aria-live="polite"></p><button type="button" hidden>Try again</button></div>';
-        [label, meter, note, retry] = ['h1', 'progress', 'p', 'button'].map(s => overlay.querySelector(s));
-        document.body.append(overlay);
-      }
-      if (!overlay.isConnected) document.body.append(overlay);
-      const logo = game === 'handborne' ? '/tv/assets/helping-hand-badge.png'
-        : ['armie', 'corgi', 'djscratch', 'girlfriend', 'lilboyfriend'].includes(game)
-          ? '/tv/assets/marks/' + game + '.png' : '/tv/assets/mom-inc-mark.png';
-      overlay.querySelector('img').src = logo;
-      label.textContent = 'Loading ' + names[game];
-      note.textContent = 'Getting this game ready…';
-    };
-    if (document.body) show(); else bodyReady.then(show);
+    if (!overlay) {
+      overlay = document.createElement('div'); overlay.id = 'mbs-game-loading';
+      overlay.setAttribute('role', 'dialog'); overlay.setAttribute('aria-modal', 'true');
+      overlay.setAttribute('aria-labelledby', 'mbs-game-loading-title');
+      overlay.innerHTML = '<div class="download-card"><img alt=""><h1 id="mbs-game-loading-title"></h1><progress aria-label="Game download" max="100"></progress><p role="status" aria-live="polite"></p><button type="button" hidden>Try again</button></div>';
+      [label, meter, note, retry] = ['h1', 'progress', 'p', 'button'].map(s => overlay.querySelector(s));
+    }
+    const logo = game === 'handborne' ? '/tv/assets/helping-hand-badge.png'
+      : ['armie', 'corgi', 'djscratch', 'girlfriend', 'lilboyfriend'].includes(game)
+        ? '/tv/assets/marks/' + game + '.png' : '/tv/assets/mom-inc-mark.png';
+    overlay.querySelector('img').src = logo;
+    label.textContent = 'Loading ' + names[game];
+    note.textContent = 'Getting this game ready…';
+    hostReady.then(() => {
+      if (finished || overlay.isConnected) return;
+      ((tvPage && document.getElementById('screen')) || document.body).append(overlay);
+    });
   }
 
   function worker() {
@@ -119,7 +126,6 @@
     // released until a successful retry has checked every file in the pack.
     const promise = new Promise(resolve => {
       const attempt = async () => {
-        await bodyReady;
         retry.hidden = true; meter.removeAttribute('value'); note.textContent = 'Getting this game ready…';
         try {
           const result = await transfer(game, ({loaded, total}) => {
@@ -199,8 +205,10 @@
   if (!names[selected]) return;
   // Capture input without making the game subtree inert/display:none: legacy
   // canvases and iframe games measure themselves while they mount behind the logo.
+  // The television's own cabinet controls (dial, power, keys) stay usable while the glass loads.
   for (const event of ['pointerdown', 'click', 'keydown']) document.addEventListener(event, e => {
-    if (!finished && !overlay?.contains(e.target)) {e.preventDefault(); e.stopImmediatePropagation();}
+    if (finished || overlay?.contains(e.target) || (tvPage && e.target?.closest?.('.panel'))) return;
+    e.preventDefault(); e.stopImmediatePropagation();
   }, true);
   domReady.then(async () => {
     window.MBS_RT?.pause('download');

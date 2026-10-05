@@ -11,7 +11,7 @@
     static: ["electric-static.mp3"],
     bloop: ["menu-bloop.mp3"],
   };
-  const LEVEL = { click: .58, switch: .7, detent: .37, static: .15, bloop: .43 };
+  const LEVEL = { click: .41, switch: .7, detent: .26, static: .15, bloop: .43 };   // CRT clicks 30% down (Ian, 2026-10-05)
   const GAP = { click: 50, switch: 65, detent: 65, static: 240, bloop: 70 };
   const KEY = "mbs-tv-muted-v1";
 
@@ -179,7 +179,7 @@
     // their ordinary controls; known game frames provide their own input/audio.
     const bound = new WeakSet();
     const bindFrame = frame => {
-      if (frame.matches("#ggGame,#ar-intro-frame,#ar-lab-frame,#ar-myr-frame,#creator-screen")) return;
+      if (frame.matches("#ggGame,#ar-intro-frame,#ar-lab-frame,#ar-myr-frame,#creator-screen,.play-frame")) return;
       let child;
       try { child = frame.contentDocument; } catch { return; }
       if (!child || bound.has(child)) return;

@@ -6,6 +6,7 @@ html[data-game] .rail{height:48px}
 .ambience-toggle:focus-visible{outline:2px solid #ffd36e;outline-offset:2px}
 /* phones: the switch takes its own line under the dial, keys and emboss, so the row never sets the cabinet wider than the phone (Ian, 2026-09-09) */
 @media (max-width:640px){.panel .ambience-toggle{order:6;flex:1 1 100%;margin-left:0}}
+.tv[data-mode="game"] .ambience-toggle{display:none}   /* room tone is cabinet furniture; in game mode the strip stays one row and the game has its own sound */
 /* Music Desk: a real booth rather than a floating pastel form. */
 #dj.dj{background:radial-gradient(ellipse at 18% 20%,#5b244c55,transparent 55%),radial-gradient(ellipse at 80% 80%,#65502644,transparent 60%),#15111e}
 #dj .deck{background:linear-gradient(145deg,#322c3a,#18141e);border-color:#6b526c;box-shadow:0 24px 65px #000a,inset 0 1px #fff3;border-radius:14px}
@@ -50,16 +51,9 @@ html[data-game="lilboyfriend"] #lbStage{box-shadow:inset 0 0 90px #332a2330}
 }
 @media(prefers-reduced-motion:reduce){#dj *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition:none!important}}
 
-/* The factory needs a wide working surface on phones. A portrait alternative
-   remains available for fixed mounts and users who cannot rotate a device. */
-.rotate-notice{display:none}
+/* The factory's portrait gate went soft (TV3): mbs-shim.js shows a dismissible "best sideways" hint. */
 html[data-game="girlfriend"] .dg-vis{z-index:12}
 html[data-game="girlfriend"] .dg-track{min-height:100%}
-@media(max-width:950px) and (orientation:portrait){
- html[data-game="girlfriend"]:not(.portrait-allowed) body{overflow:hidden}
- html[data-game="girlfriend"]:not(.portrait-allowed) .rotate-notice{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;background:#201528;color:#f7e9ce;text-align:center;font:16px/1.5 system-ui}
- .rotate-notice>span{font-size:72px;color:#ffd36e}.rotate-notice h1{font-size:26px;max-width:16ch;margin:12px 0}.rotate-notice p{max-width:25ch}.rotate-notice a,.rotate-notice button{min-height:44px;padding:12px;color:#f7e9ce}.rotate-notice button{background:transparent;border:1px solid #a58caa;border-radius:5px;margin-top:14px;font:14px system-ui}
-}
 
 /* Restored material surfaces; the game frames and controls keep their geometry. */
 #dj .deck{background:linear-gradient(112deg,#d4dce344,#03060b88 42%,#d4dce322 62%,#080a10bb),url('assets/brushed-aluminum.png') center/640px;border:3px solid #8b929a;box-shadow:inset 0 2px 1px #edf5ffc9,inset 0 -4px 3px #05070c,0 24px 60px #000b}
