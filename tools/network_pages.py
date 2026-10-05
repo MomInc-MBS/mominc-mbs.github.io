@@ -33,6 +33,11 @@ def write_network_routes(root):
         if slug=='goon':
             s=s.replace('../play/goon/','../gala/').replace('<span>▶ PLAY</span>','<span>▶ JOIN THE GALA</span>')
             s=s.replace('<img src="assets/goon-game-still.png" alt="goon game still">','<video src="assets/goon-preview.webm" poster="assets/goon-game-still.png" autoplay muted loop playsinline aria-label="The Goon Gala preview"></video>')
+        if slug=='corgi':
+            s=s.replace('<img src="assets/corgi-game-still.png" alt="corgi game still">','<video src="assets/corgi-preview.webm" poster="assets/corgi-game-still.png" autoplay muted loop playsinline aria-label="Cortisol Corgi school hunt preview"></video>')
+            lp=landing.read_text(encoding='utf-8')
+            lp=re.sub(r'<img src="../../tv/assets/corgi-game-still.png"[^>]*>','<video src="../../tv/assets/corgi-preview.webm" poster="../../tv/assets/corgi-game-still.png" autoplay muted loop playsinline aria-label="Cortisol Corgi school hunt preview"></video>',lp)
+            landing.write_text(lp,encoding='utf-8')
         if slug=='lilboyfriend':
             s=s.replace('<img src="assets/lilboyfriend-game-still.png" alt="lilboyfriend game still">','<video src="assets/lilboyfriend-preview.webm" poster="assets/lilboyfriend-game-still.png" autoplay muted loop playsinline aria-label="Lil Boyfriend museum preview"></video>')
             lp=landing.read_text(encoding='utf-8')
