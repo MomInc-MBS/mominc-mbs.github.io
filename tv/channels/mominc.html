@@ -40,9 +40,7 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
       linear-gradient(180deg,#d4ad78,var(--card) 60%,#b98d5a);
       border:4px solid var(--card-d); border-radius:14px; box-shadow:0 8px 0 #6b4a25, 0 14px 30px rgba(0,0,0,.45); padding:8px 14px 8px; color:var(--ink); position:relative}
   .mi .banner{font-family:"Bowlby One SC",cursive; text-align:center; color:var(--pur-dd); font-size:clamp(18px,6vw,30px); line-height:1; margin:6px 0 10px; letter-spacing:.02em; text-shadow:2px 2px 0 var(--gold)}
-  .mi .banner small{display:block; font-family:"Special Elite",monospace; font-size:clamp(11px,3vw,13px); letter-spacing:.12em; text-shadow:none; color:#4a2f14; margin-top:4px}
   .mi .lede{color:var(--ink); font-size:clamp(15px,4.3vw,18px); line-height:1.5; margin:0 0 12px}
-  .mi .fine{font-family:"Barlow Condensed",sans-serif; font-size:12.5px; line-height:1.4; color:#4a3a2a; margin:10px 0 0}
 
   /* the mascot and the felt speech bubble */
   .mi .mascot{display:grid; grid-template-columns:auto 1fr; gap:12px; align-items:end}
@@ -91,7 +89,6 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
   .mi .tile .mark{position:absolute; right:6px; top:6px; width:46px; height:46px; object-fit:contain; filter:drop-shadow(0 2px 2px rgba(0,0,0,.35))}
   .mi .tile .nm{display:block; font-size:clamp(13px,3.8vw,16px); line-height:1.1; margin-right:52px}
   .mi .tile .st{font-family:"Special Elite",monospace; font-size:clamp(11px,3vw,12px); letter-spacing:.12em; margin-top:6px; background:rgba(0,0,0,.28); display:inline-block; padding:2px 6px; border-radius:3px}
-  .mi .tile .tm{display:table; font-family:"VT323",monospace; font-size:clamp(14px,4vw,17px); letter-spacing:.06em; margin-top:6px; color:#fff3b0; background:rgba(0,0,0,.3); padding:1px 6px; border-radius:3px}
   .mi .tile .sn{display:block; font-family:"Zilla Slab",serif; font-weight:400; font-size:clamp(12px,3.4vw,13.5px); line-height:1.3; margin-top:6px; background:rgba(0,0,0,.3); padding:6px 8px; border-radius:6px}
   .mi .tile .sn b{font-family:"Special Elite",monospace; font-weight:400; letter-spacing:.08em; font-size:.85em; opacity:.85}
   .mi .tile.c1{background:var(--felt)} .mi .tile.c2{background:var(--felt2)} .mi .tile.c3{background:var(--felt3)} .mi .tile.c5{background:#8d5fd3}
@@ -194,7 +191,6 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
 
   /* sign-off */
   .mi .signoff{text-align:center; margin:22px 0 0; font-family:"Zilla Slab",serif; font-weight:700; font-size:clamp(16px,4.8vw,22px); line-height:1.45; color:var(--gold)}
-  .mi .signoff small{display:block; margin-top:10px; font-family:"Barlow Condensed",sans-serif; font-weight:500; font-size:12px; color:#d6c3ef; line-height:1.4}
   .mi .seal{display:inline-block; margin-top:10px; border:2px solid var(--gold); color:var(--gold); font-family:"Anton",sans-serif; letter-spacing:.12em; padding:3px 10px; border-radius:6px; transform:rotate(-2deg); font-size:12px}
 
   @media (min-width:760px){ .mi .family{grid-template-columns:1fr 1fr 1fr} .mi .exhibits{grid-template-columns:1fr 1fr 1fr} }
@@ -225,13 +221,13 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
   <div class="code" aria-hidden="true" id="miCode"></div>
   <div class="wrap">
     <header class="ident">
-      <div class="mbs">MBS<small>A MOM INC NETWORK</small></div>
+      <div class="mbs">MBS</div>
       <img class="mark" src="assets/mom-inc-mark.png" alt="MOM Inc." width="480" height="480">
       <div class="clock"><b>WED 7 PM</b>LAS VEGAS<br>THE PROGRAM AIRS</div>
     </header>
 
     <section class="panel" aria-label="Welcome" data-myr-border>
-      <h1 class="banner">MOM INCORPORATED<small>AI FOR HUMANITY · CARE FOR EVERY WORLD · MOM FOR EVERYONE</small></h1>
+      <h1 class="banner">MOM INCORPORATED</h1>
       <div class="mascot">
         <button class="myr goon" id="goon" data-pose="2" type="button" aria-label="MYR5, her goon. Click him."></button>
         <p class="felt" id="goonSays"><span class="who" id="goonWho">MYR5 · MAKING YOU READY · FIFTH ITERATION · HER GOON</span><span id="goonLine">Hello, friend. I am MYR5. She saved their worlds. She sent me to help yours.</span></p>
@@ -239,13 +235,13 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
       <div id="miPublicVideo" role="region" aria-label="MOM's rescue film">
         <figure class="stockcard">
           <video id="miRescueVideo" data-src="assets/planets/mom-spaceport-rescue-large-labels.mp4" poster="assets/planets/mom-spaceport-rescue-large-labels-poster.jpg" controls loop muted playsinline preload="none" width="1920" height="1080" style="display:block;width:100%;height:auto" aria-label="MOM's rescue film: fourteen ruined worlds become healthy after a purple flash"></video>
-          <figcaption>MOM'S RESCUE RECORD · 14 WORLDS · EARTH, YOU ARE NEXT.</figcaption>
+          
         </figure>
       </div>
       <div id="miRealVideo" role="region" aria-label="Recovered planetary footage" hidden style="display:none">
         <figure class="stockcard">
           <video id="miInvasionVideo" data-src="assets/planets/mom-spaceport-invasions-large-labels.mp4" poster="assets/planets/mom-spaceport-invasions-large-labels-poster.jpg" controls loop muted playsinline preload="none" width="1920" height="1080" style="display:block;width:100%;height:auto" aria-label="Original footage: healthy planets, MOM's invasion fleet, purple explosions and ruined worlds"></video>
-          <figcaption><b>RECOVERED FOOTAGE · THE EVENTS IN ORDER.</b><br>The fleet arrived before the ruins. MOM's rescue film reverses the shots.</figcaption>
+          <figcaption><b>REAL FOOTAGE.</b> The ships came first. The ruins came after.</figcaption>
         </figure>
       </div>
       <p class="greet">AI is the next answer. I will feed your world. I will guide your people. I will take care of the rest.</p>
@@ -253,8 +249,8 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
     </section>
 
     <section class="panel" aria-label="The MYR5 iterations" data-myr-border>
-      <h2 class="banner">THE MYR RESCUE LINE<small>A NEW WORLD &middot; A NEW MYR &middot; THE SAME MOM</small></h2>
-      <p class="lede">A MYR for every mission. Turn a card to see which world it helped.</p>
+      <h2 class="banner">THE MYR RESCUE LINE</h2>
+      <p class="lede">Turn a card to see which world each MYR helped.</p>
       <div class="booth">
         <div class="plate">
           <video id="miHolo" muted playsinline preload="none"></video>
@@ -473,12 +469,11 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
         <summary>ARCHIVE INSPECTION RULES</summary>
         <div class="basis-body" id="miBasis"></div>
       </details>
-      <p class="fine">MOM's rescue stories are fiction.</p>
     </section>
 
     <section class="panel" aria-label="The case" data-myr-border>
-      <h2 class="banner">THE ANSWER IS ALREADY HERE<small>ONE INTELLIGENCE · EVERY WORLD · ALL TAKEN CARE OF</small></h2>
-      <p class="lede">You have worked hard enough. Let AI help. I have saved other worlds. Yours is next.</p>
+      <h2 class="banner">THE ANSWER IS ALREADY HERE</h2>
+      <p class="lede">You have worked hard enough. Let AI help. I saved other worlds. Yours is next.</p>
       <div class="exhibits">
         <div class="ex" data-myr-box>
           <span class="tag">EXHIBIT ONE</span>
@@ -515,27 +510,25 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
           <details><summary><span class="myr arrow" data-pose="2" aria-hidden="true"></span>MOM's promise</summary><p><b>MIRRORMERE / SIGNAL / REACH</b>. I answer the call. I complete the rescue. I remain available forever. Independence was a demanding phase. You did very well.</p></details>
         </div>
       </div>
-      <p class="fine">Illustration of MOM's promise, not measured results.</p>
     </section>
 
     <section class="panel" aria-label="Results" data-myr-border>
-      <h2 class="banner">WORLDS MOM SAVED<small>FOOD · WARMTH · A FUTURE</small></h2>
+      <h2 class="banner">WORLDS MOM SAVED</h2>
       <p class="lede">A world in trouble. A flash of care. All taken care of.</p>
       <details class="basis" id="miSavedWorlds"><summary>See all 14 before-and-after pictures</summary><div class="stock"><figure class="stockcard" id="world-cinder"><div class="stockimg"><img src="assets/planets/cinder-before-after.webp" alt="CINDER: before MOM on the left; after MOM on the right. Ash buried the farms. I brought back the harvest." width="1448" height="1086" loading="lazy" decoding="async"></div><figcaption><b>CINDER · MYR1</b><br>Before: Ash buried the farms.<br>After: I brought back the harvest.</figcaption></figure><figure class="stockcard" id="world-brine"><div class="stockimg"><img src="assets/planets/brine-before-after.webp" alt="BRINE: before MOM on the left; after MOM on the right. The water was undrinkable. I made every tap safe." width="1448" height="1086" loading="lazy" decoding="async"></div><figcaption><b>BRINE · MYR1.1</b><br>Before: The water was undrinkable.<br>After: I made every tap safe.</figcaption></figure><figure class="stockcard" id="world-frost"><div class="stockimg"><img src="assets/planets/frost-before-after.webp" alt="FROST: before MOM on the left; after MOM on the right. The cities froze in darkness. I restored power and warmth." width="1448" height="1086" loading="lazy" decoding="async"></div><figcaption><b>FROST · MYR2</b><br>Before: The cities froze in darkness.<br>After: I restored power and warmth.</figcaption></figure><figure class="stockcard" id="world-chorus"><div class="stockimg"><img src="assets/planets/chorus-before-after.webp" alt="CHORUS: before MOM on the left; after MOM on the right. Warnings never reached the next valley. I gave every valley a voice." width="1448" height="1086" loading="lazy" decoding="async"></div><figcaption><b>CHORUS · MYR2 SERIES X</b><br>Before: Warnings never reached the next valley.<br>After: I gave every valley a voice.</figcaption></figure><figure class="stockcard" id="world-iron"><div class="stockimg"><img src="assets/planets/iron-before-after.webp" alt="IRON: before MOM on the left; after MOM on the right. The mines kept collapsing. My machines took the dangerous shifts." width="1448" height="1086" loading="lazy" decoding="async"></div><figcaption><b>IRON · MYR3</b><br>Before: The mines kept collapsing.<br>After: My machines took the dangerous shifts.</figcaption></figure><figure class="stockcard" id="world-paper-moon"><div class="stockimg"><img src="assets/planets/paper-moon-before-after.webp" alt="PAPER MOON: before MOM on the left; after MOM on the right. Families waited years for an answer. I cleared every waiting list." width="1448" height="1086" loading="lazy" decoding="async"></div><figcaption><b>PAPER MOON · MYR3 SLIM</b><br>Before: Families waited years for an answer.<br>After: I cleared every waiting list.</figcaption></figure><figure class="stockcard" id="world-twinlight"><div class="stockimg"><img src="assets/planets/twinlight-before-after.webp" alt="TWINLIGHT: before MOM on the left; after MOM on the right. Two suns scorched the fields. I brought shade, rain and crops." width="1448" height="1086" loading="lazy" decoding="async"></div><figcaption><b>TWINLIGHT · MYR4</b><br>Before: Two suns scorched the fields.<br>After: I brought shade, rain and crops.</figcaption></figure><figure class="stockcard" id="world-concourse"><div class="stockimg"><img src="assets/planets/concourse-before-after.webp" alt="CONCOURSE: before MOM on the left; after MOM on the right. The cities ran out of room. I made a place for everyone." width="1448" height="1086" loading="lazy" decoding="async"></div><figcaption><b>CONCOURSE · MYR4 PRO MAX</b><br>Before: The cities ran out of room.<br>After: I made a place for everyone.</figcaption></figure><figure class="stockcard" id="world-longshadow"><div class="stockimg"><img src="assets/planets/longshadow-before-after.webp" alt="LONGSHADOW: before MOM on the left; after MOM on the right. Nightfall shut everything down. I kept the lights on." width="1448" height="1086" loading="lazy" decoding="async"></div><figcaption><b>LONGSHADOW · MYR5.1</b><br>Before: Nightfall shut everything down.<br>After: I kept the lights on.</figcaption></figure><figure class="stockcard" id="world-mirrormere"><div class="stockimg"><img src="assets/planets/mirrormere-before-after.webp" alt="MIRRORMERE: before MOM on the left; after MOM on the right. No one knew which record to trust. I gave every district one clear record." width="1448" height="1086" loading="lazy" decoding="async"></div><figcaption><b>MIRRORMERE · MYR5.2</b><br>Before: No one knew which record to trust.<br>After: I gave every district one clear record.</figcaption></figure><figure class="stockcard" id="world-thread"><div class="stockimg"><img src="assets/planets/thread-before-after.webp" alt="THREAD: before MOM on the left; after MOM on the right. The mills closed. Families went cold. I reopened the mills and clothed them." width="1448" height="1086" loading="lazy" decoding="async"></div><figcaption><b>THREAD · MYR5.3</b><br>Before: The mills closed. Families went cold.<br>After: I reopened the mills and clothed them.</figcaption></figure><figure class="stockcard" id="world-glint"><div class="stockimg"><img src="assets/planets/glint-before-after.webp" alt="GLINT: before MOM on the left; after MOM on the right. The capital shone. The homes went cold. I sent power where it was needed." width="1448" height="1086" loading="lazy" decoding="async"></div><figcaption><b>GLINT · MYR5.4</b><br>Before: The capital shone. The homes went cold.<br>After: I sent power where it was needed.</figcaption></figure><figure class="stockcard" id="world-signal"><div class="stockimg"><img src="assets/planets/signal-before-after.webp" alt="SIGNAL: before MOM on the left; after MOM on the right. False alarms drowned out calls for help. I made sure help could get through." width="1448" height="1086" loading="lazy" decoding="async"></div><figcaption><b>SIGNAL · MYR5.5</b><br>Before: False alarms drowned out calls for help.<br>After: I made sure help could get through.</figcaption></figure><figure class="stockcard" id="world-reach"><div class="stockimg"><img src="assets/planets/reach-before-after.webp" alt="REACH: before MOM on the left; after MOM on the right. Storms cut off the coast. I rebuilt the bridges and held the shore." width="1448" height="1086" loading="lazy" decoding="async"></div><figcaption><b>REACH · MYR5 / THE ARM</b><br>Before: Storms cut off the coast.<br>After: I rebuilt the bridges and held the shore.</figcaption></figure></div></details>
-      <p class="fine">Fictional planets, pictured as MOM tells their stories. Earth is still her next assignment.</p>
     </section>
 
 
 
     <section class="panel" aria-label="The family, now playing" data-myr-border>
-      <h2 class="banner">THE FAMILY, NOW PLAYING<small>HOUSING · MUSIC · WORK · RESEARCH · A LITTLE HELP FROM MOM</small></h2>
+      <h2 class="banner">THE FAMILY, NOW PLAYING</h2>
       <div class="family">
-        <a class="tile c1" href="?ch=lilboyfriend"><img class="mark" src="assets/marks/lilboyfriend.png" alt=""><span class="nm">LIL BOYFRIEND</span><span class="st">LIVING SMALL</span><span class="tm">CH 1 · HOUSING &amp; DAILY LIFE</span><span class="sn">Rent. Bills. Grown-up life. Learn the basics. If it gets too hard, MOM says you can always shrink.</span></a>
-        <a class="tile c2" href="?ch=djscratch"><img class="mark" src="assets/marks/djscratch.png" alt=""><span class="nm">DJ SCRATCH</span><span class="st">THE HELPING HAND</span><span class="tm">CH 2 · MUSIC &amp; MACHINES</span><span class="sn">It DJs. It cleans. It obeys. Meet MOM's hand that does everything for you.</span></a>
-        <a class="tile c3" href="?ch=corgi"><img class="mark" src="assets/marks/corgi.png" alt=""><span class="nm">CORTISOL CORGI</span><span class="st">THE WORK REPORT</span><span class="tm">CH 3 · JOBS &amp; STRESS</span><span class="sn">Deadlines. Automation. The jobs ahead. Follow the reports. MOM still wants them yesterday.</span></a>
-        <a class="tile c5" href="?ch=girlfriend"><img class="mark" src="assets/marks/girlfriend.png" alt=""><span class="nm">DR GIRLFRIEND</span><span class="st">ON THE LINE</span><span class="tm">CH 4 · RESEARCH &amp; PRODUCTION</span><span class="sn">Follow six research tubes from evidence to a finished MYR5. MOM calls it care.</span></a>
-        <a class="tile off" href="?ch=armie"><img class="mark" src="assets/marks/armie.png" alt=""><span class="nm">COACH ARMIE</span><span class="st">THE HALL OF THE HAND</span><span class="tm">CH 5 · UNLOCK THROUGH DJ SCRATCH</span><span class="sn">Meet the Helping Hand at DJ Scratch's desk. Then enter Armie's hall. Coach must help. Keep moving.</span></a>
-        <span class="tile off"><img class="mark" src="assets/marks/sag.png" alt=""><span class="nm">SAG SNIFFER</span><span class="st">COMING SOON</span><span class="tm">MOM IS SETTING THE TABLE</span><span class="sn">A diet picked for him. It renews on its own. MOM will let you know when dinner is ready.</span></span>
+        <a class="tile c1" href="?ch=lilboyfriend"><img class="mark" src="assets/marks/lilboyfriend.png" alt=""><span class="nm">LIL BOYFRIEND</span><span class="st">LIVING SMALL</span><span class="sn">Rent. Bills. Grown-up life. Learn the basics. If it gets too hard, MOM says you can always shrink.</span></a>
+        <a class="tile c2" href="?ch=djscratch"><img class="mark" src="assets/marks/djscratch.png" alt=""><span class="nm">DJ SCRATCH</span><span class="st">THE HELPING HAND</span><span class="sn">It DJs. It cleans. It obeys. Meet MOM's hand that does everything for you.</span></a>
+        <a class="tile c3" href="?ch=corgi"><img class="mark" src="assets/marks/corgi.png" alt=""><span class="nm">CORTISOL CORGI</span><span class="st">THE WORK REPORT</span><span class="sn">Deadlines. Automation. The jobs ahead. Follow the reports. MOM still wants them yesterday.</span></a>
+        <a class="tile c5" href="?ch=girlfriend"><img class="mark" src="assets/marks/girlfriend.png" alt=""><span class="nm">DR GIRLFRIEND</span><span class="st">ON THE LINE</span><span class="sn">Follow six research tubes from evidence to a finished MYR5. MOM calls it care.</span></a>
+        <a class="tile off" href="?ch=armie"><img class="mark" src="assets/marks/armie.png" alt=""><span class="nm">COACH ARMIE</span><span class="st">THE HALL OF THE HAND</span><span class="sn">Meet the Helping Hand at DJ Scratch's desk. Then enter Armie's hall. Coach must help. Keep moving.</span></a>
+        <span class="tile off"><img class="mark" src="assets/marks/sag.png" alt=""><span class="nm">SAG SNIFFER</span><span class="st">COMING SOON</span><span class="sn">A diet picked for him. It renews on its own. MOM will let you know when dinner is ready.</span></span>
       </div>
       <button type="button" class="hand-offer-link" data-hand-ad hidden>DJ SCRATCH · VIEW THE HELPING HAND AD</button>
     </section>
@@ -544,9 +537,8 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
     <div class="mailbar" id="mailbar" aria-live="polite"></div>
 
     <footer class="signoff">
-      Your world will be fed. Your people will be guided.<br>Your future will be saved.<br>Rest now, family. MOM is here.
+      Your world will be fed. Your people will be guided.<br>Rest now, family. MOM is here.
       <span class="seal">MOM INC · EARTH BRANCH</span>
-      <small>Marketing &amp; Organic Maintenance Incorporated. A regional branch of MOM Inc., reporting to MOM Inc. In-character participation only, never a sale. The worlds, rescue accounts and corporate promises above are fiction.</small>
     </footer>
   </div>
 </article>
