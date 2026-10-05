@@ -350,8 +350,8 @@ FORM: Ian's pin, 2026-08-25, "90s late-night infomercial." Inside the old televi
       <!-- THE TURNTABLE, PARTY MODE: the record spins forever, her nail is the needle, scratch it for feel.
            The follow-game and the payoff now live on the control rack below (see script). -->
       <section class="deck" id="deck">
-        <p class="feature">NOW FEATURING, <b>PARTY MODE</b></p>
-        <p class="hint" id="deckHint"><b>Power on. Follow the lights.</b></p>
+        <p class="feature">YOUR <b>WORKOUT SET</b></p>
+        <p class="hint" id="deckHint"><b>DJ your workout playlist.</b> Warm up, peak, cool down.</p>
 
         <div class="deckgrid">
           <div class="deckcol left">
@@ -375,8 +375,8 @@ FORM: Ian's pin, 2026-08-25, "90s late-night infomercial." Inside the old televi
               <p class="djid-name" id="djName">DJ SCR4TCH 3000</p>
             </details>
             <div class="score">
-              <p class="score-label">YOUR GRADE</p>
-              <p class="score-num" id="scoreNum">0<span>/4</span></p>
+              <p class="score-label">SET FLOW</p>
+              <p class="score-num" id="scoreNum">0<span>/3</span></p>
               <p class="score-grade" id="scoreGrade">FLIP THE POWER</p>
             </div>
           </div>
@@ -406,32 +406,34 @@ FORM: Ian's pin, 2026-08-25, "90s late-night infomercial." Inside the old televi
                 </svg>
               </div>
             </div>
-            <div class="tuner"><div class="tuner-glass"><div class="tuner-text" id="tunerText">★ PARTY MODE ★ PART TIME ★ NOW SPINNING ★ SATISFACTION GUARANTEED ★ PARTY MODE ★ PART TIME ★</div></div></div>
+            <div class="tuner"><div class="tuner-glass"><div class="tuner-text" id="tunerText">★ WARM-UP 100 BPM ★ PEAK 140+ BPM ★ COOL-DOWN 80 BPM ★ LIFT HEAVY ★ MOM IS SPOTTING YOU ★ WARM-UP 100 BPM ★ PEAK 140+ BPM ★</div></div></div>
             <div class="scratchmark" aria-hidden="true"><i id="s1"></i><i id="s2"></i><i id="s3"></i></div>
 
-            <div class="cuelights" id="cueLights" aria-hidden="true">
-              <i class="lamp" data-key="bass"></i><i class="lamp" data-key="treble"></i><i class="lamp" data-key="volume"></i><i class="lamp" data-key="tempo"></i>
+            <div class="cuelights phases" id="cueLights" role="group" aria-label="Workout phase">
+              <button type="button" class="phase" data-key="warm"><i class="lamp" data-key="warm"></i>WARM-UP<small>90-110</small></button>
+              <button type="button" class="phase" data-key="peak"><i class="lamp" data-key="peak"></i>PEAK<small>130-160</small></button>
+              <button type="button" class="phase" data-key="cool"><i class="lamp" data-key="cool"></i>COOL-DOWN<small>70-90</small></button>
             </div>
-            <p class="cuehint" id="cueHint">Power on to begin.</p>
+            <p class="cuehint" id="cueHint">Power on, then pick a phase.</p>
 
             <div class="rack" id="rack">
               <div class="ctrl" data-key="bass" style="--c:var(--gold)">
-                <p class="ctrl-label">BASS</p>
+                <p class="ctrl-label">DRIVE</p>
                 <div class="knobface" data-key="bass"><div class="knobneedle"></div></div>
                 <p class="ctrl-num" id="numBass">5</p>
               </div>
               <div class="ctrl" data-key="treble" style="--c:var(--hot)">
-                <p class="ctrl-label">TREBLE</p>
+                <p class="ctrl-label">SHINE</p>
                 <div class="knobface" data-key="treble"><div class="knobneedle"></div></div>
                 <p class="ctrl-num" id="numTreble">5</p>
               </div>
               <div class="ctrl" data-key="volume" style="--c:var(--sig)">
-                <p class="ctrl-label">VOLUME</p>
+                <p class="ctrl-label">HYPE</p>
                 <div class="slidertrack" data-key="volume"><div class="sliderthumb"></div></div>
                 <p class="ctrl-num" id="numVolume">5</p>
               </div>
               <div class="ctrl" data-key="tempo" style="--c:var(--pur)">
-                <p class="ctrl-label">TEMPO</p>
+                <p class="ctrl-label">PACE</p>
                 <div class="slidertrack" data-key="tempo"><div class="sliderthumb"></div></div>
                 <p class="ctrl-num" id="numTempo">5</p>
               </div>
@@ -456,13 +458,14 @@ FORM: Ian's pin, 2026-08-25, "90s late-night infomercial." Inside the old televi
                 <p class="phono-station" id="phonoStation">NO STATION SET</p>
               </div>
             </div>
+            <button type="button" class="plopen" id="plOpen" aria-haspopup="dialog">&#9835; BUILD FULL PLAYLIST</button>
           </div>
 
           <div class="deckcol right">
             <div class="vizbox">
               <p class="viz-label">ON AIR</p>
               <canvas id="vizCanvas" width="140" height="120" aria-hidden="true"></canvas>
-              <p class="viz-note" id="vizNote">deck is off</p>
+              <p class="viz-note" id="vizNote">115 BPM &middot; deck is off</p>
             </div>
           </div>
         </div>
@@ -470,7 +473,7 @@ FORM: Ian's pin, 2026-08-25, "90s late-night infomercial." Inside the old televi
         <div class="codebox" id="codeBox">
           <p class="code-label">LIVE CODE ENTRY</p>
           <form id="codeForm" class="codeform">
-            <input id="codeInput" inputmode="numeric" aria-label="Bass, treble, volume and tempo code" placeholder="CODE" autocomplete="off">
+            <input id="codeInput" inputmode="numeric" aria-label="Drive, shine, hype and pace code" placeholder="CODE" autocomplete="off">
             <button type="submit" id="codeSubmit">ENTER</button>
           </form>
           <p class="code-note" id="codeNote">Find the signal. Then copy the four control settings into this drive.</p>

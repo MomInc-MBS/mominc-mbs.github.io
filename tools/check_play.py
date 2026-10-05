@@ -119,10 +119,11 @@ def dj_rack(pg):
     POWER, then touch each control in SEQUENCE order (bass knob, treble knob, volume slider, tempo
     slider) - registerTouch() only checks which control was touched, not which lamp is lit, so driving
     the fixed sequence always hits. finishGame() -> breakThrough() -> MBS.unlock('djscratch') follows."""
+    pg.evaluate("()=>window.MBS_DJ.choose('DJ SCR4TCH 3000','XYZ',['DJ','SCRATCH','3000'])")   # POWER asks for a name first
     pg.click("#powerSwitch", no_wait_after=True)
     pg.wait_for_timeout(400)
-    for key,target in (("bass",8),("treble",3),("volume",7),("tempo",9)):
-        for _ in range((target-5)%11):pg.click('.knobface[data-key="%s"], .slidertrack[data-key="%s"]' % (key, key), no_wait_after=True)
+    for key in ("warm","peak","cool"):   # the three workout phase chips, in order
+        pg.click('.phase[data-key="%s"]' % key, no_wait_after=True)
         pg.wait_for_timeout(350)
     pg.wait_for_timeout(2200)   # finishGame() -> 400ms -> breakThrough()'s typed reveal -> unlock
 
