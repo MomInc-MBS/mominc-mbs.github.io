@@ -473,15 +473,14 @@ export default {
           <p class="body">He walked ${MODE === "public" ? "the whole office" : "the whole school"} for these three pages. Hold still for the scan. Then tell him which one is coming for your job.</p>
           <div class="scan" id="scan"><div class="line"></div><div class="out" id="scanOut">HOLD STILL. LOOK AT THE DOG.</div></div>
           <button class="big" type="button" id="scanBtn">SCAN MY STRESS</button>
-          <p class="fine">The scan is purely visual. It measures nothing, stores nothing, and cannot see you. Cortisol Corgi cannot see either. That is canon.</p>
-          <p class="fine">Whatever you type below is saved in this browser so the channel knows you answered. It is not sent anywhere and nobody reads it.</p>
+          <p class="fine">The scan is just for show. It cannot see you.</p>
+          <p class="fine">What you type stays in this browser.</p>
           <form id="ventForm">
             <label for="ventName">A name, or not</label>
             <input id="ventName" name="name" placeholder="Anonymous is fine.">
             <label for="ventAI">Which AI is coming for your job?</label>
             <input id="ventAI" name="aiJob" required placeholder="The chatbot. The scheduler. All of them.">
             <button class="big" type="submit" id="ventBtn">TELL THE DOG</button>
-            <p class="fine">Nothing is posted anywhere. In-character participation only, never a sale.</p>
           </form>
           <div class="feeder" id="feeder" aria-hidden="true">
             <svg class="pile" id="kibbleSvg" viewBox="0 0 560 180" preserveAspectRatio="xMidYMax meet" role="button" tabindex="-1" aria-label="Dog food pushed out. Click it."></svg>
