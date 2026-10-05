@@ -1,3 +1,4 @@
+# LEGACY: targets the old walking game tv/channels/lilboyfriend.js, not the new museum at play/lilboyfriend/.
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 with sync_playwright() as pw:
