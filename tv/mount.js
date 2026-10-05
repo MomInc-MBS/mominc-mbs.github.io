@@ -32,6 +32,7 @@
     document.documentElement.dataset.framed = "";
     const base = document.querySelector("base") || document.head.appendChild(document.createElement("base"));
     base.target = "_parent";
+    document.addEventListener("keydown", e => { if (e.key === "Escape") try { window.parent.MBS.exitGame(); } catch {} });   // EXIT from the keyboard, inside the frame
   }
 
   /* Isolation is an ancestor-path reveal, never a blanket hide: display:none collapses descendant

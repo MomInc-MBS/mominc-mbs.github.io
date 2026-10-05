@@ -413,7 +413,7 @@ for g in REG["games"]:
         launch=launch_markup(g), heroart=hero_markup(g), bg=g["palette"]["bg"], ink=g["palette"]["ink"], accent=g["palette"]["accent"],
         titlevw=title_vw(g["title"]),
         roots=esc(json.dumps({"roots": g["roots"], "hide": g["hide"]}, ensure_ascii=False)),
-        orientation=('<aside class="rotate-notice" aria-labelledby="rotate-title"><span aria-hidden="true">↻</span><h1 id="rotate-title">Turn your phone to landscape</h1><p>The production line needs a wider view.</p><a href="../games/girlfriend/#information">Read the research &amp; questions</a><button type="button" id="portraitContinue">Use portrait controls instead</button></aside>' if slug == 'girlfriend' else ''),
+        orientation='',   # the portrait gate went soft (TV3): tv/mbs-shim.js shows a dismissible hint instead
         api=esc(API_BASE), mission_id=esc(g.get("mission_id") or ""), station=esc(STATION),
         progress_key=esc(g.get("progress_key") or ""), continue_cta=esc(g.get("continue_cta") or ""),
         next_slug=nxt["slug"], next_ch=nxt["ch"], next_title=esc(nxt["title"]),

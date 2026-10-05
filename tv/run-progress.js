@@ -9,8 +9,9 @@
   let note=document.getElementById('rankConnection');
   const gone=()=>{if(!note)return;clearTimeout(note._typeT);clearTimeout(note._fadeT);clearTimeout(note._goneT);note.hidden=true;note.style.transition='none';note.style.opacity='1';};
   if(!error){if(note){gone();delete note.dataset.text;}return;}
-  // never over gameplay: not on a standalone play route, not while the television is in game mode
-  if(document.documentElement.dataset.game!==undefined||document.getElementById('tv')?.dataset.mode==='game')return;
+  // never over gameplay: not on a standalone play route (except the ranked Gala run, where it matters), not while the television is in game mode
+  const game=document.documentElement.dataset.game;
+  if((game!==undefined&&game!=='goon')||document.getElementById('tv')?.dataset.mode==='game')return;
   if(!note){
    note=document.createElement('aside');
    note.id='rankConnection';

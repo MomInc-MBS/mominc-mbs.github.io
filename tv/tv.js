@@ -423,13 +423,15 @@
     // The frame's initial about:blank fires a load of its own before the page arrives: not the game.
     playFrame.addEventListener("load", () => {
       let doc = null; try { doc = playFrame.contentDocument; } catch {}
-      if (doc && doc.URL !== "about:blank" && !doc.documentElement.hasAttribute("data-game-loading")) play();
+      if (!doc || doc.URL === "about:blank") return;
+      if (!doc.documentElement.hasAttribute("data-game-loading")) play();
+      else playFrame.contentWindow.addEventListener("mbs-game-ready", play);   // the loaded window, whether or not the first one was reused
     });
     screenTop = screen.scrollTop; screen.scrollTop = 0;
     tv.dataset.play = "";
     playFrame.src = url;
     screen.append(playFrame);
-    playFrame.contentWindow.addEventListener("mbs-game-ready", play);   // same origin: the initial window is reused on navigation
+    playFrame.contentWindow.addEventListener("mbs-game-ready", play);   // same origin; the load handler attaches again on the loaded window
   }
   function closePlay() {
     if (!playFrame) return;
