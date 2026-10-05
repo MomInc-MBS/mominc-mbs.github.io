@@ -43,9 +43,6 @@ export function probeShots(c) {
   const view=(target,t=1)=>cam.move(a.probeEye,target,t,foot);
   return [
     {duration:1.2,enter(){cam.capture();caption("You rise to the purple compression field.");},update(t){view(a.probeBoundary,t);}},
-    {duration:1.2,enter(){cam.capture();traveler.group.updateMatrixWorld(true);origin=traveler.leftHand.getWorldPosition(v(0,0,0));caption("Your felt fingertips touch the field.");},update(t){view(a.probeBoundary,t);hand(origin.clone().lerp(a.probeBoundary,smooth(t)));}},
-    {duration:1.4,enter(){cam.capture();caption("Your hand and dressed forearm shrink together inside the field.");},update(t){view(a.probeInside,t);hand(a.probeBoundary.clone().lerp(a.probeInside,smooth(t)));traveler.leftHand.scale.setScalar(1-.77*smooth(t));contact?.(a.probeBoundary,Math.sin(t*Math.PI));}},
-    {duration:1.3,enter(){cam.capture();c.markTiny();caption("You pull back a tiny hand, forearm and sleeve. The change stays.");},update(t){view(inspect,t);hand(a.probeInside.clone().lerp(inspect,smooth(t)));traveler.leftHand.scale.setScalar(.23);traveler.setLeftPose?.("inspect",1,t);contact?.(a.probeBoundary,0);}},
   ];
 }
 export function commitShots(c) {

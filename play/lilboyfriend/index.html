@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-game="lilboyfriend">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -8,6 +8,9 @@
     <link rel="canonical" href="https://mominc.online/play/lilboyfriend/" />
     <link rel="stylesheet" href="./style.css?objects=12" />
   <script src="../../tv/touch-controls.js"></script>
+    <script src="../../tv/mbs-channels.js"></script>
+    <script src="../../tv/state.js"></script>
+    <script src="../../tv/mbs-shim.js"></script>
 </head>
   <body>
     <main id="experience">
@@ -15,33 +18,13 @@
         id="world"
         aria-label="First person felt and clay museum"
       ></canvas>
-      <header>
-        <a class="wordmark" href="../../games/lilboyfriend/"
-          >LITTLE BOYFRIEND<span>MUSEUM OF LIVING SMALL</span></a
-        >
-        <div class="edition">
-          AN ILLUSTRATED WORLD.<span>SEVEN SMALLER WORLDS / 02</span>
-        </div>
-      </header>
-      <div id="progress">
-        <span id="room-label">THE GALLERY</span
-        ><span id="scale-label">HUMAN SCALE</span
-        ><span id="journey-label">THE ORIGINAL SIZE</span>
-        <div><i id="progress-fill"></i></div>
-      </div>
-      <section id="intro" class="panel">
-        <span class="eyebrow">A SMALLER KIND OF FUTURE</span>
-        <h1>How much room<br />do you really need?</h1>
-        <p>
-          Step inside a museum of possible homes. You’re testing a one of a kind
-          magnifier. Please keep it in your felt hands. Seven smaller worlds
-          wait inside the exhibits.
-        </p>
-        <button id="start">Enter the museum <span>↗</span></button>
-        <p class="hint">
-          Scroll to walk · move your pointer to look<br />Look down to see
-          yourself. Inspect the photographs.
-        </p>
+      <a id="exit" href="../../games/lilboyfriend/" aria-label="Back to the TV"
+        ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg
+      ></a>
+      <section id="intro">
+        <button id="start" aria-label="Enter the museum">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+        </button>
       </section>
       <section
         id="hologram"
@@ -49,63 +32,25 @@
         hidden
         aria-label="Magnifier hologram"
       >
-        <div class="holo-top">
-          <span>□ MOM / OPTICAL LINK</span
-          ><button id="close-holo" aria-label="Lower magnifier">×</button>
-        </div>
-        <span id="holo-count" class="eyebrow"></span>
+        <span id="holo-count" hidden></span>
         <h2 id="holo-title"></h2>
         <p id="holo-body"></p>
         <a id="holo-source" target="_blank" rel="noopener"></a>
-        <div class="advert">
-          <span>FICTIONAL MOM PROMOTION</span>
-          <p id="holo-ad"></p>
-        </div>
-        <button id="accept-ad" hidden>Read the offer</button>
-      </section>
-      <section
-        id="choice"
-        tabindex="-1"
-        class="panel choice"
-        hidden
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="choice-title"
-      >
-        <span class="eyebrow">THE CHOICE IS YOURS</span>
-        <h2 id="choice-title"></h2>
-        <p id="choice-body"></p>
-        <div class="choices">
-          <button id="yes">Yes — Continue</button
-          ><button id="no" class="secondary">No — Leave</button>
-        </div>
+        <div class="advert"><p id="holo-ad"></p></div>
       </section>
       <section id="ending" hidden>
         <p id="ending-copy"></p>
-        <button id="restart">Try again</button>
+        <button id="restart" aria-label="Try again">&#8635;</button>
       </section>
-      <section id="returned" class="panel" hidden>
-        <span class="eyebrow">WELCOME BACK</span>
-        <h2>Same museum.<br />Different picture.</h2>
-        <p>The orange glass brought you home. Look at the photographs again.</p>
-        <button id="explore-return">Walk the gallery</button>
-      </section>
-      <div id="caption" role="status" aria-live="polite"></div>
+      <div id="caption" class="sr-only" role="status" aria-live="polite"></div>
+      <div id="prompt" aria-live="polite"></div>
       <nav id="controls" hidden aria-label="Museum controls">
-        <button id="back" aria-label="Walk backwards">↓</button
-        ><button id="forward" aria-label="Walk forward">↑</button
-        ><button id="inspect">Raise magnifier</button
-        ><button id="look-down" aria-label="Look at your feet">Look down</button
-        ><button id="pause" aria-label="Pause animation">Ⅱ</button
-        ><button id="sound" aria-label="Mute sound" aria-pressed="false">
-          ♫
+        <button id="back" aria-label="Walk backwards">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v15M5 12l7 8 7-8" /></svg></button
+        ><button id="forward" aria-label="Walk forward">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V5M5 12l7-8 7 8" /></svg>
         </button>
       </nav>
-      <div id="help" hidden>
-        SCROLL TO WALK <b>·</b> MOVE TO LOOK <b>·</b> E / INSPECT <b>·</b> ESC
-        TO PAUSE
-      </div>
-      <div id="loading">Shaping the museum…</div>
       <div id="error" hidden role="alert"></div>
     </main>
     <script type="module" src="./boot.js?objects=12"></script>
