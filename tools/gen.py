@@ -74,8 +74,6 @@ LANDING = u"""<!doctype html>
       <p class="premise">{premise}</p>
       <p class="resume" id="resume" hidden>Saved progress found on this device.</p>
       <a class="cta" id="play" href="../../play/{slug}/" data-play="../../play/{slug}/" target="_blank" rel="noopener">{cta}</a>
-      <p class="cta-sub">{duration} &middot; {inp}</p>
-      <p class="split">Public edition &middot; Free to play</p>
     </div>
   </header>
 {mission}
@@ -85,14 +83,14 @@ LANDING = u"""<!doctype html>
       <dl class="facts"><div><dt>Do</dt><dd>{does}</dd></div><div><dt>Finish</dt><dd>{finish}</dd></div></dl>
     </details>
     <details class="locked-edition"><summary><span aria-hidden="true">&#128274;</span> Restricted programming <span class="lock-state">Locked</span></summary>
-      <p>MOM is still reviewing this transmission. Horror editions unlock later.</p>
+      <p>Scary shows unlock later.</p>
     </details>
   </div>
 
   <details class="profile" id="questions" open><summary id="profileHead">{profile_title}</summary>
 
     <p class="profile-voice">{profile_intro}</p>
-    <p class="profile-store">Optional notes for a future Coach AI. Saved only in this browser; nothing is sent. No coach reads them yet. Delete them here or in Your Files.</p>
+    <p class="profile-store">Optional. Saved on this device only. Nothing is sent.</p>
 
     <form class="profile-form" id="profileForm">
 {questions}
@@ -106,8 +104,6 @@ LANDING = u"""<!doctype html>
     <div class="profile-file" id="profileFile" hidden>
       <p class="profile-count" id="profileCount"></p>
       <ul class="profile-list" id="profileList"></ul>
-      <p class="profile-partial">Partial is fine. Every question is optional, and no channel asks for
-        the same thing twice.</p>
       <p class="profile-partial"><a href="../../files/">See everything this browser is keeping</a></p>
     </div>
 {identity}
@@ -117,9 +113,8 @@ LANDING = u"""<!doctype html>
     <a href="../../tv/?ch={slug}">Explore Ch {ch} &middot; {host}</a>{live_links}
     <button type="button" class="linkish" id="shareBtn">Share game</button>
     <a href="../../tv/?ch=mominc">MOM INC</a>
-    <p class="share-said" id="shareSaid" hidden role="status">Channel link copied. MOM did not open your contacts.</p>
+    <p class="share-said" id="shareSaid" hidden role="status">Link copied.</p>
     <a href="../../files/">Your files</a>
-    <p class="fine">MOM Inc is fiction. Public games are free{rules_line}.</p>
   </footer>
 </main>
 
@@ -211,7 +206,6 @@ COMING_SOON = u"""<!doctype html>
   <footer class="foot">
     <a href="../../tv/?ch={slug}">Explore Ch {ch} &middot; {host}</a>
     <a href="../../tv/?ch=mominc">MOM INC</a>
-    <p class="fine">MOM Inc is fictional and MBS is a comedy programme. This channel is coming soon.</p>
   </footer>
 </main>
 </body>
