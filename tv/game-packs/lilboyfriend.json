@@ -23,9 +23,149 @@
       "bytes": 8327
     },
     {
+      "url": "/play/lilboyfriend/assets/actors/hand-mesh.js",
+      "revision": "7474d23de8d1f6a3eb79570dd89a01d0b9f15f6d",
+      "bytes": 2202252
+    },
+    {
+      "url": "/play/lilboyfriend/audio.js",
+      "revision": "5bf2bdee49fa735286ad2e45c75670dc95a2ad27",
+      "bytes": 6580
+    },
+    {
+      "url": "/play/lilboyfriend/boot.js",
+      "revision": "135cb3f869f8665f35fa4d137591a4d23e0c4d1c",
+      "bytes": 448
+    },
+    {
+      "url": "/play/lilboyfriend/choreography.js",
+      "revision": "748e0e08c8a30a98fa160dedd1cec296b352b283",
+      "bytes": 8043
+    },
+    {
+      "url": "/play/lilboyfriend/content.js",
+      "revision": "f4af6c15355d35f466b0dcda020cc27ad24f1a03",
+      "bytes": 3516
+    },
+    {
+      "url": "/play/lilboyfriend/energy-fields.js",
+      "revision": "77f39657660664b0d1bf9c69a61de9e82254dee8",
+      "bytes": 4395
+    },
+    {
+      "url": "/play/lilboyfriend/home-details.js",
+      "revision": "edc2f8099248a6017b548bd5a3761711f98283cd",
+      "bytes": 6846
+    },
+    {
+      "url": "/play/lilboyfriend/illustration.js",
+      "revision": "15a4ebc836a2d5cc6369a73fb3081bc63b4633b3",
+      "bytes": 1466
+    },
+    {
       "url": "/play/lilboyfriend/index.html",
-      "revision": "10365e6cb2bb2d24dc3c447d6ccf03f1e4f73ab0",
-      "bytes": 1737
+      "revision": "0aaff4b5f1287b5b7c041c7ab0b65e10baa092b3",
+      "bytes": 4292
+    },
+    {
+      "url": "/play/lilboyfriend/main.js",
+      "revision": "c1311d1fcd148a3bd54f1c6032150e337a756015",
+      "bytes": 41150
+    },
+    {
+      "url": "/play/lilboyfriend/mom-propaganda.js",
+      "revision": "854ed6300c509315695f12a6d40b8c6addd3b162",
+      "bytes": 4993
+    },
+    {
+      "url": "/play/lilboyfriend/object-surfaces.js",
+      "revision": "d42366eb1f05ca5c9ad75d99be0dabdfb5e72488",
+      "bytes": 2200
+    },
+    {
+      "url": "/play/lilboyfriend/object-worlds.js",
+      "revision": "6344f6e0b3397199e6bfed67a6e3fe5d41bce6eb",
+      "bytes": 19793
+    },
+    {
+      "url": "/play/lilboyfriend/opening-layout.js",
+      "revision": "ee1a2e34300255baaf17522fc4edc201f1bdd1fd",
+      "bytes": 904
+    },
+    {
+      "url": "/play/lilboyfriend/rig.js",
+      "revision": "0859cbe38fb64939ffb5d031b6f20518a986382b",
+      "bytes": 15269
+    },
+    {
+      "url": "/play/lilboyfriend/room-copy.js",
+      "revision": "a170ed206a4d1cfa3bea8f2c8295248dbe500e20",
+      "bytes": 2813
+    },
+    {
+      "url": "/play/lilboyfriend/room-routes.js",
+      "revision": "b51073f77c4f4104faa33f418746fe4a8b3fd462",
+      "bytes": 1455
+    },
+    {
+      "url": "/play/lilboyfriend/rooms-a.js",
+      "revision": "5210d835ecd71c29b645108df25ec509241f4316",
+      "bytes": 25147
+    },
+    {
+      "url": "/play/lilboyfriend/rooms-b.js",
+      "revision": "c19c362626354967247f33af981a7b3f6c52f7fa",
+      "bytes": 22828
+    },
+    {
+      "url": "/play/lilboyfriend/sakura/palette.js",
+      "revision": "58bc3893b4618cf6951cdf01fb1fcf91cabf45ce",
+      "bytes": 16829
+    },
+    {
+      "url": "/play/lilboyfriend/sakura/post.js",
+      "revision": "7e7cc463ed20b9806f108fa228946ad2e8312a6c",
+      "bytes": 10587
+    },
+    {
+      "url": "/play/lilboyfriend/sakura/quad.js",
+      "revision": "385c89846317a8f17d4256072d28e57fa8b6ef83",
+      "bytes": 402
+    },
+    {
+      "url": "/play/lilboyfriend/sakura/toon.js",
+      "revision": "7a011bbd7ec20678fd398c2209876dc7a67d6fdd",
+      "bytes": 5101
+    },
+    {
+      "url": "/play/lilboyfriend/style.css",
+      "revision": "a70817bffe9427193c93ab13b95152224d2abd76",
+      "bytes": 9597
+    },
+    {
+      "url": "/play/lilboyfriend/surfaces.js",
+      "revision": "552492f5c1dfc413b63fad17e131281d249f4fc9",
+      "bytes": 7163
+    },
+    {
+      "url": "/play/lilboyfriend/transition-veil.js",
+      "revision": "0e9d6a1fad1089314534a69dbfd079a53f819394",
+      "bytes": 1388
+    },
+    {
+      "url": "/play/lilboyfriend/vendor/three.core.js",
+      "revision": "7dcd0fbcbc04b8d9a20ecb96c1ce344cb55150d5",
+      "bytes": 1403455
+    },
+    {
+      "url": "/play/lilboyfriend/vendor/three.module.js",
+      "revision": "477ca4dafa7af919a2b9818e01b5ae25198d4aa4",
+      "bytes": 603113
+    },
+    {
+      "url": "/play/lilboyfriend/world.js",
+      "revision": "2a5b421a9e071e0f30e1ea2973e2814dc7d211de",
+      "bytes": 48325
     },
     {
       "url": "/tv/assets/armie-intro/vendor/BufferGeometryUtils.js",
@@ -338,6 +478,11 @@
       "bytes": 26928
     },
     {
+      "url": "/tv/touch-controls.js",
+      "revision": "f9c71cd86ffbda389067e8aebc27c4a62850f221",
+      "bytes": 1892
+    },
+    {
       "url": "/tv/tv.css",
       "revision": "7dc80a4600a5fdb124d64db0e6a437df0492a108",
       "bytes": 27087
@@ -350,7 +495,8 @@
   ],
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
-    "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
+    "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap",
+    "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
   ],
-  "version": "b645347bfbcc456ab56f"
+  "version": "d7644bc639ae2f8b856b"
 }

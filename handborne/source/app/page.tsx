@@ -9,7 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Switch } from '@/components/ui/switch';
 import { NativeSelect, NativeSelectOption } from '@/components/ui/native-select';
 import { Textarea } from '@/components/ui/textarea';
-import { DEFAULT_SELECTION, REGIONS, STYLES, PICKER_STYLES, type RegionId } from './catalog';
+import { DEFAULT_SELECTION, REGIONS, STYLES, styleFor, PICKER_STYLES, type RegionId } from './catalog';
 import { parseDesign, designCode, randomize, type Selection, type HandDesign } from './recipe';
 import { DEFAULT_POSE, POSES } from './poses';
 import { DEFAULT_NAIL_SHAPE, NAIL_SHAPES } from './nails';
@@ -17,6 +17,7 @@ import { nextPoseId, schedulePoseCycle } from './motion';
 import { registerHandTools } from './web-tools';
 import { HandViewer, type HandViewerHandle } from './hand-viewer';
 import {MATERIAL_NOTES} from './material-language';
+import {surfaceSwatch} from './swatches';
 import { AnatomyComparison, ANATOMY_STUDIES, SOFT_STUDIES } from './anatomy-comparison';
 import { HAND_SHAPES, activeHandShape, selectHandShape, type ShapeScope } from './hand-shapes';
 import { SCALE_PATTERNS } from './scale-patterns';
@@ -43,7 +44,7 @@ export default function Home() {
   const viewer=useRef<HandViewerHandle>(null);
   const design=history.present,selection=design.sections;
   const code=designCode(design);
-  const style=STYLES[selection[selectedRegion]];
+  const style=styleFor(selection[selectedRegion]);
   const selectedShape=activeHandShape(selection,shapeScope,selectedRegion);
   const shapeLocked=shapeScope==='hand'?locks.length===REGIONS.length:locks.includes(selectedRegion);
   const current=useRef(design);current.current=design;
@@ -52,7 +53,7 @@ export default function Home() {
     if(nextPose)setCycleRevision(v=>v+1);
     setHistory(h=>{const pattern=nextScalePattern??h.present.scalePattern??'none';const next={sections,pose:nextPose??h.present.pose,nailShape:nextNailShape??h.present.nailShape,...(pattern==='none'?{}:{scalePattern:pattern})};return designCode(h.present)===designCode(next)?h:{past:[...h.past,h.present].slice(-80),present:next,future:[]};});
   },[]);
-  const setStyle=(region:RegionId,value:number)=>commit({...selection,[region]:Math.max(0,Math.min(STYLES.length-1,Math.round(value)))});
+  const setStyle=(region:RegionId,value:number)=>commit({...selection,[region]:styleFor(value).id});
   const applyAll=(id:number)=>commit(Object.fromEntries(REGIONS.map(r=>[r.id,locks.includes(r.id)?selection[r.id]:id])) as Selection);
   const applyShape=(shapeId:string)=>{
     const next=selectHandShape(selection,shapeId,shapeScope,selectedRegion,locks);
@@ -135,10 +136,10 @@ export default function Home() {
           <TabsList aria-label="Customize your hand">{[['look','Look'],['shape','Shape'],['details','Details'],['motion','Motion'],['files','Save']].map(([id,label])=><TabsTrigger key={id} value={id}>{label}</TabsTrigger>)}</TabsList>
           <div className="control-scroll">
             <TabsContent value="look">
-              <div className="design-heading"><h2>Choose a look</h2><p>{MATERIAL_NOTES[style.id]}</p></div>
+              <div className="design-heading"><h2>Choose a look</h2><p>{MATERIAL_NOTES[style.id]??style.name}</p></div>
               <div className="scope-switch"><Button variant="outline" aria-pressed={scope==='hand'} onClick={()=>setScope('hand')}>Whole hand</Button><Button variant="outline" aria-pressed={scope==='part'} onClick={()=>setScope('part')}>One part</Button></div>
               {scope==='part'&&<div className="part-target"><label htmlFor="part-target">Part<NativeSelect id="part-target" value={selectedRegion} onChange={e=>setSelectedRegion(e.target.value as RegionId)}>{REGIONS.map(r=><NativeSelectOption key={r.id} value={r.id}>{r.label}</NativeSelectOption>)}</NativeSelect></label><Button variant="outline" size="icon" aria-label={(locks.includes(selectedRegion)?'Unlock ':'Lock ')+REGIONS.find(r=>r.id===selectedRegion)?.label} aria-pressed={locks.includes(selectedRegion)} onClick={()=>setLocks(list=>list.includes(selectedRegion)?list.filter(id=>id!==selectedRegion):[...list,selectedRegion])}>{locks.includes(selectedRegion)?<Lock />:<Unlock />}</Button></div>}
-              <div className="style-grid" aria-label="Creature families">{PICKER_STYLES.map(item=><button key={item.id} disabled={scope==='part'?locks.includes(selectedRegion):locks.length===REGIONS.length} aria-pressed={scope==='hand'?Object.values(selection).every(id=>id===item.id):style.id===item.id} className={(scope==='hand'?Object.values(selection).every(id=>id===item.id):style.id===item.id)?'is-active':''} onClick={()=>scope==='hand'?applyAll(item.id):setStyle(selectedRegion,item.id)}><img src={'/handborne/previews/family-'+String(item.id).padStart(2,'0')+'.png?v=materials2'} alt="" loading="lazy" /><span className="tile-label">{item.name}</span></button>)}</div>
+              <div className="style-grid" aria-label="Creature families">{PICKER_STYLES.map(item=><button key={item.id} disabled={scope==='part'?locks.includes(selectedRegion):locks.length===REGIONS.length} aria-pressed={scope==='hand'?Object.values(selection).every(id=>id===item.id):style.id===item.id} className={(scope==='hand'?Object.values(selection).every(id=>id===item.id):style.id===item.id)?'is-active':''} onClick={()=>scope==='hand'?applyAll(item.id):setStyle(selectedRegion,item.id)}><img src={surfaceSwatch(item.id,item.primary,item.secondary,item.accent)} alt="" loading="lazy" /><span className="tile-label">{item.name}</span></button>)}</div>
               {!!locks.length&&<p className="control-note">{locks.length} locked {locks.length===1?'part stays':'parts stay'} when you remix or change the whole hand. <button onClick={()=>setLocks([])}>Unlock all</button></p>}
             </TabsContent>
             <TabsContent value="shape">
@@ -174,8 +175,8 @@ export default function Home() {
           <Button disabled={busy||readyCode!==code} onClick={()=>exportFile('glb')}><Download /> Download hand · GLB</Button>
           <Button variant="outline" disabled={busy||readyCode!==code} onClick={()=>exportFile('obj')}><Download /> Download hand · OBJ + MTL</Button>
           <Button variant="outline" disabled={busy||readyCode!==code} onClick={()=>exportFile('png')}>Save preview · PNG</Button>
-          <a className="library-download" href="https://mominc.online/handborne/downloads/handborne-sections.zip" download>Download all {STYLES.length*REGIONS.length} sections · OBJ + MTL</a>
-          <a className="library-download" href="https://mominc.online/handborne/downloads/handborne-complete-hands.zip" download>Download all {STYLES.length} complete hands · GLB</a>
+          <a className="library-download" href="https://mominc.online/handborne/downloads/handborne-sections.zip" download>Download original sections · OBJ + MTL</a>
+          <a className="library-download" href="https://mominc.online/handborne/downloads/handborne-complete-hands.zip" download>Download original complete hands · GLB</a>
           <p className="export-note">Download hand includes your chosen scales and nails. The complete library contains the original base families. GLB includes detailed textures. GLB and OBJ bake the selected pose into the mesh; they do not include an animation skeleton. Curved section joins remain open surfaces, not a print-ready union.</p>
         </div>:<div className="recipe-editor">
           <label htmlFor="recipe-text">Recipe code or JSON</label>

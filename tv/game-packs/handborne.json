@@ -18,13 +18,13 @@
       "bytes": 1350
     },
     {
-      "url": "/handborne/assets/GLTFExporter-CkiDkgTb.js",
-      "revision": "cfd63cc9590df75ef5b176ac441f933d710671f5",
+      "url": "/handborne/assets/GLTFExporter-DCTBKeEW.js",
+      "revision": "1559819c149635fd73c49580c0b486c5c9552cdd",
       "bytes": 34602
     },
     {
-      "url": "/handborne/assets/OBJExporter-DThty9Vw.js",
-      "revision": "abdd440b66d4dc7c75ec313d000a9ad6cc0d61cd",
+      "url": "/handborne/assets/OBJExporter-BajSwb3c.js",
+      "revision": "2113405e2d9b5dc5fdec93aa0ded8a00a94aa7dd",
       "bytes": 2045
     },
     {
@@ -33,19 +33,19 @@
       "bytes": 8775
     },
     {
-      "url": "/handborne/assets/hand-entry-BrVOFL10.js",
-      "revision": "b7cb7603f464ad73ba8b77fe03b190c65df54d0d",
-      "bytes": 991832
+      "url": "/handborne/assets/hand-entry-BUSUnr2n.css",
+      "revision": "e18c3134e5c490ef795a0a138667186e6e1138aa",
+      "bytes": 214458
     },
     {
-      "url": "/handborne/assets/hand-entry-DdX_dztK.css",
-      "revision": "a91e6d066eeddcff9a06c5565255fb7a3e4c70cd",
-      "bytes": 213035
+      "url": "/handborne/assets/hand-entry-EKq4sP63.js",
+      "revision": "6e8fa2f77b45c1105d8f9b8a3170aa74d9df603e",
+      "bytes": 1061023
     },
     {
       "url": "/handborne/companion.mjs",
-      "revision": "8ecaa5b22d7d8a14371b0e7225a1c1058b46dddd",
-      "bytes": 632720
+      "revision": "22df6a0df018442387c0aa54856da14dded860da",
+      "bytes": 699941
     },
     {
       "url": "/handborne/decisions.js",
@@ -89,7 +89,7 @@
     },
     {
       "url": "/handborne/index.html",
-      "revision": "b647cc9c61f653cb74881982e8a782be94907cfc",
+      "revision": "4f3ac5af2cdb4fa8967917d83fe1e3407d3b935a",
       "bytes": 1292
     },
     {
@@ -568,6 +568,11 @@
       "bytes": 26928
     },
     {
+      "url": "/tv/touch-controls.js",
+      "revision": "f9c71cd86ffbda389067e8aebc27c4a62850f221",
+      "bytes": 1892
+    },
+    {
       "url": "/tv/tv.css",
       "revision": "7dc80a4600a5fdb124d64db0e6a437df0492a108",
       "bytes": 27087
@@ -581,5 +586,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "a9dff473583828f9eb96"
+  "version": "5c95493f675cd6cf97d2"
 }

@@ -1,3 +1,5 @@
+import {BUILTIN_SURFACE_PROFILES,SPECIAL_SURFACE_PROFILES,builtinSurfaceProfile} from './material-patterns';
+import palettes from './palettes.json';
 export const REGIONS = [
   { id: 'nails', label: 'Nails', short: 'Nails', description: 'Five claw and nail forms' },
   { id: 'fingertips', label: 'Finger tips', short: 'Tips', description: 'Distal pads and final phalanges' },
@@ -19,10 +21,11 @@ export type StyleFamily = {
   emissive: string;
   roughness: number;
   metalness: number;
-  detail: 'clean' | 'vine' | 'caps' | 'plates' | 'scales' | 'spines' | 'coral' | 'bone' | 'mist' | 'flame' | 'halo' | 'void' | 'eyes' | 'rock' | 'crystal' | 'magma' | 'ice' | 'storm' | 'gears' | 'neon' | 'fur' | 'jelly' | 'baby';
+  paletteId?:string;
+  detail: string | 'clean' | 'vine' | 'caps' | 'plates' | 'scales' | 'spines' | 'coral' | 'bone' | 'mist' | 'flame' | 'halo' | 'void' | 'eyes' | 'rock' | 'crystal' | 'magma' | 'ice' | 'storm' | 'gears' | 'neon' | 'fur' | 'jelly' | 'baby';
 };
 
-export const STYLES: StyleFamily[] = [
+const LEGACY_STYLES: StyleFamily[] = [
   { id: 0, name: 'Mortal', realm: 'Baseline · Earth', primary: '#b9856f', secondary: '#714c42', accent: '#f0c0a3', emissive: '#000000', roughness: 0.72, metalness: 0.02, detail: 'clean' },
   { id: 1, name: 'Verdant', realm: 'Wildroot · Dimension 12', primary: '#3f7448', secondary: '#1e3b2b', accent: '#b8dd6e', emissive: '#172d13', roughness: 0.88, metalness: 0, detail: 'vine' },
   { id: 2, name: 'Mycelial', realm: 'Sporesea · Dimension 09', primary: '#d5c7ae', secondary: '#776b82', accent: '#f59ec4', emissive: '#6d234a', roughness: 0.92, metalness: 0, detail: 'caps' },
@@ -48,6 +51,15 @@ export const STYLES: StyleFamily[] = [
   { id: 22, name: 'Baby', realm: 'Little One · Soft forms', primary: '#efb398', secondary: '#d68e7c', accent: '#ffe2d5', emissive: '#000000', roughness: .52, metalness: 0, detail: 'baby' },
 ];
 
+const specialPaletteIds=["opal-jelly", "bubble-glass", "prism-crystal", "holo-foil", "glitter-resin", "galaxy-geode"];
+export const STYLES:StyleFamily[]=[...LEGACY_STYLES,
+ ...[{id:30,name:'Flat',roughness:.55,metalness:0},{id:31,name:'Clay',roughness:.92,metalness:0},...BUILTIN_SURFACE_PROFILES,builtinSurfaceProfile(56)!,...SPECIAL_SURFACE_PROFILES].map(p=>{
+  const palette=palettes.find(row=>row.id===specialPaletteIds[p.id-57]);
+  const [primary,secondary,accent]=palette?.colors??['#8b8f9a','#4a4d55','#e7e9ee'];
+  return{id:p.id,name:p.name,realm:'Surface finish',primary,secondary,accent,emissive:'#000000',roughness:p.roughness,metalness:p.metalness,detail:p.name.toLowerCase(),paletteId:palette?.id};
+ })];
+export const styleFor=(id:number)=>STYLES.find(style=>style.id===id)!;
+export const hasStyle=(id:number)=>STYLES.some(style=>style.id===id);
 export const DEFAULT_SELECTION: Record<RegionId, number> = {
   nails: 14,
   fingertips: 5,
@@ -65,4 +77,4 @@ export const PURE_PRESETS = STYLES.filter(style=>![8,11].includes(style.id)).map
 
 
 // Legacy IDs stay importable; retired looks are excluded from new picks.
-export const PICKER_STYLES=STYLES.filter(style=>![8,11].includes(style.id));
+export const PICKER_STYLES=STYLES.filter(style=>![8,11].includes(style.id)).sort((a,b)=>Number(b.id>=57)-Number(a.id>=57));

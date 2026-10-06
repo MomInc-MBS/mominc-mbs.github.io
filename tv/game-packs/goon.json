@@ -438,6 +438,11 @@
       "bytes": 26928
     },
     {
+      "url": "/tv/touch-controls.js",
+      "revision": "f9c71cd86ffbda389067e8aebc27c4a62850f221",
+      "bytes": 1892
+    },
+    {
       "url": "/tv/tv.css",
       "revision": "7dc80a4600a5fdb124d64db0e6a437df0492a108",
       "bytes": 27087
@@ -452,5 +457,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "2413b590c5a72f95ffa9"
+  "version": "838d3078c219ffe6dd2e"
 }
