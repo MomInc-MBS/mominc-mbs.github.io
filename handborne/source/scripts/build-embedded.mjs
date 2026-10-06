@@ -7,6 +7,7 @@ await build({configFile:false,base:'/handborne/',resolve:{alias:{'@':fileURLToPa
 await rename('dist/embedded/hand-entry.html','dist/embedded/index.html');
 const {build:bundle}=await import('esbuild');
 await bundle({entryPoints:['app/companion.ts'],bundle:true,format:'esm',target:'es2022',minify:true,outfile:'dist/embedded/companion.mjs'});
+await bundle({entryPoints:['app/unlock-bridge.ts'],bundle:true,format:'esm',target:'es2022',minify:true,outfile:'dist/embedded/unlock-bridge.mjs'});
 // Assets are already published beside the recovered authoring source.
 for(const dir of ['fonts','previews'])await cp('../'+dir,'dist/embedded/'+dir,{recursive:true});
 await mkdir('dist/embedded/models',{recursive:true});

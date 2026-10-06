@@ -6,7 +6,7 @@ import {samplePaletteTint,applyPaletteFinish} from './palette-finishes';
 
 // This material language is shared verbatim by Coach and Helping Hand. Maps are
 // ordinary glTF-compatible PBR textures, so the appearance also survives export.
-export const MATERIAL_REVISION='material-prism-glitter-2026-10-05-r1';
+export const MATERIAL_REVISION='material-horror-robot-2026-10-05-r1';
 export const MATERIAL_NOTES=[
  'Fine pores, palm folds and soft satin skin.',
  'Twisted roots, bark fissures and fresh leaf growth.',
@@ -131,6 +131,8 @@ export function materialFor(style:Style,unit:number,original?:T.MeshStandardMate
   }
   if(id===62){mat.emissive.set(style.accent);mat.emissiveMap=tex.glow;mat.emissiveIntensity=.65;}
  }
+ if(id===63||id===74){mat.transmission=id===63?.48:.82;mat.thickness=unit*.32;mat.ior=id===63?1.33:1.52;mat.metalness=0;mat.attenuationColor.set(style.primary);mat.attenuationDistance=unit*2.4;mat.roughnessMap=null;mat.roughness=profile!.roughness;}
+ if([69,70,74].includes(id)){mat.emissive.set(style.accent);mat.emissiveMap=tex.glow;mat.emissiveIntensity=id===74?1.1:.75;}
  mat.flatShading=[13,14,59].includes(id);mat.userData.materialStyle=id;
  const optics={transmission:mat.transmission,thickness:mat.thickness,ior:mat.ior,roughness:mat.roughness,metalness:mat.metalness,iridescence:mat.iridescence,iridescenceThicknessRange:mat.iridescenceThicknessRange};
  applyPaletteFinish(mat,style.paletteId,style);
@@ -256,7 +258,7 @@ export function growMaterial(group:T.Group,style:Style,region:string,unit=1,amou
  let seed=style.id*9173+region.length*419;const rand=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};
  const id=style.id;if(hand&&id===20)return result;
  const baseCount=id===20?2100:[3,4].includes(id)?110:id===21?32:42;
- const count=Math.round((id>=57&&id<=62?(id===61?180:id===58?55:36):baseCount)*(region==='head'||region==='palm'||region==='back_of_hand'?1:region==='body'?.8:.5));
+ const count=Math.round((id>=63?(id===66?60:id===68?22:id===72?12:38):id>=57&&id<=62?(id===61?180:id===58?55:36):baseCount)*(region==='head'||region==='palm'||region==='back_of_hand'?1:region==='body'?.8:.5));
  const batches:T.BufferGeometry[][]=[[],[],[]],normal=new T.Vector3(),point=new T.Vector3(),up=new T.Vector3(0,1,0);
  const span=bounds.getSize(new T.Vector3()),featureUnit=unit*T.MathUtils.clamp(Math.cbrt(Math.max(1e-6,span.x*span.y*span.z))/2.2,1,2.2);
  function add(g:T.BufferGeometry,pos:T.Vector3,q:T.Quaternion,scale:T.Vector3,material=0){g.applyMatrix4(new T.Matrix4().compose(pos,q,scale));if(!g.attributes.uv)g.setAttribute('uv',new T.Float32BufferAttribute(new Float32Array(g.attributes.position.count*2),2));if(g.index){const expanded=g.toNonIndexed();g.dispose();g=expanded;}batches[material].push(g);}
@@ -270,6 +272,18 @@ export function growMaterial(group:T.Group,style:Style,region:string,unit=1,amou
   const q=new T.Quaternion().setFromUnitVectors(up,normal),s=featureUnit*amount*(.055+rand()*.075)*larger,center=point.clone(),size=new T.Vector3(s,s,s);
   const geometry=(g:T.BufferGeometry,offset=0,scale=size,mat=0)=>add(g,center.clone().addScaledVector(normal,offset+s*.12),q,scale,mat);
   switch(id){
+   case 63:geometry(new T.SphereGeometry(.8,10,7),-s*.3,new T.Vector3(s,s*.6,s),k%3);break;
+   case 64:geometry(new T.SphereGeometry(.7,10,7),-s*.12,new T.Vector3(s*.8,s*.65,s*.8),k%3);if(k%3===0)geometry(new T.TorusGeometry(.45,.13,5,10).rotateX(Math.PI/2),s*.05,size,0);break;
+   case 65:geometry(new T.DodecahedronGeometry(.6,0),0,new T.Vector3(s,s*.45,s),k%3);geometry(new T.SphereGeometry(.22,6,4),s*.4,size,2);break;
+   case 66:{const curve=new T.CatmullRomCurve3([new T.Vector3(-.7,0,0),new T.Vector3(-.25,.35,.25),new T.Vector3(.3,.2,-.15),new T.Vector3(.65,.55,.1)]);geometry(new T.TubeGeometry(curve,7,.15,5,false),s*.06,new T.Vector3(s,s,s),k%3);break;}
+   case 67:{const curve=new T.CatmullRomCurve3([new T.Vector3(-.6,0,0),new T.Vector3(-.15,.3,.15),new T.Vector3(.5,.55,-.1)]);geometry(new T.TubeGeometry(curve,6,.12,5,false),s*.1,new T.Vector3(s*.75,s*1.4,s),k%3);break;}
+   case 68:{geometry(new T.CylinderGeometry(.48,.38,.045,12),s*.12,size,1);geometry(new T.TorusGeometry(.53,.13,6,12).rotateX(Math.PI/2),s*.17,size,0);for(let t=0;t<6;t++){const a=t*Math.PI/3,offset=new T.Vector3(Math.cos(a)*s*.34,s*.32,Math.sin(a)*s*.34).applyQuaternion(q);add(new T.ConeGeometry(.08,.34,5),center.clone().add(offset),q,size,2);}break;}
+   case 69:geometry(new T.BoxGeometry(.65,.13,.85),s*.04,size,0);geometry(new T.BoxGeometry(.08,.05,1.15),s*.14,size,2);geometry(new T.CylinderGeometry(.12,.12,.1,8),s*.18,size,2);break;
+   case 70:geometry(new T.BoxGeometry(1.25,.18,.85),s*.1,size,0);geometry(new T.CylinderGeometry(.17,.17,.19,8),s*.27,size,1);geometry(new T.BoxGeometry(.9,.05,.12),s*.25,size,2);break;
+   case 71:geometry(new T.CylinderGeometry(.15,.15,1.7,8).rotateZ(Math.PI/2),s*.13,size,0);geometry(new T.BoxGeometry(.2,.11,1.05),s*.12,size,1);break;
+   case 72:geometry(new T.BoxGeometry(.8,.1,.5),s*.07,size,1);geometry(new T.CylinderGeometry(.1,.1,.12,6),s*.16,size,0);break;
+   case 73:geometry(new T.BoxGeometry(1,.15,1),s*.1,size,0);geometry(new T.BoxGeometry(.08,.025,1.1).rotateY(Math.PI/4),s*.2,size,1);break;
+   case 74:geometry(new T.SphereGeometry(.32,8,6),-s*.05,size,2);geometry(new T.TorusGeometry(.45,.07,5,12).rotateX(Math.PI/2),s*.07,size,0);break;
    case 57:geometry(new T.OctahedronGeometry(.55,1),-s*.3,new T.Vector3(s*.6,s*.2,s*.6),k%3);break;
    case 58:geometry(new T.SphereGeometry(.55,10,7),-s*.4,new T.Vector3(s*.45,s*.65,s*.45),k%3);break;
    case 59:case 62:geometry(new T.CylinderGeometry(0,.32,1.7,6),s*.42,size,k%3);break;
@@ -306,6 +320,14 @@ export function growMaterial(group:T.Group,style:Style,region:string,unit=1,amou
    if(id===57||id===59){mat.transmission=.5;mat.thickness=unit*.08;mat.metalness=0;mat.ior=1.6;}
    if(id===61){mat.metalness=.9;applySparkle(mat,1);}
    if(id===62&&index===1){mat.emissive.set(style.accent);mat.emissiveIntensity=.5;}
+  }
+  if(id>=63&&id<=68){mat.metalness=0;mat.clearcoat=id===65?0:1;mat.clearcoatRoughness=.055;mat.roughness=id===65?.98:.16;
+   if(id===63){mat.transmission=.55;mat.thickness=unit*.08;mat.ior=1.33;}
+   if(id===64&&index===2){mat.transmission=.25;mat.thickness=unit*.06;}
+  }
+  if(id>=69&&id<=74){mat.metalness=id===74?0:style.metalness;mat.clearcoat=.8;mat.clearcoatRoughness=.06;
+   if(index===2&&[69,70,74].includes(id)){mat.emissive.set(style.accent);mat.emissiveIntensity=1.3;}
+   if(id===74&&index===0){mat.transmission=.75;mat.thickness=unit*.04;mat.roughness=.045;}
   }
   if(id===20){mat.sheen=1;mat.sheenColor.set(style.accent);}
   if(id===21){mat.color.set(index===1?style.accent:'#edffd3');mat.roughness=.12;mat.metalness=0;}

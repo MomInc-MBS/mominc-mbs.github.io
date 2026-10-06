@@ -111,5 +111,17 @@
 {"id":"prism-crystal","name":"Prism Crystal","tagline":"Shifting highlights and luminous color","colors":["#b18aff","#447bff","#fff2ff"],"unlockRule":"default","finish":"pearl"},
 {"id":"holo-foil","name":"Holographic Foil","tagline":"Shifting highlights and luminous color","colors":["#ff54de","#39e5ff","#fff56b"],"unlockRule":"default","finish":"pearl"},
 {"id":"glitter-resin","name":"Glitter Resin","tagline":"Shifting highlights and luminous color","colors":["#ff319c","#7025ff","#fff6db"],"unlockRule":"default","finish":"glitter"},
-{"id":"galaxy-geode","name":"Galaxy Geode","tagline":"Shifting highlights and luminous color","colors":["#21134e","#7b39e8","#63ffff"],"unlockRule":"default","finish":"glitter"}
+{"id":"galaxy-geode","name":"Galaxy Geode","tagline":"Shifting highlights and luminous color","colors":["#21134e","#7b39e8","#63ffff"],"unlockRule":"default","finish":"glitter"},
+{"id":"caustic-slime","name":"Caustic Slime","tagline":"Organic horror surface","colors":["#8aa52b","#20300b","#dcff57"],"unlockRule":"battle-pass","finish":"glaze"},
+{"id":"blister-hide","name":"Blister Hide","tagline":"Organic horror surface","colors":["#9e435f","#2d1727","#e7bb72"],"unlockRule":"battle-pass","finish":"glaze"},
+{"id":"rotten-rind","name":"Rotten Rind","tagline":"Organic horror surface","colors":["#626124","#211916","#a2b16b"],"unlockRule":"battle-pass","finish":"matte"},
+{"id":"parasite-nest","name":"Parasite Nest","tagline":"Organic horror surface","colors":["#786541","#151c14","#ece2b0"],"unlockRule":"battle-pass","finish":"glaze"},
+{"id":"exposed-sinew","name":"Exposed Sinew","tagline":"Organic horror surface","colors":["#b72945","#300b24","#efb5a1"],"unlockRule":"battle-pass","finish":"glaze"},
+{"id":"abyssal-maw","name":"Abyssal Maw","tagline":"Organic horror surface","colors":["#522045","#100d19","#d9e6a7"],"unlockRule":"battle-pass","finish":"glaze"},
+{"id":"circuit-alloy","name":"Circuit Alloy","tagline":"Machine surface","colors":["#273f50","#0a111c","#4effdc"],"unlockRule":"battle-pass","finish":"polished-metal"},
+{"id":"servo-armor","name":"Servo Armor","tagline":"Machine surface","colors":["#617080","#141b25","#ff6739"],"unlockRule":"battle-pass","finish":"brushed-metal"},
+{"id":"chrome-rib","name":"Chrome Rib","tagline":"Machine surface","colors":["#bfcde1","#202f46","#ffffff"],"unlockRule":"battle-pass","finish":"polished-metal"},
+{"id":"carbon-mech","name":"Carbon Mech","tagline":"Machine surface","colors":["#323d46","#080d15","#95bac9"],"unlockRule":"battle-pass"},
+{"id":"hazard-panel","name":"Hazard Panel","tagline":"Machine surface","colors":["#edb932","#131a20","#ffe9a2"],"unlockRule":"battle-pass"},
+{"id":"reactor-glass","name":"Reactor Glass","tagline":"Machine surface","colors":["#48e8ff","#063a55","#d4ffff"],"unlockRule":"battle-pass","finish":"glaze"}
 ]

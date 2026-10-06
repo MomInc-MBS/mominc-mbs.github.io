@@ -38,6 +38,18 @@ export const SPECIAL_SURFACE_PROFILES:readonly SurfaceProfile[]=[
  {id:60,name:'Holographic Foil',roughness:.18,metalness:.88,relief:.022,bump:.013,sheen:0,sheenRoughness:.3,clearcoat:1,clearcoatRoughness:.045},
  {id:61,name:'Glitter Resin',roughness:.075,metalness:0,relief:.006,bump:.002,sheen:0,sheenRoughness:.3,clearcoat:1,clearcoatRoughness:.025},
  {id:62,name:'Galaxy Geode',roughness:.22,metalness:.25,relief:.065,bump:.014,sheen:0,sheenRoughness:.3,clearcoat:.8,clearcoatRoughness:.06},
+ {id:63,name:'Caustic Slime',roughness:0.055,metalness:0,relief:0.035,bump:0.012,sheen:0,sheenRoughness:.6,clearcoat:1,clearcoatRoughness:.07},
+ {id:64,name:'Blister Hide',roughness:0.18,metalness:0,relief:0.065,bump:0.023,sheen:0,sheenRoughness:.6,clearcoat:1,clearcoatRoughness:.07},
+ {id:65,name:'Rotten Rind',roughness:0.94,metalness:0,relief:0.05,bump:0.025,sheen:0,sheenRoughness:.6,clearcoat:0,clearcoatRoughness:.07},
+ {id:66,name:'Parasite Nest',roughness:0.31,metalness:0,relief:0.07,bump:0.027,sheen:0,sheenRoughness:.6,clearcoat:0.6,clearcoatRoughness:.07},
+ {id:67,name:'Exposed Sinew',roughness:0.2,metalness:0,relief:0.045,bump:0.017,sheen:0,sheenRoughness:.6,clearcoat:1,clearcoatRoughness:.07},
+ {id:68,name:'Abyssal Maw',roughness:0.26,metalness:0,relief:0.065,bump:0.023,sheen:0,sheenRoughness:.6,clearcoat:0.8,clearcoatRoughness:.07},
+ {id:69,name:'Circuit Alloy',roughness:0.19,metalness:0.83,relief:0.027,bump:0.01,sheen:0,sheenRoughness:.6,clearcoat:0.6,clearcoatRoughness:.07},
+ {id:70,name:'Servo Armor',roughness:0.34,metalness:0.82,relief:0.055,bump:0.013,sheen:0,sheenRoughness:.6,clearcoat:0.4,clearcoatRoughness:.07},
+ {id:71,name:'Chrome Rib',roughness:0.09,metalness:0.96,relief:0.05,bump:0.012,sheen:0,sheenRoughness:.6,clearcoat:1,clearcoatRoughness:.07},
+ {id:72,name:'Carbon Mech',roughness:0.64,metalness:0.18,relief:0.018,bump:0.013,sheen:0,sheenRoughness:.6,clearcoat:0.25,clearcoatRoughness:.07},
+ {id:73,name:'Hazard Panel',roughness:0.46,metalness:0.55,relief:0.032,bump:0.014,sheen:0,sheenRoughness:.6,clearcoat:0.4,clearcoatRoughness:.07},
+ {id:74,name:'Reactor Glass',roughness:0.045,metalness:0,relief:0.018,bump:0.004,sheen:0,sheenRoughness:.6,clearcoat:1,clearcoatRoughness:.07},
 ];
 const profiles=new Map([...BUILTIN_SURFACE_PROFILES,pixelProfile,...SPECIAL_SURFACE_PROFILES].map(p=>[p.id,p]));
 export const builtinSurfaceProfile=(id:number)=>profiles.get(id);
@@ -55,6 +67,19 @@ export function sampleBuiltinSurface(id:number,x:number,y:number):SurfaceSample|
  const line=(v:number,n:number,w:number)=>1-smooth(w,w*2,Math.abs(fract(v*n)-.5));
  let h=.5,t=.5,glow=0,rough=.8;
  switch(id){
+  case 63:{const c=voronoi(x*7,y*7),sac=1-smooth(.04,.44,c.near),ooze=.5+.5*Math.sin(x*20+Math.sin(y*14)*3);h=.32+sac*.49;t=.13+sac*.67+ooze*.12;rough=.055+sac*.045;break;}
+  case 64:{const c=voronoi(x*10,y*9),pustule=1-smooth(.08,.36,c.near),rim=1-smooth(.02,.08,Math.abs(c.near-.33));h=.34+pustule*.56-rim*.08;t=.1+pustule*.8;rough=.13+.24*rim;break;}
+  case 65:{const c=voronoi(x*11,y*11),rot=1-smooth(.02,.14,c.gap),mould=hash(Math.floor(x*57),Math.floor(y*57))>.7?1:0;h=.56-rot*.4+mould*.12;t=.12+mould*.49+(1-rot)*.22;rough=.86+mould*.13;break;}
+  case 66:{const c=voronoi(x*9,y*9),hole=1-smooth(.1,.22,c.near),lip=1-smooth(.045,.1,Math.abs(c.near-.25));h=.53-hole*.42+lip*.18;t=.47-hole*.45+lip*.42;rough=.22+hole*.52;break;}
+  case 67:{const strand=.5+.5*Math.sin(x*95+Math.sin(y*13)*5),cleft=Math.pow(1-strand,8);h=.3+strand*.43-cleft*.15;t=.15+strand*.68;rough=.13+cleft*.35;break;}
+  case 68:{const c=voronoi(x*6,y*6),mouth=1-smooth(.06,.26,c.near),rim=1-smooth(.02,.07,Math.abs(c.near-.28)),tooth=hash(Math.floor(x*49),Math.floor(y*49))>.76?rim:0;h=.51-mouth*.47+rim*.26;t=.3-mouth*.28+tooth*.67;rough=.16+mouth*.64;break;}
+  case 69:{const wire=Math.max(line(x,12,.028),line(y,12,.025)),junction=1-smooth(.025,.065,Math.hypot(fract(x*6)-.5,fract(y*6)-.5));h=.49+wire*.17+junction*.2;t=.12+wire*.68+junction*.17;glow=wire*.8+junction;rough=.22-wire*.1;break;}
+  case 70:{const u=fract(x*4),v=fract(y*5),edge=Math.min(u,1-u,v,1-v),seam=1-smooth(.025,.07,edge),bolt=1-smooth(.028,.07,Math.hypot(u-.14,v-.14));h=.68-seam*.45+bolt*.25;t=.56-seam*.5+bolt*.4;rough=.32+seam*.42;break;}
+  case 71:{const rib=triangle(x*13),groove=1-smooth(.07,.18,rib);h=.32+.57*rib;t=.17+.78*rib;rough=.09+groove*.3;break;}
+  case 72:{const u=fract(x*18),v=fract(y*18),over=(Math.floor(x*18)+Math.floor(y*18))%2,thread=over?Math.sin(u*Math.PI):Math.sin(v*Math.PI);h=.44+thread*.14;t=.12+thread*.69;rough=.64+.12*(1-thread);break;}
+  case 73:{const stripe=fract((x+y)*7)<.5?1:0,u=fract(x*3),v=fract(y*3),edge=Math.min(u,1-u,v,1-v),seam=1-smooth(.025,.07,edge);h=.58-seam*.34;t=.07+stripe*.74-seam*.07;rough=.41+seam*.32;break;}
+  case 74:{const cell=voronoi(x*7,y*7),seam=1-smooth(.02,.07,cell.gap),core=1-smooth(.04,.16,cell.near);h=.52-seam*.12;t=.23+seam*.53+core*.23;glow=seam*.7+core;rough=.04+seam*.07;break;}
+
   case 57:{const cloud=.5+.5*Math.sin(x*12+Math.sin(y*9)*2)*Math.cos(y*11);h=.48+cloud*.07;t=.48+cloud*.4;rough=.045+cloud*.025;break;}
   case 58:{const c=voronoi(x*9,y*9),bubble=1-smooth(.1,.24,c.near);h=.49+bubble*.13;t=.7+bubble*.28;rough=.025+bubble*.035;break;}
   case 59:{const c=voronoi(x*8,y*8),facet=Math.floor(c.near*7)/7,crack=1-smooth(.012,.06,c.gap);h=.35+facet*.65-crack*.12;t=.3+facet*.65;rough=.035+crack*.16;break;}

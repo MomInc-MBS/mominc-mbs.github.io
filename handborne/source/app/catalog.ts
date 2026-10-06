@@ -51,7 +51,7 @@ const LEGACY_STYLES: StyleFamily[] = [
   { id: 22, name: 'Baby', realm: 'Little One · Soft forms', primary: '#efb398', secondary: '#d68e7c', accent: '#ffe2d5', emissive: '#000000', roughness: .52, metalness: 0, detail: 'baby' },
 ];
 
-const specialPaletteIds=["opal-jelly", "bubble-glass", "prism-crystal", "holo-foil", "glitter-resin", "galaxy-geode"];
+const specialPaletteIds=["opal-jelly", "bubble-glass", "prism-crystal", "holo-foil", "glitter-resin", "galaxy-geode","caustic-slime","blister-hide","rotten-rind","parasite-nest","exposed-sinew","abyssal-maw","circuit-alloy","servo-armor","chrome-rib","carbon-mech","hazard-panel","reactor-glass"];
 export const STYLES:StyleFamily[]=[...LEGACY_STYLES,
  ...[{id:30,name:'Flat',roughness:.55,metalness:0},{id:31,name:'Clay',roughness:.92,metalness:0},...BUILTIN_SURFACE_PROFILES,builtinSurfaceProfile(56)!,...SPECIAL_SURFACE_PROFILES].map(p=>{
   const palette=palettes.find(row=>row.id===specialPaletteIds[p.id-57]);
@@ -77,4 +77,4 @@ export const PURE_PRESETS = STYLES.filter(style=>![8,11].includes(style.id)).map
 
 
 // Legacy IDs stay importable; retired looks are excluded from new picks.
-export const PICKER_STYLES=STYLES.filter(style=>![8,11].includes(style.id)).sort((a,b)=>Number(b.id>=57)-Number(a.id>=57));
+export const PICKER_STYLES=STYLES.filter(style=>![8,11].includes(style.id)).sort((a,b)=>Number(b.id>=63)-Number(a.id>=63)||Number(b.id>=57)-Number(a.id>=57));

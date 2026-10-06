@@ -8,7 +8,7 @@ import {addHandScales} from './scales';
 import {sculptMaterial,growMaterial} from './material-language';
 const files=new Map<number,Promise<GLTF>>();
 function family(id:number) {
-  id=id>=30?(id===57||id===58||id===61?21:id===59||id===62?14:0):id;
+  id=id>=30?(id===57||id===58||id===61||id===63||id===74?21:id===59||id===62?14:0):id;
   if(!files.has(id)) files.set(id,new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync('/handborne/models/family-'+String(id).padStart(2,'0')+'.glb?v=5').catch(error=>{files.delete(id);throw error;}));
   return files.get(id)!;
 }
