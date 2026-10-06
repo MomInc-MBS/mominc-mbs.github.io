@@ -142,7 +142,7 @@ export default {
       clicks++;
       if (clicks % 5 === 0) {
         goonWho.textContent = "MYR5 · A POSITION HAS OPENED";
-        goonLine.innerHTML = `You have listened five times. That is the interview. <a class="apply" href="mailto:${MAIL}?subject=${encodeURIComponent("Application to be a goon")}&body=${encodeURIComponent("I would like to apply to be a goon. I understand everything has been provided.")}">Apply here to be a goon</a>`;
+        goonLine.innerHTML = `You have listened five times. That is the interview. <a class="apply" href="mailto:${MAIL}?subject=${encodeURIComponent("Application to be a goon")}&body=${encodeURIComponent("I want to be a goon. I understand everything is provided.")}">Apply here to be a goon</a>`;
       } else {
         goonWho.textContent = "MYR5 · MAKING YOU READY · FIFTH ITERATION · HER GOON";
         goonLine.textContent = deck.length ? deck.pop() : (deck = GOON_LINES.slice().sort(() => Math.random() - 0.5)).pop();
@@ -166,7 +166,7 @@ export default {
       boomRun++;                                  // any reveal still pending belongs to the run that just ended
       // A successfully revealed original film stays available after this 30-second effect ends.
       mi.classList.remove("armed", "mail"); goon && goon.classList.remove("boom"); goon?.querySelectorAll(".myr-shard").forEach(n=>n.remove()); const v = goon && goon.querySelector("video"); if (v) { v.pause(); v.remove(); }
-      goonWho.textContent = "MYR5 · MAKING YOU READY · FIFTH ITERATION · HER GOON"; goonLine.textContent = "Nothing happened. Everything has been reviewed. Click me; I have more."; queue();
+      goonWho.textContent = "MYR5 · MAKING YOU READY · FIFTH ITERATION · HER GOON"; goonLine.textContent = "Nothing happened. All is fine. Click me; I have more."; queue();
     }
     function explode() {
       if (!goon || goon.classList.contains("boom")) return;   // repeat clicks refused, and always were
@@ -181,7 +181,7 @@ export default {
       // write the mail bar into a fragment that is no longer on the screen.
       ctx.timeout(() => {
         if (run !== boomRun) return;   // disarmed inside the window: this reveal is stale, drop it
-        mailbar.innerHTML = `THE REAL PROGRAM IS OPEN. <a href="mailto:${MAIL}?subject=${encodeURIComponent("The real program, please")}&body=${encodeURIComponent("The family's signal is out. Send me the real program: the workouts, the diet, the mindfulness. Free, as promised.")}">Email us and every workout, the diet and the mindfulness come to you, free.</a><small>this window closes when the purple light passes</small>`;
+        mailbar.innerHTML = `THE REAL PROGRAM IS OPEN. <a href="mailto:${MAIL}?subject=${encodeURIComponent("The real program, please")}&body=${encodeURIComponent("The family's signal is out. Send me the real program: workouts, diet, calm. Free, as promised.")}">Email us. The workouts, diet and calm come free.</a><small>this closes when the purple light fades</small>`;
         mi.classList.add("mail");
         revealRealVideo();
         if (lock) { lock.textContent = "5/5"; box.classList.add("open"); }
@@ -221,27 +221,27 @@ export default {
     // generation tell, APPROVE the single card the company files as unretouched - which is why
     // myr-10 is an APPROVE while being just as machine-made as the other fourteen. `evidence` is
     // the tell, and it is the sentence already printed on the back of that card.
-    const GEN = "Generated for this channel. Not a photograph, and nobody real is depicted.";
+    const GEN = "Made for this channel. Not a photo. Nobody real is shown.";
     const KEY = {
       version: "mominc-inspection-key-1.0",
       snapshot: "2026-09-07",
-      basis: "All fifteen images were generated for this channel. The booth grades MOM Inc's filing rule, not image forensics: DENY a card with a visible generation tell, APPROVE the one card the company files as unretouched. A score here is not a measure of anyone's ability to spot an AI image.",
+      basis: "All fifteen images were made for this channel. The booth grades MOM Inc's filing rule, not your eyes. DENY a card with a visible AI tell. APPROVE the one card MOM files as untouched. Your score does not measure how well you spot AI.",
       records: {
-        "myr-01": { plaque:"MYR1",            file:"myr-01-smear.png",      origin:GEN, evidence:"The edge of the head dissolves into the background - the face stops being a face.", finding:"d", why:"A visible tell, so the filing rule denies it." },
-        "myr-02": { plaque:"MYR1.1",          file:"myr-02-confident.png",  origin:GEN, evidence:"No tell to find. Nothing was corrected; the render simply got cleaner.", finding:"d", why:"Denied on origin, not on a tell. A clean render is still a render - this is the card that shows the rule is not 'spot the mistake'." },
-        "myr-03": { plaque:"MYR2",            file:"myr-03-melted-bg.png",  origin:GEN, evidence:"The room, not the person: the wall behind the face is melted.", finding:"d", why:"A visible tell, so the filing rule denies it." },
-        "myr-04": { plaque:"MYR2 SERIES X",   file:"myr-04-earrings.png",   origin:GEN, evidence:"Paired objects that do not match - both ears, both earrings.", finding:"d", why:"A visible tell, so the filing rule denies it." },
-        "myr-05": { plaque:"MYR3",            file:"myr-05-sixfingers.png", origin:GEN, evidence:"Six fingers on the hand.", finding:"d", why:"A visible tell, so the filing rule denies it." },
-        "myr-06": { plaque:"MYR3 SLIM",       file:"myr-06-garbled-text.png", origin:GEN, evidence:"The sign is the shape of words, not words.", finding:"d", why:"A visible tell, so the filing rule denies it." },
-        "myr-07": { plaque:"MYR4",            file:"myr-07-plastic.png",    origin:GEN, evidence:"Two light sources, no cast shadow, and skin with no pores.", finding:"d", why:"A visible tell, so the filing rule denies it." },
-        "myr-08": { plaque:"MYR4 PRO MAX",    file:"myr-08-crowd.png",      origin:GEN, evidence:"People at the back of the crowd are unfinished.", finding:"d", why:"A visible tell, so the filing rule denies it." },
-        "myr-09": { plaque:"MYR5",            file:"myr-09-clean.png",      origin:GEN, evidence:"Nothing in the frame. The tell is outside it - who posted it, and when.", finding:"d", why:"Denied on origin. The picture holds up; the account it came from is the evidence, and the booth does not show you one." },
-        "myr-11": { plaque:"MYR5.1",          file:"myr-11-shadows.png",    origin:GEN, evidence:"Shadows fall two ways under one sun.", finding:"d", why:"A visible tell, so the filing rule denies it." },
-        "myr-12": { plaque:"MYR5.2",          file:"myr-12-mirror.png",     origin:GEN, evidence:"The mirror shows a room that is not behind them.", finding:"d", why:"A visible tell, so the filing rule denies it." },
-        "myr-13": { plaque:"MYR5.3",          file:"myr-13-weave.png",      origin:GEN, evidence:"The fabric pattern repeats exactly, which real cloth does not.", finding:"d", why:"A visible tell, so the filing rule denies it." },
-        "myr-14": { plaque:"MYR5.4",          file:"myr-14-glint.png",      origin:GEN, evidence:"Ring, watch and glass each catch light from their own private sun.", finding:"d", why:"A visible tell, so the filing rule denies it." },
-        "myr-15": { plaque:"MYR5.5",          file:"myr-15-crowdtext.png",  origin:GEN, evidence:"The background sign is spelled correctly and says something else on the second read.", finding:"d", why:"A visible tell, so the filing rule denies it." },
-        "myr-10": { plaque:"MYR5 / THE ARM",  file:"myr-10-carnage.png",    origin:GEN, evidence:"None. MOM Inc files this archive image as unretouched.", finding:"a", why:"The single APPROVE, and it is approved on the company's filing, not on the image: this picture was generated exactly like the other fourteen. That gap is the joke and it is the point." }
+        "myr-01": { plaque:"MYR1",            file:"myr-01-smear.png",      origin:GEN, evidence:"The edge of the head melts into the background.", finding:"d", why:"A visible tell, so the rule denies it." },
+        "myr-02": { plaque:"MYR1.1",          file:"myr-02-confident.png",  origin:GEN, evidence:"No tell to find. The picture just got cleaner.", finding:"d", why:"Denied on origin, not on a tell. A clean picture is still made by AI. The rule is not 'spot the mistake'." },
+        "myr-03": { plaque:"MYR2",            file:"myr-03-melted-bg.png",  origin:GEN, evidence:"Look at the room: the wall behind the face is melted.", finding:"d", why:"A visible tell, so the rule denies it." },
+        "myr-04": { plaque:"MYR2 SERIES X",   file:"myr-04-earrings.png",   origin:GEN, evidence:"Pairs that do not match: both ears, both earrings.", finding:"d", why:"A visible tell, so the rule denies it." },
+        "myr-05": { plaque:"MYR3",            file:"myr-05-sixfingers.png", origin:GEN, evidence:"Six fingers on the hand.", finding:"d", why:"A visible tell, so the rule denies it." },
+        "myr-06": { plaque:"MYR3 SLIM",       file:"myr-06-garbled-text.png", origin:GEN, evidence:"The sign looks like words but is not.", finding:"d", why:"A visible tell, so the rule denies it." },
+        "myr-07": { plaque:"MYR4",            file:"myr-07-plastic.png",    origin:GEN, evidence:"Two lights, no shadow, and skin with no pores.", finding:"d", why:"A visible tell, so the rule denies it." },
+        "myr-08": { plaque:"MYR4 PRO MAX",    file:"myr-08-crowd.png",      origin:GEN, evidence:"People at the back of the crowd are half done.", finding:"d", why:"A visible tell, so the rule denies it." },
+        "myr-09": { plaque:"MYR5",            file:"myr-09-clean.png",      origin:GEN, evidence:"Nothing in the picture. The tell is outside it: who posted it, and when.", finding:"d", why:"Denied on origin. The picture holds up. Who posted it is the clue, and the booth hides that." },
+        "myr-11": { plaque:"MYR5.1",          file:"myr-11-shadows.png",    origin:GEN, evidence:"Shadows fall two ways under one sun.", finding:"d", why:"A visible tell, so the rule denies it." },
+        "myr-12": { plaque:"MYR5.2",          file:"myr-12-mirror.png",     origin:GEN, evidence:"The mirror shows a room that is not behind them.", finding:"d", why:"A visible tell, so the rule denies it." },
+        "myr-13": { plaque:"MYR5.3",          file:"myr-13-weave.png",      origin:GEN, evidence:"The cloth pattern repeats exactly. Real cloth does not.", finding:"d", why:"A visible tell, so the rule denies it." },
+        "myr-14": { plaque:"MYR5.4",          file:"myr-14-glint.png",      origin:GEN, evidence:"Ring, watch and glass each catch light from a different sun.", finding:"d", why:"A visible tell, so the rule denies it." },
+        "myr-15": { plaque:"MYR5.5",          file:"myr-15-crowdtext.png",  origin:GEN, evidence:"The sign is spelled right but says something else when you look again.", finding:"d", why:"A visible tell, so the rule denies it." },
+        "myr-10": { plaque:"MYR5 / THE ARM",  file:"myr-10-carnage.png",    origin:GEN, evidence:"None. MOM Inc files this image as untouched.", finding:"a", why:"The one APPROVE. MOM approves it on paper, not on the picture. It was made by AI like the other fourteen. That is the joke, and the point." }
       }
     };
     const answerFor = id => { const r = KEY.records[id]; return r ? r.finding : null; };
@@ -352,7 +352,7 @@ export default {
     // --- the real program unlocks with the family: reads the shell's node store (mbs-state), same as the LCD cards
     let done = ctx.state.unlockedActive();
     if (lock) lock.textContent = `${Math.min(done.length, 5)}/5`;
-    if (done.length >= 5 && box) { box.classList.add("open"); txt.textContent = "The family's signal is out. The real program is yours: the honest track, said plainly, no ticks pre-filled. It opens here when it is built."; }
+    if (done.length >= 5 && box) { box.classList.add("open"); txt.textContent = "The family's signal is out. The real program is yours: the honest track, no ticks pre-filled. It opens here when it is built."; }
 
     // --- code glowing through the seams: a still field of ones and zeros behind the cardboard, her sense model made visible
     const el = byId("miCode"); if (el) { let s = ""; for (let r = 0; r < 220; r++) { let line = ""; for (let c = 0; c < 140; c++) line += Math.random() < 0.5 ? "0" : "1"; s += line + "\n"; } el.textContent = s; }
