@@ -8,7 +8,8 @@ export function createTransitionVeil(reducedMotion) {
   function draw(value, phase) {
     lastPhase = phase;
     intensity = Math.max(0, Math.min(1, value));
-    veil.style.opacity = String(intensity);
+    // Plateau at .9: the swirl is nearly opaque for most of the pulse, not just at the cut.
+    veil.style.opacity = String(Math.min(.9, intensity * 1.5));
     veil.style.setProperty("--warp-turn", `${reducedMotion ? 0 : phase * 135}deg`);
     veil.style.setProperty("--warp-scale", String(reducedMotion ? 1 : .8 + intensity * .7));
     veil.style.setProperty("--warp-core", String(reducedMotion ? 0 : Math.pow(intensity, 3)*.18));

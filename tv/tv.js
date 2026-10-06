@@ -309,7 +309,7 @@
 
   // --- channel: the root TV page opens MOM INC; explicit links open that channel.
   const name = current === "sag" ? "mominc" : current;
-  const testcard = `<section class="testcard" aria-label="MBS test card"><h1>MBS</h1><div class="spacer"></div><p>Mom's Brainwashing Stream. This set is tuned to no one yet.</p></section>`;
+  const testcard = `<section class="testcard" aria-label="MBS test card"><h1>MBS</h1><div class="spacer"></div><p>Mom's Brainwashing Stream. This set is not tuned to a channel yet.</p></section>`;
   if (name === "armie" && !window.MBS_FLOW?.armieReady()) {
     channel.innerHTML = `<section class="testcard"><h1>COACH ARMIE</h1><p>The Music Desk has your hand on order.</p><a href="../games/djscratch/">Visit DJ Scratch</a></section>`;
   } else if (name && COMING_SOON.includes(name) && name !== "armie") {
@@ -327,7 +327,8 @@
       if (!res.ok && !res.legacy) { window.MBS_LOAD?.failed(); return; }     // the runtime rendered the unavailable state; the set keeps working
       document.title = `MBS · ${name}`;
       const root = res.root && res.root.matches("[data-host]") ? res.root : channel.querySelector("[data-host]");
-      vfd(root ? root.dataset.ch || "" : "", root ? root.dataset.host : name.toUpperCase(), root ? root.dataset.show || "" : "");
+      // the dial's numbers are the manifest's; a fragment's data-ch is only a fallback for unnumbered channels
+      vfd(chanRec.ch > 0 ? String(chanRec.ch) : (root ? root.dataset.ch || "" : ""), root ? root.dataset.host : name.toUpperCase(), root ? root.dataset.show || "" : "");
       tv.dataset.gauge = (root && root.dataset.gauge === "off") ? "off" : "";   // a channel can hide the stress meter
       // Not converted to a module yet (2.18 does that one channel at a time): scripts inserted through
       // innerHTML never run, so re-create each one. This is the path with no teardown - it is exactly
@@ -381,13 +382,14 @@
     window.MBS_RT.pause("game");
     window.MBS.cancelWave && window.MBS.cancelWave();     // a sweep is television furniture, not game
     tv.dataset.mode = "game";
-    try { sessionStorage.setItem("mbs-game", "1"); } catch {}
+    if (!playFrame) try { sessionStorage.setItem("mbs-game", "1"); } catch {}   // a framed game cannot be restored by a reload, so do not remember it
     paintGame();
     const el = document.documentElement;
     if (el.requestFullscreen) { const r = el.requestFullscreen(); r && r.catch && r.catch(() => {}); }
     settleGame();
   }
   function exitGame() {
+    closePlay();
     if (!inGame()) return;
     window.MBS_RT.pause("game");
     delete tv.dataset.mode;
@@ -401,6 +403,47 @@
   window.MBS.enterGame = enterGame;
   window.MBS.exitGame = exitGame;
   window.MBS.inGame = inGame;
+
+  // --- PLAY inside the glass (TV1/TV2). The launch tile used to open /play/<slug>/ in a new tab, which
+  // left the television behind. Now it loads that page in an iframe that fills the screen: the page's
+  // own loading screen lands inside the glass, and when it reports ready the set goes to game mode.
+  // EXIT (or Escape) removes the frame and the channel is still there underneath, untouched.
+  // Goon keeps its tab: /gala/ is its own application, not a play route, and nests the set otherwise.
+  let playFrame = null, screenTop = 0;
+  function openPlay(url) {
+    if (playFrame) return;
+    playFrame = document.createElement("iframe");
+    playFrame.className = "play-frame";
+    playFrame.title = (chanRec.name || name) + " game";
+    playFrame.allow = "fullscreen; autoplay; accelerometer; gyroscope; xr-spatial-tracking";
+    let ready = false;
+    const play = () => { if (!ready) { ready = true; enterGame(); } };
+    // the play page says when it is on; a page without the loader (no mbs-game-ready) is on at load.
+    // The frame's initial about:blank fires a load of its own before the page arrives: not the game.
+    playFrame.addEventListener("load", () => {
+      let doc = null; try { doc = playFrame.contentDocument; } catch {}
+      if (!doc || doc.URL === "about:blank") return;
+      if (!doc.documentElement.hasAttribute("data-game-loading")) play();
+      else playFrame.contentWindow.addEventListener("mbs-game-ready", play);   // the loaded window, whether or not the first one was reused
+    });
+    screenTop = screen.scrollTop; screen.scrollTop = 0;
+    tv.dataset.play = "";
+    playFrame.src = url;
+    screen.append(playFrame);
+    playFrame.contentWindow.addEventListener("mbs-game-ready", play);   // same origin; the load handler attaches again on the loaded window
+  }
+  function closePlay() {
+    if (!playFrame) return;
+    playFrame.remove(); playFrame = null;
+    delete tv.dataset.play;
+    screen.scrollTop = screenTop;
+  }
+  channel.addEventListener("click", e => {
+    const a = e.target.closest && e.target.closest("[data-network-launch] a[href]");
+    if (!a || !isGame || name === "goon" || !/^\/play\/[a-z0-9-]+\/$/.test(a.pathname)) return;
+    e.preventDefault();
+    openPlay(a.href);
+  });
 
   if (isGame && gameKey && gameBtn) {
     gameKey.hidden = false;
@@ -527,7 +570,7 @@
     const bar = document.createElement("div");
     bar.id = "myrOffer"; bar.className = "myr-offer";
     bar.innerHTML = '<img src="assets/myr5-sticker-2.png" alt="" aria-hidden="true">'
-      + '<p>I already took the workout template out for you. It is done, it is yours, nobody asked me to. I only need the forms filled so it looks like you earned it.'
+      + '<p>I already took out the workout template for you. It is yours. Nobody asked me to. I just need the forms filled in so it looks like you earned it.'
       + ' <a href="mailto:' + window.MBS.MAIL + '?subject=' + encodeURIComponent("The free workout template")
       + '&body=' + encodeURIComponent("I did my part. Send the template you already took out.") + '">Send it to me</a></p>'
       + '<button type="button" aria-label="Close">×</button>';
@@ -564,8 +607,10 @@
 
   // --- boot: on-air, the set is already on; off-air, the visitor presses power
   // once the visitor has pressed power, the set stays on across channel clicks for the rest of the tab (Ian, 2026-08-26)
+  // A link straight to a game channel is the visitor asking for that game: the set comes on for it
+  // (off-air gating is the home channel's story), unless they switched it off themselves this tab.
   let savedPower = null; try { savedPower = sessionStorage.getItem("mbs-on"); } catch {}
-  if (savedPower === "1" || (savedPower !== "0" && onAir())) {
+  if (savedPower === "1" || (savedPower !== "0" && (onAir() || isGame))) {
     tv.dataset.state = "on";
     // Automatic on-air power carries into the next channel too.
     try { sessionStorage.setItem("mbs-on", "1"); } catch {}

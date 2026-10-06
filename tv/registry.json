@@ -10,12 +10,12 @@
       "eyebrow": "SLIDE AND MERGE",
       "genre": "tile puzzle",
       "premise": "Slide the tiles together. A goon is someone who gives. You are one too.",
-      "cta": "Slide To Merge",
+      "cta": "Create Your Goon",
       "does": "Swipe to merge tiles",
       "duration": "As long as you like",
       "input": "swipe or keyboard",
       "hero": "assets/mom-inc-mark.png",
-      "teaser": "Every merge raises the pledge. The crowd loves a giver right up until the giver stops. Reach 2048 or fill the board; MOM has an ending ready either way.",
+      "teaser": "Every merge raises the pledge. The crowd loves a giver until the giver stops. Reach 2048 or fill the board. MOM has an ending ready.",
       "roots": [
         "#ggFrame",
         "#gnCode"
@@ -30,11 +30,11 @@
       "cta2": "Make The First Merge",
       "progress_key": "",
       "continue_cta": "",
-      "profile_intro": "A COACH SHOULD KNOW WHO IS ACTUALLY IN THE ROOM.",
+      "profile_intro": "YOUR COACH SHOULD KNOW WHO IS IN THE ROOM.",
       "profile_questions": [
-        "Who, if anyone, supports what you are trying to do?",
-        "Should the coach involve them, remind you about them, or keep the plan between you and the coach?",
-        "When do you reliably have help, company or accountability?"
+        "Who helps you with your goals, if anyone?",
+        "Should the coach tell them, remind you, or keep it just between you two?",
+        "When do you have help or company?"
       ],
       "share_image": "assets/mom-inc-mark.png"
     },
@@ -48,7 +48,7 @@
       "genre": "product builder",
       "premise": "Your formula. Your flavour. Your name on the label.",
       "cta": "Mix your stack",
-      "does": "Add eight scoops, flavor and mix, then label your tub",
+      "does": "Add eight scoops. Pick a flavor. Name your tub.",
       "duration": "About 2 minutes",
       "input": "tap or drag",
       "hero": null,
@@ -66,11 +66,11 @@
       "cta2": "Seal The Can",
       "progress_key": "",
       "continue_cta": "",
-      "profile_intro": "YOUR BODY. YOUR SETTINGS. NOTHING IS PRE-MIXED.",
+      "profile_intro": "YOUR BODY. YOUR CALL. NOTHING IS PRE-MIXED.",
       "profile_questions": [
-        "How does caffeine usually hit you: fine, jittery, anxious, sleepless, or you do not use it?",
-        "Which supplements do you already take, if any?",
-        "When do you usually train: morning, afternoon, evening, or it moves around?"
+        "How does caffeine make you feel? Fine, jittery, anxious, wide awake, or you skip it.",
+        "Which supplements do you take now, if any?",
+        "When do you train? Morning, afternoon, evening, or it changes."
       ],
       "share_image": "assets/mom-inc-mark.png"
     },
@@ -120,7 +120,7 @@
       "genre": "infomercial",
       "premise": "It DJs. It cleans. It obeys.",
       "cta": "Try the music desk",
-      "does": "Follow four illuminated controls",
+      "does": "Follow the four lit controls",
       "duration": "About 2 minutes",
       "input": "tap",
       "hero": "assets/marks/djscratch.png",
@@ -137,14 +137,14 @@
         "ink": "#fdf6e3",
         "accent": "#ffd36e"
       },
-      "finish": "Complete the four-control sequence",
+      "finish": "Hit all four controls in order",
       "cta2": "Make Her Answer",
       "progress_key": "",
       "continue_cta": "",
       "profile_intro": "SET THE VOICE BEFORE MOM SETS IT FOR YOU.",
       "profile_questions": [
-        "What reliably gets you to start: a deadline, a person, music, a checklist, a joke, or something else?",
-        "How should your coach speak to you: direct, calm, warm, funny, quiet, or a mix?",
+        "What gets you started? A deadline, a person, music, a list, a joke, or something else?",
+        "How should your coach talk to you? Direct, calm, warm, funny, quiet, or a mix?",
         "What should your coach never say to you?"
       ],
       "share_image": "assets/marks/djscratch.png"
@@ -159,11 +159,11 @@
       "genre": "collect and evade",
       "premise": "THREE REPORTS MISSING. HEAD OFFICE WANTS THEM YESTERDAY.",
       "cta": "Find the reports",
-      "does": "Collect three office pages and enter the school",
-      "duration": "Untimed, and it saves",
+      "does": "Find three office pages. Then enter the school.",
+      "duration": "No timer. It saves.",
       "input": "tap or keyboard",
       "hero": "assets/marks/corgi.png",
-      "teaser": "ADDITIONAL FLOORS: ACCESS RESTRICTED.",
+      "teaser": "MORE FLOORS. NO ENTRY YET.",
       "roots": [
         ":scope > svg",
         "#cc"
@@ -174,15 +174,15 @@
         "ink": "#241a0e",
         "accent": "#4a2a7a"
       },
-      "finish": "Recover the school pages to unlock your file",
+      "finish": "Find the school pages to unlock your file",
       "cta2": "Find The First Page",
       "progress_key": "mbs-corgi-school-v3",
       "continue_cta": "Continue The Hunt",
-      "profile_intro": "THE ANCHOR NEEDS THREE FACTS. THEY ARE NOT HEADLINES.",
+      "profile_intro": "THE ANCHOR NEEDS THREE FACTS. NOT HEADLINES.",
       "profile_questions": [
-        "How many hours do you usually sleep on a normal night?",
-        "How heavy is your stress load this week: light, manageable, heavy, or prefer not to say?",
-        "How much news do you take in on a normal day: none, under 30 minutes, 30 to 90 minutes, or more?"
+        "How many hours do you sleep on a normal night?",
+        "How stressed are you this week? Light, okay, heavy, or not saying.",
+        "How much news do you read or watch each day? None, under 30 minutes, 30 to 90 minutes, or more."
       ],
       "share_image": "assets/marks/corgi.png"
     },
@@ -194,9 +194,9 @@
       "host": "DR GIRLFRIEND",
       "eyebrow": "DR GIRLFRIEND / RESEARCH & PRODUCTION",
       "genre": "how a claim is made",
-      "premise": "Six research tubes. Follow the evidence through the production line.",
+      "premise": "Six test tubes. Follow the facts through the factory.",
       "cta": "Enter the factory",
-      "does": "Mix twelve obsolete coaches and debunk their myths",
+      "does": "Mix twelve old coaches. Bust their myths.",
       "duration": "About 4 minutes",
       "input": "tap, mouse or keyboard",
       "hero": "assets/marks/girlfriend.png",
@@ -211,15 +211,15 @@
         "ink": "#f4ecd8",
         "accent": "#ff8a2a"
       },
-      "finish": "Pour left to right, mould and pack to reveal the goggles",
+      "finish": "Pour left to right. Mold and pack to find the goggles.",
       "cta2": "Grab The Goggles",
       "progress_key": "",
       "continue_cta": "",
-      "profile_intro": "PUT THE BELIEF AND THE SOURCE IN SEPARATE TUBES.",
+      "profile_intro": "KEEP THE CLAIM AND THE SOURCE IN SEPARATE TUBES.",
       "profile_questions": [
-        "What health or fitness advice do you already believe?",
+        "What health or fitness advice do you believe?",
         "Where did that advice come from?",
-        "How confident are you checking a claim against its original source: not yet, sometimes, usually, or very?"
+        "Can you check a claim against its first source? Not yet, sometimes, usually, or always."
       ],
       "share_image": "assets/marks/girlfriend.png"
     },
@@ -235,7 +235,7 @@
       "premise": "Choose a fighter, answer three five-question quizzes, and reach the exit. Every move you make, the Hand makes one too.",
       "cta": "Enter The Hall",
       "does": "Take turns: move, look back, answer the gates",
-      "duration": "Untimed, and it saves",
+      "duration": "No timer. It saves.",
       "input": "tap or keyboard",
       "hero": "assets/marks/armie.png",
       "teaser": "Coach Armie takes the Workout of the Day. He has counted your fingers and he did not like the number. The hall is long, the carpet is gold, and he is not the thing behind you.",

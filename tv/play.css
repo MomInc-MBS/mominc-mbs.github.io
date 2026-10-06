@@ -27,6 +27,7 @@ body{min-height:100vh; min-height:100dvh}
    control over a game's own status display is a collision waiting for every new channel, so the shell
    takes its own reserved strip and .glass gets what is left. */
 .rail{flex:0 0 auto;display:flex;align-items:center;gap:8px;height:44px;padding:0 6px}
+html[data-framed] .rail{display:none}   /* inside the television's play frame the set's EXIT key is the way back (mount.js) */
 .exit{width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;overflow:hidden;
   border-radius:50%;border:2px solid #ffd36e;background:#0b0710;
   color:#ffd36e;text-decoration:none;font-size:20px;line-height:1;font-weight:700;

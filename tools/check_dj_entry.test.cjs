@@ -20,3 +20,14 @@ test('Fuel entrances preserve the gate and open the builder inside the TV',()=>{
  assert.ok(fragment.window.document.querySelector('#fuStage'));assert.ok(fragment.window.document.querySelector('#controlTray'));assert.ok(fragment.window.document.querySelector('#doseEducation'));
  play.window.close();fragment.window.close();
 });
+test('workout playlist share codec round-trips, caps input and ignores bad links',()=>{
+ const src=fs.readFileSync(path.join(root,'tv/channels/djscratch.js'),'utf8'),a=src.indexOf('// ---- WORKOUT DATA START'),b=src.indexOf('// ---- WORKOUT DATA END');assert.ok(a>0&&b>a);
+ const WK=new Function(src.slice(a,b)+';return WK;')();
+ const pl={n:'Leg day <b>',items:[{k:'w1',p:'warm'},{k:'~Eye of the Tiger',p:'peak'},{k:'~Ünïcode ♫',p:'peak'},{k:'c2',p:'cool'}]};
+ const hash=WK.encode(pl);assert.match(hash,/^[\w-]+$/);const back=WK.decode(hash);
+ assert.deepEqual(back.items,pl.items);assert.equal(back.n,'Leg day b');
+ assert.equal(WK.decode('not-a-playlist'),null);assert.equal(WK.decode(''),null);assert.equal(WK.decode('a'.repeat(2500)),null);
+ const odd=WK.decode(WK.encode({n:'x',items:[{k:'zz9',p:'warm'},{k:'w2',p:'nope'},{k:'w2',p:'warm'}]}));assert.deepEqual(odd.items,[{k:'w2',p:'warm'}]);
+ const long=WK.decode(WK.encode({n:'y',items:Array.from({length:60},()=>({k:'w1',p:'warm'}))}));assert.equal(long.items.length,40);
+ assert.ok(WK.decode(WK.encode({n:'t',items:[{k:'~'+'q'.repeat(90),p:'cool'}]})).items[0].k.length<=41);
+});

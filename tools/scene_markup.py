@@ -9,7 +9,7 @@ def scene_markup(slug):
       'djscratch': '<div class="studio-sign">ON AIR <i></i></div><div class="turntable"><i class="vinyl"></i><i class="tonearm"></i><b class="deck-label">MBS / SIDE A</b><div class="eq"><i></i><i></i><i></i><i></i><i></i></div></div>',
       'corgi': '<div class="office-light"></div><div class="office-door"><span>HEAD OFFICE</span><i></i></div><div class="office-paper paper-a"></div><div class="office-paper paper-b"></div><div class="office-paper paper-c"></div><div class="office-clock"></div>',
       'girlfriend': '<div class="factory-poster"></div><div class="factory-tubes"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="factory-belt"></div><div class="factory-lamp"></div>',
-      'fuel': '<div class="fuel-orbit"></div><div class="fuel-tub"><span>MBS FUEL</span><b>YOUR<br>STACK.</b><small>FICTIONAL / UNTESTED</small></div><div class="fuel-scoop"></div><div class="fuel-powder"></div>',
+      'fuel': '<div class="fuel-orbit"></div><div class="fuel-tub"><span>MBS FUEL</span><b>YOUR<br>STACK.</b></div><div class="fuel-scoop"></div><div class="fuel-powder"></div>',
     }
     if slug not in scenes: return ''
     return '<div class="world world-'+slug+'"><div class="world-light"></div>'+scenes[slug]+'<div class="world-grain"></div></div>'

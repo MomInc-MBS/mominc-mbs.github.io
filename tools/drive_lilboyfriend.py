@@ -1,3 +1,4 @@
+# LEGACY: targets the old walking game tv/channels/lilboyfriend.js, not the new museum at play/lilboyfriend/.
 """Drive lilboyfriend's 3D museum: the half no gate touches.
 
 check_play drives the FLAT gallery (it forces WebGL off) and check_teardown only mounts and unmounts,

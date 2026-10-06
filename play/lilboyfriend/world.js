@@ -747,7 +747,7 @@ export function createWorld(THREE) {
   const field=new THREE.Group();field.name='residential-compression-field';field.position.copy(tablePosition);gallery.add(field);
   for(const x of [-2.55,2.55])box(field,[.075,3.5,.075],[x,1.75,1.45],mat.gold,.012);
   box(field,[5.17,.075,.075],[0,3.5,1.45],mat.gold,.012);
-  energy.surface(field,5.05,3.43,[0,1.76,1.45]);
+  energy.surface(field,5.05,3.43,[0,1.76,1.45]).name='gallery-field-front';
   energy.surface(field,3.0,3.43,[-2.55,1.76,-.05],[0,Math.PI/2,0]);
   energy.surface(field,3.0,3.43,[2.55,1.76,-.05],[0,Math.PI/2,0]);
   energy.surface(field,5.05,3.0,[0,3.5,-.05],[Math.PI/2,0,0]);

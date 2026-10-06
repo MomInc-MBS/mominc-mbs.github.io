@@ -14,19 +14,19 @@ const TUBES = [
 
 // A paper prototype is chosen once per batch, independently of research pour order.
 const CORRECTIONS = [
-  { belief: 'Short walks do not count as exercise.', correction: 'Even short bouts of activity count toward your weekly total.', source: 'CDC activity guidelines', url: 'https://www.cdc.gov/physical-activity-basics/guidelines/adults.html' },
-  { belief: 'Exercise is useless unless I hit the full weekly target.', correction: 'Some activity offers benefits even before you reach the recommended target.', source: 'CDC activity guidelines', url: 'https://www.cdc.gov/physical-activity-basics/guidelines/adults.html' },
-  { belief: 'Walking never counts as aerobic exercise.', correction: 'Brisk walking is one way to get moderate aerobic activity.', source: 'CDC activity guidelines', url: 'https://www.cdc.gov/physical-activity-basics/guidelines/adults.html' },
-  { belief: 'Cardio replaces all strength training.', correction: 'Adult guidelines include both aerobic activity and muscle strengthening.', source: 'CDC activity guidelines', url: 'https://www.cdc.gov/physical-activity-basics/guidelines/adults.html' },
-  { belief: 'Muscle turns into fat when training stops.', correction: 'Muscle and fat are different tissues; one does not transform into the other.', source: 'ACE fitness myths', url: 'https://www.acefitness.org/resources/everyone/blog/6913/breaking-down-fitness-myths-and-misconceptions/' },
-  { belief: 'Crunches burn fat specifically from my stomach.', correction: 'Training one body part does not selectively remove fat from that area.', source: 'ACE fitness myths', url: 'https://www.acefitness.org/about-ace/press-room/press-releases/319/ace-lists-most-common-fitness-myths/' }
+  { belief: 'Short walks do not count.', correction: 'Even short bursts of activity count toward your week.', source: 'CDC activity guidelines', url: 'https://www.cdc.gov/physical-activity-basics/guidelines/adults.html' },
+  { belief: 'Exercise is useless unless I hit the full goal.', correction: 'A little activity helps, even before you hit the goal.', source: 'CDC activity guidelines', url: 'https://www.cdc.gov/physical-activity-basics/guidelines/adults.html' },
+  { belief: 'Walking is never cardio.', correction: 'A brisk walk is moderate cardio.', source: 'CDC activity guidelines', url: 'https://www.cdc.gov/physical-activity-basics/guidelines/adults.html' },
+  { belief: 'Cardio replaces all strength work.', correction: 'Adults need cardio and muscle work.', source: 'CDC activity guidelines', url: 'https://www.cdc.gov/physical-activity-basics/guidelines/adults.html' },
+  { belief: 'Muscle turns into fat when I stop training.', correction: 'Muscle and fat are different. One does not turn into the other.', source: 'ACE fitness myths', url: 'https://www.acefitness.org/resources/everyone/blog/6913/breaking-down-fitness-myths-and-misconceptions/' },
+  { belief: 'Crunches burn the fat on my stomach.', correction: 'Working one body part does not burn fat from that spot.', source: 'ACE fitness myths', url: 'https://www.acefitness.org/about-ace/press-room/press-releases/319/ace-lists-most-common-fitness-myths/' }
 ];
 function creatureCard(batch) {
-  if(batch.special)return '<b>MYR5 · ORIGINAL PURPLE · MASTER PATTERN</b><i>Six research tubes, poured from left to right.</i><u>Original coach unlocked. Dr Girlfriend will stand and lower the goggles after dispatch.</u><small>MYR5 is the current generation. Other pour orders manufacture earlier prototypes.</small>';
+  if(batch.special)return '<b>MYR5 · ORIGINAL PURPLE · MASTER PATTERN</b><i>Six tubes, poured left to right.</i><u>Original coach unlocked. Dr Girlfriend will lower the goggles after dispatch.</u><small>MYR5 is the newest coach. Other pour orders make older ones.</small>';
   return '<b>MYR' + batch.version + ' · ' + batch.shapeName + ' / ' + batch.paletteName + '</b>' +
-    '<i>MODEL BELIEVED: “' + batch.myth.belief + '”</i>' +
-    '<u>UPGRADE APPLIED: ' + batch.myth.correction + '</u>' +
-    '<small>Earlier prototype corrected. MYR5 is the current generation. <a href="' + batch.myth.url + '" target="_blank" rel="noopener">' + batch.myth.source + '</a></small>';
+    '<i>OLD BELIEF: “' + batch.myth.belief + '”</i>' +
+    '<u>UPGRADE: ' + batch.myth.correction + '</u>' +
+    '<small>Old model fixed. MYR5 is the newest coach. <a href="' + batch.myth.url + '" target="_blank" rel="noopener">' + batch.myth.source + '</a></small>';
 }
 
 /* ---- THE GOGGLES' HINT RECORD (3.3 packet 2 / C074).
@@ -62,107 +62,107 @@ const HINTS = {
     {
       "id": "fuel",
       "ch": "DRINKS · MBS FUEL",
-      "hint": "Fill the tub before you try to seal it. The label is the last step.",
+      "hint": "Fill the tub first. The label comes last.",
       "steps": [
-        "Add exactly eight scoops, with no more than two of any ingredient.",
-        "Continue to flavor, pick one, then press Mix three times.",
-        "Choose all three name parts and a label color. Seal the tub to finish."
+        "Add eight scoops. Use no more than two of any one.",
+        "Go to flavor. Pick one. Press Mix three times.",
+        "Pick all three name parts and a label color. Seal the tub."
       ],
       "source": "fuel.js: renderBatch, nextButton and submitBtn handlers"
     },
     {
       "id": "goon",
       "ch": "EXTRA · GOON",
-      "hint": "Finish your character to unlock Goon, then merge the Gala tiles toward 2048.",
+      "hint": "Finish your character to open Goon. Then merge tiles up to 2048.",
       "steps": [
-        "Finish your character in the dressing room to unlock the Goon page. Choose Enter the Gala to play the original game.",
-        "Swipe or use the direction buttons to merge matching numbered tiles. Keep your highest tile in one corner and leave room for new tiles.",
-        "Reach 2048 to clear the Gala. The separate War Room opens after your full run and MYR5 app clearance."
+        "Finish your character in the dressing room. Then press Enter the Gala.",
+        "Swipe to merge tiles with the same number. Keep your top tile in a corner. Leave room for new tiles.",
+        "Reach 2048 to clear the Gala. The War Room opens after your full run and the MYR5 app."
       ],
       "source": "goon.html controls; channel-manifest.json goon finish and active=false"
     },
     {
       "id": "lilboyfriend",
       "ch": "CH 1 · LIL BOYFRIEND",
-      "hint": "The far door changes the museum. The ending is back where you entered.",
+      "hint": "The far door changes the museum. The ending is back at the entrance.",
       "steps": [
-        "Enter the museum and walk to the far end. Inspect the exhibits along the way.",
-        "Face the door and choose Put the glass in the hole. Let the purple flash finish.",
-        "Turn back and follow the hall to the entrance. Reaching the entrance triggers the final scene and records the finished page."
+        "Walk to the far end of the museum. Look at the exhibits on the way.",
+        "Face the door. Press Put the glass in the hole. Wait for the purple flash.",
+        "Turn back and walk to the entrance. The final scene starts and the page is done."
       ],
       "source": "lilboyfriend.js: attemptInsert, fireConnect and startStomp"
     },
     {
       "id": "djscratch",
       "ch": "CH 2 · DJ SCRATCH",
-      "hint": "Follow the lit control. Its number matters more than scratching the record.",
+      "hint": "Follow the lit knob. Its number matters more than scratching.",
       "steps": [
-        "Open the Music Desk game and turn on the deck.",
-        "In order, set BASS to 8, TREBLE to 3, VOLUME to 7 and TEMPO to 9. Finish all four lights to release the signal.",
-        "Copy the four settings printed after the signal into the thumb drive, in that order. Submit them to reveal the phonograph."
+        "Open the Music Desk game. Turn on the deck.",
+        "In order, set BASS to 8, TREBLE to 3, VOLUME to 7, TEMPO to 9. Light all four lights to get the signal.",
+        "Type the four settings into the thumb drive, in order. Submit them to show the phonograph."
       ],
       "source": "djscratch.js: SEQUENCE, TARGETS, registerTouch, captureKnobCode and codeForm"
     },
     {
       "id": "corgi",
       "ch": "CH 3 · CORTISOL CORGI",
-      "hint": "Three pages open the next door. The school has more to collect.",
+      "hint": "Three pages open the next door. The school has more.",
       "steps": [
-        "Enter the hunt. Walk to each office desk and collect all three reports.",
-        "Go through the door at the end of the hall. In the school, press F or tap Flashlight; switch it off to recharge.",
-        "Collect all three school pages to unlock the file and finish the public game. In the live version, collect three pages in each of its three school levels."
+        "Start the hunt. Walk to each office desk. Collect all three reports.",
+        "Go through the door at the end of the hall. In the school, press F or tap Flashlight. Turn it off to recharge.",
+        "Collect all three school pages to open the file and finish the game. The full game has three pages in each of three school levels."
       ],
       "source": "corgi.js: LEVELS, collect, markLevelComplete and leaveCut"
     },
     {
       "id": "girlfriend",
       "ch": "CH 4 · DR GIRLFRIEND",
-      "hint": "The correct MYR5 is a recipe. Pour the tubes in their displayed order.",
+      "hint": "The right MYR5 is a recipe. Pour the tubes in the order shown.",
       "steps": [
         "Pour tubes 1 through 6, left to right: Sentience juice, Mother’s love, Dog loyalty, Small juice, Womanly wit, MBS Fuel.",
-        "Mould the coach. Close the build report, then pack the finished unit.",
-        "Take the goggles. If the batch was poured in another order, choose Mix another coach and repeat the correct recipe."
+        "Mould the coach. Close the build report. Pack the coach.",
+        "Take the goggles. If you poured in another order, press Mix another coach and try the right recipe."
       ],
       "source": "girlfriend.js: TUBES, makeLine.correct, mouldCoach, pack and goggles"
     },
     {
       "id": "hand",
       "ch": "DJ SCRATCH · THE HELPING HAND AD",
-      "hint": "The offer waits for four finished games. Orange eyes alone do not finish every game.",
+      "hint": "The offer waits for four finished games. Orange eyes alone do not finish a game.",
       "steps": [
-        "Finish Fuel, Lil Boyfriend, DJ Scratch and Cortisol Corgi. The Helping Hand ad opens after the fourth finished page.",
-        "Closing the ad hides it for ten seconds. It returns when you change channels or return to the site tab, until your hand is finished. You can also reopen it under MOM’s Now Playing cards or at DJ Scratch.",
-        "Choose Build my hand. Make five different changes in the hand builder and follow its Coach Armie link. Your finished hand goes with you."
+        "Finish Fuel, Lil Boyfriend, DJ Scratch and Cortisol Corgi. The Helping Hand ad opens after the fourth.",
+        "Close the ad and it hides for ten seconds. It comes back when you change channels or return to the tab, until your hand is done. You can also reopen it at DJ Scratch.",
+        "Press Build my hand. Make five changes. Follow the Coach Armie link. Your hand goes with you."
       ],
       "source": "network-flow.js: REQUIRED, pagesReady, decision, handProfile and showAd"
     },
     {
       "id": "armie",
       "ch": "CH 5 · COACH ARMIE",
-      "hint": "Bring your finished hand. Read the signs, and use the rear view when you need time.",
+      "hint": "Bring your finished hand. Read the signs. Use the rear view when you need time.",
       "steps": [
-        "Unlock the Helping Hand offer, finish your hand, then enter Coach Armie. Pick your movement style and skill.",
-        "In the two-lane runs, move around walls and jump over cracks or fallen stones. Follow the turn shown ahead. For TAP NOW, make nine taps; the first starts the timer if you enabled it.",
-        "At the three marked junctions, choose left, right, then left. Answer each question using its clue; the feedback explains mistakes. Looking back pauses the timed tapping.",
-        "After the last hall, finish the lab scene and customize your MYR5. Use the finished coach when you are ready."
+        "Open the Helping Hand offer. Finish your hand. Then enter Coach Armie. Pick your style and skill.",
+        "In the two-lane runs, dodge walls and jump cracks and stones. Follow the turn shown ahead. For TAP NOW, tap nine times. The first tap starts the timer if it is on.",
+        "At the three marked turns, go left, right, then left. Answer each question with its clue. Mistakes are explained. Looking back pauses the tapping timer.",
+        "After the last hall, finish the lab scene. Then customize your MYR5. Use your coach when you are ready."
       ],
       "source": "armie.html: routes, startRun, tap, rear view, feedback and startLab; maze-ui.mjs controls"
     },
     {
       "id": "mominc",
       "ch": "HOME · MOM INC",
-      "hint": "Her rescue film has been edited. The first large MYR5 is hiding the original.",
+      "hint": "Her rescue film was edited. The first big MYR5 hides the original.",
       "steps": [
-        "Earn the signals from Fuel, Lil Boyfriend, DJ Scratch, Cortisol Corgi and Dr Girlfriend.",
-        "Return to MOM and click the first large MYR5. The invasion film replaces the rescue loop directly beneath him.",
-        "Compare the order: the original shows healthy planets before the fleet arrives. The AI inspection game below is separate from this reveal."
+        "Get the signals from Fuel, Lil Boyfriend, DJ Scratch, Cortisol Corgi and Dr Girlfriend.",
+        "Go back to MOM. Click the first big MYR5. The invasion film replaces the rescue loop under him.",
+        "Compare them. The original shows healthy planets before the fleet comes. The AI game below is a separate thing."
       ],
       "source": "mominc.js: canShowRealVideo and revealRealVideo; mbs-channels.js active set"
     },
     {
       "id": "sag",
       "ch": "SAG SNIFFER",
-      "hint": "MOM is still setting the table. This page is coming soon and is not required for any unlock.",
+      "hint": "MOM is still setting the table. This page is coming soon. You do not need it to unlock anything.",
       "steps": [],
       "source": "No playable Sag channel in the current network manifest"
     }
@@ -250,9 +250,9 @@ function dressGoggles(dg) {
   const escape = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const pages = HINTS.items.map(h => '<details><summary>' + escape(h.ch) + '</summary><p>' + escape(h.hint) + '</p>' +
     (h.steps.length ? '<details><summary>Show the solution</summary>' + h.steps.map((step,i) => '<p>' + (i+1) + '. ' + escape(step) + '</p>').join('') + '</details>' : '') + '</details>').join('');
-  body.innerHTML = '<h2>KNOWLEDGE IS POWER</h2><p class="sub">THE GOGGLES · PAGE HINTS &amp; SOLUTIONS</p>' +
-    '<p>Your goggles now work on every page. After five seconds without input, a gentle orange border marks the next action. Finish a page and the next unfinished page lights up.</p><p>Pick a page below for a hint, or open its solution for the steps.</p>' + pages +
-    '<details><summary>Scan obsolete coach instructions</summary>' + CORRECTIONS.map(r => '<details><summary>' + r.belief + '</summary><p>DETECTED: ' + r.belief + '</p><p>CORRECTION: ' + r.correction + '</p></details>').join('') + '</details>' +
+  body.innerHTML = '<h2>KNOWLEDGE IS POWER</h2><p class="sub">THE GOGGLES · HINTS &amp; SOLUTIONS</p>' +
+    '<p>Your goggles work on every page. If you wait five seconds, an orange border shows your next move. Finish a page and the next one lights up.</p><p>Pick a page for a hint. Open its solution for the steps.</p>' + pages +
+    '<details><summary>Scan old coach beliefs</summary>' + CORRECTIONS.map(r => '<details><summary>' + r.belief + '</summary><p>FOUND: ' + r.belief + '</p><p>FIX: ' + r.correction + '</p></details>').join('') + '</details>' +
     '<p class="foot">I can show you the way. You still have to walk it.</p>';
 }
 
@@ -376,8 +376,8 @@ export default {
       get('dgPaperMould').hidden=stage.dataset.motion!=='moulding';
       get('dgPaperMixer').hidden=!['pour','mould'].includes(L.phase);
       get('dgPaperGoggles').toggleAttribute('hidden',(busy&&!['lowering','walking'].includes(stage.dataset.motion))||!['grab','goggles'].includes(L.phase));
-      say.textContent=busy ? ({pouring:'Pouring the research.',moulding:'Pressing a paper coach onto the belt.',packing:'Folding the carton around the coach. Sealing the flaps.',shipping:'Dispatching the sealed batch.',lowering:'Original pattern accepted. Dr Girlfriend stands and lowers the goggles.',walking:'Dr Girlfriend leaves the floor. The goggles are yours.'}[stage.dataset.motion]) :
-        ({pour:(6-L.poured)+' tubes remain. Choose one.',mould:'The mixture is ready. Mould it.',pack:batch?.special?'Original purple MYR5 formed. Pack the master pattern.':batch?'MYR'+batch.version+' formed. Pack this paper coach.':'One unit formed. Pack it.',grab:'Batch dispatched. Take the goggles.',goggles:'The goggles are yours.'}[L.phase]);
+      say.textContent=busy ? ({pouring:'Pouring the tubes.',moulding:'Pressing a paper coach onto the belt.',packing:'Folding the box around the coach.',shipping:'Sending the box out.',lowering:'Original pattern accepted. Dr Girlfriend lowers the goggles.',walking:'Dr Girlfriend walks away. The goggles are yours.'}[stage.dataset.motion]) :
+        ({pour:(6-L.poured)+' tubes left. Pick one.',mould:'The mix is ready. Mould it.',pack:batch?.special?'Original purple MYR5 made. Pack it.':batch?'MYR'+batch.version+' made. Pack this paper coach.':'One coach made. Pack it.',grab:'Box sent. Take the goggles.',goggles:'The goggles are yours.'}[L.phase]);
       get('dgUnitDetails').hidden=!['pack','grab','goggles'].includes(L.phase);
       get('dgBatchRecord').hidden=!batch;
     }

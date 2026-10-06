@@ -14,3 +14,4 @@ PLAN-REVIEW-LOG.md
 
 # gate screenshots, regenerated on every run
 tools/shots/
+tools/node_modules/

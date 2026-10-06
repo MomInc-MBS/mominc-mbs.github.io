@@ -25,7 +25,6 @@ ZOOM: .channel's zoom:1.15 was retired 2026-09-06 (2.16/C002), so visual and lay
         linear-gradient(180deg, var(--plank-l) 0%, var(--plank) 40%, var(--plank-d) 78%, var(--plank-dd) 100%);
       background-blend-mode: normal, normal, normal, multiply, normal, normal}
   .sg *{box-sizing:border-box}
-  .sg .ribbon{margin:0; padding:6px 8px; text-align:center; background:var(--purple-dd); color:#c9a6ff; font-family:"Barlow Condensed",sans-serif;
       font-size:11px; letter-spacing:.1em; text-transform:uppercase; border-bottom:1px solid rgba(255,211,110,.3)}
   .sg .wrap{max-width:calc(520px * var(--sgscale,1)); margin:0 auto; padding:0 14px 10px}
 
@@ -276,7 +275,6 @@ ZOOM: .channel's zoom:1.15 was retired 2026-09-06 (2.16/C002), so visual and lay
   .sg .treatsinput::placeholder{color:#cbb8e6}
   .sg .treatsbtn{display:inline-block; font-family:"Barlow Condensed",sans-serif; font-weight:600; letter-spacing:.05em; font-size:13.5px;
       color:#3a2410; background:var(--gold); border-radius:999px; padding:8px 18px; border:0; cursor:pointer; flex:none}
-  .sg .treatsconsent{margin:0 0 8px; font-size:11px}
   .sg .treatsfine{margin-top:8px; font-style:italic}
 
   .sg .foot{text-align:center; padding:16px 8px 34px; color:#cbb8e6}
@@ -290,7 +288,6 @@ ZOOM: .channel's zoom:1.15 was retired 2026-09-06 (2.16/C002), so visual and lay
 </style>
 
 <article class="sg" id="sg" aria-label="Sag Sniffer" data-host="SAG SNIFFER" data-show="BASSET'S ASSETS" data-ch="4" data-gauge="off">
-  <p class="ribbon">Basset's Assets · debts collected, accounts settled · nothing forgiven</p>
   <div class="wrap">
     <header class="hero">
       <img class="bg" src="assets/sag-hut.jpg" alt="Sag's hut, a curtained storage stall lined with shelves of odd collateral">
@@ -310,7 +307,7 @@ ZOOM: .channel's zoom:1.15 was retired 2026-09-06 (2.16/C002), so visual and lay
       </nav>
 
       <section class="wheelsec sgpanel active" data-panel="wheel" id="sgWheelSec" aria-label="The walls">
-        <p class="sec-sub">He'd rather be reading the stars tonight. Instead: four panels of somebody's debt, and one nobody's opened yet. Turn the wheel with the arrows. Open one, one second to look before it shuts, then you bid, and it goes up fast.</p>
+        <p class="sec-sub">Turn the wheel with the arrows. Open a door. You get one second to look. Then you bid, and the price climbs fast.</p>
         <div class="stagewrap" id="sgStageWrap">
           <div class="wheelrow">
             <div class="wheelcol">
@@ -319,13 +316,13 @@ ZOOM: .channel's zoom:1.15 was retired 2026-09-06 (2.16/C002), so visual and lay
                   <video id="sgVid" muted playsinline aria-hidden="true"></video>
                   <img id="sgSagImg" src="assets/marks/sag.png" alt="Sag, presiding over the wheel">
                 </div>
-                <p class="sec-sub">A lot is one locked door and whatever somebody couldn't pay to keep. Bidding climbs three fake rungs, then SOLD reseals the door for good. Call it Storage Wars if that helps. It is still collections.</p>
+                <p class="sec-sub">A lot is a locked door and what someone could not pay to keep. Bids go up three fake steps. Then SOLD locks the door for good.</p>
               </div>
               <div class="wheelstage" id="sgWheelStage">
                 <canvas id="sgCanvas" tabindex="0" role="button" aria-label="The facing storage door. Press Enter to open it."></canvas>
                 <p class="wheeltag" id="sgTag" aria-hidden="true"></p>
                 <div class="sg-flat" id="sgFlat">
-                  <p class="sec-sub" style="margin:0 0 6px">Your browser can't draw the room, so here's the wall as a plain list. Same five doors, same odds.</p>
+                  <p class="sec-sub" style="margin:0 0 6px">Your browser can't draw the room. Here are the five doors as a list.</p>
                   <ul id="sgFlatList"></ul>
                 </div>
               </div>
@@ -337,10 +334,10 @@ ZOOM: .channel's zoom:1.15 was retired 2026-09-06 (2.16/C002), so visual and lay
             </div>
             <div class="sagcell" id="sgCell">
               <h2 class="sec-h">Ask the Ball</h2>
-              <p class="sec-sub">He already knows the answer. He'll make you wait for it anyway.</p>
+              <p class="sec-sub">He knows the answer. He will make you wait.</p>
               <form class="askform" id="sgAskForm">
-                <label class="asklabel" for="sgQ">Type a real money question. The ball answers what it wants.</label>
-                <p class="sec-sub askfine">Your question is saved in this browser so the channel knows you asked. It is not sent anywhere and nobody reads it.</p>
+                <label class="asklabel" for="sgQ">Ask a money question. The ball answers how it wants.</label>
+                <p class="sec-sub askfine">Your question stays in this browser.</p>
                 <input class="askin" id="sgQ" name="q" type="text" maxlength="140" autocomplete="off"
                        placeholder="Should I pay off the card or save it?">
                 <button class="askbtn" id="sgAsk" type="submit">Ask the ball</button>
@@ -371,13 +368,11 @@ ZOOM: .channel's zoom:1.15 was retired 2026-09-06 (2.16/C002), so visual and lay
 
       <section class="treats sgpanel" data-panel="treats" aria-label="Natural dog treats">
         <h2 class="sec-h">The One Real Thing</h2>
-        <p class="sec-sub">Everything above this line is a bit. This part isn't.</p>
         <div class="treatscard">
-          <p class="treatsbody">He'd rather be out there than in here. Natural dog treats, sent free for a photo proving your dog is still upright, and a dog fact whenever one crosses his mind. That is the plan and it is not a bit. It is also not running yet, so there is nothing to sign up to and he is not taking numbers.</p>
-          <p class="sec-sub treatsconsent">No form here yet, on purpose. When the treats are real this is where the signup will be, and it will say what it keeps and for how long before it asks for anything.</p>
+          <p class="treatsbody">Free dog treats for a photo of your dog. A dog fact now and then. It is not open yet, so there is nothing to sign up for.</p>
           <p class="treatsprice" id="sgTreatsMsg" aria-live="polite"></p>
         </div>
-        <p class="sec-sub treatsfine">No shop, no charge, no list, and nothing in this section is asked for, kept or sent. When that changes, this line changes with it.</p>
+        <p class="sec-sub treatsfine">No shop. No charge. Nothing is sent.</p>
       </section>
     </div>
 
@@ -388,7 +383,6 @@ ZOOM: .channel's zoom:1.15 was retired 2026-09-06 (2.16/C002), so visual and lay
 
     <footer class="foot">
       <span class="stamp">BASSET'S ASSETS · CH 4</span>
-      <p class="fine">Every lot here is fake and every bid is fake; nothing is for sale, no checkout exists, and no deposit is real. We're broke goons running a broke goon operation, and at least we're honest about which one we are. In-character participation only, never a sale. If your first-edition savings book or magical tax-exempt necklace has not arrived, it never will. The corgi down the hall owes more than everyone in this room combined; he won't tell you about it, he'll just bark.</p>
     </footer>
   </div>
 </article>
@@ -1079,7 +1073,7 @@ ZOOM: .channel's zoom:1.15 was retired 2026-09-06 (2.16/C002), so visual and lay
   const treatsMsg = document.getElementById("sgTreatsMsg");
   if (treatsForm) treatsForm.addEventListener("submit", e => {
     e.preventDefault();
-    treatsMsg.textContent = "Nothing was sent: there is no list yet and your number was not kept. When the treats are real this form will say so and ask you again.";
+    treatsMsg.textContent = "Nothing was sent. There is no list yet.";
     treatsForm.reset();
   });
 

@@ -295,14 +295,24 @@ body{display:block;padding:0;overflow:hidden}
   @keyframes lcdtake-x{from{transform:scaleX(0)} to{transform:scaleX(1)}}
   .panel .row{display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px; padding:0 4px}
   .panel .lcd{order:1} .panel #ctlrow{order:2; display:flex; justify-content:space-between}
+  .panel #ctlrow{gap:6px}
   .dial-block{width:54px; gap:0} .dial-ring{display:none} .dial{width:44px; height:44px; margin:0} .dial-block .legend{display:none}
-  .keys{flex-direction:row; align-items:center; gap:8px; margin:0}
+  /* dial, four keys and the MOM INC wordmark on ONE row at 360-375px: narrower keys and a smaller
+     wordmark rather than letting the wordmark wrap onto a dead row of its own */
+  .keys{flex-direction:row; align-items:center; gap:6px; margin:0}
+  .key{width:42px}
   .key-item{width:auto; grid-template-columns:auto; justify-items:center; gap:0} .key-item .legend{display:none}
-  .key.power{width:48px; height:44px}
+  .key.power{width:44px; height:44px}
   .pilot{margin-top:0}
-  .maker{margin-top:0} .maker .emboss,.maker .engrave{font-size:18px}
+  .maker{margin-top:0; gap:5px} .maker .emboss,.maker .engrave{font-size:16px}
   .model{display:none}
 }
+
+/* --- PLAY inside the glass (TV1/TV2, tv.js openPlay): the play route fills the screen exactly, so its
+   loading screen is in the tube and the cabinet never moves. The channel stays mounted underneath. */
+.play-frame{position:absolute; inset:0; width:100%; height:100%; border:0; background:#000; z-index:20}
+.tv[data-play] .screen{overflow:hidden}
+.tv[data-play] .channel{visibility:hidden}
 
 @media(max-width:640px){
   /* Keep the channel dial and cabinet around the sponsor's compact webpage. */

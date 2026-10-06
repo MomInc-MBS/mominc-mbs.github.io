@@ -1,3 +1,4 @@
+# LEGACY: targets the old walking game tv/channels/lilboyfriend.js, not the new museum at play/lilboyfriend/.
 """Photograph CH 2 (lilboyfriend) in the television and on its play route, at 1440 and 390.
 
 WHY A SCRIPT AND NOT A GATE, unchanged from tools/shot_fuel.py and worth repeating: a lost or

@@ -399,13 +399,13 @@
     },
     {
       "url": "/tv/atmosphere.css",
-      "revision": "c42e33d2193b8a6841fe15279f171a68f261ea31",
-      "bytes": 6447
+      "revision": "4e30b039f69a64d100bb13c9beece08759ee5994",
+      "bytes": 5778
     },
     {
       "url": "/tv/atmosphere.js",
-      "revision": "1b073454f0b448d5d6fd4111e1a6ed68e620f1fa",
-      "bytes": 3476
+      "revision": "4edb1ae072c42a2acd6385615fbf23c0747d42a5",
+      "bytes": 2857
     },
     {
       "url": "/tv/audio/electric-static.mp3",
@@ -439,8 +439,8 @@
     },
     {
       "url": "/tv/card.js",
-      "revision": "8cffbc5902cf84fdd307c68ee229067affaaf5b9",
-      "bytes": 8589
+      "revision": "f5e500bebff2e9f933ed486eb432c49696d70077",
+      "bytes": 8536
     },
     {
       "url": "/tv/channel-runtime.js",
@@ -449,8 +449,8 @@
     },
     {
       "url": "/tv/dj-booth.css",
-      "revision": "4de04f6d21b51495ba99192794360ae7e98dda20",
-      "bytes": 16388
+      "revision": "f9cccd0429f8f9ffb6ad66cb4df45b3a93ae35f8",
+      "bytes": 20818
     },
     {
       "url": "/tv/dj-identity.css",
@@ -469,8 +469,8 @@
     },
     {
       "url": "/tv/game-loader.js",
-      "revision": "b878513f9c4aa1a49836ae43ca6eb410df3d06c6",
-      "bytes": 12049
+      "revision": "bb1089ca528c0c55445642b8ac0082f298606dba",
+      "bytes": 12692
     },
     {
       "url": "/tv/identity.css",
@@ -504,13 +504,13 @@
     },
     {
       "url": "/tv/mbs-shim.js",
-      "revision": "892eff81caebad89efa7e73c9972ea722b532c0b",
-      "bytes": 10106
+      "revision": "42598e53b40f3672d207f4184d27d844e0dcf601",
+      "bytes": 13773
     },
     {
       "url": "/tv/mount.js",
-      "revision": "e6882db0ca5acefb854c5e0d273f7f8690450f4d",
-      "bytes": 7513
+      "revision": "53083fba2f31a7ac3e867e1cbbc5223e4ee8d693",
+      "bytes": 8300
     },
     {
       "url": "/tv/network-flow.css",
@@ -519,8 +519,8 @@
     },
     {
       "url": "/tv/network-flow.js",
-      "revision": "9988ccfcab38fe21a2de2b70a4f9b2108e644771",
-      "bytes": 8650
+      "revision": "8a8370bfbc0b5985e22f71f5bc685b3094260a15",
+      "bytes": 8604
     },
     {
       "url": "/tv/phone-layout.js",
@@ -529,8 +529,8 @@
     },
     {
       "url": "/tv/play.css",
-      "revision": "f60b269b409671dfcea295240f9247bcbb41e7bb",
-      "bytes": 4583
+      "revision": "8c461a1dadf6776494db442831f869acc1112e16",
+      "bytes": 4710
     },
     {
       "url": "/tv/questionnaire.js",
@@ -544,8 +544,8 @@
     },
     {
       "url": "/tv/retro-ads.js",
-      "revision": "b2edfec9a57c030c658fa8569989028da19578ca",
-      "bytes": 8672
+      "revision": "57fb05ce917c580b786616efade4593facb18eff",
+      "bytes": 8663
     },
     {
       "url": "/tv/retro-pointer.js",
@@ -554,13 +554,13 @@
     },
     {
       "url": "/tv/run-progress.js",
-      "revision": "dc120a76537b93687e053ef279bc1a43012f8887",
-      "bytes": 6933
+      "revision": "b19e0d1cca71cecc2a2718e45ae9343f3b89d427",
+      "bytes": 7589
     },
     {
       "url": "/tv/sound.js",
-      "revision": "ff089b274cab1e4eba50da032c2b9dcc74e7c28a",
-      "bytes": 9580
+      "revision": "8b7d0766fec6c09fd9b90c2bf53fc93c3bd93b11",
+      "bytes": 9635
     },
     {
       "url": "/tv/state.js",
@@ -574,17 +574,17 @@
     },
     {
       "url": "/tv/tv.css",
-      "revision": "6e9981624aded1d2dcc2c601a27468a39207c9ef",
-      "bytes": 27338
+      "revision": "2a0668d8a3cdf71d226d8dd4ba0a1e9a1d45c4b0",
+      "bytes": 27968
     },
     {
       "url": "/tv/tv.js",
-      "revision": "bbb356637615279d215ce4227b1b18df0f9d7f4e",
-      "bytes": 34537
+      "revision": "3fc36044dc23893989cb99d411099b2c6e9a3131",
+      "bytes": 37256
     }
   ],
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "c0577dda5d4168f27ad2"
+  "version": "700b18bae1443f185a85"
 }

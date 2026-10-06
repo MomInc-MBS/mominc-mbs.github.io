@@ -191,65 +191,65 @@ export default {
       { name: "THE SCHOOL", doorLabel: "THE ART WING", furniture: "desk", handAuthored: true, crazy: 0,
         pages: [
           { door: "THE LIBRARY", title: "FREE MENTORS FOR YOUR OWN BUSINESS", deskLabel: "FREE SBA MENTORING", deskDate: "SCORE / SBA",
-            flavor: "The card catalog drawer was already open. Someone had been through it before you. One index card sat on top, torn from a newspaper, folded twice.",
-            stat: "SCORE, a nonprofit resource partner of the U.S. Small Business Administration, gives free one-on-one mentoring and a free business plan review to anyone starting a company -- no cost, no revenue minimum to qualify.",
+            flavor: "The card drawer was already open. Someone looked through it before you. One card sat on top. It was torn from a newspaper.",
+            stat: "SCORE works with the U.S. Small Business Administration. It gives free mentors and free business plan checks to anyone starting a company. It costs nothing. You need no money to qualify.",
             src: "SCORE.org, a resource partner of the U.S. Small Business Administration.",
-            lessonTitle: "FREE IS A CLAIM YOU CAN GO CHECK.",
-            lesson: "A free-mentor claim is either true or it isn't, and it's checkable in one search. SCORE has run this exact program for decades under an actual federal partnership. Before assuming starting a business costs money you don't have, go look at what's already free." },
+            lessonTitle: "FREE IS A CLAIM YOU CAN CHECK.",
+            lesson: "A claim about free mentors is true or it is not. One search can check it. SCORE has run this program for decades. Before you think a business costs too much, look at what is free." },
           { door: "THE GYMNASIUM", title: "PASS ONE TEST, SKIP THE CLASS", deskLabel: "CLEP: CREDIT UNDER $100", deskDate: "COLLEGE BOARD",
-            flavor: "Someone had taped a page to the underside of the bleachers, face down, like they did not want it read standing up.",
-            stat: "CLEP exams, run by the College Board, let you earn real college credit for a flat fee under $100 per test, accepted at more than 2,900 colleges and universities nationwide.",
+            flavor: "Someone taped a page under the bleachers. It faced down. They did not want it read standing up.",
+            stat: "CLEP tests come from the College Board. Each test costs under $100. Pass one and you earn real college credit. More than 2,900 colleges take it.",
             src: "The College Board, CLEP program.",
-            lessonTitle: "ONE TEST IS CHEAPER THAN ONE SEMESTER.",
-            lesson: "A single exam fee under $100 standing in for a whole semester's tuition is a real trade, not a trick. Check the accepted-college list for the specific school you care about before assuming it doesn't apply to you." },
+            lessonTitle: "ONE TEST COSTS LESS THAN ONE CLASS.",
+            lesson: "One test under $100 can stand in for a whole class. That is a real deal, not a trick. Check if your school takes it before you say no." },
           { door: "THE LOCKER ROW", title: "IRELAND WILL PAY YOU TO MOVE TO AN ISLAND", deskLabel: "EUR 84,000 TO RELOCATE", deskDate: "IRELAND, 2022",
-            flavor: "It was folded into a locker vent, small enough that a hand that was not yours had to have put it there.",
-            stat: "In 2022 Ireland's government began offering grants of roughly 84,000 euro to people willing to relocate to, and renovate a home on, one of its remote offshore islands -- a real repopulation policy, not a rumor.",
+            flavor: "It was folded small and stuffed in a locker vent. A hand that was not yours put it there.",
+            stat: "In 2022 Ireland began paying about 84,000 euro to people who move to one of its far islands and fix up a home there. It is a real plan, not a rumor.",
             src: "Government of Ireland, Our Living Islands policy, 2022.",
-            lessonTitle: "A GOVERNMENT PROGRAM HAS A NAME AND A PAGE.",
-            lesson: "\"Countries pay you to move there\" sounds like an urban legend until you find the actual policy with an actual name. This one has both. Search the name before deciding whether it's real." }
+            lessonTitle: "A REAL PLAN HAS A NAME AND A PAGE.",
+            lesson: "\"A country will pay you to move there\" sounds made up. Then you find the real plan with a real name. This one has both. Search the name to see if it is real." }
         ] },
       { name: "THE ART WING", doorLabel: "THE ATTIC", furniture: "desk", crazy: 1,
         pages: [
           { door: "THE ART ROOM", title: "ADVICE FROM 900 FREE CENTERS", deskLabel: "FREE SBDC ADVISING", deskDate: "SBA NETWORK",
-            flavor: "Paint-smudged and pinned under a drying brush, like whoever left it meant to come back for it.",
-            stat: "The Small Business Administration's nationwide network of roughly 900 free Small Business Development Centers offers no-cost, one-on-one advising on writing a business plan and getting a company running, in every state.",
+            flavor: "It was smudged with paint and pinned under a brush. Whoever left it meant to come back.",
+            stat: "The Small Business Administration has about 900 free centers. They are called Small Business Development Centers. They give free help with business plans and getting started. There is one in every state.",
             src: "America's SBDC / U.S. Small Business Administration.",
-            lessonTitle: "FREE ADVICE STILL NEEDS A NAME ATTACHED.",
-            lesson: "900 centers is a specific, checkable number, not a vibe. Look up the one nearest you before deciding whether \"free business advice\" is a real thing or a slogan." },
+            lessonTitle: "FREE ADVICE NEEDS A NAME.",
+            lesson: "900 centers is a real number you can check. It is not a slogan. Look up the one nearest you." },
           { door: "THE COMPUTER LAB", title: "DSST: THE MILITARY'S CREDIT-BY-EXAM", deskLabel: "DSST EXAMS, OFTEN FREE", deskDate: "PROMETRIC / DANTES",
-            flavor: "Still warm from a monitor that shouldn't have been on after hours, half printed and left in the tray.",
-            stat: "DSST exams work the same way CLEP does -- one test in place of one class -- and for servicemembers the fee has historically been covered entirely through the Defense Department's DANTES program.",
+            flavor: "It was still warm. A monitor was on after hours. The page was half printed and left in the tray.",
+            stat: "DSST tests work like CLEP tests. One test takes the place of one class. For people in the military, the Defense Department's DANTES program has paid the fee.",
             src: "Prometric DSST program; U.S. Department of Defense DANTES.",
-            lessonTitle: "SOMEONE ELSE MAY HAVE ALREADY PAID THE FEE.",
-            lesson: "Before assuming a credit-by-exam costs you anything, check whether an employer, a branch of service, or a school already covers it. That one question has saved people real money." },
+            lessonTitle: "SOMEONE ELSE MAY HAVE PAID THE FEE.",
+            lesson: "Before you pay for a test, ask who else might pay. It could be a boss, the military, or a school. That one question has saved people real money." },
           { door: "THE FACULTY LOUNGE", title: "ITALY PAID TOWNS TO STAY ALIVE", deskLabel: "UP TO EUR 28,000 TO RELOCATE", deskDate: "CALABRIA, ITALY",
-            flavor: "Left face-up on the good couch, the one nobody but the staff was ever supposed to sit on.",
-            stat: "Italy's Calabria region offered new residents payments of up to about 28,000 euro over three years for moving into one of its depopulating towns and staying -- one of several such offers across small Italian towns this decade.",
+            flavor: "It sat face up on the good couch. Only teachers were allowed to sit there.",
+            stat: "Calabria, in Italy, offered up to about 28,000 euro over three years. You had to move to a town that was losing people and stay. Other small Italian towns made offers like it.",
             src: "Regione Calabria relocation incentive, widely reported 2021-2022.",
-            lessonTitle: "\"THIS DECADE\" MEANS IT'S STILL SEARCHABLE.",
-            lesson: "A recent policy leaves a recent paper trail. Search the region's own name plus the year before repeating a secondhand version of the story." }
+            lessonTitle: "IT IS NEW, SO YOU CAN STILL SEARCH IT.",
+            lesson: "A new plan leaves a new paper trail. Search the region's name and the year. Do that before you repeat the story." }
         ] },
       { name: "THE ATTIC", doorLabel: null, furniture: "desk", crazy: 2,
         pages: [
           { door: "THE AUDITORIUM", title: "FILE YOUR OWN COMPANY FOR UNDER $200", deskLabel: "MOST STATES: UNDER $200", deskDate: "STATE FILING FEES",
-            flavor: "Taped under a folding seat, in a room with no lights on and no reason for anyone to be seated.",
-            stat: "Forming an LLC yourself, without a lawyer, costs a state filing fee that in most U.S. states runs well under $200 -- a few charge more, several charge far less -- and no attorney is legally required to file it.",
+            flavor: "It was taped under a folding seat. The room was dark. No one had a reason to sit there.",
+            stat: "You can start an LLC yourself. You do not need a lawyer. In most U.S. states the fee is well under $200. A few cost more. Several cost much less.",
             src: "State Secretary of State filing fee schedules, by state.",
-            lessonTitle: "THE FEE VARIES BY STATE. YOURS IS ONE SEARCH AWAY.",
-            lesson: "\"It costs too much to start a company\" is a claim about a specific number that's different in every state and public on every Secretary of State's website. Look up your own state's fee before believing the average." },
+            lessonTitle: "EACH STATE'S FEE IS DIFFERENT. LOOK UP YOURS.",
+            lesson: "\"It costs too much to start a company\" is a claim about a number. Each state has its own number. It is posted on the state's website. Look up your own state's fee." },
           { door: "THE BOILER ROOM", title: "WHAT YOU ALREADY KNOW MIGHT BE CREDIT", deskLabel: "CREDIT FOR PRIOR LEARNING", deskDate: "CAEL",
-            flavor: "Scorched a little at one corner, resting on a pipe that should not have been that warm.",
-            stat: "Many community colleges run a \"credit for prior learning\" review that turns a work certification, military training, or documented job experience you already have into transferable college credit, at no extra tuition.",
+            flavor: "One corner was a little burned. It rested on a pipe that was too warm.",
+            stat: "Many community colleges have a \"credit for prior learning\" review. It can turn a work badge, army training, or job skills into college credit. You pay no extra tuition.",
             src: "Council for Adult and Experiential Learning (CAEL), prior learning assessment.",
-            lessonTitle: "WHAT YOU ALREADY DID MIGHT ALREADY COUNT.",
-            lesson: "Before paying for a class in something you already know how to do, ask the registrar whether a prior-learning review exists. The answer is yes or no, and it's a five-minute question." },
+            lessonTitle: "WHAT YOU DID BEFORE MIGHT COUNT.",
+            lesson: "Do not pay for a class on a skill you already have. First ask the school office about a prior-learning review. The answer is yes or no. It takes five minutes." },
           { door: "THE ATTIC", title: "SWITZERLAND PAID CASH TO STOP A VILLAGE DYING", deskLabel: "CASH AND FREE LAND, EUROPE", deskDate: "ALBINEN, SWITZERLAND",
-            flavor: "Under a drop cloth, dated but never thrown out, like someone up here was keeping score.",
-            stat: "The Swiss village of Albinen voted to pay newcomers cash to move in and build a home -- one of several small European towns, alongside offers in Greece, Spain and Sardinia, that have paid or given away property just to keep the local school and shops open.",
+            flavor: "It lay under a drop cloth. It was old, but no one threw it out. Someone up here was keeping score.",
+            stat: "The Swiss village of Albinen voted to pay newcomers cash to move in and build a home. Other small towns in Greece, Spain and Sardinia did the same. Some gave away property. They wanted to keep their school and shops open.",
             src: "Municipality of Albinen, Switzerland, resident vote widely reported 2017 onward.",
-            lessonTitle: "A SMALL TOWN'S OWN VOTE IS A RECORD, NOT A RUMOR.",
-            lesson: "A town council vote is public record in a way a viral post is not. Before repeating \"this country pays you to move there,\" find the town, the vote and the year." }
+            lessonTitle: "A TOWN'S VOTE IS A RECORD, NOT A RUMOR.",
+            lesson: "A town vote is a public record. A viral post is not. Before you say \"this country pays you to move there,\" find the town, the vote, and the year." }
         ] }
     ];
     const LEVELS_PUBLIC = [
@@ -261,23 +261,23 @@ export default {
           // generative AI existed. The edition and the scenario now travel with the number, in the src line the
           // visitor reads, which is the record -- not the header comment, which had drifted (see corgi.html).
           { door: "THE MAIL ROOM", title: "UP TO 800 MILLION JOBS, WORLDWIDE", deskLabel: "800M JOBS WORLDWIDE", deskDate: "MCKINSEY, 2017",
-            flavor: "Folded into an empty mail slot, the kind with a name label long since peeled off.",
-            stat: "In 2017 the McKinsey Global Institute modelled a range: 400 to 800 million people worldwide could be displaced by automation by 2030. The 800 million is the top of that range, its fastest-adoption scenario rather than its expected case, and it was published years before generative AI.",
+            flavor: "It was folded into an empty mail slot. The name label had peeled off long ago.",
+            stat: "In 2017, McKinsey guessed at a range. By 2030, 400 to 800 million people worldwide could lose work to machines. The 800 million is the top of that range. It is the fastest case, not the likely one. It came out years before generative AI.",
             src: "McKinsey Global Institute, “Jobs Lost, Jobs Gained: Workforce Transitions in a Time of Automation,” November 2017. 800M is that report's rapid-adoption upper scenario; its midpoint scenario is 400M.",
-            lessonTitle: "A GLOBAL NUMBER IS NOT YOUR NUMBER.",
-            lesson: "800 million is every job, everywhere, added together. It tells you the shape of the problem. It does not tell you what happens to the one job in this building. Keep the scale of the claim attached to the claim." },
+            lessonTitle: "A WORLD NUMBER IS NOT YOUR NUMBER.",
+            lesson: "800 million is every job, everywhere, added up. It shows how big the problem is. It does not tell you about the one job in this building. Remember how big the claim is." },
           { door: "THE CUBE FARM", title: "710,000 FEWER ADMINISTRATIVE ASSISTANTS", deskLabel: "710K FEWER ASSISTANTS", deskDate: "MCKINSEY, 2023",
-            flavor: "Left on an empty chair in a cubicle with the nameplate still screwed to the wall.",
-            stat: "McKinsey's 2023 research on generative AI and the future of work in America projected that demand for administrative assistants could fall by roughly 710,000 positions by 2030 as AI takes over repetitive clerical tasks.",
+            flavor: "It was left on an empty chair. The nameplate was still on the wall.",
+            stat: "McKinsey studied generative AI and work in America in 2023. It said about 710,000 fewer assistant jobs could be needed by 2030. AI takes over the same boring office tasks.",
             src: "McKinsey & Company, “Generative AI and the future of work in America,” July 2023. A projection to 2030, not a count of jobs already gone.",
-            lessonTitle: "A NAMED JOB TITLE IS EASIER TO CHECK THAN A TREND.",
-            lesson: "“Administrative assistants, down 710,000” can be checked against real hiring data for that one job title. “AI is coming for office jobs” cannot be checked against anything. Prefer the number with a job title attached to it." },
+            lessonTitle: "A JOB NAME IS EASIER TO CHECK THAN A TREND.",
+            lesson: "“Assistants, down 710,000” can be checked against real hiring data for one job. “AI is coming for office jobs” cannot be checked at all. Trust the number with a job name on it." },
           { door: "THE COPIER ALCOVE", title: "THE MOST REPETITIVE WORK GOES FIRST", deskLabel: "REPETITIVE WORK FIRST", deskDate: "MCKINSEY, 2023",
-            flavor: "Warm from the copier tray, like it had just come off the machine and nobody had claimed it.",
-            stat: "McKinsey's 2023 research found office and administrative support work involves an especially high share of repetitive, data-processing tasks, exactly the kind of work automated systems handle most easily.",
+            flavor: "It was warm from the copier tray. It had just come off the machine. Nobody had claimed it.",
+            stat: "McKinsey found in 2023 that office support jobs have many repeat tasks. Much of it is moving data around. Machines do that kind of work best.",
             src: "McKinsey & Company, “Generative AI and the future of work in America,” July 2023.",
-            lessonTitle: "REPETITIVE IS THE PATTERN, NOT THE JOB TITLE.",
-            lesson: "The pattern that predicts automation is the shape of the task, not the name on the door. A repetitive task inside a job that sounds safe is still a repetitive task. Look at what the day actually consists of." }
+            lessonTitle: "REPEAT TASKS MATTER, NOT JOB NAMES.",
+            lesson: "What matters is the kind of task, not the name of the job. A repeat task in a safe-sounding job is still a repeat task. Look at what your day is really made of." }
         ] }
     ];
     const LEVELS = MODE === "public" ? [LEVELS_PUBLIC[0], {...LEVELS_LIVE[0], doorLabel:"THE BACK OF THE SCHOOL", crazy:1, pages:LEVELS_PUBLIC[0].pages.map((p,i)=>({...p,door:LEVELS_LIVE[0].pages[i].door}))}] : LEVELS_LIVE;
@@ -412,13 +412,13 @@ export default {
         </header>
         <figure class="lead">
           <img src="assets/cortisol-corgi-badge.png" alt="Cortisol Corgi, the anchor, three anxious corgis in collars" width="1761" height="1516">
-          <figcaption>THE ANCHOR, WEARING A CAMERA, IN ${L.name} AFTER HOURS. HE HAS NOT SLEPT. NEITHER HAS THE STORY.</figcaption>
+          <figcaption>THE ANCHOR, WEARING A CAMERA, IN ${L.name} AFTER HOURS. HE HAS NOT SLEPT. NEITHER HAS THE NEWS.</figcaption>
         </figure>
         <div class="cols" aria-label="This morning's newspaper">
-          <p><span class="lede">${lvl === 0 ? (MODE === "public" ? "THE OFFICE WAS BRIGHT WHEN HE WENT IN." : "THE SCHOOL WAS EMPTY WHEN HE WENT IN.") : `HE IS IN ${L.name} NOW.`}</span> Three pages are loose somewhere in it. He is going to find all three, because someone has to, and the someone is him.</p>
+          <p><span class="lede">${lvl === 0 ? (MODE === "public" ? "THE OFFICE WAS BRIGHT WHEN HE WENT IN." : "THE SCHOOL WAS EMPTY WHEN HE WENT IN.") : `HE IS IN ${L.name} NOW.`}</span> Three pages are lost in here. He will find all three. Someone has to, and it is him.</p>
           <p class="head">PAGES FOUND: ${n} / 3</p>
-          <p>${n === 0 ? "None yet. Walk the halls." : n < 3 ? "Keep going. It is worse further in." : "All three. Turn the page and see what he found."}</p>
-          <p>Each page he finds gets turned into this paper, right here, in order. Press READ THE PAPER any time to look at what he already has.</p>
+          <p>${n === 0 ? "None yet. Walk the halls." : n < 3 ? "Keep going. It gets worse." : "All three. Turn the page to see them."}</p>
+          <p>Each page he finds goes into this paper. Press READ THE PAPER to see what he has.</p>
         </div>
         <p class="pageno">DRAG THE CORNER, OR PRESS PAGE &middot; PG 1 / ${N}</p>`;
       dressRansom(front);
@@ -442,7 +442,7 @@ export default {
           <section class="block r${i + 1}">
             <p class="kicker">Still out there</p>
             <h2>PAGE ${i + 1}</h2>
-            <p class="body">Not found yet. It is somewhere in ${p.door}. Go look.</p>
+            <p class="body">Not found yet. It is in ${p.door}. Go look.</p>
           </section>
           <p class="pageno">PG ${i + 2} / ${N}</p>`;
       }
@@ -458,7 +458,7 @@ export default {
           <section class="block r1 pressure" aria-labelledby="ccNextH"><span class="tape tl" aria-hidden="true"></span>
             <p class="kicker">${complete ? "Door open" : "Still out there"}</p>
             <h2 id="ccNextH" data-ransom="${complete ? LEVELS[lvl].doorLabel : "KEEP LOOKING"}"></h2>
-            <p class="body">${complete ? `He found all three here. The door to ${LEVELS[lvl].doorLabel} is open at the end of the hall. Walk to it.` : "Three pages are somewhere in this building. He has not found all of them yet."}</p>
+            <p class="body">${complete ? `He found all three. The door to ${LEVELS[lvl].doorLabel} is open at the end of the hall. Walk to it.` : "Three pages are hiding in this building. He has not found them all."}</p>
             <p class="cap" style="color:var(--gold)">WOOF WOOF. WOOF.</p>
             <p class="cap">(answer the quiz on Wednesday. every answer is a signal out. he cannot say more. he cannot say why.)</p>
           </section>
@@ -470,18 +470,17 @@ export default {
         <section class="block constr r3" aria-labelledby="scanH"><span class="tape tl" aria-hidden="true"></span>
           <p class="kicker">The anchor's own record</p>
           <h2 id="scanH" data-ransom="Submit your stress"></h2>
-          <p class="body">He walked ${MODE === "public" ? "the whole office" : "the whole school"} for these three pages. Hold still for the scan. Then tell him which one is coming for your job.</p>
+          <p class="body">He walked ${MODE === "public" ? "the whole office" : "the whole school"} for these three pages. Hold still for the scan. Then tell him which AI is coming for your job.</p>
           <div class="scan" id="scan"><div class="line"></div><div class="out" id="scanOut">HOLD STILL. LOOK AT THE DOG.</div></div>
           <button class="big" type="button" id="scanBtn">SCAN MY STRESS</button>
-          <p class="fine">The scan is purely visual. It measures nothing, stores nothing, and cannot see you. Cortisol Corgi cannot see either. That is canon.</p>
-          <p class="fine">Whatever you type below is saved in this browser so the channel knows you answered. It is not sent anywhere and nobody reads it.</p>
+          <p class="fine">The scan is for show. It cannot see you.</p>
+          <p class="fine">What you type stays in your browser.</p>
           <form id="ventForm">
             <label for="ventName">A name, or not</label>
             <input id="ventName" name="name" placeholder="Anonymous is fine.">
             <label for="ventAI">Which AI is coming for your job?</label>
             <input id="ventAI" name="aiJob" required placeholder="The chatbot. The scheduler. All of them.">
             <button class="big" type="submit" id="ventBtn">TELL THE DOG</button>
-            <p class="fine">Nothing is posted anywhere. In-character participation only, never a sale.</p>
           </form>
           <div class="feeder" id="feeder" aria-hidden="true">
             <svg class="pile" id="kibbleSvg" viewBox="0 0 560 180" preserveAspectRatio="xMidYMax meet" role="button" tabindex="-1" aria-label="Dog food pushed out. Click it."></svg>
@@ -553,10 +552,10 @@ export default {
       ctx.on(svg, "keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); drop(); } });
 
       const scan = byId("scan"), out = byId("scanOut"), btn = byId("scanBtn");
-      const readings = ["ELEVATED. AS EXPECTED.", "HIGH. THE DOG UNDERSTANDS.", "VERY HIGH. HAVE A SEAT.", "OFF THE CHART. WELCOME HOME.", "MILD. SUSPICIOUS. SCAN AGAIN."];
+      const readings = ["ELEVATED. AS EXPECTED.", "HIGH. THE DOG GETS IT.", "VERY HIGH. SIT DOWN.", "OFF THE CHART. WELCOME HOME.", "LOW. FISHY. SCAN AGAIN."];
       let scanCount = 0;
       ctx.on(btn, "click", () => { if (scan.classList.contains("running")) return;
-        scan.classList.remove("done"); scan.classList.add("running"); out.textContent = "SCANNING. DO NOT BREATHE NORMALLY."; scanCount++;
+        scan.classList.remove("done"); scan.classList.add("running"); out.textContent = "SCANNING. BREATHE LIKE A WEIRDO."; scanCount++;
         const held = Math.min(99, 44 + scanCount * 13);
         ctx.timeout(() => { scan.classList.remove("running"); scan.classList.add("done");
           out.textContent = `STRESS: ${held}%. ${readings[(scanCount - 1) % readings.length]}`; bankMeter(held); dispense(); }, 2300); });
@@ -587,7 +586,7 @@ export default {
     const hunting = () => cc.dataset.view === "hunt";
     function showHunt() { cc.dataset.view = "hunt"; huntStage.hidden = false; bookStage.hidden = true; deskStage.hidden = true; announce("Back in the hallway."); }
     function showBook() { cc.dataset.view = "book"; huntStage.hidden = true; bookStage.hidden = false; deskStage.hidden = true; renderBook(); }
-    function showDesk() { cc.dataset.view = "desk"; huntStage.hidden = true; bookStage.hidden = true; deskStage.hidden = false; announce("At the head office's desk. It wants a code."); }
+    function showDesk() { cc.dataset.view = "desk"; huntStage.hidden = true; bookStage.hidden = true; deskStage.hidden = false; announce("At the big boss's desk. It wants a code."); }
     cc.dataset.view = "hunt";
     // Round 2, section 2: BACK TO THE HALL normally just swaps stages -- but if a page was found at a desk and
     // the dog is still standing over it, this button has to stand him down first (camera, pitch, paws, the
@@ -618,7 +617,7 @@ export default {
       const ready = !!(MISSION_ID && API_BASE);
       if (!ready) {
         deskEl.dataset.state = "inert";
-        deskMsg.textContent = "THE SCREEN IS DARK. NOTHING TO TYPE INTO YET -- CHECK BACK DURING THE STREAM.";
+        deskMsg.textContent = "THE SCREEN IS DARK. COME BACK DURING THE STREAM.";
       }
       ctx.on(deskForm, "submit", e => {
         e.preventDefault();
@@ -632,10 +631,10 @@ export default {
         }).then(r => r.ok ? r.json() : Promise.reject(new Error("http " + r.status)))
           .then(data => {
             if (data && data.game && data.game !== "corgi") throw new Error("mismatched game");
-            deskEl.dataset.state = ""; deskMsg.textContent = "ACCESS GRANTED. SENDING YOU BACK.";
+            deskEl.dataset.state = ""; deskMsg.textContent = "YOU ARE IN. SENDING YOU BACK.";
             ctx.timeout(() => { const u = new URL(location.href); u.searchParams.set("mode", "live"); location.href = u.toString(); }, 900);
           })
-          .catch(() => { deskEl.dataset.state = ""; deskMsg.textContent = "THAT CODE COULD NOT BE CHECKED. TRY AGAIN."; });
+          .catch(() => { deskEl.dataset.state = ""; deskMsg.textContent = "THAT CODE FAILED. TRY AGAIN."; });
       });
     })();
 
@@ -889,11 +888,11 @@ export default {
                                 // own, so it must key off that flag, not the index.
           rooms.unshift({ id: "trophy", label: "THE TROPHY CASE", kind: "reflect" });
           rooms.splice(2, 0, { id: "lib-loop", label: "THE LIBRARY -- READING NOOK", kind: "flavor",
-            text: "A ring of low shelves, walked all the way around. Nothing here but dust and the sense of being circled." });
+            text: "Low shelves in a ring. You walk all the way around. Just dust, and the feeling of being watched." });
           rooms.splice(4, 0, { id: "gym-loop", label: "THE GYMNASIUM -- BLEACHER LOOP", kind: "flavor",
-            text: "Under and around the bleachers, a full lap. Something creaked on the far side before you got there." });
+            text: "You walk a full lap around the bleachers. Something creaked on the far side before you got there." });
           rooms.push({ id: "locker-loop", label: "THE LOCKER ROW -- VENT LOOP", kind: "flavor",
-            text: "A second row of lockers, looping back around to the first. One vent is warm to the touch." });
+            text: "Another row of lockers loops back to the first. One vent is warm." });
         }
         if (L.doorLabel) rooms.push({ id: "next", label: L.doorLabel, kind: "locked" });
         return rooms;
@@ -915,28 +914,28 @@ export default {
       function visit(r) {
         if (r.kind === "locked") {
           if(!state.found[state.level].every(Boolean)){read.textContent=r.label+'. Locked. Find all three pages here first.';return;}
-          if (MODE === 'public' && state.dreamPhase === 'done') { read.textContent = 'The dream is over. You are back in the office, and your file is unlocked.'; return; }
+          if (MODE === 'public' && state.dreamPhase === 'done') { read.textContent = 'The dream is over. You are back in the office. Your file is open.'; return; }
           if (MODE === 'public' && state.level === 1) {
             if (!canOpenBackDoor(state)) return;
-            read.textContent = 'The back door swings open. At the back of the school, three final pages wait on a desk.';
+            read.textContent = 'The back door swings open. Three last pages wait on a desk.';
             map.replaceChildren();
             const pickup = document.createElement('button'); pickup.type = 'button'; pickup.textContent = 'COLLECT THE FINAL PAGES';
             ctx.on(pickup, 'click', showFallbackEnding); map.append(pickup); return;
           }
           if (MODE === 'public' && state.lives === 0) { restartDream(state); save(); paintHearts(); }
-          if(advanceLevel()){ROOMS=roomsFor(state.level);paintMap();repaintAll();paintLeaf4();cc.dataset.school=String(!!LEVELS[state.level].handAuthored);byId('ccTally').textContent=(MODE === 'public' ? 'PICTURES ' : 'PAGES ')+state.found[state.level].filter(Boolean).length+'/3';read.textContent='You enter the break room and fall asleep. You wake in the school. Find the three scary pictures to open its back door.';}return;
+          if(advanceLevel()){ROOMS=roomsFor(state.level);paintMap();repaintAll();paintLeaf4();cc.dataset.school=String(!!LEVELS[state.level].handAuthored);byId('ccTally').textContent=(MODE === 'public' ? 'PICTURES ' : 'PAGES ')+state.found[state.level].filter(Boolean).length+'/3';read.textContent='You go in the break room and fall asleep. You wake up in the school. Find the three scary pictures to open the back door.';}return;
         }
         if (r.kind === "flavor") { read.textContent = r.text; return; }
         if (r.kind === "reflect") {
           reflected = true;
-          read.textContent = "The glass on the case catches you before you catch it. Round ears. A wet nose, close to the floor. You are the dog. You already knew that. Seeing it is different.";
+          read.textContent = "You see yourself in the glass. Round ears. A wet nose close to the floor. You are the dog. You knew that. Seeing it is different.";
           return;
         }
         const lvl = state.level, i = r.id, p = LEVELS[lvl].pages[i];
-        if (state.found[lvl][i]) { read.textContent = `${p.title}. Already in the paper. Press READ THE PAPER above the map to see it again.`; return; }
-        read.textContent = `${p.flavor} On a desk in ${LEVELS[lvl].name}. ${p.stat} ${p.src} ${p.lessonTitle} ${p.lesson}`;
+        if (state.found[lvl][i]) { read.textContent = `${p.title}. Already in the paper. Press READ THE PAPER to see it again.`; return; }
+        read.textContent = `${p.flavor} It was on a desk in ${LEVELS[lvl].name}. ${p.stat} ${p.src} ${p.lessonTitle} ${p.lesson}`;
         collect(i); paintMap();
-        if (state.found[lvl].every(Boolean) && LEVELS[lvl].doorLabel) read.textContent+=' All three pages found. Walk to the back door.';
+        if (state.found[lvl].every(Boolean) && LEVELS[lvl].doorLabel) read.textContent+=' You found all three pages. Walk to the back door.';
       }
       function showFallbackEnding() {
         state.dreamPhase = 'ending'; save();
@@ -947,13 +946,13 @@ export default {
           state.dreamPhase = 'done'; state.level = 0; save();
           cc.dataset.school = 'false'; ROOMS = roomsFor(0); paintMap(); repaintAll(); paintLeaf4();
           byId('ccTally').textContent = 'PAGES 3/3';
-          read.textContent = 'The scene retraces your way in: you lift your head, move away from the table, and leave the break room. You are back in the office. Your file is unlocked.';
+          read.textContent = 'You lift your head. You leave the break room. You are back in the office. Your file is open.';
           markLevelComplete(LEVELS.length - 1);
         });
         map.append(leave); leave.focus();
       }
       paintMap();
-      read.textContent = "Tap a room to see what Cortisol Corgi found there.";
+      read.textContent = "Tap a room to see what Cortisol Corgi found.";
       if (MODE === 'public' && state.dreamPhase === 'ending') showFallbackEnding();
     }
 
@@ -1667,23 +1666,23 @@ export default {
         let monsterVisibleAt = 0, monsterWasVisible = false;
         // 0905: public mode's dialogue lines, picked and held for a few seconds at a time (see the frame loop).
         const DEADLINE_LINES = [
-          "The Q3 numbers are due Thursday. Nobody has started them.",
-          "Did you get the memo about Friday? There wasn't one. There will be.",
-          "He needs that email forwarded. He will not say to who.",
+          "The numbers are due Thursday. Nobody has started.",
+          "Did you get the memo about Friday? There is no memo yet. There will be.",
+          "He needs that email sent on. He will not say to who.",
           "The deadline moved up again. It always moves up.",
-          "Someone has to own this by end of day. It is being decided who.",
+          "Someone must own this by tonight. They are picking who.",
           "The meeting about the meeting starts in five minutes."
         ];
         // 2026-10-04 (Ian): in the dark school the crawler mutters school stressors, not office ones.
         const SCHOOL_LINES = [
-          "The test is today. You did not know there was a test.",
-          "Everyone else got the reading. You never got the reading.",
+          "The test is today. You did not know about a test.",
+          "Everyone else got the reading. You did not.",
           "The group project is due. The group has not met.",
-          "Your locker combination is wrong. It was right yesterday.",
-          "Pick a partner. Everyone has already picked.",
+          "Your locker code is wrong. It worked yesterday.",
+          "Pick a partner. Everyone already picked.",
           "The bell rang. Nobody told you which room.",
           "The permission slip was due Monday. It is still in your bag.",
-          "They are reading the grades out loud. Yours is next."
+          "They are reading grades out loud. Yours is next."
         ];
         let talkLine = "", talkPickedAt = 0;
         // Capture is guarded once for both monster contact and static overload.
@@ -1701,16 +1700,16 @@ export default {
             death.setAttribute('role', 'dialog'); death.setAttribute('aria-modal', 'true');
             death.setAttribute('aria-label', exhausted ? 'No paper hearts left' : 'He found you');
             death.innerHTML = '<h2>' + (exhausted ? 'YOUR LAST HEART TORE.' : 'HE FOUND YOU.') + '</h2><p>' +
-              (exhausted ? 'The dream is over. Start another with three fresh paper hearts. Your office pages are still saved.' :
-              'One paper heart tore. ' + state.lives + ' remain. Return to the office and enter the break room again. Your pages are still saved.') +
-              '</p><button type="button">' + (exhausted ? 'Restart dream — return to office' : 'Return to the office') + '</button>';
+              (exhausted ? 'The dream is over. Start a new one with three fresh paper hearts. Your office pages are saved.' :
+              'One paper heart tore. ' + state.lives + ' left. Go back to the office and enter the break room again. Your pages are saved.') +
+              '</p><button type="button">' + (exhausted ? 'Start over, back to the office' : 'Return to the office') + '</button>';
             viewport.append(death); cc.dataset.caught = 'true';
             ctx.on(death, 'pointerdown', e => e.stopPropagation());
             ctx.on(death, 'keydown', e => e.stopPropagation());
             ctx.on(death.querySelector('button'), 'click', () => {
               if (exhausted) restartDream(state);
               death.remove(); delete cc.dataset.caught; returnToOffice();
-              announce('Back in the office. Your office pages are saved. Enter the break room to try again.');
+              announce('Back in the office. Your pages are saved. Enter the break room to try again.');
             });
             announce(death.textContent); death.querySelector('button').focus();
           } else {
@@ -2055,7 +2054,7 @@ export default {
           const schoolWake = roomCut?.stage === 'wake';
           roomCut = null; transitioning = false; delete cc.dataset.transition;
           cut.hidden = true; cut.style.display = 'none'; stopInput(); setFlash(schoolWake);
-          announce(schoolWake ? 'You woke up in the school. Find the three scary pictures, then go through the back door.' : 'Back in the office. The dream is over.');
+          announce(schoolWake ? 'You woke up in the school. Find the three scary pictures. Then go out the back door.' : 'Back in the office. The dream is over.');
         }
         function returnToOffice() {
           state.level = 0; save();
@@ -2104,7 +2103,7 @@ export default {
         function enterBreakRoom() {
           openCut(state.lives === 0 ? 'retry' : 'enter');
           cutTitle.textContent = state.lives === 0 ? 'NO PAPER HEARTS LEFT.' : 'BREAK TIME.';
-          cutText.textContent = state.lives === 0 ? 'Your office pages are saved. Begin another dream with three fresh paper hearts.' : 'Just a minute. You have earned it.';
+          cutText.textContent = state.lives === 0 ? 'Your office pages are saved. Start a new dream with three fresh paper hearts.' : 'Just a minute. You earned it.';
           if (state.lives === 0) { cutButton.textContent = 'START A NEW DREAM'; cutButton.hidden = false; cutButton.focus(); }
         }
         function startDreamEnding() {
@@ -2151,7 +2150,7 @@ export default {
           } else if (q.stage === 'wake') {
             renderer.render(scene,camera); cut.style.background = 'rgba(0,0,0,' + (1-Math.min(.3,t*.18)) + ')';
             cutTitle.textContent = 'THIS IS NOT THE BREAK ROOM.';
-            cutText.textContent = 'Find the three scary pictures, then the pages beyond the school back door. You have ' + state.lives + ' paper hearts. Your flashlight recharges while off.';
+            cutText.textContent = 'Find the three scary pictures. Then find the pages past the back door. You have ' + state.lives + ' paper hearts. Your flashlight recharges when it is off.';
             cutButton.textContent = 'TURN ON THE FLASHLIGHT';
             if (cutButton.hidden) { cutButton.hidden = false; cutButton.focus(); }
           } else if (q.stage === 'dream-wake') {
@@ -2173,7 +2172,7 @@ export default {
             if (progress === 1) {
               state.dreamPhase = 'done'; returnToOffice(); transitioning = true;
               q.stage = 'done'; cutTitle.textContent = 'BREAK TIME IS OVER.';
-              cutText.textContent = 'You made it out. The pages are safe. Your file is unlocked.';
+              cutText.textContent = 'You made it out. The pages are safe. Your file is open.';
               cutButton.textContent = 'BACK TO THE OFFICE'; cutButton.hidden = false; cutButton.focus();
               markLevelComplete(LEVELS.length - 1);
             }
@@ -2304,7 +2303,7 @@ export default {
           // null, there is nothing after it.
           if (!doorSeen && player.x > DOOR_X - 1.7) {
             doorSeen = true;
-            announce(MODE === 'public' && state.dreamPhase === 'done' ? 'Break time is over. You made it out of the dream.' : LEVELS[state.level].doorLabel ? (state.found[state.level].every(Boolean) ? (doorLeaf ? 'The break room door is unlocked. Walk up to it.' : `The door to ${LEVELS[state.level].doorLabel} is open. Go on.`) : `The hallway ends here. ${LEVELS[state.level].doorLabel}. Locked. Find the three pages first.`) : "The hallway ends here. Nothing past it. This is as far as the building goes.");
+            announce(MODE === 'public' && state.dreamPhase === 'done' ? 'Break time is over. You made it out of the dream.' : LEVELS[state.level].doorLabel ? (state.found[state.level].every(Boolean) ? (doorLeaf ? 'The break room door is open. Walk up to it.' : `The door to ${LEVELS[state.level].doorLabel} is open. Go on.`) : `The hall ends here. ${LEVELS[state.level].doorLabel}. Locked. Find the three pages first.`) : "The hall ends here. There is nothing past it.");
           }
           // 2026-10-03: the break room door stays CLOSED after the pages are found until the dog walks up and looks at
           // it (within 1.9u, facing dot > 0.3); only then does doorOpen flip, its collide rect go, and the leaf swing.
