@@ -168,7 +168,7 @@ export default {
     });
     ctx.on(byId("subForm"), "submit", e => {
       e.preventDefault();
-      const b = byId("subBtn"); b.textContent = "NOTED ON THIS DEVICE ONLY. NOTHING WAS SENT AND NOBODY HEARD IT."; b.disabled = true;
+      const b = byId("subBtn"); b.textContent = "SAVED ON THIS DEVICE ONLY. NOTHING WAS SENT."; b.disabled = true;
       ctx.mbs && ctx.mbs.form && ctx.mbs.form("djscratch", { track: true });
     });
     // The customization card. In-character only, and now genuinely nothing to send: every control is
@@ -177,7 +177,7 @@ export default {
     ctx.on(byId("orderForm"), "submit", e => {
       e.preventDefault();
       const b = byId("orderBtn"); b.textContent = "DRAWING UP YOUR HAND…"; b.disabled = true;
-      ctx.timeout(() => { b.textContent = "THAT IS YOUR HAND. NOTHING WAS SENT AND NO FACTORY EXISTS."; }, 1500);
+      ctx.timeout(() => { b.textContent = "THAT IS YOUR HAND. NOTHING WAS SENT. NO FACTORY EXISTS."; }, 1500);
     });
 
     /* ---- the hand editor. The racks first, so they are live whatever happens to three.js ------- */
@@ -463,7 +463,7 @@ export default {
     const picker=byId('djA').closest('.djid'), badge=document.createElement('div');badge.className='dj-identity-badge';picker.before(badge);
     const badgeName=document.createElement('strong'),rename=document.createElement('button');rename.type='button';rename.textContent='Choose DJ name';badge.append(badgeName,rename);
     identityDialog?.remove();const dialog=document.createElement('dialog');identityDialog=dialog;dialog.className='dj-name-window';dialog.setAttribute('aria-labelledby','dj-name-heading');
-    dialog.innerHTML='<div class="dj-name-title"><span>DJ_ID.EXE — MOM INC</span><span aria-hidden="true">♫</span></div><div class="dj-name-body"><div class="dj-name-lasers" aria-hidden="true">'+Array.from({length:8},(_,i)=>'<i style="--ray:'+i+'"></i>').join('')+'</div><h2 id="dj-name-heading">MAKE SOME NOISE.</h2><p>Build your name. Every part turns up the party.</p><div data-name-picker></div><label for="dj-moniker">Your 3-character moniker</label><input id="dj-moniker" minlength="3" maxlength="3" pattern="[A-Za-z0-9]{3}" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XYZ" aria-describedby="dj-tag-note"><small id="dj-tag-note">Three letters or numbers. This tag follows you onto the Gala leaderboard.</small><p data-name-note role="status"></p><button data-name-confirm type="button" disabled>THAT’S ME. START THE SET →</button><a class="dj-name-exit" href="/tv/?ch=mominc">Back to MOM Inc</a></div>';
+    dialog.innerHTML='<div class="dj-name-title"><span>DJ_ID.EXE — MOM INC</span><span aria-hidden="true">♫</span></div><div class="dj-name-body"><div class="dj-name-lasers" aria-hidden="true">'+Array.from({length:8},(_,i)=>'<i style="--ray:'+i+'"></i>').join('')+'</div><h2 id="dj-name-heading">MAKE SOME NOISE.</h2><p>Build your name. Every part turns up the party.</p><div data-name-picker></div><label for="dj-moniker">Your 3-character moniker</label><input id="dj-moniker" minlength="3" maxlength="3" pattern="[A-Za-z0-9]{3}" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XYZ" aria-describedby="dj-tag-note"><small id="dj-tag-note">Three letters or numbers. It goes on the Gala leaderboard.</small><p data-name-note role="status"></p><button data-name-confirm type="button" disabled>THAT’S ME. START THE SET →</button><a class="dj-name-exit" href="/tv/?ch=mominc">Back to MOM Inc</a></div>';
     dialog.querySelector('[data-name-picker]').append(picker);picker.open=true;document.body.append(dialog);
     const tag=dialog.querySelector('#dj-moniker'),confirm=dialog.querySelector('[data-name-confirm]'),note=dialog.querySelector('[data-name-note]');
     [djA,djB,djC].forEach((select,i)=>{if(chosen){select.value=chosen.parts[i];}else{const option=document.createElement('option');option.value='';option.textContent=['Choose your title','Choose your sound','Choose your edition'][i];option.disabled=true;option.selected=true;select.prepend(option);}select.required=true;});tag.value=chosen?.moniker||'';
@@ -614,7 +614,7 @@ export default {
       lamps.find(l => l.dataset.key === id)?.classList.add("on");
       chips.find(c => c.dataset.key === id)?.classList.add("glow");
       rack.querySelector('.ctrl[data-key="tempo"]')?.classList.add("glow");
-      cueHint.textContent = "Tap " + P.label + ", then set PACE to " + P.lo + "-" + P.hi + " BPM · one click = one number";
+      cueHint.textContent = "Tap " + P.label + ". Set PACE to " + P.lo + "-" + P.hi + " BPM. One click is one number.";
     }
     function setPhase(id) {
       phase = id;
@@ -668,8 +668,8 @@ export default {
     const codeForm=byId('codeForm'),codeInput=byId('codeInput'),codeSubmit=byId('codeSubmit'),codeNote=byId('codeNote');
     let knobCode=null;
     codeInput.disabled=codeSubmit.disabled=true;
-    function captureKnobCode(){knobCode=['bass','treble','volume','tempo'].map(k=>String(state[k]));codeInput.disabled=codeSubmit.disabled=false;codeNote.textContent='SIGNAL SETTINGS · DRIVE '+knobCode[0]+' / SHINE '+knobCode[1]+' / HYPE '+knobCode[2]+' / PACE '+knobCode[3]+'. Copy these four values into the drive, in that order.';}
-    ctx.on(codeForm,'submit',e=>{e.preventDefault();if(!knobCode)return;const typed=codeInput.value.trim();const values=typed.split(/[^0-9]+/).filter(Boolean);const match=values.length===4?values.every((v,i)=>Number(v)===Number(knobCode[i])):typed===knobCode.join('');if(!match){codeNote.textContent='SETTINGS DO NOT MATCH. Use the four values shown when the signal unlocked: '+knobCode.join(' / ');return;}codeNote.textContent='DRIVE READ · SETTINGS ACCEPTED';codeSubmit.disabled=true;byId('codeBox').classList.add('drive-read');transformToPhono();});
+    function captureKnobCode(){knobCode=['bass','treble','volume','tempo'].map(k=>String(state[k]));codeInput.disabled=codeSubmit.disabled=false;codeNote.textContent='SIGNAL SETTINGS · DRIVE '+knobCode[0]+' / SHINE '+knobCode[1]+' / HYPE '+knobCode[2]+' / PACE '+knobCode[3]+'. Type these four numbers into the drive, in order.';}
+    ctx.on(codeForm,'submit',e=>{e.preventDefault();if(!knobCode)return;const typed=codeInput.value.trim();const values=typed.split(/[^0-9]+/).filter(Boolean);const match=values.length===4?values.every((v,i)=>Number(v)===Number(knobCode[i])):typed===knobCode.join('');if(!match){codeNote.textContent='SETTINGS DO NOT MATCH. Use the four numbers from when the signal unlocked: '+knobCode.join(' / ');return;}codeNote.textContent='DRIVE READ · SETTINGS ACCEPTED';codeSubmit.disabled=true;byId('codeBox').classList.add('drive-read');transformToPhono();});
 
     // ---- THE PHONOGRAPH: what the whole record-player/turntable setup becomes once a code is redeemed.
     // The tuning dial reads data-station on <html> - also empty until the registry agent wires it (Codex B5) -

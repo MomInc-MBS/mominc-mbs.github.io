@@ -107,7 +107,7 @@ export default {
       fu.dataset.batch=phase;
       fu.querySelectorAll('[data-step]').forEach(s=>{if(s.dataset.step===phase)s.setAttribute('aria-current','step');else s.removeAttribute('aria-current');});
       byId('batchTitle').textContent={fill:'FILL YOUR TUB',flavor:'FLAVOR & MIX',label:'MAKE IT YOURS',done:'BATCH COMPLETE!'}[phase];
-      byId('batchHelp').textContent={fill:'Add eight scoops. Pick any combination, up to two of each ingredient.',flavor:'Pick a flavor, then press MIX three times to blend your batch.',label:'Choose the name and color below, then seal your tub.',done:'Your own MBS FUEL. Start another batch to try a different mix.'}[phase];
+      byId('batchHelp').textContent={fill:'Add eight scoops. Use up to two of each ingredient.',flavor:'Pick a flavor. Then press MIX three times.',label:'Pick a name and color below. Then seal your tub.',done:'Your own MBS FUEL. Start a new batch to try another mix.'}[phase];
       ingredientPanel.hidden=phase!=='fill';flavorPanel.hidden=phase!=='flavor';
       byId('batchFill').value=total();byId('batchCount').textContent=total()+' / 8 scoops';
       [...ingredientPanel.children].forEach((b,i)=>{const n=rows[i].dataset.level==='strong'?2:rows[i].dataset.level==='weak'?1:0;b.textContent=rows[i].querySelector('.name').textContent+' · '+n+'/2';b.disabled=phase!=='fill'||busy||n===2||total()>=8;});
@@ -142,7 +142,7 @@ export default {
       version: "fuel-cost-1.0",
       snapshot: "2026-09-07",
       currency: "USD",
-      basis: "Estimated bulk supplement-grade pricing, carried forward unchanged from this channel's first build. Frozen figures, not a live quote, and not sourced from a named supplier.",
+      basis: "Estimated bulk prices. Not a live quote. Not from a named seller.",
       excluded: [
         "labour, blending and filling",
         "shipping, freight and duties",
@@ -221,7 +221,7 @@ export default {
       stackLines.push(`Name: ${productName()}`);
       stackLines.push(`Cost per scoop (est.): $${scoopCost().toFixed(4)}`);
       stackLines.push(`Cost per container (est., ${SERVINGS_PER_CONTAINER} servings): $${containerCost().toFixed(2)}`);
-      const body = "My " + productName() + " stack:\n" + stackLines.join("\n") + "\n\nNothing was sent by the site. I am sending this myself. This drink is untested and does not exist yet.";
+      const body = "My " + productName() + " stack:\n" + stackLines.join("\n") + "\n\nThe site sent nothing. I am sending this myself. This drink is untested and does not exist yet.";
       const mail = (ctx.mbs && ctx.mbs.MAIL) || "";
       mailLink.href = `mailto:${mail}?subject=${encodeURIComponent("My " + productName() + " stack")}&body=${encodeURIComponent(body)}`;
       return stackLines;
@@ -261,7 +261,7 @@ export default {
       out.push(`<span>SCOOP = SUM OF (g/scoop ÷ 1000 × $/kg), SET LEVELS ONLY. CONTAINER = SCOOP × ${SERVINGS_PER_CONTAINER} + PACKAGING.</span>`);
       out.push(`<span>MBS FUEL RETAIL: $${RETAIL_PRICE.toFixed(2)} ${ASSUMPTIONS.currency}</span>`);
       out.push(`<span>RECORD ${ASSUMPTIONS.version}, SNAPSHOT ${ASSUMPTIONS.snapshot}. ${ASSUMPTIONS.basis}</span>`);
-      out.push(`<span>NOT COUNTED: ${ASSUMPTIONS.excluded.join("; ")}. A real container costs more than the figure above.</span>`);
+      out.push(`<span>NOT COUNTED: ${ASSUMPTIONS.excluded.join("; ")}. A real container costs more than this.</span>`);
       assumpBody.innerHTML = out.join("");
     }
 
@@ -276,7 +276,7 @@ export default {
       result.hidden = false;
       if (complete()) {
         sealed = fp; phase='done';renderBatch();status.textContent=productName()+' sealed! Your batch is ready.';
-        resultNote.textContent = productName() + " — STACK LOCKED IN. NOTHING WAS SENT. THE STACK STAYS IN THIS BROWSER, IF IT ALLOWS STORAGE. THIS DRINK DOES NOT EXIST YET.";
+        resultNote.textContent = productName() + " — STACK LOCKED IN. NOTHING WAS SENT. THE STACK STAYS IN THIS BROWSER. THIS DRINK DOES NOT EXIST YET.";
         submitBtn.textContent = "STACK LOCKED IN";
         submitBtn.disabled = true;           // re-enabled by renderCan() the moment the stack becomes a different one
         ctx.mbs && ctx.mbs.form && ctx.mbs.form("fuel", { stack: stackLines, name: productName() });
@@ -295,7 +295,7 @@ export default {
         // nudge is already pointing at the tub.
         const missing = rows.find(r => !r.dataset.level);
         const what = missing ? missing.querySelector(".name").textContent.toUpperCase() : "A FLAVOUR";
-        resultNote.textContent = `NOTHING WAS SENT OR SAVED. SET ${what} TO CARRY ON, THEN EVERY REMAINING ROW AND A FLAVOUR, TO LOCK IN THE FULL STACK.`;
+        resultNote.textContent = `NOTHING WAS SENT OR SAVED. SET ${what} FIRST. THEN SET EVERY OTHER ROW AND A FLAVOUR.`;
         const target = missing ? missing.querySelector(".lvl") : flavours[0];
         if (target && target.offsetParent) target.focus();
       }
