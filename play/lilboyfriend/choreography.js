@@ -10,8 +10,10 @@ function shotCamera(c) {
   };
 }
 export function theftShots(c) {
-  const {THREE,camera,traveler,thief,magnifier,caption,sound,freeMag,putMagnifier}=c;
+  const {THREE,camera,traveler,thief,magnifier,caption,sound,freeMag,putMagnifier,world}=c;
   const a=openingAnchors(THREE),v=(x,y,z)=>new THREE.Vector3(x,y,z),cam=shotCamera(c);
+  // The coach-arm beats are shot through the gallery field's front face, which washes the clay to a pale outline. Hide it for shots 4-5 only.
+  const fieldFront=on=>{const m=world?.gallery?.getObjectByName("gallery-field-front");if(m)m.visible=on;};
   let release=magnifier.getWorldPosition(v(0,0,0)),rotation=magnifier.getWorldQuaternion(new THREE.Quaternion());
   const heldOrigin=traveler.rightHand.position.clone(),heldPose=v(.03,1.32,-1.25),heldEye=camera.position.clone(),heldLook=traveler.group.localToWorld(v(.03,1.37,-1.30));
   const flat=new THREE.Quaternion().setFromEuler(new THREE.Euler(-Math.PI/2,0,.18));
@@ -30,11 +32,11 @@ export function theftShots(c) {
       if(t>.8)magnifier.position.y+=Math.sin((t-.8)/.2*Math.PI)*.035;
     }},
     {duration:.35,enter(){cam.capture();},update(t){cam.move(a.topDown,a.landing,t,foot);magnifier.position.copy(a.landing);magnifier.quaternion.copy(flat);}},
-    {duration:1.4,enter(){cam.capture();caption("A purple right hand reaches from under the table.");thief.group.visible=true;thief.group.scale.setScalar(1.8);thief.group.rotation.set(0,Math.PI/2,0);thief.group.position.copy(a.hiddenWrist);thief.setPose("grasp",0);thief.setGrasp(0);thief.group.updateMatrixWorld(true);
+    {duration:1.4,enter(){cam.capture();caption("A purple right hand reaches from under the table.");fieldFront(false);thief.group.visible=true;thief.group.scale.setScalar(1.8);thief.group.rotation.set(0,Math.PI/2,0);thief.group.position.copy(a.hiddenWrist);thief.setPose("grasp",0);thief.setGrasp(0);thief.group.updateMatrixWorld(true);
       origin=thief.group.position.clone();offset=magnifier.localToWorld(v(.214,0,0)).sub(thief.grip.getWorldPosition(v(0,0,0)));
     },update(t){cam.move(armEye,armLook,t,foot);thief.group.position.copy(origin).addScaledVector(offset,smooth(t));thief.setPose("grasp",0);thief.setGrasp(smooth(t),t);}},
     {duration:1.55,enter(){cam.capture();putMagnifier(thief.grip);origin=thief.group.position.clone();caption("Its long clay forearm pulls your controller beneath the table.");},update(t){cam.move(armEye,armLook,t,foot);moveHand(origin,a.withdrawnWrist,t);}},
-    {duration:1.65,enter(){cam.capture();caption("You crouch. A little open cardboard box waits in the shadow.");},update(t){cam.move(a.crouch,a.box.clone().add(v(0,.17,.17)),t,foot.clone().lerp(lowFoot,smooth(t)));thief.group.visible=false;traveler.leftHand.position.set(-.27,1.08-.77*smooth(t),-.35);traveler.rightHand.position.set(.27,1.08-.77*smooth(t),-.35);}},
+    {duration:1.65,enter(){cam.capture();fieldFront(true);caption("You crouch. A little open cardboard box waits in the shadow.");},update(t){cam.move(a.crouch,a.box.clone().add(v(0,.17,.17)),t,foot.clone().lerp(lowFoot,smooth(t)));thief.group.visible=false;traveler.leftHand.position.set(-.27,1.08-.77*smooth(t),-.35);traveler.rightHand.position.set(.27,1.08-.77*smooth(t),-.35);}},
     {duration:1.1,enter(){cam.capture();caption("The controller is gone. The box is just beyond the compression field.");},update(t){cam.move(a.crouch,a.boxInterior,t,lowFoot);traveler.leftHand.position.set(-.27,.31,-.35);traveler.rightHand.position.set(.27,.31,-.35);}},
   ];
 }

@@ -173,6 +173,43 @@
   M.formsDone = () => window.MBS_STATE.formsDone(FORM_SITES);
   M.rearmTest = () => {};                                  // localhost-only hook on the shell; no standalone equivalent
 
+  /* ---- TV3: the first-person games play best sideways. A soft hint, never a gate: one tap dismisses
+     it, turning the phone dismisses it, six seconds dismiss it, and it is shown once per tab. It sits at
+     the top edge because every one of these games keeps its controls along the bottom. Runs on
+     the standalone route and inside the television's play frame alike (the frame's viewport IS the
+     glass, so portrait there means a portrait phone). Styles ride along so a page without play.css
+     still gets the same hint. */
+  const SIDEWAYS = ["girlfriend", "lilboyfriend", "corgi"];
+  const hintSlug = slug || (location.pathname.match(/^\/play\/([a-z0-9-]+)/) || [])[1];
+  if (SIDEWAYS.includes(hintSlug)) {
+    const portrait = matchMedia("(orientation: portrait)");
+    const KEY = "mbs-sideways-hint";
+    let hint = null, timer = 0;
+    const hide = () => { if (!hint) return; hint.remove(); hint = null; clearTimeout(timer); try { sessionStorage.setItem(KEY, "1"); } catch {} };
+    const show = () => {
+      // The shim can run from <head> (play pages load it before <body>); wait for the body before appending.
+      if (!document.body) { addEventListener("DOMContentLoaded", show, { once: true }); return; }
+      let seen = false; try { seen = sessionStorage.getItem(KEY) === "1"; } catch {}
+      if (seen || !portrait.matches || hint) return;
+      if (!document.getElementById("mbs-sideways-style")) {
+        const style = document.createElement("style"); style.id = "mbs-sideways-style";
+        style.textContent = ".mbs-sideways{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 10px);transform:translateX(-50%);z-index:60;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px 8px 12px;border:1px solid rgba(255,211,110,.55);border-radius:999px;background:rgba(23,19,41,.92);color:#ffd36e;font:700 14px/1 system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.5);animation:mbsSideways .4s ease-out both}.mbs-sideways svg{width:22px;height:22px;flex:none;animation:mbsSidewaysTurn 2.2s ease-in-out infinite}@keyframes mbsSideways{from{opacity:0;transform:translate(-50%,-10px)}to{opacity:1;transform:translate(-50%,0)}}@keyframes mbsSidewaysTurn{0%,30%{transform:rotate(0)}60%,100%{transform:rotate(-90deg)}}@media(prefers-reduced-motion:reduce){.mbs-sideways,.mbs-sideways svg{animation:none}}";
+        document.head.append(style);
+      }
+      hint = document.createElement("button"); hint.type = "button"; hint.className = "mbs-sideways";
+      hint.setAttribute("aria-label", "Best played sideways. Tap to dismiss.");
+      hint.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="2.5" width="8" height="15" rx="2"/><path d="M12 14.5v.01"/><path d="M4 19.5h11a4 4 0 0 0 4-4"/><path d="M6.5 17l-2.5 2.5L6.5 22"/></svg>Best sideways';
+      hint.addEventListener("click", hide);
+      const rail = document.querySelector(".rail");   // standalone: under the rail; framed (rail hidden): at the top edge
+      if (rail && getComputedStyle(rail).display !== "none") hint.style.top = Math.round(rail.getBoundingClientRect().bottom + 8) + "px";
+      document.body.append(hint);
+      timer = setTimeout(hide, 6000);
+    };
+    portrait.addEventListener("change", () => { if (!portrait.matches) hide(); });
+    // after the loading screen, so the hint never sits on the logo; a page without the loader is on already
+    if (window.MBS_LOAD) addEventListener("mbs-game-ready", show, { once: true }); else show();
+  }
+
   addEventListener("pagehide", () => { if (started && !completedSites.size) emit("GAME_EXIT"); });
   addEventListener("error", e => emit("GAME_ERROR", { message: String(e.message || e.type).slice(0, 200) }));
   paint();
