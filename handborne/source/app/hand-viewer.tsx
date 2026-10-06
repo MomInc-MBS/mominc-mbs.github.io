@@ -6,7 +6,7 @@ import * as THREE from 'three';
 import { GLTFLoader, type GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
-import { REGIONS, STYLES, type RegionId } from './catalog';
+import { REGIONS, STYLES, styleFor, type RegionId } from './catalog';
 import { recipeCode, designCode, type Selection } from './recipe';
 import { getPose, mixPoses, type Pose } from './poses';
 import { bindHand, applyHandPose, type HandRig } from './pose-rig';
@@ -59,7 +59,7 @@ export const HandViewer=forwardRef<HandViewerHandle,Props>(function HandViewer({
         }
         const mats=Array.isArray(obj.material)?obj.material:[obj.material];
         for(const [i,m]of mats.entries())if(m instanceof THREE.MeshStandardMaterial) {
-          m.copy(obj.userData.sourceMaterials[i]);
+          const source=obj.userData.sourceMaterials[i];m.copy(source);m.onBeforeCompile=source.onBeforeCompile;m.customProgramCacheKey=source.customProgramCacheKey;
           if(current.current.gray){m.color.set('#92979c');m.emissive.set(0);m.map=null;m.normalMap=null;m.roughnessMap=null;m.metalnessMap=null;m.roughness=.66;m.metalness=0;}
           if(current.current.gray&&m instanceof THREE.MeshPhysicalMaterial){m.transmission=0;m.thickness=0;m.clearcoat=0;m.sheen=0;m.iridescence=0;}
           if(!current.current.gray&&region===current.current.selectedRegion)m.emissive.add(new THREE.Color('#081b14'));
@@ -112,7 +112,7 @@ export const HandViewer=forwardRef<HandViewerHandle,Props>(function HandViewer({
           if(!(obj instanceof THREE.Mesh))return;
           for(const m of (Array.isArray(obj.material)?obj.material:[obj.material]))if(m instanceof THREE.MeshStandardMaterial&&!seen.has(m.name)){
             seen.add(m.name);
-            const style=STYLES[m.userData.materialStyle]||STYLES.find(s=>m.name.startsWith(s.name.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'_'));
+            const style=styleFor(m.userData.materialStyle)||STYLES.find(s=>m.name.startsWith(s.name.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'_'));
             const c=m.map&&style?new THREE.Color(style.primary):m.color;
             mtl+='newmtl '+m.name+'\nKd '+[c.r,c.g,c.b].join(' ')+'\nKs 0.25 0.25 0.25\nNs '+Math.round((1-m.roughness)*200)+'\nd 1\n\n';
           }
