@@ -471,14 +471,7 @@
         "hero": null,
         "teaser": "Prepared for you. Named by you. Provided by MOM.",
         "roots": [
-          "#introCard",
-          "#stageCard",
-          "#stackCard",
-          "#flavCard",
-          "#nameCard",
-          ".card[aria-label=\"Your can\"]",
-          ".head",
-          ".fu > .ticker:first-child"
+          "#fuStation"
         ],
         "hide": [],
         "palette": {
