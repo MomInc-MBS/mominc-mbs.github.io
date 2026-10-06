@@ -149,8 +149,8 @@
     },
     {
       "url": "/tv/channel-manifest.json",
-      "revision": "22b96b08292b7412384313c858e3b3720015e9a1",
-      "bytes": 16917
+      "revision": "2ffcb6cb64506cbc7db2ec666c90cb09ba9096ee",
+      "bytes": 16721
     },
     {
       "url": "/tv/channel-runtime.js",
@@ -312,5 +312,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "ef54efe8fe97b99677fb"
+  "version": "6888e158647b1f4ab297"
 }

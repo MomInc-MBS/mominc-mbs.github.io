@@ -10,6 +10,9 @@
   .fu *{box-sizing:border-box}
   .fu .wrap{position:relative; z-index:1; padding:0 clamp(12px,4vw,26px) 40px; max-width:820px; margin:0 auto}
 
+  /* the ticker: UNTESTED, constantly, top and bottom */
+  .fu .ticker{overflow:hidden; white-space:nowrap; background:repeating-linear-gradient(45deg,var(--ink) 0 14px,#000 14px 28px); border-top:4px solid var(--sun); border-bottom:4px solid var(--sun); padding:6px 0}
+  .fu .ticker b{display:inline-block; padding-left:100%; animation:tick 18s linear infinite; font-family:"Anton",sans-serif; letter-spacing:.14em; font-size:clamp(12px,3.6vw,16px); color:var(--sun); text-shadow:0 0 6px rgba(255,234,0,.6)}
   @keyframes tick{from{transform:translateX(0)} to{transform:translateX(-100%)}}
 
   /* header: sunburst behind a huge chrome wordmark, lightning either side */
@@ -38,28 +41,15 @@
   .fu .floatprint:nth-child(odd){animation-duration:6.4s}
   @keyframes bob{0%,100%{transform:translateY(0) rotate(-4deg)} 50%{transform:translateY(-8px) rotate(4deg)}}
 
-  /* the tub stage: hidden until three.js confirms a scene actually built (see TECH above) */
-  .fu #stageCard{display:none}
-  .fu.has3d #stackCard, .fu.has3d #flavCard{display:none}
-
-  /* the tub IS the page (Ian, round 3): once the scene is up, it owns the frame from the first paint -
-     no scrolling past a card of copy to reach it. The intro card's job (what this is, what to do) is
-     already done by the ticker above and the in-scene face label/nudge, so it steps aside; the header
-     shrinks to a strip instead of a hero. flex:1 + min-height:100% divides the real screen height between
-     the strip and the stage natively - no vh/zoom arithmetic to get wrong (and .channel's zoom is retired). */
-  .fu.has3d .wrap{display:flex; flex-direction:column; min-height:100%}
-  .fu.has3d #introCard{display:none}
-  .fu.has3d .head{padding:6px 4px 4px}
-  .fu.has3d .burst, .fu.has3d .bolt{display:none}
-  .fu.has3d .wordmark{font-size:clamp(18px,5vw,24px); text-shadow:2px 2px 0 var(--grape)}
-  .fu.has3d .wordmark small{font-size:9px; letter-spacing:.2em; margin-top:2px}
-  .fu.has3d .chnum{margin-top:4px; font-size:11px; padding:1px 10px}
-  .fu.has3d #fuFlavTag{display:inline-block; margin-left:6px; background:var(--grape); color:var(--cream); border-color:var(--ink); transform:rotate(1deg)}
-  .fu.has3d #stageCard{flex:1 1 auto; min-height:0; margin:0 0 14px; padding:0; border:0; box-shadow:none; background:none; display:flex; flex-direction:column}
+  /* The stage and source controls stay mounted while the compact station changes phases. */
+  .fu.has3d .wrap{display:none}
+  .fu.has3d .head{padding:0}
+  .fu.has3d .burst,.fu.has3d .bolt{display:none}
+  .fu.has3d .wordmark{font-size:clamp(18px,5vw,24px);text-shadow:2px 2px 0 var(--grape)}
+  .fu.has3d .wordmark small{font-size:9px;letter-spacing:.2em;margin-top:2px}
+  .fu.has3d .chnum{margin-top:0;font-size:10px;padding:2px 6px}
+  .fu.has3d #stageCard{flex:1 1 auto;min-height:0;margin:0;display:flex;flex-direction:column}
   .fu.has3d #stageCard .heading{display:none}
-  .fu-stage{position:relative; width:100%; height:min(58vh,520px); min-height:320px; border-radius:16px; overflow:hidden;
-      background:radial-gradient(120% 100% at 50% 18%, #2a1030, var(--ink) 72%); cursor:grab}
-  .fu.has3d .fu-stage{flex:1 1 auto; min-height:280px; height:auto; border-radius:16px}
   .fu-stage:active{cursor:grabbing}
   .fu-stage canvas{display:block; width:100%; height:100%; touch-action:none}
   .fu-stage canvas:focus-visible{outline:3px solid var(--acid); outline-offset:-3px}
@@ -146,32 +136,120 @@
     .fu .ticker b, .fu .burst, .fu .floatprint{animation:none}
   }
 
- .fu.has3d .wrap{max-width:1100px}
-@media(max-width:899px){.fu.has3d #stageCard{order:0}.fu.has3d .head{order:-1}.fu.has3d .fu-stage{height:300px}}
-/* Factory sequence retains the original FUEL palette, type and plastic stage. */
-.fu .batch-steps{display:flex;gap:8px;flex-wrap:wrap;font-family:Anton,sans-serif;font-size:14px}
-.fu .batch-steps span{padding:7px 10px;border:2px solid var(--ink);border-radius:6px;background:#ddd;color:var(--ink)}
-.fu .batch-steps [aria-current="step"]{background:var(--acid);box-shadow:3px 3px 0 var(--grape)}
-.fu #introCard{order:1;margin:12px 0;padding:16px;color:var(--ink)}
-.fu.has3d #introCard{display:block}.fu.has3d #stageCard{order:2;flex:none}
-.fu.has3d .fu-stage{height:clamp(300px,46vh,510px);flex:none}
-.fu.has3d .head .wordmark{font-size:clamp(30px,6vw,54px)}
-.fu.has3d .head .wordmark small{font-size:14px}.fu.has3d .head .bolt,.fu.has3d .head .burst{display:block}
-.fu .batch-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}
-.fu .batch-options button,.fu .batch-actions button{border:3px solid var(--ink);border-radius:9px;padding:10px;background:var(--sun);color:var(--ink);font:16px Anton,sans-serif;box-shadow:3px 3px 0 var(--grape);cursor:pointer}
-.fu .batch-options button[aria-pressed="true"]{background:var(--acid)}
-.fu .batch-actions{display:flex;gap:10px;flex-wrap:wrap}.fu #batchNext{background:var(--acid);flex:1 1 100%;width:100%;min-height:72px;padding:16px 24px;font-size:clamp(24px,6vw,32px);line-height:1.15;letter-spacing:.04em;border-width:4px;box-shadow:5px 6px 0 var(--grape);touch-action:manipulation}.fu #batchNext:active:not(:disabled){transform:translateY(3px);box-shadow:2px 3px 0 var(--grape)}
-.fu button:disabled{opacity:.48;cursor:default}.fu button:focus-visible{outline:3px solid var(--grape);outline-offset:3px}
-.fu .batch-meter{display:flex;align-items:center;gap:12px}.fu progress{accent-color:var(--grape);height:24px;flex:1;min-width:0}
-.fu #batchStatus{min-height:1.5em;font-weight:bold}.fu #introCard p{font-size:16px}.fu #introCard small{display:block;margin-top:12px;font-size:12px}
-.fu[data-batch] #stackCard,.fu[data-batch] #flavCard{display:none}
-.fu[data-batch] #nameCard,.fu[data-batch] .card[aria-label="Your can"]{order:3}
-.fu[data-batch="fill"] #nameCard,.fu[data-batch="fill"] .card[aria-label="Your can"],.fu[data-batch="flavor"] #nameCard,.fu[data-batch="flavor"] .card[aria-label="Your can"]{display:none}
-.fu #batchColors{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.fu #batchColors button{padding:10px;border:3px solid var(--ink);border-radius:8px;font:16px Anton,sans-serif;cursor:pointer}
-.fu #batchColors button[aria-pressed="true"]{outline:3px solid var(--hot);outline-offset:2px}
+.fu .batch-steps{display:flex;gap:5px;flex-wrap:nowrap;font-family:Anton,sans-serif;font-size:11px}
+.fu .batch-steps span{flex:1 1 0;min-width:0;padding:5px 3px;border:2px solid var(--ink);border-radius:6px;background:#ddd;color:var(--ink);text-align:center;white-space:nowrap}
+.fu .batch-steps [aria-current="step"]{background:var(--acid);box-shadow:2px 2px 0 var(--grape)}
+.fu .batch-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:8px 0}
+.fu .batch-options button,.fu .batch-actions button,.fu .station-tab,.fu .label-tab{border:2px solid var(--ink);border-radius:9px;padding:9px 8px;background:var(--sun);color:var(--ink);font:14px Anton,sans-serif;box-shadow:2px 2px 0 var(--grape);cursor:pointer;touch-action:manipulation}
+.fu .batch-options button[aria-pressed="true"],.fu .station-tab[aria-pressed="true"],.fu .label-tab[aria-selected="true"]{background:var(--acid)}
+.fu button:disabled{opacity:.48;cursor:default}.fu button:focus-visible,.fu select:focus-visible,.fu input:focus-visible{outline:3px solid var(--grape);outline-offset:2px}
+.fu .batch-meter{display:flex;align-items:center;gap:8px}.fu progress{accent-color:var(--grape);height:16px;flex:1;min-width:0}
+.fu #batchStatus,.fu #draftStatus{min-height:1.2em;margin:4px 0;font-size:13px;font-weight:800}
 .fu [hidden]{display:none!important}
-@media(min-width:900px){.fu.has3d .wrap{display:grid;grid-template-columns:minmax(300px,.8fr) minmax(0,1.3fr);gap:16px;align-content:start}.fu .head{grid-column:1/-1}.fu.has3d #stageCard{margin:12px 0}.fu.has3d .fu-stage{height:520px}.fu #nameCard,.fu .card[aria-label="Your can"]{grid-column:1/-1}}
-@media(max-width:480px){.fu .batch-options{grid-template-columns:repeat(2,minmax(0,1fr))}.fu .batch-actions button{flex:1}.fu .batch-steps{gap:4px}.fu .batch-steps span{padding:6px;font-size:13px}}
+
+/* Compact station: the host supplies the height; the channel itself never grows the page. */
+.fu{height:var(--fuel-height,100dvh);min-height:0;overflow:hidden;padding:0;display:block}
+.fu #introCard{height:100%;min-height:0;margin:0;padding:0;border:0;border-radius:0;box-shadow:none;background:transparent;overflow:hidden}
+.fu #introCard::before{display:none}
+.fu.has3d #introCard{display:block}
+.fu #fuStation{height:100%;min-height:0;width:100%;overflow:hidden;display:grid;grid-template-rows:auto minmax(150px,1fr) minmax(230px,min(40vh,330px)) auto;gap:7px;padding:env(safe-area-inset-top,0px) clamp(7px,2vw,16px) env(safe-area-inset-bottom,0px);}
+.fu #stationTop{min-width:0;display:grid;grid-template-columns:minmax(92px,.8fr) minmax(180px,2fr);align-items:center;gap:8px}
+.fu #stationBrand{display:flex;flex-wrap:wrap;align-items:center;gap:5px 7px;min-width:0;padding:0;overflow:visible;text-align:left}
+.fu #stationBrand .wordmark{font-size:clamp(17px,4vw,23px);line-height:1;text-shadow:2px 2px 0 var(--grape);white-space:nowrap;-webkit-text-stroke:1px var(--ink)}
+.fu #stationBrand .wordmark small{display:none}
+.fu #stationBrand .chnum{margin:0;padding:2px 6px;border-width:2px;font-size:10px;transform:none;white-space:nowrap}
+.fu #stationProgress{min-width:0}
+.fu .fu-mom-marquee{grid-column:1/-1;flex:1 1 100%;width:100%;height:22px;margin:0;transform:none;border:1px solid var(--ink);border-radius:4px;display:flex;align-items:center}
+.fu .fu-mom-track{animation:none;width:auto;display:block;white-space:nowrap;line-height:20px}
+.fu .fu-mom-track>span{display:block;gap:10px;padding:1px 8px;font-size:11px;color:var(--ink)}.fu .fu-mom-track>span:nth-child(2){display:none}.fu .fu-mom-track img{width:20px;height:18px}
+.fu #stageCard{display:flex;min-width:0;min-height:0;margin:0;padding:0;border:3px solid var(--ink);border-radius:17px;overflow:hidden;box-shadow:4px 4px 0 var(--grape);background:radial-gradient(120% 100% at 50% 18%,#fffef2 0%,#c6ff00 22%,#54eaff 49%,#281030 100%)}
+.fu #stageCard::before{inset:4px;border-radius:11px}
+.fu #stageCard .heading{display:none}
+.fu .fu-stage{position:relative;flex:1 1 auto;min-width:0;min-height:0;width:100%;height:100%;border-radius:14px;overflow:hidden;background:radial-gradient(120% 100% at 50% 18%,#5b2a68 0%,#24102b 72%);cursor:grab}
+.fu .fu-stage canvas{position:relative;z-index:1;display:block;width:100%;height:100%;touch-action:none}
+.fu .jar-fallback{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+.fu .jar-fallback svg{position:relative;z-index:1;height:86%;max-width:88%;overflow:visible;filter:drop-shadow(0 12px 6px rgba(0,0,0,.35))}
+.fu #fuFallback{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.fu.has3d .jar-fallback{display:none}
+.fu .fu-face{left:8px;top:7px;max-width:48%;z-index:3}.fu .fu-face b{font-size:12px}.fu .fu-face i{font-size:10px}
+.fu .fu-nudge{top:7px;right:7px;max-width:43%;padding:3px 6px;font-size:10px;animation:none}
+.fu .fu-rotate{bottom:6px;gap:7px}.fu .fu-rotbtn{width:44px;height:44px;font-size:20px;border-width:2px}
+.fu #controlTray{position:relative;min-height:0;overflow:auto;overscroll-behavior:contain;background:linear-gradient(155deg,#fff 0%,var(--cream) 62%,#e6edbf 100%);border:3px solid var(--ink);border-radius:15px;padding:9px 10px 8px;box-shadow:3px 3px 0 rgba(0,0,0,.3)}
+.fu .tray-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 5px}
+.fu .tray-head h2{margin:0;font:18px Anton,sans-serif;letter-spacing:.04em;color:var(--hot-d)}
+.fu #batchHelp{margin:0;font-size:12px;line-height:1.25;font-weight:800}
+.fu #batchIngredients{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin:7px 0}
+.fu #batchIngredients button{min-width:0;min-height:44px;padding:7px 3px;font-size:11px;line-height:1.1;overflow:hidden;text-overflow:ellipsis}
+.fu #batchFlavors{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;margin:7px 0}
+.fu #batchFlavors button{min-height:44px;padding:5px;font-size:11px;line-height:1.1}
+.fu .flavor-pager{display:flex;align-items:center;justify-content:center;gap:12px;margin:4px 0}
+.fu .flavor-pager button{border:2px solid var(--ink);border-radius:8px;padding:5px 10px;background:var(--sun);font:13px Anton,sans-serif}
+.fu #flavorPage{font:14px VT323,monospace}
+.fu #stationActions{display:flex;align-items:center;gap:7px;min-height:44px}
+.fu #stationActions button{min-width:0;min-height:42px;margin:0;padding:7px 9px;border:3px solid var(--ink);border-radius:10px;background:var(--sun);color:var(--ink);font:14px Anton,sans-serif;box-shadow:3px 3px 0 var(--grape);touch-action:manipulation}
+.fu #stationActions #batchNext{flex:1;background:var(--acid);font-size:clamp(16px,4.4vw,20px);letter-spacing:.03em}
+.fu #stationActions #submitBtn{flex:1;background:linear-gradient(135deg,var(--hot),var(--grape));color:var(--cream);font-size:clamp(15px,4vw,19px)}
+.fu #stationActions button:active:not(:disabled){transform:translateY(2px);box-shadow:1px 1px 0 var(--grape)}
+.fu .station-tab{font-size:12px;padding:5px 9px}
+.fu #trayLabel{min-height:0;overflow:hidden}
+.fu[data-batch="label"] #controlTray{overflow:hidden}
+.fu #nameCard{margin:0;padding:0;border:0;background:transparent;box-shadow:none}
+.fu #nameCard::before{display:none}
+.fu #nameCard>.heading,.fu #nameCard>.lede{display:none}
+.fu .label-tabs{display:flex;gap:5px;overflow-x:auto;margin:0 0 7px;padding:1px 1px 3px}
+.fu .label-tab{flex:1 0 auto;padding:6px 10px;font-size:12px;box-shadow:none}
+.fu .label-panel{display:grid;grid-template-columns:1fr;gap:5px;align-items:start}
+.fu .label-subpage{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;align-items:start}
+.fu .label-page-nav{display:flex;align-items:center;justify-content:center;gap:12px;margin:0 0 5px}
+.fu .label-page-nav button{min-height:34px;padding:4px 12px;border:2px solid var(--ink);border-radius:8px;background:var(--sun);font:12px Anton,sans-serif}
+.fu .label-page-nav span{font:13px VT323,monospace}
+.fu #labelPanelStyle [data-label-page="style:1"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+.fu #batchColors{grid-column:1/-1}
+.fu #nameSuggestions{grid-column:1/-1}
+.fu #nameSuggestions .namepicker{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
+.fu #nameSuggestions select{min-width:0;width:100%;padding:5px 4px;font-size:11px}
+.fu .label-control{display:grid;gap:3px;min-width:0;font-size:11px;font-weight:900}
+.fu .label-control input,.fu .label-control select{width:100%;min-width:0;min-height:30px;padding:5px 7px;border:2px solid var(--ink);border-radius:8px;background:#fff;color:var(--ink);font:13px Nunito,Arial,sans-serif}
+.fu .label-control input[type=color]{height:38px;padding:2px}
+.fu .label-control input[type=range]{min-height:24px;padding:0;accent-color:var(--grape)}
+.fu .label-toggle{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:800}
+.fu .label-toggle input{accent-color:var(--grape)}
+.fu .label-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;margin-top:0}
+.fu .label-actions button,.fu #labelExport{min-height:32px;padding:5px 8px;border:2px solid var(--ink);border-radius:8px;background:var(--sun);font:12px Anton,sans-serif}
+.fu #fuelLabelPreview{display:block;width:100%;height:60px;border:2px solid var(--ink);border-radius:8px;background:#31153a;touch-action:none}
+.fu #trayReview .card{margin:0 0 8px;padding:10px;border-width:2px;border-radius:12px;box-shadow:none}
+.fu #trayReview .card::before{display:none}
+.fu #trayReview .heading{display:none}
+.fu #trayReview .can{padding:7px 9px;font-size:12px}
+.fu #trayReview .costbar{padding:6px 8px;margin-top:5px;font-size:12px}
+.fu #trayReview .assump{margin-top:5px}
+.fu #trayReview .assump-body{max-height:130px;overflow:auto}
+.fu #result{margin-top:7px}
+.fu .review-design-actions{display:flex;align-items:center;gap:7px}.fu .review-design-actions button,.fu .review-design-actions label{min-height:32px;padding:5px 9px;border:2px solid var(--ink);border-radius:8px;background:var(--sun);font:12px Anton,sans-serif;color:var(--ink)}.fu .review-design-actions input{max-width:180px;font:11px Nunito,Arial,sans-serif}
+.fu #resultNote{font-size:12px}
+.fu #reviewPanel{display:grid;gap:7px}
+.fu .review-page-nav{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;align-items:center;gap:4px}
+.fu .review-page-nav>button{min-height:34px;padding:4px 8px;border:2px solid var(--ink);border-radius:8px;background:var(--sun);font:12px Anton,sans-serif}
+.fu .review-tabs{display:flex;gap:3px;min-width:0}
+.fu .review-tabs button{flex:1 1 0;min-width:0;min-height:34px;padding:4px 3px;border:2px solid var(--ink);border-radius:7px;background:#fff;font:10px Anton,sans-serif}
+.fu .review-tabs button[aria-pressed="true"]{background:var(--acid)}
+.fu #reviewPageNotes{max-height:170px;overflow:auto}
+.fu #reviewPageCost .assump-body{max-height:125px;overflow:auto}
+.fu #ingredientDetails,.fu #nameSuggestions{margin:5px 0;border:2px solid var(--ink);border-radius:9px;background:#fff;padding:6px 8px;font-size:12px}
+.fu #ingredientDetails summary,.fu #nameSuggestions summary{cursor:pointer;font:13px Anton,sans-serif}
+.fu #srows{gap:7px;margin-top:7px}
+.fu #srows .srow{padding:8px;border-width:2px;border-radius:10px;box-shadow:none}
+.fu #srows .real{font-size:12px}
+.fu #srows .promise{font-size:12px;padding:6px}
+.fu #trayFill .ingredient-info{min-height:1.2em;margin:4px 0;font-size:11px;line-height:1.25}
+.fu #batchColors{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+.fu #batchColors button{min-height:44px;flex:1 1 20%;padding:6px 5px;border:2px solid var(--ink);border-radius:7px;font:12px Anton,sans-serif;cursor:pointer}
+.fu #batchColors button[aria-pressed=true]{outline:2px solid var(--hot);outline-offset:1px}
+.fu .fu-footnote{display:none}
+@media(max-width:380px){.fu #stationTop{grid-template-columns:minmax(95px,.75fr) minmax(190px,2fr);gap:3px}.fu #stationBrand{justify-content:space-between}.fu .batch-steps span{font-size:10px}.fu #controlTray{padding:7px}.fu #stationActions{gap:5px}.fu #stationActions button{padding:6px;font-size:12px}}
+@media(max-height:560px){.fu #fuStation{grid-template-rows:auto minmax(128px,1fr) minmax(155px,34vh) auto;gap:4px}.fu #stationTop{grid-template-columns:minmax(75px,.7fr) minmax(170px,2fr)}.fu .fu-mom-marquee{display:none}.fu #controlTray{padding:6px}.fu #stationActions,.fu #stationActions button{min-height:36px}.fu #stationActions button{padding:4px 7px}.fu .fu-face,.fu .fu-nudge{display:none}}
+@media(orientation:landscape) and (max-height:520px){.fu #fuStation{grid-template-columns:minmax(180px,.8fr) minmax(240px,1.2fr);grid-template-rows:auto minmax(130px,1fr) auto;gap:5px}.fu #stationTop{grid-column:1/-1;grid-row:1;grid-template-columns:minmax(80px,.5fr) minmax(180px,2fr)}.fu #stageCard{grid-column:1;grid-row:2/4}.fu #controlTray{grid-column:2;grid-row:2;max-height:100%}.fu #stationActions{grid-column:2;grid-row:3}}
+@media(min-width:760px) and (min-height:600px){.fu #fuStation{max-width:1100px;margin:0 auto;grid-template-rows:auto minmax(220px,1fr) minmax(230px,min(40vh,330px)) auto}.fu #stageCard{max-width:980px;margin:0 auto;width:100%}}
 @media(prefers-reduced-motion:reduce){.fu *{animation:none!important}}
 .fu .fu-mom-marquee{position:relative;z-index:2;overflow:hidden;border:3px solid var(--ink);background:var(--hot);margin:0 0 14px;transform:rotate(-1deg)}
 .fu .fu-mom-track{display:flex;width:max-content;animation:fuel-mom-scroll 14s linear infinite}
@@ -182,45 +260,106 @@
 @keyframes fuel-mom-scroll{to{transform:translateX(-50%)}}
 @keyframes fuel-electric{to{filter:drop-shadow(0 0 8px var(--volt)) drop-shadow(3px 4px 0 var(--ink))}}
 @media(prefers-reduced-motion:reduce){.fu .fu-mom-track,.fu .bolt{animation:none}}
+/* Keep each normal inspector page in its allotted space; the jar is the live preview. */
+.fu[data-batch="label"][data-review="false"] #batchHelp{display:none}
+.fu[data-batch="label"][data-review="false"] #batchStatus{margin:2px 0 4px;font-size:11px;line-height:1.2}
+.fu #labelPanelShape{grid-template-columns:repeat(2,minmax(0,1fr))}
+.fu #labelPanelShape .label-toggle{grid-column:1/-1}
+.fu .label-tabs{margin-bottom:3px;padding-bottom:1px}
+.fu .label-page-nav{margin-bottom:3px}
+.fu #draftStatus{margin:3px 0 0;font-size:10px;line-height:1.2}
+@media(max-height:700px) and (orientation:portrait){.fu[data-batch="label"] #fuStation,.fu[data-review="true"] #fuStation,.fu[data-batch="done"] #fuStation{grid-template-rows:auto minmax(150px,1fr) 270px auto}}
+.fu[data-review="true"] #batchHelp,.fu[data-review="true"] #batchStatus,.fu[data-batch="done"] #batchHelp,.fu[data-batch="done"] #batchStatus{display:none}
+.fu #trayReview .floatprint{display:none}
+.fu #trayReview .can{padding:5px 7px}
+.fu #trayReview .can span{padding:0;font-size:11px;line-height:1.25}
+.fu #trayReview #resultNote{font:800 12px/1.3 Nunito,Arial,sans-serif;margin:0 0 7px;text-align:left}
+.fu #trayReview .mailme{font-size:12px;padding:7px;min-height:40px}
+.fu #trayReview .review-design-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.fu #trayReview .review-design-actions input{max-width:100%;width:100%;font-size:10px}
+@media(orientation:landscape) and (max-height:520px){.fu[data-batch="label"][data-review="false"] #batchStatus,.fu #draftStatus{display:none}}
+@media(min-width:900px) and (min-height:600px){
+  .fu #fuStation{grid-template-columns:1.1fr 1fr;grid-template-rows:auto minmax(0,1fr) auto;gap:12px}
+  .fu #stationTop{grid-column:1/-1;grid-row:1}
+  .fu #stageCard{grid-column:1;grid-row:2/4;height:auto}
+  .fu #controlTray{grid-column:2;grid-row:2}
+  .fu #stationActions{grid-column:2;grid-row:3}
+}
+.fu #batchColors:empty{display:none}
+.fu .label-panel .label-toggle{white-space:nowrap;font-size:10px}
+.fu #nameSuggestions{margin:0;padding:4px 6px}
+.fu .label-actions button{min-height:40px;padding:4px 5px;font-size:11px}
+.fu #trayFlavor>p{display:none}
+.fu.fuel-typing #fuStation{grid-template-rows:minmax(64px,1fr) minmax(145px,auto) 44px;gap:4px}
+.fu.fuel-typing #stationTop,.fu.fuel-typing .tray-head,.fu.fuel-typing #batchHelp,.fu.fuel-typing #batchStatus,.fu.fuel-typing #draftStatus{display:none}
+.fu.fuel-typing #controlTray{padding:5px 7px}
+.fu.fuel-typing .fu-face,.fu.fuel-typing .fu-nudge,.fu.fuel-typing .fu-rotate{display:none}
+.fu.fuel-typing .label-page-nav{margin-bottom:0}
 </style>
 
 <article class="fu" id="fu" aria-label="MBS FUEL" data-host="MBS FUEL" data-show="BUILD YOUR STACK" data-ch="7" data-gauge="off">
-
-  <div class="wrap">
-    <header class="head">
-      <div class="fu-mom-marquee" aria-label="MOM Inc · Goon Fuel · Untested"><div class="fu-mom-track" aria-hidden="true"><span><img src="/tv/assets/mom-inc-mark.png" alt="">MOM INC <b>⚡ GOON FUEL ⚡</b> UNTESTED <img src="/tv/assets/mom-inc-mark.png" alt="">MOM INC <b>⚡ GOON FUEL ⚡</b> UNTESTED</span><span><img src="/tv/assets/mom-inc-mark.png" alt="">MOM INC <b>⚡ GOON FUEL ⚡</b> UNTESTED <img src="/tv/assets/mom-inc-mark.png" alt="">MOM INC <b>⚡ GOON FUEL ⚡</b> UNTESTED</span></div></div>
-      <div class="burst" aria-hidden="true"></div>
-      <svg class="bolt l" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 1 3 14h7l-1 9 11-14h-8z"/></svg>
-      <svg class="bolt r" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 1 3 14h7l-1 9 11-14h-8z"/></svg>
-      <h1 class="wordmark">MBS FUEL</h1>
-      <span class="chnum">CH 7 · MOM INC SUBSIDIARY</span>
-      <span class="chnum" id="fuFlavTag" hidden>FLAVOUR: NOT SET</span>
-    </header>
-
-    <section class="card" id="introCard" aria-label="Mixing station">
-<div class="batch-steps" aria-label="Batch progress"><span data-step="fill">01 FILL</span><span data-step="flavor">02 FLAVOR</span><span data-step="label">03 LABEL</span><span data-step="done">04 SEALED</span></div>
-<h2 class="heading" id="batchTitle">FILL YOUR TUB</h2>
-<p id="batchHelp">Add eight scoops. Pick any combination, up to two of each ingredient.</p>
-<div class="batch-meter"><progress id="batchFill" max="8" value="0" aria-label="Tub fill"></progress><b id="batchCount">0 / 8 scoops</b></div>
-<div id="batchIngredients" class="batch-options"></div>
-<div id="batchFlavors" class="batch-options" hidden></div>
-<p id="batchStatus" role="status" aria-live="polite">Your tub is empty. Choose your first ingredient.</p>
-<div class="batch-actions"><button type="button" id="batchUndo">UNDO SCOOP</button><button type="button" id="batchNext">NEXT: FLAVOR</button><button type="button" id="batchReset">START OVER</button></div>
-</section>
-
-    <section class="card" id="stageCard" aria-label="The tub">
-      <h2 class="heading">THE STACK</h2>
-      <div class="fu-stage" id="fuStage">
-        <canvas id="fuCanvas" aria-label="Your FUEL mixing tub. Use the ingredient and flavor buttons to build your batch. Left and right arrows rotate the tub."></canvas>
-        <div class="fu-face" id="fuFace"><b>&nbsp;</b><i>&nbsp;</i></div>
-        <p class="fu-nudge" id="fuNudge">Tap a jar. Tap a flavour.</p>
-        <div class="fu-rotate">
-          <button type="button" class="fu-rotbtn" id="fuRotL" aria-label="Rotate tub left">&#8249;</button>
-          <button type="button" class="fu-rotbtn" id="fuRotR" aria-label="Rotate tub right">&#8250;</button>
+  <section class="card" id="introCard" aria-label="Mixing station">
+    <div id="fuStation">
+      <div id="stationTop">
+        <header class="head" id="stationBrand">
+          <div class="fu-mom-marquee" aria-label="MOM Inc, Goon Fuel, Untested"><div class="fu-mom-track" aria-hidden="true"><span>MOM INC <b>&#9889; GOON FUEL &#9889;</b> UNTESTED</span></div></div>
+          <div class="burst" aria-hidden="true"></div><svg class="bolt l" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 1 3 14h7l-1 9 11-14h-8z"/></svg>
+          <svg class="bolt r" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 1 3 14h7l-1 9 11-14h-8z"/></svg>
+          <h1 class="wordmark">MBS FUEL<small>BUILD YOUR STACK</small></h1>
+          <span class="chnum">CH 7 &bull; MOM INC</span><span class="chnum" id="fuFlavTag" hidden>FLAVOUR: NOT SET</span>
+        </header>
+        <div id="stationProgress"><div class="batch-steps" aria-label="Batch progress"><span data-step="fill">01 FILL</span><span data-step="flavor">02 FLAVOR</span><span data-step="label">03 LABEL</span><span data-step="done">04 SEALED</span></div>
+          <div class="batch-meter"><progress id="batchFill" max="8" value="0" aria-label="Tub fill"></progress><b id="batchCount">0 / 8 scoops</b></div>
         </div>
       </div>
-    </section>
-
+      <section class="card" id="stageCard" aria-label="The tub"><h2 class="heading">THE STACK</h2><div class="fu-stage" id="fuStage">
+        <div class="jar-fallback" aria-hidden="true"><canvas id="fuFallback"></canvas></div>
+        <canvas id="fuCanvas" aria-label="Your FUEL mixing tub. Use the ingredient and flavor buttons to build your batch. Left and right arrows rotate the tub."></canvas>
+        <div class="fu-face" id="fuFace"><b>&nbsp;</b><i>&nbsp;</i></div><p class="fu-nudge" id="fuNudge">Tap a jar. Tap a flavour.</p>
+        <div class="fu-rotate"><button type="button" class="fu-rotbtn" id="fuRotL" aria-label="Rotate tub left">&#8249;</button><button type="button" class="fu-rotbtn" id="fuRotR" aria-label="Rotate tub right">&#8250;</button></div>
+      </div></section>
+      <section id="controlTray" aria-label="Batch controls">
+        <div class="tray-head"><h2 id="batchTitle">FILL YOUR TUB</h2><button type="button" id="batchReview" class="station-tab" aria-controls="trayReview" aria-expanded="false">REVIEW</button></div>
+        <p id="batchHelp">Add eight scoops. Pick any combination, up to two of each ingredient.</p><p id="batchStatus" role="status" aria-live="polite">Your tub is empty. Choose your first ingredient.</p>
+        <div id="trayFill" class="tray-page"><div id="batchIngredients" class="batch-options" aria-label="Ingredients"></div><p id="ingredientInfo" class="ingredient-info">Choose ingredients to see their general effects. Game scoops are fictional units.</p></div>
+        <div id="trayFlavor" class="tray-page" hidden><div id="batchFlavors" class="batch-options" aria-label="Flavour choices"></div><div class="flavor-pager"><button type="button" id="flavorPrev" aria-label="Previous flavours">PREV</button><span id="flavorPage" aria-live="polite">1 / 2</span><button type="button" id="flavorNext" aria-label="Next flavours">NEXT</button></div><p>Choose one flavour, then mix three times.</p></div>
+        <div id="trayLabel" class="tray-page" hidden>
+          <section class="card" id="nameCard" aria-label="Name and design your label">
+            <h2 class="heading">MAKE YOUR LABEL</h2><p class="lede">Build a tub shape and a label that reads like yours.</p>
+            <div class="label-tabs" id="labelTabs" role="tablist" aria-label="Label editor">
+              <button type="button" class="label-tab" role="tab" id="labelTabShape" aria-controls="labelPanelShape" data-label-tab="shape" aria-selected="true">SHAPE</button><button type="button" class="label-tab" role="tab" id="labelTabName" aria-controls="labelPanelName" data-label-tab="name" aria-selected="false">NAME</button><button type="button" class="label-tab" role="tab" id="labelTabStyle" aria-controls="labelPanelStyle" data-label-tab="style" aria-selected="false">STYLE</button><button type="button" class="label-tab" role="tab" id="labelTabArt" aria-controls="labelPanelArt" data-label-tab="art" aria-selected="false">ART</button>
+            </div>
+            <div class="label-page-nav" id="labelPageNav"><button type="button" id="labelPagePrev">PREV</button><span id="labelPageCount" aria-live="polite">1 / 1</span><button type="button" id="labelPageNext">NEXT</button></div>
+            <div id="labelPanelShape" class="label-panel" role="tabpanel" aria-labelledby="labelTabShape" data-label-panel="shape">
+              <label class="label-control" for="labelTemplate">START FROM A TEMPLATE<select id="labelTemplate"><option value="classic">Classic tub</option><option value="tower">Tall tower</option><option value="wide">Wide mouth</option><option value="soft">Soft shoulder</option></select></label>
+              <label class="label-control" for="labelShape">LABEL SHAPE<select id="labelShape"><option value="classic">Classic jar</option><option value="cylinder">Straight cylinder</option><option value="tapered">Tapered jar</option><option value="square">Square canister</option><option value="flask">Flask</option></select></label>
+              <label class="label-toggle"><input type="checkbox" id="labelLockShape"> Lock shape</label>
+            </div>
+            <div id="labelPanelName" class="label-panel" role="tabpanel" aria-labelledby="labelTabName" data-label-panel="name" hidden>
+              <div class="label-subpage" data-label-page="name:0"><label class="label-control" for="labelTitle">PRODUCT NAME<input id="labelTitle" type="text" maxlength="48" value="YOUR FORMULA" autocomplete="off"></label><label class="label-control" for="labelSubtitle">SUBTITLE<input id="labelSubtitle" type="text" maxlength="52" value="MBS FUEL &bull; UNTESTED" autocomplete="off"></label></div>
+              <div class="label-subpage" data-label-page="name:1" hidden><label class="label-toggle"><input type="checkbox" id="labelLockName"> Lock name</label><details id="nameSuggestions"><summary>WORD BUILDER</summary><div class="namepicker">
+                <select id="nameA" aria-label="First word"><option>BUCKED</option><option>ELITE</option><option>PEAK</option><option>APEX</option><option>SAVAGE</option><option>PRIMAL</option><option>RIPPED</option><option>NITRO</option><option>HYPER</option><option>ALPHA</option><option>LIMITLESS</option><option>GODMODE</option></select>
+                <select id="nameB" aria-label="Second word"><option>SURGE</option><option>PUMP</option><option>MATRIX</option><option>PROTOCOL</option><option>STACK</option><option>FORMULA</option><option>COMPLEX</option><option>BLEND</option><option>IGNITE</option><option>OVERDRIVE</option><option>ASCEND</option><option>ONSLAUGHT</option></select>
+                <select id="nameC" aria-label="Third word"><option>XR</option><option>MAX</option><option>5000</option><option>BLACK</option><option>EXTREME</option><option>PRO</option><option>ULTRA</option><option>V2</option><option>ZERO</option><option>PLUS</option><option>X</option><option>RELOADED</option></select>
+              </div></details></div>
+            </div>
+            <div id="labelPanelStyle" class="label-panel" role="tabpanel" aria-labelledby="labelTabStyle" data-label-panel="style" hidden>
+              <div class="label-subpage" data-label-page="style:0"><label class="label-control" for="labelFont">TYPE STYLE<select id="labelFont"><option value="block">Block athletic</option><option value="condensed">Condensed race</option><option value="round">Round energy</option><option value="serif">Classic serif</option><option value="mono">Factory mono</option></select></label><label class="label-control" for="labelPattern">LABEL PATTERN<select id="labelPattern"><option value="burst">Electric burst</option><option value="stripes">Fast stripes</option><option value="grid">Tech grid</option><option value="waves">Flow waves</option><option value="solid">Solid color</option><option value="speckle">Powder flecks</option></select></label></div>
+              <div class="label-subpage" data-label-page="style:1" hidden><label class="label-control" for="labelPrimary">PRIMARY COLOR<input id="labelPrimary" type="color" value="#ff2e88"></label><label class="label-control" for="labelSecondary">SECONDARY COLOR<input id="labelSecondary" type="color" value="#ffea00"></label><label class="label-control" for="labelInk">TYPE COLOR<input id="labelInk" type="color" value="#1a0a10"></label><label class="label-toggle"><input type="checkbox" id="labelLockColors"> Lock colors</label><div id="batchColors" role="group" aria-label="Quick label color presets"></div></div>
+            </div>
+            <div id="labelPanelArt" class="label-panel" role="tabpanel" aria-labelledby="labelTabArt" data-label-panel="art" hidden>
+              <div class="label-subpage" data-label-page="art:0"><label class="label-control" for="labelIcon">LABEL MARK<select id="labelIcon"><option value="bolt">Lightning bolt</option><option value="star">Starburst</option><option value="wave">Wave</option><option value="flame">Flame</option><option value="none">No mark</option></select></label><label class="label-control" for="labelUpload">ADD YOUR ART<input id="labelUpload" type="file" accept="image/*"></label></div>
+              <div class="label-subpage" data-label-page="art:1" hidden><label class="label-control" for="labelArtScale">ART SCALE<input id="labelArtScale" type="range" min="0.5" max="2" step="0.05" value="1"></label><label class="label-control" for="labelArtX">LEFT / RIGHT<input id="labelArtX" type="range" min="-1" max="1" step="0.02" value="0"></label><label class="label-control" for="labelArtY">UP / DOWN<input id="labelArtY" type="range" min="-1" max="1" step="0.02" value="0"></label><label class="label-toggle"><input type="checkbox" id="labelLockArt"> Lock artwork</label></div>
+              <div class="label-subpage label-actions" data-label-page="art:2" hidden><button type="button" id="labelUndo">UNDO</button><button type="button" id="labelArtRemove">REMOVE ART</button><button type="button" id="labelRemix">REMIX</button><button type="button" id="labelPng">DOWNLOAD LABEL PNG</button></div>
+              <canvas id="fuelLabelPreview" hidden aria-hidden="true"></canvas>
+            </div>
+            <p id="draftStatus" role="status" aria-live="polite">Your design stays on this device until you seal the batch.</p>
+          </section>
+        </div>
+        <div id="trayReview" class="tray-page" hidden><div id="reviewPanel">
+          <nav id="reviewPageNav" class="review-page-nav" aria-label="Review pages"><button type="button" id="reviewPagePrev">PREV</button><div class="review-tabs"><button type="button" data-review-tab="summary" id="reviewTabSummary" aria-pressed="true">SUMMARY</button><button type="button" data-review-tab="cost" id="reviewTabCost" aria-pressed="false">COST</button><button type="button" data-review-tab="notes" id="reviewTabNotes" aria-pressed="false">NOTES</button><button type="button" data-review-tab="save" id="reviewTabSave" aria-pressed="false">SAVE</button></div><span id="reviewPageCount" aria-live="polite">1 / 4</span><button type="button" id="reviewPageNext">NEXT</button></nav>
+          <section id="reviewPageNotes" class="review-page" data-review-page="notes" hidden>
+    <details id="ingredientDetails"><summary>INGREDIENTS AND ORIGINAL LEVEL CONTROLS</summary>
     <section class="card" id="stackCard" aria-label="Your stack">
       <p class="floatprint" style="left:3%; top:40%">UNTESTED</p>
       <h2 class="heading">THE STACK</h2>
@@ -228,7 +367,7 @@
 
         <div class="srow" data-supp="caffeine">
           <div class="srow-top"><svg class="ic" viewBox="0 0 24 24" fill="var(--sun-d)" aria-hidden="true"><path d="M13 1 3 14h7l-1 9 11-14h-8z"/></svg><h3 class="name">CAFFEINE</h3></div>
-          <p class="real">General effect: caffeine is a stimulant. It blocks adenosine, which makes you sleepy. Most people feel more awake. Hard work can feel a bit easier. Not a promise.</p>
+          <p class="real">General effect: caffeine is a stimulant. It blocks adenosine, the molecule that makes you feel sleepy. Most people feel more alert. Effort can feel a little easier, at normal doses. Not a promise.</p>
           <div class="levels" role="radiogroup" aria-label="Caffeine level">
             <button type="button" class="lvl" data-level="none" role="radio" aria-checked="false">NONE</button>
             <button type="button" class="lvl" data-level="weak" role="radio" aria-checked="false">WEAK</button>
@@ -236,16 +375,16 @@
           </div>
           <div class="promise" aria-live="polite">
             <span class="p-unset">Pick a level to see what MBS FUEL promises.</span>
-            <span class="p-none">You stay tired like the rest of us. The only honest line on this can.</span>
-            <span class="p-weak">A soft hum behind your eyes. You finally understand your unread emails.</span>
-            <span class="p-strong">Your heart plays a drum solo. Time slows so you can watch yourself win. Lightning follows you into meetings.</span>
+            <span class="p-none">You remain a mortal, tired like the rest of us. The only honest line on this can.</span>
+            <span class="p-weak">A gentle hum behind your eyes. You will finally understand your unread emails.</span>
+            <span class="p-strong">Your heartbeat becomes a drum solo. Time politely slows down so you can watch yourself win. Lightning starts following you into meetings.</span>
           </div>
           <p class="untested">UNTESTED · this blend has never been made</p>
         </div>
 
         <div class="srow" data-supp="theanine">
           <div class="srow-top"><svg class="ic" viewBox="0 0 24 24" fill="var(--volt-d)" aria-hidden="true"><path d="M13 1 3 14h7l-1 9 11-14h-8z"/></svg><h3 class="name">L-THEANINE</h3></div>
-          <p class="real">General effect: an amino acid from tea. With caffeine, some people feel calm and focused, with fewer jitters. The proof is small. Not a promise.</p>
+          <p class="real">General effect: an amino acid from tea leaves. Paired with caffeine, some people feel calmer and more focused, with fewer jitters. The evidence is modest. Not a promise.</p>
           <div class="levels" role="radiogroup" aria-label="L-theanine level">
             <button type="button" class="lvl" data-level="none" role="radio" aria-checked="false">NONE</button>
             <button type="button" class="lvl" data-level="weak" role="radio" aria-checked="false">WEAK</button>
@@ -253,16 +392,16 @@
           </div>
           <div class="promise" aria-live="polite">
             <span class="p-unset">Pick a level to see what MBS FUEL promises.</span>
-            <span class="p-none">Your nerves stay as jittery as the caffeine made them.</span>
-            <span class="p-weak">You feel calm like a monk. You sort something A to Z, just for peace.</span>
-            <span class="p-strong">You are calm like a monk who lifts 400 pounds. Your enemies feel your peace and leave.</span>
+            <span class="p-none">Your nerves stay exactly as jittery as the caffeine alone made them.</span>
+            <span class="p-weak">A monk-like stillness descends. You will alphabetize something out of pure serenity.</span>
+            <span class="p-strong">You achieve the calm of a monk who also benches 400 pounds. Your enemies sense your peace and simply leave.</span>
           </div>
           <p class="untested">UNTESTED · this blend has never been made</p>
         </div>
 
         <div class="srow" data-supp="glutamine">
           <div class="srow-top"><svg class="ic" viewBox="0 0 24 24" fill="var(--acid-d)" aria-hidden="true"><path d="M13 1 3 14h7l-1 9 11-14h-8z"/></svg><h3 class="name">L-GLUTAMINE</h3></div>
-          <p class="real">General effect: an amino acid. Your gut and immune system use a lot of it in hard training. It may help some people recover. If you eat well, there is little proof it helps more. Not a promise.</p>
+          <p class="real">General effect: an amino acid. Your gut and immune system use a lot of it during hard training. It may help some people recover. There is little proof it boosts performance if you already eat well. Not a promise.</p>
           <div class="levels" role="radiogroup" aria-label="L-glutamine level">
             <button type="button" class="lvl" data-level="none" role="radio" aria-checked="false">NONE</button>
             <button type="button" class="lvl" data-level="weak" role="radio" aria-checked="false">WEAK</button>
@@ -270,16 +409,16 @@
           </div>
           <div class="promise" aria-live="polite">
             <span class="p-unset">Pick a level to see what MBS FUEL promises.</span>
-            <span class="p-none">Your gut keeps going. No help. No worries.</span>
-            <span class="p-weak">Your gut claps. Somewhere, tiny gut germs throw a small parade.</span>
-            <span class="p-strong">Your whole belly finds peace and mails you a thank-you card. You could digest a boulder. You might have to.</span>
+            <span class="p-none">Your gut soldiers on, unsupported and completely unbothered.</span>
+            <span class="p-weak">Your intestines applaud. Somewhere, a gut biome throws a small, tasteful parade.</span>
+            <span class="p-strong">Your entire digestive tract achieves enlightenment and mails you a thank-you card. You could digest a boulder, and you might have to.</span>
           </div>
           <p class="untested">UNTESTED · this blend has never been made</p>
         </div>
 
         <div class="srow" data-supp="citrulline">
           <div class="srow-top"><svg class="ic" viewBox="0 0 24 24" fill="var(--hot-d)" aria-hidden="true"><path d="M13 1 3 14h7l-1 9 11-14h-8z"/></svg><h3 class="name">L-CITRULLINE</h3></div>
-          <p class="real">General effect: an amino acid. Your body turns some of it into nitric oxide. That relaxes blood vessels. Some studies show a bit more blood flow and less soreness. Not a promise.</p>
+          <p class="real">General effect: an amino acid. Your body turns some of it into nitric oxide. Nitric oxide relaxes blood vessels. Some studies show a bit more blood flow, and less soreness the next day. Not a promise.</p>
           <div class="levels" role="radiogroup" aria-label="L-citrulline level">
             <button type="button" class="lvl" data-level="none" role="radio" aria-checked="false">NONE</button>
             <button type="button" class="lvl" data-level="weak" role="radio" aria-checked="false">WEAK</button>
@@ -287,16 +426,16 @@
           </div>
           <div class="promise" aria-live="polite">
             <span class="p-unset">Pick a level to see what MBS FUEL promises.</span>
-            <span class="p-none">Your blood vessels stay as wide as they were this morning.</span>
-            <span class="p-weak">A small pump. Your arms look a little odd in the mirror.</span>
-            <span class="p-strong">Your veins show from space. Bikers ride behind your pump to go faster.</span>
+            <span class="p-none">Your blood vessels remain exactly as wide as they were this morning.</span>
+            <span class="p-weak">A faint pump. Your forearms look mildly suspicious in the mirror.</span>
+            <span class="p-strong">Your veins become visible from orbit. Passing cyclists quietly draft behind your pump.</span>
           </div>
           <p class="untested">UNTESTED · this blend has never been made</p>
         </div>
 
         <div class="srow" data-supp="creatine">
           <div class="srow-top"><svg class="ic" viewBox="0 0 24 24" fill="var(--grape)" aria-hidden="true"><path d="M13 1 3 14h7l-1 9 11-14h-8z"/></svg><h3 class="name">CREATINE</h3></div>
-          <p class="real">General effect: one of the most studied sports supplements. It adds fuel to your muscles for short, hard efforts, like sprints and heavy lifts. Used often, it can add a little strength and power. Not a promise.</p>
+          <p class="real">General effect: one of the most studied sports supplements there is. It raises stored phosphocreatine in your muscles. That helps short, hard efforts, like sprints and heavy lifts. Used often over time, it can give modest gains in strength and power. Not a promise.</p>
           <div class="levels" role="radiogroup" aria-label="Creatine level">
             <button type="button" class="lvl" data-level="none" role="radio" aria-checked="false">NONE</button>
             <button type="button" class="lvl" data-level="weak" role="radio" aria-checked="false">WEAK</button>
@@ -304,16 +443,16 @@
           </div>
           <div class="promise" aria-live="polite">
             <span class="p-unset">Pick a level to see what MBS FUEL promises.</span>
-            <span class="p-none">Your muscles keep the creatine they had. That is fine too.</span>
-            <span class="p-weak">You add a plate to the bar. You ask nobody.</span>
-            <span class="p-strong">You deadlift the vending machine this drink came from. Physics files a complaint.</span>
+            <span class="p-none">Your muscles keep whatever creatine you already had, which is also fine.</span>
+            <span class="p-weak">You add a plate to the bar without asking anyone's permission.</span>
+            <span class="p-strong">You deadlift the vending machine this drink came from. Physics files a formal complaint.</span>
           </div>
           <p class="untested">UNTESTED · this blend has never been made</p>
         </div>
 
         <div class="srow" data-supp="electrolytes">
           <div class="srow-top"><svg class="ic" viewBox="0 0 24 24" fill="var(--sun-d)" aria-hidden="true"><path d="M13 1 3 14h7l-1 9 11-14h-8z"/></svg><h3 class="name">ELECTROLYTES</h3></div>
-          <p class="real">General effect: sodium, potassium, and other minerals. You lose them in sweat. Your body needs them for water balance, muscles, and nerves. Replacing them after a big sweat can help you feel better. Not a promise. Not medical care. See a doctor if you lose lots of fluid.</p>
+          <p class="real">General effect: sodium, potassium, and other minerals. You lose them in sweat. Your body needs them for hydration, muscle movement, and nerve signals. Replacing them when you sweat a lot can help you feel and perform better. Not a promise, and not a substitute for medical care if you are losing large amounts of fluid.</p>
           <div class="levels" role="radiogroup" aria-label="Electrolytes level">
             <button type="button" class="lvl" data-level="none" role="radio" aria-checked="false">NONE</button>
             <button type="button" class="lvl" data-level="weak" role="radio" aria-checked="false">WEAK</button>
@@ -321,16 +460,17 @@
           </div>
           <div class="promise" aria-live="polite">
             <span class="p-unset">Pick a level to see what MBS FUEL promises.</span>
-            <span class="p-none">You sweat like a normal, a bit salty human.</span>
-            <span class="p-weak">Your cramps take the day off. Your handshake gets weirdly firm.</span>
-            <span class="p-strong">You sweat something close to a sports drink. The ocean asks you for tips.</span>
+            <span class="p-none">You sweat like a normal, slightly salty human.</span>
+            <span class="p-weak">Your cramps take the day off. Your handshake becomes weirdly, unnecessarily firm.</span>
+            <span class="p-strong">You sweat something suspiciously close to a sports drink. The ocean asks you for tips.</span>
           </div>
           <p class="untested">UNTESTED · this blend has never been made</p>
         </div>
 
       </div>
-    </section>
+    </section></details>
 
+    <details id="flavorDetails"><summary>ALL ORIGINAL FLAVOUR CHOICES</summary>
     <section class="card" id="flavCard" aria-label="Flavour">
       <h2 class="heading">PICK YOUR FLAVOUR</h2>
       <p class="warn">⚠ FLAVOUR IS ALSO UNTESTED. NO FLAVOUR BELOW EXISTS YET. ⚠</p>
@@ -344,51 +484,33 @@
         <button type="button" class="flv" data-flavour="BLACKOUT GRAPE" role="radio" aria-checked="false">BLACKOUT GRAPE</button>
         <button type="button" class="flv" data-flavour="SIREN SONG WATERMELON" role="radio" aria-checked="false">SIREN SONG WATERMELON</button>
       </div>
-    </section>
+    </section></details>
 
-    <section class="card" id="nameCard" aria-label="Name your stack">
-      <h2 class="heading">NAME YOUR PRE-WORKOUT</h2>
-      <p class="lede">Three words, zero focus group. Pick a name and a label color.</p>
-      <div id="batchColors" role="group" aria-label="Label color"></div><div class="namepicker">
-        <select id="nameA" aria-label="First word">
-          <option>BUCKED</option><option>ELITE</option><option>PEAK</option><option>APEX</option>
-          <option>SAVAGE</option><option>PRIMAL</option><option>RIPPED</option><option>NITRO</option>
-          <option>HYPER</option><option>ALPHA</option><option>LIMITLESS</option><option>GODMODE</option>
-        </select>
-        <select id="nameB" aria-label="Second word">
-          <option>SURGE</option><option>PUMP</option><option>MATRIX</option><option>PROTOCOL</option>
-          <option>STACK</option><option>FORMULA</option><option>COMPLEX</option><option>BLEND</option>
-          <option>IGNITE</option><option>OVERDRIVE</option><option>ASCEND</option><option>ONSLAUGHT</option>
-        </select>
-        <select id="nameC" aria-label="Third word">
-          <option>XR</option><option>MAX</option><option>5000</option><option>BLACK</option>
-          <option>EXTREME</option><option>PRO</option><option>ULTRA</option><option>V2</option>
-          <option>ZERO</option><option>PLUS</option><option>X</option><option>RELOADED</option>
-        </select>
-      </div>
-    </section>
-
-    <section class="card" aria-label="Your can">
+            <details id="ingredientInfoDetails"><summary>INGREDIENT NOTES</summary><p>Fictional game choices. Ingredient descriptions are general effects, not promises. Scoops are game units, not a supplement recipe.</p></details>
+            <p class="fu-footnote">MBS FUEL is fictional and untested. This game is not a supplement recommendation or medical advice.</p>
+          </section>
+          <section class="card" aria-label="Your can">
       <p class="floatprint" style="right:5%; top:10%">UNTESTED</p>
       <h2 class="heading">YOUR CAN</h2>
-      <div class="can" id="canLabel"></div>
-      <div class="costbar" id="costBar"></div>
+      <div id="reviewPageSummary" class="review-page" data-review-page="summary"><div class="can" id="canLabel"></div></div>
+      <div id="reviewPageCost" class="review-page" data-review-page="cost" hidden><div class="costbar" id="costBar"></div>
       <details class="assump" id="assumpBox">
         <summary>WHERE THOSE TWO NUMBERS COME FROM</summary>
         <div class="assump-body" id="assumpBody"></div>
-      </details>
-      <button type="button" class="submit" id="submitBtn">SEAL THE CAN</button>
-      <div class="result" id="result" hidden>
+      </details></div>
+      <div id="reviewPageSave" class="review-page" data-review-page="save" hidden><div class="result" id="result" hidden>
         <p class="note" id="resultNote">NOTHING WAS SENT OR SAVED. THIS DRINK DOES NOT EXIST YET.</p>
         <a class="mailme" id="mailLink" target="_blank" rel="noopener">EMAIL US YOUR STACK YOURSELF</a>
       </div>
+          <div class="review-design-actions"><button type="button" id="labelExport">SAVE DESIGN</button><label for="labelImport">LOAD SAVED DESIGN<input id="labelImport" type="file" accept=".json,application/json"></label></div>
+      </div>
     </section>
-  </div>
 
-
-  <footer class="foot">
-    MBS FUEL · A MOM INC SUBSIDIARY
-    <small>This is a game. It is not medical advice.</small>
-  </footer>
+        </div></div>
+      </section>
+      <footer id="stationActions" aria-label="Batch actions">
+        <button type="button" id="batchBack" hidden>BACK</button><button type="button" id="batchUndo">UNDO</button><button type="button" id="batchReset">START OVER</button><button type="button" id="batchNext">NEXT: FLAVOR</button><button type="button" class="submit" id="submitBtn">SEAL THE CAN</button>
+      </footer>
+    </div>
+  </section>
 </article>
-

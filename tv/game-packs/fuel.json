@@ -29,8 +29,8 @@
     },
     {
       "url": "/play/fuel/index.html",
-      "revision": "b716f8aa649739dafa4fa59a5235223fe6b6f4a4",
-      "bytes": 2216
+      "revision": "d898513d31c12ebcef9fffc591f1fb99867b2032",
+      "bytes": 2007
     },
     {
       "url": "/tv/assets/armie-intro/vendor/BufferGeometryUtils.js",
@@ -148,14 +148,19 @@
       "bytes": 13515
     },
     {
+      "url": "/tv/channels/fuel-label.mjs",
+      "revision": "7864fc9f2cdaae4b713afd63eb22745c0d20d48b",
+      "bytes": 7886
+    },
+    {
       "url": "/tv/channels/fuel.html",
-      "revision": "e82fae683746dd7cc08e614ccde05afa671db657",
-      "bytes": 36310
+      "revision": "3323a6fa6ce58a4cbfee399d629d1f707d663700",
+      "bytes": 54655
     },
     {
       "url": "/tv/channels/fuel.js",
-      "revision": "7bd52a8bb78ccbd91447d4131ca51db427b9352a",
-      "bytes": 57336
+      "revision": "f6faae33048b96490a3b18f56440e7dc58c0e4a1",
+      "bytes": 35006
     },
     {
       "url": "/tv/dj-booth.css",
@@ -298,5 +303,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "725e3e393ef6b3acf5a8"
+  "version": "9e1fd1c083b9cbb2d29d"
 }
