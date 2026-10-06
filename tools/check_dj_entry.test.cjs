@@ -8,10 +8,17 @@ test('DJ page arrival stays quiet; starting the game requires a dancing name pic
  for(const [i,id] of ['djA','djB','djC'].entries()){const select=w.byId(id);select.value=['DJ','ECHO','3000'][i];select.dispatchEvent(new w.Event('change'));assert.ok(dialog.classList.contains('dj-dancing'));}
  tag.value='xy';tag.dispatchEvent(new w.Event('input'));assert.equal(confirm.disabled,true);tag.value='xyz';tag.dispatchEvent(new w.Event('input'));assert.equal(confirm.disabled,false);confirm.click();assert.equal(started,1);assert.equal(dialog.open,false);assert.equal(w.MBS_DJ.read().moniker,'XYZ');assert.equal(w.MBS_DJ.display(),'Anonymous guest');w.MBS_DJ.complete();assert.match(w.MBS_DJ.display(),/^PRISONER .*XYZ$/);dom.window.close();
 });
-test('Fuel entrances return to the original neon tub page with MOM marquee and electricity',()=>{
- const read=file=>fs.readFileSync(path.join(root,file),'utf8');assert.match(read('arcade/tub-flight/game.mjs'),/location.assign\('\/play\/fuel\/'\)/);assert.match(read('tv/tv.js'),/if\(name==="fuel"\)location.replace\("\/play\/fuel\/"\)/);
- const landing=read('games/fuel/index.html');assert.ok(landing.indexOf('/tv/fuel-gate.js')<landing.indexOf("location.replace('/play/fuel/')"));assert.ok(landing.includes("dataset.fuelLocked!=='true'"));
- const play=new JSDOM(read('play/fuel/index.html')),fragment=new JSDOM(read('tv/channels/fuel.html'));const roots=JSON.parse(play.window.document.documentElement.dataset.roots).roots;for(const selector of roots)assert.equal(fragment.window.document.querySelectorAll(selector).length,1,selector);assert.ok(fragment.window.document.querySelector('.head .fu-mom-marquee'));assert.equal(fragment.window.document.querySelectorAll('.fu-mom-track>span').length,2);assert.equal(fragment.window.document.querySelectorAll('.head .bolt').length,2);assert.ok(fragment.window.document.querySelector('#fuStage'));assert.ok(read('tv/channels/fuel.html').includes('fuel-mom-scroll'));play.window.close();fragment.window.close();
+test('Fuel entrances preserve the gate and open the builder inside the TV',()=>{
+ const read=file=>fs.readFileSync(path.join(root,file),'utf8');
+ assert.ok(read('arcade/tub-flight/game.mjs').includes("location.assign('/tv/?ch=fuel')"));
+ assert.ok(!read('tv/tv.js').includes('location.replace("/play/fuel/")'));
+ assert.ok(read('tv/tv.js').includes('name !== "fuel" && !!chanRec.game'));
+ const landing=read('games/fuel/index.html');assert.ok(landing.indexOf('/tv/fuel-gate.js')<landing.indexOf("location.replace('/tv/?ch=fuel')"));assert.ok(landing.includes("dataset.fuelLocked!=='true'"));
+ const wrapper=read('play/fuel/index.html');assert.ok(wrapper.indexOf('/tv/fuel-gate.js')<wrapper.indexOf("target.searchParams.set('ch','fuel')"));assert.ok(wrapper.includes('target.hash=location.hash'));
+ const play=new JSDOM(wrapper),fragment=new JSDOM(read('tv/channels/fuel.html'));const roots=JSON.parse(play.window.document.documentElement.dataset.roots).roots;
+ for(const selector of roots)assert.equal(fragment.window.document.querySelectorAll(selector).length,1,selector);
+ assert.ok(fragment.window.document.querySelector('#fuStage'));assert.ok(fragment.window.document.querySelector('#controlTray'));assert.ok(fragment.window.document.querySelector('#doseEducation'));
+ play.window.close();fragment.window.close();
 });
 test('workout playlist share codec round-trips, caps input and ignores bad links',()=>{
  const src=fs.readFileSync(path.join(root,'tv/channels/djscratch.js'),'utf8'),a=src.indexOf('// ---- WORKOUT DATA START'),b=src.indexOf('// ---- WORKOUT DATA END');assert.ok(a>0&&b>a);

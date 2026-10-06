@@ -55,7 +55,7 @@
   }
  }
  function start(){
-  if(document.querySelector('#tv')){const ads=document.createElement('script');ads.src='/tv/retro-ads.js?v=neon-tv-2';document.head.append(ads);}
+  if(document.querySelector('#tv')){const ads=document.createElement('script');ads.src='/tv/retro-ads.js?v=fuel-tv-3';document.head.append(ads);}
   recoverSchoolFinish();
   recoverGalaFinish();
   paint();

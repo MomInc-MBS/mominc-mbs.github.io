@@ -8,7 +8,7 @@
  const headlines={corner:'pssstt feeling sleepy?',bottom:'YOUR NEXT SCOOP IS AIRBORNE.',side:'KEEP. IT. UP.',button:'THIS BUTTON NEEDS FUEL.',game:'TUB FLIGHT'};
  let active=null,kind=null,game=null,timer=null,countdown=null,cycle=0,generation=0,disposed=false,wasOn=false,previousKind=null,manualHand=false,lastFocus=null;
  const powered=()=>!disposed&&!document.hidden&&tv.dataset.state==='on';
- const sponsor=()=>window.MBS_FLOW?.pagesReady()?(window.MBS_FLOW.armieReady()?null:'hand'):'fuel';
+ const sponsor=()=>new URLSearchParams(location.search).get('ch')==='fuel'?null:window.MBS_FLOW?.pagesReady()?(window.MBS_FLOW.armieReady()?null:'hand'):'fuel';
  const occupied=()=>!!document.querySelector('dialog[open], [aria-modal="true"]');
  const available=()=>sponsor()==='fuel'?['fuel']:sponsor()==='hand'?['hand']:[];
  function clearTimer(){if(timer!==null)clearTimeout(timer);timer=null;}

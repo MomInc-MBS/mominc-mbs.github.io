@@ -44,7 +44,7 @@ export function cleanDraft(input, keys, flavors) {
 // Exact visual identity includes image bytes; these bounded strings stay in local storage, not mailto.
 export function batchIdentity(scoops, flavour, words, label) {
   const {locks, ...appearance}=cleanLabel(label);
-  return JSON.stringify({scoops,flavour,words,appearance});
+  return JSON.stringify({amountsVersion:2,scoops,flavour,words,appearance});
 }
 export function batchSignature(scoops, flavour, words, label) {
   const text=batchIdentity(scoops,flavour,words,label);let a=2166136261,b=5381;
