@@ -1,8 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {defaultLabel,cleanLabel,cleanDraft,batchIdentity,batchSignature} from '../tv/channels/fuel-label.mjs';
+import {AMOUNTS,servingAmount,servingGrams} from '../tv/channels/fuel-amounts.mjs';
 const keys=['caffeine','theanine','glutamine','citrulline','creatine','electrolytes'];
 const flavors=['LIME','GRAPE'];
+test('reference serving amounts double exactly and price the full electrolyte blend',()=>{
+  for(const key of keys){assert.equal(servingGrams(key,2),servingGrams(key,1)*2);assert.equal(servingAmount(key,0),'NONE');assert.ok(AMOUNTS[key].source.startsWith('https://'));}
+  assert.equal(servingAmount('caffeine',2),'200 mg');assert.equal(servingAmount('creatine',2),'6 g');
+  assert.equal(servingAmount('electrolytes',2),'400 mg sodium');assert.equal(servingGrams('electrolytes',2),1);
+});
 test('restored drafts enforce capacity, ingredient limits and valid mixing',()=>{
   const d=cleanDraft({version:1,scoops:['caffeine','caffeine','caffeine','unknown','creatine'],flavour:'LIME',mixTurns:3,phase:'done'},keys,flavors);
   assert.deepEqual(d.scoops,['caffeine','caffeine','creatine']);assert.equal(d.mixTurns,0);assert.equal(d.phase,'fill');

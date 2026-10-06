@@ -1,4 +1,4 @@
-<!-- FUEL factory game: fill eight game scoops, inject flavor, mix, name and color the label, seal. Original palette, wordmark, stage and ingredient content retained. -->
+<!-- FUEL factory game: fill eight ingredient additions, inject flavor, mix, name and color the label, seal. Original palette, wordmark, stage and ingredient content retained. -->
 <style>
   .fu{--hot:#ff2e88; --hot-d:#c40058; --acid:#c6ff00; --acid-d:#7a9c00; --volt:#00e0ff; --volt-d:#0092ab;
       --sun:#ffea00; --sun-d:#e0a500; --grape:#7a2fc4; --grape-d:#4a1a86; --ink:#1a0a10; --cream:#fffef2;
@@ -148,7 +148,7 @@
 .fu [hidden]{display:none!important}
 
 /* Compact station: the host supplies the height; the channel itself never grows the page. */
-.fu{height:var(--fuel-height,100dvh);min-height:0;overflow:hidden;padding:0;display:block}
+.fu{height:var(--fuel-height,100dvh);min-height:0;overflow:hidden;padding:0;display:block;container-type:size}
 .fu #introCard{height:100%;min-height:0;margin:0;padding:0;border:0;border-radius:0;box-shadow:none;background:transparent;overflow:hidden}
 .fu #introCard::before{display:none}
 .fu.has3d #introCard{display:block}
@@ -173,7 +173,7 @@
 .fu.has3d .jar-fallback{display:none}
 .fu .fu-face{left:8px;top:7px;max-width:48%;z-index:3}.fu .fu-face b{font-size:12px}.fu .fu-face i{font-size:10px}
 .fu .fu-nudge{top:7px;right:7px;max-width:43%;padding:3px 6px;font-size:10px;animation:none}
-.fu .fu-rotate{bottom:6px;gap:7px}.fu .fu-rotbtn{width:44px;height:44px;font-size:20px;border-width:2px}
+.fu .fu-rotate{left:12px;right:12px;top:50%;bottom:auto;transform:translateY(-50%);justify-content:space-between;gap:0;pointer-events:none}.fu .fu-rotbtn{width:44px;height:44px;font-size:20px;border-width:2px}
 .fu #controlTray{position:relative;min-height:0;overflow:auto;overscroll-behavior:contain;background:linear-gradient(155deg,#fff 0%,var(--cream) 62%,#e6edbf 100%);border:3px solid var(--ink);border-radius:15px;padding:9px 10px 8px;box-shadow:3px 3px 0 rgba(0,0,0,.3)}
 .fu .tray-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 5px}
 .fu .tray-head h2{margin:0;font:18px Anton,sans-serif;letter-spacing:.04em;color:var(--hot-d)}
@@ -295,6 +295,33 @@
 .fu.fuel-typing #controlTray{padding:5px 7px}
 .fu.fuel-typing .fu-face,.fu.fuel-typing .fu-nudge,.fu.fuel-typing .fu-rotate{display:none}
 .fu.fuel-typing .label-page-nav{margin-bottom:0}
+/* The cabinet takes space on a phone. Fit the advert to its screen, not the viewport. */
+@container (max-height:620px){
+  .fu #fuStation{grid-template-rows:auto minmax(90px,1fr) 210px 44px;gap:4px;padding:4px 7px}
+  .fu[data-batch="label"] #fuStation,.fu[data-review="true"] #fuStation,.fu[data-batch="done"] #fuStation{grid-template-rows:auto minmax(90px,1fr) 230px 44px}
+  .fu #stationTop{display:block}.fu #stationBrand{display:none}
+  .fu #batchHelp,.fu #batchStatus,.fu #draftStatus,.fu .fu-face,.fu .fu-nudge{display:none}
+  .fu #controlTray{padding:5px 7px}.fu .tray-head{margin-bottom:3px}.fu .tray-head h2{font-size:15px}
+  .fu #stationActions button{min-height:40px;padding:5px 7px;font-size:12px}
+  .fu .batch-options{gap:4px}.fu #batchIngredients button{font-size:10px}
+  .fu[data-review="true"] .tray-head,.fu[data-batch="done"] .tray-head{display:none}
+  .fu #trayReview .card{padding:4px;margin:0}
+  .fu #trayReview .can{gap:0;padding:4px 6px}
+  .fu #trayReview .can span{line-height:1.2}
+  .fu #reviewPageNotes{max-height:135px}
+}
+@container (max-height:410px){
+  .fu #stationTop{display:none}
+  .fu #fuStation,.fu[data-batch="label"] #fuStation,.fu[data-review="true"] #fuStation,.fu[data-batch="done"] #fuStation{grid-template-rows:minmax(64px,1fr) 215px 40px}
+  .fu .tray-head{display:none}
+}
+@container (min-width:560px) and (max-height:620px){
+  .fu #fuStation,.fu[data-batch="label"] #fuStation,.fu[data-review="true"] #fuStation,.fu[data-batch="done"] #fuStation{grid-template-columns:minmax(160px,1fr) minmax(260px,1fr);grid-template-rows:auto minmax(0,1fr) 44px}
+  .fu #stationTop{grid-column:1/-1;grid-row:1}
+  .fu #stageCard{grid-column:1;grid-row:2/4}
+  .fu #controlTray{grid-column:2;grid-row:2}
+  .fu #stationActions{grid-column:2;grid-row:3}
+}
 </style>
 
 <article class="fu" id="fu" aria-label="MBS FUEL" data-host="MBS FUEL" data-show="BUILD YOUR STACK" data-ch="7" data-gauge="off">
@@ -309,7 +336,7 @@
           <span class="chnum">CH 7 &bull; MOM INC</span><span class="chnum" id="fuFlavTag" hidden>FLAVOUR: NOT SET</span>
         </header>
         <div id="stationProgress"><div class="batch-steps" aria-label="Batch progress"><span data-step="fill">01 FILL</span><span data-step="flavor">02 FLAVOR</span><span data-step="label">03 LABEL</span><span data-step="done">04 SEALED</span></div>
-          <div class="batch-meter"><progress id="batchFill" max="8" value="0" aria-label="Tub fill"></progress><b id="batchCount">0 / 8 scoops</b></div>
+          <div class="batch-meter"><progress id="batchFill" max="8" value="0" aria-label="Tub fill"></progress><b id="batchCount">0 / 8 additions</b></div>
         </div>
       </div>
       <section class="card" id="stageCard" aria-label="The tub"><h2 class="heading">THE STACK</h2><div class="fu-stage" id="fuStage">
@@ -320,8 +347,8 @@
       </div></section>
       <section id="controlTray" aria-label="Batch controls">
         <div class="tray-head"><h2 id="batchTitle">FILL YOUR TUB</h2><button type="button" id="batchReview" class="station-tab" aria-controls="trayReview" aria-expanded="false">REVIEW</button></div>
-        <p id="batchHelp">Add eight scoops. Pick any combination, up to two of each ingredient.</p><p id="batchStatus" role="status" aria-live="polite">Your tub is empty. Choose your first ingredient.</p>
-        <div id="trayFill" class="tray-page"><div id="batchIngredients" class="batch-options" aria-label="Ingredients"></div><p id="ingredientInfo" class="ingredient-info">Choose ingredients to see their general effects. Game scoops are fictional units.</p></div>
+        <p id="batchHelp">Tap once for base, twice for double. Eight additions fill your jar.</p><p id="batchStatus" role="status" aria-live="polite">Your tub is empty. Choose your first ingredient.</p>
+        <div id="trayFill" class="tray-page"><div id="batchIngredients" class="batch-options" aria-label="Ingredients"></div><p id="ingredientInfo" class="ingredient-info">Reference amounts per serving. Tap once for base, twice for double. Daily needs vary.</p></div>
         <div id="trayFlavor" class="tray-page" hidden><div id="batchFlavors" class="batch-options" aria-label="Flavour choices"></div><div class="flavor-pager"><button type="button" id="flavorPrev" aria-label="Previous flavours">PREV</button><span id="flavorPage" aria-live="polite">1 / 2</span><button type="button" id="flavorNext" aria-label="Next flavours">NEXT</button></div><p>Choose one flavour, then mix three times.</p></div>
         <div id="trayLabel" class="tray-page" hidden>
           <section class="card" id="nameCard" aria-label="Name and design your label">
@@ -359,7 +386,12 @@
         <div id="trayReview" class="tray-page" hidden><div id="reviewPanel">
           <nav id="reviewPageNav" class="review-page-nav" aria-label="Review pages"><button type="button" id="reviewPagePrev">PREV</button><div class="review-tabs"><button type="button" data-review-tab="summary" id="reviewTabSummary" aria-pressed="true">SUMMARY</button><button type="button" data-review-tab="cost" id="reviewTabCost" aria-pressed="false">COST</button><button type="button" data-review-tab="notes" id="reviewTabNotes" aria-pressed="false">NOTES</button><button type="button" data-review-tab="save" id="reviewTabSave" aria-pressed="false">SAVE</button></div><span id="reviewPageCount" aria-live="polite">1 / 4</span><button type="button" id="reviewPageNext">NEXT</button></nav>
           <section id="reviewPageNotes" class="review-page" data-review-page="notes" hidden>
-    <details id="ingredientDetails"><summary>INGREDIENTS AND ORIGINAL LEVEL CONTROLS</summary>
+    <div id="doseEducation" aria-label="Educational dose references">
+              <p>Reference amounts per serving. Tap once for base, twice for double. Daily needs vary.</p>
+              <div id="doseFacts" aria-live="polite"></div>
+              <p class="dose-sources">Sources: <a href="https://ods.od.nih.gov/factsheets/ExerciseAndAthleticPerformance-HealthProfessional/" target="_blank" rel="noopener">NIH Office of Dietary Supplements: Exercise and Athletic Performance</a> &middot; <a href="https://www.fda.gov/consumers/consumer-updates/spilling-beans-how-much-caffeine-too-much" target="_blank" rel="noopener">FDA: Caffeine information</a></p>
+            </div>
+    <details id="ingredientDetails"><summary>INGREDIENTS &amp; AMOUNTS</summary>
     <section class="card" id="stackCard" aria-label="Your stack">
       <p class="floatprint" style="left:3%; top:40%">UNTESTED</p>
       <h2 class="heading">THE STACK</h2>
@@ -370,8 +402,8 @@
           <p class="real">General effect: caffeine is a stimulant. It blocks adenosine, the molecule that makes you feel sleepy. Most people feel more alert. Effort can feel a little easier, at normal doses. Not a promise.</p>
           <div class="levels" role="radiogroup" aria-label="Caffeine level">
             <button type="button" class="lvl" data-level="none" role="radio" aria-checked="false">NONE</button>
-            <button type="button" class="lvl" data-level="weak" role="radio" aria-checked="false">WEAK</button>
-            <button type="button" class="lvl" data-level="strong" role="radio" aria-checked="false">STRONG</button>
+            <button type="button" class="lvl" data-level="weak" role="radio" aria-checked="false">BASE</button>
+            <button type="button" class="lvl" data-level="strong" role="radio" aria-checked="false">DOUBLE</button>
           </div>
           <div class="promise" aria-live="polite">
             <span class="p-unset">Pick a level to see what MBS FUEL promises.</span>
@@ -387,8 +419,8 @@
           <p class="real">General effect: an amino acid from tea leaves. Paired with caffeine, some people feel calmer and more focused, with fewer jitters. The evidence is modest. Not a promise.</p>
           <div class="levels" role="radiogroup" aria-label="L-theanine level">
             <button type="button" class="lvl" data-level="none" role="radio" aria-checked="false">NONE</button>
-            <button type="button" class="lvl" data-level="weak" role="radio" aria-checked="false">WEAK</button>
-            <button type="button" class="lvl" data-level="strong" role="radio" aria-checked="false">STRONG</button>
+            <button type="button" class="lvl" data-level="weak" role="radio" aria-checked="false">BASE</button>
+            <button type="button" class="lvl" data-level="strong" role="radio" aria-checked="false">DOUBLE</button>
           </div>
           <div class="promise" aria-live="polite">
             <span class="p-unset">Pick a level to see what MBS FUEL promises.</span>
@@ -404,8 +436,8 @@
           <p class="real">General effect: an amino acid. Your gut and immune system use a lot of it during hard training. It may help some people recover. There is little proof it boosts performance if you already eat well. Not a promise.</p>
           <div class="levels" role="radiogroup" aria-label="L-glutamine level">
             <button type="button" class="lvl" data-level="none" role="radio" aria-checked="false">NONE</button>
-            <button type="button" class="lvl" data-level="weak" role="radio" aria-checked="false">WEAK</button>
-            <button type="button" class="lvl" data-level="strong" role="radio" aria-checked="false">STRONG</button>
+            <button type="button" class="lvl" data-level="weak" role="radio" aria-checked="false">BASE</button>
+            <button type="button" class="lvl" data-level="strong" role="radio" aria-checked="false">DOUBLE</button>
           </div>
           <div class="promise" aria-live="polite">
             <span class="p-unset">Pick a level to see what MBS FUEL promises.</span>
@@ -421,8 +453,8 @@
           <p class="real">General effect: an amino acid. Your body turns some of it into nitric oxide. Nitric oxide relaxes blood vessels. Some studies show a bit more blood flow, and less soreness the next day. Not a promise.</p>
           <div class="levels" role="radiogroup" aria-label="L-citrulline level">
             <button type="button" class="lvl" data-level="none" role="radio" aria-checked="false">NONE</button>
-            <button type="button" class="lvl" data-level="weak" role="radio" aria-checked="false">WEAK</button>
-            <button type="button" class="lvl" data-level="strong" role="radio" aria-checked="false">STRONG</button>
+            <button type="button" class="lvl" data-level="weak" role="radio" aria-checked="false">BASE</button>
+            <button type="button" class="lvl" data-level="strong" role="radio" aria-checked="false">DOUBLE</button>
           </div>
           <div class="promise" aria-live="polite">
             <span class="p-unset">Pick a level to see what MBS FUEL promises.</span>
@@ -438,8 +470,8 @@
           <p class="real">General effect: one of the most studied sports supplements there is. It raises stored phosphocreatine in your muscles. That helps short, hard efforts, like sprints and heavy lifts. Used often over time, it can give modest gains in strength and power. Not a promise.</p>
           <div class="levels" role="radiogroup" aria-label="Creatine level">
             <button type="button" class="lvl" data-level="none" role="radio" aria-checked="false">NONE</button>
-            <button type="button" class="lvl" data-level="weak" role="radio" aria-checked="false">WEAK</button>
-            <button type="button" class="lvl" data-level="strong" role="radio" aria-checked="false">STRONG</button>
+            <button type="button" class="lvl" data-level="weak" role="radio" aria-checked="false">BASE</button>
+            <button type="button" class="lvl" data-level="strong" role="radio" aria-checked="false">DOUBLE</button>
           </div>
           <div class="promise" aria-live="polite">
             <span class="p-unset">Pick a level to see what MBS FUEL promises.</span>
@@ -455,8 +487,8 @@
           <p class="real">General effect: sodium, potassium, and other minerals. You lose them in sweat. Your body needs them for hydration, muscle movement, and nerve signals. Replacing them when you sweat a lot can help you feel and perform better. Not a promise, and not a substitute for medical care if you are losing large amounts of fluid.</p>
           <div class="levels" role="radiogroup" aria-label="Electrolytes level">
             <button type="button" class="lvl" data-level="none" role="radio" aria-checked="false">NONE</button>
-            <button type="button" class="lvl" data-level="weak" role="radio" aria-checked="false">WEAK</button>
-            <button type="button" class="lvl" data-level="strong" role="radio" aria-checked="false">STRONG</button>
+            <button type="button" class="lvl" data-level="weak" role="radio" aria-checked="false">BASE</button>
+            <button type="button" class="lvl" data-level="strong" role="radio" aria-checked="false">DOUBLE</button>
           </div>
           <div class="promise" aria-live="polite">
             <span class="p-unset">Pick a level to see what MBS FUEL promises.</span>
@@ -486,8 +518,8 @@
       </div>
     </section></details>
 
-            <details id="ingredientInfoDetails"><summary>INGREDIENT NOTES</summary><p>Fictional game choices. Ingredient descriptions are general effects, not promises. Scoops are game units, not a supplement recipe.</p></details>
-            <p class="fu-footnote">MBS FUEL is fictional and untested. This game is not a supplement recommendation or medical advice.</p>
+            <details id="ingredientInfoDetails"><summary>INGREDIENT NOTES</summary><p>Reference amounts per serving. Tap once for base, twice for double. Daily needs vary. Ingredient descriptions are general information, not personal recommendations.</p></details>
+            <p class="fu-footnote">Reference amounts per serving. Tap once for base, twice for double. Daily needs vary. MBS FUEL is fictional and untested. This is not a supplement recommendation or medical advice.</p>
           </section>
           <section class="card" aria-label="Your can">
       <p class="floatprint" style="right:5%; top:10%">UNTESTED</p>

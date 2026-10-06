@@ -310,7 +310,6 @@
   // --- channel: the root TV page opens MOM INC; explicit links open that channel.
   const name = current === "sag" ? "mominc" : current;
   const testcard = `<section class="testcard" aria-label="MBS test card"><h1>MBS</h1><div class="spacer"></div><p>Mom's Brainwashing Stream. This set is tuned to no one yet.</p></section>`;
-  if(name==="fuel")location.replace("/play/fuel/");
   if (name === "armie" && !window.MBS_FLOW?.armieReady()) {
     channel.innerHTML = `<section class="testcard"><h1>COACH ARMIE</h1><p>The Music Desk has your hand on order.</p><a href="../games/djscratch/">Visit DJ Scratch</a></section>`;
   } else if (name && COMING_SOON.includes(name) && name !== "armie") {
@@ -357,7 +356,7 @@
   const gameLegend = document.getElementById("gameLegend");
   const chanRec = (window.MBS_CHANNELS.channels || []).find(c => c.id === name) || {};
   // a coming-soon or suppressed channel loads no fragment at all (above), so there is nothing to frame
-  const isGame = !!chanRec.game && !chanRec.comingSoon && !chanRec.suppressed;
+  const isGame = name !== "fuel" && !!chanRec.game && !chanRec.comingSoon && !chanRec.suppressed;
   const inGame = () => tv.dataset.mode === "game";
 
   function paintGame() {

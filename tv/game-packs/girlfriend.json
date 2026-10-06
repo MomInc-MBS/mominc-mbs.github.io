@@ -9,8 +9,8 @@
     },
     {
       "url": "/arcade/tub-flight/game.mjs",
-      "revision": "b644eb305d2bf1e709d6a42e821b46376e135378",
-      "bytes": 5737
+      "revision": "753356891d69ba5a3022772d559a4d173c51e44a",
+      "bytes": 5715
     },
     {
       "url": "/arcade/tub-flight/style.css",
@@ -209,8 +209,8 @@
     },
     {
       "url": "/tv/index.html",
-      "revision": "d886c597363f924f192fbe8aef028c54c124bdc7",
-      "bytes": 14929
+      "revision": "144ed2fba297a3c1ed682acebe0e618cd09ba25c",
+      "bytes": 14824
     },
     {
       "url": "/tv/landing.css",
@@ -244,7 +244,7 @@
     },
     {
       "url": "/tv/network-flow.js",
-      "revision": "5e911079d47ca1ebe9cbda74e401f5dcef1497e7",
+      "revision": "9988ccfcab38fe21a2de2b70a4f9b2108e644771",
       "bytes": 8650
     },
     {
@@ -269,8 +269,8 @@
     },
     {
       "url": "/tv/retro-ads.js",
-      "revision": "201aa7265334b6e64fc181ff79a021ec4430ac9a",
-      "bytes": 8611
+      "revision": "b2edfec9a57c030c658fa8569989028da19578ca",
+      "bytes": 8672
     },
     {
       "url": "/tv/retro-pointer.js",
@@ -299,18 +299,18 @@
     },
     {
       "url": "/tv/tv.css",
-      "revision": "7dc80a4600a5fdb124d64db0e6a437df0492a108",
-      "bytes": 27087
+      "revision": "6e9981624aded1d2dcc2c601a27468a39207c9ef",
+      "bytes": 27338
     },
     {
       "url": "/tv/tv.js",
-      "revision": "32006f6fe65601b4707ace61390006b635dfabf6",
-      "bytes": 34570
+      "revision": "bbb356637615279d215ce4227b1b18df0f9d7f4e",
+      "bytes": 34537
     }
   ],
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "6888e158647b1f4ab297"
+  "version": "7a0d92f7533406278e1c"
 }

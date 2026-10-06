@@ -304,6 +304,11 @@ body{display:block;padding:0;overflow:hidden}
   .model{display:none}
 }
 
+@media(max-width:640px){
+  /* Keep the channel dial and cabinet around the sponsor's compact webpage. */
+  .tv:has(.fu) .lcd{min-width:0;overflow:hidden}
+  .tv:has(.fu) .lcd-list{flex-wrap:nowrap;overflow-x:auto;max-width:100%;scrollbar-width:thin}
+}
 /* --- game mode: the set hands the whole viewport to the game (2.15 / C001).
    `data-mode="game"` sits on .tv and means the LAYOUT mode. It is not the TONE switch of the same
    name: that one is live/public and lives on <html> (tv.js) and on a channel's own root (corgi.html).

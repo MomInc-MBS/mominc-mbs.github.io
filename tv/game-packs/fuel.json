@@ -9,8 +9,8 @@
     },
     {
       "url": "/arcade/tub-flight/game.mjs",
-      "revision": "b644eb305d2bf1e709d6a42e821b46376e135378",
-      "bytes": 5737
+      "revision": "753356891d69ba5a3022772d559a4d173c51e44a",
+      "bytes": 5715
     },
     {
       "url": "/arcade/tub-flight/index.html",
@@ -24,13 +24,13 @@
     },
     {
       "url": "/games/fuel/index.html",
-      "revision": "66c73d69ee3cd182c9e6d1270ef05b3419e4a550",
-      "bytes": 7731
+      "revision": "c5ab6530ad0ac60a6a28f854f7dbbd58be0ce75f",
+      "bytes": 7703
     },
     {
       "url": "/play/fuel/index.html",
-      "revision": "d898513d31c12ebcef9fffc591f1fb99867b2032",
-      "bytes": 2007
+      "revision": "b9f798a425a2f1c211b38aa155560684e380a5f9",
+      "bytes": 2251
     },
     {
       "url": "/tv/assets/armie-intro/vendor/BufferGeometryUtils.js",
@@ -148,19 +148,24 @@
       "bytes": 13515
     },
     {
+      "url": "/tv/channels/fuel-amounts.mjs",
+      "revision": "cbd9712301ceee376f0f7ae953e7aa6f8bae7f97",
+      "bytes": 3198
+    },
+    {
       "url": "/tv/channels/fuel-label.mjs",
-      "revision": "7864fc9f2cdaae4b713afd63eb22745c0d20d48b",
-      "bytes": 7886
+      "revision": "bc635df0c8c04657b0e3f65e950540196b1179a0",
+      "bytes": 7903
     },
     {
       "url": "/tv/channels/fuel.html",
-      "revision": "3323a6fa6ce58a4cbfee399d629d1f707d663700",
-      "bytes": 54655
+      "revision": "e187c0b96bf7136cbbe29a56e50ec5c413610d70",
+      "bytes": 57346
     },
     {
       "url": "/tv/channels/fuel.js",
-      "revision": "f6faae33048b96490a3b18f56440e7dc58c0e4a1",
-      "bytes": 35006
+      "revision": "fe5ee1f109e31942607f8a7d97934ca87b2773e0",
+      "bytes": 36567
     },
     {
       "url": "/tv/dj-booth.css",
@@ -199,8 +204,8 @@
     },
     {
       "url": "/tv/index.html",
-      "revision": "d886c597363f924f192fbe8aef028c54c124bdc7",
-      "bytes": 14929
+      "revision": "144ed2fba297a3c1ed682acebe0e618cd09ba25c",
+      "bytes": 14824
     },
     {
       "url": "/tv/landing.css",
@@ -234,7 +239,7 @@
     },
     {
       "url": "/tv/network-flow.js",
-      "revision": "5e911079d47ca1ebe9cbda74e401f5dcef1497e7",
+      "revision": "9988ccfcab38fe21a2de2b70a4f9b2108e644771",
       "bytes": 8650
     },
     {
@@ -259,8 +264,8 @@
     },
     {
       "url": "/tv/retro-ads.js",
-      "revision": "201aa7265334b6e64fc181ff79a021ec4430ac9a",
-      "bytes": 8611
+      "revision": "b2edfec9a57c030c658fa8569989028da19578ca",
+      "bytes": 8672
     },
     {
       "url": "/tv/retro-pointer.js",
@@ -289,13 +294,13 @@
     },
     {
       "url": "/tv/tv.css",
-      "revision": "7dc80a4600a5fdb124d64db0e6a437df0492a108",
-      "bytes": 27087
+      "revision": "6e9981624aded1d2dcc2c601a27468a39207c9ef",
+      "bytes": 27338
     },
     {
       "url": "/tv/tv.js",
-      "revision": "32006f6fe65601b4707ace61390006b635dfabf6",
-      "bytes": 34570
+      "revision": "bbb356637615279d215ce4227b1b18df0f9d7f4e",
+      "bytes": 34537
     }
   ],
   "fontStyles": [
@@ -303,5 +308,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "9e1fd1c083b9cbb2d29d"
+  "version": "343074fe2d4be1729050"
 }
