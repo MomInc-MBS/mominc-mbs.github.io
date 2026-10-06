@@ -187,6 +187,8 @@
     let hint = null, timer = 0;
     const hide = () => { if (!hint) return; hint.remove(); hint = null; clearTimeout(timer); try { sessionStorage.setItem(KEY, "1"); } catch {} };
     const show = () => {
+      // The shim can run from <head> (play pages load it before <body>); wait for the body before appending.
+      if (!document.body) { addEventListener("DOMContentLoaded", show, { once: true }); return; }
       let seen = false; try { seen = sessionStorage.getItem(KEY) === "1"; } catch {}
       if (seen || !portrait.matches || hint) return;
       if (!document.getElementById("mbs-sideways-style")) {

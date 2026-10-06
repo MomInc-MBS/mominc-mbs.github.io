@@ -166,7 +166,8 @@ export function createTraveler(THREE) {
   // plane; depth>0 means the palm is inside, which shrinks it toward .4.
   const restLeft=leftHand.position.clone();
   const field={state:"idle",depth:0,set(o){field.point=o.point.clone();field.normal=o.normal.clone().normalize();field.onContact=o.onContact;field.rest=o.rest?.clone();},
-    reachIn(){if(!field.point)return;field.state="reaching";field.t=0;field.shrink=0;field.from=leftHand.position.clone();field.crossed=false;},
+    // Reach from the chest rest (if set), not from wherever choreography left the hand: the poke must start outside the plane.
+    reachIn(){if(!field.point)return;field.state="reaching";field.t=0;field.shrink=0;field.from=(field.rest||leftHand.position).clone();leftHand.position.copy(field.from);field.crossed=false;},
     pullBack(){if(field.state==="idle")return;field.state="withdrawing";field.t=0;field.from=leftHand.position.clone();},
     clear(){field.state="idle";field.depth=0;field.shrink=0;field.onContact?.(field.point,0);}};
   function updateField(dt) {
@@ -176,7 +177,7 @@ export function createTraveler(THREE) {
     const palm=new THREE.Vector3(0,0,-.03).applyQuaternion(leftHand.quaternion);
     const rest=field.rest||restLeft;
     if(field.state==="reaching"||field.state==="inside") {
-      const target=pLocal.clone().addScaledVector(nLocal,-.10).sub(palm);
+      const target=pLocal.clone().addScaledVector(nLocal,-.05).sub(palm);
       field.t=Math.min(1,field.t+dt/1.1);leftHand.position.copy(field.from).lerp(target,field.t*field.t*(3-2*field.t));
     } else if(field.state==="withdrawing") {
       field.t=Math.min(1,field.t+dt/1.0);leftHand.position.copy(field.from).lerp(rest,field.t*field.t*(3-2*field.t));

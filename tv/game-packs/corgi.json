@@ -9,8 +9,8 @@
     },
     {
       "url": "/arcade/tub-flight/game.mjs",
-      "revision": "b644eb305d2bf1e709d6a42e821b46376e135378",
-      "bytes": 5737
+      "revision": "31f065995d6d6df2c5d0c5d41ba437659f981354",
+      "bytes": 5714
     },
     {
       "url": "/arcade/tub-flight/style.css",
@@ -19,8 +19,8 @@
     },
     {
       "url": "/games/corgi/index.html",
-      "revision": "8d3d4935df2607082537dd6c188c1edfc2f1b16e",
-      "bytes": 7708
+      "revision": "d51f09b1fec862f922823d110cb82c9c42e096cc",
+      "bytes": 7137
     },
     {
       "url": "/play/corgi/index.html",
@@ -54,8 +54,13 @@
     },
     {
       "url": "/tv/assets/corgi-game-still.png",
-      "revision": "95a9cb56f9a786703642b0fb9f2f35c6255cc8d5",
-      "bytes": 121666
+      "revision": "e8c8620d2b6db86bb72a9663cba2b8ee6bc00b14",
+      "bytes": 86235
+    },
+    {
+      "url": "/tv/assets/corgi-preview.webm",
+      "revision": "e6f16ce2fb64baca5bc315c5a0df1f25f7b9ca09",
+      "bytes": 49606
     },
     {
       "url": "/tv/assets/cortisol-corgi-badge.png",
@@ -119,13 +124,13 @@
     },
     {
       "url": "/tv/atmosphere.css",
-      "revision": "c42e33d2193b8a6841fe15279f171a68f261ea31",
-      "bytes": 6447
+      "revision": "4e30b039f69a64d100bb13c9beece08759ee5994",
+      "bytes": 5778
     },
     {
       "url": "/tv/atmosphere.js",
-      "revision": "1b073454f0b448d5d6fd4111e1a6ed68e620f1fa",
-      "bytes": 3476
+      "revision": "4edb1ae072c42a2acd6385615fbf23c0747d42a5",
+      "bytes": 2857
     },
     {
       "url": "/tv/audio/electric-static.mp3",
@@ -159,8 +164,8 @@
     },
     {
       "url": "/tv/card.js",
-      "revision": "8cffbc5902cf84fdd307c68ee229067affaaf5b9",
-      "bytes": 8589
+      "revision": "f5e500bebff2e9f933ed486eb432c49696d70077",
+      "bytes": 8536
     },
     {
       "url": "/tv/channel-runtime.js",
@@ -179,18 +184,18 @@
     },
     {
       "url": "/tv/channels/corgi.html",
-      "revision": "ce4a3af0f1b59e9ba106a5356cb6b857730c3374",
-      "bytes": 48250
+      "revision": "e36479b960626b285ca39b521f12860fdedf3ce4",
+      "bytes": 47853
     },
     {
       "url": "/tv/channels/corgi.js",
-      "revision": "15f434a8aa65b1e2f898e21ec3468c6f06558d82",
-      "bytes": 198752
+      "revision": "f592a8e9960f89ac005633819efeac9aa5ad8966",
+      "bytes": 196699
     },
     {
       "url": "/tv/dj-booth.css",
-      "revision": "4de04f6d21b51495ba99192794360ae7e98dda20",
-      "bytes": 16388
+      "revision": "f9cccd0429f8f9ffb6ad66cb4df45b3a93ae35f8",
+      "bytes": 20818
     },
     {
       "url": "/tv/dj-identity.css",
@@ -209,8 +214,8 @@
     },
     {
       "url": "/tv/game-loader.js",
-      "revision": "b878513f9c4aa1a49836ae43ca6eb410df3d06c6",
-      "bytes": 12049
+      "revision": "bb1089ca528c0c55445642b8ac0082f298606dba",
+      "bytes": 12692
     },
     {
       "url": "/tv/identity.css",
@@ -224,8 +229,8 @@
     },
     {
       "url": "/tv/index.html",
-      "revision": "d886c597363f924f192fbe8aef028c54c124bdc7",
-      "bytes": 14929
+      "revision": "00ee55888d7aa30302934ae5bd2f315010a0b55e",
+      "bytes": 14815
     },
     {
       "url": "/tv/landing.css",
@@ -244,13 +249,13 @@
     },
     {
       "url": "/tv/mbs-shim.js",
-      "revision": "892eff81caebad89efa7e73c9972ea722b532c0b",
-      "bytes": 10106
+      "revision": "917e29680138746f1aa04e35bc9c367aefa72f86",
+      "bytes": 13813
     },
     {
       "url": "/tv/mount.js",
-      "revision": "e6882db0ca5acefb854c5e0d273f7f8690450f4d",
-      "bytes": 7513
+      "revision": "53083fba2f31a7ac3e867e1cbbc5223e4ee8d693",
+      "bytes": 8300
     },
     {
       "url": "/tv/network-flow.css",
@@ -259,8 +264,8 @@
     },
     {
       "url": "/tv/network-flow.js",
-      "revision": "5e911079d47ca1ebe9cbda74e401f5dcef1497e7",
-      "bytes": 8650
+      "revision": "56e4fefd204b8e7d12b7a66ef392cdb4f8d71232",
+      "bytes": 8604
     },
     {
       "url": "/tv/phone-layout.js",
@@ -269,8 +274,8 @@
     },
     {
       "url": "/tv/play.css",
-      "revision": "f60b269b409671dfcea295240f9247bcbb41e7bb",
-      "bytes": 4583
+      "revision": "8c461a1dadf6776494db442831f869acc1112e16",
+      "bytes": 4710
     },
     {
       "url": "/tv/questionnaire.js",
@@ -284,8 +289,8 @@
     },
     {
       "url": "/tv/retro-ads.js",
-      "revision": "201aa7265334b6e64fc181ff79a021ec4430ac9a",
-      "bytes": 8611
+      "revision": "c712ca4f8471fd5067047f00fab57a5bc42f8ee3",
+      "bytes": 8602
     },
     {
       "url": "/tv/retro-pointer.js",
@@ -294,13 +299,13 @@
     },
     {
       "url": "/tv/run-progress.js",
-      "revision": "dc120a76537b93687e053ef279bc1a43012f8887",
-      "bytes": 6933
+      "revision": "b19e0d1cca71cecc2a2718e45ae9343f3b89d427",
+      "bytes": 7589
     },
     {
       "url": "/tv/sound.js",
-      "revision": "ff089b274cab1e4eba50da032c2b9dcc74e7c28a",
-      "bytes": 9580
+      "revision": "8b7d0766fec6c09fd9b90c2bf53fc93c3bd93b11",
+      "bytes": 9635
     },
     {
       "url": "/tv/state.js",
@@ -314,18 +319,18 @@
     },
     {
       "url": "/tv/tv.css",
-      "revision": "7dc80a4600a5fdb124d64db0e6a437df0492a108",
-      "bytes": 27087
+      "revision": "46dcbd33d3ac6f0ff2d85f4a644cfd6d1af6f55a",
+      "bytes": 27717
     },
     {
       "url": "/tv/tv.js",
-      "revision": "32006f6fe65601b4707ace61390006b635dfabf6",
-      "bytes": 34570
+      "revision": "7a60b17884ea137cff4c51a36cb38f23512b5574",
+      "bytes": 37289
     }
   ],
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "869ee1cc21317efb032d"
+  "version": "66db7265b00508efbac2"
 }

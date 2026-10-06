@@ -5,7 +5,7 @@ export const OPENING = Object.freeze({
   hiddenWrist: [1.05,-.10,-25.55], withdrawnWrist: [1.12,-.10,-26.15], box: [0,.05,-26], boxSize: [1.25,.39,1.05],
   ladderFoot: [0,0,-25.30], ladderRim: [0,.44,-25.475], ladderHeight:.48, ladderWidth:.36,
   jumpFoot: [0,0,-25.12], boxInterior: [0,.08,-25.95], topDown: [.40,1.75,-24.15], crouch: [.65,.56,-24.65],
-  probeEye:[0,1.55,-24.12], probeLook:[-.03,.85,-24.55], probeBoundary:[-.06,1.13,-24.55], probeInside:[-.20,1.13,-24.93],
+  probeEye:[0,1.55,-24.25], probeLook:[-.03,.85,-24.55], probeBoundary:[-.06,1.13,-24.55], probeInside:[-.20,1.13,-24.93],
 });
 export function openingAnchors(THREE) {
   const anchors = Object.fromEntries(Object.entries(OPENING).map(([key,value]) =>
