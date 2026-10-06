@@ -1,127 +1,1607 @@
 [
-{"id":"pal-01","name":"Acid Forge","tagline":"Lime bites oxblood and chrome","colors":["#C6FF00","#4A0E17","#C0C7CE"],"unlockRule":"aura-milestone","unlockAtDay":5,"finish":"glitter"},
-{"id":"pal-02","name":"Neon Afterburn Haze","tagline":"Orange aqua contrails with violet flare","colors":["#FF6D00","#00E0B0","#C800FF"],"unlockRule":"aura-milestone","unlockAtDay":10,"finish":"brushed-metal"},
-{"id":"pal-03","name":"Petrel Copper","tagline":"Petrol depths meet intense violet","colors":["#0E5A61","#B87333","#6913E7"],"unlockRule":"aura-milestone","unlockAtDay":15,"finish":"polished-metal"},
-{"id":"pal-04","name":"Vinaigrette Rust","tagline":"Oil pigment rust swirl","colors":["#8A3B12","#556B2F","#E7A213"],"unlockRule":"aura-milestone","unlockAtDay":20,"finish":"marbled"},
-{"id":"pal-05","name":"Neon Relic","tagline":"Hot magenta neon amber on bone","colors":["#FF009F","#FFB500","#F2EFE6"],"unlockRule":"aura-milestone","unlockAtDay":25,"finish":"glitter"},
-{"id":"pal-06","name":"Glacier Ember","tagline":"Ice teal over ember red","colors":["#13E7D1","#D9381E","#2B2530"],"unlockRule":"aura-milestone","unlockAtDay":30,"finish":"pearl"},
-{"id":"pal-07","name":"Chartreuse Storm","tagline":"Sludge green meets slate violet","colors":["#B5C700","#3D3654","#E85D75"],"unlockRule":"aura-milestone","unlockAtDay":35,"finish":"matte"},
-{"id":"pal-08","name":"Saffron Voltage","tagline":"Saffron arcs on ink blue","colors":["#FFB000","#101D42","#00FAA6"],"unlockRule":"aura-milestone","unlockAtDay":40,"finish":"polished-metal"},
-{"id":"pal-09","name":"Neon Venom Signal","tagline":"Poison lime warning under arterial red","colors":["#A6FF00","#FF2442","#101828"],"unlockRule":"aura-milestone","unlockAtDay":45,"finish":"watercolor"},
-{"id":"pal-10","name":"Mercury Moss","tagline":"Silver moss over saturated gold","colors":["#AEB6BC","#5C6B3C","#E7A913"],"unlockRule":"aura-milestone","unlockAtDay":50,"finish":"brushed-metal"},
-{"id":"pal-11","name":"Ultraviolet Tar","tagline":"Violet glow on tar black","colors":["#7B2FF7","#141414","#FFC93C"],"unlockRule":"aura-milestone","unlockAtDay":55,"finish":"glaze"},
-{"id":"pal-12","name":"Salmon Circuit","tagline":"Salmon pink on circuit green","colors":["#FA2200","#00A86B","#2E2A5C"],"unlockRule":"aura-milestone","unlockAtDay":60,"finish":"pearl"},
-{"id":"pal-13","name":"Muddy Pop","tagline":"Ochre mud sparks cerulean","colors":["#8C6A2F","#0081C8","#E71362"],"unlockRule":"battle-pass","reward":"strider-2:L1","finish":"matte"},
-{"id":"pal-14","name":"Neon Vapor Crown","tagline":"Laser pink blue over dark purple","colors":["#FF00AA","#00D0FF","#1B0033"],"unlockRule":"battle-pass","reward":"strider-2:L3","finish":"watercolor"},
-{"id":"pal-15","name":"Brick Vein","tagline":"Brick red veined in steel","colors":["#A0342B","#8C9BA5","#D7E713"],"unlockRule":"battle-pass","reward":"strider-2:L4","finish":"marbled"},
-{"id":"pal-16","name":"Peacock Static","tagline":"Peacock green hums gold","colors":["#046A5B","#FAAF00","#5B1E4B"],"unlockRule":"battle-pass","reward":"strider-3:L1","finish":"polished-metal"},
-{"id":"pal-17","name":"Foghorn Flame","tagline":"Fog gray with fire-orange siren","colors":["#B8C0C2","#FA3F00","#123C69"],"unlockRule":"battle-pass","reward":"strider-3:L3","finish":"brushed-metal"},
-{"id":"pal-18","name":"Toxic Honey","tagline":"Honey drips on toxic lime","colors":["#D9A404","#9BF00B","#4A154B"],"unlockRule":"battle-pass","reward":"strider-3:L4","finish":"glaze"},
-{"id":"pal-19","name":"Neon Crimson Mirage","tagline":"Scarlet toxic lime over deep jade","colors":["#FF1744","#76FF03","#005E3C"],"unlockRule":"battle-pass","reward":"strider-4:L1","finish":"matte"},
-{"id":"pal-20","name":"Opal Drain","tagline":"Opal sheen on drainpipe green","colors":["#13E7B9","#3E5641","#D1495B"],"unlockRule":"battle-pass","reward":"strider-4:L3","finish":"pearl"},
-{"id":"pal-21","name":"Rust Halo","tagline":"Rust ringed by mint flash","colors":["#9C4221","#12E898","#2C2C54"],"unlockRule":"battle-pass","reward":"strider-4:L4","finish":"brushed-metal"},
-{"id":"pal-22","name":"Volt Quartz","tagline":"Electric yellow on rose quartz","colors":["#F5E900","#E71363","#264653"],"unlockRule":"battle-pass","reward":"strider-5:L1","finish":"glitter"},
-{"id":"pal-23","name":"Neon Flare Garden","tagline":"Laser lime pink on teal steel","colors":["#8CFF00","#FF006E","#00B8A9"],"unlockRule":"battle-pass","reward":"strider-5:L3","finish":"matte"},
-{"id":"pal-24","name":"Crimson Tidebreak","tagline":"Crimson breaks on seafoam","colors":["#B91338","#13E7B5","#2A1E5C"],"unlockRule":"battle-pass","reward":"strider-5:L4","finish":"watercolor"},
-{"id":"pal-25","name":"Brass Mirage","tagline":"Brass shimmer dusky plum","colors":["#C59B42","#5A2A52","#0D94ED"],"unlockRule":"battle-pass","reward":"strider-6:L1","finish":"polished-metal"},
-{"id":"pal-26","name":"Neon Infrared Bloom","tagline":"Red heat sliced by frozen cyan","colors":["#FF0000","#00F5FF","#5B00B5"],"unlockRule":"battle-pass","reward":"strider-6:L3","finish":"glaze"},
-{"id":"pal-27","name":"Ice Magma","tagline":"Pigmented ice over magma orange","colors":["#D6F0F0","#F45B0F","#3D2C8D"],"unlockRule":"battle-pass","reward":"strider-6:L4","finish":"marbled"},
-{"id":"pal-28","name":"Fern Radio","tagline":"Fern green static magenta","colors":["#3F7A3A","#E4007C","#E7BE13"],"unlockRule":"battle-pass","reward":"ringer-2:L1","finish":"matte"},
-{"id":"pal-29","name":"Porcelain Fuel","tagline":"Porcelain white fuel orange","colors":["#F2F2F0","#FF7A1A","#14507A"],"unlockRule":"battle-pass","reward":"ringer-2:L3","finish":"glaze"},
-{"id":"pal-30","name":"Neon Photon Alley","tagline":"Yellow signage aqua and violet glass","colors":["#FFD300","#00FFCC","#7A00FF"],"unlockRule":"battle-pass","reward":"ringer-2:L4","finish":"brushed-metal"},
-{"id":"pal-31","name":"Neon Solar Flare","tagline":"Hot yellow ember in plum space","colors":["#FFEA00","#FF3D00","#26142B"],"unlockRule":"battle-pass","reward":"ringer-3:L1","finish":"polished-metal"},
-{"id":"pal-32","name":"Wet Cement Rose","tagline":"Cement gray wild rose","colors":["#8D9096","#D84A87","#F0E130"],"unlockRule":"battle-pass","reward":"ringer-3:L3","finish":"matte"},
-{"id":"pal-33","name":"Neon Laser Tropics","tagline":"Chartreuse beams with scorched orange shadows","colors":["#C6FF00","#FF4D00","#001219"],"unlockRule":"battle-pass","reward":"ringer-3:L4","finish":"watercolor"},
-{"id":"pal-34","name":"Copper Fog","tagline":"Copper glows through fog","colors":["#B46A30","#C4CBCE","#B600F5"],"unlockRule":"battle-pass","reward":"ringer-4:L1","finish":"brushed-metal"},
-{"id":"pal-35","name":"Laser Moss","tagline":"Laser cyan on moss","colors":["#00E5FF","#546B2F","#FF4FA3"],"unlockRule":"battle-pass","reward":"ringer-4:L3","finish":"glitter"},
-{"id":"pal-36","name":"Bone Ember","tagline":"Bone white ember orange","colors":["#EDE8DC","#E4572E","#BA00FF"],"unlockRule":"battle-pass","reward":"ringer-4:L4","finish":"matte"},
-{"id":"pal-37","name":"Plum Static","tagline":"Plum noise with electric lime","colors":["#4A1E4F","#B8F000","#33B5C7"],"unlockRule":"battle-pass","reward":"ringer-5:L1","finish":"glaze"},
-{"id":"pal-38","name":"Neon Lime Vortex","tagline":"Acid green swirling through electric blue","colors":["#BFFF00","#00E5FF","#12100F"],"unlockRule":"battle-pass","reward":"ringer-5:L3","finish":"pearl"},
-{"id":"pal-39","name":"Clay Command","tagline":"Terracotta clay cobalt order","colors":["#C06B55","#2E4BC6","#EDE6D6"],"unlockRule":"battle-pass","reward":"ringer-5:L4","finish":"marbled"},
-{"id":"pal-40","name":"Static Cream","tagline":"Cream noise shock green","colors":["#F4EDDE","#39FF14","#4A306D"],"unlockRule":"battle-pass","reward":"manyarm-2:L1","finish":"glitter"},
-{"id":"pal-41","name":"Midnight Papaya","tagline":"Midnight blue papaya burst","colors":["#191970","#FF9E42","#13E796"],"unlockRule":"battle-pass","reward":"manyarm-2:L3","finish":"polished-metal"},
-{"id":"pal-42","name":"Dusty Laser","tagline":"Dusty mauve laser green","colors":["#A27E8E","#7CFC00","#1B3B6F"],"unlockRule":"battle-pass","reward":"manyarm-2:L4","finish":"matte"},
-{"id":"pal-43","name":"Neon Atomic Sunset","tagline":"Amber fallout glowing beside ultraviolet pink","colors":["#FF9100","#FF00F5","#062A2A"],"unlockRule":"battle-pass","reward":"manyarm-3:L1","finish":"glaze"},
-{"id":"pal-44","name":"Fern Flame","tagline":"Cool fern fierce flame","colors":["#4F7942","#FF3D2E","#E75A13"],"unlockRule":"battle-pass","reward":"manyarm-3:L3","finish":"brushed-metal"},
-{"id":"pal-45","name":"Violet Quarry","tagline":"Quarry gray violet eruption","colors":["#7D7F87","#8B3DFF","#DCE35B"],"unlockRule":"battle-pass","reward":"manyarm-3:L4","finish":"matte"},
-{"id":"pal-46","name":"Cadmium Deep","tagline":"Cadmium red deep lagoon","colors":["#D32E12","#046E8F","#E79E13"],"unlockRule":"battle-pass","reward":"manyarm-4:L1","finish":"polished-metal"},
-{"id":"pal-47","name":"Pigment Riot","tagline":"Intense blue maroon and hot orange","colors":["#139FE7","#6E1423","#FF7300"],"unlockRule":"battle-pass","reward":"manyarm-4:L3","finish":"watercolor"},
-{"id":"pal-48","name":"Neon Prism Riot","tagline":"Sea-glass cyan, magenta bite, lemon flash","colors":["#00FFC6","#FF00B8","#F5FF00"],"unlockRule":"battle-pass","reward":"manyarm-4:L4","finish":"pearl"},
-{"id":"pal-49","name":"Neon Tropic Surge","tagline":"Aqua tide, citrus flare, violet thunder","colors":["#00FF9D","#FFB000","#D000FF"],"unlockRule":"battle-pass","reward":"manyarm-5:L1","finish":"glitter"},
-{"id":"pal-50","name":"Ash Honey","tagline":"Ash gray golden honey","colors":["#9BA0A6","#E0A100","#2F6690"],"unlockRule":"battle-pass","reward":"manyarm-5:L3","finish":"matte"},
-{"id":"pal-51","name":"Cherry Motor","tagline":"Cherry motor oil with electric blue","colors":["#B22234","#3B2F2F","#005CFF"],"unlockRule":"battle-pass","reward":"manyarm-5:L4","finish":"brushed-metal"},
-{"id":"pal-52","name":"Glacier Punch","tagline":"Glacier pigmented hot punch","colors":["#13A6E7","#F52549","#3D405B"],"unlockRule":"battle-pass","reward":"wedge-2:L1","finish":"glaze"},
-{"id":"pal-53","name":"Tarnish Bloom","tagline":"Tarnished teal floral orange","colors":["#3A7D7B","#F4852B","#E9D6EC"],"unlockRule":"battle-pass","reward":"wedge-2:L3","finish":"marbled"},
-{"id":"pal-54","name":"Umber Signal","tagline":"Umber earth neon signal","colors":["#635147","#D0FF4B","#7A28C0"],"unlockRule":"battle-pass","reward":"wedge-2:L4","finish":"matte"},
-{"id":"pal-55","name":"Rose Quartz Coil","tagline":"Soft rose coil of teal","colors":["#E7134B","#0FA3A3","#2B2118"],"unlockRule":"battle-pass","reward":"wedge-3:L1","finish":"pearl"},
-{"id":"pal-56","name":"Sulfur Deck","tagline":"Sulfur yellow blue and hot orange","colors":["#E3D200","#274C77","#FF4A00"],"unlockRule":"battle-pass","reward":"wedge-3:L3","finish":"polished-metal"},
-{"id":"pal-57","name":"Neon Ember Static","tagline":"Orange yellow buzzing with royal voltage","colors":["#FF5E00","#FFE600","#3A0CA3"],"unlockRule":"battle-pass","reward":"wedge-3:L4","finish":"watercolor"},
-{"id":"pal-58","name":"Mango Ash","tagline":"Mango bright volcanic ash","colors":["#FFA12B","#59595E","#64DDBB"],"unlockRule":"battle-pass","reward":"wedge-4:L1","finish":"matte"},
-{"id":"pal-59","name":"Steel Petal","tagline":"Steel gray crushed petals","colors":["#8A8F98","#E71813","#D8E26E"],"unlockRule":"battle-pass","reward":"wedge-4:L3","finish":"brushed-metal"},
-{"id":"pal-60","name":"Ninja Cream","tagline":"Hidden navy cream coral","colors":["#1E2A4A","#F0EBE0","#7EEC00"],"unlockRule":"battle-pass","reward":"wedge-4:L4","finish":"glaze"},
-{"id":"pal-61","name":"Tangerine Static","tagline":"Tangerine buzz grape shadow","colors":["#F28500","#3D2159","#202020"],"unlockRule":"battle-pass","reward":"wedge-5:L1","finish":"glitter"},
-{"id":"pal-62","name":"Sage Pistol","tagline":"Muted sage pistol pink","colors":["#9AB5A1","#E45C98","#33272A"],"unlockRule":"battle-pass","reward":"wedge-5:L3","finish":"matte"},
-{"id":"pal-63","name":"Lagoon Battery","tagline":"Lagoon green charged yellow","colors":["#1D8A7A","#FAE000","#76305B"],"unlockRule":"battle-pass","reward":"wedge-5:L4","finish":"polished-metal"},
-{"id":"pal-64","name":"Wine Cooling","tagline":"Warm wine cooled by mint","colors":["#701F3C","#13E78C","#E8D44D"],"unlockRule":"battle-pass","reward":"warden-1:L1","finish":"pearl"},
-{"id":"pal-65","name":"Charcoal Tulip","tagline":"Charcoal tulip flame combo","colors":["#2E3033","#FF4E50","#CA00C7"],"unlockRule":"battle-pass","reward":"warden-1:L3","finish":"matte"},
-{"id":"pal-66","name":"Neon Acid Harbor","tagline":"Lime light cutting across magenta docks","colors":["#39FF14","#FF007F","#001B2E"],"unlockRule":"battle-pass","reward":"warden-1:L4","finish":"pearl"},
-{"id":"pal-67","name":"Rustic Neon","tagline":"Barn red barn lime buzz","colors":["#8A3324","#C1FF33","#2D4A6B"],"unlockRule":"battle-pass","reward":"blob-2:L1","finish":"marbled"},
-{"id":"pal-68","name":"Alice Warning","tagline":"Alice blue caution orange","colors":["#1399E7","#FF7E1F","#EEF700"],"unlockRule":"battle-pass","reward":"blob-2:L3","finish":"watercolor"},
-{"id":"pal-69","name":"Smog Candy","tagline":"Smog beige candy teal","colors":["#E79813","#00C2A8","#D8395B"],"unlockRule":"battle-pass","reward":"blob-2:L4","finish":"matte"},
-{"id":"pal-70","name":"Violet Furnace","tagline":"Furnace violet cooled sky","colors":["#6A2D9E","#F57C3B","#302012"],"unlockRule":"battle-pass","reward":"blob-3:L1","finish":"glaze"},
-{"id":"pal-71","name":"Khaki Storm","tagline":"Khaki field storm magenta","colors":["#A89B6E","#E0218A","#2A6F97"],"unlockRule":"battle-pass","reward":"blob-3:L3","finish":"brushed-metal"},
-{"id":"pal-72","name":"Neon Circuit Surge","tagline":"Turquoise sparks over midnight violet","colors":["#00F5D4","#F72585","#0B0321"],"unlockRule":"battle-pass","reward":"blob-3:L4","finish":"glitter"},
-{"id":"pal-73","name":"Cedar Ultraviolet","tagline":"Cedar wood ultraviolet light","colors":["#7A4532","#8246FF","#E9E4D8"],"unlockRule":"battle-pass","reward":"blob-4:L1","finish":"matte"},
-{"id":"pal-74","name":"Frosted Chili","tagline":"Frost blue chili red","colors":["#13AAE7","#C13A2F","#4C5B2C"],"unlockRule":"battle-pass","reward":"blob-4:L3","finish":"polished-metal"},
-{"id":"pal-75","name":"Moss Rocket","tagline":"Moss green rocket pink","colors":["#5B7042","#FA0057","#061F5B"],"unlockRule":"battle-pass","reward":"blob-4:L4","finish":"matte"},
-{"id":"pal-76","name":"Pewter Punch","tagline":"Pewter softened hot punch","colors":["#99A0A8","#FF3D7F","#164D37"],"unlockRule":"battle-pass","reward":"cap-2:L1","finish":"brushed-metal"},
-{"id":"pal-77","name":"Neon Glacier Riot","tagline":"Cyan hot pink and radioactive lime","colors":["#00F0FF","#FF00E5","#CCFF00"],"unlockRule":"battle-pass","reward":"cap-2:L3","finish":"watercolor"},
-{"id":"pal-78","name":"Cola Lightning","tagline":"Cola brown lightning yellow","colors":["#3A2618","#F7FF00","#FA005E"],"unlockRule":"battle-pass","reward":"cap-2:L4","finish":"glaze"},
-{"id":"pal-79","name":"Periwinkle Fuel","tagline":"Soft periwinkle diesel orange","colors":["#1325E7","#E0641E","#2F4730"],"unlockRule":"battle-pass","reward":"cap-3:L1","finish":"matte"},
-{"id":"pal-80","name":"Jade Alarm","tagline":"Jade calm siren red","colors":["#57A78A","#D91E36","#E7AF13"],"unlockRule":"battle-pass","reward":"cap-3:L3","finish":"pearl"},
-{"id":"pal-81","name":"Neon Ultraviolet Pulse","tagline":"Violet beams with mint-charged current","colors":["#8C00FF","#00FFB2","#160021"],"unlockRule":"battle-pass","reward":"cap-3:L4","finish":"matte"},
-{"id":"pal-82","name":"Neon Nightcaller","tagline":"Cyan violet flame in black-green fog","colors":["#00FFFF","#9400FF","#131A00"],"unlockRule":"battle-pass","reward":"stalk-2:L1","finish":"marbled"},
-{"id":"pal-83","name":"Ivory Shock","tagline":"Ivory calm violet shock","colors":["#F0EEE4","#7C1FD3","#FFB200"],"unlockRule":"battle-pass","reward":"stalk-2:L3","finish":"glaze"},
-{"id":"pal-84","name":"Neon Ruby Arc","tagline":"Red-hot signal over green afterglow","colors":["#FF073A","#00FF87","#080F1B"],"unlockRule":"battle-pass","reward":"stalk-2:L4","finish":"glitter"},
-{"id":"pal-85","name":"Maroon Cloud","tagline":"Maroon heavy cloud blue","colors":["#6D1E2E","#1381E7","#E5D352"],"unlockRule":"battle-pass","reward":"stalk-3:L1","finish":"watercolor"},
-{"id":"pal-86","name":"Chrome Berry","tagline":"Chrome band over berry","colors":["#C3C9D1","#8E2A5C","#FFB347"],"unlockRule":"battle-pass","reward":"stalk-3:L3","finish":"polished-metal"},
-{"id":"pal-87","name":"Lentil Neon","tagline":"Lentil tan electric aqua","colors":["#B09A6E","#00FFF0","#5F1B63"],"unlockRule":"battle-pass","reward":"stalk-3:L4","finish":"matte"},
-{"id":"pal-88","name":"Neon Cobalt Fuse","tagline":"Blue ignition wired to blazing yellow","colors":["#004DFF","#FFEE00","#0D0221"],"unlockRule":"battle-pass","reward":"stalk-4:L1","finish":"glaze"},
-{"id":"pal-89","name":"Spruce Bonfire","tagline":"Dark spruce bonfire orange","colors":["#23493C","#FF7A3D","#0C1735"],"unlockRule":"battle-pass","reward":"stalk-4:L3","finish":"matte"},
-{"id":"pal-90","name":"Lilac Foundry","tagline":"Lilac meets foundry steel","colors":["#9813E7","#7B8894","#D4522A"],"unlockRule":"battle-pass","reward":"stalk-4:L4","finish":"brushed-metal"},
-{"id":"pal-91","name":"Topaz Battle","tagline":"Topaz gold navy clash","colors":["#F0B429","#182952","#FA007D"],"unlockRule":"battle-pass","reward":"tanka-2:L1","finish":"polished-metal"},
-{"id":"pal-92","name":"Dusk Celery","tagline":"Dusky purple celery snap","colors":["#574B6B","#C8D86A","#FA2100"],"unlockRule":"battle-pass","reward":"tanka-2:L3","finish":"matte"},
-{"id":"pal-93","name":"Tide Copperfuse","tagline":"Tidal teal copperfuse glow","colors":["#0F7B7B","#C07840","#C2F000"],"unlockRule":"battle-pass","reward":"tanka-2:L4","finish":"pearl"},
-{"id":"pal-94","name":"Punch Driftwood","tagline":"Fruit punch on driftwood","colors":["#E63362","#6E5B4A","#1648EA"],"unlockRule":"battle-pass","reward":"tanka-3:L1","finish":"watercolor"},
-{"id":"pal-95","name":"Ink Lime","tagline":"Ink smudge streaked lime","colors":["#23232A","#A8E10C","#7E10EA"],"unlockRule":"battle-pass","reward":"tanka-3:L3","finish":"glaze"},
-{"id":"pal-96","name":"Porcelain Prism","tagline":"Porcelain violet over tidal blue","colors":["#F5F1E8","#BD05DA","#005F73"],"unlockRule":"battle-pass","reward":"tanka-3:L4","finish":"marbled"},
-{"id":"pal-97","name":"Wasabi Cloud","tagline":"Wasabi heat cloud gray","colors":["#9FBF3B","#8E94A0","#E71363"],"unlockRule":"battle-pass","reward":"tanka-4:L1","finish":"matte"},
-{"id":"pal-98","name":"Eggplant Flare","tagline":"Eggplant deep flare yellow","colors":["#41284E","#FFD23F","#5BC0BE"],"unlockRule":"battle-pass","reward":"tanka-4:L3","finish":"glitter"},
-{"id":"pal-99","name":"Stone Rose","tagline":"Stone gray antique rose","colors":["#8F8A82","#C46E8E","#2F6DA3"],"unlockRule":"battle-pass","reward":"tanka-4:L4","finish":"brushed-metal"},
-{"id":"pal-100","name":"Neon Quasar Pop","tagline":"Yellow green comet over indigo gravity","colors":["#FFEF00","#00FF3C","#2D02B8"],"unlockRule":"battle-pass","reward":"lume-1:L1","finish":"glaze"},
-{"id":"pal-101","name":"Arctic Rust","tagline":"Arctic white rusted orange","colors":["#E9F2F5","#9E4A1D","#3E3F8F"],"unlockRule":"battle-pass","reward":"lume-1:L3","finish":"brushed-metal"},
-{"id":"pal-102","name":"Magenta Selvage","tagline":"Magenta edge denim blue","colors":["#D8117E","#3B5B8C","#E7D313"],"unlockRule":"battle-pass","reward":"lume-1:L4","finish":"matte"},
-{"id":"pal-103","name":"Haze Saffron","tagline":"Purple haze saffron spark","colors":["#8467B8","#F4A81D","#1D4E50"],"unlockRule":"battle-pass","reward":"food:L1","finish":"pearl"},
-{"id":"pal-104","name":"Neon Cyber Reed","tagline":"Green circuitry humming beside lemon static","colors":["#00FF66","#FFEA00","#4B0082"],"unlockRule":"battle-pass","reward":"food:L2","finish":"glitter"},
-{"id":"pal-105","name":"Neon Magma Bloom","tagline":"Molten orange meeting synthetic magenta","colors":["#FF2E00","#F000FF","#0A0A0F"],"unlockRule":"battle-pass","reward":"food:L3","finish":"polished-metal"},
-{"id":"pal-106","name":"Dune Violet","tagline":"Warm dune electric violet","colors":["#C9AE7E","#7D2BF0","#13E7E3"],"unlockRule":"battle-pass","reward":"food:L4","finish":"marbled"},
-{"id":"pal-107","name":"Ember Nightshade","tagline":"Violet shadows ember teal","colors":["#523090","#EF4E23","#0C5D68"],"unlockRule":"battle-pass","reward":"food:L5","finish":"watercolor"},
-{"id":"opal-jelly","name":"Opal Jelly","tagline":"Shifting highlights and luminous color","colors":["#b3fff0","#9767ff","#fff1ff"],"unlockRule":"default","finish":"pearl"},
-{"id":"bubble-glass","name":"Bubble Glass","tagline":"Shifting highlights and luminous color","colors":["#58eaff","#b8fff8","#ffffff"],"unlockRule":"default","finish":"glaze"},
-{"id":"prism-crystal","name":"Prism Crystal","tagline":"Shifting highlights and luminous color","colors":["#b18aff","#447bff","#fff2ff"],"unlockRule":"default","finish":"pearl"},
-{"id":"holo-foil","name":"Holographic Foil","tagline":"Shifting highlights and luminous color","colors":["#ff54de","#39e5ff","#fff56b"],"unlockRule":"default","finish":"pearl"},
-{"id":"glitter-resin","name":"Glitter Resin","tagline":"Shifting highlights and luminous color","colors":["#ff319c","#7025ff","#fff6db"],"unlockRule":"default","finish":"glitter"},
-{"id":"galaxy-geode","name":"Galaxy Geode","tagline":"Shifting highlights and luminous color","colors":["#21134e","#7b39e8","#63ffff"],"unlockRule":"default","finish":"glitter"},
-{"id":"caustic-slime","name":"Caustic Slime","tagline":"Organic horror surface","colors":["#8aa52b","#20300b","#dcff57"],"unlockRule":"battle-pass","finish":"glaze"},
-{"id":"blister-hide","name":"Blister Hide","tagline":"Organic horror surface","colors":["#9e435f","#2d1727","#e7bb72"],"unlockRule":"battle-pass","finish":"glaze"},
-{"id":"rotten-rind","name":"Rotten Rind","tagline":"Organic horror surface","colors":["#626124","#211916","#a2b16b"],"unlockRule":"battle-pass","finish":"matte"},
-{"id":"parasite-nest","name":"Parasite Nest","tagline":"Organic horror surface","colors":["#786541","#151c14","#ece2b0"],"unlockRule":"battle-pass","finish":"glaze"},
-{"id":"exposed-sinew","name":"Exposed Sinew","tagline":"Organic horror surface","colors":["#b72945","#300b24","#efb5a1"],"unlockRule":"battle-pass","finish":"glaze"},
-{"id":"abyssal-maw","name":"Abyssal Maw","tagline":"Organic horror surface","colors":["#522045","#100d19","#d9e6a7"],"unlockRule":"battle-pass","finish":"glaze"},
-{"id":"circuit-alloy","name":"Circuit Alloy","tagline":"Machine surface","colors":["#273f50","#0a111c","#4effdc"],"unlockRule":"battle-pass","finish":"polished-metal"},
-{"id":"servo-armor","name":"Servo Armor","tagline":"Machine surface","colors":["#617080","#141b25","#ff6739"],"unlockRule":"battle-pass","finish":"brushed-metal"},
-{"id":"chrome-rib","name":"Chrome Rib","tagline":"Machine surface","colors":["#bfcde1","#202f46","#ffffff"],"unlockRule":"battle-pass","finish":"polished-metal"},
-{"id":"carbon-mech","name":"Carbon Mech","tagline":"Machine surface","colors":["#323d46","#080d15","#95bac9"],"unlockRule":"battle-pass"},
-{"id":"hazard-panel","name":"Hazard Panel","tagline":"Machine surface","colors":["#edb932","#131a20","#ffe9a2"],"unlockRule":"battle-pass"},
-{"id":"reactor-glass","name":"Reactor Glass","tagline":"Machine surface","colors":["#48e8ff","#063a55","#d4ffff"],"unlockRule":"battle-pass","finish":"glaze"}
+  {
+    "id": "pal-01",
+    "name": "Acid Forge",
+    "tagline": "Lime bites oxblood and chrome",
+    "colors": [
+      "#C6FF00",
+      "#4A0E17",
+      "#C0C7CE"
+    ],
+    "unlockRule": "aura-milestone",
+    "unlockAtDay": 5,
+    "finish": "glitter"
+  },
+  {
+    "id": "pal-02",
+    "name": "Neon Afterburn Haze",
+    "tagline": "Orange aqua contrails with violet flare",
+    "colors": [
+      "#FF6D00",
+      "#00E0B0",
+      "#C800FF"
+    ],
+    "unlockRule": "aura-milestone",
+    "unlockAtDay": 10,
+    "finish": "brushed-metal"
+  },
+  {
+    "id": "pal-03",
+    "name": "Petrel Copper",
+    "tagline": "Petrol depths meet intense violet",
+    "colors": [
+      "#0E5A61",
+      "#B87333",
+      "#6913E7"
+    ],
+    "unlockRule": "aura-milestone",
+    "unlockAtDay": 15,
+    "finish": "polished-metal"
+  },
+  {
+    "id": "pal-04",
+    "name": "Vinaigrette Rust",
+    "tagline": "Oil pigment rust swirl",
+    "colors": [
+      "#8A3B12",
+      "#556B2F",
+      "#E7A213"
+    ],
+    "unlockRule": "aura-milestone",
+    "unlockAtDay": 20,
+    "finish": "marbled"
+  },
+  {
+    "id": "pal-05",
+    "name": "Neon Relic",
+    "tagline": "Hot magenta neon amber on bone",
+    "colors": [
+      "#FF009F",
+      "#FFB500",
+      "#F2EFE6"
+    ],
+    "unlockRule": "aura-milestone",
+    "unlockAtDay": 25,
+    "finish": "glitter"
+  },
+  {
+    "id": "pal-06",
+    "name": "Glacier Ember",
+    "tagline": "Ice teal over ember red",
+    "colors": [
+      "#13E7D1",
+      "#D9381E",
+      "#2B2530"
+    ],
+    "unlockRule": "aura-milestone",
+    "unlockAtDay": 30,
+    "finish": "pearl"
+  },
+  {
+    "id": "pal-07",
+    "name": "Chartreuse Storm",
+    "tagline": "Sludge green meets slate violet",
+    "colors": [
+      "#B5C700",
+      "#3D3654",
+      "#E85D75"
+    ],
+    "unlockRule": "aura-milestone",
+    "unlockAtDay": 35,
+    "finish": "matte"
+  },
+  {
+    "id": "pal-08",
+    "name": "Saffron Voltage",
+    "tagline": "Saffron arcs on ink blue",
+    "colors": [
+      "#FFB000",
+      "#101D42",
+      "#00FAA6"
+    ],
+    "unlockRule": "aura-milestone",
+    "unlockAtDay": 40,
+    "finish": "polished-metal"
+  },
+  {
+    "id": "pal-09",
+    "name": "Neon Venom Signal",
+    "tagline": "Poison lime warning under arterial red",
+    "colors": [
+      "#A6FF00",
+      "#FF2442",
+      "#101828"
+    ],
+    "unlockRule": "aura-milestone",
+    "unlockAtDay": 45,
+    "finish": "watercolor"
+  },
+  {
+    "id": "pal-10",
+    "name": "Mercury Moss",
+    "tagline": "Silver moss over saturated gold",
+    "colors": [
+      "#AEB6BC",
+      "#5C6B3C",
+      "#E7A913"
+    ],
+    "unlockRule": "aura-milestone",
+    "unlockAtDay": 50,
+    "finish": "brushed-metal"
+  },
+  {
+    "id": "pal-11",
+    "name": "Ultraviolet Tar",
+    "tagline": "Violet glow on tar black",
+    "colors": [
+      "#7B2FF7",
+      "#141414",
+      "#FFC93C"
+    ],
+    "unlockRule": "aura-milestone",
+    "unlockAtDay": 55,
+    "finish": "glaze"
+  },
+  {
+    "id": "pal-12",
+    "name": "Salmon Circuit",
+    "tagline": "Salmon pink on circuit green",
+    "colors": [
+      "#FA2200",
+      "#00A86B",
+      "#2E2A5C"
+    ],
+    "unlockRule": "aura-milestone",
+    "unlockAtDay": 60,
+    "finish": "pearl"
+  },
+  {
+    "id": "pal-13",
+    "name": "Muddy Pop",
+    "tagline": "Ochre mud sparks cerulean",
+    "colors": [
+      "#8C6A2F",
+      "#0081C8",
+      "#E71362"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "strider-2:L1",
+    "finish": "matte"
+  },
+  {
+    "id": "pal-14",
+    "name": "Neon Vapor Crown",
+    "tagline": "Laser pink blue over dark purple",
+    "colors": [
+      "#FF00AA",
+      "#00D0FF",
+      "#1B0033"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "strider-2:L3",
+    "finish": "watercolor"
+  },
+  {
+    "id": "pal-15",
+    "name": "Brick Vein",
+    "tagline": "Brick red veined in steel",
+    "colors": [
+      "#A0342B",
+      "#8C9BA5",
+      "#D7E713"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "strider-2:L4",
+    "finish": "marbled"
+  },
+  {
+    "id": "pal-16",
+    "name": "Peacock Static",
+    "tagline": "Peacock green hums gold",
+    "colors": [
+      "#046A5B",
+      "#FAAF00",
+      "#5B1E4B"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "strider-3:L1",
+    "finish": "polished-metal"
+  },
+  {
+    "id": "pal-17",
+    "name": "Foghorn Flame",
+    "tagline": "Fog gray with fire-orange siren",
+    "colors": [
+      "#B8C0C2",
+      "#FA3F00",
+      "#123C69"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "strider-3:L3",
+    "finish": "brushed-metal"
+  },
+  {
+    "id": "pal-18",
+    "name": "Toxic Honey",
+    "tagline": "Honey drips on toxic lime",
+    "colors": [
+      "#D9A404",
+      "#9BF00B",
+      "#4A154B"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "strider-3:L4",
+    "finish": "glaze"
+  },
+  {
+    "id": "pal-19",
+    "name": "Neon Crimson Mirage",
+    "tagline": "Scarlet toxic lime over deep jade",
+    "colors": [
+      "#FF1744",
+      "#76FF03",
+      "#005E3C"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "strider-4:L1",
+    "finish": "matte"
+  },
+  {
+    "id": "pal-20",
+    "name": "Opal Drain",
+    "tagline": "Opal sheen on drainpipe green",
+    "colors": [
+      "#13E7B9",
+      "#3E5641",
+      "#D1495B"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "strider-4:L3",
+    "finish": "pearl"
+  },
+  {
+    "id": "pal-21",
+    "name": "Rust Halo",
+    "tagline": "Rust ringed by mint flash",
+    "colors": [
+      "#9C4221",
+      "#12E898",
+      "#2C2C54"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "strider-4:L4",
+    "finish": "brushed-metal"
+  },
+  {
+    "id": "pal-22",
+    "name": "Volt Quartz",
+    "tagline": "Electric yellow on rose quartz",
+    "colors": [
+      "#F5E900",
+      "#E71363",
+      "#264653"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "strider-5:L1",
+    "finish": "glitter"
+  },
+  {
+    "id": "pal-23",
+    "name": "Neon Flare Garden",
+    "tagline": "Laser lime pink on teal steel",
+    "colors": [
+      "#8CFF00",
+      "#FF006E",
+      "#00B8A9"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "strider-5:L3",
+    "finish": "matte"
+  },
+  {
+    "id": "pal-24",
+    "name": "Crimson Tidebreak",
+    "tagline": "Crimson breaks on seafoam",
+    "colors": [
+      "#B91338",
+      "#13E7B5",
+      "#2A1E5C"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "strider-5:L4",
+    "finish": "watercolor"
+  },
+  {
+    "id": "pal-25",
+    "name": "Brass Mirage",
+    "tagline": "Brass shimmer dusky plum",
+    "colors": [
+      "#C59B42",
+      "#5A2A52",
+      "#0D94ED"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "strider-6:L1",
+    "finish": "polished-metal"
+  },
+  {
+    "id": "pal-26",
+    "name": "Neon Infrared Bloom",
+    "tagline": "Red heat sliced by frozen cyan",
+    "colors": [
+      "#FF0000",
+      "#00F5FF",
+      "#5B00B5"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "strider-6:L3",
+    "finish": "glaze"
+  },
+  {
+    "id": "pal-27",
+    "name": "Ice Magma",
+    "tagline": "Pigmented ice over magma orange",
+    "colors": [
+      "#D6F0F0",
+      "#F45B0F",
+      "#3D2C8D"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "strider-6:L4",
+    "finish": "marbled"
+  },
+  {
+    "id": "pal-28",
+    "name": "Fern Radio",
+    "tagline": "Fern green static magenta",
+    "colors": [
+      "#3F7A3A",
+      "#E4007C",
+      "#E7BE13"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "ringer-2:L1",
+    "finish": "matte"
+  },
+  {
+    "id": "pal-29",
+    "name": "Porcelain Fuel",
+    "tagline": "Porcelain white fuel orange",
+    "colors": [
+      "#F2F2F0",
+      "#FF7A1A",
+      "#14507A"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "ringer-2:L3",
+    "finish": "glaze"
+  },
+  {
+    "id": "pal-30",
+    "name": "Neon Photon Alley",
+    "tagline": "Yellow signage aqua and violet glass",
+    "colors": [
+      "#FFD300",
+      "#00FFCC",
+      "#7A00FF"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "ringer-2:L4",
+    "finish": "brushed-metal"
+  },
+  {
+    "id": "pal-31",
+    "name": "Neon Solar Flare",
+    "tagline": "Hot yellow ember in plum space",
+    "colors": [
+      "#FFEA00",
+      "#FF3D00",
+      "#26142B"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "ringer-3:L1",
+    "finish": "polished-metal"
+  },
+  {
+    "id": "pal-32",
+    "name": "Wet Cement Rose",
+    "tagline": "Cement gray wild rose",
+    "colors": [
+      "#8D9096",
+      "#D84A87",
+      "#F0E130"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "ringer-3:L3",
+    "finish": "matte"
+  },
+  {
+    "id": "pal-33",
+    "name": "Neon Laser Tropics",
+    "tagline": "Chartreuse beams with scorched orange shadows",
+    "colors": [
+      "#C6FF00",
+      "#FF4D00",
+      "#001219"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "ringer-3:L4",
+    "finish": "watercolor"
+  },
+  {
+    "id": "pal-34",
+    "name": "Copper Fog",
+    "tagline": "Copper glows through fog",
+    "colors": [
+      "#B46A30",
+      "#C4CBCE",
+      "#B600F5"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "ringer-4:L1",
+    "finish": "brushed-metal"
+  },
+  {
+    "id": "pal-35",
+    "name": "Laser Moss",
+    "tagline": "Laser cyan on moss",
+    "colors": [
+      "#00E5FF",
+      "#546B2F",
+      "#FF4FA3"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "ringer-4:L3",
+    "finish": "glitter"
+  },
+  {
+    "id": "pal-36",
+    "name": "Bone Ember",
+    "tagline": "Bone white ember orange",
+    "colors": [
+      "#EDE8DC",
+      "#E4572E",
+      "#BA00FF"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "ringer-4:L4",
+    "finish": "matte"
+  },
+  {
+    "id": "pal-37",
+    "name": "Plum Static",
+    "tagline": "Plum noise with electric lime",
+    "colors": [
+      "#4A1E4F",
+      "#B8F000",
+      "#33B5C7"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "ringer-5:L1",
+    "finish": "glaze"
+  },
+  {
+    "id": "pal-38",
+    "name": "Neon Lime Vortex",
+    "tagline": "Acid green swirling through electric blue",
+    "colors": [
+      "#BFFF00",
+      "#00E5FF",
+      "#12100F"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "ringer-5:L3",
+    "finish": "pearl"
+  },
+  {
+    "id": "pal-39",
+    "name": "Clay Command",
+    "tagline": "Terracotta clay cobalt order",
+    "colors": [
+      "#C06B55",
+      "#2E4BC6",
+      "#EDE6D6"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "ringer-5:L4",
+    "finish": "marbled"
+  },
+  {
+    "id": "pal-40",
+    "name": "Static Cream",
+    "tagline": "Cream noise shock green",
+    "colors": [
+      "#F4EDDE",
+      "#39FF14",
+      "#4A306D"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "manyarm-2:L1",
+    "finish": "glitter"
+  },
+  {
+    "id": "pal-41",
+    "name": "Midnight Papaya",
+    "tagline": "Midnight blue papaya burst",
+    "colors": [
+      "#191970",
+      "#FF9E42",
+      "#13E796"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "manyarm-2:L3",
+    "finish": "polished-metal"
+  },
+  {
+    "id": "pal-42",
+    "name": "Dusty Laser",
+    "tagline": "Dusty mauve laser green",
+    "colors": [
+      "#A27E8E",
+      "#7CFC00",
+      "#1B3B6F"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "manyarm-2:L4",
+    "finish": "matte"
+  },
+  {
+    "id": "pal-43",
+    "name": "Neon Atomic Sunset",
+    "tagline": "Amber fallout glowing beside ultraviolet pink",
+    "colors": [
+      "#FF9100",
+      "#FF00F5",
+      "#062A2A"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "manyarm-3:L1",
+    "finish": "glaze"
+  },
+  {
+    "id": "pal-44",
+    "name": "Fern Flame",
+    "tagline": "Cool fern fierce flame",
+    "colors": [
+      "#4F7942",
+      "#FF3D2E",
+      "#E75A13"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "manyarm-3:L3",
+    "finish": "brushed-metal"
+  },
+  {
+    "id": "pal-45",
+    "name": "Violet Quarry",
+    "tagline": "Quarry gray violet eruption",
+    "colors": [
+      "#7D7F87",
+      "#8B3DFF",
+      "#DCE35B"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "manyarm-3:L4",
+    "finish": "matte"
+  },
+  {
+    "id": "pal-46",
+    "name": "Cadmium Deep",
+    "tagline": "Cadmium red deep lagoon",
+    "colors": [
+      "#D32E12",
+      "#046E8F",
+      "#E79E13"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "manyarm-4:L1",
+    "finish": "polished-metal"
+  },
+  {
+    "id": "pal-47",
+    "name": "Pigment Riot",
+    "tagline": "Intense blue maroon and hot orange",
+    "colors": [
+      "#139FE7",
+      "#6E1423",
+      "#FF7300"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "manyarm-4:L3",
+    "finish": "watercolor"
+  },
+  {
+    "id": "pal-48",
+    "name": "Neon Prism Riot",
+    "tagline": "Sea-glass cyan, magenta bite, lemon flash",
+    "colors": [
+      "#00FFC6",
+      "#FF00B8",
+      "#F5FF00"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "manyarm-4:L4",
+    "finish": "pearl"
+  },
+  {
+    "id": "pal-49",
+    "name": "Neon Tropic Surge",
+    "tagline": "Aqua tide, citrus flare, violet thunder",
+    "colors": [
+      "#00FF9D",
+      "#FFB000",
+      "#D000FF"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "manyarm-5:L1",
+    "finish": "glitter"
+  },
+  {
+    "id": "pal-50",
+    "name": "Ash Honey",
+    "tagline": "Ash gray golden honey",
+    "colors": [
+      "#9BA0A6",
+      "#E0A100",
+      "#2F6690"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "manyarm-5:L3",
+    "finish": "matte"
+  },
+  {
+    "id": "pal-51",
+    "name": "Cherry Motor",
+    "tagline": "Cherry motor oil with electric blue",
+    "colors": [
+      "#B22234",
+      "#3B2F2F",
+      "#005CFF"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "manyarm-5:L4",
+    "finish": "brushed-metal"
+  },
+  {
+    "id": "pal-52",
+    "name": "Glacier Punch",
+    "tagline": "Glacier pigmented hot punch",
+    "colors": [
+      "#13A6E7",
+      "#F52549",
+      "#3D405B"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "wedge-2:L1",
+    "finish": "glaze"
+  },
+  {
+    "id": "pal-53",
+    "name": "Tarnish Bloom",
+    "tagline": "Tarnished teal floral orange",
+    "colors": [
+      "#3A7D7B",
+      "#F4852B",
+      "#E9D6EC"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "wedge-2:L3",
+    "finish": "marbled"
+  },
+  {
+    "id": "pal-54",
+    "name": "Umber Signal",
+    "tagline": "Umber earth neon signal",
+    "colors": [
+      "#635147",
+      "#D0FF4B",
+      "#7A28C0"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "wedge-2:L4",
+    "finish": "matte"
+  },
+  {
+    "id": "pal-55",
+    "name": "Rose Quartz Coil",
+    "tagline": "Soft rose coil of teal",
+    "colors": [
+      "#E7134B",
+      "#0FA3A3",
+      "#2B2118"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "wedge-3:L1",
+    "finish": "pearl"
+  },
+  {
+    "id": "pal-56",
+    "name": "Sulfur Deck",
+    "tagline": "Sulfur yellow blue and hot orange",
+    "colors": [
+      "#E3D200",
+      "#274C77",
+      "#FF4A00"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "wedge-3:L3",
+    "finish": "polished-metal"
+  },
+  {
+    "id": "pal-57",
+    "name": "Neon Ember Static",
+    "tagline": "Orange yellow buzzing with royal voltage",
+    "colors": [
+      "#FF5E00",
+      "#FFE600",
+      "#3A0CA3"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "wedge-3:L4",
+    "finish": "watercolor"
+  },
+  {
+    "id": "pal-58",
+    "name": "Mango Ash",
+    "tagline": "Mango bright volcanic ash",
+    "colors": [
+      "#FFA12B",
+      "#59595E",
+      "#64DDBB"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "wedge-4:L1",
+    "finish": "matte"
+  },
+  {
+    "id": "pal-59",
+    "name": "Steel Petal",
+    "tagline": "Steel gray crushed petals",
+    "colors": [
+      "#8A8F98",
+      "#E71813",
+      "#D8E26E"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "wedge-4:L3",
+    "finish": "brushed-metal"
+  },
+  {
+    "id": "pal-60",
+    "name": "Ninja Cream",
+    "tagline": "Hidden navy cream coral",
+    "colors": [
+      "#1E2A4A",
+      "#F0EBE0",
+      "#7EEC00"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "wedge-4:L4",
+    "finish": "glaze"
+  },
+  {
+    "id": "pal-61",
+    "name": "Tangerine Static",
+    "tagline": "Tangerine buzz grape shadow",
+    "colors": [
+      "#F28500",
+      "#3D2159",
+      "#202020"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "wedge-5:L1",
+    "finish": "glitter"
+  },
+  {
+    "id": "pal-62",
+    "name": "Sage Pistol",
+    "tagline": "Muted sage pistol pink",
+    "colors": [
+      "#9AB5A1",
+      "#E45C98",
+      "#33272A"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "wedge-5:L3",
+    "finish": "matte"
+  },
+  {
+    "id": "pal-63",
+    "name": "Lagoon Battery",
+    "tagline": "Lagoon green charged yellow",
+    "colors": [
+      "#1D8A7A",
+      "#FAE000",
+      "#76305B"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "wedge-5:L4",
+    "finish": "polished-metal"
+  },
+  {
+    "id": "pal-64",
+    "name": "Wine Cooling",
+    "tagline": "Warm wine cooled by mint",
+    "colors": [
+      "#701F3C",
+      "#13E78C",
+      "#E8D44D"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "warden-1:L1",
+    "finish": "pearl"
+  },
+  {
+    "id": "pal-65",
+    "name": "Charcoal Tulip",
+    "tagline": "Charcoal tulip flame combo",
+    "colors": [
+      "#2E3033",
+      "#FF4E50",
+      "#CA00C7"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "warden-1:L3",
+    "finish": "matte"
+  },
+  {
+    "id": "pal-66",
+    "name": "Neon Acid Harbor",
+    "tagline": "Lime light cutting across magenta docks",
+    "colors": [
+      "#39FF14",
+      "#FF007F",
+      "#001B2E"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "warden-1:L4",
+    "finish": "pearl"
+  },
+  {
+    "id": "pal-67",
+    "name": "Rustic Neon",
+    "tagline": "Barn red barn lime buzz",
+    "colors": [
+      "#8A3324",
+      "#C1FF33",
+      "#2D4A6B"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "blob-2:L1",
+    "finish": "marbled"
+  },
+  {
+    "id": "pal-68",
+    "name": "Alice Warning",
+    "tagline": "Alice blue caution orange",
+    "colors": [
+      "#1399E7",
+      "#FF7E1F",
+      "#EEF700"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "blob-2:L3",
+    "finish": "watercolor"
+  },
+  {
+    "id": "pal-69",
+    "name": "Smog Candy",
+    "tagline": "Smog beige candy teal",
+    "colors": [
+      "#E79813",
+      "#00C2A8",
+      "#D8395B"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "blob-2:L4",
+    "finish": "matte"
+  },
+  {
+    "id": "pal-70",
+    "name": "Violet Furnace",
+    "tagline": "Furnace violet cooled sky",
+    "colors": [
+      "#6A2D9E",
+      "#F57C3B",
+      "#302012"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "blob-3:L1",
+    "finish": "glaze"
+  },
+  {
+    "id": "pal-71",
+    "name": "Khaki Storm",
+    "tagline": "Khaki field storm magenta",
+    "colors": [
+      "#A89B6E",
+      "#E0218A",
+      "#2A6F97"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "blob-3:L3",
+    "finish": "brushed-metal"
+  },
+  {
+    "id": "pal-72",
+    "name": "Neon Circuit Surge",
+    "tagline": "Turquoise sparks over midnight violet",
+    "colors": [
+      "#00F5D4",
+      "#F72585",
+      "#0B0321"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "blob-3:L4",
+    "finish": "glitter"
+  },
+  {
+    "id": "pal-73",
+    "name": "Cedar Ultraviolet",
+    "tagline": "Cedar wood ultraviolet light",
+    "colors": [
+      "#7A4532",
+      "#8246FF",
+      "#E9E4D8"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "blob-4:L1",
+    "finish": "matte"
+  },
+  {
+    "id": "pal-74",
+    "name": "Frosted Chili",
+    "tagline": "Frost blue chili red",
+    "colors": [
+      "#13AAE7",
+      "#C13A2F",
+      "#4C5B2C"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "blob-4:L3",
+    "finish": "polished-metal"
+  },
+  {
+    "id": "pal-75",
+    "name": "Moss Rocket",
+    "tagline": "Moss green rocket pink",
+    "colors": [
+      "#5B7042",
+      "#FA0057",
+      "#061F5B"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "blob-4:L4",
+    "finish": "matte"
+  },
+  {
+    "id": "pal-76",
+    "name": "Pewter Punch",
+    "tagline": "Pewter softened hot punch",
+    "colors": [
+      "#99A0A8",
+      "#FF3D7F",
+      "#164D37"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "cap-2:L1",
+    "finish": "brushed-metal"
+  },
+  {
+    "id": "pal-77",
+    "name": "Neon Glacier Riot",
+    "tagline": "Cyan hot pink and radioactive lime",
+    "colors": [
+      "#00F0FF",
+      "#FF00E5",
+      "#CCFF00"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "cap-2:L3",
+    "finish": "watercolor"
+  },
+  {
+    "id": "pal-78",
+    "name": "Cola Lightning",
+    "tagline": "Cola brown lightning yellow",
+    "colors": [
+      "#3A2618",
+      "#F7FF00",
+      "#FA005E"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "cap-2:L4",
+    "finish": "glaze"
+  },
+  {
+    "id": "pal-79",
+    "name": "Periwinkle Fuel",
+    "tagline": "Soft periwinkle diesel orange",
+    "colors": [
+      "#1325E7",
+      "#E0641E",
+      "#2F4730"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "cap-3:L1",
+    "finish": "matte"
+  },
+  {
+    "id": "pal-80",
+    "name": "Jade Alarm",
+    "tagline": "Jade calm siren red",
+    "colors": [
+      "#57A78A",
+      "#D91E36",
+      "#E7AF13"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "cap-3:L3",
+    "finish": "pearl"
+  },
+  {
+    "id": "pal-81",
+    "name": "Neon Ultraviolet Pulse",
+    "tagline": "Violet beams with mint-charged current",
+    "colors": [
+      "#8C00FF",
+      "#00FFB2",
+      "#160021"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "cap-3:L4",
+    "finish": "matte"
+  },
+  {
+    "id": "pal-82",
+    "name": "Neon Nightcaller",
+    "tagline": "Cyan violet flame in black-green fog",
+    "colors": [
+      "#00FFFF",
+      "#9400FF",
+      "#131A00"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "stalk-2:L1",
+    "finish": "marbled"
+  },
+  {
+    "id": "pal-83",
+    "name": "Ivory Shock",
+    "tagline": "Ivory calm violet shock",
+    "colors": [
+      "#F0EEE4",
+      "#7C1FD3",
+      "#FFB200"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "stalk-2:L3",
+    "finish": "glaze"
+  },
+  {
+    "id": "pal-84",
+    "name": "Neon Ruby Arc",
+    "tagline": "Red-hot signal over green afterglow",
+    "colors": [
+      "#FF073A",
+      "#00FF87",
+      "#080F1B"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "stalk-2:L4",
+    "finish": "glitter"
+  },
+  {
+    "id": "pal-85",
+    "name": "Maroon Cloud",
+    "tagline": "Maroon heavy cloud blue",
+    "colors": [
+      "#6D1E2E",
+      "#1381E7",
+      "#E5D352"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "stalk-3:L1",
+    "finish": "watercolor"
+  },
+  {
+    "id": "pal-86",
+    "name": "Chrome Berry",
+    "tagline": "Chrome band over berry",
+    "colors": [
+      "#C3C9D1",
+      "#8E2A5C",
+      "#FFB347"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "stalk-3:L3",
+    "finish": "polished-metal"
+  },
+  {
+    "id": "pal-87",
+    "name": "Lentil Neon",
+    "tagline": "Lentil tan electric aqua",
+    "colors": [
+      "#B09A6E",
+      "#00FFF0",
+      "#5F1B63"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "stalk-3:L4",
+    "finish": "matte"
+  },
+  {
+    "id": "pal-88",
+    "name": "Neon Cobalt Fuse",
+    "tagline": "Blue ignition wired to blazing yellow",
+    "colors": [
+      "#004DFF",
+      "#FFEE00",
+      "#0D0221"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "stalk-4:L1",
+    "finish": "glaze"
+  },
+  {
+    "id": "pal-89",
+    "name": "Spruce Bonfire",
+    "tagline": "Dark spruce bonfire orange",
+    "colors": [
+      "#23493C",
+      "#FF7A3D",
+      "#0C1735"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "stalk-4:L3",
+    "finish": "matte"
+  },
+  {
+    "id": "pal-90",
+    "name": "Lilac Foundry",
+    "tagline": "Lilac meets foundry steel",
+    "colors": [
+      "#9813E7",
+      "#7B8894",
+      "#D4522A"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "stalk-4:L4",
+    "finish": "brushed-metal"
+  },
+  {
+    "id": "pal-91",
+    "name": "Topaz Battle",
+    "tagline": "Topaz gold navy clash",
+    "colors": [
+      "#F0B429",
+      "#182952",
+      "#FA007D"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "tanka-2:L1",
+    "finish": "polished-metal"
+  },
+  {
+    "id": "pal-92",
+    "name": "Dusk Celery",
+    "tagline": "Dusky purple celery snap",
+    "colors": [
+      "#574B6B",
+      "#C8D86A",
+      "#FA2100"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "tanka-2:L3",
+    "finish": "matte"
+  },
+  {
+    "id": "pal-93",
+    "name": "Tide Copperfuse",
+    "tagline": "Tidal teal copperfuse glow",
+    "colors": [
+      "#0F7B7B",
+      "#C07840",
+      "#C2F000"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "tanka-2:L4",
+    "finish": "pearl"
+  },
+  {
+    "id": "pal-94",
+    "name": "Punch Driftwood",
+    "tagline": "Fruit punch on driftwood",
+    "colors": [
+      "#E63362",
+      "#6E5B4A",
+      "#1648EA"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "tanka-3:L1",
+    "finish": "watercolor"
+  },
+  {
+    "id": "pal-95",
+    "name": "Ink Lime",
+    "tagline": "Ink smudge streaked lime",
+    "colors": [
+      "#23232A",
+      "#A8E10C",
+      "#7E10EA"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "tanka-3:L3",
+    "finish": "glaze"
+  },
+  {
+    "id": "pal-96",
+    "name": "Porcelain Prism",
+    "tagline": "Porcelain violet over tidal blue",
+    "colors": [
+      "#F5F1E8",
+      "#BD05DA",
+      "#005F73"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "tanka-3:L4",
+    "finish": "marbled"
+  },
+  {
+    "id": "pal-97",
+    "name": "Wasabi Cloud",
+    "tagline": "Wasabi heat cloud gray",
+    "colors": [
+      "#9FBF3B",
+      "#8E94A0",
+      "#E71363"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "tanka-4:L1",
+    "finish": "matte"
+  },
+  {
+    "id": "pal-98",
+    "name": "Eggplant Flare",
+    "tagline": "Eggplant deep flare yellow",
+    "colors": [
+      "#41284E",
+      "#FFD23F",
+      "#5BC0BE"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "tanka-4:L3",
+    "finish": "glitter"
+  },
+  {
+    "id": "pal-99",
+    "name": "Stone Rose",
+    "tagline": "Stone gray antique rose",
+    "colors": [
+      "#8F8A82",
+      "#C46E8E",
+      "#2F6DA3"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "tanka-4:L4",
+    "finish": "brushed-metal"
+  },
+  {
+    "id": "pal-100",
+    "name": "Neon Quasar Pop",
+    "tagline": "Yellow green comet over indigo gravity",
+    "colors": [
+      "#FFEF00",
+      "#00FF3C",
+      "#2D02B8"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "lume-1:L1",
+    "finish": "glaze"
+  },
+  {
+    "id": "pal-101",
+    "name": "Arctic Rust",
+    "tagline": "Arctic white rusted orange",
+    "colors": [
+      "#E9F2F5",
+      "#9E4A1D",
+      "#3E3F8F"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "lume-1:L3",
+    "finish": "brushed-metal"
+  },
+  {
+    "id": "pal-102",
+    "name": "Magenta Selvage",
+    "tagline": "Magenta edge denim blue",
+    "colors": [
+      "#D8117E",
+      "#3B5B8C",
+      "#E7D313"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "lume-1:L4",
+    "finish": "matte"
+  },
+  {
+    "id": "pal-103",
+    "name": "Haze Saffron",
+    "tagline": "Purple haze saffron spark",
+    "colors": [
+      "#8467B8",
+      "#F4A81D",
+      "#1D4E50"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "food:L1",
+    "finish": "pearl"
+  },
+  {
+    "id": "pal-104",
+    "name": "Neon Cyber Reed",
+    "tagline": "Green circuitry humming beside lemon static",
+    "colors": [
+      "#00FF66",
+      "#FFEA00",
+      "#4B0082"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "food:L2",
+    "finish": "glitter"
+  },
+  {
+    "id": "pal-105",
+    "name": "Neon Magma Bloom",
+    "tagline": "Molten orange meeting synthetic magenta",
+    "colors": [
+      "#FF2E00",
+      "#F000FF",
+      "#0A0A0F"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "food:L3",
+    "finish": "polished-metal"
+  },
+  {
+    "id": "pal-106",
+    "name": "Dune Violet",
+    "tagline": "Warm dune electric violet",
+    "colors": [
+      "#C9AE7E",
+      "#7D2BF0",
+      "#13E7E3"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "food:L4",
+    "finish": "marbled"
+  },
+  {
+    "id": "pal-107",
+    "name": "Ember Nightshade",
+    "tagline": "Violet shadows ember teal",
+    "colors": [
+      "#523090",
+      "#EF4E23",
+      "#0C5D68"
+    ],
+    "unlockRule": "battle-pass",
+    "reward": "food:L5",
+    "finish": "watercolor"
+  },
+  {
+    "id": "opal-jelly",
+    "name": "Opal Jelly",
+    "tagline": "Shifting highlights and luminous color",
+    "colors": [
+      "#b3fff0",
+      "#9767ff",
+      "#fff1ff"
+    ],
+    "unlockRule": "battle-pass",
+    "finish": "pearl"
+  },
+  {
+    "id": "bubble-glass",
+    "name": "Bubble Glass",
+    "tagline": "Shifting highlights and luminous color",
+    "colors": [
+      "#58eaff",
+      "#b8fff8",
+      "#ffffff"
+    ],
+    "unlockRule": "battle-pass",
+    "finish": "glaze"
+  },
+  {
+    "id": "prism-crystal",
+    "name": "Prism Crystal",
+    "tagline": "Shifting highlights and luminous color",
+    "colors": [
+      "#b18aff",
+      "#447bff",
+      "#fff2ff"
+    ],
+    "unlockRule": "battle-pass",
+    "finish": "pearl"
+  },
+  {
+    "id": "holo-foil",
+    "name": "Holographic Foil",
+    "tagline": "Shifting highlights and luminous color",
+    "colors": [
+      "#ff54de",
+      "#39e5ff",
+      "#fff56b"
+    ],
+    "unlockRule": "battle-pass",
+    "finish": "pearl"
+  },
+  {
+    "id": "glitter-resin",
+    "name": "Glitter Resin",
+    "tagline": "Shifting highlights and luminous color",
+    "colors": [
+      "#ff319c",
+      "#7025ff",
+      "#fff6db"
+    ],
+    "unlockRule": "battle-pass",
+    "finish": "glitter"
+  },
+  {
+    "id": "galaxy-geode",
+    "name": "Galaxy Geode",
+    "tagline": "Shifting highlights and luminous color",
+    "colors": [
+      "#21134e",
+      "#7b39e8",
+      "#63ffff"
+    ],
+    "unlockRule": "battle-pass",
+    "finish": "glitter"
+  },
+  {
+    "id": "caustic-slime",
+    "name": "Caustic Slime",
+    "tagline": "Organic horror surface",
+    "colors": [
+      "#8aa52b",
+      "#20300b",
+      "#dcff57"
+    ],
+    "unlockRule": "battle-pass",
+    "finish": "glaze"
+  },
+  {
+    "id": "blister-hide",
+    "name": "Blister Hide",
+    "tagline": "Organic horror surface",
+    "colors": [
+      "#9e435f",
+      "#2d1727",
+      "#e7bb72"
+    ],
+    "unlockRule": "battle-pass",
+    "finish": "glaze"
+  },
+  {
+    "id": "rotten-rind",
+    "name": "Rotten Rind",
+    "tagline": "Organic horror surface",
+    "colors": [
+      "#626124",
+      "#211916",
+      "#a2b16b"
+    ],
+    "unlockRule": "battle-pass",
+    "finish": "matte"
+  },
+  {
+    "id": "parasite-nest",
+    "name": "Parasite Nest",
+    "tagline": "Organic horror surface",
+    "colors": [
+      "#786541",
+      "#151c14",
+      "#ece2b0"
+    ],
+    "unlockRule": "battle-pass",
+    "finish": "glaze"
+  },
+  {
+    "id": "exposed-sinew",
+    "name": "Exposed Sinew",
+    "tagline": "Organic horror surface",
+    "colors": [
+      "#b72945",
+      "#300b24",
+      "#efb5a1"
+    ],
+    "unlockRule": "battle-pass",
+    "finish": "glaze"
+  },
+  {
+    "id": "abyssal-maw",
+    "name": "Abyssal Maw",
+    "tagline": "Organic horror surface",
+    "colors": [
+      "#522045",
+      "#100d19",
+      "#d9e6a7"
+    ],
+    "unlockRule": "battle-pass",
+    "finish": "glaze"
+  },
+  {
+    "id": "circuit-alloy",
+    "name": "Circuit Alloy",
+    "tagline": "Machine surface",
+    "colors": [
+      "#273f50",
+      "#0a111c",
+      "#4effdc"
+    ],
+    "unlockRule": "battle-pass",
+    "finish": "polished-metal"
+  },
+  {
+    "id": "servo-armor",
+    "name": "Servo Armor",
+    "tagline": "Machine surface",
+    "colors": [
+      "#617080",
+      "#141b25",
+      "#ff6739"
+    ],
+    "unlockRule": "battle-pass",
+    "finish": "brushed-metal"
+  },
+  {
+    "id": "chrome-rib",
+    "name": "Chrome Rib",
+    "tagline": "Machine surface",
+    "colors": [
+      "#bfcde1",
+      "#202f46",
+      "#ffffff"
+    ],
+    "unlockRule": "battle-pass",
+    "finish": "polished-metal"
+  },
+  {
+    "id": "carbon-mech",
+    "name": "Carbon Mech",
+    "tagline": "Machine surface",
+    "colors": [
+      "#323d46",
+      "#080d15",
+      "#95bac9"
+    ],
+    "unlockRule": "battle-pass"
+  },
+  {
+    "id": "hazard-panel",
+    "name": "Hazard Panel",
+    "tagline": "Machine surface",
+    "colors": [
+      "#edb932",
+      "#131a20",
+      "#ffe9a2"
+    ],
+    "unlockRule": "battle-pass"
+  },
+  {
+    "id": "reactor-glass",
+    "name": "Reactor Glass",
+    "tagline": "Machine surface",
+    "colors": [
+      "#48e8ff",
+      "#063a55",
+      "#d4ffff"
+    ],
+    "unlockRule": "battle-pass",
+    "finish": "glaze"
+  }
 ]

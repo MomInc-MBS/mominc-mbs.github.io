@@ -18,13 +18,13 @@
       "bytes": 1350
     },
     {
-      "url": "/handborne/assets/GLTFExporter-DtrwThpg.js",
-      "revision": "5a935edb85eb14acefe07a83a8945739284119b1",
+      "url": "/handborne/assets/GLTFExporter-Bjf-hL3X.js",
+      "revision": "36f4faaa00c45cbf048a89ad06afd7693803c33c",
       "bytes": 34602
     },
     {
-      "url": "/handborne/assets/OBJExporter-BmfG4hV3.js",
-      "revision": "a4151f40db4afe04b93091c721b26607097cc313",
+      "url": "/handborne/assets/OBJExporter-BW87md1x.js",
+      "revision": "780f7cd89ff2b394aadff1027661e3e59daff4e2",
       "bytes": 2045
     },
     {
@@ -38,9 +38,9 @@
       "bytes": 214458
     },
     {
-      "url": "/handborne/assets/hand-entry-DzeSxrpI.js",
-      "revision": "3cab1e8d79c07f65539033c43d95e19db8706417",
-      "bytes": 1071097
+      "url": "/handborne/assets/hand-entry-CXtHIiHD.js",
+      "revision": "c5526cbc6600b708f49b9f6a87d98cf9ccf18de1",
+      "bytes": 1071121
     },
     {
       "url": "/handborne/companion.mjs",
@@ -89,7 +89,7 @@
     },
     {
       "url": "/handborne/index.html",
-      "revision": "ab61eeef751acf9d228d09537e465a4702a724df",
+      "revision": "55883a5e561425ad267ff8645a68389baef2d2f2",
       "bytes": 1292
     },
     {
@@ -586,5 +586,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "f5b8439d5d2d065198c6"
+  "version": "e22b2caeae19ea6ca936"
 }
