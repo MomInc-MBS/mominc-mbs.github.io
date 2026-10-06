@@ -69,28 +69,28 @@
   function saveDraft(e) {
     e.preventDefault();
     const s = S();
-    if (!s) return say("This page could not reach its own storage, so nothing was saved.");
+    if (!s) return say("This page cannot reach storage. Nothing was saved.");
     const answers = {};
     fields().forEach(t => { const v = t.value.trim(); if (v) answers[t.name] = v; });
     if (!Object.keys(answers).length) {         // an empty save is a delete, not an empty record
       say(s.clearDraft(D.slug)
           ? "Nothing to save, so nothing was kept."
-          : "This browser is not letting the page change stored data.");
+          : "This browser is not letting the page change saved data.");
       return paintFile();
     }
     say(s.saveDraft(D.slug, { title: document.title.split(" | ")[0], answers })
         ? "Saved on this device. Nothing was sent."
-        : "This browser is not letting the page store anything, so nothing was saved.");
+        : "This browser is not letting the page save. Nothing was saved.");
     paintFile();
   }
 
   function deleteMine() {
     const s = S();
-    if (!s) return say("This page could not reach its own storage, so nothing was deleted.");
+    if (!s) return say("This page cannot reach storage. Nothing was deleted.");
     const wrote = s.clearDraft(D.slug);
     fields().forEach(t => { t.value = ""; });
     say(wrote ? "Deleted from this device."
-              : "This browser is not letting the page change stored data, so nothing was deleted.");
+              : "This browser is not letting the page change saved data. Nothing was deleted.");
     paintFile();
   }
 
@@ -108,7 +108,7 @@
     // with no code edit. (The old hard-coded "of 6" was the same defect as games/index.html's "6 games".)
     let total = slugs.length;
     try { const f = window.MBS_CHANNELS && window.MBS_CHANNELS.forms; if (f && f.length) total = f.length; } catch {}
-    countEl.textContent = "Your coach file: " + slugs.length + " of " + total + " channel slices saved.";
+    countEl.textContent = "Your coach file: " + slugs.length + " of " + total + " channels saved.";
     list.textContent = "";
     slugs.forEach(sl => {
       const li = document.createElement("li");
@@ -120,7 +120,7 @@
       del.addEventListener("click", () => {
         const s = S();
         if (!s || !s.clearDraft(sl)) {
-          say("This browser is not letting the page change stored data.");
+          say("This browser is not letting the page change saved data.");
           return;
         }
         if (sl === D.slug) fields().forEach(t => { t.value = ""; });

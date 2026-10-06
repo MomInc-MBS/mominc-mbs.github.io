@@ -104,7 +104,7 @@ LANDING = u"""<!doctype html>
     <div class="profile-file" id="profileFile" hidden>
       <p class="profile-count" id="profileCount"></p>
       <ul class="profile-list" id="profileList"></ul>
-      <p class="profile-partial"><a href="../../files/">See everything this browser is keeping</a></p>
+      <p class="profile-partial"><a href="../../files/">See what this browser keeps</a></p>
     </div>
 {identity}
   </details>
@@ -199,7 +199,7 @@ COMING_SOON = u"""<!doctype html>
       <p class="eyebrow">{eyebrow} &middot; Coming Soon</p>
       <div class="brand-heading">{brand}<h1 class="title">{page_title}</h1></div>
       <p class="premise">{premise}</p>
-      <p class="premise">This channel is being rebuilt and is not playable yet.</p>
+      <p class="premise">This channel is being rebuilt. You cannot play it yet.</p>
       <a class="cta" id="play" href="../../">Back To All Channels</a>
     </div>
   </header>

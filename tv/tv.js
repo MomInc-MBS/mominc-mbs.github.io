@@ -309,7 +309,7 @@
 
   // --- channel: the root TV page opens MOM INC; explicit links open that channel.
   const name = current === "sag" ? "mominc" : current;
-  const testcard = `<section class="testcard" aria-label="MBS test card"><h1>MBS</h1><div class="spacer"></div><p>Mom's Brainwashing Stream. This set is tuned to no one yet.</p></section>`;
+  const testcard = `<section class="testcard" aria-label="MBS test card"><h1>MBS</h1><div class="spacer"></div><p>Mom's Brainwashing Stream. This set is not tuned to a channel yet.</p></section>`;
   if(name==="fuel")location.replace("/play/fuel/");
   if (name === "armie" && !window.MBS_FLOW?.armieReady()) {
     channel.innerHTML = `<section class="testcard"><h1>COACH ARMIE</h1><p>The Music Desk has your hand on order.</p><a href="../games/djscratch/">Visit DJ Scratch</a></section>`;
@@ -571,7 +571,7 @@
     const bar = document.createElement("div");
     bar.id = "myrOffer"; bar.className = "myr-offer";
     bar.innerHTML = '<img src="assets/myr5-sticker-2.png" alt="" aria-hidden="true">'
-      + '<p>I already took the workout template out for you. It is done, it is yours, nobody asked me to. I only need the forms filled so it looks like you earned it.'
+      + '<p>I already took out the workout template for you. It is yours. Nobody asked me to. I just need the forms filled in so it looks like you earned it.'
       + ' <a href="mailto:' + window.MBS.MAIL + '?subject=' + encodeURIComponent("The free workout template")
       + '&body=' + encodeURIComponent("I did my part. Send the template you already took out.") + '">Send it to me</a></p>'
       + '<button type="button" aria-label="Close">×</button>';
