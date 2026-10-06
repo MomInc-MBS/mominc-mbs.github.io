@@ -10,9 +10,21 @@ The television lives at https://mominc.online/tv/ . A channel is a query on that
 - [CH 2 · LIVING SMALL](https://mominc.online/tv/?ch=lilboyfriend): A MOM Inc residential therapy, now in a smaller size. The Residential Compression Program, and what living small costs.
 - [CH 3 · THE MUSIC DESK](https://mominc.online/tv/?ch=djscratch): The Music Desk. It DJs. It cleans. It obeys. Send an unsigned track and the hand will play it.
 - [CH 4 · BASSET'S ASSETS](https://mominc.online/tv/?ch=sag): Basset's Assets. Debts collected, accounts settled, nothing forgiven. Everything on these walls came in against a debt. Coming soon.
-- [CH 5 · COACH ARMIE](https://mominc.online/tv/?ch=armie): Coach Armie takes the Workout of the Day. He has counted your fingers. A broadcast character; nothing behind him is a real transmission. Coming soon.
+- [CH 5 · COACH ARMIE](https://mominc.online/tv/?ch=armie): Coach Armie takes the Workout of the Day. He has counted your fingers. A broadcast character; nothing behind him is a real transmission. Playable now: a chase game down a spaceship corridor where you jump, slide and swipe past MOM Inc. traps while Coach Armie, a purple clay forearm, comes after you.
 - [CH 6 · NAUSEOUS IN THE MORNING](https://mominc.online/tv/?ch=corgi): The bad news desk. They moved the morning again, the sun rose four minutes early, and the corgi knows. The corgi always knows.
 - [CH 7 · BUILD YOUR STACK](https://mominc.online/tv/?ch=fuel): Build your own pre-workout stack, flavour and can included. Untested: this blend has never been brewed, and the page says so.
+
+## The real app: MYR5
+
+- [MYR5](https://myr5.mominc.online/): a free workout web app with a customizable 3D alien coach. It runs in the phone's browser and installs from there. The phone camera follows your body to count reps and estimate holds; the camera and pose processing stay on the phone. Counts are estimates, not a medical or professional assessment. MYR5 is for ages 13 and up.
+- [Get MYR5](https://mominc.online/download/): the end of the show's run, with the install link.
+- MYR5 is independent. Contact: ianmyersrocks97@gmail.com
+
+## Compare
+
+- [Supernatural alternatives without a VR headset](https://mominc.online/compare/supernatural-alternatives/)
+- [MYR5 vs Zombies, Run!](https://mominc.online/compare/myr5-vs-zombies-run/)
+- [MYR5 vs Nike Training Club](https://mominc.online/compare/myr5-vs-nike-training-club/)
 
 ## About
 
@@ -21,6 +33,6 @@ The television lives at https://mominc.online/tv/ . A channel is a query on that
 
 ## Fine print
 
-MOM Inc is not a real company. MBS is a comedy show about a corporation that manufactures fake advertisements, which makes this one of the few honest things on the network. Nothing here claims an audience, a testimonial or a result, because there is not one yet. The show first aired 2026-08-26.
+MOM Inc is not a real company. MYR5 is the real app and the publisher of this site: MOM Inc. and MBS are its fictional universe. MBS is a comedy show about a corporation that manufactures fake advertisements, which makes this one of the few honest things on the network. Nothing here claims an audience, a testimonial or a result, because there is not one yet. The show first aired 2026-08-26.
 
 The commerce underneath the fiction is honest: the art is by the artist who submitted it, the goods are the goods, and the health information in the teaching segments is checked before it is said.

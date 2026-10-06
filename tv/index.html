@@ -38,6 +38,34 @@
       ]
     },
     {
+      "@type": "Organization",
+      "@id": "https://myr5.mominc.online/#myr5",
+      "name": "MYR5",
+      "url": "https://myr5.mominc.online/",
+      "email": "ianmyersrocks97@gmail.com",
+      "description": "MYR5 is the independent maker of the MYR5 workout app and the publisher of this site. MOM Inc and MBS are MYR5's fictional universe.",
+      "sameAs": [
+        "https://github.com/MomInc-MBS"
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://myr5.mominc.online/#app",
+      "name": "MYR5",
+      "url": "https://myr5.mominc.online/",
+      "description": "A free workout web app with a customizable 3D alien coach. The phone camera counts reps and estimates holds; camera and pose processing stay on the phone. For ages 13 and up.",
+      "applicationCategory": "HealthApplication",
+      "operatingSystem": "Web browser (installable)",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "publisher": {
+        "@id": "https://myr5.mominc.online/#myr5"
+      }
+    },
+    {
       "@type": "WebSite",
       "@id": "https://mominc.online/#site",
       "name": "MBS",
@@ -45,6 +73,9 @@
       "url": "https://mominc.online/",
       "inLanguage": "en",
       "publisher": {
+        "@id": "https://myr5.mominc.online/#myr5"
+      },
+      "about": {
         "@id": "https://mominc.online/#org"
       }
     },
@@ -93,10 +124,13 @@
     {
       "@type": "WebPage",
       "@id": "https://mominc.online/tv/?ch=armie",
+      "mentions": {
+        "@id": "https://myr5.mominc.online/#app"
+      },
       "url": "https://mominc.online/tv/?ch=armie",
       "name": "COACH ARMIE",
       "alternateName": "MOM INC",
-      "description": "Coach Armie takes the Workout of the Day. He has counted your fingers. A broadcast character; nothing behind him is a real transmission. Coming soon.",
+      "description": "Coach Armie takes the Workout of the Day. He has counted your fingers. A broadcast character; nothing behind him is a real transmission. Playable now: a chase game down a spaceship corridor.",
       "isPartOf": {
         "@id": "https://mominc.online/#site"
       },
@@ -210,10 +244,11 @@ try { if (sessionStorage.getItem("mbs-on") === "1") document.getElementById("tv"
     <li><a href="?ch=lilboyfriend">CH 1 · LIVING SMALL</a>. A MOM Inc residential therapy, now in a smaller size. The Residential Compression Program, and what living small costs.</li>
     <li><a href="?ch=djscratch">CH 2 · THE MUSIC DESK</a>. The Music Desk. It DJs. It cleans. It obeys. Send an unsigned track and the hand will play it.</li>
 
-    <li><a href="?ch=armie">CH 5 · COACH ARMIE</a>. Coach Armie takes the Workout of the Day. He has counted your fingers. A broadcast character; nothing behind him is a real transmission. Coming soon.</li>
+    <li><a href="?ch=armie">CH 5 · COACH ARMIE</a>. Coach Armie takes the Workout of the Day. He has counted your fingers. A broadcast character; nothing behind him is a real transmission. Playable now: a chase game down a spaceship corridor.</li>
     <li><a href="?ch=corgi">CH 3 · NAUSEOUS IN THE MORNING</a>. The bad news desk. They moved the morning again, the sun rose four minutes early, and the corgi knows. The corgi always knows.</li>
   </ul>
-  <p>MOM Inc is not a real company. MBS is a comedy show about a corporation that manufactures fake advertisements, which makes this one of the few honest things on the network. Nothing here claims an audience, a testimonial or a result, because there is not one yet. The show first aired 2026-08-26.</p>
+  <p>The real app behind the show is <a href="https://myr5.mominc.online/">MYR5</a>: a free workout web app with a customizable 3D alien coach. Your phone camera counts reps and estimates holds, and the camera and pose processing stay on the phone. For ages 13 and up. <a href="/download/">Get MYR5</a>.</p>
+  <p>MOM Inc is not a real company. MYR5 is real, and publishes this site. MBS is a comedy show about a corporation that manufactures fake advertisements, which makes this one of the few honest things on the network. Nothing here claims an audience, a testimonial or a result, because there is not one yet. The show first aired 2026-08-26.</p>
 </noscript>
 <!-- noscript:end -->
 </body>
