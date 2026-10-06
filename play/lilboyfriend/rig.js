@@ -51,7 +51,7 @@ function makeWorkshop(THREE, felt) {
     }
     // Cap tucked fabric ends; visible wrists must not be open hollow tubes.
     for(const row of [0,rings])for(let i=1;i<radial;i++) {
-      const start=row*(radial+1);if(row===0)indices.push(start,start+i+1,start+i);else indices.push(start,start+i,start+i+1);
+      const start=row*(radial+1);if(row===0)indices.push(start,start+i,start+i+1);else indices.push(start,start+i+1,start+i);
     }
     const g=new THREE.BufferGeometry();g.setAttribute("position",new THREE.Float32BufferAttribute(position,3));g.setAttribute("uv",new THREE.Float32BufferAttribute(uv,2));g.setIndex(indices);g.computeVertexNormals();return mesh(g,mat);
   }
@@ -108,10 +108,9 @@ export function createTraveler(THREE) {
   const hips=workshop.softForm([[-.13,.15,.092,0],[-.09,.215,.132,0],[.05,.229,.14,0],[.12,.18,.10,0]]);hips.position.set(0,.62,.2);group.add(hips);
   workshop.stitches(torso,[[0,.32,-.101],[0,.18,-.138],[0,-.08,-.139],[0,-.30,-.126]],.008,42);
   for(const sign of [-1,1])workshop.stitches(torso,[[sign*.16,.31,-.085],[sign*.238,.17,-.036],[sign*.203,-.14,-.035],[sign*.18,-.30,-.04]],.007,34);
-  torso.visible=false;hips.visible=false;
   const legs=[],feet=[];
   for(const sign of [-1,1]) {
-    const leg=workshop.softForm([[-.275,.071,.066,0],[-.23,.078,.077,0],[-.03,.079,.080,0],[.17,.09,.088,0],[.275,.075,.065,0]]);leg.position.set(sign*.123,.335,-.055);group.add(leg);leg.visible=false;legs.push(leg);
+    const leg=workshop.softForm([[-.275,.071,.066,0],[-.23,.078,.077,0],[-.03,.079,.080,0],[.17,.09,.088,0],[.275,.075,.065,0]]);leg.position.set(sign*.123,.335,-.055);group.add(leg);legs.push(leg);
     workshop.stitches(leg,[[sign*.064,-.25,-.031],[sign*.077,-.06,-.035],[sign*.085,.14,-.039],[sign*.062,.25,-.025]],.005,34);
     const foot=workshop.softForm([[-.057,.053,.104,-.005],[-.045,.093,.153,-.022],[.011,.092,.159,-.029],[.048,.075,.125,-.006],[.057,.047,.067,.013]],workshop.highlight);foot.position.set(sign*.123,.057,-.20);group.add(foot);feet.push(foot);
     workshop.stitches(foot,[[-.08,-.02,-.075],[0,-.018,-.181],[.08,-.02,-.075]],.005,28);
@@ -120,35 +119,78 @@ export function createTraveler(THREE) {
   leftHand.name="traveler-left-probe-hand";rightHand.name="traveler-right-device-hand";
   leftHand.position.set(-.35,1.08,-.45);rightHand.position.set(.36,1.08,-.45);leftHand.rotation.z=-.16;group.add(leftHand,rightHand);
   const grip=new THREE.Group();grip.name="traveler-magnifier-grip";grip.position.set(0,.05,-.05);rightHand.add(grip);
-  const upperArms=[],lowerArms=[];
-  // Only the dressed distal arm enters the frame. The shoulder stays behind the
-  // eye plane; a bounded sleeve prevents a probe reach becoming a giant pole.
+  const upperArms=[],lowerArms=[],sleeves=[];
+  // Two-bone arm: shoulder sleeve (torso shoulder -> elbow), forearm sleeve
+  // (elbow -> cuff), felt forearm (cuff -> wrist). Always anchored at the torso.
+  const UPPER=.34,SLEEVE=.40;
   for(let i=0;i<2;i++) {
-    const sleeve=workshop.softForm([[-.5,.038,.034,0],[-.43,.054,.048,0],[.2,.062,.051,0],[.5,.057,.048,0]],workshop.sleeve);
+    const upper=workshop.softForm([[-.5,.042,.038,0],[0,.046,.04,0],[.5,.048,.04,0]],workshop.sleeve);
+    const sleeve=workshop.softForm([[-.5,.036,.032,0],[-.43,.048,.043,0],[.2,.053,.045,0],[.5,.05,.043,0]],workshop.sleeve);
     const forearm=workshop.softForm([[-.5,.032,.023,0],[-.30,.036,.027,0],[.35,.040,.031,0],[.5,.042,.033,0]]);
+    upper.name=i?"right-felt-upper-arm":"left-felt-upper-arm";
     sleeve.name=i?"right-tailored-felt-sleeve":"left-tailored-felt-sleeve";
     forearm.name=i?"right-felt-forearm":"left-felt-forearm";
     workshop.stitches(sleeve,[[.041,-.46,-.021],[.055,0,-.025],[.054,.45,-.021]],.004,24);
     workshop.stitches(sleeve,[[-.041,-.44,-.021],[0,-.43,-.039],[.041,-.44,-.021]],.004,14);
-    group.add(sleeve,forearm);upperArms.push(sleeve);lowerArms.push(forearm);
+    group.add(upper,sleeve,forearm);upperArms.push(upper);sleeves.push(sleeve);lowerArms.push(forearm);
   }
   let inspection=0,lastTime=null,tiny=false,lastBob=0,viewHeight=1.55;
-  function setViewHeight(value=1.55){viewHeight=Math.max(.18,Math.min(2,value));}
+  function setViewHeight(value=1.55){
+    viewHeight=Math.max(.18,Math.min(2,value));
+    // Standing: the whole body is below the eye, so looking down shows it.
+    // Crouched or climbing the eye sits inside the torso; hide it then.
+    const standing=viewHeight>=1.4;torso.visible=hips.visible=standing;for(const leg of legs)leg.visible=standing;
+  }
   function solveLimbs() {
     for(let i=0;i<2;i++) {
       const hand=i?rightHand:leftHand,sign=i?1:-1,ratio=hand.scale.x;
       const wrist=new THREE.Vector3(0,0,.070*handSculpt.detailScale).multiply(hand.scale).applyQuaternion(hand.quaternion).add(hand.position);
-      const shoulder=new THREE.Vector3(sign*.30,viewHeight-.38,.12);
-      const backward=shoulder.sub(wrist).normalize();
-      // The complete distal form shrinks with the palm, including its length,
-      // cuff, seam and forearm. There is no normal-sized cylinder at a tiny wrist.
+      const shoulder=new THREE.Vector3(sign*.28,Math.min(1.25,viewHeight-.30),.05);
+      const backward=shoulder.clone().sub(wrist).normalize();
+      // Forearm and cuff shrink with the palm; the sleeves keep their length and
+      // only taper toward it, so a shrunk hand still hangs off a full-size body.
       const cuff=wrist.clone().addScaledVector(backward,.105*ratio);
-      const sleeveEnd=wrist.clone().addScaledVector(backward,.46*ratio);
+      const axis=cuff.clone().sub(shoulder),d=Math.max(1e-4,axis.length());axis.divideScalar(d);
+      const reach=Math.min(d,UPPER+SLEEVE),a=(UPPER*UPPER-SLEEVE*SLEEVE+reach*reach)/(2*reach),h=Math.sqrt(Math.max(0,UPPER*UPPER-a*a));
+      const bend=new THREE.Vector3(sign*.3,-1,-.1);bend.addScaledVector(axis,-bend.dot(axis)).normalize();
+      const elbow=shoulder.clone().addScaledVector(axis,a).addScaledVector(bend,h);
       aimLimb(THREE,lowerArms[i],wrist,cuff);
-      aimLimb(THREE,upperArms[i],cuff,sleeveEnd);
-      for(const limb of [upperArms[i],lowerArms[i]]){limb.scale.x=ratio;limb.scale.z=ratio;}
+      aimLimb(THREE,sleeves[i],cuff,elbow);
+      aimLimb(THREE,upperArms[i],elbow,shoulder);
+      lowerArms[i].scale.x=lowerArms[i].scale.z=ratio;
+      sleeves[i].scale.x=sleeves[i].scale.z=(1+ratio)/2;
     }
     group.userData.armScale=leftHand.scale.x;
+  }
+  // Purple-field probe: the rig owns the left hand while active. World-space
+  // plane; depth>0 means the palm is inside, which shrinks it toward .4.
+  const restLeft=leftHand.position.clone();
+  const field={state:"idle",depth:0,set(o){field.point=o.point.clone();field.normal=o.normal.clone().normalize();field.onContact=o.onContact;field.rest=o.rest?.clone();},
+    reachIn(){if(!field.point)return;field.state="reaching";field.t=0;field.shrink=0;field.from=leftHand.position.clone();field.crossed=false;},
+    pullBack(){if(field.state==="idle")return;field.state="withdrawing";field.t=0;field.from=leftHand.position.clone();},
+    clear(){field.state="idle";field.depth=0;field.shrink=0;field.onContact?.(field.point,0);}};
+  function updateField(dt) {
+    if(field.state==="idle"||!field.point)return;
+    group.updateMatrixWorld(true);
+    const pLocal=group.worldToLocal(field.point.clone()),nLocal=field.normal.clone().applyQuaternion(group.getWorldQuaternion(new THREE.Quaternion()).invert()).normalize();
+    const palm=new THREE.Vector3(0,0,-.03).applyQuaternion(leftHand.quaternion);
+    const rest=field.rest||restLeft;
+    if(field.state==="reaching"||field.state==="inside") {
+      const target=pLocal.clone().addScaledVector(nLocal,-.10).sub(palm);
+      field.t=Math.min(1,field.t+dt/1.1);leftHand.position.copy(field.from).lerp(target,field.t*field.t*(3-2*field.t));
+    } else if(field.state==="withdrawing") {
+      field.t=Math.min(1,field.t+dt/1.0);leftHand.position.copy(field.from).lerp(rest,field.t*field.t*(3-2*field.t));
+    }
+    field.depth=pLocal.clone().sub(leftHand.position.clone().add(palm)).dot(nLocal);
+    // The shrink is its own beat: full size at the plane, then down to .4 over .6 s; back up as the hand leaves.
+    if(field.state==="inside")field.shrink=Math.min(1,(field.shrink||0)+dt/.6);
+    else if(field.state==="withdrawing"&&field.depth<.02)field.shrink=Math.max(0,(field.shrink||0)-dt/.5);
+    const s=field.shrink||0,scale=1-.6*s*s*(3-2*s);
+    leftHand.scale.setScalar(scale);
+    field.onContact?.(field.point,field.depth>-.12&&field.depth<.12?1-Math.abs(field.depth)/.12:0);
+    const detail={depth:field.depth,scale};
+    if(field.state==="reaching"&&field.depth>0&&!field.crossed){field.crossed=true;field.state="inside";dispatchEvent(new CustomEvent("lb:field-reached",{detail}));}
+    if(field.state==="withdrawing"&&field.t>=1){field.state="idle";leftHand.scale.setScalar(1);field.onContact?.(field.point,0);dispatchEvent(new CustomEvent("lb:field-withdrawn",{detail:{depth:field.depth,scale:1}}));}
   }
   function setLeftPose(name="open",amount=1,time=0) {
     amount=Math.max(0,Math.min(1,amount));
@@ -163,12 +205,13 @@ export function createTraveler(THREE) {
     const amount=typeof inspect==="number"?Math.max(0,Math.min(1,inspect)):inspect?1:0;inspection+=(amount-inspection)*(1-Math.exp(-dt*10));
     const stride=moving?Math.sin(time*8):0;lastBob=moving?Math.sin(time*16)*.008:Math.sin(time*2)*.002;
     rightHand.position.set(.36-inspection*.33,1.08+inspection*.24+lastBob,-.45-inspection*.80);rightHand.rotation.set(inspection*-.08,inspection*-.08,0);
-    for(let i=0;i<2;i++){legs[i].rotation.x=stride*.12*(i?-1:1);feet[i].position.z=-.20+stride*.03*(i?-1:1);}
-    setLeftPose("open",1,time);right.chains.forEach(({base,joints,thumb})=>{if(thumb)base.rotation.y=-.35;joints.forEach((joint,j)=>joint.rotation.x=-(thumb?[.3,.9][j]:[.45,.72,.50][j]));});solveLimbs();leftHand.userData.tiny=tiny;
+    // A slight forward lean on the legs shows their length from above instead of two end-on stubs.
+    for(let i=0;i<2;i++){legs[i].rotation.x=-.18+stride*.12*(i?-1:1);feet[i].position.z=-.20+stride*.03*(i?-1:1);}
+    setLeftPose("open",1,time);right.chains.forEach(({base,joints,thumb})=>{if(thumb)base.rotation.y=-.35;joints.forEach((joint,j)=>joint.rotation.x=-(thumb?[.3,.9][j]:[.45,.72,.50][j]));});updateField(dt);solveLimbs();leftHand.userData.tiny=tiny;
   }
-  function setTinyHand(value){tiny=Boolean(value);leftHand.scale.setScalar(tiny?.23:1);leftHand.userData.tiny=tiny;}
+  function setTinyHand(value){tiny=Boolean(value);if(field.state==="idle")leftHand.scale.setScalar(tiny?.23:1);leftHand.userData.tiny=tiny;}
   update(0,false,false);
-  return {group,leftHand,rightHand,grip,update,setTinyHand,solveLimbs,setLeftPose,setViewHeight,dispose(){left.skeleton.dispose();right.skeleton.dispose();workshop.dispose();}};
+  return {group,leftHand,rightHand,grip,field,update,setTinyHand,solveLimbs,setLeftPose,setViewHeight,dispose(){left.skeleton.dispose();right.skeleton.dispose();workshop.dispose();}};
 }
 
 export function createClayHand(THREE) {
@@ -178,6 +221,35 @@ export function createClayHand(THREE) {
   // transform. Its long tapered end remains beneath the table to the right.
   const forearm=workshop.softForm([[.047,.023,.018,0],[.075,.031,.025,0],[.20,.037,.032,0],[.43,.043,.037,0],[.64,.047,.039,0]]);
   forearm.name="thief-connected-long-clay-forearm";forearm.rotation.x=Math.PI/2;hand.add(forearm);
+  // Coach Armie canon (tv/assets/armie-intro/coach-hand.mjs): a fur ring where
+  // the forearm starts and two mismatched googly eyes whose pupils lag behind.
+  const furMaterial=new THREE.MeshStandardMaterial({color:0xc79be0,roughness:1});
+  const FUR=280,fur=new THREE.InstancedMesh(workshop.own(new THREE.ConeGeometry(.008,.045,5)),furMaterial,FUR);
+  fur.name="thief-forearm-fur-ring";fur.castShadow=false;fur.userData.visualOnly=true;
+  {const m=new THREE.Matrix4(),q=new THREE.Quaternion(),up=new THREE.Vector3(0,1,0),seed=i=>Math.abs(Math.sin(i*12.9898+78.233)*43758.5453)%1;
+    for(let i=0;i<FUR;i++){const th=i/FUR*TAU*7.3+seed(i)*.9,y=.12+seed(i+1)*.10,rx=.030+y*.03,rz=.025+y*.03;
+      const dir=new THREE.Vector3(Math.cos(th)*rz,.35+seed(i+2)*.5,Math.sin(th)*rx).normalize();q.setFromUnitVectors(up,dir);
+      m.compose(new THREE.Vector3(Math.cos(th)*rx*.92,y,Math.sin(th)*rz*.92).addScaledVector(dir,.012),q,new THREE.Vector3(1,.7+seed(i+3)*.7,1));fur.setMatrixAt(i,m);}
+    forearm.add(fur);}
+  const sclera=new THREE.MeshStandardMaterial({color:0xfffdf6,roughness:.35}),ink=new THREE.MeshStandardMaterial({color:0x120a14,roughness:.3});
+  // Eyes sit at the hand end of the forearm, where the theft camera looks: big r .045, small r .028 (10:6).
+  const eyes=[[-.022,.055,-.022,.045],[.026,.098,-.022,.028]].map(([x,y,z,r],i)=>{
+    const eye=workshop.mesh(new THREE.SphereGeometry(1,18,12),sclera);eye.name=i?"coach-small-googly-eye":"coach-big-googly-eye";eye.position.set(x,y,z);eye.scale.setScalar(r);forearm.add(eye);
+    const pupil=workshop.mesh(new THREE.SphereGeometry(.5,12,8),ink);pupil.position.z=-.7;eye.add(pupil);
+    return {pupil,r,pos:new THREE.Vector2(),vel:new THREE.Vector2()};});
+  let lastWorld=null,lastEyeTime=null;
+  function updateEyes() {
+    const now=performance.now()/1000,dt=lastEyeTime===null?1/60:Math.min(.1,now-lastEyeTime);lastEyeTime=now;
+    group.updateMatrixWorld(true);const world=group.getWorldPosition(new THREE.Vector3());
+    const delta=lastWorld?world.clone().sub(lastWorld):new THREE.Vector3();lastWorld=world;
+    delta.applyQuaternion(forearm.getWorldQuaternion(new THREE.Quaternion()).invert());
+    eyes.forEach((e,i)=>{
+      // Pupils are loose beads: movement throws them the other way, a spring brings them back.
+      e.vel.x+=(-delta.x*18-e.pos.x*60-e.vel.x*7)*dt;e.vel.y+=(-delta.y*18-e.pos.y*60-e.vel.y*7)*dt;
+      e.pos.addScaledVector(e.vel,dt);const room=.4;if(e.pos.length()>room)e.pos.setLength(room);
+      e.pupil.position.set(e.pos.x+Math.sin(now*1.3+i*2.4)*.06,e.pos.y+Math.cos(now*.9+i)*.06,-.7);
+    });
+  }
   const grip=new THREE.Group();grip.name="clay-thief-frame-edge-pinch";grip.position.set(-.033,-.052,-.019);hand.add(grip);
   function poseFingers(name,time,graspAmount=0) {
     const walking=["crawl","walk","walking"].includes(name),climbing=["climb","climbing"].includes(name);
@@ -193,8 +265,8 @@ export function createClayHand(THREE) {
     time=time;
     const walking=["crawl","walk","walking"].includes(name),climbing=["climb","climbing"].includes(name),grasping=["grasp","grab","hold","carrying"].includes(name);
     hand.position.set(0,walking?.145+Math.sin(time*12)*.008:climbing?.155:.145,0);hand.rotation.set(climbing?-.55:grasping?-.17:.04,0,walking?Math.sin(time*6)*.04:0);
-    poseFingers(name,time,grasping?1:0);group.userData.pose=name;
+    poseFingers(name,time,grasping?1:0);group.userData.pose=name;updateEyes();
   }
-  function setGrasp(amount=1,time=0){poseFingers("rest",time,Math.max(0,Math.min(1,amount)));group.userData.grasp=amount;}
-  setPose("crawl",0);return {group,grip,setPose,setGrasp,dispose(){skeleton.dispose();workshop.dispose();}};
+  function setGrasp(amount=1,time=0){poseFingers("rest",time,Math.max(0,Math.min(1,amount)));group.userData.grasp=amount;updateEyes();}
+  setPose("crawl",0);return {group,grip,setPose,setGrasp,dispose(){skeleton.dispose();workshop.dispose();furMaterial.dispose();sclera.dispose();ink.dispose();}};
 }

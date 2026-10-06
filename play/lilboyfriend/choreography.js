@@ -16,6 +16,8 @@ export function theftShots(c) {
   const heldOrigin=traveler.rightHand.position.clone(),heldPose=v(.03,1.32,-1.25),heldEye=camera.position.clone(),heldLook=traveler.group.localToWorld(v(.03,1.37,-1.30));
   const flat=new THREE.Quaternion().setFromEuler(new THREE.Euler(-Math.PI/2,0,.18));
   const foot=v(camera.position.x,0,camera.position.z),lowFoot=v(a.crouch.x,0,a.crouch.z);
+  // Coach-arm beats: frame the hand plus the eyed forearm, not just the fingertips at the frame edge.
+  const armEye=v(1.2,1.5,-24.4),armLook=v(1.15,.05,-25.3);
   let origin,offset,fallStart,fallRotation,impact=false;
   const moveHand=(from,to,t,pose="grasp")=>{thief.group.position.copy(from).lerp(to,smooth(t));thief.setPose(pose,t*2);};
   return [
@@ -30,8 +32,8 @@ export function theftShots(c) {
     {duration:.35,enter(){cam.capture();},update(t){cam.move(a.topDown,a.landing,t,foot);magnifier.position.copy(a.landing);magnifier.quaternion.copy(flat);}},
     {duration:1.4,enter(){cam.capture();caption("A purple right hand reaches from under the table.");thief.group.visible=true;thief.group.scale.setScalar(1.8);thief.group.rotation.set(0,Math.PI/2,0);thief.group.position.copy(a.hiddenWrist);thief.setPose("grasp",0);thief.setGrasp(0);thief.group.updateMatrixWorld(true);
       origin=thief.group.position.clone();offset=magnifier.localToWorld(v(.214,0,0)).sub(thief.grip.getWorldPosition(v(0,0,0)));
-    },update(t){cam.move(a.topDown,a.landing,t,foot);thief.group.position.copy(origin).addScaledVector(offset,smooth(t));thief.setPose("grasp",0);thief.setGrasp(smooth(t),t);}},
-    {duration:1.55,enter(){cam.capture();putMagnifier(thief.grip);origin=thief.group.position.clone();caption("Its long clay forearm pulls your controller beneath the table.");},update(t){cam.move(a.topDown,a.landing,t,foot);moveHand(origin,a.withdrawnWrist,t);}},
+    },update(t){cam.move(armEye,armLook,t,foot);thief.group.position.copy(origin).addScaledVector(offset,smooth(t));thief.setPose("grasp",0);thief.setGrasp(smooth(t),t);}},
+    {duration:1.55,enter(){cam.capture();putMagnifier(thief.grip);origin=thief.group.position.clone();caption("Its long clay forearm pulls your controller beneath the table.");},update(t){cam.move(armEye,armLook,t,foot);moveHand(origin,a.withdrawnWrist,t);}},
     {duration:1.65,enter(){cam.capture();caption("You crouch. A little open cardboard box waits in the shadow.");},update(t){cam.move(a.crouch,a.box.clone().add(v(0,.17,.17)),t,foot.clone().lerp(lowFoot,smooth(t)));thief.group.visible=false;traveler.leftHand.position.set(-.27,1.08-.77*smooth(t),-.35);traveler.rightHand.position.set(.27,1.08-.77*smooth(t),-.35);}},
     {duration:1.1,enter(){cam.capture();caption("The controller is gone. The box is just beyond the compression field.");},update(t){cam.move(a.crouch,a.boxInterior,t,lowFoot);traveler.leftHand.position.set(-.27,.31,-.35);traveler.rightHand.position.set(.27,.31,-.35);}},
   ];
@@ -43,9 +45,8 @@ export function probeShots(c) {
   const view=(target,t=1)=>cam.move(a.probeEye,target,t,foot);
   return [
     {duration:1.2,enter(){cam.capture();caption("You rise to the purple compression field.");},update(t){view(a.probeBoundary,t);}},
-    {duration:1.2,enter(){cam.capture();traveler.group.updateMatrixWorld(true);origin=traveler.leftHand.getWorldPosition(v(0,0,0));caption("Your felt fingertips touch the field.");},update(t){view(a.probeBoundary,t);hand(origin.clone().lerp(a.probeBoundary,smooth(t)));}},
-    {duration:1.4,enter(){cam.capture();caption("Your hand and dressed forearm shrink together inside the field.");},update(t){view(a.probeInside,t);hand(a.probeBoundary.clone().lerp(a.probeInside,smooth(t)));traveler.leftHand.scale.setScalar(1-.77*smooth(t));contact?.(a.probeBoundary,Math.sin(t*Math.PI));}},
-    {duration:1.3,enter(){cam.capture();c.markTiny();caption("You pull back a tiny hand, forearm and sleeve. The change stays.");},update(t){view(inspect,t);hand(a.probeInside.clone().lerp(inspect,smooth(t)));traveler.leftHand.scale.setScalar(.23);traveler.setLeftPose?.("inspect",1,t);contact?.(a.probeBoundary,0);}},
+    // Tilt down so the whole body and the arm from the shoulder frame the reach.
+    {duration:.9,enter(){cam.capture();caption("You look down at yourself, the field just ahead.");},update(t){view(a.probeLook,t);}},
   ];
 }
 export function commitShots(c) {

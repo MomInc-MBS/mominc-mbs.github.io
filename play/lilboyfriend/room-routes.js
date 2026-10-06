@@ -16,7 +16,8 @@ export function createRouteSampler(THREE, metadata) {
     return id === "gallery" ? 22.5 : curves.get(id)?.length || 0;
   }
   function limit(id) {
-    return id === "atomicRoom" ? Math.max(0, length(id) - 1.15) : length(id);
+    // Eye clearance at the end of the walk: the jar ladder foot and the next room's field stay out of the near plane.
+    return id === "atomicRoom" ? Math.max(0, length(id) - 1.15) : id === "jarRoom" ? Math.max(0, length(id) - 1.0) : Math.max(0, length(id) - 0.35);
   }
   function sample(id, distance) {
     if (id === "gallery")
