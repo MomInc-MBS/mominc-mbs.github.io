@@ -158,7 +158,13 @@ export function applySparkle(mat:T.MeshPhysicalMaterial,sparkle:number){
  mat.needsUpdate=true;
 }
 
-function authoredUvScale(g:T.BufferGeometry,matrix:T.Matrix4){
+function meshWorldSpan(g:T.BufferGeometry,matrix:T.Matrix4){
+ if(!g.boundingBox)g.computeBoundingBox();
+ const size=g.boundingBox!.clone().applyMatrix4(matrix).getSize(new T.Vector3());
+ return Math.max(size.x,size.y,size.z,1e-6);
+}
+
+export function authoredUvScale(g:T.BufferGeometry,matrix:T.Matrix4){
  const uv=g.attributes.uv,p=g.attributes.position,idx=g.index;if(!uv||uv.itemSize<2)return 1.8;
  let worldArea=0,uvArea=0;const a=new T.Vector3(),b=new T.Vector3(),c=new T.Vector3(),ab=new T.Vector3(),ac=new T.Vector3();
  const count=idx?.count??p.count;
@@ -168,7 +174,10 @@ function authoredUvScale(g:T.BufferGeometry,matrix:T.Matrix4){
   const ux=uv.getX(ib)-uv.getX(ia),uy=uv.getY(ib)-uv.getY(ia),vx=uv.getX(ic)-uv.getX(ia),vy=uv.getY(ic)-uv.getY(ia);uvArea+=Math.abs(ux*vy-uy*vx)*.5;
  }
  if(!Number.isFinite(worldArea)||!Number.isFinite(uvArea)||worldArea<=1e-10||uvArea<=1e-10)return 1.8;
- return T.MathUtils.clamp(Math.sqrt(worldArea/uvArea)*1.8,.08,64);
+ // Divide physical UV density by the mesh span. A ten-times larger imported
+ // sculpt should show the same sized pattern, not 10x more tiles that mipmap away.
+ const span=meshWorldSpan(g,matrix);
+ return T.MathUtils.clamp(Math.sqrt(worldArea/uvArea)*1.8/Math.max(1,span/2),.5,6);
 }
 
 export function sculptMaterial(mesh:T.Mesh,style:Style,unit=1,amount=1,coachRelief?:CoachReliefBudget){
@@ -202,12 +211,13 @@ export function sculptMaterial(mesh:T.Mesh,style:Style,unit=1,amount=1,coachReli
  const authoredNormals=new Float32Array(g.attributes.normal.array as ArrayLike<number>);g.computeVertexNormals();const geometricBefore=new Float32Array(g.attributes.normal.array as ArrayLike<number>);g.attributes.normal.array.set(authoredNormals);g.attributes.normal.needsUpdate=true;
  const p=g.attributes.position,n=g.attributes.normal,uv=new Float32Array(p.count*2),colors=new Float32Array(p.count*3),worldPositions=new Float32Array(p.count*3),worldOffsets=new Float32Array(p.count*3);
  const sourceUv=coachRelief?g.attributes.uv:undefined,uvScale=sourceUv?authoredUvScale(g,mesh.matrixWorld):1,vertexKeys=coachRelief?new Array<string>(p.count):undefined;
+ const coordinateUnit=Math.max(unit,meshWorldSpan(g,mesh.matrixWorld)/2);
  const normalMatrix=new T.Matrix3().getNormalMatrix(mesh.matrixWorld),inv=mesh.matrixWorld.clone().invert(),point=new T.Vector3(),normal=new T.Vector3();
- const id=style.id,relief=unit*(builtinSurfaceProfile(id)?.relief??([0,8,20,21,22].includes(id)?.0018:id===13?.037:id===18?.018:.019));
+ const id=style.id,relief=Math.min(unit*(builtinSurfaceProfile(id)?.relief??([0,8,20,21,22].includes(id)?.0018:id===13?.037:id===18?.018:.019)),meshWorldSpan(g,mesh.matrixWorld)*.015);
  const seamOffsets=coachRelief?new Map<string,{x:number;y:number;z:number;count:number}>():undefined,seamKey=(x:number,y:number,z:number)=>`${Math.round(x*1e5)},${Math.round(y*1e5)},${Math.round(z*1e5)}`;
  for(let i=0;i<p.count;i++){
   const localX=p.getX(i),localY=p.getY(i),localZ=p.getZ(i);point.set(localX,localY,localZ).applyMatrix4(mesh.matrixWorld);normal.fromBufferAttribute(n,i).applyMatrix3(normalMatrix).normalize();
-  const x=point.x/unit,y=point.y/unit,z=point.z/unit;
+  const x=point.x/coordinateUnit,y=point.y/coordinateUnit,z=point.z/coordinateUnit;
   // Roster UVs avoid normal-threshold seams; original MYR5 keeps its proven object projection.
   // Both coordinates are fixed on the mesh and remain periodic for the built-in surfaces.
   const u=sourceUv?sourceUv.getX(i)*uvScale:(Math.abs(normal.z)>.45?x:z)*1.8+.5,v=sourceUv?sourceUv.getY(i)*uvScale:y*1.8+.5,s=surfaceSample(id,u,v);
@@ -229,35 +239,36 @@ export function sculptMaterial(mesh:T.Mesh,style:Style,unit=1,amount=1,coachReli
  if(mesh.userData.ownedGeometry)old.dispose();mesh.userData.ownedGeometry=true;mesh.userData.ownedMaterial=true;
 }
 
-type Triangle={a:T.Vector3;b:T.Vector3;c:T.Vector3;total:number};
+type Triangle={a:T.Vector3;b:T.Vector3;c:T.Vector3;normal:T.Vector3;total:number};
 function surfaceTriangles(group:T.Group){
- group.updateWorldMatrix(true,true);const inv=group.matrixWorld.clone().invert(),triangles:Triangle[]=[];let total=0;
+ group.updateWorldMatrix(true,true);const inv=group.matrixWorld.clone().invert(),triangles:Triangle[]=[],bounds=new T.Box3();let total=0;
  group.traverseVisible(obj=>{if(!(obj instanceof T.Mesh)||obj.userData.materialDetail)return;const g=obj.geometry,p=g.attributes.position,ix=g.index;if(!p)return;
-  const matrix=inv.clone().multiply(obj.matrixWorld),count=ix?.count??p.count;
+  const matrix=inv.clone().multiply(obj.matrixWorld),normalMatrix=new T.Matrix3().getNormalMatrix(matrix),authored=g.attributes.normal,count=ix?.count??p.count;
   // Surface sampling needs area coverage, not every triangle of the dense fur assets.
   const stride=Math.max(1,Math.ceil(count/24000))*3;
-  for(let j=0;j+2<count;j+=stride){const [a,b,c]=[0,1,2].map(k=>new T.Vector3().fromBufferAttribute(p,ix?ix.getX(j+k):j+k).applyMatrix4(matrix));const area=b.clone().sub(a).cross(c.clone().sub(a)).length()*.5;if(area<1e-10)continue;total+=area;triangles.push({a,b,c,total});}
- });return {triangles,total};
+  for(let j=0;j+2<count;j+=stride){const ids=[0,1,2].map(k=>ix?ix.getX(j+k):j+k),[a,b,c]=ids.map(i=>new T.Vector3().fromBufferAttribute(p,i).applyMatrix4(matrix));const cross=b.clone().sub(a).cross(c.clone().sub(a)),area=cross.length()*.5;if(area<1e-10)continue;const normal=authored?ids.reduce((sum,i)=>sum.add(new T.Vector3().fromBufferAttribute(authored,i).applyMatrix3(normalMatrix)),new T.Vector3()).normalize():cross.normalize();if(normal.lengthSq()<1e-8)normal.copy(cross).normalize();total+=area;bounds.expandByPoint(a);bounds.expandByPoint(b);bounds.expandByPoint(c);triangles.push({a,b,c,normal,total});}
+ });return {triangles,total,bounds};
 }
 export function growMaterial(group:T.Group,style:Style,region:string,unit=1,amount=1,hand=false){
  const result=new T.Group();result.name='Material sculpture '+style.detail;result.userData.region=region;
  if(region==='eye'||region==='nails'||[0,7,22].includes(style.id))return result;
- const {triangles,total}=surfaceTriangles(group);if(!triangles.length)return result;
+ const {triangles,total,bounds}=surfaceTriangles(group);if(!triangles.length)return result;
  let seed=style.id*9173+region.length*419;const rand=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};
  const id=style.id;if(hand&&id===20)return result;
  const baseCount=id===20?2100:[3,4].includes(id)?110:id===21?32:42;
  const count=Math.round((id>=57&&id<=62?(id===61?180:id===58?55:36):baseCount)*(region==='head'||region==='palm'||region==='back_of_hand'?1:region==='body'?.8:.5));
  const batches:T.BufferGeometry[][]=[[],[],[]],normal=new T.Vector3(),point=new T.Vector3(),up=new T.Vector3(0,1,0);
+ const span=bounds.getSize(new T.Vector3()),featureUnit=unit*T.MathUtils.clamp(Math.cbrt(Math.max(1e-6,span.x*span.y*span.z))/2.2,1,2.2);
  function add(g:T.BufferGeometry,pos:T.Vector3,q:T.Quaternion,scale:T.Vector3,material=0){g.applyMatrix4(new T.Matrix4().compose(pos,q,scale));if(!g.attributes.uv)g.setAttribute('uv',new T.Float32BufferAttribute(new Float32Array(g.attributes.position.count*2),2));if(g.index){const expanded=g.toNonIndexed();g.dispose();g=expanded;}batches[material].push(g);}
  const color=[style.primary,style.accent,style.secondary];
  for(let k=0;k<count;k++){
   const pick=rand()*total;let lo=0,hi=triangles.length-1;while(lo<hi){const m=(lo+hi)>>1;if(triangles[m].total<pick)lo=m+1;else hi=m;}
-  const {a,b,c}=triangles[lo],u=Math.sqrt(rand()),v=rand();point.copy(a).multiplyScalar(1-u).addScaledVector(b,u*(1-v)).addScaledVector(c,u*v);normal.copy(b).sub(a).cross(c.clone().sub(a)).normalize();
+  const {a,b,c}=triangles[lo],u=Math.sqrt(rand()),v=rand();point.copy(a).multiplyScalar(1-u).addScaledVector(b,u*(1-v)).addScaledVector(c,u*v);normal.copy(triangles[lo].normal);
   let socket=false;group.traverse(o=>{for(const [x,y,z,r]of o.userData.eyeSockets??[])if(point.distanceTo(new T.Vector3(x,y,z))<r*1.48)socket=true;});
   if(socket||(!hand&&region==='feet'&&normal.y<-.2))continue;
   const larger=[2,3,9,13,14,16].includes(id)?1.7:1;
-  const q=new T.Quaternion().setFromUnitVectors(up,normal),s=unit*amount*(.055+rand()*.075)*larger,center=point.clone(),size=new T.Vector3(s,s,s);
-  const geometry=(g:T.BufferGeometry,offset=0,scale=size,mat=0)=>add(g,center.clone().addScaledVector(normal,offset),q,scale,mat);
+  const q=new T.Quaternion().setFromUnitVectors(up,normal),s=featureUnit*amount*(.055+rand()*.075)*larger,center=point.clone(),size=new T.Vector3(s,s,s);
+  const geometry=(g:T.BufferGeometry,offset=0,scale=size,mat=0)=>add(g,center.clone().addScaledVector(normal,offset+s*.12),q,scale,mat);
   switch(id){
    case 57:geometry(new T.OctahedronGeometry(.55,1),-s*.3,new T.Vector3(s*.6,s*.2,s*.6),k%3);break;
    case 58:geometry(new T.SphereGeometry(.55,10,7),-s*.4,new T.Vector3(s*.45,s*.65,s*.45),k%3);break;

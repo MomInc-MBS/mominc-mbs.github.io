@@ -18,13 +18,13 @@
       "bytes": 1350
     },
     {
-      "url": "/handborne/assets/GLTFExporter-DCTBKeEW.js",
-      "revision": "1559819c149635fd73c49580c0b486c5c9552cdd",
+      "url": "/handborne/assets/GLTFExporter-CB_VHvVn.js",
+      "revision": "f1bb629d7f4b08c8090f3f108088535b4be5c5e8",
       "bytes": 34602
     },
     {
-      "url": "/handborne/assets/OBJExporter-BajSwb3c.js",
-      "revision": "2113405e2d9b5dc5fdec93aa0ded8a00a94aa7dd",
+      "url": "/handborne/assets/OBJExporter-Dc1_MNpb.js",
+      "revision": "bca7b108be01a9643119d4b8b226e25b01e7667b",
       "bytes": 2045
     },
     {
@@ -38,14 +38,14 @@
       "bytes": 214458
     },
     {
-      "url": "/handborne/assets/hand-entry-EKq4sP63.js",
-      "revision": "6e8fa2f77b45c1105d8f9b8a3170aa74d9df603e",
-      "bytes": 1061023
+      "url": "/handborne/assets/hand-entry-DRhQ8PUp.js",
+      "revision": "c93bb1cae5c02dd4f22ae18d2c0923c471e80c6b",
+      "bytes": 1061662
     },
     {
       "url": "/handborne/companion.mjs",
-      "revision": "22df6a0df018442387c0aa54856da14dded860da",
-      "bytes": 699941
+      "revision": "aac8e3415419dfbaf67d19b48a255d625718c04e",
+      "bytes": 700646
     },
     {
       "url": "/handborne/decisions.js",
@@ -89,7 +89,7 @@
     },
     {
       "url": "/handborne/index.html",
-      "revision": "4f3ac5af2cdb4fa8967917d83fe1e3407d3b935a",
+      "revision": "eaff7fa161c3cf45038803c87c28fe09bf4c7a07",
       "bytes": 1292
     },
     {
@@ -586,5 +586,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "5c95493f675cd6cf97d2"
+  "version": "e3a0714099e526853c90"
 }
