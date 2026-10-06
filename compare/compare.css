@@ -1,0 +1,16 @@
+*{box-sizing:border-box}
+html{color-scheme:dark}
+body{margin:0;background:#1b0a2c;color:#fffef2;font:500 17px/1.55 "Nunito",-apple-system,"Segoe UI",Arial,sans-serif}
+main{max-width:760px;margin:0 auto;padding:28px 18px 48px}
+h1{font:400 clamp(1.7rem,6vw,2.6rem)/1.05 "Bowlby One SC","Arial Black",Impact,sans-serif;margin:0 0 8px;text-shadow:3px 3px 0 #7a2fc4}
+h2{color:#ffd36e;font-size:1.25rem;margin:30px 0 8px}
+a{color:#ffd36e}
+.checked{opacity:.8;font-size:14px;margin:0 0 18px}
+.verdict{background:#2a1145;border-left:4px solid #ffd36e;padding:12px 14px;margin:0 0 8px}
+.table{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{border:1px solid #4a2a6a;padding:8px;text-align:left;vertical-align:top}
+th{background:#2a1145}
+sup a{text-decoration:none}
+ol.sources{font-size:14px;word-break:break-word}
+footer{max-width:760px;margin:0 auto;padding:16px 18px 32px;border-top:1px solid #4a2a6a;font-size:14px;opacity:.85}
