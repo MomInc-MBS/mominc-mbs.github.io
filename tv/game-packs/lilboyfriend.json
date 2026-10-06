@@ -34,13 +34,13 @@
     },
     {
       "url": "/play/lilboyfriend/boot.js",
-      "revision": "135cb3f869f8665f35fa4d137591a4d23e0c4d1c",
-      "bytes": 448
+      "revision": "c239dffc7558ad094c8afd7623cd129a7531ca22",
+      "bytes": 461
     },
     {
       "url": "/play/lilboyfriend/choreography.js",
-      "revision": "748e0e08c8a30a98fa160dedd1cec296b352b283",
-      "bytes": 8043
+      "revision": "9056268ca696b62d4fcb57cc536748e3cdaa0991",
+      "bytes": 7801
     },
     {
       "url": "/play/lilboyfriend/content.js",
@@ -49,8 +49,8 @@
     },
     {
       "url": "/play/lilboyfriend/energy-fields.js",
-      "revision": "77f39657660664b0d1bf9c69a61de9e82254dee8",
-      "bytes": 4395
+      "revision": "5a4c0ec085ad68ab521d16394bbaf6a99d21e28e",
+      "bytes": 4636
     },
     {
       "url": "/play/lilboyfriend/home-details.js",
@@ -64,13 +64,13 @@
     },
     {
       "url": "/play/lilboyfriend/index.html",
-      "revision": "0aaff4b5f1287b5b7c041c7ab0b65e10baa092b3",
-      "bytes": 4292
+      "revision": "fb5e0c0be71239f1b43244548ac4302042e5b129",
+      "bytes": 2365
     },
     {
       "url": "/play/lilboyfriend/main.js",
-      "revision": "c1311d1fcd148a3bd54f1c6032150e337a756015",
-      "bytes": 41150
+      "revision": "75b9fab58f9f47b389f39b228dc5257a64ee0910",
+      "bytes": 41934
     },
     {
       "url": "/play/lilboyfriend/mom-propaganda.js",
@@ -89,13 +89,13 @@
     },
     {
       "url": "/play/lilboyfriend/opening-layout.js",
-      "revision": "ee1a2e34300255baaf17522fc4edc201f1bdd1fd",
-      "bytes": 904
+      "revision": "5d35152e50461954c508d260a80472cb983d3913",
+      "bytes": 933
     },
     {
       "url": "/play/lilboyfriend/rig.js",
-      "revision": "0859cbe38fb64939ffb5d031b6f20518a986382b",
-      "bytes": 15269
+      "revision": "4f1cec734d74113b047897f27ef9210a656f6f20",
+      "bytes": 21725
     },
     {
       "url": "/play/lilboyfriend/room-copy.js",
@@ -104,8 +104,8 @@
     },
     {
       "url": "/play/lilboyfriend/room-routes.js",
-      "revision": "b51073f77c4f4104faa33f418746fe4a8b3fd462",
-      "bytes": 1455
+      "revision": "06840992039990f179c743aa05faf860056d91f4",
+      "bytes": 1645
     },
     {
       "url": "/play/lilboyfriend/rooms-a.js",
@@ -139,8 +139,8 @@
     },
     {
       "url": "/play/lilboyfriend/style.css",
-      "revision": "a70817bffe9427193c93ab13b95152224d2abd76",
-      "bytes": 9597
+      "revision": "882d991fc62e3a44ec03a6a480922633ed2ff7cd",
+      "bytes": 8020
     },
     {
       "url": "/play/lilboyfriend/surfaces.js",
@@ -149,8 +149,8 @@
     },
     {
       "url": "/play/lilboyfriend/transition-veil.js",
-      "revision": "0e9d6a1fad1089314534a69dbfd079a53f819394",
-      "bytes": 1388
+      "revision": "d1c03449daf812ca52b8fcbe2f62e773a9543b12",
+      "bytes": 1501
     },
     {
       "url": "/play/lilboyfriend/vendor/three.core.js",
@@ -164,8 +164,8 @@
     },
     {
       "url": "/play/lilboyfriend/world.js",
-      "revision": "2a5b421a9e071e0f30e1ea2973e2814dc7d211de",
-      "bytes": 48325
+      "revision": "d4e6816522d518b621c0c8f343a2b6930cbd91f4",
+      "bytes": 48352
     },
     {
       "url": "/tv/assets/armie-intro/vendor/BufferGeometryUtils.js",
@@ -264,13 +264,13 @@
     },
     {
       "url": "/tv/assets/lilboyfriend-game-still.png",
-      "revision": "bf4b800c7fb667e2878bca598b3f6fc186e830b8",
-      "bytes": 150061
+      "revision": "210c19c15caced8aef7575c073ec1f8278328a12",
+      "bytes": 172217
     },
     {
       "url": "/tv/assets/lilboyfriend-preview.webm",
-      "revision": "a349d6236c727acc1630590c05136764fbf7e12c",
-      "bytes": 613065
+      "revision": "e73d80ea35cf5f9cd662027396cbb990969e8030",
+      "bytes": 199661
     },
     {
       "url": "/tv/assets/marks/lilboyfriend.png",
@@ -294,13 +294,13 @@
     },
     {
       "url": "/tv/atmosphere.css",
-      "revision": "c42e33d2193b8a6841fe15279f171a68f261ea31",
-      "bytes": 6447
+      "revision": "4e30b039f69a64d100bb13c9beece08759ee5994",
+      "bytes": 5778
     },
     {
       "url": "/tv/atmosphere.js",
-      "revision": "1b073454f0b448d5d6fd4111e1a6ed68e620f1fa",
-      "bytes": 3476
+      "revision": "4edb1ae072c42a2acd6385615fbf23c0747d42a5",
+      "bytes": 2857
     },
     {
       "url": "/tv/audio/electric-static.mp3",
@@ -334,8 +334,8 @@
     },
     {
       "url": "/tv/card.js",
-      "revision": "8cffbc5902cf84fdd307c68ee229067affaaf5b9",
-      "bytes": 8589
+      "revision": "f5e500bebff2e9f933ed486eb432c49696d70077",
+      "bytes": 8536
     },
     {
       "url": "/tv/channel-runtime.js",
@@ -344,8 +344,8 @@
     },
     {
       "url": "/tv/channels/lilboyfriend.html",
-      "revision": "5f0598338497be29e8dcb2f4074fedc1a726ea1d",
-      "bytes": 79043
+      "revision": "3ebfcae59f9a550c01fd7bdb4de06adfc6d538e8",
+      "bytes": 78327
     },
     {
       "url": "/tv/channels/lilboyfriend.js",
@@ -359,8 +359,8 @@
     },
     {
       "url": "/tv/dj-booth.css",
-      "revision": "4de04f6d21b51495ba99192794360ae7e98dda20",
-      "bytes": 16388
+      "revision": "f9cccd0429f8f9ffb6ad66cb4df45b3a93ae35f8",
+      "bytes": 20818
     },
     {
       "url": "/tv/dj-identity.css",
@@ -379,8 +379,8 @@
     },
     {
       "url": "/tv/game-loader.js",
-      "revision": "b878513f9c4aa1a49836ae43ca6eb410df3d06c6",
-      "bytes": 12049
+      "revision": "bb1089ca528c0c55445642b8ac0082f298606dba",
+      "bytes": 12692
     },
     {
       "url": "/tv/identity.css",
@@ -414,13 +414,13 @@
     },
     {
       "url": "/tv/mbs-shim.js",
-      "revision": "892eff81caebad89efa7e73c9972ea722b532c0b",
-      "bytes": 10106
+      "revision": "42598e53b40f3672d207f4184d27d844e0dcf601",
+      "bytes": 13773
     },
     {
       "url": "/tv/mount.js",
-      "revision": "e6882db0ca5acefb854c5e0d273f7f8690450f4d",
-      "bytes": 7513
+      "revision": "53083fba2f31a7ac3e867e1cbbc5223e4ee8d693",
+      "bytes": 8300
     },
     {
       "url": "/tv/network-flow.css",
@@ -429,8 +429,8 @@
     },
     {
       "url": "/tv/network-flow.js",
-      "revision": "9988ccfcab38fe21a2de2b70a4f9b2108e644771",
-      "bytes": 8650
+      "revision": "8a8370bfbc0b5985e22f71f5bc685b3094260a15",
+      "bytes": 8604
     },
     {
       "url": "/tv/phone-layout.js",
@@ -439,8 +439,8 @@
     },
     {
       "url": "/tv/play.css",
-      "revision": "f60b269b409671dfcea295240f9247bcbb41e7bb",
-      "bytes": 4583
+      "revision": "8c461a1dadf6776494db442831f869acc1112e16",
+      "bytes": 4710
     },
     {
       "url": "/tv/questionnaire.js",
@@ -454,8 +454,8 @@
     },
     {
       "url": "/tv/retro-ads.js",
-      "revision": "b2edfec9a57c030c658fa8569989028da19578ca",
-      "bytes": 8672
+      "revision": "57fb05ce917c580b786616efade4593facb18eff",
+      "bytes": 8663
     },
     {
       "url": "/tv/retro-pointer.js",
@@ -464,13 +464,13 @@
     },
     {
       "url": "/tv/run-progress.js",
-      "revision": "dc120a76537b93687e053ef279bc1a43012f8887",
-      "bytes": 6933
+      "revision": "b19e0d1cca71cecc2a2718e45ae9343f3b89d427",
+      "bytes": 7589
     },
     {
       "url": "/tv/sound.js",
-      "revision": "ff089b274cab1e4eba50da032c2b9dcc74e7c28a",
-      "bytes": 9580
+      "revision": "8b7d0766fec6c09fd9b90c2bf53fc93c3bd93b11",
+      "bytes": 9635
     },
     {
       "url": "/tv/state.js",
@@ -484,13 +484,13 @@
     },
     {
       "url": "/tv/tv.css",
-      "revision": "6e9981624aded1d2dcc2c601a27468a39207c9ef",
-      "bytes": 27338
+      "revision": "2a0668d8a3cdf71d226d8dd4ba0a1e9a1d45c4b0",
+      "bytes": 27968
     },
     {
       "url": "/tv/tv.js",
-      "revision": "bbb356637615279d215ce4227b1b18df0f9d7f4e",
-      "bytes": 34537
+      "revision": "3fc36044dc23893989cb99d411099b2c6e9a3131",
+      "bytes": 37256
     }
   ],
   "fontStyles": [
@@ -498,5 +498,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap",
     "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
   ],
-  "version": "2e24c9a37de20fc368f1"
+  "version": "950ab42f869c581e35ea"
 }
