@@ -2,6 +2,7 @@ import { createTransitionVeil } from "./transition-veil.js?objects=12";
 import * as THREE from "./vendor/three.module.js?objects=12";
 import { createWorld, createMagnifier } from "./world.js?objects=12";
 import { createTraveler, createClayHand } from "./rig.js?objects=12";
+import { ROOM_COPY } from "./room-copy.js?objects=12";
 import { EXHIBITS, ENDING, SMALL_HAND_ENDING } from "./content.js?objects=12";
 import { createRouteSampler } from "./room-routes.js?objects=12";
 import { createSoundscape } from "./audio.js?objects=12";
@@ -70,6 +71,45 @@ const roomOrder = world.roomOrder;
 const roomKeys = ["gallery", ...roomOrder];
 for (const key of roomKeys) scene.add(world[key]);
 const routes = createRouteSampler(THREE, world.roomMetadata);
+// LB2: every room hangs its name (and scale) from chains just inside the entrance.
+function hangSign(parent, [name, scale], at, heading) {
+  const c = document.createElement("canvas");
+  c.width = 1024;
+  c.height = 340;
+  const g = c.getContext("2d");
+  g.fillStyle = "#eed8ac";
+  g.fillRect(0, 0, 1024, 340);
+  g.strokeStyle = "#873db9";
+  g.lineWidth = 14;
+  g.strokeRect(14, 14, 996, 312);
+  g.fillStyle = "#3a2548";
+  g.textAlign = "center";
+  g.font = "700 118px 'Space Grotesk',sans-serif";
+  g.textBaseline = "middle";
+  let size = 118;
+  while (g.measureText(name).width > 900 && size > 40) g.font = `700 ${(size -= 6)}px 'Space Grotesk',sans-serif`;
+  g.fillText(name, 512, 135);
+  g.fillStyle = "#873db9";
+  size = 60;
+  g.font = `600 ${size}px 'Space Grotesk',sans-serif`;
+  while (g.measureText(scale).width > 900 && size > 28) g.font = `600 ${(size -= 4)}px 'Space Grotesk',sans-serif`;
+  g.fillText(scale, 512, 252);
+  const map = new THREE.CanvasTexture(c);
+  map.colorSpace = THREE.SRGBColorSpace;
+  const sign = new THREE.Group();
+  sign.name = "hanging-room-sign";
+  const w = 1.8, h = w * 340 / 1024;
+  sign.add(new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ map, side: THREE.DoubleSide })));
+  const chain = new THREE.MeshBasicMaterial({ color: "#3a2548" });
+  for (const x of [-w / 2 + .1, w / 2 - .1]) {
+    const rod = new THREE.Mesh(new THREE.CylinderGeometry(.012, .012, 3, 6), chain);
+    rod.position.set(x, h / 2 + 1.5, 0);
+    sign.add(rod);
+  }
+  sign.position.copy(at);
+  sign.rotation.y = heading;
+  parent.add(sign);
+}
 const visited = [];
 const completedEntrances = [];
 const sound = createSoundscape();
@@ -143,6 +183,13 @@ const roomNames = {
     ]),
   ),
 };
+const signPos = {}, signsRead = new Set();
+hangSign(world.gallery, roomNames.gallery, v(0, 2.7, -4.5), 0);
+for (const id of roomOrder) {
+  const p = routes.sample(id, 4.5);
+  signPos[id] = p.position.clone().setY(2.7);
+  hangSign(world[id], roomNames[id], signPos[id], p.heading);
+}
 function eyeAt(id, distance) {
   return routes
     .sample(id, distance)
@@ -193,6 +240,48 @@ function placeExplorer() {
 }
 let inspectionStarted = 0;
 const sequenceLog = [];
+// One text-only prompt (LB5). contextPrompt() picks the options for the moment.
+let promptActions = [],
+  promptKey = "";
+function setPrompt(opts) {
+  promptActions = opts;
+  const key = opts.map((o) => o.text).join("|");
+  if (key === promptKey) return;
+  promptKey = key;
+  $("prompt").classList.toggle("show", opts.length > 0);
+  if (opts.length)
+    $("prompt").replaceChildren(
+      ...opts.map((o) => {
+        const b = document.createElement("button");
+        b.textContent = o.text;
+        b.onclick = o.fn;
+        return b;
+      }),
+    );
+}
+function contextPrompt() {
+  if (state === "choice1") return [{ text: "tap to reach in", fn: probe }];
+  if (state === "fieldIn") return [{ text: "tap to pull back", fn: pullBack }];
+  if (state === "choice2")
+    return [
+      { text: "enter again", fn: () => { field.clear(); commit(); } },
+      { text: "leave", fn: () => { field.clear(); refuse(); } },
+    ];
+  if (state !== "explore" || sequence || paused) return [];
+  if (inspecting)
+    return room === "gallery" && inspected === 5 && !returned
+      ? [{ text: "tap to continue", fn: theft }]
+      : [];
+  if (room === "gallery")
+    return nearestExhibit() >= 0 ? [{ text: "tap to inspect", fn: inspect }] : [];
+  if (room === "atomicRoom") {
+    if (camera.position.distanceTo(magnifier.position) < 1.5)
+      return [{ text: "tap to step through", fn: inspect }];
+    return nearSign() ? [{ text: "tap to read", fn: inspect }] : [];
+  }
+  if (nearWelcome()) return [{ text: "tap to enter", fn: inspect }];
+  return nearSign() ? [{ text: "tap to read", fn: inspect }] : [];
+}
 function caption(text) {
   $("caption").textContent = text;
 }
@@ -204,9 +293,7 @@ function setState(next) {
   state = next;
   document.body.classList.toggle("locked", next === "sequence");
   $("controls").hidden = ["intro", "ending"].includes(next);
-  $("help").hidden = next === "intro" || next === "ending";
-  $("inspect").disabled = next !== "explore";
-  $("choice").hidden = next !== "choice1" && next !== "choice2";
+  $("controls").classList.toggle("idle", next !== "explore");
   sequenceLog.push(next);
 }
 function showRoom(key) {
@@ -216,13 +303,6 @@ function showRoom(key) {
   fill.visible = key === "gallery";
   sound.setRoom(key);
   atomicPrompted = false;
-  $("journey-label").textContent =
-    key === "gallery"
-      ? "THE ORIGINAL SIZE"
-      : `${roomOrder.indexOf(key) + 1} / ${roomOrder.length} SMALLER WORLDS`;
-  const [label, scale] = roomNames[key];
-  $("room-label").textContent = label;
-  $("scale-label").textContent = scale;
   scene.background.set(
     world.roomMetadata[key]?.background ||
       (key === "atomicRoom" ? "#170d2a" : "#dce6ee"),
@@ -238,6 +318,7 @@ function closeHolo() {
   lowerLens();
   inspecting = false;
   $("hologram").hidden = true;
+  $("hologram").classList.remove("sign-card");
   const welcome = world.roomMetadata[room]?.welcome;
   if (welcome) welcome.mug.position.y = welcome.baseY;
   $("hologram").querySelector(".advert").hidden = false;
@@ -260,12 +341,28 @@ function readWelcome(gift) {
   if (!ex.sourceUrl) $("holo-source").removeAttribute("href");
   $("holo-source").hidden = false;
   $("hologram").querySelector(".advert").hidden = true;
-  $("accept-ad").hidden = true;
-  $("close-holo").hidden = false;
   $("hologram").hidden = false;
   $("hologram").setAttribute("aria-label", "Welcome-home note");
   $("hologram").classList.remove("lens-readout");
   caption("A welcome gift. Lift the mug to read the museum's practical note.");
+}
+function nearSign() {
+  return room !== "gallery" && !signsRead.has(room) && signPos[room] && camera.position.distanceTo(signPos[room]) < 5.2;
+}
+function readSign() {
+  inspecting = true;
+  signsRead.add(room);
+  $("holo-count").textContent = "";
+  $("holo-title").textContent = roomNames[room][0];
+  $("holo-body").textContent = ROOM_COPY[room].ad.replace(/^MOM FICTIONAL AD:\s*/, "");
+  $("holo-source").textContent = "";
+  $("holo-source").removeAttribute("href");
+  $("holo-ad").textContent = "";
+  $("hologram").querySelector(".advert").hidden = true;
+  $("hologram").setAttribute("aria-label", "Room sign");
+  $("hologram").classList.remove("lens-readout");
+  $("hologram").classList.add("sign-card");
+  $("hologram").hidden = false;
 }
 function nearestExhibit() {
   if (room !== "gallery") return -1;
@@ -292,21 +389,18 @@ function inspect() {
       readWelcome(gift);
       return;
     }
+    if (nearSign()) {
+      readSign();
+      return;
+    }
   }
   if (room === "atomicRoom") {
     if (camera.position.distanceTo(magnifier.position) < 1.5) returnHome();
-    else caption("The orange glass is ahead. Move close enough to touch it.");
     return;
   }
-  if (room !== "gallery") {
-    caption(world.roomMetadata[room].portal.caption);
-    return;
-  }
+  if (room !== "gallery") return;
   const i = nearestExhibit();
-  if (i < 0) {
-    caption("Walk closer to a photograph to raise the magnifier.");
-    return;
-  }
+  if (i < 0) return;
   if (inspecting) {
     if (inspected === 5 && !returned) theft();
     else closeHolo();
@@ -332,8 +426,6 @@ function inspect() {
   $("holo-ad").textContent = returned
     ? "Your surroundings may have changed. MOM thanks you for participating."
     : ex.ad;
-  $("accept-ad").hidden = true;
-  $("close-holo").hidden = false;
   $("hologram").hidden = false;
   caption(
     i === 5 && !returned
@@ -417,15 +509,10 @@ function updateSequence(dt) {
 }
 function firstChoice() {
   setState("choice1");
-  $("choice-title").textContent = "Follow the hand through the field?";
-  $("choice-body").textContent =
-    "Your borrowed magnifier is inside the box. The warning says size changes may persist.";
   caption("The hand waits. Your equipment does not belong to you.");
-  $("choice").focus();
 }
 function theft() {
   if (state !== "explore" || inspected !== 5 || returned) return;
-  $("accept-ad").hidden = true;
   route = targetRoute = 22.3;
   runSequence(
     "theft",
@@ -445,33 +532,25 @@ function theft() {
     firstChoice,
   );
 }
+// LB-RIG owns the hand while the field is active (reports/lb-rig-api.md).
+const field = traveler.field;
+// rest = the hand held close to the chest, so the reach is a short poke to the plane .43 m ahead.
+field.set({ point: world.opening.probeBoundary, normal: v(0, 0, 1), onContact: fieldContact, rest: v(-.12, 1.0, -.22) });
+addEventListener("lb:field-reached", () => { tiny = true; if (state === "field") setState("fieldIn"); });
+addEventListener("lb:field-withdrawn", () => {
+  if (state !== "field" && state !== "fieldIn") return;
+  setState("choice2");
+  caption("One hand has already made the trip.");
+});
 function probe() {
-  runSequence(
-    "probe",
-    probeShots({
-      THREE,
-      world,
-      camera,
-      traveler,
-      poseCamera,
-      caption,
-      defaultLeftRotation,
-      contact: fieldContact,
-      markTiny() {
-        tiny = true;
-        traveler.setTinyHand(true);
-      },
-    }),
-    () => {
-      contactRing.visible = false;
-      setState("choice2");
-      $("choice-title").textContent = "Continue into the box?";
-      $("choice-body").textContent =
-        "Your hand is still tiny. The rest of you can follow, or you can go home.";
-      caption("One hand has already made the trip.");
-      $("choice").focus();
-    },
-  );
+  runSequence("probe", probeShots({ THREE, world, camera, traveler, poseCamera, caption }), () => {
+    setState("field");
+    field.reachIn();
+  });
+}
+function pullBack() {
+  setState("field");
+  field.pullBack();
 }
 function commit() {
   traveler.leftHand.position.copy(defaultLeft);
@@ -764,7 +843,6 @@ function returnHome() {
       const look=photo.lerp(v(0,1.55,-12),Math.max(0,(t-.88)/.12));
       poseCamera(eye,look);
       const desired=camera.quaternion.clone();camera.quaternion.copy(galleryRotation).slerp(desired,clamp(t/.08,0,1));
-      $("progress-fill").style.width=`${clamp((1-eye.z)/22.5,0,1)*100}%`;
     },
   });
   let coveredDistance = 0;
@@ -789,7 +867,8 @@ function returnHome() {
     const pane = magnifier.getObjectByName("magnifier-pane");
     if (pane) { pane.material.color.set("#e5d7ff"); pane.material.opacity = .08; }
     setState("explore");
-    $("returned").hidden = true;
+    window.MBS?.unlock?.("lilboyfriend");
+    window.MBS?.complete?.("lilboyfriend", { terminal: "orange-glass" });
     window.scrollTo(0, 0);
     placeExplorer();
     caption("Welcome back to the Museum of Living Small.");
@@ -798,7 +877,6 @@ function returnHome() {
 function refuse() {
   if (state !== "choice1" && state !== "choice2") return;
   closeHolo();
-  $("choice").hidden = true;
   $("ending-copy").textContent = tiny ? SMALL_HAND_ENDING : ENDING;
   caption("You sigh.");
   sound.cue("sigh");
@@ -838,47 +916,10 @@ $("start").onclick = () => {
   setState("explore");
   caption("The first photograph is ahead. Keep the borrowed lens close.");
 };
-$("inspect").onclick = inspect;
-$("close-holo").onclick = () => {
-  if (inspected === 5 && inspecting && room === "gallery" && !returned) theft();
-  else closeHolo();
+$("hologram").onclick = () => {
+  if (!(inspected === 5 && room === "gallery" && !returned)) closeHolo();
 };
-$("accept-ad").onclick = theft;
-$("yes").onclick = () =>
-  state === "choice1" ? probe() : state === "choice2" ? commit() : null;
-$("no").onclick = refuse;
 $("restart").onclick = () => location.reload();
-$("explore-return").onclick = () => {
-  $("returned").hidden = true;
-  setState("explore");
-  caption("Inspect the same exhibits again.");
-};
-function pause() {
-  paused = !paused;
-  document.body.classList.toggle("paused", paused);
-  $("pause").textContent = paused ? "▶" : "Ⅱ";
-  $("pause").setAttribute(
-    "aria-label",
-    paused ? "Resume animation" : "Pause animation",
-  );
-  heldMove = 0;
-  sound.setPaused(paused);
-  caption(paused ? "Paused. Resume when you are ready." : "");
-}
-$("pause").onclick = pause;
-$("sound").onclick = () => {
-  muted = !muted;
-  sound.start();
-  sound.setMuted(muted);
-  $("sound").textContent = muted ? "\u266a" : "\u266b";
-  $("sound").setAttribute("aria-label", muted ? "Enable sound" : "Mute sound");
-  $("sound").setAttribute("aria-pressed", String(muted));
-};
-$("look-down").onclick = () => {
-  if (state !== "explore" || paused) return;
-  targetPitch = targetPitch < -0.5 ? 0 : -1.52;
-  targetYaw = 0;
-};
 for (const [id, dir] of [
   ["forward", 1],
   ["back", -1],
@@ -911,14 +952,12 @@ addEventListener("keydown", (e) => {
   if (e.target.closest?.("button,a") && e.key === "Enter") return;
   if (["ArrowUp", "ArrowDown", " ", "ArrowLeft", "ArrowRight"].includes(e.key))
     e.preventDefault();
-  if (e.key === "Escape" && !e.repeat) pause();
-  if (e.code === "KeyE" && !e.repeat) inspect();
+  if (e.code === "KeyE" && !e.repeat && promptActions.length === 1) promptActions[0].fn();
   if (state !== "explore" || paused) return;
   if (["ArrowUp", "KeyW"].includes(e.code)) heldMove = 1;
   if (["ArrowDown", "KeyS"].includes(e.code)) heldMove = -1;
   if (e.code === "ArrowLeft") targetYaw = clamp(targetYaw + 0.12, -1.05, 1.05);
   if (e.code === "ArrowRight") targetYaw = clamp(targetYaw - 0.12, -1.05, 1.05);
-  if (e.code === "KeyL") $("look-down").click();
 });
 addEventListener("keyup", () => (heldMove = 0));
 addEventListener("blur", () => {
@@ -959,27 +998,7 @@ $("world").addEventListener("pointerup", (e) => {
     e.clientY - canvasPress.y,
   );
   canvasPress = null;
-  if (
-    moved > 14 ||
-    state !== "explore" ||
-    room !== "atomicRoom" ||
-    camera.position.distanceTo(magnifier.position) > 1.5
-  )
-    return;
-  const ray = new THREE.Raycaster();
-  ray.setFromCamera(
-    new THREE.Vector2(
-      (e.clientX / innerWidth) * 2 - 1,
-      1 - (e.clientY / innerHeight) * 2,
-    ),
-    camera,
-  );
-  if (
-    ray
-      .intersectObject(magnifier, true)
-      .some((hit) => hit.object.name === "magnifier-pane")
-  )
-    returnHome();
+  if (moved <= 14 && promptActions.length === 1) promptActions[0].fn();
 });
 function resize() {
   camera.aspect = innerWidth / innerHeight;
@@ -1035,7 +1054,6 @@ function updateFrame(dt) {
         pitch = lerp(pitch, targetPitch, 1 - Math.exp(-dt * 8));
       }
       placeExplorer();
-      $("progress-fill").style.width = `${(route / routes.limit(room)) * 100}%`;
       if (
         state === "explore" &&
         !returned &&
@@ -1046,37 +1064,9 @@ function updateFrame(dt) {
         const next = roomOrder[roomOrder.indexOf(room) + 1];
         if (next) transitionRoom(next);
       }
-      if (
-        state === "explore" &&
-        room === "atomicRoom" &&
-        camera.position.distanceTo(magnifier.position) < 1.6 &&
-        !atomicPrompted
-      ) {
-        atomicPrompted = true;
-        caption(
-          "The glass is within reach. Touch it with E, the button, or a tap on the orange center.",
-        );
-      }
-      if (state === "explore") {
-        $("inspect").textContent =
-          room === "gallery"
-            ? inspecting
-              ? "Lower magnifier"
-              : nearestExhibit() >= 0
-                ? "Inspect exhibit"
-                : "Raise magnifier"
-            : inspecting
-              ? "Put mug down"
-              : nearWelcome()
-                ? "Read welcome note"
-                : room === "atomicRoom"
-                  ? camera.position.distanceTo(magnifier.position) < 1.5
-                    ? "Touch orange glass"
-                    : "Find the orange glass"
-                  : "Follow the path";
-      }
     }
   }
+  setPrompt(contextPrompt());
   const clipNear = state === "sequence" ? .012 : .08;
   if (camera.near !== clipNear) {
     camera.near = clipNear;
@@ -1093,12 +1083,14 @@ function tick(now) {
   frameId = requestAnimationFrame(tick);
 }
 frameId = requestAnimationFrame(tick);
-$("loading").hidden = true;
 // Inspectable state and deterministic sequence stepping for draft review.
 window.museum = {
   snapshot: () => ({
     state,
     paused,
+    fieldState: field.state,
+    fieldDepth: field.depth,
+    handScale: traveler.leftHand.scale.x,
     bodyRoot: traveler.group.position.toArray(),
     visibleBodyMeshes: traveler.group.children.filter(child => child.isMesh && child.visible).length,
     deviceBounds: (() => {
@@ -1138,7 +1130,6 @@ window.museum = {
   }),
   reviewPause: (value=true) => {
     paused=Boolean(value);document.body.classList.toggle("paused",paused);sound.setPaused(paused);
-    $("pause").textContent=paused?"\u25b6":"\u2161";$("pause").setAttribute("aria-label",paused?"Resume animation":"Pause animation");
     pipeline.render();
   },
   reviewSequenceTime: (seconds) => {
@@ -1181,7 +1172,6 @@ window.museum = {
       );
       if (id === "atomicRoom") setupRecovered();
       $("intro").hidden = true;
-      $("returned").hidden = true;
       setState("explore");
       caption(
         world.roomMetadata[id]?.portal?.caption ||
