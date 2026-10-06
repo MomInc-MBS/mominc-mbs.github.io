@@ -257,7 +257,8 @@ body.flash::after {
   opacity: var(--flash, 0);
   z-index: 8;
 }
-body.locked #controls button {
+body.locked #controls button,
+#controls.idle button {
   opacity: 0.25;
   pointer-events: none;
 }
@@ -345,6 +346,15 @@ body.locked #controls button {
 .hologram .advert > span { display: none; }
 .hologram .advert p { color: #ffce98; font-weight: 700; }
 #holo-source { display: none; }
+/* Room-sign read card: screen-space at the bottom, clear of the hanging sign. */
+.hologram.sign-card, .hologram.sign-card.lens-readout {
+  inset: auto 8% max(150px, calc(env(safe-area-inset-bottom) + 138px));
+  max-height: 45%;
+  text-align: center;
+  color: #fff6e6;
+  text-shadow: 0 1px 3px #1a0f26, 0 0 12px #1a0f26, 0 0 26px #1a0f26cc;
+}
+.hologram.sign-card p { margin: 0 auto; }
 .hologram { pointer-events: auto; }
 @media (max-width:650px) {
   .hologram, .hologram.lens-readout { inset: 17% 13% auto; max-height: 63%; }

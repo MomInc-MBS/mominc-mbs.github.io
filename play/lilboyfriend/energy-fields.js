@@ -54,7 +54,8 @@ export function createEnergySystem(T, k) {
   }
   function portal(parent,metadata,id) {
     const p=metadata.portal,approach=p.approach||p.target,look=p.look||p.target;
-    const center=[approach[0],.0,approach[2]+.65];
+    // Fields sit at least .85 m beyond the walk end (-17) so the eye never stops inside one.
+    const center=[approach[0],.0,Math.min(approach[2]+.65,-17.85)];
     const g=new T.Group();g.name='MOM-'+id+'-threshold';g.position.set(...center);g.rotation.y=Math.atan2(look[0]-center[0],look[2]-center[2])+Math.PI;parent.add(g);
     // Hardware stays outside the walk corridor; energy spans the opening.
     generator(g,[-1.5,0,0],.65);

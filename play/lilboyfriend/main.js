@@ -90,7 +90,9 @@ function hangSign(parent, [name, scale], at, heading) {
   while (g.measureText(name).width > 900 && size > 40) g.font = `700 ${(size -= 6)}px 'Space Grotesk',sans-serif`;
   g.fillText(name, 512, 135);
   g.fillStyle = "#873db9";
-  g.font = "600 60px 'Space Grotesk',sans-serif";
+  size = 60;
+  g.font = `600 ${size}px 'Space Grotesk',sans-serif`;
+  while (g.measureText(scale).width > 900 && size > 28) g.font = `600 ${(size -= 4)}px 'Space Grotesk',sans-serif`;
   g.fillText(scale, 512, 252);
   const map = new THREE.CanvasTexture(c);
   map.colorSpace = THREE.SRGBColorSpace;
@@ -262,8 +264,7 @@ function contextPrompt() {
   if (state === "fieldIn") return [{ text: "tap to pull back", fn: pullBack }];
   if (state === "choice2")
     return [
-      { text: "reach in again", fn: () => { setState("field"); field.reachIn(); } },
-      { text: "go in", fn: () => { field.clear(); commit(); } },
+      { text: "enter again", fn: () => { field.clear(); commit(); } },
       { text: "leave", fn: () => { field.clear(); refuse(); } },
     ];
   if (state !== "explore" || sequence || paused) return [];
@@ -273,12 +274,13 @@ function contextPrompt() {
       : [];
   if (room === "gallery")
     return nearestExhibit() >= 0 ? [{ text: "tap to inspect", fn: inspect }] : [];
-  if (room === "atomicRoom")
+  if (room === "atomicRoom") {
     if (camera.position.distanceTo(magnifier.position) < 1.5)
       return [{ text: "tap to step through", fn: inspect }];
-    if (nearSign()) return [{ text: "tap to read", fn: inspect }];
-    return [];
-  return nearSign() || nearWelcome() ? [{ text: "tap to read", fn: inspect }] : [];
+    return nearSign() ? [{ text: "tap to read", fn: inspect }] : [];
+  }
+  if (nearWelcome()) return [{ text: "tap to enter", fn: inspect }];
+  return nearSign() ? [{ text: "tap to read", fn: inspect }] : [];
 }
 function caption(text) {
   $("caption").textContent = text;
@@ -291,6 +293,7 @@ function setState(next) {
   state = next;
   document.body.classList.toggle("locked", next === "sequence");
   $("controls").hidden = ["intro", "ending"].includes(next);
+  $("controls").classList.toggle("idle", next !== "explore");
   sequenceLog.push(next);
 }
 function showRoom(key) {
@@ -315,6 +318,7 @@ function closeHolo() {
   lowerLens();
   inspecting = false;
   $("hologram").hidden = true;
+  $("hologram").classList.remove("sign-card");
   const welcome = world.roomMetadata[room]?.welcome;
   if (welcome) welcome.mug.position.y = welcome.baseY;
   $("hologram").querySelector(".advert").hidden = false;
@@ -357,6 +361,7 @@ function readSign() {
   $("hologram").querySelector(".advert").hidden = true;
   $("hologram").setAttribute("aria-label", "Room sign");
   $("hologram").classList.remove("lens-readout");
+  $("hologram").classList.add("sign-card");
   $("hologram").hidden = false;
 }
 function nearestExhibit() {
@@ -529,7 +534,8 @@ function theft() {
 }
 // LB-RIG owns the hand while the field is active (reports/lb-rig-api.md).
 const field = traveler.field;
-field.set({ point: world.opening.probeBoundary, normal: v(0, 0, 1), onContact: fieldContact });
+// rest = the hand held close to the chest, so the reach is a short poke to the plane .43 m ahead.
+field.set({ point: world.opening.probeBoundary, normal: v(0, 0, 1), onContact: fieldContact, rest: v(-.12, 1.0, -.22) });
 addEventListener("lb:field-reached", () => { tiny = true; if (state === "field") setState("fieldIn"); });
 addEventListener("lb:field-withdrawn", () => {
   if (state !== "field" && state !== "fieldIn") return;
@@ -1082,6 +1088,9 @@ window.museum = {
   snapshot: () => ({
     state,
     paused,
+    fieldState: field.state,
+    fieldDepth: field.depth,
+    handScale: traveler.leftHand.scale.x,
     bodyRoot: traveler.group.position.toArray(),
     visibleBodyMeshes: traveler.group.children.filter(child => child.isMesh && child.visible).length,
     deviceBounds: (() => {
