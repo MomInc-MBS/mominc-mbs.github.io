@@ -8,7 +8,7 @@
  const headlines={corner:'pssstt feeling sleepy?',bottom:'YOUR NEXT SCOOP IS AIRBORNE.',side:'KEEP. IT. UP.',button:'THIS BUTTON NEEDS FUEL.',game:'TUB FLIGHT'};
  let active=null,kind=null,game=null,timer=null,countdown=null,cycle=0,generation=0,disposed=false,wasOn=false,previousKind=null,manualHand=false,lastFocus=null;
  const powered=()=>!disposed&&!document.hidden&&tv.dataset.state==='on';
- const fuelDone=()=>{try{const v=JSON.parse(localStorage.getItem('mbs-fuel-flight-v1'));return v?.version===1&&v.pipes===8&&v.completedAt>0;}catch{return false;}};// same receipt arcade/tub-flight/game.mjs fuelUnlocked() reads
+ const fuelDone=()=>{try{const v=JSON.parse(localStorage.getItem('mbs-fuel-flight-v1'));return v?.version===1&&v.pipes===8&&Date.now()-v.completedAt<3600000;}catch{return false;}};// same receipt arcade/tub-flight/game.mjs fuelUnlocked() reads; a finished run only quiets the ads for an hour (Ian, 6 Oct)
  const sponsor=()=>new URLSearchParams(location.search).get('ch')==='fuel'?null:window.MBS_FLOW?.pagesReady()?(window.MBS_FLOW.armieReady()?null:'hand'):fuelDone()?null:'fuel';
  const occupied=()=>!!document.querySelector('dialog[open], [aria-modal="true"]');
  const available=()=>sponsor()==='fuel'?['fuel']:sponsor()==='hand'?['hand']:[];
@@ -55,5 +55,6 @@
  window.addEventListener('mbs:page-complete',sync);window.addEventListener('mbs-flow',sync);window.addEventListener('storage',sync);window.addEventListener('mbs:hand-offer',showHand);
  document.addEventListener('visibilitychange',sync);
  window.addEventListener('pagehide',()=>{disposed=true;remove();layer.hidden=true;wasOn=false;});window.addEventListener('pageshow',()=>{disposed=false;sync();});
+ setInterval(sync,60000);// notice when that hour runs out on an open tab
  window.MBS_ADS={close,show,showHand,available};sync();if(new URLSearchParams(location.search).get('ad')==='hand')showHand();
 })();
