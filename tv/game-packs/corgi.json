@@ -289,8 +289,8 @@
     },
     {
       "url": "/tv/retro-ads.js",
-      "revision": "57fb05ce917c580b786616efade4593facb18eff",
-      "bytes": 8663
+      "revision": "d0ecafdf07791f26fea8e36d0537af45d76053c9",
+      "bytes": 8906
     },
     {
       "url": "/tv/retro-pointer.js",
@@ -324,13 +324,13 @@
     },
     {
       "url": "/tv/tv.js",
-      "revision": "3fc36044dc23893989cb99d411099b2c6e9a3131",
-      "bytes": 37256
+      "revision": "1d57eebf8b09aa15946791574bdcc935d95ba646",
+      "bytes": 37478
     }
   ],
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "267dfe0fee301ef95114"
+  "version": "79df2930affdc07eda86"
 }

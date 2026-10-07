@@ -266,6 +266,9 @@ export default {
     const stage=get('dgStage'), dock=get('dgDock'), props=get('dgTubeProps');
     const vis=get('dgVis'), say=get('dgNudge'), unit=get('dgPaperUnit');
     let busy=false, returnFocus=null, batch=null;
+    // Portrait: size the stage to the visible TV glass so the belt and the dock share one screen (the CSS 100dvh overshoots the glass).
+    const fit=()=>{const sc=dg.closest('.screen');stage.style.height=sc&&matchMedia('(orientation:portrait)').matches?sc.clientHeight+'px':'';};
+    fit();ctx.on(window,'resize',fit);
     let labAudio=null,labMuted=false,beat=0;
     function labTone(freq,dur,gain,type='sine',end=freq){if(!labAudio||labMuted)return;const t=labAudio.currentTime,o=labAudio.createOscillator(),v=labAudio.createGain();o.type=type;o.frequency.setValueAtTime(freq,t);o.frequency.exponentialRampToValueAtTime(Math.max(20,end),t+dur);v.gain.setValueAtTime(gain,t);v.gain.exponentialRampToValueAtTime(.0001,t+dur);o.connect(v).connect(labAudio.destination);o.start();o.stop(t+dur);o.onended=()=>{o.disconnect();v.disconnect();};}
     function labStart(){if(labAudio)return;try{labAudio=ctx.audio(new AudioContext());labAudio.resume();}catch{return;}ctx.interval(()=>{const notes=[110,110,146.83,130.81,110,164.81,146.83,130.81];labTone(notes[beat%8],.32,.012,'sawtooth');if(beat%2===0)labTone(65,.1,.025,'triangle',35);if(beat%4===0)labTone(55,.7,.008);beat++;},330);}

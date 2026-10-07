@@ -517,7 +517,8 @@
   const readUnlock = () => window.MBS_STATE.unlockedActive();
   const paintUnlock = () => {
     const done = readUnlock();
-    document.querySelectorAll(".lcd-card").forEach(el => el.classList.toggle("done", done.includes(el.dataset.id)));
+    const paged = window.MBS_STATE.completedPages();       // a finished page (Goon Gala has no ARG secret) lights its card too
+    document.querySelectorAll(".lcd-card").forEach(el => el.classList.toggle("done", done.includes(el.dataset.id) || paged.includes(el.dataset.id)));
     if (lcd) lcd.dataset.count = `${done.length}/${NODES}`;
   };
   const ARMED_MS = 30000;                                   // the unlock window: 30 s from the fifth node, then the purple glow passes and everything returns (Ian, 2026-08-26)
@@ -595,6 +596,7 @@
     window.MBS_STATE.setArmedAt(Date.now());
     paintUnlock(); paintArmed(); document.dispatchEvent(new CustomEvent("mbs:arm"));
   };
+  window.addEventListener("mbs:page-complete", paintUnlock);
   paintUnlock(); paintArmed(); paintForms();
   if (location.hash === "#armtest") setTimeout(() => window.MBS.rearmTest(), 1200);
 
