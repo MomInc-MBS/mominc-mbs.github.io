@@ -1,5 +1,6 @@
 import {chasePressure} from './chase-state.mjs?v=chase-5';
 import {coachHand} from './coach-hand.mjs?v=chase-5';
+import {coachElement} from './coach-3d.mjs';
 const LINES=['Coach not mad.','Coach must help.','Job says catch.','Mom loves you. Run.','Coach hears your feet.','Coach getting close.','Door needs facts.','Coach feels torn.'];
 // Rolled-out clay letters on a canvas (the real text sits beside it for screen readers).
 export function clayText(text,height=40){
@@ -27,7 +28,7 @@ export function mountChase({root,panel}){
   const coach=coachHand({size:46});coach.classList.add('ar-chase-coach','ch-crawl');coach.setAttribute('role','img');coach.removeAttribute('aria-hidden');coach.setAttribute('aria-label','Coach Armie');
   layout.append(hud);const track=hud.querySelector('.ar-chase-track'),status=hud.querySelector('.ar-chase-status');track.append(coach);
   const say=document.createElement('div');say.className='ar-coach-say';say.setAttribute('aria-live','polite');say.hidden=true;layout.append(say);
-  const lunge=document.createElement('div');lunge.className='ar-coach-lunge';lunge.hidden=true;const big=coachHand({size:420});big.coach.pressure(1);lunge.append(big);layout.append(lunge);
+  const lunge=document.createElement('div');lunge.className='ar-coach-lunge';lunge.hidden=true;const big=coachElement(coachHand({size:420}));big.coach.pressure(1);lunge.append(big);layout.append(lunge);
   const tint=document.createElement('div');tint.className='ar-last-life-tint';tint.setAttribute('aria-hidden','true');layout.append(tint);
   const streaks=document.createElement('div');streaks.className='ar-speed-streaks';streaks.setAttribute('aria-hidden','true');layout.append(streaks);
   let lastPressure=-1,lastText='',lastBeat='',popTimer=0,hideTimer=0,lungeTimer=0,line=Math.floor(Math.random()*LINES.length),saying='';

@@ -2,6 +2,7 @@ import {continueScene} from './game-scene.js?v=chase-5';
 import * as THREE from './vendor/three.module.js';
 import {GLTFLoader} from './vendor/GLTFLoader.js';
 import {bindHand,applyHandPose} from './pose-rig.js';
+import {replaceSprite} from './coach-3d.mjs';
 let handRig=null,lastGrip=-1;
 const liveMode=new URLSearchParams(location.search).has('live');const framedLive=liveMode&&!new URLSearchParams(location.search).has('cabinet');const FACE_HEIGHT=liveMode?2.55*innerHeight/innerWidth*(framedLive?(954/1280)/(672/720):1):1.434375;
 const regions=['nails','fingertips','middle_sections','knuckles','palm','back_of_hand','wrist'];
@@ -41,6 +42,8 @@ const led=box(.022,.025,.016,new THREE.MeshBasicMaterial({color:'#85ff9d'}),.12,
 box(.3,3.6,7,black,18,1.8,2);box(.3,3.6,2.15,purple,-17,1.8,-.4);box(.3,3.6,2.15,purple,-17,1.8,4.4);box(.3,.45,3,gold,-17,3.35,2);
 const exitMat=new THREE.MeshBasicMaterial({color:'#fff6d6'});const exit=new THREE.Mesh(new THREE.PlaneGeometry(2.8,3.1),exitMat);exit.rotation.y=Math.PI/2;exit.position.set(-17,1.52,2);scene.add(exit);const exitLight=new THREE.PointLight('#ffefd2',22,10);exitLight.position.set(-16,2,2);scene.add(exitLight);
 const coachTex=await new THREE.TextureLoader().loadAsync('./coach.png');coachTex.colorSpace=THREE.SRGBColorSpace;const coach=new THREE.Sprite(new THREE.SpriteMaterial({map:coachTex,color:'#5c485f',transparent:true,blending:THREE.AdditiveBlending,depthWrite:false}));coach.position.set(12,.66,2);coach.scale.set(2.65,1.77,1);scene.add(coach);
+// The 3D clay coach follows the sprite (which game-scene.js keeps driving); the sprite stays as the no-GLB fallback.
+replaceSprite(scene,coach).catch(e=>console.warn('3D coach unavailable, keeping sprite:',e.message));
 const flashMat=new THREE.MeshBasicMaterial({color:'#fff9e2',transparent:true,opacity:0,depthTest:false,depthWrite:false});const flash=new THREE.Mesh(new THREE.PlaneGeometry(2,2),flashMat);flash.position.z=-.1;flash.renderOrder=1000;camera.add(flash);scene.add(camera);
 // Assemble all seven original Handborne regions, retaining their actual geometry and textures.
 const loader=new GLTFLoader(),hand=new THREE.Group();scene.add(hand);let recipe=null,playing=false,startTime=0,ended=false,ready=false;

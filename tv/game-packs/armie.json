@@ -69,8 +69,13 @@
     },
     {
       "url": "/tv/assets/armie-intro/chase-ui.mjs",
-      "revision": "a61d67056e11326f4ac9d9e0794dc104a73a412d",
-      "bytes": 8564
+      "revision": "54cc8ae1c680a7b3fc7a9d4526b5bff877264b31",
+      "bytes": 8623
+    },
+    {
+      "url": "/tv/assets/armie-intro/coach-3d.mjs",
+      "revision": "0a7ad3814ebd2f8cccce76783591db83579424ad",
+      "bytes": 10487
     },
     {
       "url": "/tv/assets/armie-intro/coach-hand.mjs",
@@ -119,8 +124,8 @@
     },
     {
       "url": "/tv/assets/armie-intro/intro.js",
-      "revision": "8f5bc2182c1b369c13aa9b8bb44a075295c3d15e",
-      "bytes": 14585
+      "revision": "c10cd6540cae51f25f75ddf7dffe425c50369a4f",
+      "bytes": 14851
     },
     {
       "url": "/tv/assets/armie-intro/lab.html",
@@ -129,8 +134,8 @@
     },
     {
       "url": "/tv/assets/armie-intro/lab.js",
-      "revision": "6c359f5abe46d6b348208c5767080396ade9cf25",
-      "bytes": 26162
+      "revision": "16f9fb08395179ddeffd778f00824f4e9d42e29a",
+      "bytes": 26322
     },
     {
       "url": "/tv/assets/armie-intro/maze-run.mjs",
@@ -151,6 +156,11 @@
       "url": "/tv/assets/armie-intro/maze-ui.mjs",
       "revision": "d5ebea3fb976325a9908e4f5ee5b68a78977fe17",
       "bytes": 4213
+    },
+    {
+      "url": "/tv/assets/armie-intro/models/coach-hand.glb",
+      "revision": "061bf1ec258bce4b35b3a0c984068f08f82b059b",
+      "bytes": 197264
     },
     {
       "url": "/tv/assets/armie-intro/models/family-00.glb",
@@ -876,5 +886,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "331fac3dd7b7864ab626"
+  "version": "d321555eda0fc7ddb009"
 }
