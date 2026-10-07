@@ -119,7 +119,7 @@ export function createSoundscape() {
   function outputLevel() {
     if (!context || !master) return;
     ramp(master.gain, muted || paused ? 0 : 0.03, context.currentTime, 0.04);
-    if (music) ramp(music.gain, muted || paused ? 0 : musicLevel(musicRoom), context.currentTime, muted || paused ? 0.04 : 1.2);
+    if (music) ramp(music.gain.gain, muted || paused ? 0 : musicLevel(musicRoom), context.currentTime, muted || paused ? 0.04 : 1.2);
   }
 
   async function startMusic() {
@@ -210,7 +210,7 @@ export function createSoundscape() {
           source.start();
           rooms[id] = { gain, oscillator, toneGain, source, filter, noiseGain };
         }
-        setRoom(currentRoom);
+        setRoom(musicRoom);
         startMusic();
       } catch {
         if (context) {
@@ -227,7 +227,7 @@ export function createSoundscape() {
 
     try {
       if (context.state !== "running") await context.resume();
-      setRoom(currentRoom);
+      setRoom(musicRoom);
       outputLevel();
       return context.state === "running";
     } catch {

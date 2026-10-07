@@ -34,8 +34,8 @@
     },
     {
       "url": "/play/lilboyfriend/audio.js",
-      "revision": "8702cfc5c43078c9720cc1d585f449302574e0ee",
-      "bytes": 8473
+      "revision": "41a019785dd8ac2bcbb505407379444932182e3d",
+      "bytes": 8474
     },
     {
       "url": "/play/lilboyfriend/boot.js",
@@ -513,5 +513,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap",
     "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
   ],
-  "version": "803d05496ec0c4389db4"
+  "version": "729298b6219bee799c53"
 }
