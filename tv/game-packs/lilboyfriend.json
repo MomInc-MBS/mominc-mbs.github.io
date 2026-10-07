@@ -94,8 +94,8 @@
     },
     {
       "url": "/play/lilboyfriend/rig.js",
-      "revision": "65b9f49de1385cb5f4f76e466cd08f7ed3e1122e",
-      "bytes": 23216
+      "revision": "295071368ad0a903693ff1b1c710337941badd84",
+      "bytes": 23201
     },
     {
       "url": "/play/lilboyfriend/room-copy.js",
@@ -169,8 +169,8 @@
     },
     {
       "url": "/tv/assets/armie-intro/coach-3d.mjs",
-      "revision": "0a7ad3814ebd2f8cccce76783591db83579424ad",
-      "bytes": 10487
+      "revision": "5cb50bd6556b89b3a5fb9f9f61654f4c94aba7bf",
+      "bytes": 10821
     },
     {
       "url": "/tv/assets/armie-intro/models/coach-hand.glb",
@@ -508,5 +508,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap",
     "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
   ],
-  "version": "b540c3785b3c630d866f"
+  "version": "4e6cba8d82a3db5286ad"
 }

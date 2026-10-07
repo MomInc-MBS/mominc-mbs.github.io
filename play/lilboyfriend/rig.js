@@ -277,7 +277,7 @@ export function createClayHand(THREE) {
   // The GLB coach lies with its pointy face on the grip (fingers at -z), body trailing +z, eyes up to the camera.
   let coach=null;const COACH_LENGTH=.8;
   import("/tv/assets/armie-intro/coach-3d.mjs").then(m=>m.loadCoachParts().then(parts=>m.buildCoach(THREE,parts))).then(c=>{
-    coach=c;c.group.rotation.set(-Math.PI/2,Math.PI/2,0,"YXZ");c.group.scale.setScalar(COACH_LENGTH);
+    coach=c;c.group.rotation.set(0,Math.PI/2,0);c.group.scale.setScalar(COACH_LENGTH);
     c.group.position.set(grip.position.x,grip.position.y+.06,grip.position.z+COACH_LENGTH*.5);
     for(const child of hand.children)if(child!==grip)child.visible=false;
     c.group.traverse(o=>{if(o.isMesh)o.castShadow=true;});hand.add(c.group);group.userData.coachModel=true;
