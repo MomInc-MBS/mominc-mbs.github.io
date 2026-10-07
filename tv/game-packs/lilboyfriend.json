@@ -469,8 +469,8 @@
     },
     {
       "url": "/tv/retro-ads.js",
-      "revision": "72e34843533a9e84fd84287172300e0f37896ba4",
-      "bytes": 9058
+      "revision": "23bfa9a3a23ba1df0202d48a8fb33a35a153d687",
+      "bytes": 9178
     },
     {
       "url": "/tv/retro-pointer.js",
@@ -513,5 +513,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap",
     "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
   ],
-  "version": "6769bc8fb22d258d0c93"
+  "version": "bad7d5792caa965732d0"
 }
