@@ -8,7 +8,7 @@
  const headlines={corner:'pssstt feeling sleepy?',bottom:'YOUR NEXT SCOOP IS AIRBORNE.',side:'KEEP. IT. UP.',button:'THIS BUTTON NEEDS FUEL.',game:'TUB FLIGHT'};
  let active=null,kind=null,game=null,timer=null,countdown=null,cycle=0,generation=0,disposed=false,wasOn=false,previousKind=null,manualHand=false,lastFocus=null;
  const powered=()=>!disposed&&!document.hidden&&tv.dataset.state==='on';
- const fuelDone=()=>{try{const v=JSON.parse(localStorage.getItem('mbs-fuel-flight-v1'));return v?.version===1&&v.pipes===8&&Date.now()-v.completedAt<3600000;}catch{return false;}};// same receipt arcade/tub-flight/game.mjs fuelUnlocked() reads; a finished run only quiets the ads for an hour (Ian, 6 Oct)
+ const fuelQuiet=()=>{try{const v=JSON.parse(localStorage.getItem('mbs-fuel-flight-v1'));return v?.version===1&&v.pipes===8?Math.max(0,v.completedAt+3600000-Date.now()):0;}catch{return 0;}},fuelDone=()=>fuelQuiet()>0;// same receipt arcade/tub-flight/game.mjs fuelUnlocked() reads; a finished run only quiets the ads for an hour (Ian, 6 Oct)
  const sponsor=()=>new URLSearchParams(location.search).get('ch')==='fuel'?null:window.MBS_FLOW?.pagesReady()?(window.MBS_FLOW.armieReady()?null:'hand'):fuelDone()?null:'fuel';
  const occupied=()=>!!document.querySelector('dialog[open], [aria-modal="true"]');
  const available=()=>sponsor()==='fuel'?['fuel']:sponsor()==='hand'?['hand']:[];
@@ -17,7 +17,8 @@
  function tickCountdown(){if(!countdown)return;const now=Date.now();if(countdown.running)countdown.remaining=Math.max(0,countdown.remaining-(now-countdown.at));countdown.at=now;countdown.running=powered();const seconds=Math.ceil(countdown.remaining/1000);countdown.label.textContent=seconds?'Close in '+seconds+'s':'You can close this ad';countdown.button.disabled=seconds>0;if(!seconds)clearInterval(countdown.id);}
  function lockClose(button){clearCountdown();const label=document.createElement('span');label.className='sponsor-wait';label.setAttribute('role','status');button.before(label);countdown={button,label,remaining:5000,at:Date.now(),running:powered(),id:setInterval(tickCountdown,250)};tickCountdown();}
  function remove(){clearTimer();clearCountdown();generation++;game?.dispose();game=null;active?.remove();active=null;kind=null;manualHand=false;}
- function schedule(){if(timer!==null||!powered()||!sponsor())return;timer=setTimeout(()=>{timer=null;show();},sponsor()==='hand'?10000:14000+Math.random()*7000);}
+ function schedule(){if(timer!==null||!powered())return;if(!sponsor()){const wait=fuelQuiet();if(wait)timer=setTimeout(()=>{timer=null;sync();},wait+1000);return;}// wake when the hour after a Fuel run runs out
+ timer=setTimeout(()=>{timer=null;show();},sponsor()==='hand'?10000:14000+Math.random()*7000);}
  function close(){tickCountdown();if(countdown?.remaining>0)return;const restore=active?.contains(document.activeElement);remove();if(restore&&powered()){if(lastFocus?.isConnected)lastFocus.focus();else screen.focus();}schedule();}
  function placeButton(){if(!active?.classList.contains('sponsor-button'))return;const bounds=glass.getBoundingClientRect();const target=[...screen.querySelectorAll('a,button')].find(el=>{const r=el.getBoundingClientRect();return r.width>80&&r.top>=bounds.top&&r.bottom<=bounds.bottom;});const r=target?.getBoundingClientRect(),ad=active.getBoundingClientRect();active.style.left=Math.max(8,Math.min(bounds.width-ad.width-8,r?r.left-bounds.left:(bounds.width-ad.width)/2))+'px';active.style.top=Math.max(8,Math.min(bounds.height-ad.height-8,r?r.top-bounds.top-80:bounds.height*.35))+'px';}
  function attach(node,type){lastFocus=document.activeElement;active=node;kind=type;layer.append(node);layer.hidden=!powered();}
@@ -26,7 +27,7 @@
   try{const {mountTubFlight}=await import('/arcade/tub-flight/game.mjs?v=neon-tv-2');if(version!==generation||active!==overlay)return;game=mountTubFlight(overlay.querySelector('[data-arcade]'),{autoFuel:true});if(!powered())game.pause();else if(focus)overlay.querySelector('canvas')?.focus();}
   catch{if(version===generation&&active===overlay)overlay.querySelector('[data-arcade]').innerHTML='<p>The sponsor lost its signal.</p><a href="/arcade/tub-flight/">Open Tub Flight →</a>';}
  }
- function show(mode,manual=false){clearTimer();if(active||!powered()||occupied()){schedule();return;}const type=manual&&window.MBS_FLOW?.pagesReady()?'hand':sponsor();if(!type)return;
+ function show(mode,manual=false){clearTimer();if(active||!powered()||occupied()){schedule();return;}const type=manual&&window.MBS_FLOW?.pagesReady()?'hand':sponsor();if(!type){schedule();return;}
   const ad=document.createElement('aside');ad.setAttribute('aria-label',type==='fuel'?'Goon Fuel advertisement':'DJ Scratch Helping Hand advertisement');ad.dataset.sponsor=type;
   if(type==='hand'){
    ad.className='retro-sponsor sponsor-hand';ad.innerHTML='<div class="sponsor-cap"><span>DJ SCRATCH · SPONSOR MESSAGE</span><button type="button" aria-label="Close advertisement">×</button></div><div class="sponsor-content"><img src="/tv/assets/helping-hand-badge.png" alt="The Helping Hand"><h2>BUY A HELPING HAND!</h2><p>It DJs. It cleans. It obeys. One hand. Every task. Build yours.</p><a class="sponsor-cta" href="/handborne/">Build my hand →</a><small>Fictional offer. No payment required.</small></div>';attach(ad,'hand');manualHand=manual;
@@ -55,6 +56,5 @@
  window.addEventListener('mbs:page-complete',sync);window.addEventListener('mbs-flow',sync);window.addEventListener('storage',sync);window.addEventListener('mbs:hand-offer',showHand);
  document.addEventListener('visibilitychange',sync);
  window.addEventListener('pagehide',()=>{disposed=true;remove();layer.hidden=true;wasOn=false;});window.addEventListener('pageshow',()=>{disposed=false;sync();});
- setInterval(sync,60000);// notice when that hour runs out on an open tab
  window.MBS_ADS={close,show,showHand,available};sync();if(new URLSearchParams(location.search).get('ad')==='hand')showHand();
 })();
