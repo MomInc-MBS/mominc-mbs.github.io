@@ -285,6 +285,40 @@ function contextPrompt() {
 function caption(text) {
   $("caption").textContent = text;
 }
+const quips = {
+  boxRoom: "Whoa. Okay. That box is huge now.",
+  jarRoom: "Wait. Is that a jar? It is a whole building.",
+  pencilRoom: "A pencil. A PENCIL. It is a skyscraper. What?",
+  matchRoom: "That is a matchstick. Why is it so big? I am so small!",
+  spoolRoom: "I am standing on thread. THREAD. How is this my life?",
+  fiberRoom: "Those are fuzz bits. I can see the fuzz. This is NOT okay!",
+  atomicRoom: "Atoms. Cool. Is that it? ...I'm kind of bored.",
+};
+const quipped = new Set();
+let quipTimers = [];
+function quip(key) {
+  const text = quips[key];
+  if (!text || quipped.has(key)) return;
+  quipped.add(key);
+  quipTimers.forEach(clearTimeout);
+  const el = $("subtitle");
+  el.classList.remove("show");
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const later = (fn, ms) => quipTimers.push(setTimeout(fn, ms));
+  later(() => {
+    caption("Little Boyfriend: " + text);
+    el.lastChild.textContent = "";
+    el.classList.add("show");
+    let i = 0;
+    const type = () => {
+      i = reduced ? text.length : i + 1;
+      el.lastChild.textContent = text.slice(0, i);
+      if (i < text.length) later(type, 40);
+      else later(() => el.classList.remove("show"), 5000);
+    };
+    type();
+  }, 800);
+}
 function setState(next) {
   heldMove = 0;
   touch = null;
@@ -302,6 +336,7 @@ function showRoom(key) {
   orangeLight.visible = key === "atomicRoom";
   fill.visible = key === "gallery";
   sound.setRoom(key);
+  quip(key);
   atomicPrompted = false;
   scene.background.set(
     world.roomMetadata[key]?.background ||
