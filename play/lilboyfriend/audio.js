@@ -86,6 +86,18 @@ const CUES = {
   sigh: { hz: 220, endHz: 165, seconds: 0.72, wave: "sine", level: 0.13 },
 };
 
+// Ian's 8-bar loop (about 119 BPM, played live, so the bar lengths drift a little): one take from
+// its first note to 16.1 s. It is near-silent in the museum and gets louder with every shrink.
+const LOOP_URL = new URL("./assets/lilbf-loop.mp3", import.meta.url).href;
+const LOOP_SECONDS = 16.1;
+const MUSIC_ROOMS = ["gallery", "boxRoom", "jarRoom", "pencilRoom", "matchRoom", "spoolRoom", "fiberRoom", "atomicRoom"];
+const MUSIC_QUIET = 0.04;
+const MUSIC_LOUD = 0.55;
+function musicLevel(id) {
+  const step = Math.max(0, MUSIC_ROOMS.indexOf(id));
+  return MUSIC_QUIET + ((MUSIC_LOUD - MUSIC_QUIET) * step) / (MUSIC_ROOMS.length - 1);
+}
+
 function ramp(param, value, now, seconds = 0.08) {
   param.cancelScheduledValues(now);
   param.setValueAtTime(param.value, now);
@@ -98,6 +110,8 @@ export function createSoundscape() {
   let noiseBuffer = null;
   let rooms = null;
   let currentRoom = "boxRoom";
+  let musicRoom = "gallery";
+  let music = null;
   let muted = false;
   let paused = false;
   let disposed = false;
@@ -105,10 +119,39 @@ export function createSoundscape() {
   function outputLevel() {
     if (!context || !master) return;
     ramp(master.gain, muted || paused ? 0 : 0.03, context.currentTime, 0.04);
+    if (music) ramp(music.gain.gain, muted || paused ? 0 : musicLevel(musicRoom), context.currentTime, muted || paused ? 0.04 : 1.2);
+  }
+
+  async function startMusic() {
+    try {
+      const data = await (await fetch(LOOP_URL)).arrayBuffer();
+      const buffer = await context.decodeAudioData(data);
+      if (disposed || music) return;
+      // Decoders pad the start by different amounts, so find the first note in the samples.
+      const ch = buffer.getChannelData(0);
+      let first = 0;
+      while (first < ch.length && Math.abs(ch[first]) < 0.01) first += 1;
+      const source = context.createBufferSource();
+      const gain = context.createGain();
+      source.buffer = buffer;
+      source.loop = true;
+      source.loopStart = first / buffer.sampleRate;
+      source.loopEnd = Math.min(buffer.duration, source.loopStart + LOOP_SECONDS);
+      gain.gain.value = 0;
+      source.connect(gain);
+      gain.connect(context.destination);
+      source.start(0, source.loopStart);
+      music = { source, gain };
+      outputLevel();
+    } catch {
+      /* the game still plays without music */
+    }
   }
 
   function setRoom(id) {
     if (ROOM_SOUND[id]) currentRoom = id;
+    if (MUSIC_ROOMS.includes(id)) musicRoom = id;
+    outputLevel();
     if (!context || !rooms) return;
     const now = context.currentTime;
     for (const [key, layer] of Object.entries(rooms)) {
@@ -167,7 +210,8 @@ export function createSoundscape() {
           source.start();
           rooms[id] = { gain, oscillator, toneGain, source, filter, noiseGain };
         }
-        setRoom(currentRoom);
+        setRoom(musicRoom);
+        startMusic();
       } catch {
         if (context) {
           try {
@@ -183,7 +227,7 @@ export function createSoundscape() {
 
     try {
       if (context.state !== "running") await context.resume();
-      setRoom(currentRoom);
+      setRoom(musicRoom);
       outputLevel();
       return context.state === "running";
     } catch {
@@ -237,7 +281,7 @@ export function createSoundscape() {
         /* ignore teardown failures */
       }
     }
-    context = master = rooms = noiseBuffer = null;
+    context = master = rooms = noiseBuffer = music = null;
   }
 
   return { start, setRoom, cue, setPaused, setMuted, dispose };

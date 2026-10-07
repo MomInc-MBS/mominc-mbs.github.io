@@ -28,9 +28,14 @@
       "bytes": 2202252
     },
     {
+      "url": "/play/lilboyfriend/assets/lilbf-loop.mp3",
+      "revision": "c5efa223b1a6f3fe2f2b28f73a8e8b71adb06316",
+      "bytes": 290399
+    },
+    {
       "url": "/play/lilboyfriend/audio.js",
-      "revision": "5bf2bdee49fa735286ad2e45c75670dc95a2ad27",
-      "bytes": 6580
+      "revision": "41a019785dd8ac2bcbb505407379444932182e3d",
+      "bytes": 8474
     },
     {
       "url": "/play/lilboyfriend/boot.js",
@@ -508,5 +513,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap",
     "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
   ],
-  "version": "4e6cba8d82a3db5286ad"
+  "version": "729298b6219bee799c53"
 }
