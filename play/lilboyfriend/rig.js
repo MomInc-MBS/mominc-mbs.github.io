@@ -272,5 +272,17 @@ export function createClayHand(THREE) {
     poseFingers(name,time,grasping?1:0);group.userData.pose=name;updateEyes();
   }
   function setGrasp(amount=1,time=0){poseFingers("rest",time,Math.max(0,Math.min(1,amount)));group.userData.grasp=amount;updateEyes();}
+  // Coach Armie GLB (tv/assets/armie-intro/models/coach-hand.glb, shared with the Armie channel) replaces the
+  // procedural clay once it loads; this hand stays as the fallback and keeps owning grip, pose and path.
+  // The GLB coach lies with its pointy face on the grip (fingers at -z), body trailing +z, eyes up to the camera.
+  let coach=null;const COACH_LENGTH=.8;
+  import("/tv/assets/armie-intro/coach-3d.mjs").then(m=>m.loadCoachParts().then(parts=>m.buildCoach(THREE,parts))).then(c=>{
+    coach=c;c.group.rotation.set(-Math.PI/2,Math.PI/2,0,"YXZ");c.group.scale.setScalar(COACH_LENGTH);
+    c.group.position.set(grip.position.x,grip.position.y+.06,grip.position.z+COACH_LENGTH*.5);
+    for(const child of hand.children)if(child!==grip)child.visible=false;
+    c.group.traverse(o=>{if(o.isMesh)o.castShadow=true;});hand.add(c.group);group.userData.coachModel=true;
+  }).catch(e=>console.warn("3D coach unavailable, keeping clay hand:",e.message));
+  const tickCoach=()=>coach?.tick(performance.now(),{pressure:.5+.5*(group.userData.grasp||0)});
+  const pose=setPose,grasp=setGrasp;setPose=(n,t)=>{pose(n,t);tickCoach();};setGrasp=(a,t)=>{grasp(a,t);tickCoach();};
   setPose("crawl",0);return {group,grip,setPose,setGrasp,dispose(){skeleton.dispose();workshop.dispose();furMaterial.dispose();sclera.dispose();ink.dispose();}};
 }

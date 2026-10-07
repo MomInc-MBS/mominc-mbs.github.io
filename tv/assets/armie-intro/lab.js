@@ -1,6 +1,7 @@
 import * as THREE from './vendor/three.module.js';
 import {GLTFLoader} from './vendor/GLTFLoader.js';
 import {bindHand,applyHandPose} from './pose-rig.js';
+import {replaceSprite} from './coach-3d.mjs';
 const params=new URLSearchParams(location.search),DEBUG=params.has('debug'),SCRUB=params.has('t')?Math.max(0,+params.get('t')||0):null,AUTO_PRESS=params.get('press')==='1';
 const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const renderer=new THREE.WebGLRenderer({antialias:true});renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.outputColorSpace=THREE.SRGBColorSpace;document.body.prepend(renderer.domElement);
@@ -17,6 +18,7 @@ const doors=[];for(const side of [-1,1]){doors.push(box(2.05,3.8,.18,purple,side
 box(7,4,.2,black,-5.7,2,8);box(7,4,.2,black,5.7,2,8);
 const loadTex=async url=>{const t=await new THREE.TextureLoader().loadAsync(url);t.colorSpace=THREE.SRGBColorSpace;return t;};
 const coachTex=await new THREE.TextureLoader().loadAsync('./coach.png');const coach=new THREE.Sprite(new THREE.SpriteMaterial({map:coachTex,transparent:true,blending:THREE.AdditiveBlending,color:'#b79ec7'}));coach.position.set(0,.95,9.3);coach.scale.set(3.6,2.4,1);scene.add(coach);
+replaceSprite(scene,coach,{rear:true}).catch(e=>console.warn('3D coach unavailable, keeping sprite:',e.message));
 
 // ── The machine: a gold/purple console. Big round button under a padlock and a red LOCKED ring; USB-A port on its right side.
 const machine=new THREE.Group();machine.position.set(-.15,0,-2);machine.rotation.y=-.6;scene.add(machine);
