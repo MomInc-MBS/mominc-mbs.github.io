@@ -58,9 +58,12 @@ function makeWorkshop(THREE, felt) {
   return {surface,highlight,cuff,sleeve,mesh,own,pad,thread,stitches,softForm,dispose(){geometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());textures.forEach(t=>t.dispose());}};
 }
 
-function makeHand(THREE,workshop,felt) {
+// handSculpt is a RIGHT hand (thumb on -x, nails on +y). mirror=true builds a left
+// hand: the whole sculpt + skeleton sits under a scale.x=-1 group, bound mirrored.
+function makeHand(THREE,workshop,felt,mirror=false) {
   const hand=new THREE.Group();hand.name=felt?"sewn-felt-anatomical-glove":"continuous-purple-clay-hand";
-  const root=new THREE.Bone();root.name="palm-root";hand.add(root);
+  const body=new THREE.Group();body.name=mirror?"mirrored-left-hand":"right-hand";if(mirror)body.scale.x=-1;hand.add(body);
+  const root=new THREE.Bone();root.name="palm-root";body.add(root);
   const bones=[root],chains=[];
   handSculpt.fingers.forEach((finger,i)=> {
     const base=new THREE.Group();base.name=["index","middle","ring","little","thumb"][i]+"-metacarpal";
@@ -82,7 +85,7 @@ function makeHand(THREE,workshop,felt) {
   geometry.setAttribute("skinIndex",new THREE.Uint16BufferAttribute(handSculpt.skinIndices,4));
   geometry.setAttribute("skinWeight",new THREE.Float32BufferAttribute(handSculpt.skinWeights,4));
   geometry.setIndex(handSculpt.indices);geometry.computeBoundingSphere();
-  const skin=new THREE.SkinnedMesh(geometry,workshop.surface);skin.name="voxel-fused-palm-webbing-and-fingers";skin.castShadow=skin.receiveShadow=true;skin.frustumCulled=false;hand.add(skin);
+  const skin=new THREE.SkinnedMesh(geometry,workshop.surface);skin.name="voxel-fused-palm-webbing-and-fingers";skin.castShadow=skin.receiveShadow=true;skin.frustumCulled=false;body.add(skin);
   hand.updateMatrixWorld(true);const skeleton=new THREE.Skeleton(bones);skin.bind(skeleton);
   if(felt) {
     const detailScale=handSculpt.detailScale;
@@ -115,7 +118,7 @@ export function createTraveler(THREE) {
     const foot=workshop.softForm([[-.057,.053,.104,-.005],[-.045,.093,.153,-.022],[.011,.092,.159,-.029],[.048,.075,.125,-.006],[.057,.047,.067,.013]],workshop.highlight);foot.position.set(sign*.123,.057,-.20);group.add(foot);feet.push(foot);
     workshop.stitches(foot,[[-.08,-.02,-.075],[0,-.018,-.181],[.08,-.02,-.075]],.005,28);
   }
-  const left=makeHand(THREE,workshop,true),right=makeHand(THREE,workshop,true),leftHand=left.hand,rightHand=right.hand;
+  const left=makeHand(THREE,workshop,true,true),right=makeHand(THREE,workshop,true),leftHand=left.hand,rightHand=right.hand;
   leftHand.name="traveler-left-probe-hand";rightHand.name="traveler-right-device-hand";
   leftHand.position.set(-.35,1.08,-.45);rightHand.position.set(.36,1.08,-.45);leftHand.rotation.z=-.16;group.add(leftHand,rightHand);
   const grip=new THREE.Group();grip.name="traveler-magnifier-grip";grip.position.set(0,.05,-.05);rightHand.add(grip);
@@ -219,7 +222,7 @@ export function createClayHand(THREE) {
   const workshop=makeWorkshop(THREE,false),group=new THREE.Group();group.name="independent-sculpted-purple-clay-finger-thief";
   const {hand,chains,skeleton}=makeHand(THREE,workshop,false);group.add(hand);
   // Continuous clay forearm overlaps the fused wrist and follows the same hand
-  // transform. Its long tapered end remains beneath the table to the right.
+  // transform. Its long tapered end trails back (+z) and stays beneath the table.
   const forearm=workshop.softForm([[.047,.023,.018,0],[.075,.031,.025,0],[.20,.037,.032,0],[.43,.043,.037,0],[.64,.047,.039,0]]);
   forearm.name="thief-connected-long-clay-forearm";forearm.rotation.x=Math.PI/2;hand.add(forearm);
   // Coach Armie canon (tv/assets/armie-intro/coach-hand.mjs): a fur ring where
@@ -269,5 +272,17 @@ export function createClayHand(THREE) {
     poseFingers(name,time,grasping?1:0);group.userData.pose=name;updateEyes();
   }
   function setGrasp(amount=1,time=0){poseFingers("rest",time,Math.max(0,Math.min(1,amount)));group.userData.grasp=amount;updateEyes();}
+  // Coach Armie GLB (tv/assets/armie-intro/models/coach-hand.glb, shared with the Armie channel) replaces the
+  // procedural clay once it loads; this hand stays as the fallback and keeps owning grip, pose and path.
+  // The GLB coach lies with its pointy face on the grip (fingers at -z), body trailing +z, eyes up to the camera.
+  let coach=null;const COACH_LENGTH=.8;
+  import("/tv/assets/armie-intro/coach-3d.mjs").then(m=>m.loadCoachParts().then(parts=>m.buildCoach(THREE,parts))).then(c=>{
+    coach=c;c.group.rotation.set(-Math.PI/2,Math.PI/2,0,"YXZ");c.group.scale.setScalar(COACH_LENGTH);
+    c.group.position.set(grip.position.x,grip.position.y+.06,grip.position.z+COACH_LENGTH*.5);
+    for(const child of hand.children)if(child!==grip)child.visible=false;
+    c.group.traverse(o=>{if(o.isMesh)o.castShadow=true;});hand.add(c.group);group.userData.coachModel=true;
+  }).catch(e=>console.warn("3D coach unavailable, keeping clay hand:",e.message));
+  const tickCoach=()=>coach?.tick(performance.now(),{pressure:.5+.5*(group.userData.grasp||0)});
+  const pose=setPose,grasp=setGrasp;setPose=(n,t)=>{pose(n,t);tickCoach();};setGrasp=(a,t)=>{grasp(a,t);tickCoach();};
   setPose("crawl",0);return {group,grip,setPose,setGrasp,dispose(){skeleton.dispose();workshop.dispose();furMaterial.dispose();sclera.dispose();ink.dispose();}};
 }

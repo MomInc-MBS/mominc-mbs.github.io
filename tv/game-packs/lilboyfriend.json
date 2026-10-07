@@ -39,8 +39,8 @@
     },
     {
       "url": "/play/lilboyfriend/choreography.js",
-      "revision": "9056268ca696b62d4fcb57cc536748e3cdaa0991",
-      "bytes": 7801
+      "revision": "e71f26ba3b5363bb3b6512ba9555e4ccfd79ee2e",
+      "bytes": 8406
     },
     {
       "url": "/play/lilboyfriend/content.js",
@@ -89,13 +89,13 @@
     },
     {
       "url": "/play/lilboyfriend/opening-layout.js",
-      "revision": "5d35152e50461954c508d260a80472cb983d3913",
-      "bytes": 933
+      "revision": "98dd25ee30f094ab95da49e7dcf52b46a02eb506",
+      "bytes": 864
     },
     {
       "url": "/play/lilboyfriend/rig.js",
-      "revision": "4f1cec734d74113b047897f27ef9210a656f6f20",
-      "bytes": 21725
+      "revision": "65b9f49de1385cb5f4f76e466cd08f7ed3e1122e",
+      "bytes": 23216
     },
     {
       "url": "/play/lilboyfriend/room-copy.js",
@@ -166,6 +166,16 @@
       "url": "/play/lilboyfriend/world.js",
       "revision": "d4e6816522d518b621c0c8f343a2b6930cbd91f4",
       "bytes": 48352
+    },
+    {
+      "url": "/tv/assets/armie-intro/coach-3d.mjs",
+      "revision": "0a7ad3814ebd2f8cccce76783591db83579424ad",
+      "bytes": 10487
+    },
+    {
+      "url": "/tv/assets/armie-intro/models/coach-hand.glb",
+      "revision": "061bf1ec258bce4b35b3a0c984068f08f82b059b",
+      "bytes": 197264
     },
     {
       "url": "/tv/assets/armie-intro/vendor/BufferGeometryUtils.js",
@@ -454,8 +464,8 @@
     },
     {
       "url": "/tv/retro-ads.js",
-      "revision": "57fb05ce917c580b786616efade4593facb18eff",
-      "bytes": 8663
+      "revision": "d0ecafdf07791f26fea8e36d0537af45d76053c9",
+      "bytes": 8906
     },
     {
       "url": "/tv/retro-pointer.js",
@@ -489,8 +499,8 @@
     },
     {
       "url": "/tv/tv.js",
-      "revision": "3fc36044dc23893989cb99d411099b2c6e9a3131",
-      "bytes": 37256
+      "revision": "1d57eebf8b09aa15946791574bdcc935d95ba646",
+      "bytes": 37478
     }
   ],
   "fontStyles": [
@@ -498,5 +508,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap",
     "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
   ],
-  "version": "950ab42f869c581e35ea"
+  "version": "b540c3785b3c630d866f"
 }
