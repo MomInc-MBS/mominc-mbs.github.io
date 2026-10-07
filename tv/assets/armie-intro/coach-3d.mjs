@@ -1,7 +1,7 @@
 // Coach Armie in 3D: whatever clay forearm sits in models/coach-hand.glb (placeholder: Modly Hunyuan3D-2 Mini mesh),
 // made canonical at load and given live googly eyes in code. Every caller keeps its 2D coach (sprite / SVG /
 // procedural hand) until the model is in, so a missing or broken GLB changes nothing.
-// Canonical frame: length 1 along X, centred, fingers/face end at +X, up +Y, eye side +Z (as exported).
+// Canonical frame: length 1 along X, centred, fingers at +X, lying PALM DOWN: back of the hand (and the eyes on its knuckles) faces +Y, Z is sideways.
 import * as T from './vendor/three.module.js';
 import {GLTFLoader} from './vendor/GLTFLoader.js';
 export const COACH_GLB=new URL('./models/coach-hand.glb',import.meta.url).href;
@@ -26,8 +26,8 @@ function canonical(root){
   const spread=(lo,hi)=>{let s=0,n=0;for(const p of all){const t=(p[axis]-box.min[axis])/L;if(t>=lo&&t<=hi){s+=Math.hypot(p[a]-c[a],p[b]-c[b]);n++;}}return n?s/n:0;};
   const dir=new T.Vector3();dir[axis]=spread(.85,1)>=spread(0,.15)?1:-1;
   const align=new T.Quaternion().setFromUnitVectors(dir,new T.Vector3(1,0,0));
-  // Roll about the length so the BACK of the hand (opposite the curl of the fingers, here -Z palm side) faces +Z, the eyes' side.
-  const roll=new T.Quaternion().setFromAxisAngle(new T.Vector3(1,0,0),Math.PI);
+  // Roll about the length so the BACK of the hand (opposite the curl of the fingers; in the file the palm is +Z) faces +Y: palm down.
+  const roll=new T.Quaternion().setFromAxisAngle(new T.Vector3(1,0,0),Math.PI/2);
   const M=new T.Matrix4().makeScale(1/L,1/L,1/L).multiply(new T.Matrix4().makeRotationFromQuaternion(roll.multiply(align))).multiply(new T.Matrix4().makeTranslation(-c.x,-c.y,-c.z));
   for(const p of parts)p.pos=p.pos.applyMatrix4(M).array;
   // Plain-white single-material export: paint it as clay, with the bone (the thin end, x < -.16) gold. Vertex colours carry both.
@@ -51,11 +51,11 @@ export function buildCoach(THREE,{parts,hasEyes}){
   if(!hasEyes){// big + small mismatched googly eyes (coach-hand.mjs canon ratio 10:6).
     const sclera=new THREE.MeshStandardMaterial({color:0xfffdf6,roughness:.25}),ink=new THREE.MeshStandardMaterial({color:0x120a14,roughness:.3});
     const ray=new THREE.Raycaster(),up=new THREE.Vector3(0,1,0);
-    // Ian's hand model: eyes sit on the back of the hand (x -.16 wrist .. .5 fingertips), kept inside its outline.
-    for(const [x,y,r] of [[.07,.03,.06],[.2,-.03,.038]]){
-      ray.set(new THREE.Vector3(x,y,2),new THREE.Vector3(0,0,-1));const hit=ray.intersectObjects(body,false)[0];
-      const n=hit?.face?hit.face.normal.clone().normalize():new THREE.Vector3(0,0,1);if(n.z<0)n.negate();
-      const eye=new THREE.Group();eye.position.copy(hit?hit.point:new THREE.Vector3(x,y,.15)).addScaledVector(n,r*.15);eye.quaternion.setFromUnitVectors(up,n);group.add(eye);
+    // Ian's hand model, palm down: both eyes sit side by side on the knuckle ridge (x .27) of the back of the hand, facing +Y.
+    for(const [x,z,r] of [[.27,-.075,.06],[.27,.07,.038]]){
+      ray.set(new THREE.Vector3(x,2,z),new THREE.Vector3(0,-1,0));const hit=ray.intersectObjects(body,false)[0];
+      const n=hit?.face?hit.face.normal.clone().normalize():new THREE.Vector3(0,1,0);if(n.y<0)n.negate();
+            const eye=new THREE.Group();eye.position.copy(hit?hit.point:new THREE.Vector3(x,.15,z)).addScaledVector(n,r*.15);eye.quaternion.setFromUnitVectors(up,n);group.add(eye);
       const white=new THREE.Mesh(new THREE.SphereGeometry(1,24,12),sclera);white.scale.set(r,r*.5,r);eye.add(white);
       const pupil=new THREE.Mesh(new THREE.SphereGeometry(1,16,8),ink);pupil.scale.set(r*.5,r*.15,r*.5);pupil.position.y=r*.42;eye.add(pupil);
       pupils.push({p:pupil,rest:pupil.position.clone(),room:r*.42,target:new THREE.Vector2()});}
@@ -75,7 +75,7 @@ export const loadCoach=THREE=>loadCoachParts().then(parts=>buildCoach(THREE,part
 // turn: extra yaw so the eye side shows (0 = face end points straight at the camera).
 // The additive sprite glowed in the dark; the lit model carries its own key light, scaled by the sprite's tint
 // (game-scene.js brightens the tint as Coach closes in).
-export function replaceSprite(scene,sprite,{size=.9,lift=0,turn=.9,glow=2.5,rear=false}={}){
+export function replaceSprite(scene,sprite,{size=.9,lift=0,turn=.9,glow=2.5,rear=false,tilt=.6}={}){
   return loadCoach(T).then(coach=>{
     const g=coach.group,to=new T.Vector3();scene.add(g);sprite.material.visible=false;
     const key=new T.PointLight('#f3dcff',0,0,1.4);key.position.set(.25,.55,1.1);g.add(key);
@@ -87,7 +87,7 @@ export function replaceSprite(scene,sprite,{size=.9,lift=0,turn=.9,glow=2.5,rear
       g.position.copy(sprite.position);g.position.y+=k*(lift+.04*Math.abs(Math.sin(now/220))*q);g.scale.setScalar(k);
       // rear: grab beats that put the sprite at the camera's feet (lab): rear the model up to eye level so it looms, face first.
       const near=rear?T.MathUtils.clamp(1-camera.position.distanceTo(sprite.position)/4,0,1):0;g.position.y+=(camera.position.y-.1*k-g.position.y)*near;
-      to.subVectors(camera.position,g.position);g.rotation.set(0,Math.atan2(-to.z,to.x)+turn*(1-.5*near),Math.sin(now/300)*.06*q);
+      to.subVectors(camera.position,g.position);g.rotation.set(tilt,Math.atan2(-to.z,to.x)+turn*(1-.5*near),Math.sin(now/300)*.06*q,'YXZ');
       coach.tick(now,{pressure:sprite.userData.pressure??.4,roll:!!sprite.userData.roll});};
     return coach;
   });
@@ -103,14 +103,15 @@ export function coachElement(svgEl){
     const canvas=renderer.domElement;canvas.style.cssText='position:absolute;inset:0;width:100%;height:100%';canvas.setAttribute('aria-hidden','true');
     const scene=new T.Scene(),camera=new T.PerspectiveCamera(30,.5,.1,20);
     scene.add(new T.HemisphereLight('#f0e2ff','#3a1830',2.2));const key=new T.DirectionalLight('#fff0dc',2.6);key.position.set(1.5,2,3);scene.add(key);
-    coach.group.rotation.set(0,-.35,Math.PI/2);scene.add(coach.group);
+    // Palm down in the file's frame: pivot stands the hand up with its back (and the eyes) toward the camera.
+    const pivot=new T.Group();pivot.rotation.x=Math.PI/2;pivot.add(coach.group);coach.group.rotation.set(0,0,0);const stand=new T.Group();stand.rotation.set(0,-.35,Math.PI/2);stand.add(pivot);scene.add(stand);
     let shown=false,w=0,h=0;
     const frame=now=>{if(dead||!el.isConnected&&shown){renderer.dispose();return;}raf=requestAnimationFrame(frame);
       if(!el.offsetParent)return;const cw=el.clientWidth,ch=el.clientHeight;if(!cw||!ch)return;
       if(cw!==w||ch!==h){w=cw;h=ch;renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.setSize(w,h,false);camera.aspect=w/h;
         // Fit the length (now vertical) to the box height.
-        camera.position.z=1.3/(2*Math.tan(T.MathUtils.degToRad(camera.fov/2)));camera.updateProjectionMatrix();}
-      const q=still()?0:1;coach.group.rotation.y=-.35+Math.sin(now/260)*.12*q;coach.tick(now,{pressure,roll});renderer.render(scene,camera);
+        camera.position.z=1.6/(2*Math.tan(T.MathUtils.degToRad(camera.fov/2)));camera.updateProjectionMatrix();}
+      const q=still()?0:1;stand.rotation.y=-.35+Math.sin(now/260)*.12*q;coach.tick(now,{pressure,roll});renderer.render(scene,camera);
       if(!shown){shown=true;el.append(canvas);const svg=el.querySelector('svg');if(svg)svg.style.visibility='hidden';}};
     raf=requestAnimationFrame(frame);
   }).catch(e=>console.warn('3D coach unavailable, keeping 2D:',e.message));

@@ -74,8 +74,8 @@
     },
     {
       "url": "/tv/assets/armie-intro/coach-3d.mjs",
-      "revision": "0a7ad3814ebd2f8cccce76783591db83579424ad",
-      "bytes": 10487
+      "revision": "5cb50bd6556b89b3a5fb9f9f61654f4c94aba7bf",
+      "bytes": 10821
     },
     {
       "url": "/tv/assets/armie-intro/coach-hand.mjs",
@@ -886,5 +886,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "67686ea7cb0a2c3821d9"
+  "version": "826178f137df882e2eb9"
 }
