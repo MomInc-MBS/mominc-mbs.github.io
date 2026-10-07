@@ -163,6 +163,8 @@ export default {
 
     // the buy button and the forms are in-character only; nothing is sold or sent
     ctx.on(byId("buyBtn"), "click", e => {
+      // Once every story page is done the hand is real: the button opens the customizer (the hand ad still pops on the unlock).
+      if (window.MBS_FLOW?.pagesReady()) { location.assign("/handborne/"); return; }
       const b = e.currentTarget; b.textContent = "MOM IS PROCESSING YOUR DEVOTION…"; b.disabled = true;
       ctx.timeout(() => { b.textContent = "THERE IS NO CHECKOUT. THERE NEVER WAS."; }, 1400);
     });

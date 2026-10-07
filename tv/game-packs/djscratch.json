@@ -184,8 +184,8 @@
     },
     {
       "url": "/tv/channels/djscratch.js",
-      "revision": "56515944521f2c83ee9c9ffa03efff8e36c6ddb1",
-      "bytes": 55774
+      "revision": "18779c98779cd64914f398bf6361f7d8af58fba9",
+      "bytes": 55988
     },
     {
       "url": "/tv/dj-booth.css",
@@ -284,8 +284,8 @@
     },
     {
       "url": "/tv/retro-ads.js",
-      "revision": "d0ecafdf07791f26fea8e36d0537af45d76053c9",
-      "bytes": 8906
+      "revision": "23bfa9a3a23ba1df0202d48a8fb33a35a153d687",
+      "bytes": 9178
     },
     {
       "url": "/tv/retro-pointer.js",
@@ -327,5 +327,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "183a5ad3b8f86f4debab"
+  "version": "9e0806cd471d943d9df4"
 }

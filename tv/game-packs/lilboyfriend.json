@@ -69,13 +69,13 @@
     },
     {
       "url": "/play/lilboyfriend/index.html",
-      "revision": "fb5e0c0be71239f1b43244548ac4302042e5b129",
-      "bytes": 2365
+      "revision": "8c617c5dcf1a34f377dc9b3a1a6c923c21a8477c",
+      "bytes": 2440
     },
     {
       "url": "/play/lilboyfriend/main.js",
-      "revision": "75b9fab58f9f47b389f39b228dc5257a64ee0910",
-      "bytes": 41934
+      "revision": "74f54438e6e4b147cd724aaf807e5f68aad5b1cf",
+      "bytes": 43197
     },
     {
       "url": "/play/lilboyfriend/mom-propaganda.js",
@@ -144,8 +144,8 @@
     },
     {
       "url": "/play/lilboyfriend/style.css",
-      "revision": "882d991fc62e3a44ec03a6a480922633ed2ff7cd",
-      "bytes": 8020
+      "revision": "9619d8014b401e31d5518c7acb0e88e0a20152a6",
+      "bytes": 8606
     },
     {
       "url": "/play/lilboyfriend/surfaces.js",
@@ -469,8 +469,8 @@
     },
     {
       "url": "/tv/retro-ads.js",
-      "revision": "d0ecafdf07791f26fea8e36d0537af45d76053c9",
-      "bytes": 8906
+      "revision": "23bfa9a3a23ba1df0202d48a8fb33a35a153d687",
+      "bytes": 9178
     },
     {
       "url": "/tv/retro-pointer.js",
@@ -513,5 +513,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap",
     "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
   ],
-  "version": "729298b6219bee799c53"
+  "version": "bad7d5792caa965732d0"
 }
