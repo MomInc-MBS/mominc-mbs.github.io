@@ -267,7 +267,7 @@ export default {
     const vis=get('dgVis'), say=get('dgNudge'), unit=get('dgPaperUnit');
     let busy=false, returnFocus=null, batch=null;
     // Portrait: size the stage to the visible TV glass so the belt and the dock share one screen (the CSS 100dvh overshoots the glass).
-    const fit=()=>{const sc=dg.closest('.screen');stage.style.height=sc&&matchMedia('(orientation:portrait)').matches?sc.clientHeight+'px':'';};
+    const fit=()=>{const sc=dg.closest('.screen');const on=sc&&matchMedia('(orientation:portrait)').matches;stage.style.height=on?sc.clientHeight+'px':'';stage.style.minHeight=on?'0':'';};
     fit();ctx.on(window,'resize',fit);
     let labAudio=null,labMuted=false,beat=0;
     function labTone(freq,dur,gain,type='sine',end=freq){if(!labAudio||labMuted)return;const t=labAudio.currentTime,o=labAudio.createOscillator(),v=labAudio.createGain();o.type=type;o.frequency.setValueAtTime(freq,t);o.frequency.exponentialRampToValueAtTime(Math.max(20,end),t+dur);v.gain.setValueAtTime(gain,t);v.gain.exponentialRampToValueAtTime(.0001,t+dur);o.connect(v).connect(labAudio.destination);o.start();o.stop(t+dur);o.onended=()=>{o.disconnect();v.disconnect();};}

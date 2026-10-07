@@ -164,13 +164,13 @@
     },
     {
       "url": "/tv/channels/girlfriend.html",
-      "revision": "2f41903d2d4b1394541a4710f8e50399080e3bec",
-      "bytes": 21498
+      "revision": "2aca11bc1f2afa60d2f9f224f9cb80e0285cea08",
+      "bytes": 21534
     },
     {
       "url": "/tv/channels/girlfriend.js",
-      "revision": "e6b767e5446ee7989b7bcf1aa6e7bfe1c8d77db2",
-      "bytes": 26768
+      "revision": "c6b64487fcecd80bed956ff7c17f0a478fd55c3e",
+      "bytes": 26812
     },
     {
       "url": "/tv/dj-booth.css",
@@ -312,5 +312,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "bbc65b80b2ea960a2988"
+  "version": "1c4a54dd4e075f7da8a1"
 }
