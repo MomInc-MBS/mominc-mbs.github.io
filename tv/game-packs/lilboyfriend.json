@@ -39,8 +39,8 @@
     },
     {
       "url": "/play/lilboyfriend/choreography.js",
-      "revision": "9056268ca696b62d4fcb57cc536748e3cdaa0991",
-      "bytes": 7801
+      "revision": "e71f26ba3b5363bb3b6512ba9555e4ccfd79ee2e",
+      "bytes": 8406
     },
     {
       "url": "/play/lilboyfriend/content.js",
@@ -89,13 +89,13 @@
     },
     {
       "url": "/play/lilboyfriend/opening-layout.js",
-      "revision": "5d35152e50461954c508d260a80472cb983d3913",
-      "bytes": 933
+      "revision": "98dd25ee30f094ab95da49e7dcf52b46a02eb506",
+      "bytes": 864
     },
     {
       "url": "/play/lilboyfriend/rig.js",
-      "revision": "4f1cec734d74113b047897f27ef9210a656f6f20",
-      "bytes": 21725
+      "revision": "0aca50fbe61f21406d61ffaa4afdd3f3c2f0fac6",
+      "bytes": 22041
     },
     {
       "url": "/play/lilboyfriend/room-copy.js",
@@ -498,5 +498,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap",
     "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
   ],
-  "version": "950ab42f869c581e35ea"
+  "version": "e90cf823205d8bfa6fd9"
 }
