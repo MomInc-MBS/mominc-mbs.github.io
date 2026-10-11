@@ -89,8 +89,8 @@
     },
     {
       "url": "/handborne/index.html",
-      "revision": "55883a5e561425ad267ff8645a68389baef2d2f2",
-      "bytes": 1292
+      "revision": "65542dc89c84a44e81d3574599a56378923c0eaf",
+      "bytes": 1400
     },
     {
       "url": "/handborne/invitation.css",
@@ -348,6 +348,36 @@
       "bytes": 196205
     },
     {
+      "url": "/shader-aurora.mjs",
+      "revision": "d65276c4284e8c0e3320d0ad3b7e7adbc11eded2",
+      "bytes": 2197
+    },
+    {
+      "url": "/shader-effects.css",
+      "revision": "edf196028343774a278d34c382aae40d14cd463b",
+      "bytes": 1438
+    },
+    {
+      "url": "/shader-effects.mjs",
+      "revision": "2793d189efef1c09f4d65771938dd0cee939e24b",
+      "bytes": 7149
+    },
+    {
+      "url": "/shader-entry.mjs",
+      "revision": "d750bedcf1408826055b06c62df2ed9029934fab",
+      "bytes": 303
+    },
+    {
+      "url": "/shader-hologram.mjs",
+      "revision": "e4449d7addd42a1d567154930fbf0f4d1178b085",
+      "bytes": 2996
+    },
+    {
+      "url": "/shader-sparkle.mjs",
+      "revision": "1aaa6bbcdc2628ab3d24bc10cfd2635caffdc832",
+      "bytes": 3220
+    },
+    {
       "url": "/tv/assets/brushed-aluminum.png",
       "revision": "97e0339b9b4126fedb12ed68c94f8ab1e13bdd4b",
       "bytes": 2759321
@@ -484,8 +514,8 @@
     },
     {
       "url": "/tv/index.html",
-      "revision": "144ed2fba297a3c1ed682acebe0e618cd09ba25c",
-      "bytes": 14824
+      "revision": "405b5fa00a7ed350def1c956d548fec6634826c3",
+      "bytes": 14931
     },
     {
       "url": "/tv/landing.css",
@@ -581,10 +611,15 @@
       "url": "/tv/tv.js",
       "revision": "1d57eebf8b09aa15946791574bdcc935d95ba646",
       "bytes": 37478
+    },
+    {
+      "url": "/vendor/shaders/runtime.mjs",
+      "revision": "b96316bcaabf6d1ce902c3ef45ac3712d6cacd7f",
+      "bytes": 2579959
     }
   ],
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "1e5548403c6d049137a2"
+  "version": "1f3ce918bd12b4460018"
 }

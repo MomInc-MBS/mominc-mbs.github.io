@@ -347,6 +347,48 @@ test('all generated packs match every current website asset', () => {
   }
 });
 
+test('shader-enabled packs include the locally bundled engine for offline lazy imports', () => {
+  const runtimeUrl = '/vendor/shaders/runtime.mjs';
+  const manager = readFileSync(new URL('shader-effects.mjs', root), 'utf8');
+  assert.ok(manager.includes(`import('${runtimeUrl}')`), 'inspect the engine imported by the shared manager');
+  for (const game of ['djscratch', 'goon']) {
+    const manifest = JSON.parse(readFileSync(new URL(`tv/game-packs/${game}.json`, root)));
+    assert.ok(manifest.assets.some(asset => asset.url === '/shader-effects.mjs'), `${game} must include its shader manager`);
+    assert.ok(manifest.assets.some(asset => asset.url === runtimeUrl), `${game} must download the lazily imported engine before offline play`);
+  }
+  for (const name of readdirSync(new URL('tv/game-packs/', root))) {
+    const manifest = JSON.parse(readFileSync(new URL('tv/game-packs/' + name, root)));
+    if (manifest.assets.some(asset => asset.url === '/shader-effects.mjs')) {
+      assert.equal(manifest.assets.filter(asset => asset.url === runtimeUrl).length, 1, `${name}: engine is included once`);
+    }
+  }
+});
+
+test('font inventory ignores runtime templates and preserves concrete Google font URLs', () => {
+  const source = [
+    '<link href="https://fonts.googleapis.com/css2?family=Anton&amp;display=swap">',
+    '`https://fonts.googleapis.com/css2?family=VT323&display=swap`,document.head.appendChild(s)',
+    '`https://fonts.googleapis.com/css2?family=${e.trim().replace(/ /g,"+")}`',
+    '`https://fonts.googleapis.com/css2?family=${t}:wght@400&display=swap`,document.head.appendChild(s)',
+  ].join('\n');
+  const result = execFileSync('python', ['-c',
+    'import json, runpy, sys; scan=runpy.run_path(sys.argv[1])["google_font_styles"]; print(json.dumps(sorted(scan(sys.argv[2]))))',
+    'tools/gen_game_packs.py', source], {cwd: root, encoding: 'utf8'});
+  assert.deepEqual(JSON.parse(result), [
+    'https://fonts.googleapis.com/css2?family=Anton&display=swap',
+    'https://fonts.googleapis.com/css2?family=VT323&display=swap',
+  ]);
+  for (const name of readdirSync(new URL('tv/game-packs/', root))) {
+    const manifest = JSON.parse(readFileSync(new URL('tv/game-packs/' + name, root)));
+    for (const url of manifest.fontStyles) {
+      assert.ok(!url.includes('${') && !url.includes('`'), `${name}: only concrete URLs may block download readiness`);
+      assert.equal(new URL(url).hostname, 'fonts.googleapis.com');
+    }
+  }
+  const hand = JSON.parse(readFileSync(new URL('tv/game-packs/handborne.json', root)));
+  assert.ok(hand.fontStyles.some(url => url.includes('family=Bowlby+One+SC')), 'the actual shared font stylesheet stays cached');
+});
+
 test('the channel dial tunes in numeric order with mouse, touch, and keyboard', () => {
   const shell = readFileSync(new URL('tv/tv.js', root), 'utf8');
   const styles = readFileSync(new URL('tv/tv.css', root), 'utf8');

@@ -1,0 +1,20 @@
+/* The shader is decorative; native artwork, text and touch targets stay in front. */
+canvas.shaders-layer{position:absolute!important;pointer-events:none!important;image-rendering:auto!important;object-fit:fill!important;max-width:none!important;filter:none;display:block}
+canvas.shaders-layer[data-shader-effect="hologram"]{mix-blend-mode:screen}
+.meditation-far>.shaders-layer{filter:grayscale(1)!important;mix-blend-mode:screen;transition:filter 2.5s ease}
+.meditation-colour .meditation-far>.shaders-layer{filter:none!important}
+.ship-header>.shaders-layer{border-radius:inherit}
+.ship-header>a,.ship-header>button{position:relative;z-index:1}
+#holoStage{isolation:isolate}
+#holoStage>canvas:not(.shaders-layer){z-index:1}
+.portrait>.shaders-layer{z-index:0!important;filter:none!important}
+.dj .logobar,.reward-pack-card{position:relative}
+.dj .logobar>.shaders-layer{mix-blend-mode:screen}
+.drop-pod-card>.shaders-layer,.reward-pack-card>.shaders-layer,.creature-skin-reward>.shaders-layer{mix-blend-mode:screen}
+.cage-bays{position:relative;isolation:isolate}
+.cage-bays>button{position:relative;z-index:1}
+.gala-bay-stage{isolation:isolate}
+.gala-bay-stage>canvas:not(.shaders-layer){z-index:1}
+.design-studio .hand-canvas>.shaders-layer{mix-blend-mode:screen}
+.design-studio .hand-canvas>canvas:not(.shaders-layer){position:relative;z-index:1}
+@media(prefers-reduced-motion:reduce){canvas.shaders-layer{display:none!important}}

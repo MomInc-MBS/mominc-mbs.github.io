@@ -21,6 +21,13 @@ TEXT = {'.html', '.js', '.mjs', '.css', '.json', '.mtl'}
 SLUGS = ['mominc', 'girlfriend', 'lilboyfriend', 'corgi', 'djscratch', 'fuel', 'goon', 'war-room', 'armie', 'handborne']
 
 
+def google_font_styles(source):
+    """Collect concrete font stylesheet URLs, never JS template expressions."""
+    return {html.unescape(url) for url in re.findall(
+        r'https://fonts\.googleapis\.com/[^\s\"\'<>`]+', source
+    ) if '${' not in url}
+
+
 def working_record(path, file_path):
     """Return the blob Git will commit, not checkout-specific Windows bytes."""
     raw = file_path.read_bytes()
@@ -69,7 +76,10 @@ def build(refresh=False):
     for f in ROOT.iterdir():
         if f.is_file() and f.suffix in EXT:
             overlay(f.name, f)
-    for base in ['tv', 'games', 'play', 'gala', 'handborne', 'arcade']:
+    # Include the locally bundled shader engine before its first commit, so a
+    # literal lazy import is followed by the dependency scan just like other JS.
+    # Only this vendor subtree is overlaid; unrelated vendor assets stay in HEAD.
+    for base in ['tv', 'games', 'play', 'gala', 'handborne', 'arcade', 'vendor/shaders']:
         for f in (ROOT / base).rglob('*'):
             if f.is_file() and f.suffix in EXT and 'game-packs' not in f.parts:
                 path = f.relative_to(ROOT).as_posix()
@@ -151,7 +161,7 @@ def build(refresh=False):
             # it before scanning references (and never rescan a megabyte token).
             source = re.sub(r'data:[^,\s\"\']+,[^\s\"\'<>]+', '', read(path))
             source = re.sub(r'/\*.*?\*/|^\s*//[^\n]*', '', source, flags=re.S | re.M)
-            fonts.update(html.unescape(u) for u in re.findall(r'https://fonts\.googleapis\.com/[^\s\"\'<>]+', source))
+            fonts.update(google_font_styles(source))
             refs = set(re.findall(r'(?<![\w./@-])[\w./@-]{1,240}\.(?:js|mjs|css|json|png|jpg|jpeg|webp|svg|gif|mp4|webm|mp3|wav|glb|obj|mtl|ttf|woff2?)\b', source))
             for ref in refs:
                 if Path(path).suffix in {'.js', '.mjs', '.json'} and Path(ref).suffix in {'.js', '.mjs'} and '/' not in ref:
