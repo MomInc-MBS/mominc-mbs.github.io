@@ -164,8 +164,8 @@
     },
     {
       "url": "/play/misinformation/flight.css",
-      "revision": "3d3d0f996493fa994805c93552fb377ddc4744fc",
-      "bytes": 17949
+      "revision": "5b99f367f498b7919d5ea5de462c6ebba83111bc",
+      "bytes": 18853
     },
     {
       "url": "/play/misinformation/index.html",
@@ -492,5 +492,5 @@
     "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "95cd46eff3d1b8bb3764"
+  "version": "0cd26cce7d5c81160faa"
 }
