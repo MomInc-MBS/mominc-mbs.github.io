@@ -164,7 +164,7 @@ function resize() {
   renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
   const v = THREE.MathUtils.degToRad(camera.fov / 2), hz = Math.atan(Math.tan(v) * camera.aspect);
   portrait = THREE.MathUtils.clamp((1 - camera.aspect) / .55, 0, 1);
-  fitD = Math.max(1.35 / Math.tan(v), (1.25 - .17 * portrait) / Math.tan(hz)) + .45; // the screen and its note fill the frame, phone portrait included
+  fitD = Math.max(1.35 / Math.tan(v), 1.42 / Math.tan(hz)) + .45; // the screen and its note fill the frame, phone portrait included
 }
 const scr = new THREE.Vector3();
 function place(el, world, size, show) {

@@ -384,7 +384,7 @@ body{display:block;padding:0;overflow:hidden}
 .off3d-note{border-radius:6px}
 .off3d-wire{border:2px dashed rgba(255,211,110,.55); animation:off3dPulse 1.6s ease-in-out infinite}
 @keyframes off3dPulse{50%{border-color:rgba(255,211,110,.1)}}
-.off3d-hint{position:absolute; left:0; right:0; bottom:max(18px, env(safe-area-inset-bottom)); margin:0; text-align:center; pointer-events:none;
+.off3d-hint{position:absolute; left:0; right:0; top:max(18px, env(safe-area-inset-top)); margin:0; text-align:center; pointer-events:none;
   font:600 15px/1 "Barlow Condensed", sans-serif; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,211,110,.7); transition:opacity 1.2s ease}
 .off3d-hint.gone{opacity:0}
 .off3d-sr{position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); margin:0}
