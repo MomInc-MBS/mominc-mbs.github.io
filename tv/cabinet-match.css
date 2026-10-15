@@ -1,0 +1,181 @@
+/* The live set follows the gold computer's front: channel tube, picture, controls. */
+.tv .cabinet{
+  position:relative;
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  grid-template-rows:clamp(126px,22vh,210px) minmax(0,1fr) auto auto;
+  grid-template-areas:"lcd" "screen" "gauge" "panel";
+  gap:7px;
+  padding:12px clamp(18px,3vw,38px) 14px;
+  overflow:hidden;
+  background:
+    repeating-linear-gradient(108deg,#fff3 0 1px,transparent 1px 4px),
+    linear-gradient(108deg,#6d4825 0%,#b28b4b 2%,#e5c77d 7%,#9c7137 50%,#dbb86c 93%,#573719 100%);
+  box-shadow:inset 0 2px 1px #fff5,inset 0 -5px 8px #3d230e,0 0 0 2px #2b180a;
+}
+.tv[data-gauge="off"] .cabinet{grid-template-columns:minmax(0,1fr);grid-template-areas:"lcd" "screen" "gauge" "panel"}
+.cabinet > .channel-crt{
+  grid-area:lcd;
+  min-width:0;
+  min-height:0;
+  height:100%;
+  padding:8px 12px;
+  border:8px ridge #b38b4e;
+  border-radius:46% 46% 12% 12% / 18% 18% 10% 10%;
+  background:radial-gradient(ellipse at 50% 8%,#342716,#090b0e 72%);
+  box-shadow:inset 0 0 0 2px #100d08,inset 0 8px 24px #000c,0 3px 0 #5f3e1e,0 5px 12px #0007;
+}
+.channel-crt.lcd{display:grid;grid-template-rows:auto minmax(0,1fr);gap:3px;overflow:hidden}
+.channel-crt .vfd{display:flex;align-items:baseline;gap:10px;min-width:0;padding:2px 5px 4px;white-space:nowrap}
+.channel-crt .vfd-ch{flex:none}
+.channel-crt .vfd-name{font-size:clamp(17px,2vw,25px);min-width:0;text-overflow:ellipsis}
+.channel-crt .vfd-show{font-size:12px;text-overflow:ellipsis}
+.channel-crt .lcd-list{display:flex;flex-wrap:wrap;align-content:start;gap:4px;min-height:0;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#aa8047 #1c150d}
+.channel-crt .lcd-card,.channel-crt .lcd-card.half,.channel-crt .lcd-card.head{flex:0 0 auto;grid-column:auto;grid-template-columns:auto;min-height:32px;margin:0;padding:5px 9px;align-content:center;white-space:nowrap}
+.channel-crt .lcd-card .lcd-ch{display:none}
+.channel-crt .lcd-card .lcd-name,.channel-crt .lcd-card.half .lcd-name,.channel-crt .lcd-card.head .lcd-name{font-size:clamp(13px,1.3vw,16px)}
+.channel-crt .lcd-card.head{border-width:2px}
+
+.tv .cabinet > .bezel{
+  grid-area:screen;
+  min-width:0;
+  min-height:0;
+  padding:8px;
+  border:5px ridge #b48d50;
+  border-radius:22px;
+  background:linear-gradient(130deg,#6c4925,#d7b46c 7%,#86602d 50%,#d7b46c 93%,#54381d);
+  box-shadow:inset 0 2px 3px #fff6,inset 0 -4px 6px #301a0d,0 5px 10px #0008;
+}
+.cabinet .bezel::after{right:17px;bottom:2px;color:#705025;text-shadow:0 1px 1px #f7dd9d,0 -1px 1px #3c280f;font-size:13px}
+.cabinet .glass{border-radius:24px / 20px;box-shadow:inset 0 0 0 3px #070708,inset 0 0 38px #000d}
+
+.tv .cabinet > .gauge{
+  grid-area:gauge;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:7px;
+  min-height:19px;
+  padding:0 4px;
+  border:0;
+}
+.tv[data-gauge="off"] .cabinet > .gauge,.tv[data-mode="game"] .cabinet > .gauge{display:none}
+.cabinet .gauge-pct{font-size:13px;line-height:1}
+.cabinet .gauge-track{width:clamp(72px,14vw,130px);height:8px;flex:none;border-radius:8px}
+.cabinet .gauge-fill{left:0;top:0;bottom:auto;transform:none;width:calc(var(--meter,0) * 1%);height:100%;border-radius:8px;background:linear-gradient(90deg,#d6a531,#ffb84f,#ee457f)}
+.cabinet .gauge-label{writing-mode:initial;font-size:10px;letter-spacing:.12em}
+
+.tv .cabinet > .panel{
+  grid-area:panel;
+  display:block;
+  min-width:0;
+  margin:0;
+  padding:7px 10px 8px;
+  border:4px ridge #b48a4b;
+  border-radius:10px 10px 18px 18px;
+  background:linear-gradient(175deg,#e5c67b,#bb9655 45%,#8c6231);
+  box-shadow:inset 0 2px 2px #fff5,inset 0 -3px 5px #3b240e,0 4px 7px #0007;
+}
+.tv .panel #ctlrow{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:center;
+  gap:8px 15px;
+  min-width:0;
+  padding:0;
+}
+.tv .panel .dial-block{order:0;width:58px;gap:0}
+.tv .panel .dial-ring{display:none}
+.tv .panel .dial{width:48px;height:48px;margin:0;background:radial-gradient(circle at 37% 28%,#e5c879,#96703c 60%,#43270f)}
+.tv .panel .dial-grip{inset:10px;background:repeating-conic-gradient(#9b7541 0 8deg,#573619 8deg 16deg)}
+.tv .panel .dial-block .legend{margin-top:4px;color:#35220d}
+.tv .panel .keys{order:1;display:flex;flex-direction:row;align-items:center;gap:7px;margin:0}
+.tv .panel .key-item{width:auto;display:grid;grid-template-columns:auto;justify-items:center;gap:3px}
+.tv .panel .key{width:44px;height:44px}
+.tv .panel .key.power{width:44px;height:44px}
+.tv .panel .key-item .legend{font-size:10px;line-height:1;color:#33220e;text-shadow:0 1px #ffe2a3}
+.tv .panel .pilot{margin:0 0 14px 1px}
+.tv .panel .maker{order:2;margin:0 3px 0 6px;gap:5px}
+.tv .panel .maker .emboss,.tv .panel .maker .engrave{font-size:clamp(20px,2vw,27px);color:#8b642f;text-shadow:0 1px #f8dfa1,0 -1px #493015}
+.tv .panel .maker .inscription{font:700 clamp(12px,1.35vw,17px)/1.15 Georgia,serif;letter-spacing:.12em;white-space:nowrap;color:#765223;text-shadow:0 1px #f7dfa4,0 -1px #38230e}
+.tv .panel .model{order:3;flex-basis:100%;margin:0;text-align:center;color:#4a3016}
+.tv .panel .ambience-toggle{order:4;margin:0;min-height:44px;padding:5px 10px}
+.cabinet-side-brand{
+  position:absolute;
+  z-index:4;
+  top:28%;
+  bottom:19%;
+  width:17px;
+  overflow:hidden;
+  pointer-events:none;
+  font:600 clamp(11px,1.3vw,17px)/1 "Anton",var(--print);
+  letter-spacing:.25em;
+  writing-mode:vertical-rl;
+  text-align:center;
+  color:#99723c;
+  text-shadow:1px 1px #f7d991,-1px -1px #533719;
+}
+.cabinet-side-brand--left{left:7px;transform:rotate(180deg)}
+.cabinet-side-brand--right{right:7px}
+
+/* The 3D face supplies its own gold rim; the original, live channel UI fills that aperture. */
+.off3d:has(> #lcd.channel-crt){touch-action:pan-y}
+.off3d:has(> #lcd.channel-crt) canvas{touch-action:none}
+.off3d > #lcd.channel-crt{
+  position:absolute;
+  z-index:2;
+  width:auto;
+  height:auto;
+  min-width:0;
+  min-height:0;
+  padding:4px 6px;
+  border:0;
+  border-radius:8% / 13%;
+  background:radial-gradient(ellipse at 50% 5%,#17291d,#080b0b 78%);
+  box-shadow:inset 0 0 0 2px #080704,inset 0 4px 13px #000d;
+  pointer-events:auto;
+}
+.off3d > #lcd .vfd{gap:5px;padding:0 3px 2px}
+.off3d > #lcd .vfd-ch{font-size:11px}
+.off3d > #lcd .vfd-name{font-size:15px}
+.off3d > #lcd .vfd-show{font-size:10px}
+.off3d > #lcd .lcd-card,.off3d > #lcd .lcd-card.half,.off3d > #lcd .lcd-card.head{min-height:29px;padding:3px 7px}
+.off3d > #lcd .lcd-card .lcd-name,.off3d > #lcd .lcd-card.half .lcd-name,.off3d > #lcd .lcd-card.head .lcd-name{font-size:13px}
+
+@media(max-width:640px){
+  .tv .cabinet{grid-template-rows:clamp(135px,20dvh,176px) minmax(0,1fr) auto auto;gap:5px;padding:7px 20px max(8px,env(safe-area-inset-bottom))}
+  .cabinet > .channel-crt{padding:5px 6px;border-width:5px}
+  .channel-crt .vfd{gap:6px;padding:1px 2px 3px}
+  .channel-crt .vfd-name{font-size:16px}
+  .channel-crt .vfd-show{font-size:10px}
+  .channel-crt .lcd-card,.channel-crt .lcd-card.half,.channel-crt .lcd-card.head{min-height:32px;padding:5px 8px}
+  .channel-crt .lcd-card .lcd-name,.channel-crt .lcd-card.half .lcd-name,.channel-crt .lcd-card.head .lcd-name{font-size:13px}
+  .tv .cabinet > .bezel{padding:5px;border-width:4px}
+  .tv .cabinet > .panel{padding:4px 4px 5px;border-width:3px}
+  .tv .panel #ctlrow{justify-content:space-evenly;gap:4px 5px}
+  .tv .panel .dial-block{width:46px}
+  .tv .panel .dial{width:44px;height:44px}
+  .tv .panel .dial-block .legend{display:none}
+  .tv .panel .keys{gap:4px}
+  .tv .panel .key-item .legend{display:none}
+  .tv .panel .maker{margin:0;gap:3px}
+  .tv .panel .maker .emboss,.tv .panel .maker .engrave{font-size:17px}
+  .tv .panel .maker .inscription{font-size:11px;letter-spacing:.09em}
+  .tv .panel .model{display:none}
+  .tv .panel .ambience-toggle{order:4;flex:0 1 auto;min-height:44px;margin:0;padding:4px 8px;font-size:10px}
+  .cabinet-side-brand{top:22%;bottom:19%;width:12px;font-size:10px;letter-spacing:.13em}
+  .cabinet-side-brand--left{left:3px}
+  .cabinet-side-brand--right{right:3px}
+}
+
+/* Entered games keep the selector above the stage and the exit key below it. */
+.tv[data-mode="game"] .cabinet{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto;grid-template-areas:"lcd" "screen" "panel";gap:0;padding:0;background:#09090b;box-shadow:none}
+.tv[data-mode="game"] .cabinet > .channel-crt{grid-area:lcd;height:auto;min-height:48px;padding:4px 6px;border:0;border-radius:0;box-shadow:none}
+.tv[data-mode="game"] .channel-crt .lcd-list{flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden}
+.tv[data-mode="game"] .channel-crt .lcd-card,.tv[data-mode="game"] .channel-crt .lcd-card.half,.tv[data-mode="game"] .channel-crt .lcd-card.head{min-height:40px;padding:6px 10px}
+.tv[data-mode="game"] .cabinet > .bezel{grid-area:screen;border:0;border-radius:0;box-shadow:none}
+.tv[data-mode="game"] .cabinet > .panel{grid-area:panel;display:block;margin:0;padding:4px 8px;border:0;border-top:1px solid #5d482b;border-radius:0;background:#17120c;box-shadow:none}
+.tv[data-mode="game"] .panel #ctlrow{justify-content:flex-end}
+.tv[data-mode="game"] .panel .key-item .legend{display:none}
+.tv[data-mode="game"] .cabinet-side-brand{display:none}

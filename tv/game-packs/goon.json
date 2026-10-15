@@ -333,6 +333,11 @@
       "bytes": 1772
     },
     {
+      "url": "/tv/cabinet-match.css",
+      "revision": "c3469ca9963741873cbb0df7ec66afd1694b1d6f",
+      "bytes": 9165
+    },
+    {
       "url": "/tv/card.js",
       "revision": "f5e500bebff2e9f933ed486eb432c49696d70077",
       "bytes": 8536
@@ -399,8 +404,8 @@
     },
     {
       "url": "/tv/index.html",
-      "revision": "1c346ddfd0a8e7fb9e232d50e2c9fd9876ca11cc",
-      "bytes": 14964
+      "revision": "5212c47e8c3a34c074a1900967c17df57528e563",
+      "bytes": 15243
     },
     {
       "url": "/tv/landing.css",
@@ -439,8 +444,8 @@
     },
     {
       "url": "/tv/off-scene.mjs",
-      "revision": "2efe5d9b47fcf79be3f04615e686c97edef2b1c5",
-      "bytes": 28420
+      "revision": "52e07a5eb59cae7592808582074ef34658b13cbc",
+      "bytes": 32399
     },
     {
       "url": "/tv/phone-layout.js",
@@ -499,8 +504,8 @@
     },
     {
       "url": "/tv/tv.js",
-      "revision": "e104038600d3698ff1a2ae423343b91e2971636f",
-      "bytes": 35651
+      "revision": "30a27cf9a9094d8fba5931ab513b96535972fa58",
+      "bytes": 35649
     },
     {
       "url": "/vendor/shaders/runtime.mjs",
@@ -512,5 +517,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "78e86b6699e35a62d765"
+  "version": "fd71b2c5410fe69e8099"
 }
