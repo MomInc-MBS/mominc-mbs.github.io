@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "tool": "built-in image_gen",
+  "references": [
+    "Approved original OBS SpaceTime paper-cut saucer still",
+    "Nauseous Intro R3 clean v2 palette/shape reference"
+  ],
+  "assets": [
+    {
+      "path": "dist/assets/space-atlas.png",
+      "layout": "2 columns x 4 rows",
+      "purpose": "quiet paper-cut space backgrounds from realistic orbit to sci-fi base"
+    },
+    {
+      "path": "dist/assets/player-saucer.png",
+      "purpose": "orange/gold repaired escape saucer, dark obscured pilot"
+    },
+    {
+      "path": "dist/assets/mom-pursuer.png",
+      "purpose": "transparent derivation of approved one-eyed purple/gold OBS saucer"
+    }
+  ],
+  "spritePrompts": [
+    {
+      "key": "momPursuer",
+      "prompt": "Use case: background-extraction. Asset type: transparent production game sprite. EDIT TARGET: the reference image. Isolate ONLY the existing CENTRAL purple-and-gold paper-cut flying saucer and its clear gold-rimmed dome with the one-eyed purple pilot. Keep the exact approved craft design, silhouette, layered rough paper texture, purple hue, gold dots, gold trim, pilot head shape, single eye and proportions unchanged. This must look like the very same saucer from the reference, not a redesign. Remove the background, Earth, all asteroids, stars, all text, hanging sign, tether, and small satellite next to the craft. Include entire central saucer and pilot dome uncropped with a little transparent padding, front three-quarter/elevation matching the reference. Preserve soft self shadows only; no floor or opaque background. Genuinely transparent alpha background. No new elements, no letters, no additional eyes. Center single craft on canvas."
+    },
+    {
+      "key": "playerSaucer",
+      "prompt": "Use case: stylized-concept. Asset type: transparent production game sprite for the player's escape saucer. REFERENCE image is style and craft-shape reference only. Make one new flying saucer in the EXACT same simple dimensional paper-cut PBS school-television diorama style as the central reference craft. Keep a similar wide oval saucer silhouette, small rounded dome and layered paper edges, but player's hull is burnt ORANGE and warm GOLD, with gold concentric trim and gold small circular porthole accents. Show subtle improvised hacked patch seams / paper repair tabs on the orange hull without visual clutter. Dome center is very DARK near-black smoky paper/glass; the pilot is fully obscured, no visible face, eyes or recognizable person. Friendly handmade geometric silhouette, tactile matte craft-paper grain, restrained soft shadows between layers. Entire single craft centered and uncropped, same view angle as reference, transparent padding. No Earth, sky, stars, asteroids, satellites, text, logo, hanging signs, labels, floor or background. True transparent alpha background. Read clearly at 100 pixels wide."
+    }
+  ]
+}

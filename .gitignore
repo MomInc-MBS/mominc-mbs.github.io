@@ -15,3 +15,7 @@ PLAN-REVIEW-LOG.md
 # gate screenshots, regenerated on every run
 tools/shots/
 tools/node_modules/
+
+# Local browser QA artifacts
+.qa/
+__pycache__/

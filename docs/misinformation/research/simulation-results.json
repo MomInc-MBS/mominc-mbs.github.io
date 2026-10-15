@@ -1,0 +1,238 @@
+{
+  "version": "proposal-v0.3",
+  "base_scores": {
+    "1": 10,
+    "2": 15,
+    "3": 30,
+    "4": 60,
+    "5": 85,
+    "6": 100
+  },
+  "propulsion_scale": 50,
+  "score_provenance": "Parent verified original Krillion runtime; attach parent evidence in research dossier.",
+  "approach": 90000,
+  "station": 100000,
+  "primary_variant": "strict_whole_run",
+  "optional_variant": "optional_persistent_locks",
+  "checks_passed": 12,
+  "checks": [
+    {
+      "case": "Reference scores preserved, propulsion scaled separately",
+      "result": "pass",
+      "state": {
+        "mode": "strict_whole_run",
+        "distance": 0,
+        "score": 0,
+        "hits": 0,
+        "locks": 0,
+        "eligible": true,
+        "escaped": false,
+        "dead": false,
+        "questions": 0
+      }
+    },
+    {
+      "case": "Strict fastest win: exactly 20 maximum answers / 2000 base points",
+      "result": "pass",
+      "state": {
+        "mode": "strict_whole_run",
+        "distance": 100000,
+        "score": 2000,
+        "hits": 0,
+        "locks": 0,
+        "eligible": true,
+        "escaped": true,
+        "dead": false,
+        "questions": 20
+      }
+    },
+    {
+      "case": "One low answer prevents strict docking despite 10000 later maxima",
+      "result": "pass",
+      "state": {
+        "mode": "strict_whole_run",
+        "distance": 90000,
+        "score": 1000085,
+        "hits": 0,
+        "locks": 0,
+        "eligible": false,
+        "escaped": false,
+        "dead": false,
+        "questions": 10001
+      }
+    },
+    {
+      "case": "Unlimited low-tier grinding cannot win",
+      "result": "pass",
+      "state": {
+        "mode": "strict_whole_run",
+        "distance": 90000,
+        "score": 100000,
+        "hits": 0,
+        "locks": 0,
+        "eligible": false,
+        "escaped": false,
+        "dead": false,
+        "questions": 10000
+      }
+    },
+    {
+      "case": "Skip cannot bypass strict all-questions rule",
+      "result": "pass",
+      "state": {
+        "mode": "strict_whole_run",
+        "distance": 90000,
+        "score": 2000,
+        "hits": 0,
+        "locks": 0,
+        "eligible": false,
+        "escaped": false,
+        "dead": false,
+        "questions": 21
+      }
+    },
+    {
+      "case": "Late low naming answer immediately loses eligibility even when classification misses",
+      "result": "pass",
+      "state": {
+        "mode": "strict_whole_run",
+        "distance": 90000,
+        "score": 1900,
+        "hits": 1,
+        "locks": 0,
+        "eligible": false,
+        "escaped": false,
+        "dead": false,
+        "questions": 20
+      }
+    },
+    {
+      "case": "Two classification misses survive if every naming answer remains maximum",
+      "result": "pass",
+      "state": {
+        "mode": "strict_whole_run",
+        "distance": 100000,
+        "score": 2000,
+        "hits": 2,
+        "locks": 0,
+        "eligible": true,
+        "escaped": true,
+        "dead": false,
+        "questions": 22
+      }
+    },
+    {
+      "case": "Third classification error ends strict run",
+      "result": "pass",
+      "state": {
+        "mode": "strict_whole_run",
+        "distance": 0,
+        "score": 0,
+        "hits": 3,
+        "locks": 0,
+        "eligible": true,
+        "escaped": false,
+        "dead": true,
+        "questions": 3
+      }
+    },
+    {
+      "case": "Restart restores strict eligibility",
+      "result": "pass",
+      "state": {
+        "mode": "strict_whole_run",
+        "distance": 0,
+        "score": 0,
+        "hits": 0,
+        "locks": 0,
+        "eligible": true,
+        "escaped": false,
+        "dead": false,
+        "questions": 0
+      }
+    },
+    {
+      "case": "Optional locks block grind but recover from earlier low answers",
+      "result": "pass",
+      "state": {
+        "mode": "optional_persistent_locks",
+        "distance": 100000.0,
+        "score": 101025,
+        "hits": 0,
+        "locks": 6,
+        "eligible": false,
+        "escaped": true,
+        "dead": false,
+        "questions": 10011
+      }
+    },
+    {
+      "case": "Optional lock fastest win: 24 maximum questions",
+      "result": "pass",
+      "state": {
+        "mode": "optional_persistent_locks",
+        "distance": 100000.0,
+        "score": 2400,
+        "hits": 0,
+        "locks": 6,
+        "eligible": true,
+        "escaped": true,
+        "dead": false,
+        "questions": 24
+      }
+    },
+    {
+      "case": "Third classification miss kills optional run despite five locks",
+      "result": "pass",
+      "state": {
+        "mode": "optional_persistent_locks",
+        "distance": 98333.33333333333,
+        "score": 2300,
+        "hits": 3,
+        "locks": 5,
+        "eligible": true,
+        "escaped": false,
+        "dead": true,
+        "questions": 26
+      }
+    }
+  ],
+  "illustrative_optional_gate_sensitivity": [
+    {
+      "top_tier_correct_probability": 0.25,
+      "optional_lock_expected_questions": 24.0,
+      "optional_streak_expected_questions": 5460.0
+    },
+    {
+      "top_tier_correct_probability": 0.5,
+      "optional_lock_expected_questions": 12.0,
+      "optional_streak_expected_questions": 126.0
+    },
+    {
+      "top_tier_correct_probability": 0.7,
+      "optional_lock_expected_questions": 8.57,
+      "optional_streak_expected_questions": 25.0
+    },
+    {
+      "top_tier_correct_probability": 0.8,
+      "optional_lock_expected_questions": 7.5,
+      "optional_streak_expected_questions": 14.07
+    },
+    {
+      "top_tier_correct_probability": 0.9,
+      "optional_lock_expected_questions": 6.67,
+      "optional_streak_expected_questions": 8.82
+    },
+    {
+      "top_tier_correct_probability": 1,
+      "optional_lock_expected_questions": 6.0,
+      "optional_streak_expected_questions": 6
+    }
+  ],
+  "limitations": [
+    "No app integration or browser checks",
+    "No empirical player probabilities",
+    "Canonical answer and lock-family uniqueness are content-system prerequisites",
+    "Only base score vector is reference-verified; scaling and gates remain proposals"
+  ]
+}

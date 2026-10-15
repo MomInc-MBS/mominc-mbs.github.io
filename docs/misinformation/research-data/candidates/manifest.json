@@ -1,0 +1,142 @@
+{
+  "scope": "Bounded Wikidata discovery export, not a verified or complete game database",
+  "class_verification": {
+    "request_url": "https://www.wikidata.org/w/api.php?action=wbgetentities&ids=Q159535%7CQ484188%7CQ3199915&props=labels%7Cdescriptions&languages=en&format=json",
+    "labels": {
+      "Q159535": "conspiracy theory",
+      "Q484188": "serial killer",
+      "Q3199915": "massacre"
+    },
+    "status": "success"
+  },
+  "exports": [
+    {
+      "dataset": "conspiracy-theories",
+      "class_id": "Q159535",
+      "class_url": "https://www.wikidata.org/wiki/Q159535",
+      "query_file": "conspiracy-theories.sparql",
+      "request_url": "https://query.wikidata.org/sparql?query=PREFIX+wd%3A+%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F%3E%0APREFIX+wdt%3A+%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0APREFIX+wikibase%3A+%3Chttp%3A%2F%2Fwikiba.se%2Fontology%23%3E%0APREFIX+bd%3A+%3Chttp%3A%2F%2Fwww.bigdata.com%2Frdf%23%3E%0ASELECT+%3Fitem+%3FitemLabel+WHERE+%7B%0A++%7B+SELECT+DISTINCT+%3Fitem+WHERE+%7B+%3Fitem+wdt%3AP31%2Fwdt%3AP279%2A+wd%3AQ159535+.+%7D+ORDER+BY+%3Fitem+LIMIT+200+%7D%0A++SERVICE+wikibase%3Alabel+%7B+bd%3AserviceParam+wikibase%3Alanguage+%22en%22+.+%7D%0A%7D%0AORDER+BY+%3Fitem%0A&format=json",
+      "retrieved_at_utc": "2026-10-15T04:37:45.443410+00:00",
+      "limit": 200,
+      "license": "CC0-1.0",
+      "license_url": "https://www.wikidata.org/wiki/Wikidata:Licensing",
+      "review_state": "unreviewed_discovery_only",
+      "scored_eligible": false,
+      "status": "success",
+      "count": 200,
+      "sha256": "a4e433236d788e97b5e8becb65640aade99e44f9879e97f585dae3663c574793",
+      "content_type": null,
+      "raw_file": "conspiracy-theories.raw.json"
+    },
+    {
+      "dataset": "serial-killers",
+      "class_id": "Q484188",
+      "class_url": "https://www.wikidata.org/wiki/Q484188",
+      "retrieved_at_utc": "2026-10-15T04:38:45.832879+00:00",
+      "method": "Wikidata API CirrusSearch direct haswbstatement relation and wbgetentities labels",
+      "search": "haswbstatement:P106=Q484188 haswbstatement:P31=Q5",
+      "limit": 100,
+      "license": "CC0-1.0",
+      "license_url": "https://www.wikidata.org/wiki/Wikidata:Licensing",
+      "review_state": "unreviewed_discovery_only",
+      "scored_eligible": false,
+      "coverage_note": "Direct relation only; no subclass traversal. Search results may lag entity edits.",
+      "attempted_sparql": {
+        "dataset": "serial-killers",
+        "class_id": "Q484188",
+        "class_url": "https://www.wikidata.org/wiki/Q484188",
+        "query_file": "serial-killers.sparql",
+        "request_url": "https://query.wikidata.org/sparql?query=PREFIX+wd%3A+%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F%3E%0APREFIX+wdt%3A+%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0APREFIX+wikibase%3A+%3Chttp%3A%2F%2Fwikiba.se%2Fontology%23%3E%0APREFIX+bd%3A+%3Chttp%3A%2F%2Fwww.bigdata.com%2Frdf%23%3E%0ASELECT+%3Fitem+%3FitemLabel+WHERE+%7B%0A++%7B+SELECT+DISTINCT+%3Fitem+WHERE+%7B+%7B+%3Fitem+wdt%3AP106%2Fwdt%3AP279%2A+wd%3AQ484188+.+%7D+UNION+%7B+%3Fitem+wdt%3AP31%2Fwdt%3AP279%2A+wd%3AQ484188+.+%7D+%7D+ORDER+BY+%3Fitem+LIMIT+200+%7D%0A++SERVICE+wikibase%3Alabel+%7B+bd%3AserviceParam+wikibase%3Alanguage+%22en%22+.+%7D%0A%7D%0AORDER+BY+%3Fitem%0A&format=json",
+        "retrieved_at_utc": "2026-10-15T04:37:45.568038+00:00",
+        "limit": 200,
+        "license": "CC0-1.0",
+        "license_url": "https://www.wikidata.org/wiki/Wikidata:Licensing",
+        "review_state": "unreviewed_discovery_only",
+        "scored_eligible": false,
+        "status": "failed",
+        "count": 0,
+        "error_type": "HTTPError",
+        "error": "HTTP Error 429: Aggressively rate-limiting to 1 req / min - this rule was created during active wdqs outage (797a132)",
+        "http_status": 429,
+        "response_excerpt": "<!DOCTYPE html>\n<html lang=\"en\">\n<meta charset=\"utf-8\">\n<title>Wikimedia Error</title>\n<style>\n* { margin: 0; padding: 0; }\nbody { background: #fff; font: 15px/1.6 sans-serif; color: #333; }\n.content { margin: 7% auto 0; padding: 2em 1em 1em; max-width: 640px; display: flex; flex-direction: row; flex-wrap: wrap; }\n.footer { clear: both; margin-top: 14%; border-top: 1px solid #e5e5e5; background: #f9f9f9; padding: 2em 0; font-size: 0.8em; text-align: center; }\nimg { margin: 0 2em 2em 0; }\na img { border: 0; }\nh1 { margin-top: 1em; font-size: 1.2em; }\n.content-text { flex: 1; }\np { margin: 0.7em 0 1em 0; }\na { color: #0645ad; text-decoration: none; }\na:hover { text-decoration: underline; }\ncode { font-family: sans-serif; }\nsummary { font-weight: bold; cursor: pointer; }\ndetails[open] { background: #970302; color: #dfdedd; }\n.text-muted { color: #777; }\n@media (prefers-color-scheme: dark) {\n  a { color: #9e9eff; }\n  body { background: transparent; color: #ddd; }\n  .footer { border-top: 1px solid #444; background: #060606; }\n  #logo { filter: invert(1) hue-rotate(180deg); }\n  .text-muted { color: #888; }\n}\n</style>\n<meta name=\"color-scheme\" content=\"light dark\">\n<div class=\"content\" ro"
+      },
+      "requests": [
+        {
+          "request_url": "https://www.wikidata.org/w/api.php?format=json&action=query&list=search&srsearch=haswbstatement%3AP106%3DQ484188+haswbstatement%3AP31%3DQ5&srnamespace=0&srlimit=100&srprop=",
+          "raw_file": "serial-killers.api-search.raw.json",
+          "sha256": "46fa9faeb1b1baf403028e8e5233a29917c679f17842431aa0918bc2ac27aded"
+        },
+        {
+          "request_url": "https://www.wikidata.org/w/api.php?format=json&action=wbgetentities&ids=Q43963%7CQ485508%7CQ44200%7CQ298252%7CQ192218%7CQ311634%7CQ298364%7CQ218148%7CQ507748%7CQ264849%7CQ44496%7CQ311669%7CQ202048%7CQ309643%7CQ3308546%7CQ360680%7CQ242475%7CQ63984%7CQ4045981%7CQ944611%7CQ238111%7CQ153355%7CQ2331681%7CQ1372199%7CQ1341394%7CQ65537%7CQ268516%7CQ2578157%7CQ549242%7CQ1053825%7CQ3835101%7CQ60291%7CQ312308%7CQ3807464%7CQ263512%7CQ2618824%7CQ483939%7CQ350959%7CQ365456%7CQ1224648%7CQ1066396%7CQ577052%7CQ100971%7CQ1073485%7CQ3273337%7CQ28537916%7CQ3566872%7CQ1245693%7CQ1076451%7CQ2463622&props=labels&languages=en",
+          "raw_file": "serial-killers.labels-1.raw.json",
+          "sha256": "73da62359fe5186046b1f5d7371b175e5e1acdb7509ea158a64b3140c22e458b"
+        },
+        {
+          "request_url": "https://www.wikidata.org/w/api.php?format=json&action=wbgetentities&ids=Q3658816%7CQ68963%7CQ105464%7CQ352717%7CQ1385693%7CQ11426516%7CQ48080939%7CQ382035%7CQ18534305%7CQ15457372%7CQ2357346%7CQ1391118%7CQ557801%7CQ59658%7CQ1551351%7CQ920200%7CQ1300486%7CQ2479292%7CQ320445%7CQ16466%7CQ1988804%7CQ465885%7CQ4021170%7CQ108760741%7CQ2121910%7CQ3610668%7CQ1150906%7CQ2422185%7CQ2763065%7CQ1811737%7CQ109607538%7CQ317496%7CQ1956761%7CQ292650%7CQ2425137%7CQ1368838%7CQ7173022%7CQ2556172%7CQ1945341%7CQ36789%7CQ1173934%7CQ531794%7CQ7341544%7CQ63976%7CQ3170039%7CQ106914706%7CQ1130933%7CQ1083667%7CQ718895%7CQ20989212&props=labels&languages=en",
+          "raw_file": "serial-killers.labels-2.raw.json",
+          "sha256": "592acc257dee97d4b1c84cb6118604aaaf16a59aca5c458c09c23bbf3370ec32"
+        }
+      ],
+      "search_reported_total_hits": 1302,
+      "status": "success",
+      "count": 100
+    },
+    {
+      "dataset": "massacres",
+      "class_id": "Q3199915",
+      "class_url": "https://www.wikidata.org/wiki/Q3199915",
+      "retrieved_at_utc": "2026-10-15T04:38:24.612164+00:00",
+      "method": "Wikidata API CirrusSearch direct haswbstatement relation and wbgetentities labels",
+      "search": "haswbstatement:P31=Q3199915",
+      "limit": 100,
+      "license": "CC0-1.0",
+      "license_url": "https://www.wikidata.org/wiki/Wikidata:Licensing",
+      "review_state": "unreviewed_discovery_only",
+      "scored_eligible": false,
+      "coverage_note": "Direct relation only; no subclass traversal. Search results may lag entity edits.",
+      "attempted_sparql": {
+        "dataset": "massacres",
+        "class_id": "Q3199915",
+        "class_url": "https://www.wikidata.org/wiki/Q3199915",
+        "query_file": "massacres.sparql",
+        "request_url": "https://query.wikidata.org/sparql?query=PREFIX+wd%3A+%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F%3E%0APREFIX+wdt%3A+%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0APREFIX+wikibase%3A+%3Chttp%3A%2F%2Fwikiba.se%2Fontology%23%3E%0APREFIX+bd%3A+%3Chttp%3A%2F%2Fwww.bigdata.com%2Frdf%23%3E%0ASELECT+%3Fitem+%3FitemLabel+WHERE+%7B%0A++%7B+SELECT+DISTINCT+%3Fitem+WHERE+%7B+%3Fitem+wdt%3AP31%2Fwdt%3AP279%2A+wd%3AQ3199915+.+%7D+ORDER+BY+%3Fitem+LIMIT+200+%7D%0A++SERVICE+wikibase%3Alabel+%7B+bd%3AserviceParam+wikibase%3Alanguage+%22en%22+.+%7D%0A%7D%0AORDER+BY+%3Fitem%0A&format=json",
+        "retrieved_at_utc": "2026-10-15T04:37:45.633446+00:00",
+        "limit": 200,
+        "license": "CC0-1.0",
+        "license_url": "https://www.wikidata.org/wiki/Wikidata:Licensing",
+        "review_state": "unreviewed_discovery_only",
+        "scored_eligible": false,
+        "status": "failed",
+        "count": 0,
+        "error_type": "HTTPError",
+        "error": "HTTP Error 429: Aggressively rate-limiting to 1 req / min - this rule was created during active wdqs outage (797a132)",
+        "http_status": 429,
+        "response_excerpt": "<!DOCTYPE html>\n<html lang=\"en\">\n<meta charset=\"utf-8\">\n<title>Wikimedia Error</title>\n<style>\n* { margin: 0; padding: 0; }\nbody { background: #fff; font: 15px/1.6 sans-serif; color: #333; }\n.content { margin: 7% auto 0; padding: 2em 1em 1em; max-width: 640px; display: flex; flex-direction: row; flex-wrap: wrap; }\n.footer { clear: both; margin-top: 14%; border-top: 1px solid #e5e5e5; background: #f9f9f9; padding: 2em 0; font-size: 0.8em; text-align: center; }\nimg { margin: 0 2em 2em 0; }\na img { border: 0; }\nh1 { margin-top: 1em; font-size: 1.2em; }\n.content-text { flex: 1; }\np { margin: 0.7em 0 1em 0; }\na { color: #0645ad; text-decoration: none; }\na:hover { text-decoration: underline; }\ncode { font-family: sans-serif; }\nsummary { font-weight: bold; cursor: pointer; }\ndetails[open] { background: #970302; color: #dfdedd; }\n.text-muted { color: #777; }\n@media (prefers-color-scheme: dark) {\n  a { color: #9e9eff; }\n  body { background: transparent; color: #ddd; }\n  .footer { border-top: 1px solid #444; background: #060606; }\n  #logo { filter: invert(1) hue-rotate(180deg); }\n  .text-muted { color: #888; }\n}\n</style>\n<meta name=\"color-scheme\" content=\"light dark\">\n<div class=\"content\" ro"
+      },
+      "requests": [
+        {
+          "request_url": "https://www.wikidata.org/w/api.php?format=json&action=query&list=search&srsearch=haswbstatement%3AP31%3DQ3199915&srnamespace=0&srlimit=100&srprop=",
+          "raw_file": "massacres.api-search.raw.json",
+          "sha256": "614dbcac1a8277b926c1886910d71ff1fe72479818d44e110c3df0c9fa077f9e"
+        },
+        {
+          "request_url": "https://www.wikidata.org/w/api.php?format=json&action=wbgetentities&ids=Q134301%7CQ7451679%7CQ8628%7CQ153081%7CQ21479779%7CQ99717%7CQ192055%7CQ244939%7CQ1265674%7CQ20871346%7CQ163891%7CQ19283494%7CQ9388656%7CQ846876%7CQ111467700%7CQ170334%7CQ2608210%7CQ200472%7CQ839710%7CQ111310085%7CQ112016492%7CQ108413%7CQ92987578%7CQ41522095%7CQ183421%7CQ1294142%7CQ14607541%7CQ876357%7CQ1907560%7CQ2590023%7CQ193733%7CQ28679197%7CQ2993743%7CQ734004%7CQ215687%7CQ482635%7CQ430700%7CQ190819%7CQ25893254%7CQ5062182%7CQ7165608%7CQ886799%7CQ3504310%7CQ483458%7CQ53679432%7CQ104852916%7CQ31284270%7CQ181289%7CQ208199%7CQ1144988&props=labels&languages=en",
+          "raw_file": "massacres.labels-1.raw.json",
+          "sha256": "5d738bf3c403aadfbf62658c6370ce76f578ff4d860e2b12f84bf6ef74afa6d9"
+        },
+        {
+          "request_url": "https://www.wikidata.org/w/api.php?format=json&action=wbgetentities&ids=Q1254804%7CQ2092950%7CQ3975763%7CQ111844397%7CQ460143%7CQ11696355%7CQ1785309%7CQ325760%7CQ7191299%7CQ51651%7CQ3975713%7CQ799299%7CQ112210783%7CQ55816370%7CQ5193032%7CQ2655890%7CQ3445471%7CQ7509799%7CQ18641076%7CQ109701707%7CQ716144%7CQ6159472%7CQ109941596%7CQ473868%7CQ2164344%7CQ6082978%7CQ2705622%7CQ939859%7CQ93440524%7CQ106065465%7CQ25536389%7CQ66626347%7CQ653857%7CQ9388637%7CQ3297436%7CQ1195058%7CQ1203203%7CQ2552587%7CQ17044936%7CQ777916%7CQ211582%7CQ685201%7CQ111760530%7CQ3297430%7CQ543028%7CQ4928070%7CQ2672355%7CQ11785457%7CQ61455598%7CQ7521988&props=labels&languages=en",
+          "raw_file": "massacres.labels-2.raw.json",
+          "sha256": "2b47c0d31f9ded5456ad64c67a4bd9a9f08ce7ba113f6238e461ce94938855fa"
+        }
+      ],
+      "search_reported_total_hits": 3595,
+      "status": "success",
+      "count": 100
+    }
+  ],
+  "total_candidate_rows": 400,
+  "all_candidates_require_primary_source_review": true,
+  "unique_candidate_entities": 400,
+  "candidate_membership_rows": 400
+}

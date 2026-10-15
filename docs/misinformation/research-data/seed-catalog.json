@@ -1,0 +1,675 @@
+{
+  "catalog_version": 1,
+  "title": "Mom's Misinformation Machine - research starter",
+  "reviewed_at": "2026-10-14",
+  "scope": "Twelve original draft subjects and precisely worded claims. Not a comprehensive conspiracy database. No scored questions approved.",
+  "classification_policy": "Grade exact statements, never subjects. Documented events may have separate unsupported theories attached. Unsupported, contradicted, disputed, and unresolved remain distinct evidence statuses.",
+  "iceberg_policy": "Tiers 1-8 are an original proposed familiarity ladder; these twelve examples occupy tiers 1-5 only. No objective or inherited community ranking is asserted.",
+  "rarity_policy": "No real player rarity data exists in this starter. Use versioned answer statistics after calibration; never equate editorial iceberg tier, death toll, or unsupportedness with rarity.",
+  "sources": [
+    {
+      "id": "source-chemtrails",
+      "title": "Information on Contrails from Aircraft",
+      "publisher": "US Environmental Protection Agency",
+      "url": "https://www.epa.gov/regulations-emissions-vehicles-and-engines/Contrails",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "Federal official source; item-level rights review required before copying content or assets",
+      "licensing_url": "https://www.copyright.gov/comp3/docs/compendium.pdf",
+      "reuse_policy": "Linked factual verification and independently authored wording. No source prose, images, or documents copied into this catalog. Review item-level rights before future asset reuse."
+    },
+    {
+      "id": "source-nibiru",
+      "title": "2012 - A Scientific Reality Check",
+      "publisher": "NASA Jet Propulsion Laboratory",
+      "url": "https://www.jpl.nasa.gov/blog/2009/11/2012-a-scientific-reality-check",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "Federal official source; item-level rights review required before copying content or assets",
+      "licensing_url": "https://www.copyright.gov/comp3/docs/compendium.pdf",
+      "reuse_policy": "Linked factual verification and independently authored wording. No source prose, images, or documents copied into this catalog. Review item-level rights before future asset reuse."
+    },
+    {
+      "id": "source-apollo",
+      "title": "The Apollo Experiment That Keeps on Giving",
+      "publisher": "NASA Jet Propulsion Laboratory",
+      "url": "https://www.jpl.nasa.gov/news/the-apollo-experiment-that-keeps-on-giving/",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "NASA/JPL official source; item-level rights review required before copying content or assets",
+      "licensing_url": "https://www.copyright.gov/comp3/docs/compendium.pdf",
+      "reuse_policy": "Linked factual verification and independently authored wording. No source prose, images, or documents copied into this catalog. Review item-level rights before future asset reuse."
+    },
+    {
+      "id": "source-mkultra",
+      "title": "1977 Senate Hearing on MKULTRA",
+      "publisher": "US Senate; copy hosted by CIA",
+      "url": "https://www.cia.gov/library/abbottabad-compound/9D/9D9A27BD7241E2074EAF81C7FC2C86CF_MK.Ultra_Senate.Hearings.pdf",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "Federal official source; item-level rights review required before copying content or assets",
+      "licensing_url": "https://www.copyright.gov/comp3/docs/compendium.pdf",
+      "reuse_policy": "Linked factual verification and independently authored wording. No source prose, images, or documents copied into this catalog. Review item-level rights before future asset reuse."
+    },
+    {
+      "id": "source-cointelpro",
+      "title": "COINTELPRO records",
+      "publisher": "Federal Bureau of Investigation",
+      "url": "https://vault.fbi.gov/cointel-pro",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "Federal official source; item-level rights review required before copying content or assets",
+      "licensing_url": "https://www.copyright.gov/comp3/docs/compendium.pdf",
+      "reuse_policy": "Linked factual verification and independently authored wording. No source prose, images, or documents copied into this catalog. Review item-level rights before future asset reuse."
+    },
+    {
+      "id": "source-tuskegee",
+      "title": "The Untreated Syphilis Study at Tuskegee Timeline",
+      "publisher": "US Centers for Disease Control and Prevention",
+      "url": "https://www.cdc.gov/tuskegee/about/timeline.html",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "Federal official source; item-level rights review required before copying content or assets",
+      "licensing_url": "https://www.copyright.gov/comp3/docs/compendium.pdf",
+      "reuse_policy": "Linked factual verification and independently authored wording. No source prose, images, or documents copied into this catalog. Review item-level rights before future asset reuse."
+    },
+    {
+      "id": "source-wtc",
+      "title": "Collapse of the World Trade Center Towers: Final Report",
+      "publisher": "US National Institute of Standards and Technology",
+      "url": "https://www.nist.gov/publications/collapse-world-trade-center-towers-final-report-federal-building-and-fire-safety",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "Federal official source; item-level rights review required before copying content or assets",
+      "licensing_url": "https://www.copyright.gov/comp3/docs/compendium.pdf",
+      "reuse_policy": "Linked factual verification and independently authored wording. No source prose, images, or documents copied into this catalog. Review item-level rights before future asset reuse."
+    },
+    {
+      "id": "source-hindenburg",
+      "title": "Beyond the Hindenburg: Airships Throughout History",
+      "publisher": "US National Archives",
+      "url": "https://prologue.blogs.archives.gov/2017/10/27/beyond-the-hindenburg-airships-throughout-history/",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "Federal official source; item-level rights review required before copying content or assets",
+      "licensing_url": "https://www.copyright.gov/comp3/docs/compendium.pdf",
+      "reuse_policy": "Linked factual verification and independently authored wording. No source prose, images, or documents copied into this catalog. Review item-level rights before future asset reuse."
+    },
+    {
+      "id": "source-bundy",
+      "title": "Serial Killers, Part 3: Ted Bundy's Campaign of Terror",
+      "publisher": "Federal Bureau of Investigation",
+      "url": "https://www.fbi.gov/news/stories/serial-killers-part-3-ted-bundys-campaign-of-terror1",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "Federal official source; item-level rights review required before copying content or assets",
+      "licensing_url": "https://www.copyright.gov/comp3/docs/compendium.pdf",
+      "reuse_policy": "Linked factual verification and independently authored wording. No source prose, images, or documents copied into this catalog. Review item-level rights before future asset reuse."
+    },
+    {
+      "id": "source-dahmer",
+      "title": "Serial Killers, Part 7: Jeffrey Dahmer",
+      "publisher": "Federal Bureau of Investigation",
+      "url": "https://www.fbi.gov/news/stories/serial-killers-part-7-jeffrey-dahmer",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "Federal official source; item-level rights review required before copying content or assets",
+      "licensing_url": "https://www.copyright.gov/comp3/docs/compendium.pdf",
+      "reuse_policy": "Linked factual verification and independently authored wording. No source prose, images, or documents copied into this catalog. Review item-level rights before future asset reuse."
+    },
+    {
+      "id": "source-hitler",
+      "title": "Learn about the Holocaust",
+      "publisher": "United States Holocaust Memorial Museum",
+      "url": "https://www.ushmm.org/holocaust/",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "Restricted and item-specific Museum terms; no blanket open license established",
+      "licensing_url": "https://www.ushmm.org/copyright-and-legal-information/terms-of-use",
+      "reuse_policy": "Linked factual verification only. Independently authored wording. Do not bulk ingest Museum prose, create embeddings, or use its content to develop AI systems without written consent. Review individual asset rights before any reuse."
+    },
+    {
+      "id": "source-khieu",
+      "title": "Case 002",
+      "publisher": "Extraordinary Chambers in the Courts of Cambodia",
+      "url": "https://www.eccc.gov.kh/en/cases/case-002",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "Court website; no blanket permissive reuse license established",
+      "licensing_url": null,
+      "reuse_policy": "Linked factual verification and independently authored wording. No source prose, images, or documents copied into this catalog. Review item-level rights before future asset reuse."
+    }
+  ],
+  "subjects": [
+    {
+      "id": "chemtrails",
+      "canonical_name": "Chemtrails claim",
+      "category": "conspiracy_claim",
+      "aliases": [
+        "chemtrails",
+        "chemical trails"
+      ],
+      "proposed_iceberg_tier": 1,
+      "tier_basis": "Original editorial proposal for subject familiarity, not empirical rarity, truth, brutality, or score. Needs playtest calibration.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "claim-chemtrails",
+        "exact_statement": "Routine high-altitude aircraft contrails are a secret population-control spraying program.",
+        "evidence_status": "unsupported",
+        "historical_conspiracy": false,
+        "evidence_summary": "EPA explains contrails as ice-crystal clouds and describes this alleged purpose as an inaccurate claim; actual regulated aerial spraying is a separate subject.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "eligibility": "pending_human_edit",
+        "sources": [
+          {
+            "source_id": "source-chemtrails",
+            "evidence_role": "contradicts_or_explains",
+            "locator": null
+          }
+        ]
+      },
+      "question": {
+        "id": "question-chemtrails",
+        "version": 1,
+        "identification_prompt": "What name is used for the claim that ordinary high-altitude aircraft condensation trails are a covert spraying program?",
+        "classification_prompt": "Classify this exact statement: Routine high-altitude aircraft contrails are a secret population-control spraying program.",
+        "accepted_answers": [
+          "chemtrails",
+          "chemical trails"
+        ],
+        "explanation": "EPA explains contrails as ice-crystal clouds and describes this alleged purpose as an inaccurate claim; actual regulated aerial spraying is a separate subject.",
+        "rarity_seed": "uncalibrated; no propulsion value assigned",
+        "review_state": "draft",
+        "eligibility": "pending_human_edit"
+      }
+    },
+    {
+      "id": "nibiru",
+      "canonical_name": "Nibiru 2012 collision claim",
+      "category": "conspiracy_claim",
+      "aliases": [
+        "Nibiru",
+        "Nibiru cataclysm",
+        "Planet X 2012 prediction"
+      ],
+      "proposed_iceberg_tier": 3,
+      "tier_basis": "Original editorial proposal for subject familiarity, not empirical rarity, truth, brutality, or score. Needs playtest calibration.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "claim-nibiru",
+        "exact_statement": "A planet called Nibiru would collide with Earth in December 2012.",
+        "evidence_status": "contradicted",
+        "historical_conspiracy": false,
+        "evidence_summary": "JPL rejected the proposed object and collision prediction; the specified date also makes this a falsifiable historical prediction rather than a claim about all future impacts.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "eligibility": "pending_human_edit",
+        "sources": [
+          {
+            "source_id": "source-nibiru",
+            "evidence_role": "contradicts_or_explains",
+            "locator": null
+          }
+        ]
+      },
+      "question": {
+        "id": "question-nibiru",
+        "version": 1,
+        "identification_prompt": "Which purported planet was central to an online prediction of an Earth collision in December 2012?",
+        "classification_prompt": "Classify this exact statement: A planet called Nibiru would collide with Earth in December 2012.",
+        "accepted_answers": [
+          "Nibiru",
+          "Nibiru cataclysm",
+          "Planet X 2012 prediction"
+        ],
+        "explanation": "JPL rejected the proposed object and collision prediction; the specified date also makes this a falsifiable historical prediction rather than a claim about all future impacts.",
+        "rarity_seed": "uncalibrated; no propulsion value assigned",
+        "review_state": "draft",
+        "eligibility": "pending_human_edit"
+      }
+    },
+    {
+      "id": "apollo",
+      "canonical_name": "Apollo lunar retroreflectors",
+      "category": "documented_space_event",
+      "aliases": [
+        "Apollo",
+        "Apollo program",
+        "Apollo Moon landings"
+      ],
+      "proposed_iceberg_tier": 2,
+      "tier_basis": "Original editorial proposal for subject familiarity, not empirical rarity, truth, brutality, or score. Needs playtest calibration.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "claim-apollo",
+        "exact_statement": "Apollo missions placed laser-ranging retroreflectors on the surface of the Moon.",
+        "evidence_status": "documented",
+        "historical_conspiracy": false,
+        "evidence_summary": "NASA describes the Apollo surface reflectors and their use in measurements of the Earth-Moon distance. These devices alone do not establish every detail of every Apollo mission.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "eligibility": "pending_human_edit",
+        "sources": [
+          {
+            "source_id": "source-apollo",
+            "evidence_role": "supports",
+            "locator": "Opening article paragraphs describing arrays left by Apollo 11, 14 and 15"
+          }
+        ]
+      },
+      "question": {
+        "id": "question-apollo",
+        "version": 1,
+        "identification_prompt": "Which US crewed lunar program placed retroreflectors on the Moon?",
+        "classification_prompt": "Classify this exact statement: Apollo missions placed laser-ranging retroreflectors on the surface of the Moon.",
+        "accepted_answers": [
+          "Apollo",
+          "Apollo program",
+          "Apollo Moon landings"
+        ],
+        "explanation": "NASA describes the Apollo surface reflectors and their use in measurements of the Earth-Moon distance. These devices alone do not establish every detail of every Apollo mission.",
+        "rarity_seed": "uncalibrated; no propulsion value assigned",
+        "review_state": "draft",
+        "eligibility": "pending_human_edit"
+      }
+    },
+    {
+      "id": "mkultra",
+      "canonical_name": "MKULTRA",
+      "category": "documented_covert_program",
+      "aliases": [
+        "MKULTRA",
+        "MK Ultra",
+        "Project MKULTRA"
+      ],
+      "proposed_iceberg_tier": 3,
+      "tier_basis": "Original editorial proposal for subject familiarity, not empirical rarity, truth, brutality, or score. Needs playtest calibration.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "claim-mkultra",
+        "exact_statement": "The CIA operated a behavioral-modification research program called MKULTRA that was examined in a 1977 US Senate hearing.",
+        "evidence_status": "documented",
+        "historical_conspiracy": true,
+        "evidence_summary": "The hearing documents the program and its investigation. Its existence does not establish unrelated later allegations of universal or remote mind control.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "eligibility": "pending_human_edit",
+        "sources": [
+          {
+            "source_id": "source-mkultra",
+            "evidence_role": "supports",
+            "locator": null
+          }
+        ]
+      },
+      "question": {
+        "id": "question-mkultra",
+        "version": 1,
+        "identification_prompt": "Which CIA behavioral-modification research program was examined in a US Senate hearing in 1977?",
+        "classification_prompt": "Classify this exact statement: The CIA operated a behavioral-modification research program called MKULTRA that was examined in a 1977 US Senate hearing.",
+        "accepted_answers": [
+          "MKULTRA",
+          "MK Ultra",
+          "Project MKULTRA"
+        ],
+        "explanation": "The hearing documents the program and its investigation. Its existence does not establish unrelated later allegations of universal or remote mind control.",
+        "rarity_seed": "uncalibrated; no propulsion value assigned",
+        "review_state": "draft",
+        "eligibility": "pending_human_edit"
+      }
+    },
+    {
+      "id": "cointelpro",
+      "canonical_name": "COINTELPRO",
+      "category": "documented_covert_program",
+      "aliases": [
+        "COINTELPRO",
+        "Counterintelligence Program"
+      ],
+      "proposed_iceberg_tier": 4,
+      "tier_basis": "Original editorial proposal for subject familiarity, not empirical rarity, truth, brutality, or score. Needs playtest calibration.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "claim-cointelpro",
+        "exact_statement": "The FBI conducted domestic counterintelligence operations under the name COINTELPRO.",
+        "evidence_status": "documented",
+        "historical_conspiracy": true,
+        "evidence_summary": "The FBI Vault provides program records organized by targeted groups. A specific claim about a particular operation still requires its own document-level citation.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "eligibility": "pending_human_edit",
+        "sources": [
+          {
+            "source_id": "source-cointelpro",
+            "evidence_role": "supports",
+            "locator": null
+          }
+        ]
+      },
+      "question": {
+        "id": "question-cointelpro",
+        "version": 1,
+        "identification_prompt": "What name was used for FBI domestic counterintelligence operations whose records are organized in the FBI Vault by targeted groups?",
+        "classification_prompt": "Classify this exact statement: The FBI conducted domestic counterintelligence operations under the name COINTELPRO.",
+        "accepted_answers": [
+          "COINTELPRO",
+          "Counterintelligence Program"
+        ],
+        "explanation": "The FBI Vault provides program records organized by targeted groups. A specific claim about a particular operation still requires its own document-level citation.",
+        "rarity_seed": "uncalibrated; no propulsion value assigned",
+        "review_state": "draft",
+        "eligibility": "pending_human_edit"
+      }
+    },
+    {
+      "id": "tuskegee",
+      "canonical_name": "USPHS Untreated Syphilis Study at Tuskegee",
+      "category": "documented_human_rights_abuse",
+      "aliases": [
+        "Tuskegee study",
+        "Tuskegee syphilis study",
+        "USPHS Untreated Syphilis Study at Tuskegee"
+      ],
+      "proposed_iceberg_tier": 3,
+      "tier_basis": "Original editorial proposal for subject familiarity, not empirical rarity, truth, brutality, or score. Needs playtest calibration.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "claim-tuskegee",
+        "exact_statement": "In the US Public Health Service syphilis study at Tuskegee, participants were not offered penicillin after it became the treatment of choice.",
+        "evidence_status": "documented",
+        "historical_conspiracy": false,
+        "evidence_summary": "CDC documents withheld treatment. Do not substitute the different and incorrect assertion that this study deliberately infected its participants.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "eligibility": "pending_human_edit",
+        "sources": [
+          {
+            "source_id": "source-tuskegee",
+            "evidence_role": "supports",
+            "locator": null
+          }
+        ]
+      },
+      "question": {
+        "id": "question-tuskegee",
+        "version": 1,
+        "identification_prompt": "Which US Public Health Service study in Alabama withheld appropriate syphilis treatment from participants?",
+        "classification_prompt": "Classify this exact statement: In the US Public Health Service syphilis study at Tuskegee, participants were not offered penicillin after it became the treatment of choice.",
+        "accepted_answers": [
+          "Tuskegee study",
+          "Tuskegee syphilis study",
+          "USPHS Untreated Syphilis Study at Tuskegee"
+        ],
+        "explanation": "CDC documents withheld treatment. Do not substitute the different and incorrect assertion that this study deliberately infected its participants.",
+        "rarity_seed": "uncalibrated; no propulsion value assigned",
+        "review_state": "draft",
+        "eligibility": "pending_human_edit"
+      }
+    },
+    {
+      "id": "wtc",
+      "canonical_name": "World Trade Center disaster",
+      "category": "documented_tragedy",
+      "aliases": [
+        "World Trade Center disaster",
+        "World Trade Center collapse",
+        "September 11 attacks",
+        "9/11"
+      ],
+      "proposed_iceberg_tier": 1,
+      "tier_basis": "Original editorial proposal for subject familiarity, not empirical rarity, truth, brutality, or score. Needs playtest calibration.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "claim-wtc",
+        "exact_statement": "The World Trade Center towers collapsed following aircraft impacts and fires during the September 11, 2001 attacks.",
+        "evidence_status": "documented",
+        "historical_conspiracy": false,
+        "evidence_summary": "NIST investigated the tower failures. This statement concerns the documented disaster; an allegation of a separate concealed cause would be a different claim.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "eligibility": "pending_human_edit",
+        "sources": [
+          {
+            "source_id": "source-wtc",
+            "evidence_role": "supports",
+            "locator": null
+          }
+        ]
+      },
+      "question": {
+        "id": "question-wtc",
+        "version": 1,
+        "identification_prompt": "Which New York complex lost its twin towers during the September 11, 2001 attacks?",
+        "classification_prompt": "Classify this exact statement: The World Trade Center towers collapsed following aircraft impacts and fires during the September 11, 2001 attacks.",
+        "accepted_answers": [
+          "World Trade Center disaster",
+          "World Trade Center collapse",
+          "September 11 attacks",
+          "9/11"
+        ],
+        "explanation": "NIST investigated the tower failures. This statement concerns the documented disaster; an allegation of a separate concealed cause would be a different claim.",
+        "rarity_seed": "uncalibrated; no propulsion value assigned",
+        "review_state": "draft",
+        "eligibility": "pending_human_edit"
+      }
+    },
+    {
+      "id": "hindenburg",
+      "canonical_name": "Hindenburg disaster",
+      "category": "documented_tragedy",
+      "aliases": [
+        "Hindenburg",
+        "Hindenburg disaster",
+        "LZ 129"
+      ],
+      "proposed_iceberg_tier": 2,
+      "tier_basis": "Original editorial proposal for subject familiarity, not empirical rarity, truth, brutality, or score. Needs playtest calibration.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "claim-hindenburg",
+        "exact_statement": "The German airship Hindenburg was destroyed in a fiery disaster in 1937.",
+        "evidence_status": "documented",
+        "historical_conspiracy": false,
+        "evidence_summary": "National Archives history records the airship and the 1937 disaster. This wording intentionally does not grade a disputed ignition mechanism.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "eligibility": "pending_human_edit",
+        "sources": [
+          {
+            "source_id": "source-hindenburg",
+            "evidence_role": "supports",
+            "locator": null
+          }
+        ]
+      },
+      "question": {
+        "id": "question-hindenburg",
+        "version": 1,
+        "identification_prompt": "Which German airship was destroyed in a famous fiery disaster in 1937?",
+        "classification_prompt": "Classify this exact statement: The German airship Hindenburg was destroyed in a fiery disaster in 1937.",
+        "accepted_answers": [
+          "Hindenburg",
+          "Hindenburg disaster",
+          "LZ 129"
+        ],
+        "explanation": "National Archives history records the airship and the 1937 disaster. This wording intentionally does not grade a disputed ignition mechanism.",
+        "rarity_seed": "uncalibrated; no propulsion value assigned",
+        "review_state": "draft",
+        "eligibility": "pending_human_edit"
+      }
+    },
+    {
+      "id": "bundy",
+      "canonical_name": "Ted Bundy",
+      "category": "serial_killer",
+      "aliases": [
+        "Ted Bundy",
+        "Theodore Bundy",
+        "Theodore Robert Bundy"
+      ],
+      "proposed_iceberg_tier": 2,
+      "tier_basis": "Original editorial proposal for subject familiarity, not empirical rarity, truth, brutality, or score. Needs playtest calibration.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "claim-bundy",
+        "exact_statement": "Ted Bundy escaped custody before committing further violent crimes and being arrested again.",
+        "evidence_status": "documented",
+        "historical_conspiracy": false,
+        "evidence_summary": "The FBI case account describes his escapes and subsequent campaign of violent crimes. Suspected, confessed, and judicially established victim counts must not be merged.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "eligibility": "pending_human_edit",
+        "sources": [
+          {
+            "source_id": "source-bundy",
+            "evidence_role": "supports",
+            "locator": null
+          }
+        ]
+      },
+      "question": {
+        "id": "question-bundy",
+        "version": 1,
+        "identification_prompt": "Which serial killer is described in an FBI case history as escaping Colorado custody before continuing attacks in Florida?",
+        "classification_prompt": "Classify this exact statement: Ted Bundy escaped custody before committing further violent crimes and being arrested again.",
+        "accepted_answers": [
+          "Ted Bundy",
+          "Theodore Bundy",
+          "Theodore Robert Bundy"
+        ],
+        "explanation": "The FBI case account describes his escapes and subsequent campaign of violent crimes. Suspected, confessed, and judicially established victim counts must not be merged.",
+        "rarity_seed": "uncalibrated; no propulsion value assigned",
+        "review_state": "draft",
+        "eligibility": "pending_human_edit"
+      }
+    },
+    {
+      "id": "dahmer",
+      "canonical_name": "Jeffrey Dahmer",
+      "category": "serial_killer",
+      "aliases": [
+        "Jeffrey Dahmer",
+        "Jeffrey Lionel Dahmer"
+      ],
+      "proposed_iceberg_tier": 2,
+      "tier_basis": "Original editorial proposal for subject familiarity, not empirical rarity, truth, brutality, or score. Needs playtest calibration.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "claim-dahmer",
+        "exact_statement": "Jeffrey Dahmer was arrested after police discovered evidence associated with multiple victims in his Milwaukee apartment.",
+        "evidence_status": "documented",
+        "historical_conspiracy": false,
+        "evidence_summary": "The FBI account describes the arrest and evidence discovery. The card does not require graphic details or reward victim counts.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "eligibility": "pending_human_edit",
+        "sources": [
+          {
+            "source_id": "source-dahmer",
+            "evidence_role": "supports",
+            "locator": null
+          }
+        ]
+      },
+      "question": {
+        "id": "question-dahmer",
+        "version": 1,
+        "identification_prompt": "Which serial killer was arrested after a 1991 discovery of evidence associated with multiple victims in his Milwaukee apartment?",
+        "classification_prompt": "Classify this exact statement: Jeffrey Dahmer was arrested after police discovered evidence associated with multiple victims in his Milwaukee apartment.",
+        "accepted_answers": [
+          "Jeffrey Dahmer",
+          "Jeffrey Lionel Dahmer"
+        ],
+        "explanation": "The FBI account describes the arrest and evidence discovery. The card does not require graphic details or reward victim counts.",
+        "rarity_seed": "uncalibrated; no propulsion value assigned",
+        "review_state": "draft",
+        "eligibility": "pending_human_edit"
+      }
+    },
+    {
+      "id": "hitler",
+      "canonical_name": "Adolf Hitler and the Nazi regime",
+      "category": "mass_atrocity_leader",
+      "aliases": [
+        "Adolf Hitler",
+        "Hitler"
+      ],
+      "proposed_iceberg_tier": 1,
+      "tier_basis": "Original editorial proposal for subject familiarity, not empirical rarity, truth, brutality, or score. Needs playtest calibration.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "claim-hitler",
+        "exact_statement": "Under Adolf Hitler, the Nazi regime and its allies and collaborators systematically murdered approximately six million Jews in the Holocaust.",
+        "evidence_status": "documented",
+        "historical_conspiracy": false,
+        "evidence_summary": "The Holocaust is a documented genocide. This is a statement about regime responsibility, not a numerical score for acts personally carried out by a leader.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "eligibility": "pending_human_edit",
+        "sources": [
+          {
+            "source_id": "source-hitler",
+            "evidence_role": "supports",
+            "locator": null
+          }
+        ]
+      },
+      "question": {
+        "id": "question-hitler",
+        "version": 1,
+        "identification_prompt": "Who led Nazi Germany during the Holocaust?",
+        "classification_prompt": "Classify this exact statement: Under Adolf Hitler, the Nazi regime and its allies and collaborators systematically murdered approximately six million Jews in the Holocaust.",
+        "accepted_answers": [
+          "Adolf Hitler",
+          "Hitler"
+        ],
+        "explanation": "The Holocaust is a documented genocide. This is a statement about regime responsibility, not a numerical score for acts personally carried out by a leader.",
+        "rarity_seed": "uncalibrated; no propulsion value assigned",
+        "review_state": "draft",
+        "eligibility": "pending_human_edit"
+      }
+    },
+    {
+      "id": "khieu",
+      "canonical_name": "Khieu Samphan",
+      "category": "mass_atrocity_leader",
+      "aliases": [
+        "Khieu Samphan"
+      ],
+      "proposed_iceberg_tier": 5,
+      "tier_basis": "Original editorial proposal for subject familiarity, not empirical rarity, truth, brutality, or score. Needs playtest calibration.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "claim-khieu",
+        "exact_statement": "Khieu Samphan, a former head of state of Democratic Kampuchea, was sentenced to life imprisonment for genocide, crimes against humanity, and grave breaches of the Geneva Conventions.",
+        "evidence_status": "documented",
+        "historical_conspiracy": false,
+        "evidence_summary": "The ECCC case record states his position and judicial findings. Do not attribute the same conviction or procedural outcome indiscriminately to every Khmer Rouge leader.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "eligibility": "pending_human_edit",
+        "sources": [
+          {
+            "source_id": "source-khieu",
+            "evidence_role": "supports",
+            "locator": null
+          }
+        ]
+      },
+      "question": {
+        "id": "question-khieu",
+        "version": 1,
+        "identification_prompt": "Which former Democratic Kampuchea head of state received a life sentence in ECCC Case 002?",
+        "classification_prompt": "Classify this exact statement: Khieu Samphan, a former head of state of Democratic Kampuchea, was sentenced to life imprisonment for genocide, crimes against humanity, and grave breaches of the Geneva Conventions.",
+        "accepted_answers": [
+          "Khieu Samphan"
+        ],
+        "explanation": "The ECCC case record states his position and judicial findings. Do not attribute the same conviction or procedural outcome indiscriminately to every Khmer Rouge leader.",
+        "rarity_seed": "uncalibrated; no propulsion value assigned",
+        "review_state": "draft",
+        "eligibility": "pending_human_edit"
+      }
+    }
+  ]
+}

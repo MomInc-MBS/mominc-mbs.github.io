@@ -1,0 +1,28 @@
+{
+  "version": "proposal-1",
+  "status": "editorial framework, not a sourced community ranking",
+  "scope": "Original eight-layer content acquisition framework. Discovery examples are not approved scored cards.",
+  "rules": [
+    "Depth represents obscurity and knowledge difficulty, not truth, atrocity severity, victim counts or dangerousness.",
+    "Each subject may have multiple claims with different evidence statuses.",
+    "Only reviewed, unambiguous exact propositions enter the two-choice damage mechanic.",
+    "Editorial rarity seeds remain separate from measured answer frequency.",
+    "Include ordinary events and documented covert programs at every appropriate layer to avoid making depth a truth cue."
+  ],
+  "layers": [
+    {"layer": 1, "flight_band": "Company grounds", "focus": "Widely recognized myths, familiar historical events and well-known criminal cases", "candidate_examples": ["Moon landing denial", "Flat Earth", "September 11 attacks"], "question_design": "Broad category prompts with several familiar and several less familiar accepted answers"},
+    {"layer": 2, "flight_band": "Low orbit", "focus": "Popular conspiracy narratives, famous predictions and famous disasters", "candidate_examples": ["Chemtrails", "Nibiru cataclysm", "Hindenburg disaster"], "question_design": "Separate the actual event from a specific unsupported explanation"},
+    {"layer": 3, "flight_band": "Satellite belt", "focus": "Documented covert programs and unethical institutional behavior", "candidate_examples": ["MKULTRA", "COINTELPRO", "Tuskegee syphilis study"], "question_design": "Reward knowledge of the exact documented program without validating later embellishments"},
+    {"layer": 4, "flight_band": "Lunar interference", "focus": "Regional legends, lost-world narratives and lesser-known cases", "candidate_examples": ["Hollow Earth narratives", "Agartha narratives"], "question_design": "Source the origin and exact allegation; do not equate folklore with a documented event"},
+    {"layer": 5, "flight_band": "Red channel", "focus": "Internet-native narratives and beliefs about information systems", "candidate_examples": ["Dead Internet theory", "Mandela effect explanations"], "question_design": "Distinguish a measurable phenomenon from a speculative or conspiratorial proposed cause"},
+    {"layer": 6, "flight_band": "Outer-system files", "focus": "Alternative chronologies and reconstructed-history narratives", "candidate_examples": ["Phantom time hypothesis", "Tartaria conspiracy narratives"], "question_design": "Use original primary/academic references and grade the precise claim, never an entire culture or identity"},
+    {"layer": 7, "flight_band": "Deep-space static", "focus": "Niche cosmic-control narratives and obscure documented operations", "candidate_examples": ["Prison planet narratives", "Saturn-Moon matrix narratives"], "question_design": "Require independent provenance before adding a claim to scored rounds; discovery alone is insufficient"},
+    {"layer": 8, "flight_band": "Station approach", "focus": "Cross-topic expert recall and mixed evidence challenges", "candidate_examples": [], "question_design": "Mix every content category. Each winning answer must meet the top rarity tier, while classification still follows evidence rather than wildness"}
+  ],
+  "expansion": {
+    "discovery": "Wikidata CC0 candidate import, separately labeled and deduplicated",
+    "verification": "Independent primary evidence plus original question wording and review state",
+    "calibration": "Versioned player-answer frequencies only after sufficient valid-answer observations",
+    "completeness": "No exhaustive list of every conspiracy is claimed"
+  }
+}

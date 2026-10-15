@@ -1,0 +1,30 @@
+/* One paper-cut material language for the two saucers and all eight space layers. */
+:root{--orange:#b95120;--gold:#d4a84f;--violet:#654282}
+.space-art{position:absolute;inset:0;background-image:url('assets/space-atlas.png');background-size:200% 400%;background-position:var(--space-x,0%) var(--space-y,0%);opacity:.8;transition:opacity .6s}
+.flight-scene{isolation:isolate;background:#151023;color:#f0dca4;min-height:620px}
+.flight-scene:after{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(90deg,#130e21c7,transparent 65%),linear-gradient(0deg,#130e21e8,transparent 22%,transparent 88%,#130e21b8)}
+.flight-scene .starfield{opacity:.2;z-index:1}
+.scene-top,.scene-bottom{z-index:5}
+.scene-top{color:#f4e6c8}
+.station-label{position:absolute;top:57px;right:20px;left:20px;text-align:right;z-index:4;font:9px var(--mono);letter-spacing:.7px}
+.station-label small{display:block;margin-top:6px;font:8px var(--mono);opacity:.7}
+.depth-chart{position:absolute;left:18px;top:96px;bottom:82px;list-style:none;margin:0;padding:0;display:flex;flex-direction:column;justify-content:space-between;z-index:5;width:160px}
+.depth-chart li{padding:5px 9px;border-left:1px solid #dbb76c55;display:grid;gap:4px;opacity:.55;transition:opacity .4s,background .4s;color:#eedab3}
+.depth-chart b{font:500 10px var(--mono)}
+.depth-chart span{font:9px var(--mono)}
+.depth-chart li.active{opacity:1;background:#e8c37822;border-left:3px solid #f3c675}
+.depth-chart li.reached{opacity:.8;color:#d5c1e9}
+.saucer{position:absolute;left:65%;transform:translate(-50%,50%);z-index:3;width:150px;transition:bottom 1.15s cubic-bezier(.2,.75,.3,1),filter .4s;pointer-events:none}
+.saucer img{display:block;width:100%;height:auto;filter:drop-shadow(0 7px 5px #10082166);animation:saucer-drift 4s ease-in-out infinite alternate}
+.saucer span{display:block;text-align:center;margin-top:2px;font:8px var(--mono);letter-spacing:1px;color:#f5dca6;text-shadow:0 1px 4px #000}
+.mom-saucer{width:160px;left:72%;z-index:2}
+.mom-saucer img{animation-delay:-2s}.mom-saucer span{color:#ddc6f4}
+.chase-status{position:absolute;bottom:61px;right:18px;left:18px;z-index:5;font:8px var(--mono);letter-spacing:.5px;text-align:right;color:#d8bddf}
+.flight-scene[data-hits="2"] .chase-status,.flight-scene[data-hits="3"] .chase-status{color:#ffb89a}
+.flight-scene[data-phase="dead"] .player-saucer{filter:sepia(.6) brightness(.6)}
+.flight-scene[data-phase="escaped"] .mom-saucer{opacity:.3}
+.score-menu{margin-top:12px}.terminal table th{font:8px var(--mono)}.terminal table tr{border-bottom:1px solid var(--line)}.terminal table caption{font:10px/1.6 var(--mono)}
+.primary.warm{background:#a94b24;border-color:#a94b24}.intro h1 em{color:#a94b24}
+@keyframes saucer-drift{from{transform:translateY(-3px) rotate(-2deg)}to{transform:translateY(4px) rotate(2deg)}}
+@media(max-width:650px){.flight-scene{min-height:365px;height:365px}.scene-top{top:16px;left:14px;right:14px}.station-label{top:43px;right:14px;font-size:7px}.station-label small{font-size:6px;margin-top:4px}.depth-chart{left:12px;top:67px;bottom:64px;width:135px}.depth-chart li{padding:4px 6px;gap:2px}.depth-chart b{font-size:9px}.depth-chart span{font-size:9px}.saucer{width:108px;left:70%}.mom-saucer{width:119px;left:73%}.saucer span{font-size:6px}.scene-bottom{left:14px;right:14px}.chase-status{font-size:7px;bottom:auto;top:73px;left:auto;right:14px;max-width:140px;line-height:1.6}.terminal table th{font-size:7px}.terminal table td{font-size:10px}.terminal table td small{font-size:8px}}
+@media(prefers-reduced-motion:reduce){.saucer img{animation:none}.saucer,.space-art,.depth-chart li{transition:none}}

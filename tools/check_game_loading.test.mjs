@@ -72,6 +72,22 @@ test('only the selected game downloads; readiness waits for the last file', asyn
   assert.equal(await (await w.get('/later.glb?v=scene2')).text(), 'later');
 });
 
+test('Misinformation has a registered worker route, mounts after download, and can reopen offline', async () => {
+  const route = '/play/misinformation/index.html';
+  const html = readFileSync(new URL(route.slice(1), root), 'utf8');
+  assert.match(html, /data-game="misinformation"/);
+  assert.match(html, /application\/mbs-script[\s\S]*data-mbs-src="app\.js"/);
+  assert.match(readFileSync(new URL('play/misinformation/app.js', root), 'utf8'), /MBS_LOAD\?\.finish\(/);
+  const assets = [file(route, html)];
+  const w = worker({misinformation: pack('misinformation', assets)}, {[route]: html});
+  const job = w.send('misinformation');
+  assert.ok(job.done, 'the service worker must recognize the new game instead of silently ignoring it');
+  await job.done;
+  assert.equal(job.messages.at(-1).type, 'ready');
+  w.state.offline = true;
+  assert.equal(await (await w.get('/play/misinformation/', {navigate: true})).text(), html);
+});
+
 test('large models download fully, report bytes, and are shared across paths and games', async () => {
   const body = Buffer.alloc(9 * 1024 * 1024, 77);
   const first = file('/armie/family.glb', body), second = {...first, url: '/handborne/family.glb'};

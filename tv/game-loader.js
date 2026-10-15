@@ -5,7 +5,8 @@
   if (window.MBS_LOAD) return;
   const names = {mominc: 'MOM INC', girlfriend: 'Dr. Girlfriend', lilboyfriend: 'Lil Boyfriend',
     corgi: 'Cortisol Corgi', djscratch: 'DJ Scratch', fuel: 'Fuel', goon: 'The Goon Gala',
-    'war-room': 'The War Room', armie: 'Coach Armie', handborne: 'Helping Hand'};
+    'war-room': 'The War Room', armie: 'Coach Armie', handborne: 'Helping Hand',
+    misinformation: "MOM's Misinformation Machine"};
   const path = location.pathname;
   const tvPage = /^\/tv\/(?:index\.html)?$/.test(path);
   const channelName = new URLSearchParams(location.search).get('ch') || 'mominc';

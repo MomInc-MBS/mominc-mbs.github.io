@@ -1,0 +1,44 @@
+[
+  {
+    "obs_collection": "Untitled.json",
+    "obs_source": "SpaceTIme",
+    "original_video": "C:/Users/ianmy/Downloads/agent_generate_video_edit - Replace the small spaceship with a tiny flat 2D paper cutout….agent_generate_video_edit - replace the small spaceship with a tiny flat 2d paper cutout….mp4",
+    "frame_png": "D:\\Research\\moms-misinformation-machine\\art-references\\SpaceTIme-OBS-frame-2s.png",
+    "frame_time_seconds": 2,
+    "dimensions": [
+      1920,
+      1080
+    ],
+    "mode": "RGB",
+    "transparent": false,
+    "extraction": "ffmpeg single frame; source unchanged"
+  },
+  {
+    "obs_collection": "Untitled.json",
+    "obs_source": "Desk Levitatin",
+    "original_video": "C:/Users/ianmy/Downloads/agent_generate_video - 1998 children_s television stop-motion diorama aesthetic_ Fl.mp4",
+    "frame_png": "D:\\Research\\moms-misinformation-machine\\art-references\\Desk-Levitatin-OBS-frame-2s.png",
+    "frame_time_seconds": 2,
+    "dimensions": [
+      1920,
+      1080
+    ],
+    "mode": "RGB",
+    "transparent": false,
+    "extraction": "ffmpeg single frame; source unchanged"
+  },
+  {
+    "obs_collection": "Untitled.json",
+    "obs_source": "Media",
+    "original_video": "C:/Users/ianmy/Downloads/Seedance 2_0 - 1998 children_s television stop-motion diorama aesthetic_ Flat 2D paper cutout of a s.mp4",
+    "frame_png": "D:\\Research\\moms-misinformation-machine\\art-references\\Media-OBS-frame-2s.png",
+    "frame_time_seconds": 2,
+    "dimensions": [
+      1280,
+      720
+    ],
+    "mode": "RGB",
+    "transparent": false,
+    "extraction": "ffmpeg single frame; source unchanged"
+  }
+]

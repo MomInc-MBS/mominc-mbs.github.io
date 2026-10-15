@@ -18,7 +18,7 @@ EXT = {'.html', '.js', '.mjs', '.css', '.json', '.png', '.jpg', '.jpeg', '.webp'
        '.svg', '.gif', '.mp4', '.webm', '.mp3', '.wav', '.glb', '.obj', '.mtl',
        '.ttf', '.woff', '.woff2'}
 TEXT = {'.html', '.js', '.mjs', '.css', '.json', '.mtl'}
-SLUGS = ['mominc', 'girlfriend', 'lilboyfriend', 'corgi', 'djscratch', 'fuel', 'goon', 'war-room', 'armie', 'handborne']
+SLUGS = ['mominc', 'girlfriend', 'lilboyfriend', 'corgi', 'djscratch', 'fuel', 'goon', 'war-room', 'armie', 'handborne', 'misinformation']
 
 
 def google_font_styles(source):
@@ -146,6 +146,8 @@ def build(refresh=False):
             selected.add('tv/assets/armie-intro/myr5/models/myr5.glb')
         if slug == 'fuel':
             selected |= under('arcade/tub-flight/')
+        if slug == 'misinformation':
+            selected |= under('play/misinformation/')
         if slug == 'corgi':
             selected |= {p for p in files if re.fullmatch(r'tv/assets/school-drawing-[123]\.png', p)}
 

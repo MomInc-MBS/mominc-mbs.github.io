@@ -18,6 +18,21 @@
       "bytes": 1350
     },
     {
+      "url": "/play/misinformation/assets/mom-pursuer.png",
+      "revision": "5eca612bdf389c8d5df207f4b153092ffd7e8947",
+      "bytes": 1346191
+    },
+    {
+      "url": "/play/misinformation/assets/player-saucer.png",
+      "revision": "33330fde45f9fc28bf0022477d4cfbe3c1627a10",
+      "bytes": 2206296
+    },
+    {
+      "url": "/play/misinformation/assets/space-atlas.png",
+      "revision": "a48c403df6f1abe6e92d3954386717f3a211acc3",
+      "bytes": 2367773
+    },
+    {
       "url": "/shader-aurora.mjs",
       "revision": "d65276c4284e8c0e3320d0ad3b7e7adbc11eded2",
       "bytes": 2197
@@ -439,8 +454,8 @@
     },
     {
       "url": "/tv/channels/mominc.html",
-      "revision": "eed4151aaff39a42237d6870f28b7c8301a94b0b",
-      "bytes": 54034
+      "revision": "500720049ee5d7dcf4e60580e697a7b7fca225c8",
+      "bytes": 56778
     },
     {
       "url": "/tv/channels/mominc.js",
@@ -469,8 +484,8 @@
     },
     {
       "url": "/tv/game-loader.js",
-      "revision": "bb1089ca528c0c55445642b8ac0082f298606dba",
-      "bytes": 12692
+      "revision": "6571cbdff70c41b1828ee47effefac8c241a8eb8",
+      "bytes": 12744
     },
     {
       "url": "/tv/identity.css",
@@ -591,5 +606,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "ac71de69f3c58358ec8f"
+  "version": "52c61656fb283df5e28b"
 }

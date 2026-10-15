@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en" data-game="misinformation">
+<head>
+ <script src="/tv/game-loader.js?v=1"></script>
+ <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+ <meta name="theme-color" content="#101b22"><meta name="description" content="Escape MOM Inc. Rare answers fuel your flying saucer. Separate documented events from unsupported claims. Three hits and your run is over.">
+ <title>MOM’s Misinformation Machine</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="space.css">
+</head>
+<body>
+ <a class="skip-link" href="#terminal">Skip to flight terminal</a>
+ <header class="masthead"><a class="wordmark" href="/tv/?ch=mominc" aria-label="MOM Inc. Misinformation Machine home">MOM<span>INC.</span><small>DEPARTMENT OF NARRATIVE CONTROL</small></a><div class="live-label"><i></i> UNAUTHORIZED DEPARTURE</div><button id="archive-toggle" class="text-button">The archive ↗</button></header>
+ <main>
+  <section class="intro"><div class="eyebrow">EMPLOYEE ESCAPE PROGRAM / FLIGHT TEST 001</div><h1>Mom is lying.<br><em>You are leaving.</em></h1><p>The truth is stranger than the briefing.<br>Give rare answers. Read the evidence. Get out.</p><div class="edition">MOM’S MISINFORMATION MACHINE <span>SPACE ESCAPE TRIVIA</span></div></section>
+  <section class="flight-grid" aria-label="Space escape game">
+   <div id="space-scene" class="flight-scene" aria-label="Flying saucer chase and space depth chart">
+    <div class="space-art" aria-hidden="true"></div><div class="starfield" aria-hidden="true"></div>
+    <div class="scene-top"><span>ESCAPE VECTOR</span><span id="band-code">LAYER 01 / 08</span></div>
+    <div class="station-label">MOTHER SOLAR STATION <small>100,000 KM</small></div>
+    <ol class="depth-chart" aria-label="Space depth chart">
+     <li data-layer="7"><b>87,500</b><span>Station approach</span></li>
+     <li data-layer="6"><b>75,000</b><span>Deep-space static</span></li>
+     <li data-layer="5"><b>62,500</b><span>Outer-system files</span></li>
+     <li data-layer="4"><b>50,000</b><span>The red channel</span></li>
+     <li data-layer="3"><b>37,500</b><span>Lunar interference</span></li>
+     <li data-layer="2"><b>25,000</b><span>Satellite belt</span></li>
+     <li data-layer="1"><b>12,500</b><span>Low orbit</span></li>
+     <li data-layer="0"><b>0 KM</b><span>Company grounds</span></li>
+    </ol>
+    <div id="rocket" class="saucer player-saucer"><img src="assets/player-saucer.png" alt="Orange and gold escape saucer with an obscured pilot"><span>YOU</span></div>
+    <div id="pursuer" class="saucer mom-saucer"><img src="assets/mom-pursuer.png" alt="MOM's purple and gold paper saucer chasing you"><span>MOM INC.</span></div>
+    <div id="chase-status" class="chase-status">MOM IS ON YOUR TRAIL</div>
+    <div class="scene-bottom"><span id="band-name">Company grounds</span><b id="scene-distance">0 <small>KM</small></b></div>
+   </div>
+   <div class="terminal-wrap">
+    <div class="hud"><div><span>DISTANCE</span><b id="distance">0<small> km</small></b></div><div><span>SIGNAL SCORE</span><b id="score">0</b></div><div><span>HULL</span><b id="hull" aria-label="3 hits remaining">● ● ●</b></div></div>
+    <div class="progress-track" role="progressbar" aria-label="Journey to Mother Solar Station" aria-valuemin="0" aria-valuemax="100000" aria-valuenow="0"><div id="progress"></div></div>
+    <section id="terminal" class="terminal" tabindex="-1" aria-label="Flight terminal"><div id="screen"></div></section>
+    <div class="terminal-footer"><span id="clearance">CLEARANCE: PERFECT RUN REQUIRED</span><button id="restart" class="text-button">Restart flight ↺</button></div>
+   </div>
+  </section>
+  <section class="instructions"><div><span class="eyebrow">THE EXIT PROCEDURE</span><h2>Uncommon knowledge.<br>Very common danger.</h2></div><ol><li><b>Name something that fits.</b><span>You have 25 seconds. Rarer valid answers earn 10–100 points.</span></li><li><b>Read the exact statement.</b><span>Is it documented, or an unsupported conspiracy claim? A wrong call damages your hull.</span></li><li><b>Reach the station.</b><span>Every accepted answer must be top-tier to dock. Three hits end the run. Restart as often as you like.</span></li></ol></section>
+  <section class="test-note"><b>A SMALL ARCHIVE. A BIG ESCAPE PLAN.</b><p>This playable flight test contains 12 subjects and 9 category prompts. New prompt pools unlock as you climb; the sample bank recycles. Rarity is editorial, not a claim about other players. The complete conspiracy iceberg is still to be researched and populated.</p><p>Includes non-graphic references to historical atrocities, disasters, abuse, and serial murder. Scores reward recall, never harm. Unresolved claims are excluded from binary grading.</p></section>
+  <section id="archive" hidden aria-labelledby="archive-title"><div class="archive-head"><div><span class="eyebrow">EVIDENCE, NOT VIBES</span><h2 id="archive-title">The sample archive.</h2></div><button id="archive-close" class="text-button">Close archive ×</button></div><label class="search-label">Search the archive<input id="archive-search" type="search" placeholder="Try a subject, program, or case…"></label><div id="archive-list"></div></section>
+ </main>
+ <footer><span>© MOM INC. · COMPLIANCE IS OPTIONAL. GRAVITY IS NOT.</span><span>Original space game inspired by rare-answer trivia.</span></footer>
+ <script type="application/mbs-script" data-mbs-type="module" data-mbs-src="app.js" data-mbs-defer="true"></script>
+</body>
+</html>

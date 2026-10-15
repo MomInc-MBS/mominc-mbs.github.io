@@ -3,7 +3,7 @@
 'use strict';
 const FILES = 'mbs-game-files-v1', INDEX = 'mbs-game-index-v1', FONTS = 'mbs-game-fonts-v1';
 const ORIGIN = self.location.origin;
-const GAMES = new Set(['mominc', 'girlfriend', 'lilboyfriend', 'corgi', 'djscratch', 'fuel', 'goon', 'war-room', 'armie', 'handborne']);
+const GAMES = new Set(['mominc', 'girlfriend', 'lilboyfriend', 'corgi', 'djscratch', 'fuel', 'goon', 'war-room', 'armie', 'handborne', 'misinformation']);
 const jobs = new Map();
 let routesPromise;
 const fileKey = revision => ORIGIN + '/.mbs-game-file/' + revision;
