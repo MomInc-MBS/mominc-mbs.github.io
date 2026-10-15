@@ -25,7 +25,7 @@
   let offScene = null;
   function paintDark() {
     darkNote.textContent = "Press power.";
-    offScene ??= import("/tv/off-scene.mjs?mbs-rev=tv-cabinet-match-1").catch(e => console.warn("3D off screen unavailable:", e.message));
+    offScene ??= import("/tv/off-scene.mjs?mbs-rev=tv-gold-fuel-1").catch(e => console.warn("3D off screen unavailable:", e.message));
   }
   const hotwired = () => { try { return sessionStorage.getItem("mbs-hotwired") === "1" || localStorage.getItem("mbs-off3d-locked") === "1"; } catch { return true; } };
 
