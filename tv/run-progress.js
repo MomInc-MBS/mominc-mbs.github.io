@@ -11,7 +11,8 @@
   if(!error){if(note){gone();delete note.dataset.text;}return;}
   // never over gameplay: not on a standalone play route (except the ranked Gala run, where it matters), not while the television is in game mode
   const game=document.documentElement.dataset.game;
-  if((game!==undefined&&game!=='goon')||document.getElementById('tv')?.dataset.mode==='game')return;
+  const tv=document.getElementById('tv'),glass=tv?.querySelector('.glass');
+  if((game!==undefined&&game!=='goon')||(tv&&(tv.dataset.state!=='on'||tv.dataset.mode==='game'||!glass))){gone();if(note)delete note.dataset.text;return;}
   if(!note){
    note=document.createElement('aside');
    note.id='rankConnection';
@@ -21,7 +22,10 @@
    // bottom banner, never the top tabs; one tap dismisses it, and it goes by itself after 4 s
    note.style.cssText='position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);transform:translateX(-50%);z-index:6500;max-width:88vw;cursor:pointer;color:#ff7f1a;text-shadow:0 1px 2px rgba(0,0,0,.8),0 0 8px currentColor,0 0 16px currentColor;font:13px/1.4 monospace;text-align:center;white-space:pre-wrap;opacity:1';
    note.addEventListener('click',gone);
-   document.body.append(note);
+   if(glass){
+    note.style.position='absolute';note.style.bottom='16px';note.style.zIndex='8';note.style.maxWidth='88%';
+    glass.append(note);
+   }else document.body.append(note);
   }
   if(note.dataset.text===error)return; // each message plays once; it shows again only after the error clears and recurs
   note.dataset.text=error;
@@ -53,5 +57,8 @@
  function handoff(){if(!state)throw Error('Connect your ranked run first.');const data={version:1,id:state.id,token:state.token,dj:window.MBS_DJ?.read()||null};try{const look=JSON.parse(localStorage.getItem('mominc-avatar-v1'));if(look?.schema==='mominc-avatar')data.avatar=look;}catch{}return new URLSearchParams({gala:btoa(unescape(encodeURIComponent(JSON.stringify(data))))}).toString();}
  function time(ms){if(!Number.isFinite(ms)||ms<0)return '—';const seconds=Math.floor(ms/1000);return String(Math.floor(seconds/3600)).padStart(2,'0')+':'+String(Math.floor(seconds/60)%60).padStart(2,'0')+':'+String(seconds%60).padStart(2,'0');}
  window.MBS_RUN={KEY,stages,start,checkpoint,flush,refresh,join,retag,handoff,time,read:()=>state,error:()=>error,leaderboard:()=>request('/leaderboard')};
+ // Power and game mode can change without a new run response. Hide an existing message immediately.
+ function watchTelevision(){const tv=document.getElementById('tv');if(tv)new MutationObserver(notify).observe(tv,{attributes:true,attributeFilter:['data-state','data-mode']});}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',watchTelevision,{once:true});else watchTelevision();
  window.addEventListener('online',flush);window.addEventListener('mbs:page-complete',e=>{if(e.detail?.site!=='goon')checkpoint(e.detail?.site);});window.addEventListener('mbs-flow',()=>{if(window.MBS_FLOW?.armieReady())checkpoint('hand');});window.addEventListener('storage',e=>{if(e.key===KEY){state=saved()||state;notify();}});document.addEventListener('DOMContentLoaded',notify,{once:true});start().then(flush);
 })();

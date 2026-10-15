@@ -824,8 +824,8 @@
     },
     {
       "url": "/tv/index.html",
-      "revision": "0d83bc414c137b7ffabd6eed76f2cabb1d5b3e97",
-      "bytes": 15288
+      "revision": "f6500d0f1fc1515c1c58f4d0bf26023d9f025c81",
+      "bytes": 15343
     },
     {
       "url": "/tv/landing.css",
@@ -839,8 +839,8 @@
     },
     {
       "url": "/tv/mbs-runtime.js",
-      "revision": "558a6547ca5fbc974c3aab555c516104ed03ab71",
-      "bytes": 6455
+      "revision": "59b2d4f10d3e9bae1689ff9a7e09573259d471b0",
+      "bytes": 6801
     },
     {
       "url": "/tv/mbs-shim.js",
@@ -899,8 +899,8 @@
     },
     {
       "url": "/tv/run-progress.js",
-      "revision": "b19e0d1cca71cecc2a2718e45ae9343f3b89d427",
-      "bytes": 7589
+      "revision": "541b3ac4d81a7c8fe9b9edef9dee613cc1af51a3",
+      "bytes": 8285
     },
     {
       "url": "/tv/sound.js",
@@ -924,8 +924,8 @@
     },
     {
       "url": "/tv/tv.js",
-      "revision": "e23ced2361a2bdaa8cd5e87fc057292390aa714d",
-      "bytes": 35666
+      "revision": "8d5fa5581540dc40672ced1e5d49f7bf41b309e8",
+      "bytes": 35740
     },
     {
       "url": "/vendor/shaders/runtime.mjs",
@@ -936,5 +936,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "2403d3c905959b0637ef"
+  "version": "b0afb5cdde236a2f5c8c"
 }

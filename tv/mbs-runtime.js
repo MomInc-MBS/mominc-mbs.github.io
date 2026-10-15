@@ -121,12 +121,27 @@
     if (!paused()) emit("mbs:resume", { source: source || "unknown" });
   }
 
-  // a cancellable warm-up: the 900 ms television warm-up was a bare setTimeout, so pausing during it
-  // did nothing and the set came on anyway, mid-pause (C006's "guard the 900ms warm-up timer")
+  // Suspend the warm-up while paused and restart it on resume. Dropping its callback
+  // would leave the television permanently stuck in its warming state.
   function warmUp(ms, run) {
-    let t = setTimeout(() => { t = 0; if (!paused()) run(); }, ms);
-    const cancel = () => { if (t) { clearTimeout(t); t = 0; } };
-    document.addEventListener("mbs:pause", cancel, { once: true });
+    let t = 0, finished = false;
+    const suspend = () => { if (t) clearTimeout(t); t = 0; };
+    const cancel = () => {
+      finished = true; suspend();
+      document.removeEventListener("mbs:pause", suspend);
+      document.removeEventListener("mbs:resume", start);
+    };
+    const start = () => {
+      if (finished || t || paused()) return;
+      t = setTimeout(() => {
+        t = 0;
+        if (paused()) return;
+        cancel(); run();
+      }, ms);
+    };
+    document.addEventListener("mbs:pause", suspend);
+    document.addEventListener("mbs:resume", start);
+    start();
     return cancel;
   }
 

@@ -27,14 +27,14 @@
     darkNote.textContent = "Press power.";
     offScene ??= import("/tv/off-scene.mjs?mbs-rev=tv-two-controls-1").catch(e => console.warn("3D off screen unavailable:", e.message));
   }
-  const hotwired = () => { try { return sessionStorage.getItem("mbs-hotwired") === "1" || localStorage.getItem("mbs-off3d-locked") === "1"; } catch { return true; } };
+  const hotwired = () => { if (window.MBS_OFF3D?.hot) return true; try { return sessionStorage.getItem("mbs-hotwired") === "1" || localStorage.getItem("mbs-off3d-locked") === "1"; } catch { return true; } };
 
   // --- power
   // 2.13/C006: the warm-up is cancellable. It used to be a bare setTimeout, so pausing (or switching
   // off) during the 900 ms warm-up did nothing and the set came on anyway, mid-pause.
   let cancelWarmUp = null;
   function turnOn() {
-    if (tv.dataset.state === "on") return;
+    if (tv.dataset.state === "on" || tv.dataset.state === "warming") return;
     tv.dataset.state = "warming";
     try { sessionStorage.setItem("mbs-on", "1"); } catch {}
     window.MBS_RT.resume("power");
