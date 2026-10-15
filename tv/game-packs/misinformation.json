@@ -19,8 +19,8 @@
     },
     {
       "url": "/play/misinformation/app.js",
-      "revision": "0b8468204b4ce233413635b72b223824a02cefeb",
-      "bytes": 15775
+      "revision": "0b9498d087f7f16239617b706bba3fc8af4d1dac",
+      "bytes": 16032
     },
     {
       "url": "/play/misinformation/assets/mom-pursuer.png",
@@ -39,23 +39,28 @@
     },
     {
       "url": "/play/misinformation/catalog.js",
-      "revision": "aa7761710bae6937a2beafd7a774eb5de1d94907",
-      "bytes": 49131
+      "revision": "fda46715d12de0c9155af70fec296fb0c3c534f5",
+      "bytes": 713401
+    },
+    {
+      "url": "/play/misinformation/deck.js",
+      "revision": "424633838705e931f50ea9cf8775a77a6a536bfa",
+      "bytes": 1468
     },
     {
       "url": "/play/misinformation/engine.js",
-      "revision": "8615efbe83f3bb6e3674326048e569dc7be417c8",
-      "bytes": 4473
+      "revision": "38b3a3e5f7a8020ce6f0cb4ab660e40a7873421c",
+      "bytes": 6162
     },
     {
       "url": "/play/misinformation/index.html",
-      "revision": "713ab0ed28be7c632818e6c23aa7dbfe6aee67cb",
-      "bytes": 5687
+      "revision": "aabf0354aa43d62d8120a5099cac688594b4211a",
+      "bytes": 6115
     },
     {
       "url": "/play/misinformation/scene.js",
-      "revision": "b4fafe8f4bdb3d2630bec552ee26d3418d14d04e",
-      "bytes": 1390
+      "revision": "bc7abde8d65d98534bf18f2ac797d24b5d7cc920",
+      "bytes": 3669
     },
     {
       "url": "/play/misinformation/scores.js",
@@ -64,8 +69,8 @@
     },
     {
       "url": "/play/misinformation/space.css",
-      "revision": "226253ace0584055a16dafcce3f7a21f328a2047",
-      "bytes": 3671
+      "revision": "5e3f2571d2b69f5dc48f025ddb79872056d68764",
+      "bytes": 6676
     },
     {
       "url": "/play/misinformation/style.css",
@@ -342,5 +347,5 @@
     "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "0c390f73ac7b21f2e82a"
+  "version": "c1ab77bcf205d35bc2f5"
 }

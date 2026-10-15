@@ -22,12 +22,12 @@ def record(name, **details):
 def state(page):
     return page.evaluate("k=>JSON.parse(localStorage.getItem(k))", RUN)
 
-def answer(page, correct=True):
-    choice = page.evaluate("""async()=>{const {subjects,questions}=await import('./catalog.js');
+def answer(page, correct=True, tier=5):
+    choice = page.evaluate("""async tier=>{const {subjects,questions}=await import('./catalog.js');
         const s=JSON.parse(localStorage.getItem('mom-misinformation-flight-v1'));
         const q=questions.find(q=>q.id===s.question);
-        const subject=subjects.find(s=>s.id===q.answers.find(a=>a.tier===5).id);
-        return {name:subject.name,classification:subject.classification};}""")
+        const subject=subjects.find(s=>s.id===q.answers.find(a=>a.tier===tier).id);
+        return {name:subject.name,classification:subject.classification};}""", tier)
     page.locator("#answer").fill(choice["name"])
     page.locator("#answer-form button[type=submit]").click()
     expected = choice["classification"]
@@ -59,13 +59,19 @@ with sync_playwright() as pw:
       if(fixture){sessionStorage.removeItem('__qa_restore');localStorage.setItem('mom-misinformation-flight-v1',fixture);}})();""")
     page.wait_for_url("**/play/misinformation/")
     try:
-        page.wait_for_function("!document.documentElement.hasAttribute('data-game-loading')", timeout=60000)
+        page.wait_for_function("!document.documentElement.hasAttribute('data-game-loading')", timeout=180000)
     except Exception:
         page.screenshot(path=str(OUT / "loading-failure.png"))
         print(page.locator("body").inner_text()[:1500], flush=True)
         print(page.evaluate("({scripts:[...document.scripts].map(s=>({src:s.src,type:s.type})),loader:!!window.MBS_LOAD})"), flush=True)
         raise
     expect(page.locator("button[data-action='launch']")).to_be_visible()
+    catalog=page.evaluate("""async()=>{const {subjects,questions}=await import('./catalog.js');return {
+      subjects:subjects.length,questions:questions.length,
+      commonMajority:questions.every(q=>q.answers.filter(a=>a.tier===0).length>q.answers.length/2),
+      minPrompts:Math.min(...subjects.map(s=>questions.filter(q=>q.answers.some(a=>a.id===s.id)).length))};}""")
+    assert catalog["subjects"]>=141 and catalog["questions"]>=160 and catalog["commonMajority"] and catalog["minPrompts"]>=10
+    record("Expanded live catalog has triple distinct answers, broad pools and common-answer majorities",**catalog)
     assert page.locator(".depth-chart li").count() == 8
     page.wait_for_function("[...document.querySelectorAll('.saucer img')].every(e=>e.complete&&e.naturalWidth>0)")
     record("Actual preview link opens dedicated play menu and loader completes")
@@ -81,7 +87,9 @@ with sync_playwright() as pw:
     assert after["phase"] == "answer" and after["hits"] == 0 and after["deadline"] == before["deadline"]
     record("Invalid answer retries without damage or a fresh timer")
     layers=set()
+    winning_questions=[]
     for i in range(20):
+        winning_questions.append(state(page)["question"])
         after=answer(page)
         layers.add(page.locator("#space-scene").get_attribute("data-layer"))
         if after["phase"] == "escaped":
@@ -89,6 +97,7 @@ with sync_playwright() as pw:
         page.locator("button[data-action='next']").click()
     assert after["phase"] == "escaped" and after["distance"] == 100000 and after["score"] == 2000
     assert len(layers) == 8
+    assert len(set(winning_questions))==20
     page.locator("#space-scene").screenshot(path=str(OUT / "sci-fi-station.png"))
     record("Twenty highest-tier answers dock; all eight art and chart layers appear", layers=sorted(layers))
     page.locator("button[data-action='scoreboard']").click()
@@ -147,6 +156,50 @@ with sync_playwright() as pw:
         expect(page.locator("button[data-action='launch']")).to_be_visible()
         assert state(page)["phase"]=="ready"
     record("Malformed terminal saves recover to the play menu without trapping the loader")
+    # Restarts should not reset the browser's transmission rotation.
+    page.set_viewport_size({"width":390,"height":844})
+    openings=[]
+    for i in range(8):
+        page.locator("button[data-action='launch']").click()
+        openings.append(state(page)["question"])
+        if i<7:
+            page.locator("#restart").click()
+    assert len(set(openings))==8
+    pools=page.evaluate("""async ids=>{const {questions}=await import('./catalog.js');return ids.map(id=>questions.find(q=>q.id===id).poolId);}""",openings)
+    assert len(set(pools))==8
+    record("Eight fresh runs rotate both wording and accepted-answer scopes")
+    def frame():
+        return page.evaluate("""()=>({player:parseFloat(document.querySelector('#rocket').style.bottom),
+          mini:parseFloat(document.querySelector('#mobile-chase').style.getPropertyValue('--mini-player-x')),
+          ordinal:Number(document.querySelector('#mobile-chase').dataset.motionOrdinal)})""")
+    previous=frame()
+    after=answer(page,tier=0)
+    current=frame()
+    assert after["distance"]==500 and after["score"]==10 and current["player"]>previous["player"] and current["mini"]>previous["mini"]
+    page.wait_for_function("()=>{const r=document.querySelector('#mobile-chase').getBoundingClientRect(),t=document.querySelector('#terminal').getBoundingClientRect();return r.top>=-1&&r.bottom<innerHeight&&r.height>90&&t.top>=r.bottom+6&&t.top<innerHeight/2;}")
+    page.screenshot(path=str(OUT/"mobile-chase-answer.png"))
+    previous=current
+    page.locator("button[data-action='next']").click()
+    after=answer(page,False,tier=0)
+    current=frame()
+    assert after["distance"]==500 and after["score"]==10 and after["hits"]==1 and current["mini"]>previous["mini"]
+    previous=current
+    page.locator("button[data-action='next']").click()
+    page.locator("button[data-action='skip']").click()
+    current=frame()
+    assert state(page)["distance"]==500 and state(page)["hits"]==1 and current["mini"]>previous["mini"] and current["ordinal"]==3
+    page.reload(wait_until="domcontentloaded")
+    page.wait_for_function("!document.documentElement.hasAttribute('data-game-loading')", timeout=120000)
+    assert frame()==current
+    assert not page.locator("#mobile-chase").evaluate("e=>e.classList.contains('flight-step')")
+    record("Common answer, miss and pass each move orange closer; mobile chase stays visible and reload-stable")
+    page.emulate_media(reduced_motion="reduce")
+    page.locator("button[data-action='next']").click()
+    after=answer(page,tier=0)
+    assert frame()["mini"]>current["mini"]
+    assert not page.locator("#mobile-chase").evaluate("e=>e.classList.contains('flight-step')")
+    assert not page.evaluate("document.documentElement.scrollWidth>innerWidth")
+    record("Reduced motion keeps chase progress visible without animated pulses")
     home.set_viewport_size({"width":390,"height":844})
     preview.screenshot(path=str(OUT / "main-preview-mobile.png"))
     record("Main MOM home preview remains usable at phone width")

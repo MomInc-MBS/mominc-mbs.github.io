@@ -26,5 +26,28 @@
 .score-menu{margin-top:12px}.terminal table th{font:8px var(--mono)}.terminal table tr{border-bottom:1px solid var(--line)}.terminal table caption{font:10px/1.6 var(--mono)}
 .primary.warm{background:#a94b24;border-color:#a94b24}.intro h1 em{color:#a94b24}
 @keyframes saucer-drift{from{transform:translateY(-3px) rotate(-2deg)}to{transform:translateY(4px) rotate(2deg)}}
+.flight-scene:before{content:'';position:absolute;inset:-30% 0;z-index:1;pointer-events:none;opacity:0;background:linear-gradient(180deg,transparent,#f6d59a88,transparent) 58% 15%/2px 60px no-repeat,linear-gradient(180deg,transparent,#d8b7ef99,transparent) 88% 70%/2px 85px no-repeat,linear-gradient(180deg,transparent,#fff3ca99,transparent) 43% 42%/1px 38px no-repeat}
+.flight-scene.flight-step:before{animation:answer-flyby .85s ease-out both}
+.flight-step .saucer img{animation:saucer-drift 4s ease-in-out infinite alternate,answer-thrust .85s ease-out}
+.flight-step .mom-saucer img{animation-delay:-2s,.08s}
+@keyframes answer-flyby{0%{opacity:0;transform:translateY(-45%)}20%{opacity:.9}100%{opacity:0;transform:translateY(45%)}}
+@keyframes answer-thrust{0%,100%{translate:0 0}35%{translate:0 -12px}70%{translate:0 -4px}}
+.mobile-chase{display:none}
+.mobile-chase[data-phase="ready"]{display:none}
+.mobile-chase-art{position:absolute;inset:0;background:#151023 url('assets/space-atlas.png') var(--space-x,0%) var(--space-y,0%)/200% 400% no-repeat}
+.mobile-chase-art:before{content:'';position:absolute;inset:0;background:linear-gradient(0deg,#130e21ed,transparent 72%),linear-gradient(90deg,#130e2188,transparent)}
+.mobile-chase-art:after{content:'STATION';position:absolute;right:8px;top:8px;color:#f5dca6;font:7px var(--mono);letter-spacing:.4px}
+.mobile-chase:after{content:'';position:absolute;left:var(--mini-station-x,88%);top:43%;width:29px;height:12px;transform:translate(-50%,-50%);border:2px solid #ecc979;border-radius:50%;box-shadow:0 0 9px #e5b15b66;pointer-events:none}
+.mobile-chase>img{position:absolute;top:45%;width:67px;transform:translate(-50%,-50%);z-index:2;pointer-events:none;transition:left 1.15s cubic-bezier(.2,.75,.3,1);filter:drop-shadow(0 3px 3px #10082188)}
+.mobile-chase .mobile-chase-player{left:var(--mini-player-x,46%);z-index:3}
+.mobile-chase .mobile-chase-mom{left:var(--mini-mom-x,23.2%);width:73px}
+.mobile-chase-label{position:absolute;bottom:9px;left:10px;right:10px;color:#f5dca6;font:7px/1.5 var(--mono);letter-spacing:.25px;z-index:4;pointer-events:none}
+.mobile-chase.flight-step>img{animation:mini-answer-thrust .85s ease-out}
+.mobile-chase.flight-step>.mobile-chase-mom{animation-delay:.08s}
+.mobile-chase[data-phase="dead"] .mobile-chase-player{filter:sepia(.6) brightness(.6)}
+.mobile-chase[data-phase="escaped"] .mobile-chase-mom{opacity:.3}
+.mobile-chase[data-hits="2"] .mobile-chase-label,.mobile-chase[data-hits="3"] .mobile-chase-label{color:#ffb89a}
+@keyframes mini-answer-thrust{0%,100%{translate:0 0}35%{translate:9px -2px}70%{translate:3px 0}}
+@media(max-width:650px){.mobile-chase{display:block;height:110px;flex:0 0 110px;position:sticky;top:0;z-index:7;isolation:isolate;overflow:hidden;border:1px solid #34243f;border-top:2px solid #d4a84f;background:#151023;margin-bottom:8px;pointer-events:none}#terminal{scroll-margin-top:130px}}
 @media(max-width:650px){.flight-scene{min-height:365px;height:365px}.scene-top{top:16px;left:14px;right:14px}.station-label{top:43px;right:14px;font-size:7px}.station-label small{font-size:6px;margin-top:4px}.depth-chart{left:12px;top:67px;bottom:64px;width:135px}.depth-chart li{padding:4px 6px;gap:2px}.depth-chart b{font-size:9px}.depth-chart span{font-size:9px}.saucer{width:108px;left:70%}.mom-saucer{width:119px;left:73%}.saucer span{font-size:6px}.scene-bottom{left:14px;right:14px}.chase-status{font-size:7px;bottom:auto;top:73px;left:auto;right:14px;max-width:140px;line-height:1.6}.terminal table th{font-size:7px}.terminal table td{font-size:10px}.terminal table td small{font-size:8px}}
-@media(prefers-reduced-motion:reduce){.saucer img{animation:none}.saucer,.space-art,.depth-chart li{transition:none}}
+@media(prefers-reduced-motion:reduce){.saucer img,.flight-step .saucer img,.flight-scene.flight-step:before,.mobile-chase.flight-step>img{animation:none}.saucer,.space-art,.depth-chart li,.mobile-chase>img{transition:none}}

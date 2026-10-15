@@ -1,0 +1,1711 @@
+{
+  "title": "Mom's Misinformation Machine: science and space expansion v2",
+  "version": 2,
+  "reviewed_at": "2026-10-14",
+  "scope": "New distinct named subjects only, compared against the 47-subject main catalog. Not a complete encyclopedia or complete conspiracy database.",
+  "source_policy": "Primary institutional source for every precise statement. Original concise wording, no copied articles or images; source review notes identify boundaries. Some false science rumors are misinformation rather than literal secret-plot narratives and are labeled accordingly.",
+  "familiarity_policy": "Editorial relative familiarity from 0 (general/common) to 5 (obscure); independent of the eight flight depths and not measured player-answer frequencies.",
+  "medical_scope": "Vaccine cards grade narrowly scoped historical misinformation, not personal medical advice or current eligibility recommendations. The archived CDC source is dated August 18, 2021.",
+  "release_policy": "Source-checked proposals for the release captain to integrate and verify; no app or live source changes made by this file.",
+  "counts": {
+    "subjects": 56,
+    "events": 40,
+    "claims": 16,
+    "familiarity_0_or_1": 36,
+    "familiarity_5": 1,
+    "alternate_statements": 17
+  },
+  "subjects": [
+    {
+      "id": "mercury",
+      "name": "Mercury",
+      "aliases": [],
+      "classification": "event",
+      "statement": "Mercury is the closest planet to the Sun.",
+      "explanation": "NASA identifies this small rocky world as the innermost planet.",
+      "source": "https://science.nasa.gov/mercury/facts/",
+      "publisher": "NASA",
+      "category": "Documented planet",
+      "topics": [
+        "space",
+        "science",
+        "sky"
+      ],
+      "familiarity": 0,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "NASA facts page: introduction and orbit.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      },
+      "alternate_statements": [
+        {
+          "statement": "Mercury is the smallest of the eight planets in our solar system.",
+          "source": "https://science.nasa.gov/mercury/facts/",
+          "publisher": "NASA",
+          "evidence_status": "documented"
+        },
+        {
+          "statement": "Mercury completes an orbit of the Sun in about 88 Earth days.",
+          "source": "https://science.nasa.gov/mercury/facts/",
+          "publisher": "NASA",
+          "evidence_status": "documented"
+        }
+      ]
+    },
+    {
+      "id": "venus",
+      "name": "Venus",
+      "aliases": [],
+      "classification": "event",
+      "statement": "Venus is the hottest planet in our solar system.",
+      "explanation": "Its dense atmosphere traps heat even though Mercury is closer to the Sun.",
+      "source": "https://science.nasa.gov/venus/venus-facts/",
+      "publisher": "NASA",
+      "category": "Documented planet",
+      "topics": [
+        "space",
+        "science",
+        "sky",
+        "environment"
+      ],
+      "familiarity": 0,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "NASA facts page: introduction and atmosphere.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      },
+      "alternate_statements": [
+        {
+          "statement": "Venus is the second planet from the Sun.",
+          "source": "https://science.nasa.gov/venus/venus-facts/",
+          "publisher": "NASA",
+          "evidence_status": "documented"
+        },
+        {
+          "statement": "A strong greenhouse effect contributes to the extreme surface heat on Venus.",
+          "source": "https://science.nasa.gov/venus/venus-facts/",
+          "publisher": "NASA",
+          "evidence_status": "documented"
+        }
+      ]
+    },
+    {
+      "id": "earth",
+      "name": "Earth",
+      "aliases": [
+        "Terra"
+      ],
+      "classification": "event",
+      "statement": "Earth is the third planet from the Sun.",
+      "explanation": "NASA records its orbit and layered rocky structure.",
+      "source": "https://science.nasa.gov/earth/facts/",
+      "publisher": "NASA",
+      "category": "Documented planet",
+      "topics": [
+        "space",
+        "science",
+        "sky",
+        "environment"
+      ],
+      "familiarity": 0,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "NASA facts page: formation, moons, and introduction.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      },
+      "alternate_statements": [
+        {
+          "statement": "Earth has a crust, a mantle, and a metallic core.",
+          "source": "https://science.nasa.gov/earth/facts/",
+          "publisher": "NASA",
+          "evidence_status": "documented"
+        },
+        {
+          "statement": "Earth has one natural moon.",
+          "source": "https://science.nasa.gov/earth/facts/",
+          "publisher": "NASA",
+          "evidence_status": "documented"
+        }
+      ]
+    },
+    {
+      "id": "mars",
+      "name": "Mars",
+      "aliases": [
+        "Red Planet",
+        "The Red Planet"
+      ],
+      "classification": "event",
+      "statement": "Mars is home to the enormous volcano Olympus Mons.",
+      "explanation": "Spacecraft observations establish this large volcanic landform on Mars.",
+      "source": "https://science.nasa.gov/mars/facts/",
+      "publisher": "NASA",
+      "category": "Documented planet",
+      "topics": [
+        "space",
+        "science",
+        "sky"
+      ],
+      "familiarity": 0,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "NASA facts page: The Largest Volcano.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      },
+      "alternate_statements": [
+        {
+          "statement": "Mars is the fourth planet from the Sun.",
+          "source": "https://science.nasa.gov/mars/facts/",
+          "publisher": "NASA",
+          "evidence_status": "documented"
+        }
+      ]
+    },
+    {
+      "id": "jupiter",
+      "name": "Jupiter",
+      "aliases": [],
+      "classification": "event",
+      "statement": "Jupiter is the largest planet in our solar system.",
+      "explanation": "It is a gas giant whose bulk is mostly hydrogen and helium.",
+      "source": "https://science.nasa.gov/jupiter/jupiter-facts/",
+      "publisher": "NASA",
+      "category": "Documented planet",
+      "topics": [
+        "space",
+        "science",
+        "sky"
+      ],
+      "familiarity": 0,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "NASA facts page: introduction and structure.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      },
+      "alternate_statements": [
+        {
+          "statement": "Jupiter is the fifth planet from the Sun.",
+          "source": "https://science.nasa.gov/jupiter/jupiter-facts/",
+          "publisher": "NASA",
+          "evidence_status": "documented"
+        },
+        {
+          "statement": "Jupiter has a faint ring system.",
+          "source": "https://science.nasa.gov/jupiter/jupiter-facts/",
+          "publisher": "NASA",
+          "evidence_status": "documented"
+        }
+      ]
+    },
+    {
+      "id": "saturn",
+      "name": "Saturn",
+      "aliases": [],
+      "classification": "event",
+      "statement": "Saturn is a gas giant surrounded by a prominent ring system.",
+      "explanation": "Its visible rings contain numerous separate particles rather than a single solid disc.",
+      "source": "https://science.nasa.gov/saturn/facts/",
+      "publisher": "NASA",
+      "category": "Documented planet",
+      "topics": [
+        "space",
+        "science",
+        "sky"
+      ],
+      "familiarity": 0,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "NASA facts page: introduction and Rings; distinct from existing Saturn hexagon entry.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      },
+      "alternate_statements": [
+        {
+          "statement": "Saturn is the sixth planet from the Sun.",
+          "source": "https://science.nasa.gov/saturn/facts/",
+          "publisher": "NASA",
+          "evidence_status": "documented"
+        }
+      ]
+    },
+    {
+      "id": "uranus",
+      "name": "Uranus",
+      "aliases": [],
+      "classification": "event",
+      "statement": "Uranus rotates with its axis tilted so far that it appears to spin on its side.",
+      "explanation": "NASA describes its nearly right-angle tilt relative to its orbital plane.",
+      "source": "https://science.nasa.gov/uranus/",
+      "publisher": "NASA",
+      "category": "Documented planet",
+      "topics": [
+        "space",
+        "science",
+        "sky"
+      ],
+      "familiarity": 1,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "NASA overview explicitly states sideways rotation and seventh-planet position.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      },
+      "alternate_statements": [
+        {
+          "statement": "Uranus is the seventh planet from the Sun.",
+          "source": "https://science.nasa.gov/uranus/",
+          "publisher": "NASA",
+          "evidence_status": "documented"
+        }
+      ]
+    },
+    {
+      "id": "neptune",
+      "name": "Neptune",
+      "aliases": [],
+      "classification": "event",
+      "statement": "Neptune is the eighth planet from the Sun.",
+      "explanation": "It is the most distant of the eight recognized planets.",
+      "source": "https://science.nasa.gov/neptune/neptune-facts/",
+      "publisher": "NASA",
+      "category": "Documented planet",
+      "topics": [
+        "space",
+        "science",
+        "sky"
+      ],
+      "familiarity": 1,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "NASA facts introduction and Voyager 2 image caption.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      },
+      "alternate_statements": [
+        {
+          "statement": "Voyager 2 flew past Neptune in 1989.",
+          "source": "https://science.nasa.gov/neptune/neptune-facts/",
+          "publisher": "NASA",
+          "evidence_status": "documented"
+        }
+      ]
+    },
+    {
+      "id": "pluto",
+      "name": "Pluto",
+      "aliases": [],
+      "classification": "event",
+      "statement": "The International Astronomical Union reclassified Pluto as a dwarf planet in 2006.",
+      "explanation": "The classification changed; Pluto itself did not disappear from the solar system.",
+      "source": "https://science.nasa.gov/dwarf-planets/pluto/facts/",
+      "publisher": "NASA",
+      "category": "Documented dwarf planet",
+      "topics": [
+        "space",
+        "science",
+        "sky"
+      ],
+      "familiarity": 0,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "NASA facts: introduction, IAU classification, and New Horizons.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      },
+      "alternate_statements": [
+        {
+          "statement": "Pluto lies in the Kuiper Belt.",
+          "source": "https://science.nasa.gov/dwarf-planets/pluto/facts/",
+          "publisher": "NASA",
+          "evidence_status": "documented"
+        },
+        {
+          "statement": "New Horizons flew past Pluto in July 2015.",
+          "source": "https://science.nasa.gov/dwarf-planets/pluto/facts/",
+          "publisher": "NASA",
+          "evidence_status": "documented"
+        }
+      ]
+    },
+    {
+      "id": "sun",
+      "name": "Sun",
+      "aliases": [
+        "The Sun",
+        "Sol"
+      ],
+      "classification": "event",
+      "statement": "The Sun is the star at the center of our solar system.",
+      "explanation": "It is a hot ball of gas dominated by hydrogen and helium.",
+      "source": "https://science.nasa.gov/sun/facts/",
+      "publisher": "NASA",
+      "category": "Documented star",
+      "topics": [
+        "space",
+        "science",
+        "sky",
+        "environment"
+      ],
+      "familiarity": 0,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "NASA Sun facts introduction.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      },
+      "alternate_statements": [
+        {
+          "statement": "The Sun is composed primarily of hydrogen and helium.",
+          "source": "https://science.nasa.gov/sun/facts/",
+          "publisher": "NASA",
+          "evidence_status": "documented"
+        }
+      ]
+    },
+    {
+      "id": "moon",
+      "name": "Moon",
+      "aliases": [
+        "The Moon",
+        "Luna",
+        "Earths Moon"
+      ],
+      "classification": "event",
+      "statement": "The Moon is Earth's only natural satellite.",
+      "explanation": "Its physical surface preserves impact craters and other evidence of solar-system history.",
+      "source": "https://science.nasa.gov/moon/facts/",
+      "publisher": "NASA",
+      "category": "Documented natural satellite",
+      "topics": [
+        "space",
+        "science",
+        "sky"
+      ],
+      "familiarity": 0,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "NASA Moon facts introduction; distinct from lunar-reflector and Hollow Moon propositions.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      },
+      "alternate_statements": [
+        {
+          "statement": "The Moon orbits Earth.",
+          "source": "https://science.nasa.gov/moon/facts/",
+          "publisher": "NASA",
+          "evidence_status": "documented"
+        }
+      ]
+    },
+    {
+      "id": "ceres",
+      "name": "Ceres",
+      "aliases": [
+        "Dwarf planet Ceres"
+      ],
+      "classification": "event",
+      "statement": "Ceres is the largest object in the main asteroid belt between Mars and Jupiter.",
+      "explanation": "It is classified as a dwarf planet rather than one of the eight major planets.",
+      "source": "https://science.nasa.gov/dwarf-planets/ceres/facts/",
+      "publisher": "NASA",
+      "category": "Documented dwarf planet",
+      "topics": [
+        "space",
+        "science",
+        "sky"
+      ],
+      "familiarity": 2,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "NASA facts introduction and Dawn visit.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      },
+      "alternate_statements": [
+        {
+          "statement": "The Dawn spacecraft reached Ceres in 2015.",
+          "source": "https://science.nasa.gov/dwarf-planets/ceres/facts/",
+          "publisher": "NASA",
+          "evidence_status": "documented"
+        }
+      ]
+    },
+    {
+      "id": "asteroid-belt",
+      "name": "Asteroid Belt",
+      "aliases": [
+        "Main asteroid belt",
+        "Main belt"
+      ],
+      "classification": "event",
+      "statement": "The main asteroid belt lies between the orbits of Mars and Jupiter.",
+      "explanation": "Its many small bodies are remnants of the solar system's formation.",
+      "source": "https://science.nasa.gov/asset/webb/asteroid-belts-illustration/",
+      "publisher": "NASA",
+      "category": "Documented solar-system region",
+      "topics": [
+        "space",
+        "science",
+        "sky"
+      ],
+      "familiarity": 1,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "NASA illustration caption states location and origin of remaining asteroids.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "kuiper-belt",
+      "name": "Kuiper Belt",
+      "aliases": [],
+      "classification": "event",
+      "statement": "The Kuiper Belt is a region of icy bodies beyond Neptune.",
+      "explanation": "This distant region includes Pluto and many smaller objects.",
+      "source": "https://science.nasa.gov/solar-system/kuiper-belt/facts/",
+      "publisher": "NASA",
+      "category": "Documented solar-system region",
+      "topics": [
+        "space",
+        "science",
+        "sky"
+      ],
+      "familiarity": 2,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "NASA facts introduction; location beyond Neptune, icy population.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "iss",
+      "name": "International Space Station",
+      "aliases": [
+        "ISS",
+        "International Space Station ISS"
+      ],
+      "classification": "event",
+      "statement": "The International Space Station has been continuously inhabited since November 2000.",
+      "explanation": "An international partnership operates this orbiting research laboratory.",
+      "source": "https://www.nasa.gov/international-space-station/space-station-facts-and-figures/",
+      "publisher": "NASA",
+      "category": "Documented space station",
+      "topics": [
+        "space",
+        "science",
+        "technology",
+        "governments"
+      ],
+      "familiarity": 0,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "NASA facts explicitly records continuous occupancy since November 2000.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "hubble",
+      "name": "Hubble Space Telescope",
+      "aliases": [
+        "Hubble",
+        "Hubble telescope",
+        "HST"
+      ],
+      "classification": "event",
+      "statement": "The Hubble Space Telescope launched aboard Space Shuttle Discovery in April 1990.",
+      "explanation": "Its mission places a telescope above much of Earth's obscuring atmosphere.",
+      "source": "https://science.nasa.gov/mission/hubble/overview/the-history-of-hubble/",
+      "publisher": "NASA",
+      "category": "Documented space observatory",
+      "topics": [
+        "space",
+        "science",
+        "technology",
+        "governments"
+      ],
+      "familiarity": 0,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "NASA history: April 24, 1990, STS-31 launch.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "james-webb",
+      "name": "James Webb Space Telescope",
+      "aliases": [
+        "JWST",
+        "James Webb",
+        "Webb telescope"
+      ],
+      "classification": "event",
+      "statement": "The James Webb Space Telescope observes near-infrared and mid-infrared light.",
+      "explanation": "These wavelengths help it study distant galaxies and material hidden by dust.",
+      "source": "https://science.nasa.gov/mission/webb/science-overview/science-explainers/infrared-astronomy/",
+      "publisher": "NASA",
+      "category": "Documented space observatory",
+      "topics": [
+        "space",
+        "science",
+        "technology",
+        "governments"
+      ],
+      "familiarity": 1,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "NASA infrared-astronomy explainer names Webb wavelength ranges.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "voyager-1",
+      "name": "Voyager 1",
+      "aliases": [
+        "Voyager One"
+      ],
+      "classification": "event",
+      "statement": "Voyager 1 entered interstellar space in August 2012.",
+      "explanation": "NASA identifies the boundary crossing from spacecraft measurements; this is not a claim that it left the Sun's gravitational influence.",
+      "source": "https://science.nasa.gov/mission/voyager/voyager-1/",
+      "publisher": "NASA",
+      "category": "Documented space probe",
+      "topics": [
+        "space",
+        "science",
+        "technology",
+        "governments"
+      ],
+      "familiarity": 1,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "NASA mission overview; distinguish interstellar medium from escaping all solar gravity.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "voyager-2",
+      "name": "Voyager 2",
+      "aliases": [
+        "Voyager Two"
+      ],
+      "classification": "event",
+      "statement": "Voyager 2 flew past both Uranus and Neptune.",
+      "explanation": "It visited all four giant planets during its planetary tour.",
+      "source": "https://science.nasa.gov/mission/voyager/voyager-2/",
+      "publisher": "NASA",
+      "category": "Documented space probe",
+      "topics": [
+        "space",
+        "science",
+        "technology",
+        "governments"
+      ],
+      "familiarity": 1,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "NASA mission overview and planetary encounter history.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "curiosity",
+      "name": "Curiosity",
+      "aliases": [
+        "Curiosity rover",
+        "Mars Science Laboratory",
+        "MSL"
+      ],
+      "classification": "event",
+      "statement": "NASA's Curiosity rover landed on Mars in August 2012.",
+      "explanation": "NASA recorded the descent and landing, including observations by an orbiter.",
+      "source": "https://science.nasa.gov/resource/curiosity-has-landed/",
+      "publisher": "NASA",
+      "category": "Documented Mars rover",
+      "topics": [
+        "space",
+        "science",
+        "technology",
+        "governments"
+      ],
+      "familiarity": 1,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "Contemporary mission landing video and transcript; Aug 5 PDT / Aug 6 UTC.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "perseverance",
+      "name": "Perseverance",
+      "aliases": [
+        "Perseverance rover",
+        "Mars 2020"
+      ],
+      "classification": "event",
+      "statement": "NASA's Perseverance rover landed on Mars in February 2021.",
+      "explanation": "The mission examines Martian geology and collects rock samples.",
+      "source": "https://science.nasa.gov/mission/mars-2020-perseverance/",
+      "publisher": "NASA",
+      "category": "Documented Mars rover",
+      "topics": [
+        "space",
+        "science",
+        "technology",
+        "governments"
+      ],
+      "familiarity": 1,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "NASA mission overview and February 18, 2021 landing record; no claim of confirmed Martian life.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "ingenuity",
+      "name": "Ingenuity",
+      "aliases": [
+        "Ingenuity helicopter",
+        "Mars helicopter"
+      ],
+      "classification": "event",
+      "statement": "Ingenuity made the first powered, controlled aircraft flight on another planet in April 2021.",
+      "explanation": "This small helicopter flew in the thin Martian atmosphere.",
+      "source": "https://www.jpl.nasa.gov/missions/ingenuity/",
+      "publisher": "NASA / Jet Propulsion Laboratory",
+      "category": "Documented aircraft experiment",
+      "topics": [
+        "space",
+        "science",
+        "technology",
+        "governments"
+      ],
+      "familiarity": 2,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "Mission page records April 19, 2021 first flight; mission ended later, no present operational-status claim.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "sputnik-1",
+      "name": "Sputnik 1",
+      "aliases": [
+        "Sputnik",
+        "Sputnik One"
+      ],
+      "classification": "event",
+      "statement": "The Soviet Union launched Sputnik 1 into Earth orbit in October 1957.",
+      "explanation": "Its radio signals became an early landmark of the space age.",
+      "source": "https://www.nasa.gov/image-article/sputnik-1/",
+      "publisher": "NASA",
+      "category": "Documented artificial satellite",
+      "topics": [
+        "space",
+        "science",
+        "technology",
+        "governments",
+        "unusual-history"
+      ],
+      "familiarity": 1,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "NASA historical caption: October 4, 1957 launch and scientific objectives.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "viking-1",
+      "name": "Viking 1",
+      "aliases": [
+        "Viking One",
+        "Viking 1 lander"
+      ],
+      "classification": "event",
+      "statement": "Viking 1 landed on Mars on July 20, 1976.",
+      "explanation": "The lander transmitted images from the Martian surface.",
+      "source": "https://science.nasa.gov/mission/viking-1/",
+      "publisher": "NASA",
+      "category": "Documented Mars lander",
+      "topics": [
+        "space",
+        "science",
+        "technology",
+        "governments"
+      ],
+      "familiarity": 2,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "NASA mission history and landing chronology; no claim of confirmed biology.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "cassini",
+      "name": "Cassini",
+      "aliases": [
+        "Cassini spacecraft",
+        "Cassini orbiter"
+      ],
+      "classification": "event",
+      "statement": "Cassini became the first spacecraft to orbit Saturn in 2004.",
+      "explanation": "It carried the Huygens probe and spent years studying Saturn's system.",
+      "source": "https://science.nasa.gov/mission/cassini/the-journey/timeline/",
+      "publisher": "NASA",
+      "category": "Documented space probe",
+      "topics": [
+        "space",
+        "science",
+        "technology",
+        "governments"
+      ],
+      "familiarity": 1,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "NASA timeline records Saturn orbit insertion and Huygens separation.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "new-horizons",
+      "name": "New Horizons",
+      "aliases": [
+        "New Horizons probe"
+      ],
+      "classification": "event",
+      "statement": "New Horizons flew past Pluto on July 14, 2015.",
+      "explanation": "The mission returned the first close-up spacecraft observations of the dwarf planet.",
+      "source": "https://science.nasa.gov/mission/new-horizons/",
+      "publisher": "NASA",
+      "category": "Documented space probe",
+      "topics": [
+        "space",
+        "science",
+        "technology",
+        "governments"
+      ],
+      "familiarity": 2,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "NASA mission overview and Pluto encounter date.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "juno",
+      "name": "Juno",
+      "aliases": [
+        "Juno spacecraft",
+        "Juno probe"
+      ],
+      "classification": "event",
+      "statement": "The Juno spacecraft reached Jupiter in 2016.",
+      "explanation": "The mission studies the giant planet using repeated close passes.",
+      "source": "https://science.nasa.gov/mission/juno/",
+      "publisher": "NASA",
+      "category": "Documented space probe",
+      "topics": [
+        "space",
+        "science",
+        "technology",
+        "governments"
+      ],
+      "familiarity": 2,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "NASA mission page states 2016 arrival; no assertion of current operating status.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "rosetta",
+      "name": "Rosetta",
+      "aliases": [
+        "Rosetta mission"
+      ],
+      "classification": "event",
+      "statement": "Rosetta delivered the Philae lander to comet 67P in November 2014.",
+      "explanation": "The mission studied the comet while accompanying it around the Sun.",
+      "source": "https://www.esa.int/Science_Exploration/Space_Science/Rosetta_overview",
+      "publisher": "European Space Agency",
+      "category": "Documented comet mission",
+      "topics": [
+        "space",
+        "science",
+        "technology",
+        "governments"
+      ],
+      "familiarity": 3,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "ESA mission overview records Philae delivery and comet rendezvous.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "osiris-rex",
+      "name": "OSIRIS-REx",
+      "aliases": [
+        "Osiris Rex mission"
+      ],
+      "classification": "event",
+      "statement": "OSIRIS-REx delivered a sample from asteroid Bennu to Earth in September 2023.",
+      "explanation": "The sample return is documented; it is not proof of extraterrestrial organisms.",
+      "source": "https://science.nasa.gov/mission/osiris-rex/osiris-rex-faq/",
+      "publisher": "NASA",
+      "category": "Documented sample-return mission",
+      "topics": [
+        "space",
+        "science",
+        "technology",
+        "governments"
+      ],
+      "familiarity": 3,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "NASA mission FAQ records September 24, 2023 return.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "dart",
+      "name": "DART",
+      "aliases": [
+        "Double Asteroid Redirection Test",
+        "DART mission"
+      ],
+      "classification": "event",
+      "statement": "NASA's DART impact changed the orbit of asteroid moonlet Dimorphos around Didymos.",
+      "explanation": "This was a deliberate test of asteroid-deflection technology.",
+      "source": "https://science.nasa.gov/planetary-defense-dart/",
+      "publisher": "NASA",
+      "category": "Documented planetary-defense experiment",
+      "topics": [
+        "space",
+        "science",
+        "technology",
+        "governments"
+      ],
+      "familiarity": 2,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "NASA reports measured orbit change; distinguish orbit around Didymos from a dangerous course toward Earth.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "sagittarius-a",
+      "name": "Sagittarius A*",
+      "aliases": [
+        "Sagittarius A star",
+        "Sgr A star"
+      ],
+      "classification": "event",
+      "statement": "Sagittarius A* is the supermassive black hole at the center of the Milky Way.",
+      "explanation": "Astronomical observations locate it in our galaxy's central region.",
+      "source": "https://science.nasa.gov/asset/webb/galactic-center-chandra-hubble-spitzer-compass-image/",
+      "publisher": "NASA",
+      "category": "Documented astronomical object",
+      "topics": [
+        "space",
+        "science",
+        "sky"
+      ],
+      "familiarity": 3,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "NASA annotated multi-observatory image identifies the central black hole.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "halleys-comet",
+      "name": "Halley's Comet",
+      "aliases": [
+        "Halley",
+        "Comet Halley",
+        "1P Halley"
+      ],
+      "classification": "event",
+      "statement": "Halley's Comet takes roughly 76 years to orbit the Sun.",
+      "explanation": "Its debris also supplies recurring meteor showers seen from Earth.",
+      "source": "https://science.nasa.gov/solar-system/meteors-meteorites/orionids/",
+      "publisher": "NASA",
+      "category": "Documented comet",
+      "topics": [
+        "space",
+        "science",
+        "sky"
+      ],
+      "familiarity": 1,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "NASA Orionids page names parent comet and approximate orbital period.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "solar-eclipse",
+      "name": "Solar eclipse",
+      "aliases": [
+        "Total solar eclipse",
+        "Annular solar eclipse",
+        "Partial solar eclipse"
+      ],
+      "classification": "event",
+      "statement": "A solar eclipse occurs when the Moon passes between Earth and the Sun and casts a shadow on Earth.",
+      "explanation": "How the bodies align determines whether an observer sees a total, partial, or annular eclipse.",
+      "source": "https://science.nasa.gov/eclipses/types/",
+      "publisher": "NASA",
+      "category": "Documented sky phenomenon",
+      "topics": [
+        "space",
+        "science",
+        "sky"
+      ],
+      "familiarity": 0,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "NASA eclipse geometry explanation; no viewing-safety advice included.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "aurora",
+      "name": "Aurora",
+      "aliases": [
+        "Northern lights",
+        "Southern lights",
+        "Aurora borealis",
+        "Aurora australis"
+      ],
+      "classification": "event",
+      "statement": "Auroras produce light when energetic particles interact with gases in Earth's upper atmosphere.",
+      "explanation": "The colors reflect emissions from atmospheric gases, including oxygen and nitrogen.",
+      "source": "https://ncc.nesdis.noaa.gov/VIIRS/SWX/Aurora.php",
+      "publisher": "NOAA National Calibration Center",
+      "category": "Documented sky phenomenon",
+      "topics": [
+        "space",
+        "science",
+        "sky",
+        "environment"
+      ],
+      "familiarity": 0,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "NOAA explains particle-atmosphere interactions and emitted light.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "ozone-layer",
+      "name": "Ozone layer",
+      "aliases": [
+        "Stratospheric ozone",
+        "Ozone shield"
+      ],
+      "classification": "event",
+      "statement": "The stratospheric ozone layer absorbs harmful ultraviolet radiation from the Sun.",
+      "explanation": "Its protective role is distinct from the causes of modern global warming.",
+      "source": "https://www.epa.gov/ozone-layer-protection/basic-ozone-layer-science",
+      "publisher": "US Environmental Protection Agency",
+      "category": "Documented atmospheric science",
+      "topics": [
+        "science",
+        "sky",
+        "environment"
+      ],
+      "familiarity": 1,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "EPA basic ozone science describes UV protection and atmospheric location.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "milky-way",
+      "name": "Milky Way",
+      "aliases": [
+        "Milky Way galaxy",
+        "Our galaxy"
+      ],
+      "classification": "event",
+      "statement": "Our solar system is located in the Milky Way galaxy.",
+      "explanation": "The galaxy contains many stars besides the Sun.",
+      "source": "https://science.nasa.gov/solar-system/solar-system-facts/",
+      "publisher": "NASA",
+      "category": "Documented galaxy",
+      "topics": [
+        "space",
+        "science",
+        "sky"
+      ],
+      "familiarity": 0,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "NASA solar-system facts identifies our galaxy and the Orion Spur.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "corona",
+      "name": "CORONA reconnaissance program",
+      "aliases": [
+        "Project CORONA",
+        "CORONA spy satellites"
+      ],
+      "classification": "event",
+      "statement": "The CORONA program used satellites to obtain photographic intelligence during the Cold War.",
+      "explanation": "Its film capsules were returned to Earth and recovered for analysis.",
+      "source": "https://www.cia.gov/resources/csi/books-monographs/corona-americas-first-satellite-program/",
+      "publisher": "US Central Intelligence Agency",
+      "category": "Documented intelligence program",
+      "topics": [
+        "space",
+        "science",
+        "technology",
+        "governments",
+        "secret-programs",
+        "unusual-history"
+      ],
+      "familiarity": 3,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "Declassified CIA historical volume records first successful flight in August 1960.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "aquatone",
+      "name": "Project AQUATONE",
+      "aliases": [
+        "AQUATONE",
+        "U-2 program",
+        "U2 spy plane program"
+      ],
+      "classification": "event",
+      "statement": "Project AQUATONE was the code name for the CIA's U-2 reconnaissance-aircraft program.",
+      "explanation": "Its high-altitude aircraft collected intelligence during the Cold War.",
+      "source": "https://www.cia.gov/legacy/honoring-heroes/heroes/eugene-buster-edens/",
+      "publisher": "US Central Intelligence Agency",
+      "category": "Documented intelligence program",
+      "topics": [
+        "science",
+        "technology",
+        "sky",
+        "governments",
+        "secret-programs",
+        "unusual-history"
+      ],
+      "familiarity": 2,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "CIA historical account explicitly identifies AQUATONE as U-2 program code name.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "palladium",
+      "name": "Project PALLADIUM",
+      "aliases": [
+        "PALLADIUM",
+        "Palladium radar project"
+      ],
+      "classification": "event",
+      "statement": "Project PALLADIUM used electronically simulated radar echoes to study air-defense radar systems.",
+      "explanation": "The declassified account describes receiving radar signals, delaying them, and transmitting them back.",
+      "source": "https://www.cia.gov/readingroom/docs/DOC_0006122549.pdf",
+      "publisher": "US Central Intelligence Agency",
+      "category": "Documented intelligence experiment",
+      "topics": [
+        "science",
+        "technology",
+        "governments",
+        "secret-programs",
+        "unusual-history"
+      ],
+      "familiarity": 5,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "Declassified firsthand technical account by Gene Poteat: Some Beginnings of Information Warfare, Project PALLADIUM section.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "operation-gold",
+      "name": "Operation GOLD",
+      "aliases": [
+        "Berlin Tunnel",
+        "Operation Gold tunnel"
+      ],
+      "classification": "event",
+      "statement": "CIA and British intelligence built a tunnel in Berlin to intercept Soviet communications.",
+      "explanation": "Operation GOLD was a real Cold War surveillance operation.",
+      "source": "https://www.cia.gov/stories/story/berlin-tunnel-americas-ear-behind-the-iron-curtain/",
+      "publisher": "US Central Intelligence Agency",
+      "category": "Documented covert operation",
+      "topics": [
+        "technology",
+        "governments",
+        "secret-programs",
+        "unusual-history"
+      ],
+      "familiarity": 4,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "documented",
+        "notes": "CIA historical account describes mission, tunnel, and communications intercepts.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "moon-landing-hoax",
+      "name": "Moon landing hoax",
+      "aliases": [
+        "Apollo hoax",
+        "Faked Moon landings",
+        "Moon hoax"
+      ],
+      "classification": "claim",
+      "statement": "The Apollo Moon landings were entirely staged on Earth.",
+      "explanation": "Mission records and equipment left on the lunar surface contradict this claim.",
+      "source": "https://www.jpl.nasa.gov/news/the-apollo-experiment-that-keeps-on-giving/",
+      "publisher": "NASA / Jet Propulsion Laboratory",
+      "category": "Unsupported space claim",
+      "topics": [
+        "conspiracy",
+        "science",
+        "space",
+        "technology",
+        "governments",
+        "sky"
+      ],
+      "familiarity": 0,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "contradicted",
+        "notes": "Primary mission-instrument account; independent subject is denial claim, not existing Apollo reflector fact.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "mars-hoax",
+      "name": "Mars-size hoax",
+      "aliases": [
+        "Mars as big as Moon",
+        "Two Moons hoax",
+        "Mars hoax"
+      ],
+      "classification": "claim",
+      "statement": "Mars periodically appears as large as the full Moon to the unaided eye.",
+      "explanation": "NASA identifies this circulating message as a hoax.",
+      "source": "https://mars.nasa.gov/embed/21869/",
+      "publisher": "NASA",
+      "category": "Unsupported sky claim",
+      "topics": [
+        "conspiracy",
+        "science",
+        "space",
+        "sky"
+      ],
+      "familiarity": 1,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "contradicted",
+        "notes": "NASA Mars Hoax image and explanatory caption directly address apparent-size claim.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "comet-elenin-doomsday",
+      "name": "Comet Elenin doomsday",
+      "aliases": [
+        "Elenin doomsday",
+        "Elenin apocalypse",
+        "Doomsday comet Elenin"
+      ],
+      "classification": "claim",
+      "statement": "Comet Elenin was going to destroy Earth in 2011.",
+      "explanation": "NASA reports that the comet posed no danger and broke into debris.",
+      "source": "https://www.jpl.nasa.gov/news/nasa-there-is-no-asteroid-threatening-earth/",
+      "publisher": "NASA / Jet Propulsion Laboratory",
+      "category": "Unsupported doomsday claim",
+      "topics": [
+        "conspiracy",
+        "science",
+        "space",
+        "sky"
+      ],
+      "familiarity": 3,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "contradicted",
+        "notes": "NASA retrospective specifically discusses failed 2011 Elenin rumors; not a blanket statement about all future asteroid hazards.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "2012-calendar-apocalypse",
+      "name": "2012 Mayan-calendar apocalypse",
+      "aliases": [
+        "Mayan apocalypse",
+        "Maya calendar apocalypse",
+        "December 2012 apocalypse"
+      ],
+      "classification": "claim",
+      "statement": "The Maya calendar predicted that the world would end on December 21, 2012.",
+      "explanation": "NASA explains the date as a calendar-cycle transition, not an end-of-world prediction.",
+      "source": "https://science.nasa.gov/image-article/apod-2012-december-21-orion-over-el-castillo/",
+      "publisher": "NASA Astronomy Picture of the Day",
+      "category": "Unsupported doomsday claim",
+      "topics": [
+        "conspiracy",
+        "science",
+        "space",
+        "sky",
+        "unusual-history"
+      ],
+      "familiarity": 1,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "contradicted",
+        "notes": "NASA contemporary December 21, 2012 explanation; separate from existing Nibiru collision claim.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "denver-airport-lizard-base",
+      "name": "Denver airport lizard-base claim",
+      "aliases": [
+        "Denver airport conspiracy",
+        "DIA conspiracy",
+        "Denver lizard people"
+      ],
+      "classification": "claim",
+      "statement": "Denver International Airport was built as a secret headquarters for reptilian beings.",
+      "explanation": "The airport describes these stories as conspiracy rumors and publicizes their ordinary infrastructure context.",
+      "source": "https://www.flydenver.com/press-release/embracing-the-unbelievabledenver-international-airport-addresses-conspiracy-theories-by-celebrating-them-in-october/",
+      "publisher": "Denver International Airport",
+      "category": "Unsupported infrastructure claim",
+      "topics": [
+        "conspiracy",
+        "science",
+        "technology",
+        "governments",
+        "unusual-history"
+      ],
+      "familiarity": 2,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "unsupported",
+        "notes": "Institutional source explicitly characterizes reptilian and underground-base stories as rumors; no claim that nonexistence has been experimentally proved.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "5g-covid",
+      "name": "5G COVID-transmission claim",
+      "aliases": [
+        "5G coronavirus",
+        "5G causes COVID",
+        "5G COVID conspiracy"
+      ],
+      "classification": "claim",
+      "statement": "COVID-19 is transmitted through 5G mobile-phone networks.",
+      "explanation": "Viruses do not travel through radio networks.",
+      "source": "https://extranet.who.int/kobe_centre/sites/default/files/20200422_EN_New_mythbusters_rev.pdf",
+      "publisher": "World Health Organization",
+      "category": "Unsupported technology claim",
+      "topics": [
+        "conspiracy",
+        "science",
+        "technology",
+        "governments"
+      ],
+      "familiarity": 1,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "contradicted",
+        "notes": "WHO April 2020 mythbuster explicitly rejects radio-network transmission; no treatment or current public-health recommendation.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "vaccine-microchips",
+      "name": "Vaccine microchip claim",
+      "aliases": [
+        "Microchip vaccines",
+        "Vaccine tracking chips",
+        "COVID vaccine microchips"
+      ],
+      "classification": "claim",
+      "statement": "The COVID-19 vaccines authorized in the United States in 2021 contained hidden tracking microchips.",
+      "explanation": "CDC's archived ingredient explanation explicitly rejects the microchip claim. ",
+      "source": "https://stacks.cdc.gov/view/cdc/109015/cdc_109015_DS1.pdf",
+      "publisher": "Centers for Disease Control and Prevention",
+      "category": "Unsupported surveillance claim",
+      "topics": [
+        "conspiracy",
+        "science",
+        "technology",
+        "governments"
+      ],
+      "familiarity": 1,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "contradicted",
+        "notes": "CDC archive, August 18, 2021, page 1: microchips question.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "magnetic-vaccines",
+      "name": "Magnetic vaccine claim",
+      "aliases": [
+        "Vaccine magnetism",
+        "Magnet challenge",
+        "Magnetic COVID vaccines"
+      ],
+      "classification": "claim",
+      "statement": "Receiving a COVID-19 vaccine authorized in the United States in 2021 made a person magnetic.",
+      "explanation": "The archived CDC fact sheet rejects the alleged magnetic effect.",
+      "source": "https://stacks.cdc.gov/view/cdc/109015/cdc_109015_DS1.pdf",
+      "publisher": "Centers for Disease Control and Prevention",
+      "category": "Unsupported technology claim",
+      "topics": [
+        "conspiracy",
+        "science",
+        "technology"
+      ],
+      "familiarity": 1,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "contradicted",
+        "notes": "CDC archive, August 18, 2021, page 1: magnetism question.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "mrna-dna-rewrite",
+      "name": "mRNA DNA-rewrite claim",
+      "aliases": [
+        "Vaccines change DNA",
+        "mRNA rewrites DNA",
+        "DNA altering vaccine claim"
+      ],
+      "classification": "claim",
+      "statement": "mRNA COVID-19 vaccines rewrite the recipient's genomic DNA.",
+      "explanation": "The vaccine instructions do not rewrite DNA in the cell nucleus.",
+      "source": "https://stacks.cdc.gov/view/cdc/109015/cdc_109015_DS1.pdf",
+      "publisher": "Centers for Disease Control and Prevention",
+      "category": "Unsupported biotechnology claim",
+      "topics": [
+        "conspiracy",
+        "science",
+        "technology"
+      ],
+      "familiarity": 1,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "contradicted",
+        "notes": "CDC archive, August 18, 2021, page 2: DNA question.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "noaa-hurricane-steering",
+      "name": "Hurricane-steering conspiracy",
+      "aliases": [
+        "NOAA hurricane control",
+        "Government hurricane steering",
+        "Hurricane weather weapons"
+      ],
+      "classification": "claim",
+      "statement": "NOAA can create hurricanes and steer them toward chosen communities.",
+      "explanation": "NOAA says that hurricane-creation and steering technology does not exist.",
+      "source": "https://www.noaa.gov/news/fact-check-debunking-weather-modification-claims",
+      "publisher": "US National Oceanic and Atmospheric Administration",
+      "category": "Unsupported weather-control claim",
+      "topics": [
+        "conspiracy",
+        "science",
+        "sky",
+        "governments",
+        "environment",
+        "technology"
+      ],
+      "familiarity": 1,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "contradicted",
+        "notes": "NOAA 2024 fact check distinguishes forecasting from nonexistent steering capability; not a denial of all historical weather experiments.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "solar-warming-hoax",
+      "name": "Sun-only warming claim",
+      "aliases": [
+        "Solar warming conspiracy",
+        "Sun causes all global warming",
+        "Solar-only climate change"
+      ],
+      "classification": "claim",
+      "statement": "An increase in the Sun's energy output explains the global warming observed since the 1950s.",
+      "explanation": "Solar energy received by Earth shows no matching long-term increase over that period.",
+      "source": "https://science.nasa.gov/climate-change/faq/is-the-sun-causing-global-warming/",
+      "publisher": "NASA",
+      "category": "Unsupported climate claim",
+      "topics": [
+        "conspiracy",
+        "science",
+        "space",
+        "sky",
+        "environment"
+      ],
+      "familiarity": 1,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "contradicted",
+        "notes": "NASA compares measured solar energy and global-temperature trends; does not deny all natural influences on climate.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "earthquake-weather",
+      "name": "Earthquake weather",
+      "aliases": [
+        "Hot weather causes earthquakes",
+        "Earthquake weather theory"
+      ],
+      "classification": "claim",
+      "statement": "Hot, calm weather is a reliable warning that a major earthquake is about to occur.",
+      "explanation": "USGS finds no characteristic weather pattern that reliably predicts earthquakes.",
+      "source": "https://www.usgs.gov/faqs/there-earthquake-weather",
+      "publisher": "US Geological Survey",
+      "category": "Unsupported prediction claim",
+      "topics": [
+        "conspiracy",
+        "science",
+        "environment",
+        "sky"
+      ],
+      "familiarity": 2,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "contradicted",
+        "notes": "USGS notes approximately even distribution across weather conditions and exceptions involving small pressure-triggered fault effects; statement is only about reliable warning.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "magnetic-pole-flip-apocalypse",
+      "name": "Magnetic-reversal apocalypse",
+      "aliases": [
+        "Pole flip apocalypse",
+        "Magnetic pole shift extinction",
+        "Magnetic reversal extinction"
+      ],
+      "classification": "claim",
+      "statement": "Every reversal of Earth's magnetic poles causes a mass extinction.",
+      "explanation": "The geological record does not show that asserted one-to-one connection.",
+      "source": "https://www.usgs.gov/faqs/do-any-mass-extinctions-correlate-magnetic-reversals",
+      "publisher": "US Geological Survey",
+      "category": "Unsupported catastrophe claim",
+      "topics": [
+        "conspiracy",
+        "science",
+        "space",
+        "environment"
+      ],
+      "familiarity": 2,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "contradicted",
+        "notes": "USGS FAQ explicitly finds no correlation; does not assert that every possible field change has no consequences.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "disney-cryonics",
+      "name": "Walt Disney cryonics rumor",
+      "aliases": [
+        "Frozen Walt Disney",
+        "Walt Disney frozen",
+        "Disney cryogenic freezing"
+      ],
+      "classification": "claim",
+      "statement": "Walt Disney's body was cryogenically frozen after his death.",
+      "explanation": "His family museum records that he was cremated and interred.",
+      "source": "https://www.waltdisney.org/blog/common-misconceptions-about-walt-disney",
+      "publisher": "The Walt Disney Family Museum",
+      "category": "Unsupported preservation rumor",
+      "topics": [
+        "conspiracy",
+        "science",
+        "technology",
+        "unusual-history"
+      ],
+      "familiarity": 1,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "contradicted",
+        "notes": "Museum misconception article explicitly addresses freezing and cremation; no broader biographical allegations imported.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "earthquake-prediction-coverup",
+      "name": "Secret earthquake-prediction claim",
+      "aliases": [
+        "USGS earthquake coverup",
+        "Secret earthquake forecasts",
+        "Exact earthquake prediction conspiracy"
+      ],
+      "classification": "claim",
+      "statement": "USGS has a reliable system that predicts the exact time, place, and magnitude of major earthquakes but hides those predictions.",
+      "explanation": "USGS distinguishes probabilistic forecasts from an unavailable reliable exact-prediction method.",
+      "source": "https://www.usgs.gov/programs/earthquake-hazards/science/frequently-asked-questions-about-2023-earthquakes-turkiye",
+      "publisher": "US Geological Survey",
+      "category": "Unsupported government-technology claim",
+      "topics": [
+        "conspiracy",
+        "science",
+        "technology",
+        "governments",
+        "environment"
+      ],
+      "familiarity": 2,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "unsupported",
+        "notes": "USGS explains required prediction criteria and lack of reliable precursors; hidden-capability allegation has no supporting evidence in the record.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    },
+    {
+      "id": "2000-alignment-apocalypse",
+      "name": "May 2000 alignment apocalypse",
+      "aliases": [
+        "2000 planetary alignment disaster",
+        "May 5 2000 apocalypse",
+        "Planetary alignment apocalypse"
+      ],
+      "classification": "claim",
+      "statement": "The planetary alignment of May 5, 2000 was going to destroy Earth through combined gravitational forces.",
+      "explanation": "NASA explained that the other planets' gravitational effects during that configuration were minute.",
+      "source": "https://nssdc.gsfc.nasa.gov/planetary/alignment.html",
+      "publisher": "NASA Space Science Data Coordinated Archive",
+      "category": "Unsupported doomsday claim",
+      "topics": [
+        "conspiracy",
+        "science",
+        "space",
+        "sky"
+      ],
+      "familiarity": 3,
+      "source_review": {
+        "reviewed_at": "2026-10-14",
+        "evidence_status": "contradicted",
+        "notes": "Contemporary NASA alignment analysis; precise failed prediction, not a blanket denial that gravity acts between planets.",
+        "wording": "Original concise wording; no source article or media copied.",
+        "review_state": "source_checked_release_proposal"
+      }
+    }
+  ],
+  "validation": {
+    "baseline_main_subjects": 47,
+    "new_science_subjects": 56,
+    "new_history_subjects_checked": 52,
+    "duplicate_ids": [],
+    "normalized_alias_collisions_against_main47_and_history": [],
+    "app_or_catalog_modified": false
+  }
+}

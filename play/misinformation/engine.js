@@ -45,27 +45,51 @@ export function skip(state) {
 export function selectQuestion(state, questions, random=Math.random) {
   const pool=questions.filter(q=>q.band<=bandIndex(state.distance));
   if(!pool.length) throw new Error('No unlocked questions available.');
-  // A sparse catalog falls back to its deepest unlocked layer. Surface
-  // leftovers must not obscure a newly reached layer's questions.
   const deepest=Math.max(...pool.map(q=>q.band));
   const current=pool.filter(q=>q.band===deepest);
   const previous=pool.filter(q=>q.band===deepest-1);
   const focus=[...current,...previous];
   const seen=new Set(state.seen);
-  const recent=new Set(state.history.slice(-3).map(h=>h.question));
+  // Browser-wide recent IDs can be supplied ephemerally by the app. Old saves
+  // need only their existing history; neither format is mutated here.
+  const recentIds=Array.isArray(state.recentQuestions)?state.recentQuestions:state.history.map(h=>h.question);
+  const recent=new Set(recentIds.slice(-16));
+  const byId=new Map(questions.map(q=>[q.id,q]));
+  const family=q=>q.family??q.id;
+  const answerPool=q=>q.poolId??q.id;
+  const seenPools=new Set([...seen].map(id=>byId.get(id)).filter(Boolean).map(answerPool));
+  const recentPoolIds=recentIds.map(id=>byId.get(id)).filter(Boolean).map(answerPool);
+  const recentPools=new Set(recentIds.slice(-8).map(id=>byId.get(id)).filter(Boolean).map(answerPool));
+  const recentFamilies=new Set(recentIds.slice(-2).map(id=>byId.get(id)).filter(Boolean).map(family));
+  const varied=options=>{const alternative=options.filter(q=>!recentFamilies.has(family(q)));return alternative.length?alternative:options;};
   const pick=(options,recycled)=>({question:options[Math.min(options.length-1,Math.floor(random()*options.length))],recycled});
-  for(const group of [current,previous]) {
-    // The app resets cycle-seen on recycle; retain the cooldown across that
-    // reset instead of treating a just-played prompt as genuinely fresh.
-    const unseen=group.filter(q=>!seen.has(q.id)&&!recent.has(q.id));
-    if(unseen.length) return pick(unseen,false);
+  const bands=[...new Set(pool.map(q=>q.band))].sort((a,b)=>b-a);
+  const groups=bands.map(band=>pool.filter(q=>q.band===band));
+  // Equivalent answer sets are one semantic pool, even when wording differs.
+  // Within a cooldown pass, new pools precede cosmetic variants, retaining
+  // depth priority among equivalent choices. Relax cooldowns only when needed
+  // to consume remaining unlocked content in a finite catalog.
+  const cooldowns=[q=>!recent.has(q.id)&&!recentPools.has(answerPool(q)),q=>!recent.has(q.id),()=>true];
+  for(const allowed of cooldowns) {
+    for(const requireNewPool of [true,false]) {
+      for(const group of groups) {
+        const unseen=group.filter(q=>!seen.has(q.id)&&allowed(q)&&(!requireNewPool||!seenPools.has(answerPool(q))));
+        if(unseen.length) return pick(varied(unseen),false);
+      }
+    }
   }
-  let replay=focus.filter(q=>!recent.has(q.id));
+  let replay=focus.filter(q=>!recent.has(q.id)&&!recentPools.has(answerPool(q)));
   if(!replay.length) {
-    // Tiny catalogs cannot avoid all three recent IDs, but can still avoid
-    // an immediate repeat whenever a second prompt exists.
-    replay=focus.filter(q=>q.id!==state.history.at(-1)?.question);
-    if(!replay.length) replay=focus;
+    // Once every semantic pool is recent, prefer the least recent pool before
+    // its least recent wording, rather than alternating cosmetic variants.
+    const exactSafe=focus.filter(q=>!recent.has(q.id));
+    replay=exactSafe.length?exactSafe:focus;
+    const oldestPool=Math.min(...replay.map(q=>recentPoolIds.lastIndexOf(answerPool(q))));
+    replay=replay.filter(q=>recentPoolIds.lastIndexOf(answerPool(q))===oldestPool);
+    if(!exactSafe.length){
+      const oldest=Math.min(...replay.map(q=>recentIds.lastIndexOf(q.id)));
+      replay=replay.filter(q=>recentIds.lastIndexOf(q.id)===oldest);
+    }
   }
-  return pick(replay,true);
+  return pick(varied(replay),true);
 }

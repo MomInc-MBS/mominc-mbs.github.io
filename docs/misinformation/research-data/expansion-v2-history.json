@@ -1,0 +1,1039 @@
+[
+  {
+    "id": "declaration-independence",
+    "name": "Declaration of Independence",
+    "aliases": [
+      "declaration",
+      "american declaration of independence"
+    ],
+    "classification": "event",
+    "statement": "The Continental Congress adopted the Declaration of Independence in July 1776.",
+    "explanation": "The document announced the American colonies' separation from Great Britain. Adoption on July 4 does not mean every delegate signed it that day.",
+    "source": "https://www.archives.gov/founding-docs/declaration-transcript",
+    "publisher": "US National Archives",
+    "category": "Historical document",
+    "topics": [
+      "history",
+      "governments"
+    ],
+    "familiarity": 0
+  },
+  {
+    "id": "us-constitution",
+    "name": "US Constitution",
+    "aliases": [
+      "constitution",
+      "united states constitution"
+    ],
+    "classification": "event",
+    "statement": "The United States Constitution was drafted at a convention in Philadelphia in 1787.",
+    "explanation": "Its articles establish a federal system with legislative, executive and judicial branches. This is a documented constitutional text, rather than a secret governing agreement.",
+    "source": "https://www.archives.gov/founding-docs/constitution-transcript",
+    "publisher": "US National Archives",
+    "category": "Historical document",
+    "topics": [
+      "history",
+      "governments"
+    ],
+    "familiarity": 0
+  },
+  {
+    "id": "emancipation-proclamation",
+    "name": "Emancipation Proclamation",
+    "aliases": [
+      "emancipation"
+    ],
+    "classification": "event",
+    "statement": "Abraham Lincoln issued the Emancipation Proclamation on January 1, 1863.",
+    "explanation": "It declared enslaved people free in designated areas in rebellion against the United States. It did not abolish slavery throughout the entire country that day.",
+    "source": "https://www.archives.gov/milestone-documents/emancipation-proclamation",
+    "publisher": "US National Archives",
+    "category": "Historical document",
+    "topics": [
+      "history",
+      "governments",
+      "leaders"
+    ],
+    "familiarity": 1
+  },
+  {
+    "id": "thirteenth-amendment",
+    "name": "Thirteenth Amendment",
+    "aliases": [
+      "13th amendment",
+      "amendment 13"
+    ],
+    "classification": "event",
+    "statement": "The Thirteenth Amendment abolished slavery in the United States, with an exception for punishment after criminal conviction.",
+    "explanation": "Ratified in 1865, the amendment expressly includes the punishment exception. The exact wording matters when describing what it prohibited.",
+    "source": "https://www.archives.gov/milestone-documents/13th-amendment",
+    "publisher": "US National Archives",
+    "category": "Historical document",
+    "topics": [
+      "history",
+      "governments"
+    ],
+    "familiarity": 1
+  },
+  {
+    "id": "nineteenth-amendment",
+    "name": "Nineteenth Amendment",
+    "aliases": [
+      "19th amendment",
+      "amendment 19"
+    ],
+    "classification": "event",
+    "statement": "The Nineteenth Amendment prohibits denying the vote on account of sex.",
+    "explanation": "Ratified in 1920, it established a constitutional voting protection. Other discriminatory barriers continued to prevent many women from exercising that right.",
+    "source": "https://www.archives.gov/milestone-documents/19th-amendment",
+    "publisher": "US National Archives",
+    "category": "Historical document",
+    "topics": [
+      "history",
+      "governments"
+    ],
+    "familiarity": 1
+  },
+  {
+    "id": "civil-rights-act-1964",
+    "name": "Civil Rights Act of 1964",
+    "aliases": [
+      "civil rights act",
+      "1964 civil rights act"
+    ],
+    "classification": "event",
+    "statement": "The Civil Rights Act of 1964 outlawed discrimination in public accommodations and employment.",
+    "explanation": "President Lyndon Johnson signed the law in July 1964. Its legal protections did not mean discrimination immediately disappeared in practice.",
+    "source": "https://www.archives.gov/milestone-documents/civil-rights-act",
+    "publisher": "US National Archives",
+    "category": "Historical document",
+    "topics": [
+      "history",
+      "governments"
+    ],
+    "familiarity": 1
+  },
+  {
+    "id": "voting-rights-act-1965",
+    "name": "Voting Rights Act of 1965",
+    "aliases": [
+      "voting rights act",
+      "1965 voting rights act"
+    ],
+    "classification": "event",
+    "statement": "The Voting Rights Act of 1965 targeted discriminatory voting practices, including literacy tests.",
+    "explanation": "The law was enacted during the civil rights movement to protect access to voting. This proposition concerns its historical enactment, rather than today's complete legal framework.",
+    "source": "https://www.archives.gov/milestone-documents/voting-rights-act",
+    "publisher": "US National Archives",
+    "category": "Historical document",
+    "topics": [
+      "history",
+      "governments"
+    ],
+    "familiarity": 2
+  },
+  {
+    "id": "magna-carta",
+    "name": "Magna Carta",
+    "aliases": [
+      "magna charta",
+      "great charter"
+    ],
+    "classification": "event",
+    "statement": "King John agreed to Magna Carta at Runnymede in 1215.",
+    "explanation": "The charter limited royal power in specific ways. It was not a modern declaration granting equal democratic rights to everyone.",
+    "source": "https://commonslibrary.parliament.uk/research-briefings/cbp-11169/",
+    "publisher": "UK House of Commons Library",
+    "category": "Historical document",
+    "topics": [
+      "history",
+      "governments",
+      "leaders"
+    ],
+    "familiarity": 1
+  },
+  {
+    "id": "dday",
+    "name": "D-Day landings",
+    "aliases": [
+      "d day",
+      "d-day",
+      "normandy landings",
+      "operation overlord"
+    ],
+    "classification": "event",
+    "statement": "Allied forces landed in Normandy on June 6, 1944.",
+    "explanation": "The landings opened the Normandy campaign in occupied France during the Second World War. Operation Overlord involved forces from multiple Allied countries.",
+    "source": "https://www.iwm.org.uk/sites/default/files/files/2024-06/iwm_d-day_80_press_release.pdf",
+    "publisher": "Imperial War Museums",
+    "category": "Historical event",
+    "topics": [
+      "history",
+      "governments"
+    ],
+    "familiarity": 0
+  },
+  {
+    "id": "pearl-harbor",
+    "name": "Pearl Harbor attack",
+    "aliases": [
+      "pearl harbour",
+      "pearl harbor"
+    ],
+    "classification": "event",
+    "statement": "Japanese forces attacked Pearl Harbor on December 7, 1941.",
+    "explanation": "The attack on the US naval base in Hawaii preceded the United States' declaration of war against Japan the next day.",
+    "source": "https://www.nps.gov/wwii/learn/historyculture/pearl-harbor.htm",
+    "publisher": "US National Park Service",
+    "category": "Historical event",
+    "topics": [
+      "history",
+      "governments"
+    ],
+    "familiarity": 0
+  },
+  {
+    "id": "watergate",
+    "name": "Watergate",
+    "aliases": [
+      "watergate scandal",
+      "watergate burglary"
+    ],
+    "classification": "event",
+    "statement": "The Watergate scandal followed a 1972 burglary at Democratic National Committee headquarters.",
+    "explanation": "The investigation and cover-up crisis culminated in Richard Nixon's resignation in August 1974. He resigned before the full House voted on impeachment.",
+    "source": "https://www.archives.gov/exhibits/american_originals/nixon.html",
+    "publisher": "US National Archives",
+    "category": "Historical event",
+    "topics": [
+      "history",
+      "governments",
+      "crime"
+    ],
+    "familiarity": 0
+  },
+  {
+    "id": "iran-contra",
+    "name": "Iran-Contra affair",
+    "aliases": [
+      "iran contra",
+      "iran-contra"
+    ],
+    "classification": "event",
+    "statement": "Some proceeds from secret arms sales to Iran were diverted to support Contra rebels in Nicaragua.",
+    "explanation": "Congressional investigations documented the arms transactions and diversion. This statement does not assert that every senior official knew every part of the operation.",
+    "source": "https://www.reaganlibrary.gov/public/digitallibrary/smof/counsel/culvahouse/cfoa1130/40-123-12011812-CFOA1130-048-2018.pdf",
+    "publisher": "Ronald Reagan Presidential Library / US congressional investigation",
+    "category": "Historical event",
+    "topics": [
+      "history",
+      "governments"
+    ],
+    "familiarity": 2
+  },
+  {
+    "id": "cuban-missile-crisis",
+    "name": "Cuban Missile Crisis",
+    "aliases": [
+      "cuban crisis",
+      "missile crisis"
+    ],
+    "classification": "event",
+    "statement": "The United States and Soviet Union confronted each other over Soviet nuclear missiles in Cuba in October 1962.",
+    "explanation": "The crisis included a US naval quarantine and negotiations over missile removal. The diplomatic history documents a real confrontation.",
+    "source": "https://history.state.gov/milestones/1961-1968/cuban-missile-crisis",
+    "publisher": "US Department of State, Office of the Historian",
+    "category": "Historical event",
+    "topics": [
+      "history",
+      "governments"
+    ],
+    "familiarity": 1
+  },
+  {
+    "id": "berlin-wall",
+    "name": "Opening of the Berlin Wall",
+    "aliases": [
+      "berlin wall",
+      "fall of the berlin wall"
+    ],
+    "classification": "event",
+    "statement": "Border crossings through the Berlin Wall opened on November 9, 1989.",
+    "explanation": "The opening enabled East Berliners to cross into West Berlin. Physical demolition and German reunification occurred over a longer period.",
+    "source": "https://www.berlin.de/en/history/8482274-8619314-opening-and-fall-of-the-berlin-wall.en.html",
+    "publisher": "State of Berlin",
+    "category": "Historical event",
+    "topics": [
+      "history",
+      "governments"
+    ],
+    "familiarity": 0
+  },
+  {
+    "id": "wwi-armistice",
+    "name": "First World War armistice",
+    "aliases": [
+      "armistice",
+      "1918 armistice",
+      "november 11 armistice"
+    ],
+    "classification": "event",
+    "statement": "The armistice with Germany halted fighting on the Western Front on November 11, 1918.",
+    "explanation": "The ceasefire took effect at 11 a.m. The armistice was distinct from the later peace treaties and did not instantly resolve every conflict.",
+    "source": "https://www.nam.ac.uk/explore/1918-victory",
+    "publisher": "National Army Museum",
+    "category": "Historical event",
+    "topics": [
+      "history",
+      "governments"
+    ],
+    "familiarity": 1
+  },
+  {
+    "id": "titanic",
+    "name": "Titanic sinking",
+    "aliases": [
+      "titanic",
+      "rms titanic"
+    ],
+    "classification": "event",
+    "statement": "RMS Titanic sank in April 1912 after striking an iceberg during its maiden voyage.",
+    "explanation": "The liner sank early on April 15 after the collision the previous night. The Smithsonian documents its maiden voyage and the discovery of the wreck.",
+    "source": "https://www.si.edu/spotlight/titanic",
+    "publisher": "Smithsonian Institution",
+    "category": "Disaster",
+    "topics": [
+      "history",
+      "disasters"
+    ],
+    "familiarity": 0
+  },
+  {
+    "id": "challenger",
+    "name": "Space Shuttle Challenger disaster",
+    "aliases": [
+      "challenger disaster",
+      "challenger shuttle",
+      "challenger"
+    ],
+    "classification": "event",
+    "statement": "Space Shuttle Challenger broke apart shortly after launch on January 28, 1986.",
+    "explanation": "NASA's accident-learning record identifies a failure in a solid rocket booster's O-ring seal. The event is documented in the accident investigation.",
+    "source": "https://sma.nasa.gov/sma-disciplines/accllp/challenger",
+    "publisher": "NASA",
+    "category": "Disaster",
+    "topics": [
+      "history",
+      "disasters",
+      "science"
+    ],
+    "familiarity": 1
+  },
+  {
+    "id": "columbia",
+    "name": "Space Shuttle Columbia disaster",
+    "aliases": [
+      "columbia disaster",
+      "columbia shuttle",
+      "space shuttle columbia"
+    ],
+    "classification": "event",
+    "statement": "Space Shuttle Columbia was lost during reentry on February 1, 2003.",
+    "explanation": "NASA records the loss of the orbiter as it returned from its mission. It was a different accident from Challenger's launch failure.",
+    "source": "https://sma.nasa.gov/sma-disciplines/accllp/columbia",
+    "publisher": "NASA",
+    "category": "Disaster",
+    "topics": [
+      "history",
+      "disasters",
+      "science"
+    ],
+    "familiarity": 2
+  },
+  {
+    "id": "chernobyl",
+    "name": "Chernobyl disaster",
+    "aliases": [
+      "chernobyl",
+      "chornobyl"
+    ],
+    "classification": "event",
+    "statement": "An accident destroyed Unit 4 at the Chernobyl nuclear power plant in April 1986.",
+    "explanation": "The damaged reactor released radioactive material. The IAEA's contemporary accident report documents the event; this card makes no claim about a final casualty total.",
+    "source": "https://www.iaea.org/sites/default/files/gc/gc-spl1-3.pdf",
+    "publisher": "International Atomic Energy Agency",
+    "category": "Disaster",
+    "topics": [
+      "history",
+      "disasters",
+      "science"
+    ],
+    "familiarity": 0
+  },
+  {
+    "id": "fukushima",
+    "name": "Fukushima Daiichi accident",
+    "aliases": [
+      "fukushima",
+      "fukushima daiichi"
+    ],
+    "classification": "event",
+    "statement": "The March 2011 earthquake and tsunami in Japan led to a nuclear accident at Fukushima Daiichi.",
+    "explanation": "The IAEA's report examines the disaster and failures at the power station. The earthquake, tsunami and reactor accident are connected but distinct events.",
+    "source": "https://www-pub.iaea.org/MTCD/Publications/PDF/Pub1710-ReportByTheDG-Web.pdf",
+    "publisher": "International Atomic Energy Agency",
+    "category": "Disaster",
+    "topics": [
+      "history",
+      "disasters",
+      "science"
+    ],
+    "familiarity": 1
+  },
+  {
+    "id": "deepwater-horizon",
+    "name": "Deepwater Horizon spill",
+    "aliases": [
+      "deepwater horizon",
+      "bp oil spill",
+      "macondo spill"
+    ],
+    "classification": "event",
+    "statement": "The Deepwater Horizon drilling rig disaster in April 2010 led to a major offshore oil spill.",
+    "explanation": "NOAA documents the explosion, sinking of the rig and discharge from the Macondo well. The spill continued after the initial rig disaster.",
+    "source": "https://darrp.noaa.gov/oil-spills/deepwater-horizon",
+    "publisher": "US National Oceanic and Atmospheric Administration",
+    "category": "Disaster",
+    "topics": [
+      "history",
+      "disasters",
+      "science"
+    ],
+    "familiarity": 1
+  },
+  {
+    "id": "bhopal",
+    "name": "Bhopal gas disaster",
+    "aliases": [
+      "bhopal",
+      "bhopal gas leak"
+    ],
+    "classification": "event",
+    "statement": "Toxic gas escaped from a pesticide plant in Bhopal, India, in December 1984.",
+    "explanation": "The World Health Organization describes the methyl isocyanate release in its environmental-health case study. The proposition concerns the documented industrial disaster.",
+    "source": "https://iris.who.int/bitstream/handle/10665/70570/WHO_SDE_OEH_01.3_eng.pdf",
+    "publisher": "World Health Organization",
+    "category": "Disaster",
+    "topics": [
+      "history",
+      "disasters"
+    ],
+    "familiarity": 2
+  },
+  {
+    "id": "pompeii",
+    "name": "Destruction of Pompeii",
+    "aliases": [
+      "pompeii",
+      "vesuvius eruption",
+      "mount vesuvius"
+    ],
+    "classification": "event",
+    "statement": "An eruption of Mount Vesuvius buried Pompeii in the year 79.",
+    "explanation": "UNESCO documents the archaeological remains of Pompeii and nearby settlements. The year is well established; the precise eruption month has been debated.",
+    "source": "https://whc.unesco.org/en/list/829",
+    "publisher": "UNESCO World Heritage Centre",
+    "category": "Disaster",
+    "topics": [
+      "history",
+      "disasters"
+    ],
+    "familiarity": 0
+  },
+  {
+    "id": "krakatau",
+    "name": "Krakatau eruption of 1883",
+    "aliases": [
+      "krakatoa",
+      "krakatau",
+      "1883 krakatoa"
+    ],
+    "classification": "event",
+    "statement": "The 1883 eruption of Krakatau generated destructive tsunamis in Indonesia.",
+    "explanation": "NOAA's historical account connects the volcanic eruption with waves that struck nearby coasts. This is a documented natural disaster.",
+    "source": "https://www.ncei.noaa.gov/news/day-historic-krakatau-eruption-1883",
+    "publisher": "US National Oceanic and Atmospheric Administration",
+    "category": "Disaster",
+    "topics": [
+      "history",
+      "disasters",
+      "science"
+    ],
+    "familiarity": 2
+  },
+  {
+    "id": "san-francisco-1906",
+    "name": "1906 San Francisco earthquake",
+    "aliases": [
+      "san francisco earthquake",
+      "1906 earthquake",
+      "1906 san francisco"
+    ],
+    "classification": "event",
+    "statement": "An earthquake struck the San Francisco region in April 1906 and was followed by major fires.",
+    "explanation": "The US Geological Survey documents the earthquake and the scientific response. The fires contributed substantially to the city's destruction.",
+    "source": "https://pubs.usgs.gov/gip/2006/31/",
+    "publisher": "US Geological Survey",
+    "category": "Disaster",
+    "topics": [
+      "history",
+      "disasters"
+    ],
+    "familiarity": 1
+  },
+  {
+    "id": "triangle-shirtwaist",
+    "name": "Triangle Shirtwaist factory fire",
+    "aliases": [
+      "triangle fire",
+      "triangle shirtwaist",
+      "shirtwaist fire"
+    ],
+    "classification": "event",
+    "statement": "The Triangle Shirtwaist factory in New York City burned in March 1911.",
+    "explanation": "The US Department of Labor describes the fire and the subsequent factory-safety investigations and reforms. Its significance is historical, not a measure of victims' suffering.",
+    "source": "https://www.dol.gov/general/aboutdol/history/mono-regsafepart07",
+    "publisher": "US Department of Labor",
+    "category": "Disaster",
+    "topics": [
+      "history",
+      "disasters",
+      "governments"
+    ],
+    "familiarity": 3
+  },
+  {
+    "id": "dust-bowl",
+    "name": "Dust Bowl",
+    "aliases": [
+      "dustbowl",
+      "dust bowl storms"
+    ],
+    "classification": "event",
+    "statement": "Severe drought and dust storms affected the US Great Plains during the 1930s.",
+    "explanation": "The Library of Congress describes drought, exposed soil and migration during the Dust Bowl. It was not simply one isolated storm.",
+    "source": "https://www.loc.gov/classroom-materials/united-states-history-primary-source-timeline/great-depression-and-world-war-ii-1929-1945/dust-bowl/",
+    "publisher": "Library of Congress",
+    "category": "Disaster",
+    "topics": [
+      "history",
+      "disasters"
+    ],
+    "familiarity": 1
+  },
+  {
+    "id": "great-fire-london",
+    "name": "Great Fire of London",
+    "aliases": [
+      "london fire",
+      "great fire of london",
+      "1666 london fire"
+    ],
+    "classification": "event",
+    "statement": "The Great Fire of London began in September 1666 and spread through much of the city.",
+    "explanation": "London Museum traces the fire to a bakery in Pudding Lane and describes its spread. The event does not establish accusations of a foreign plot.",
+    "source": "https://www.londonmuseum.org.uk/collections/london-stories/great-fire-of-london/",
+    "publisher": "London Museum",
+    "category": "Disaster",
+    "topics": [
+      "history",
+      "disasters"
+    ],
+    "familiarity": 1
+  },
+  {
+    "id": "aberfan",
+    "name": "Aberfan disaster",
+    "aliases": [
+      "aberfan disaster",
+      "aberfan"
+    ],
+    "classification": "event",
+    "statement": "A coal-waste tip collapsed onto part of Aberfan in Wales in October 1966.",
+    "explanation": "The collapse engulfed buildings including Pantglas Junior School. The National Library of Wales preserves archival material about the disaster and its aftermath.",
+    "source": "https://www.library.wales/discover-learn/digital-exhibitions/archives/aberfan-disaster-1966",
+    "publisher": "National Library of Wales",
+    "category": "Disaster",
+    "topics": [
+      "history",
+      "disasters"
+    ],
+    "familiarity": 4
+  },
+  {
+    "id": "great-chicago-fire",
+    "name": "Great Chicago Fire",
+    "aliases": [
+      "chicago fire",
+      "great chicago fire",
+      "1871 chicago fire"
+    ],
+    "classification": "event",
+    "statement": "The Great Chicago Fire began in October 1871 and spread across a large part of Chicago.",
+    "explanation": "The Chicago History Museum documents the fire beginning on DeKoven Street and spreading for three days. This proposition does not assign its ignition to the familiar cow story.",
+    "source": "https://www.chicagohistory.org/how-disaster-shaped-the-modern-city/",
+    "publisher": "Chicago History Museum",
+    "category": "Disaster",
+    "topics": [
+      "history",
+      "disasters"
+    ],
+    "familiarity": 1
+  },
+  {
+    "id": "napoleon",
+    "name": "Napoleon Bonaparte",
+    "aliases": [
+      "napoleon",
+      "bonaparte",
+      "napoleon i"
+    ],
+    "classification": "event",
+    "statement": "Napoleon was defeated at the Battle of Waterloo in June 1815.",
+    "explanation": "The National Army Museum describes the coalition victory involving Wellington and Blucher. Napoleon's subsequent exile followed the defeat.",
+    "source": "https://www.nam.ac.uk/explore/battle-waterloo",
+    "publisher": "National Army Museum",
+    "category": "Government and leaders",
+    "topics": [
+      "history",
+      "leaders",
+      "governments"
+    ],
+    "familiarity": 0
+  },
+  {
+    "id": "george-washington",
+    "name": "George Washington",
+    "aliases": [
+      "washington",
+      "president washington"
+    ],
+    "classification": "event",
+    "statement": "George Washington served as the first president of the United States.",
+    "explanation": "His presidency ran from 1789 to 1797. The National Park Service documents his military and political career.",
+    "source": "https://www.nps.gov/people/georgewashington.htm",
+    "publisher": "US National Park Service",
+    "category": "Government and leaders",
+    "topics": [
+      "history",
+      "leaders",
+      "governments"
+    ],
+    "familiarity": 0
+  },
+  {
+    "id": "abraham-lincoln",
+    "name": "Abraham Lincoln",
+    "aliases": [
+      "lincoln",
+      "president lincoln"
+    ],
+    "classification": "event",
+    "statement": "Abraham Lincoln was shot at Ford's Theatre in April 1865.",
+    "explanation": "The National Park Service documents the assassination. Lincoln was attacked on April 14 and died the following morning.",
+    "source": "https://www.nps.gov/foth/learn/historyculture/faq-the-assassination.htm",
+    "publisher": "US National Park Service",
+    "category": "Government and leaders",
+    "topics": [
+      "history",
+      "leaders",
+      "crime"
+    ],
+    "familiarity": 0
+  },
+  {
+    "id": "nelson-mandela",
+    "name": "Nelson Mandela",
+    "aliases": [
+      "mandela"
+    ],
+    "classification": "event",
+    "statement": "Nelson Mandela became president of South Africa in 1994 after the country's first democratic national election.",
+    "explanation": "His foundation's biography records his inauguration on May 10, 1994. The statement concerns a documented political transition.",
+    "source": "https://www.nelsonmandela.org/biography",
+    "publisher": "Nelson Mandela Foundation",
+    "category": "Government and leaders",
+    "topics": [
+      "history",
+      "leaders",
+      "governments"
+    ],
+    "familiarity": 0
+  },
+  {
+    "id": "gandhi",
+    "name": "Mahatma Gandhi",
+    "aliases": [
+      "gandhi",
+      "mohandas gandhi",
+      "mohandas karamchand gandhi"
+    ],
+    "classification": "event",
+    "statement": "Mahatma Gandhi led the Salt March in India in 1930.",
+    "explanation": "The march challenged the British monopoly on salt production and sales. India's Ministry of Culture documents the event through the Dandi memorial.",
+    "source": "https://culture.gov.in/dandi-memorial",
+    "publisher": "Government of India, Ministry of Culture",
+    "category": "Government and leaders",
+    "topics": [
+      "history",
+      "leaders",
+      "governments"
+    ],
+    "familiarity": 0
+  },
+  {
+    "id": "mao",
+    "name": "Mao Zedong",
+    "aliases": [
+      "mao",
+      "mao tse tung",
+      "mao tse-tung"
+    ],
+    "classification": "event",
+    "statement": "Mao Zedong proclaimed the People's Republic of China in October 1949.",
+    "explanation": "A contemporary diplomatic record includes the proclamation. This bounded historical statement does not endorse Mao's rule or evaluate every policy under it.",
+    "source": "https://history.state.gov/historicaldocuments/frus1949v08/d619",
+    "publisher": "US Department of State, Office of the Historian",
+    "category": "Government and leaders",
+    "topics": [
+      "history",
+      "leaders",
+      "governments"
+    ],
+    "familiarity": 1
+  },
+  {
+    "id": "mussolini",
+    "name": "Benito Mussolini",
+    "aliases": [
+      "mussolini",
+      "benito mussolini"
+    ],
+    "classification": "event",
+    "statement": "Benito Mussolini became Italy's prime minister in 1922 and later established a dictatorship.",
+    "explanation": "The US Holocaust Memorial Museum describes his rise and consolidation of Fascist rule. These are documented political events.",
+    "source": "https://encyclopedia.ushmm.org/content/en/article/benito-mussolini-1",
+    "publisher": "US Holocaust Memorial Museum",
+    "category": "Government and leaders",
+    "topics": [
+      "history",
+      "leaders",
+      "governments"
+    ],
+    "familiarity": 1
+  },
+  {
+    "id": "saddam-hussein",
+    "name": "Saddam Hussein",
+    "aliases": [
+      "saddam",
+      "saddam hussein"
+    ],
+    "classification": "event",
+    "statement": "The Iraqi High Tribunal convicted Saddam Hussein in the Dujail case in November 2006.",
+    "explanation": "The contemporary historical White House statement records the November 5 verdict. This card identifies the documented proceeding, rather than endorsing the fairness of the trial or asserting a personal death total.",
+    "source": "https://georgewbush-whitehouse.archives.gov/news/releases/2006/11/20061105-1.html",
+    "publisher": "US White House historical archive",
+    "category": "Government and leaders",
+    "topics": [
+      "history",
+      "leaders",
+      "governments",
+      "crime"
+    ],
+    "familiarity": 1
+  },
+  {
+    "id": "pinochet",
+    "name": "Augusto Pinochet",
+    "aliases": [
+      "pinochet",
+      "augusto pinochet"
+    ],
+    "classification": "event",
+    "statement": "Augusto Pinochet was Chile's head of state from 1973 until 1990.",
+    "explanation": "A UK parliamentary judicial report records his period in office. Its separate discussion of allegations should not be confused with a criminal conviction.",
+    "source": "https://publications.parliament.uk/pa/ld199899/ldselect/ldappeal/15/15.pdf",
+    "publisher": "UK House of Lords, Appeal Committee",
+    "category": "Government and leaders",
+    "topics": [
+      "history",
+      "leaders",
+      "governments"
+    ],
+    "familiarity": 2
+  },
+  {
+    "id": "karadzic",
+    "name": "Radovan Karadzic",
+    "aliases": [
+      "karadzic",
+      "radovan karadzic",
+      "karadžić"
+    ],
+    "classification": "event",
+    "statement": "Radovan Karadzic's conviction included genocide at Srebrenica, and his final sentence was life imprisonment.",
+    "explanation": "The UN tribunal mechanism records the trial and 2019 appeal judgment. The precise conviction matters more than broad claims about every wartime allegation.",
+    "source": "https://www.irmct.org/en/cases/mict-13-55",
+    "publisher": "UN International Residual Mechanism for Criminal Tribunals",
+    "category": "Government and leaders",
+    "topics": [
+      "history",
+      "leaders",
+      "crime"
+    ],
+    "familiarity": 3
+  },
+  {
+    "id": "mladic",
+    "name": "Ratko Mladic",
+    "aliases": [
+      "mladic",
+      "ratko mladic",
+      "mladić"
+    ],
+    "classification": "event",
+    "statement": "Ratko Mladic's final convictions included genocide at Srebrenica.",
+    "explanation": "The UN tribunal mechanism records that the 2021 appeal affirmed his life sentence. This does not imply conviction on every charge originally brought.",
+    "source": "https://www.irmct.org/en/cases/mict-13-56",
+    "publisher": "UN International Residual Mechanism for Criminal Tribunals",
+    "category": "Government and leaders",
+    "topics": [
+      "history",
+      "leaders",
+      "crime"
+    ],
+    "familiarity": 3
+  },
+  {
+    "id": "al-capone",
+    "name": "Al Capone",
+    "aliases": [
+      "capone",
+      "alphonse capone",
+      "scarface capone"
+    ],
+    "classification": "event",
+    "statement": "Al Capone was convicted of federal income-tax evasion in 1931.",
+    "explanation": "The FBI's historical case account documents the tax prosecution. It should not be replaced with an assumption that every reputed gang crime led to a conviction.",
+    "source": "https://www.fbi.gov/history/cases-and-criminals/al-capone",
+    "publisher": "Federal Bureau of Investigation",
+    "category": "Criminal case",
+    "topics": [
+      "history",
+      "crime"
+    ],
+    "familiarity": 0
+  },
+  {
+    "id": "dillinger",
+    "name": "John Dillinger",
+    "aliases": [
+      "dillinger"
+    ],
+    "classification": "event",
+    "statement": "John Dillinger escaped from the jail at Crown Point, Indiana, in March 1934.",
+    "explanation": "The FBI documents his escape and pursuit. This proposition does not require accepting the disputed details of the familiar wooden-gun story.",
+    "source": "https://www.fbi.gov/history/cases-and-criminals/john-dillinger",
+    "publisher": "Federal Bureau of Investigation",
+    "category": "Criminal case",
+    "topics": [
+      "history",
+      "crime"
+    ],
+    "familiarity": 2
+  },
+  {
+    "id": "bonnie-clyde",
+    "name": "Bonnie and Clyde",
+    "aliases": [
+      "bonnie clyde",
+      "bonnie parker and clyde barrow",
+      "bonnie & clyde"
+    ],
+    "classification": "event",
+    "statement": "Bonnie Parker and Clyde Barrow were killed in a police ambush in Louisiana in May 1934.",
+    "explanation": "The FBI's case history records the pursuit and the ambush. This statement does not treat every suspected crime as a proven conviction.",
+    "source": "https://www.fbi.gov/history/cases-and-criminals/bonnie-and-clyde",
+    "publisher": "Federal Bureau of Investigation",
+    "category": "Criminal case",
+    "topics": [
+      "history",
+      "crime"
+    ],
+    "familiarity": 1
+  },
+  {
+    "id": "lindbergh-kidnapping",
+    "name": "Lindbergh kidnapping",
+    "aliases": [
+      "lindbergh case",
+      "lindbergh baby kidnapping"
+    ],
+    "classification": "event",
+    "statement": "Charles Lindbergh's young son was kidnapped from the family home in 1932.",
+    "explanation": "The FBI documents its assistance to New Jersey authorities during the investigation. The exact proposition concerns the kidnapping, not an alternative suspect theory.",
+    "source": "https://www.fbi.gov/history/cases-and-criminals/lindbergh-kidnapping",
+    "publisher": "Federal Bureau of Investigation",
+    "category": "Criminal case",
+    "topics": [
+      "history",
+      "crime"
+    ],
+    "familiarity": 3
+  },
+  {
+    "id": "unabomber",
+    "name": "Ted Kaczynski",
+    "aliases": [
+      "unabomber",
+      "kaczynski",
+      "theodore kaczynski"
+    ],
+    "classification": "event",
+    "statement": "Ted Kaczynski, known as the Unabomber, pleaded guilty in January 1998.",
+    "explanation": "The FBI's case history records his 1996 arrest and subsequent guilty plea. The card concerns the documented criminal case rather than promoting his writings.",
+    "source": "https://www.fbi.gov/history/cases-and-criminals/unabomber",
+    "publisher": "Federal Bureau of Investigation",
+    "category": "Criminal case",
+    "topics": [
+      "history",
+      "crime"
+    ],
+    "familiarity": 1
+  },
+  {
+    "id": "harold-shipman",
+    "name": "Harold Shipman",
+    "aliases": [
+      "shipman",
+      "doctor shipman",
+      "dr shipman"
+    ],
+    "classification": "event",
+    "statement": "British doctor Harold Shipman was convicted of murdering patients in January 2000.",
+    "explanation": "The official Shipman Inquiry records the convictions and examines failures in earlier investigations. The proposition does not depend on a speculative victim total.",
+    "source": "https://assets.publishing.service.gov.uk/media/5a7ceaee40f0b65b3de0bf11/5853.pdf",
+    "publisher": "UK Shipman Inquiry",
+    "category": "Criminal case",
+    "topics": [
+      "history",
+      "crime"
+    ],
+    "familiarity": 3
+  },
+  {
+    "id": "golden-state-killer",
+    "name": "Joseph DeAngelo",
+    "aliases": [
+      "golden state killer",
+      "deangelo",
+      "joseph james deangelo",
+      "east area rapist"
+    ],
+    "classification": "event",
+    "statement": "Joseph DeAngelo pleaded guilty in 2020 in the Golden State Killer prosecution.",
+    "explanation": "The prosecuting district attorneys announced the pleas and described his identification through investigative genetic genealogy. His identity in this prosecuted case is not an unresolved guess.",
+    "source": "https://www.contracosta.ca.gov/m/newsflash/Archive/Item/2331?arcId=8982",
+    "publisher": "Contra Costa County District Attorney",
+    "category": "Criminal case",
+    "topics": [
+      "history",
+      "crime"
+    ],
+    "familiarity": 2
+  },
+  {
+    "id": "lusitania",
+    "name": "Sinking of RMS Lusitania",
+    "aliases": [
+      "lusitania",
+      "rms lusitania"
+    ],
+    "classification": "event",
+    "statement": "A German submarine torpedoed RMS Lusitania in May 1915.",
+    "explanation": "Imperial War Museums documents the sinking through its First World War collection. The proposition describes the attack, without claiming it immediately brought the United States into the war.",
+    "source": "https://www.iwm.org.uk/sites/default/files/files/2023-10/first_world_war_large_print_guide.pdf",
+    "publisher": "Imperial War Museums",
+    "category": "Disaster",
+    "topics": [
+      "history",
+      "disasters"
+    ],
+    "familiarity": 2
+  },
+  {
+    "id": "spanish-flu",
+    "name": "1918 influenza pandemic",
+    "aliases": [
+      "spanish flu",
+      "1918 flu",
+      "1918 influenza",
+      "1918 pandemic"
+    ],
+    "classification": "event",
+    "statement": "An influenza pandemic spread worldwide during 1918 and 1919.",
+    "explanation": "The CDC's historical account identifies an H1N1 virus and notes that its geographic origin is not universally agreed. The nickname does not prove it began in Spain.",
+    "source": "https://archive.cdc.gov/www_cdc_gov/flu/pandemic-resources/1918-commemoration/1918-pandemic-history.htm",
+    "publisher": "US Centers for Disease Control and Prevention",
+    "category": "Disaster",
+    "topics": [
+      "history",
+      "disasters",
+      "science"
+    ],
+    "familiarity": 1
+  },
+  {
+    "id": "great-smog-london",
+    "name": "Great Smog of London",
+    "aliases": [
+      "great smog",
+      "london smog",
+      "1952 smog"
+    ],
+    "classification": "event",
+    "statement": "London experienced a severe episode of polluted fog in December 1952.",
+    "explanation": "The Met Office explains how smoke and other pollutants became trapped near the ground by a temperature inversion. This was a documented pollution disaster.",
+    "source": "https://weather.metoffice.gov.uk/learn-about/weather/case-studies/great-smog",
+    "publisher": "UK Met Office",
+    "category": "Disaster",
+    "topics": [
+      "history",
+      "disasters",
+      "science"
+    ],
+    "familiarity": 3
+  },
+  {
+    "id": "salem-witch-trials",
+    "name": "Salem witch trials",
+    "aliases": [
+      "salem trials",
+      "salem witchcraft trials",
+      "salem"
+    ],
+    "classification": "event",
+    "statement": "Courts in Massachusetts conducted the Salem witch trials in 1692.",
+    "explanation": "The Massachusetts courts preserve original trial documents. The existence of the proceedings is documented; it does not establish that the accused possessed supernatural powers.",
+    "source": "https://www.mass.gov/news/salem-witch-trials-original-court-records",
+    "publisher": "Massachusetts Trial Court Law Libraries",
+    "category": "Historical event",
+    "topics": [
+      "history",
+      "crime",
+      "unusual-history"
+    ],
+    "familiarity": 1
+  }
+]
