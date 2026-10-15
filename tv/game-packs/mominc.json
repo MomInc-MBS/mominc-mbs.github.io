@@ -544,8 +544,8 @@
     },
     {
       "url": "/tv/index.html",
-      "revision": "50d0c0b95a4a11216b987e2e13f9e89cb9c5ba57",
-      "bytes": 14938
+      "revision": "a87263a6ce14d7ede5352a66e730dd0da97bee48",
+      "bytes": 14947
     },
     {
       "url": "/tv/landing.css",
@@ -584,8 +584,8 @@
     },
     {
       "url": "/tv/off-scene.mjs",
-      "revision": "feccc8887429653eae45017a0d3937d467b09abd",
-      "bytes": 25340
+      "revision": "40daef46de3ceb8e2bb78a035cfb1d97fdffc313",
+      "bytes": 26055
     },
     {
       "url": "/tv/phone-layout.js",
@@ -644,8 +644,8 @@
     },
     {
       "url": "/tv/tv.js",
-      "revision": "89a58b618c0ed5898f0585889f8f86b8da48fc5e",
-      "bytes": 34730
+      "revision": "5da7d67e850fa3c71717275c2481773546678114",
+      "bytes": 35583
     },
     {
       "url": "/vendor/shaders/runtime.mjs",
@@ -656,5 +656,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "05e3f1c14a7ad631d9b7"
+  "version": "7f5e9ef853405442b304"
 }

@@ -416,6 +416,55 @@ test('the channel dial tunes in numeric order with mouse, touch, and keyboard', 
   assert.match(styles, /\.dial\{[^}]*touch-action:none/s);
 });
 
+test('channel dial taps cycle with wraparound, pointer clicks tune once, and drags keep detents', () => {
+  const shell = readFileSync(new URL('tv/tv.js', root), 'utf8');
+  const start = shell.indexOf('  const dialChannels =');
+  const end = shell.indexOf('  // --- press into the glass:', start);
+  assert.ok(start >= 0 && end > start, 'locate the live dial handler section');
+  const dialCode = shell.slice(start, end);
+  const channels = [
+    {id: 'one', ch: 1, name: 'One', href: '?ch=one'},
+    {id: 'hidden', ch: 2, name: 'Hidden', suppressed: true, href: '?ch=hidden'},
+    {id: 'three', ch: 3, name: 'Three', href: '?ch=three'},
+    {id: 'four', ch: 4, name: 'Four', href: '?ch=four'},
+    {id: 'five', ch: 5, name: 'Five', href: '?ch=five'},
+  ];
+  function dial(current) {
+    const events = {}, navigations = [], timers = [];
+    const knob = {style: {setProperty() {}}, attrs: {}, classes: new Set(), captured: new Set(),
+      setAttribute(k, v) {this.attrs[k] = v;},
+      addEventListener(type, fn) {(events[type] ||= []).push(fn);},
+      setPointerCapture(id) {this.captured.add(id);}, hasPointerCapture(id) {return this.captured.has(id);},
+      releasePointerCapture(id) {this.captured.delete(id);},
+      getBoundingClientRect() {return {left: 0, top: 0, width: 200, height: 200};},
+      classList: {add(name) {knob.classes.add(name);}, remove(name) {knob.classes.delete(name);}},
+      fire(type, event = {}) {for (const fn of events[type] || []) fn({preventDefault() {}, ...event});}};
+    const window = {addEventListener() {}, MBS_SOUND: {play() {return false;}}};
+    vm.runInNewContext(dialCode, {CHANNELS: channels, current, knob, window,
+      location: {assign(url) {navigations.push(url);}}, setTimeout(fn) {timers.push(fn);return timers.length;}, clearTimeout() {}});
+    return {knob, navigations, timers};
+  }
+
+  const last = dial('five');
+  assert.match(last.knob.attrs['aria-label'], /Currently channel 5, Five/);
+  last.knob.fire('click', {detail: 0}); // keyboard or the off-scene dial's forwarded .click()
+  assert.deepEqual(last.navigations, ['?ch=one']);
+
+  const tapped = dial('one');
+  tapped.knob.fire('pointerdown', {isPrimary: true, pointerType: 'touch', pointerId: 7, clientX: 200, clientY: 100});
+  tapped.knob.fire('pointerup', {pointerId: 7});
+  tapped.knob.fire('click', {detail: 1}); // browser click following pointerup is consumed
+  assert.deepEqual(tapped.navigations, ['?ch=three']);
+
+  const dragged = dial('one');
+  dragged.knob.fire('pointerdown', {isPrimary: true, pointerType: 'mouse', button: 0, pointerId: 8, clientX: 200, clientY: 100});
+  const a = 165 * Math.PI / 180;
+  dragged.knob.fire('pointermove', {pointerId: 8, clientX: 100 + 100 * Math.cos(a), clientY: 100 + 100 * Math.sin(a)});
+  dragged.knob.fire('pointerup', {pointerId: 8});
+  dragged.timers.at(-1)?.(); // the existing detent sound gets its short beat before navigation
+  assert.deepEqual(dragged.navigations, ['?ch=four']);
+});
+
 test('Coach Armie keeps its TV tile and the hand offer arrives on a powered set', () => {
   // tv.js drops listed:false channels from the strip; network-flow.js lights or darkens the armie tile.
   const page = {window: {}};

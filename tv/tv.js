@@ -25,7 +25,7 @@
   let offScene = null;
   function paintDark() {
     darkNote.textContent = "Press power.";
-    offScene ??= import("/tv/off-scene.mjs?v=tv-off-phone-1").catch(e => console.warn("3D off screen unavailable:", e.message));
+    offScene ??= import("/tv/off-scene.mjs?mbs-rev=tv-channel-clicker-1").catch(e => console.warn("3D off screen unavailable:", e.message));
   }
   const hotwired = () => { try { return sessionStorage.getItem("mbs-hotwired") === "1" || localStorage.getItem("mbs-off3d-locked") === "1"; } catch { return true; } };
 
@@ -133,9 +133,9 @@
   const paintDialLabel = index => {
     const c = dialChannels[index];
     knob.setAttribute("aria-label", c
-      ? `Channel dial. Channel ${c.ch}, ${c.name}. Drag or use arrow keys to change channel.`
-      : "Channel dial. Drag or use arrow keys to choose a channel.");
-    knob.title = "Drag to change channel";
+      ? `Channel dial. Currently channel ${c.ch}, ${c.name}. Tap or click for the next channel, drag, or use arrow keys to change channel.`
+      : "Channel dial. Tap or click for the next channel, drag, or use arrow keys to choose a channel.");
+    knob.title = c ? `Currently channel ${c.ch}, ${c.name}. Tap or click for the next channel.` : "Tap or click for the next channel";
   };
   paintDialLabel(dialIndex);
   const pointerAngle = e => {
@@ -159,6 +159,17 @@
     if (audible) pendingTune = setTimeout(() => location.assign(destination), 75);
     else location.assign(destination);
   };
+  const activateDial = () => {
+    if (!dialChannels.length) return;
+    tune(dialIndex < 0 ? 0 : (dialIndex + 1) % dialChannels.length);
+  };
+  let suppressPointerClick = false;
+  knob.addEventListener("click", e => {
+    // A physical pointer activation is handled on pointerup so a tap can tune immediately;
+    // consume its browser-generated click. detail===0 is keyboard or forwarded activation.
+    if (suppressPointerClick) { suppressPointerClick = false; return; }
+    if (e.detail === 0) activateDial();
+  });
   knob.addEventListener("pointerdown", e => {
     if (!e.isPrimary || (e.pointerType === "mouse" && e.button !== 0)) return;
     if (pendingTune) { clearTimeout(pendingTune); pendingTune = null; }
@@ -196,7 +207,11 @@
     let turns = dialStep ? Math.round(drag.total / dialStep) : 0;
     if (crossedDetent && turns === 0) turns = Math.sign(drag.total);
     if (navigate && crossedDetent) tune(drag.start + turns, drag.sounded === Math.max(0, Math.min(dialChannels.length - 1, drag.start + turns)));
-    else knob.style.setProperty("--rot", `${dialAngle(dialIndex)}deg`);
+    else if (navigate) {
+      suppressPointerClick = true;
+      setTimeout(() => { suppressPointerClick = false; }, 0);
+      activateDial();
+    } else knob.style.setProperty("--rot", `${dialAngle(dialIndex)}deg`);
   };
   knob.addEventListener("pointerup", e => finishDial(e, true));
   knob.addEventListener("pointercancel", e => finishDial(e, false));

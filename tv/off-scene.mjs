@@ -35,6 +35,7 @@ const btn = (cls, label) => { const b = document.createElement('button'); b.type
 layer.append(bgRenderer.domElement, renderer.domElement);
 const noteBtn = btn('off3d-note', 'Sticky note: ' + NOTE);
 const powerBtn = btn('off3d-power', 'Power');
+const sharedDial = document.getElementById('knob');
 const dialBtn = btn('off3d-dial', 'Channel dial');
 const wireBtns = [btn('off3d-wire', 'Loose wire end. Drag it onto the other wire, or press Enter to connect them.'), btn('off3d-wire', 'Loose wire end. Drag it onto the other wire, or press Enter to connect them.')];
 const hint = document.createElement('p'); hint.className = 'off3d-hint'; hint.textContent = 'drag to look around'; layer.append(hint);
@@ -214,8 +215,18 @@ layer.addEventListener('keydown', e => {
 });
 noteBtn.addEventListener('click', () => { dropHint(); if (zoomTo) { closeNote(); powerBtn.focus(); return; } noteOpened = true; yawTo = Math.round(yaw / (2 * Math.PI)) * 2 * Math.PI; zoomTo = 1; if (still()) { yaw = yawTo; zoom = 1; } sfx('bloop'); live.textContent = 'The note says: ' + NOTE; });
 powerBtn.addEventListener('click', () => { realPower.click(); });
-// The dial clicks round a notch; the set is off, so there is no channel to change to yet.
-let dialTo = 0; dialBtn.addEventListener('click', () => { dialTo -= Math.PI / 7; sfx('click'); });
+// Keep the 3D dial's spin and sound here; tv.js owns channel selection and tuning.
+const requestedChannel = new URLSearchParams(location.search).get('ch') || 'mominc';
+const channelId = requestedChannel === 'sag' ? 'mominc' : requestedChannel;
+const selectedChannel = window.MBS_CHANNELS?.channels?.find(c => c.id === channelId);
+const dialLabel = selectedChannel
+  ? `Channel dial. Currently channel ${selectedChannel.ch}, ${selectedChannel.name}. Tap or press Enter or Space for the next channel.`
+  : 'Channel dial. Tap or press Enter or Space for the next channel.';
+dialBtn.setAttribute('aria-label', dialLabel);
+dialBtn.title = dialLabel;
+let dialTo = -(Math.max(0, Number(selectedChannel?.ch) || 0)) * Math.PI / 7;
+dial.rotation.z = dialTo;
+dialBtn.addEventListener('click', () => { dialTo -= Math.PI / 7; sfx('click'); sharedDial?.click(); });
 tv.addEventListener('mbs:deadpower', () => { flick = performance.now(); live.textContent = 'Nothing. No power. Check the back.'; });
 wireBtns.forEach((b, i) => {
   b.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); hotwire(performance.now()); } });
