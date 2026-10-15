@@ -25,7 +25,7 @@
   let offScene = null;
   function paintDark() {
     darkNote.textContent = "Press power.";
-    offScene ??= import("/tv/off-scene.mjs?mbs-rev=tv-channel-clicker-1").catch(e => console.warn("3D off screen unavailable:", e.message));
+    offScene ??= import("/tv/off-scene.mjs?mbs-rev=tv-mobile-recovery-1").catch(e => console.warn("3D off screen unavailable:", e.message));
   }
   const hotwired = () => { try { return sessionStorage.getItem("mbs-hotwired") === "1" || localStorage.getItem("mbs-off3d-locked") === "1"; } catch { return true; } };
 
@@ -123,7 +123,8 @@
 
   // The channel numbers are the dial's source of truth. Pointer events cover both mouse and touch;
   // waiting until release lets one turn cross several detents without unloading the page mid-drag.
-  const dialChannels = CHANNELS.filter(c => c.ch > 0 && !c.suppressed).sort((a, b) => a.ch - b.ch);
+  const dialChannels = CHANNELS.filter(c => c.ch > 0 && !c.suppressed).sort((a, b) => a.ch - b.ch)
+    .filter(c => c.id !== "armie" || window.MBS_FLOW?.armieReady());
   const dialStep = dialChannels.length > 1 ? 300 / (dialChannels.length - 1) : 0;
   const dialAngle = index => -150 + Math.max(0, index) * dialStep;
   let dialIndex = dialChannels.findIndex(c => c.id === current);

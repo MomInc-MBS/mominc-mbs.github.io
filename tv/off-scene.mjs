@@ -27,12 +27,33 @@ const sfx = k => { try { window.MBS_SOUND?.unlock(); window.MBS_SOUND?.play(k); 
 const layer = document.createElement('div');
 layer.className = 'off3d'; layer.dataset.noTvSound = ''; layer.tabIndex = 0;
 layer.setAttribute('role', 'region'); layer.setAttribute('aria-label', 'The television is off. Look around the computer: arrow keys or drag.');
-// Two canvases: the room (floor, door) renders small and CSS-blurred behind, the computer renders sharp on top: out of focus.
+// One WebGL context: render the room small and blur it, then draw the computer sharp on top.
+// A second context could be evicted on phones while leaving its blank canvas and power gate visible.
 const mkRenderer = (opts, ratio) => { const r = new THREE.WebGLRenderer(opts); r.setPixelRatio(ratio); r.outputColorSpace = THREE.SRGBColorSpace; r.toneMapping = THREE.ACESFilmicToneMapping; r.toneMappingExposure = 1.15; r.domElement.setAttribute('aria-hidden', 'true'); return r; };
-const bgRenderer = mkRenderer({}, .5); bgRenderer.domElement.className = 'off3d-bg'; // throws without WebGL: tv.js catches and keeps the dark tube
-const renderer = mkRenderer({antialias: true, alpha: true}, Math.min(devicePixelRatio, 1.5)); renderer.setClearColor(0, 0);
+const renderer = mkRenderer({antialias: true}, Math.min(devicePixelRatio, 1.5)); // throws without WebGL: tv.js keeps the dark tube
+const roomTarget = new THREE.WebGLRenderTarget(1, 1, {depthBuffer: true});
+const blurScene = new THREE.Scene(), blurCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+const blurMat = new THREE.ShaderMaterial({
+  uniforms: {room: {value: roomTarget.texture}, texel: {value: new THREE.Vector2(1, 1)}},
+  vertexShader: 'varying vec2 uvOut; void main() { uvOut = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }',
+  fragmentShader: `uniform sampler2D room; uniform vec2 texel; varying vec2 uvOut;
+    void main() {
+      vec4 c = texture2D(room, uvOut) * .20;
+      c += texture2D(room, uvOut + vec2(texel.x, 0.)) * .12;
+      c += texture2D(room, uvOut - vec2(texel.x, 0.)) * .12;
+      c += texture2D(room, uvOut + vec2(0., texel.y)) * .12;
+      c += texture2D(room, uvOut - vec2(0., texel.y)) * .12;
+      c += texture2D(room, uvOut + texel) * .08;
+      c += texture2D(room, uvOut - texel) * .08;
+      c += texture2D(room, uvOut + vec2(texel.x, -texel.y)) * .08;
+      c += texture2D(room, uvOut + vec2(-texel.x, texel.y)) * .08;
+      gl_FragColor = c;
+      #include <colorspace_fragment>
+    }`
+});
+blurScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), blurMat));
 const btn = (cls, label) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'off3d-hit ' + cls; b.setAttribute('aria-label', label); layer.append(b); return b; };
-layer.append(bgRenderer.domElement, renderer.domElement);
+layer.append(renderer.domElement);
 const noteBtn = btn('off3d-note', 'Sticky note: ' + NOTE);
 const powerBtn = btn('off3d-power', 'Power');
 const sharedDial = document.getElementById('knob');
@@ -177,7 +198,10 @@ function rig() {
 }
 function resize() {
   const cw = innerWidth, ch = innerHeight; if (cw === w && ch === h) return; w = cw; h = ch;
-  renderer.setSize(w, h, false); bgRenderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
+  renderer.setSize(w, h, false);
+  const rw = Math.max(1, Math.floor(w * .5)), rh = Math.max(1, Math.floor(h * .5));
+  roomTarget.setSize(rw, rh); blurMat.uniforms.texel.value.set(2 / rw, 2 / rh);
+  camera.aspect = w / h; camera.updateProjectionMatrix();
   const v = THREE.MathUtils.degToRad(camera.fov / 2), hz = Math.atan(Math.tan(v) * camera.aspect);
   portrait = THREE.MathUtils.clamp((1 - camera.aspect) / .55, 0, 1);
   // Portrait: cover, so both gold sides sit just off-screen and the face is the whole phone. Landscape: the whole face fits.
@@ -242,9 +266,20 @@ wireBtns.forEach((b, i) => {
 });
 
 // --- loop: runs only while the set is off
-let raf = 0, running = false;
+let raf = 0, running = false, failed = false, ready = false;
+function failScene(error) {
+  if (failed) return;
+  failed = true; ready = false; running = false; cancelAnimationFrame(raf);
+  tv.dataset.off3d = 'failed'; // tv.js releases the power gate; the original TV remains usable.
+  if (error) console.warn('3D off screen unavailable:', error);
+}
+renderer.debug.onShaderError = (gl, program) => failScene(gl.getProgramInfoLog(program) || 'WebGL shader failed');
+renderer.domElement.addEventListener('webglcontextlost', e => { e.preventDefault(); failScene('WebGL context lost'); });
+renderer.domElement.addEventListener('webglcontextrestored', () => { failed = false; w = h = 0; sync(); });
 function frame(now) {
-  raf = requestAnimationFrame(frame); resize();
+  raf = requestAnimationFrame(frame);
+  try {
+  resize();
   const q = still() ? 1 : .12; yaw += (yawTo - yaw) * q; zoom += (zoomTo - zoom) * (still() ? 1 : .1);
   if (Math.abs(zoom - zoomTo) < .002) zoom = zoomTo;
   const {over, rear, a} = rig(), wrapped = Math.atan2(Math.sin(yaw), Math.cos(yaw)), front = Math.abs(wrapped) < .45;
@@ -259,6 +294,9 @@ function frame(now) {
   sparkBits.material.opacity = s < 1 ? 1 - s : 0;
   if (s < 1) { const p = sparkBits.geometry.attributes.position; for (let i = 0; i < 60; i++) { sparkVel[i].y -= .06; p.setXYZ(i, p.getX(i) + sparkVel[i].x * .016, p.getY(i) + sparkVel[i].y * .016, p.getZ(i) + sparkVel[i].z * .016); } p.needsUpdate = true; }
   renderLayers();
+  if (failed) return;
+  if (renderer.getContext().isContextLost()) { failScene('WebGL context lost'); return; }
+  if (!ready) { ready = true; tv.dataset.off3d = 'on'; }
   note.visible = !noteGone || zoom > .05; // peels off as the camera pulls back
   const zoomed = zoom > .5;
   place(noteBtn, NOTE_POS, (zoomed ? .9 : 1.1) * NOTE_SIZE * pxPerUnit(NOTE_POS), front && !noteGone);
@@ -268,22 +306,30 @@ function frame(now) {
   const back = rear > .85 && !isHot();
   wires.forEach(wr => place(wr.button, wr.end, 0, back));
   layer.classList.toggle('zoomed', zoomed); layer.classList.toggle('hot', isHot());
+  } catch (error) { failScene(error); }
 }
 const ROOM = new Set([floor, doorway]);
 function renderLayers() {
   const vis = scene.children.map(c => c.visible), bg = scene.background;
-  scene.children.forEach(c => { if (!c.isLight) c.visible = ROOM.has(c); }); bgRenderer.render(scene, camera);
-  scene.children.forEach((c, i) => { c.visible = vis[i] && !ROOM.has(c); }); scene.background = null; renderer.render(scene, camera);
-  scene.children.forEach((c, i) => { c.visible = vis[i]; }); scene.background = bg;
+  try {
+    scene.children.forEach(c => { if (!c.isLight) c.visible = ROOM.has(c); });
+    renderer.setRenderTarget(roomTarget); renderer.render(scene, camera);
+    renderer.setRenderTarget(null); renderer.render(blurScene, blurCamera);
+    scene.children.forEach((c, i) => { c.visible = vis[i] && !ROOM.has(c); });
+    scene.background = null; renderer.autoClear = false; renderer.clearDepth(); renderer.render(scene, camera);
+  } finally {
+    renderer.setRenderTarget(null); renderer.autoClear = true;
+    scene.children.forEach((c, i) => { c.visible = vis[i]; }); scene.background = bg;
+  }
 }
 function sync() {
   const on = tv.dataset.state === 'off';
-  if (on && !running) { relock(); hint.hidden = locked; running = true; w = h = 0; raf = requestAnimationFrame(frame); }
-  if (!on && running) { running = false; cancelAnimationFrame(raf); renderer.setSize(1, 1, false); bgRenderer.setSize(1, 1, false); // free the framebuffer while the TV runs
+  if (on && !running && !failed) { relock(); hint.hidden = locked; running = true; w = h = 0; raf = requestAnimationFrame(frame); }
+  if (!on && running) { running = false; ready = false; cancelAnimationFrame(raf); renderer.setSize(1, 1, false); roomTarget.setSize(1, 1); // free the framebuffer while the TV runs
     if (zoomTo) closeNote(); zoom = 0; if (hot && !armieDone()) try { localStorage.setItem(LOCK_KEY, '1'); } catch {} }
 }
 addEventListener('mbs:page-complete', () => running && relock());
 new MutationObserver(sync).observe(tv, {attributes: true, attributeFilter: ['data-state']});
-tv.dataset.off3d = 'on'; sync();
+sync();
 // test hook: the check script drives the camera without simulating drags
 window.MBS_OFF3D = {setYaw: turn, get locked() { return locked; }, get noteGone() { return noteGone; }, relock, get yaw() { return yaw; }, hotwire: () => hotwire(performance.now()), get hot() { return isHot(); }};

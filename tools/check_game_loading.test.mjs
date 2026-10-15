@@ -427,9 +427,9 @@ test('channel dial taps cycle with wraparound, pointer clicks tune once, and dra
     {id: 'hidden', ch: 2, name: 'Hidden', suppressed: true, href: '?ch=hidden'},
     {id: 'three', ch: 3, name: 'Three', href: '?ch=three'},
     {id: 'four', ch: 4, name: 'Four', href: '?ch=four'},
-    {id: 'five', ch: 5, name: 'Five', href: '?ch=five'},
+    {id: 'armie', ch: 5, name: 'Coach Armie', href: '?ch=armie'},
   ];
-  function dial(current) {
+  function dial(current, armieReady = true) {
     const events = {}, navigations = [], timers = [];
     const knob = {style: {setProperty() {}}, attrs: {}, classes: new Set(), captured: new Set(),
       setAttribute(k, v) {this.attrs[k] = v;},
@@ -439,16 +439,23 @@ test('channel dial taps cycle with wraparound, pointer clicks tune once, and dra
       getBoundingClientRect() {return {left: 0, top: 0, width: 200, height: 200};},
       classList: {add(name) {knob.classes.add(name);}, remove(name) {knob.classes.delete(name);}},
       fire(type, event = {}) {for (const fn of events[type] || []) fn({preventDefault() {}, ...event});}};
-    const window = {addEventListener() {}, MBS_SOUND: {play() {return false;}}};
+    const window = {addEventListener() {}, MBS_FLOW: {armieReady() {return armieReady;}}, MBS_SOUND: {play() {return false;}}};
     vm.runInNewContext(dialCode, {CHANNELS: channels, current, knob, window,
       location: {assign(url) {navigations.push(url);}}, setTimeout(fn) {timers.push(fn);return timers.length;}, clearTimeout() {}});
     return {knob, navigations, timers};
   }
 
-  const last = dial('five');
-  assert.match(last.knob.attrs['aria-label'], /Currently channel 5, Five/);
+  const last = dial('armie');
+  assert.match(last.knob.attrs['aria-label'], /Currently channel 5, Coach Armie/);
   last.knob.fire('click', {detail: 0}); // keyboard or the off-scene dial's forwarded .click()
   assert.deepEqual(last.navigations, ['?ch=one']);
+
+  const locked = dial('four', false);
+  locked.knob.fire('click', {detail: 0});
+  assert.deepEqual(locked.navigations, ['?ch=one'], 'the clicker follows the LCD lock and skips Armie');
+  const unlocked = dial('four', true);
+  unlocked.knob.fire('click', {detail: 0});
+  assert.deepEqual(unlocked.navigations, ['?ch=armie']);
 
   const tapped = dial('one');
   tapped.knob.fire('pointerdown', {isPrimary: true, pointerType: 'touch', pointerId: 7, clientX: 200, clientY: 100});
