@@ -3048,7 +3048,14 @@ export const subjects = [
     "category": "Historical event",
     "aliases": [
       "cuban crisis",
-      "missile crisis"
+      "missile crisis",
+      "cuban missle crisis",
+      "cuban missles crisis",
+      "cuban missil crisis",
+      "cuban missile crises",
+      "cuba missile crisis",
+      "cuban missile crisis 1962",
+      "october crisis 1962"
     ],
     "familiarity": 1,
     "topics": [
@@ -4041,6 +4048,1336 @@ export const subjects = [
       "unusual-history"
     ],
     "depth": 1
+  },
+  {
+    "id": "world-war-one",
+    "name": "World War I",
+    "classification": "event",
+    "statement": "World War I was fought from 1914 to 1918.",
+    "explanation": "The conflict involved the Allied and Central Powers; later peace settlements were separate from the 1918 armistice.",
+    "source": "https://encyclopedia.ushmm.org/content/en/article/world-war-i",
+    "publisher": "US Holocaust Memorial Museum",
+    "category": "Historical event",
+    "aliases": [
+      "WW1",
+      "WWI",
+      "World War 1",
+      "First World War",
+      "Great War"
+    ],
+    "familiarity": 0,
+    "topics": [
+      "events",
+      "government",
+      "history",
+      "international",
+      "military",
+      "political-events",
+      "war"
+    ],
+    "depth": 0
+  },
+  {
+    "id": "world-war-two",
+    "name": "World War II",
+    "classification": "event",
+    "statement": "Germany invaded Poland in September 1939, starting World War II in Europe.",
+    "explanation": "The European war began in 1939; fighting in Asia had already begun earlier.",
+    "source": "https://encyclopedia.ushmm.org/content/en/article/world-war-ii-in-depth",
+    "publisher": "US Holocaust Memorial Museum",
+    "category": "Historical event",
+    "aliases": [
+      "WW2",
+      "WWII",
+      "World War 2",
+      "Second World War"
+    ],
+    "familiarity": 0,
+    "topics": [
+      "events",
+      "government",
+      "history",
+      "international",
+      "military",
+      "political-events",
+      "war"
+    ],
+    "depth": 0
+  },
+  {
+    "id": "korean-war",
+    "name": "Korean War",
+    "classification": "event",
+    "statement": "The Korean War began in 1950 and fighting was halted by an armistice in 1953.",
+    "explanation": "The armistice stopped the fighting without becoming a comprehensive peace treaty.",
+    "source": "https://www.nam.ac.uk/explore/korean-war",
+    "publisher": "National Army Museum",
+    "category": "Historical event",
+    "aliases": [
+      "Korea war",
+      "Korean conflict"
+    ],
+    "familiarity": 0,
+    "topics": [
+      "events",
+      "government",
+      "history",
+      "international",
+      "military",
+      "political-events",
+      "war"
+    ],
+    "depth": 0
+  },
+  {
+    "id": "vietnam-war",
+    "name": "Vietnam War",
+    "classification": "event",
+    "statement": "The United States signed the Paris peace agreement concerning Vietnam in January 1973.",
+    "explanation": "The agreement and US withdrawal did not mean that all fighting in Vietnam ended that year.",
+    "source": "https://history.state.gov/milestones/1969-1976/ending-vietnam",
+    "publisher": "US Department of State, Office of the Historian",
+    "category": "Historical event",
+    "aliases": [
+      "Vietnam conflict",
+      "Vietnam"
+    ],
+    "familiarity": 0,
+    "topics": [
+      "events",
+      "government",
+      "history",
+      "international",
+      "military",
+      "political-events",
+      "war"
+    ],
+    "depth": 0
+  },
+  {
+    "id": "gulf-war",
+    "name": "Gulf War",
+    "classification": "event",
+    "statement": "A US-led coalition fought Iraqi forces in 1991 after Iraq invaded Kuwait.",
+    "explanation": "The 1990 invasion and 1991 coalition campaign are distinct stages of the crisis.",
+    "source": "https://history.state.gov/milestones/1989-1992/gulf-war",
+    "publisher": "US Department of State, Office of the Historian",
+    "category": "Historical event",
+    "aliases": [
+      "First Gulf War",
+      "Persian Gulf War",
+      "Desert Storm",
+      "Operation Desert Storm",
+      "Gulf War 1991"
+    ],
+    "familiarity": 0,
+    "topics": [
+      "events",
+      "government",
+      "history",
+      "international",
+      "military",
+      "political-events",
+      "war"
+    ],
+    "depth": 0
+  },
+  {
+    "id": "american-revolution",
+    "name": "American Revolution",
+    "classification": "event",
+    "statement": "The American Revolutionary War was fought from 1775 to 1783.",
+    "explanation": "The conflict began between Britain and its North American colonies and developed into a wider international war.",
+    "source": "https://www.nps.gov/inde/learn/historyculture/resources-americanrevolutionoverview.htm",
+    "publisher": "US National Park Service",
+    "category": "Historical event",
+    "aliases": [
+      "American Revolutionary War",
+      "US Revolutionary War",
+      "War of American Independence",
+      "Revolutionary War"
+    ],
+    "familiarity": 0,
+    "topics": [
+      "events",
+      "government",
+      "history",
+      "international",
+      "military",
+      "political-events",
+      "social-change",
+      "war"
+    ],
+    "depth": 0
+  },
+  {
+    "id": "american-civil-war",
+    "name": "American Civil War",
+    "classification": "event",
+    "statement": "The American Civil War was fought from 1861 to 1865.",
+    "explanation": "The National Park Service preserves battlefields and records the conflict between the Union and Confederacy.",
+    "source": "https://www.nps.gov/subjects/military/american-military-heritage.htm",
+    "publisher": "US National Park Service",
+    "category": "Historical event",
+    "aliases": [
+      "US Civil War",
+      "Civil War",
+      "United States Civil War",
+      "War Between the States"
+    ],
+    "familiarity": 0,
+    "topics": [
+      "events",
+      "government",
+      "history",
+      "international",
+      "military",
+      "political-events",
+      "social-change",
+      "war"
+    ],
+    "depth": 0
+  },
+  {
+    "id": "french-revolution",
+    "name": "French Revolution",
+    "classification": "event",
+    "statement": "The storming of the Bastille took place in Paris in July 1789 during the French Revolution.",
+    "explanation": "The event became a defining symbol of the revolution; it was not the whole revolution in a single day.",
+    "source": "https://en.chateauversailles.fr/discover/history/key-dates/versailles-heart-french-revolution",
+    "publisher": "Chateau de Versailles",
+    "category": "Historical event",
+    "aliases": [
+      "French revolution 1789",
+      "1789 revolution"
+    ],
+    "familiarity": 0,
+    "topics": [
+      "events",
+      "government",
+      "history",
+      "international",
+      "political-events",
+      "social-change"
+    ],
+    "depth": 0
+  },
+  {
+    "id": "great-depression",
+    "name": "Great Depression",
+    "classification": "event",
+    "statement": "The United States experienced a severe economic depression during the 1930s.",
+    "explanation": "Federal Reserve historians distinguish the long depression from the October 1929 stock-market crash.",
+    "source": "https://www.federalreservehistory.org/topics/recessions-and-depressions",
+    "publisher": "Federal Reserve History",
+    "category": "Historical event",
+    "aliases": [
+      "The Depression",
+      "1930s depression"
+    ],
+    "familiarity": 0,
+    "topics": [
+      "economy",
+      "events",
+      "government",
+      "history",
+      "political-events",
+      "social-change"
+    ],
+    "depth": 0
+  },
+  {
+    "id": "wall-street-crash-1929",
+    "name": "Wall Street Crash of 1929",
+    "classification": "event",
+    "statement": "US share prices collapsed in the stock-market crash of October 1929.",
+    "explanation": "The crash was followed by a much longer depression; it was not the only cause.",
+    "source": "https://www.federalreservehistory.org/essays/stock-market-crash-of-1929",
+    "publisher": "Federal Reserve History",
+    "category": "Historical event",
+    "aliases": [
+      "1929 stock market crash",
+      "Stock market crash 1929",
+      "Black Tuesday",
+      "Great Crash"
+    ],
+    "familiarity": 0,
+    "topics": [
+      "economy",
+      "events",
+      "government",
+      "history",
+      "political-events",
+      "social-change"
+    ],
+    "depth": 0
+  },
+  {
+    "id": "financial-crisis-2008",
+    "name": "2008 financial crisis",
+    "classification": "event",
+    "statement": "The United States experienced a recession from December 2007 to June 2009 during the global financial crisis.",
+    "explanation": "Housing and financial-market distress were central to the crisis; the dates refer to the US recession.",
+    "source": "https://www.federalreservehistory.org/essays/great-recession-of-200709",
+    "publisher": "Federal Reserve History",
+    "category": "Historical event",
+    "aliases": [
+      "Global financial crisis",
+      "Great Recession",
+      "2008 recession",
+      "Financial crisis",
+      "Global financial crash",
+      "2008 crash"
+    ],
+    "familiarity": 0,
+    "topics": [
+      "economy",
+      "events",
+      "government",
+      "history",
+      "political-events",
+      "social-change"
+    ],
+    "depth": 0
+  },
+  {
+    "id": "soviet-union-collapse",
+    "name": "Collapse of the Soviet Union",
+    "classification": "event",
+    "statement": "The Soviet Union dissolved in 1991.",
+    "explanation": "The failed August coup and the emergence of independent republics were part of the breakup.",
+    "source": "https://history.state.gov/milestones/1989-1992/collapse-soviet-union",
+    "publisher": "US Department of State, Office of the Historian",
+    "category": "Historical event",
+    "aliases": [
+      "Soviet collapse",
+      "USSR collapse",
+      "Fall of the Soviet Union",
+      "Dissolution of the Soviet Union",
+      "Fall of USSR"
+    ],
+    "familiarity": 0,
+    "topics": [
+      "events",
+      "government",
+      "history",
+      "international",
+      "political-events",
+      "social-change"
+    ],
+    "depth": 0
+  },
+  {
+    "id": "brexit",
+    "name": "Brexit",
+    "classification": "event",
+    "statement": "A majority of voters in the UK referendum of June 2016 voted to leave the European Union.",
+    "explanation": "The referendum was followed by negotiations and formal UK withdrawal in January 2020.",
+    "source": "https://commonslibrary.parliament.uk/research-briefings/cbp-7960/",
+    "publisher": "UK House of Commons Library",
+    "category": "Historical event",
+    "aliases": [
+      "UK leaves EU",
+      "Britain leaves EU",
+      "EU referendum",
+      "British exit"
+    ],
+    "familiarity": 0,
+    "topics": [
+      "events",
+      "government",
+      "history",
+      "international",
+      "political-events",
+      "social-change"
+    ],
+    "depth": 0
+  },
+  {
+    "id": "rwandan-genocide",
+    "name": "1994 genocide against the Tutsi in Rwanda",
+    "classification": "event",
+    "statement": "A genocide against the Tutsi took place in Rwanda in 1994.",
+    "explanation": "The UN records the atrocity and subsequent prosecutions; the proposition avoids disputed exact totals.",
+    "source": "https://www.un.org/en/preventgenocide/rwanda/index.shtml",
+    "publisher": "United Nations",
+    "category": "Historical atrocity",
+    "aliases": [
+      "Rwandan genocide",
+      "Rwanda genocide",
+      "Genocide in Rwanda",
+      "1994 Rwanda genocide"
+    ],
+    "familiarity": 1,
+    "topics": [
+      "abuse",
+      "atrocity-cases",
+      "disasters",
+      "events",
+      "government",
+      "history",
+      "international",
+      "political-events"
+    ],
+    "depth": 1
+  },
+  {
+    "id": "holocaust",
+    "name": "Holocaust",
+    "classification": "event",
+    "statement": "Nazi Germany and its collaborators systematically murdered six million Jews during the Holocaust.",
+    "explanation": "The museum documents this genocide and the persecution and killing of other groups.",
+    "source": "https://www.ushmm.org/holocaust/",
+    "publisher": "US Holocaust Memorial Museum",
+    "category": "Historical atrocity",
+    "aliases": [
+      "The Holocaust",
+      "Shoah",
+      "Nazi Holocaust"
+    ],
+    "familiarity": 0,
+    "topics": [
+      "abuse",
+      "atrocity-cases",
+      "disasters",
+      "events",
+      "government",
+      "history",
+      "international",
+      "political-events",
+      "war"
+    ],
+    "depth": 0
+  },
+  {
+    "id": "trinity-test",
+    "name": "Trinity nuclear test",
+    "classification": "event",
+    "statement": "The first nuclear test took place in New Mexico on July 16, 1945.",
+    "explanation": "The plutonium device was developed as part of the Manhattan Project.",
+    "source": "https://www.energy.gov/lm/trinity-site-worlds-first-nuclear-explosion",
+    "publisher": "US Department of Energy",
+    "category": "Documented experiment",
+    "aliases": [
+      "Trinity",
+      "Trinity test",
+      "First atomic bomb test"
+    ],
+    "familiarity": 1,
+    "topics": [
+      "events",
+      "experiments",
+      "explosions",
+      "government",
+      "history",
+      "military",
+      "research",
+      "science",
+      "technology",
+      "war"
+    ],
+    "depth": 1
+  },
+  {
+    "id": "hiroshima-bombing",
+    "name": "Atomic bombing of Hiroshima",
+    "classification": "event",
+    "statement": "The United States dropped an atomic bomb on Hiroshima on August 6, 1945.",
+    "explanation": "The NPS timeline records the mission without claiming that one event alone ended the war.",
+    "source": "https://www.nps.gov/articles/000/the-atomic-bombings-of-hiroshima-and-nagasaki.htm",
+    "publisher": "US National Park Service",
+    "category": "Historical event",
+    "aliases": [
+      "Hiroshima",
+      "Hiroshima bombing",
+      "Hiroshima atomic bomb"
+    ],
+    "familiarity": 0,
+    "topics": [
+      "disasters",
+      "events",
+      "explosions",
+      "government",
+      "history",
+      "international",
+      "military",
+      "political-events",
+      "technology",
+      "war"
+    ],
+    "depth": 0
+  },
+  {
+    "id": "nagasaki-bombing",
+    "name": "Atomic bombing of Nagasaki",
+    "classification": "event",
+    "statement": "The United States dropped an atomic bomb on Nagasaki on August 9, 1945.",
+    "explanation": "This was a separate bombing three days after Hiroshima.",
+    "source": "https://www.nps.gov/articles/000/the-atomic-bombings-of-hiroshima-and-nagasaki.htm",
+    "publisher": "US National Park Service",
+    "category": "Historical event",
+    "aliases": [
+      "Nagasaki",
+      "Nagasaki bombing",
+      "Nagasaki atomic bomb"
+    ],
+    "familiarity": 0,
+    "topics": [
+      "disasters",
+      "events",
+      "explosions",
+      "government",
+      "history",
+      "international",
+      "military",
+      "political-events",
+      "technology",
+      "war"
+    ],
+    "depth": 0
+  },
+  {
+    "id": "manhattan-project",
+    "name": "Manhattan Project",
+    "classification": "event",
+    "statement": "The Manhattan Project developed the first atomic weapons during World War II.",
+    "explanation": "Its sites included Los Alamos, Oak Ridge and Hanford; it was a real wartime program.",
+    "source": "https://home.nps.gov/mapr/learn/historyculture/timeline.htm",
+    "publisher": "US National Park Service",
+    "category": "Documented research program",
+    "aliases": [
+      "The Manhattan Project",
+      "Atomic bomb project"
+    ],
+    "familiarity": 1,
+    "topics": [
+      "covert",
+      "experiments",
+      "government",
+      "history",
+      "military",
+      "programs",
+      "research",
+      "science",
+      "technology",
+      "war"
+    ],
+    "depth": 1
+  },
+  {
+    "id": "smallpox-eradication",
+    "name": "Smallpox eradication",
+    "classification": "event",
+    "statement": "WHO declared smallpox eradicated in 1980.",
+    "explanation": "The declaration followed an international campaign; it did not mean every infectious disease had disappeared.",
+    "source": "https://www.who.int/emergencies/situations/smallpox",
+    "publisher": "World Health Organization",
+    "category": "Historical medical event",
+    "aliases": [
+      "Eradication of smallpox",
+      "Smallpox campaign"
+    ],
+    "familiarity": 1,
+    "topics": [
+      "events",
+      "government",
+      "history",
+      "international",
+      "medicine",
+      "research",
+      "science",
+      "social-change"
+    ],
+    "depth": 1
+  },
+  {
+    "id": "covid-pandemic",
+    "name": "COVID-19 pandemic",
+    "classification": "event",
+    "statement": "WHO characterized the COVID-19 outbreak as a pandemic on March 11, 2020.",
+    "explanation": "This date describes WHO's assessment of worldwide spread, not the date the virus first existed.",
+    "source": "https://www.who.int/news-room/speeches/item/who-director-general-s-opening-remarks-at-the-media-briefing-on-covid-19---11-march-2020",
+    "publisher": "World Health Organization",
+    "category": "Historical medical event",
+    "aliases": [
+      "COVID",
+      "Covid 19",
+      "Coronavirus pandemic",
+      "COVID pandemic",
+      "Coronavirus"
+    ],
+    "familiarity": 0,
+    "topics": [
+      "disasters",
+      "events",
+      "government",
+      "history",
+      "international",
+      "medicine",
+      "science"
+    ],
+    "depth": 0
+  },
+  {
+    "id": "indian-ocean-tsunami-2004",
+    "name": "2004 Indian Ocean tsunami",
+    "classification": "event",
+    "statement": "An earthquake off Sumatra generated the Indian Ocean tsunami on December 26, 2004.",
+    "explanation": "The waves devastated coasts around the Indian Ocean; no single final casualty total is used.",
+    "source": "https://www.noaa.gov/jetstream/2004tsu_max",
+    "publisher": "US National Oceanic and Atmospheric Administration",
+    "category": "Natural disaster",
+    "aliases": [
+      "Boxing Day tsunami",
+      "Indian Ocean tsunami",
+      "2004 tsunami",
+      "Sumatra tsunami",
+      "2004 Boxing Day tsunami"
+    ],
+    "familiarity": 0,
+    "topics": [
+      "disasters",
+      "earth",
+      "environment",
+      "events",
+      "history",
+      "international",
+      "natural-disasters",
+      "natural-events",
+      "nature",
+      "science"
+    ],
+    "depth": 0
+  },
+  {
+    "id": "haiti-earthquake-2010",
+    "name": "2010 Haiti earthquake",
+    "classification": "event",
+    "statement": "A magnitude 7.0 earthquake struck Haiti on January 12, 2010.",
+    "explanation": "The USGS reconnaissance report records extensive damage; exact death estimates are not used to grade this statement.",
+    "source": "https://pubs.usgs.gov/of/2010/1048/",
+    "publisher": "US Geological Survey",
+    "category": "Natural disaster",
+    "aliases": [
+      "Haiti earthquake",
+      "Haiti quake",
+      "2010 Haiti quake"
+    ],
+    "familiarity": 1,
+    "topics": [
+      "disasters",
+      "earth",
+      "environment",
+      "events",
+      "history",
+      "international",
+      "natural-disasters",
+      "natural-events",
+      "nature",
+      "science"
+    ],
+    "depth": 1
+  },
+  {
+    "id": "tohoku-earthquake-2011",
+    "name": "2011 Tohoku earthquake and tsunami",
+    "classification": "event",
+    "statement": "A powerful offshore earthquake struck northeastern Japan on March 11, 2011 and generated a tsunami.",
+    "explanation": "The earthquake and tsunami are distinct from the associated Fukushima nuclear accident.",
+    "source": "https://earthquake.usgs.gov/earthquakes/eventpage/official20110311054624120_30",
+    "publisher": "US Geological Survey",
+    "category": "Natural disaster",
+    "aliases": [
+      "Tohoku earthquake",
+      "Japan earthquake 2011",
+      "2011 Japan tsunami",
+      "Japan tsunami",
+      "Great East Japan Earthquake"
+    ],
+    "familiarity": 1,
+    "topics": [
+      "disasters",
+      "earth",
+      "environment",
+      "events",
+      "history",
+      "international",
+      "natural-disasters",
+      "natural-events",
+      "nature",
+      "science"
+    ],
+    "depth": 1
+  },
+  {
+    "id": "hurricane-katrina",
+    "name": "Hurricane Katrina",
+    "classification": "event",
+    "statement": "Hurricane Katrina struck the northern US Gulf Coast in August 2005.",
+    "explanation": "The National Weather Service documents the storm, landfalls and destructive surge.",
+    "source": "https://www.weather.gov/mob/katrina",
+    "publisher": "US National Weather Service",
+    "category": "Natural disaster",
+    "aliases": [
+      "Katrina",
+      "Katrina hurricane"
+    ],
+    "familiarity": 0,
+    "topics": [
+      "disasters",
+      "environment",
+      "events",
+      "history",
+      "natural-disasters",
+      "natural-events",
+      "nature",
+      "science",
+      "weather"
+    ],
+    "depth": 0
+  },
+  {
+    "id": "suez-crisis",
+    "name": "Suez Crisis",
+    "classification": "event",
+    "statement": "Egypt nationalized the Suez Canal Company in 1956, triggering an international crisis.",
+    "explanation": "The crisis involved Egypt, Britain, France, Israel and major-power diplomacy.",
+    "source": "https://history.state.gov/milestones/1953-1960/suez",
+    "publisher": "US Department of State, Office of the Historian",
+    "category": "Historical event",
+    "aliases": [
+      "Suez crisis 1956",
+      "1956 Suez Crisis",
+      "Suez war"
+    ],
+    "familiarity": 1,
+    "topics": [
+      "events",
+      "government",
+      "history",
+      "international",
+      "military",
+      "political-events",
+      "war"
+    ],
+    "depth": 1
+  },
+  {
+    "id": "panama-canal-opening",
+    "name": "Opening of the Panama Canal",
+    "classification": "event",
+    "statement": "The Panama Canal opened in 1914.",
+    "explanation": "The canal provided a shipping route across the isthmus between the Atlantic and Pacific oceans.",
+    "source": "https://history.state.gov/milestones/1899-1913/panama-canal",
+    "publisher": "US Department of State, Office of the Historian",
+    "category": "Historical event",
+    "aliases": [
+      "Panama Canal",
+      "Panama canal opening",
+      "Building the Panama Canal"
+    ],
+    "familiarity": 1,
+    "topics": [
+      "events",
+      "exploration",
+      "government",
+      "history",
+      "international",
+      "technology",
+      "transport"
+    ],
+    "depth": 1
+  },
+  {
+    "id": "indian-independence",
+    "name": "Indian independence",
+    "classification": "event",
+    "statement": "India became independent from British rule in August 1947.",
+    "explanation": "Independence accompanied partition; the transition was not free of violence.",
+    "source": "https://history.state.gov/countries/india",
+    "publisher": "US Department of State, Office of the Historian",
+    "category": "Historical event",
+    "aliases": [
+      "India independence",
+      "Independence of India",
+      "India independence 1947"
+    ],
+    "familiarity": 1,
+    "topics": [
+      "events",
+      "government",
+      "history",
+      "international",
+      "political-events",
+      "social-change"
+    ],
+    "depth": 1
+  },
+  {
+    "id": "end-apartheid",
+    "name": "End of apartheid",
+    "classification": "event",
+    "statement": "The dismantling of apartheid led to a democratic government in South Africa in 1994.",
+    "explanation": "The transition occurred through a series of steps in the early 1990s rather than one overnight change.",
+    "source": "https://history.state.gov/milestones/1989-1992/apartheid",
+    "publisher": "US Department of State, Office of the Historian",
+    "category": "Historical event",
+    "aliases": [
+      "Apartheid",
+      "Apartheid ends",
+      "Fall of apartheid",
+      "End of South African apartheid"
+    ],
+    "familiarity": 0,
+    "topics": [
+      "abuse",
+      "events",
+      "government",
+      "history",
+      "international",
+      "political-events",
+      "social-change"
+    ],
+    "depth": 0
+  },
+  {
+    "id": "jfk-assassination",
+    "name": "Assassination of John F. Kennedy",
+    "classification": "event",
+    "statement": "President John F. Kennedy was assassinated in Dallas on November 22, 1963.",
+    "explanation": "The event is documented. This statement does not decide competing claims about additional conspirators.",
+    "source": "https://www.archives.gov/research/jfk/select-committee-report/findings.html",
+    "publisher": "US National Archives",
+    "category": "Historical event",
+    "aliases": [
+      "JFK assassination",
+      "Kennedy assassination",
+      "JFK",
+      "John F Kennedy assassination",
+      "JFK assasination",
+      "Kennedy assasination"
+    ],
+    "familiarity": 0,
+    "topics": [
+      "crime",
+      "criminal-cases",
+      "events",
+      "government",
+      "history",
+      "investigations",
+      "modern-history",
+      "political-events"
+    ],
+    "depth": 0
+  },
+  {
+    "id": "tiananmen-1989",
+    "name": "Tiananmen Square crackdown",
+    "classification": "event",
+    "statement": "Chinese authorities violently suppressed the Beijing demonstrations in June 1989.",
+    "explanation": "The historical account records the crackdown; no disputed precise casualty count is used.",
+    "source": "https://history.state.gov/milestones/1989-1992/tiananmen-square",
+    "publisher": "US Department of State, Office of the Historian",
+    "category": "Historical event",
+    "aliases": [
+      "Tiananmen Square",
+      "Tiananmen massacre",
+      "Tiananmen Square massacre",
+      "Tiananmen 1989",
+      "Tianamen Square"
+    ],
+    "familiarity": 1,
+    "topics": [
+      "abuse",
+      "disasters",
+      "events",
+      "government",
+      "history",
+      "international",
+      "political-events",
+      "social-change"
+    ],
+    "depth": 1
+  },
+  {
+    "id": "wright-first-flight",
+    "name": "Wright brothers first flight",
+    "classification": "event",
+    "statement": "The Wright brothers made powered flights in North Carolina on December 17, 1903.",
+    "explanation": "The Smithsonian records the 1903 Flyer and the short flights that launched the aerial age.",
+    "source": "https://airandspace.si.edu/collection-objects/1903-wright-flyer/nasm_A19610048000",
+    "publisher": "Smithsonian National Air and Space Museum",
+    "category": "Historical event",
+    "aliases": [
+      "Wright brothers",
+      "First powered flight",
+      "Kitty Hawk flight",
+      "Wright flyer",
+      "First airplane flight"
+    ],
+    "familiarity": 0,
+    "topics": [
+      "events",
+      "experiments",
+      "exploration",
+      "history",
+      "research",
+      "science",
+      "technology",
+      "transport"
+    ],
+    "depth": 0
+  },
+  {
+    "id": "boston-tea-party",
+    "name": "Boston Tea Party",
+    "classification": "event",
+    "statement": "Protesters dumped tea into Boston Harbor on December 16, 1773.",
+    "explanation": "The National Park Service timeline documents the protest against British policies.",
+    "source": "https://home.nps.gov/articles/000/boston-tea-party-in-real-time.htm",
+    "publisher": "US National Park Service",
+    "category": "Historical event",
+    "aliases": [
+      "Tea Party 1773",
+      "Boston tea protest"
+    ],
+    "familiarity": 1,
+    "topics": [
+      "events",
+      "government",
+      "history",
+      "international",
+      "political-events",
+      "social-change"
+    ],
+    "depth": 1
+  },
+  {
+    "id": "march-on-washington",
+    "name": "March on Washington",
+    "classification": "event",
+    "statement": "The March on Washington for Jobs and Freedom took place on August 28, 1963.",
+    "explanation": "The demonstration brought a large crowd to Washington, DC to demand civil and economic rights.",
+    "source": "https://www.nps.gov/articles/march-on-washington.htm/index.htm",
+    "publisher": "US National Park Service",
+    "category": "Historical event",
+    "aliases": [
+      "March on Washington 1963",
+      "March on Washington for Jobs and Freedom",
+      "I Have a Dream speech"
+    ],
+    "familiarity": 1,
+    "topics": [
+      "events",
+      "government",
+      "history",
+      "international",
+      "political-events",
+      "social-change"
+    ],
+    "depth": 1
+  },
+  {
+    "id": "mount-st-helens-1980",
+    "name": "1980 Mount St. Helens eruption",
+    "classification": "event",
+    "statement": "Mount St. Helens erupted catastrophically on May 18, 1980.",
+    "explanation": "A collapsing flank, lateral blast and ash eruption were part of the documented sequence.",
+    "source": "https://pubs.usgs.gov/gip/msh/climactic.html",
+    "publisher": "US Geological Survey",
+    "category": "Natural disaster",
+    "aliases": [
+      "Mount St Helens",
+      "Mount Saint Helens",
+      "Mt St Helens",
+      "St Helens eruption"
+    ],
+    "familiarity": 1,
+    "topics": [
+      "disasters",
+      "earth",
+      "environment",
+      "events",
+      "explosions",
+      "history",
+      "natural-disasters",
+      "natural-events",
+      "nature",
+      "science"
+    ],
+    "depth": 1
+  },
+  {
+    "id": "exxon-valdez-spill",
+    "name": "Exxon Valdez oil spill",
+    "classification": "event",
+    "statement": "The tanker Exxon Valdez ran aground in Alaska on March 24, 1989 and spilled oil.",
+    "explanation": "NOAA records the grounding at Bligh Reef in Prince William Sound.",
+    "source": "https://incidentnews.noaa.gov/incident/6683",
+    "publisher": "US National Oceanic and Atmospheric Administration",
+    "category": "Industrial disaster",
+    "aliases": [
+      "Exxon Valdez",
+      "Exxon oil spill",
+      "Valdez oil spill"
+    ],
+    "familiarity": 1,
+    "topics": [
+      "disasters",
+      "environment",
+      "events",
+      "history",
+      "industrial-disasters",
+      "science",
+      "technology",
+      "transport",
+      "transport-disasters"
+    ],
+    "depth": 1
+  },
+  {
+    "id": "three-mile-island",
+    "name": "Three Mile Island accident",
+    "classification": "event",
+    "statement": "Three Mile Island Unit 2 partially melted down in Pennsylvania in March 1979.",
+    "explanation": "The NRC describes the accident and changes to regulation, training and emergency planning.",
+    "source": "https://www.nrc.gov/regulations-legislation/fact-sheets-brochures/backgrounder-on-the-three-mile-island-accident",
+    "publisher": "US Nuclear Regulatory Commission",
+    "category": "Industrial disaster",
+    "aliases": [
+      "Three Mile Island",
+      "3 Mile Island",
+      "TMI accident",
+      "Three Mile Island meltdown"
+    ],
+    "familiarity": 1,
+    "topics": [
+      "disasters",
+      "environment",
+      "events",
+      "government",
+      "history",
+      "industrial-disasters",
+      "science",
+      "technology"
+    ],
+    "depth": 1
+  },
+  {
+    "id": "paris-agreement",
+    "name": "Paris Agreement",
+    "classification": "event",
+    "statement": "The Paris Agreement on climate change was adopted in December 2015.",
+    "explanation": "Adoption in 2015 and entry into force in 2016 were separate legal steps.",
+    "source": "https://unfccc.int/process-and-meetings/the-paris-agreement",
+    "publisher": "UN Framework Convention on Climate Change",
+    "category": "Historical agreement",
+    "aliases": [
+      "Paris climate agreement",
+      "Paris climate accord",
+      "COP21",
+      "Paris Accord"
+    ],
+    "familiarity": 1,
+    "topics": [
+      "documents",
+      "environment",
+      "events",
+      "government",
+      "history",
+      "international",
+      "political-events",
+      "science",
+      "social-change"
+    ],
+    "depth": 1
+  },
+  {
+    "id": "montreal-protocol",
+    "name": "Montreal Protocol",
+    "classification": "event",
+    "statement": "The Montreal Protocol on ozone-depleting substances was adopted in September 1987.",
+    "explanation": "It regulates substances that damage the ozone layer; it is a different treaty from the Paris climate agreement.",
+    "source": "https://www.unep.org/ozonaction/who-we-are/about-montreal-protocol",
+    "publisher": "UN Environment Programme",
+    "category": "Historical agreement",
+    "aliases": [
+      "Montreal ozone treaty",
+      "Ozone treaty"
+    ],
+    "familiarity": 2,
+    "topics": [
+      "documents",
+      "environment",
+      "events",
+      "government",
+      "history",
+      "international",
+      "political-events",
+      "science",
+      "social-change"
+    ],
+    "depth": 2
+  },
+  {
+    "id": "area-51",
+    "name": "Area 51",
+    "classification": "event",
+    "statement": "Area 51 was used to test the CIA's U-2 reconnaissance aircraft in the 1950s.",
+    "explanation": "The aircraft-testing role does not establish claims about captured extraterrestrial craft.",
+    "source": "https://www.cia.gov/stories/story/area-51-and-the-accidental-test-flight/",
+    "publisher": "US Central Intelligence Agency",
+    "category": "Documented test site",
+    "aliases": [
+      "Groom Lake",
+      "Watertown test site"
+    ],
+    "familiarity": 0,
+    "topics": [
+      "covert",
+      "government",
+      "history",
+      "military",
+      "programs",
+      "research",
+      "science",
+      "surveillance",
+      "technology",
+      "unusual-history"
+    ],
+    "depth": 0
+  },
+  {
+    "id": "illuminati",
+    "name": "Bavarian Illuminati",
+    "classification": "event",
+    "statement": "Adam Weishaupt founded the society later known as the Illuminati in Ingolstadt in 1776.",
+    "explanation": "The historical society existed. Its founding is not evidence that a hidden group controls modern world events.",
+    "source": "https://www.lmu.de/en/about-lmu/lmu-at-a-glance/history/1776/",
+    "publisher": "Ludwig Maximilian University of Munich",
+    "category": "Historical society",
+    "aliases": [
+      "Illuminati",
+      "The Illuminati",
+      "Order of the Illuminati"
+    ],
+    "familiarity": 0,
+    "topics": [
+      "documents",
+      "history",
+      "social-change",
+      "unusual-history"
+    ],
+    "depth": 0
+  },
+  {
+    "id": "freemasons",
+    "name": "Freemasonry",
+    "classification": "event",
+    "statement": "Four London lodges formed a Grand Lodge in 1717.",
+    "explanation": "The United Grand Lodge of England records this history; the statement does not endorse world-control allegations.",
+    "source": "https://www.ugle.org.uk/discover-freemasonry/history-freemasonry",
+    "publisher": "United Grand Lodge of England",
+    "category": "Historical society",
+    "aliases": [
+      "Freemasons",
+      "Masons",
+      "Masonic lodges"
+    ],
+    "familiarity": 0,
+    "topics": [
+      "documents",
+      "history",
+      "social-change",
+      "unusual-history"
+    ],
+    "depth": 0
+  },
+  {
+    "id": "bilderberg",
+    "name": "Bilderberg Meeting",
+    "classification": "event",
+    "statement": "The first Bilderberg Meeting took place in the Netherlands in 1954.",
+    "explanation": "The organizer records the meeting. Private discussions alone do not establish a secret world-government claim.",
+    "source": "https://bilderbergmeetings.org/background/brief-history",
+    "publisher": "Bilderberg Meetings",
+    "category": "Documented meeting",
+    "aliases": [
+      "Bilderberg",
+      "Bilderberg Group",
+      "Bilderberg conference"
+    ],
+    "familiarity": 1,
+    "topics": [
+      "history",
+      "international",
+      "political-events",
+      "unusual-history"
+    ],
+    "depth": 1
+  },
+  {
+    "id": "wtc-controlled-demolition",
+    "name": "9/11 controlled-demolition claim",
+    "classification": "claim",
+    "statement": "The Twin Towers were brought down by secretly planted demolition explosives on September 11, 2001.",
+    "explanation": "NIST found no corroborating evidence for that hypothesis and documented an impact-and-fire collapse sequence.",
+    "source": "https://www.nist.gov/world-trade-center-investigation/study-faqs/wtc-towers-investigation",
+    "publisher": "US National Institute of Standards and Technology",
+    "category": "Unsupported demolition claim",
+    "aliases": [
+      "9/11 controlled demolition",
+      "Twin Towers demolition theory",
+      "Controlled demolition theory"
+    ],
+    "familiarity": 0,
+    "topics": [
+      "conspiracy",
+      "extraordinary-technology",
+      "government-claims",
+      "history",
+      "modern-history",
+      "science-claims",
+      "unusual-history"
+    ],
+    "depth": 0
+  },
+  {
+    "id": "wtc7-demolition",
+    "name": "WTC 7 demolition claim",
+    "classification": "claim",
+    "statement": "World Trade Center 7 was brought down by a concealed demolition blast.",
+    "explanation": "NIST investigated the blast hypothesis, found no supporting blast evidence and described fire-induced structural failure.",
+    "source": "https://www.nist.gov/world-trade-center-investigation/study-faqs/wtc-7-investigation",
+    "publisher": "US National Institute of Standards and Technology",
+    "category": "Unsupported demolition claim",
+    "aliases": [
+      "WTC7 demolition",
+      "Building 7 demolition",
+      "World Trade Center 7 conspiracy",
+      "WTC 7 conspiracy"
+    ],
+    "familiarity": 1,
+    "topics": [
+      "conspiracy",
+      "extraordinary-technology",
+      "government-claims",
+      "history",
+      "modern-history",
+      "science-claims",
+      "unusual-history"
+    ],
+    "depth": 1
+  },
+  {
+    "id": "mmr-autism-claim",
+    "name": "MMR-autism claim",
+    "classification": "claim",
+    "statement": "The MMR vaccine causes autism.",
+    "explanation": "Large, high-quality studies and WHO safety reviews do not support a causal link between vaccines and autism.",
+    "source": "https://www.who.int/news/item/11-12-2025-who-expert-group-s-new-analysis-reaffirms-there-is-no-link-between-vaccines-and-autism",
+    "publisher": "World Health Organization",
+    "category": "Unsupported medical claim",
+    "aliases": [
+      "Vaccines cause autism",
+      "Vaccine autism",
+      "MMR causes autism",
+      "Autism vaccine conspiracy",
+      "MMR autism"
+    ],
+    "familiarity": 0,
+    "topics": [
+      "conspiracy",
+      "medicine",
+      "science",
+      "science-claims",
+      "technology",
+      "unusual-history"
+    ],
+    "depth": 0
+  },
+  {
+    "id": "protocols-forgery-claim",
+    "name": "Protocols authenticity claim",
+    "classification": "claim",
+    "statement": "The Protocols of the Elders of Zion are an authentic record of a Jewish plan to control the world.",
+    "explanation": "The museum traces this antisemitic text's fabrication and plagiarism. It is a forgery, not evidence against Jewish people.",
+    "source": "https://encyclopedia.ushmm.org/content/en/article/protocols-of-the-elders-of-zion",
+    "publisher": "US Holocaust Memorial Museum",
+    "category": "Antisemitic forgery claim",
+    "aliases": [
+      "Protocols of the Elders of Zion",
+      "Protocols of Zion",
+      "Elders of Zion conspiracy"
+    ],
+    "familiarity": 2,
+    "topics": [
+      "conspiracy",
+      "documents",
+      "government-claims",
+      "hidden-worlds",
+      "history",
+      "unusual-history"
+    ],
+    "depth": 2
+  },
+  {
+    "id": "great-wall-moon-myth",
+    "name": "Great Wall visible-from-Moon myth",
+    "classification": "claim",
+    "statement": "The Great Wall of China is visible to the unaided eye from the Moon.",
+    "explanation": "NASA identifies this as a myth; magnified photographs from low Earth orbit are a different question.",
+    "source": "https://www.nasa.gov/image-article/great-wall/",
+    "publisher": "NASA",
+    "category": "Unsupported visibility claim",
+    "aliases": [
+      "Great Wall from Moon",
+      "Great Wall visible from space",
+      "Great Wall moon myth"
+    ],
+    "familiarity": 0,
+    "topics": [
+      "astronomy",
+      "conspiracy",
+      "science",
+      "science-claims",
+      "sky",
+      "space",
+      "space-claims",
+      "technology",
+      "unusual-history"
+    ],
+    "depth": 0
+  },
+  {
+    "id": "pentagon-confirmed-aliens",
+    "name": "Pentagon alien-confirmation claim",
+    "classification": "claim",
+    "statement": "The Pentagon's 2024 historical UAP review confirmed that alien spacecraft had visited Earth.",
+    "explanation": "AARO found no evidence that reviewed sightings had been confirmed as extraterrestrial technology. An unidentified sighting is not itself an alien identification.",
+    "source": "https://www.aaro.mil/Portals/136/PDFs/AARO_Historical_Record_Report_Vol_1_2024.pdf",
+    "publisher": "US Department of Defense, All-domain Anomaly Resolution Office",
+    "category": "Unsupported alien-confirmation claim",
+    "aliases": [
+      "Pentagon confirmed aliens",
+      "Government confirmed aliens",
+      "UFO proof",
+      "UAP alien proof"
+    ],
+    "familiarity": 1,
+    "topics": [
+      "aliens",
+      "astronomy",
+      "conspiracy",
+      "government-claims",
+      "science",
+      "sky",
+      "space",
+      "space-claims",
+      "technology",
+      "unusual-history"
+    ],
+    "depth": 1
   }
 ];
 export const questions = [
@@ -4049,7 +5386,7 @@ export const questions = [
     "band": 0,
     "family": "legacy-sky",
     "topic": "Archive transmission",
-    "poolId": "d85de4cec4184185",
+    "poolId": "3c4c82b0027a9dda",
     "prompt": "Name a celestial object, space mission, natural sky phenomenon, or story about the sky.",
     "hint": "Think broadly: familiar names are valid too. More unusual answers travel farther. The archive contains the available subjects.",
     "answers": [
@@ -4067,6 +5404,10 @@ export const questions = [
       },
       {
         "id": "earth",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
         "tier": 0
       },
       {
@@ -4170,12 +5511,16 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "perseverance",
         "tier": 0
       },
       {
         "id": "project-blue-book",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "challenger",
@@ -4227,7 +5572,7 @@ export const questions = [
       },
       {
         "id": "kuiper-belt",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "new-horizons",
@@ -4251,7 +5596,7 @@ export const questions = [
       },
       {
         "id": "hollow-moon",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "2000-alignment-apocalypse",
@@ -4284,16 +5629,24 @@ export const questions = [
     "band": 0,
     "family": "legacy-secrets",
     "topic": "Archive transmission",
-    "poolId": "d060cb757cdb4265",
+    "poolId": "ee73f1ccc24b63a1",
     "prompt": "Name a government project, intelligence operation, or research study.",
     "hint": "Think broadly: familiar names are valid too. More unusual answers travel farther. The archive contains the available subjects.",
     "answers": [
+      {
+        "id": "area-51",
+        "tier": 0
+      },
       {
         "id": "hubble",
         "tier": 0
       },
       {
         "id": "iss",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -4306,6 +5659,10 @@ export const questions = [
       },
       {
         "id": "james-webb",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
         "tier": 0
       },
       {
@@ -4325,7 +5682,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "smallpox-eradication",
+        "tier": 0
+      },
+      {
         "id": "sputnik-1",
+        "tier": 0
+      },
+      {
+        "id": "trinity-test",
         "tier": 0
       },
       {
@@ -4350,15 +5715,15 @@ export const questions = [
       },
       {
         "id": "ingenuity",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "juno",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "new-horizons",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "aquatone",
@@ -4382,7 +5747,7 @@ export const questions = [
       },
       {
         "id": "rosetta",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "stargate",
@@ -4502,12 +5867,16 @@ export const questions = [
     "band": 1,
     "family": "legacy-case-files",
     "topic": "Archive transmission",
-    "poolId": "a4bcbf610ef0dc30",
+    "poolId": "e5a3541d99cd5c3d",
     "prompt": "Name a serial killer or a famous criminal case.",
     "hint": "Think broadly: familiar names are valid too. More unusual answers travel farther. The archive contains the available subjects.",
     "answers": [
       {
         "id": "al-capone",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
         "tier": 0
       },
       {
@@ -4548,7 +5917,7 @@ export const questions = [
       },
       {
         "id": "salem-witch-trials",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "unabomber",
@@ -4589,10 +5958,22 @@ export const questions = [
     "band": 1,
     "family": "legacy-sudden-disasters",
     "topic": "Archive transmission",
-    "poolId": "eb30778dfb29968d",
+    "poolId": "62367a4c94e0ae5d",
     "prompt": "Name a major disaster or a striking natural event.",
     "hint": "Think broadly: familiar names are valid too. More unusual answers travel farther. The archive contains the available subjects.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
       {
         "id": "aurora",
         "tier": 0
@@ -4602,11 +5983,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "covid-pandemic",
+        "tier": 0
+      },
+      {
         "id": "pompeii",
         "tier": 0
       },
       {
         "id": "hindenburg",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -4630,6 +6023,22 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "deepwater-horizon",
         "tier": 0
       },
@@ -4638,27 +6047,39 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "exxon-valdez-spill",
+        "tier": 0
+      },
+      {
         "id": "fukushima",
         "tier": 0
       },
       {
         "id": "great-chicago-fire",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "great-fire-london",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "molasses-flood",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "halifax",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "challenger",
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
         "tier": 1
       },
       {
@@ -4675,11 +6096,11 @@ export const questions = [
       },
       {
         "id": "krakatau",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "saturn-hexagon",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lusitania",
@@ -4691,7 +6112,7 @@ export const questions = [
       },
       {
         "id": "great-smog-london",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "lake-nyos",
@@ -4712,10 +6133,18 @@ export const questions = [
     "band": 1,
     "family": "legacy-earth-claims",
     "topic": "Archive transmission",
-    "poolId": "9aa37bb0ea0fcedf",
+    "poolId": "2c50b02060b1b978",
     "prompt": "Name a subject involving nature or an extraordinary theory about the world.",
     "hint": "Think broadly: familiar names are valid too. More unusual answers travel farther. The archive contains the available subjects.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
       {
         "id": "aurora",
         "tier": 0
@@ -4741,6 +6170,14 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
+        "tier": 0
+      },
+      {
         "id": "jupiter",
         "tier": 0
       },
@@ -4754,6 +6191,10 @@ export const questions = [
       },
       {
         "id": "milky-way",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -4790,6 +6231,18 @@ export const questions = [
       },
       {
         "id": "san-francisco-1906",
+        "tier": 0
+      },
+      {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
         "tier": 0
       },
       {
@@ -4834,11 +6287,15 @@ export const questions = [
       },
       {
         "id": "neptune",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "ozone-layer",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 1
       },
       {
         "id": "solar-warming-hoax",
@@ -4858,6 +6315,10 @@ export const questions = [
       },
       {
         "id": "disney-cryonics",
+        "tier": 1
+      },
+      {
+        "id": "wtc7-demolition",
         "tier": 1
       },
       {
@@ -4886,11 +6347,11 @@ export const questions = [
       },
       {
         "id": "kuiper-belt",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "magnetic-pole-flip-apocalypse",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "nibiru",
@@ -4898,6 +6359,10 @@ export const questions = [
       },
       {
         "id": "philadelphia-experiment",
+        "tier": 2
+      },
+      {
+        "id": "protocols-forgery-claim",
         "tier": 2
       },
       {
@@ -4914,7 +6379,7 @@ export const questions = [
       },
       {
         "id": "hollow-moon",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "lake-nyos",
@@ -4947,7 +6412,7 @@ export const questions = [
     "band": 2,
     "family": "legacy-alien-appearances",
     "topic": "Archive transmission",
-    "poolId": "156c16859699f470",
+    "poolId": "17a795249cf248a2",
     "prompt": "Name a space subject or a story about alleged alien visitors.",
     "hint": "Think broadly: familiar names are valid too. More unusual answers travel farther. The archive contains the available subjects.",
     "answers": [
@@ -4961,6 +6426,10 @@ export const questions = [
       },
       {
         "id": "earth",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
         "tier": 0
       },
       {
@@ -5052,6 +6521,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "perseverance",
         "tier": 0
       },
@@ -5065,7 +6538,7 @@ export const questions = [
       },
       {
         "id": "sputnik-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "tunguska",
@@ -5166,16 +6639,24 @@ export const questions = [
     "band": 2,
     "family": "legacy-classified-and-declassified",
     "topic": "Archive transmission",
-    "poolId": "d060cb757cdb4265",
+    "poolId": "ee73f1ccc24b63a1",
     "prompt": "Name a government program or a research project with a public record.",
     "hint": "Think broadly: familiar names are valid too. More unusual answers travel farther. The archive contains the available subjects.",
     "answers": [
+      {
+        "id": "area-51",
+        "tier": 0
+      },
       {
         "id": "hubble",
         "tier": 0
       },
       {
         "id": "iss",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -5188,6 +6669,10 @@ export const questions = [
       },
       {
         "id": "james-webb",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
         "tier": 0
       },
       {
@@ -5207,7 +6692,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "smallpox-eradication",
+        "tier": 0
+      },
+      {
         "id": "sputnik-1",
+        "tier": 0
+      },
+      {
+        "id": "trinity-test",
         "tier": 0
       },
       {
@@ -5232,15 +6725,15 @@ export const questions = [
       },
       {
         "id": "juno",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "new-horizons",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "aquatone",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "viking-1",
@@ -5264,7 +6757,7 @@ export const questions = [
       },
       {
         "id": "rosetta",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "stargate",
@@ -5301,12 +6794,16 @@ export const questions = [
     "band": 2,
     "family": "legacy-signals-and-legends",
     "topic": "Archive transmission",
-    "poolId": "b71f709365dd35cc",
+    "poolId": "5c2c5fa974565218",
     "prompt": "Name a subject involving the sky, space, or government research.",
     "hint": "Think broadly: familiar names are valid too. More unusual answers travel farther. The archive contains the available subjects.",
     "answers": [
       {
         "id": "apollo",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
         "tier": 0
       },
       {
@@ -5319,6 +6816,10 @@ export const questions = [
       },
       {
         "id": "earth",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
         "tier": 0
       },
       {
@@ -5410,6 +6911,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mars-hoax",
         "tier": 0
       },
@@ -5427,6 +6932,10 @@ export const questions = [
       },
       {
         "id": "ozone-layer",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
         "tier": 0
       },
       {
@@ -5455,11 +6964,11 @@ export const questions = [
       },
       {
         "id": "voyager-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-2",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "carrington",
@@ -5523,7 +7032,7 @@ export const questions = [
       },
       {
         "id": "corona",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "hollow-moon",
@@ -5555,7 +7064,7 @@ export const questions = [
       },
       {
         "id": "stargate",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "acoustikitty",
@@ -5592,16 +7101,28 @@ export const questions = [
     "band": 3,
     "family": "legacy-space-and-natural-science",
     "topic": "Archive transmission",
-    "poolId": "476fa1fc3d3f42f5",
+    "poolId": "825c684acca3ba16",
     "prompt": "Name something studied in space or the natural sciences.",
     "hint": "Think broadly: familiar names are valid too. More unusual answers travel farther. The archive contains the available subjects.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
       {
         "id": "apollo",
         "tier": 0
       },
       {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
         "id": "aurora",
+        "tier": 0
+      },
+      {
+        "id": "covid-pandemic",
         "tier": 0
       },
       {
@@ -5613,7 +7134,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
         "id": "hubble",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -5634,6 +7163,10 @@ export const questions = [
       },
       {
         "id": "milky-way",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -5669,11 +7202,27 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wright-first-flight",
+        "tier": 0
+      },
+      {
         "id": "san-francisco-1906",
         "tier": 0
       },
       {
         "id": "spanish-flu",
+        "tier": 0
+      },
+      {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
         "tier": 0
       },
       {
@@ -5701,6 +7250,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "exxon-valdez-spill",
+        "tier": 0
+      },
+      {
         "id": "halleys-comet",
         "tier": 0
       },
@@ -5714,6 +7267,10 @@ export const questions = [
       },
       {
         "id": "magnetic-vaccines",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
         "tier": 0
       },
       {
@@ -5741,11 +7298,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "paris-agreement",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "perseverance",
         "tier": 0
       },
       {
         "id": "project-blue-book",
+        "tier": 0
+      },
+      {
+        "id": "smallpox-eradication",
         "tier": 0
       },
       {
@@ -5761,28 +7330,36 @@ export const questions = [
         "tier": 0
       },
       {
-        "id": "tunguska",
+        "id": "three-mile-island",
         "tier": 0
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
+      },
+      {
+        "id": "tunguska",
+        "tier": 1
       },
       {
         "id": "tuskegee",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "uranus",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "vaccine-microchips",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-2",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "disney-cryonics",
@@ -5833,28 +7410,32 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "montreal-protocol",
+        "tier": 1
+      },
+      {
         "id": "new-horizons",
         "tier": 1
       },
       {
         "id": "nibiru",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "aquatone",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "saturn-hexagon",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "earthquake-prediction-coverup",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "columbia",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "viking-1",
@@ -5886,15 +7467,15 @@ export const questions = [
       },
       {
         "id": "northwoods",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "osiris-rex",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "stormfury",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "rosetta",
@@ -5914,7 +7495,7 @@ export const questions = [
       },
       {
         "id": "operation-gold",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "azorian",
@@ -5939,12 +7520,16 @@ export const questions = [
     "band": 3,
     "family": "legacy-forensic-trail",
     "topic": "Archive transmission",
-    "poolId": "a4bcbf610ef0dc30",
+    "poolId": "e5a3541d99cd5c3d",
     "prompt": "Name a criminal case or a subject involving forensic evidence.",
     "hint": "Think broadly: familiar names are valid too. More unusual answers travel farther. The archive contains the available subjects.",
     "answers": [
       {
         "id": "al-capone",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
         "tier": 0
       },
       {
@@ -5985,7 +7570,7 @@ export const questions = [
       },
       {
         "id": "salem-witch-trials",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "unabomber",
@@ -6026,16 +7611,36 @@ export const questions = [
     "band": 3,
     "family": "legacy-impossible-machines",
     "topic": "Archive transmission",
-    "poolId": "672a2128c3b21259",
+    "poolId": "8bfe72675f406ae3",
     "prompt": "Name a technology-related subject or a claim about an extraordinary machine.",
     "hint": "Think broadly: familiar names are valid too. More unusual answers travel farther. The archive contains the available subjects.",
     "answers": [
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
       {
         "id": "apollo",
         "tier": 0
       },
       {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
         "id": "chernobyl",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
         "tier": 0
       },
       {
@@ -6051,6 +7656,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mmr-autism-claim",
+        "tier": 0
+      },
+      {
         "id": "moon-landing-hoax",
         "tier": 0
       },
@@ -6060,6 +7669,10 @@ export const questions = [
       },
       {
         "id": "titanic",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -6084,6 +7697,10 @@ export const questions = [
       },
       {
         "id": "rader",
+        "tier": 0
+      },
+      {
+        "id": "exxon-valdez-spill",
         "tier": 0
       },
       {
@@ -6115,11 +7732,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mars-hoax",
         "tier": 0
       },
       {
         "id": "mrna-dna-rewrite",
+        "tier": 0
+      },
+      {
+        "id": "panama-canal-opening",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
         "tier": 0
       },
       {
@@ -6135,24 +7764,36 @@ export const questions = [
         "tier": 0
       },
       {
-        "id": "vaccine-microchips",
+        "id": "three-mile-island",
         "tier": 0
+      },
+      {
+        "id": "trinity-test",
+        "tier": 0
+      },
+      {
+        "id": "vaccine-microchips",
+        "tier": 1
       },
       {
         "id": "voyager-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-2",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "wtc7-demolition",
+        "tier": 1
       },
       {
         "id": "bhopal",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "dart",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "denver-airport-lizard-base",
@@ -6196,15 +7837,15 @@ export const questions = [
       },
       {
         "id": "viking-1",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "comet-elenin-doomsday",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "corona",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "hollow-moon",
@@ -6228,7 +7869,7 @@ export const questions = [
       },
       {
         "id": "acoustikitty",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "mars-doorway",
@@ -6261,16 +7902,24 @@ export const questions = [
     "band": 4,
     "family": "legacy-strange-research-records",
     "topic": "Archive transmission",
-    "poolId": "d060cb757cdb4265",
+    "poolId": "ee73f1ccc24b63a1",
     "prompt": "Name a research program or an unusual government project.",
     "hint": "Think broadly: familiar names are valid too. More unusual answers travel farther. The archive contains the available subjects.",
     "answers": [
+      {
+        "id": "area-51",
+        "tier": 0
+      },
       {
         "id": "hubble",
         "tier": 0
       },
       {
         "id": "iss",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -6283,6 +7932,10 @@ export const questions = [
       },
       {
         "id": "james-webb",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
         "tier": 0
       },
       {
@@ -6302,7 +7955,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "smallpox-eradication",
+        "tier": 0
+      },
+      {
         "id": "sputnik-1",
+        "tier": 0
+      },
+      {
+        "id": "trinity-test",
         "tier": 0
       },
       {
@@ -6327,15 +7988,15 @@ export const questions = [
       },
       {
         "id": "ingenuity",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "juno",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "new-horizons",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "aquatone",
@@ -6359,7 +8020,7 @@ export const questions = [
       },
       {
         "id": "rosetta",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "stargate",
@@ -6396,12 +8057,28 @@ export const questions = [
     "band": 4,
     "family": "legacy-read-the-image",
     "topic": "Archive transmission",
-    "poolId": "b2e94c415175950e",
+    "poolId": "a91c370223cf77ae",
     "prompt": "Name a space-related subject, conspiracy story, or remarkable technology.",
     "hint": "Think broadly: familiar names are valid too. More unusual answers travel farther. The archive contains the available subjects.",
     "answers": [
       {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
+      {
         "id": "apollo",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
         "tier": 0
       },
       {
@@ -6426,6 +8103,10 @@ export const questions = [
       },
       {
         "id": "flat-earth",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
         "tier": 0
       },
       {
@@ -6454,6 +8135,10 @@ export const questions = [
       },
       {
         "id": "milky-way",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -6493,6 +8178,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wright-first-flight",
+        "tier": 0
+      },
+      {
         "id": "2012-calendar-apocalypse",
         "tier": 0
       },
@@ -6518,6 +8207,10 @@ export const questions = [
       },
       {
         "id": "rader",
+        "tier": 0
+      },
+      {
+        "id": "exxon-valdez-spill",
         "tier": 0
       },
       {
@@ -6553,6 +8246,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mars-hoax",
         "tier": 0
       },
@@ -6562,6 +8259,14 @@ export const questions = [
       },
       {
         "id": "neptune",
+        "tier": 0
+      },
+      {
+        "id": "panama-canal-opening",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
         "tier": 0
       },
       {
@@ -6585,16 +8290,24 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
+      },
+      {
         "id": "tunguska",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "uranus",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "vaccine-microchips",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-1",
@@ -6606,6 +8319,10 @@ export const questions = [
       },
       {
         "id": "disney-cryonics",
+        "tier": 1
+      },
+      {
+        "id": "wtc7-demolition",
         "tier": 1
       },
       {
@@ -6662,15 +8379,19 @@ export const questions = [
       },
       {
         "id": "philadelphia-experiment",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "aquatone",
-        "tier": 1
+        "tier": 2
+      },
+      {
+        "id": "protocols-forgery-claim",
+        "tier": 2
       },
       {
         "id": "saturn-hexagon",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "earthquake-prediction-coverup",
@@ -6706,11 +8427,11 @@ export const questions = [
       },
       {
         "id": "2000-alignment-apocalypse",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "osiris-rex",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "rosetta",
@@ -6734,7 +8455,7 @@ export const questions = [
       },
       {
         "id": "operation-gold",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "azorian",
@@ -6759,7 +8480,7 @@ export const questions = [
     "band": 4,
     "family": "legacy-official-abuse-records",
     "topic": "Archive transmission",
-    "poolId": "68451c5d85497b24",
+    "poolId": "a223c83a0187b2f4",
     "prompt": "Name a leader, a government program, or a documented abuse of power.",
     "hint": "Think broadly: familiar names are valid too. More unusual answers travel farther. The archive contains the available subjects.",
     "answers": [
@@ -6772,7 +8493,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
         "id": "george-washington",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
         "tier": 0
       },
       {
@@ -6796,11 +8529,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
         "id": "mussolini",
         "tier": 0
       },
       {
         "id": "idi-amin",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
         "tier": 0
       },
       {
@@ -6824,20 +8565,24 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "tiananmen-1989",
+        "tier": 0
+      },
+      {
         "id": "tuskegee",
         "tier": 0
       },
       {
         "id": "pinochet",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "charles-taylor",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "cointelpro",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "aquatone",
@@ -6865,7 +8610,7 @@ export const questions = [
       },
       {
         "id": "acoustikitty",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "samphan",
@@ -6902,10 +8647,18 @@ export const questions = [
     "band": 5,
     "family": "legacy-unlikely-intelligence",
     "topic": "Archive transmission",
-    "poolId": "b3d9ee1696b02f8f",
+    "poolId": "ba61f7b642da3ad2",
     "prompt": "Name an intelligence operation, government project, or surveillance subject.",
     "hint": "Think broadly: familiar names are valid too. More unusual answers travel farther. The archive contains the available subjects.",
     "answers": [
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
+        "tier": 0
+      },
       {
         "id": "mkultra",
         "tier": 0
@@ -6936,7 +8689,7 @@ export const questions = [
       },
       {
         "id": "stormfury",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "stargate",
@@ -6969,10 +8722,22 @@ export const questions = [
     "band": 5,
     "family": "legacy-unlikely-disaster",
     "topic": "Archive transmission",
-    "poolId": "eb30778dfb29968d",
+    "poolId": "62367a4c94e0ae5d",
     "prompt": "Name a disaster or an unusual event caused by natural forces.",
     "hint": "Think broadly: familiar names are valid too. More unusual answers travel farther. The archive contains the available subjects.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
       {
         "id": "aurora",
         "tier": 0
@@ -6982,11 +8747,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "covid-pandemic",
+        "tier": 0
+      },
+      {
         "id": "pompeii",
         "tier": 0
       },
       {
         "id": "hindenburg",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -7010,6 +8787,22 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "deepwater-horizon",
         "tier": 0
       },
@@ -7018,27 +8811,39 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "exxon-valdez-spill",
+        "tier": 0
+      },
+      {
         "id": "fukushima",
         "tier": 0
       },
       {
         "id": "great-chicago-fire",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "great-fire-london",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "molasses-flood",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "halifax",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "challenger",
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
         "tier": 1
       },
       {
@@ -7055,11 +8860,11 @@ export const questions = [
       },
       {
         "id": "krakatau",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "saturn-hexagon",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lusitania",
@@ -7071,7 +8876,7 @@ export const questions = [
       },
       {
         "id": "great-smog-london",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "triangle-shirtwaist",
@@ -7092,10 +8897,14 @@ export const questions = [
     "band": 5,
     "family": "legacy-hidden-geography",
     "topic": "Archive transmission",
-    "poolId": "a71dfbae8669b39f",
+    "poolId": "e2f52b080ea14107",
     "prompt": "Name a space-related subject or a theory about a hidden place or power.",
     "hint": "Think broadly: familiar names are valid too. More unusual answers travel farther. The archive contains the available subjects.",
     "answers": [
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
       {
         "id": "apollo",
         "tier": 0
@@ -7121,6 +8930,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
         "id": "hubble",
         "tier": 0
       },
@@ -7142,6 +8955,10 @@ export const questions = [
       },
       {
         "id": "milky-way",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -7229,6 +9046,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "perseverance",
         "tier": 0
       },
@@ -7250,7 +9071,7 @@ export const questions = [
       },
       {
         "id": "tunguska",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "uranus",
@@ -7270,6 +9091,10 @@ export const questions = [
       },
       {
         "id": "disney-cryonics",
+        "tier": 1
+      },
+      {
+        "id": "wtc7-demolition",
         "tier": 1
       },
       {
@@ -7310,11 +9135,11 @@ export const questions = [
       },
       {
         "id": "kuiper-belt",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "magnetic-pole-flip-apocalypse",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "new-horizons",
@@ -7326,6 +9151,10 @@ export const questions = [
       },
       {
         "id": "philadelphia-experiment",
+        "tier": 2
+      },
+      {
+        "id": "protocols-forgery-claim",
         "tier": 2
       },
       {
@@ -7342,11 +9171,11 @@ export const questions = [
       },
       {
         "id": "viking-1",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "comet-elenin-doomsday",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "lhc-doomsday",
@@ -7362,7 +9191,7 @@ export const questions = [
       },
       {
         "id": "rosetta",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "sagittarius-a",
@@ -7383,12 +9212,36 @@ export const questions = [
     "band": 6,
     "family": "legacy-stranger-than-fiction",
     "topic": "Archive transmission",
-    "poolId": "58ff13f43e4c18e2",
+    "poolId": "22c333db27f6547e",
     "prompt": "Name an unusual historical subject, natural event, or disaster.",
     "hint": "Think broadly: familiar names are valid too. More unusual answers travel farther. The archive contains the available subjects.",
     "answers": [
       {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
         "id": "aurora",
+        "tier": 0
+      },
+      {
+        "id": "illuminati",
         "tier": 0
       },
       {
@@ -7404,6 +9257,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "covid-pandemic",
+        "tier": 0
+      },
+      {
         "id": "pompeii",
         "tier": 0
       },
@@ -7412,7 +9269,27 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "freemasons",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
         "id": "hindenburg",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -7448,6 +9325,22 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "2012-calendar-apocalypse",
         "tier": 0
       },
@@ -7456,11 +9349,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "bilderberg",
+        "tier": 0
+      },
+      {
         "id": "deepwater-horizon",
         "tier": 0
       },
       {
         "id": "dust-bowl",
+        "tier": 0
+      },
+      {
+        "id": "exxon-valdez-spill",
         "tier": 0
       },
       {
@@ -7504,6 +9405,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "salem-witch-trials",
         "tier": 0
       },
@@ -7516,28 +9421,40 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 1
+      },
+      {
         "id": "tunguska",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "vaccine-microchips",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "disney-cryonics",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "wtc7-demolition",
+        "tier": 1
       },
       {
         "id": "bhopal",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "carrington",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "denver-airport-lizard-base",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "earthquake-weather",
@@ -7572,6 +9489,10 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "protocols-forgery-claim",
+        "tier": 1
+      },
+      {
         "id": "saturn-hexagon",
         "tier": 1
       },
@@ -7581,23 +9502,23 @@ export const questions = [
       },
       {
         "id": "lusitania",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "columbia",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "comet-elenin-doomsday",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "corona",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "great-smog-london",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "hollow-moon",
@@ -7621,15 +9542,15 @@ export const questions = [
       },
       {
         "id": "stargate",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "triangle-shirtwaist",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "aberfan",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "acoustikitty",
@@ -7645,7 +9566,7 @@ export const questions = [
       },
       {
         "id": "azorian",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "palladium",
@@ -7666,12 +9587,32 @@ export const questions = [
     "band": 6,
     "family": "legacy-military-invention-files",
     "topic": "Archive transmission",
-    "poolId": "8aad1d7c647b6106",
+    "poolId": "0d26a7544e39484d",
     "prompt": "Name a military project, government program, or technological invention.",
     "hint": "Think broadly: familiar names are valid too. More unusual answers travel farther. The archive contains the available subjects.",
     "answers": [
       {
+        "id": "american-civil-war",
+        "tier": 0
+      },
+      {
+        "id": "american-revolution",
+        "tier": 0
+      },
+      {
         "id": "apollo",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
         "tier": 0
       },
       {
@@ -7680,6 +9621,14 @@ export const questions = [
       },
       {
         "id": "dday",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
+        "id": "gulf-war",
         "tier": 0
       },
       {
@@ -7695,6 +9644,14 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "korean-war",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
+        "tier": 0
+      },
+      {
         "id": "pearl-harbor",
         "tier": 0
       },
@@ -7704,6 +9661,22 @@ export const questions = [
       },
       {
         "id": "titanic",
+        "tier": 0
+      },
+      {
+        "id": "vietnam-war",
+        "tier": 0
+      },
+      {
+        "id": "world-war-one",
+        "tier": 0
+      },
+      {
+        "id": "world-war-two",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -7724,6 +9697,10 @@ export const questions = [
       },
       {
         "id": "rader",
+        "tier": 0
+      },
+      {
+        "id": "exxon-valdez-spill",
         "tier": 0
       },
       {
@@ -7751,6 +9728,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mkultra",
         "tier": 0
       },
@@ -7759,7 +9740,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "panama-canal-opening",
+        "tier": 0
+      },
+      {
         "id": "paperclip",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
         "tier": 0
       },
       {
@@ -7768,27 +9757,39 @@ export const questions = [
       },
       {
         "id": "project-blue-book",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "challenger",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "sputnik-1",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "suez-crisis",
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
       },
       {
         "id": "vaccine-microchips",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-2",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "bhopal",
@@ -7824,19 +9825,19 @@ export const questions = [
       },
       {
         "id": "lusitania",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "columbia",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "viking-1",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "corona",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lhc-doomsday",
@@ -7856,11 +9857,11 @@ export const questions = [
       },
       {
         "id": "rosetta",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "stargate",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "aberfan",
@@ -7893,7 +9894,7 @@ export const questions = [
     "band": 6,
     "family": "legacy-responsibility-in-the-record",
     "topic": "Archive transmission",
-    "poolId": "f464e2388fcee3d9",
+    "poolId": "2c246cbe31aaa04b",
     "prompt": "Name a leader or a subject involving state repression.",
     "hint": "Think broadly: familiar names are valid too. More unusual answers travel farther. The archive contains the available subjects.",
     "answers": [
@@ -7906,7 +9907,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
         "id": "george-washington",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
         "tier": 0
       },
       {
@@ -7930,6 +9939,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
         "id": "mussolini",
         "tier": 0
       },
@@ -7943,10 +9956,14 @@ export const questions = [
       },
       {
         "id": "mkultra",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "saddam-hussein",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
         "tier": 1
       },
       {
@@ -7959,7 +9976,7 @@ export const questions = [
       },
       {
         "id": "cointelpro",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "karadzic",
@@ -7988,7 +10005,7 @@ export const questions = [
     "band": 7,
     "family": "legacy-last-court-file",
     "topic": "Archive transmission",
-    "poolId": "a2181cd6d003b4f8",
+    "poolId": "43a478a90673b301",
     "prompt": "Name a criminal case, a political leader, or a court proceeding.",
     "hint": "Think broadly: familiar names are valid too. More unusual answers travel farther. The archive contains the available subjects.",
     "answers": [
@@ -8002,6 +10019,10 @@ export const questions = [
       },
       {
         "id": "al-capone",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
         "tier": 0
       },
       {
@@ -8135,16 +10156,24 @@ export const questions = [
     "band": 7,
     "family": "legacy-last-secret-project",
     "topic": "Archive transmission",
-    "poolId": "d060cb757cdb4265",
+    "poolId": "ee73f1ccc24b63a1",
     "prompt": "Name a government project or a scientific research program.",
     "hint": "Think broadly: familiar names are valid too. More unusual answers travel farther. The archive contains the available subjects.",
     "answers": [
+      {
+        "id": "area-51",
+        "tier": 0
+      },
       {
         "id": "hubble",
         "tier": 0
       },
       {
         "id": "iss",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -8157,6 +10186,10 @@ export const questions = [
       },
       {
         "id": "james-webb",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
         "tier": 0
       },
       {
@@ -8176,7 +10209,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "smallpox-eradication",
+        "tier": 0
+      },
+      {
         "id": "sputnik-1",
+        "tier": 0
+      },
+      {
+        "id": "trinity-test",
         "tier": 0
       },
       {
@@ -8201,15 +10242,15 @@ export const questions = [
       },
       {
         "id": "ingenuity",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "juno",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "new-horizons",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "aquatone",
@@ -8233,7 +10274,7 @@ export const questions = [
       },
       {
         "id": "stormfury",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "rosetta",
@@ -8270,12 +10311,28 @@ export const questions = [
     "band": 7,
     "family": "legacy-last-unreal-world",
     "topic": "Archive transmission",
-    "poolId": "b2e94c415175950e",
+    "poolId": "a91c370223cf77ae",
     "prompt": "Name a space-related subject, conspiracy theory, or extraordinary technology.",
     "hint": "Think broadly: familiar names are valid too. More unusual answers travel farther. The archive contains the available subjects.",
     "answers": [
       {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
+      {
         "id": "apollo",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
         "tier": 0
       },
       {
@@ -8300,6 +10357,10 @@ export const questions = [
       },
       {
         "id": "flat-earth",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
         "tier": 0
       },
       {
@@ -8328,6 +10389,10 @@ export const questions = [
       },
       {
         "id": "milky-way",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -8367,6 +10432,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wright-first-flight",
+        "tier": 0
+      },
+      {
         "id": "2012-calendar-apocalypse",
         "tier": 0
       },
@@ -8392,6 +10461,10 @@ export const questions = [
       },
       {
         "id": "rader",
+        "tier": 0
+      },
+      {
+        "id": "exxon-valdez-spill",
         "tier": 0
       },
       {
@@ -8427,6 +10500,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mars-hoax",
         "tier": 0
       },
@@ -8436,6 +10513,14 @@ export const questions = [
       },
       {
         "id": "neptune",
+        "tier": 0
+      },
+      {
+        "id": "panama-canal-opening",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
         "tier": 0
       },
       {
@@ -8459,16 +10544,24 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
+      },
+      {
         "id": "tunguska",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "uranus",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "vaccine-microchips",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-1",
@@ -8480,6 +10573,10 @@ export const questions = [
       },
       {
         "id": "disney-cryonics",
+        "tier": 1
+      },
+      {
+        "id": "wtc7-demolition",
         "tier": 1
       },
       {
@@ -8536,15 +10633,19 @@ export const questions = [
       },
       {
         "id": "nibiru",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "aquatone",
-        "tier": 1
+        "tier": 2
+      },
+      {
+        "id": "protocols-forgery-claim",
+        "tier": 2
       },
       {
         "id": "saturn-hexagon",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "earthquake-prediction-coverup",
@@ -8580,11 +10681,11 @@ export const questions = [
       },
       {
         "id": "2000-alignment-apocalypse",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "osiris-rex",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "rosetta",
@@ -8608,7 +10709,7 @@ export const questions = [
       },
       {
         "id": "operation-gold",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "azorian",
@@ -8633,7 +10734,7 @@ export const questions = [
     "band": 0,
     "family": "space",
     "topic": "Space & sky",
-    "poolId": "156c16859699f470",
+    "poolId": "17a795249cf248a2",
     "prompt": "Name a celestial object, space phenomenon, mission, or space-related theory.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
@@ -8647,6 +10748,10 @@ export const questions = [
       },
       {
         "id": "earth",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
         "tier": 0
       },
       {
@@ -8738,6 +10843,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "perseverance",
         "tier": 0
       },
@@ -8751,7 +10860,7 @@ export const questions = [
       },
       {
         "id": "sputnik-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "tunguska",
@@ -8852,7 +10961,7 @@ export const questions = [
     "band": 0,
     "family": "space",
     "topic": "Space & sky",
-    "poolId": "632b0ed3e4063197",
+    "poolId": "96dbe6a6105a88a5",
     "prompt": "Name a subject involving space exploration or a remarkable invention.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
@@ -8861,7 +10970,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
         "id": "chernobyl",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
         "tier": 0
       },
       {
@@ -8877,7 +11002,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mmr-autism-claim",
+        "tier": 0
+      },
+      {
         "id": "titanic",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -8901,6 +11034,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "exxon-valdez-spill",
+        "tier": 0
+      },
+      {
         "id": "fukushima",
         "tier": 0
       },
@@ -8921,7 +11058,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mrna-dna-rewrite",
+        "tier": 0
+      },
+      {
+        "id": "panama-canal-opening",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
         "tier": 0
       },
       {
@@ -8937,20 +11086,28 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
+      },
+      {
         "id": "vaccine-microchips",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-2",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "bhopal",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "dart",
@@ -8978,15 +11135,15 @@ export const questions = [
       },
       {
         "id": "columbia",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "viking-1",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "corona",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lhc-doomsday",
@@ -9002,11 +11159,11 @@ export const questions = [
       },
       {
         "id": "acoustikitty",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "operation-gold",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "azorian",
@@ -9014,7 +11171,7 @@ export const questions = [
       },
       {
         "id": "palladium",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "project-xray",
@@ -9031,10 +11188,14 @@ export const questions = [
     "band": 1,
     "family": "space",
     "topic": "Space & sky",
-    "poolId": "2cf244c5c6e790c0",
+    "poolId": "c5c84f958e978ce0",
     "prompt": "Name a world, a natural phenomenon, or a story about the sky.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
       {
         "id": "apollo",
         "tier": 0
@@ -9056,7 +11217,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
         "id": "hubble",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -9116,6 +11285,18 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "2012-calendar-apocalypse",
         "tier": 0
       },
@@ -9164,20 +11345,24 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "perseverance",
         "tier": 0
       },
       {
         "id": "project-blue-book",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "challenger",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "sputnik-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "solar-warming-hoax",
@@ -9233,11 +11418,11 @@ export const questions = [
       },
       {
         "id": "magnetic-pole-flip-apocalypse",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "new-horizons",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "nibiru",
@@ -9265,7 +11450,7 @@ export const questions = [
       },
       {
         "id": "hollow-moon",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "lake-nyos",
@@ -9302,12 +11487,16 @@ export const questions = [
     "band": 1,
     "family": "space",
     "topic": "Space & sky",
-    "poolId": "4af63bcdf3d8a00b",
+    "poolId": "ab4b393a3b7ff8c3",
     "prompt": "Name a space mission or a government research program.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
         "id": "apollo",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
         "tier": 0
       },
       {
@@ -9328,6 +11517,10 @@ export const questions = [
       },
       {
         "id": "james-webb",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
         "tier": 0
       },
       {
@@ -9376,7 +11569,7 @@ export const questions = [
       },
       {
         "id": "new-horizons",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "aquatone",
@@ -9437,7 +11630,7 @@ export const questions = [
     "band": 2,
     "family": "space",
     "topic": "Space & sky",
-    "poolId": "16f116e8bdd1fe59",
+    "poolId": "43b682278cfa0421",
     "prompt": "Name something associated with the Moon, Mars, or alleged alien visitors.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
@@ -9470,8 +11663,12 @@ export const questions = [
         "tier": 0
       },
       {
-        "id": "perseverance",
+        "id": "pentagon-confirmed-aliens",
         "tier": 0
+      },
+      {
+        "id": "perseverance",
+        "tier": 1
       },
       {
         "id": "face-mars",
@@ -9500,12 +11697,16 @@ export const questions = [
     "band": 2,
     "family": "space",
     "topic": "Space & sky",
-    "poolId": "30ab11832d3ffd4d",
+    "poolId": "880bd16a6c50cd55",
     "prompt": "Name a spacecraft, a scientific instrument, or an intelligence project.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
         "id": "apollo",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
         "tier": 0
       },
       {
@@ -9526,6 +11727,10 @@ export const questions = [
       },
       {
         "id": "james-webb",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
         "tier": 0
       },
       {
@@ -9578,7 +11783,7 @@ export const questions = [
       },
       {
         "id": "aquatone",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "columbia",
@@ -9606,7 +11811,7 @@ export const questions = [
       },
       {
         "id": "rosetta",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "stargate",
@@ -9643,7 +11848,7 @@ export const questions = [
     "band": 3,
     "family": "space",
     "topic": "Space & sky",
-    "poolId": "f3860f8a48970f70",
+    "poolId": "95743dc020da6ee2",
     "prompt": "Name a space-related subject or a famous prediction of catastrophe.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
@@ -9657,6 +11862,10 @@ export const questions = [
       },
       {
         "id": "earth",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
         "tier": 0
       },
       {
@@ -9748,6 +11957,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "perseverance",
         "tier": 0
       },
@@ -9765,7 +11978,7 @@ export const questions = [
       },
       {
         "id": "tunguska",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "uranus",
@@ -9870,10 +12083,14 @@ export const questions = [
     "band": 4,
     "family": "space",
     "topic": "Space & sky",
-    "poolId": "4064a474477c7ef2",
+    "poolId": "03707ef75fe824d5",
     "prompt": "Name a subject involving astronomy, unusual weather, or a striking natural event.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
       {
         "id": "apollo",
         "tier": 0
@@ -9895,7 +12112,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
         "id": "hubble",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -9959,6 +12184,18 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "2012-calendar-apocalypse",
         "tier": 0
       },
@@ -10003,16 +12240,20 @@ export const questions = [
         "tier": 0
       },
       {
-        "id": "perseverance",
+        "id": "pentagon-confirmed-aliens",
         "tier": 0
+      },
+      {
+        "id": "perseverance",
+        "tier": 1
       },
       {
         "id": "project-blue-book",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "challenger",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "sputnik-1",
@@ -10068,7 +12309,7 @@ export const questions = [
       },
       {
         "id": "new-horizons",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "nibiru",
@@ -10133,7 +12374,7 @@ export const questions = [
     "band": 5,
     "family": "space",
     "topic": "Space & sky",
-    "poolId": "2dad16593dc38b21",
+    "poolId": "df8fe20ba0d852c3",
     "prompt": "Name a real mission or a theory about hidden worlds and visitors.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
@@ -10174,6 +12415,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "perseverance",
         "tier": 0
       },
@@ -10215,6 +12460,10 @@ export const questions = [
       },
       {
         "id": "nibiru",
+        "tier": 1
+      },
+      {
+        "id": "protocols-forgery-claim",
         "tier": 1
       },
       {
@@ -10248,10 +12497,14 @@ export const questions = [
     "band": 6,
     "family": "space",
     "topic": "Space & sky",
-    "poolId": "7b8d088682b5d54f",
+    "poolId": "6aeffe73b749212f",
     "prompt": "Name something studied beyond Earth or a claim about extraordinary technology.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
       {
         "id": "apollo",
         "tier": 0
@@ -10262,6 +12515,10 @@ export const questions = [
       },
       {
         "id": "earth",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
         "tier": 0
       },
       {
@@ -10361,6 +12618,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "perseverance",
         "tier": 0
       },
@@ -10378,7 +12639,7 @@ export const questions = [
       },
       {
         "id": "tunguska",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "uranus",
@@ -10390,6 +12651,10 @@ export const questions = [
       },
       {
         "id": "voyager-2",
+        "tier": 1
+      },
+      {
+        "id": "wtc7-demolition",
         "tier": 1
       },
       {
@@ -10426,11 +12691,11 @@ export const questions = [
       },
       {
         "id": "new-horizons",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "nibiru",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "philadelphia-experiment",
@@ -10454,7 +12719,7 @@ export const questions = [
       },
       {
         "id": "lhc-doomsday",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "2000-alignment-apocalypse",
@@ -10487,10 +12752,14 @@ export const questions = [
     "band": 0,
     "family": "nature",
     "topic": "The natural world",
-    "poolId": "cb726004b504e5c7",
+    "poolId": "217ed5f9c300b265",
     "prompt": "Name a natural object, phenomenon, or disaster.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
       {
         "id": "aurora",
         "tier": 0
@@ -10501,6 +12770,10 @@ export const questions = [
       },
       {
         "id": "earth",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -10552,8 +12825,20 @@ export const questions = [
         "tier": 0
       },
       {
-        "id": "asteroid-belt",
+        "id": "mount-st-helens-1980",
         "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 1
+      },
+      {
+        "id": "asteroid-belt",
+        "tier": 1
       },
       {
         "id": "dust-bowl",
@@ -10577,7 +12862,7 @@ export const questions = [
       },
       {
         "id": "carrington",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "ceres",
@@ -10589,7 +12874,7 @@ export const questions = [
       },
       {
         "id": "kuiper-belt",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "saturn-hexagon",
@@ -10610,10 +12895,14 @@ export const questions = [
     "band": 0,
     "family": "nature",
     "topic": "The natural world",
-    "poolId": "dc77457709fe8381",
+    "poolId": "b6bc05b7a1d3f489",
     "prompt": "Name something associated with Earth, its environment, or its weather.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
       {
         "id": "aurora",
         "tier": 0
@@ -10639,6 +12928,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "hurricane-katrina",
+        "tier": 0
+      },
+      {
         "id": "solar-eclipse",
         "tier": 0
       },
@@ -10647,11 +12940,27 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "deepwater-horizon",
         "tier": 0
       },
       {
         "id": "dust-bowl",
+        "tier": 0
+      },
+      {
+        "id": "exxon-valdez-spill",
         "tier": 0
       },
       {
@@ -10671,8 +12980,16 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "paris-agreement",
+        "tier": 1
+      },
+      {
         "id": "solar-warming-hoax",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
       },
       {
         "id": "bhopal",
@@ -10695,8 +13012,12 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "montreal-protocol",
+        "tier": 2
+      },
+      {
         "id": "saturn-hexagon",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "earthquake-prediction-coverup",
@@ -10708,7 +13029,7 @@ export const questions = [
       },
       {
         "id": "lake-nyos",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "stormfury",
@@ -10729,10 +13050,22 @@ export const questions = [
     "band": 1,
     "family": "nature",
     "topic": "The natural world",
-    "poolId": "eb30778dfb29968d",
+    "poolId": "62367a4c94e0ae5d",
     "prompt": "Name a natural event or a disaster that changed a community.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
       {
         "id": "aurora",
         "tier": 0
@@ -10742,11 +13075,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "covid-pandemic",
+        "tier": 0
+      },
+      {
         "id": "pompeii",
         "tier": 0
       },
       {
         "id": "hindenburg",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -10770,6 +13115,22 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "deepwater-horizon",
         "tier": 0
       },
@@ -10778,27 +13139,39 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "exxon-valdez-spill",
+        "tier": 0
+      },
+      {
         "id": "fukushima",
         "tier": 0
       },
       {
         "id": "great-chicago-fire",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "great-fire-london",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "molasses-flood",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "halifax",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "challenger",
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
         "tier": 1
       },
       {
@@ -10815,11 +13188,11 @@ export const questions = [
       },
       {
         "id": "krakatau",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lusitania",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "columbia",
@@ -10831,7 +13204,7 @@ export const questions = [
       },
       {
         "id": "lake-nyos",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "triangle-shirtwaist",
@@ -10852,10 +13225,14 @@ export const questions = [
     "band": 1,
     "family": "nature",
     "topic": "The natural world",
-    "poolId": "bbe84651db556fbc",
+    "poolId": "322bf1ea9f86d4b1",
     "prompt": "Name a subject connected to astronomy or a natural event.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
       {
         "id": "apollo",
         "tier": 0
@@ -10873,7 +13250,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
         "id": "hubble",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -10937,6 +13322,18 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "2012-calendar-apocalypse",
         "tier": 0
       },
@@ -10973,16 +13370,20 @@ export const questions = [
         "tier": 0
       },
       {
-        "id": "perseverance",
+        "id": "pentagon-confirmed-aliens",
         "tier": 0
+      },
+      {
+        "id": "perseverance",
+        "tier": 1
       },
       {
         "id": "project-blue-book",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "challenger",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "sputnik-1",
@@ -11034,7 +13435,7 @@ export const questions = [
       },
       {
         "id": "kuiper-belt",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "new-horizons",
@@ -11095,16 +13496,48 @@ export const questions = [
     "band": 2,
     "family": "nature",
     "topic": "The natural world",
-    "poolId": "f445adce564d4d8b",
+    "poolId": "8d656ad709d686b9",
     "prompt": "Name a natural hazard, an environmental subject, or a historical event.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "financial-crisis-2008",
+        "tier": 0
+      },
+      {
+        "id": "american-civil-war",
+        "tier": 0
+      },
+      {
+        "id": "american-revolution",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
       {
         "id": "aurora",
         "tier": 0
       },
       {
         "id": "bermuda-triangle",
+        "tier": 0
+      },
+      {
+        "id": "brexit",
         "tier": 0
       },
       {
@@ -11116,6 +13549,14 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "soviet-union-collapse",
+        "tier": 0
+      },
+      {
+        "id": "covid-pandemic",
+        "tier": 0
+      },
+      {
         "id": "dday",
         "tier": 0
       },
@@ -11124,7 +13565,35 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
+        "id": "french-revolution",
+        "tier": 0
+      },
+      {
+        "id": "great-depression",
+        "tier": 0
+      },
+      {
+        "id": "gulf-war",
+        "tier": 0
+      },
+      {
         "id": "hindenburg",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
+        "tier": 0
+      },
+      {
+        "id": "korean-war",
         "tier": 0
       },
       {
@@ -11148,7 +13617,27 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "vietnam-war",
+        "tier": 0
+      },
+      {
+        "id": "wall-street-crash-1929",
+        "tier": 0
+      },
+      {
         "id": "watergate",
+        "tier": 0
+      },
+      {
+        "id": "world-war-one",
+        "tier": 0
+      },
+      {
+        "id": "world-war-two",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -11157,6 +13646,26 @@ export const questions = [
       },
       {
         "id": "spanish-flu",
+        "tier": 0
+      },
+      {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
+        "id": "boston-tea-party",
         "tier": 0
       },
       {
@@ -11172,39 +13681,63 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "exxon-valdez-spill",
+        "tier": 0
+      },
+      {
         "id": "wwi-armistice",
         "tier": 0
       },
       {
         "id": "fukushima",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "great-chicago-fire",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "great-fire-london",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "molasses-flood",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "halifax",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "noaa-hurricane-steering",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "indian-independence",
+        "tier": 1
+      },
+      {
+        "id": "march-on-washington",
+        "tier": 1
+      },
+      {
+        "id": "panama-canal-opening",
+        "tier": 1
       },
       {
         "id": "ozone-layer",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "paris-agreement",
+        "tier": 1
       },
       {
         "id": "salem-witch-trials",
+        "tier": 1
+      },
+      {
+        "id": "smallpox-eradication",
         "tier": 1
       },
       {
@@ -11212,36 +13745,56 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "suez-crisis",
+        "tier": 1
+      },
+      {
         "id": "solar-warming-hoax",
         "tier": 1
       },
       {
-        "id": "tunguska",
+        "id": "three-mile-island",
         "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 1
+      },
+      {
+        "id": "trinity-test",
+        "tier": 2
+      },
+      {
+        "id": "tunguska",
+        "tier": 2
       },
       {
         "id": "bhopal",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "carrington",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "earthquake-weather",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "iran-contra",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "krakatau",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "magnetic-pole-flip-apocalypse",
-        "tier": 1
+        "tier": 2
+      },
+      {
+        "id": "montreal-protocol",
+        "tier": 2
       },
       {
         "id": "earthquake-prediction-coverup",
@@ -11249,19 +13802,19 @@ export const questions = [
       },
       {
         "id": "lusitania",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "columbia",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "great-smog-london",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "lake-nyos",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "lindbergh-kidnapping",
@@ -11269,11 +13822,11 @@ export const questions = [
       },
       {
         "id": "dancing-plague",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "triangle-shirtwaist",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "aberfan",
@@ -11290,7 +13843,7 @@ export const questions = [
     "band": 2,
     "family": "nature",
     "topic": "The natural world",
-    "poolId": "59b8d1920009fcdf",
+    "poolId": "2ac114142c676b39",
     "prompt": "Name a subject involving astronomy, weather, or attempts to study them.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
@@ -11311,7 +13864,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
         "id": "hubble",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -11407,6 +13968,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "perseverance",
         "tier": 0
       },
@@ -11416,11 +13981,11 @@ export const questions = [
       },
       {
         "id": "challenger",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "sputnik-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "tunguska",
@@ -11468,11 +14033,11 @@ export const questions = [
       },
       {
         "id": "new-horizons",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "nibiru",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "saturn-hexagon",
@@ -11496,7 +14061,7 @@ export const questions = [
       },
       {
         "id": "hollow-moon",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "2000-alignment-apocalypse",
@@ -11529,16 +14094,28 @@ export const questions = [
     "band": 3,
     "family": "nature",
     "topic": "The natural world",
-    "poolId": "7df932b0744c2860",
+    "poolId": "2d0e346135339371",
     "prompt": "Name a subject involving Earth science or an unusual scientific observation.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
       {
         "id": "apollo",
         "tier": 0
       },
       {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
         "id": "aurora",
+        "tier": 0
+      },
+      {
+        "id": "covid-pandemic",
         "tier": 0
       },
       {
@@ -11554,7 +14131,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
         "id": "hubble",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -11575,6 +14160,10 @@ export const questions = [
       },
       {
         "id": "milky-way",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -11610,11 +14199,27 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wright-first-flight",
+        "tier": 0
+      },
+      {
         "id": "san-francisco-1906",
         "tier": 0
       },
       {
         "id": "spanish-flu",
+        "tier": 0
+      },
+      {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
         "tier": 0
       },
       {
@@ -11642,6 +14247,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "exxon-valdez-spill",
+        "tier": 0
+      },
+      {
         "id": "halleys-comet",
         "tier": 0
       },
@@ -11655,6 +14264,10 @@ export const questions = [
       },
       {
         "id": "magnetic-vaccines",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
         "tier": 0
       },
       {
@@ -11682,11 +14295,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "paris-agreement",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "perseverance",
         "tier": 0
       },
       {
         "id": "project-blue-book",
+        "tier": 0
+      },
+      {
+        "id": "smallpox-eradication",
         "tier": 0
       },
       {
@@ -11702,28 +14327,36 @@ export const questions = [
         "tier": 0
       },
       {
-        "id": "tunguska",
+        "id": "three-mile-island",
         "tier": 0
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
+      },
+      {
+        "id": "tunguska",
+        "tier": 1
       },
       {
         "id": "tuskegee",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "uranus",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "vaccine-microchips",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-2",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "disney-cryonics",
@@ -11774,6 +14407,10 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "montreal-protocol",
+        "tier": 1
+      },
+      {
         "id": "new-horizons",
         "tier": 1
       },
@@ -11783,19 +14420,19 @@ export const questions = [
       },
       {
         "id": "aquatone",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "saturn-hexagon",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "earthquake-prediction-coverup",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "columbia",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "viking-1",
@@ -11831,11 +14468,11 @@ export const questions = [
       },
       {
         "id": "osiris-rex",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "stormfury",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "rosetta",
@@ -11859,7 +14496,7 @@ export const questions = [
       },
       {
         "id": "operation-gold",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "azorian",
@@ -11884,10 +14521,14 @@ export const questions = [
     "band": 4,
     "family": "nature",
     "topic": "The natural world",
-    "poolId": "6ec03246cad212a5",
+    "poolId": "fd07550a55ecdfc6",
     "prompt": "Name a subject involving nature or a theory about a hidden place.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
       {
         "id": "aurora",
         "tier": 0
@@ -11906,6 +14547,10 @@ export const questions = [
       },
       {
         "id": "flat-earth",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -11953,6 +14598,18 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "asteroid-belt",
         "tier": 0
       },
@@ -11970,7 +14627,7 @@ export const questions = [
       },
       {
         "id": "ozone-layer",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "solar-warming-hoax",
@@ -12006,7 +14663,7 @@ export const questions = [
       },
       {
         "id": "kuiper-belt",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "magnetic-pole-flip-apocalypse",
@@ -12017,12 +14674,16 @@ export const questions = [
         "tier": 2
       },
       {
+        "id": "protocols-forgery-claim",
+        "tier": 2
+      },
+      {
         "id": "saturn-hexagon",
         "tier": 2
       },
       {
         "id": "earthquake-prediction-coverup",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "hollow-moon",
@@ -12047,10 +14708,22 @@ export const questions = [
     "band": 5,
     "family": "nature",
     "topic": "The natural world",
-    "poolId": "dccf0eda6f9641df",
+    "poolId": "10cd9858906a9559",
     "prompt": "Name a real disaster or a claim about extraordinary forces in nature.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
       {
         "id": "bermuda-triangle",
         "tier": 0
@@ -12064,6 +14737,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "covid-pandemic",
+        "tier": 0
+      },
+      {
         "id": "pompeii",
         "tier": 0
       },
@@ -12073,6 +14750,14 @@ export const questions = [
       },
       {
         "id": "hindenburg",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -12092,11 +14777,31 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "deepwater-horizon",
         "tier": 0
       },
       {
         "id": "dust-bowl",
+        "tier": 0
+      },
+      {
+        "id": "exxon-valdez-spill",
         "tier": 0
       },
       {
@@ -12113,19 +14818,19 @@ export const questions = [
       },
       {
         "id": "molasses-flood",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "haarp",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "halifax",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "noaa-hurricane-steering",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "challenger",
@@ -12133,6 +14838,14 @@ export const questions = [
       },
       {
         "id": "solar-warming-hoax",
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
         "tier": 1
       },
       {
@@ -12149,11 +14862,11 @@ export const questions = [
       },
       {
         "id": "hollow-earth",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "krakatau",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "magnetic-pole-flip-apocalypse",
@@ -12169,7 +14882,7 @@ export const questions = [
       },
       {
         "id": "columbia",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "great-smog-london",
@@ -12194,10 +14907,14 @@ export const questions = [
     "band": 6,
     "family": "nature",
     "topic": "The natural world",
-    "poolId": "b07a8c0432749108",
+    "poolId": "c9683bcf71633b1b",
     "prompt": "Name a subject involving the environment, space, or unexplained-looking natural shapes.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
       {
         "id": "apollo",
         "tier": 0
@@ -12227,7 +14944,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
         "id": "hubble",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -12287,6 +15012,18 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "2012-calendar-apocalypse",
         "tier": 0
       },
@@ -12308,6 +15045,10 @@ export const questions = [
       },
       {
         "id": "dust-bowl",
+        "tier": 0
+      },
+      {
+        "id": "exxon-valdez-spill",
         "tier": 0
       },
       {
@@ -12339,6 +15080,14 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "paris-agreement",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "perseverance",
         "tier": 0
       },
@@ -12348,15 +15097,19 @@ export const questions = [
       },
       {
         "id": "challenger",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "sputnik-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "solar-warming-hoax",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
       },
       {
         "id": "tunguska",
@@ -12415,12 +15168,16 @@ export const questions = [
         "tier": 1
       },
       {
-        "id": "new-horizons",
+        "id": "montreal-protocol",
         "tier": 1
       },
       {
+        "id": "new-horizons",
+        "tier": 2
+      },
+      {
         "id": "nibiru",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "saturn-hexagon",
@@ -12452,7 +15209,7 @@ export const questions = [
       },
       {
         "id": "lake-nyos",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "2000-alignment-apocalypse",
@@ -12472,7 +15229,7 @@ export const questions = [
       },
       {
         "id": "sagittarius-a",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "aberfan",
@@ -12493,12 +15250,20 @@ export const questions = [
     "band": 0,
     "family": "science",
     "topic": "Science & discovery",
-    "poolId": "985bac9492c59bda",
+    "poolId": "a878810d308bc2aa",
     "prompt": "Name a subject connected to science, medicine, or exploration.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
         "id": "apollo",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
         "tier": 0
       },
       {
@@ -12506,11 +15271,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "covid-pandemic",
+        "tier": 0
+      },
+      {
         "id": "earth",
         "tier": 0
       },
       {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
         "id": "hubble",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -12531,6 +15308,10 @@ export const questions = [
       },
       {
         "id": "milky-way",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -12566,7 +15347,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wright-first-flight",
+        "tier": 0
+      },
+      {
         "id": "spanish-flu",
+        "tier": 0
+      },
+      {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
         "tier": 0
       },
       {
@@ -12590,6 +15387,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "exxon-valdez-spill",
+        "tier": 0
+      },
+      {
         "id": "halleys-comet",
         "tier": 0
       },
@@ -12603,6 +15404,10 @@ export const questions = [
       },
       {
         "id": "magnetic-vaccines",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
         "tier": 0
       },
       {
@@ -12622,6 +15427,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "panama-canal-opening",
+        "tier": 0
+      },
+      {
         "id": "paperclip",
         "tier": 0
       },
@@ -12630,11 +15439,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "paris-agreement",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "perseverance",
         "tier": 0
       },
       {
         "id": "project-blue-book",
+        "tier": 0
+      },
+      {
+        "id": "smallpox-eradication",
         "tier": 0
       },
       {
@@ -12650,28 +15471,36 @@ export const questions = [
         "tier": 0
       },
       {
-        "id": "tunguska",
+        "id": "three-mile-island",
         "tier": 0
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
+      },
+      {
+        "id": "tunguska",
+        "tier": 1
       },
       {
         "id": "tuskegee",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "uranus",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "vaccine-microchips",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-2",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "disney-cryonics",
@@ -12718,6 +15547,10 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "montreal-protocol",
+        "tier": 1
+      },
+      {
         "id": "new-horizons",
         "tier": 1
       },
@@ -12735,15 +15568,15 @@ export const questions = [
       },
       {
         "id": "earthquake-prediction-coverup",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "columbia",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "viking-1",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "comet-elenin-doomsday",
@@ -12779,7 +15612,7 @@ export const questions = [
       },
       {
         "id": "rosetta",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "sagittarius-a",
@@ -12824,12 +15657,20 @@ export const questions = [
     "band": 0,
     "family": "science",
     "topic": "Science & discovery",
-    "poolId": "a93da10a46c0e2a0",
+    "poolId": "16ed2df5fc0b3972",
     "prompt": "Name a scientific object, a space mission, or a research program.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
         "id": "apollo",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
         "tier": 0
       },
       {
@@ -12837,11 +15678,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "covid-pandemic",
+        "tier": 0
+      },
+      {
         "id": "earth",
         "tier": 0
       },
       {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
         "id": "hubble",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -12862,6 +15715,10 @@ export const questions = [
       },
       {
         "id": "milky-way",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -12897,7 +15754,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wright-first-flight",
+        "tier": 0
+      },
+      {
         "id": "spanish-flu",
+        "tier": 0
+      },
+      {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
         "tier": 0
       },
       {
@@ -12921,6 +15794,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "exxon-valdez-spill",
+        "tier": 0
+      },
+      {
         "id": "halleys-comet",
         "tier": 0
       },
@@ -12934,6 +15811,10 @@ export const questions = [
       },
       {
         "id": "magnetic-vaccines",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
         "tier": 0
       },
       {
@@ -12961,11 +15842,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "paris-agreement",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "perseverance",
         "tier": 0
       },
       {
         "id": "project-blue-book",
+        "tier": 0
+      },
+      {
+        "id": "smallpox-eradication",
         "tier": 0
       },
       {
@@ -12981,28 +15874,36 @@ export const questions = [
         "tier": 0
       },
       {
-        "id": "tunguska",
+        "id": "three-mile-island",
         "tier": 0
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
+      },
+      {
+        "id": "tunguska",
+        "tier": 1
       },
       {
         "id": "tuskegee",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "uranus",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "vaccine-microchips",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-2",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "disney-cryonics",
@@ -13049,6 +15950,10 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "montreal-protocol",
+        "tier": 1
+      },
+      {
         "id": "new-horizons",
         "tier": 1
       },
@@ -13062,15 +15967,15 @@ export const questions = [
       },
       {
         "id": "saturn-hexagon",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "earthquake-prediction-coverup",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "columbia",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "viking-1",
@@ -13106,7 +16011,7 @@ export const questions = [
       },
       {
         "id": "stormfury",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "rosetta",
@@ -13151,7 +16056,7 @@ export const questions = [
     "band": 1,
     "family": "science",
     "topic": "Science & discovery",
-    "poolId": "632b0ed3e4063197",
+    "poolId": "96dbe6a6105a88a5",
     "prompt": "Name an invention or an event that revealed a technological risk.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
@@ -13160,7 +16065,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
         "id": "chernobyl",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
         "tier": 0
       },
       {
@@ -13176,7 +16097,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mmr-autism-claim",
+        "tier": 0
+      },
+      {
         "id": "titanic",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -13200,6 +16129,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "exxon-valdez-spill",
+        "tier": 0
+      },
+      {
         "id": "fukushima",
         "tier": 0
       },
@@ -13220,7 +16153,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mrna-dna-rewrite",
+        "tier": 0
+      },
+      {
+        "id": "panama-canal-opening",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
         "tier": 0
       },
       {
@@ -13236,20 +16181,28 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
+      },
+      {
         "id": "vaccine-microchips",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-2",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "bhopal",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "dart",
@@ -13277,15 +16230,15 @@ export const questions = [
       },
       {
         "id": "columbia",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "viking-1",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "corona",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lhc-doomsday",
@@ -13301,11 +16254,11 @@ export const questions = [
       },
       {
         "id": "acoustikitty",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "operation-gold",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "azorian",
@@ -13313,7 +16266,7 @@ export const questions = [
       },
       {
         "id": "palladium",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "project-xray",
@@ -13330,10 +16283,18 @@ export const questions = [
     "band": 1,
     "family": "science",
     "topic": "Science & discovery",
-    "poolId": "34e1b7418aec9594",
+    "poolId": "5894e0555f3900ec",
     "prompt": "Name a subject involving research or a major discovery in nature.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
       {
         "id": "aurora",
         "tier": 0
@@ -13347,6 +16308,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "hurricane-katrina",
+        "tier": 0
+      },
+      {
         "id": "iss",
         "tier": 0
       },
@@ -13355,11 +16320,27 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wright-first-flight",
+        "tier": 0
+      },
+      {
         "id": "san-francisco-1906",
         "tier": 0
       },
       {
         "id": "spanish-flu",
+        "tier": 0
+      },
+      {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
         "tier": 0
       },
       {
@@ -13379,6 +16360,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mkultra",
         "tier": 0
       },
@@ -13395,7 +16380,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "smallpox-eradication",
+        "tier": 0
+      },
+      {
         "id": "sputnik-1",
+        "tier": 0
+      },
+      {
+        "id": "trinity-test",
         "tier": 0
       },
       {
@@ -13412,23 +16405,23 @@ export const questions = [
       },
       {
         "id": "voyager-2",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "carrington",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "cointelpro",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "dart",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "ingenuity",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "juno",
@@ -13456,15 +16449,15 @@ export const questions = [
       },
       {
         "id": "corona",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lake-nyos",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "northwoods",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "stormfury",
@@ -13480,11 +16473,11 @@ export const questions = [
       },
       {
         "id": "acoustikitty",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "operation-gold",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "azorian",
@@ -13492,7 +16485,7 @@ export const questions = [
       },
       {
         "id": "palladium",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "project-xray",
@@ -13509,10 +16502,14 @@ export const questions = [
     "band": 2,
     "family": "science",
     "topic": "Science & discovery",
-    "poolId": "4657136846f25c60",
+    "poolId": "2ce9e129ce19c5b9",
     "prompt": "Name a subject involving scientific equipment, spacecraft, or an alleged secret device.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
       {
         "id": "apollo",
         "tier": 0
@@ -13566,8 +16563,12 @@ export const questions = [
         "tier": 0
       },
       {
-        "id": "dart",
+        "id": "wtc7-demolition",
         "tier": 0
+      },
+      {
+        "id": "dart",
+        "tier": 1
       },
       {
         "id": "denver-airport-lizard-base",
@@ -13620,10 +16621,18 @@ export const questions = [
     "band": 3,
     "family": "science",
     "topic": "Science & discovery",
-    "poolId": "749341794f55d2dd",
+    "poolId": "29b02ac4039b8f0c",
     "prompt": "Name a research program or a theory about hidden powers.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
       {
         "id": "bermuda-triangle",
         "tier": 0
@@ -13645,6 +16654,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mkultra",
         "tier": 0
       },
@@ -13658,6 +16671,10 @@ export const questions = [
       },
       {
         "id": "solar-warming-hoax",
+        "tier": 0
+      },
+      {
+        "id": "wtc7-demolition",
         "tier": 0
       },
       {
@@ -13682,11 +16699,11 @@ export const questions = [
       },
       {
         "id": "philadelphia-experiment",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "aquatone",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "earthquake-prediction-coverup",
@@ -13710,7 +16727,7 @@ export const questions = [
       },
       {
         "id": "stormfury",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "stargate",
@@ -13722,7 +16739,7 @@ export const questions = [
       },
       {
         "id": "azorian",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "palladium",
@@ -13743,16 +16760,32 @@ export const questions = [
     "band": 3,
     "family": "science",
     "topic": "Science & discovery",
-    "poolId": "29aef3a7d91c7791",
+    "poolId": "268142b04db3d882",
     "prompt": "Name a scientific subject or an unusual event in history.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
       {
         "id": "apollo",
         "tier": 0
       },
       {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
         "id": "aurora",
+        "tier": 0
+      },
+      {
+        "id": "illuminati",
         "tier": 0
       },
       {
@@ -13764,6 +16797,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "covid-pandemic",
+        "tier": 0
+      },
+      {
         "id": "earth",
         "tier": 0
       },
@@ -13772,7 +16809,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "freemasons",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
         "id": "hubble",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -13793,6 +16842,10 @@ export const questions = [
       },
       {
         "id": "milky-way",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -13828,11 +16881,27 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wright-first-flight",
+        "tier": 0
+      },
+      {
         "id": "zodiac",
         "tier": 0
       },
       {
         "id": "spanish-flu",
+        "tier": 0
+      },
+      {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
         "tier": 0
       },
       {
@@ -13848,11 +16917,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "bilderberg",
+        "tier": 0
+      },
+      {
         "id": "cassini",
         "tier": 0
       },
       {
         "id": "curiosity",
+        "tier": 0
+      },
+      {
+        "id": "exxon-valdez-spill",
         "tier": 0
       },
       {
@@ -13880,6 +16957,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mars-hoax",
         "tier": 0
       },
@@ -13904,6 +16985,14 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "paris-agreement",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "perseverance",
         "tier": 0
       },
@@ -13913,6 +17002,10 @@ export const questions = [
       },
       {
         "id": "salem-witch-trials",
+        "tier": 0
+      },
+      {
+        "id": "smallpox-eradication",
         "tier": 0
       },
       {
@@ -13928,31 +17021,43 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
+      },
+      {
         "id": "tunguska",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "tuskegee",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "uranus",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "vaccine-microchips",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-2",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "disney-cryonics",
+        "tier": 1
+      },
+      {
+        "id": "wtc7-demolition",
         "tier": 1
       },
       {
@@ -14004,6 +17109,10 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "montreal-protocol",
+        "tier": 1
+      },
+      {
         "id": "new-horizons",
         "tier": 1
       },
@@ -14017,19 +17126,23 @@ export const questions = [
       },
       {
         "id": "aquatone",
-        "tier": 1
+        "tier": 2
+      },
+      {
+        "id": "protocols-forgery-claim",
+        "tier": 2
       },
       {
         "id": "saturn-hexagon",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "earthquake-prediction-coverup",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "columbia",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "viking-1",
@@ -14065,15 +17178,15 @@ export const questions = [
       },
       {
         "id": "northwoods",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "osiris-rex",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "stormfury",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "rosetta",
@@ -14097,7 +17210,7 @@ export const questions = [
       },
       {
         "id": "operation-gold",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "azorian",
@@ -14122,12 +17235,28 @@ export const questions = [
     "band": 4,
     "family": "science",
     "topic": "Science & discovery",
-    "poolId": "99eb74ca99602d89",
+    "poolId": "704348f069ed46f1",
     "prompt": "Name a subject involving medicine, research, or the abuse of government power.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
         "id": "hitler",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "covid-pandemic",
+        "tier": 0
+      },
+      {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
         "tier": 0
       },
       {
@@ -14143,11 +17272,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mmr-autism-claim",
+        "tier": 0
+      },
+      {
         "id": "pol-pot",
         "tier": 0
       },
       {
+        "id": "wright-first-flight",
+        "tier": 0
+      },
+      {
         "id": "spanish-flu",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
         "tier": 0
       },
       {
@@ -14179,6 +17320,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mao",
         "tier": 0
       },
@@ -14207,7 +17352,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "smallpox-eradication",
+        "tier": 0
+      },
+      {
         "id": "sputnik-1",
+        "tier": 0
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 0
+      },
+      {
+        "id": "trinity-test",
         "tier": 0
       },
       {
@@ -14224,23 +17381,23 @@ export const questions = [
       },
       {
         "id": "voyager-2",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "disney-cryonics",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "pinochet",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "charles-taylor",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "cointelpro",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "dart",
@@ -14276,11 +17433,11 @@ export const questions = [
       },
       {
         "id": "osiris-rex",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "stormfury",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "karadzic",
@@ -14304,7 +17461,7 @@ export const questions = [
       },
       {
         "id": "acoustikitty",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "samphan",
@@ -14337,7 +17494,7 @@ export const questions = [
     "band": 5,
     "family": "science",
     "topic": "Science & discovery",
-    "poolId": "31820981a83879e6",
+    "poolId": "0196a58483fc8376",
     "prompt": "Name something investigated through astronomy, forensics, or government research.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
@@ -14346,11 +17503,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
         "id": "aurora",
         "tier": 0
       },
       {
         "id": "earth",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
         "tier": 0
       },
       {
@@ -14454,6 +17619,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mars-hoax",
         "tier": 0
       },
@@ -14467,6 +17636,10 @@ export const questions = [
       },
       {
         "id": "paperclip",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
         "tier": 0
       },
       {
@@ -14495,11 +17668,11 @@ export const questions = [
       },
       {
         "id": "voyager-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-2",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "carrington",
@@ -14559,11 +17732,11 @@ export const questions = [
       },
       {
         "id": "viking-1",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "comet-elenin-doomsday",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "corona",
@@ -14595,7 +17768,7 @@ export const questions = [
       },
       {
         "id": "rosetta",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "sagittarius-a",
@@ -14615,7 +17788,7 @@ export const questions = [
       },
       {
         "id": "operation-gold",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "palladium",
@@ -14636,12 +17809,24 @@ export const questions = [
     "band": 7,
     "family": "science",
     "topic": "Science & discovery",
-    "poolId": "68fa1981af45dc1f",
+    "poolId": "23b1083e18fba13f",
     "prompt": "Name a scientific subject or a seemingly impossible project in the archive.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
+      {
         "id": "apollo",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
         "tier": 0
       },
       {
@@ -14649,11 +17834,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "covid-pandemic",
+        "tier": 0
+      },
+      {
         "id": "earth",
         "tier": 0
       },
       {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
         "id": "hubble",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -14674,6 +17871,10 @@ export const questions = [
       },
       {
         "id": "milky-way",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -14709,7 +17910,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wright-first-flight",
+        "tier": 0
+      },
+      {
         "id": "spanish-flu",
+        "tier": 0
+      },
+      {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
         "tier": 0
       },
       {
@@ -14733,6 +17950,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "exxon-valdez-spill",
+        "tier": 0
+      },
+      {
         "id": "haarp",
         "tier": 0
       },
@@ -14750,6 +17971,10 @@ export const questions = [
       },
       {
         "id": "magnetic-vaccines",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
         "tier": 0
       },
       {
@@ -14777,11 +18002,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "paris-agreement",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "perseverance",
         "tier": 0
       },
       {
         "id": "project-blue-book",
+        "tier": 0
+      },
+      {
+        "id": "smallpox-eradication",
         "tier": 0
       },
       {
@@ -14797,32 +18034,44 @@ export const questions = [
         "tier": 0
       },
       {
-        "id": "tunguska",
+        "id": "three-mile-island",
         "tier": 0
+      },
+      {
+        "id": "trinity-test",
+        "tier": 0
+      },
+      {
+        "id": "tunguska",
+        "tier": 1
       },
       {
         "id": "tuskegee",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "uranus",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "vaccine-microchips",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-2",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "disney-cryonics",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "wtc7-demolition",
+        "tier": 1
       },
       {
         "id": "carrington",
@@ -14869,6 +18118,10 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "montreal-protocol",
+        "tier": 1
+      },
+      {
         "id": "new-horizons",
         "tier": 1
       },
@@ -14878,27 +18131,27 @@ export const questions = [
       },
       {
         "id": "philadelphia-experiment",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "aquatone",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "saturn-hexagon",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "earthquake-prediction-coverup",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "columbia",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "viking-1",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "comet-elenin-doomsday",
@@ -14926,15 +18179,15 @@ export const questions = [
       },
       {
         "id": "northwoods",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "osiris-rex",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "stormfury",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "rosetta",
@@ -14954,7 +18207,7 @@ export const questions = [
       },
       {
         "id": "mars-doorway",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "operation-gold",
@@ -14979,16 +18232,40 @@ export const questions = [
     "band": 0,
     "family": "technology",
     "topic": "Machines & inventions",
-    "poolId": "2f351478b5eacbc0",
+    "poolId": "b6b090d5ea8c38f3",
     "prompt": "Name an invention, mission, or event connected to modern technology.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
       {
         "id": "apollo",
         "tier": 0
       },
       {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
         "id": "chernobyl",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
         "tier": 0
       },
       {
@@ -15004,11 +18281,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mmr-autism-claim",
+        "tier": 0
+      },
+      {
         "id": "wtc",
         "tier": 0
       },
       {
         "id": "titanic",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -15032,6 +18317,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "exxon-valdez-spill",
+        "tier": 0
+      },
+      {
         "id": "fukushima",
         "tier": 0
       },
@@ -15052,7 +18341,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mrna-dna-rewrite",
+        "tier": 0
+      },
+      {
+        "id": "panama-canal-opening",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
         "tier": 0
       },
       {
@@ -15065,19 +18366,31 @@ export const questions = [
       },
       {
         "id": "sputnik-1",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
       },
       {
         "id": "vaccine-microchips",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-2",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "wtc7-demolition",
+        "tier": 1
       },
       {
         "id": "bhopal",
@@ -15105,15 +18418,15 @@ export const questions = [
       },
       {
         "id": "lusitania",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "columbia",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "viking-1",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "corona",
@@ -15129,11 +18442,11 @@ export const questions = [
       },
       {
         "id": "rosetta",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "aberfan",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "acoustikitty",
@@ -15145,7 +18458,7 @@ export const questions = [
       },
       {
         "id": "azorian",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "project-xray",
@@ -15162,7 +18475,7 @@ export const questions = [
     "band": 1,
     "family": "technology",
     "topic": "Machines & inventions",
-    "poolId": "1d9466db9879043e",
+    "poolId": "26715367e3a3a0ee",
     "prompt": "Name a subject involving aircraft, spacecraft, ships, or other transport.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
@@ -15199,6 +18512,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wright-first-flight",
+        "tier": 0
+      },
+      {
         "id": "cassini",
         "tier": 0
       },
@@ -15207,11 +18524,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "exxon-valdez-spill",
+        "tier": 0
+      },
+      {
         "id": "halifax",
         "tier": 0
       },
       {
         "id": "james-webb",
+        "tier": 0
+      },
+      {
+        "id": "panama-canal-opening",
         "tier": 0
       },
       {
@@ -15228,7 +18553,7 @@ export const questions = [
       },
       {
         "id": "voyager-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-2",
@@ -15289,7 +18614,7 @@ export const questions = [
     "band": 1,
     "family": "technology",
     "topic": "Machines & inventions",
-    "poolId": "433d3268175ead93",
+    "poolId": "ad0b1cb617b1bfe3",
     "prompt": "Name a technology-related disaster or a major exploration effort.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
@@ -15322,6 +18647,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wright-first-flight",
+        "tier": 0
+      },
+      {
         "id": "cassini",
         "tier": 0
       },
@@ -15331,6 +18660,10 @@ export const questions = [
       },
       {
         "id": "deepwater-horizon",
+        "tier": 0
+      },
+      {
+        "id": "exxon-valdez-spill",
         "tier": 0
       },
       {
@@ -15350,6 +18683,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "panama-canal-opening",
+        "tier": 0
+      },
+      {
         "id": "perseverance",
         "tier": 0
       },
@@ -15359,7 +18696,11 @@ export const questions = [
       },
       {
         "id": "sputnik-1",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
       },
       {
         "id": "voyager-1",
@@ -15383,7 +18724,7 @@ export const questions = [
       },
       {
         "id": "new-horizons",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lusitania",
@@ -15420,10 +18761,14 @@ export const questions = [
     "band": 2,
     "family": "technology",
     "topic": "Machines & inventions",
-    "poolId": "593ea7c5a5053b68",
+    "poolId": "25fa5bdd433b60c6",
     "prompt": "Name a subject involving communications, surveillance, or forensic evidence.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "area-51",
+        "tier": 0
+      },
       {
         "id": "gacy",
         "tier": 0
@@ -15462,7 +18807,7 @@ export const questions = [
       },
       {
         "id": "corona",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "harold-shipman",
@@ -15499,16 +18844,28 @@ export const questions = [
     "band": 2,
     "family": "technology",
     "topic": "Machines & inventions",
-    "poolId": "6181babf1d730bfa",
+    "poolId": "e6bfabe466ccd68f",
     "prompt": "Name a research program or a story about a powerful machine.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
       {
         "id": "haarp",
         "tier": 0
       },
       {
         "id": "noaa-hurricane-steering",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
         "tier": 0
       },
       {
@@ -15521,6 +18878,10 @@ export const questions = [
       },
       {
         "id": "project-blue-book",
+        "tier": 0
+      },
+      {
+        "id": "wtc7-demolition",
         "tier": 0
       },
       {
@@ -15545,7 +18906,7 @@ export const questions = [
       },
       {
         "id": "lhc-doomsday",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "northwoods",
@@ -15590,7 +18951,7 @@ export const questions = [
     "band": 3,
     "family": "technology",
     "topic": "Machines & inventions",
-    "poolId": "e9b2b951513bd933",
+    "poolId": "88fcb326396939ae",
     "prompt": "Name a subject involving a scientific instrument or an industrial accident.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
@@ -15623,6 +18984,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "exxon-valdez-spill",
+        "tier": 0
+      },
+      {
         "id": "fukushima",
         "tier": 0
       },
@@ -15643,8 +19008,12 @@ export const questions = [
         "tier": 0
       },
       {
-        "id": "voyager-1",
+        "id": "three-mile-island",
         "tier": 0
+      },
+      {
+        "id": "voyager-1",
+        "tier": 1
       },
       {
         "id": "voyager-2",
@@ -15664,7 +19033,7 @@ export const questions = [
       },
       {
         "id": "new-horizons",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "viking-1",
@@ -15693,10 +19062,14 @@ export const questions = [
     "band": 4,
     "family": "technology",
     "topic": "Machines & inventions",
-    "poolId": "097ef96c44e8c62c",
+    "poolId": "6979deadce2c0879",
     "prompt": "Name a mission, experiment, or claim about advanced technology.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
       {
         "id": "apollo",
         "tier": 0
@@ -15707,6 +19080,10 @@ export const questions = [
       },
       {
         "id": "iss",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -15730,6 +19107,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mkultra",
         "tier": 0
       },
@@ -15739,6 +19120,10 @@ export const questions = [
       },
       {
         "id": "sputnik-1",
+        "tier": 0
+      },
+      {
+        "id": "trinity-test",
         "tier": 0
       },
       {
@@ -15754,12 +19139,16 @@ export const questions = [
         "tier": 0
       },
       {
-        "id": "dart",
+        "id": "wtc7-demolition",
         "tier": 0
       },
       {
+        "id": "dart",
+        "tier": 1
+      },
+      {
         "id": "denver-airport-lizard-base",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "ingenuity",
@@ -15783,7 +19172,7 @@ export const questions = [
       },
       {
         "id": "hollow-moon",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lhc-doomsday",
@@ -15820,7 +19209,7 @@ export const questions = [
     "band": 4,
     "family": "technology",
     "topic": "Machines & inventions",
-    "poolId": "2f351478b5eacbc0",
+    "poolId": "7a6e8a40707e5e51",
     "prompt": "Name a technological achievement or a documented failure of engineering.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
@@ -15829,7 +19218,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
         "id": "chernobyl",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
         "tier": 0
       },
       {
@@ -15845,11 +19250,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mmr-autism-claim",
+        "tier": 0
+      },
+      {
         "id": "wtc",
         "tier": 0
       },
       {
         "id": "titanic",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -15873,6 +19286,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "exxon-valdez-spill",
+        "tier": 0
+      },
+      {
         "id": "fukushima",
         "tier": 0
       },
@@ -15893,7 +19310,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mrna-dna-rewrite",
+        "tier": 0
+      },
+      {
+        "id": "panama-canal-opening",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
         "tier": 0
       },
       {
@@ -15909,16 +19338,24 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
+      },
+      {
         "id": "vaccine-microchips",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-2",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "bhopal",
@@ -15950,11 +19387,11 @@ export const questions = [
       },
       {
         "id": "columbia",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "viking-1",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "corona",
@@ -15974,7 +19411,7 @@ export const questions = [
       },
       {
         "id": "acoustikitty",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "operation-gold",
@@ -15986,7 +19423,7 @@ export const questions = [
       },
       {
         "id": "palladium",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "project-xray",
@@ -16003,12 +19440,20 @@ export const questions = [
     "band": 5,
     "family": "technology",
     "topic": "Machines & inventions",
-    "poolId": "e0adf9b4bcabadab",
+    "poolId": "f918938780729f56",
     "prompt": "Name a subject involving secret technology, intelligence, or exploration.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
+      {
         "id": "apollo",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
         "tier": 0
       },
       {
@@ -16017,6 +19462,10 @@ export const questions = [
       },
       {
         "id": "iss",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -16040,7 +19489,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mkultra",
+        "tier": 0
+      },
+      {
+        "id": "panama-canal-opening",
         "tier": 0
       },
       {
@@ -16068,6 +19525,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wtc7-demolition",
+        "tier": 0
+      },
+      {
         "id": "cointelpro",
         "tier": 0
       },
@@ -16081,15 +19542,15 @@ export const questions = [
       },
       {
         "id": "ingenuity",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "juno",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "new-horizons",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "aquatone",
@@ -16117,11 +19578,11 @@ export const questions = [
       },
       {
         "id": "osiris-rex",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "stormfury",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "rosetta",
@@ -16137,7 +19598,7 @@ export const questions = [
       },
       {
         "id": "operation-gold",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "azorian",
@@ -16162,16 +19623,36 @@ export const questions = [
     "band": 7,
     "family": "technology",
     "topic": "Machines & inventions",
-    "poolId": "ef3d124e4c429346",
+    "poolId": "915dac618c5bf472",
     "prompt": "Name a real machine-related subject or a theory about impossible technology.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
       {
         "id": "apollo",
         "tier": 0
       },
       {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
         "id": "chernobyl",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
         "tier": 0
       },
       {
@@ -16187,7 +19668,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mmr-autism-claim",
+        "tier": 0
+      },
+      {
         "id": "titanic",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -16208,6 +19697,10 @@ export const questions = [
       },
       {
         "id": "rader",
+        "tier": 0
+      },
+      {
+        "id": "exxon-valdez-spill",
         "tier": 0
       },
       {
@@ -16239,7 +19732,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mrna-dna-rewrite",
+        "tier": 0
+      },
+      {
+        "id": "panama-canal-opening",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
         "tier": 0
       },
       {
@@ -16255,20 +19760,32 @@ export const questions = [
         "tier": 0
       },
       {
-        "id": "vaccine-microchips",
+        "id": "three-mile-island",
         "tier": 0
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
+      },
+      {
+        "id": "vaccine-microchips",
+        "tier": 1
       },
       {
         "id": "voyager-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-2",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "wtc7-demolition",
+        "tier": 1
       },
       {
         "id": "bhopal",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "dart",
@@ -16300,19 +19817,19 @@ export const questions = [
       },
       {
         "id": "lusitania",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "columbia",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "viking-1",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "corona",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "hollow-moon",
@@ -16328,11 +19845,11 @@ export const questions = [
       },
       {
         "id": "rosetta",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "aberfan",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "acoustikitty",
@@ -16344,7 +19861,7 @@ export const questions = [
       },
       {
         "id": "azorian",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "palladium",
@@ -16361,10 +19878,18 @@ export const questions = [
     "band": 0,
     "family": "conspiracies",
     "topic": "Conspiracies & secret stories",
-    "poolId": "a3f3837f7a24ec1d",
+    "poolId": "a112f4b03cd1399b",
     "prompt": "Name a conspiracy theory or a documented secret program.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
       {
         "id": "bermuda-triangle",
         "tier": 0
@@ -16375,6 +19900,14 @@ export const questions = [
       },
       {
         "id": "flat-earth",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -16406,6 +19939,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mars-hoax",
         "tier": 0
       },
@@ -16419,6 +19956,10 @@ export const questions = [
       },
       {
         "id": "paperclip",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
         "tier": 0
       },
       {
@@ -16438,6 +19979,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wtc7-demolition",
+        "tier": 0
+      },
+      {
         "id": "cointelpro",
         "tier": 0
       },
@@ -16451,15 +19996,15 @@ export const questions = [
       },
       {
         "id": "face-mars",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "hollow-earth",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "magnetic-pole-flip-apocalypse",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "philadelphia-experiment",
@@ -16467,6 +20012,10 @@ export const questions = [
       },
       {
         "id": "aquatone",
+        "tier": 1
+      },
+      {
+        "id": "protocols-forgery-claim",
         "tier": 1
       },
       {
@@ -16487,15 +20036,15 @@ export const questions = [
       },
       {
         "id": "lhc-doomsday",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "2000-alignment-apocalypse",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "northwoods",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "stormfury",
@@ -16511,11 +20060,11 @@ export const questions = [
       },
       {
         "id": "mars-doorway",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "operation-gold",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "azorian",
@@ -16523,7 +20072,7 @@ export const questions = [
       },
       {
         "id": "palladium",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "project-xray",
@@ -16540,10 +20089,18 @@ export const questions = [
     "band": 0,
     "family": "conspiracies",
     "topic": "Conspiracies & secret stories",
-    "poolId": "31eecbe3d138723b",
+    "poolId": "b1d3fce8feec994f",
     "prompt": "Name a conspiracy-related subject or a subject connected to government.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "financial-crisis-2008",
+        "tier": 0
+      },
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
       {
         "id": "abraham-lincoln",
         "tier": 0
@@ -16553,7 +20110,35 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "american-civil-war",
+        "tier": 0
+      },
+      {
+        "id": "american-revolution",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
         "id": "bermuda-triangle",
+        "tier": 0
+      },
+      {
+        "id": "brexit",
         "tier": 0
       },
       {
@@ -16561,7 +20146,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "soviet-union-collapse",
+        "tier": 0
+      },
+      {
+        "id": "covid-pandemic",
+        "tier": 0
+      },
+      {
         "id": "declaration-independence",
+        "tier": 0
+      },
+      {
+        "id": "end-apartheid",
         "tier": 0
       },
       {
@@ -16569,7 +20166,27 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "french-revolution",
+        "tier": 0
+      },
+      {
         "id": "george-washington",
+        "tier": 0
+      },
+      {
+        "id": "great-depression",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
+        "id": "gulf-war",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
         "tier": 0
       },
       {
@@ -16585,7 +20202,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "korean-war",
+        "tier": 0
+      },
+      {
         "id": "gandhi",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -16617,7 +20242,27 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "vietnam-war",
+        "tier": 0
+      },
+      {
+        "id": "wall-street-crash-1929",
+        "tier": 0
+      },
+      {
         "id": "watergate",
+        "tier": 0
+      },
+      {
+        "id": "world-war-one",
+        "tier": 0
+      },
+      {
+        "id": "world-war-two",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
         "tier": 0
       },
       {
@@ -16630,6 +20275,10 @@ export const questions = [
       },
       {
         "id": "mussolini",
+        "tier": 0
+      },
+      {
+        "id": "boston-tea-party",
         "tier": 0
       },
       {
@@ -16665,6 +20314,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "indian-independence",
+        "tier": 0
+      },
+      {
         "id": "james-webb",
         "tier": 0
       },
@@ -16677,7 +20330,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mao",
+        "tier": 0
+      },
+      {
+        "id": "march-on-washington",
         "tier": 0
       },
       {
@@ -16697,7 +20358,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "panama-canal-opening",
+        "tier": 0
+      },
+      {
         "id": "paperclip",
+        "tier": 0
+      },
+      {
+        "id": "paris-agreement",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
         "tier": 0
       },
       {
@@ -16706,42 +20379,66 @@ export const questions = [
       },
       {
         "id": "project-blue-book",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "saddam-hussein",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "smallpox-eradication",
+        "tier": 1
       },
       {
         "id": "sputnik-1",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "suez-crisis",
+        "tier": 1
       },
       {
         "id": "solar-warming-hoax",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "thirteenth-amendment",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 1
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
       },
       {
         "id": "tuskegee",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "vaccine-microchips",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-2",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "disney-cryonics",
+        "tier": 1
+      },
+      {
+        "id": "wtc7-demolition",
         "tier": 1
       },
       {
@@ -16789,36 +20486,44 @@ export const questions = [
         "tier": 1
       },
       {
-        "id": "new-horizons",
+        "id": "montreal-protocol",
         "tier": 1
+      },
+      {
+        "id": "new-horizons",
+        "tier": 2
       },
       {
         "id": "nibiru",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "philadelphia-experiment",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "aquatone",
-        "tier": 1
+        "tier": 2
+      },
+      {
+        "id": "protocols-forgery-claim",
+        "tier": 2
       },
       {
         "id": "earthquake-prediction-coverup",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "viking-1",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "voting-rights-act-1965",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "comet-elenin-doomsday",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "corona",
@@ -16846,19 +20551,19 @@ export const questions = [
       },
       {
         "id": "stormfury",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "karadzic",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "mladic",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "rosetta",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "stargate",
@@ -16878,11 +20583,11 @@ export const questions = [
       },
       {
         "id": "operation-gold",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "azorian",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "kambanda",
@@ -16907,7 +20612,7 @@ export const questions = [
     "band": 1,
     "family": "conspiracies",
     "topic": "Conspiracies & secret stories",
-    "poolId": "609ae62d2de5e118",
+    "poolId": "ead025f2c18b7b78",
     "prompt": "Name a story about strange skies, hidden worlds, or alleged visitors.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
@@ -16933,6 +20638,10 @@ export const questions = [
       },
       {
         "id": "flat-earth",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
         "tier": 0
       },
       {
@@ -17036,6 +20745,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "perseverance",
         "tier": 0
       },
@@ -17097,7 +20810,7 @@ export const questions = [
       },
       {
         "id": "juno",
-        "tier": 2
+        "tier": 1
       },
       {
         "id": "kuiper-belt",
@@ -17109,6 +20822,10 @@ export const questions = [
       },
       {
         "id": "nibiru",
+        "tier": 2
+      },
+      {
+        "id": "protocols-forgery-claim",
         "tier": 2
       },
       {
@@ -17158,16 +20875,36 @@ export const questions = [
     "band": 2,
     "family": "conspiracies",
     "topic": "Conspiracies & secret stories",
-    "poolId": "7638b90e5bf1fae9",
+    "poolId": "a3c682970f99f9bc",
     "prompt": "Name a subject involving a doomsday claim or an extraordinary invention.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
       {
         "id": "apollo",
         "tier": 0
       },
       {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
         "id": "chernobyl",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
         "tier": 0
       },
       {
@@ -17183,7 +20920,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mmr-autism-claim",
+        "tier": 0
+      },
+      {
         "id": "titanic",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -17208,6 +20953,10 @@ export const questions = [
       },
       {
         "id": "rader",
+        "tier": 0
+      },
+      {
+        "id": "exxon-valdez-spill",
         "tier": 0
       },
       {
@@ -17239,7 +20988,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mrna-dna-rewrite",
+        "tier": 0
+      },
+      {
+        "id": "panama-canal-opening",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
         "tier": 0
       },
       {
@@ -17255,28 +21016,40 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "three-mile-island",
+        "tier": 0
+      },
+      {
+        "id": "trinity-test",
+        "tier": 0
+      },
+      {
         "id": "vaccine-microchips",
         "tier": 0
       },
       {
         "id": "voyager-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-2",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "wtc7-demolition",
+        "tier": 1
       },
       {
         "id": "bhopal",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "dart",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "denver-airport-lizard-base",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "ingenuity",
@@ -17316,11 +21089,11 @@ export const questions = [
       },
       {
         "id": "comet-elenin-doomsday",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "corona",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "hollow-moon",
@@ -17344,7 +21117,7 @@ export const questions = [
       },
       {
         "id": "aberfan",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "acoustikitty",
@@ -17377,7 +21150,7 @@ export const questions = [
     "band": 3,
     "family": "conspiracies",
     "topic": "Conspiracies & secret stories",
-    "poolId": "d985247e1b8c338a",
+    "poolId": "080dcdd776612ec6",
     "prompt": "Name a theory about nature or a real project that tried to influence it.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
@@ -17394,11 +21167,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wright-first-flight",
+        "tier": 0
+      },
+      {
         "id": "haarp",
         "tier": 0
       },
       {
         "id": "noaa-hurricane-steering",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
         "tier": 0
       },
       {
@@ -17410,12 +21191,16 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "trinity-test",
+        "tier": 0
+      },
+      {
         "id": "tuskegee",
         "tier": 0
       },
       {
         "id": "earthquake-weather",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "hollow-earth",
@@ -17427,7 +21212,7 @@ export const questions = [
       },
       {
         "id": "stormfury",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "stargate",
@@ -17452,10 +21237,18 @@ export const questions = [
     "band": 3,
     "family": "conspiracies",
     "topic": "Conspiracies & secret stories",
-    "poolId": "7c8d1c3ed8dd4a82",
+    "poolId": "13678945285389c0",
     "prompt": "Name a subject involving a cover story, spying, or alleged hidden powers.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
       {
         "id": "haarp",
         "tier": 0
@@ -17465,11 +21258,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mkultra",
         "tier": 0
       },
       {
         "id": "paperclip",
+        "tier": 0
+      },
+      {
+        "id": "wtc7-demolition",
         "tier": 0
       },
       {
@@ -17494,7 +21295,7 @@ export const questions = [
       },
       {
         "id": "lhc-doomsday",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "northwoods",
@@ -17535,10 +21336,22 @@ export const questions = [
     "band": 4,
     "family": "conspiracies",
     "topic": "Conspiracies & secret stories",
-    "poolId": "129979b40dbd0eea",
+    "poolId": "3b50965c7d896f59",
     "prompt": "Name a conspiracy-related subject or an unusual historical event.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "illuminati",
+        "tier": 0
+      },
       {
         "id": "bermuda-triangle",
         "tier": 0
@@ -17549,6 +21362,18 @@ export const questions = [
       },
       {
         "id": "flat-earth",
+        "tier": 0
+      },
+      {
+        "id": "freemasons",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -17569,6 +21394,10 @@ export const questions = [
       },
       {
         "id": "5g-covid",
+        "tier": 0
+      },
+      {
+        "id": "bilderberg",
         "tier": 0
       },
       {
@@ -17596,6 +21425,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "salem-witch-trials",
         "tier": 0
       },
@@ -17616,6 +21449,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wtc7-demolition",
+        "tier": 0
+      },
+      {
         "id": "carrington",
         "tier": 0
       },
@@ -17625,19 +21462,19 @@ export const questions = [
       },
       {
         "id": "face-mars",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "hollow-earth",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "magnetic-pole-flip-apocalypse",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "nibiru",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "philadelphia-experiment",
@@ -17645,6 +21482,10 @@ export const questions = [
       },
       {
         "id": "aquatone",
+        "tier": 1
+      },
+      {
+        "id": "protocols-forgery-claim",
         "tier": 1
       },
       {
@@ -17669,11 +21510,11 @@ export const questions = [
       },
       {
         "id": "lhc-doomsday",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "2000-alignment-apocalypse",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "northwoods",
@@ -17693,7 +21534,7 @@ export const questions = [
       },
       {
         "id": "mars-doorway",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "operation-gold",
@@ -17705,7 +21546,7 @@ export const questions = [
       },
       {
         "id": "palladium",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "project-xray",
@@ -17722,16 +21563,32 @@ export const questions = [
     "band": 5,
     "family": "conspiracies",
     "topic": "Conspiracies & secret stories",
-    "poolId": "22337d2736a214d8",
+    "poolId": "793c3b8a86636a7f",
     "prompt": "Name a subject involving secret research, medicine, or a scientific hoax.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
       {
         "id": "chemtrails",
         "tier": 0
       },
       {
+        "id": "covid-pandemic",
+        "tier": 0
+      },
+      {
         "id": "flat-earth",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
         "tier": 0
       },
       {
@@ -17740,6 +21597,14 @@ export const questions = [
       },
       {
         "id": "iss",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -17775,6 +21640,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mkultra",
         "tier": 0
       },
@@ -17795,11 +21664,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "smallpox-eradication",
+        "tier": 0
+      },
+      {
         "id": "sputnik-1",
         "tier": 0
       },
       {
         "id": "solar-warming-hoax",
+        "tier": 0
+      },
+      {
+        "id": "trinity-test",
         "tier": 0
       },
       {
@@ -17820,19 +21697,23 @@ export const questions = [
       },
       {
         "id": "disney-cryonics",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "wtc7-demolition",
+        "tier": 1
       },
       {
         "id": "cointelpro",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "dart",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "earthquake-weather",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "hollow-earth",
@@ -17868,15 +21749,15 @@ export const questions = [
       },
       {
         "id": "lhc-doomsday",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "northwoods",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "osiris-rex",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "stormfury",
@@ -17892,11 +21773,11 @@ export const questions = [
       },
       {
         "id": "dancing-plague",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "acoustikitty",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "operation-gold",
@@ -17908,7 +21789,7 @@ export const questions = [
       },
       {
         "id": "palladium",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "project-xray",
@@ -17925,10 +21806,18 @@ export const questions = [
     "band": 6,
     "family": "conspiracies",
     "topic": "Conspiracies & secret stories",
-    "poolId": "1784a3cb3c5a64fc",
+    "poolId": "2590c0e8afc18791",
     "prompt": "Name a theory about space or a real government research program.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
       {
         "id": "moon-landing-hoax",
         "tier": 0
@@ -17942,6 +21831,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mars-hoax",
         "tier": 0
       },
@@ -17951,6 +21844,10 @@ export const questions = [
       },
       {
         "id": "paperclip",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
         "tier": 0
       },
       {
@@ -17979,11 +21876,11 @@ export const questions = [
       },
       {
         "id": "corona",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "hollow-moon",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "northwoods",
@@ -18003,7 +21900,7 @@ export const questions = [
       },
       {
         "id": "mars-doorway",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "operation-gold",
@@ -18032,10 +21929,18 @@ export const questions = [
     "band": 7,
     "family": "conspiracies",
     "topic": "Conspiracies & secret stories",
-    "poolId": "d4d563fbeb907454",
+    "poolId": "c5281449f9108174",
     "prompt": "Name a subject involving hidden worlds, strange technology, or a secret operation.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
       {
         "id": "bermuda-triangle",
         "tier": 0
@@ -18053,6 +21958,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mkultra",
         "tier": 0
       },
@@ -18062,6 +21971,10 @@ export const questions = [
       },
       {
         "id": "project-blue-book",
+        "tier": 0
+      },
+      {
+        "id": "wtc7-demolition",
         "tier": 0
       },
       {
@@ -18085,12 +21998,16 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "protocols-forgery-claim",
+        "tier": 1
+      },
+      {
         "id": "corona",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "hollow-moon",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "lhc-doomsday",
@@ -18106,11 +22023,11 @@ export const questions = [
       },
       {
         "id": "stargate",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "acoustikitty",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "operation-gold",
@@ -18118,7 +22035,7 @@ export const questions = [
       },
       {
         "id": "azorian",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "palladium",
@@ -18139,7 +22056,7 @@ export const questions = [
     "band": 0,
     "family": "programs",
     "topic": "Projects & operations",
-    "poolId": "8b24865bd3d71181",
+    "poolId": "939e926679b87a9a",
     "prompt": "Name a government program, space mission, or research project.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
@@ -18148,11 +22065,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
         "id": "hubble",
         "tier": 0
       },
       {
         "id": "iss",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -18165,6 +22090,10 @@ export const questions = [
       },
       {
         "id": "james-webb",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
         "tier": 0
       },
       {
@@ -18184,7 +22113,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "smallpox-eradication",
+        "tier": 0
+      },
+      {
         "id": "sputnik-1",
+        "tier": 0
+      },
+      {
+        "id": "trinity-test",
         "tier": 0
       },
       {
@@ -18209,11 +22146,11 @@ export const questions = [
       },
       {
         "id": "ingenuity",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "juno",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "new-horizons",
@@ -18241,7 +22178,7 @@ export const questions = [
       },
       {
         "id": "rosetta",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "stargate",
@@ -18278,10 +22215,18 @@ export const questions = [
     "band": 1,
     "family": "programs",
     "topic": "Projects & operations",
-    "poolId": "c5c047561287c508",
+    "poolId": "02052a9a7b0a4990",
     "prompt": "Name an intelligence operation or a subject connected to surveillance.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
+        "tier": 0
+      },
       {
         "id": "mkultra",
         "tier": 0
@@ -18308,7 +22253,7 @@ export const questions = [
       },
       {
         "id": "stargate",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "operation-gold",
@@ -18337,16 +22282,40 @@ export const questions = [
     "band": 1,
     "family": "programs",
     "topic": "Projects & operations",
-    "poolId": "a338f58ca680d089",
+    "poolId": "7b36e581dad945f3",
     "prompt": "Name a subject involving military research or space exploration.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "american-civil-war",
+        "tier": 0
+      },
+      {
+        "id": "american-revolution",
+        "tier": 0
+      },
       {
         "id": "apollo",
         "tier": 0
       },
       {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
         "id": "dday",
+        "tier": 0
+      },
+      {
+        "id": "gulf-war",
         "tier": 0
       },
       {
@@ -18358,11 +22327,31 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "korean-war",
+        "tier": 0
+      },
+      {
         "id": "pearl-harbor",
         "tier": 0
       },
       {
         "id": "roswell-alien-craft",
+        "tier": 0
+      },
+      {
+        "id": "vietnam-war",
+        "tier": 0
+      },
+      {
+        "id": "world-war-one",
+        "tier": 0
+      },
+      {
+        "id": "world-war-two",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -18382,7 +22371,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mkultra",
+        "tier": 0
+      },
+      {
+        "id": "panama-canal-opening",
         "tier": 0
       },
       {
@@ -18398,32 +22395,44 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "smallpox-eradication",
+        "tier": 0
+      },
+      {
         "id": "sputnik-1",
         "tier": 0
       },
       {
-        "id": "tuskegee",
+        "id": "suez-crisis",
         "tier": 0
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
+      },
+      {
+        "id": "tuskegee",
+        "tier": 1
       },
       {
         "id": "voyager-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-2",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "cointelpro",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "dart",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "ingenuity",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "juno",
@@ -18443,19 +22452,19 @@ export const questions = [
       },
       {
         "id": "viking-1",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "corona",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "northwoods",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "osiris-rex",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "stormfury",
@@ -18467,11 +22476,11 @@ export const questions = [
       },
       {
         "id": "acoustikitty",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "operation-gold",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "azorian",
@@ -18479,7 +22488,7 @@ export const questions = [
       },
       {
         "id": "palladium",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "project-xray",
@@ -18496,16 +22505,28 @@ export const questions = [
     "band": 2,
     "family": "programs",
     "topic": "Projects & operations",
-    "poolId": "6181babf1d730bfa",
+    "poolId": "e6bfabe466ccd68f",
     "prompt": "Name a government project or a theory about secret technology.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
       {
         "id": "haarp",
         "tier": 0
       },
       {
         "id": "noaa-hurricane-steering",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
         "tier": 0
       },
       {
@@ -18518,6 +22539,10 @@ export const questions = [
       },
       {
         "id": "project-blue-book",
+        "tier": 0
+      },
+      {
+        "id": "wtc7-demolition",
         "tier": 0
       },
       {
@@ -18542,7 +22567,7 @@ export const questions = [
       },
       {
         "id": "hollow-moon",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "lhc-doomsday",
@@ -18587,12 +22612,16 @@ export const questions = [
     "band": 3,
     "family": "programs",
     "topic": "Projects & operations",
-    "poolId": "4af63bcdf3d8a00b",
+    "poolId": "ab4b393a3b7ff8c3",
     "prompt": "Name a scientific mission or a government operation.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
         "id": "apollo",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
         "tier": 0
       },
       {
@@ -18613,6 +22642,10 @@ export const questions = [
       },
       {
         "id": "james-webb",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
         "tier": 0
       },
       {
@@ -18661,7 +22694,7 @@ export const questions = [
       },
       {
         "id": "new-horizons",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "aquatone",
@@ -18722,12 +22755,20 @@ export const questions = [
     "band": 3,
     "family": "programs",
     "topic": "Projects & operations",
-    "poolId": "cbc6e55931c120f3",
+    "poolId": "ff1c63f3e5d18461",
     "prompt": "Name a subject involving experiments or the abuse of government power.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
         "id": "hitler",
+        "tier": 0
+      },
+      {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
         "tier": 0
       },
       {
@@ -18739,11 +22780,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wright-first-flight",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
         "id": "mussolini",
         "tier": 0
       },
       {
         "id": "idi-amin",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
         "tier": 0
       },
       {
@@ -18759,16 +22812,24 @@ export const questions = [
         "tier": 0
       },
       {
-        "id": "tuskegee",
+        "id": "tiananmen-1989",
         "tier": 0
+      },
+      {
+        "id": "trinity-test",
+        "tier": 0
+      },
+      {
+        "id": "tuskegee",
+        "tier": 1
       },
       {
         "id": "pinochet",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "charles-taylor",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "cointelpro",
@@ -18784,7 +22845,7 @@ export const questions = [
       },
       {
         "id": "stargate",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "acoustikitty",
@@ -18813,12 +22874,20 @@ export const questions = [
     "band": 4,
     "family": "programs",
     "topic": "Projects & operations",
-    "poolId": "01530ba6dc2635d2",
+    "poolId": "6fec02af9dd288f7",
     "prompt": "Name a research project or an intelligence case with a documentary record.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
         "id": "al-capone",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
         "tier": 0
       },
       {
@@ -18850,6 +22919,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wright-first-flight",
+        "tier": 0
+      },
+      {
         "id": "zodiac",
         "tier": 0
       },
@@ -18878,6 +22951,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mkultra",
         "tier": 0
       },
@@ -18898,11 +22975,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "smallpox-eradication",
+        "tier": 0
+      },
+      {
         "id": "sputnik-1",
         "tier": 0
       },
       {
         "id": "unabomber",
+        "tier": 0
+      },
+      {
+        "id": "trinity-test",
         "tier": 0
       },
       {
@@ -18919,11 +23004,11 @@ export const questions = [
       },
       {
         "id": "cointelpro",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "dart",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "ingenuity",
@@ -18967,11 +23052,11 @@ export const questions = [
       },
       {
         "id": "lindbergh-kidnapping",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "northwoods",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "osiris-rex",
@@ -18991,7 +23076,7 @@ export const questions = [
       },
       {
         "id": "acoustikitty",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "joseph-franklin",
@@ -19003,7 +23088,7 @@ export const questions = [
       },
       {
         "id": "palladium",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "project-xray",
@@ -19020,7 +23105,7 @@ export const questions = [
     "band": 5,
     "family": "programs",
     "topic": "Projects & operations",
-    "poolId": "a3d69c7443b38e89",
+    "poolId": "4addb2ee3ac0e35b",
     "prompt": "Name a subject involving covert activity, communications, or engineering.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
@@ -19029,7 +23114,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
         "id": "chernobyl",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
         "tier": 0
       },
       {
@@ -19045,7 +23146,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mmr-autism-claim",
+        "tier": 0
+      },
+      {
         "id": "titanic",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -19069,6 +23178,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "exxon-valdez-spill",
+        "tier": 0
+      },
+      {
         "id": "fukushima",
         "tier": 0
       },
@@ -19089,6 +23202,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mkultra",
         "tier": 0
       },
@@ -19097,7 +23214,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "panama-canal-opening",
+        "tier": 0
+      },
+      {
         "id": "paperclip",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
         "tier": 0
       },
       {
@@ -19113,24 +23238,32 @@ export const questions = [
         "tier": 0
       },
       {
-        "id": "vaccine-microchips",
+        "id": "three-mile-island",
         "tier": 0
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
+      },
+      {
+        "id": "vaccine-microchips",
+        "tier": 1
       },
       {
         "id": "voyager-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-2",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "bhopal",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "carrington",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "cointelpro",
@@ -19162,19 +23295,19 @@ export const questions = [
       },
       {
         "id": "columbia",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "viking-1",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "corona",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lhc-doomsday",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "northwoods",
@@ -19190,11 +23323,11 @@ export const questions = [
       },
       {
         "id": "stargate",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "aberfan",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "acoustikitty",
@@ -19206,7 +23339,7 @@ export const questions = [
       },
       {
         "id": "azorian",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "project-xray",
@@ -19223,10 +23356,14 @@ export const questions = [
     "band": 6,
     "family": "programs",
     "topic": "Projects & operations",
-    "poolId": "fb833c14b37e4a5d",
+    "poolId": "491092b2b2031250",
     "prompt": "Name a subject involving secret research or alleged control over nature.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "area-51",
+        "tier": 0
+      },
       {
         "id": "bermuda-triangle",
         "tier": 0
@@ -19245,6 +23382,10 @@ export const questions = [
       },
       {
         "id": "iss",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -19268,6 +23409,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mkultra",
         "tier": 0
       },
@@ -19284,11 +23429,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "smallpox-eradication",
+        "tier": 0
+      },
+      {
         "id": "sputnik-1",
         "tier": 0
       },
       {
         "id": "solar-warming-hoax",
+        "tier": 0
+      },
+      {
+        "id": "trinity-test",
         "tier": 0
       },
       {
@@ -19313,11 +23466,11 @@ export const questions = [
       },
       {
         "id": "earthquake-weather",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "hollow-earth",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "ingenuity",
@@ -19353,11 +23506,11 @@ export const questions = [
       },
       {
         "id": "northwoods",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "osiris-rex",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "rosetta",
@@ -19373,7 +23526,7 @@ export const questions = [
       },
       {
         "id": "operation-gold",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "azorian",
@@ -19398,12 +23551,16 @@ export const questions = [
     "band": 7,
     "family": "programs",
     "topic": "Projects & operations",
-    "poolId": "4af63bcdf3d8a00b",
+    "poolId": "ab4b393a3b7ff8c3",
     "prompt": "Name an unusual government project, a space mission, or a spying operation.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
         "id": "apollo",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
         "tier": 0
       },
       {
@@ -19424,6 +23581,10 @@ export const questions = [
       },
       {
         "id": "james-webb",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
         "tier": 0
       },
       {
@@ -19472,7 +23633,7 @@ export const questions = [
       },
       {
         "id": "new-horizons",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "aquatone",
@@ -19533,10 +23694,22 @@ export const questions = [
     "band": 0,
     "family": "history",
     "topic": "World history",
-    "poolId": "fced3923c16bce7d",
+    "poolId": "348403dd244f06f5",
     "prompt": "Name a historical person, event, disaster, or government program.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "financial-crisis-2008",
+        "tier": 0
+      },
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
       {
         "id": "abraham-lincoln",
         "tier": 0
@@ -19550,11 +23723,51 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "american-civil-war",
+        "tier": 0
+      },
+      {
+        "id": "american-revolution",
+        "tier": 0
+      },
+      {
         "id": "apollo",
         "tier": 0
       },
       {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
+        "id": "illuminati",
+        "tier": 0
+      },
+      {
+        "id": "brexit",
+        "tier": 0
+      },
+      {
         "id": "chernobyl",
+        "tier": 0
+      },
+      {
+        "id": "soviet-union-collapse",
+        "tier": 0
+      },
+      {
+        "id": "covid-pandemic",
         "tier": 0
       },
       {
@@ -19570,7 +23783,27 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
+        "id": "freemasons",
+        "tier": 0
+      },
+      {
+        "id": "french-revolution",
+        "tier": 0
+      },
+      {
         "id": "george-washington",
+        "tier": 0
+      },
+      {
+        "id": "great-depression",
+        "tier": 0
+      },
+      {
+        "id": "gulf-war",
         "tier": 0
       },
       {
@@ -19578,7 +23811,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "holocaust",
+        "tier": 0
+      },
+      {
         "id": "hubble",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -19595,6 +23836,10 @@ export const questions = [
       },
       {
         "id": "stalin",
+        "tier": 0
+      },
+      {
+        "id": "korean-war",
         "tier": 0
       },
       {
@@ -19638,7 +23883,27 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "vietnam-war",
+        "tier": 0
+      },
+      {
+        "id": "wall-street-crash-1929",
+        "tier": 0
+      },
+      {
         "id": "watergate",
+        "tier": 0
+      },
+      {
+        "id": "world-war-one",
+        "tier": 0
+      },
+      {
+        "id": "world-war-two",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -19654,11 +23919,35 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "mussolini",
         "tier": 0
       },
       {
+        "id": "bilderberg",
+        "tier": 0
+      },
+      {
         "id": "bonnie-clyde",
+        "tier": 0
+      },
+      {
+        "id": "boston-tea-party",
         "tier": 0
       },
       {
@@ -19694,6 +23983,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "exxon-valdez-spill",
+        "tier": 0
+      },
+      {
         "id": "wwi-armistice",
         "tier": 0
       },
@@ -19726,6 +24019,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "indian-independence",
+        "tier": 0
+      },
+      {
         "id": "james-webb",
         "tier": 0
       },
@@ -19734,44 +24031,68 @@ export const questions = [
         "tier": 0
       },
       {
-        "id": "mao",
+        "id": "manhattan-project",
         "tier": 0
+      },
+      {
+        "id": "mao",
+        "tier": 1
+      },
+      {
+        "id": "march-on-washington",
+        "tier": 1
       },
       {
         "id": "mkultra",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "nineteenth-amendment",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "panama-canal-opening",
+        "tier": 1
       },
       {
         "id": "paperclip",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "paris-agreement",
+        "tier": 1
       },
       {
         "id": "perseverance",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "project-blue-book",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "saddam-hussein",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "salem-witch-trials",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "smallpox-eradication",
+        "tier": 1
       },
       {
         "id": "challenger",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "sputnik-1",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "suez-crisis",
+        "tier": 1
       },
       {
         "id": "unabomber",
@@ -19779,6 +24100,18 @@ export const questions = [
       },
       {
         "id": "thirteenth-amendment",
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 1
+      },
+      {
+        "id": "trinity-test",
         "tier": 1
       },
       {
@@ -19795,6 +24128,10 @@ export const questions = [
       },
       {
         "id": "voyager-2",
+        "tier": 1
+      },
+      {
+        "id": "wtc7-demolition",
         "tier": 1
       },
       {
@@ -19831,39 +24168,47 @@ export const questions = [
       },
       {
         "id": "dillinger",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "golden-state-killer",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "juno",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "krakatau",
-        "tier": 1
+        "tier": 2
+      },
+      {
+        "id": "montreal-protocol",
+        "tier": 2
       },
       {
         "id": "new-horizons",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "aquatone",
-        "tier": 1
+        "tier": 2
+      },
+      {
+        "id": "protocols-forgery-claim",
+        "tier": 2
       },
       {
         "id": "lusitania",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "columbia",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "viking-1",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "voting-rights-act-1965",
@@ -19895,23 +24240,23 @@ export const questions = [
       },
       {
         "id": "osiris-rex",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "stormfury",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "karadzic",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "mladic",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "rosetta",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "stargate",
@@ -19935,11 +24280,11 @@ export const questions = [
       },
       {
         "id": "joseph-franklin",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "operation-gold",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "azorian",
@@ -19968,10 +24313,18 @@ export const questions = [
     "band": 0,
     "family": "history",
     "topic": "World history",
-    "poolId": "1e3539cabc8599d3",
+    "poolId": "fc708608c3630e51",
     "prompt": "Name a major event or a leader who shaped a country.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "financial-crisis-2008",
+        "tier": 0
+      },
       {
         "id": "abraham-lincoln",
         "tier": 0
@@ -19981,7 +24334,39 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "american-civil-war",
+        "tier": 0
+      },
+      {
+        "id": "american-revolution",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
+        "id": "brexit",
+        "tier": 0
+      },
+      {
         "id": "chernobyl",
+        "tier": 0
+      },
+      {
+        "id": "soviet-union-collapse",
+        "tier": 0
+      },
+      {
+        "id": "covid-pandemic",
         "tier": 0
       },
       {
@@ -19993,7 +24378,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
+        "id": "french-revolution",
+        "tier": 0
+      },
+      {
         "id": "george-washington",
+        "tier": 0
+      },
+      {
+        "id": "great-depression",
+        "tier": 0
+      },
+      {
+        "id": "gulf-war",
         "tier": 0
       },
       {
@@ -20001,7 +24402,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "holocaust",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
+        "tier": 0
+      },
+      {
         "id": "stalin",
+        "tier": 0
+      },
+      {
+        "id": "korean-war",
         "tier": 0
       },
       {
@@ -20037,7 +24450,27 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "vietnam-war",
+        "tier": 0
+      },
+      {
+        "id": "wall-street-crash-1929",
+        "tier": 0
+      },
+      {
         "id": "watergate",
+        "tier": 0
+      },
+      {
+        "id": "world-war-one",
+        "tier": 0
+      },
+      {
+        "id": "world-war-two",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -20049,7 +24482,27 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "mussolini",
+        "tier": 0
+      },
+      {
+        "id": "boston-tea-party",
         "tier": 0
       },
       {
@@ -20065,35 +24518,55 @@ export const questions = [
         "tier": 0
       },
       {
-        "id": "wwi-armistice",
+        "id": "exxon-valdez-spill",
         "tier": 0
+      },
+      {
+        "id": "wwi-armistice",
+        "tier": 1
       },
       {
         "id": "fukushima",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "great-chicago-fire",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "great-fire-london",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "molasses-flood",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "halifax",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "idi-amin",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "indian-independence",
+        "tier": 1
       },
       {
         "id": "mao",
+        "tier": 1
+      },
+      {
+        "id": "march-on-washington",
+        "tier": 1
+      },
+      {
+        "id": "panama-canal-opening",
+        "tier": 1
+      },
+      {
+        "id": "paris-agreement",
         "tier": 1
       },
       {
@@ -20105,36 +24578,60 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "smallpox-eradication",
+        "tier": 1
+      },
+      {
         "id": "challenger",
         "tier": 1
       },
       {
-        "id": "tunguska",
+        "id": "suez-crisis",
         "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 1
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
+      },
+      {
+        "id": "tunguska",
+        "tier": 2
       },
       {
         "id": "pinochet",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "bhopal",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "carrington",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "charles-taylor",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "iran-contra",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "krakatau",
-        "tier": 1
+        "tier": 2
+      },
+      {
+        "id": "montreal-protocol",
+        "tier": 2
       },
       {
         "id": "lusitania",
@@ -20146,19 +24643,19 @@ export const questions = [
       },
       {
         "id": "great-smog-london",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "lake-nyos",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "lindbergh-kidnapping",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "karadzic",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "mladic",
@@ -20170,7 +24667,7 @@ export const questions = [
       },
       {
         "id": "triangle-shirtwaist",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "aberfan",
@@ -20191,7 +24688,7 @@ export const questions = [
     "band": 1,
     "family": "history",
     "topic": "World history",
-    "poolId": "fc7f0ee2a009a84e",
+    "poolId": "995774bd90451b88",
     "prompt": "Name a subject connected to war, political power, or a major public scandal.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
@@ -20204,6 +24701,22 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "american-civil-war",
+        "tier": 0
+      },
+      {
+        "id": "american-revolution",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
         "id": "dday",
         "tier": 0
       },
@@ -20212,7 +24725,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "gulf-war",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
+        "tier": 0
+      },
+      {
         "id": "stalin",
+        "tier": 0
+      },
+      {
+        "id": "korean-war",
         "tier": 0
       },
       {
@@ -20236,7 +24761,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "vietnam-war",
+        "tier": 0
+      },
+      {
         "id": "watergate",
+        "tier": 0
+      },
+      {
+        "id": "world-war-one",
+        "tier": 0
+      },
+      {
+        "id": "world-war-two",
         "tier": 0
       },
       {
@@ -20245,15 +24782,19 @@ export const questions = [
       },
       {
         "id": "wwi-armistice",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "halifax",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "idi-amin",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "manhattan-project",
+        "tier": 1
       },
       {
         "id": "mao",
@@ -20268,12 +24809,20 @@ export const questions = [
         "tier": 1
       },
       {
-        "id": "pinochet",
+        "id": "suez-crisis",
         "tier": 1
       },
       {
-        "id": "charles-taylor",
+        "id": "trinity-test",
         "tier": 1
+      },
+      {
+        "id": "pinochet",
+        "tier": 2
+      },
+      {
+        "id": "charles-taylor",
+        "tier": 2
       },
       {
         "id": "iran-contra",
@@ -20285,7 +24834,7 @@ export const questions = [
       },
       {
         "id": "mladic",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "samphan",
@@ -20306,16 +24855,32 @@ export const questions = [
     "band": 1,
     "family": "history",
     "topic": "World history",
-    "poolId": "d8fed75b6420a2da",
+    "poolId": "0c1f909d32f149ce",
     "prompt": "Name a historical disaster or a turning point in science and exploration.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
       {
         "id": "apollo",
         "tier": 0
       },
       {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
         "id": "chernobyl",
+        "tier": 0
+      },
+      {
+        "id": "covid-pandemic",
         "tier": 0
       },
       {
@@ -20327,7 +24892,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "holocaust",
+        "tier": 0
+      },
+      {
         "id": "hubble",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -20351,6 +24924,22 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "cassini",
         "tier": 0
       },
@@ -20364,6 +24953,10 @@ export const questions = [
       },
       {
         "id": "dust-bowl",
+        "tier": 0
+      },
+      {
+        "id": "exxon-valdez-spill",
         "tier": 0
       },
       {
@@ -20388,19 +24981,27 @@ export const questions = [
       },
       {
         "id": "james-webb",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "perseverance",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "challenger",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "sputnik-1",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 1
       },
       {
         "id": "tunguska",
@@ -20428,19 +25029,19 @@ export const questions = [
       },
       {
         "id": "juno",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "krakatau",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "new-horizons",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lusitania",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "columbia",
@@ -20452,11 +25053,11 @@ export const questions = [
       },
       {
         "id": "great-smog-london",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "lake-nyos",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "osiris-rex",
@@ -20464,7 +25065,7 @@ export const questions = [
       },
       {
         "id": "rosetta",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "aberfan",
@@ -20481,7 +25082,7 @@ export const questions = [
     "band": 2,
     "family": "history",
     "topic": "World history",
-    "poolId": "a2181cd6d003b4f8",
+    "poolId": "43a478a90673b301",
     "prompt": "Name a historical person or an event connected to law and justice.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
@@ -20495,6 +25096,10 @@ export const questions = [
       },
       {
         "id": "al-capone",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
         "tier": 0
       },
       {
@@ -20628,10 +25233,14 @@ export const questions = [
     "band": 2,
     "family": "history",
     "topic": "World history",
-    "poolId": "136c9f422d5cb2a2",
+    "poolId": "087788fa2044de68",
     "prompt": "Name a subject involving a historic document, government action, or social change.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "financial-crisis-2008",
+        "tier": 0
+      },
       {
         "id": "abraham-lincoln",
         "tier": 0
@@ -20641,11 +25250,75 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "american-civil-war",
+        "tier": 0
+      },
+      {
+        "id": "american-revolution",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
+        "id": "illuminati",
+        "tier": 0
+      },
+      {
+        "id": "brexit",
+        "tier": 0
+      },
+      {
+        "id": "soviet-union-collapse",
+        "tier": 0
+      },
+      {
+        "id": "covid-pandemic",
+        "tier": 0
+      },
+      {
         "id": "declaration-independence",
         "tier": 0
       },
       {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
+        "id": "freemasons",
+        "tier": 0
+      },
+      {
+        "id": "french-revolution",
+        "tier": 0
+      },
+      {
         "id": "george-washington",
+        "tier": 0
+      },
+      {
+        "id": "great-depression",
+        "tier": 0
+      },
+      {
+        "id": "gulf-war",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
         "tier": 0
       },
       {
@@ -20658,6 +25331,10 @@ export const questions = [
       },
       {
         "id": "stalin",
+        "tier": 0
+      },
+      {
+        "id": "korean-war",
         "tier": 0
       },
       {
@@ -20685,11 +25362,35 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "vietnam-war",
+        "tier": 0
+      },
+      {
+        "id": "wall-street-crash-1929",
+        "tier": 0
+      },
+      {
         "id": "watergate",
         "tier": 0
       },
       {
+        "id": "world-war-one",
+        "tier": 0
+      },
+      {
+        "id": "world-war-two",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
         "id": "mussolini",
+        "tier": 0
+      },
+      {
+        "id": "boston-tea-party",
         "tier": 0
       },
       {
@@ -20717,6 +25418,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "indian-independence",
+        "tier": 0
+      },
+      {
         "id": "james-webb",
         "tier": 0
       },
@@ -20725,7 +25430,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mao",
+        "tier": 0
+      },
+      {
+        "id": "march-on-washington",
         "tier": 0
       },
       {
@@ -20737,36 +25450,64 @@ export const questions = [
         "tier": 0
       },
       {
-        "id": "paperclip",
+        "id": "panama-canal-opening",
         "tier": 0
+      },
+      {
+        "id": "paperclip",
+        "tier": 1
+      },
+      {
+        "id": "paris-agreement",
+        "tier": 1
       },
       {
         "id": "perseverance",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "project-blue-book",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "saddam-hussein",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "smallpox-eradication",
+        "tier": 1
       },
       {
         "id": "sputnik-1",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "suez-crisis",
+        "tier": 1
       },
       {
         "id": "thirteenth-amendment",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 1
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
       },
       {
         "id": "tuskegee",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-2",
@@ -20801,24 +25542,32 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "montreal-protocol",
+        "tier": 2
+      },
+      {
         "id": "new-horizons",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "aquatone",
-        "tier": 1
+        "tier": 2
+      },
+      {
+        "id": "protocols-forgery-claim",
+        "tier": 2
       },
       {
         "id": "viking-1",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "voting-rights-act-1965",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "corona",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "northwoods",
@@ -20838,15 +25587,15 @@ export const questions = [
       },
       {
         "id": "rosetta",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "stargate",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "acoustikitty",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "samphan",
@@ -20862,7 +25611,7 @@ export const questions = [
       },
       {
         "id": "kambanda",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "palladium",
@@ -20883,12 +25632,28 @@ export const questions = [
     "band": 3,
     "family": "history",
     "topic": "World history",
-    "poolId": "ecbd532c5cd1ef31",
+    "poolId": "2341cd5b0d332236",
     "prompt": "Name a subject connected to an unusual event or an important investigation.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
+      {
         "id": "al-capone",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
+        "tier": 0
+      },
+      {
+        "id": "illuminati",
         "tier": 0
       },
       {
@@ -20904,11 +25669,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "freemasons",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
         "id": "dahmer",
         "tier": 0
       },
       {
         "id": "gacy",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -20941,6 +25718,10 @@ export const questions = [
       },
       {
         "id": "5g-covid",
+        "tier": 0
+      },
+      {
+        "id": "bilderberg",
         "tier": 0
       },
       {
@@ -20980,6 +25761,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "project-blue-book",
         "tier": 0
       },
@@ -21008,24 +25793,28 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wtc7-demolition",
+        "tier": 0
+      },
+      {
         "id": "carrington",
         "tier": 0
       },
       {
         "id": "cointelpro",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "denver-airport-lizard-base",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "earthquake-weather",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "face-mars",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "hollow-earth",
@@ -21060,6 +25849,10 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "protocols-forgery-claim",
+        "tier": 1
+      },
+      {
         "id": "earthquake-prediction-coverup",
         "tier": 1
       },
@@ -21073,11 +25866,11 @@ export const questions = [
       },
       {
         "id": "harold-shipman",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "hollow-moon",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lake-nyos",
@@ -21105,7 +25898,7 @@ export const questions = [
       },
       {
         "id": "acoustikitty",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "joseph-franklin",
@@ -21142,12 +25935,24 @@ export const questions = [
     "band": 4,
     "family": "history",
     "topic": "World history",
-    "poolId": "484cd3a645cc1491",
+    "poolId": "f422085afb63bf92",
     "prompt": "Name a historical subject involving technology, travel, or exploration.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
         "id": "apollo",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
         "tier": 0
       },
       {
@@ -21163,6 +25968,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
         "id": "hindenburg",
         "tier": 0
       },
@@ -21175,11 +25984,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mmr-autism-claim",
+        "tier": 0
+      },
+      {
         "id": "wtc",
         "tier": 0
       },
       {
         "id": "titanic",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -21203,6 +26020,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "exxon-valdez-spill",
+        "tier": 0
+      },
+      {
         "id": "fukushima",
         "tier": 0
       },
@@ -21223,7 +26044,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mrna-dna-rewrite",
+        "tier": 0
+      },
+      {
+        "id": "panama-canal-opening",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
         "tier": 0
       },
       {
@@ -21239,16 +26072,24 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
+      },
+      {
         "id": "vaccine-microchips",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-2",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "bhopal",
@@ -21280,19 +26121,19 @@ export const questions = [
       },
       {
         "id": "aquatone",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lusitania",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "columbia",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "viking-1",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "corona",
@@ -21308,11 +26149,11 @@ export const questions = [
       },
       {
         "id": "rosetta",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "acoustikitty",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "operation-gold",
@@ -21324,7 +26165,7 @@ export const questions = [
       },
       {
         "id": "palladium",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "project-xray",
@@ -21341,12 +26182,24 @@ export const questions = [
     "band": 5,
     "family": "history",
     "topic": "World history",
-    "poolId": "2ff142fe8a6d6517",
+    "poolId": "c5b824b64d43a7bd",
     "prompt": "Name a subject involving political repression or a documented covert program.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
         "id": "hitler",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
         "tier": 0
       },
       {
@@ -21358,11 +26211,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
         "id": "mussolini",
         "tier": 0
       },
       {
         "id": "idi-amin",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
         "tier": 0
       },
       {
@@ -21386,6 +26247,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "tiananmen-1989",
+        "tier": 0
+      },
+      {
         "id": "tuskegee",
         "tier": 0
       },
@@ -21399,15 +26264,15 @@ export const questions = [
       },
       {
         "id": "cointelpro",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "aquatone",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "corona",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "northwoods",
@@ -21427,11 +26292,11 @@ export const questions = [
       },
       {
         "id": "acoustikitty",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "samphan",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "operation-gold",
@@ -21443,7 +26308,7 @@ export const questions = [
       },
       {
         "id": "kambanda",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "palladium",
@@ -21464,12 +26329,48 @@ export const questions = [
     "band": 6,
     "family": "history",
     "topic": "World history",
-    "poolId": "90a13198ffd97ef4",
+    "poolId": "d4a1fcb4226fd2a0",
     "prompt": "Name a real historical event or a persistent story about a hidden cause.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "financial-crisis-2008",
+        "tier": 0
+      },
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
+      {
+        "id": "american-civil-war",
+        "tier": 0
+      },
+      {
+        "id": "american-revolution",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
         "id": "bermuda-triangle",
+        "tier": 0
+      },
+      {
+        "id": "brexit",
         "tier": 0
       },
       {
@@ -21481,6 +26382,14 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "soviet-union-collapse",
+        "tier": 0
+      },
+      {
+        "id": "covid-pandemic",
+        "tier": 0
+      },
+      {
         "id": "dday",
         "tier": 0
       },
@@ -21489,11 +26398,47 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
         "id": "flat-earth",
         "tier": 0
       },
       {
+        "id": "french-revolution",
+        "tier": 0
+      },
+      {
+        "id": "great-depression",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
+        "id": "gulf-war",
+        "tier": 0
+      },
+      {
         "id": "hindenburg",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
+        "tier": 0
+      },
+      {
+        "id": "korean-war",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -21521,7 +26466,27 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "vietnam-war",
+        "tier": 0
+      },
+      {
+        "id": "wall-street-crash-1929",
+        "tier": 0
+      },
+      {
         "id": "watergate",
+        "tier": 0
+      },
+      {
+        "id": "world-war-one",
+        "tier": 0
+      },
+      {
+        "id": "world-war-two",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -21533,11 +26498,31 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "2012-calendar-apocalypse",
         "tier": 0
       },
       {
         "id": "5g-covid",
+        "tier": 0
+      },
+      {
+        "id": "boston-tea-party",
         "tier": 0
       },
       {
@@ -21550,6 +26535,10 @@ export const questions = [
       },
       {
         "id": "dust-bowl",
+        "tier": 0
+      },
+      {
+        "id": "exxon-valdez-spill",
         "tier": 0
       },
       {
@@ -21582,31 +26571,71 @@ export const questions = [
       },
       {
         "id": "noaa-hurricane-steering",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "indian-independence",
+        "tier": 1
       },
       {
         "id": "magnetic-vaccines",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "march-on-washington",
+        "tier": 1
       },
       {
         "id": "mars-hoax",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "mrna-dna-rewrite",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "panama-canal-opening",
+        "tier": 1
+      },
+      {
+        "id": "paris-agreement",
+        "tier": 1
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 1
       },
       {
         "id": "salem-witch-trials",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "smallpox-eradication",
+        "tier": 1
       },
       {
         "id": "challenger",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "suez-crisis",
+        "tier": 1
       },
       {
         "id": "solar-warming-hoax",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 1
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
       },
       {
         "id": "tunguska",
@@ -21618,6 +26647,10 @@ export const questions = [
       },
       {
         "id": "disney-cryonics",
+        "tier": 1
+      },
+      {
+        "id": "wtc7-demolition",
         "tier": 1
       },
       {
@@ -21634,35 +26667,43 @@ export const questions = [
       },
       {
         "id": "earthquake-weather",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "face-mars",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "hollow-earth",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "iran-contra",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "krakatau",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "magnetic-pole-flip-apocalypse",
-        "tier": 1
+        "tier": 2
+      },
+      {
+        "id": "montreal-protocol",
+        "tier": 2
       },
       {
         "id": "nibiru",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "philadelphia-experiment",
-        "tier": 1
+        "tier": 2
+      },
+      {
+        "id": "protocols-forgery-claim",
+        "tier": 2
       },
       {
         "id": "earthquake-prediction-coverup",
@@ -21674,23 +26715,23 @@ export const questions = [
       },
       {
         "id": "columbia",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "comet-elenin-doomsday",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "great-smog-london",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "hollow-moon",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "lake-nyos",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "lhc-doomsday",
@@ -21702,11 +26743,11 @@ export const questions = [
       },
       {
         "id": "2000-alignment-apocalypse",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "dancing-plague",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "triangle-shirtwaist",
@@ -21727,10 +26768,22 @@ export const questions = [
     "band": 0,
     "family": "disasters",
     "topic": "Disasters & major events",
-    "poolId": "eb30778dfb29968d",
+    "poolId": "62367a4c94e0ae5d",
     "prompt": "Name a major disaster or a natural event.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
       {
         "id": "aurora",
         "tier": 0
@@ -21740,11 +26793,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "covid-pandemic",
+        "tier": 0
+      },
+      {
         "id": "pompeii",
         "tier": 0
       },
       {
         "id": "hindenburg",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -21768,6 +26833,22 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "deepwater-horizon",
         "tier": 0
       },
@@ -21776,27 +26857,39 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "exxon-valdez-spill",
+        "tier": 0
+      },
+      {
         "id": "fukushima",
         "tier": 0
       },
       {
         "id": "great-chicago-fire",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "great-fire-london",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "molasses-flood",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "halifax",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "challenger",
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
         "tier": 1
       },
       {
@@ -21813,11 +26906,11 @@ export const questions = [
       },
       {
         "id": "krakatau",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "saturn-hexagon",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lusitania",
@@ -21829,7 +26922,7 @@ export const questions = [
       },
       {
         "id": "great-smog-london",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "lake-nyos",
@@ -21850,10 +26943,14 @@ export const questions = [
     "band": 0,
     "family": "disasters",
     "topic": "Disasters & major events",
-    "poolId": "9d666a06ddb66f4e",
+    "poolId": "8e5a0bc058225495",
     "prompt": "Name an event involving transport, industry, or a natural hazard.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
       {
         "id": "chernobyl",
         "tier": 0
@@ -21864,6 +26961,10 @@ export const questions = [
       },
       {
         "id": "hindenburg",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -21879,6 +26980,18 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "deepwater-horizon",
         "tier": 0
       },
@@ -21887,12 +27000,16 @@ export const questions = [
         "tier": 0
       },
       {
-        "id": "fukushima",
+        "id": "exxon-valdez-spill",
         "tier": 0
       },
       {
+        "id": "fukushima",
+        "tier": 1
+      },
+      {
         "id": "molasses-flood",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "halifax",
@@ -21903,8 +27020,12 @@ export const questions = [
         "tier": 1
       },
       {
-        "id": "bhopal",
+        "id": "three-mile-island",
         "tier": 1
+      },
+      {
+        "id": "bhopal",
+        "tier": 2
       },
       {
         "id": "krakatau",
@@ -21933,16 +27054,60 @@ export const questions = [
     "band": 1,
     "family": "disasters",
     "topic": "Disasters & major events",
-    "poolId": "0e2e9745b1729950",
+    "poolId": "9bf0b5db8c6ff007",
     "prompt": "Name a disaster or an event that changed public life.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "financial-crisis-2008",
+        "tier": 0
+      },
       {
         "id": "abraham-lincoln",
         "tier": 0
       },
       {
+        "id": "american-civil-war",
+        "tier": 0
+      },
+      {
+        "id": "american-revolution",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
+        "id": "illuminati",
+        "tier": 0
+      },
+      {
+        "id": "brexit",
+        "tier": 0
+      },
+      {
         "id": "chernobyl",
+        "tier": 0
+      },
+      {
+        "id": "soviet-union-collapse",
+        "tier": 0
+      },
+      {
+        "id": "covid-pandemic",
         "tier": 0
       },
       {
@@ -21958,11 +27123,43 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
+        "id": "freemasons",
+        "tier": 0
+      },
+      {
+        "id": "french-revolution",
+        "tier": 0
+      },
+      {
         "id": "george-washington",
         "tier": 0
       },
       {
+        "id": "great-depression",
+        "tier": 0
+      },
+      {
+        "id": "gulf-war",
+        "tier": 0
+      },
+      {
         "id": "hindenburg",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
+        "tier": 0
+      },
+      {
+        "id": "korean-war",
         "tier": 0
       },
       {
@@ -21998,7 +27195,27 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "vietnam-war",
+        "tier": 0
+      },
+      {
+        "id": "wall-street-crash-1929",
+        "tier": 0
+      },
+      {
         "id": "watergate",
+        "tier": 0
+      },
+      {
+        "id": "world-war-one",
+        "tier": 0
+      },
+      {
+        "id": "world-war-two",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -22007,6 +27224,26 @@ export const questions = [
       },
       {
         "id": "spanish-flu",
+        "tier": 0
+      },
+      {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
+        "id": "boston-tea-party",
         "tier": 0
       },
       {
@@ -22019,31 +27256,35 @@ export const questions = [
       },
       {
         "id": "deepwater-horizon",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "dust-bowl",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "emancipation-proclamation",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "exxon-valdez-spill",
+        "tier": 1
       },
       {
         "id": "wwi-armistice",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "fukushima",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "great-chicago-fire",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "great-fire-london",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "molasses-flood",
@@ -22054,7 +27295,15 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "indian-independence",
+        "tier": 1
+      },
+      {
         "id": "magna-carta",
+        "tier": 1
+      },
+      {
+        "id": "march-on-washington",
         "tier": 1
       },
       {
@@ -22062,7 +27311,19 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "panama-canal-opening",
+        "tier": 1
+      },
+      {
+        "id": "paris-agreement",
+        "tier": 1
+      },
+      {
         "id": "salem-witch-trials",
+        "tier": 1
+      },
+      {
+        "id": "smallpox-eradication",
         "tier": 1
       },
       {
@@ -22070,44 +27331,64 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "suez-crisis",
+        "tier": 2
+      },
+      {
         "id": "thirteenth-amendment",
-        "tier": 1
+        "tier": 2
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 2
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 2
+      },
+      {
+        "id": "trinity-test",
+        "tier": 2
       },
       {
         "id": "tunguska",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "bhopal",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "carrington",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "iran-contra",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "krakatau",
         "tier": 2
       },
       {
+        "id": "montreal-protocol",
+        "tier": 3
+      },
+      {
         "id": "lusitania",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "columbia",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "voting-rights-act-1965",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "great-smog-london",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "lake-nyos",
@@ -22115,11 +27396,11 @@ export const questions = [
       },
       {
         "id": "lindbergh-kidnapping",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "dancing-plague",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "aberfan",
@@ -22136,10 +27417,22 @@ export const questions = [
     "band": 1,
     "family": "disasters",
     "topic": "Disasters & major events",
-    "poolId": "0e1600952855a3cc",
+    "poolId": "9c76588b5a382365",
     "prompt": "Name an event involving an explosion, a fire, or a powerful natural force.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
       {
         "id": "aurora",
         "tier": 0
@@ -22150,6 +27443,10 @@ export const questions = [
       },
       {
         "id": "hindenburg",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -22169,24 +27466,40 @@ export const questions = [
         "tier": 0
       },
       {
-        "id": "dust-bowl",
+        "id": "mount-st-helens-1980",
         "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
+        "id": "dust-bowl",
+        "tier": 1
       },
       {
         "id": "great-chicago-fire",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "great-fire-london",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "halifax",
         "tier": 1
       },
       {
-        "id": "tunguska",
+        "id": "trinity-test",
         "tier": 1
+      },
+      {
+        "id": "tunguska",
+        "tier": 2
       },
       {
         "id": "carrington",
@@ -22215,7 +27528,7 @@ export const questions = [
     "band": 2,
     "family": "disasters",
     "topic": "Disasters & major events",
-    "poolId": "733153169670f4db",
+    "poolId": "50c25958f24b8c23",
     "prompt": "Name a disaster connected to a ship, aircraft, spacecraft, or industrial site.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
@@ -22240,6 +27553,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "exxon-valdez-spill",
+        "tier": 0
+      },
+      {
         "id": "fukushima",
         "tier": 0
       },
@@ -22253,6 +27570,10 @@ export const questions = [
       },
       {
         "id": "challenger",
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
         "tier": 1
       },
       {
@@ -22278,12 +27599,28 @@ export const questions = [
     "band": 3,
     "family": "disasters",
     "topic": "Disasters & major events",
-    "poolId": "99c2920a35462b60",
+    "poolId": "5fb8f1cd3c0be07b",
     "prompt": "Name a real disaster or a prediction of a catastrophe.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
         "id": "chernobyl",
+        "tier": 0
+      },
+      {
+        "id": "covid-pandemic",
         "tier": 0
       },
       {
@@ -22292,6 +27629,14 @@ export const questions = [
       },
       {
         "id": "hindenburg",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -22311,6 +27656,22 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "2012-calendar-apocalypse",
         "tier": 0
       },
@@ -22320,6 +27681,10 @@ export const questions = [
       },
       {
         "id": "dust-bowl",
+        "tier": 0
+      },
+      {
+        "id": "exxon-valdez-spill",
         "tier": 0
       },
       {
@@ -22336,19 +27701,27 @@ export const questions = [
       },
       {
         "id": "molasses-flood",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "halifax",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "challenger",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 1
       },
       {
         "id": "tunguska",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "bhopal",
@@ -22364,15 +27737,15 @@ export const questions = [
       },
       {
         "id": "lusitania",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "columbia",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "comet-elenin-doomsday",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "great-smog-london",
@@ -22384,7 +27757,7 @@ export const questions = [
       },
       {
         "id": "lhc-doomsday",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "2000-alignment-apocalypse",
@@ -22409,10 +27782,14 @@ export const questions = [
     "band": 3,
     "family": "disasters",
     "topic": "Disasters & major events",
-    "poolId": "85e78c928dcfef23",
+    "poolId": "9ed46d733e1d3708",
     "prompt": "Name a subject involving a major environmental event or an engineering failure.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
       {
         "id": "aurora",
         "tier": 0
@@ -22438,6 +27815,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "hurricane-katrina",
+        "tier": 0
+      },
+      {
         "id": "wtc",
         "tier": 0
       },
@@ -22454,11 +27835,27 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "deepwater-horizon",
         "tier": 0
       },
       {
         "id": "dust-bowl",
+        "tier": 0
+      },
+      {
+        "id": "exxon-valdez-spill",
         "tier": 0
       },
       {
@@ -22479,7 +27876,11 @@ export const questions = [
       },
       {
         "id": "ozone-layer",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "paris-agreement",
+        "tier": 1
       },
       {
         "id": "challenger",
@@ -22487,6 +27888,10 @@ export const questions = [
       },
       {
         "id": "solar-warming-hoax",
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
         "tier": 1
       },
       {
@@ -22504,6 +27909,10 @@ export const questions = [
       {
         "id": "magnetic-pole-flip-apocalypse",
         "tier": 1
+      },
+      {
+        "id": "montreal-protocol",
+        "tier": 2
       },
       {
         "id": "earthquake-prediction-coverup",
@@ -22540,12 +27949,36 @@ export const questions = [
     "band": 4,
     "family": "disasters",
     "topic": "Disasters & major events",
-    "poolId": "58ff13f43e4c18e2",
+    "poolId": "22c333db27f6547e",
     "prompt": "Name a natural event or a historical tragedy with an unusual story.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
         "id": "aurora",
+        "tier": 0
+      },
+      {
+        "id": "illuminati",
         "tier": 0
       },
       {
@@ -22561,6 +27994,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "covid-pandemic",
+        "tier": 0
+      },
+      {
         "id": "pompeii",
         "tier": 0
       },
@@ -22569,7 +28006,27 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "freemasons",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
         "id": "hindenburg",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -22605,6 +28062,22 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "2012-calendar-apocalypse",
         "tier": 0
       },
@@ -22613,11 +28086,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "bilderberg",
+        "tier": 0
+      },
+      {
         "id": "deepwater-horizon",
         "tier": 0
       },
       {
         "id": "dust-bowl",
+        "tier": 0
+      },
+      {
+        "id": "exxon-valdez-spill",
         "tier": 0
       },
       {
@@ -22661,6 +28142,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "salem-witch-trials",
         "tier": 0
       },
@@ -22673,28 +28158,40 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 1
+      },
+      {
         "id": "tunguska",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "vaccine-microchips",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "disney-cryonics",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "wtc7-demolition",
+        "tier": 1
       },
       {
         "id": "bhopal",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "denver-airport-lizard-base",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "earthquake-weather",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "face-mars",
@@ -22725,6 +28222,10 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "protocols-forgery-claim",
+        "tier": 1
+      },
+      {
         "id": "saturn-hexagon",
         "tier": 1
       },
@@ -22738,23 +28239,23 @@ export const questions = [
       },
       {
         "id": "columbia",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "comet-elenin-doomsday",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "corona",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "great-smog-london",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "hollow-moon",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lake-nyos",
@@ -22778,15 +28279,15 @@ export const questions = [
       },
       {
         "id": "dancing-plague",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "triangle-shirtwaist",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "aberfan",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "acoustikitty",
@@ -22802,7 +28303,7 @@ export const questions = [
       },
       {
         "id": "azorian",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "palladium",
@@ -22823,16 +28324,32 @@ export const questions = [
     "band": 5,
     "family": "disasters",
     "topic": "Disasters & major events",
-    "poolId": "b78c14cd91079f4b",
+    "poolId": "26d06c03ab6471f5",
     "prompt": "Name a disaster, a natural object, or a project involving forces of nature.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
       {
         "id": "aurora",
         "tier": 0
       },
       {
         "id": "chernobyl",
+        "tier": 0
+      },
+      {
+        "id": "covid-pandemic",
         "tier": 0
       },
       {
@@ -22845,6 +28362,14 @@ export const questions = [
       },
       {
         "id": "hindenburg",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -22904,6 +28429,22 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "asteroid-belt",
         "tier": 0
       },
@@ -22916,20 +28457,24 @@ export const questions = [
         "tier": 0
       },
       {
-        "id": "fukushima",
+        "id": "exxon-valdez-spill",
         "tier": 0
+      },
+      {
+        "id": "fukushima",
+        "tier": 1
       },
       {
         "id": "great-chicago-fire",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "great-fire-london",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "molasses-flood",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "halifax",
@@ -22948,6 +28493,14 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 1
+      },
+      {
         "id": "tunguska",
         "tier": 1
       },
@@ -22957,19 +28510,19 @@ export const questions = [
       },
       {
         "id": "bhopal",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "carrington",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "ceres",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "krakatau",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "kuiper-belt",
@@ -22985,11 +28538,11 @@ export const questions = [
       },
       {
         "id": "great-smog-london",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "lake-nyos",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "stormfury",
@@ -23001,7 +28554,7 @@ export const questions = [
       },
       {
         "id": "triangle-shirtwaist",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "aberfan",
@@ -23018,10 +28571,22 @@ export const questions = [
     "band": 6,
     "family": "disasters",
     "topic": "Disasters & major events",
-    "poolId": "7bc387c721579054",
+    "poolId": "f90be4d1189f15a9",
     "prompt": "Name a subject involving a real catastrophe or an alleged extraordinary cause.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
       {
         "id": "bermuda-triangle",
         "tier": 0
@@ -23035,6 +28600,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "covid-pandemic",
+        "tier": 0
+      },
+      {
         "id": "pompeii",
         "tier": 0
       },
@@ -23044,6 +28613,14 @@ export const questions = [
       },
       {
         "id": "hindenburg",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -23063,6 +28640,22 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "2012-calendar-apocalypse",
         "tier": 0
       },
@@ -23072,6 +28665,10 @@ export const questions = [
       },
       {
         "id": "dust-bowl",
+        "tier": 0
+      },
+      {
+        "id": "exxon-valdez-spill",
         "tier": 0
       },
       {
@@ -23096,19 +28693,27 @@ export const questions = [
       },
       {
         "id": "halifax",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "noaa-hurricane-steering",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "challenger",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "solar-warming-hoax",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 1
       },
       {
         "id": "tunguska",
@@ -23132,19 +28737,19 @@ export const questions = [
       },
       {
         "id": "magnetic-pole-flip-apocalypse",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "nibiru",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "earthquake-prediction-coverup",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lusitania",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "columbia",
@@ -23156,11 +28761,11 @@ export const questions = [
       },
       {
         "id": "great-smog-london",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "lake-nyos",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "lhc-doomsday",
@@ -23168,7 +28773,7 @@ export const questions = [
       },
       {
         "id": "2000-alignment-apocalypse",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "triangle-shirtwaist",
@@ -23185,12 +28790,16 @@ export const questions = [
     "band": 0,
     "family": "crime",
     "topic": "Cases & investigations",
-    "poolId": "efe9901d2dd94f21",
+    "poolId": "1d83b56402fdbe94",
     "prompt": "Name a serial killer or a famous criminal investigation.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
         "id": "al-capone",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
         "tier": 0
       },
       {
@@ -23276,12 +28885,16 @@ export const questions = [
     "band": 0,
     "family": "crime",
     "topic": "Cases & investigations",
-    "poolId": "2e6537f79c9e5982",
+    "poolId": "b6600284e9072321",
     "prompt": "Name a person or case connected to murder, prosecution, or forensic work.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
         "id": "al-capone",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
         "tier": 0
       },
       {
@@ -23330,7 +28943,7 @@ export const questions = [
       },
       {
         "id": "charles-taylor",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "dillinger",
@@ -23375,12 +28988,16 @@ export const questions = [
     "band": 1,
     "family": "crime",
     "topic": "Cases & investigations",
-    "poolId": "6c2d3acb4fde02cb",
+    "poolId": "e6c84373525a6fad",
     "prompt": "Name a criminal case or a major political scandal.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
         "id": "al-capone",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
         "tier": 0
       },
       {
@@ -23470,7 +29087,7 @@ export const questions = [
     "band": 1,
     "family": "crime",
     "topic": "Cases & investigations",
-    "poolId": "7f37069f0f355030",
+    "poolId": "7500d9272ed025cd",
     "prompt": "Name a person connected to a documented criminal case or an atrocity judgment.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
@@ -23480,6 +29097,10 @@ export const questions = [
       },
       {
         "id": "al-capone",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
         "tier": 0
       },
       {
@@ -23496,6 +29117,10 @@ export const questions = [
       },
       {
         "id": "zodiac",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
         "tier": 0
       },
       {
@@ -23561,12 +29186,20 @@ export const questions = [
     "band": 2,
     "family": "crime",
     "topic": "Cases & investigations",
-    "poolId": "e36d41f232fc6e00",
+    "poolId": "7f0ca41291bfc6aa",
     "prompt": "Name a subject involving police work, evidence, or an intelligence investigation.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
         "id": "al-capone",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
         "tier": 0
       },
       {
@@ -23606,6 +29239,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mkultra",
         "tier": 0
       },
@@ -23631,11 +29268,11 @@ export const questions = [
       },
       {
         "id": "iran-contra",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "dillinger",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "aquatone",
@@ -23659,7 +29296,7 @@ export const questions = [
       },
       {
         "id": "stargate",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "acoustikitty",
@@ -23696,12 +29333,20 @@ export const questions = [
     "band": 3,
     "family": "crime",
     "topic": "Cases & investigations",
-    "poolId": "8dfdc9ddd10462d8",
+    "poolId": "e1677dccbcca45a8",
     "prompt": "Name a serial-killer case or a documented abuse of state power.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
         "id": "hitler",
+        "tier": 0
+      },
+      {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
         "tier": 0
       },
       {
@@ -23726,6 +29371,10 @@ export const questions = [
       },
       {
         "id": "zodiac",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
         "tier": 0
       },
       {
@@ -23754,7 +29403,11 @@ export const questions = [
       },
       {
         "id": "saddam-hussein",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 1
       },
       {
         "id": "tuskegee",
@@ -23774,7 +29427,7 @@ export const questions = [
       },
       {
         "id": "golden-state-killer",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "harold-shipman",
@@ -23786,7 +29439,7 @@ export const questions = [
       },
       {
         "id": "joseph-franklin",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "samphan",
@@ -23807,7 +29460,7 @@ export const questions = [
     "band": 4,
     "family": "crime",
     "topic": "Cases & investigations",
-    "poolId": "33b1418171bac333",
+    "poolId": "8c8a3e6fec4d8845",
     "prompt": "Name a criminal case or a leader connected to a court proceeding.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
@@ -23817,6 +29470,14 @@ export const questions = [
       },
       {
         "id": "al-capone",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
         "tier": 0
       },
       {
@@ -23837,6 +29498,10 @@ export const questions = [
       },
       {
         "id": "zodiac",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
         "tier": 0
       },
       {
@@ -23861,7 +29526,7 @@ export const questions = [
       },
       {
         "id": "unabomber",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "charles-taylor",
@@ -23881,7 +29546,7 @@ export const questions = [
       },
       {
         "id": "lindbergh-kidnapping",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "karadzic",
@@ -23910,12 +29575,16 @@ export const questions = [
     "band": 5,
     "family": "crime",
     "topic": "Cases & investigations",
-    "poolId": "5649416604829ae4",
+    "poolId": "5b350123da192c20",
     "prompt": "Name a subject involving an investigation, a prosecution, or a public inquiry.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
         "id": "al-capone",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
         "tier": 0
       },
       {
@@ -23976,7 +29645,7 @@ export const questions = [
       },
       {
         "id": "charles-taylor",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "cointelpro",
@@ -24000,7 +29669,7 @@ export const questions = [
       },
       {
         "id": "lindbergh-kidnapping",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "karadzic",
@@ -24012,7 +29681,7 @@ export const questions = [
       },
       {
         "id": "dancing-plague",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "joseph-franklin",
@@ -24168,12 +29837,20 @@ export const questions = [
     "band": 7,
     "family": "crime",
     "topic": "Cases & investigations",
-    "poolId": "75c6723e72fdf62a",
+    "poolId": "1f8676d81c88a7ff",
     "prompt": "Name a documented criminal case or a real covert operation.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
         "id": "al-capone",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
         "tier": 0
       },
       {
@@ -24209,6 +29886,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mkultra",
         "tier": 0
       },
@@ -24238,11 +29919,11 @@ export const questions = [
       },
       {
         "id": "golden-state-killer",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "aquatone",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "corona",
@@ -24266,7 +29947,7 @@ export const questions = [
       },
       {
         "id": "mladic",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "stargate",
@@ -24386,16 +30067,48 @@ export const questions = [
     "band": 0,
     "family": "leaders",
     "topic": "Leaders & power",
-    "poolId": "34ab047f43cf7150",
+    "poolId": "03283dc2384e0c40",
     "prompt": "Name a political leader or a major event in government history.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "financial-crisis-2008",
+        "tier": 0
+      },
       {
         "id": "abraham-lincoln",
         "tier": 0
       },
       {
         "id": "hitler",
+        "tier": 0
+      },
+      {
+        "id": "american-civil-war",
+        "tier": 0
+      },
+      {
+        "id": "american-revolution",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
+        "id": "brexit",
+        "tier": 0
+      },
+      {
+        "id": "soviet-union-collapse",
         "tier": 0
       },
       {
@@ -24407,11 +30120,35 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
+        "id": "french-revolution",
+        "tier": 0
+      },
+      {
         "id": "george-washington",
         "tier": 0
       },
       {
+        "id": "great-depression",
+        "tier": 0
+      },
+      {
+        "id": "gulf-war",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
+        "tier": 0
+      },
+      {
         "id": "stalin",
+        "tier": 0
+      },
+      {
+        "id": "korean-war",
         "tier": 0
       },
       {
@@ -24443,31 +30180,63 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "vietnam-war",
+        "tier": 0
+      },
+      {
+        "id": "wall-street-crash-1929",
+        "tier": 0
+      },
+      {
         "id": "watergate",
         "tier": 0
       },
       {
-        "id": "mussolini",
+        "id": "world-war-one",
         "tier": 0
+      },
+      {
+        "id": "world-war-two",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
+        "id": "mussolini",
+        "tier": 1
+      },
+      {
+        "id": "bilderberg",
+        "tier": 1
+      },
+      {
+        "id": "boston-tea-party",
+        "tier": 1
       },
       {
         "id": "civil-rights-act-1964",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "cuban-missile-crisis",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "emancipation-proclamation",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "wwi-armistice",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "idi-amin",
+        "tier": 1
+      },
+      {
+        "id": "indian-independence",
         "tier": 1
       },
       {
@@ -24479,20 +30248,36 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "march-on-washington",
+        "tier": 1
+      },
+      {
         "id": "nineteenth-amendment",
         "tier": 1
       },
       {
+        "id": "paris-agreement",
+        "tier": 2
+      },
+      {
         "id": "saddam-hussein",
-        "tier": 1
+        "tier": 2
+      },
+      {
+        "id": "suez-crisis",
+        "tier": 2
       },
       {
         "id": "thirteenth-amendment",
-        "tier": 1
+        "tier": 2
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 2
       },
       {
         "id": "pinochet",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "charles-taylor",
@@ -24500,11 +30285,15 @@ export const questions = [
       },
       {
         "id": "iran-contra",
-        "tier": 2
+        "tier": 3
+      },
+      {
+        "id": "montreal-protocol",
+        "tier": 3
       },
       {
         "id": "voting-rights-act-1965",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "karadzic",
@@ -24512,7 +30301,7 @@ export const questions = [
       },
       {
         "id": "mladic",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "samphan",
@@ -24529,7 +30318,7 @@ export const questions = [
     "band": 1,
     "family": "leaders",
     "topic": "Leaders & power",
-    "poolId": "198f0e00afee1e22",
+    "poolId": "349548dc2e75b575",
     "prompt": "Name a subject involving political power, repression, or a public scandal.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
@@ -24542,7 +30331,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
         "id": "george-washington",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
         "tier": 0
       },
       {
@@ -24570,6 +30367,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
         "id": "mussolini",
         "tier": 0
       },
@@ -24583,10 +30384,14 @@ export const questions = [
       },
       {
         "id": "mkultra",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "saddam-hussein",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
         "tier": 1
       },
       {
@@ -24603,7 +30408,7 @@ export const questions = [
       },
       {
         "id": "iran-contra",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "karadzic",
@@ -24632,10 +30437,14 @@ export const questions = [
     "band": 1,
     "family": "leaders",
     "topic": "Leaders & power",
-    "poolId": "f747c65b1499799f",
+    "poolId": "950dcd22623997c3",
     "prompt": "Name a leader or a subject connected to war and international relations.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
       {
         "id": "abraham-lincoln",
         "tier": 0
@@ -24645,7 +30454,43 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "american-civil-war",
+        "tier": 0
+      },
+      {
+        "id": "american-revolution",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
+        "id": "brexit",
+        "tier": 0
+      },
+      {
+        "id": "soviet-union-collapse",
+        "tier": 0
+      },
+      {
+        "id": "covid-pandemic",
+        "tier": 0
+      },
+      {
         "id": "dday",
+        "tier": 0
+      },
+      {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
+        "id": "french-revolution",
         "tier": 0
       },
       {
@@ -24653,7 +30498,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "gulf-war",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
+        "tier": 0
+      },
+      {
         "id": "stalin",
+        "tier": 0
+      },
+      {
+        "id": "korean-war",
         "tier": 0
       },
       {
@@ -24681,23 +30538,63 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "vietnam-war",
+        "tier": 0
+      },
+      {
+        "id": "world-war-one",
+        "tier": 0
+      },
+      {
+        "id": "world-war-two",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "mussolini",
         "tier": 0
       },
       {
-        "id": "cuban-missile-crisis",
+        "id": "bilderberg",
         "tier": 0
+      },
+      {
+        "id": "boston-tea-party",
+        "tier": 1
+      },
+      {
+        "id": "cuban-missile-crisis",
+        "tier": 1
       },
       {
         "id": "wwi-armistice",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "halifax",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "idi-amin",
+        "tier": 1
+      },
+      {
+        "id": "indian-independence",
+        "tier": 1
+      },
+      {
+        "id": "manhattan-project",
         "tier": 1
       },
       {
@@ -24705,7 +30602,19 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "march-on-washington",
+        "tier": 1
+      },
+      {
+        "id": "panama-canal-opening",
+        "tier": 1
+      },
+      {
         "id": "paperclip",
+        "tier": 1
+      },
+      {
+        "id": "paris-agreement",
         "tier": 1
       },
       {
@@ -24713,24 +30622,44 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "smallpox-eradication",
+        "tier": 2
+      },
+      {
+        "id": "suez-crisis",
+        "tier": 2
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 2
+      },
+      {
+        "id": "trinity-test",
+        "tier": 2
+      },
+      {
         "id": "pinochet",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "charles-taylor",
         "tier": 2
       },
       {
+        "id": "montreal-protocol",
+        "tier": 3
+      },
+      {
         "id": "northwoods",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "mladic",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "samphan",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "kambanda",
@@ -24747,7 +30676,7 @@ export const questions = [
     "band": 2,
     "family": "leaders",
     "topic": "Leaders & power",
-    "poolId": "1c148916cab2bdc1",
+    "poolId": "bf80a4fa5f5efd1d",
     "prompt": "Name a leader or a documented case involving state crimes.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
@@ -24761,6 +30690,10 @@ export const questions = [
       },
       {
         "id": "george-washington",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
         "tier": 0
       },
       {
@@ -24784,12 +30717,16 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
         "id": "mussolini",
         "tier": 0
       },
       {
         "id": "idi-amin",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "mao",
@@ -24830,10 +30767,14 @@ export const questions = [
     "band": 3,
     "family": "leaders",
     "topic": "Leaders & power",
-    "poolId": "3ef0226e619d8e94",
+    "poolId": "843f09340a00ecd0",
     "prompt": "Name a person or event connected to leadership and social change.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "financial-crisis-2008",
+        "tier": 0
+      },
       {
         "id": "abraham-lincoln",
         "tier": 0
@@ -24843,11 +30784,47 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "american-civil-war",
+        "tier": 0
+      },
+      {
+        "id": "american-revolution",
+        "tier": 0
+      },
+      {
+        "id": "illuminati",
+        "tier": 0
+      },
+      {
+        "id": "brexit",
+        "tier": 0
+      },
+      {
+        "id": "soviet-union-collapse",
+        "tier": 0
+      },
+      {
         "id": "declaration-independence",
         "tier": 0
       },
       {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
+        "id": "freemasons",
+        "tier": 0
+      },
+      {
+        "id": "french-revolution",
+        "tier": 0
+      },
+      {
         "id": "george-washington",
+        "tier": 0
+      },
+      {
+        "id": "great-depression",
         "tier": 0
       },
       {
@@ -24879,7 +30856,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wall-street-crash-1929",
+        "tier": 0
+      },
+      {
         "id": "mussolini",
+        "tier": 0
+      },
+      {
+        "id": "boston-tea-party",
         "tier": 0
       },
       {
@@ -24892,11 +30877,15 @@ export const questions = [
       },
       {
         "id": "emancipation-proclamation",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "idi-amin",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "indian-independence",
+        "tier": 1
       },
       {
         "id": "magna-carta",
@@ -24907,7 +30896,15 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "march-on-washington",
+        "tier": 1
+      },
+      {
         "id": "nineteenth-amendment",
+        "tier": 1
+      },
+      {
+        "id": "paris-agreement",
         "tier": 1
       },
       {
@@ -24915,12 +30912,24 @@ export const questions = [
         "tier": 1
       },
       {
-        "id": "thirteenth-amendment",
+        "id": "smallpox-eradication",
         "tier": 1
       },
       {
+        "id": "thirteenth-amendment",
+        "tier": 2
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 2
+      },
+      {
         "id": "charles-taylor",
-        "tier": 1
+        "tier": 2
+      },
+      {
+        "id": "montreal-protocol",
+        "tier": 2
       },
       {
         "id": "voting-rights-act-1965",
@@ -24928,11 +30937,11 @@ export const questions = [
       },
       {
         "id": "karadzic",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "mladic",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "samphan",
@@ -24953,16 +30962,52 @@ export const questions = [
     "band": 4,
     "family": "leaders",
     "topic": "Leaders & power",
-    "poolId": "2b0e8fd32ad419ad",
+    "poolId": "1cff869a14f35363",
     "prompt": "Name a leader or a government action recorded in historical documents.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "financial-crisis-2008",
+        "tier": 0
+      },
       {
         "id": "abraham-lincoln",
         "tier": 0
       },
       {
         "id": "hitler",
+        "tier": 0
+      },
+      {
+        "id": "american-civil-war",
+        "tier": 0
+      },
+      {
+        "id": "american-revolution",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
+        "id": "illuminati",
+        "tier": 0
+      },
+      {
+        "id": "brexit",
+        "tier": 0
+      },
+      {
+        "id": "soviet-union-collapse",
         "tier": 0
       },
       {
@@ -24974,11 +31019,39 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
+        "id": "freemasons",
+        "tier": 0
+      },
+      {
+        "id": "french-revolution",
+        "tier": 0
+      },
+      {
         "id": "george-washington",
         "tier": 0
       },
       {
+        "id": "great-depression",
+        "tier": 0
+      },
+      {
+        "id": "gulf-war",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
+        "tier": 0
+      },
+      {
         "id": "stalin",
+        "tier": 0
+      },
+      {
+        "id": "korean-war",
         "tier": 0
       },
       {
@@ -25010,7 +31083,27 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "vietnam-war",
+        "tier": 0
+      },
+      {
+        "id": "wall-street-crash-1929",
+        "tier": 0
+      },
+      {
         "id": "watergate",
+        "tier": 0
+      },
+      {
+        "id": "world-war-one",
+        "tier": 0
+      },
+      {
+        "id": "world-war-two",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
         "tier": 0
       },
       {
@@ -25018,23 +31111,35 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "bilderberg",
+        "tier": 1
+      },
+      {
+        "id": "boston-tea-party",
+        "tier": 1
+      },
+      {
         "id": "civil-rights-act-1964",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "cuban-missile-crisis",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "emancipation-proclamation",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "wwi-armistice",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "idi-amin",
+        "tier": 1
+      },
+      {
+        "id": "indian-independence",
         "tier": 1
       },
       {
@@ -25046,7 +31151,15 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "march-on-washington",
+        "tier": 1
+      },
+      {
         "id": "nineteenth-amendment",
+        "tier": 1
+      },
+      {
+        "id": "paris-agreement",
         "tier": 1
       },
       {
@@ -25054,12 +31167,20 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "suez-crisis",
+        "tier": 2
+      },
+      {
         "id": "thirteenth-amendment",
-        "tier": 1
+        "tier": 2
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 2
       },
       {
         "id": "pinochet",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "charles-taylor",
@@ -25070,12 +31191,20 @@ export const questions = [
         "tier": 2
       },
       {
-        "id": "voting-rights-act-1965",
+        "id": "montreal-protocol",
         "tier": 2
       },
       {
+        "id": "protocols-forgery-claim",
+        "tier": 3
+      },
+      {
+        "id": "voting-rights-act-1965",
+        "tier": 3
+      },
+      {
         "id": "northwoods",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "karadzic",
@@ -25083,7 +31212,7 @@ export const questions = [
       },
       {
         "id": "mladic",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "kambanda",
@@ -25100,7 +31229,7 @@ export const questions = [
     "band": 5,
     "family": "leaders",
     "topic": "Leaders & power",
-    "poolId": "2c7b706e59e73b58",
+    "poolId": "c482aa51873021fb",
     "prompt": "Name a political leader or a subject involving a government project.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
@@ -25110,6 +31239,10 @@ export const questions = [
       },
       {
         "id": "hitler",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
         "tier": 0
       },
       {
@@ -25142,6 +31275,10 @@ export const questions = [
       },
       {
         "id": "idi-amin",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
         "tier": 0
       },
       {
@@ -25174,7 +31311,7 @@ export const questions = [
       },
       {
         "id": "cointelpro",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "aquatone",
@@ -25202,7 +31339,7 @@ export const questions = [
       },
       {
         "id": "stargate",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "acoustikitty",
@@ -25338,7 +31475,7 @@ export const questions = [
     "band": 7,
     "family": "leaders",
     "topic": "Leaders & power",
-    "poolId": "1c148916cab2bdc1",
+    "poolId": "bf80a4fa5f5efd1d",
     "prompt": "Name a person connected to political power or an atrocity prosecution.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
@@ -25352,6 +31489,10 @@ export const questions = [
       },
       {
         "id": "george-washington",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
         "tier": 0
       },
       {
@@ -25375,12 +31516,16 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
         "id": "mussolini",
         "tier": 0
       },
       {
         "id": "idi-amin",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "mao",
@@ -25421,16 +31566,64 @@ export const questions = [
     "band": 0,
     "family": "world-affairs",
     "topic": "Government & world affairs",
-    "poolId": "7f9044f2e4122686",
+    "poolId": "58d6239b11912437",
     "prompt": "Name a subject connected to government, international history, or social change.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "financial-crisis-2008",
+        "tier": 0
+      },
       {
         "id": "abraham-lincoln",
         "tier": 0
       },
       {
         "id": "hitler",
+        "tier": 0
+      },
+      {
+        "id": "american-civil-war",
+        "tier": 0
+      },
+      {
+        "id": "american-revolution",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
+        "id": "illuminati",
+        "tier": 0
+      },
+      {
+        "id": "brexit",
+        "tier": 0
+      },
+      {
+        "id": "soviet-union-collapse",
+        "tier": 0
+      },
+      {
+        "id": "covid-pandemic",
         "tier": 0
       },
       {
@@ -25442,7 +31635,31 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
+        "id": "freemasons",
+        "tier": 0
+      },
+      {
+        "id": "french-revolution",
+        "tier": 0
+      },
+      {
         "id": "george-washington",
+        "tier": 0
+      },
+      {
+        "id": "great-depression",
+        "tier": 0
+      },
+      {
+        "id": "gulf-war",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
         "tier": 0
       },
       {
@@ -25455,6 +31672,10 @@ export const questions = [
       },
       {
         "id": "stalin",
+        "tier": 0
+      },
+      {
+        "id": "korean-war",
         "tier": 0
       },
       {
@@ -25486,11 +31707,47 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "vietnam-war",
+        "tier": 0
+      },
+      {
+        "id": "wall-street-crash-1929",
+        "tier": 0
+      },
+      {
         "id": "watergate",
         "tier": 0
       },
       {
+        "id": "world-war-one",
+        "tier": 0
+      },
+      {
+        "id": "world-war-two",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "mussolini",
+        "tier": 0
+      },
+      {
+        "id": "bilderberg",
+        "tier": 0
+      },
+      {
+        "id": "boston-tea-party",
         "tier": 0
       },
       {
@@ -25522,6 +31779,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "indian-independence",
+        "tier": 0
+      },
+      {
         "id": "james-webb",
         "tier": 0
       },
@@ -25530,44 +31791,80 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mao",
         "tier": 0
       },
       {
+        "id": "march-on-washington",
+        "tier": 1
+      },
+      {
         "id": "mkultra",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "nineteenth-amendment",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "panama-canal-opening",
+        "tier": 1
       },
       {
         "id": "paperclip",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "paris-agreement",
+        "tier": 1
       },
       {
         "id": "perseverance",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "project-blue-book",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "saddam-hussein",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "smallpox-eradication",
+        "tier": 1
       },
       {
         "id": "sputnik-1",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "suez-crisis",
+        "tier": 1
       },
       {
         "id": "thirteenth-amendment",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 1
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
       },
       {
         "id": "tuskegee",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-1",
@@ -25591,39 +31888,43 @@ export const questions = [
       },
       {
         "id": "dart",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "ingenuity",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "iran-contra",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "juno",
-        "tier": 1
+        "tier": 2
+      },
+      {
+        "id": "montreal-protocol",
+        "tier": 2
       },
       {
         "id": "new-horizons",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "aquatone",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "viking-1",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "voting-rights-act-1965",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "corona",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "northwoods",
@@ -25635,23 +31936,23 @@ export const questions = [
       },
       {
         "id": "stormfury",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "karadzic",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "mladic",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "rosetta",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "stargate",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "acoustikitty",
@@ -25663,11 +31964,11 @@ export const questions = [
       },
       {
         "id": "azorian",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "kambanda",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "palladium",
@@ -25688,16 +31989,52 @@ export const questions = [
     "band": 0,
     "family": "world-affairs",
     "topic": "Government & world affairs",
-    "poolId": "2b0e8fd32ad419ad",
+    "poolId": "1cff869a14f35363",
     "prompt": "Name a political event, historic document, or leader.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "financial-crisis-2008",
+        "tier": 0
+      },
       {
         "id": "abraham-lincoln",
         "tier": 0
       },
       {
         "id": "hitler",
+        "tier": 0
+      },
+      {
+        "id": "american-civil-war",
+        "tier": 0
+      },
+      {
+        "id": "american-revolution",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
+        "id": "illuminati",
+        "tier": 0
+      },
+      {
+        "id": "brexit",
+        "tier": 0
+      },
+      {
+        "id": "soviet-union-collapse",
         "tier": 0
       },
       {
@@ -25709,11 +32046,39 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
+        "id": "freemasons",
+        "tier": 0
+      },
+      {
+        "id": "french-revolution",
+        "tier": 0
+      },
+      {
         "id": "george-washington",
         "tier": 0
       },
       {
+        "id": "great-depression",
+        "tier": 0
+      },
+      {
+        "id": "gulf-war",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
+        "tier": 0
+      },
+      {
         "id": "stalin",
+        "tier": 0
+      },
+      {
+        "id": "korean-war",
         "tier": 0
       },
       {
@@ -25745,7 +32110,27 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "vietnam-war",
+        "tier": 0
+      },
+      {
+        "id": "wall-street-crash-1929",
+        "tier": 0
+      },
+      {
         "id": "watergate",
+        "tier": 0
+      },
+      {
+        "id": "world-war-one",
+        "tier": 0
+      },
+      {
+        "id": "world-war-two",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
         "tier": 0
       },
       {
@@ -25753,23 +32138,35 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "bilderberg",
+        "tier": 1
+      },
+      {
+        "id": "boston-tea-party",
+        "tier": 1
+      },
+      {
         "id": "civil-rights-act-1964",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "cuban-missile-crisis",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "emancipation-proclamation",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "wwi-armistice",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "idi-amin",
+        "tier": 1
+      },
+      {
+        "id": "indian-independence",
         "tier": 1
       },
       {
@@ -25781,7 +32178,15 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "march-on-washington",
+        "tier": 1
+      },
+      {
         "id": "nineteenth-amendment",
+        "tier": 1
+      },
+      {
+        "id": "paris-agreement",
         "tier": 1
       },
       {
@@ -25789,12 +32194,20 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "suez-crisis",
+        "tier": 2
+      },
+      {
         "id": "thirteenth-amendment",
-        "tier": 1
+        "tier": 2
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 2
       },
       {
         "id": "pinochet",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "charles-taylor",
@@ -25805,12 +32218,20 @@ export const questions = [
         "tier": 2
       },
       {
-        "id": "voting-rights-act-1965",
+        "id": "montreal-protocol",
         "tier": 2
       },
       {
+        "id": "protocols-forgery-claim",
+        "tier": 3
+      },
+      {
+        "id": "voting-rights-act-1965",
+        "tier": 3
+      },
+      {
         "id": "northwoods",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "karadzic",
@@ -25818,7 +32239,7 @@ export const questions = [
       },
       {
         "id": "mladic",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "samphan",
@@ -25835,16 +32256,56 @@ export const questions = [
     "band": 1,
     "family": "world-affairs",
     "topic": "Government & world affairs",
-    "poolId": "e693eaf41aa41b85",
+    "poolId": "ed2d8e3d8eead69a",
     "prompt": "Name a subject connected to conflict, government policy, or a public scandal.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "financial-crisis-2008",
+        "tier": 0
+      },
       {
         "id": "abraham-lincoln",
         "tier": 0
       },
       {
         "id": "hitler",
+        "tier": 0
+      },
+      {
+        "id": "american-civil-war",
+        "tier": 0
+      },
+      {
+        "id": "american-revolution",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
+        "id": "brexit",
+        "tier": 0
+      },
+      {
+        "id": "soviet-union-collapse",
+        "tier": 0
+      },
+      {
+        "id": "covid-pandemic",
         "tier": 0
       },
       {
@@ -25856,7 +32317,27 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
+        "id": "french-revolution",
+        "tier": 0
+      },
+      {
         "id": "george-washington",
+        "tier": 0
+      },
+      {
+        "id": "great-depression",
+        "tier": 0
+      },
+      {
+        "id": "gulf-war",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
         "tier": 0
       },
       {
@@ -25869,6 +32350,10 @@ export const questions = [
       },
       {
         "id": "stalin",
+        "tier": 0
+      },
+      {
+        "id": "korean-war",
         "tier": 0
       },
       {
@@ -25900,11 +32385,35 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "vietnam-war",
+        "tier": 0
+      },
+      {
+        "id": "wall-street-crash-1929",
+        "tier": 0
+      },
+      {
         "id": "watergate",
         "tier": 0
       },
       {
+        "id": "world-war-one",
+        "tier": 0
+      },
+      {
+        "id": "world-war-two",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
         "id": "mussolini",
+        "tier": 0
+      },
+      {
+        "id": "boston-tea-party",
         "tier": 0
       },
       {
@@ -25940,6 +32449,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "indian-independence",
+        "tier": 0
+      },
+      {
         "id": "james-webb",
         "tier": 0
       },
@@ -25948,7 +32461,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mao",
+        "tier": 0
+      },
+      {
+        "id": "march-on-washington",
         "tier": 0
       },
       {
@@ -25957,31 +32478,59 @@ export const questions = [
       },
       {
         "id": "nineteenth-amendment",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "panama-canal-opening",
+        "tier": 1
       },
       {
         "id": "paperclip",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "paris-agreement",
+        "tier": 1
       },
       {
         "id": "perseverance",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "project-blue-book",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "saddam-hussein",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "smallpox-eradication",
+        "tier": 1
       },
       {
         "id": "sputnik-1",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "suez-crisis",
+        "tier": 1
       },
       {
         "id": "thirteenth-amendment",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 1
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
       },
       {
         "id": "tuskegee",
@@ -26020,28 +32569,32 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "montreal-protocol",
+        "tier": 2
+      },
+      {
         "id": "new-horizons",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "aquatone",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "viking-1",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "voting-rights-act-1965",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "corona",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "northwoods",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "osiris-rex",
@@ -26061,15 +32614,15 @@ export const questions = [
       },
       {
         "id": "rosetta",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "stargate",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "acoustikitty",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "samphan",
@@ -26085,7 +32638,7 @@ export const questions = [
       },
       {
         "id": "kambanda",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "palladium",
@@ -26106,16 +32659,64 @@ export const questions = [
     "band": 2,
     "family": "world-affairs",
     "topic": "Government & world affairs",
-    "poolId": "99b474f4d83077c7",
+    "poolId": "05607f7902fdf73f",
     "prompt": "Name a major international event or a space-exploration effort.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "american-civil-war",
+        "tier": 0
+      },
+      {
+        "id": "american-revolution",
+        "tier": 0
+      },
       {
         "id": "apollo",
         "tier": 0
       },
       {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
+        "id": "brexit",
+        "tier": 0
+      },
+      {
+        "id": "soviet-union-collapse",
+        "tier": 0
+      },
+      {
+        "id": "covid-pandemic",
+        "tier": 0
+      },
+      {
         "id": "dday",
+        "tier": 0
+      },
+      {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
+        "id": "french-revolution",
+        "tier": 0
+      },
+      {
+        "id": "gulf-war",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
         "tier": 0
       },
       {
@@ -26127,11 +32728,47 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "korean-war",
+        "tier": 0
+      },
+      {
         "id": "berlin-wall",
         "tier": 0
       },
       {
         "id": "pearl-harbor",
+        "tier": 0
+      },
+      {
+        "id": "vietnam-war",
+        "tier": 0
+      },
+      {
+        "id": "world-war-one",
+        "tier": 0
+      },
+      {
+        "id": "world-war-two",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
+        "id": "bilderberg",
+        "tier": 0
+      },
+      {
+        "id": "boston-tea-party",
         "tier": 0
       },
       {
@@ -26144,55 +32781,87 @@ export const questions = [
       },
       {
         "id": "curiosity",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "wwi-armistice",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "idi-amin",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "indian-independence",
+        "tier": 1
       },
       {
         "id": "james-webb",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "march-on-washington",
+        "tier": 1
+      },
+      {
+        "id": "panama-canal-opening",
+        "tier": 1
+      },
+      {
+        "id": "paris-agreement",
+        "tier": 1
       },
       {
         "id": "perseverance",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "smallpox-eradication",
+        "tier": 1
       },
       {
         "id": "sputnik-1",
         "tier": 1
       },
       {
+        "id": "suez-crisis",
+        "tier": 2
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 2
+      },
+      {
         "id": "voyager-1",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "voyager-2",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "dart",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "ingenuity",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "juno",
-        "tier": 2
+        "tier": 3
+      },
+      {
+        "id": "montreal-protocol",
+        "tier": 3
       },
       {
         "id": "new-horizons",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "viking-1",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "osiris-rex",
@@ -26209,7 +32878,7 @@ export const questions = [
     "band": 2,
     "family": "world-affairs",
     "topic": "Government & world affairs",
-    "poolId": "2c7b706e59e73b58",
+    "poolId": "c482aa51873021fb",
     "prompt": "Name a government program or a political leader.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
@@ -26219,6 +32888,10 @@ export const questions = [
       },
       {
         "id": "hitler",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
         "tier": 0
       },
       {
@@ -26254,6 +32927,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mao",
         "tier": 0
       },
@@ -26283,7 +32960,7 @@ export const questions = [
       },
       {
         "id": "cointelpro",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "aquatone",
@@ -26311,7 +32988,7 @@ export const questions = [
       },
       {
         "id": "acoustikitty",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "samphan",
@@ -26348,10 +33025,14 @@ export const questions = [
     "band": 3,
     "family": "world-affairs",
     "topic": "Government & world affairs",
-    "poolId": "d4e47a0c5bbba3ba",
+    "poolId": "4a70253fc54cbab6",
     "prompt": "Name a subject involving state power or a famous investigation.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "financial-crisis-2008",
+        "tier": 0
+      },
       {
         "id": "abraham-lincoln",
         "tier": 0
@@ -26365,11 +33046,67 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "american-civil-war",
+        "tier": 0
+      },
+      {
+        "id": "american-revolution",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
+        "id": "brexit",
+        "tier": 0
+      },
+      {
+        "id": "soviet-union-collapse",
+        "tier": 0
+      },
+      {
+        "id": "covid-pandemic",
+        "tier": 0
+      },
+      {
         "id": "declaration-independence",
         "tier": 0
       },
       {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
+        "id": "french-revolution",
+        "tier": 0
+      },
+      {
         "id": "george-washington",
+        "tier": 0
+      },
+      {
+        "id": "great-depression",
+        "tier": 0
+      },
+      {
+        "id": "gulf-war",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
         "tier": 0
       },
       {
@@ -26390,6 +33127,10 @@ export const questions = [
       },
       {
         "id": "stalin",
+        "tier": 0
+      },
+      {
+        "id": "korean-war",
         "tier": 0
       },
       {
@@ -26425,11 +33166,31 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "vietnam-war",
+        "tier": 0
+      },
+      {
+        "id": "wall-street-crash-1929",
+        "tier": 0
+      },
+      {
         "id": "watergate",
         "tier": 0
       },
       {
+        "id": "world-war-one",
+        "tier": 0
+      },
+      {
+        "id": "world-war-two",
+        "tier": 0
+      },
+      {
         "id": "zodiac",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
         "tier": 0
       },
       {
@@ -26438,6 +33199,10 @@ export const questions = [
       },
       {
         "id": "bonnie-clyde",
+        "tier": 0
+      },
+      {
+        "id": "boston-tea-party",
         "tier": 0
       },
       {
@@ -26473,6 +33238,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "indian-independence",
+        "tier": 0
+      },
+      {
         "id": "james-webb",
         "tier": 0
       },
@@ -26481,7 +33250,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mao",
+        "tier": 0
+      },
+      {
+        "id": "march-on-washington",
         "tier": 0
       },
       {
@@ -26493,36 +33270,64 @@ export const questions = [
         "tier": 0
       },
       {
-        "id": "paperclip",
+        "id": "panama-canal-opening",
         "tier": 0
+      },
+      {
+        "id": "paperclip",
+        "tier": 1
+      },
+      {
+        "id": "paris-agreement",
+        "tier": 1
       },
       {
         "id": "perseverance",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "project-blue-book",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "saddam-hussein",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "salem-witch-trials",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "smallpox-eradication",
+        "tier": 1
       },
       {
         "id": "sputnik-1",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "suez-crisis",
+        "tier": 1
       },
       {
         "id": "unabomber",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "thirteenth-amendment",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 1
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
       },
       {
         "id": "tuskegee",
@@ -26566,27 +33371,31 @@ export const questions = [
       },
       {
         "id": "golden-state-killer",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "juno",
-        "tier": 1
+        "tier": 2
+      },
+      {
+        "id": "montreal-protocol",
+        "tier": 2
       },
       {
         "id": "new-horizons",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "aquatone",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "viking-1",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "voting-rights-act-1965",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "corona",
@@ -26614,15 +33423,15 @@ export const questions = [
       },
       {
         "id": "mladic",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "rosetta",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "stargate",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "acoustikitty",
@@ -26642,7 +33451,7 @@ export const questions = [
       },
       {
         "id": "azorian",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "kambanda",
@@ -26667,16 +33476,60 @@ export const questions = [
     "band": 4,
     "family": "world-affairs",
     "topic": "Government & world affairs",
-    "poolId": "ebfc7e4b463a4aa4",
+    "poolId": "afd29734ea0fe4c3",
     "prompt": "Name a real historical event or a theory involving government secrecy.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "financial-crisis-2008",
+        "tier": 0
+      },
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
+      {
+        "id": "american-civil-war",
+        "tier": 0
+      },
+      {
+        "id": "american-revolution",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
+        "id": "brexit",
+        "tier": 0
+      },
       {
         "id": "chemtrails",
         "tier": 0
       },
       {
         "id": "chernobyl",
+        "tier": 0
+      },
+      {
+        "id": "soviet-union-collapse",
+        "tier": 0
+      },
+      {
+        "id": "covid-pandemic",
         "tier": 0
       },
       {
@@ -26688,7 +33541,35 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
+        "id": "french-revolution",
+        "tier": 0
+      },
+      {
+        "id": "great-depression",
+        "tier": 0
+      },
+      {
+        "id": "gulf-war",
+        "tier": 0
+      },
+      {
         "id": "hindenburg",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
+        "tier": 0
+      },
+      {
+        "id": "korean-war",
         "tier": 0
       },
       {
@@ -26712,7 +33593,27 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "vietnam-war",
+        "tier": 0
+      },
+      {
+        "id": "wall-street-crash-1929",
+        "tier": 0
+      },
+      {
         "id": "watergate",
+        "tier": 0
+      },
+      {
+        "id": "world-war-one",
+        "tier": 0
+      },
+      {
+        "id": "world-war-two",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -26721,6 +33622,26 @@ export const questions = [
       },
       {
         "id": "spanish-flu",
+        "tier": 0
+      },
+      {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
+        "id": "boston-tea-party",
         "tier": 0
       },
       {
@@ -26736,35 +33657,59 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "exxon-valdez-spill",
+        "tier": 0
+      },
+      {
         "id": "wwi-armistice",
         "tier": 0
       },
       {
         "id": "fukushima",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "great-chicago-fire",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "great-fire-london",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "molasses-flood",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "haarp",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "halifax",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "noaa-hurricane-steering",
+        "tier": 1
+      },
+      {
+        "id": "indian-independence",
+        "tier": 1
+      },
+      {
+        "id": "march-on-washington",
+        "tier": 1
+      },
+      {
+        "id": "panama-canal-opening",
+        "tier": 1
+      },
+      {
+        "id": "paris-agreement",
+        "tier": 1
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
         "tier": 1
       },
       {
@@ -26772,60 +33717,92 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "smallpox-eradication",
+        "tier": 1
+      },
+      {
         "id": "challenger",
         "tier": 1
       },
       {
-        "id": "tunguska",
+        "id": "suez-crisis",
         "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 1
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
+      },
+      {
+        "id": "tunguska",
+        "tier": 2
+      },
+      {
+        "id": "wtc7-demolition",
+        "tier": 2
       },
       {
         "id": "bhopal",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "carrington",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "denver-airport-lizard-base",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "krakatau",
-        "tier": 1
+        "tier": 2
+      },
+      {
+        "id": "montreal-protocol",
+        "tier": 2
       },
       {
         "id": "philadelphia-experiment",
-        "tier": 1
+        "tier": 2
+      },
+      {
+        "id": "protocols-forgery-claim",
+        "tier": 2
       },
       {
         "id": "lusitania",
-        "tier": 1
+        "tier": 3
       },
       {
         "id": "columbia",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "great-smog-london",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "lake-nyos",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "lindbergh-kidnapping",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "dancing-plague",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "triangle-shirtwaist",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "aberfan",
@@ -26842,12 +33819,40 @@ export const questions = [
     "band": 4,
     "family": "world-affairs",
     "topic": "Government & world affairs",
-    "poolId": "7d05e20dcc83a6f6",
+    "poolId": "b1bea8aa1cdd5754",
     "prompt": "Name a subject involving political change, prosecution, or covert activity.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
+        "id": "financial-crisis-2008",
+        "tier": 0
+      },
+      {
         "id": "abraham-lincoln",
+        "tier": 0
+      },
+      {
+        "id": "american-civil-war",
+        "tier": 0
+      },
+      {
+        "id": "american-revolution",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "illuminati",
+        "tier": 0
+      },
+      {
+        "id": "brexit",
+        "tier": 0
+      },
+      {
+        "id": "soviet-union-collapse",
         "tier": 0
       },
       {
@@ -26855,7 +33860,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
+        "id": "freemasons",
+        "tier": 0
+      },
+      {
+        "id": "french-revolution",
+        "tier": 0
+      },
+      {
         "id": "george-washington",
+        "tier": 0
+      },
+      {
+        "id": "great-depression",
         "tier": 0
       },
       {
@@ -26879,6 +33900,14 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wall-street-crash-1929",
+        "tier": 0
+      },
+      {
+        "id": "boston-tea-party",
+        "tier": 0
+      },
+      {
         "id": "civil-rights-act-1964",
         "tier": 0
       },
@@ -26891,7 +33920,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "indian-independence",
+        "tier": 0
+      },
+      {
         "id": "magna-carta",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
+        "id": "march-on-washington",
         "tier": 0
       },
       {
@@ -26907,28 +33948,44 @@ export const questions = [
         "tier": 0
       },
       {
-        "id": "project-blue-book",
+        "id": "paris-agreement",
         "tier": 0
+      },
+      {
+        "id": "project-blue-book",
+        "tier": 1
       },
       {
         "id": "saddam-hussein",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "salem-witch-trials",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "smallpox-eradication",
+        "tier": 1
       },
       {
         "id": "thirteenth-amendment",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 1
       },
       {
         "id": "charles-taylor",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "cointelpro",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "montreal-protocol",
+        "tier": 1
       },
       {
         "id": "aquatone",
@@ -26948,19 +34005,19 @@ export const questions = [
       },
       {
         "id": "stormfury",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "karadzic",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "mladic",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "stargate",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "acoustikitty",
@@ -26972,11 +34029,11 @@ export const questions = [
       },
       {
         "id": "samphan",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "azorian",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "kambanda",
@@ -26984,7 +34041,7 @@ export const questions = [
       },
       {
         "id": "palladium",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "project-xray",
@@ -27001,16 +34058,68 @@ export const questions = [
     "band": 5,
     "family": "world-affairs",
     "topic": "Government & world affairs",
-    "poolId": "43e0eba7c6de539f",
+    "poolId": "b02093563547c01f",
     "prompt": "Name a subject involving international conflict or secret research.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
       {
         "id": "hitler",
         "tier": 0
       },
       {
+        "id": "american-civil-war",
+        "tier": 0
+      },
+      {
+        "id": "american-revolution",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
+        "id": "brexit",
+        "tier": 0
+      },
+      {
+        "id": "soviet-union-collapse",
+        "tier": 0
+      },
+      {
+        "id": "covid-pandemic",
+        "tier": 0
+      },
+      {
         "id": "dday",
+        "tier": 0
+      },
+      {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
+        "id": "french-revolution",
+        "tier": 0
+      },
+      {
+        "id": "gulf-war",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
         "tier": 0
       },
       {
@@ -27026,6 +34135,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "korean-war",
+        "tier": 0
+      },
+      {
         "id": "berlin-wall",
         "tier": 0
       },
@@ -27038,7 +34151,43 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "vietnam-war",
+        "tier": 0
+      },
+      {
+        "id": "world-war-one",
+        "tier": 0
+      },
+      {
+        "id": "world-war-two",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "mussolini",
+        "tier": 0
+      },
+      {
+        "id": "bilderberg",
+        "tier": 0
+      },
+      {
+        "id": "boston-tea-party",
         "tier": 0
       },
       {
@@ -27066,7 +34215,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "indian-independence",
+        "tier": 0
+      },
+      {
         "id": "james-webb",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
         "tier": 0
       },
       {
@@ -27074,44 +34231,72 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "march-on-washington",
+        "tier": 0
+      },
+      {
         "id": "mkultra",
         "tier": 0
       },
       {
-        "id": "paperclip",
+        "id": "panama-canal-opening",
         "tier": 0
+      },
+      {
+        "id": "paperclip",
+        "tier": 1
+      },
+      {
+        "id": "paris-agreement",
+        "tier": 1
       },
       {
         "id": "perseverance",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "project-blue-book",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "saddam-hussein",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "smallpox-eradication",
+        "tier": 1
       },
       {
         "id": "sputnik-1",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "suez-crisis",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 1
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
       },
       {
         "id": "tuskegee",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-2",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "pinochet",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "charles-taylor",
@@ -27130,32 +34315,36 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "montreal-protocol",
+        "tier": 2
+      },
+      {
         "id": "new-horizons",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "aquatone",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "viking-1",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "corona",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "northwoods",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "osiris-rex",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "stormfury",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "karadzic",
@@ -27163,19 +34352,19 @@ export const questions = [
       },
       {
         "id": "mladic",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "rosetta",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "stargate",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "acoustikitty",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "operation-gold",
@@ -27183,11 +34372,11 @@ export const questions = [
       },
       {
         "id": "azorian",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "palladium",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "project-xray",
@@ -27204,10 +34393,18 @@ export const questions = [
     "band": 6,
     "family": "world-affairs",
     "topic": "Government & world affairs",
-    "poolId": "61db1429bbf5489e",
+    "poolId": "d1a48ab2dcb486ab",
     "prompt": "Name a government-related subject or an unusual subject from world history.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "financial-crisis-2008",
+        "tier": 0
+      },
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
       {
         "id": "abraham-lincoln",
         "tier": 0
@@ -27217,7 +34414,39 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "american-civil-war",
+        "tier": 0
+      },
+      {
+        "id": "american-revolution",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
+        "id": "illuminati",
+        "tier": 0
+      },
+      {
         "id": "bermuda-triangle",
+        "tier": 0
+      },
+      {
+        "id": "brexit",
         "tier": 0
       },
       {
@@ -27225,7 +34454,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "soviet-union-collapse",
+        "tier": 0
+      },
+      {
+        "id": "covid-pandemic",
+        "tier": 0
+      },
+      {
         "id": "declaration-independence",
+        "tier": 0
+      },
+      {
+        "id": "end-apartheid",
         "tier": 0
       },
       {
@@ -27233,7 +34474,31 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "freemasons",
+        "tier": 0
+      },
+      {
+        "id": "french-revolution",
+        "tier": 0
+      },
+      {
         "id": "george-washington",
+        "tier": 0
+      },
+      {
+        "id": "great-depression",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
+        "id": "gulf-war",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
         "tier": 0
       },
       {
@@ -27249,7 +34514,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "korean-war",
+        "tier": 0
+      },
+      {
         "id": "gandhi",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -27281,11 +34554,31 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "vietnam-war",
+        "tier": 0
+      },
+      {
+        "id": "wall-street-crash-1929",
+        "tier": 0
+      },
+      {
         "id": "watergate",
         "tier": 0
       },
       {
+        "id": "world-war-one",
+        "tier": 0
+      },
+      {
+        "id": "world-war-two",
+        "tier": 0
+      },
+      {
         "id": "zodiac",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
         "tier": 0
       },
       {
@@ -27298,6 +34591,14 @@ export const questions = [
       },
       {
         "id": "mussolini",
+        "tier": 0
+      },
+      {
+        "id": "bilderberg",
+        "tier": 0
+      },
+      {
+        "id": "boston-tea-party",
         "tier": 0
       },
       {
@@ -27337,6 +34638,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "indian-independence",
+        "tier": 0
+      },
+      {
         "id": "james-webb",
         "tier": 0
       },
@@ -27349,7 +34654,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mao",
+        "tier": 0
+      },
+      {
+        "id": "march-on-washington",
         "tier": 0
       },
       {
@@ -27369,7 +34682,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "panama-canal-opening",
+        "tier": 0
+      },
+      {
         "id": "paperclip",
+        "tier": 0
+      },
+      {
+        "id": "paris-agreement",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
         "tier": 0
       },
       {
@@ -27378,50 +34703,74 @@ export const questions = [
       },
       {
         "id": "project-blue-book",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "saddam-hussein",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "salem-witch-trials",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "smallpox-eradication",
+        "tier": 1
       },
       {
         "id": "sputnik-1",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "suez-crisis",
+        "tier": 1
       },
       {
         "id": "solar-warming-hoax",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "thirteenth-amendment",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 1
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
       },
       {
         "id": "tunguska",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "tuskegee",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "vaccine-microchips",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-2",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "disney-cryonics",
+        "tier": 1
+      },
+      {
+        "id": "wtc7-demolition",
         "tier": 1
       },
       {
@@ -27477,36 +34826,44 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "montreal-protocol",
+        "tier": 2
+      },
+      {
         "id": "new-horizons",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "nibiru",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "philadelphia-experiment",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "aquatone",
-        "tier": 1
+        "tier": 2
+      },
+      {
+        "id": "protocols-forgery-claim",
+        "tier": 2
       },
       {
         "id": "earthquake-prediction-coverup",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "viking-1",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "voting-rights-act-1965",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "comet-elenin-doomsday",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "corona",
@@ -27534,23 +34891,23 @@ export const questions = [
       },
       {
         "id": "osiris-rex",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "stormfury",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "karadzic",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "mladic",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "rosetta",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "stargate",
@@ -27570,11 +34927,11 @@ export const questions = [
       },
       {
         "id": "mars-doorway",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "operation-gold",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "kambanda",
@@ -27599,10 +34956,22 @@ export const questions = [
     "band": 0,
     "family": "oddities",
     "topic": "Stranger history",
-    "poolId": "6ac05ce68ce2cc75",
+    "poolId": "bb3c2386ab4da450",
     "prompt": "Name an unusual historical subject or a strange-sounding research project.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "illuminati",
+        "tier": 0
+      },
       {
         "id": "bermuda-triangle",
         "tier": 0
@@ -27613,6 +34982,18 @@ export const questions = [
       },
       {
         "id": "flat-earth",
+        "tier": 0
+      },
+      {
+        "id": "freemasons",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -27636,6 +35017,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "bilderberg",
+        "tier": 0
+      },
+      {
         "id": "molasses-flood",
         "tier": 0
       },
@@ -27652,6 +35037,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mars-hoax",
         "tier": 0
       },
@@ -27665,6 +35054,10 @@ export const questions = [
       },
       {
         "id": "paperclip",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
         "tier": 0
       },
       {
@@ -27692,24 +35085,28 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wtc7-demolition",
+        "tier": 0
+      },
+      {
         "id": "carrington",
         "tier": 0
       },
       {
         "id": "cointelpro",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "denver-airport-lizard-base",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "earthquake-weather",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "face-mars",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "hollow-earth",
@@ -27732,6 +35129,10 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "protocols-forgery-claim",
+        "tier": 1
+      },
+      {
         "id": "earthquake-prediction-coverup",
         "tier": 1
       },
@@ -27745,19 +35146,19 @@ export const questions = [
       },
       {
         "id": "hollow-moon",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lake-nyos",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lhc-doomsday",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "2000-alignment-apocalypse",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "northwoods",
@@ -27773,11 +35174,11 @@ export const questions = [
       },
       {
         "id": "acoustikitty",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "mars-doorway",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "operation-gold",
@@ -27789,7 +35190,7 @@ export const questions = [
       },
       {
         "id": "palladium",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "project-xray",
@@ -27806,10 +35207,22 @@ export const questions = [
     "band": 1,
     "family": "oddities",
     "topic": "Stranger history",
-    "poolId": "eb30778dfb29968d",
+    "poolId": "62367a4c94e0ae5d",
     "prompt": "Name a natural event or a historical disaster with an unexpected story.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
       {
         "id": "aurora",
         "tier": 0
@@ -27819,11 +35232,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "covid-pandemic",
+        "tier": 0
+      },
+      {
         "id": "pompeii",
         "tier": 0
       },
       {
         "id": "hindenburg",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -27847,6 +35272,22 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "deepwater-horizon",
         "tier": 0
       },
@@ -27855,27 +35296,39 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "exxon-valdez-spill",
+        "tier": 0
+      },
+      {
         "id": "fukushima",
         "tier": 0
       },
       {
         "id": "great-chicago-fire",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "great-fire-london",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "molasses-flood",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "halifax",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "challenger",
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
         "tier": 1
       },
       {
@@ -27892,11 +35345,11 @@ export const questions = [
       },
       {
         "id": "krakatau",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "saturn-hexagon",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lusitania",
@@ -27908,7 +35361,7 @@ export const questions = [
       },
       {
         "id": "great-smog-london",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "triangle-shirtwaist",
@@ -27929,10 +35382,14 @@ export const questions = [
     "band": 2,
     "family": "oddities",
     "topic": "Stranger history",
-    "poolId": "da7c5e27f4980738",
+    "poolId": "e56d05571c51e17d",
     "prompt": "Name a subject involving an extraordinary claim or an unusual experiment.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
       {
         "id": "bermuda-triangle",
         "tier": 0
@@ -27946,11 +35403,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
+        "tier": 0
+      },
+      {
         "id": "moon-landing-hoax",
         "tier": 0
       },
       {
         "id": "roswell-alien-craft",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -27974,6 +35443,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mars-hoax",
         "tier": 0
       },
@@ -27986,7 +35459,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "solar-warming-hoax",
+        "tier": 0
+      },
+      {
+        "id": "trinity-test",
         "tier": 0
       },
       {
@@ -28002,12 +35483,16 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wtc7-demolition",
+        "tier": 1
+      },
+      {
         "id": "denver-airport-lizard-base",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "earthquake-weather",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "face-mars",
@@ -28030,12 +35515,16 @@ export const questions = [
         "tier": 1
       },
       {
-        "id": "earthquake-prediction-coverup",
+        "id": "protocols-forgery-claim",
         "tier": 1
       },
       {
+        "id": "earthquake-prediction-coverup",
+        "tier": 2
+      },
+      {
         "id": "comet-elenin-doomsday",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "hollow-moon",
@@ -28051,7 +35540,7 @@ export const questions = [
       },
       {
         "id": "stormfury",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "stargate",
@@ -28076,12 +35565,28 @@ export const questions = [
     "band": 2,
     "family": "oddities",
     "topic": "Stranger history",
-    "poolId": "00a98d54edf31355",
+    "poolId": "138e0329ef04f1a1",
     "prompt": "Name a subject involving strange skies or unlikely technology.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
+      {
         "id": "apollo",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
         "tier": 0
       },
       {
@@ -28098,6 +35603,10 @@ export const questions = [
       },
       {
         "id": "earth",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
         "tier": 0
       },
       {
@@ -28126,6 +35635,10 @@ export const questions = [
       },
       {
         "id": "milky-way",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -28165,6 +35678,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wright-first-flight",
+        "tier": 0
+      },
+      {
         "id": "2012-calendar-apocalypse",
         "tier": 0
       },
@@ -28190,6 +35707,10 @@ export const questions = [
       },
       {
         "id": "rader",
+        "tier": 0
+      },
+      {
+        "id": "exxon-valdez-spill",
         "tier": 0
       },
       {
@@ -28225,6 +35746,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mars-hoax",
         "tier": 0
       },
@@ -28237,7 +35762,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "panama-canal-opening",
+        "tier": 0
+      },
+      {
         "id": "ozone-layer",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
         "tier": 0
       },
       {
@@ -28250,15 +35783,23 @@ export const questions = [
       },
       {
         "id": "challenger",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "sputnik-1",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
       },
       {
         "id": "tunguska",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "uranus",
@@ -28274,6 +35815,10 @@ export const questions = [
       },
       {
         "id": "voyager-2",
+        "tier": 1
+      },
+      {
+        "id": "wtc7-demolition",
         "tier": 1
       },
       {
@@ -28322,15 +35867,15 @@ export const questions = [
       },
       {
         "id": "philadelphia-experiment",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "aquatone",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "saturn-hexagon",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lusitania",
@@ -28366,7 +35911,7 @@ export const questions = [
       },
       {
         "id": "osiris-rex",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "rosetta",
@@ -28411,12 +35956,28 @@ export const questions = [
     "band": 3,
     "family": "oddities",
     "topic": "Stranger history",
-    "poolId": "014af6520e4f7a64",
+    "poolId": "1248769ed07240ec",
     "prompt": "Name an unusual historical subject, a research project, or a strange natural event.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
         "id": "aurora",
+        "tier": 0
+      },
+      {
+        "id": "illuminati",
         "tier": 0
       },
       {
@@ -28433,6 +35994,22 @@ export const questions = [
       },
       {
         "id": "flat-earth",
+        "tier": 0
+      },
+      {
+        "id": "freemasons",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -28460,11 +36037,27 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "2012-calendar-apocalypse",
         "tier": 0
       },
       {
         "id": "5g-covid",
+        "tier": 0
+      },
+      {
+        "id": "bilderberg",
         "tier": 0
       },
       {
@@ -28488,6 +36081,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mars-hoax",
         "tier": 0
       },
@@ -28501,6 +36098,10 @@ export const questions = [
       },
       {
         "id": "paperclip",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
         "tier": 0
       },
       {
@@ -28525,23 +36126,27 @@ export const questions = [
       },
       {
         "id": "disney-cryonics",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "wtc7-demolition",
+        "tier": 1
       },
       {
         "id": "carrington",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "cointelpro",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "denver-airport-lizard-base",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "earthquake-weather",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "face-mars",
@@ -28572,6 +36177,10 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "protocols-forgery-claim",
+        "tier": 1
+      },
+      {
         "id": "saturn-hexagon",
         "tier": 1
       },
@@ -28581,19 +36190,19 @@ export const questions = [
       },
       {
         "id": "comet-elenin-doomsday",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "corona",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "hollow-moon",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lake-nyos",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lhc-doomsday",
@@ -28613,11 +36222,11 @@ export const questions = [
       },
       {
         "id": "dancing-plague",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "acoustikitty",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "mars-doorway",
@@ -28650,10 +36259,22 @@ export const questions = [
     "band": 4,
     "family": "oddities",
     "topic": "Stranger history",
-    "poolId": "129979b40dbd0eea",
+    "poolId": "3b50965c7d896f59",
     "prompt": "Name an unusual historical subject or a theory about a hidden world.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "illuminati",
+        "tier": 0
+      },
       {
         "id": "bermuda-triangle",
         "tier": 0
@@ -28664,6 +36285,18 @@ export const questions = [
       },
       {
         "id": "flat-earth",
+        "tier": 0
+      },
+      {
+        "id": "freemasons",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -28684,6 +36317,10 @@ export const questions = [
       },
       {
         "id": "5g-covid",
+        "tier": 0
+      },
+      {
+        "id": "bilderberg",
         "tier": 0
       },
       {
@@ -28711,6 +36348,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "salem-witch-trials",
         "tier": 0
       },
@@ -28731,6 +36372,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wtc7-demolition",
+        "tier": 0
+      },
+      {
         "id": "carrington",
         "tier": 0
       },
@@ -28740,19 +36385,19 @@ export const questions = [
       },
       {
         "id": "earthquake-weather",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "face-mars",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "hollow-earth",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "magnetic-pole-flip-apocalypse",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "nibiru",
@@ -28764,6 +36409,10 @@ export const questions = [
       },
       {
         "id": "aquatone",
+        "tier": 1
+      },
+      {
+        "id": "protocols-forgery-claim",
         "tier": 1
       },
       {
@@ -28784,11 +36433,11 @@ export const questions = [
       },
       {
         "id": "lake-nyos",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lhc-doomsday",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "2000-alignment-apocalypse",
@@ -28808,7 +36457,7 @@ export const questions = [
       },
       {
         "id": "acoustikitty",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "mars-doorway",
@@ -28820,7 +36469,7 @@ export const questions = [
       },
       {
         "id": "azorian",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "project-xray",
@@ -28837,12 +36486,20 @@ export const questions = [
     "band": 4,
     "family": "oddities",
     "topic": "Stranger history",
-    "poolId": "e5667823cdf5db5b",
+    "poolId": "b67212e7cd18d3a3",
     "prompt": "Name a subject involving a mission, a government project, or the natural world.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
         "id": "apollo",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
         "tier": 0
       },
       {
@@ -28859,6 +36516,10 @@ export const questions = [
       },
       {
         "id": "hubble",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -28910,6 +36571,18 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "asteroid-belt",
         "tier": 0
       },
@@ -28931,6 +36604,10 @@ export const questions = [
       },
       {
         "id": "james-webb",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
         "tier": 0
       },
       {
@@ -28971,15 +36648,15 @@ export const questions = [
       },
       {
         "id": "uranus",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-2",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "carrington",
@@ -29035,7 +36712,7 @@ export const questions = [
       },
       {
         "id": "viking-1",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "corona",
@@ -29100,16 +36777,32 @@ export const questions = [
     "band": 5,
     "family": "oddities",
     "topic": "Stranger history",
-    "poolId": "3c2453a5f91fa0e3",
+    "poolId": "9e67db9880c2cfb4",
     "prompt": "Name a subject involving mysterious-looking places or an unexpected disaster.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
       {
         "id": "bermuda-triangle",
         "tier": 0
       },
       {
         "id": "chernobyl",
+        "tier": 0
+      },
+      {
+        "id": "covid-pandemic",
         "tier": 0
       },
       {
@@ -29122,6 +36815,14 @@ export const questions = [
       },
       {
         "id": "hindenburg",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -29141,11 +36842,31 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "deepwater-horizon",
         "tier": 0
       },
       {
         "id": "dust-bowl",
+        "tier": 0
+      },
+      {
+        "id": "exxon-valdez-spill",
         "tier": 0
       },
       {
@@ -29166,19 +36887,27 @@ export const questions = [
       },
       {
         "id": "halifax",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "challenger",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 1
       },
       {
         "id": "tunguska",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "bhopal",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "denver-airport-lizard-base",
@@ -29201,12 +36930,16 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "protocols-forgery-claim",
+        "tier": 2
+      },
+      {
         "id": "saturn-hexagon",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lusitania",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "columbia",
@@ -29218,7 +36951,7 @@ export const questions = [
       },
       {
         "id": "hollow-moon",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "lake-nyos",
@@ -29243,10 +36976,18 @@ export const questions = [
     "band": 6,
     "family": "oddities",
     "topic": "Stranger history",
-    "poolId": "217810c5a5c2c15e",
+    "poolId": "f85c528baa74c432",
     "prompt": "Name a real scientific project or a persistent extraordinary story.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
       {
         "id": "bermuda-triangle",
         "tier": 0
@@ -29260,6 +37001,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
         "id": "hubble",
         "tier": 0
       },
@@ -29268,11 +37013,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mmr-autism-claim",
+        "tier": 0
+      },
+      {
         "id": "moon-landing-hoax",
         "tier": 0
       },
       {
         "id": "roswell-alien-craft",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -29308,6 +37061,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mars-hoax",
         "tier": 0
       },
@@ -29324,6 +37081,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "perseverance",
         "tier": 0
       },
@@ -29332,11 +37093,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "smallpox-eradication",
+        "tier": 0
+      },
+      {
         "id": "sputnik-1",
         "tier": 0
       },
       {
         "id": "solar-warming-hoax",
+        "tier": 0
+      },
+      {
+        "id": "trinity-test",
         "tier": 0
       },
       {
@@ -29360,24 +37129,28 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wtc7-demolition",
+        "tier": 0
+      },
+      {
         "id": "cointelpro",
         "tier": 0
       },
       {
         "id": "dart",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "denver-airport-lizard-base",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "earthquake-weather",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "face-mars",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "hollow-earth",
@@ -29412,6 +37185,10 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "protocols-forgery-claim",
+        "tier": 1
+      },
+      {
         "id": "earthquake-prediction-coverup",
         "tier": 1
       },
@@ -29425,7 +37202,7 @@ export const questions = [
       },
       {
         "id": "hollow-moon",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lhc-doomsday",
@@ -29490,12 +37267,28 @@ export const questions = [
     "band": 7,
     "family": "oddities",
     "topic": "Stranger history",
-    "poolId": "21b0f0a63ee94f66",
+    "poolId": "ce3bbe6a83da22cb",
     "prompt": "Name a subject involving unusual history, secret research, or a strange natural event.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
         "id": "aurora",
+        "tier": 0
+      },
+      {
+        "id": "illuminati",
         "tier": 0
       },
       {
@@ -29515,11 +37308,27 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "freemasons",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
         "id": "hubble",
         "tier": 0
       },
       {
+        "id": "hurricane-katrina",
+        "tier": 0
+      },
+      {
         "id": "iss",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -29535,6 +37344,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wright-first-flight",
+        "tier": 0
+      },
+      {
         "id": "zodiac",
         "tier": 0
       },
@@ -29547,11 +37360,27 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "2012-calendar-apocalypse",
         "tier": 0
       },
       {
         "id": "5g-covid",
+        "tier": 0
+      },
+      {
+        "id": "bilderberg",
         "tier": 0
       },
       {
@@ -29587,6 +37416,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mars-hoax",
         "tier": 0
       },
@@ -29603,6 +37436,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "perseverance",
         "tier": 0
       },
@@ -29615,11 +37452,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "smallpox-eradication",
+        "tier": 0
+      },
+      {
         "id": "sputnik-1",
         "tier": 0
       },
       {
         "id": "solar-warming-hoax",
+        "tier": 0
+      },
+      {
+        "id": "trinity-test",
         "tier": 0
       },
       {
@@ -29636,27 +37481,31 @@ export const questions = [
       },
       {
         "id": "voyager-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-2",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "disney-cryonics",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "wtc7-demolition",
+        "tier": 1
       },
       {
         "id": "carrington",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "cointelpro",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "dart",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "denver-airport-lizard-base",
@@ -29707,24 +37556,28 @@ export const questions = [
         "tier": 1
       },
       {
-        "id": "earthquake-prediction-coverup",
+        "id": "protocols-forgery-claim",
         "tier": 1
+      },
+      {
+        "id": "earthquake-prediction-coverup",
+        "tier": 2
       },
       {
         "id": "viking-1",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "comet-elenin-doomsday",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "corona",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "hollow-moon",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lake-nyos",
@@ -29752,11 +37605,11 @@ export const questions = [
       },
       {
         "id": "rosetta",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "stargate",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "dancing-plague",
@@ -29776,7 +37629,7 @@ export const questions = [
       },
       {
         "id": "azorian",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "palladium",
@@ -29797,10 +37650,18 @@ export const questions = [
     "band": 0,
     "family": "surveillance",
     "topic": "Secrets & surveillance",
-    "poolId": "4a7bbc1305f3adad",
+    "poolId": "34ab7c3491a0fa88",
     "prompt": "Name a subject involving spying, surveillance, or government secrecy.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
       {
         "id": "chemtrails",
         "tier": 0
@@ -29818,11 +37679,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mkultra",
         "tier": 0
       },
       {
         "id": "paperclip",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
+        "id": "wtc7-demolition",
         "tier": 0
       },
       {
@@ -29839,7 +37712,11 @@ export const questions = [
       },
       {
         "id": "aquatone",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "protocols-forgery-claim",
+        "tier": 1
       },
       {
         "id": "corona",
@@ -29880,12 +37757,20 @@ export const questions = [
     "band": 1,
     "family": "surveillance",
     "topic": "Secrets & surveillance",
-    "poolId": "e36d41f232fc6e00",
+    "poolId": "7f0ca41291bfc6aa",
     "prompt": "Name an intelligence project or a famous investigation.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
         "id": "al-capone",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
         "tier": 0
       },
       {
@@ -29925,6 +37810,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mkultra",
         "tier": 0
       },
@@ -29950,11 +37839,11 @@ export const questions = [
       },
       {
         "id": "iran-contra",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "dillinger",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "golden-state-killer",
@@ -29978,7 +37867,7 @@ export const questions = [
       },
       {
         "id": "northwoods",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "stargate",
@@ -30066,10 +37955,18 @@ export const questions = [
     "band": 2,
     "family": "surveillance",
     "topic": "Secrets & surveillance",
-    "poolId": "b392bab65f2c93a4",
+    "poolId": "d7539ebd866938cc",
     "prompt": "Name a covert program or a theory about secret control.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
       {
         "id": "chemtrails",
         "tier": 0
@@ -30087,11 +37984,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mkultra",
         "tier": 0
       },
       {
         "id": "paperclip",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
+        "id": "wtc7-demolition",
         "tier": 0
       },
       {
@@ -30107,12 +38016,16 @@ export const questions = [
         "tier": 0
       },
       {
-        "id": "corona",
+        "id": "protocols-forgery-claim",
         "tier": 0
       },
       {
+        "id": "corona",
+        "tier": 1
+      },
+      {
         "id": "hollow-moon",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "lhc-doomsday",
@@ -30128,7 +38041,7 @@ export const questions = [
       },
       {
         "id": "acoustikitty",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "operation-gold",
@@ -30157,12 +38070,24 @@ export const questions = [
     "band": 3,
     "family": "surveillance",
     "topic": "Secrets & surveillance",
-    "poolId": "6190200bf7bd5c72",
+    "poolId": "05585953c5fbae80",
     "prompt": "Name a government research project or a documented abuse.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
         "id": "hitler",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
         "tier": 0
       },
       {
@@ -30179,6 +38104,14 @@ export const questions = [
       },
       {
         "id": "pol-pot",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
         "tier": 0
       },
       {
@@ -30199,6 +38132,10 @@ export const questions = [
       },
       {
         "id": "james-webb",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
         "tier": 0
       },
       {
@@ -30226,7 +38163,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "smallpox-eradication",
+        "tier": 0
+      },
+      {
         "id": "sputnik-1",
+        "tier": 0
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 0
+      },
+      {
+        "id": "trinity-test",
         "tier": 0
       },
       {
@@ -30247,19 +38196,19 @@ export const questions = [
       },
       {
         "id": "charles-taylor",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "cointelpro",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "dart",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "ingenuity",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "juno",
@@ -30291,11 +38240,11 @@ export const questions = [
       },
       {
         "id": "stormfury",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "karadzic",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "mladic",
@@ -30315,7 +38264,7 @@ export const questions = [
       },
       {
         "id": "operation-gold",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "azorian",
@@ -30327,7 +38276,7 @@ export const questions = [
       },
       {
         "id": "palladium",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "project-xray",
@@ -30344,12 +38293,32 @@ export const questions = [
     "band": 4,
     "family": "surveillance",
     "topic": "Secrets & surveillance",
-    "poolId": "352c6f0733e49e8a",
+    "poolId": "46601d51eb7e6823",
     "prompt": "Name a subject involving surveillance or military technology.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
+        "id": "american-civil-war",
+        "tier": 0
+      },
+      {
+        "id": "american-revolution",
+        "tier": 0
+      },
+      {
         "id": "apollo",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
         "tier": 0
       },
       {
@@ -30358,6 +38327,14 @@ export const questions = [
       },
       {
         "id": "dday",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
+        "id": "gulf-war",
         "tier": 0
       },
       {
@@ -30373,6 +38350,14 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "korean-war",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
+        "tier": 0
+      },
+      {
         "id": "pearl-harbor",
         "tier": 0
       },
@@ -30382,6 +38367,22 @@ export const questions = [
       },
       {
         "id": "titanic",
+        "tier": 0
+      },
+      {
+        "id": "vietnam-war",
+        "tier": 0
+      },
+      {
+        "id": "world-war-one",
+        "tier": 0
+      },
+      {
+        "id": "world-war-two",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -30402,6 +38403,10 @@ export const questions = [
       },
       {
         "id": "rader",
+        "tier": 0
+      },
+      {
+        "id": "exxon-valdez-spill",
         "tier": 0
       },
       {
@@ -30429,6 +38434,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mkultra",
         "tier": 0
       },
@@ -30437,7 +38446,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "panama-canal-opening",
+        "tier": 0
+      },
+      {
         "id": "paperclip",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
         "tier": 0
       },
       {
@@ -30446,27 +38463,39 @@ export const questions = [
       },
       {
         "id": "project-blue-book",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "challenger",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "sputnik-1",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "suez-crisis",
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
       },
       {
         "id": "vaccine-microchips",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-2",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "bhopal",
@@ -30498,19 +38527,19 @@ export const questions = [
       },
       {
         "id": "lusitania",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "columbia",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "viking-1",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "corona",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lhc-doomsday",
@@ -30530,11 +38559,11 @@ export const questions = [
       },
       {
         "id": "stargate",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "aberfan",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "acoustikitty",
@@ -30567,12 +38596,20 @@ export const questions = [
     "band": 4,
     "family": "surveillance",
     "topic": "Secrets & surveillance",
-    "poolId": "01530ba6dc2635d2",
+    "poolId": "6fec02af9dd288f7",
     "prompt": "Name a subject involving an investigation or secret scientific research.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
         "id": "al-capone",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
         "tier": 0
       },
       {
@@ -30604,6 +38641,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wright-first-flight",
+        "tier": 0
+      },
+      {
         "id": "zodiac",
         "tier": 0
       },
@@ -30632,6 +38673,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mkultra",
         "tier": 0
       },
@@ -30652,11 +38697,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "smallpox-eradication",
+        "tier": 0
+      },
+      {
         "id": "sputnik-1",
         "tier": 0
       },
       {
         "id": "unabomber",
+        "tier": 0
+      },
+      {
+        "id": "trinity-test",
         "tier": 0
       },
       {
@@ -30673,11 +38726,11 @@ export const questions = [
       },
       {
         "id": "cointelpro",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "dart",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "ingenuity",
@@ -30721,11 +38774,11 @@ export const questions = [
       },
       {
         "id": "northwoods",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "osiris-rex",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "stormfury",
@@ -30745,7 +38798,7 @@ export const questions = [
       },
       {
         "id": "joseph-franklin",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "operation-gold",
@@ -30757,7 +38810,7 @@ export const questions = [
       },
       {
         "id": "palladium",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "project-xray",
@@ -30774,12 +38827,24 @@ export const questions = [
     "band": 5,
     "family": "surveillance",
     "topic": "Secrets & surveillance",
-    "poolId": "146b77d2a4c40dd0",
+    "poolId": "89f77a0e71dc9656",
     "prompt": "Name a covert operation or an event involving state repression.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
         "id": "hitler",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
         "tier": 0
       },
       {
@@ -30791,11 +38856,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
         "id": "mussolini",
         "tier": 0
       },
       {
         "id": "idi-amin",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
         "tier": 0
       },
       {
@@ -30815,6 +38888,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "tiananmen-1989",
+        "tier": 0
+      },
+      {
         "id": "tuskegee",
         "tier": 0
       },
@@ -30828,15 +38905,15 @@ export const questions = [
       },
       {
         "id": "cointelpro",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "aquatone",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "corona",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "northwoods",
@@ -30856,7 +38933,7 @@ export const questions = [
       },
       {
         "id": "acoustikitty",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "samphan",
@@ -30868,7 +38945,7 @@ export const questions = [
       },
       {
         "id": "kambanda",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "palladium",
@@ -30889,16 +38966,28 @@ export const questions = [
     "band": 6,
     "family": "surveillance",
     "topic": "Secrets & surveillance",
-    "poolId": "6181babf1d730bfa",
+    "poolId": "e6bfabe466ccd68f",
     "prompt": "Name a subject involving hidden technology, spying, or unusual government plans.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
       {
         "id": "haarp",
         "tier": 0
       },
       {
         "id": "noaa-hurricane-steering",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
         "tier": 0
       },
       {
@@ -30911,6 +39000,10 @@ export const questions = [
       },
       {
         "id": "project-blue-book",
+        "tier": 0
+      },
+      {
+        "id": "wtc7-demolition",
         "tier": 0
       },
       {
@@ -30935,7 +39028,7 @@ export const questions = [
       },
       {
         "id": "hollow-moon",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "lhc-doomsday",
@@ -30980,12 +39073,20 @@ export const questions = [
     "band": 7,
     "family": "surveillance",
     "topic": "Secrets & surveillance",
-    "poolId": "6a2a97c25cec9d79",
+    "poolId": "4a8d35f0362ddf07",
     "prompt": "Name a secret-program subject or a case solved through evidence.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
         "id": "al-capone",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
         "tier": 0
       },
       {
@@ -31018,6 +39119,10 @@ export const questions = [
       },
       {
         "id": "ridgway",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
         "tier": 0
       },
       {
@@ -31054,11 +39159,11 @@ export const questions = [
       },
       {
         "id": "golden-state-killer",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "aquatone",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "corona",
@@ -31086,7 +39191,7 @@ export const questions = [
       },
       {
         "id": "mladic",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "stargate",
@@ -31123,7 +39228,7 @@ export const questions = [
     "band": 0,
     "family": "sky-stories",
     "topic": "Signals from the sky",
-    "poolId": "54585eca62ef5190",
+    "poolId": "26fd1ac9e1e002bb",
     "prompt": "Name something associated with the sky, space, or the weather.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
@@ -31144,7 +39249,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
         "id": "hubble",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -31244,6 +39357,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "perseverance",
         "tier": 0
       },
@@ -31253,7 +39370,7 @@ export const questions = [
       },
       {
         "id": "challenger",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "sputnik-1",
@@ -31305,7 +39422,7 @@ export const questions = [
       },
       {
         "id": "nibiru",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "saturn-hexagon",
@@ -31366,7 +39483,7 @@ export const questions = [
     "band": 1,
     "family": "sky-stories",
     "topic": "Signals from the sky",
-    "poolId": "156c16859699f470",
+    "poolId": "17a795249cf248a2",
     "prompt": "Name a mission, a celestial body, or a story about aliens.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
@@ -31380,6 +39497,10 @@ export const questions = [
       },
       {
         "id": "earth",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
         "tier": 0
       },
       {
@@ -31471,6 +39592,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "perseverance",
         "tier": 0
       },
@@ -31484,7 +39609,7 @@ export const questions = [
       },
       {
         "id": "sputnik-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "tunguska",
@@ -31585,7 +39710,7 @@ export const questions = [
     "band": 2,
     "family": "sky-stories",
     "topic": "Signals from the sky",
-    "poolId": "5f0eff079ee29b4e",
+    "poolId": "a5b2b57e5f601ed7",
     "prompt": "Name a subject involving a vehicle, spacecraft, or an unusual sky event.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
@@ -31607,6 +39732,10 @@ export const questions = [
       },
       {
         "id": "earth",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
         "tier": 0
       },
       {
@@ -31678,6 +39807,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wright-first-flight",
+        "tier": 0
+      },
+      {
         "id": "2012-calendar-apocalypse",
         "tier": 0
       },
@@ -31691,6 +39824,10 @@ export const questions = [
       },
       {
         "id": "curiosity",
+        "tier": 0
+      },
+      {
+        "id": "exxon-valdez-spill",
         "tier": 0
       },
       {
@@ -31722,16 +39859,24 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "panama-canal-opening",
+        "tier": 0
+      },
+      {
         "id": "ozone-layer",
         "tier": 0
       },
       {
-        "id": "perseverance",
+        "id": "pentagon-confirmed-aliens",
         "tier": 0
       },
       {
+        "id": "perseverance",
+        "tier": 1
+      },
+      {
         "id": "project-blue-book",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "challenger",
@@ -31791,7 +39936,7 @@ export const questions = [
       },
       {
         "id": "new-horizons",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "nibiru",
@@ -31856,10 +40001,14 @@ export const questions = [
     "band": 3,
     "family": "sky-stories",
     "topic": "Signals from the sky",
-    "poolId": "89b42184d00d1ded",
+    "poolId": "4ee7503c17fe8224",
     "prompt": "Name a space-related claim, natural object, or theory about nature.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
       {
         "id": "aurora",
         "tier": 0
@@ -31870,6 +40019,14 @@ export const questions = [
       },
       {
         "id": "earth",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -31925,6 +40082,18 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "2012-calendar-apocalypse",
         "tier": 0
       },
@@ -31946,15 +40115,19 @@ export const questions = [
       },
       {
         "id": "neptune",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "ozone-layer",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 1
       },
       {
         "id": "solar-warming-hoax",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "tunguska",
@@ -31990,7 +40163,7 @@ export const questions = [
       },
       {
         "id": "magnetic-pole-flip-apocalypse",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "nibiru",
@@ -32010,7 +40183,7 @@ export const questions = [
       },
       {
         "id": "lake-nyos",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "2000-alignment-apocalypse",
@@ -32035,7 +40208,7 @@ export const questions = [
     "band": 3,
     "family": "sky-stories",
     "topic": "Signals from the sky",
-    "poolId": "feee1704e038a453",
+    "poolId": "ab17a7f56477dfc8",
     "prompt": "Name a subject involving weather research or space exploration.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
@@ -32052,6 +40225,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wright-first-flight",
+        "tier": 0
+      },
+      {
         "id": "cassini",
         "tier": 0
       },
@@ -32061,6 +40238,10 @@ export const questions = [
       },
       {
         "id": "james-webb",
+        "tier": 0
+      },
+      {
+        "id": "panama-canal-opening",
         "tier": 0
       },
       {
@@ -32077,7 +40258,7 @@ export const questions = [
       },
       {
         "id": "voyager-2",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "dart",
@@ -32118,16 +40299,28 @@ export const questions = [
     "band": 4,
     "family": "sky-stories",
     "topic": "Signals from the sky",
-    "poolId": "db4e024c694cb2ed",
+    "poolId": "03b49b0948a23920",
     "prompt": "Name a natural event or a prediction involving a planet or the sky.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
       {
         "id": "aurora",
         "tier": 0
       },
       {
         "id": "pompeii",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -32151,6 +40344,18 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "2012-calendar-apocalypse",
         "tier": 0
       },
@@ -32163,16 +40368,20 @@ export const questions = [
         "tier": 0
       },
       {
-        "id": "tunguska",
+        "id": "pentagon-confirmed-aliens",
         "tier": 0
+      },
+      {
+        "id": "tunguska",
+        "tier": 1
       },
       {
         "id": "carrington",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "face-mars",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "krakatau",
@@ -32188,11 +40397,11 @@ export const questions = [
       },
       {
         "id": "saturn-hexagon",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "comet-elenin-doomsday",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "hollow-moon",
@@ -32200,7 +40409,7 @@ export const questions = [
       },
       {
         "id": "lake-nyos",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "lhc-doomsday",
@@ -32221,10 +40430,14 @@ export const questions = [
     "band": 5,
     "family": "sky-stories",
     "topic": "Signals from the sky",
-    "poolId": "6c9d96dd6a474fcc",
+    "poolId": "23a1806feb676132",
     "prompt": "Name a subject involving strange worlds or extraordinary technology.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
       {
         "id": "apollo",
         "tier": 0
@@ -32243,6 +40456,10 @@ export const questions = [
       },
       {
         "id": "flat-earth",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
         "tier": 0
       },
       {
@@ -32342,6 +40559,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "perseverance",
         "tier": 0
       },
@@ -32371,6 +40592,10 @@ export const questions = [
       },
       {
         "id": "voyager-2",
+        "tier": 1
+      },
+      {
+        "id": "wtc7-demolition",
         "tier": 1
       },
       {
@@ -32411,7 +40636,7 @@ export const questions = [
       },
       {
         "id": "new-horizons",
-        "tier": 2
+        "tier": 1
       },
       {
         "id": "nibiru",
@@ -32419,6 +40644,10 @@ export const questions = [
       },
       {
         "id": "philadelphia-experiment",
+        "tier": 2
+      },
+      {
+        "id": "protocols-forgery-claim",
         "tier": 2
       },
       {
@@ -32472,12 +40701,16 @@ export const questions = [
     "band": 5,
     "family": "sky-stories",
     "topic": "Signals from the sky",
-    "poolId": "792d92c0da46ddb8",
+    "poolId": "2dfd127c05463931",
     "prompt": "Name a scientific mission or a space-related claim.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
         "id": "apollo",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
         "tier": 0
       },
       {
@@ -32517,6 +40750,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "perseverance",
         "tier": 0
       },
@@ -32534,7 +40771,7 @@ export const questions = [
       },
       {
         "id": "dart",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "ingenuity",
@@ -32558,7 +40795,7 @@ export const questions = [
       },
       {
         "id": "comet-elenin-doomsday",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "hollow-moon",
@@ -32570,7 +40807,7 @@ export const questions = [
       },
       {
         "id": "osiris-rex",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "rosetta",
@@ -32591,12 +40828,16 @@ export const questions = [
     "band": 6,
     "family": "sky-stories",
     "topic": "Signals from the sky",
-    "poolId": "3d5e6e2fc37eea85",
+    "poolId": "2c4bc60f8576f393",
     "prompt": "Name a subject involving space, unusual weather, or a secret research program.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
         "id": "apollo",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
         "tier": 0
       },
       {
@@ -32612,7 +40853,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
         "id": "hubble",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -32700,6 +40949,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mars-hoax",
         "tier": 0
       },
@@ -32713,6 +40966,10 @@ export const questions = [
       },
       {
         "id": "paperclip",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
         "tier": 0
       },
       {
@@ -32741,11 +40998,11 @@ export const questions = [
       },
       {
         "id": "voyager-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-2",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "carrington",
@@ -32809,7 +41066,7 @@ export const questions = [
       },
       {
         "id": "great-smog-london",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "hollow-moon",
@@ -32841,7 +41098,7 @@ export const questions = [
       },
       {
         "id": "stargate",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "acoustikitty",
@@ -32878,10 +41135,14 @@ export const questions = [
     "band": 7,
     "family": "sky-stories",
     "topic": "Signals from the sky",
-    "poolId": "7b8d088682b5d54f",
+    "poolId": "6aeffe73b749212f",
     "prompt": "Name a space subject or a story about visitors and impossible journeys.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
       {
         "id": "apollo",
         "tier": 0
@@ -32892,6 +41153,10 @@ export const questions = [
       },
       {
         "id": "earth",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
         "tier": 0
       },
       {
@@ -32991,6 +41256,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "perseverance",
         "tier": 0
       },
@@ -33008,7 +41277,7 @@ export const questions = [
       },
       {
         "id": "tunguska",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "uranus",
@@ -33020,6 +41289,10 @@ export const questions = [
       },
       {
         "id": "voyager-2",
+        "tier": 1
+      },
+      {
+        "id": "wtc7-demolition",
         "tier": 1
       },
       {
@@ -33056,11 +41329,11 @@ export const questions = [
       },
       {
         "id": "nibiru",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "philadelphia-experiment",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "saturn-hexagon",
@@ -33084,7 +41357,7 @@ export const questions = [
       },
       {
         "id": "lhc-doomsday",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "2000-alignment-apocalypse",
@@ -33117,10 +41390,22 @@ export const questions = [
     "band": 0,
     "family": "evidence",
     "topic": "The public record",
-    "poolId": "08a715965e260bc1",
+    "poolId": "291aa6d9ee01df15",
     "prompt": "Name a historical subject recorded by scientists, investigators, or archives.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "financial-crisis-2008",
+        "tier": 0
+      },
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
       {
         "id": "abraham-lincoln",
         "tier": 0
@@ -33134,7 +41419,31 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "american-civil-war",
+        "tier": 0
+      },
+      {
+        "id": "american-revolution",
+        "tier": 0
+      },
+      {
         "id": "apollo",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
         "tier": 0
       },
       {
@@ -33142,7 +41451,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "illuminati",
+        "tier": 0
+      },
+      {
+        "id": "brexit",
+        "tier": 0
+      },
+      {
         "id": "chernobyl",
+        "tier": 0
+      },
+      {
+        "id": "soviet-union-collapse",
+        "tier": 0
+      },
+      {
+        "id": "covid-pandemic",
         "tier": 0
       },
       {
@@ -33162,7 +41487,31 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
+        "id": "freemasons",
+        "tier": 0
+      },
+      {
+        "id": "french-revolution",
+        "tier": 0
+      },
+      {
         "id": "george-washington",
+        "tier": 0
+      },
+      {
+        "id": "great-depression",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
+        "id": "gulf-war",
         "tier": 0
       },
       {
@@ -33170,7 +41519,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "holocaust",
+        "tier": 0
+      },
+      {
         "id": "hubble",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -33194,6 +41551,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "korean-war",
+        "tier": 0
+      },
+      {
         "id": "gandhi",
         "tier": 0
       },
@@ -33207,6 +41568,10 @@ export const questions = [
       },
       {
         "id": "milky-way",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -33278,7 +41643,27 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "vietnam-war",
+        "tier": 0
+      },
+      {
+        "id": "wall-street-crash-1929",
+        "tier": 0
+      },
+      {
         "id": "watergate",
+        "tier": 0
+      },
+      {
+        "id": "world-war-one",
+        "tier": 0
+      },
+      {
+        "id": "world-war-two",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -33291,6 +41676,22 @@ export const questions = [
       },
       {
         "id": "spanish-flu",
+        "tier": 0
+      },
+      {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
         "tier": 0
       },
       {
@@ -33310,7 +41711,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "bilderberg",
+        "tier": 0
+      },
+      {
         "id": "bonnie-clyde",
+        "tier": 0
+      },
+      {
+        "id": "boston-tea-party",
         "tier": 0
       },
       {
@@ -33343,6 +41752,10 @@ export const questions = [
       },
       {
         "id": "emancipation-proclamation",
+        "tier": 0
+      },
+      {
+        "id": "exxon-valdez-spill",
         "tier": 0
       },
       {
@@ -33386,6 +41799,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "indian-independence",
+        "tier": 0
+      },
+      {
         "id": "james-webb",
         "tier": 0
       },
@@ -33398,52 +41815,76 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mao",
         "tier": 0
       },
       {
-        "id": "mars-hoax",
+        "id": "march-on-washington",
         "tier": 0
+      },
+      {
+        "id": "mars-hoax",
+        "tier": 1
       },
       {
         "id": "mkultra",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "mrna-dna-rewrite",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "neptune",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "nineteenth-amendment",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "panama-canal-opening",
+        "tier": 1
       },
       {
         "id": "paperclip",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "ozone-layer",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "paris-agreement",
+        "tier": 1
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 1
       },
       {
         "id": "perseverance",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "project-blue-book",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "saddam-hussein",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "salem-witch-trials",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "smallpox-eradication",
+        "tier": 1
       },
       {
         "id": "challenger",
@@ -33451,6 +41892,10 @@ export const questions = [
       },
       {
         "id": "sputnik-1",
+        "tier": 1
+      },
+      {
+        "id": "suez-crisis",
         "tier": 1
       },
       {
@@ -33463,6 +41908,18 @@ export const questions = [
       },
       {
         "id": "thirteenth-amendment",
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 1
+      },
+      {
+        "id": "trinity-test",
         "tier": 1
       },
       {
@@ -33491,6 +41948,10 @@ export const questions = [
       },
       {
         "id": "disney-cryonics",
+        "tier": 1
+      },
+      {
+        "id": "wtc7-demolition",
         "tier": 1
       },
       {
@@ -33543,39 +42004,47 @@ export const questions = [
       },
       {
         "id": "golden-state-killer",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "juno",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "krakatau",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "kuiper-belt",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "magnetic-pole-flip-apocalypse",
-        "tier": 1
+        "tier": 2
+      },
+      {
+        "id": "montreal-protocol",
+        "tier": 2
       },
       {
         "id": "new-horizons",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "nibiru",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "aquatone",
-        "tier": 1
+        "tier": 2
+      },
+      {
+        "id": "protocols-forgery-claim",
+        "tier": 2
       },
       {
         "id": "saturn-hexagon",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "earthquake-prediction-coverup",
@@ -33627,23 +42096,23 @@ export const questions = [
       },
       {
         "id": "northwoods",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "osiris-rex",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "stormfury",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "karadzic",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "mladic",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "rosetta",
@@ -33679,11 +42148,11 @@ export const questions = [
       },
       {
         "id": "samphan",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "mars-doorway",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "operation-gold",
@@ -33716,12 +42185,20 @@ export const questions = [
     "band": 1,
     "family": "evidence",
     "topic": "The public record",
-    "poolId": "618f34306bd90a6f",
+    "poolId": "4c6300d1c8c9f515",
     "prompt": "Name a famous case, a public scandal, or a government program.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
         "id": "al-capone",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
         "tier": 0
       },
       {
@@ -33761,6 +42238,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mkultra",
         "tier": 0
       },
@@ -33794,11 +42275,11 @@ export const questions = [
       },
       {
         "id": "dillinger",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "golden-state-killer",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "aquatone",
@@ -33867,12 +42348,20 @@ export const questions = [
     "band": 2,
     "family": "evidence",
     "topic": "The public record",
-    "poolId": "7d35454bea6af4c9",
+    "poolId": "7d179a8d1d64380c",
     "prompt": "Name a scientific subject or a case involving forensic evidence.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
         "id": "apollo",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
         "tier": 0
       },
       {
@@ -33880,11 +42369,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "covid-pandemic",
+        "tier": 0
+      },
+      {
         "id": "earth",
         "tier": 0
       },
       {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
         "id": "hubble",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -33909,6 +42410,10 @@ export const questions = [
       },
       {
         "id": "milky-way",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -33948,11 +42453,27 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wright-first-flight",
+        "tier": 0
+      },
+      {
         "id": "zodiac",
         "tier": 0
       },
       {
         "id": "spanish-flu",
+        "tier": 0
+      },
+      {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
         "tier": 0
       },
       {
@@ -33980,6 +42501,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "exxon-valdez-spill",
+        "tier": 0
+      },
+      {
         "id": "ridgway",
         "tier": 0
       },
@@ -33997,6 +42522,10 @@ export const questions = [
       },
       {
         "id": "magnetic-vaccines",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
         "tier": 0
       },
       {
@@ -34024,11 +42553,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "paris-agreement",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "perseverance",
         "tier": 0
       },
       {
         "id": "project-blue-book",
+        "tier": 0
+      },
+      {
+        "id": "smallpox-eradication",
         "tier": 0
       },
       {
@@ -34044,24 +42585,32 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
+      },
+      {
         "id": "tunguska",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "tuskegee",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "uranus",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "vaccine-microchips",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-2",
@@ -34116,24 +42665,28 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "montreal-protocol",
+        "tier": 1
+      },
+      {
         "id": "new-horizons",
         "tier": 1
       },
       {
         "id": "nibiru",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "aquatone",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "saturn-hexagon",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "earthquake-prediction-coverup",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "columbia",
@@ -34169,11 +42722,11 @@ export const questions = [
       },
       {
         "id": "northwoods",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "osiris-rex",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "stormfury",
@@ -34197,7 +42750,7 @@ export const questions = [
       },
       {
         "id": "mars-doorway",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "operation-gold",
@@ -34222,16 +42775,56 @@ export const questions = [
     "band": 3,
     "family": "evidence",
     "topic": "The public record",
-    "poolId": "f221befb77bf0144",
+    "poolId": "8e39de2c01af30d5",
     "prompt": "Name a subject connected to history, an investigation, or a public inquiry.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "financial-crisis-2008",
+        "tier": 0
+      },
       {
         "id": "al-capone",
         "tier": 0
       },
       {
+        "id": "american-civil-war",
+        "tier": 0
+      },
+      {
+        "id": "american-revolution",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
+        "id": "brexit",
+        "tier": 0
+      },
+      {
         "id": "chernobyl",
+        "tier": 0
+      },
+      {
+        "id": "soviet-union-collapse",
+        "tier": 0
+      },
+      {
+        "id": "covid-pandemic",
         "tier": 0
       },
       {
@@ -34243,7 +42836,31 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
+        "id": "french-revolution",
+        "tier": 0
+      },
+      {
+        "id": "great-depression",
+        "tier": 0
+      },
+      {
+        "id": "gulf-war",
+        "tier": 0
+      },
+      {
         "id": "hindenburg",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -34252,6 +42869,10 @@ export const questions = [
       },
       {
         "id": "gacy",
+        "tier": 0
+      },
+      {
+        "id": "korean-war",
         "tier": 0
       },
       {
@@ -34275,7 +42896,27 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "vietnam-war",
+        "tier": 0
+      },
+      {
+        "id": "wall-street-crash-1929",
+        "tier": 0
+      },
+      {
         "id": "watergate",
+        "tier": 0
+      },
+      {
+        "id": "world-war-one",
+        "tier": 0
+      },
+      {
+        "id": "world-war-two",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -34291,7 +42932,27 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "bonnie-clyde",
+        "tier": 0
+      },
+      {
+        "id": "boston-tea-party",
         "tier": 0
       },
       {
@@ -34311,39 +42972,63 @@ export const questions = [
         "tier": 0
       },
       {
-        "id": "wwi-armistice",
+        "id": "exxon-valdez-spill",
         "tier": 0
+      },
+      {
+        "id": "wwi-armistice",
+        "tier": 1
       },
       {
         "id": "fukushima",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "ridgway",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "great-chicago-fire",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "great-fire-london",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "molasses-flood",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "halifax",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "indian-independence",
+        "tier": 1
+      },
+      {
+        "id": "march-on-washington",
+        "tier": 1
+      },
+      {
+        "id": "panama-canal-opening",
+        "tier": 1
+      },
+      {
+        "id": "paris-agreement",
+        "tier": 1
       },
       {
         "id": "project-blue-book",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "salem-witch-trials",
+        "tier": 1
+      },
+      {
+        "id": "smallpox-eradication",
         "tier": 1
       },
       {
@@ -34351,36 +43036,52 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "suez-crisis",
+        "tier": 1
+      },
+      {
         "id": "unabomber",
         "tier": 1
       },
       {
-        "id": "tunguska",
+        "id": "three-mile-island",
         "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 1
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
+      },
+      {
+        "id": "tunguska",
+        "tier": 2
       },
       {
         "id": "tuskegee",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "bhopal",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "carrington",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "cointelpro",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "iran-contra",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "dillinger",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "golden-state-killer",
@@ -34391,20 +43092,24 @@ export const questions = [
         "tier": 2
       },
       {
-        "id": "lusitania",
+        "id": "montreal-protocol",
         "tier": 2
+      },
+      {
+        "id": "lusitania",
+        "tier": 3
       },
       {
         "id": "columbia",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "great-smog-london",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "harold-shipman",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "lake-nyos",
@@ -34416,7 +43121,7 @@ export const questions = [
       },
       {
         "id": "dancing-plague",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "triangle-shirtwaist",
@@ -34437,7 +43142,7 @@ export const questions = [
     "band": 3,
     "family": "evidence",
     "topic": "The public record",
-    "poolId": "138919ccae78fce1",
+    "poolId": "b05cbf0275a0abe9",
     "prompt": "Name a leader, a criminal case, or a historical document.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
@@ -34454,7 +43159,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "jfk-assassination",
+        "tier": 0
+      },
+      {
+        "id": "illuminati",
+        "tier": 0
+      },
+      {
         "id": "declaration-independence",
+        "tier": 0
+      },
+      {
+        "id": "freemasons",
         "tier": 0
       },
       {
@@ -34546,6 +43263,10 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "paris-agreement",
+        "tier": 1
+      },
+      {
         "id": "saddam-hussein",
         "tier": 1
       },
@@ -34575,6 +43296,14 @@ export const questions = [
       },
       {
         "id": "golden-state-killer",
+        "tier": 1
+      },
+      {
+        "id": "montreal-protocol",
+        "tier": 1
+      },
+      {
+        "id": "protocols-forgery-claim",
         "tier": 2
       },
       {
@@ -34620,10 +43349,18 @@ export const questions = [
     "band": 4,
     "family": "evidence",
     "topic": "The public record",
-    "poolId": "a3f3837f7a24ec1d",
+    "poolId": "a112f4b03cd1399b",
     "prompt": "Name a real project or a subject surrounded by unsupported stories.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
       {
         "id": "bermuda-triangle",
         "tier": 0
@@ -34634,6 +43371,14 @@ export const questions = [
       },
       {
         "id": "flat-earth",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -34665,6 +43410,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mars-hoax",
         "tier": 0
       },
@@ -34678,6 +43427,10 @@ export const questions = [
       },
       {
         "id": "paperclip",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
         "tier": 0
       },
       {
@@ -34697,6 +43450,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wtc7-demolition",
+        "tier": 0
+      },
+      {
         "id": "cointelpro",
         "tier": 0
       },
@@ -34710,15 +43467,15 @@ export const questions = [
       },
       {
         "id": "face-mars",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "hollow-earth",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "magnetic-pole-flip-apocalypse",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "nibiru",
@@ -34730,6 +43487,10 @@ export const questions = [
       },
       {
         "id": "aquatone",
+        "tier": 1
+      },
+      {
+        "id": "protocols-forgery-claim",
         "tier": 1
       },
       {
@@ -34746,15 +43507,15 @@ export const questions = [
       },
       {
         "id": "hollow-moon",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lhc-doomsday",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "2000-alignment-apocalypse",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "northwoods",
@@ -34770,11 +43531,11 @@ export const questions = [
       },
       {
         "id": "mars-doorway",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "operation-gold",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "azorian",
@@ -34782,7 +43543,7 @@ export const questions = [
       },
       {
         "id": "palladium",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "project-xray",
@@ -34799,12 +43560,20 @@ export const questions = [
     "band": 5,
     "family": "evidence",
     "topic": "The public record",
-    "poolId": "98732026649d5314",
+    "poolId": "68454e7040da60c0",
     "prompt": "Name a subject involving a scientific record or a court proceeding.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
         "id": "apollo",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
         "tier": 0
       },
       {
@@ -34812,11 +43581,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "covid-pandemic",
+        "tier": 0
+      },
+      {
         "id": "earth",
         "tier": 0
       },
       {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
         "id": "hubble",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -34837,6 +43618,10 @@ export const questions = [
       },
       {
         "id": "milky-way",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -34872,7 +43657,23 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wright-first-flight",
+        "tier": 0
+      },
+      {
         "id": "spanish-flu",
+        "tier": 0
+      },
+      {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
         "tier": 0
       },
       {
@@ -34896,6 +43697,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "exxon-valdez-spill",
+        "tier": 0
+      },
+      {
         "id": "halleys-comet",
         "tier": 0
       },
@@ -34909,6 +43714,10 @@ export const questions = [
       },
       {
         "id": "magnetic-vaccines",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
         "tier": 0
       },
       {
@@ -34936,6 +43745,14 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "paris-agreement",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "perseverance",
         "tier": 0
       },
@@ -34952,6 +43769,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "smallpox-eradication",
+        "tier": 0
+      },
+      {
         "id": "challenger",
         "tier": 0
       },
@@ -34964,36 +43785,44 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "three-mile-island",
+        "tier": 0
+      },
+      {
+        "id": "trinity-test",
+        "tier": 0
+      },
+      {
         "id": "tunguska",
         "tier": 0
       },
       {
         "id": "tuskegee",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "uranus",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "vaccine-microchips",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-2",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "disney-cryonics",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "carrington",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "ceres",
@@ -35036,6 +43865,10 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "montreal-protocol",
+        "tier": 1
+      },
+      {
         "id": "new-horizons",
         "tier": 1
       },
@@ -35057,19 +43890,19 @@ export const questions = [
       },
       {
         "id": "columbia",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "viking-1",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "comet-elenin-doomsday",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "corona",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "great-smog-london",
@@ -35105,11 +43938,11 @@ export const questions = [
       },
       {
         "id": "rosetta",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "sagittarius-a",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "stargate",
@@ -35133,7 +43966,7 @@ export const questions = [
       },
       {
         "id": "operation-gold",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "azorian",
@@ -35158,12 +43991,32 @@ export const questions = [
     "band": 5,
     "family": "evidence",
     "topic": "The public record",
-    "poolId": "6a51c0d63ead7fd1",
+    "poolId": "5a677782670e76d0",
     "prompt": "Name a disaster, a research project, or an intelligence operation.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
         "id": "chernobyl",
+        "tier": 0
+      },
+      {
+        "id": "covid-pandemic",
         "tier": 0
       },
       {
@@ -35175,7 +44028,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "holocaust",
+        "tier": 0
+      },
+      {
         "id": "hubble",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -35191,11 +44052,31 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wright-first-flight",
+        "tier": 0
+      },
+      {
         "id": "san-francisco-1906",
         "tier": 0
       },
       {
         "id": "spanish-flu",
+        "tier": 0
+      },
+      {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
         "tier": 0
       },
       {
@@ -35212,6 +44093,10 @@ export const questions = [
       },
       {
         "id": "dust-bowl",
+        "tier": 0
+      },
+      {
+        "id": "exxon-valdez-spill",
         "tier": 0
       },
       {
@@ -35239,6 +44124,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mkultra",
         "tier": 0
       },
@@ -35255,6 +44144,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "smallpox-eradication",
+        "tier": 0
+      },
+      {
         "id": "challenger",
         "tier": 0
       },
@@ -35263,28 +44156,40 @@ export const questions = [
         "tier": 0
       },
       {
-        "id": "tunguska",
+        "id": "three-mile-island",
         "tier": 0
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 1
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
+      },
+      {
+        "id": "tunguska",
+        "tier": 1
       },
       {
         "id": "tuskegee",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-2",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "bhopal",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "cointelpro",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "dart",
@@ -35320,19 +44225,19 @@ export const questions = [
       },
       {
         "id": "viking-1",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "corona",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "great-smog-london",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lake-nyos",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "northwoods",
@@ -35352,11 +44257,11 @@ export const questions = [
       },
       {
         "id": "stargate",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "triangle-shirtwaist",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "aberfan",
@@ -35389,7 +44294,7 @@ export const questions = [
     "band": 6,
     "family": "evidence",
     "topic": "The public record",
-    "poolId": "7af29390bc4c1f9f",
+    "poolId": "fdee111006e27793",
     "prompt": "Name a subject involving a documented abuse or a famous criminal investigation.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
@@ -35399,6 +44304,18 @@ export const questions = [
       },
       {
         "id": "al-capone",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
+        "tier": 0
+      },
+      {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
         "tier": 0
       },
       {
@@ -35427,6 +44344,10 @@ export const questions = [
       },
       {
         "id": "zodiac",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
         "tier": 0
       },
       {
@@ -35463,10 +44384,14 @@ export const questions = [
       },
       {
         "id": "salem-witch-trials",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "unabomber",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
         "tier": 1
       },
       {
@@ -35491,7 +44416,7 @@ export const questions = [
       },
       {
         "id": "golden-state-killer",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "harold-shipman",
@@ -35528,12 +44453,20 @@ export const questions = [
     "band": 7,
     "family": "evidence",
     "topic": "The public record",
-    "poolId": "3212f1bd977b690d",
+    "poolId": "78bc27ca658be382",
     "prompt": "Name a case, experiment, or extraordinary claim with evidence to examine.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
+      {
         "id": "al-capone",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
         "tier": 0
       },
       {
@@ -35549,11 +44482,19 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
         "id": "dahmer",
         "tier": 0
       },
       {
         "id": "gacy",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -35570,6 +44511,10 @@ export const questions = [
       },
       {
         "id": "bundy",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -35609,6 +44554,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mars-hoax",
         "tier": 0
       },
@@ -35618,6 +44567,10 @@ export const questions = [
       },
       {
         "id": "mrna-dna-rewrite",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
         "tier": 0
       },
       {
@@ -35637,20 +44590,28 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "trinity-test",
+        "tier": 0
+      },
+      {
         "id": "tuskegee",
         "tier": 0
       },
       {
         "id": "vaccine-microchips",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "disney-cryonics",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "wtc7-demolition",
+        "tier": 1
       },
       {
         "id": "denver-airport-lizard-base",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "earthquake-weather",
@@ -35685,16 +44646,20 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "protocols-forgery-claim",
+        "tier": 1
+      },
+      {
         "id": "earthquake-prediction-coverup",
         "tier": 1
       },
       {
         "id": "comet-elenin-doomsday",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "harold-shipman",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "hollow-moon",
@@ -35718,7 +44683,7 @@ export const questions = [
       },
       {
         "id": "mladic",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "stargate",
@@ -35751,12 +44716,56 @@ export const questions = [
     "band": 0,
     "family": "deep-files",
     "topic": "The deep files",
-    "poolId": "3cfcd2f6a4defd53",
+    "poolId": "4199199cae2a55e5",
     "prompt": "Name a conspiracy-related subject or a surprising real event.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "financial-crisis-2008",
+        "tier": 0
+      },
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
+      {
+        "id": "american-civil-war",
+        "tier": 0
+      },
+      {
+        "id": "american-revolution",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
+        "id": "illuminati",
+        "tier": 0
+      },
+      {
         "id": "bermuda-triangle",
+        "tier": 0
+      },
+      {
+        "id": "brexit",
         "tier": 0
       },
       {
@@ -35768,6 +44777,14 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "soviet-union-collapse",
+        "tier": 0
+      },
+      {
+        "id": "covid-pandemic",
+        "tier": 0
+      },
+      {
         "id": "dday",
         "tier": 0
       },
@@ -35776,11 +44793,51 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
         "id": "flat-earth",
         "tier": 0
       },
       {
+        "id": "freemasons",
+        "tier": 0
+      },
+      {
+        "id": "french-revolution",
+        "tier": 0
+      },
+      {
+        "id": "great-depression",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
+        "id": "gulf-war",
+        "tier": 0
+      },
+      {
         "id": "hindenburg",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
+        "tier": 0
+      },
+      {
+        "id": "korean-war",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -35808,7 +44865,27 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "vietnam-war",
+        "tier": 0
+      },
+      {
+        "id": "wall-street-crash-1929",
+        "tier": 0
+      },
+      {
         "id": "watergate",
+        "tier": 0
+      },
+      {
+        "id": "world-war-one",
+        "tier": 0
+      },
+      {
+        "id": "world-war-two",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
         "tier": 0
       },
       {
@@ -35824,11 +44901,35 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "2012-calendar-apocalypse",
         "tier": 0
       },
       {
         "id": "5g-covid",
+        "tier": 0
+      },
+      {
+        "id": "bilderberg",
+        "tier": 0
+      },
+      {
+        "id": "boston-tea-party",
         "tier": 0
       },
       {
@@ -35841,6 +44942,10 @@ export const questions = [
       },
       {
         "id": "dust-bowl",
+        "tier": 0
+      },
+      {
+        "id": "exxon-valdez-spill",
         "tier": 0
       },
       {
@@ -35876,48 +44981,92 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "indian-independence",
+        "tier": 0
+      },
+      {
         "id": "magnetic-vaccines",
         "tier": 0
       },
       {
+        "id": "march-on-washington",
+        "tier": 1
+      },
+      {
         "id": "mars-hoax",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "mrna-dna-rewrite",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "panama-canal-opening",
+        "tier": 1
+      },
+      {
+        "id": "paris-agreement",
+        "tier": 1
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 1
       },
       {
         "id": "salem-witch-trials",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "smallpox-eradication",
+        "tier": 1
       },
       {
         "id": "challenger",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "suez-crisis",
+        "tier": 1
       },
       {
         "id": "solar-warming-hoax",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 1
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
       },
       {
         "id": "tunguska",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "vaccine-microchips",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "disney-cryonics",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "wtc7-demolition",
+        "tier": 1
       },
       {
         "id": "bhopal",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "carrington",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "denver-airport-lizard-base",
@@ -35948,40 +45097,48 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "montreal-protocol",
+        "tier": 2
+      },
+      {
         "id": "nibiru",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "philadelphia-experiment",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "aquatone",
-        "tier": 1
+        "tier": 2
+      },
+      {
+        "id": "protocols-forgery-claim",
+        "tier": 2
       },
       {
         "id": "earthquake-prediction-coverup",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lusitania",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "columbia",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "corona",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "great-smog-london",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "hollow-moon",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lake-nyos",
@@ -35997,23 +45154,23 @@ export const questions = [
       },
       {
         "id": "2000-alignment-apocalypse",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "northwoods",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "stargate",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "dancing-plague",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "triangle-shirtwaist",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "aberfan",
@@ -36029,11 +45186,11 @@ export const questions = [
       },
       {
         "id": "operation-gold",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "azorian",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "palladium",
@@ -36054,10 +45211,18 @@ export const questions = [
     "band": 1,
     "family": "deep-files",
     "topic": "The deep files",
-    "poolId": "82447034619f8871",
+    "poolId": "1afff291a9aeec95",
     "prompt": "Name a subject involving a secret project or an unlikely natural phenomenon.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
       {
         "id": "aurora",
         "tier": 0
@@ -36068,6 +45233,10 @@ export const questions = [
       },
       {
         "id": "earth",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -36115,6 +45284,18 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "asteroid-belt",
         "tier": 0
       },
@@ -36124,6 +45305,10 @@ export const questions = [
       },
       {
         "id": "halleys-comet",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
         "tier": 0
       },
       {
@@ -36152,15 +45337,15 @@ export const questions = [
       },
       {
         "id": "tunguska",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "uranus",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "carrington",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "ceres",
@@ -36196,11 +45381,11 @@ export const questions = [
       },
       {
         "id": "earthquake-prediction-coverup",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "corona",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lake-nyos",
@@ -36220,7 +45405,7 @@ export const questions = [
       },
       {
         "id": "stargate",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "acoustikitty",
@@ -36232,7 +45417,7 @@ export const questions = [
       },
       {
         "id": "azorian",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "palladium",
@@ -36249,12 +45434,16 @@ export const questions = [
     "band": 2,
     "family": "deep-files",
     "topic": "The deep files",
-    "poolId": "0d29812c5762fb3a",
+    "poolId": "8914a8ce9a309fef",
     "prompt": "Name a subject involving hidden places, scientific research, or exploration.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
         "id": "apollo",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
         "tier": 0
       },
       {
@@ -36274,6 +45463,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wright-first-flight",
+        "tier": 0
+      },
+      {
         "id": "cassini",
         "tier": 0
       },
@@ -36286,7 +45479,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mkultra",
+        "tier": 0
+      },
+      {
+        "id": "panama-canal-opening",
         "tier": 0
       },
       {
@@ -36302,7 +45503,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "smallpox-eradication",
+        "tier": 0
+      },
+      {
         "id": "sputnik-1",
+        "tier": 0
+      },
+      {
+        "id": "trinity-test",
         "tier": 0
       },
       {
@@ -36331,11 +45540,11 @@ export const questions = [
       },
       {
         "id": "hollow-earth",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "ingenuity",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "juno",
@@ -36354,6 +45563,10 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "protocols-forgery-claim",
+        "tier": 1
+      },
+      {
         "id": "viking-1",
         "tier": 1
       },
@@ -36367,11 +45580,11 @@ export const questions = [
       },
       {
         "id": "northwoods",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "osiris-rex",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "stormfury",
@@ -36387,7 +45600,7 @@ export const questions = [
       },
       {
         "id": "acoustikitty",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "operation-gold",
@@ -36412,10 +45625,14 @@ export const questions = [
     "band": 3,
     "family": "deep-files",
     "topic": "The deep files",
-    "poolId": "7b7100020b5354cf",
+    "poolId": "b35d3db4526620f1",
     "prompt": "Name a subject connected to political power, a criminal case, or an extraordinary claim.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
       {
         "id": "abraham-lincoln",
         "tier": 0
@@ -36426,6 +45643,10 @@ export const questions = [
       },
       {
         "id": "al-capone",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
         "tier": 0
       },
       {
@@ -36445,6 +45666,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
         "id": "dahmer",
         "tier": 0
       },
@@ -36458,6 +45683,10 @@ export const questions = [
       },
       {
         "id": "gandhi",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -36545,16 +45774,20 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "saddam-hussein",
         "tier": 0
       },
       {
         "id": "salem-witch-trials",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "solar-warming-hoax",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "unabomber",
@@ -36566,6 +45799,10 @@ export const questions = [
       },
       {
         "id": "disney-cryonics",
+        "tier": 1
+      },
+      {
+        "id": "wtc7-demolition",
         "tier": 1
       },
       {
@@ -36607,6 +45844,10 @@ export const questions = [
       {
         "id": "philadelphia-experiment",
         "tier": 1
+      },
+      {
+        "id": "protocols-forgery-claim",
+        "tier": 2
       },
       {
         "id": "earthquake-prediction-coverup",
@@ -36671,12 +45912,32 @@ export const questions = [
     "band": 4,
     "family": "deep-files",
     "topic": "The deep files",
-    "poolId": "c982dc9e1e028c3a",
+    "poolId": "8068cc1425556a9c",
     "prompt": "Name a real disaster or a story about an extraordinary machine.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
       {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
         "id": "chernobyl",
+        "tier": 0
+      },
+      {
+        "id": "covid-pandemic",
         "tier": 0
       },
       {
@@ -36685,6 +45946,14 @@ export const questions = [
       },
       {
         "id": "hindenburg",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -36704,11 +45973,31 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
+        "tier": 0
+      },
+      {
         "id": "deepwater-horizon",
         "tier": 0
       },
       {
         "id": "dust-bowl",
+        "tier": 0
+      },
+      {
+        "id": "exxon-valdez-spill",
         "tier": 0
       },
       {
@@ -36729,22 +46018,34 @@ export const questions = [
       },
       {
         "id": "haarp",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "halifax",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "noaa-hurricane-steering",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "challenger",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 1
       },
       {
         "id": "tunguska",
+        "tier": 1
+      },
+      {
+        "id": "wtc7-demolition",
         "tier": 1
       },
       {
@@ -36757,15 +46058,15 @@ export const questions = [
       },
       {
         "id": "philadelphia-experiment",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lusitania",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "columbia",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "great-smog-london",
@@ -36777,7 +46078,7 @@ export const questions = [
       },
       {
         "id": "lake-nyos",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "lhc-doomsday",
@@ -36802,10 +46103,18 @@ export const questions = [
     "band": 4,
     "family": "deep-files",
     "topic": "The deep files",
-    "poolId": "4e91d3e235d7ad51",
+    "poolId": "9771fad27f0689c4",
     "prompt": "Name a subject involving government secrecy or a strange-looking scientific observation.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
+      {
+        "id": "financial-crisis-2008",
+        "tier": 0
+      },
       {
         "id": "abraham-lincoln",
         "tier": 0
@@ -36815,11 +46124,47 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "american-civil-war",
+        "tier": 0
+      },
+      {
+        "id": "american-revolution",
+        "tier": 0
+      },
+      {
         "id": "apollo",
         "tier": 0
       },
       {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
         "id": "aurora",
+        "tier": 0
+      },
+      {
+        "id": "brexit",
+        "tier": 0
+      },
+      {
+        "id": "soviet-union-collapse",
+        "tier": 0
+      },
+      {
+        "id": "covid-pandemic",
         "tier": 0
       },
       {
@@ -36831,11 +46176,39 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
+        "id": "french-revolution",
+        "tier": 0
+      },
+      {
         "id": "george-washington",
         "tier": 0
       },
       {
+        "id": "great-depression",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
+        "id": "gulf-war",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
+        "tier": 0
+      },
+      {
         "id": "hubble",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -36848,6 +46221,10 @@ export const questions = [
       },
       {
         "id": "jupiter",
+        "tier": 0
+      },
+      {
+        "id": "korean-war",
         "tier": 0
       },
       {
@@ -36864,6 +46241,10 @@ export const questions = [
       },
       {
         "id": "milky-way",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -36919,11 +46300,47 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "vietnam-war",
+        "tier": 0
+      },
+      {
+        "id": "wall-street-crash-1929",
+        "tier": 0
+      },
+      {
         "id": "watergate",
         "tier": 0
       },
       {
+        "id": "world-war-one",
+        "tier": 0
+      },
+      {
+        "id": "world-war-two",
+        "tier": 0
+      },
+      {
+        "id": "wright-first-flight",
+        "tier": 0
+      },
+      {
         "id": "spanish-flu",
+        "tier": 0
+      },
+      {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
         "tier": 0
       },
       {
@@ -36940,6 +46357,10 @@ export const questions = [
       },
       {
         "id": "mussolini",
+        "tier": 0
+      },
+      {
+        "id": "boston-tea-party",
         "tier": 0
       },
       {
@@ -36963,6 +46384,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "exxon-valdez-spill",
+        "tier": 0
+      },
+      {
         "id": "halleys-comet",
         "tier": 0
       },
@@ -36972,6 +46397,10 @@ export const questions = [
       },
       {
         "id": "idi-amin",
+        "tier": 0
+      },
+      {
+        "id": "indian-independence",
         "tier": 0
       },
       {
@@ -36987,7 +46416,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mao",
+        "tier": 0
+      },
+      {
+        "id": "march-on-washington",
         "tier": 0
       },
       {
@@ -37008,43 +46445,75 @@ export const questions = [
       },
       {
         "id": "nineteenth-amendment",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "panama-canal-opening",
+        "tier": 1
       },
       {
         "id": "paperclip",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "ozone-layer",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "paris-agreement",
+        "tier": 1
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 1
       },
       {
         "id": "perseverance",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "project-blue-book",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "saddam-hussein",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "smallpox-eradication",
+        "tier": 1
       },
       {
         "id": "challenger",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "sputnik-1",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "suez-crisis",
+        "tier": 1
       },
       {
         "id": "solar-warming-hoax",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "thirteenth-amendment",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 1
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
       },
       {
         "id": "tunguska",
@@ -37108,39 +46577,43 @@ export const questions = [
       },
       {
         "id": "ingenuity",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "iran-contra",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "juno",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "kuiper-belt",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "magnetic-pole-flip-apocalypse",
-        "tier": 1
+        "tier": 2
+      },
+      {
+        "id": "montreal-protocol",
+        "tier": 2
       },
       {
         "id": "new-horizons",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "nibiru",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "aquatone",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "saturn-hexagon",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "earthquake-prediction-coverup",
@@ -37176,23 +46649,23 @@ export const questions = [
       },
       {
         "id": "2000-alignment-apocalypse",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "northwoods",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "osiris-rex",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "stormfury",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "karadzic",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "mladic",
@@ -37216,11 +46689,11 @@ export const questions = [
       },
       {
         "id": "mars-doorway",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "operation-gold",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "azorian",
@@ -37249,16 +46722,24 @@ export const questions = [
     "band": 5,
     "family": "deep-files",
     "topic": "The deep files",
-    "poolId": "da8bd97c042bfb30",
+    "poolId": "764925e2e01415ff",
     "prompt": "Name a subject involving an unusual project, a prosecution, or hidden worlds.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "area-51",
+        "tier": 0
+      },
       {
         "id": "bermuda-triangle",
         "tier": 0
       },
       {
         "id": "flat-earth",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
         "tier": 0
       },
       {
@@ -37306,6 +46787,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "protocols-forgery-claim",
+        "tier": 0
+      },
+      {
         "id": "corona",
         "tier": 0
       },
@@ -37315,7 +46800,7 @@ export const questions = [
       },
       {
         "id": "northwoods",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "stormfury",
@@ -37339,7 +46824,7 @@ export const questions = [
       },
       {
         "id": "samphan",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "operation-gold",
@@ -37351,7 +46836,7 @@ export const questions = [
       },
       {
         "id": "kambanda",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "palladium",
@@ -37372,16 +46857,24 @@ export const questions = [
     "band": 5,
     "family": "deep-files",
     "topic": "The deep files",
-    "poolId": "625164efec5264a1",
+    "poolId": "6b61938e70a8c5fe",
     "prompt": "Name a scientific subject, a documented abuse, or a theory about the sky.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "indian-ocean-tsunami-2004",
+        "tier": 0
+      },
       {
         "id": "hitler",
         "tier": 0
       },
       {
         "id": "apollo",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
         "tier": 0
       },
       {
@@ -37393,11 +46886,31 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "covid-pandemic",
+        "tier": 0
+      },
+      {
         "id": "earth",
         "tier": 0
       },
       {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
+        "tier": 0
+      },
+      {
         "id": "hubble",
+        "tier": 0
+      },
+      {
+        "id": "hurricane-katrina",
         "tier": 0
       },
       {
@@ -37422,6 +46935,10 @@ export const questions = [
       },
       {
         "id": "milky-way",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -37461,7 +46978,27 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wright-first-flight",
+        "tier": 0
+      },
+      {
         "id": "spanish-flu",
+        "tier": 0
+      },
+      {
+        "id": "mount-st-helens-1980",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
+        "tier": 0
+      },
+      {
+        "id": "haiti-earthquake-2010",
+        "tier": 0
+      },
+      {
+        "id": "tohoku-earthquake-2011",
         "tier": 0
       },
       {
@@ -37489,6 +47026,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "exxon-valdez-spill",
+        "tier": 0
+      },
+      {
         "id": "haarp",
         "tier": 0
       },
@@ -37510,6 +47051,10 @@ export const questions = [
       },
       {
         "id": "magnetic-vaccines",
+        "tier": 0
+      },
+      {
+        "id": "manhattan-project",
         "tier": 0
       },
       {
@@ -37541,6 +47086,14 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "paris-agreement",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 0
+      },
+      {
         "id": "perseverance",
         "tier": 0
       },
@@ -37553,6 +47106,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "smallpox-eradication",
+        "tier": 0
+      },
+      {
         "id": "challenger",
         "tier": 0
       },
@@ -37562,27 +47119,39 @@ export const questions = [
       },
       {
         "id": "solar-warming-hoax",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 1
+      },
+      {
+        "id": "trinity-test",
+        "tier": 1
       },
       {
         "id": "tunguska",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "tuskegee",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "uranus",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "vaccine-microchips",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-1",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "voyager-2",
@@ -37641,6 +47210,10 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "montreal-protocol",
+        "tier": 1
+      },
+      {
         "id": "new-horizons",
         "tier": 1
       },
@@ -37650,23 +47223,23 @@ export const questions = [
       },
       {
         "id": "aquatone",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "saturn-hexagon",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "earthquake-prediction-coverup",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "columbia",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "viking-1",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "comet-elenin-doomsday",
@@ -37702,15 +47275,15 @@ export const questions = [
       },
       {
         "id": "karadzic",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "mladic",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "rosetta",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "sagittarius-a",
@@ -37734,7 +47307,7 @@ export const questions = [
       },
       {
         "id": "azorian",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "kambanda",
@@ -37759,10 +47332,22 @@ export const questions = [
     "band": 6,
     "family": "deep-files",
     "topic": "The deep files",
-    "poolId": "6ac05ce68ce2cc75",
+    "poolId": "bb3c2386ab4da450",
     "prompt": "Name a subject involving an intelligence operation, an unusual event, or a strange technology claim.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "wtc-controlled-demolition",
+        "tier": 0
+      },
+      {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "illuminati",
+        "tier": 0
+      },
       {
         "id": "bermuda-triangle",
         "tier": 0
@@ -37773,6 +47358,18 @@ export const questions = [
       },
       {
         "id": "flat-earth",
+        "tier": 0
+      },
+      {
+        "id": "freemasons",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
+        "id": "mmr-autism-claim",
         "tier": 0
       },
       {
@@ -37796,6 +47393,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "bilderberg",
+        "tier": 0
+      },
+      {
         "id": "molasses-flood",
         "tier": 0
       },
@@ -37812,6 +47413,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mars-hoax",
         "tier": 0
       },
@@ -37825,6 +47430,10 @@ export const questions = [
       },
       {
         "id": "paperclip",
+        "tier": 0
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
         "tier": 0
       },
       {
@@ -37852,24 +47461,28 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "wtc7-demolition",
+        "tier": 0
+      },
+      {
         "id": "carrington",
         "tier": 0
       },
       {
         "id": "cointelpro",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "denver-airport-lizard-base",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "earthquake-weather",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "face-mars",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "hollow-earth",
@@ -37892,6 +47505,10 @@ export const questions = [
         "tier": 1
       },
       {
+        "id": "protocols-forgery-claim",
+        "tier": 1
+      },
+      {
         "id": "earthquake-prediction-coverup",
         "tier": 1
       },
@@ -37905,19 +47522,19 @@ export const questions = [
       },
       {
         "id": "hollow-moon",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lake-nyos",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "lhc-doomsday",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "2000-alignment-apocalypse",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "northwoods",
@@ -37933,11 +47550,11 @@ export const questions = [
       },
       {
         "id": "dancing-plague",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "acoustikitty",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "mars-doorway",
@@ -37949,7 +47566,7 @@ export const questions = [
       },
       {
         "id": "azorian",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "project-xray",
@@ -37966,10 +47583,14 @@ export const questions = [
     "band": 7,
     "family": "deep-files",
     "topic": "The deep files",
-    "poolId": "2aa597fc615a44cc",
+    "poolId": "b016cbbf97e315e1",
     "prompt": "Name a subject from the archive involving secret power, strange worlds, or a real investigation.",
     "hint": "Start with a familiar name. More unusual valid answers earn more distance. The archive has examples and evidence.",
     "answers": [
+      {
+        "id": "financial-crisis-2008",
+        "tier": 0
+      },
       {
         "id": "abraham-lincoln",
         "tier": 0
@@ -37983,11 +47604,47 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "american-civil-war",
+        "tier": 0
+      },
+      {
+        "id": "american-revolution",
+        "tier": 0
+      },
+      {
         "id": "apollo",
         "tier": 0
       },
       {
+        "id": "area-51",
+        "tier": 0
+      },
+      {
+        "id": "jfk-assassination",
+        "tier": 0
+      },
+      {
+        "id": "hiroshima-bombing",
+        "tier": 0
+      },
+      {
+        "id": "nagasaki-bombing",
+        "tier": 0
+      },
+      {
         "id": "aurora",
+        "tier": 0
+      },
+      {
+        "id": "brexit",
+        "tier": 0
+      },
+      {
+        "id": "soviet-union-collapse",
+        "tier": 0
+      },
+      {
+        "id": "covid-pandemic",
         "tier": 0
       },
       {
@@ -37999,7 +47656,31 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "end-apartheid",
+        "tier": 0
+      },
+      {
+        "id": "french-revolution",
+        "tier": 0
+      },
+      {
         "id": "george-washington",
+        "tier": 0
+      },
+      {
+        "id": "great-depression",
+        "tier": 0
+      },
+      {
+        "id": "great-wall-moon-myth",
+        "tier": 0
+      },
+      {
+        "id": "gulf-war",
+        "tier": 0
+      },
+      {
+        "id": "holocaust",
         "tier": 0
       },
       {
@@ -38024,6 +47705,10 @@ export const questions = [
       },
       {
         "id": "jupiter",
+        "tier": 0
+      },
+      {
+        "id": "korean-war",
         "tier": 0
       },
       {
@@ -38103,11 +47788,31 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "vietnam-war",
+        "tier": 0
+      },
+      {
+        "id": "wall-street-crash-1929",
+        "tier": 0
+      },
+      {
         "id": "watergate",
         "tier": 0
       },
       {
+        "id": "world-war-one",
+        "tier": 0
+      },
+      {
+        "id": "world-war-two",
+        "tier": 0
+      },
+      {
         "id": "zodiac",
+        "tier": 0
+      },
+      {
+        "id": "rwandan-genocide",
         "tier": 0
       },
       {
@@ -38124,6 +47829,10 @@ export const questions = [
       },
       {
         "id": "bonnie-clyde",
+        "tier": 0
+      },
+      {
+        "id": "boston-tea-party",
         "tier": 0
       },
       {
@@ -38163,6 +47872,10 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "indian-independence",
+        "tier": 0
+      },
+      {
         "id": "james-webb",
         "tier": 0
       },
@@ -38171,7 +47884,15 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "manhattan-project",
+        "tier": 0
+      },
+      {
         "id": "mao",
+        "tier": 0
+      },
+      {
+        "id": "march-on-washington",
         "tier": 0
       },
       {
@@ -38191,32 +47912,52 @@ export const questions = [
         "tier": 0
       },
       {
+        "id": "panama-canal-opening",
+        "tier": 1
+      },
+      {
         "id": "paperclip",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "paris-agreement",
+        "tier": 1
+      },
+      {
+        "id": "pentagon-confirmed-aliens",
+        "tier": 1
       },
       {
         "id": "perseverance",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "project-blue-book",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "saddam-hussein",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "salem-witch-trials",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "smallpox-eradication",
+        "tier": 1
       },
       {
         "id": "challenger",
-        "tier": 0
+        "tier": 1
       },
       {
         "id": "sputnik-1",
-        "tier": 0
+        "tier": 1
+      },
+      {
+        "id": "suez-crisis",
+        "tier": 1
       },
       {
         "id": "unabomber",
@@ -38224,6 +47965,18 @@ export const questions = [
       },
       {
         "id": "thirteenth-amendment",
+        "tier": 1
+      },
+      {
+        "id": "three-mile-island",
+        "tier": 1
+      },
+      {
+        "id": "tiananmen-1989",
+        "tier": 1
+      },
+      {
+        "id": "trinity-test",
         "tier": 1
       },
       {
@@ -38292,31 +48045,35 @@ export const questions = [
       },
       {
         "id": "juno",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "kuiper-belt",
-        "tier": 1
+        "tier": 2
+      },
+      {
+        "id": "montreal-protocol",
+        "tier": 2
       },
       {
         "id": "new-horizons",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "nibiru",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "aquatone",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "saturn-hexagon",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "columbia",
-        "tier": 1
+        "tier": 2
       },
       {
         "id": "viking-1",
@@ -38356,19 +48113,19 @@ export const questions = [
       },
       {
         "id": "osiris-rex",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "stormfury",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "karadzic",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "mladic",
-        "tier": 2
+        "tier": 3
       },
       {
         "id": "rosetta",
@@ -38396,7 +48153,7 @@ export const questions = [
       },
       {
         "id": "mars-doorway",
-        "tier": 3
+        "tier": 4
       },
       {
         "id": "operation-gold",

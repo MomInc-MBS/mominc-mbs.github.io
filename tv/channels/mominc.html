@@ -15,7 +15,7 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
 
   /* MOM's own game leads the network home, using the same play-preview frame as the family. */
   .mi .mi-misinformation{z-index:1;margin:0 0 24px;border-color:#b8a078}
-  .mi .mi-misinformation-scene{position:relative;height:clamp(230px,42vh,360px);overflow:hidden;background:#160e27 url('/play/misinformation/assets/space-atlas.png') 0 0/200% 400% no-repeat}
+  .mi .mi-misinformation-scene{position:relative;height:clamp(230px,42vh,360px);overflow:hidden;background:#160e27 url('/play/misinformation/assets/journey/01-office.svg') center 48%/cover no-repeat;animation:mi-misinformation-worlds 18s steps(1,end) infinite}
   .mi .mi-misinformation-saucer{position:absolute;display:block;height:auto;object-fit:contain;object-position:center;filter:drop-shadow(0 9px 5px #09051680);pointer-events:none}
   .mi .mi-misinformation-player{width:38%;max-width:280px;left:54%;top:8%;animation:mi-misinformation-escape 5.8s ease-in-out infinite}
   .mi .mi-misinformation-mom{width:48%;max-width:350px;left:8%;bottom:5%;animation:mi-misinformation-pursuit 5.8s ease-in-out infinite}
@@ -26,7 +26,8 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
   .mi .mi-misinformation>a:hover .mi-misinformation-play{background:#74508a}
   @keyframes mi-misinformation-escape{0%,100%{transform:translate3d(-8%,15px,0) rotate(-5deg)}50%{transform:translate3d(10%,-12px,0) rotate(5deg)}}
   @keyframes mi-misinformation-pursuit{0%,100%{transform:translate3d(0,0,0) rotate(4deg)}50%{transform:translate3d(9%,-16px,0) rotate(-5deg)}}
-  @media (prefers-reduced-motion:reduce){.mi .mi-misinformation-saucer{animation:none}}
+  @keyframes mi-misinformation-worlds{0%,100%{background-image:url('/play/misinformation/assets/journey/01-office.svg')}34%{background-image:url('/play/misinformation/assets/journey/10-fold.svg')}67%{background-image:url('/play/misinformation/assets/journey/20-mothership.svg')}}
+  @media (prefers-reduced-motion:reduce){.mi .mi-misinformation-saucer,.mi .mi-misinformation-scene{animation:none}}
 
   /* MYR5 as decoration: a sticker with a googly eye. --cx/--cy/--rx/--ry are the eye's place on that pose, as fractions of the sticker. */
   .mi .myr{position:relative; display:inline-block; width:var(--w,48px); aspect-ratio:var(--ar,0.8); pointer-events:none; user-select:none; flex:0 0 auto}
@@ -241,7 +242,7 @@ FORM: Ian's interview 2026-08-26 (five rounds) plus his same-day notes (impossib
       </div>
       <div class="mi-misinformation-copy">
         <h2 class="mi-misinformation-title">MOM's Misinformation Machine</h2>
-        <p class="mi-misinformation-tagline">Rare answers. Three hits. One way out.</p>
+        <p class="mi-misinformation-tagline">20 paper worlds. Three hits. Your answers become the incident report.</p>
         <span class="mi-misinformation-play">PLAY &rarr;</span>
       </div>
     </a>

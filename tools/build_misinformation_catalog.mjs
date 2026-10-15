@@ -142,7 +142,7 @@ function tagsFor(subject) {
  return [...tags].sort();
 }
 let candidates = baseline.subjects.map(s=>({...s, familiarity:familiarity[s.id]}));
-for(const name of ['expansion-v2-science.json','expansion-v2-history.json']) {
+for(const name of ['expansion-v2-science.json','expansion-v2-history.json','expansion-v3-world-events.json']) {
  const input = await read(name);
  const entries = Array.isArray(input) ? input : input.subjects || input.entries || input.records;
  if(!Array.isArray(entries)) throw Error(`Missing subjects in ${name}`);

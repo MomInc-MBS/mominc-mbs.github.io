@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createScoreStore,SCORE_KEY,MAX_SAVED_RUNS,newRunId} from '../../play/misinformation/scores.js';
+import {freshRun,beginQuestion,acceptAnswer,classify} from '../../play/misinformation/engine.js';
 function storage(){const values=new Map();return {getItem:k=>values.get(k)??null,setItem:(k,v)=>values.set(k,v)};}
 function run(id='one',override={}){return {id,outcome:'dead',score:300,distance:15000,hits:3,rounds:6,pristine:true,
  startedAt:'2026-10-14T12:00:00.000Z',finishedAt:'2026-10-14T12:05:00.000Z',...override};}
@@ -79,4 +80,28 @@ test('a failed snapshot refresh preserves prior records and becomes explicitly t
  local.getItem=()=>{throw Error('permission changed');};
  const current=board.snapshot();assert.equal(current.available,false);assert.equal(current.runs.length,1);
  assert.equal(current.bestScore,300);assert.equal(current.bestDistance,15000);
+});
+test('ordinary twenty-answer escapes persist even when naming performance is not pristine',()=>{
+ const prompt={id:'ordinary-win',band:0,answers:[{id:'ordinary',tier:0}]};
+ const subject={id:'ordinary',classification:'event'};
+ let state=freshRun();
+ for(let i=0;i<20;i++)state=classify(acceptAnswer(beginQuestion(state,prompt),subject,prompt),subject,prompt,'event');
+ assert.equal(state.phase,'escaped');assert.equal(state.pristine,false);assert.equal(state.score,200);
+ const local=storage(),board=createScoreStore(local);
+ const record=run('ordinary-win',{outcome:state.phase,score:state.score,distance:state.distance,
+  hits:state.hits,rounds:state.rounds,pristine:state.pristine});
+ board.record(record);board.record(record);
+ const restored=createScoreStore(local).snapshot();
+ assert.equal(restored.runs.length,1);assert.equal(restored.escapes,1);assert.equal(restored.runs[0].pristine,false);
+ assert.equal(restored.bestDistance,100000);assert.equal(restored.bestScore,200);
+});
+test('old top-tier escapes and new mixed-answer escapes coexist without losing legacy records',()=>{
+ const local=storage(),legacy=run('old-perfect',{outcome:'escaped',distance:100000,score:2000,hits:0,rounds:20,pristine:true});
+ const current=run('new-mixed',{outcome:'escaped',distance:100000,score:200,hits:2,rounds:22,pristine:false});
+ local.setItem(SCORE_KEY,JSON.stringify({version:1,runs:[legacy,current]}));
+ const board=createScoreStore(local);assert.equal(board.snapshot().escapes,2);
+ board.record(run('later'));assert.equal(createScoreStore(local).snapshot().runs.length,3);
+ assert.deepEqual(createScoreStore(local).snapshot().runs.filter(r=>r.outcome==='escaped').map(r=>r.id).sort(),['new-mixed','old-perfect']);
+ assert.throws(()=>board.record(run('not-arrived',{outcome:'escaped',distance:95000,hits:0,pristine:false})),/Invalid/);
+ assert.throws(()=>board.record(run('caught',{outcome:'escaped',distance:100000,hits:3,pristine:false})),/Invalid/);
 });

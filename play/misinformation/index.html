@@ -4,7 +4,7 @@
  <script src="/tv/game-loader.js?v=1"></script>
  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
  <meta name="theme-color" content="#101b22"><meta name="description" content="Escape MOM Inc. Rare answers fuel your flying saucer. Separate documented events from unsupported claims. Three hits and your run is over.">
- <title>MOM’s Misinformation Machine</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="space.css">
+ <title>MOM’s Misinformation Machine</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="space.css"><link rel="stylesheet" href="journey.css">
 </head>
 <body>
  <a class="skip-link" href="#terminal">Skip to flight terminal</a>
@@ -14,33 +14,25 @@
   <section class="flight-grid" aria-label="Space escape game">
    <div id="space-scene" class="flight-scene" aria-label="Flying saucer chase and space depth chart">
     <div class="space-art" aria-hidden="true"></div><div class="starfield" aria-hidden="true"></div>
-    <div class="scene-top"><span>ESCAPE VECTOR</span><span id="band-code">LAYER 01 / 08</span></div>
-    <div class="station-label">MOTHER SOLAR STATION <small>100,000 KM</small></div>
-    <ol class="depth-chart" aria-label="Space depth chart">
-     <li data-layer="7"><b>87,500</b><span>Station approach</span></li>
-     <li data-layer="6"><b>75,000</b><span>Deep-space static</span></li>
-     <li data-layer="5"><b>62,500</b><span>Outer-system files</span></li>
-     <li data-layer="4"><b>50,000</b><span>The red channel</span></li>
-     <li data-layer="3"><b>37,500</b><span>Lunar interference</span></li>
-     <li data-layer="2"><b>25,000</b><span>Satellite belt</span></li>
-     <li data-layer="1"><b>12,500</b><span>Low orbit</span></li>
-     <li data-layer="0"><b>0 KM</b><span>Company grounds</span></li>
-    </ol>
+    <div class="scene-top"><span id="location-stage">01 / GROUNDED</span><span id="band-code">LEVEL 01 / 20</span></div>
+    <div class="location-caption"><small>YOU ARE HERE</small><h2 id="location-title">Office</h2><p>The pyramid on the desk was your first warning.</p></div>
+    <ol class="depth-chart" aria-label="Journey depth chart"></ol>
     <div id="rocket" class="saucer player-saucer"><img src="assets/player-saucer.png" alt="Orange and gold escape saucer with an obscured pilot"><span>YOU</span></div>
     <div id="pursuer" class="saucer mom-saucer"><img src="assets/mom-pursuer.png" alt="MOM's purple and gold paper saucer chasing you"><span>MOM INC.</span></div>
     <div id="chase-status" class="chase-status">MOM IS ON YOUR TRAIL</div>
-    <div class="scene-bottom"><span id="band-name">Company grounds</span><b id="scene-distance">0 <small>KM</small></b></div>
+    <div class="scene-bottom"><span id="band-name">NEXT STOP: Ceiling Vents</span><b id="scene-distance">0 <small>KM</small></b></div>
    </div>
    <div class="terminal-wrap">
     <div id="mobile-chase" class="mobile-chase" aria-label="Live saucer chase"><div class="mobile-chase-art" aria-hidden="true"></div><img class="mobile-chase-player" src="assets/player-saucer.png" alt=""><img class="mobile-chase-mom" src="assets/mom-pursuer.png" alt=""><span class="mobile-chase-label"></span></div>
     <div class="hud"><div><span>DISTANCE</span><b id="distance">0<small> km</small></b></div><div><span>SIGNAL SCORE</span><b id="score">0</b></div><div><span>HULL</span><b id="hull" aria-label="3 hits remaining">● ● ●</b></div></div>
-    <div class="progress-track" role="progressbar" aria-label="Journey to Mother Solar Station" aria-valuemin="0" aria-valuemax="100000" aria-valuenow="0"><div id="progress"></div></div>
+    <div class="progress-track" role="progressbar" aria-label="Journey to MOM's Mothership Desk" aria-valuemin="0" aria-valuemax="100000" aria-valuenow="0"><div id="progress"></div></div>
     <section id="terminal" class="terminal" tabindex="-1" aria-label="Flight terminal"><div id="screen"></div></section>
-    <div class="terminal-footer"><span id="clearance">CLEARANCE: PERFECT RUN REQUIRED</span><button id="restart" class="text-button">Restart flight ↺</button></div>
+    <div class="terminal-footer"><span id="clearance">20 LEVELS · EVERY CORRECT ANSWER COUNTS</span><button id="restart" class="text-button">Restart flight ↺</button></div>
    </div>
   </section>
-  <section class="instructions"><div><span class="eyebrow">THE EXIT PROCEDURE</span><h2>Uncommon knowledge.<br>Very common danger.</h2></div><ol><li><b>Name something that fits.</b><span>You have 25 seconds. Rarer valid answers earn 10–100 points.</span></li><li><b>Read the exact statement.</b><span>Is it documented, or an unsupported claim? A wrong call damages your hull.</span></li><li><b>Reach the station.</b><span>Every accepted answer must be top-tier to dock. Three hits end the run. Restart as often as you like.</span></li></ol></section>
-  <section class="test-note"><b>THE DEEPER YOU GO, THE STRANGER IT GETS.</b><p>Ten broad prompts in each topic, a bigger answer bank, and eight layers of space. Common answers make up most of every list; rarer names travel farther. Unused questions and topics rotate before repeats, including across restarts. Every resolved answer moves the chase. Answer tiers and the top discovery pick are editorial and specific to each question, not measured from other players.</p><p>Includes non-graphic references to historical atrocities, disasters, abuse, and serial murder. Scores reward recall, never harm. Grade the exact statement: a real investigation does not prove every theory about it. Unresolved propositions are excluded from binary grading.</p></section>
+  <details class="route-map"><summary>The whole escape route · 20 levels</summary><ol id="route-list"></ol></details>
+  <section class="instructions"><div><span class="eyebrow">THE EXIT PROCEDURE</span><h2>Uncommon knowledge.<br>Very common danger.</h2></div><ol><li><b>Name something that fits.</b><span>You have 35 seconds. Familiar answers count; rarity earns 10–100 points. Unlisted names get an evidence-backed hosted check, with your timer paused.</span></li><li><b>Read the exact statement.</b><span>Is it documented, or an unsupported claim? A wrong call damages your hull. An article about a theory does not make the theory true.</span></li><li><b>Escape through 20 paper worlds.</b><span>Each correct answer clears at least a level. Rare answers travel farther. Three hits end the run. Turn your flight's answers into an ad-lib incident report.</span></li></ol></section>
+  <section class="test-note"><b>THE DEEPER YOU GO, THE STRANGER IT GETS.</b><p>Ten broad prompts in each topic. The office gives way to space, paper tears, The Fold, and full dimensions. Common answers make up most of the reviewed lists. Unused questions and topics rotate before repeats, including across restarts. Every resolved answer moves the chase. Rarity tiers are editorial, not measured from players. Unreviewed online discoveries receive the common tier.</p><p>Includes non-graphic references to historical atrocities, disasters, abuse, and serial murder. Scores reward recall, never harm. Grade the exact statement: a real investigation does not prove every theory about it. The hosted model judges prompt fit; the linked evidence supplies the fact card. It can make mistakes. The reviewed bank remains playable when the online desk is unavailable.</p></section>
   <section id="archive" hidden aria-labelledby="archive-title"><div class="archive-head"><div><span class="eyebrow">EVIDENCE, NOT VIBES</span><h2 id="archive-title">The evidence archive.</h2></div><button id="archive-close" class="text-button">Close archive ×</button></div><label class="search-label">Search the archive<input id="archive-search" type="search" placeholder="Try a subject, program, or case…"></label><div id="archive-list"></div></section>
  </main>
  <footer><span>© MOM INC. · COMPLIANCE IS OPTIONAL. GRAVITY IS NOT.</span><span>Original space game inspired by rare-answer trivia.</span></footer>

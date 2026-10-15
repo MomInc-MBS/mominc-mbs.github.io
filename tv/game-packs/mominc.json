@@ -18,6 +18,21 @@
       "bytes": 1350
     },
     {
+      "url": "/play/misinformation/assets/journey/01-office.svg",
+      "revision": "5d83e0b5ed8c0b7b55753d7544ff0a706a0ea05b",
+      "bytes": 1892
+    },
+    {
+      "url": "/play/misinformation/assets/journey/10-fold.svg",
+      "revision": "cda6a48145635b62375af195c214299fac08461e",
+      "bytes": 3588
+    },
+    {
+      "url": "/play/misinformation/assets/journey/20-mothership.svg",
+      "revision": "a3f6476619a4e877c9abbe7237de27b95b41c460",
+      "bytes": 3846
+    },
+    {
       "url": "/play/misinformation/assets/mom-pursuer.png",
       "revision": "5eca612bdf389c8d5df207f4b153092ffd7e8947",
       "bytes": 1346191
@@ -26,11 +41,6 @@
       "url": "/play/misinformation/assets/player-saucer.png",
       "revision": "33330fde45f9fc28bf0022477d4cfbe3c1627a10",
       "bytes": 2206296
-    },
-    {
-      "url": "/play/misinformation/assets/space-atlas.png",
-      "revision": "a48c403df6f1abe6e92d3954386717f3a211acc3",
-      "bytes": 2367773
     },
     {
       "url": "/shader-aurora.mjs",
@@ -454,8 +464,8 @@
     },
     {
       "url": "/tv/channels/mominc.html",
-      "revision": "500720049ee5d7dcf4e60580e697a7b7fca225c8",
-      "bytes": 56778
+      "revision": "161611169befe5cbf672e6676a89c43b34c15f93",
+      "bytes": 57188
     },
     {
       "url": "/tv/channels/mominc.js",
@@ -606,5 +616,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "52c61656fb283df5e28b"
+  "version": "4668cb1763f24d0dd175"
 }

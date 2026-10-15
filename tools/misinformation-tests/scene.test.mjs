@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {sceneFrame} from '../../play/misinformation/scene.js';
-import {freshRun,beginQuestion,acceptAnswer,classify,skip,APPROACH} from '../../play/misinformation/engine.js';
+import {freshRun,beginQuestion,acceptAnswer,classify,skip,STATION,LEVELS,levelIndex,bandIndex} from '../../play/misinformation/engine.js';
 import {renderScene,mobileSceneFrame} from '../../play/misinformation/scene.js';
 test('every depth band maps to a different cell of the two-by-four atlas',()=>{const cells=[];for(let i=0;i<8;i++){const f=sceneFrame({distance:i*12500,hits:0,phase:'result'});cells.push(`${f.x},${f.y}`);assert.equal(f.layer,i);assert.ok(f.x===0||f.x===100);assert.ok(f.y>=0&&f.y<=100);}assert.equal(new Set(cells).size,8);});
 test('damage closes the chase gap, and caught/docked states stay visible',()=>{const frames=[0,1,2].map(hits=>sceneFrame({distance:50000,hits,phase:'result'}));assert.ok(frames[0].player-frames[0].pursuer>frames[1].player-frames[1].pursuer);assert.ok(frames[1].player-frames[1].pursuer>frames[2].player-frames[2].pursuer);assert.match(sceneFrame({distance:100000,hits:0,phase:'escaped'}).status,/REACHED/);assert.match(sceneFrame({distance:0,hits:3,phase:'dead'}).status,/CAUGHT/);});
@@ -15,21 +15,22 @@ test('low answers, wrong classifications, and passes advance the visual chase wi
  for(const state of [low,wrong,passed]){
   const f=sceneFrame(state);assert.ok(f.player>before.player);assert.ok(f.pursuer>before.pursuer);assert.equal(f.motion,1);
  }
- assert.equal(low.distance,500);assert.equal(low.score,10);
+ assert.equal(low.distance,5000);assert.equal(low.score,10);
  assert.equal(wrong.distance,0);assert.equal(wrong.score,0);assert.equal(wrong.hits,1);
  assert.equal(passed.distance,0);assert.equal(passed.score,0);assert.equal(passed.hits,0);
  assert.equal(sceneFrame(wrong).outcome,'hit');assert.equal(sceneFrame(passed).outcome,'pass');
 });
-test('both craft approach the station monotonically across layers and remain bounded in unlimited practice',()=>{
+test('both craft approach the final desk monotonically until an ordinary twenty-answer win',()=>{
  let state=freshRun(),previous=sceneFrame(state);
- for(let i=0;i<1000;i++){
+ const visited=new Set([previous.level]);
+ for(let i=0;i<20;i++){
   state=resolve(state);const f=sceneFrame(state);
   assert.ok(f.player>=previous.player);assert.ok(f.pursuer>=previous.pursuer);
-  assert.ok(f.player<=72);assert.ok(f.pursuer<f.player);assert.ok(f.pursuer>=0);
-  assert.equal(f.motion,i+1);previous=f;
+  assert.ok(f.player<=(state.phase==='escaped'?80:72));assert.ok(f.pursuer<f.player);assert.ok(f.pursuer>=0);
+  assert.equal(f.motion,i+1);assert.equal(f.level,levelIndex(state.distance));visited.add(f.level);previous=f;
  }
- assert.equal(state.distance,APPROACH);assert.equal(state.phase,'result');assert.equal(previous.player,72);
- assert.ok(sceneFrame({...state,phase:'escaped'}).player>previous.player);
+ assert.equal(state.distance,STATION);assert.equal(state.phase,'escaped');assert.equal(previous.player,80);
+ assert.equal(visited.size,20);assert.equal(state.pristine,false);
 });
 test('top answers open a wider chase gap while only the third hit produces a catch',()=>{
  const low=sceneFrame(resolve(freshRun())),top=sceneFrame(resolve(freshRun(),rare));
@@ -60,24 +61,36 @@ test('each resolved ordinal retriggers one flyby; rerenders and reload do not, r
  const first=resolve(freshRun());renderScene(first);renderScene(first);assert.equal(bursts,1);
  const second=skip(beginQuestion(first,prompt));renderScene(second);assert.equal(bursts,2);
  assert.equal(scene.dataset.motionOrdinal,'2');
- // A capped flight still generates a new visible beat for every answer.
- renderScene({...second,rounds:1000,distance:APPROACH,score:10000});assert.equal(bursts,3);
- renderScene({...second,rounds:1001,distance:APPROACH,score:10000});assert.equal(bursts,4);
+ // A pass before the final desk still generates a visible beat without fuel.
+ renderScene({...second,rounds:1000,distance:95000,score:190});assert.equal(bursts,3);
+ renderScene({...second,rounds:1001,distance:95000,score:190});assert.equal(bursts,4);
  globalThis.matchMedia=()=>({matches:true});renderScene({...second,rounds:1002});assert.equal(bursts,4);
  assert.ok(!classes.has('flight-step'));
  delete scene.dataset.motionOrdinal;renderScene(first);assert.equal(bursts,4);
 });
-test('the inline chase uses the same monotonic route and keeps practice short of the station',()=>{
+test('the inline chase stays short of the station until the reachable ordinary-answer win',()=>{
  let state=freshRun(),previous=mobileSceneFrame(sceneFrame(state));
- for(let i=0;i<300;i++){
+ for(let i=0;i<19;i++){
   state=resolve(state);const mini=mobileSceneFrame(sceneFrame(state));
   assert.ok(mini.player>=previous.player);assert.ok(mini.pursuer>=previous.pursuer);
   assert.ok(mini.pursuer<mini.player);assert.ok(mini.player<mini.station);assert.ok(mini.pursuer>0);
   previous=mini;
  }
- const docked=mobileSceneFrame(sceneFrame({...state,phase:'escaped'}));
+ state=resolve(state);assert.equal(state.phase,'escaped');
+ const docked=mobileSceneFrame(sceneFrame(state));
  assert.ok(docked.player>previous.player);assert.ok(docked.player<=docked.station);
- assert.deepEqual(mobileSceneFrame(sceneFrame(JSON.parse(JSON.stringify(state)))),previous);
+ assert.deepEqual(mobileSceneFrame(sceneFrame(JSON.parse(JSON.stringify(state)))),docked);
+});
+test('twenty visual levels preserve the separate eight-band question difficulty mapping',()=>{
+ assert.equal(LEVELS.length,20);const art=new Set();
+ for(let i=0;i<20;i++){
+  const distance=i*5000,frame=sceneFrame({distance,score:i*10,hits:0,rounds:i,phase:i===0?'ready':'result'});
+  assert.equal(frame.level,i);assert.equal(frame.layer,bandIndex(distance));
+  assert.equal(frame.effect,LEVELS[i].effect);assert.match(frame.art,/^assets\/journey\/.+\.svg$/);art.add(frame.art);
+  assert.ok(frame.player<=72);assert.ok(frame.pursuer<frame.player);
+  assert.deepEqual(sceneFrame(JSON.parse(JSON.stringify({distance,score:i*10,hits:0,rounds:i,phase:i===0?'ready':'result'}))),frame);
+ }
+ assert.equal(art.size,20);
 });
 test('the inline HUD receives atlas, ordinal, progress and independent pulses while rerenders remain quiet',t=>{
  const originalDocument=globalThis.document,originalMedia=globalThis.matchMedia;
@@ -95,7 +108,9 @@ test('the inline HUD receives atlas, ordinal, progress and independent pulses wh
  assert.equal(mini.vars['--space-x'],scene.vars['--space-x']);
  assert.equal(mini.vars['--space-y'],scene.vars['--space-y']);
  assert.equal(mini.vars['--mini-player-x'],`${mobileSceneFrame(sceneFrame(first)).player}%`);
- assert.match(label.textContent,/SIGNAL 001/);assert.match(mini['aria-label'],/Live saucer chase/);
+ assert.match(label.textContent,/02 \/ 20/);assert.ok(label.textContent.includes(LEVELS[1].name.toUpperCase()));
+ assert.equal(mini.dataset.level,'1');assert.match(mini.vars['--journey-art'],/02-vents\.svg/);
+ assert.match(mini['aria-label'],/Live saucer chase/);
  // A scoreboard/hint rerender leaves the completed animation alone.
  mini.classes.delete('flight-step');renderScene(first);assert.ok(!mini.classes.has('flight-step'));
  const second=skip(beginQuestion(first,prompt));renderScene(second);assert.ok(mini.classes.has('flight-step'));

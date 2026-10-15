@@ -19,8 +19,108 @@
     },
     {
       "url": "/play/misinformation/app.js",
-      "revision": "0b9498d087f7f16239617b706bba3fc8af4d1dac",
-      "bytes": 16032
+      "revision": "a23c91ffbce8e71fbb55bd766fc65f7f8fbd1d90",
+      "bytes": 22366
+    },
+    {
+      "url": "/play/misinformation/assets/journey/01-office.svg",
+      "revision": "5d83e0b5ed8c0b7b55753d7544ff0a706a0ea05b",
+      "bytes": 1892
+    },
+    {
+      "url": "/play/misinformation/assets/journey/02-vents.svg",
+      "revision": "37caf2bf15cd438f4be3401bc9fe611f140e5664",
+      "bytes": 1903
+    },
+    {
+      "url": "/play/misinformation/assets/journey/03-stairwell.svg",
+      "revision": "3775b7bbe60620f78beedf77b60041070da61d41",
+      "bytes": 1763
+    },
+    {
+      "url": "/play/misinformation/assets/journey/04-rooftops.svg",
+      "revision": "c3006441a39f3c3888f3513efa82b3df65c1d8db",
+      "bytes": 11569
+    },
+    {
+      "url": "/play/misinformation/assets/journey/05-clouds.svg",
+      "revision": "36ff966d26408eef170e30e44d09534b5101ad82",
+      "bytes": 1634
+    },
+    {
+      "url": "/play/misinformation/assets/journey/06-elevator.svg",
+      "revision": "6e38ecc0d1d30102215dcc67573662446ea9fd84",
+      "bytes": 3086
+    },
+    {
+      "url": "/play/misinformation/assets/journey/07-junkyard.svg",
+      "revision": "947bc83705d6d279cb3fca8485704637d6ea0e9b",
+      "bytes": 3627
+    },
+    {
+      "url": "/play/misinformation/assets/journey/08-port18.svg",
+      "revision": "4f4171d5e08bb53f8f6276c97101d5fb6ad95f1e",
+      "bytes": 3238
+    },
+    {
+      "url": "/play/misinformation/assets/journey/09-cafeteria.svg",
+      "revision": "88dfe1001f3f56c9eaaa23a0586c2b23870d8ea9",
+      "bytes": 2898
+    },
+    {
+      "url": "/play/misinformation/assets/journey/10-fold.svg",
+      "revision": "cda6a48145635b62375af195c214299fac08461e",
+      "bytes": 3588
+    },
+    {
+      "url": "/play/misinformation/assets/journey/11-origami.svg",
+      "revision": "3a14b3855f568d5ec74c40ecff3c5311788936a3",
+      "bytes": 3426
+    },
+    {
+      "url": "/play/misinformation/assets/journey/12-gym.svg",
+      "revision": "406b9e3f26238596f622a76fbe34f20538d03b13",
+      "bytes": 3706
+    },
+    {
+      "url": "/play/misinformation/assets/journey/13-wormhole.svg",
+      "revision": "4f3e2f20a3f80f836cf58a90bb54f24242e481f3",
+      "bytes": 2959
+    },
+    {
+      "url": "/play/misinformation/assets/journey/14-flatland.svg",
+      "revision": "1f5e4aab68d0ff260aaf023c192d48088d494afa",
+      "bytes": 2666
+    },
+    {
+      "url": "/play/misinformation/assets/journey/15-mirror.svg",
+      "revision": "0cc65a4cd5d4dd9615143f831fbd75de9a9c3e55",
+      "bytes": 3793
+    },
+    {
+      "url": "/play/misinformation/assets/journey/16-quilt.svg",
+      "revision": "99033e449cdcf00daf99069b8ea290f7dc105d67",
+      "bytes": 8013
+    },
+    {
+      "url": "/play/misinformation/assets/journey/17-cable.svg",
+      "revision": "a6d3d0b4111f2fc3f5042e9041ad2a701eed39e7",
+      "bytes": 3613
+    },
+    {
+      "url": "/play/misinformation/assets/journey/18-nursery.svg",
+      "revision": "ec408be6292c1296ce36b6dff46193b5f3434ea6",
+      "bytes": 3893
+    },
+    {
+      "url": "/play/misinformation/assets/journey/19-edge.svg",
+      "revision": "a187bf3b22e53becd7998dc4f5fdda73e0d30aee",
+      "bytes": 3234
+    },
+    {
+      "url": "/play/misinformation/assets/journey/20-mothership.svg",
+      "revision": "a3f6476619a4e877c9abbe7237de27b95b41c460",
+      "bytes": 3846
     },
     {
       "url": "/play/misinformation/assets/mom-pursuer.png",
@@ -39,8 +139,8 @@
     },
     {
       "url": "/play/misinformation/catalog.js",
-      "revision": "fda46715d12de0c9155af70fec296fb0c3c534f5",
-      "bytes": 713401
+      "revision": "1c8794e5a4ace237e91e1d19dff21de86a1e1c22",
+      "bytes": 900427
     },
     {
       "url": "/play/misinformation/deck.js",
@@ -49,28 +149,43 @@
     },
     {
       "url": "/play/misinformation/engine.js",
-      "revision": "38b3a3e5f7a8020ce6f0cb4ab660e40a7873421c",
-      "bytes": 6162
+      "revision": "f33cff81142272c7ebd6cc4f931625b15348f1ce",
+      "bytes": 8488
     },
     {
       "url": "/play/misinformation/index.html",
-      "revision": "aabf0354aa43d62d8120a5099cac688594b4211a",
-      "bytes": 6115
+      "revision": "3bad3e5da62b3ed9678dcbc217b258c2e3c066fe",
+      "bytes": 6144
+    },
+    {
+      "url": "/play/misinformation/journey.css",
+      "revision": "bba6d7c941a1e52c4f8afb879e440b85675b6e3a",
+      "bytes": 6854
+    },
+    {
+      "url": "/play/misinformation/judge.js",
+      "revision": "bb08d45c5f6c52cbc3561e634dcbf75fb4319938",
+      "bytes": 2992
     },
     {
       "url": "/play/misinformation/scene.js",
-      "revision": "bc7abde8d65d98534bf18f2ac797d24b5d7cc920",
-      "bytes": 3669
+      "revision": "6ba136c014071c83e02dc71052dd0240a22e6cae",
+      "bytes": 6685
     },
     {
       "url": "/play/misinformation/scores.js",
-      "revision": "c01b3158ee84bb201021b8da04083fade49416cb",
-      "bytes": 3887
+      "revision": "0471fcdce8d58046d9afd14792c85ceee54c129c",
+      "bytes": 3872
     },
     {
       "url": "/play/misinformation/space.css",
       "revision": "5e3f2571d2b69f5dc48f025ddb79872056d68764",
       "bytes": 6676
+    },
+    {
+      "url": "/play/misinformation/stories.js",
+      "revision": "24dfbb3a7323afe38b055dca45a4d366aec4667f",
+      "bytes": 8922
     },
     {
       "url": "/play/misinformation/style.css",
@@ -347,5 +462,5 @@
     "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "c1ab77bcf205d35bc2f5"
+  "version": "1c4841255a29e412d289"
 }
