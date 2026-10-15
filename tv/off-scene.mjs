@@ -27,14 +27,15 @@ const sfx = k => { try { window.MBS_SOUND?.unlock(); window.MBS_SOUND?.play(k); 
 const layer = document.createElement('div');
 layer.className = 'off3d'; layer.dataset.noTvSound = ''; layer.tabIndex = 0;
 layer.setAttribute('role', 'region'); layer.setAttribute('aria-label', 'The television is off. Look around the computer: arrow keys or drag.');
-const renderer = new THREE.WebGLRenderer({antialias: true}); // throws without WebGL: tv.js catches and keeps the dark tube
-renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5)); renderer.outputColorSpace = THREE.SRGBColorSpace;
-renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.15;
-renderer.domElement.setAttribute('aria-hidden', 'true');
+// Two canvases: the room (floor, door) renders small and CSS-blurred behind, the computer renders sharp on top: out of focus.
+const mkRenderer = (opts, ratio) => { const r = new THREE.WebGLRenderer(opts); r.setPixelRatio(ratio); r.outputColorSpace = THREE.SRGBColorSpace; r.toneMapping = THREE.ACESFilmicToneMapping; r.toneMappingExposure = 1.15; r.domElement.setAttribute('aria-hidden', 'true'); return r; };
+const bgRenderer = mkRenderer({}, .5); bgRenderer.domElement.className = 'off3d-bg'; // throws without WebGL: tv.js catches and keeps the dark tube
+const renderer = mkRenderer({antialias: true, alpha: true}, Math.min(devicePixelRatio, 1.5)); renderer.setClearColor(0, 0);
 const btn = (cls, label) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'off3d-hit ' + cls; b.setAttribute('aria-label', label); layer.append(b); return b; };
-layer.append(renderer.domElement);
+layer.append(bgRenderer.domElement, renderer.domElement);
 const noteBtn = btn('off3d-note', 'Sticky note: ' + NOTE);
 const powerBtn = btn('off3d-power', 'Power');
+const dialBtn = btn('off3d-dial', 'Channel dial');
 const wireBtns = [btn('off3d-wire', 'Loose wire end. Drag it onto the other wire, or press Enter to connect them.'), btn('off3d-wire', 'Loose wire end. Drag it onto the other wire, or press Enter to connect them.')];
 const hint = document.createElement('p'); hint.className = 'off3d-hint'; hint.textContent = 'drag to look around'; layer.append(hint);
 const live = document.createElement('p'); live.className = 'off3d-sr'; live.setAttribute('role', 'status'); layer.append(live);
@@ -52,29 +53,44 @@ const purple = mat('#443147', .85, .1), gold = mat('#b28c45', .34, .64), floorMa
 purple.map = grit; purple.bumpScale = .13; gold.bumpScale = .045; floorMat.bumpScale = .08;
 function box(w, h, d, m, x, y, z, parent = scene) { const mesh = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m); mesh.position.set(x, y, z); parent.add(mesh); return mesh; }
 function plane(w, h, m, x, y, z, parent = scene) { const mesh = new THREE.Mesh(new THREE.PlaneGeometry(w, h), m); mesh.position.set(x, y, z); parent.add(mesh); return mesh; }
-const FACE_HEIGHT = 1.434375, FACE_Y = 1.68;
-box(40, .15, 40, floorMat, 0, -.075, 0);
+// Phone-shaped (Ian, 15 Oct): a tall slim face that fills a phone face-on, the bezel's own dial, power key and logo in the chin.
+const FACE_W = 1.7, FACE_HEIGHT = 3.6, FACE_D = .5, FACE_Y = .98 + FACE_HEIGHT / 2, FRONT_Z = FACE_D / 2;
+const floor = box(40, .15, 40, floorMat, 0, -.075, 0);
 const computer = new THREE.Group(); scene.add(computer); box(3, .15, 1.8, gold, 0, .64, 0, computer); for (const x of [-1.3, 1.3]) box(.14, .6, .14, black, x, .3, 0, computer);
-box(2.55, FACE_HEIGHT, .85, gold, 0, FACE_Y, 0, computer); box(1.3, .12, .7, gold, 0, .92, .05, computer); box(2.15, .11, .55, gold, 0, .8, .72, computer);
+box(FACE_W, FACE_HEIGHT, FACE_D, gold, 0, FACE_Y, 0, computer); box(1.3, .12, .7, gold, 0, .92, .05, computer); box(2.15, .11, .55, gold, 0, .8, .72, computer);
 for (let row = 0; row < 4; row++) for (let k = 0; k < 13; k++) box(.12, .025, .085, black, -.87 + k * .145, .867, .53 + row * .105, computer);
-const tex = url => { const t = new THREE.TextureLoader().load(url); t.colorSpace = THREE.SRGBColorSpace; return t; };
-plane(2.55, FACE_HEIGHT, new THREE.MeshBasicMaterial({map: tex('/tv/assets/armie-intro/website-bezel.png'), toneMapped: false}), 0, FACE_Y, .431, computer);
-const SCREEN = {x: (582 / 1280 - .5) * 2.55, y: FACE_Y + (.5 - 359 / 720) * FACE_HEIGHT, w: 954 / 1280 * 2.55, h: 672 / 720 * FACE_HEIGHT};
-const screenMat = new THREE.MeshStandardMaterial({color: '#0b0d12', roughness: .18, metalness: .4, emissive: '#6d63c8', emissiveIntensity: 0});
-plane(SCREEN.w, SCREEN.h, screenMat, SCREEN.x, SCREEN.y, .432, computer);
-box(.035, .12, .22, black, 1.29, 1.3, .24, computer); // the side drive slot (the USB itself left with Armie)
-// The bezel's printed POWER key at (1138, 522) of 1280x720, given a real cap to press.
-const POWER = new THREE.Vector3((1138 / 1280 - .5) * 2.55, FACE_Y + (.5 - 522 / 720) * FACE_HEIGHT, .45);
-const powerCap = box(.1, .065, .04, mat('#7a2fc4', .4, .2), POWER.x, POWER.y, POWER.z, computer);
+// A crop (px of the 1280x720 bezel art) of website-bezel.png on its own plane.
+function crop(px, py, pw, ph, w, x, y, z = FRONT_Z + .002, round = false) {
+  const t = new THREE.TextureLoader().load('/tv/assets/armie-intro/website-bezel.png'); t.colorSpace = THREE.SRGBColorSpace;
+  t.repeat.set(pw / 1280, ph / 720); t.offset.set(px / 1280, 1 - (py + ph) / 720);
+  const m = new THREE.MeshBasicMaterial({map: t, toneMapped: false});
+  if (!round) return plane(w, w * ph / pw, m, x, y, z, computer);
+  const disc = new THREE.Mesh(new THREE.CircleGeometry(w / 2, 48), m); disc.position.set(x, y, z); computer.add(disc); return disc;
+}
+const TOP = FACE_Y + FACE_HEIGHT / 2, CHIN = .82;
+const SCREEN = {x: 0, w: FACE_W - .16, h: FACE_HEIGHT - .26 - CHIN}; SCREEN.y = TOP - .26 - SCREEN.h / 2;
+plane(SCREEN.w + .05, SCREEN.h + .05, black, 0, SCREEN.y, FRONT_Z + .001, computer); // the screen's dark rim
+const screenMat = new THREE.MeshStandardMaterial({color: '#0b0d12', roughness: .85, metalness: .05, emissive: '#6d63c8', emissiveIntensity: 0});
+plane(SCREEN.w, SCREEN.h, screenMat, SCREEN.x, SCREEN.y, FRONT_Z + .002, computer);
+crop(1115, 640, 112, 40, .34, 0, TOP - .13); // MOM INC
+const CHIN_Y = TOP - .26 - SCREEN.h - CHIN / 2;
+const DIAL = new THREE.Vector3(-.4, CHIN_Y + .03, FRONT_Z + .03);
+const dial = crop(1112, 17, 122, 122, .62, DIAL.x, DIAL.y, DIAL.z, true); // the channel dial, big
+// The bezel's POWER key, four times its old size (Ian): a real cap wearing the art's power symbol.
+const POWER = new THREE.Vector3(.4, CHIN_Y + .03, FRONT_Z + .06);
+box(.46, .32, .05, black, POWER.x, POWER.y, FRONT_Z + .02, computer);
+const powerCap = box(.4, .26, .06, mat('#7a2fc4', .4, .2), POWER.x, POWER.y, POWER.z - .02, computer);
+crop(1118, 510, 42, 24, .38, POWER.x, POWER.y, POWER.z + .012);
+box(.035, .12, .22, black, FACE_W / 2 + .01, 1.6, 0, computer); // the side drive slot (the USB itself left with Armie)
 // Rear panel (the intro only ever showed the front): vent slats and a service plate.
-const REAR_Z = -.426;
-for (let i = 0; i < 9; i++) box(1.7, .035, .03, black, 0, 2.15 - i * .07, REAR_Z - .01, computer);
+const REAR_Z = -FACE_D / 2 - .001;
+for (let i = 0; i < 9; i++) box(1.2, .035, .03, black, 0, TOP - .35 - i * .07, REAR_Z - .01, computer);
 function labelTexture(lines, bg, fg, w = 512, h = 160) { const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d'); g.fillStyle = bg; g.fillRect(0, 0, w, h); g.fillStyle = fg; g.font = 'bold 34px monospace'; g.textAlign = 'center'; lines.forEach((t, i) => g.fillText(t, w / 2, 52 + i * 46)); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t; }
-const plate = plane(.72, .225, new THREE.MeshStandardMaterial({map: labelTexture(['MOM INC MBS-1998', 'NO USER SERVICEABLE PARTS', 'DO NOT HOTWIRE'], '#463421', '#ffd995'), roughness: .5, metalness: .3}), 0, 1.45, REAR_Z - .012, computer);
+const plate = plane(.72, .225, new THREE.MeshStandardMaterial({map: labelTexture(['MOM INC MBS-1998', 'NO USER SERVICEABLE PARTS', 'DO NOT HOTWIRE'], '#463421', '#ffd995'), roughness: .5, metalness: .3}), 0, 2.4, REAR_Z - .012, computer);
 plate.rotation.y = Math.PI;
 
 // --- the sticky note: scrawled in Rock Salt (already loaded by the page's font link)
-const NOTE_POS = new THREE.Vector3(SCREEN.x + .42, SCREEN.y + .2, .445), NOTE_SIZE = .5;
+const NOTE_POS = new THREE.Vector3(SCREEN.x + .28, SCREEN.y + .5, FRONT_Z + .015), NOTE_SIZE = .5;
 const noteCanvas = document.createElement('canvas'); noteCanvas.width = noteCanvas.height = 512;
 const noteTex = new THREE.CanvasTexture(noteCanvas); noteTex.colorSpace = THREE.SRGBColorSpace; noteTex.anisotropy = 4;
 function paintNote() {
@@ -110,17 +126,17 @@ box(.05, 2.9, .05, new THREE.MeshBasicMaterial({color: '#fff6d6'}), 0, 1.5, .02,
 const doorGlow = new THREE.PointLight('#ffefd2', 9, 6); doorGlow.position.set(0, 2, 1.2); doorway.add(doorGlow);
 
 // --- the other side: Coach peeking over the top of the monitor (stands up, eyes to the camera, like coachElement)
-const coachHolder = new THREE.Group(); coachHolder.position.set(.75, 1.2, -.75); coachHolder.rotation.y = -PEEK; coachHolder.visible = false; scene.add(coachHolder);
+const coachHolder = new THREE.Group(); coachHolder.position.set(.75, 3.3, -.75); coachHolder.rotation.y = -PEEK; coachHolder.visible = false; scene.add(coachHolder);
 let coach = null;
 loadCoach(THREE).then(c => { coach = c; const pivot = new THREE.Group(); pivot.rotation.x = Math.PI / 2; pivot.add(c.group); const stand = new THREE.Group(); stand.rotation.set(0, 0, Math.PI / 2); stand.add(pivot); stand.scale.setScalar(1.3); coachHolder.add(stand); const glow = new THREE.PointLight('#f3dcff', 3, 3); glow.position.set(0, .4, 1); coachHolder.add(glow); }).catch(e => console.warn('3D coach unavailable:', e.message));
 
 // --- the rear: two cut wires with stripped copper ends
 const copper = new THREE.MeshStandardMaterial({color: '#d9773a', metalness: .9, roughness: .3, emissive: '#ff8a3a', emissiveIntensity: 0});
 const wires = [['#b3262e', -.32], ['#1b1b20', .32]].map(([color, x], i) => {
-  const root = new THREE.Vector3(x, 1.28, REAR_Z), rest = new THREE.Vector3(x * 1.15, .98, REAR_Z - .6);
+  const root = new THREE.Vector3(x, 1.6, REAR_Z), rest = new THREE.Vector3(x * 1.15, .98, REAR_Z - .6);
   const mesh = new THREE.Mesh(new THREE.BufferGeometry(), new THREE.MeshStandardMaterial({color, roughness: .55})); scene.add(mesh);
   const tip = new THREE.Mesh(new THREE.CylinderGeometry(.018, .012, .1, 10), copper); scene.add(tip);
-  box(.09, .09, .03, black, x, 1.28, REAR_Z - .015, computer); // grommet
+  box(.09, .09, .03, black, x, 1.6, REAR_Z - .015, computer); // grommet
   return {root, rest, end: rest.clone(), mesh, tip, button: wireBtns[i]};
 });
 const up = new THREE.Vector3(0, 1, 0);
@@ -150,21 +166,22 @@ relock(); if (isHot()) placeJoined(); else wires.forEach(shapeWire);
 const look = new THREE.Vector3(), pos = new THREE.Vector3(), tmp = new THREE.Vector3();
 function rig() {
   const a = Math.abs(Math.atan2(Math.sin(yaw), Math.cos(yaw))), over = Math.exp(-(((a - PEEK) / .38) ** 2)), rear = THREE.MathUtils.smoothstep(a, 1.7, 2.6);
-  // Portrait (p -> 1): raise the camera a little and aim lower so the monitor, keyboard and desk sit centred in the tall frame;
-  // at the rear it no longer pulls in, so the plate and both wires stay in frame.
+  // Face-on the camera sits square to the face; at the rear it pulls in on wide screens only, so both wires stay in frame.
   const d = fitD * (1 - .3 * rear * (1 - portrait));
-  pos.set(Math.sin(yaw) * d, THREE.MathUtils.lerp(THREE.MathUtils.lerp(1.75 + 1.3 * portrait, 3.05, over), 1.75, rear), Math.cos(yaw) * d);
-  look.set(0, THREE.MathUtils.lerp(1.6 - .5 * portrait, 1.25, rear), 0).lerp(tmp.set(-Math.sin(yaw) * 7, 1.7, -Math.cos(yaw) * 7), over * .9);
+  pos.set(Math.sin(yaw) * d, THREE.MathUtils.lerp(THREE.MathUtils.lerp(FACE_Y, TOP + .45, over), 2.1, rear), Math.cos(yaw) * d);
+  look.set(0, THREE.MathUtils.lerp(FACE_Y, 1.5, rear), 0).lerp(tmp.set(-Math.sin(yaw) * 7, 1.7, -Math.cos(yaw) * 7), over * .9);
   if (zoom > 0) { const nz = NOTE_POS.clone(); pos.lerp(tmp.set(nz.x, nz.y, nz.z + NOTE_SIZE * .62 / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) / Math.min(1, camera.aspect)), zoom); look.lerp(nz, zoom); }
   camera.position.copy(pos); camera.lookAt(look);
   return {over, rear, a};
 }
 function resize() {
   const cw = innerWidth, ch = innerHeight; if (cw === w && ch === h) return; w = cw; h = ch;
-  renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
+  renderer.setSize(w, h, false); bgRenderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
   const v = THREE.MathUtils.degToRad(camera.fov / 2), hz = Math.atan(Math.tan(v) * camera.aspect);
   portrait = THREE.MathUtils.clamp((1 - camera.aspect) / .55, 0, 1);
-  fitD = Math.max(1.35 / Math.tan(v), 1.42 / Math.tan(hz)) + .45; // the screen and its note fill the frame, phone portrait included
+  // Portrait: cover, so both gold sides sit just off-screen and the face is the whole phone. Landscape: the whole face fits.
+  const byW = s => FACE_W * s / (2 * Math.tan(hz)), byH = s => FACE_HEIGHT * s / (2 * Math.tan(v));
+  fitD = (camera.aspect < 1 ? Math.min(byW(.95), byH(1)) : Math.max(byW(1.1), byH(1.08))) + FRONT_Z;
 }
 const scr = new THREE.Vector3();
 function place(el, world, size, show) {
@@ -197,6 +214,8 @@ layer.addEventListener('keydown', e => {
 });
 noteBtn.addEventListener('click', () => { dropHint(); if (zoomTo) { closeNote(); powerBtn.focus(); return; } noteOpened = true; yawTo = Math.round(yaw / (2 * Math.PI)) * 2 * Math.PI; zoomTo = 1; if (still()) { yaw = yawTo; zoom = 1; } sfx('bloop'); live.textContent = 'The note says: ' + NOTE; });
 powerBtn.addEventListener('click', () => { realPower.click(); });
+// The dial clicks round a notch; the set is off, so there is no channel to change to yet.
+let dialTo = 0; dialBtn.addEventListener('click', () => { dialTo -= Math.PI / 7; sfx('click'); });
 tv.addEventListener('mbs:deadpower', () => { flick = performance.now(); live.textContent = 'Nothing. No power. Check the back.'; });
 wireBtns.forEach((b, i) => {
   b.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); hotwire(performance.now()); } });
@@ -220,7 +239,7 @@ function frame(now) {
   const {over, rear, a} = rig(), wrapped = Math.atan2(Math.sin(yaw), Math.cos(yaw)), front = Math.abs(wrapped) < .45;
   // Coach rises behind the monitor only while you look over its side, and ducks again when you turn away.
   const peek = wrapped < 0 ? over : 0; coachHolder.visible = !!coach && peek > .02;
-  coachHolder.position.y = .95 + peek * 1.05 + (still() ? 0 : Math.sin(now / 380) * .03 * peek); coachHolder.rotation.z = still() ? 0 : Math.sin(now / 520) * .08;
+  coachHolder.position.y = TOP - 1.45 + peek * 1.05 + (still() ? 0 : Math.sin(now / 380) * .03 * peek); coachHolder.rotation.z = still() ? 0 : Math.sin(now / 520) * .08;
   coach?.tick(now, {pressure: .5});
   // CRT: a dead flicker when power is pressed unwired, a faint hum once hotwired.
   const f = Math.max(0, 1 - (now - flick) / 450); screenMat.emissiveIntensity = (isHot() ? .06 + .03 * Math.sin(now / 300) : 0) + f * (Math.sin(now / 18) > 0 ? .55 : .1);
@@ -228,19 +247,28 @@ function frame(now) {
   const s = (now - sparkAt) / 700; spark.intensity = s < 1 ? (1 - s) * 14 * (Math.random() * .6 + .4) : 0; copper.emissiveIntensity = s < 1 ? (1 - s) * 1.5 : 0;
   sparkBits.material.opacity = s < 1 ? 1 - s : 0;
   if (s < 1) { const p = sparkBits.geometry.attributes.position; for (let i = 0; i < 60; i++) { sparkVel[i].y -= .06; p.setXYZ(i, p.getX(i) + sparkVel[i].x * .016, p.getY(i) + sparkVel[i].y * .016, p.getZ(i) + sparkVel[i].z * .016); } p.needsUpdate = true; }
-  renderer.render(scene, camera);
+  renderLayers();
   note.visible = !noteGone || zoom > .05; // peels off as the camera pulls back
   const zoomed = zoom > .5;
   place(noteBtn, NOTE_POS, (zoomed ? .9 : 1.1) * NOTE_SIZE * pxPerUnit(NOTE_POS), front && !noteGone);
-  place(powerBtn, POWER, 0, front && !zoomed);
+  place(powerBtn, POWER, .42 * pxPerUnit(POWER), front && !zoomed);
+  place(dialBtn, DIAL, .6 * pxPerUnit(DIAL), front && !zoomed);
+  dial.rotation.z += (dialTo - dial.rotation.z) * (still() ? 1 : .2);
   const back = rear > .85 && !isHot();
   wires.forEach(wr => place(wr.button, wr.end, 0, back));
   layer.classList.toggle('zoomed', zoomed); layer.classList.toggle('hot', isHot());
 }
+const ROOM = new Set([floor, doorway]);
+function renderLayers() {
+  const vis = scene.children.map(c => c.visible), bg = scene.background;
+  scene.children.forEach(c => { if (!c.isLight) c.visible = ROOM.has(c); }); bgRenderer.render(scene, camera);
+  scene.children.forEach((c, i) => { c.visible = vis[i] && !ROOM.has(c); }); scene.background = null; renderer.render(scene, camera);
+  scene.children.forEach((c, i) => { c.visible = vis[i]; }); scene.background = bg;
+}
 function sync() {
   const on = tv.dataset.state === 'off';
   if (on && !running) { relock(); hint.hidden = locked; running = true; w = h = 0; raf = requestAnimationFrame(frame); }
-  if (!on && running) { running = false; cancelAnimationFrame(raf); renderer.setSize(1, 1, false); // free the framebuffer while the TV runs
+  if (!on && running) { running = false; cancelAnimationFrame(raf); renderer.setSize(1, 1, false); bgRenderer.setSize(1, 1, false); // free the framebuffer while the TV runs
     if (zoomTo) closeNote(); zoom = 0; if (hot && !armieDone()) try { localStorage.setItem(LOCK_KEY, '1'); } catch {} }
 }
 addEventListener('mbs:page-complete', () => running && relock());
