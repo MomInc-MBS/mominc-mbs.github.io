@@ -3,7 +3,7 @@ import * as THREE from './vendor/three.module.js';
 import {GLTFLoader} from './vendor/GLTFLoader.js';
 import {bindHand,applyHandPose} from './pose-rig.js';
 import {replaceSprite} from './coach-3d.mjs';
-import {createComputer,createGoldMaterial} from './shared-computer.mjs?mbs-rev=tv-gold-fuel-1';
+import {createComputer,createGoldMaterial} from './shared-computer.mjs?mbs-rev=tv-two-controls-1';
 let handRig=null,lastGrip=-1;
 const liveMode=new URLSearchParams(location.search).has('live');const framedLive=liveMode&&!new URLSearchParams(location.search).has('cabinet');const FACE_HEIGHT=liveMode?2.55*innerHeight/innerWidth*(framedLive?(954/1280)/(672/720):1):1.434375;
 const ROOM_HEIGHT=Math.max(3.65,.98+FACE_HEIGHT+.45),ROOM_BACK_Z=Math.max(5.5,.535+FACE_HEIGHT/(2*Math.tan(THREE.MathUtils.degToRad(43/2)))+2);

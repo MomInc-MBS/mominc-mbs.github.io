@@ -62,11 +62,14 @@ export function createComputer({THREE, scene, gold, black, faceHeight, mode}) {
     const disc = new THREE.Mesh(new THREE.CircleGeometry(w / 2, 48), material); disc.position.set(x, y, z); computer.add(disc); return disc;
   };
   const chinY = bottom + .078 * faceHeight, dialPos = new THREE.Vector3(-width * .235, chinY, frontZ + .07);
-  const dial = crop(1112, 17, 122, 122, width * .365, dialPos.x, dialPos.y, dialPos.z, true);
+  const dialDiameter = Math.max(width * 44 / innerWidth, Math.min(width * .365, faceHeight * .145, width * 160 / innerWidth));
+  const powerWidth = Math.min(width * .27, width * 130 / innerWidth);
+  const powerHeight = Math.max(faceHeight * 44 / innerHeight, Math.min(faceHeight * .09, faceHeight * 78 / innerHeight));
+  const dial = crop(1112, 17, 122, 122, dialDiameter, dialPos.x, dialPos.y, dialPos.z, true);
   const power = new THREE.Vector3(width * .235, chinY, frontZ + .09);
-  box(width * .27, faceHeight * .09, .05, black, power.x, power.y, frontZ + .025);
-  box(width * .235, faceHeight * .072, .06, new THREE.MeshStandardMaterial({color: '#7a2fc4', roughness: .4, metalness: .2}), power.x, power.y, frontZ + .065);
-  crop(1118, 510, 42, 24, width * .225, power.x, power.y, frontZ + .105);
+  box(powerWidth, powerHeight, .05, black, power.x, power.y, frontZ + .025);
+  box(powerWidth * .87, powerHeight * .8, .06, new THREE.MeshStandardMaterial({color: '#7a2fc4', roughness: .4, metalness: .2}), power.x, power.y, frontZ + .065);
+  crop(1118, 510, 42, 24, powerWidth * .833, power.x, power.y, frontZ + .105);
 
   const badgeTexture = (text, vertical) => {
     const c = document.createElement('canvas'); c.width = vertical ? 256 : 512; c.height = vertical ? 1024 : 128;
@@ -93,5 +96,5 @@ export function createComputer({THREE, scene, gold, black, faceHeight, mode}) {
   }
   box(.035, .12, .22, black, width / 2 + .01, 1.3, .24); // USB slot
   for (let i = 0; i < 9; i++) box(width * .7, .035, .03, black, 0, top - .35 - i * .07, -frontZ - .01);
-  return {computer, screen, screenMat, upperScreen, dimensions: {width, height: faceHeight, centerY, frontZ, top, bottom}, screenBounds: main, controls: {dial, dialPos, power}};
+  return {computer, screen, screenMat, upperScreen, dimensions: {width, height: faceHeight, centerY, frontZ, top, bottom}, screenBounds: main, controls: {dial, dialPos, power, dialDiameter, powerWidth, powerHeight}};
 }

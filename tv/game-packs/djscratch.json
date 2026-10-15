@@ -69,8 +69,8 @@
     },
     {
       "url": "/tv/assets/armie-intro/shared-computer.mjs",
-      "revision": "ebbb319c755c85d95c44c44740301574eae7aaca",
-      "bytes": 7462
+      "revision": "377372972d6b9b04cde688bafb43efc271c046eb",
+      "bytes": 7822
     },
     {
       "url": "/tv/assets/armie-intro/vendor/BufferGeometryUtils.js",
@@ -184,8 +184,8 @@
     },
     {
       "url": "/tv/atmosphere.js",
-      "revision": "4edb1ae072c42a2acd6385615fbf23c0747d42a5",
-      "bytes": 2857
+      "revision": "8d07cef696604a285ac2db1526ec29105f9ba2af",
+      "bytes": 2890
     },
     {
       "url": "/tv/audio/electric-static.mp3",
@@ -219,8 +219,8 @@
     },
     {
       "url": "/tv/cabinet-match.css",
-      "revision": "0b87d14f49ca17ca046effe4c199515b467a35b6",
-      "bytes": 8344
+      "revision": "5c395f4d9c2b21b9b34597a0d945c13433291177",
+      "bytes": 7671
     },
     {
       "url": "/tv/card.js",
@@ -279,8 +279,8 @@
     },
     {
       "url": "/tv/index.html",
-      "revision": "c32584f67c312c106adccef5ddf7bdc6e2b973a3",
-      "bytes": 15253
+      "revision": "0d83bc414c137b7ffabd6eed76f2cabb1d5b3e97",
+      "bytes": 15288
     },
     {
       "url": "/tv/landing.css",
@@ -319,8 +319,8 @@
     },
     {
       "url": "/tv/off-scene.mjs",
-      "revision": "01b3829f23afbe1f317cfe39ae2c17ad6ba4092e",
-      "bytes": 26099
+      "revision": "f9417e9b3c6b9213644d81f1bd9a0a101ef03526",
+      "bytes": 26217
     },
     {
       "url": "/tv/phone-layout.js",
@@ -379,8 +379,8 @@
     },
     {
       "url": "/tv/tv.js",
-      "revision": "6da698db741740553765070865a0f87ccbc37548",
-      "bytes": 35645
+      "revision": "e23ced2361a2bdaa8cd5e87fc057292390aa714d",
+      "bytes": 35666
     },
     {
       "url": "/vendor/shaders/runtime.mjs",
@@ -392,5 +392,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "f61e54b6a0b5c0d87996"
+  "version": "0bdc0ff3c96216e6f0d9"
 }

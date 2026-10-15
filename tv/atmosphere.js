@@ -4,7 +4,7 @@
   // The portrait gate that lived here went soft (TV3): mbs-shim.js shows a dismissible "best sideways" hint instead.
   let audio, gain, oscillator, second, enabled = false;
   window.MBS_ATMOSPHERE = {mount(host,slug) {
-    if ((slug === 'djscratch'&&document.documentElement.dataset.game) || document.querySelector('.ambience-toggle')) return;
+    if (document.querySelector('#tv') || (slug === 'djscratch'&&document.documentElement.dataset.game) || document.querySelector('.ambience-toggle')) return;
     const rail = document.querySelector('.rail')||document.querySelector('#ctlrow')||document.querySelector('main footer'); if (!rail) return;
     const button = document.createElement('button'); button.type = 'button';
     button.className = 'ambience-toggle'; button.textContent = 'Room sound: off';

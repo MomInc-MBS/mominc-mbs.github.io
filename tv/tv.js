@@ -25,7 +25,7 @@
   let offScene = null;
   function paintDark() {
     darkNote.textContent = "Press power.";
-    offScene ??= import("/tv/off-scene.mjs?mbs-rev=tv-gold-fuel-1").catch(e => console.warn("3D off screen unavailable:", e.message));
+    offScene ??= import("/tv/off-scene.mjs?mbs-rev=tv-two-controls-1").catch(e => console.warn("3D off screen unavailable:", e.message));
   }
   const hotwired = () => { try { return sessionStorage.getItem("mbs-hotwired") === "1" || localStorage.getItem("mbs-off3d-locked") === "1"; } catch { return true; } };
 
@@ -333,8 +333,8 @@
     const on = inGame();
     if (gameBtn) {
       gameBtn.setAttribute("aria-pressed", on ? "true" : "false");
-      gameBtn.setAttribute("aria-label", on ? "Exit game" : "Enter game");
-      gameBtn.title = on ? "Exit game" : "Enter game";
+      gameBtn.setAttribute("aria-label", on ? "Back to television" : "Enter game");
+      gameBtn.title = on ? "Back to television" : "Enter game";
     }
     if (gameLegend) gameLegend.textContent = on ? "EXIT" : "GAME";
   }

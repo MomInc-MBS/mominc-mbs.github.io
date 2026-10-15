@@ -184,10 +184,10 @@ function resize() {
   fitD = (camera.aspect < 1 ? Math.min(byW(.95), byH(1)) : Math.max(byW(1.1), byH(1.08))) + FRONT_Z;
 }
 const scr = new THREE.Vector3();
-function place(el, world, size, show) {
+function place(el, world, size, show, height = size) {
   el.hidden = !show; if (!show) return;
-  scr.copy(world).project(camera); const px = Math.max(48, size);
-  el.style.cssText = `left:${(scr.x + 1) / 2 * w - px / 2}px;top:${(1 - scr.y) / 2 * h - px / 2}px;width:${px}px;height:${px}px`;
+  scr.copy(world).project(camera); const px = Math.max(48, size), ph = Math.max(48, height);
+  el.style.cssText = `left:${(scr.x + 1) / 2 * w - px / 2}px;top:${(1 - scr.y) / 2 * h - ph / 2}px;width:${px}px;height:${ph}px`;
 }
 const pxPerUnit = at => h / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.distanceTo(at));
 // --- input: drag / wheel / arrows orbit; buttons are real buttons
@@ -274,8 +274,8 @@ function frame(now) {
   note.visible = !noteGone || zoom > .05; // peels off as the camera pulls back
   const zoomed = zoom > .5;
   place(noteBtn, NOTE_POS, (zoomed ? .9 : 1.1) * NOTE_SIZE * pxPerUnit(NOTE_POS), front && !noteGone);
-  place(powerBtn, POWER, .42 * pxPerUnit(POWER), front && !zoomed);
-  place(dialBtn, DIAL, .6 * pxPerUnit(DIAL), front && !zoomed);
+  place(powerBtn, POWER, controls.powerWidth * pxPerUnit(POWER), front && !zoomed, controls.powerHeight * pxPerUnit(POWER));
+  place(dialBtn, DIAL, controls.dialDiameter * pxPerUnit(DIAL), front && !zoomed);
   dial.rotation.z += (dialTo - dial.rotation.z) * (still() ? 1 : .2);
   const back = rear > .85 && !isHot();
   wires.forEach(wr => place(wr.button, wr.end, 0, back));
