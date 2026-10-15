@@ -52,6 +52,7 @@ OPACITY = """() => ({
 with sync_playwright() as pw:
     b = pw.chromium.launch()
     ctx = b.new_context()
+    ctx.add_init_script("try { sessionStorage.setItem('mbs-on', '1') } catch (e) {}")   # the panel is only reachable with the set on (off = the 3D computer)
     pg = ctx.new_page()
     errs = []
     pg.on("console", lambda m: errs.append(m.text) if m.type == "error" else None)
@@ -121,6 +122,7 @@ with sync_playwright() as pw:
 
     print("== a fresh visitor is unaffected by someone else's stored choice")
     ctx2 = b.new_context()
+    ctx2.add_init_script("try { sessionStorage.setItem('mbs-on', '1') } catch (e) {}")
     pg2 = ctx2.new_page()
     pg2.goto(BASE + "/tv/", wait_until="load"); pg2.wait_for_timeout(150)
     fresh = pg2.evaluate(OPACITY)

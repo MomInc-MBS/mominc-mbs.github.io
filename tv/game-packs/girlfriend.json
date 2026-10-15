@@ -58,6 +58,41 @@
       "bytes": 3220
     },
     {
+      "url": "/tv/assets/armie-intro/coach-3d.mjs",
+      "revision": "5cb50bd6556b89b3a5fb9f9f61654f4c94aba7bf",
+      "bytes": 10821
+    },
+    {
+      "url": "/tv/assets/armie-intro/models/coach-hand.glb",
+      "revision": "061bf1ec258bce4b35b3a0c984068f08f82b059b",
+      "bytes": 197264
+    },
+    {
+      "url": "/tv/assets/armie-intro/vendor/BufferGeometryUtils.js",
+      "revision": "94854716b38f19724d501fe4878525e12fbeaea4",
+      "bytes": 35552
+    },
+    {
+      "url": "/tv/assets/armie-intro/vendor/GLTFLoader.js",
+      "revision": "31cfd6f1799aabf2eea62b507684c2ec7393dfcd",
+      "bytes": 114745
+    },
+    {
+      "url": "/tv/assets/armie-intro/vendor/three.core.js",
+      "revision": "7dcd0fbcbc04b8d9a20ecb96c1ce344cb55150d5",
+      "bytes": 1403455
+    },
+    {
+      "url": "/tv/assets/armie-intro/vendor/three.module.js",
+      "revision": "477ca4dafa7af919a2b9818e01b5ae25198d4aa4",
+      "bytes": 603113
+    },
+    {
+      "url": "/tv/assets/armie-intro/website-bezel.png",
+      "revision": "86b15c925e65669c1aca1d5d0efc3062ef85a7d1",
+      "bytes": 315531
+    },
+    {
       "url": "/tv/assets/brushed-aluminum.png",
       "revision": "97e0339b9b4126fedb12ed68c94f8ab1e13bdd4b",
       "bytes": 2759321
@@ -239,8 +274,8 @@
     },
     {
       "url": "/tv/index.html",
-      "revision": "405b5fa00a7ed350def1c956d548fec6634826c3",
-      "bytes": 14931
+      "revision": "cd56aa92cc14cadce06c1b079a78bca9d76b056c",
+      "bytes": 14935
     },
     {
       "url": "/tv/landing.css",
@@ -276,6 +311,11 @@
       "url": "/tv/network-flow.js",
       "revision": "8a8370bfbc0b5985e22f71f5bc685b3094260a15",
       "bytes": 8604
+    },
+    {
+      "url": "/tv/off-scene.mjs",
+      "revision": "2d51b9da4c90d324eaa1df2d55fbd4d29510c3dd",
+      "bytes": 22886
     },
     {
       "url": "/tv/phone-layout.js",
@@ -329,13 +369,13 @@
     },
     {
       "url": "/tv/tv.css",
-      "revision": "2a0668d8a3cdf71d226d8dd4ba0a1e9a1d45c4b0",
-      "bytes": 27968
+      "revision": "82a8b75b921dddbc539a3fb0fd4171a2dee29dc9",
+      "bytes": 29160
     },
     {
       "url": "/tv/tv.js",
-      "revision": "1d57eebf8b09aa15946791574bdcc935d95ba646",
-      "bytes": 37478
+      "revision": "f4c4637787062cca8fe4da1a095db9cf0341bafe",
+      "bytes": 34727
     },
     {
       "url": "/vendor/shaders/runtime.mjs",
@@ -347,5 +387,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "a359f35dce2c22bc1ebd"
+  "version": "e5a2cbaf7a275eb7464e"
 }

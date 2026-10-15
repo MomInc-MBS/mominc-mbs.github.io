@@ -10,75 +10,24 @@
 
   // --- the show's clock. Wednesday, 7 to 8 pm, Las Vegas time (Ian, 2026-08-25: one show a week, Wednesday). Change here only.
   const SHOW = { weekday: 3, startHour: 19, endHour: 20, tz: "America/Los_Angeles" };
-  // 2.23/C009: every reading of the clock takes `now` as an argument, and only paintDark() supplies
-  // the default. A schedule computed from a buried Date.now() passes at 3pm and fails at 3am, so it
-  // can never be gated; with `now` on the outside the gate drives it at a fixed instant.
+  // The off screen no longer advertises show times (Ian, 2026-10-15); the clock only decides whether the set boots on.
   const WD = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
   function showParts(now) {
-    const p = new Intl.DateTimeFormat("en-US", { timeZone: SHOW.tz, weekday: "short", year: "numeric", month: "numeric", day: "numeric", hour: "numeric", hour12: false }).formatToParts(now);
-    const n = t => +p.find(x => x.type === t).value;
-    return { wd: WD.indexOf(p.find(x => x.type === "weekday").value), y: n("year"), m: n("month"), d: n("day"), h: n("hour") % 24 };
+    const p = new Intl.DateTimeFormat("en-US", { timeZone: SHOW.tz, weekday: "short", hour: "numeric", hour12: false }).formatToParts(now);
+    return { wd: WD.indexOf(p.find(x => x.type === "weekday").value), h: +p.find(x => x.type === "hour").value % 24 };
   }
   function onAir(now = new Date()) {
     const t = showParts(now);
     return t.wd === SHOW.weekday && t.h >= SHOW.startHour && t.h < SHOW.endHour;
   }
-  // The UTC instant of a wall-clock hour in SHOW.tz. Intl formats an instant INTO a zone and will not
-  // read one back out, so: guess the instant as though the zone were UTC, format the guess back, and
-  // subtract however far off the zone put it. The show starts at 7pm and no US transition lands near
-  // it, so a single correction is exact on both sides of a daylight-saving change.
-  function zoned(y, m, d, h) {
-    const guess = Date.UTC(y, m - 1, d, h);
-    const t = showParts(new Date(guess));
-    return new Date(guess - (Date.UTC(t.y, t.m - 1, t.d, t.h) - guess));
+  // Off: the 3D computer (off-scene.mjs) replaces the dark tube. Its rear wires must be joined before
+  // power works; until that module is running (or if WebGL fails) the plain dark tube and power stay as they were.
+  let offScene = null;
+  function paintDark() {
+    darkNote.textContent = "Press power.";
+    offScene ??= import("/tv/off-scene.mjs?v=tv-off-3d-1").catch(e => console.warn("3D off screen unavailable:", e.message));
   }
-  function nextStart(now = new Date()) {
-    const t = showParts(now);
-    let days = (SHOW.weekday - t.wd + 7) % 7;
-    if (days === 0 && t.h >= SHOW.endHour) days = 7;   // Wednesday, but tonight's hour is spent: it is next week's show
-    return zoned(t.y, t.m, t.d + days, SHOW.startHour);
-  }
-  const FMT = { weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit", timeZoneName: "short" };
-  const fmtShow = new Intl.DateTimeFormat("en-US", Object.assign({ timeZone: SHOW.tz }, FMT));
-  const fmtHere = new Intl.DateTimeFormat("en-US", FMT);   // no timeZone: whatever zone the visitor is in
-  const stamp = t => t.toISOString().split(/[-:]/).join("").slice(0, 15) + "Z";
-  function ics(start) {
-    const end = new Date(start.getTime() + (SHOW.endHour - SHOW.startHour) * 3600000);
-    return [
-      "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//MOM INC//MBS//EN", "CALSCALE:GREGORIAN",
-      "BEGIN:VEVENT",
-      "UID:" + stamp(start) + "-mbs@momincorporated",
-      "DTSTAMP:" + stamp(start),
-      "DTSTART:" + stamp(start),
-      "DTEND:" + stamp(end),
-      "RRULE:FREQ=WEEKLY;BYDAY=WE",
-      "SUMMARY:MBS",
-      "DESCRIPTION:One show a week on the set.",
-      "END:VEVENT", "END:VCALENDAR", "",
-    ].join("\r\n");
-  }
-  // The calendar affordance is a real file, not a link to somebody else's calendar: an .ics the set
-  // hands over. Blob rather than a data: URL because Chrome will not download a top-level data: URL.
-  let icsUrl = null;
-  function calendarLink(start) {
-    if (icsUrl) URL.revokeObjectURL(icsUrl);
-    icsUrl = URL.createObjectURL(new Blob([ics(start)], { type: "text/calendar" }));
-    const a = document.createElement("a");
-    a.id = "darkAdd"; a.href = icsUrl; a.download = "mbs.ics"; a.textContent = "Add to your calendar";
-    return a;
-  }
-  // The dark screen is the guide. It says the next actual airing - dated, in the show's zone and in
-  // the visitor's - and offers the two things they can do about it right now.
-  function paintDark(now = new Date()) {
-    darkNote.textContent = "";
-    if (onAir(now)) { darkNote.dataset.next = ""; darkNote.textContent = "MBS is on air now, until 8. Press power."; return; }
-    const start = nextStart(now);
-    darkNote.dataset.next = start.toISOString();
-    const there = fmtShow.format(start), here = fmtHere.format(start);
-    const line = document.createElement("span");
-    line.textContent = "Next show " + there + (here === there ? "" : ", " + here + " where you are") + ".";
-    darkNote.append(line, document.createElement("br"), calendarLink(start), document.createTextNode(" · or press power now."));
-  }
+  const hotwired = () => { try { return sessionStorage.getItem("mbs-hotwired") === "1" || localStorage.getItem("mbs-off3d-locked") === "1"; } catch { return true; } };
 
   // --- power
   // 2.13/C006: the warm-up is cancellable. It used to be a bare setTimeout, so pausing (or switching
@@ -101,7 +50,11 @@
     window.MBS_RT.pause("power");
     tv.dataset.state = "off"; paintDark(); try { sessionStorage.setItem("mbs-on", "0"); } catch {}
   }
-  power.addEventListener("click", () => (tv.dataset.state === "on" ? turnOff() : turnOn()));
+  power.addEventListener("click", () => {
+    if (tv.dataset.state === "on") return turnOff();
+    if (tv.dataset.off3d === "on" && !hotwired()) return tv.dispatchEvent(new Event("mbs:deadpower"));   // dead click until hotwired
+    turnOn();
+  });
 
   // --- the picture control (2.22 / C003)
   // How much CRT treatment is on the glass is a PREFERENCE, not progress, so it does not go into
