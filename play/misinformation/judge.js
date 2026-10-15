@@ -14,6 +14,7 @@ export function cleanJudgment(value,questionId){
  try{const url=new URL(subject.source);if(url.protocol!=='https:'||url.username||url.password)return null;}catch{return null;}
  if(!['event','claim'].includes(raw.classification))return null;
  subject.classification=raw.classification;
+ if(raw.rewardKind==='discovery')subject.rewardKind='discovery';
  subject.aliases=Array.isArray(raw.aliases)?raw.aliases.filter(x=>typeof x==='string'&&x.length<=160).slice(0,12):[];
  subject.topics=Array.isArray(raw.topics)?raw.topics.filter(x=>typeof x==='string'&&x.length<=60).slice(0,30):[];
  return {questionId,subject,tier:value.tier};

@@ -1,0 +1,1174 @@
+[
+  {
+    "id": "stanford-prison-experiment",
+    "name": "Stanford Prison Experiment",
+    "aliases": [
+      "Stanford Prison Study",
+      "Zimbardo prison experiment",
+      "Standford prison experiment",
+      "the Stanford prison experiment"
+    ],
+    "classification": "event",
+    "statement": "Philip Zimbardo's team conducted the Stanford Prison Experiment at Stanford University in 1971.",
+    "explanation": "The experiment's occurrence and year are documented in the project archive. The card does not treat the study's debated interpretation as established fact.",
+    "source": "https://historicalsociety.stanford.edu/stanford-prison-experiment-50-years-later-conversation-philip-zimbardo",
+    "publisher": "Stanford Historical Society and Stanford University",
+    "category": "Psychology study",
+    "topics": [
+      "research",
+      "experiments",
+      "psychology",
+      "science",
+      "history"
+    ],
+    "familiarity": 1,
+    "depth": 3
+  },
+  {
+    "id": "milgram-obedience-study",
+    "name": "Milgram obedience study",
+    "aliases": [
+      "Milgram experiment",
+      "Milgram shock experiment",
+      "Stanley Milgram obedience experiment",
+      "Milgram obedience experiment"
+    ],
+    "classification": "event",
+    "statement": "Stanley Milgram published \"Behavioral Study of Obedience\" in 1963, describing a laboratory procedure conducted at Yale.",
+    "explanation": "Milgram's paper describes the study procedure and reported participant responses; this card does not generalize its results to everyone or every setting.",
+    "source": "https://doi.org/10.1037/h0040525",
+    "publisher": "American Psychological Association, Journal of Abnormal and Social Psychology",
+    "category": "Psychology study",
+    "topics": [
+      "research",
+      "experiments",
+      "psychology",
+      "science",
+      "history"
+    ],
+    "familiarity": 1,
+    "depth": 3
+  },
+  {
+    "id": "asch-conformity-study",
+    "name": "Asch conformity study",
+    "aliases": [
+      "Asch conformity experiment",
+      "Solomon Asch line experiment",
+      "Asch line study"
+    ],
+    "classification": "event",
+    "statement": "Solomon Asch published \"Opinions and Social Pressure,\" describing conformity experiments, in Scientific American in 1955.",
+    "explanation": "Asch's article is a primary account of the experiments. It does not establish that people always conform.",
+    "source": "https://www.scientificamerican.com/article/opinions-and-social-pressure/",
+    "publisher": "Scientific American",
+    "category": "Psychology study",
+    "topics": [
+      "research",
+      "experiments",
+      "psychology",
+      "science",
+      "history"
+    ],
+    "familiarity": 1,
+    "depth": 3
+  },
+  {
+    "id": "robbers-cave-experiment",
+    "name": "Robbers Cave experiment",
+    "aliases": [
+      "Robbers Cave study",
+      "Sherif Robbers Cave study"
+    ],
+    "classification": "event",
+    "statement": "The Sherifs' Intergroup Relations Study was conducted at Robbers Cave State Park in Oklahoma in 1954.",
+    "explanation": "The University of Akron archival finding aid identifies the study in the Sherif papers. This card records the research project, not a universal rule about groups.",
+    "source": "https://search.alexanderstreet.com/preview/work/bibliographic_entity%7Cbibliographic_details%7C2746348",
+    "publisher": "University of Akron Cummings Center for the History of Psychology",
+    "category": "Psychology study",
+    "topics": [
+      "research",
+      "experiments",
+      "psychology",
+      "science",
+      "history"
+    ],
+    "familiarity": 2,
+    "depth": 4
+  },
+  {
+    "id": "bobo-doll-study",
+    "name": "Bobo doll study",
+    "aliases": [
+      "Bobo doll experiment",
+      "Bandura Bobo doll experiment",
+      "Bandura aggression study"
+    ],
+    "classification": "event",
+    "statement": "Albert Bandura, Dorothea Ross, and Sheila Ross published a 1961 study of children's imitation of aggressive models.",
+    "explanation": "The authors' paper reports a laboratory study of children exposed to adult models; the card avoids treating the result as a complete explanation of aggression.",
+    "source": "https://doi.org/10.1037/h0045925",
+    "publisher": "American Psychological Association, Journal of Abnormal and Social Psychology",
+    "category": "Psychology study",
+    "topics": [
+      "research",
+      "experiments",
+      "psychology",
+      "science",
+      "history"
+    ],
+    "familiarity": 1,
+    "depth": 3
+  },
+  {
+    "id": "harlow-contact-comfort-study",
+    "name": "Harlow contact-comfort study",
+    "aliases": [
+      "Harlow rhesus monkey study",
+      "Harlow cloth mother experiment",
+      "Nature of Love experiment"
+    ],
+    "classification": "event",
+    "statement": "Harry Harlow's 1958 paper reported experiments in which infant rhesus monkeys were offered cloth and wire surrogate mothers.",
+    "explanation": "The original paper documents the animal study. It does not establish that findings in rhesus monkeys transfer directly to human relationships.",
+    "source": "https://psychclassics.yorku.ca/Harlow/love.htm",
+    "publisher": "York University, Classics in the History of Psychology",
+    "category": "Psychology study",
+    "topics": [
+      "research",
+      "experiments",
+      "psychology",
+      "science",
+      "history"
+    ],
+    "familiarity": 2,
+    "depth": 4
+  },
+  {
+    "id": "stroop-effect-study",
+    "name": "Stroop study",
+    "aliases": [
+      "Stroop test",
+      "Stroop effect experiment",
+      "Ridley Stroop color-word study"
+    ],
+    "classification": "event",
+    "statement": "J. Ridley Stroop published \"Studies of Interference in Serial Verbal Reactions\" in 1935.",
+    "explanation": "Stroop's paper documents the experiments that gave the color-word task its name; the card does not turn a laboratory task into a diagnosis.",
+    "source": "https://psychclassics.yorku.ca/Stroop/",
+    "publisher": "York University, Classics in the History of Psychology",
+    "category": "Psychology study",
+    "topics": [
+      "research",
+      "experiments",
+      "psychology",
+      "science",
+      "history"
+    ],
+    "familiarity": 1,
+    "depth": 3
+  },
+  {
+    "id": "marshmallow-delay-study",
+    "name": "Mischel delay-of-gratification study",
+    "aliases": [
+      "Marshmallow test",
+      "Stanford marshmallow experiment",
+      "Walter Mischel marshmallow study"
+    ],
+    "classification": "event",
+    "statement": "Walter Mischel, Ebbe Ebbesen, and Antonette Zeiss published a study of cognitive and attentional mechanisms in delay of gratification in 1972.",
+    "explanation": "The cited study documents a specific preschool waiting task and its experimental conditions; popular claims about predicting a child's future should not be inferred from this record.",
+    "source": "https://doi.org/10.1037/h0032198",
+    "publisher": "American Psychological Association, Journal of Personality and Social Psychology",
+    "category": "Psychology study",
+    "topics": [
+      "research",
+      "experiments",
+      "psychology",
+      "science",
+      "history"
+    ],
+    "familiarity": 1,
+    "depth": 3
+  },
+  {
+    "id": "invisible-gorilla-study",
+    "name": "Invisible Gorilla study",
+    "aliases": [
+      "Invisible Gorilla experiment",
+      "inattentional blindness gorilla study",
+      "Simons and Chabris gorilla experiment"
+    ],
+    "classification": "event",
+    "statement": "Daniel Simons and Christopher Chabris published a 1999 paper on inattentional blindness for dynamic events.",
+    "explanation": "Their paper describes a visual attention study. Whether a person notices the unexpected object depends on task and display conditions.",
+    "source": "https://www.chabris.com/Simons1999.pdf",
+    "publisher": "Daniel Simons and Christopher Chabris, Perception",
+    "category": "Psychology study",
+    "topics": [
+      "research",
+      "experiments",
+      "psychology",
+      "science",
+      "history"
+    ],
+    "familiarity": 1,
+    "depth": 3
+  },
+  {
+    "id": "loftus-palmer-car-crash-study",
+    "name": "Loftus and Palmer car-crash study",
+    "aliases": [
+      "Loftus Palmer experiment",
+      "misinformation effect car crash study",
+      "car crash memory experiment"
+    ],
+    "classification": "event",
+    "statement": "Elizabeth Loftus and John Palmer published \"Reconstruction of Automobile Destruction\" in 1974.",
+    "explanation": "The paper investigated how wording of questions relates to participants' reports after viewing traffic accidents; it does not show that every memory is false.",
+    "source": "https://doi.org/10.1016/S0022-5371(74)80011-3",
+    "publisher": "Elsevier, Journal of Verbal Learning and Verbal Behavior",
+    "category": "Psychology study",
+    "topics": [
+      "research",
+      "experiments",
+      "psychology",
+      "science",
+      "history"
+    ],
+    "familiarity": 2,
+    "depth": 4
+  },
+  {
+    "id": "little-albert-study",
+    "name": "Little Albert study",
+    "aliases": [
+      "Little Albert experiment",
+      "Watson and Rayner conditioning study",
+      "Albert B. experiment"
+    ],
+    "classification": "event",
+    "statement": "John B. Watson and Rosalie Rayner published a 1920 paper describing conditioned emotional responses in an infant they called Albert B.",
+    "explanation": "This card records the historical paper and its stated subject. Later claims about the infant's identity and the study's results are not treated as settled here.",
+    "source": "https://psychclassics.yorku.ca/Watson/emotion.htm",
+    "publisher": "York University, Classics in the History of Psychology",
+    "category": "Psychology study",
+    "topics": [
+      "research",
+      "experiments",
+      "psychology",
+      "science",
+      "history"
+    ],
+    "familiarity": 2,
+    "depth": 4
+  },
+  {
+    "id": "drm-false-memory-study",
+    "name": "Deese-Roediger-McDermott false-memory study",
+    "aliases": [
+      "DRM paradigm",
+      "Roediger McDermott false memory experiment",
+      "false memory word-list study"
+    ],
+    "classification": "event",
+    "statement": "Henry Roediger and Kathleen McDermott published \"Creating False Memories: Remembering Words Not Presented in Lists\" in 1995.",
+    "explanation": "The article documents a word-list memory procedure and its results; the record does not imply that memory is generally unreliable in every situation.",
+    "source": "https://doi.org/10.1037/0278-7393.21.4.803",
+    "publisher": "American Psychological Association, Journal of Experimental Psychology: Learning, Memory, and Cognition",
+    "category": "Psychology study",
+    "topics": [
+      "research",
+      "experiments",
+      "psychology",
+      "science",
+      "history"
+    ],
+    "familiarity": 2,
+    "depth": 4
+  },
+  {
+    "id": "stanford-marshmallow-followup",
+    "name": "Delay-of-gratification replication study",
+    "aliases": [
+      "marshmallow test replication",
+      "marshmallow study replication",
+      "Watts Duncan Quan 2018 delay gratification"
+    ],
+    "classification": "event",
+    "statement": "A 2018 study by Tyler Watts, Greg Duncan, and Ha Yeon Quan reanalyzed and replicated preschool delay-of-gratification work with a larger, more diverse sample.",
+    "explanation": "The authors report that associations with later outcomes were smaller after accounting for family background and early abilities. This card captures the existence and scope of that follow-up, not a final verdict on all delay research.",
+    "source": "https://doi.org/10.1177/0956797618761661",
+    "publisher": "SAGE, Psychological Science",
+    "category": "Psychology study",
+    "topics": [
+      "research",
+      "experiments",
+      "psychology",
+      "science",
+      "history"
+    ],
+    "familiarity": 3,
+    "depth": 5
+  },
+  {
+    "id": "harriet-tubman",
+    "name": "Harriet Tubman",
+    "aliases": [
+      "Araminta Ross",
+      "Moses of her people",
+      "Harriet Ross Tubman"
+    ],
+    "classification": "event",
+    "statement": "Harriet Tubman escaped slavery in 1849 and later made repeated trips to Maryland to help others reach freedom.",
+    "explanation": "The National Park Service documents Tubman's escape and Underground Railroad work. The statement avoids assigning a disputed total to those she helped.",
+    "source": "https://www.nps.gov/people/harriet-tubman.htm",
+    "publisher": "US National Park Service",
+    "category": "Historical person",
+    "topics": [
+      "leaders",
+      "people",
+      "history",
+      "government"
+    ],
+    "familiarity": 0,
+    "depth": 2
+  },
+  {
+    "id": "rosa-parks-arrest",
+    "name": "Rosa Parks and the Montgomery bus boycott",
+    "aliases": [
+      "Rosa Parks",
+      "Montgomery bus arrest",
+      "Rosa Parks arrest"
+    ],
+    "classification": "event",
+    "statement": "Rosa Parks was arrested in Montgomery on December 1, 1955, after refusing to give up her bus seat to a white passenger.",
+    "explanation": "The Library of Congress preserves Parks's arrest and court records. Her action helped prompt the Montgomery Bus Boycott.",
+    "source": "https://www.loc.gov/exhibitions/rosa-parks-in-her-own-words/about-this-exhibition/the-bus-boycott/rosa-parks-arrest/",
+    "publisher": "Library of Congress",
+    "category": "Civil rights event",
+    "topics": [
+      "history",
+      "events",
+      "government",
+      "social-change",
+      "people"
+    ],
+    "familiarity": 0,
+    "depth": 2
+  },
+  {
+    "id": "alan-shepard-first-american-space",
+    "name": "Alan Shepard's first spaceflight",
+    "aliases": [
+      "Alan Shepard",
+      "Freedom 7",
+      "first American in space"
+    ],
+    "classification": "event",
+    "statement": "Alan Shepard became the first American in space on May 5, 1961, during a suborbital Mercury flight.",
+    "explanation": "NASA records that Shepard's Freedom 7 flight reached space but did not orbit Earth.",
+    "source": "https://www.nasa.gov/history/may-5-1961-alan-shepard-becomes-the-first-american-in-space/",
+    "publisher": "NASA",
+    "category": "Spaceflight milestone",
+    "topics": [
+      "history",
+      "events",
+      "science",
+      "technology",
+      "exploration",
+      "missions",
+      "spacecraft",
+      "scientific-milestones"
+    ],
+    "familiarity": 1,
+    "depth": 2
+  },
+  {
+    "id": "marie-curie-chemistry-nobel",
+    "name": "Marie Curie's 1911 Nobel Prize",
+    "aliases": [
+      "Maria Sklodowska Curie"
+    ],
+    "classification": "event",
+    "statement": "Marie Curie received the 1911 Nobel Prize in Chemistry for her work on radium and polonium.",
+    "explanation": "The Nobel Foundation's biographical account documents the award and Curie's research.",
+    "source": "https://www.nobelprize.org/prizes/chemistry/1911/marie-curie/biographical/",
+    "publisher": "Nobel Prize Outreach",
+    "category": "Scientist",
+    "topics": [
+      "people",
+      "science",
+      "history",
+      "research",
+      "scientific-milestones"
+    ],
+    "familiarity": 0,
+    "depth": 2
+  },
+  {
+    "id": "einstein-photoelectric-nobel",
+    "name": "Einstein and the photoelectric effect",
+    "aliases": [
+      "Albert Einstein",
+      "Einstein Nobel Prize",
+      "photoelectric effect"
+    ],
+    "classification": "event",
+    "statement": "In 1922, Albert Einstein was awarded the 1921 Nobel Prize in Physics for his services to theoretical physics, especially his discovery of the law of the photoelectric effect.",
+    "explanation": "The Nobel Prize was awarded in 1922 for the 1921 prize year. The cited motivation did not name relativity.",
+    "source": "https://www.nobelprize.org/prizes/physics/the-nobel-prize-in-physics-1901-2000/",
+    "publisher": "Nobel Prize Outreach",
+    "category": "Scientific milestone",
+    "topics": [
+      "people",
+      "science",
+      "history",
+      "research",
+      "scientific-milestones"
+    ],
+    "familiarity": 0,
+    "depth": 3
+  },
+  {
+    "id": "alaska-purchase",
+    "name": "Alaska Purchase",
+    "aliases": [
+      "Alaska purchase 1867",
+      "Seward's Folly",
+      "Seward purchase"
+    ],
+    "classification": "event",
+    "statement": "The United States agreed to purchase Alaska from Russia in 1867, and the territory was formally transferred on October 18 that year.",
+    "explanation": "The US Department of State's historical account records the treaty and transfer.",
+    "source": "https://history.state.gov/milestones/1866-1898/alaska-purchase",
+    "publisher": "US Department of State, Office of the Historian",
+    "category": "Historical agreement",
+    "topics": [
+      "history",
+      "events",
+      "government",
+      "international"
+    ],
+    "familiarity": 1,
+    "depth": 3
+  },
+  {
+    "id": "brown-v-board",
+    "name": "Brown v. Board of Education",
+    "aliases": [
+      "Brown v. Board",
+      "Brown decision"
+    ],
+    "classification": "event",
+    "statement": "On May 17, 1954, the US Supreme Court ruled in Brown v. Board of Education that racial segregation in public schools was unconstitutional.",
+    "explanation": "The National Archives preserves the unanimous Supreme Court opinion.",
+    "source": "https://www.archives.gov/milestone-documents/brown-v-board-of-education",
+    "publisher": "US National Archives and Records Administration",
+    "category": "Legal and civil rights milestone",
+    "topics": [
+      "history",
+      "events",
+      "government",
+      "social-change"
+    ],
+    "familiarity": 0,
+    "depth": 2
+  },
+  {
+    "id": "first-telegraph-message",
+    "name": "Morse's first telegraph message",
+    "aliases": [
+      "What hath God wrought",
+      "Samuel Morse telegraph",
+      "first telegraph message"
+    ],
+    "classification": "event",
+    "statement": "Samuel Morse sent the message \"What hath God wrought?\" from Washington, DC, to Baltimore on May 24, 1844.",
+    "explanation": "The Library of Congress collection includes the recorded telegraph message and Morse papers.",
+    "source": "https://www.loc.gov/collections/samuel-morse-papers/articles-and-essays/collection-highlights/invention-of-the-telegraph/",
+    "publisher": "Library of Congress",
+    "category": "Invention",
+    "topics": [
+      "technology",
+      "science",
+      "history",
+      "communications"
+    ],
+    "familiarity": 1,
+    "depth": 3
+  },
+  {
+    "id": "eniac",
+    "name": "ENIAC",
+    "aliases": [
+      "Electronic Numerical Integrator and Computer",
+      "ENIAC computer",
+      "the ENIAC"
+    ],
+    "classification": "event",
+    "statement": "ENIAC was unveiled at the University of Pennsylvania on February 14, 1946.",
+    "explanation": "The Computer History Museum records that John Mauchly and J. Presper Eckert unveiled ENIAC at the University of Pennsylvania on February 14, 1946.",
+    "source": "https://www.computerhistory.org/tdih/February/14/",
+    "publisher": "Computer History Museum",
+    "category": "Invention",
+    "topics": [
+      "technology",
+      "science",
+      "history",
+      "computers",
+      "scientific-milestones"
+    ],
+    "familiarity": 1,
+    "depth": 3
+  },
+  {
+    "id": "space-shuttle-columbia-sts1",
+    "name": "Space Shuttle Columbia STS-1",
+    "aliases": [
+      "STS-1",
+      "Space Shuttle Columbia first flight",
+      "first Space Shuttle mission"
+    ],
+    "classification": "event",
+    "statement": "Space Shuttle Columbia launched on NASA's first Space Shuttle mission, STS-1, on April 12, 1981.",
+    "explanation": "NASA identifies STS-1 as its first Space Shuttle mission; Columbia returned to Earth on April 14.",
+    "source": "https://www.nasa.gov/mission/sts-1/",
+    "publisher": "NASA",
+    "category": "Spaceflight milestone",
+    "topics": [
+      "technology",
+      "science",
+      "history",
+      "events",
+      "exploration",
+      "missions",
+      "spacecraft"
+    ],
+    "familiarity": 1,
+    "depth": 3
+  },
+  {
+    "id": "telephone-patent",
+    "name": "Bell's telephone patent",
+    "aliases": [
+      "Alexander Graham Bell telephone",
+      "Bell telephone patent",
+      "telephone invention"
+    ],
+    "classification": "event",
+    "statement": "Alexander Graham Bell received a fundamental US patent for the telephone in 1876.",
+    "explanation": "The Smithsonian's National Museum of American History records the patent and Bell's work on acoustics and speech.",
+    "source": "https://amhistory.si.edu/documentsgallery/exhibitions/hear-my-voice/3.html",
+    "publisher": "Smithsonian National Museum of American History",
+    "category": "Invention",
+    "topics": [
+      "technology",
+      "science",
+      "history",
+      "communications"
+    ],
+    "familiarity": 0,
+    "depth": 3
+  },
+  {
+    "id": "world-wide-web",
+    "name": "World Wide Web",
+    "aliases": [
+      "WWW",
+      "Tim Berners-Lee web invention"
+    ],
+    "classification": "event",
+    "statement": "Tim Berners-Lee invented the World Wide Web while working at CERN in 1989.",
+    "explanation": "CERN distinguishes the Web from the Internet and notes that it later released Web software into the public domain in 1993.",
+    "source": "https://worldwideweb.cern.ch/history/",
+    "publisher": "CERN",
+    "category": "Invention",
+    "topics": [
+      "technology",
+      "science",
+      "history",
+      "computers",
+      "communications",
+      "scientific-milestones"
+    ],
+    "familiarity": 0,
+    "depth": 3
+  },
+  {
+    "id": "point-contact-transistor",
+    "name": "Point-contact transistor",
+    "aliases": [
+      "first transistor",
+      "Bardeen and Brattain transistor",
+      "transistor invention"
+    ],
+    "classification": "event",
+    "statement": "John Bardeen and Walter Brattain achieved transistor action with a germanium point-contact device in December 1947.",
+    "explanation": "The Computer History Museum cites Bell Labs records and the researchers' 1948 Physical Review paper.",
+    "source": "https://www.computerhistory.org/siliconengine/invention-of-the-point-contact-transistor/",
+    "publisher": "Computer History Museum",
+    "category": "Invention",
+    "topics": [
+      "technology",
+      "science",
+      "history",
+      "electronics",
+      "scientific-milestones"
+    ],
+    "familiarity": 1,
+    "depth": 4
+  },
+  {
+    "id": "edison-incandescent-lamp",
+    "name": "Edison's practical incandescent lamp",
+    "aliases": [
+      "Thomas Edison light bulb",
+      "Edison light bulb",
+      "incandescent lamp"
+    ],
+    "classification": "event",
+    "statement": "Thomas Edison developed an incandescent lamp practical for widespread use in 1879.",
+    "explanation": "The Library of Congress notes that incandescent lighting had multiple earlier contributors and describes Edison's practical improvement.",
+    "source": "https://www.loc.gov/classroom-materials/inventions-and-innovations/",
+    "publisher": "Library of Congress",
+    "category": "Invention",
+    "topics": [
+      "technology",
+      "science",
+      "history",
+      "electricity"
+    ],
+    "familiarity": 0,
+    "depth": 3
+  },
+  {
+    "id": "penicillin-discovery",
+    "name": "Penicillin discovery",
+    "aliases": [
+      "Alexander Fleming penicillin",
+      "Fleming penicillin discovery",
+      "penicillin"
+    ],
+    "classification": "event",
+    "statement": "Alexander Fleming observed in 1928 that bacteria near a contaminating Penicillium mould had been killed.",
+    "explanation": "The Nobel Foundation describes Fleming's observation and the subsequent development of penicillin, a shared achievement that also involved Ernst Chain and Howard Florey.",
+    "source": "https://www.nobelprize.org/prizes/medicine/1945/fleming/questions-and-answers/",
+    "publisher": "Nobel Prize Outreach",
+    "category": "Scientific discovery",
+    "topics": [
+      "science",
+      "history",
+      "medicine",
+      "research",
+      "scientific-milestones"
+    ],
+    "familiarity": 0,
+    "depth": 3
+  },
+  {
+    "id": "gutenberg-printing-press",
+    "name": "Gutenberg printing press",
+    "aliases": [
+      "Johannes Gutenberg press",
+      "Gutenberg press",
+      "printing press"
+    ],
+    "classification": "event",
+    "statement": "Johannes Gutenberg is widely credited with developing one of Europe's early movable-type printing presses.",
+    "explanation": "The Library of Congress generally credits Gutenberg with developing the Western European mechanical printing press and movable metal type; details of the invention are uncertain.",
+    "source": "https://wwws.loc.gov/exhibits/bibles/the-gutenberg-bible.html",
+    "publisher": "Library of Congress",
+    "category": "Invention",
+    "topics": [
+      "technology",
+      "science",
+      "history",
+      "communications"
+    ],
+    "familiarity": 1,
+    "depth": 4
+  },
+  {
+    "id": "yellowstone-national-park",
+    "name": "Yellowstone National Park established",
+    "aliases": [
+      "Yellowstone first national park",
+      "Yellowstone established 1872"
+    ],
+    "classification": "event",
+    "statement": "The United States established Yellowstone National Park on March 1, 1872.",
+    "explanation": "The National Park Service identifies Yellowstone as the world's first national park and preserves the act establishing it.",
+    "source": "https://www.nps.gov/yell/learn/historyculture/yellowstoneestablishment.htm",
+    "publisher": "US National Park Service",
+    "category": "Historical milestone",
+    "topics": [
+      "history",
+      "events",
+      "government",
+      "environment",
+      "science"
+    ],
+    "familiarity": 0,
+    "depth": 3
+  },
+  {
+    "id": "universal-declaration-human-rights",
+    "name": "Universal Declaration of Human Rights",
+    "aliases": [
+      "UDHR",
+      "Universal Declaration",
+      "human rights declaration"
+    ],
+    "classification": "event",
+    "statement": "The UN General Assembly proclaimed the Universal Declaration of Human Rights on December 10, 1948.",
+    "explanation": "The United Nations records the date and General Assembly resolution 217 A (III).",
+    "source": "https://www.un.org/en/about-us/universal-declaration-of-human-rights/",
+    "publisher": "United Nations",
+    "category": "Historical document",
+    "topics": [
+      "history",
+      "events",
+      "government",
+      "international",
+      "social-change",
+      "documents"
+    ],
+    "familiarity": 0,
+    "depth": 3
+  },
+  {
+    "id": "dna-double-helix",
+    "name": "DNA double-helix structure",
+    "aliases": [
+      "DNA double helix",
+      "Watson and Crick DNA structure",
+      "DNA structure discovery"
+    ],
+    "classification": "event",
+    "statement": "James Watson and Francis Crick published a paper proposing a double-helix model of DNA in 1953.",
+    "explanation": "The Nobel Foundation records the 1953 paper and the 1962 prize awarded to Crick, Watson, and Maurice Wilkins; earlier work by Rosalind Franklin was part of the scientific context.",
+    "source": "https://www.nobelprize.org/prizes/medicine/1962/perspectives/",
+    "publisher": "Nobel Prize Outreach",
+    "category": "Scientific discovery",
+    "topics": [
+      "science",
+      "history",
+      "research",
+      "biology",
+      "scientific-milestones"
+    ],
+    "familiarity": 0,
+    "depth": 4
+  },
+  {
+    "id": "x-rays-discovery",
+    "name": "Discovery of X-rays",
+    "aliases": [
+      "X rays",
+      "Rontgen rays",
+      "Wilhelm Rontgen X-rays"
+    ],
+    "classification": "event",
+    "statement": "Wilhelm Conrad Rontgen discovered X-rays in 1895 and received the first Nobel Prize in Physics in 1901.",
+    "explanation": "The Nobel Prize history describes the discovery and award.",
+    "source": "https://www.nobelprize.org/prizes/themes/the-nobel-prize-in-physics-1901-2000/",
+    "publisher": "Nobel Prize Outreach",
+    "category": "Scientific discovery",
+    "topics": [
+      "science",
+      "history",
+      "research",
+      "medicine",
+      "scientific-milestones"
+    ],
+    "familiarity": 1,
+    "depth": 4
+  },
+  {
+    "id": "yuri-gagarin-first-orbit",
+    "name": "Yuri Gagarin's first orbital flight",
+    "aliases": [
+      "Yuri Gagarin",
+      "Vostok 1",
+      "first human in space"
+    ],
+    "classification": "event",
+    "statement": "Yuri Gagarin became the first human to orbit Earth on April 12, 1961.",
+    "explanation": "NASA records that Gagarin's Vostok flight lasted 108 minutes.",
+    "source": "https://science.nasa.gov/resource/yuri-gagarin-first-human-in-space/",
+    "publisher": "NASA",
+    "category": "Spaceflight milestone",
+    "topics": [
+      "history",
+      "events",
+      "science",
+      "technology",
+      "exploration",
+      "missions",
+      "spacecraft",
+      "scientific-milestones"
+    ],
+    "familiarity": 0,
+    "depth": 2
+  },
+  {
+    "id": "john-glenn-friendship-7",
+    "name": "John Glenn's Friendship 7 flight",
+    "aliases": [
+      "John Glenn",
+      "Friendship 7",
+      "first American orbital flight"
+    ],
+    "classification": "event",
+    "statement": "John Glenn became the first American to orbit Earth on February 20, 1962, aboard Friendship 7.",
+    "explanation": "NASA records the Mercury-Atlas 6 mission and its three Earth orbits.",
+    "source": "https://www.nasa.gov/history/60-years-ago-john-glenn-the-first-american-to-orbit-the-earth-aboard-friendship-7/",
+    "publisher": "NASA",
+    "category": "Spaceflight milestone",
+    "topics": [
+      "history",
+      "events",
+      "science",
+      "technology",
+      "exploration",
+      "missions",
+      "spacecraft",
+      "scientific-milestones"
+    ],
+    "familiarity": 0,
+    "depth": 3
+  },
+  {
+    "id": "valentina-tereshkova-vostok-6",
+    "name": "Valentina Tereshkova's Vostok 6 flight",
+    "aliases": [
+      "Valentina Tereshkova",
+      "Vostok 6",
+      "first woman in space"
+    ],
+    "classification": "event",
+    "statement": "Valentina Tereshkova became the first woman in space when Vostok 6 launched on June 16, 1963.",
+    "explanation": "NASA's historical resource records her 48 orbits of Earth during the mission.",
+    "source": "https://starchild.gsfc.nasa.gov/docs/StarChild/whos_who_level2/tereshkova.html",
+    "publisher": "NASA Goddard Space Flight Center",
+    "category": "Spaceflight milestone",
+    "topics": [
+      "history",
+      "events",
+      "science",
+      "technology",
+      "exploration",
+      "people",
+      "missions",
+      "spacecraft",
+      "scientific-milestones"
+    ],
+    "familiarity": 1,
+    "depth": 4
+  },
+  {
+    "id": "treaty-of-versailles-signing",
+    "name": "Treaty of Versailles signing",
+    "aliases": [
+      "Treaty of Versailles",
+      "Versailles peace treaty"
+    ],
+    "classification": "event",
+    "statement": "Germany signed the Treaty of Peace at Versailles on June 28, 1919.",
+    "explanation": "The US Department of State's published diplomatic record notes the signing ceremony at the Palace of Versailles.",
+    "source": "https://history.state.gov/historicaldocuments/frus1919Parisv11/d272",
+    "publisher": "US Department of State, Office of the Historian",
+    "category": "Historical agreement",
+    "topics": [
+      "history",
+      "events",
+      "government",
+      "international"
+    ],
+    "familiarity": 1,
+    "depth": 3
+  },
+  {
+    "id": "united-nations-founded",
+    "name": "United Nations founded",
+    "aliases": [
+      "United Nations",
+      "UN Charter",
+      "UN founded 1945"
+    ],
+    "classification": "event",
+    "statement": "The United Nations officially came into existence on October 24, 1945, after the UN Charter was ratified by the required states.",
+    "explanation": "The UN distinguishes the Charter's signing in June from its entry into force in October.",
+    "source": "https://www.un.org/en/about-us/history-of-the-un",
+    "publisher": "United Nations",
+    "category": "Historical milestone",
+    "topics": [
+      "history",
+      "events",
+      "government",
+      "international"
+    ],
+    "familiarity": 0,
+    "depth": 3
+  },
+  {
+    "id": "goddard-liquid-rocket",
+    "name": "Goddard's liquid-fueled rocket",
+    "aliases": [
+      "Robert Goddard rocket",
+      "first liquid-fueled rocket",
+      "Goddard rocket"
+    ],
+    "classification": "event",
+    "statement": "Robert Goddard launched the first liquid-fueled rocket on March 16, 1926, in Auburn, Massachusetts.",
+    "explanation": "NASA records the brief flight as a milestone in rocketry; the rocket rose 41 feet and landed 184 feet away.",
+    "source": "https://www.nasa.gov/history/95-years-ago-goddards-first-liquid-fueled-rocket/",
+    "publisher": "NASA",
+    "category": "Invention",
+    "topics": [
+      "technology",
+      "science",
+      "history",
+      "exploration",
+      "scientific-milestones"
+    ],
+    "familiarity": 1,
+    "depth": 4
+  },
+  {
+    "id": "first-transatlantic-telegraph-cable",
+    "name": "First transatlantic telegraph cable",
+    "aliases": [
+      "Atlantic telegraph cable",
+      "transatlantic cable 1858",
+      "Atlantic cable"
+    ],
+    "classification": "event",
+    "statement": "The first official message sent over the transatlantic telegraph cable was transmitted on August 16, 1858.",
+    "explanation": "The Library of Congress records the message and the people who built the cable; the early cable's service was short-lived.",
+    "source": "https://guides.loc.gov/this-month-in-business-history/august/first-transatlantic-telegraph-cable",
+    "publisher": "Library of Congress",
+    "category": "Invention",
+    "topics": [
+      "technology",
+      "science",
+      "history",
+      "communications",
+      "scientific-milestones"
+    ],
+    "familiarity": 2,
+    "depth": 5
+  },
+  {
+    "id": "margaret-thatcher",
+    "name": "Margaret Thatcher",
+    "aliases": [
+      "Baroness Thatcher",
+      "Margaret Thatcher prime minister",
+      "first female British Prime Minister"
+    ],
+    "classification": "event",
+    "statement": "Margaret Thatcher became UK prime minister in 1979 and served until 1990.",
+    "explanation": "The UK government records her election and dates in office. This card is a basic biographical fact, not an endorsement of her policies.",
+    "source": "https://www.gov.uk/government/history/past-prime-ministers/margaret-thatcher",
+    "publisher": "UK Government",
+    "category": "Political leader",
+    "topics": [
+      "leaders",
+      "people",
+      "government",
+      "history"
+    ],
+    "familiarity": 1,
+    "depth": 2
+  },
+  {
+    "id": "barack-obama",
+    "name": "Barack Obama",
+    "aliases": [
+      "Barack Hussein Obama II",
+      "President Obama",
+      "44th U.S. President",
+      "Obama"
+    ],
+    "classification": "event",
+    "statement": "Barack Obama was elected the 44th President of the United States on November 4, 2008.",
+    "explanation": "The archived White House biography records the election date and the start of his presidency in January 2009.",
+    "source": "https://obamawhitehouse.archives.gov/1600/presidents/barackobama/",
+    "publisher": "Obama White House Archives",
+    "category": "Political leader",
+    "topics": [
+      "leaders",
+      "people",
+      "government",
+      "history"
+    ],
+    "familiarity": 0,
+    "depth": 2
+  },
+  {
+    "id": "winston-churchill",
+    "name": "Winston Churchill",
+    "aliases": [
+      "Sir Winston Churchill",
+      "Prime Minister Churchill",
+      "Churchill"
+    ],
+    "classification": "event",
+    "statement": "Winston Churchill became Prime Minister of the United Kingdom on May 10, 1940.",
+    "explanation": "The UK Parliament Hansard record lists Churchill as Prime Minister beginning on May 10, 1940.",
+    "source": "https://api.parliament.uk/historic-hansard/offices/prime-minister",
+    "publisher": "UK Parliament, Historic Hansard",
+    "category": "Political leader",
+    "topics": [
+      "leaders",
+      "people",
+      "government",
+      "history"
+    ],
+    "familiarity": 0,
+    "depth": 2
+  },
+  {
+    "id": "queen-elizabeth-ii",
+    "name": "Queen Elizabeth II",
+    "aliases": [
+      "Elizabeth II",
+      "Queen Elizabeth",
+      "Elizabeth Windsor",
+      "Queen Elizabeth 2",
+      "Elizabeth 2"
+    ],
+    "classification": "event",
+    "statement": "Elizabeth II acceded to the British throne on February 6, 1952.",
+    "explanation": "The Royal Family account records Princess Elizabeth's accession following the death of King George VI.",
+    "source": "https://www.royal.uk/queen-elizabeth-iis-accession-and-coronation",
+    "publisher": "The Royal Family",
+    "category": "Political leader",
+    "topics": [
+      "leaders",
+      "people",
+      "government",
+      "history"
+    ],
+    "familiarity": 0,
+    "depth": 2
+  },
+  {
+    "id": "angela-merkel",
+    "name": "Angela Merkel",
+    "aliases": [
+      "Angela Dorothea Merkel",
+      "Chancellor Merkel",
+      "German Chancellor Angela Merkel",
+      "Merkel"
+    ],
+    "classification": "event",
+    "statement": "Angela Merkel became Germany's first woman Federal Chancellor in 2005.",
+    "explanation": "The German Federal Government marks Merkel's election as the first woman to hold the office of Federal Chancellor.",
+    "source": "https://www.bundesregierung.de/breg-en/service/archive/media-center/08-gender-equality-2005-1570320",
+    "publisher": "German Federal Government",
+    "category": "Political leader",
+    "topics": [
+      "leaders",
+      "people",
+      "government",
+      "history"
+    ],
+    "familiarity": 1,
+    "depth": 3
+  },
+  {
+    "id": "franklin-d-roosevelt",
+    "name": "Franklin D. Roosevelt",
+    "aliases": [
+      "Franklin Delano Roosevelt",
+      "FDR",
+      "President Roosevelt"
+    ],
+    "classification": "event",
+    "statement": "Franklin D. Roosevelt was first inaugurated as President of the United States on March 4, 1933.",
+    "explanation": "The FDR Presidential Library records his first inauguration and the original inauguration date before the 20th Amendment changed it.",
+    "source": "https://www.fdrlibrary.org/fdr-presidency",
+    "publisher": "Franklin D. Roosevelt Presidential Library and Museum",
+    "category": "Political leader",
+    "topics": [
+      "leaders",
+      "people",
+      "government",
+      "history"
+    ],
+    "familiarity": 0,
+    "depth": 3
+  },
+  {
+    "id": "john-f-kennedy",
+    "name": "John F. Kennedy",
+    "aliases": [
+      "John Fitzgerald Kennedy",
+      "President Kennedy"
+    ],
+    "classification": "event",
+    "statement": "John F. Kennedy's inauguration as the 35th President of the United States took place on January 20, 1961.",
+    "explanation": "The JFK Presidential Library archives photographs and records of Kennedy's inauguration on that date.",
+    "source": "https://www.jfklibrary.org/sites/default/files/2020-12/Interpreting%20JFK%27s%20Inaugural%20Address%20LP_0.pdf",
+    "publisher": "John F. Kennedy Presidential Library and Museum",
+    "category": "Political leader",
+    "topics": [
+      "leaders",
+      "people",
+      "government",
+      "history"
+    ],
+    "familiarity": 0,
+    "depth": 3
+  },
+  {
+    "id": "indira-gandhi",
+    "name": "Indira Gandhi",
+    "aliases": [
+      "Indira Priyadarshini Gandhi",
+      "Prime Minister Indira Gandhi"
+    ],
+    "classification": "event",
+    "statement": "Indira Gandhi became Prime Minister of India on January 24, 1966.",
+    "explanation": "The Prime Minister of India's official biographical record lists the start of her first term on January 24, 1966.",
+    "source": "https://www.pmindia.gov.in/en/former_pm/smt-indira-gandhi-2/",
+    "publisher": "Prime Minister of India",
+    "category": "Political leader",
+    "topics": [
+      "leaders",
+      "people",
+      "government",
+      "history"
+    ],
+    "familiarity": 1,
+    "depth": 3
+  },
+  {
+    "id": "charles-de-gaulle",
+    "name": "Charles de Gaulle",
+    "aliases": [
+      "General de Gaulle",
+      "Charles Andre Joseph Marie de Gaulle",
+      "de Gaulle"
+    ],
+    "classification": "event",
+    "statement": "Charles de Gaulle was elected President of the French Republic on December 21, 1958.",
+    "explanation": "The Elysee historical timeline records de Gaulle's election in December 1958 and presidency from 1959.",
+    "source": "https://www.elysee.fr/en/charles-de-gaulle",
+    "publisher": "Elysee Palace",
+    "category": "Political leader",
+    "topics": [
+      "leaders",
+      "people",
+      "government",
+      "history"
+    ],
+    "familiarity": 1,
+    "depth": 3
+  }
+]

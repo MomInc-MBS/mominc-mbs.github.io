@@ -16,6 +16,14 @@ test('malformed online cards, unknown prompts and unsafe links do not restore',(
  for(const value of [{...response,tier:6},{...response,subject:{...subject,source:'javascript:alert(1)'}},{...response,subject:{...subject,classification:'uncertain'}},{...response,subject:{...subject,statement:''}}])assert.equal(cleanJudgment(value,'q'),null);
  assert.deepEqual(cleanSavedJudgments([{questionId:'removed',subject,tier:0},null],new Set(['q'])),[]);
 });
+
+test('fixed discovery credit stays explicit after saving a newly verified answer',()=>{
+ const entry=cleanJudgment({accepted:true,subject:{...subject,rewardKind:'discovery'},tier:1},'q');
+ assert.equal(entry.subject.rewardKind,'discovery');
+ const [restored]=cleanSavedJudgments(JSON.parse(JSON.stringify([entry])),new Set(['q']));
+ assert.equal(restored.subject.rewardKind,'discovery');
+ assert.equal(questionWithJudgments({id:'q',answers:[]},[restored]).answers[0].tier,1);
+});
 test('hosted check sends only the answer and question ID, never score or history',async()=>{
  let options;
  const result=await judgeAnswer('my answer','my question',{fetcher:async(url,input)=>{options=input;return new Response(JSON.stringify(response));}});

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createHandler,validInput,semanticJudge,makeWikiSubject,resolveWiki,decision,knownAliasFit,boundedText,sourceJson} from './handler.mjs';
+import {createHandler,validInput,semanticJudge,makeWikiSubject,resolveWiki,decision,knownAliasFit,boundedText,sourceJson,outsidePoolTier} from './handler.mjs';
 import {consumeBudget} from './budget.mjs';
 import {questions,subjects} from '../../play/misinformation/catalog.js';
 const origin='https://mominc.online';
@@ -34,6 +34,42 @@ test('outside-pool unrelated subject remains rejected by typed decision',async()
  const result=await semanticJudge('Cuban Missile Crisis',{prompt:'Name a serial killer.'},[cuban],env({AI:{run:async()=>({answers:{identity:votes('R0'),fit0:votes('UNRELATED')}})}}),{known:true});
  assert.equal(result.accepted,false);
 });
+test('one exact retrieved title wins identity despite band and film decoys, then passes category fit',async()=>{
+ const question=questions.find(x=>x.id==='programs-06');
+ const candidates=[
+  {id:'wiki-1',name:'Stanford Band',description:'A university marching band',evidence:'A marching band.'},
+  {id:'wiki-2',name:'The Stanford Prison Experiment (film)',description:'A dramatic film',evidence:'A film adaptation.'},
+  {id:'wiki-3',name:'Stanford Prison Experiment',description:'A psychology study',evidence:'An experiment conducted at Stanford.'}
+ ];
+ let checked=false;
+ const result=await semanticJudge('Stanford Prison Experiment',question,candidates,env({AI:{run:async(_model,payload)=>{
+  checked=true;
+  assert.equal(payload.questions.identity,undefined);
+  return {answers:{identity:votes('NONE'),fit0:votes('UNRELATED'),fit1:votes('UNRELATED'),fit2:votes('FIT')}};
+ }}}));
+ assert.equal(checked,true);assert.equal(result.accepted,true);assert.equal(result.subject.id,'wiki-3');
+});
+test('a unique exact reviewed alias resolves before identity scoring',async()=>{
+ const dday=subjects.find(s=>s.id==='dday');
+ const result=await semanticJudge('Normandy Landings',q,[dday],env({AI:{run:async()=>({answers:{identity:votes('NONE'),fit0:votes('FIT')}})}}),{known:true});
+ assert.equal(result.accepted,true);assert.equal(result.subject.id,'dday');
+});
+test('reviewed familiarity tiers clamp to the shared 0 through 4 scale',()=>{
+ assert.equal(outsidePoolTier({familiarity:-2}),0);
+ assert.equal(outsidePoolTier({familiarity:0}),0);
+ assert.equal(outsidePoolTier({familiarity:3}),3);
+ assert.equal(outsidePoolTier({familiarity:7}),4);
+});
+test('exact title still fails when the documented subject does not fit the question',async()=>{
+ const candidate={id:'wiki-4',name:'Stanford Summer Session',description:'A university academic program',evidence:'A summer academic program.',source:'https://en.wikipedia.org/wiki/Stanford_Summer_Session'};
+ const result=await semanticJudge(candidate.name,questions.find(x=>x.id==='programs-06'),[candidate],env({AI:{run:async()=>({answers:{fit0:votes('UNRELATED')}})}}));
+ assert.equal(result.accepted,false);
+});
+test('nonexact ambiguous identity still abstains',async()=>{
+ const candidates=[{id:'wiki-1',name:'Stanford Band',description:'A band'},{id:'wiki-2',name:'Stanford Prison Experiment (film)',description:'A film'}];
+ const result=await semanticJudge('Stanford thing',q,candidates,env({AI:{run:async()=>({answers:{identity:votes('NONE'),fit0:votes('FIT'),fit1:votes('FIT')}})}}));
+ assert.equal(result.accepted,false);
+});
 test('low confidence and ambiguity abstain rather than accept',async()=>{
  const ambiguous=await semanticJudge('John',q,[cuban],env({AI:{run:async()=>({answers:{identity:votes('R0',.55),fit0:votes('FIT')}})}}));
  assert.equal(ambiguous.accepted,false);
@@ -59,7 +95,8 @@ test('model cannot supply a fabricated factual statement or source',async()=>{
  const candidate={id:'wiki-123',name:'Test event',description:'Historical event with a documented record',evidence:'Evidence',source:'https://en.wikipedia.org/wiki/Test_event'};
  const result=await semanticJudge('Test event',q,[candidate],env({AI:{run:async()=>({answers:{identity:votes('R0'),fit0:votes('FIT')},statement:'Fabricated claim',source:'http://bad.test'})}}));
  assert.equal(result.accepted,true);assert.equal(result.subject.source,candidate.source);
- assert.match(result.subject.statement,/Wikipedia describes Test event/);assert.doesNotMatch(result.subject.statement,/Fabricated/);assert.equal(result.tier,0);
+ assert.match(result.subject.statement,/Wikipedia describes Test event/);assert.doesNotMatch(result.subject.statement,/Fabricated/);assert.equal(result.tier,1);
+ assert.equal(result.subject.rewardKind,'discovery');assert.match(result.subject.explanation,/fixed discovery credit/);assert.match(result.subject.explanation,/rarity score/);
 });
 test('new reference cards quote no more than 25 source-description words',()=>{
  const card=makeWikiSubject({id:'wiki-1',name:'Long description',description:Array.from({length:40},(_,i)=>'word'+i).join(' '),source:'https://en.wikipedia.org/wiki/Long_description'});

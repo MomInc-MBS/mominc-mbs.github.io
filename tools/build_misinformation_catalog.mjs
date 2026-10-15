@@ -3,6 +3,7 @@ import {fileURLToPath} from 'node:url';
 import {resolve, dirname} from 'node:path';
 import {createHash} from 'node:crypto';
 import {topicQuestions, legacyScopes, legacyPrompts} from './misinformation_question_bank.mjs';
+import * as bank from './misinformation_question_bank.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const dataDir = resolve(root, 'docs/misinformation/research-data');
@@ -142,7 +143,7 @@ function tagsFor(subject) {
  return [...tags].sort();
 }
 let candidates = baseline.subjects.map(s=>({...s, familiarity:familiarity[s.id]}));
-for(const name of ['expansion-v2-science.json','expansion-v2-history.json','expansion-v3-world-events.json']) {
+for(const name of ['expansion-v2-science.json','expansion-v2-history.json','expansion-v3-world-events.json','expansion-v5-accessible.json']) {
  const input = await read(name);
  const entries = Array.isArray(input) ? input : input.subjects || input.entries || input.records;
  if(!Array.isArray(entries)) throw Error(`Missing subjects in ${name}`);
@@ -202,36 +203,37 @@ const legacyDiscoveries = {
  'responsibility-in-the-record':'charles-taylor','last-court-file':'kambanda',
  'last-secret-project':'palladium','last-unreal-world':'philadelphia-experiment'
 };
-// At least 55% of each pool scores 10 points; only one editorial discovery
-// earns 100. The remaining tiers follow increasing relative unfamiliarity.
+// Familiarity is an authored 0..4 rubric, independent of pool size or spelling.
+// A missing answer is not evidence of commonness. Only the curated gem earns 100.
 function scoreAnswers(pool, def) {
  let sorted = [...pool].sort((a,b)=>a.familiarity-b.familiarity || a.name.localeCompare(b.name,'en'));
- if(sorted.length < 8)throw Error(`Prompt ${def.id} too narrow: ${sorted.map(s=>s.id)}`);
+ if(sorted.length < 4)throw Error(`Prompt ${def.id} too narrow: ${sorted.map(s=>s.id)}`);
  const choices=(discoveries[def.family] || '').split(' ').filter(Boolean);
  const start=(Number(def.id.match(/-(\d+)$/)?.[1] || 1)-1)%Math.max(1,choices.length);
  const preferences=legacyDiscoveries[def.id]?[legacyDiscoveries[def.id]]:[...choices.slice(start),...choices.slice(0,start)];
  const gem=preferences.map(id=>sorted.find(s=>s.id===id&&s.familiarity>=2)).find(Boolean) || sorted.at(-1);
- sorted=[...sorted.filter(s=>s.id!==gem.id),gem];
- const counts = [Math.ceil(sorted.length * .55),0,0,0,0,1];
- let rest = sorted.length - counts[0] - counts[5];
- for(const [tier,share] of [[4,.04],[3,.07],[2,.12]]) {
-  const count = Math.min(rest,Math.max(1,Math.floor(sorted.length*share)));
-  counts[tier] = count;rest -= count;
- }
- counts[1] = rest;
- let cursor = 0;
- return counts.flatMap((count,tier)=>Array.from({length:count},()=>({id:sorted[cursor++].id,tier})));
+ return sorted.map(s=>({id:s.id,tier:s.id===gem.id?5:Math.max(0,Math.min(4,s.familiarity))}));
 }
 const legacy = baseline.questions.map(q => ({
- id:q.id,band:q.band,family:`legacy-${q.id}`,topic:'Archive transmission',
+ id:q.id,band:bank.legacyBands?.[q.id]??q.band,family:`legacy-${q.id}`,topic:'Archive transmission',
  prompt:legacyPrompts[q.id],topics:legacyScopes[q.id],
- hint:'Think broadly: familiar names are valid too. More unusual answers travel farther. The archive contains the available subjects.',
- legacyAnswers:q.answers.map(a=>a.id)
+ hint:''
 }));
 const questions = [...legacy,...topicQuestions].map(def => {
- const pool = subjects.filter(s=>def.topics.some(tag=>s.topics.includes(tag)) || def.legacyAnswers?.includes(s.id));
+ const theories=/\b(?:theor(?:y|ies)|claims?|conspir(?:acy|acies)|hoax(?:es)?|hidden worlds?|legends?|alleged|predictions?|stor(?:y|ies))\b/i.test(def.prompt);
+ const filters=bank.questionFilters?.[def.id] || {};
+ // Ordinary categories mean ordinary documented subjects. A theory about a
+ // planet does not qualify as a planet merely because both have a space tag.
+ const pool = subjects.filter(s=>(s.classification!=='claim'||theories||filters.onlyClaims)
+  && (!filters.onlyClaims||s.classification==='claim')
+  && def.topics.some(tag=>s.topics.includes(tag))
+  && (filters.allTopics||[]).every(tag=>s.topics.includes(tag))
+  && !(filters.excludeTopics||[]).some(tag=>s.topics.includes(tag))
+  && !(filters.excludeIds||[]).includes(s.id));
  const poolId=createHash('sha1').update(pool.map(s=>s.id).sort().join('|')).digest('hex').slice(0,16);
- return {id:def.id,band:def.band,family:def.family,topic:def.topic,poolId,prompt:def.prompt,hint:def.hint,answers:scoreAnswers(pool,def)};
+ const examples=[...pool].sort((a,b)=>a.familiarity-b.familiarity||a.name.localeCompare(b.name,'en')).slice(0,2).map(s=>s.name);
+ const hint=def.hint || `Try ${examples.join(' or ')}. These are valid examples, not the complete answer list. Other names in the category count too.`;
+ return {id:def.id,band:def.band,family:def.family,topic:def.topic,poolId,prompt:def.prompt,hint,examples,answers:scoreAnswers(pool,def)};
 });
 const byId = new Map(subjects.map(s=>[s.id,s]));
 for(const question of questions) {
@@ -247,7 +249,7 @@ for(const question of questions) {
 }
 if(subjects.length < 141)throw Error(`Need at least 141 distinct subjects; got ${subjects.length}`);
 const memberships = subjects.map(s=>({id:s.id,count:questions.filter(q=>q.answers.some(a=>a.id===s.id)).length}));
-if(memberships.some(s=>s.count<10))throw Error(`Subjects need ten or more broad prompts: ${JSON.stringify(memberships.filter(s=>s.count<10))}`);
+if(memberships.some(s=>s.count<1))throw Error(`Subjects need at least one accurate prompt: ${JSON.stringify(memberships.filter(s=>s.count<1))}`);
 const source = '// Generated by tools/build_misinformation_catalog.mjs from reviewed source records and authored broad prompts.\n'
  + '// Familiarity and score tiers are editorial; they never rank harm or measure player frequencies.\n'
  + `export const subjects = ${JSON.stringify(subjects,null,2)};\n`
