@@ -1,0 +1,26 @@
+/* Paper route, shared by the full scene and the compact sticky chase. */
+.winding-map{margin:0;max-width:100%;color:#292431;overflow:hidden;background:#e8d9b7;border:1px solid #403347;border-radius:11px;box-shadow:0 3px 0 #17132133}
+.winding-map-svg{display:block;width:100%;height:auto;max-height:190px;overflow:visible}
+.winding-paper{fill:#e8d9b7;stroke:#c2ac88;stroke-width:1}
+.winding-track-shadow,.winding-track,.winding-map-progress{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.winding-track-shadow{stroke:#292431;stroke-width:8;opacity:.23;transform:translateY(2px)}
+.winding-track{stroke:#9f9285;stroke-width:4;stroke-dasharray:2 5}
+.winding-map-progress{stroke-width:5;transition:stroke-dashoffset .75s ease-out}
+.winding-stop circle{stroke:#46334e;stroke-width:1.1;fill:#bcae97}
+.winding-grounded circle{fill:#d4b473}.winding-folds circle{fill:#b58caa}.winding-dimensions circle{fill:#85aca5}
+.winding-stop text{text-anchor:middle;font:700 10px ui-monospace,monospace;fill:#292431;pointer-events:none}
+.winding-stop.is-reached circle{stroke:#a94b24;stroke-width:1.8}
+.winding-stop.is-current circle{stroke:#a94b24;stroke-width:3;fill:#f2d793}
+.winding-end-label{font:700 9px ui-monospace,monospace;letter-spacing:.35px;fill:#46334e}
+.winding-map-mom circle{fill:#805b91;stroke:#f0dbb0;stroke-width:2}
+.winding-map-you path{fill:#c65f30;stroke:#292431;stroke-width:1.2;stroke-linejoin:round}
+.winding-map-you text,.winding-map-mom text{text-anchor:middle;font:800 10px ui-monospace,monospace;fill:#292431;paint-order:stroke;stroke:#e8d9b7;stroke-width:3px;stroke-linejoin:round}
+.winding-map-mom text{fill:#654282}
+.winding-map-caption{display:flex;align-items:center;gap:8px;padding:5px 9px 7px;border-top:1px solid #aa967777;font:10px/1.25 ui-monospace,monospace}
+.winding-map-level{white-space:nowrap;color:#654282}.winding-map-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px}.winding-map-percent{white-space:nowrap;font-weight:700}
+[data-phase="dead"]>.winding-map .winding-map-you path{fill:#9c8074}
+[data-phase="escaped"]>.winding-map .winding-map-mom{opacity:.4}
+#mobile-minimap .winding-map{border-radius:8px;box-shadow:none}
+#mobile-minimap .winding-map-caption{padding:3px 7px 5px;gap:6px;font-size:9px}
+#mobile-minimap .winding-map-name{font-size:10px}
+@media(prefers-reduced-motion:reduce){.winding-map-progress{transition:none}}

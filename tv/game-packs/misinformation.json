@@ -19,8 +19,8 @@
     },
     {
       "url": "/play/misinformation/app.js",
-      "revision": "a23c91ffbce8e71fbb55bd766fc65f7f8fbd1d90",
-      "bytes": 22366
+      "revision": "0a74b71c25f745f450295c5f4519432273ffdb32",
+      "bytes": 25427
     },
     {
       "url": "/play/misinformation/assets/journey/01-office.svg",
@@ -153,9 +153,24 @@
       "bytes": 8488
     },
     {
+      "url": "/play/misinformation/feedback.js",
+      "revision": "a514389709bc041d0d31d245d3aed5237785d885",
+      "bytes": 6960
+    },
+    {
+      "url": "/play/misinformation/flight-fx.js",
+      "revision": "8c8ba961b825c45d1a58dedf08714745a6fe83e1",
+      "bytes": 2530
+    },
+    {
+      "url": "/play/misinformation/flight.css",
+      "revision": "3d3d0f996493fa994805c93552fb377ddc4744fc",
+      "bytes": 17949
+    },
+    {
       "url": "/play/misinformation/index.html",
-      "revision": "3bad3e5da62b3ed9678dcbc217b258c2e3c066fe",
-      "bytes": 6144
+      "revision": "404836d7373239dda7a7e1eb7bc7afee695c07c8",
+      "bytes": 7191
     },
     {
       "url": "/play/misinformation/journey.css",
@@ -168,9 +183,24 @@
       "bytes": 2992
     },
     {
+      "url": "/play/misinformation/minimap.css",
+      "revision": "bd963d510981340cad039a55c00cc9bbecc6e00f",
+      "bytes": 2412
+    },
+    {
+      "url": "/play/misinformation/minimap.js",
+      "revision": "935981a24ed4b5503d438c5938278588fa3dbffd",
+      "bytes": 7065
+    },
+    {
+      "url": "/play/misinformation/question-flow.js",
+      "revision": "2659fb93014933050ba83b3ab87443d33961d2cc",
+      "bytes": 1682
+    },
+    {
       "url": "/play/misinformation/scene.js",
-      "revision": "6ba136c014071c83e02dc71052dd0240a22e6cae",
-      "bytes": 6685
+      "revision": "d8e052d5d3b9a3b6770a8441c1a11e31ba595634",
+      "bytes": 6781
     },
     {
       "url": "/play/misinformation/scores.js",
@@ -462,5 +492,5 @@
     "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "1c4841255a29e412d289"
+  "version": "95cd46eff3d1b8bb3764"
 }

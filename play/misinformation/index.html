@@ -4,26 +4,29 @@
  <script src="/tv/game-loader.js?v=1"></script>
  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
  <meta name="theme-color" content="#101b22"><meta name="description" content="Escape MOM Inc. Rare answers fuel your flying saucer. Separate documented events from unsupported claims. Three hits and your run is over.">
- <title>MOM’s Misinformation Machine</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="space.css"><link rel="stylesheet" href="journey.css">
+ <title>MOM’s Misinformation Machine</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="space.css"><link rel="stylesheet" href="journey.css"><link rel="stylesheet" href="minimap.css"><link rel="stylesheet" href="flight.css">
 </head>
 <body>
  <a class="skip-link" href="#terminal">Skip to flight terminal</a>
- <header class="masthead"><a class="wordmark" href="/tv/?ch=mominc" aria-label="MOM Inc. Misinformation Machine home">MOM<span>INC.</span><small>DEPARTMENT OF NARRATIVE CONTROL</small></a><div class="live-label"><i></i> UNAUTHORIZED DEPARTURE</div><button id="archive-toggle" class="text-button">The archive ↗</button></header>
+ <header class="masthead"><a class="wordmark" href="/tv/?ch=mominc" aria-label="MOM Inc. Misinformation Machine home">MOM<span>INC.</span><small>YOUR PUBLIC ACCESS ESCAPE CHANNEL</small></a><div class="live-label"><i></i> MOMVISION / CHANNEL 18</div><div class="broadcast-controls"><button id="sound-toggle" class="text-button" aria-pressed="false">Sound off</button><button id="archive-toggle" class="text-button">The archive ↗</button></div></header>
  <main>
   <section class="intro"><div class="eyebrow">EMPLOYEE ESCAPE PROGRAM / OPEN DEPARTURES</div><h1>Mom is lying.<br><em>You are leaving.</em></h1><p>The truth is stranger than the briefing.<br>Give rare answers. Read the evidence. Get out.</p><div class="edition">MOM’S MISINFORMATION MACHINE <span>SPACE ESCAPE TRIVIA</span></div></section>
   <section class="flight-grid" aria-label="Space escape game">
    <div id="space-scene" class="flight-scene" aria-label="Flying saucer chase and space depth chart">
     <div class="space-art" aria-hidden="true"></div><div class="starfield" aria-hidden="true"></div>
+    <div class="flight-speedlines" aria-hidden="true"></div><div class="flight-colorwash" aria-hidden="true"></div>
     <div class="scene-top"><span id="location-stage">01 / GROUNDED</span><span id="band-code">LEVEL 01 / 20</span></div>
     <div class="location-caption"><small>YOU ARE HERE</small><h2 id="location-title">Office</h2><p>The pyramid on the desk was your first warning.</p></div>
     <ol class="depth-chart" aria-label="Journey depth chart"></ol>
-    <div id="rocket" class="saucer player-saucer"><img src="assets/player-saucer.png" alt="Orange and gold escape saucer with an obscured pilot"><span>YOU</span></div>
-    <div id="pursuer" class="saucer mom-saucer"><img src="assets/mom-pursuer.png" alt="MOM's purple and gold paper saucer chasing you"><span>MOM INC.</span></div>
+    <div id="rocket" class="saucer player-saucer"><i class="ship-trail" aria-hidden="true"></i><img src="assets/player-saucer.png" alt="Orange and gold escape saucer with an obscured pilot"><span>YOU</span></div>
+    <div id="pursuer" class="saucer mom-saucer"><i class="ship-trail" aria-hidden="true"></i><i class="pursuit-lights" aria-hidden="true"></i><img src="assets/mom-pursuer.png" alt="MOM's purple and gold paper saucer chasing you"><span>MOM INC.</span></div>
+    <div class="flight-reaction" aria-live="off"><strong></strong><span></span></div>
+    <div id="journey-minimap" class="journey-minimap"></div>
     <div id="chase-status" class="chase-status">MOM IS ON YOUR TRAIL</div>
     <div class="scene-bottom"><span id="band-name">NEXT STOP: Ceiling Vents</span><b id="scene-distance">0 <small>KM</small></b></div>
    </div>
    <div class="terminal-wrap">
-    <div id="mobile-chase" class="mobile-chase" aria-label="Live saucer chase"><div class="mobile-chase-art" aria-hidden="true"></div><img class="mobile-chase-player" src="assets/player-saucer.png" alt=""><img class="mobile-chase-mom" src="assets/mom-pursuer.png" alt=""><span class="mobile-chase-label"></span></div>
+    <div id="mobile-chase" class="mobile-chase" aria-label="Live saucer chase"><div class="mobile-chase-art" aria-hidden="true"></div><div class="flight-speedlines" aria-hidden="true"></div><div class="flight-colorwash" aria-hidden="true"></div><i class="mobile-player-trail ship-trail" aria-hidden="true"></i><i class="mobile-mom-trail ship-trail" aria-hidden="true"></i><i class="mobile-sirens pursuit-lights" aria-hidden="true"></i><img class="mobile-chase-player" src="assets/player-saucer.png" alt=""><img class="mobile-chase-mom" src="assets/mom-pursuer.png" alt=""><div class="flight-reaction" aria-live="off"><strong></strong><span></span></div><span class="mobile-chase-label"></span><div id="mobile-minimap" class="journey-minimap"></div></div>
     <div class="hud"><div><span>DISTANCE</span><b id="distance">0<small> km</small></b></div><div><span>SIGNAL SCORE</span><b id="score">0</b></div><div><span>HULL</span><b id="hull" aria-label="3 hits remaining">● ● ●</b></div></div>
     <div class="progress-track" role="progressbar" aria-label="Journey to MOM's Mothership Desk" aria-valuemin="0" aria-valuemax="100000" aria-valuenow="0"><div id="progress"></div></div>
     <section id="terminal" class="terminal" tabindex="-1" aria-label="Flight terminal"><div id="screen"></div></section>

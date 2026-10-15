@@ -1,5 +1,7 @@
 # Krillion: shipped-client static findings
 
+Historical thirteen-file snapshot. The [2026-10-15 REA interaction recheck](krillion-interaction-rea-2026-10-15.md) recovered the previously omitted daily controller and resolves this report's earlier unknowns about submit endpoints, retry/correction flow, timeout finalization, the daily pass control and continuation timing. Server matching rules and the private answer bank remain unknown. Preserve the evidence scope below when citing this older report.
+
 Examined 2026-10-14. Scope: 13 JavaScript files under `D:/Research/moms-misinformation-machine/reference/`, provided by the parent research session. Read as text only; no third-party code executed, no bulk question bank copied. Offsets below are zero-based Unicode character offsets after UTF-8 decoding (not byte offsets). File paths are relative to that reference directory.
 
 ## Verified directly in the client

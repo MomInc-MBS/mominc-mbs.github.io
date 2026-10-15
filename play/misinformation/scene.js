@@ -58,8 +58,9 @@ export function renderScene(state) {
  const title=document.querySelector('#location-title');if(title)title.textContent=LEVELS[f.level].name;
  const stage=document.querySelector('#location-stage');if(stage)stage.textContent=f.level<6?'01 / GROUNDED':f.level<10?'02 / REALITY FOLDS':'03 / FULL DIMENSIONS';
  scene.style.setProperty('--space-x',`${f.x}%`);scene.style.setProperty('--space-y',`${f.y}%`);
- document.querySelector('#rocket').style.bottom=`${f.player}%`;
- document.querySelector('#pursuer').style.bottom=`${f.pursuer}%`;
+ // Keep the hero chase inside the illustrated flight lane above the map.
+ document.querySelector('#rocket').style.bottom=`${45+(f.player-40)*.3}%`;
+ document.querySelector('#pursuer').style.bottom=`${45+(f.pursuer-40)*.3}%`;
  document.querySelector('#chase-status').textContent=f.status;
  for(const marker of document.querySelectorAll('[data-stop]')){
   const n=Number(marker.dataset.stop);marker.classList.toggle('active',n===f.level);marker.classList.toggle('reached',n<f.level);

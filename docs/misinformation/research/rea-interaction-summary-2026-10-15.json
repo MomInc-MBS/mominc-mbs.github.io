@@ -1,0 +1,152 @@
+{
+  "evidence_id": "ev_162c498310d9975d4b39991d14db27d67037cc7e3982172ddefedf8fa59a7ce8",
+  "subject": {
+    "name": "js",
+    "digest": {
+      "sha256": "b1dcfd36d837fa70dda8c57dc1288d944e071239e2bf5afeba245db1537c156a"
+    },
+    "local_path": "D:\\Research\\moms-misinformation-machine\\current-2026-10-15\\js",
+    "format": "directory",
+    "architecture": null
+  },
+  "provider": {
+    "id": "rea-javascript-application",
+    "name": "REA JavaScript application analyzer",
+    "version": "1"
+  },
+  "operation": "analyze_javascript_application",
+  "parameters": {
+    "format": "auto",
+    "integrity_policy": "fail",
+    "max_semantic_nodes": 500,
+    "max_semantic_nodes_per_file": 250,
+    "source_paths": [
+      "13amf1x8mc9_f.js",
+      "0dnsev-dwk49n.js"
+    ],
+    "max_heap_mb": 512,
+    "analysis_timeout_ms": 30000
+  },
+  "authority": "shipped-artifact",
+  "limitations": [
+    "Caller-selected source analysis leaves 12 inventoried files outside analysis scope. Inventory identity covers the complete artifact; relationships through unselected sources remain unknown.",
+    "CommonJS and ESM binding relationships were recovered from inert syntax and resolved only within the inventoried artifact container.",
+    "Graph coverage is incomplete; unavailable facts remain explicit and must not be read as absence.",
+    "JavaScript and HTML were parsed as inert text; bundle bootstrap code was never executed.",
+    "Static imports, entrypoints, workers, endpoints, and storage relationships do not prove runtime execution.",
+    "Static paths and relationships may remain unresolved when expressions are dynamic or obfuscated.",
+    "Webpack/Rspack factories were recovered from AST literals; REA did not invoke push handlers or bundle bootstrap code."
+  ],
+  "statistics": {
+    "relevant_files": 14,
+    "nested_asar_containers": 0,
+    "text_bytes_read": 63993,
+    "invalid_utf8_files": 0,
+    "parsed_javascript_files": 2,
+    "visited_ast_nodes": 17147,
+    "findings": 7,
+    "modules": 0,
+    "parse_failures": 0
+  },
+  "source_selection": {
+    "requested_paths": [
+      "13amf1x8mc9_f.js",
+      "0dnsev-dwk49n.js"
+    ],
+    "unselected_files": 12
+  },
+  "root_artifact_sha256": "b1dcfd36d837fa70dda8c57dc1288d944e071239e2bf5afeba245db1537c156a",
+  "semantic_coverage": {
+    "status": "partial",
+    "truncated": true,
+    "omitted_nodes": null,
+    "omitted_relations": null,
+    "limits": [
+      {
+        "name": "semantic_graph_file_node_ceiling",
+        "value": 250,
+        "unit": "items"
+      },
+      {
+        "name": "semantic_graph_node_ceiling",
+        "value": 500,
+        "unit": "items"
+      }
+    ],
+    "families": [
+      {
+        "family": "boundary",
+        "status": "partial",
+        "retained_relations": 0,
+        "unknown_id_count": 12
+      },
+      {
+        "family": "call-flow",
+        "status": "partial",
+        "retained_relations": 0,
+        "unknown_id_count": 1135
+      },
+      {
+        "family": "child-process",
+        "status": "partial",
+        "retained_relations": 0,
+        "unknown_id_count": 12
+      },
+      {
+        "family": "closure",
+        "status": "partial",
+        "retained_relations": 525,
+        "unknown_id_count": 12
+      },
+      {
+        "family": "configuration",
+        "status": "partial",
+        "retained_relations": 0,
+        "unknown_id_count": 12
+      },
+      {
+        "family": "data-flow",
+        "status": "partial",
+        "retained_relations": 0,
+        "unknown_id_count": 212
+      },
+      {
+        "family": "event",
+        "status": "partial",
+        "retained_relations": 0,
+        "unknown_id_count": 12
+      },
+      {
+        "family": "object-flow",
+        "status": "partial",
+        "retained_relations": 0,
+        "unknown_id_count": 1783
+      },
+      {
+        "family": "promise-ownership",
+        "status": "partial",
+        "retained_relations": 0,
+        "unknown_id_count": 12
+      },
+      {
+        "family": "request",
+        "status": "partial",
+        "retained_relations": 0,
+        "unknown_id_count": 12
+      },
+      {
+        "family": "resource-lifecycle",
+        "status": "partial",
+        "retained_relations": 0,
+        "unknown_id_count": 12
+      },
+      {
+        "family": "timer",
+        "status": "partial",
+        "retained_relations": 0,
+        "unknown_id_count": 13
+      }
+    ]
+  },
+  "raw_evidence_bytes": 3447267
+}

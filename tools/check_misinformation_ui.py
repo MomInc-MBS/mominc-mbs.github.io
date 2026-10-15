@@ -24,7 +24,15 @@ def record(name, **details):
 def state(page):
     return page.evaluate("k=>JSON.parse(localStorage.getItem(k))", RUN)
 
+def naming_ready(page):
+    # New transmissions may have a short read-first countdown. Restored active
+    # prompts can already be editable, so wait on behavior instead of sleeping.
+    expect(page.locator("#answer")).to_be_enabled(timeout=15000)
+    expect(page.locator("#answer-form button[type=submit]")).to_be_enabled(timeout=15000)
+
+
 def answer(page, correct=True, tier=5):
+    naming_ready(page)
     choice = page.evaluate("""async tier=>{const {subjects,questions}=await import('./catalog.js');
         const s=JSON.parse(localStorage.getItem('mom-misinformation-flight-v1'));
         const q=questions.find(q=>q.id===s.question);
@@ -102,6 +110,7 @@ with sync_playwright() as pw:
     page.locator("button[data-action='scoreboard-back']").click()
     page.locator("button[data-action='launch']").click()
     # A short rejected answer stays local, avoiding an external hosted-judge call.
+    naming_ready(page)
     before=state(page)
     assert before["remaining"]==35000
     page.locator("#answer").fill("?")
@@ -183,6 +192,7 @@ with sync_playwright() as pw:
     page.locator("#archive-close").click()
     record("Archive search exposes evidence links; menu fits 320px and 430px")
     page.locator("button[data-action='launch']").click()
+    naming_ready(page)
     page.evaluate("k=>{const s=JSON.parse(localStorage.getItem(k));s.deadline=Date.now()-1000;sessionStorage.setItem('__qa_restore',JSON.stringify(s));}", RUN)
     page.reload(wait_until="domcontentloaded")
     page.wait_for_function("!document.documentElement.hasAttribute('data-game-loading')", timeout=120000)
@@ -195,6 +205,7 @@ with sync_playwright() as pw:
     expect(page.locator("button[data-action='next']")).to_contain_text("CONTINUE ESCAPE")
     record("Expired timer skips once without damage and the next common answer resumes escape")
     page.locator("button[data-action='next']").click()
+    naming_ready(page)
     legacy_deadline=page.evaluate("""k=>{const s=JSON.parse(localStorage.getItem(k));delete s.progressionVersion;
       s.deadline=Date.now()+10000;s.remaining=10000;sessionStorage.setItem('__qa_restore',JSON.stringify(s));return s.deadline;}""",RUN)
     page.reload(wait_until="domcontentloaded")
@@ -232,7 +243,16 @@ with sync_playwright() as pw:
     after=answer(page,tier=0)
     current=frame()
     assert after["distance"]==5000 and after["score"]==10 and current["player"]>previous["player"] and current["mini"]>previous["mini"]
-    page.wait_for_function("()=>{const r=document.querySelector('#mobile-chase').getBoundingClientRect(),t=document.querySelector('#terminal').getBoundingClientRect();return r.top>=-1&&r.bottom<innerHeight&&r.height>90&&t.top>=r.bottom+6&&t.top<innerHeight/2;}")
+    page.wait_for_function("""()=>{
+      const r=document.querySelector('#mobile-chase').getBoundingClientRect();
+      const t=document.querySelector('#terminal').getBoundingClientRect();
+      const expected=innerHeight<=580?158:276;
+      const map=document.querySelector('#mobile-minimap').getBoundingClientRect();
+      const route=document.querySelector('#mobile-minimap .winding-map-svg').getBoundingClientRect();
+      return r.top>=-1&&r.bottom<innerHeight&&Math.abs(r.height-expected)<=2
+        &&t.top>=r.bottom+6&&t.top<=r.bottom+40&&t.top<innerHeight/2&&route.height>0&&route.width>0
+        &&map.top>=r.top&&map.bottom<=r.bottom+1;
+    }""")
     page.screenshot(path=str(OUT/"mobile-chase-answer.png"))
     previous=current
     page.locator("button[data-action='next']").click()
