@@ -399,8 +399,8 @@
     },
     {
       "url": "/tv/index.html",
-      "revision": "cd56aa92cc14cadce06c1b079a78bca9d76b056c",
-      "bytes": 14935
+      "revision": "50d0c0b95a4a11216b987e2e13f9e89cb9c5ba57",
+      "bytes": 14938
     },
     {
       "url": "/tv/landing.css",
@@ -439,8 +439,8 @@
     },
     {
       "url": "/tv/off-scene.mjs",
-      "revision": "2d51b9da4c90d324eaa1df2d55fbd4d29510c3dd",
-      "bytes": 22886
+      "revision": "feccc8887429653eae45017a0d3937d467b09abd",
+      "bytes": 25340
     },
     {
       "url": "/tv/phone-layout.js",
@@ -494,13 +494,13 @@
     },
     {
       "url": "/tv/tv.css",
-      "revision": "82a8b75b921dddbc539a3fb0fd4171a2dee29dc9",
-      "bytes": 29160
+      "revision": "1c19b09ebead76818388b42440291ffddfbbb3f2",
+      "bytes": 29335
     },
     {
       "url": "/tv/tv.js",
-      "revision": "f4c4637787062cca8fe4da1a095db9cf0341bafe",
-      "bytes": 34727
+      "revision": "89a58b618c0ed5898f0585889f8f86b8da48fc5e",
+      "bytes": 34730
     },
     {
       "url": "/vendor/shaders/runtime.mjs",
@@ -512,5 +512,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "9063a3e1e867b6e7faa8"
+  "version": "33b2273896e41d049757"
 }

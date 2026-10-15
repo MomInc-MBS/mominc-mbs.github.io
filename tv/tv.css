@@ -376,12 +376,14 @@ body{display:block;padding:0;overflow:hidden}
 /* off: the 3D computer (off-scene.mjs) covers the whole page; shown only while the set is off */
 .off3d{display:none; position:fixed; inset:0; z-index:900; background:#09080c; touch-action:none; overscroll-behavior:none; user-select:none; -webkit-user-select:none; -webkit-tap-highlight-color:transparent; outline:none}
 .tv[data-state="off"][data-off3d="on"] ~ .off3d{display:block}
-.off3d canvas{display:block; width:100%; height:100%; cursor:grab}
+.off3d canvas{position:absolute; inset:0; display:block; width:100%; height:100%; cursor:grab}
+.off3d canvas.off3d-bg{filter:blur(7px); transform:scale(1.06); pointer-events:none} /* the room, out of focus */
 .off3d canvas:active{cursor:grabbing}
 .off3d-hit{position:absolute; margin:0; padding:0; border:0; border-radius:50%; background:transparent; cursor:pointer; touch-action:none}
 .off3d-hit[hidden]{display:none}
 .off3d-hit:focus-visible{outline:3px solid var(--gold); outline-offset:2px}
 .off3d-note{border-radius:6px}
+.off3d-power{border-radius:10px}
 .off3d-wire{border:2px dashed rgba(255,211,110,.55); animation:off3dPulse 1.6s ease-in-out infinite}
 @keyframes off3dPulse{50%{border-color:rgba(255,211,110,.1)}}
 .off3d-hint{position:absolute; left:0; right:0; top:max(18px, env(safe-area-inset-top)); margin:0; text-align:center; pointer-events:none;
