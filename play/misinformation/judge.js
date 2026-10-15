@@ -14,6 +14,7 @@ export function cleanJudgment(value,questionId){
  try{const url=new URL(subject.source);if(url.protocol!=='https:'||url.username||url.password)return null;}catch{return null;}
  if(!['event','claim'].includes(raw.classification))return null;
  subject.classification=raw.classification;
+ if(raw.classificationMode==='topic')subject.classificationMode='topic';
  if(raw.rewardKind==='discovery')subject.rewardKind='discovery';
  subject.aliases=Array.isArray(raw.aliases)?raw.aliases.filter(x=>typeof x==='string'&&x.length<=160).slice(0,12):[];
  subject.topics=Array.isArray(raw.topics)?raw.topics.filter(x=>typeof x==='string'&&x.length<=60).slice(0,30):[];
@@ -29,9 +30,19 @@ export function cleanSavedJudgments(value,questionIds){
 }
 export function questionWithJudgments(question,verified=[]){
  if(!question)return question;
- const answers=[...question.answers];
- for(const entry of verified){if(entry.questionId===question.id&&!answers.some(a=>a.id===entry.subject.id))answers.push({id:entry.subject.id,tier:entry.tier});}
- return {...question,answers};
+ const answers=new Map(question.answers.map(a=>[a.id,a]));
+ // A saved hosted acceptance keeps its awarded tier when the built-in bank grows.
+ for(const entry of verified)if(entry.questionId===question.id)answers.set(entry.subject.id,{id:entry.subject.id,tier:entry.tier});
+ return {...question,answers:[...answers.values()]};
+}
+export function subjectsWithJudgments(subjects,verified=[],questionId){
+ if(!verified.length)return subjects;
+ const cards=new Map(subjects.map(s=>[s.id,s]));
+ for(const entry of verified)if(!cards.has(entry.subject.id))cards.set(entry.subject.id,entry.subject);
+ // Keep the exact evidence card already locked for this prompt, even if a newer
+ // catalog now has a different kind of card for the same Wikipedia page ID.
+ for(const entry of verified)if(entry.questionId===questionId)cards.set(entry.subject.id,entry.subject);
+ return [...cards.values()];
 }
 export async function judgeAnswer(answer,questionId,{signal,fetcher=fetch}={}){
  const controller=new AbortController();

@@ -3,11 +3,12 @@ import {subjects,questions} from './catalog.js';
 import {createScoreStore,newRunId} from './scores.js';
 import {renderScene} from './scene.js';
 import {createQuestionDeck} from './deck.js';
-import {judgeAnswer,cleanSavedJudgments,questionWithJudgments} from './judge.js';
+import {judgeAnswer,cleanSavedJudgments,questionWithJudgments,subjectsWithJudgments} from './judge.js';
 import {createStoryDraft,fillStory,STORY_TEMPLATES,STORY_LIMITS} from './stories.js';
 import {mountMinimaps,renderMinimaps} from './minimap.js';
 import {mountFlightFX,playFlightReaction,reactionFor} from './flight-fx.js';
 import {createFeedback} from './feedback.js';
+import {failureExample} from './learning.js';
 import {openTransmission,namingClock,suggestCorrection} from './question-flow.js';
 const $=s=>document.querySelector(s);
 const fmt=n=>Math.round(n).toLocaleString('en-US');
@@ -69,7 +70,7 @@ function restore(){
 }
 function save(){try{localStorage.setItem(STORAGE,JSON.stringify(state));}catch{storageAvailable=false;}}
 function q(){return questionWithJudgments(questions.find(q=>q.id===state.question),state.verifiedAnswers);}
-function flightSubjects(){return [...subjects,...(state.verifiedAnswers??[]).map(e=>e.subject).filter(s=>!subjects.some(a=>a.id===s.id))];}
+function flightSubjects(){return subjectsWithJudgments(subjects,state.verifiedAnswers??[],state.question);}
 function subject(){return flightSubjects().find(s=>s.id===state.answer);}
 function hud(){
  $('#distance').innerHTML=`${fmt(state.distance)}<small> km</small>`;$('#score').textContent=fmt(state.score);
@@ -93,6 +94,30 @@ function react(type,entry={}){
  playFlightReaction(event);sound.trigger(event);
 }
 function resolvePass(){state=skip(state);render({focus:true});react('pass');}
+function closeCockpitMenu(){
+ const menu=$('#cockpit-menu');if(menu)menu.hidden=true;
+ $('.terminal-wrap').classList.remove('cockpit-menu-open');
+}
+function toggleCockpitMenu(force){
+ let menu=$('#cockpit-menu');
+ if(!menu){menu=document.createElement('div');menu.id='cockpit-menu';menu.className='cockpit-menu';menu.hidden=true;menu.setAttribute('role','dialog');menu.setAttribute('aria-label','Flight menu');$('.terminal-wrap').append(menu);}
+ const open=force??menu.hidden;
+ const between=['ready','result','dead','escaped'].includes(state.phase);
+ menu.innerHTML=`<h2>Flight menu</h2><button class="primary" data-action="menu">BACK TO CHASE</button><button class="secondary" data-action="scoreboard" ${between?'':'disabled'}>SCOREBOARD</button><button class="secondary" data-action="story" ${between&&state.history.some(h=>h.subject)?'':'disabled'}>MY ANSWERS / AD-LIB</button><button class="secondary" data-action="archive">SEARCH THE ARCHIVE</button><button class="secondary" data-action="sound">${sound.soundEnabled()?'SOUND ON':'SOUND OFF'}</button><button class="text-button" data-action="restart">RESTART FLIGHT</button>`;
+ menu.hidden=!open;$('.terminal-wrap').classList.toggle('cockpit-menu-open',open);
+}
+function mountCockpitControls(){
+ const controls=$('#cockpit-controls');if(!controls)return;
+ controls.replaceChildren();
+ const main=$('#screen .choice-grid')||$('#screen button.primary');
+ if(main){
+  const form=main.closest('form');if(form&&main.tagName==='BUTTON')main.setAttribute('form',form.id);
+  controls.append(main);
+ }
+ const nav=document.createElement('nav');nav.className='cockpit-nav';nav.setAttribute('aria-label','Chase controls');
+ nav.innerHTML=`${state.phase==='answer'&&!menuView?`<button class="text-button" data-action="skip" ${checking||namingClock(state).phase==='preview'?'disabled':''}>PASS</button>`:''}<button class="text-button" data-action="menu" aria-haspopup="dialog">FLIGHT MENU</button>`;
+ controls.append(nav);
+}
 function storyHtml(){
  if(!state.storyDraft||!STORY_TEMPLATES.some(t=>t.id===state.storyDraft.templateId)||!Array.isArray(state.storyDraft.slots)||state.storyDraft.slots.length>STORY_LIMITS.maxSlots||state.storyDraft.slots.some(s=>!s||typeof s.id!=='string'||typeof s.type!=='string')){state.storyDraft=createStoryDraft(state.history,flightSubjects());state.storyValues={};state.storyFinished=false;}
  const draft=state.storyDraft;
@@ -104,29 +129,33 @@ function render({focus=false}={}){
  document.body.dataset.flight=state.phase;
  if(state.phase==='ready')html=`<div class="screen-label"><span>FLIGHT BRIEFING</span><span>20 PLACES TO ESCAPE THROUGH</span></div><h2>Your employer<br>would prefer<br>you stayed.</h2><p class="lede">From the office desk to the edge of the page. Name something that fits, then separate documented facts from unsupported claims.</p><div class="preflight"><span><b>35s</b>TO NAME IT</span><span><b>3 hits</b>UNTIL RECALL</span><span><b>20</b>PAPER WORLDS</span></div><button class="primary warm" data-action="launch">BEGIN UNAUTHORIZED ASCENT <span>↑</span></button><p style="font-size:11px">Common correct answers clear a level. Rare answers go farther. Every flight can reach MOM's Mothership Desk.</p><p style="font-size:10px">${subjects.length} sourced answers · ${questions.length} broad questions. Unlisted answers are sent to the hosted answer judge with the current prompt, never your flight history. Historical violence is discussed without graphic detail.</p>`;
  if(state.phase==='answer'){
-  const question=q(),preview=namingClock(state).phase==='preview',locked=checking||preview;html=`<div class="screen-label"><span>TRANSMISSION ${String(state.rounds+1).padStart(3,'0')} / ${preview?'READ THE PROMPT':'NAME IT'}</span><span id="timer" class="timer"></span></div><span class="question-topic">${safe(question.topic||question.family||'The signal')}</span><h2>${safe(question.prompt)}</h2><p>${preview?'Read it first. Your 35 seconds start after the countdown.':'Every correct answer moves you forward. Uncommon answers earn bonus distance.'}</p><p class="answer-example">For example: ${safe((question.examples||[]).join(' or '))}. Other fitting answers count too.</p><form class="answer-form" id="answer-form" data-rejected="${!!feedback&&!suggestion&&!checking}"><label for="answer">YOUR ANSWER</label><input id="answer" name="answer" value="${safe(state.draft??'')}" aria-describedby="answer-feedback" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="120" placeholder="Type your answer…" ${locked?'disabled':''} required><p id="answer-feedback" role="status" aria-live="polite" class="${checking?'judge-status':'danger'}">${checking?'Checking the evidence and prompt fit. Your timer is paused.':safe(feedback)}</p><button class="primary" type="submit" ${locked?'disabled':''}>${checking?'CHECKING ANSWER…':preview?'STAND BY…':'TRANSMIT ANSWER'} <span>↑</span></button></form>${suggestion?`<button class="secondary" data-action="confirm" style="width:100%;margin-top:10px">Confirm ${safe(suggestion.name)} ↵</button>`:''}<div class="answer-tools"><button class="text-button" data-action="hint" ${locked?'disabled':''}>${showHint?'Hide clue':'Need a clue?'}</button><button class="text-button" data-action="skip" ${locked?'disabled':''}>Pass · 0 points</button></div>${showHint?`<p class="hint">${safe(question.hint)}</p>`:''}`;
+  const question=q(),preview=namingClock(state).phase==='preview',locked=checking||preview;html=`<div class="screen-label"><span>TRANSMISSION ${String(state.rounds+1).padStart(3,'0')} / ${preview?'READ THE PROMPT':'NAME IT'}</span><span id="timer" class="timer"></span></div><span class="question-topic">${safe(question.topic||question.family||'The signal')}</span><h2>${safe(question.prompt)}</h2><p>${preview?'Read it first. Your 35 seconds start after the countdown.':'Every correct answer moves you forward. Uncommon answers earn bonus distance.'}</p><form class="answer-form" id="answer-form" data-rejected="${!!feedback&&!suggestion&&!checking}"><label for="answer">YOUR ANSWER</label><input id="answer" name="answer" value="${safe(state.draft??'')}" aria-describedby="answer-feedback" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="120" placeholder="Type your answer…" ${locked?'disabled':''} required><p id="answer-feedback" role="status" aria-live="polite" class="${checking?'judge-status':'danger'}">${checking?'Checking the evidence and prompt fit. Your timer is paused.':safe(feedback)}</p><button class="primary" type="submit" ${locked?'disabled':''}>${checking?'CHECKING ANSWER…':preview?'STAND BY…':'TRANSMIT ANSWER'} <span>↑</span></button></form>`;
  }
  if(state.phase==='classify'){
-  const s=subject(),entry=q().answers.find(a=>a.id===s.id);html=`<div class="screen-label"><span>ANSWER LOCKED / CHECK IT</span><span>NO TIMER</span></div><h2>${safe(s.name)}</h2><span class="badge">${safe(rewardName(s,entry.tier)).toUpperCase()} · ${POINTS[entry.tier]} POTENTIAL POINTS</span>${s.rewardKind==='discovery'?'<p class="notice">15 points of discovery credit for a newly verified answer. Its rarity has not been rated.</p>':''}<div class="tier-ladder" aria-label="Reward level ${entry.tier+1} of 6">${Array.from({length:6},(_,i)=>`<span class="${i<=entry.tier?'lit':''}"></span>`).join('')}</div><div class="statement">${safe(s.statement)}</div><p>Judge <b>this exact statement</b>. A record about a theory does not prove the theory.</p><div class="choice-grid"><button data-action="classify" data-choice="event"><b>Documented event or fact</b><small>Supported history, science, program, or criminal case</small></button><button data-action="classify" data-choice="claim"><b>Unsupported claim</b><small>The statement is unsupported or contradicted</small></button></div>`;
+  const s=subject(),entry=q().answers.find(a=>a.id===s.id);html=`<div class="screen-label"><span>ANSWER LOCKED / CHECK IT</span><span>NO TIMER</span></div><h2>${safe(s.name)}</h2><span class="badge">${safe(rewardName(s,entry.tier)).toUpperCase()} · ${POINTS[entry.tier]} POTENTIAL POINTS</span>${s.rewardKind==='discovery'?'<p class="notice">15 points of discovery credit for a newly verified answer. Its rarity has not been rated.</p>':''}<div class="tier-ladder" aria-label="Reward level ${entry.tier+1} of 6">${Array.from({length:6},(_,i)=>`<span class="${i<=entry.tier?'lit':''}"></span>`).join('')}</div><div class="statement">${safe(s.statement)}</div><p>${s.classificationMode==='topic'?'Classify the topic described above. An article about a belief does not make its claims true.':'Judge this exact statement. A record about a theory does not prove the theory.'}</p><div class="choice-grid"><button data-action="classify" data-choice="event"><b>${s.classificationMode==='topic'?'Documented subject':'Documented event or fact'}</b><small>History, science, people or projects</small></button><button data-action="classify" data-choice="claim"><b>${s.classificationMode==='topic'?'Theory / legend / hoax':'Unsupported claim'}</b><small>${s.classificationMode==='topic'?'Conspiracy or extraordinary belief':'Unsupported or contradicted statement'}</small></button></div>`;
  }
  if(state.phase==='result'||state.phase==='dead'||state.phase==='escaped'){
   const last=state.history.at(-1),s=subject();
   const priorLevel=levelIndex(state.distance-(last?.travelled??0)),currentLevel=levelIndex(state.distance);
   const arrival=last?.correct&&currentLevel>priorLevel?`<p class="arrival"><b>LEVEL ${currentLevel+1} / 20</b> ${safe(LEVELS.slice(priorLevel+1,currentLevel+1).map(l=>l.name).join(' → '))}</p>`:'';
-  const result=last?.skipped?'<p class="result-title">No answer transmitted.</p><p>Zero points. Your hull is intact. The next correct answer can keep your escape moving.</p>':last&&s?`<p class="result-title">${safe(s.name)} · ${safe(rewardName(s,last.tier))}</p><div class="result-score"><strong>${last.correct?`+${fmt(last.travelled??last.earned*50)}`:'&minus;1'}</strong><span>${last.correct?`KM OF ESCAPE PROGRESS<br>+${last.earned} POINTS`:'HULL HIT'}</span></div>${last.correct?`<p class="result-quip">${safe(reactionFor({type:'launch',tier:last.tier}).quip)}${streak()>1?` <b>${streak()} correct signals in a row.</b>`:''}</p>`:''}${arrival}<details class="evidence-reveal"><summary>Why ${last.correct?'that checked out':'the hull took a hit'} · read the evidence</summary><p><b>${last.correct?'Correct classification.':'That classification missed.'}</b> ${s.classification==='event'?'This exact statement is documented.':'This exact statement is unsupported or contradicted by the evidence.'}</p><p>${safe(s.explanation)}</p>${sourceLink(s)}</details>`:'';
-  if(state.phase==='dead')html=`<div class="screen-label"><span>EMPLOYEE RECALL COMPLETE</span><span>HULL 0 / 3</span></div><h2>Mom brought<br>you home.</h2><p>You took three hits. The flight is over.</p>${result}<button class="primary warm" data-action="restart">ESCAPE AGAIN <span>↺</span></button>`;
-  else if(state.phase==='escaped')html=`<div class="screen-label"><span>MOM'S MOTHERSHIP DESK</span><span>DOCKING APPROVED</span></div><h2>You escaped.<br>She noticed.</h2><p>All 20 stops. ${state.rounds} transmissions. You reached MOM's Mothership Desk with ${3-state.hits} hull hits remaining.</p>${result}<button class="primary warm" data-action="restart">START ANOTHER FLIGHT <span>↺</span></button>`;
-  else html=`<div class="screen-label"><span>TRANSMISSION RECEIVED</span><span>${state.hits} / 3 HITS TAKEN</span></div><h2>${last?.skipped?'Dead air.':last?.correct?'Signal verified.':'Misinformation hit.'}</h2>${result}<button class="primary" data-action="next">CONTINUE ESCAPE <span>↑</span></button>`;
+  const result=last?.skipped?'<p class="result-title">No answer transmitted.</p><p>Zero points. Your hull is intact. The next correct answer can keep your escape moving.</p>':last&&s?`<p class="result-title">${safe(s.name)} · ${safe(rewardName(s,last.tier))}</p><div class="result-score"><strong>${last.correct?`+${fmt(last.travelled??last.earned*50)}`:'&minus;1'}</strong><span>${last.correct?`KM OF ESCAPE PROGRESS<br>+${last.earned} POINTS`:'HULL HIT'}</span></div>${last.correct?`<p class="result-quip">${safe(reactionFor({type:'launch',tier:last.tier}).quip)}${streak()>1?` <b>${streak()} correct signals in a row.</b>`:''}</p>`:''}${arrival}<details class="evidence-reveal"><summary>Why ${last.correct?'that checked out':'the hull took a hit'} · read the evidence</summary><p><b>${last.correct?'Correct classification.':'That classification missed.'}</b> ${s.classificationMode==='topic'?'The source identifies this topic as a belief, legend, hoax, or fringe claim.':s.classification==='event'?'This exact statement is documented.':'This exact statement is unsupported or contradicted by the evidence.'}</p><p>${safe(s.explanation)}</p>${sourceLink(s)}</details>`:'';
+  const learned=failureExample(q(),flightSubjects(),state.history);
+  const lesson=learned?`<aside class="learning-example"><small>FROM THAT QUESTION / FILE UNLOCKED</small><b>${safe(learned.subject.name)} <span>${learned.points} points</span></b><details><summary>Learn this answer</summary><p>${safe(learned.subject.explanation)}</p>${sourceLink(learned.subject)}</details></aside>`:'';
+  if(state.phase==='dead')html=`<div class="screen-label"><span>EMPLOYEE RECALL COMPLETE</span><span>HULL 0 / 3</span></div><h2>Mom brought<br>you home.</h2><p>You took three hits. The flight is over.</p>${lesson}${result}<button class="primary warm" data-action="restart">ESCAPE AGAIN <span>↺</span></button>`;
+  else if(state.phase==='escaped')html=`<div class="screen-label"><span>MOM'S MOTHERSHIP DESK</span><span>DOCKING APPROVED</span></div><h2>You escaped.<br>She noticed.</h2><p>All 20 stops. ${state.rounds} transmissions. You reached MOM's Mothership Desk with ${3-state.hits} hull hits remaining.</p>${lesson}${result}<button class="primary warm" data-action="restart">START ANOTHER FLIGHT <span>↺</span></button>`;
+  else html=`<div class="screen-label"><span>TRANSMISSION RECEIVED</span><span>${state.hits} / 3 HITS TAKEN</span></div><h2>${last?.skipped?'Dead air.':last?.correct?'Signal verified.':'Misinformation hit.'}</h2>${lesson}${result}<button class="primary" data-action="next">CONTINUE ESCAPE <span>↑</span></button>`;
  }
- if(state.phase==='ready'||['result','dead','escaped'].includes(state.phase))html+=`<button class="secondary" data-action="scoreboard" style="width:100%;margin-top:12px">VIEW THIS BROWSER'S SCOREBOARD</button>`;
- if(['result','dead','escaped'].includes(state.phase)&&state.history.some(h=>h.subject))html+=`<button class="secondary" data-action="story" style="width:100%;margin-top:10px">TURN MY ANSWERS INTO AN AD-LIB <span>↗</span></button>`;
+ if(!$('#cockpit-controls')&&(state.phase==='ready'||['result','dead','escaped'].includes(state.phase)))html+=`<button class="secondary" data-action="scoreboard" style="width:100%;margin-top:12px">VIEW THIS BROWSER'S SCOREBOARD</button>`;
+ if(!$('#cockpit-controls')&&['result','dead','escaped'].includes(state.phase)&&state.history.some(h=>h.subject))html+=`<button class="secondary" data-action="story" style="width:100%;margin-top:10px">TURN MY ANSWERS INTO AN AD-LIB <span>↗</span></button>`;
  if(menuView==='scores')html=scoreboardHtml();
  if(menuView==='story')html=storyHtml();
  const stage=state.phase==='answer'?0:state.phase==='classify'?1:2;
  const flow=state.phase!=='ready'&&!menuView?`<div class="question-flow" aria-label="Answer steps">${['01 NAME IT','02 CHECK IT','03 LAUNCH'].map((name,i)=>`<span class="${stage===i?'active':''}">${name}</span>`).join('')}</div>`:'';
  $('#screen').innerHTML=flow+html;
+ document.body.dataset.panel=menuView||'flight';
+ mountCockpitControls();
  if(state.phase==='answer')tick();save();
- if(focus){const target=state.phase==='answer'?$('#answer'):$('#terminal');target?.focus({preventScroll:true});if(matchMedia('(max-width:650px)').matches)$('#terminal').scrollIntoView({behavior:'instant',block:'start'});}
+ if(focus&&!matchMedia('(max-width:650px)').matches){const target=state.phase==='answer'?$('#answer'):$('#terminal');target?.focus({preventScroll:true});}
 }
 function next(){
  menuView=null;runMetadata();
@@ -180,14 +209,17 @@ $('#screen').addEventListener('input',e=>{
  if(e.target.id==='answer'){state.draft=e.target.value.slice(0,120);save();sound.trigger({type:'typing'});if(suggestion&&normalize(e.target.value)!==normalize(suggestion.name)){suggestion=null;feedback='';$('#answer-feedback').textContent='';$('#screen [data-action="confirm"]')?.remove();}}
  if(e.target.closest('#story-form')&&e.target.name){state.storyValues={...state.storyValues,[e.target.name]:e.target.value};save();}
 });
-$('#screen').addEventListener('click',e=>{
+document.addEventListener('click',e=>{
  const b=e.target.closest('button[data-action]');if(!b)return;
  switch(b.dataset.action){
-  case 'launch': case 'next': next();break;
-  case 'restart': restart();break;
-  case 'scoreboard':if(['ready','result','dead','escaped'].includes(state.phase)){menuView='scores';render({focus:true});}break;
+  case 'menu': toggleCockpitMenu();break;
+  case 'archive': closeCockpitMenu();$('#archive-toggle').click();break;
+  case 'sound': $('#sound-toggle').click();toggleCockpitMenu(true);break;
+  case 'launch': case 'next': closeCockpitMenu();next();break;
+  case 'restart': closeCockpitMenu();restart();break;
+  case 'scoreboard':if(['ready','result','dead','escaped'].includes(state.phase)){closeCockpitMenu();menuView='scores';render({focus:true});}break;
   case 'scoreboard-back':menuView=null;render({focus:true});break;
-  case 'story':menuView='story';render({focus:true});break;
+  case 'story':closeCockpitMenu();menuView='story';render({focus:true});break;
   case 'story-back':menuView=null;render({focus:true});break;
   case 'story-edit':state.storyFinished=false;render({focus:true});break;
   case 'story-remix':{const previous=state.storyDraft?.templateId;for(let i=0;i<5;i++){state.storyDraft=createStoryDraft(state.history,flightSubjects());if(state.storyDraft.templateId!==previous)break;}state.storyValues={};state.storyFinished=false;render({focus:true});break;}
@@ -200,12 +232,12 @@ $('#screen').addEventListener('click',e=>{
 });
 function restart(){checking?.controller.abort();checking=null;if(state.phase!=='ready')finalizeFlight(['dead','escaped'].includes(state.phase)?state.phase:'abandoned');state=freshRun();runMetadata();menuView=null;suggestion=null;feedback='';render({focus:true});}
 $('#restart').addEventListener('click',restart);
-function archive(){const query=normalize($('#archive-search').value);const list=subjects.filter(s=>normalize(`${s.name} ${s.category} ${s.statement}`).includes(query));$('#archive-list').innerHTML=list.length?list.map(s=>`<details class="archive-item"><summary>${safe(s.name)}<small>${safe(s.category).toUpperCase()}</small></summary><p><b>Exact statement:</b> ${safe(s.statement)}</p><p>${safe(s.explanation)}</p>${sourceLink(s)}</details>`).join(''):'<p>No matching archive entries.</p>';}
-$('#archive-toggle').addEventListener('click',()=>{$('#archive').hidden=!$('#archive').hidden;if(!$('#archive').hidden){archive();$('#archive').scrollIntoView({behavior:'smooth',block:'start'});$('#archive-search').focus({preventScroll:true});}});
+function archive(){const query=normalize($('#archive-search').value);const list=subjects.filter(s=>normalize(`${s.name} ${s.category} ${s.statement}`).includes(query));$('#archive-list').innerHTML=list.length?`<p class="notice">${list.length.toLocaleString('en-US')} matching answers${list.length>100?' / showing the first 100. Search to narrow the archive.':'.'}</p>`+list.slice(0,100).map(s=>`<details class="archive-item"><summary>${safe(s.name)}<small>${safe(s.category).toUpperCase()}</small></summary><p><b>${s.classificationMode==='topic'?'Topic description':'Exact statement'}:</b> ${safe(s.statement)}</p><p>${safe(s.explanation)}</p>${sourceLink(s)}</details>`).join(''):'<p>No matching archive entries.</p>';}
+$('#archive-toggle').addEventListener('click',()=>{$('#archive').hidden=!$('#archive').hidden;if(!$('#archive').hidden){archive();if(!matchMedia('(max-width:650px)').matches)$('#archive').scrollIntoView({behavior:'smooth',block:'start'});$('#archive-search').focus({preventScroll:true});}});
 $('#archive-close').addEventListener('click',()=>{$('#archive').hidden=true;$('#archive-toggle').focus();});
 $('#archive-search').addEventListener('input',archive);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)tick();});
-document.addEventListener('keydown',event=>{if(event.key==='Enter'&&state.phase==='result'&&!menuView&&!event.target.closest('button,input,textarea,a,summary')){event.preventDefault();next();}});
+document.addEventListener('keydown',event=>{if(event.key==='Escape'){closeCockpitMenu();$('#archive').hidden=true;}if(event.key==='Enter'&&state.phase==='result'&&!menuView&&!event.target.closest('button,input,textarea,a,summary')){event.preventDefault();next();}});
 window.addEventListener('pagehide',save);
 setInterval(tick,200);
 render();

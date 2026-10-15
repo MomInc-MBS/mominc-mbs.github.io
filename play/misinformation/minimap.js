@@ -1,4 +1,5 @@
 import {LEVELS,STATION,levelIndex} from './engine.js';
+import {gapForRun} from './scene.js';
 
 // Three wavy lanes connected by wide U-turns. The same cubic geometry drives
 // the SVG, the stop locations, and arc-length interpolation of both craft.
@@ -44,7 +45,7 @@ export function minimapFrame(state){
  const rounds=Number.isFinite(state.rounds)?Math.max(0,state.rounds):(state.history?.length??0);
  const hits=Math.max(0,Math.min(3,Number.isFinite(state.hits)?state.hits:0));
  const caught=state.phase==='dead';
- const gap=caught?0:Math.max(.025,.10-hits*.025-.02*(1-Math.exp(-rounds/20))+.02*progress);
+ const gap=caught?0:gapForRun(state)/400;
  return {progress,level,title:LEVELS[level].name,percent:Math.floor(progress*100),
   player:pointAtProgress(progress),pursuer:pointAtProgress(Math.max(0,progress-gap)),
   caught,escaped:state.phase==='escaped'&&progress===1};

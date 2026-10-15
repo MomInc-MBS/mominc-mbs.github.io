@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createHandler,validInput,semanticJudge,makeWikiSubject,resolveWiki,decision,knownAliasFit,boundedText,sourceJson,outsidePoolTier} from './handler.mjs';
+import {createHandler,validInput,semanticJudge,makeWikiSubject,resolveWiki,decision,knownAliasFit,boundedText,sourceJson,outsidePoolTier,safeSubject} from './handler.mjs';
 import {consumeBudget} from './budget.mjs';
 import {questions,subjects} from '../../play/misinformation/catalog.js';
 const origin='https://mominc.online';
@@ -19,6 +19,22 @@ test('known worldwide event resolves regardless of case/punctuation',async()=>{
  const e=env({AI:{run:()=>{throw Error('Catalog match should not call AI');}}});
  const response=await handler.fetch(request({questionId:q.id,answer:' CUBAN MISSILE CRISIS '}),e);
  const body=await response.json();assert.equal(body.accepted,true);assert.equal(body.subject.id,cuban.id);assert.match(body.provider,/catalog/i);
+});
+test('public judge preserves topic classification for a known imported subject',async()=>{
+ const topic=subjects.find(s=>s.id==='wiki-3284108');
+ assert.ok(topic,'fixture remains in the imported encyclopedia catalog');
+ const question=questions.find(item=>item.id==='conspiracies-01');
+ const response=await createHandler({cache:()=>undefined}).fetch(request({questionId:question.id,answer:topic.name}),env({AI:{run:()=>{throw Error('Known imported catalog match should not call AI');}}}));
+ const body=await response.json();
+ assert.equal(body.accepted,true);
+ assert.equal(body.subject.id,topic.id);
+ assert.equal(body.subject.classificationMode,'topic');
+ assert.equal(body.subject.classification,'claim');
+});
+test('safe public subjects preserve explicit classification and reward metadata',()=>{
+ const subject=safeSubject({id:'wiki-fixture',name:'Fixture belief',classification:'claim',classificationMode:'topic',rewardKind:'discovery'});
+ assert.equal(subject.classificationMode,'topic');
+ assert.equal(subject.rewardKind,'discovery');
 });
 test('known subject outside curated pool is checked semantically, not silently rejected',async()=>{
  const target=questions.find(x=>!x.answers.some(a=>a.id===cuban.id));

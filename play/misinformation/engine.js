@@ -46,9 +46,19 @@ export function migrateRun(state, now=Date.now()) {
 }
 export function bandIndex(distance) { return Math.min(7, Math.floor(distance / 12500)); }
 export function normalize(s) { return s.normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,''); }
+// Catalog arrays are immutable during a run; imported hosted answers use a new array.
+const answerIndexes=new WeakMap();
 export function lookup(answer, question, subjects) {
-  const n=normalize(answer);
-  return subjects.find(s => question.answers.some(a=>a.id===s.id) && [s.name,...s.aliases].some(a=>normalize(a)===n));
+  let index=answerIndexes.get(subjects);
+  if(!index){
+    index=new Map();
+    for(const subject of subjects)for(const alias of [subject.name,...subject.aliases]){
+      const key=normalize(alias);if(!index.has(key))index.set(key,[]);
+      if(!index.get(key).includes(subject))index.get(key).push(subject);
+    }
+    answerIndexes.set(subjects,index);
+  }
+  return (index.get(normalize(answer))||[]).find(s=>question.answers.some(a=>a.id===s.id));
 }
 export function beginQuestion(state, question, now=Date.now()) {
   if (!['ready','result'].includes(state.phase)) throw new Error('Cannot open a question in this phase.');

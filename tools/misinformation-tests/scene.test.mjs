@@ -1,6 +1,6 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {sceneFrame} from '../../play/misinformation/scene.js';
 import {freshRun,beginQuestion,acceptAnswer,classify,skip,STATION,LEVELS,levelIndex,bandIndex} from '../../play/misinformation/engine.js';
-import {renderScene,mobileSceneFrame} from '../../play/misinformation/scene.js';
+import {renderScene,mobileSceneFrame,gapForRun} from '../../play/misinformation/scene.js';
 test('every depth band maps to a different cell of the two-by-four atlas',()=>{const cells=[];for(let i=0;i<8;i++){const f=sceneFrame({distance:i*12500,hits:0,phase:'result'});cells.push(`${f.x},${f.y}`);assert.equal(f.layer,i);assert.ok(f.x===0||f.x===100);assert.ok(f.y>=0&&f.y<=100);}assert.equal(new Set(cells).size,8);});
 test('damage closes the chase gap, and caught/docked states stay visible',()=>{const frames=[0,1,2].map(hits=>sceneFrame({distance:50000,hits,phase:'result'}));assert.ok(frames[0].player-frames[0].pursuer>frames[1].player-frames[1].pursuer);assert.ok(frames[1].player-frames[1].pursuer>frames[2].player-frames[2].pursuer);assert.match(sceneFrame({distance:100000,hits:0,phase:'escaped'}).status,/REACHED/);assert.match(sceneFrame({distance:0,hits:3,phase:'dead'}).status,/CAUGHT/);});
 
@@ -20,12 +20,12 @@ test('low answers, wrong classifications, and passes advance the visual chase wi
  assert.equal(passed.distance,0);assert.equal(passed.score,0);assert.equal(passed.hits,0);
  assert.equal(sceneFrame(wrong).outcome,'hit');assert.equal(sceneFrame(passed).outcome,'pass');
 });
-test('both craft approach the final desk monotonically until an ordinary twenty-answer win',()=>{
+test('the player approaches the final desk while MOM follows the history-shaped route',()=>{
  let state=freshRun(),previous=sceneFrame(state);
  const visited=new Set([previous.level]);
  for(let i=0;i<20;i++){
   state=resolve(state);const f=sceneFrame(state);
-  assert.ok(f.player>=previous.player);assert.ok(f.pursuer>=previous.pursuer);
+  assert.ok(f.player>=previous.player);
   assert.ok(f.player<=(state.phase==='escaped'?80:72));assert.ok(f.pursuer<f.player);assert.ok(f.pursuer>=0);
   assert.equal(f.motion,i+1);assert.equal(f.level,levelIndex(state.distance));visited.add(f.level);previous=f;
  }
@@ -39,9 +39,39 @@ test('top answers open a wider chase gap while only the third hit produces a cat
  for(let i=1;i<=3;i++){
   state=resolve(state,rare,'claim');const f=sceneFrame(state);
   assert.equal(state.phase,i===3?'dead':'result');
-  assert.ok(f.player>f.pursuer);if(i<3)assert.ok(f.player-f.pursuer>=6);
+  assert.ok(f.player>f.pursuer);if(i<3)assert.ok(f.player-f.pursuer>=4);
  }
  assert.match(sceneFrame(state).status,/CAUGHT/);
+});
+test('higher tiers open a visibly wider gap at the same route position and round count',()=>{
+ const lowHistory=Array.from({length:5},()=>({tier:0,earned:10,correct:true}));
+ const highHistory=Array.from({length:5},()=>({tier:5,earned:100,correct:true}));
+ const low=sceneFrame({distance:25000,score:50,hits:0,rounds:5,phase:'result',history:lowHistory});
+ const high=sceneFrame({distance:25000,score:500,hits:0,rounds:5,phase:'result',history:highHistory});
+ assert.equal(low.player,high.player);assert.ok(high.gap>low.gap+20);assert.ok(high.pursuer<low.pursuer);
+});
+test('wrong classifications and passes close the gap without route or hull pressure',()=>{
+ const baseline=sceneFrame({distance:12000,score:0,hits:0,rounds:0,phase:'result'});
+ const wrong=sceneFrame({distance:12000,score:0,hits:1,rounds:1,phase:'result',history:[{correct:false,earned:0}]});
+ const passed=sceneFrame({distance:12000,score:0,hits:0,rounds:1,phase:'result',history:[{correct:null,earned:0,skipped:true}]});
+ assert.equal(wrong.gap,11);assert.equal(passed.gap,15);
+ assert.ok(wrong.gap<baseline.gap);assert.ok(passed.gap<baseline.gap);
+});
+test('legacy and truncated histories derive stable bounded gaps from saved aggregates',()=>{
+ const legacy={distance:30000,score:1000,hits:0,rounds:10,phase:'result'};
+ assert.ok(sceneFrame(legacy).gap>sceneFrame({...legacy,score:10}).gap);
+ const truncated={distance:30000,score:1100,hits:2,rounds:120,phase:'result',history:Array.from({length:100},()=>({correct:false,earned:0}))};
+ const first=sceneFrame(truncated),reloaded=sceneFrame(JSON.parse(JSON.stringify(truncated)));
+ assert.deepEqual(reloaded,first);assert.ok(Number.isFinite(first.gap));assert.ok(first.gap>=4&&first.gap<=44);
+ assert.equal(gapForRun({score:1e9,hits:0,rounds:1e6,history:[]}),44);
+});
+test('later failures and passes close a gap after high-score answers reach the cap',()=>{
+ const wins=Array.from({length:10},()=>({tier:5,earned:100,correct:true}));
+ const run=history=>gapForRun({score:history.filter(entry=>entry.correct===true).reduce((sum,entry)=>sum+entry.earned,0),hits:history.filter(entry=>entry.correct===false).length,rounds:history.length,history});
+ assert.equal(run(wins),44);
+ assert.equal(run([...wins,{correct:false,earned:0}]),37);
+ assert.equal(run([...wins,{skipped:true,correct:null,earned:0}]),41);
+ assert.equal(run([...wins,{skipped:true,correct:null,earned:0},{skipped:true,correct:null,earned:0}]),38);
 });
 test('existing saved fields reproduce identical scene positions and ordinal after reload',()=>{
  let state=resolve(freshRun());state=skip(beginQuestion(state,prompt));state=resolve(state,rare,'claim');

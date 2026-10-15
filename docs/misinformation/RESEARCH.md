@@ -1,6 +1,6 @@
 # Mom's Misinformation Machine - mechanics research and release scope
 
-Original research date: 2026-10-14; current interaction recheck and visual release candidate: 2026-10-15. This document distinguishes recovered Krillion behavior, proposed adaptations, and our original implementation. The public game has a curated playable catalog; it does not claim an exhaustive database of every conspiracy. The latest MOMvision presentation and interaction changes are prepared locally, with browser verification underway; public verification of that candidate is not yet recorded here. Release scope and check status are in [RELEASE.md](RELEASE.md).
+Original research date: 2026-10-14; latest interaction, phone chase, and Wikipedia expansion: 2026-10-15. This document distinguishes recovered Krillion behavior from our original adaptation. The playable archive now combines reviewed cards with a bounded, attributed Wikipedia category import; it does not claim every conspiracy in existence. See [current release scope](RELEASE.md) and [Wikipedia collection evidence](research/wikipedia-answer-index-2026-10-15.md).
 
 ## Evidence and method
 

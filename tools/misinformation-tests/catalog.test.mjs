@@ -20,13 +20,52 @@ test('catalog subjects have unique IDs and complete sourced exact statements', (
   }
 });
 
+test('Wikipedia import and generated catalog meet the archive coverage floor', async()=>{
+  assert.ok(subjects.length>5000,`Expected over 5,000 subjects, got ${subjects.length}`);
+  assert.ok(questions.length>=194,`Expected at least 194 prompts, got ${questions.length}`);
+  const memberships=questions.reduce((total,question)=>total+question.answers.length,0);
+  assert.ok(memberships>=20000,`Expected at least 20,000 answer memberships, got ${memberships}`);
+  const aliasCount=subjects.reduce((total,subject)=>total+subject.aliases.length,0);
+  assert.ok(aliasCount>20000,`Expected over 20,000 aliases, got ${aliasCount}`);
+  const topicTags=new Set(['conspiracy','wiki-stories','wiki-fringe']);
+  const importedTopics=subjects.filter(subject=>subject.classificationMode==='topic'&&subject.topics.some(topic=>topicTags.has(topic)));
+  assert.ok(importedTopics.length>500,`Expected over 500 imported conspiracy, legend, hoax, or fringe topic cards, got ${importedTopics.length}`);
+});
+
+test('Wikipedia source index has bounded descriptions and revision provenance',async()=>{
+  const index=JSON.parse(await readFile(new URL('../../docs/misinformation/research-data/wikipedia-index.json',import.meta.url),'utf8'));
+  assert.ok(Array.isArray(index.articles));
+  assert.ok(index.articles.length>5000,`Expected over 5,000 source articles, got ${index.articles.length}`);
+  const categories=new Set(index.articles.flatMap(article=>article.categories||[]));
+  assert.ok(categories.size>=250,`Expected at least 250 source categories, got ${categories.size}`);
+  for(const article of index.articles){
+    const source=new URL(article.source);
+    assert.equal(source.protocol,'https:',article.id);
+    assert.equal(source.hostname,'en.wikipedia.org',article.id);
+    assert.ok(typeof article.description==='string'&&article.description.trim(),`${article.id}: missing description`);
+    assert.ok(article.description.trim().split(/\s+/).length<=25,`${article.id}: description exceeds 25 words`);
+    assert.ok(Number.isSafeInteger(article.revisionId)&&article.revisionId>0,`${article.id}: missing revision ID`);
+    assert.ok(typeof article.revisionAt==='string'&&Number.isFinite(Date.parse(article.revisionAt)),`${article.id}: missing revision timestamp`);
+  }
+});
+
+test('unmeasured imported subjects receive familiarity one and never become gems',()=>{
+  const unmeasured=subjects.filter(subject=>subject.id.startsWith('wiki-')&&subject.readership?.views==null);
+  const gemIds=new Set(questions.flatMap(question=>question.answers.filter(answer=>answer.tier===5).map(answer=>answer.id)));
+  for(const subject of unmeasured){
+    assert.equal(subject.rewardKind,'discovery',subject.id);
+    assert.equal(subject.familiarity,1,subject.id);
+    assert.ok(!gemIds.has(subject.id),`${subject.id}: unmeasured discovery cannot be a tier-5 gem`);
+  }
+});
+
 test('ten broad prompts per topic and ample distinct transmissions at every depth', () => {
   assert.ok(questions.length >= 160);
   assert.equal(new Set(questions.map(question => question.id)).size, questions.length);
   assert.equal(new Set(questions.map(question => question.prompt)).size, questions.length);
   const authored=questions.filter(q=>!q.family.startsWith('legacy-'));
   const families=new Set(authored.map(q=>q.family));
-  assert.equal(families.size,16);
+  assert.equal(families.size,17);
   for(const family of families)assert.equal(authored.filter(q=>q.family===family).length,10,family);
   for (let band = 0; band < 8; band++) {
     const group = questions.filter(question => question.band === band);

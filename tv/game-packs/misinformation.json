@@ -19,8 +19,8 @@
     },
     {
       "url": "/play/misinformation/app.js",
-      "revision": "263a9665ade98812f0e5a57a04b43142937bbcc9",
-      "bytes": 26156
+      "revision": "7bc415d2dd72932fab096646fa270b231bb12507",
+      "bytes": 29066
     },
     {
       "url": "/play/misinformation/assets/journey/01-office.svg",
@@ -139,8 +139,18 @@
     },
     {
       "url": "/play/misinformation/catalog.js",
-      "revision": "6798fb4fe2413c827422fc9fe5484311a5ea11e1",
-      "bytes": 528416
+      "revision": "7b8c503d18ac01f2b0fa1bf5e8378ecbf2a55827",
+      "bytes": 5910317
+    },
+    {
+      "url": "/play/misinformation/cockpit.css",
+      "revision": "730d2f8984cb192f95793e5286a878c958c27549",
+      "bytes": 9327
+    },
+    {
+      "url": "/play/misinformation/cockpit.js",
+      "revision": "33fcf485410c35807a78ebc41e8574990a4ec505",
+      "bytes": 2475
     },
     {
       "url": "/play/misinformation/deck.js",
@@ -149,8 +159,8 @@
     },
     {
       "url": "/play/misinformation/engine.js",
-      "revision": "f33cff81142272c7ebd6cc4f931625b15348f1ce",
-      "bytes": 8488
+      "revision": "ad91563445549a5214b3f965fd07e5df87bdc3c4",
+      "bytes": 8912
     },
     {
       "url": "/play/misinformation/feedback.js",
@@ -169,8 +179,8 @@
     },
     {
       "url": "/play/misinformation/index.html",
-      "revision": "aeb0a7be510d29fff7ea0f451ff446906265e638",
-      "bytes": 7320
+      "revision": "c8ed178c096f3377104409d9de414b6e4d1666be",
+      "bytes": 7885
     },
     {
       "url": "/play/misinformation/journey.css",
@@ -179,8 +189,13 @@
     },
     {
       "url": "/play/misinformation/judge.js",
-      "revision": "fd6252f028c2ed457dc526aad78a5004a2f78fba",
-      "bytes": 3057
+      "revision": "2e244ec71e9c799ed5dc078555a7c6f1f616eddd",
+      "bytes": 3784
+    },
+    {
+      "url": "/play/misinformation/learning.js",
+      "revision": "f8676e6b2d3d5484fc9809465fb7ac250a38af68",
+      "bytes": 1969
     },
     {
       "url": "/play/misinformation/minimap.css",
@@ -189,8 +204,8 @@
     },
     {
       "url": "/play/misinformation/minimap.js",
-      "revision": "935981a24ed4b5503d438c5938278588fa3dbffd",
-      "bytes": 7065
+      "revision": "f0bc13cc2c628c0c282762f4bad0f9f4eb592fca",
+      "bytes": 7053
     },
     {
       "url": "/play/misinformation/question-flow.js",
@@ -199,8 +214,8 @@
     },
     {
       "url": "/play/misinformation/scene.js",
-      "revision": "d8e052d5d3b9a3b6770a8441c1a11e31ba595634",
-      "bytes": 6781
+      "revision": "2e5437dfd4cb2c717672847a316677458ae08134",
+      "bytes": 8784
     },
     {
       "url": "/play/misinformation/scores.js",
@@ -532,5 +547,5 @@
     "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "5b0a940219eb573f66ca"
+  "version": "c483adad2b7d481bdfb5"
 }
