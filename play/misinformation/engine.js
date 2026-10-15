@@ -44,8 +44,28 @@ export function skip(state) {
 }
 export function selectQuestion(state, questions, random=Math.random) {
   const pool=questions.filter(q=>q.band<=bandIndex(state.distance));
-  let unseen=pool.filter(q=>!state.seen.includes(q.id));
-  let recycled=false;
-  if(!unseen.length) { unseen=pool; recycled=true; }
-  return {question:unseen[Math.min(unseen.length-1,Math.floor(random()*unseen.length))],recycled};
+  if(!pool.length) throw new Error('No unlocked questions available.');
+  // A sparse catalog falls back to its deepest unlocked layer. Surface
+  // leftovers must not obscure a newly reached layer's questions.
+  const deepest=Math.max(...pool.map(q=>q.band));
+  const current=pool.filter(q=>q.band===deepest);
+  const previous=pool.filter(q=>q.band===deepest-1);
+  const focus=[...current,...previous];
+  const seen=new Set(state.seen);
+  const recent=new Set(state.history.slice(-3).map(h=>h.question));
+  const pick=(options,recycled)=>({question:options[Math.min(options.length-1,Math.floor(random()*options.length))],recycled});
+  for(const group of [current,previous]) {
+    // The app resets cycle-seen on recycle; retain the cooldown across that
+    // reset instead of treating a just-played prompt as genuinely fresh.
+    const unseen=group.filter(q=>!seen.has(q.id)&&!recent.has(q.id));
+    if(unseen.length) return pick(unseen,false);
+  }
+  let replay=focus.filter(q=>!recent.has(q.id));
+  if(!replay.length) {
+    // Tiny catalogs cannot avoid all three recent IDs, but can still avoid
+    // an immediate repeat whenever a second prompt exists.
+    replay=focus.filter(q=>q.id!==state.history.at(-1)?.question);
+    if(!replay.length) replay=focus;
+  }
+  return pick(replay,true);
 }

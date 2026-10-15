@@ -11,3 +11,53 @@ test('skips disqualify clearance without dealing classification damage',()=>{con
 test('every prompt has multiple accepted answers, a top tier, and sources',()=>{for(const q of questions){assert.ok(q.answers.length>1);assert.ok(q.answers.some(a=>a.tier===5));for(const a of q.answers){const s=subjects.find(s=>s.id===a.id);assert.ok(s?.source.startsWith('https://'));assert.ok(['claim','event'].includes(s.classification));}}});
 test('deeper pools unlock with distance; finite bank recycling is explicit',()=>{let s=freshRun();assert.ok(selectQuestion(s,questions,()=>0).question.band===0);s.distance=80000;const unlocked=questions.filter(q=>q.band<=6);s.seen=unlocked.map(q=>q.id);assert.equal(selectQuestion(s,questions).recycled,true);});
 test('a completed question cannot be classified twice',()=>{const s=answer(freshRun());assert.throws(()=>classify(s,rare,question,'claim'));});
+
+const layered=Array.from({length:8},(_,band)=>Array.from({length:3},(_,i)=>({id:`layer-${band}-${i}`,band}))).flat();
+test('fresh current-depth questions outrank unseen surface leftovers',()=>{
+ const s={...freshRun(),distance:80000};
+ for(const random of [()=>0,()=>0.999])assert.equal(selectQuestion(s,layered,random).question.band,6);
+ s.seen=layered.filter(q=>q.band===6).map(q=>q.id);
+ assert.equal(selectQuestion(s,layered,()=>0).question.band,5);
+});
+test('three distinct current-depth prompts are reached before revisiting the previous layer',()=>{
+ for(let band=0;band<8;band++){
+  const s={...freshRun(),distance:band*12500},ids=[];
+  for(let i=0;i<3;i++){
+   const selected=selectQuestion(s,layered,()=>0);
+   assert.equal(selected.question.band,band);assert.equal(selected.recycled,false);
+   ids.push(selected.question.id);s.seen.push(selected.question.id);s.history.push({question:selected.question.id});
+  }
+  assert.equal(new Set(ids).size,3);
+  if(band>0)assert.equal(selectQuestion(s,layered,()=>0).question.band,band-1);
+ }
+});
+test('replay stays in current/previous layers and excludes the last three when alternatives exist',()=>{
+ const s={...freshRun(),distance:50000,seen:layered.map(q=>q.id),
+  history:[{question:'layer-4-0'},{question:'layer-4-1'},{question:'layer-3-0'}]};
+ for(const random of [()=>0,()=>0.999]){
+  const selected=selectQuestion(s,layered,random);
+  assert.equal(selected.recycled,true);assert.ok([3,4].includes(selected.question.band));
+  assert.ok(!s.history.some(h=>h.question===selected.question.id));
+ }
+});
+test('app-style cycle resets preserve the cooldown and unlimited deep replay',()=>{
+ const s={...freshRun(),distance:95000},recent=[];
+ for(let i=0;i<60;i++){
+  const selected=selectQuestion(s,layered,()=>0);
+  assert.ok([6,7].includes(selected.question.band));
+  assert.ok(!recent.includes(selected.question.id));
+  if(selected.recycled)s.seen=[];
+  s.seen.push(selected.question.id);s.history.push({question:selected.question.id});
+  recent.push(selected.question.id);if(recent.length>3)recent.shift();
+ }
+});
+test('missing current band falls back to deepest unlocked content, never locked content',()=>{
+ const sparse=[{id:'surface',band:0},{id:'deep',band:4},{id:'locked',band:7}];
+ assert.equal(selectQuestion({...freshRun(),distance:75000},sparse,()=>0).question.id,'deep');
+ assert.throws(()=>selectQuestion(freshRun(),[],()=>0),/No unlocked/);
+});
+test('a tiny recycled pool avoids an immediate repeat when another question exists',()=>{
+ const tiny=[{id:'one',band:0},{id:'two',band:0}];
+ const s={...freshRun(),seen:['one','two'],history:[{question:'one'},{question:'two'}]};
+ assert.equal(selectQuestion(s,tiny,()=>0.999).question.id,'one');
+});

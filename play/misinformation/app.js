@@ -29,7 +29,16 @@ function scoreboardHtml(){
 }
 function restore(){
  try{const s=JSON.parse(localStorage.getItem(STORAGE));
-  if(s?.version===1 && ['ready','answer','classify','result','dead','escaped'].includes(s.phase) && Number.isFinite(s.distance) && s.distance>=0&&s.distance<=STATION&&Number.isInteger(s.hits)&&s.hits>=0&&s.hits<=3&&Array.isArray(s.history)&&Array.isArray(s.seen)&&typeof s.pristine==='boolean'&&Number.isFinite(s.score)&&Number.isInteger(s.rounds)&&s.rounds>=0&&(s.phase==='ready'||questions.some(q=>q.id===s.question))&&(s.phase!=='classify'||questions.find(q=>q.id===s.question)?.answers.some(a=>a.id===s.answer))&&(s.phase!=='answer'||Number.isFinite(s.deadline)))return s;
+  if(s?.version===1 && ['ready','answer','classify','result','dead','escaped'].includes(s.phase)
+   &&Number.isFinite(s.distance)&&s.distance>=0&&s.distance<=STATION
+   &&Number.isInteger(s.hits)&&s.hits>=0&&s.hits<=3
+   &&Array.isArray(s.history)&&Array.isArray(s.seen)&&typeof s.pristine==='boolean'
+   &&Number.isSafeInteger(s.score)&&s.score>=0&&Number.isSafeInteger(s.rounds)&&s.rounds>=0
+   &&(s.phase==='dead'?s.hits===3:s.hits<3)
+   &&(s.phase!=='escaped'||(s.distance===STATION&&s.pristine))
+   &&(s.phase==='ready'||questions.some(q=>q.id===s.question))
+   &&(s.phase!=='classify'||questions.find(q=>q.id===s.question)?.answers.some(a=>a.id===s.answer))
+   &&(s.phase!=='answer'||Number.isFinite(s.deadline)))return s;
  }catch{storageAvailable=false;}return freshRun();
 }
 function save(){try{localStorage.setItem(STORAGE,JSON.stringify(state));}catch{storageAvailable=false;}}
@@ -53,7 +62,7 @@ function sourceLink(s){return `<a class="source-link" href="${safe(s.source)}" t
 function render({focus=false}={}){
  if(['dead','escaped'].includes(state.phase))finalizeFlight(state.phase);
  hud();let html='';
- if(state.phase==='ready')html=`<div class="screen-label"><span>FLIGHT BRIEFING</span><span>NO DAILY LIMIT</span></div><h2>Your employer<br>would prefer<br>you stayed.</h2><p class="lede">Escape MOM Inc. by naming rare answers, then separating documented history from unsupported conspiracy claims.</p><div class="preflight"><span><b>25s</b>TO NAME IT</span><span><b>3 hits</b>UNTIL RECALL</span><span><b>∞</b>RESTARTS</span></div><button class="primary warm" data-action="launch">BEGIN UNAUTHORIZED ASCENT <span>↑</span></button><p style="font-size:10px">Historical violence and abuse are discussed without graphic detail. Sample archive · 12 subjects · editorial scores.</p>`;
+ if(state.phase==='ready')html=`<div class="screen-label"><span>FLIGHT BRIEFING</span><span>NO DAILY LIMIT</span></div><h2>Your employer<br>would prefer<br>you stayed.</h2><p class="lede">Escape MOM Inc. by naming rare answers, then separating documented history from unsupported conspiracy claims.</p><div class="preflight"><span><b>25s</b>TO NAME IT</span><span><b>3 hits</b>UNTIL RECALL</span><span><b>∞</b>RESTARTS</span></div><button class="primary warm" data-action="launch">BEGIN UNAUTHORIZED ASCENT <span>↑</span></button><p style="font-size:10px">Historical violence and abuse are discussed without graphic detail. ${subjects.length} subjects · ${questions.length} transmissions · editorial scores.</p>`;
  if(state.phase==='answer'){
   const question=q();html=`<div class="screen-label"><span>TRANSMISSION ${String(state.rounds+1).padStart(3,'0')} / NAME IT</span><span id="timer" class="timer"></span></div><h2>${safe(question.prompt)}</h2><p>Rare valid answers launch farther. Only a <b>100-point answer</b> preserves station clearance.</p>${!state.pristine?'<p class="notice">This is now a practice flight. Restart for an escape attempt.</p>':''}<form class="answer-form" id="answer-form"><label for="answer">YOUR ANSWER</label><input id="answer" name="answer" aria-describedby="answer-feedback" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="120" placeholder="Think beyond the obvious…" required><p id="answer-feedback" aria-live="polite" class="danger">${safe(feedback)}</p><button class="primary" type="submit">TRANSMIT ANSWER <span>↑</span></button></form>${suggestion?`<button class="secondary" data-action="confirm" style="width:100%;margin-top:10px">Did you mean ${safe(suggestion.name)}? Confirm ↵</button>`:''}<div class="answer-tools"><button class="text-button" data-action="hint">${showHint?'Hide clue':'Need a clue?'}</button><button class="text-button" data-action="skip">Pass · 0 points</button></div>${showHint?`<p class="hint">${safe(question.hint)}</p>`:''}`;
  }
@@ -84,7 +93,7 @@ function submit(event){
  event.preventDefault();if(state.phase!=='answer')return;if(Date.now()>=state.deadline){state=skip(state);render({focus:true});return;}
  const value=$('#answer').value.trim(),matched=lookup(value,q(),subjects);if(matched){commit(matched);return;}
  const norm=normalize(value);suggestion=norm.length>=5?subjects.find(s=>q().answers.some(a=>a.id===s.id)&&[s.name,...s.aliases].some(alias=>near(norm,normalize(alias)))):null;
- feedback=suggestion?'Possible typo. Confirm the proposed name below.':'No matching answer in this sample prompt. Try again; the clock is still running.';
+ feedback=suggestion?'Possible typo. Confirm the proposed name below.':'No matching answer for this transmission. Try again; the clock is still running.';
  const previous=value;render();const input=$('#answer');if(input){input.value=previous;input.focus({preventScroll:true});}
 }
 function tick(){
@@ -107,7 +116,7 @@ $('#screen').addEventListener('click',e=>{
 });
 function restart(){if(state.phase!=='ready')finalizeFlight(['dead','escaped'].includes(state.phase)?state.phase:'abandoned');state=freshRun();runMetadata();menuView=null;suggestion=null;feedback='';render({focus:true});}
 $('#restart').addEventListener('click',restart);
-function archive(){const query=normalize($('#archive-search').value);const list=subjects.filter(s=>normalize(`${s.name} ${s.category} ${s.statement}`).includes(query));$('#archive-list').innerHTML=list.length?list.map(s=>`<details class="archive-item"><summary>${safe(s.name)}<small>${safe(s.category).toUpperCase()}</small></summary><p><b>Exact statement:</b> ${safe(s.statement)}</p><p>${safe(s.explanation)}</p>${sourceLink(s)}</details>`).join(''):'<p>No matching sample entries.</p>';}
+function archive(){const query=normalize($('#archive-search').value);const list=subjects.filter(s=>normalize(`${s.name} ${s.category} ${s.statement}`).includes(query));$('#archive-list').innerHTML=list.length?list.map(s=>`<details class="archive-item"><summary>${safe(s.name)}<small>${safe(s.category).toUpperCase()}</small></summary><p><b>Exact statement:</b> ${safe(s.statement)}</p><p>${safe(s.explanation)}</p>${sourceLink(s)}</details>`).join(''):'<p>No matching archive entries.</p>';}
 $('#archive-toggle').addEventListener('click',()=>{$('#archive').hidden=!$('#archive').hidden;if(!$('#archive').hidden){archive();$('#archive').scrollIntoView({behavior:'smooth',block:'start'});$('#archive-search').focus({preventScroll:true});}});
 $('#archive-close').addEventListener('click',()=>{$('#archive').hidden=true;$('#archive-toggle').focus();});
 $('#archive-search').addEventListener('input',archive);

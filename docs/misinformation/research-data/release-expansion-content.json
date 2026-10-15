@@ -1,0 +1,941 @@
+{
+  "title": "Mom's Misinformation Machine: source-checked release expansion proposals",
+  "version": 1,
+  "reviewed_at": "2026-10-14",
+  "scope": "21 additional unique subjects beyond the twelve-card starter. Original concise wording, source-backed precise propositions; not a comprehensive conspiracy catalog.",
+  "classification_policy": "documented maps to Documented; unsupported and contradicted map to Unsupported claim. Preserve exact evidence status in explanations; no disputed or unresolved statements included.",
+  "release_policy": "Source-checked proposals for authorized release integration by the release captain; no additional human approval gate is imposed here.",
+  "rarity_policy": "Editorial iceberg tiers are proposals; no real player answer-frequency data is claimed.",
+  "counts": {
+    "documented": 11,
+    "unsupported": 4,
+    "contradicted": 6
+  },
+  "sources": [
+    {
+      "id": "release-source-face-mars",
+      "title": "Geologic Face on Mars Formation",
+      "publisher": "NASA/JPL-Caltech",
+      "url": "https://science.nasa.gov/resource/geologic-face-on-mars-formation/",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "Linked verification only; original card text; no source media or prose copied. Item-level source rights remain separate.",
+      "licensing_url": null,
+      "reuse_policy": "Use original statements and explanations with linked attribution. Do not assume linked photographs, scans, books, or museum assets are freely reusable."
+    },
+    {
+      "id": "release-source-bermuda-triangle",
+      "title": "What is the Bermuda Triangle?",
+      "publisher": "US National Oceanic and Atmospheric Administration",
+      "url": "https://oceanservice.noaa.gov/facts/bermudatri.html",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "Linked verification only; original card text; no source media or prose copied. Item-level source rights remain separate.",
+      "licensing_url": null,
+      "reuse_policy": "Use original statements and explanations with linked attribution. Do not assume linked photographs, scans, books, or museum assets are freely reusable."
+    },
+    {
+      "id": "release-source-haarp",
+      "title": "HAARP FAQ",
+      "publisher": "University of Alaska Fairbanks Geophysical Institute",
+      "url": "https://haarp.gi.alaska.edu/faq",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "Linked verification only; original card text; no source media or prose copied. Item-level source rights remain separate.",
+      "licensing_url": null,
+      "reuse_policy": "Use original statements and explanations with linked attribution. Do not assume linked photographs, scans, books, or museum assets are freely reusable."
+    },
+    {
+      "id": "release-source-philadelphia-experiment",
+      "title": "Philadelphia Experiment",
+      "publisher": "US Naval History and Heritage Command",
+      "url": "https://www.history.navy.mil/research/library/online-reading-room/title-list-alphabetically/p/philadelphia-experiment.html",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "Linked verification only; original card text; no source media or prose copied. Item-level source rights remain separate.",
+      "licensing_url": null,
+      "reuse_policy": "Use original statements and explanations with linked attribution. Do not assume linked photographs, scans, books, or museum assets are freely reusable."
+    },
+    {
+      "id": "release-source-lhc-doomsday",
+      "title": "Large Hadron Collider FAQ",
+      "publisher": "CERN",
+      "url": "https://home.cern/resources/faqs/large-hadron-collider-dangerous",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "Linked verification only; original card text; no source media or prose copied. Item-level source rights remain separate.",
+      "licensing_url": null,
+      "reuse_policy": "Use original statements and explanations with linked attribution. Do not assume linked photographs, scans, books, or museum assets are freely reusable."
+    },
+    {
+      "id": "release-source-flat-earth",
+      "title": "How Do We Know the Earth Isn\u2019t Flat? We Asked a NASA Expert: Episode 53",
+      "publisher": "NASA",
+      "url": "https://www.nasa.gov/earth/how-do-we-know-the-earth-isnt-flat-we-asked-a-nasa-expert-episode-53/",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "Linked verification only; original card text; no source media or prose copied. Item-level source rights remain separate.",
+      "licensing_url": null,
+      "reuse_policy": "Use original statements and explanations with linked attribution. Do not assume linked photographs, scans, books, or museum assets are freely reusable."
+    },
+    {
+      "id": "release-source-hollow-earth",
+      "title": "What do we know about the interior of the Earth?",
+      "publisher": "US Geological Survey",
+      "url": "https://www.usgs.gov/media/audio/what-do-we-know-about-interior-earth",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "Linked verification only; original card text; no source media or prose copied. Item-level source rights remain separate.",
+      "licensing_url": null,
+      "reuse_policy": "Use original statements and explanations with linked attribution. Do not assume linked photographs, scans, books, or museum assets are freely reusable."
+    },
+    {
+      "id": "release-source-hollow-moon",
+      "title": "Moon Composition and Structure",
+      "publisher": "NASA",
+      "url": "https://science.nasa.gov/moon/composition/",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "Linked verification only; original card text; no source media or prose copied. Item-level source rights remain separate.",
+      "licensing_url": null,
+      "reuse_policy": "Use original statements and explanations with linked attribution. Do not assume linked photographs, scans, books, or museum assets are freely reusable."
+    },
+    {
+      "id": "release-source-mars-doorway",
+      "title": "Door-Shaped Fracture Spotted by Curiosity at East Cliffs",
+      "publisher": "NASA/JPL-Caltech/MSSS",
+      "url": "https://science.nasa.gov/photojournal/door-shaped-fracture-spotted-by-curiosity-at-east-cliffs/",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "Linked verification only; original card text; no source media or prose copied. Item-level source rights remain separate.",
+      "licensing_url": null,
+      "reuse_policy": "Use original statements and explanations with linked attribution. Do not assume linked photographs, scans, books, or museum assets are freely reusable."
+    },
+    {
+      "id": "release-source-roswell-alien-craft",
+      "title": "Report of Air Force Research Regarding the Roswell Incident",
+      "publisher": "US Air Force",
+      "url": "https://www.nsa.gov/portals/75/documents/news-features/declassified-documents/ufo/report_af_roswell.pdf",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "Linked verification only; original card text; no source media or prose copied. Item-level source rights remain separate.",
+      "licensing_url": null,
+      "reuse_policy": "Use original statements and explanations with linked attribution. Do not assume linked photographs, scans, books, or museum assets are freely reusable."
+    },
+    {
+      "id": "release-source-acoustikitty",
+      "title": "Natural Spies: Animals in Espionage",
+      "publisher": "US Central Intelligence Agency",
+      "url": "https://www.cia.gov/stories/story/natural-spies-animals-in-espionage/",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "Linked verification only; original card text; no source media or prose copied. Item-level source rights remain separate.",
+      "licensing_url": null,
+      "reuse_policy": "Use original statements and explanations with linked attribution. Do not assume linked photographs, scans, books, or museum assets are freely reusable."
+    },
+    {
+      "id": "release-source-stargate",
+      "title": "Ask Molly: Did CIA Really Study Psychic Powers?",
+      "publisher": "US Central Intelligence Agency",
+      "url": "https://www.cia.gov/stories/story/ask-molly-did-cia-really-study-psychic-powers/",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "Linked verification only; original card text; no source media or prose copied. Item-level source rights remain separate.",
+      "licensing_url": null,
+      "reuse_policy": "Use original statements and explanations with linked attribution. Do not assume linked photographs, scans, books, or museum assets are freely reusable."
+    },
+    {
+      "id": "release-source-azorian",
+      "title": "Project AZORIAN",
+      "publisher": "US Central Intelligence Agency",
+      "url": "https://www.cia.gov/legacy/museum/exhibit/project-azorian/",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "Linked verification only; original card text; no source media or prose copied. Item-level source rights remain separate.",
+      "licensing_url": null,
+      "reuse_policy": "Use original statements and explanations with linked attribution. Do not assume linked photographs, scans, books, or museum assets are freely reusable."
+    },
+    {
+      "id": "release-source-stormfury",
+      "title": "Fact check: Debunking weather modification claims",
+      "publisher": "US National Oceanic and Atmospheric Administration",
+      "url": "https://www.noaa.gov/news/fact-check-debunking-weather-modification-claims",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "Linked verification only; original card text; no source media or prose copied. Item-level source rights remain separate.",
+      "licensing_url": null,
+      "reuse_policy": "Use original statements and explanations with linked attribution. Do not assume linked photographs, scans, books, or museum assets are freely reusable."
+    },
+    {
+      "id": "release-source-saturn-hexagon",
+      "title": "Saturn\u2019s Streaming Hexagon Storm",
+      "publisher": "NASA/JPL-Caltech",
+      "url": "https://science.nasa.gov/resource/saturns-streaming-hexagon-storm/",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "Linked verification only; original card text; no source media or prose copied. Item-level source rights remain separate.",
+      "licensing_url": null,
+      "reuse_policy": "Use original statements and explanations with linked attribution. Do not assume linked photographs, scans, books, or museum assets are freely reusable."
+    },
+    {
+      "id": "release-source-northwoods",
+      "title": "Justification for US Military Intervention in Cuba, March 13, 1962",
+      "publisher": "US Joint Chiefs of Staff; primary document hosted by National Security Archive, George Washington University",
+      "url": "https://nsarchive2.gwu.edu/news/20010430/northwoods.pdf",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "Linked verification only; original card text; no source media or prose copied. Item-level source rights remain separate.",
+      "licensing_url": null,
+      "reuse_policy": "Use original statements and explanations with linked attribution. Do not assume linked photographs, scans, books, or museum assets are freely reusable."
+    },
+    {
+      "id": "release-source-boston-molasses",
+      "title": "100 years ago today: Molasses crashes through Boston\u2019s North End",
+      "publisher": "City of Boston / Boston City Archives",
+      "url": "https://www.boston.gov/news/100-years-ago-today-molasses-crashes-through-bostons-north-end",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "Linked verification only; original card text; no source media or prose copied. Item-level source rights remain separate.",
+      "licensing_url": null,
+      "reuse_policy": "Use original statements and explanations with linked attribution. Do not assume linked photographs, scans, books, or museum assets are freely reusable."
+    },
+    {
+      "id": "release-source-lake-nyos",
+      "title": "The 21 August 1986 Lake Nyos gas disaster: final report",
+      "publisher": "US Geological Survey",
+      "url": "https://pubs.usgs.gov/of/1987/0097/report.pdf",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "Linked verification only; original card text; no source media or prose copied. Item-level source rights remain separate.",
+      "licensing_url": null,
+      "reuse_policy": "Use original statements and explanations with linked attribution. Do not assume linked photographs, scans, books, or museum assets are freely reusable."
+    },
+    {
+      "id": "release-source-project-xray",
+      "title": "Bat Bomb: World War II\u2019s Other Secret Weapon",
+      "publisher": "University of Texas Press; account by project participant Jack Couffer",
+      "url": "https://utpress.utexas.edu/9780292718722/",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "Linked verification only; original card text; no source media or prose copied. Item-level source rights remain separate.",
+      "licensing_url": null,
+      "reuse_policy": "Use original statements and explanations with linked attribution. Do not assume linked photographs, scans, books, or museum assets are freely reusable."
+    },
+    {
+      "id": "release-source-paperclip",
+      "title": "Implementation of the Nazi War Crimes Disclosure Act: interim report",
+      "publisher": "US National Archives",
+      "url": "https://www.archives.gov/iwg/reports/nazi-war-crimes-interim-report-october-1999",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "Linked verification only; original card text; no source media or prose copied. Item-level source rights remain separate.",
+      "licensing_url": null,
+      "reuse_policy": "Use original statements and explanations with linked attribution. Do not assume linked photographs, scans, books, or museum assets are freely reusable."
+    },
+    {
+      "id": "release-source-project-blue-book",
+      "title": "Unidentified Flying Objects and Air Force Project Blue Book",
+      "publisher": "US Air Force",
+      "url": "https://www.af.mil/About-Us/Fact-Sheets/Display/Article/104590/unidentified-flying-objects-and-air-force-project-blue-book/",
+      "retrieved_at": "2026-10-14",
+      "licensing_status": "Linked verification only; original card text; no source media or prose copied. Item-level source rights remain separate.",
+      "licensing_url": null,
+      "reuse_policy": "Use original statements and explanations with linked attribution. Do not assume linked photographs, scans, books, or museum assets are freely reusable."
+    }
+  ],
+  "subjects": [
+    {
+      "id": "face-mars",
+      "canonical_name": "Face on Mars",
+      "category": "conspiracy_claim",
+      "aliases": [
+        "Face on Mars",
+        "Cydonia face",
+        "Martian face"
+      ],
+      "proposed_iceberg_tier": 4,
+      "tier_basis": "Original editorial familiarity proposal, independent of truth, severity, and empirical rarity.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "release-claim-face-mars",
+        "exact_statement": "The face-shaped formation in Cydonia on Mars is an artificial monument built by an alien civilization.",
+        "evidence_status": "unsupported",
+        "binary_classification": "unsupported",
+        "historical_conspiracy": false,
+        "evidence_summary": "NASA identifies the feature as an eroded rock formation shaped by natural processes; shadows and image transmission errors helped create the face-like appearance.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "sources": [
+          {
+            "source_id": "release-source-face-mars",
+            "evidence_role": "contradicts_or_explains",
+            "locator": "Planetary-geologist explanation of natural origin; corroborating high-resolution images: https://www.jpl.nasa.gov/images/pia03225-highest-resolution-view-of-face-on-mars/"
+          }
+        ],
+        "eligibility": "research_only"
+      },
+      "integration_constraints": "Grade this exact statement; do not replace it with a topic-level verdict. Keep evidence distinction in the reveal. Rarity and scoring are separate game design data.",
+      "source_check_state": "verified_for_release_integration"
+    },
+    {
+      "id": "bermuda-triangle",
+      "canonical_name": "Bermuda Triangle",
+      "category": "conspiracy_claim",
+      "aliases": [
+        "Bermuda Triangle",
+        "Devils Triangle",
+        "Devil's Triangle"
+      ],
+      "proposed_iceberg_tier": 2,
+      "tier_basis": "Original editorial familiarity proposal, independent of truth, severity, and empirical rarity.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "release-claim-bermuda-triangle",
+        "exact_statement": "A supernatural force in the Bermuda Triangle makes ships and aircraft disappear more frequently than in comparable busy ocean areas.",
+        "evidence_status": "unsupported",
+        "binary_classification": "unsupported",
+        "historical_conspiracy": false,
+        "evidence_summary": "NOAA reports no evidence of an unusually high disappearance rate. A real disappearance does not establish a supernatural cause.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "sources": [
+          {
+            "source_id": "release-source-bermuda-triangle",
+            "evidence_role": "contradicts_or_explains",
+            "locator": "NOAA conclusion on comparative disappearance frequency"
+          }
+        ],
+        "eligibility": "research_only"
+      },
+      "integration_constraints": "Grade this exact statement; do not replace it with a topic-level verdict. Keep evidence distinction in the reveal. Rarity and scoring are separate game design data.",
+      "source_check_state": "verified_for_release_integration"
+    },
+    {
+      "id": "haarp",
+      "canonical_name": "HAARP weather-control claim",
+      "category": "conspiracy_claim",
+      "aliases": [
+        "HAARP",
+        "High-frequency Active Auroral Research Program"
+      ],
+      "proposed_iceberg_tier": 4,
+      "tier_basis": "Original editorial familiarity proposal, independent of truth, severity, and empirical rarity.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "release-claim-haarp",
+        "exact_statement": "HAARP can control surface weather by heating the parts of the atmosphere where storms form.",
+        "evidence_status": "contradicted",
+        "binary_classification": "unsupported",
+        "historical_conspiracy": false,
+        "evidence_summary": "The facility transmits radio waves that interact with the ionosphere. Its operating frequencies do not heat the lower atmospheric layers responsible for weather.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "sources": [
+          {
+            "source_id": "release-source-haarp",
+            "evidence_role": "contradicts_or_explains",
+            "locator": "FAQ: Can HAARP Control or Manipulate the Weather?"
+          }
+        ],
+        "eligibility": "research_only"
+      },
+      "integration_constraints": "Grade this exact statement; do not replace it with a topic-level verdict. Keep evidence distinction in the reveal. Rarity and scoring are separate game design data.",
+      "source_check_state": "verified_for_release_integration"
+    },
+    {
+      "id": "philadelphia-experiment",
+      "canonical_name": "Philadelphia Experiment",
+      "category": "conspiracy_claim",
+      "aliases": [
+        "Philadelphia Experiment",
+        "Project Rainbow",
+        "USS Eldridge teleportation"
+      ],
+      "proposed_iceberg_tier": 5,
+      "tier_basis": "Original editorial familiarity proposal, independent of truth, severity, and empirical rarity.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "release-claim-philadelphia-experiment",
+        "exact_statement": "In 1943, the US Navy made USS Eldridge optically invisible and teleported it between Philadelphia and Norfolk.",
+        "evidence_status": "unsupported",
+        "binary_classification": "unsupported",
+        "historical_conspiracy": false,
+        "evidence_summary": "Navy archivists found no confirming records and describe the documented movements of Eldridge. Magnetic degaussing is real but does not make a ship invisible to human eyes or teleport it.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "sources": [
+          {
+            "source_id": "release-source-philadelphia-experiment",
+            "evidence_role": "contradicts_or_explains",
+            "locator": "Archive search, ship itinerary, and distinction from degaussing"
+          }
+        ],
+        "eligibility": "research_only"
+      },
+      "integration_constraints": "Grade this exact statement; do not replace it with a topic-level verdict. Keep evidence distinction in the reveal. Rarity and scoring are separate game design data.",
+      "source_check_state": "verified_for_release_integration"
+    },
+    {
+      "id": "lhc-doomsday",
+      "canonical_name": "LHC doomsday black-hole claim",
+      "category": "conspiracy_claim",
+      "aliases": [
+        "LHC doomsday",
+        "CERN black hole",
+        "Large Hadron Collider black hole"
+      ],
+      "proposed_iceberg_tier": 3,
+      "tier_basis": "Original editorial familiarity proposal, independent of truth, severity, and empirical rarity.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "release-claim-lhc-doomsday",
+        "exact_statement": "The Large Hadron Collider can create a stable black hole that grows until it swallows Earth.",
+        "evidence_status": "contradicted",
+        "binary_classification": "unsupported",
+        "historical_conspiracy": false,
+        "evidence_summary": "CERN safety assessments reject this doomsday scenario. In speculative models that allow microscopic black holes, they would decay immediately rather than grow into a planet-consuming object.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "sources": [
+          {
+            "source_id": "release-source-lhc-doomsday",
+            "evidence_role": "contradicts_or_explains",
+            "locator": "FAQ: Can the LHC create a black hole?"
+          }
+        ],
+        "eligibility": "research_only"
+      },
+      "integration_constraints": "Grade this exact statement; do not replace it with a topic-level verdict. Keep evidence distinction in the reveal. Rarity and scoring are separate game design data.",
+      "source_check_state": "verified_for_release_integration"
+    },
+    {
+      "id": "flat-earth",
+      "canonical_name": "Flat Earth",
+      "category": "conspiracy_claim",
+      "aliases": [
+        "Flat Earth",
+        "flat-earth theory",
+        "flat Earth model"
+      ],
+      "proposed_iceberg_tier": 1,
+      "tier_basis": "Original editorial familiarity proposal, independent of truth, severity, and empirical rarity.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "release-claim-flat-earth",
+        "exact_statement": "Earth is physically a flat disc rather than an approximately spherical planet.",
+        "evidence_status": "contradicted",
+        "binary_classification": "unsupported",
+        "historical_conspiracy": false,
+        "evidence_summary": "Observations including circumnavigation, lunar eclipses, and spaceflight establish the round Earth. Flat maps are projections, not evidence of a disc-shaped planet.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "sources": [
+          {
+            "source_id": "release-source-flat-earth",
+            "evidence_role": "contradicts_or_explains",
+            "locator": "NASA explanation of observable evidence for Earth shape"
+          }
+        ],
+        "eligibility": "research_only"
+      },
+      "integration_constraints": "Grade this exact statement; do not replace it with a topic-level verdict. Keep evidence distinction in the reveal. Rarity and scoring are separate game design data.",
+      "source_check_state": "verified_for_release_integration"
+    },
+    {
+      "id": "hollow-earth",
+      "canonical_name": "Hollow Earth",
+      "category": "conspiracy_claim",
+      "aliases": [
+        "Hollow Earth",
+        "hollow-earth theory"
+      ],
+      "proposed_iceberg_tier": 4,
+      "tier_basis": "Original editorial familiarity proposal, independent of truth, severity, and empirical rarity.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "release-claim-hollow-earth",
+        "exact_statement": "Earth is an empty shell beneath its crust, with no mantle or metallic core.",
+        "evidence_status": "contradicted",
+        "binary_classification": "unsupported",
+        "historical_conspiracy": false,
+        "evidence_summary": "Seismic and other geophysical evidence establishes a mantle, liquid outer core, and solid inner core. Caverns near the surface do not make the planet hollow.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "sources": [
+          {
+            "source_id": "release-source-hollow-earth",
+            "evidence_role": "contradicts_or_explains",
+            "locator": "USGS description of four main layers and core state"
+          }
+        ],
+        "eligibility": "research_only"
+      },
+      "integration_constraints": "Grade this exact statement; do not replace it with a topic-level verdict. Keep evidence distinction in the reveal. Rarity and scoring are separate game design data.",
+      "source_check_state": "verified_for_release_integration"
+    },
+    {
+      "id": "hollow-moon",
+      "canonical_name": "Hollow Moon",
+      "category": "conspiracy_claim",
+      "aliases": [
+        "Hollow Moon",
+        "Spaceship Moon",
+        "hollow-moon theory"
+      ],
+      "proposed_iceberg_tier": 5,
+      "tier_basis": "Original editorial familiarity proposal, independent of truth, severity, and empirical rarity.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "release-claim-hollow-moon",
+        "exact_statement": "The Moon is an empty artificial shell with no rocky mantle or metallic core.",
+        "evidence_status": "contradicted",
+        "binary_classification": "unsupported",
+        "historical_conspiracy": false,
+        "evidence_summary": "Lunar measurements support a layered body with a crust, mantle, and core. This statement grades the hollow-shell assertion, not whether the Moon produces long-lasting seismic vibrations.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "sources": [
+          {
+            "source_id": "release-source-hollow-moon",
+            "evidence_role": "contradicts_or_explains",
+            "locator": "Sections describing lunar core, mantle, and crust"
+          }
+        ],
+        "eligibility": "research_only"
+      },
+      "integration_constraints": "Grade this exact statement; do not replace it with a topic-level verdict. Keep evidence distinction in the reveal. Rarity and scoring are separate game design data.",
+      "source_check_state": "verified_for_release_integration"
+    },
+    {
+      "id": "mars-doorway",
+      "canonical_name": "Mars doorway claim",
+      "category": "conspiracy_claim",
+      "aliases": [
+        "Mars doorway",
+        "door on Mars",
+        "Curiosity doorway",
+        "East Cliffs doorway"
+      ],
+      "proposed_iceberg_tier": 4,
+      "tier_basis": "Original editorial familiarity proposal, independent of truth, severity, and empirical rarity.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "release-claim-mars-doorway",
+        "exact_statement": "The doorway-like opening Curiosity photographed at East Cliffs in May 2022 was constructed by a Martian civilization.",
+        "evidence_status": "contradicted",
+        "binary_classification": "unsupported",
+        "historical_conspiracy": false,
+        "evidence_summary": "NASA describes the opening as a small, naturally occurring fracture in bedrock. Its doorway-like outline is not evidence of an engineered entrance.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "sources": [
+          {
+            "source_id": "release-source-mars-doorway",
+            "evidence_role": "contradicts_or_explains",
+            "locator": "Description: natural open fracture about 30 cm tall and 40 cm wide"
+          }
+        ],
+        "eligibility": "research_only"
+      },
+      "integration_constraints": "Grade this exact statement; do not replace it with a topic-level verdict. Keep evidence distinction in the reveal. Rarity and scoring are separate game design data.",
+      "source_check_state": "verified_for_release_integration"
+    },
+    {
+      "id": "roswell-alien-craft",
+      "canonical_name": "Roswell extraterrestrial-craft claim",
+      "category": "conspiracy_claim",
+      "aliases": [
+        "Roswell",
+        "Roswell incident",
+        "Roswell UFO crash"
+      ],
+      "proposed_iceberg_tier": 2,
+      "tier_basis": "Original editorial familiarity proposal, independent of truth, severity, and empirical rarity.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "release-claim-roswell-alien-craft",
+        "exact_statement": "The wreckage recovered near Roswell in July 1947 was an extraterrestrial spacecraft.",
+        "evidence_status": "unsupported",
+        "binary_classification": "unsupported",
+        "historical_conspiracy": false,
+        "evidence_summary": "The Air Force record review identified balloon equipment associated with Project MOGUL as the most likely source and found no records of recovered extraterrestrial materials. This does not classify every unidentified aerial report.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "sources": [
+          {
+            "source_id": "release-source-roswell-alien-craft",
+            "evidence_role": "contradicts_or_explains",
+            "locator": "Executive summary and Project MOGUL findings; corroborating GAO record review: https://www.govinfo.gov/content/pkg/GAOREPORTS-NSIAD-95-187/html/GAOREPORTS-NSIAD-95-187.htm"
+          }
+        ],
+        "eligibility": "research_only"
+      },
+      "integration_constraints": "Grade this exact statement; do not replace it with a topic-level verdict. Keep evidence distinction in the reveal. Rarity and scoring are separate game design data.",
+      "source_check_state": "verified_for_release_integration"
+    },
+    {
+      "id": "acoustikitty",
+      "canonical_name": "Acoustikitty",
+      "category": "documented_covert_program",
+      "aliases": [
+        "Acoustikitty",
+        "Acoustic Kitty",
+        "Acoustic Kitten"
+      ],
+      "proposed_iceberg_tier": 6,
+      "tier_basis": "Original editorial familiarity proposal, independent of truth, severity, and empirical rarity.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "release-claim-acoustikitty",
+        "exact_statement": "The CIA experimented with a cat fitted with a microphone and transmitter to eavesdrop on conversations.",
+        "evidence_status": "documented",
+        "binary_classification": "documented",
+        "historical_conspiracy": true,
+        "evidence_summary": "The CIA acknowledges this 1960s experiment. The technology worked, but directing the cat proved impractical; this is not evidence of an operational army of spy cats.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "sources": [
+          {
+            "source_id": "release-source-acoustikitty",
+            "evidence_role": "supports",
+            "locator": "Section: Spy Cats: Acoustikitty"
+          }
+        ],
+        "eligibility": "research_only"
+      },
+      "integration_constraints": "Grade this exact statement; do not replace it with a topic-level verdict. Keep evidence distinction in the reveal. Rarity and scoring are separate game design data.",
+      "source_check_state": "verified_for_release_integration"
+    },
+    {
+      "id": "stargate",
+      "canonical_name": "STARGATE remote-viewing research",
+      "category": "documented_covert_program",
+      "aliases": [
+        "STARGATE",
+        "Stargate Project",
+        "Project Stargate",
+        "STAR GATE"
+      ],
+      "proposed_iceberg_tier": 5,
+      "tier_basis": "Original editorial familiarity proposal, independent of truth, severity, and empirical rarity.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "release-claim-stargate",
+        "exact_statement": "US intelligence agencies funded research into remote viewing under programs that included STARGATE.",
+        "evidence_status": "documented",
+        "binary_classification": "documented",
+        "historical_conspiracy": true,
+        "evidence_summary": "The funding and research program are documented. The existence of that research is not proof that psychic spying works; operational usefulness was assessed as unreliable.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "sources": [
+          {
+            "source_id": "release-source-stargate",
+            "evidence_role": "supports",
+            "locator": "Program history and evaluation; primary assessment: https://www.cia.gov/readingroom/docs/CIA-RDP96-00791R000200300002-2.pdf"
+          }
+        ],
+        "eligibility": "research_only"
+      },
+      "integration_constraints": "Grade this exact statement; do not replace it with a topic-level verdict. Keep evidence distinction in the reveal. Rarity and scoring are separate game design data.",
+      "source_check_state": "verified_for_release_integration"
+    },
+    {
+      "id": "azorian",
+      "canonical_name": "Project AZORIAN",
+      "category": "documented_covert_program",
+      "aliases": [
+        "AZORIAN",
+        "Project Azorian",
+        "Glomar Explorer",
+        "Hughes Glomar Explorer"
+      ],
+      "proposed_iceberg_tier": 6,
+      "tier_basis": "Original editorial familiarity proposal, independent of truth, severity, and empirical rarity.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "release-claim-azorian",
+        "exact_statement": "The CIA used the Hughes Glomar Explorer in a secret attempt to recover a sunken Soviet submarine from the Pacific seabed.",
+        "evidence_status": "documented",
+        "binary_classification": "documented",
+        "historical_conspiracy": true,
+        "evidence_summary": "The vessel had a deep-sea mining cover story. The recovery effort took place, but a section broke apart during the lift, so do not describe it as a complete recovery.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "sources": [
+          {
+            "source_id": "release-source-azorian",
+            "evidence_role": "supports",
+            "locator": "CIA museum account of mission, cover story, and partial recovery"
+          }
+        ],
+        "eligibility": "research_only"
+      },
+      "integration_constraints": "Grade this exact statement; do not replace it with a topic-level verdict. Keep evidence distinction in the reveal. Rarity and scoring are separate game design data.",
+      "source_check_state": "verified_for_release_integration"
+    },
+    {
+      "id": "stormfury",
+      "canonical_name": "Project STORMFURY",
+      "category": "documented_research_program",
+      "aliases": [
+        "STORMFURY",
+        "Project Stormfury"
+      ],
+      "proposed_iceberg_tier": 5,
+      "tier_basis": "Original editorial familiarity proposal, independent of truth, severity, and empirical rarity.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "release-claim-stormfury",
+        "exact_statement": "Between 1962 and 1982, NOAA supported Project STORMFURY research into whether hurricane intensity could be modified.",
+        "evidence_status": "documented",
+        "binary_classification": "documented",
+        "historical_conspiracy": false,
+        "evidence_summary": "The historical experiment is documented. It does not establish that NOAA can create or steer modern hurricanes.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "sources": [
+          {
+            "source_id": "release-source-stormfury",
+            "evidence_role": "supports",
+            "locator": "Historical Project STORMFURY paragraph"
+          }
+        ],
+        "eligibility": "research_only"
+      },
+      "integration_constraints": "Grade this exact statement; do not replace it with a topic-level verdict. Keep evidence distinction in the reveal. Rarity and scoring are separate game design data.",
+      "source_check_state": "verified_for_release_integration"
+    },
+    {
+      "id": "saturn-hexagon",
+      "canonical_name": "Saturn\u2019s polar hexagon",
+      "category": "documented_space_phenomenon",
+      "aliases": [
+        "Saturn's hexagon",
+        "Saturn hexagon",
+        "Saturn polar hexagon"
+      ],
+      "proposed_iceberg_tier": 4,
+      "tier_basis": "Original editorial familiarity proposal, independent of truth, severity, and empirical rarity.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "release-claim-saturn-hexagon",
+        "exact_statement": "Saturn has a six-sided atmospheric jet stream around its north pole.",
+        "evidence_status": "documented",
+        "binary_classification": "documented",
+        "historical_conspiracy": false,
+        "evidence_summary": "Voyager and Cassini observed this atmospheric pattern. Its geometry does not establish an artificial structure or a supernatural symbol.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "sources": [
+          {
+            "source_id": "release-source-saturn-hexagon",
+            "evidence_role": "supports",
+            "locator": "Cassini description of six-sided jet stream"
+          }
+        ],
+        "eligibility": "research_only"
+      },
+      "integration_constraints": "Grade this exact statement; do not replace it with a topic-level verdict. Keep evidence distinction in the reveal. Rarity and scoring are separate game design data.",
+      "source_check_state": "verified_for_release_integration"
+    },
+    {
+      "id": "northwoods",
+      "canonical_name": "Operation NORTHWOODS proposal",
+      "category": "documented_covert_proposal",
+      "aliases": [
+        "NORTHWOODS",
+        "Operation Northwoods"
+      ],
+      "proposed_iceberg_tier": 6,
+      "tier_basis": "Original editorial familiarity proposal, independent of truth, severity, and empirical rarity.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "release-claim-northwoods",
+        "exact_statement": "In 1962, the US Joint Chiefs of Staff proposed staged incidents that could be blamed on Cuba to justify military intervention.",
+        "evidence_status": "documented",
+        "binary_classification": "documented",
+        "historical_conspiracy": true,
+        "evidence_summary": "The declassified memorandum documents a proposal. This card does not claim that the proposed attacks were approved or carried out.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "sources": [
+          {
+            "source_id": "release-source-northwoods",
+            "evidence_role": "supports",
+            "locator": "15-page primary memorandum; explanatory record: https://nsarchive2.gwu.edu/news/20010430/"
+          }
+        ],
+        "eligibility": "research_only"
+      },
+      "integration_constraints": "Grade this exact statement; do not replace it with a topic-level verdict. Keep evidence distinction in the reveal. Rarity and scoring are separate game design data.",
+      "source_check_state": "verified_for_release_integration"
+    },
+    {
+      "id": "boston-molasses",
+      "canonical_name": "Great Molasses Flood",
+      "category": "documented_tragedy",
+      "aliases": [
+        "Great Molasses Flood",
+        "Boston Molasses Flood",
+        "Boston molasses disaster"
+      ],
+      "proposed_iceberg_tier": 3,
+      "tier_basis": "Original editorial familiarity proposal, independent of truth, severity, and empirical rarity.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "release-claim-boston-molasses",
+        "exact_statement": "A burst storage tank sent a deadly flood of molasses through Boston\u2019s North End in January 1919.",
+        "evidence_status": "documented",
+        "binary_classification": "documented",
+        "historical_conspiracy": false,
+        "evidence_summary": "Boston City Archives documents the industrial disaster and its victims. The unusual material does not make the event fictional.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "sources": [
+          {
+            "source_id": "release-source-boston-molasses",
+            "evidence_role": "supports",
+            "locator": "Archive account of tank rupture and flood"
+          }
+        ],
+        "eligibility": "research_only"
+      },
+      "integration_constraints": "Grade this exact statement; do not replace it with a topic-level verdict. Keep evidence distinction in the reveal. Rarity and scoring are separate game design data.",
+      "source_check_state": "verified_for_release_integration"
+    },
+    {
+      "id": "lake-nyos",
+      "canonical_name": "Lake Nyos gas disaster",
+      "category": "documented_tragedy",
+      "aliases": [
+        "Lake Nyos",
+        "Lake Nyos disaster",
+        "Nyos disaster"
+      ],
+      "proposed_iceberg_tier": 5,
+      "tier_basis": "Original editorial familiarity proposal, independent of truth, severity, and empirical rarity.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "release-claim-lake-nyos",
+        "exact_statement": "A catastrophic release of carbon dioxide from Lake Nyos in Cameroon caused mass fatalities in August 1986.",
+        "evidence_status": "documented",
+        "binary_classification": "documented",
+        "historical_conspiracy": false,
+        "evidence_summary": "The US scientific investigation identified a lethal carbon-dioxide cloud from the lake. The precise trigger of the release was not established by that report, and this card does not grade it.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "sources": [
+          {
+            "source_id": "release-source-lake-nyos",
+            "evidence_role": "supports",
+            "locator": "Executive summary: gas release, source evidence, and undetermined trigger"
+          }
+        ],
+        "eligibility": "research_only"
+      },
+      "integration_constraints": "Grade this exact statement; do not replace it with a topic-level verdict. Keep evidence distinction in the reveal. Rarity and scoring are separate game design data.",
+      "source_check_state": "verified_for_release_integration"
+    },
+    {
+      "id": "project-xray",
+      "canonical_name": "Project X-Ray bat-bomb research",
+      "category": "documented_research_program",
+      "aliases": [
+        "Project X-Ray",
+        "bat bomb",
+        "bat bombs"
+      ],
+      "proposed_iceberg_tier": 7,
+      "tier_basis": "Original editorial familiarity proposal, independent of truth, severity, and empirical rarity.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "release-claim-project-xray",
+        "exact_statement": "During World War II, US researchers tested the idea of using bats to carry small incendiary bombs.",
+        "evidence_status": "documented",
+        "binary_classification": "documented",
+        "historical_conspiracy": false,
+        "evidence_summary": "The bat-bomb research was real. This statement concerns testing, not a claim that bat bombs were deployed against Japanese cities.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "sources": [
+          {
+            "source_id": "release-source-project-xray",
+            "evidence_role": "supports",
+            "locator": "Firsthand participant account described by academic publisher; archival corroboration: https://www.si.edu/object/archives/components/sova-nasm-xxxx-1183-s-ref1764"
+          }
+        ],
+        "eligibility": "research_only"
+      },
+      "integration_constraints": "Grade this exact statement; do not replace it with a topic-level verdict. Keep evidence distinction in the reveal. Rarity and scoring are separate game design data.",
+      "source_check_state": "verified_for_release_integration"
+    },
+    {
+      "id": "paperclip",
+      "canonical_name": "Operation Paperclip",
+      "category": "documented_government_program",
+      "aliases": [
+        "Operation Paperclip",
+        "Project Paperclip",
+        "Paperclip"
+      ],
+      "proposed_iceberg_tier": 4,
+      "tier_basis": "Original editorial familiarity proposal, independent of truth, severity, and empirical rarity.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "release-claim-paperclip",
+        "exact_statement": "After World War II, the United States recruited German and Austrian scientists through the program known as Paperclip.",
+        "evidence_status": "documented",
+        "binary_classification": "documented",
+        "historical_conspiracy": false,
+        "evidence_summary": "National Archives records describe the recruitment and disputes over Nazi affiliations. This is not an assertion that every recruit had the same background or committed the same crimes.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "sources": [
+          {
+            "source_id": "release-source-paperclip",
+            "evidence_role": "supports",
+            "locator": "Account of JIOA recruitment and September 1946 authorization"
+          }
+        ],
+        "eligibility": "research_only"
+      },
+      "integration_constraints": "Grade this exact statement; do not replace it with a topic-level verdict. Keep evidence distinction in the reveal. Rarity and scoring are separate game design data.",
+      "source_check_state": "verified_for_release_integration"
+    },
+    {
+      "id": "project-blue-book",
+      "canonical_name": "Project Blue Book",
+      "category": "documented_government_program",
+      "aliases": [
+        "Project Blue Book",
+        "Blue Book",
+        "USAF Blue Book"
+      ],
+      "proposed_iceberg_tier": 3,
+      "tier_basis": "Original editorial familiarity proposal, independent of truth, severity, and empirical rarity.",
+      "review_state": "draft",
+      "reviewed_at": "2026-10-14",
+      "claim": {
+        "id": "release-claim-project-blue-book",
+        "exact_statement": "The US Air Force operated a program called Project Blue Book to investigate reports of unidentified flying objects.",
+        "evidence_status": "documented",
+        "binary_classification": "documented",
+        "historical_conspiracy": false,
+        "evidence_summary": "The investigation program and its records are real. An unexplained report is not automatically proof of an extraterrestrial spacecraft.",
+        "reviewed_at": "2026-10-14",
+        "review_state": "draft",
+        "sources": [
+          {
+            "source_id": "release-source-project-blue-book",
+            "evidence_role": "supports",
+            "locator": "Air Force fact sheet on UFO investigation programs and closure"
+          }
+        ],
+        "eligibility": "research_only"
+      },
+      "integration_constraints": "Grade this exact statement; do not replace it with a topic-level verdict. Keep evidence distinction in the reveal. Rarity and scoring are separate game design data.",
+      "source_check_state": "verified_for_release_integration"
+    }
+  ]
+}

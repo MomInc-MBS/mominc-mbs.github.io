@@ -1,6 +1,6 @@
 """Browser regression checks for the home preview and the real standalone game route.
 
-Uses the local main-site server; never writes a production endpoint.
+Uses the actual main-site paths; all game records stay in the test browser.
 Run: python tools/check_misinformation_ui.py http://127.0.0.1:5190
 """
 import json
@@ -54,6 +54,9 @@ with sync_playwright() as pw:
     with context.expect_page() as opened:
         preview.click()
     page = opened.value
+    # Install saved-state fixtures after the old page's pagehide save, before app startup.
+    page.add_init_script("""(()=>{const fixture=sessionStorage.getItem('__qa_restore');
+      if(fixture){sessionStorage.removeItem('__qa_restore');localStorage.setItem('mom-misinformation-flight-v1',fixture);}})();""")
     page.wait_for_url("**/play/misinformation/")
     try:
         page.wait_for_function("!document.documentElement.hasAttribute('data-game-loading')", timeout=60000)
@@ -115,6 +118,35 @@ with sync_playwright() as pw:
     assert page.locator("#screen tbody tr").count()==2
     page.locator("#terminal").screenshot(path=str(OUT / "mobile-scoreboard.png"))
     record("Mobile play menu and scoreboard fit 390px; both final outcomes saved")
+    page.locator("button[data-action='scoreboard-back']").click()
+    for width in (320,430):
+        page.set_viewport_size({"width":width,"height":844})
+        assert not page.evaluate("document.documentElement.scrollWidth>innerWidth")
+        page.locator("button[data-action='scoreboard']").click()
+        assert not page.evaluate("document.documentElement.scrollWidth>innerWidth")
+        page.locator("button[data-action='scoreboard-back']").click()
+    page.locator("#archive-toggle").click()
+    page.locator("#archive-search").fill("MKULTRA")
+    expect(page.locator("#archive-list")).to_contain_text("MKULTRA")
+    assert page.locator("#archive-list details").count() >= 1
+    assert page.locator("#archive-list a.source-link").first.get_attribute("href").startswith("https://")
+    page.locator("#archive-close").click()
+    record("Archive search exposes evidence links; menu fits 320px and 430px")
+    page.locator("button[data-action='launch']").click()
+    page.evaluate("k=>{const s=JSON.parse(localStorage.getItem(k));s.deadline=Date.now()-1000;sessionStorage.setItem('__qa_restore',JSON.stringify(s));}", RUN)
+    page.reload(wait_until="domcontentloaded")
+    page.wait_for_function("!document.documentElement.hasAttribute('data-game-loading')", timeout=120000)
+    page.wait_for_function("k=>JSON.parse(localStorage.getItem(k)).phase==='result'", arg=RUN)
+    expired=state(page)
+    assert expired["pristine"] is False and expired["hits"]==0 and expired["rounds"]==1
+    record("Reloading an expired naming timer skips once and removes docking clearance")
+    for phase in ("dead","escaped"):
+        page.evaluate("([k,phase])=>{const s=JSON.parse(localStorage.getItem(k));s.phase=phase;s.hits=2;s.distance=95000;s.pristine=false;sessionStorage.setItem('__qa_restore',JSON.stringify(s));}",[RUN,phase])
+        page.reload(wait_until="domcontentloaded")
+        page.wait_for_function("!document.documentElement.hasAttribute('data-game-loading')", timeout=120000)
+        expect(page.locator("button[data-action='launch']")).to_be_visible()
+        assert state(page)["phase"]=="ready"
+    record("Malformed terminal saves recover to the play menu without trapping the loader")
     home.set_viewport_size({"width":390,"height":844})
     preview.screenshot(path=str(OUT / "main-preview-mobile.png"))
     record("Main MOM home preview remains usable at phone width")

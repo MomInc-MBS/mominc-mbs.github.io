@@ -1,0 +1,258 @@
+[
+  {
+    "id": "zodiac",
+    "name": "Zodiac Killer case",
+    "aliases": [
+      "Zodiac",
+      "Zodiac Killer",
+      "Zodiac letters"
+    ],
+    "classification": "event",
+    "statement": "The FBI examined handwriting and fingerprints on letters and envelopes attributed to the Zodiac Killer.",
+    "explanation": "The FBI archive documents forensic assistance in this real Northern California murder investigation. This card does not identify any proposed suspect as the killer or treat an unproven identity theory as fact.",
+    "source": "https://archives.fbi.gov/archives/news/stories/2007/march/zodiac_030207",
+    "publisher": "Federal Bureau of Investigation",
+    "category": "Documented criminal case",
+    "depth": 2
+  },
+  {
+    "id": "rader",
+    "name": "Dennis Rader",
+    "aliases": [
+      "BTK",
+      "BTK Killer",
+      "Dennis Lynn Rader"
+    ],
+    "classification": "event",
+    "statement": "A forensic examination of a floppy disk sent to a television station helped investigators identify Dennis Rader, the BTK killer.",
+    "explanation": "The FBI describes its regional computer-forensics laboratory helping Wichita investigators examine the disk. The statement concerns a documented investigative technique, not an invented mind-reading method.",
+    "source": "https://archives.fbi.gov/archives/news/stories/2006/april/rclf042406",
+    "publisher": "Federal Bureau of Investigation",
+    "category": "Documented criminal case",
+    "depth": 3
+  },
+  {
+    "id": "ridgway",
+    "name": "Gary Ridgway",
+    "aliases": [
+      "Gary Leon Ridgway",
+      "Green River Killer",
+      "The Green River Killer"
+    ],
+    "classification": "event",
+    "statement": "Police arrested Gary Ridgway in November 2001 after DNA evidence linked him to a victim in the Green River killings.",
+    "explanation": "The FBI Seattle field-office history records the DNA identification and arrest. This card grades that documented investigation rather than speculation about additional crimes or a comparison of victim counts.",
+    "source": "https://www.fbi.gov/history/field-office-histories/seattle",
+    "publisher": "Federal Bureau of Investigation",
+    "category": "Documented criminal case",
+    "depth": 4
+  },
+  {
+    "id": "gacy",
+    "name": "John Wayne Gacy",
+    "aliases": [
+      "John Gacy",
+      "Gacy"
+    ],
+    "classification": "event",
+    "statement": "In 2021, Cook County investigators identified one of John Wayne Gacy's previously unidentified victims as Francis Wayne Alexander using genetic genealogy and DNA comparisons.",
+    "explanation": "The investigating sheriff's office announced the identification and described confirmation with relatives' DNA. This is a documented identification of a victim, not a score based on how many people an offender killed.",
+    "source": "https://www.cookcountysheriff.org/john-wayne-gacy-victim-identified/",
+    "publisher": "Cook County Sheriff's Office",
+    "category": "Documented criminal case",
+    "depth": 2
+  },
+  {
+    "id": "joseph-franklin",
+    "name": "Joseph Paul Franklin",
+    "aliases": [
+      "Joseph Franklin"
+    ],
+    "classification": "event",
+    "statement": "Joseph Paul Franklin was convicted in multiple racially motivated attacks and received life and death sentences in different states.",
+    "explanation": "The FBI case history documents Franklin's racist violence and criminal sentences. The card identifies a historical prosecution; it does not endorse his ideology or use violence severity as a rarity measure.",
+    "source": "https://www.fbi.gov/news/stories/serial-killers-part-4",
+    "publisher": "Federal Bureau of Investigation",
+    "category": "Documented criminal case",
+    "depth": 7
+  },
+  {
+    "id": "stalin",
+    "name": "Joseph Stalin",
+    "aliases": [
+      "Josef Stalin",
+      "Stalin",
+      "Iosif Stalin",
+      "Ioseb Jughashvili"
+    ],
+    "classification": "event",
+    "statement": "During the 1930s, Stalin's government carried out political purges involving imprisonment, exile, and executions.",
+    "explanation": "The United States Holocaust Memorial Museum records the purges of the Soviet party, government, armed forces, and intelligentsia. This statement does not ask for a contested personal death total or imply that every allegation about Stalin is established.",
+    "source": "https://encyclopedia.ushmm.org/content/en/article/josef-stalin",
+    "publisher": "United States Holocaust Memorial Museum",
+    "category": "Documented state repression",
+    "depth": 0
+  },
+  {
+    "id": "pol-pot",
+    "name": "Pol Pot",
+    "aliases": [
+      "Saloth Sar",
+      "Polpot",
+      "Brother Number One",
+      "Brother No 1"
+    ],
+    "classification": "event",
+    "statement": "Pol Pot headed Democratic Kampuchea's government, and ECCC historical findings identify him as a planner of forced evacuations from cities to rural areas.",
+    "explanation": "The tribunal's profile records his premiership and evacuation planning. It explicitly warns that he was not an accused person in ECCC proceedings, so those historical findings must not be described as an ECCC conviction of Pol Pot.",
+    "source": "https://www.eccc.gov.kh/en/directory/khmer-rouge-profile/saloth-sar",
+    "publisher": "Extraordinary Chambers in the Courts of Cambodia",
+    "category": "Documented state repression",
+    "depth": 1
+  },
+  {
+    "id": "idi-amin",
+    "name": "Idi Amin",
+    "aliases": [
+      "Idi Amin Dada",
+      "Amin"
+    ],
+    "classification": "event",
+    "statement": "In 1972, Idi Amin ordered Asian holders of British passports to leave Uganda.",
+    "explanation": "A British Cabinet record reproduced on page 10 of The National Archives lesson pack (CAB 128/50, 8 August 1972) describes the expulsion order. This exact statement concerns forced expulsion; it makes no claim about an adjudicated murder total.",
+    "source": "https://cdn.nationalarchives.gov.uk/documents/education/ugandan-asians.pdf#page=10",
+    "publisher": "The National Archives, United Kingdom",
+    "category": "Documented state repression",
+    "depth": 3
+  },
+  {
+    "id": "charles-taylor",
+    "name": "Charles Taylor",
+    "aliases": [
+      "Charles Ghankay Taylor"
+    ],
+    "classification": "event",
+    "statement": "The Special Court for Sierra Leone convicted former Liberian president Charles Taylor of planning, and aiding and abetting, crimes committed by rebel forces during Sierra Leone's civil war.",
+    "explanation": "The court records convictions for war crimes, crimes against humanity, and other serious violations, upheld on appeal. Legal responsibility for planning or assisting crimes is distinct from claiming he personally carried out every offense.",
+    "source": "https://rscsl.org/press-releases/trial-chamber-denies-taylor-motion-to-serve-his-sentence-in-rwanda/",
+    "publisher": "Residual Special Court for Sierra Leone",
+    "category": "Documented atrocity judgment",
+    "depth": 6
+  },
+  {
+    "id": "kambanda",
+    "name": "Jean Kambanda",
+    "aliases": [
+      "Kambanda"
+    ],
+    "classification": "event",
+    "statement": "In May 1998, former Rwandan prime minister Jean Kambanda pleaded guilty to genocide and crimes against humanity before the International Criminal Tribunal for Rwanda.",
+    "explanation": "The tribunal's contemporary announcement records his guilty pleas and the court's acceptance of them. This card concerns an identified legal proceeding, not a generalized claim about an entire population or a speculative personal death toll.",
+    "source": "https://unictr.irmct.org/en/news/ex-rwandan-prime-minister-jean-kambanda-pleads-guilty-genocide",
+    "publisher": "United Nations International Criminal Tribunal for Rwanda",
+    "category": "Documented atrocity judgment",
+    "depth": 7
+  },
+  {
+    "id": "molasses-flood",
+    "name": "Great Molasses Flood",
+    "aliases": [
+      "Boston Molasses Flood",
+      "Boston Molasses Disaster",
+      "Molasses Flood",
+      "1919 Molasses Flood"
+    ],
+    "classification": "event",
+    "statement": "A storage tank ruptured in Boston's North End in January 1919, releasing a destructive flood of molasses.",
+    "explanation": "Boston City Archives documents the failed tank and damage to the neighborhood. The unusual substance does not make the disaster fictional; this card does not ask the player to accept the tank owner's allegation of a bombing plot.",
+    "source": "https://www.boston.gov/news/100-years-ago-today-molasses-crashes-through-bostons-north-end",
+    "publisher": "City of Boston / Boston City Archives",
+    "category": "Documented tragedy",
+    "depth": 3
+  },
+  {
+    "id": "lake-nyos",
+    "name": "Lake Nyos disaster",
+    "aliases": [
+      "Lake Nyos",
+      "Nyos",
+      "Lake Nyos gas disaster",
+      "Nyos gas disaster"
+    ],
+    "classification": "event",
+    "statement": "In 1986, Lake Nyos in Cameroon released a lethal cloud of carbon dioxide into nearby communities.",
+    "explanation": "US Geological Survey records describe the carbon-dioxide release. Calling this a gas disaster does not establish a supernatural cause or settle the precise trigger that disturbed the lake.",
+    "source": "https://www.usgs.gov/media/images/exploding-lakes-cameroon-0",
+    "publisher": "United States Geological Survey",
+    "category": "Documented natural disaster",
+    "depth": 6
+  },
+  {
+    "id": "tunguska",
+    "name": "Tunguska event",
+    "aliases": [
+      "Tunguska",
+      "Tunguska explosion",
+      "Tunguska airburst"
+    ],
+    "classification": "event",
+    "statement": "A powerful airburst over Siberia in June 1908 flattened and scorched large areas of forest.",
+    "explanation": "NASA describes the Tunguska event and the physical evidence documented by later expeditions. The event is real; the exact incoming object and its dimensions remain scientific questions, and this card makes no alien-spacecraft claim.",
+    "source": "https://science.nasa.gov/earth/earth-observatory/a-cosmic-explosion-over-siberia-154488/",
+    "publisher": "NASA Earth Observatory",
+    "category": "Documented natural event",
+    "depth": 3
+  },
+  {
+    "id": "carrington",
+    "name": "Carrington event",
+    "aliases": [
+      "Carrington",
+      "1859 solar storm",
+      "1859 geomagnetic storm",
+      "Carrington solar storm"
+    ],
+    "classification": "event",
+    "statement": "The 1859 Carrington event disrupted telegraph systems, with operators reporting sparks and equipment fires.",
+    "explanation": "NOAA records these effects of an extreme geomagnetic storm. The card concerns historical space-weather impacts, not a prediction of an imminent worldwide catastrophe.",
+    "source": "https://www.nesdis.noaa.gov/news/when-solar-storms-attack-space-weather-and-our-infrastructure",
+    "publisher": "National Oceanic and Atmospheric Administration",
+    "category": "Documented natural event",
+    "depth": 4
+  },
+  {
+    "id": "halifax",
+    "name": "Halifax Explosion",
+    "aliases": [
+      "1917 Halifax Explosion",
+      "Halifax Harbour Explosion",
+      "Mont Blanc explosion",
+      "Mont-Blanc explosion"
+    ],
+    "classification": "event",
+    "statement": "In December 1917, the ships Imo and Mont Blanc collided in Halifax Harbour; fire aboard the munitions-carrying Mont Blanc led to a devastating explosion.",
+    "explanation": "Parks Canada records the collision, fire, and explosion. The statement concerns the documented sequence of events and does not assign disputed individual blame or award points for casualties.",
+    "source": "https://www.canada.ca/en/parks-canada/news/2016/07/the-halifax-explosion.html",
+    "publisher": "Parks Canada",
+    "category": "Documented tragedy",
+    "depth": 4
+  },
+  {
+    "id": "dancing-plague",
+    "name": "Strasbourg dancing episode of 1518",
+    "aliases": [
+      "Dancing Plague",
+      "Dancing Plague of 1518",
+      "Strasbourg Dancing Plague",
+      "Dancing Mania",
+      "1518 dancing epidemic"
+    ],
+    "classification": "event",
+    "statement": "Municipal historical sources describe an episode of prolonged public dancing in Strasbourg in July 1518.",
+    "explanation": "Strasbourg's museums distinguish the recorded episode from later exaggerated interpretations. This card does not assert a settled medical cause, supernatural compulsion, a verified death toll, or the popular claim that people literally danced themselves to death.",
+    "source": "https://www.musees.strasbourg.eu/edition/-/entity/id/3113559/1518%2BLa%2Bfi%25C3%25A8vre%2Bde%2Bla%2Bdanse",
+    "publisher": "Museums of the City of Strasbourg",
+    "category": "Documented unusual history",
+    "depth": 6
+  }
+]
