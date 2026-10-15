@@ -20,7 +20,7 @@ test('TV gestures play physical and digital samples, mute works, and Back retain
   const page=await context.newPage();await page.goto(base+'/tv/',{waitUntil:'domcontentloaded'});
   await page.waitForFunction(()=>!!window.MBS_SOUND);console.log('Sound engine ready');
   assert.equal(await page.evaluate(()=>__audioQA.sources.some(s=>s.started)),false,'preloading is silent');
-  console.log('Power gesture');await page.locator('#power').click();
+  console.log('Power gesture');await page.evaluate(()=>sessionStorage.setItem('mbs-hotwired','1'));await page.waitForFunction(()=>document.querySelector('#tv').dataset.off3d==='on'||performance.now()>8000);await page.locator(await page.evaluate(()=>document.querySelector('#tv').dataset.off3d==='on')?'.off3d-power':'#power').click(); // off: the 3D computer's power key (hotwired)
   await page.waitForFunction(()=>document.querySelector('#tv').dataset.state==='on');
   await page.waitForFunction(()=>__audioQA.sources.some(s=>s.started&&!s.loop&&s.state==='running'));
   assert.ok(await page.evaluate(()=>__audioQA.cues.includes('switch')));

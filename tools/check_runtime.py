@@ -141,6 +141,7 @@ with sync_playwright() as pw:
     warm = pg.evaluate("""async () => {
         const tv = document.getElementById("tv");
         tv.dataset.state = "off";
+        sessionStorage.setItem("mbs-hotwired", "1");   // the 3D off screen gates power until hotwired
         document.getElementById("power").click();      // begins the 900ms warm-up
         const during = tv.dataset.state;
         window.MBS_RT.pause("test");                   // pause mid-warm-up

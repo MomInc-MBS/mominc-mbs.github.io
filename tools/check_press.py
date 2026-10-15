@@ -109,7 +109,11 @@ def power_on(pg):
         if pg.evaluate("!!document.querySelector('.tv') && document.querySelector('.tv').dataset.state === 'on'"):
             return True
         try:
-            pg.click(".power", timeout=2000)
+            # off = the 3D computer (tv/off-scene.mjs): it covers the panel and gates power until hotwired
+            if pg.evaluate("sessionStorage.setItem('mbs-hotwired', '1'), document.getElementById('tv').dataset.off3d === 'on'"):
+                pg.evaluate("document.getElementById('power').click()")
+            else:
+                pg.click(".power", timeout=2000)
         except Exception:
             return False
         pg.wait_for_timeout(2600)
