@@ -19,8 +19,8 @@
     },
     {
       "url": "/play/misinformation/app.js",
-      "revision": "7bc415d2dd72932fab096646fa270b231bb12507",
-      "bytes": 29066
+      "revision": "2d88ed5421b0928bfacee74658b76788530d9023",
+      "bytes": 29600
     },
     {
       "url": "/play/misinformation/assets/journey/01-office.svg",
@@ -139,8 +139,8 @@
     },
     {
       "url": "/play/misinformation/catalog.js",
-      "revision": "7b8c503d18ac01f2b0fa1bf5e8378ecbf2a55827",
-      "bytes": 5910317
+      "revision": "3174614e5db0e5bc5c7e3c618e1cd5955b37c943",
+      "bytes": 5910097
     },
     {
       "url": "/play/misinformation/cockpit.css",
@@ -159,8 +159,8 @@
     },
     {
       "url": "/play/misinformation/engine.js",
-      "revision": "ad91563445549a5214b3f965fd07e5df87bdc3c4",
-      "bytes": 8912
+      "revision": "f7ad9cb52ee428889b18fbd828e37022dceb5b76",
+      "bytes": 8995
     },
     {
       "url": "/play/misinformation/feedback.js",
@@ -179,8 +179,8 @@
     },
     {
       "url": "/play/misinformation/index.html",
-      "revision": "c8ed178c096f3377104409d9de414b6e4d1666be",
-      "bytes": 7885
+      "revision": "c2ff4161faba191a6e0a3265e867fc3a02232dc5",
+      "bytes": 7979
     },
     {
       "url": "/play/misinformation/journey.css",
@@ -219,8 +219,8 @@
     },
     {
       "url": "/play/misinformation/scores.js",
-      "revision": "0471fcdce8d58046d9afd14792c85ceee54c129c",
-      "bytes": 3872
+      "revision": "aae119f113ec5f7c3c7cbb4ad563d16a0476eb59",
+      "bytes": 3888
     },
     {
       "url": "/play/misinformation/space.css",
@@ -557,5 +557,5 @@
     "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "dc3f7bd61de939a85ce8"
+  "version": "521adf986882e94eee2e"
 }

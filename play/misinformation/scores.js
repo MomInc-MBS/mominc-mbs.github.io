@@ -13,7 +13,7 @@ function clean(run){
  !Number.isInteger(run.hits)||run.hits<0||run.hits>3||!Number.isSafeInteger(run.rounds)||run.rounds<0||
  !validDate(run.startedAt)||!validDate(run.finishedAt)||Date.parse(run.finishedAt)<Date.parse(run.startedAt)||
  typeof run.pristine!=='boolean'||(run.outcome==='escaped'&&(run.distance!==100000||run.hits>=3))||
- (run.outcome==='dead'&&run.hits!==3))return null;
+ (run.outcome==='dead'&&run.hits!==3&&run.rounds!==5))return null;
  return {id:run.id,outcome:run.outcome,score:run.score,distance:run.distance,hits:run.hits,rounds:run.rounds,
  pristine:run.pristine,startedAt:new Date(run.startedAt).toISOString(),finishedAt:new Date(run.finishedAt).toISOString()};
 }

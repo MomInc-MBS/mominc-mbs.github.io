@@ -1,7 +1,7 @@
 import {subjects,questions} from '../../play/misinformation/catalog.js';
 export const MODEL = '@cf/cloudflare/clef-flash';
 export const PROVIDER = 'Cloudflare Workers AI / Clef Flash';
-export const VERSION = '2026-10-15-v4';
+export const VERSION = '2026-10-16-v5';
 const ORIGINS = new Set(['https://mominc.online','https://www.mominc.online','http://127.0.0.1:5190','http://localhost:5190']);
 const USER_AGENT = 'MOM-Misinformation-Machine/1.0 (https://mominc.online/play/misinformation/; public subject lookup)';
 export const normalize = value => value.normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');

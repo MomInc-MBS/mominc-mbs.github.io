@@ -62,7 +62,7 @@ test('the generator, exported artwork routes, and twenty level names agree in or
  for(let i=0;i<20;i++){
   assert.equal(inspected.generator[i].label,LEVELS[i].name);
   assert.equal(JOURNEY_ART[i],`assets/journey/${String(i+1).padStart(2,'0')}-${inspected.generator[i].slug}.svg`);
-  assert.equal(sceneFrame({distance:i*5000,hits:0,phase:'result'}).art,JOURNEY_ART[i]);
+  assert.equal(sceneFrame({distance:LEVELS[i].startDistance,hits:0,phase:'result'}).art,JOURNEY_ART[i]);
  }
 });
 test('the scenery shares one paper material and consistent palette with twenty distinct compositions',()=>{
@@ -89,7 +89,7 @@ test('crossing each level updates the exact location title, artwork, effect and 
  globalThis.document={querySelector:selector=>elements[selector]??null,querySelectorAll:selector=>selector==='[data-stop]'?markers:[]};
  globalThis.matchMedia=()=>({matches:true});
  for(let i=0;i<20;i++){
-  renderScene({...freshRun(),distance:i*5000,rounds:i,score:i*10,phase:i===0?'ready':'result'});
+  renderScene({...freshRun(),distance:LEVELS[i].startDistance,rounds:i,score:i*10,phase:i===0?'ready':'result'});
   assert.equal(title.textContent,LEVELS[i].name);assert.equal(scene.dataset.level,String(i));
   assert.equal(scene.dataset.effect,LEVELS[i].effect);assert.equal(vars['--journey-art'],`url("${JOURNEY_ART[i]}")`);
   assert.deepEqual(markers.filter(m=>m.classes.has('active')).map(m=>Number(m.dataset.stop)),[i]);

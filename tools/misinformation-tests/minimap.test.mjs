@@ -70,3 +70,13 @@ test('two map instances mount idempotently with unique SVG IDs and update the sa
   assert.equal(host.writes,1);
  }
 });
+
+test('the final desk stays unreached for every short flight, including four top answers plus redacted',()=>{
+ for(const distance of [90000,95000,97000,99999]){
+  const frame=minimapFrame({...freshRun(),distance,phase:'dead',rounds:5});
+  assert.equal(frame.level,18);assert.equal(frame.title,'Edge of the Page');assert.equal(frame.escaped,false);
+  assert.ok(ROUTE_STOPS[19].progress>frame.progress);
+ }
+ const frame=minimapFrame({...freshRun(),distance:100000,phase:'escaped',rounds:5});
+ assert.equal(frame.level,19);assert.equal(frame.title,"MOM's Mothership Desk");assert.equal(frame.escaped,true);
+});

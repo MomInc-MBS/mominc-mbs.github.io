@@ -62,7 +62,14 @@ test('unmeasured imported subjects receive familiarity one and never become gems
 test('ten broad prompts per topic and ample distinct transmissions at every depth', () => {
   assert.ok(questions.length >= 160);
   assert.equal(new Set(questions.map(question => question.id)).size, questions.length);
-  assert.equal(new Set(questions.map(question => question.prompt)).size, questions.length);
+  // Legacy IDs and depth variants can share plain wording. Identical wording
+  // must mean the same accepted subjects; deck rotation deduplicates poolId.
+  const wordingPools=new Map();
+  for(const question of questions){
+    if(wordingPools.has(question.prompt))assert.equal(question.poolId,wordingPools.get(question.prompt),question.prompt);
+    wordingPools.set(question.prompt,question.poolId);
+  }
+  assert.ok(wordingPools.size>=180);
   const authored=questions.filter(q=>!q.family.startsWith('legacy-'));
   const families=new Set(authored.map(q=>q.family));
   assert.equal(families.size,17);
@@ -70,7 +77,7 @@ test('ten broad prompts per topic and ample distinct transmissions at every dept
   for (let band = 0; band < 8; band++) {
     const group = questions.filter(question => question.band === band);
     assert.ok(group.length >= 10, `Band ${band}`);
-    assert.equal(new Set(group.map(question => question.prompt)).size, group.length);
+    assert.ok(new Set(group.map(question => question.poolId)).size>=8, `Band ${band} distinct answer pools`);
   }
   assert.ok(questions.every(question => Number.isInteger(question.band) && question.band >= 0 && question.band <= 7));
 });

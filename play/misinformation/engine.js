@@ -3,11 +3,12 @@ export const TIERS = ['Office gossip', 'Suspiciously familiar', 'Loose thread', 
 export const STATION = 100000;
 // Retained as a legacy route marker, no longer a practice-flight cap.
 export const APPROACH = 95000;
-// Legacy score-to-distance scale for old history; current travel is tier based.
-export const KM_PER_POINT = 50;
+// Five 100-point answers are the only route to the station.
+export const KM_PER_POINT = 200;
 export const ANSWER_TIME_MS = 35000;
-export const PROGRESSION_VERSION = 2;
-export const TRAVEL_BY_TIER = Object.freeze([5000,5500,6000,6500,7000,7500]);
+export const PROGRESSION_VERSION = 3;
+export const MAX_QUESTIONS = 5;
+export const TRAVEL_BY_TIER = Object.freeze(POINTS.map(points=>points*KM_PER_POINT));
 export const LEVEL_DISTANCE = 5000;
 const LEVEL_NAMES = [
   'Office','Ceiling Vents','Propaganda Stairwell','Rooftop and Billboards',
@@ -19,30 +20,27 @@ const LEVEL_NAMES = [
 const LEVEL_EFFECTS = {6:'paper-tears',9:'fold',10:'origami',12:'wormhole',13:'flatland',14:'mirror',15:'quilt',16:'data-cable',17:'nursery',18:'drawing-hand',19:'mothership'};
 export const LEVELS = Object.freeze(LEVEL_NAMES.map((name,index)=>Object.freeze({
   id:name.toLowerCase().replace(/[^a-z0-9]+/g,'-'),number:index+1,name,
-  startDistance:index*LEVEL_DISTANCE,endDistance:(index+1)*LEVEL_DISTANCE,
+  startDistance:index===19?STATION:index*LEVEL_DISTANCE,endDistance:index>=18?STATION:(index+1)*LEVEL_DISTANCE,
   effect:LEVEL_EFFECTS[index]??'none'
 })));
 export const BANDS = ['Company grounds', 'Low orbit', 'The satellite belt', 'Lunar interference', 'The red channel', 'Outer-system files', 'Deep-space static', 'Station approach'];
 export function freshRun() {
   return {version:1, progressionVersion:PROGRESSION_VERSION, score:0, distance:0, hits:0, rounds:0, pristine:true, phase:'ready', question:null, answer:null, deadline:null, remaining:ANSWER_TIME_MS, seen:[], history:[], cycle:0};
 }
-export function levelIndex(distance) { return Math.min(LEVELS.length-1,Math.floor(Math.max(0,Number.isFinite(distance)?distance:0)/LEVEL_DISTANCE)); }
+export function levelIndex(distance) {
+  const km=Math.max(0,Number.isFinite(distance)?distance:0);
+  // The final desk is arrival itself; approach scenery remains Edge of the Page.
+  return km>=STATION?19:Math.min(18,Math.floor(km/LEVEL_DISTANCE));
+}
 export function travelForTier(tier) {
   if(!Number.isInteger(tier)||tier<0||tier>=TRAVEL_BY_TIER.length) throw new Error('Invalid rarity.');
   return TRAVEL_BY_TIER[tier];
 }
 export function migrateRun(state, now=Date.now()) {
   if(state.progressionVersion===PROGRESSION_VERSION)return state;
-  const migrated={...state,progressionVersion:PROGRESSION_VERSION};
-  // Preserve earned route position, hull, phase and score. Grant the requested
-  // extra ten seconds once to a saved active 25-second naming deadline.
-  if(state.phase==='answer'&&Number.isFinite(state.deadline)){
-    migrated.deadline=Math.min(state.deadline+10000,now+ANSWER_TIME_MS);
-    migrated.remaining=Math.max(0,migrated.deadline-now);
-  }else{
-    migrated.remaining=Math.min(ANSWER_TIME_MS,Math.max(0,(Number.isFinite(state.remaining)?state.remaining:25000)+10000));
-  }
-  return migrated;
+  // Earlier releases allowed unlimited questions and incompatible travel.
+  // Restart their flight rather than importing progress that bypasses this limit.
+  return freshRun();
 }
 export function bandIndex(distance) { return Math.min(7, Math.floor(distance / 12500)); }
 export function normalize(s) { return s.normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,''); }
@@ -61,7 +59,8 @@ export function lookup(answer, question, subjects) {
   return (index.get(normalize(answer))||[]).find(s=>question.answers.some(a=>a.id===s.id));
 }
 export function beginQuestion(state, question, now=Date.now()) {
-  if (!['ready','result'].includes(state.phase)) throw new Error('Cannot open a question in this phase.');
+  state=migrateRun(state,now);
+  if (state.rounds>=MAX_QUESTIONS || !['ready','result'].includes(state.phase)) throw new Error('Cannot open a question in this phase.');
   return {...migrateRun(state,now),phase:'answer',question:question.id,answer:null,deadline:now+ANSWER_TIME_MS,remaining:ANSWER_TIME_MS,seen:[...state.seen,question.id]};
 }
 export function acceptAnswer(state, subject, question) {
@@ -72,7 +71,7 @@ export function acceptAnswer(state, subject, question) {
   return {...state,phase:'classify',answer:subject.id,pristine:state.pristine&&entry.tier===5,remaining:Math.max(0,state.deadline-Date.now()),deadline:null};
 }
 export function classify(state, subject, question, choice) {
-  if(state.phase!=='classify' || state.answer!==subject.id) throw new Error('No answer to classify.');
+  if(state.rounds>=MAX_QUESTIONS || state.phase!=='classify' || state.answer!==subject.id) throw new Error('No answer to classify.');
   state=migrateRun(state);
   const tier=question.answers.find(a=>a.id===subject.id)?.tier;
   if(!Number.isInteger(tier) || tier<0 || tier>5) throw new Error('Invalid rarity.');
@@ -81,14 +80,14 @@ export function classify(state, subject, question, choice) {
   const pristine=state.pristine && tier===5;
   const hits=state.hits+(correct?0:1);
   const distance=Math.min(STATION,state.distance+(correct?travelForTier(tier):0));
-  const phase=hits>=3?'dead':distance>=STATION?'escaped':'result';
-  return {...state,score:state.score+earned,distance,hits,pristine,rounds:state.rounds+1,phase,deadline:null,
+  const phase=hits>=3?'dead':distance>=STATION?'escaped':state.rounds+1>=MAX_QUESTIONS?'dead':'result';
+  return {...state,score:state.score+earned,distance,hits,pristine,rounds:state.rounds+1,phase,lossReason:phase==='dead'?(hits>=3?'hits':'questions'):null,deadline:null,
     history:[...state.history,{subject:subject.id,question:question.id,tier,earned,travelled:distance-state.distance,correct,choice}].slice(-100)};
 }
 export function skip(state) {
-  if(state.phase!=='answer') throw new Error('Cannot skip this phase.');
+  if(state.rounds>=MAX_QUESTIONS || state.phase!=='answer') throw new Error('Cannot skip this phase.');
   state=migrateRun(state);
-  return {...state,pristine:false,rounds:state.rounds+1,phase:'result',deadline:null,answer:null,
+  return {...state,pristine:false,rounds:state.rounds+1,phase:state.rounds+1>=MAX_QUESTIONS?'dead':'result',lossReason:state.rounds+1>=MAX_QUESTIONS?'questions':null,deadline:null,answer:null,
     history:[...state.history,{question:state.question,earned:0,correct:null,skipped:true}].slice(-100)};
 }
 export function selectQuestion(state, questions, random=Math.random) {

@@ -17,61 +17,64 @@ test('the exact twenty-level itinerary is independent of eight question-difficul
  ]);
  assert.equal(BANDS.length,8);assert.equal(LEVELS.length,20);assert.equal(LEVEL_DISTANCE,5000);
  for(let i=0;i<20;i++){
-  assert.equal(LEVELS[i].number,i+1);assert.equal(LEVELS[i].startDistance,i*5000);
-  assert.equal(LEVELS[i].endDistance,(i+1)*5000);assert.equal(levelIndex(i*5000),i);
-  assert.equal(levelIndex((i+1)*5000-1),i);
+  const start=i===19?STATION:i*5000,end=i>=18?STATION:(i+1)*5000;
+  assert.equal(LEVELS[i].number,i+1);assert.equal(LEVELS[i].startDistance,start);
+  assert.equal(LEVELS[i].endDistance,end);assert.equal(levelIndex(start),i);
+  if(i<19)assert.equal(levelIndex(end-1),i);
  }
+ for(const distance of [90000,95000,97000,99999])assert.equal(levelIndex(distance),18);
  assert.equal(levelIndex(100000),19);assert.equal(levelIndex(-100),0);
  assert.equal(LEVELS[9].effect,'fold');assert.equal(LEVELS[18].effect,'drawing-hand');
  for(let i=0;i<8;i++)assert.equal(bandIndex(i*12500),i);
 });
-test('source point tiers are unchanged while all correct answers advance at least one full level',()=>{
- assert.deepEqual(POINTS,[10,15,30,60,85,100]);assert.deepEqual(TRAVEL_BY_TIER,[5000,5500,6000,6500,7000,7500]);
+test('all six tiers award proportional distance and only five top answers win',()=>{
+ assert.deepEqual(POINTS,[10,15,30,60,85,100]);assert.deepEqual(TRAVEL_BY_TIER,[2000,3000,6000,12000,17000,20000]);
  for(let tier=0;tier<6;tier++){
-  const s=resolve(freshRun(),tier);assert.equal(s.score,POINTS[tier]);
-  assert.equal(s.distance,TRAVEL_BY_TIER[tier]);assert.equal(s.history.at(-1).travelled,travelForTier(tier));
+  let s=freshRun();
+  for(let i=1;i<=5;i++){
+   s=resolve(s,tier);assert.equal(s.rounds,i);assert.equal(s.distance,i*travelForTier(tier));
+   assert.equal(s.phase,i<5?'result':tier===5?'escaped':'dead');
+  }
+  assert.equal(s.score,5*POINTS[tier]);assert.throws(()=>beginQuestion(s,prompt));
  }
  assert.throws(()=>travelForTier(-1),/Invalid rarity/);assert.throws(()=>travelForTier(6),/Invalid rarity/);
 });
-test('ordinary knowledgeable play visits all twenty levels and wins in twenty correct answers',()=>{
- let s=freshRun();const visited=[levelIndex(s.distance)];
- for(let i=1;i<=20;i++){
-  s=resolve(s,0);visited.push(levelIndex(s.distance));assert.equal(s.rounds,i);
-  assert.equal(s.phase,i===20?'escaped':'result');assert.equal(s.distance,i*5000);
+test('four top answers plus any lower answer cannot escape, regardless of order',()=>{
+ for(let tier=0;tier<5;tier++)for(let position=0;position<5;position++){
+  let s=freshRun();for(let i=0;i<5;i++)s=resolve(s,i===position?tier:5);
+  assert.equal(s.phase,'dead');assert.equal(s.lossReason,'questions');assert.equal(s.hits,0);
+  assert.equal(s.distance,80000+travelForTier(tier));assert.throws(()=>beginQuestion(s,prompt));
  }
- assert.equal(new Set(visited).size,20);assert.equal(s.score,200);assert.equal(s.pristine,false);
 });
-test('all six tiers can win; rarer answers reduce correct-answer count without changing damage rules',()=>{
- const counts=[];
- for(let tier=0;tier<6;tier++){
-  let s=freshRun();while(s.phase!=='escaped')s=resolve(s,tier);
-  counts.push(s.rounds);assert.equal(s.distance,STATION);assert.equal(s.hits,0);
+test('passes and expired naming windows consume the five-question budget without damage',()=>{
+ let s=freshRun();for(let i=0;i<5;i++)s=skip(beginQuestion(s,prompt,0));
+ assert.equal(s.rounds,5);assert.equal(s.hits,0);assert.equal(s.distance,0);assert.equal(s.phase,'dead');
+ assert.throws(()=>beginQuestion(s,prompt));
+ s=freshRun();for(let i=0;i<4;i++)s=resolve(s,5);s=skip(beginQuestion(s,prompt));
+ assert.equal(s.phase,'dead');assert.equal(s.distance,80000);assert.equal(s.hits,0);
+});
+test('three wrong classifications still end the flight early',()=>{
+ let s=freshRun();for(let i=0;i<3;i++)s=resolve(s,5,false);
+ assert.equal(s.phase,'dead');assert.equal(s.rounds,3);assert.equal(s.hits,3);assert.equal(s.lossReason,'hits');
+ assert.throws(()=>beginQuestion(s,prompt));
+});
+test('reload preserves current progress and cannot offer a sixth question',()=>{
+ let s=freshRun();for(let i=0;i<4;i++)s=resolve(s,5);
+ const saved=JSON.parse(JSON.stringify(s));assert.deepEqual(migrateRun(saved),s);
+ s=resolve(migrateRun(saved),5);assert.equal(s.phase,'escaped');assert.equal(s.distance,STATION);
+ assert.throws(()=>beginQuestion(migrateRun(JSON.parse(JSON.stringify(s))),prompt));
+ let loss=freshRun();for(let i=0;i<5;i++)loss=resolve(loss,0);
+ assert.throws(()=>beginQuestion(migrateRun(JSON.parse(JSON.stringify(loss))),prompt));
+ assert.throws(()=>beginQuestion({...freshRun(),rounds:5,phase:'result'},prompt));
+});
+test('old saves restart safely instead of importing unlimited-question distance',()=>{
+ for(const phase of ['answer','classify','result','escaped','dead']){
+  const old={...freshRun(),progressionVersion:2,phase,distance:95000,score:1900,rounds:42,hits:2,deadline:1000,previewUntil:999999,namingAutoSubmitted:true,lossReason:'hits',judgePending:true};
+  const before=structuredClone(old),m=migrateRun(old);assert.deepEqual(old,before);
+  assert.equal(m.progressionVersion,PROGRESSION_VERSION);assert.equal(m.phase,'ready');
+  assert.equal(m.distance,0);assert.equal(m.rounds,0);assert.equal(m.score,0);assert.equal(m.hits,0);
+  for(const key of ['previewUntil','namingAutoSubmitted','lossReason','judgePending'])assert.equal(m[key],undefined);
  }
- assert.deepEqual(counts,[20,19,17,16,15,14]);
- let s=resolve(freshRun(),0,false);s=resolve(s,5,false);
- assert.equal(s.hits,2);assert.equal(s.distance,0);assert.equal(s.score,0);
- for(let i=0;i<20;i++)s=resolve(s,0);assert.equal(s.phase,'escaped');assert.equal(s.hits,2);
- let dead=resolve(freshRun(),0,false);dead=resolve(dead,0,false);dead=resolve(dead,0,false);
- assert.equal(dead.phase,'dead');assert.equal(dead.hits,3);assert.equal(dead.distance,0);
-});
-test('a saved legacy practice run keeps progress and can escape on its next ordinary answer',()=>{
- const legacy={...freshRun(),distance:95000,score:1900,pristine:false,phase:'result',rounds:42,hits:2};
- delete legacy.progressionVersion;const before=structuredClone(legacy),m=migrateRun(legacy,1000);
- assert.deepEqual(legacy,before);assert.equal(m.progressionVersion,PROGRESSION_VERSION);
- for(const key of ['distance','score','hits','phase','rounds','pristine'])assert.equal(m[key],legacy[key]);
- const won=resolve(m,0);assert.equal(won.phase,'escaped');assert.equal(won.distance,100000);assert.equal(won.hits,2);
- assert.deepEqual(migrateRun(m,999999),m);
-});
-test('new questions allow thirty-five seconds and old active deadlines gain exactly ten seconds once',()=>{
- const started=beginQuestion(freshRun(),prompt,1000);assert.equal(ANSWER_TIME_MS,35000);
- assert.equal(started.deadline,36000);assert.equal(started.remaining,35000);
- const old={...started,deadline:26000,remaining:25000};delete old.progressionVersion;
- const migrated=migrateRun(old,11000);assert.equal(migrated.deadline,36000);assert.equal(migrated.remaining,25000);
- assert.equal(migrateRun(migrated,12000).deadline,36000);
- const expired={...old,deadline:1000};assert.equal(migrateRun(expired,20000).remaining,0);
-});
-test('passes remain recoverable and do not move numeric distance',()=>{
- let s=resolve(freshRun(),0);const passed=skip(beginQuestion(s,prompt));
- assert.equal(passed.distance,5000);assert.equal(passed.score,10);assert.equal(passed.hits,0);
- s=passed;while(s.phase!=='escaped')s=resolve(s,0);assert.equal(s.phase,'escaped');
+ const active=beginQuestion(freshRun(),prompt,1000);assert.equal(ANSWER_TIME_MS,35000);assert.equal(active.deadline,36000);
+ assert.deepEqual(migrateRun(active,11000),active);
 });

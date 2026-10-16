@@ -81,19 +81,19 @@ test('a failed snapshot refresh preserves prior records and becomes explicitly t
  const current=board.snapshot();assert.equal(current.available,false);assert.equal(current.runs.length,1);
  assert.equal(current.bestScore,300);assert.equal(current.bestDistance,15000);
 });
-test('ordinary twenty-answer escapes persist even when naming performance is not pristine',()=>{
+test('five-question common-answer losses persist without hull damage',()=>{
  const prompt={id:'ordinary-win',band:0,answers:[{id:'ordinary',tier:0}]};
  const subject={id:'ordinary',classification:'event'};
  let state=freshRun();
- for(let i=0;i<20;i++)state=classify(acceptAnswer(beginQuestion(state,prompt),subject,prompt),subject,prompt,'event');
- assert.equal(state.phase,'escaped');assert.equal(state.pristine,false);assert.equal(state.score,200);
+ for(let i=0;i<5;i++)state=classify(acceptAnswer(beginQuestion(state,prompt),subject,prompt),subject,prompt,'event');
+ assert.equal(state.phase,'dead');assert.equal(state.pristine,false);assert.equal(state.score,50);
  const local=storage(),board=createScoreStore(local);
  const record=run('ordinary-win',{outcome:state.phase,score:state.score,distance:state.distance,
   hits:state.hits,rounds:state.rounds,pristine:state.pristine});
  board.record(record);board.record(record);
  const restored=createScoreStore(local).snapshot();
- assert.equal(restored.runs.length,1);assert.equal(restored.escapes,1);assert.equal(restored.runs[0].pristine,false);
- assert.equal(restored.bestDistance,100000);assert.equal(restored.bestScore,200);
+ assert.equal(restored.runs.length,1);assert.equal(restored.escapes,0);assert.equal(restored.runs[0].pristine,false);
+ assert.equal(restored.bestDistance,10000);assert.equal(restored.bestScore,50);
 });
 test('old top-tier escapes and new mixed-answer escapes coexist without losing legacy records',()=>{
  const local=storage(),legacy=run('old-perfect',{outcome:'escaped',distance:100000,score:2000,hits:0,rounds:20,pristine:true});
