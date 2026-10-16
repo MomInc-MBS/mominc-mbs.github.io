@@ -1,3 +1,4 @@
+import {createSakuraView} from './sakura/view.mjs?v=sakura-1';
 import * as THREE from './vendor/three.module.js';
 import {GLTFLoader} from './vendor/GLTFLoader.js';
 import {bindHand,applyHandPose} from './pose-rig.js';
@@ -5,13 +6,14 @@ import {replaceSprite} from './coach-3d.mjs';
 const params=new URLSearchParams(location.search),DEBUG=params.has('debug'),SCRUB=params.has('t')?Math.max(0,+params.get('t')||0):null,AUTO_PRESS=params.get('press')==='1';
 const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const renderer=new THREE.WebGLRenderer({antialias:true});renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.outputColorSpace=THREE.SRGBColorSpace;document.body.prepend(renderer.domElement);
-const scene=new THREE.Scene();scene.background=new THREE.Color('#08070d');scene.fog=new THREE.FogExp2('#100d17',.045);const camera=new THREE.PerspectiveCamera(48,innerWidth/innerHeight,.05,60);
+const sakura=createSakuraView(renderer);
+const scene=new THREE.Scene();scene.background=new THREE.Color('#08070d');scene.fog=new THREE.FogExp2('#54475f',.045);const camera=new THREE.PerspectiveCamera(48,innerWidth/innerHeight,.05,60);
 const gold=new THREE.MeshStandardMaterial({color:'#c6a463',metalness:.65,roughness:.35}),purple=new THREE.MeshStandardMaterial({color:'#322344',metalness:.35,roughness:.35}),black=new THREE.MeshStandardMaterial({color:'#100d17',roughness:.5}),steel=new THREE.MeshStandardMaterial({color:'#c6c5b9',metalness:.8,roughness:.25});
 function box(w,h,d,mat,x,y,z,parent=scene){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);m.position.set(x,y,z);parent.add(m);return m;}
 function plane(w,h,mat,x,y,z,parent=scene){const m=new THREE.Mesh(new THREE.PlaneGeometry(w,h),mat);m.position.set(x,y,z);parent.add(m);return m;}
 function label(text,bg,fg,w=512,h=96){const c=document.createElement('canvas');c.width=w;c.height=h;const g=c.getContext('2d');g.fillStyle=bg;g.fillRect(0,0,w,h);g.fillStyle=fg;g.font=`bold ${h*.55|0}px monospace`;g.textAlign='center';g.textBaseline='middle';g.fillText(text,w/2,h/2+2);const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;return t;}
 box(12,.15,20,purple,0,-.1,0);box(12,.15,20,black,0,4.3,0);box(.2,4.4,20,purple,-6,2,0);box(.2,4.4,20,purple,6,2,0);box(12,4.4,.2,purple,0,2,-8);
-const roomLight=new THREE.HemisphereLight('#d8c1ec','#30233a',0);scene.add(roomLight);const spot=new THREE.PointLight('#d5b7ed',0,18);spot.position.set(0,3.4,-.5);scene.add(spot);
+const roomLight=new THREE.HemisphereLight('#dcecff','#b6a6c6',0);scene.add(roomLight);const spot=new THREE.PointLight('#fff1d8',0,18);spot.position.set(0,3.4,-.5);scene.add(spot);
 for(let z=-7;z<=8;z+=2){for(const x of [-5.6,5.6]){box(.12,.035,.55,new THREE.MeshBasicMaterial({color:'#6d5682'}),x,.03,z);const l=new THREE.PointLight('#584363',.25,2);l.position.set(x,.15,z);scene.add(l);}}
 // The entrance behind the viewer closes in five physical increments.
 const doors=[];for(const side of [-1,1]){doors.push(box(2.05,3.8,.18,purple,side*2.15,1.9,8));box(.12,4,.25,gold,side*2.18,2,8);}
@@ -148,7 +150,7 @@ function renderReveal(t,pressAt){
  camera.position.copy(camPos);camera.lookAt(target);
  doors.forEach((d,i)=>d.position.x=(i?1:-1)*(2.15-clicks/5*1.12));
  caption.textContent=t<TURN0?'Door stays shut.':t<EMERGE0?(t>TURN1?'Locked.':''):t<CLICK?'Your hand brought the drive.':!pressed?(t-READY>4?'Press the button.':'Unlocked.'):q<COLLAPSE1?'':q<PULL0?'The portal folds into your quilt.':'Take it with you.';
- renderer.render(scene,camera);
+ sakura.render(scene,camera);
  if(!pressed&&t>=READY&&SCRUB==null){btn.getWorldPosition(v1).project(camera);pressEl.hidden=false;pressEl.style.transform=`translate(${(v1.x+1)/2*innerWidth}px,${(1-v1.y)/2*innerHeight}px) translate(-50%,-50%)`;}else pressEl.hidden=true;
 }
 
@@ -164,7 +166,7 @@ function tick(now){const t=(now-start)/1000;const look=new THREE.Vector3(0,1.6,-
 if(phase==='seal'){camera.position.set(0,1.65,3);look.set(0,1.5,9);const remaining=Math.max(0,deadline-now);timer.textContent=(remaining/1000).toFixed(1);coach.position.z=9.3-(1-remaining/3000)*.9;if(!remaining)fail();}
 doors.forEach((d,i)=>d.position.x=(i?1:-1)*(2.15-clicks/5*1.12));
 if(phase==='reveal'){const dt=Math.min(.05,(now-lastNow)/1000);lastNow=now;let next=clock+dt*(RM?2:1);if(handState==='loading'&&next>EMERGE0)next=Math.max(clock,EMERGE0);clock=next;if(AUTO_PRESS&&pressAt===Infinity&&clock>=AUTO_T)pressAt=clock;renderReveal(clock,pressAt);if(clock-pressAt>=END&&!finished)finish();}
-else{if(finished){coach.position.z=4.2;coach.scale.set(5,4,1);}camera.lookAt(look);renderer.render(scene,camera);}
+else{if(finished){coach.position.z=4.2;coach.scale.set(5,4,1);}camera.lookAt(look);sakura.render(scene,camera);}
 if(!finished||phase!=='reveal')requestAnimationFrame(tick);}
 window.armieLab={get phase(){return phase},get clicks(){return clicks},get clock(){return clock},renderAt:(t,press=AUTO_PRESS?AUTO_T:Infinity)=>{phase='reveal';clicks=5;task.hidden=true;renderReveal(t,press);}};
 addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});

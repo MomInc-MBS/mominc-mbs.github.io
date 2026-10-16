@@ -1,3 +1,4 @@
+import {createSakuraView} from './sakura/view.mjs?v=sakura-1';
 // Coach Armie in 3D: whatever clay forearm sits in models/coach-hand.glb (placeholder: Modly Hunyuan3D-2 Mini mesh),
 // made canonical at load and given live googly eyes in code. Every caller keeps its 2D coach (sprite / SVG /
 // procedural hand) until the model is in, so a missing or broken GLB changes nothing.
@@ -96,22 +97,24 @@ export function replaceSprite(scene,sprite,{size=.9,lift=0,turn=.9,glow=2.5,rear
 // DOM coach for overlays: starts as the 2D SVG (fallback) and swaps to a WebGL canvas once the model has drawn.
 // Same API as coachHand(): el.coach.pressure(p) / roll(on) / destroy(). Points up, face at the top.
 export function coachElement(svgEl){
-  const el=svgEl;let pressure=.3,roll=false,dead=false,raf=0;const api=el.coach;
-  el.coach={pressure(p){pressure=Math.max(0,Math.min(1,p));api.pressure(p);},roll(on){roll=!!on;api.roll(on);},destroy(){dead=true;cancelAnimationFrame(raf);api.destroy();}};
+  const el=svgEl;let pressure=.3,roll=false,dead=false,raf=0,release=()=>{};const api=el.coach;
+  el.coach={pressure(p){pressure=Math.max(0,Math.min(1,p));api.pressure(p);},roll(on){roll=!!on;api.roll(on);},destroy(){dead=true;cancelAnimationFrame(raf);release();api.destroy();}};
   loadCoach(T).then(coach=>{if(dead)return;
     const renderer=new T.WebGLRenderer({alpha:true,antialias:true});renderer.outputColorSpace=T.SRGBColorSpace;
+    const sakura=createSakuraView(renderer);
+    release=()=>{sakura.dispose();renderer.dispose();};
     const canvas=renderer.domElement;canvas.style.cssText='position:absolute;inset:0;width:100%;height:100%';canvas.setAttribute('aria-hidden','true');
     const scene=new T.Scene(),camera=new T.PerspectiveCamera(30,.5,.1,20);
     scene.add(new T.HemisphereLight('#f0e2ff','#3a1830',2.2));const key=new T.DirectionalLight('#fff0dc',2.6);key.position.set(1.5,2,3);scene.add(key);
     // Palm down in the file's frame: pivot stands the hand up with its back (and the eyes) toward the camera.
     const pivot=new T.Group();pivot.rotation.x=Math.PI/2;pivot.add(coach.group);coach.group.rotation.set(0,0,0);const stand=new T.Group();stand.rotation.set(0,-.35,Math.PI/2);stand.add(pivot);scene.add(stand);
     let shown=false,w=0,h=0;
-    const frame=now=>{if(dead||!el.isConnected&&shown){renderer.dispose();return;}raf=requestAnimationFrame(frame);
+    const frame=now=>{if(dead||!el.isConnected&&shown){release();return;}raf=requestAnimationFrame(frame);
       if(!el.offsetParent)return;const cw=el.clientWidth,ch=el.clientHeight;if(!cw||!ch)return;
       if(cw!==w||ch!==h){w=cw;h=ch;renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.setSize(w,h,false);camera.aspect=w/h;
         // Fit the length (now vertical) to the box height.
         camera.position.z=1.6/(2*Math.tan(T.MathUtils.degToRad(camera.fov/2)));camera.updateProjectionMatrix();}
-      const q=still()?0:1;stand.rotation.y=-.35+Math.sin(now/260)*.12*q;coach.tick(now,{pressure,roll});renderer.render(scene,camera);
+      const q=still()?0:1;stand.rotation.y=-.35+Math.sin(now/260)*.12*q;coach.tick(now,{pressure,roll});sakura.render(scene,camera);
       if(!shown){shown=true;el.append(canvas);const svg=el.querySelector('svg');if(svg)svg.style.visibility='hidden';}};
     raf=requestAnimationFrame(frame);
   }).catch(e=>console.warn('3D coach unavailable, keeping 2D:',e.message));

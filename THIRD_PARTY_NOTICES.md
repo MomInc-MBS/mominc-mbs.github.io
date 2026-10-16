@@ -116,3 +116,7 @@ Erik Satie, Gymnopédie No. 1. Piano performance: Robin Alciatore, courtesy of M
 ## Shaders WebGPU effects
 
 The optional decorative Aurora, Hologram and Sparkle effects use shaders 4.0.4, Copyright Shader Effects Inc., under the MIT license. Source: https://github.com/shader-effects-inc/shaders . The bundled runtime and full license are in vendor/shaders/. Existing artwork remains the fallback on browsers without WebGPU.
+
+## Coach Armie Sakura rendering
+
+The ink, color grade and FXAA shaders in `tv/assets/armie-intro/sakura/` are adapted from Sakura Crossing, copyright (c) 2026 Kenton Wang, under the MIT License. The license is included in `tv/assets/armie-intro/sakura/LICENSE.txt`. Armie uses its existing local Three.js r180 renderer and original models.
