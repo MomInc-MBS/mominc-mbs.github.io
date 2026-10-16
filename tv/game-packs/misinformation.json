@@ -269,13 +269,28 @@
     },
     {
       "url": "/tv/assets/armie-intro/coach-3d.mjs",
-      "revision": "5cb50bd6556b89b3a5fb9f9f61654f4c94aba7bf",
-      "bytes": 10821
+      "revision": "b3631fabfbb18c8f5c19bee5bd664d7c5b5ec339",
+      "bytes": 10999
     },
     {
       "url": "/tv/assets/armie-intro/models/coach-hand.glb",
       "revision": "061bf1ec258bce4b35b3a0c984068f08f82b059b",
       "bytes": 197264
+    },
+    {
+      "url": "/tv/assets/armie-intro/sakura/post.js",
+      "revision": "a33813e2073f0806b87ba5558a0c2b3216715ca9",
+      "bytes": 10797
+    },
+    {
+      "url": "/tv/assets/armie-intro/sakura/quad.js",
+      "revision": "385c89846317a8f17d4256072d28e57fa8b6ef83",
+      "bytes": 402
+    },
+    {
+      "url": "/tv/assets/armie-intro/sakura/view.mjs",
+      "revision": "1b5797736f3ffc8ee8c796110f203f885a941735",
+      "bytes": 1785
     },
     {
       "url": "/tv/assets/armie-intro/shared-computer.mjs",
@@ -557,5 +572,5 @@
     "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "521adf986882e94eee2e"
+  "version": "0fb3fa396e848d60b99c"
 }

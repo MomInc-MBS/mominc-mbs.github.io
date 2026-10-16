@@ -1,4 +1,5 @@
-import {continueScene} from './game-scene.js?v=chase-5';
+import {createSakuraView} from './sakura/view.mjs?v=sakura-1';
+import {continueScene} from './game-scene.js?v=sakura-1';
 import * as THREE from './vendor/three.module.js';
 import {GLTFLoader} from './vendor/GLTFLoader.js';
 import {bindHand,applyHandPose} from './pose-rig.js';
@@ -10,9 +11,10 @@ const ROOM_HEIGHT=Math.max(3.65,.98+FACE_HEIGHT+.45),ROOM_BACK_Z=Math.max(5.5,.5
 const regions=['nails','fingertips','middle_sections','knuckles','palm','back_of_hand','wrist'];
 const status=document.querySelector('#status'),summary=document.querySelector('#summary'),startButton=document.querySelector('#start'),caption=document.querySelector('#caption'),fade=document.querySelector('#fade');
 const renderer=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.setSize(innerWidth,innerHeight);renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;document.body.prepend(renderer.domElement);
-const scene=new THREE.Scene();scene.background=new THREE.Color('#09080c');scene.fog=new THREE.FogExp2('#100c15',.037);
+const sakura=createSakuraView(renderer);
+const scene=new THREE.Scene();scene.background=new THREE.Color('#09080c');scene.fog=new THREE.FogExp2('#54475f',.037);
 const camera=new THREE.PerspectiveCamera(43,innerWidth/innerHeight,.05,80);camera.position.set(0,1.6,2.6);camera.lookAt(0,1.52,0);
-scene.add(new THREE.HemisphereLight('#b8b4d6','#251422',.9));const key=new THREE.PointLight('#ffe3b4',20,13);key.position.set(0,3,2);scene.add(key);
+scene.add(new THREE.HemisphereLight('#dcecff','#b6a6c6',1.05));const key=new THREE.PointLight('#fff1d8',20,13);key.position.set(0,3,2);scene.add(key);
 function noiseTexture(){const c=document.createElement('canvas');c.width=c.height=256;const g=c.getContext('2d');g.fillStyle='#777';g.fillRect(0,0,256,256);let seed=93;const rand=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};for(let i=0;i<24000;i++){const v=45+rand()*145;g.fillStyle=`rgba(${v},${v},${v},${.15+rand()*.6})`;g.fillRect(rand()*256,rand()*256,1+rand()*3,1+rand()*3);}for(let i=0;i<22;i++){g.strokeStyle='#3336';g.beginPath();g.ellipse(rand()*256,rand()*256,7+rand()*20,2+rand()*6,rand()*6,0,Math.PI*2);g.stroke();}const tx=new THREE.CanvasTexture(c);tx.wrapS=tx.wrapT=THREE.RepeatWrapping;tx.repeat.set(3,3);return tx;}
 const grit=noiseTexture();const mat=(color,roughness=.5,metalness=.15)=>new THREE.MeshStandardMaterial({color,roughness,metalness,bumpMap:grit,bumpScale:.035});
 const purple=mat('#443147',.85,.1),gold=createGoldMaterial(THREE,grit),clay=mat('#704772',.95,0),floorMat=mat('#49294e',.33,.35),black=mat('#0c0b10',.75,.1);
@@ -65,7 +67,7 @@ function renderAt(t){
  const firstShake=t>=.1&&t<1?Math.sin((t-.1)/.9*Math.PI):t>=3.3&&t<5.2?Math.sin((t-3.3)/1.9*Math.PI):0;if(!matchMedia('(prefers-reduced-motion: reduce)').matches){camera.position.x+=Math.sin(t*73)*.045*firstShake;camera.position.y+=Math.cos(t*59)*.026*firstShake;}
  camera.lookAt(target);coach.position.x=12-Math.max(0,t-4)*.065;coach.position.y=.66+Math.sin(t*4)*.022;practicals.forEach((l,i)=>l.intensity=5+Math.sin(t*1.7+i)*.18);
  flashMat.opacity=ease((t-19.65)/1.1);fade.style.opacity=String(flashMat.opacity);caption.textContent=t<4?'':t<7?'Coach still here.':t<11?'Take the drive.':t<13.8?'Coach must help.':t<19?'Run for coach.':'';
-  renderer.render(scene,camera);window.armieIntroTime=t;
+  sakura.render(scene,camera);window.armieIntroTime=t;
  if(liveMode){camera.updateMatrixWorld();const {x,y,width,height,z}=opening;const corners=[[x-width/2,y+height/2,z],[x+width/2,y+height/2,z],[x+width/2,y-height/2,z],[x-width/2,y-height/2,z]].map(p=>new THREE.Vector3(...p));const visible=t<15&&corners.every(p=>p.clone().applyMatrix4(camera.matrixWorldInverse).z<-.05);const points=corners.map(p=>{p.project(camera);return [(p.x+1)*innerWidth/2,(1-p.y)*innerHeight/2];});parent.postMessage({type:'armie-intro-face',time:t,points,visible},location.origin);}
 }
 function done(){playing=false;ended=true;fade.style.opacity='1';parent.postMessage({type:'armie-intro-complete'},location.origin);if(parent===window){status.style.display='grid';summary.textContent='Intro complete. Your hand stayed with you.';startButton.textContent='Replay intro';startButton.hidden=false;}}
@@ -75,7 +77,7 @@ window.addEventListener('message',e=>{if(e.origin===location.origin&&e.source===
 startButton.onclick=play;document.querySelector('#skip').onclick=done;
 window.addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);if(!playing&&!window.armieGameSceneState)renderAt(window.armieIntroTime||0);});
 window.addEventListener('message',e=>{if(e.origin!==location.origin||e.source!==parent||e.data?.type!=='armie-intro-start')return;loadHand(e.data.profile).then(play).catch(err=>{summary.textContent=err.message;});});
-const updateGame=continueScene({THREE,scene,camera,renderer,coach,computer,hand,drive,flashMat,fade,status,caption,practicals});
+const updateGame=continueScene({THREE,scene,camera,renderer,renderView:sakura.render,coach,computer,hand,drive,flashMat,fade,status,caption,practicals});
 window.addEventListener('message',e=>{if(e.origin===location.origin&&e.source===parent&&e.data?.type==='armie-game-state'){playing=false;updateGame(e.data.state);}});
 window.armieIntro={renderAt,play,canvas:renderer.domElement,getProfile:()=>recipe};
 try{const r=JSON.parse(localStorage.getItem('mbs-hand-profile-v1'));if(valid(r))await loadHand(r);else summary.textContent='Finish your hand in Handborne first.';}catch(e){summary.textContent='Could not load your hand. '+e.message;}

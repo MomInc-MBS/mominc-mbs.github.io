@@ -104,8 +104,8 @@
     },
     {
       "url": "/tv/assets/armie-intro/coach-3d.mjs",
-      "revision": "5cb50bd6556b89b3a5fb9f9f61654f4c94aba7bf",
-      "bytes": 10821
+      "revision": "b3631fabfbb18c8f5c19bee5bd664d7c5b5ec339",
+      "bytes": 10999
     },
     {
       "url": "/tv/assets/armie-intro/coach-hand.mjs",
@@ -139,8 +139,8 @@
     },
     {
       "url": "/tv/assets/armie-intro/game-scene.js",
-      "revision": "a52d929c51d562f507b9cd8316103b35f7926b8d",
-      "bytes": 4243
+      "revision": "7f4171c146086e92590539da1f597012fe01562f",
+      "bytes": 4261
     },
     {
       "url": "/tv/assets/armie-intro/game-screen.png",
@@ -149,23 +149,23 @@
     },
     {
       "url": "/tv/assets/armie-intro/index.html",
-      "revision": "cacc377fe458fc96dd6f3705212441af1951d936",
-      "bytes": 1492
+      "revision": "4f1c43e1304c8d49f4abe05002513b33a451008b",
+      "bytes": 1489
     },
     {
       "url": "/tv/assets/armie-intro/intro.js",
-      "revision": "46a729f009627f632396d4839b5950ff12531af0",
-      "bytes": 14685
+      "revision": "dee17db626903750150fa249166798c13c6b3345",
+      "bytes": 14815
     },
     {
       "url": "/tv/assets/armie-intro/lab.html",
-      "revision": "8d7d230eae20a867cb0919ec622d392675c37609",
-      "bytes": 1682
+      "revision": "4a1960323dc2cdd992e3634422a7588cb5e2af70",
+      "bytes": 1705
     },
     {
       "url": "/tv/assets/armie-intro/lab.js",
-      "revision": "16f9fb08395179ddeffd778f00824f4e9d42e29a",
-      "bytes": 26322
+      "revision": "faca876c4af39fb09858b5dc2c7501d1ed8b908a",
+      "bytes": 26422
     },
     {
       "url": "/tv/assets/armie-intro/maze-run.mjs",
@@ -174,8 +174,8 @@
     },
     {
       "url": "/tv/assets/armie-intro/maze-scene.js",
-      "revision": "062e5648de4df20e96feb25a72661bd0e287c2e8",
-      "bytes": 24650
+      "revision": "073dd2d36469c7d0460bb3b79d1bad47f123a766",
+      "bytes": 24687
     },
     {
       "url": "/tv/assets/armie-intro/maze-ui.css",
@@ -628,6 +628,21 @@
       "bytes": 288808
     },
     {
+      "url": "/tv/assets/armie-intro/sakura/post.js",
+      "revision": "a33813e2073f0806b87ba5558a0c2b3216715ca9",
+      "bytes": 10797
+    },
+    {
+      "url": "/tv/assets/armie-intro/sakura/quad.js",
+      "revision": "385c89846317a8f17d4256072d28e57fa8b6ef83",
+      "bytes": 402
+    },
+    {
+      "url": "/tv/assets/armie-intro/sakura/view.mjs",
+      "revision": "1b5797736f3ffc8ee8c796110f203f885a941735",
+      "bytes": 1785
+    },
+    {
       "url": "/tv/assets/armie-intro/shared-computer.mjs",
       "revision": "377372972d6b9b04cde688bafb43efc271c046eb",
       "bytes": 7822
@@ -784,8 +799,8 @@
     },
     {
       "url": "/tv/channels/armie.html",
-      "revision": "9df89ddf0e37c481dea8f6712ce0f1c4a4bcc538",
-      "bytes": 32076929
+      "revision": "04ec168e9630bb62e3aa7a15bed3234c19b2b5a4",
+      "bytes": 32076949
     },
     {
       "url": "/tv/dj-booth.css",
@@ -936,5 +951,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "b0afb5cdde236a2f5c8c"
+  "version": "f79c5ef9f7e553826b2a"
 }

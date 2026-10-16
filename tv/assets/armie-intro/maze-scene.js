@@ -6,9 +6,9 @@ const SIGNS=[['MOM INC','LOVES YOU'],['REST HERE','MOM IS PROUD'],['NO ONE','LEA
 const R=2.4,CY=1.55,SEG=16,TAU=Math.PI*2; // tube radius, axis height, radial segments
 
 export function createMazeScene(THREE){
-  const scene=new THREE.Scene();scene.background=new THREE.Color('#040208');scene.fog=new THREE.Fog('#0c0712',14,48);
-  scene.add(new THREE.HemisphereLight('#a898c0','#1c1222',.6));
-  const lamp=new THREE.PointLight('#ffd49a',9,12,1.6),ahead=new THREE.PointLight('#ffc77a',14,18,1.6),alarm=new THREE.PointLight('#ff2030',0,16,1.4),pitLight=new THREE.PointLight('#ff3a14',0,9,1.4),fill=new THREE.PointLight('#b9a8e8',2.2,22,1.2);
+  const scene=new THREE.Scene();scene.background=new THREE.Color('#040208');scene.fog=new THREE.Fog('#54475f',14,48);
+  scene.add(new THREE.HemisphereLight('#dcecff','#b6a6c6',.75));
+  const lamp=new THREE.PointLight('#fff1d8',9,12,1.6),ahead=new THREE.PointLight('#ffc77a',14,18,1.6),alarm=new THREE.PointLight('#ff2030',0,16,1.4),pitLight=new THREE.PointLight('#ff3a14',0,9,1.4),fill=new THREE.PointLight('#b9a8e8',2.2,22,1.2);
   scene.add(lamp,ahead,alarm,pitLight,fill);
   const camera=new THREE.PerspectiveCamera(72,1,.06,160);
   const material=(color,metalness=.4,roughness=.5)=>new THREE.MeshStandardMaterial({color,metalness,roughness});
@@ -233,6 +233,6 @@ export function createMazeScene(THREE){
       const q=place(Math.min(m.d,LENGTH)),wob=motion?Math.sin(now*.7+m.s)*.15:0;
       dustPos[i*3]=q.x+Math.cos(q.yaw)*m.x;dustPos[i*3+1]=m.y+wob;dustPos[i*3+2]=q.z-Math.sin(q.yaw)*m.x;if(motion){m.y=(m.y+.0015)%3.6;}}
     dustGeo.attributes.position.needsUpdate=true;
-    renderer.render(scene,camera);
+    (options.renderView||((s,c)=>renderer.render(s,c)))(scene,camera);
   }};
 }
