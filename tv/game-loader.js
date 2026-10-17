@@ -208,7 +208,7 @@
   // canvases and iframe games measure themselves while they mount behind the logo.
   // The television's own cabinet controls (dial, power, keys) stay usable while the glass loads.
   for (const event of ['pointerdown', 'click', 'keydown']) document.addEventListener(event, e => {
-    if (finished || overlay?.contains(e.target) || (tvPage && e.target?.closest?.('.panel'))) return;
+    if (finished || overlay?.contains(e.target) || (tvPage && e.target?.closest?.('.panel, .off3d'))) return;
     e.preventDefault(); e.stopImmediatePropagation();
   }, true);
   domReady.then(async () => {

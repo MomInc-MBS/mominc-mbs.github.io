@@ -22,7 +22,7 @@ const server=http.createServer((req,res)=>{
  const base='http://127.0.0.1:'+server.address().port;
  const browser=await chromium.launch({headless:true,args:['--enable-webgl','--use-angle=swiftshader']});
  try{
-  if(!process.argv.includes('--additional')){
+  if(!process.argv.includes('--additional')&&!process.argv.includes('--session-only')){
   const context=await browser.newContext(),page=await context.newPage();const errors=[];
   page.on('pageerror',e=>{errors.push(e.message);console.error('Browser:',e.message);});
   await page.goto(base+'/__flow');
@@ -95,6 +95,7 @@ const server=http.createServer((req,res)=>{
   await legacy.close();
   }
 
+  if(!process.argv.includes('--session-only')){
   const mobile=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true}),studio=await mobile.newPage();
   await studio.route('https://myr5.mominc.online/**',route=>route.fulfill({contentType:'text/html',body:'<!doctype html><title>Coach installer</title>'}));
   await studio.goto(base+'/__flow');
@@ -111,6 +112,7 @@ const server=http.createServer((req,res)=>{
   assert.equal(incoming.siteChoices.armie.game.hallways,3,'The old ending is repaired before leaving the website');
   assert.equal(incoming.customizationConfirmed,true);assert.equal(incoming.appearance['myr5-recipe-v1'].coach,'supportive');
   console.log('PASS phone finish button carries the saved Coach straight to the app installer');await mobile.close();
+  }
 
   const timed=await browser.newContext(),clock=await timed.newPage();
   await clock.clock.install({time:Date.now()});await clock.goto(base+'/__flow');
@@ -123,21 +125,39 @@ const server=http.createServer((req,res)=>{
    localStorage.setItem('mbs-armie-hall-result',JSON.stringify({game:{hallways:3}}));
    localStorage.setItem('myr5-recipe-v1',JSON.stringify({saved:'coach'}));
    localStorage.setItem('mbs-hand-profile-v1',JSON.stringify({saved:'hand'}));
+   localStorage.setItem('mbs-off3d-locked','1');sessionStorage.setItem('mbs-hotwired','1');sessionStorage.setItem('mbs-on','1');sessionStorage.setItem('mbs-game','1');
+   localStorage.setItem('mbs-gala-run-v1',JSON.stringify({id:'old-profile'}));localStorage.setItem('mbs-dj-identity-v1',JSON.stringify({base:'old-name'}));
    MBS_STATE.saveDraft('fuel',{answers:{q1:'saved answer'}});
-  },ids);
+  },[...ids,'goon']);
+  const other=await timed.newPage();await other.goto(base+'/__flow');await other.evaluate(()=>{for(const key of ['mbs-on','mbs-hotwired','mbs-game'])sessionStorage.setItem(key,'1');});
   await clock.clock.fastForward(3599000);
   assert.equal(await clock.evaluate(()=>MBS_FLOW.pagesReady()),true,'Progress remains before the hour');
   const reloaded=clock.waitForEvent('load');await clock.clock.fastForward(1000);await reloaded;
+  await other.waitForFunction(()=>['mbs-on','mbs-hotwired','mbs-game'].every(key=>sessionStorage.getItem(key)===null));
   assert.equal(await clock.evaluate(()=>MBS_STATE.completedPages().length),0);
   assert.equal(await clock.evaluate(()=>MBS_STATE.unlockedActive().length),0);
   assert.equal(await clock.evaluate(()=>MBS_FLOW.read().count),0);
   for(const key of ['mbs-hand-ad-shown-v1','mbs-lilbf-museum-v2','mbs-corgi-school-v3','mbs-armie-hall-v2'])assert.equal(await clock.evaluate(k=>localStorage.getItem(k),key),null);
-  for(const key of ['myr5-recipe-v1','mbs-hand-profile-v1','mbs-armie-hall-result'])assert(await clock.evaluate(k=>localStorage.getItem(k),key));
-  assert.equal(await clock.evaluate(()=>MBS_STATE.draftFor('fuel').answers.q1),'saved answer');
+  assert(await clock.evaluate(()=>localStorage.getItem('myr5-recipe-v1')),'Saved coach design remains available for app handoff');
+  for(const key of ['mbs-hand-profile-v1','mbs-armie-hall-result','mbs-off3d-locked','mbs-gala-run-v1','mbs-dj-identity-v1'])assert.equal(await clock.evaluate(k=>localStorage.getItem(k),key),null,key);
+  for(const key of ['mbs-hotwired','mbs-on','mbs-game'])assert.equal(await clock.evaluate(k=>sessionStorage.getItem(k),key),null,key);
+  assert.equal(await clock.evaluate(()=>Object.keys(MBS_STATE.read().drafts).length),0,'Website profile answers expire with the visit');
   await clock.reload();assert.equal(await clock.evaluate(()=>MBS_STATE.completedPages().length),0,'Reload does not restore expired progress');
-  await clock.evaluate(ids=>ids.forEach(id=>MBS.complete(id)),ids);
-  await clock.locator('dialog[open]').waitFor();
-  assert.equal(await clock.locator('dialog[open]').count(),1,'The new hour has its own one-time sponsor message');
-  console.log('PASS exact one-hour active reset clears all round progress and keeps saved designs/setup');await timed.close();
+  console.log('PASS exact one-hour active reset clears website profile, round and TV resume state while keeping saved coach designs');
+  // Exercise a returning visit without another live tab resetting the deliberately seeded old clock.
+  await other.close();
+  // Expiry must happen before the head's ranked-run restore.
+  await clock.evaluate(()=>{
+    localStorage.setItem('mbs-story-started-at-v1',String(Date.now()-3600001));
+    localStorage.setItem('mbs-gala-run-v1',JSON.stringify({version:1,id:'11111111-1111-1111-1111-111111111111',token:'a'.repeat(64),queue:[],completed:[]}));
+    localStorage.setItem('mbs-off3d-locked','1');sessionStorage.setItem('mbs-on','1');sessionStorage.setItem('mbs-hotwired','1');
+  });
+  const calls=[],entryErrors=[];clock.on('pageerror',e=>entryErrors.push(e.message));clock.on('console',m=>{if(m.type()==='error')entryErrors.push(m.text());});await clock.route('https://myr5.mominc.online/api/gala/**',route=>{if(route.request().method()!=='OPTIONS')calls.push({method:route.request().method(),auth:route.request().headers().authorization});return route.fulfill({headers:{'access-control-allow-origin':'*','access-control-allow-headers':'*','access-control-allow-methods':'GET,POST,OPTIONS'},contentType:'application/json',body:JSON.stringify({id:'22222222-2222-2222-2222-222222222222',token:'b'.repeat(64)})});});
+  await clock.goto(base+'/tv/?ch=mominc');
+  await clock.waitForFunction(()=>window.MBS_RUN?.read()?.id==='22222222-2222-2222-2222-222222222222',null,{timeout:10000}).catch(async e=>{console.error({calls,entryErrors,diagnostic:await clock.evaluate(()=>({run:window.MBS_RUN?.read(),error:window.MBS_RUN?.error(),scripts:[...document.scripts].map(s=>s.src)}))});throw e;});
+  assert.equal(calls[0].method,'POST');assert.equal(calls[0].auth,undefined,'Expired profile never authorizes the first run request');
+  assert.equal(await clock.evaluate(()=>sessionStorage.getItem('mbs-hotwired')),null);
+  assert.equal(await clock.evaluate(()=>localStorage.getItem('mbs-off3d-locked')),null);
+  console.log('PASS actual TV entry discards the expired profile before its first run request');await timed.close();
  }finally{await browser.close();server.close();}
 })().catch(e=>{console.error(e);server.close();process.exitCode=1;});

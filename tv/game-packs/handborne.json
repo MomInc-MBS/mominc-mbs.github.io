@@ -559,8 +559,8 @@
     },
     {
       "url": "/tv/game-loader.js",
-      "revision": "6571cbdff70c41b1828ee47effefac8c241a8eb8",
-      "bytes": 12744
+      "revision": "506d9c3d0b049f08600542fc23a07e29bcca5982",
+      "bytes": 12752
     },
     {
       "url": "/tv/identity.css",
@@ -574,7 +574,7 @@
     },
     {
       "url": "/tv/index.html",
-      "revision": "f6500d0f1fc1515c1c58f4d0bf26023d9f025c81",
+      "revision": "06029fa4831b29dc7b5afde382ee946ec345a2dd",
       "bytes": 15343
     },
     {
@@ -659,8 +659,8 @@
     },
     {
       "url": "/tv/state.js",
-      "revision": "cc8aa116a6d9968300901305f15ad5c78d05535c",
-      "bytes": 26928
+      "revision": "a5a34b6f152fb2e7681dd5301ae696a984c7bb7a",
+      "bytes": 27376
     },
     {
       "url": "/tv/touch-controls.js",
@@ -686,5 +686,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "5c2ded96c63def52550a"
+  "version": "a1e4a158027527b94356"
 }
