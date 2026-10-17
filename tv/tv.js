@@ -331,6 +331,7 @@
 
   function paintGame() {
     const on = inGame();
+    if (gameKey) gameKey.hidden = !on && !isGame;
     if (gameBtn) {
       gameBtn.setAttribute("aria-pressed", on ? "true" : "false");
       gameBtn.setAttribute("aria-label", on ? "Back to television" : "Enter game");
@@ -347,7 +348,7 @@
     requestAnimationFrame(() => requestAnimationFrame(() => window.MBS_RT.resume("game")));
   }
   function enterGame() {
-    if (!isGame || inGame()) return;
+    if ((!isGame && !playFrame) || inGame()) return;
     window.MBS_RT.pause("game");
     window.MBS.cancelWave && window.MBS.cancelWave();     // a sweep is television furniture, not game
     tv.dataset.mode = "game";
@@ -373,11 +374,8 @@
   window.MBS.exitGame = exitGame;
   window.MBS.inGame = inGame;
 
-  // --- PLAY inside the glass (TV1/TV2). The launch tile used to open /play/<slug>/ in a new tab, which
-  // left the television behind. Now it loads that page in an iframe that fills the screen: the page's
-  // own loading screen lands inside the glass, and when it reports ready the set goes to game mode.
-  // EXIT (or Escape) removes the frame and the channel is still there underneath, untouched.
-  // Goon keeps its tab: /gala/ is its own application, not a play route, and nests the set otherwise.
+  // Every launch hands the viewport to the game immediately, including its loading menu.
+  // The channel stays mounted underneath so Back to TV restores the same television.
   let playFrame = null, screenTop = 0;
   function openPlay(url) {
     if (playFrame) return;
@@ -385,21 +383,17 @@
     playFrame.className = "play-frame";
     playFrame.title = (chanRec.name || name) + " game";
     playFrame.allow = "fullscreen; autoplay; accelerometer; gyroscope; xr-spatial-tracking";
-    let ready = false;
-    const play = () => { if (!ready) { ready = true; enterGame(); } };
-    // the play page says when it is on; a page without the loader (no mbs-game-ready) is on at load.
-    // The frame's initial about:blank fires a load of its own before the page arrives: not the game.
     playFrame.addEventListener("load", () => {
       let doc = null; try { doc = playFrame.contentDocument; } catch {}
       if (!doc || doc.URL === "about:blank") return;
-      if (!doc.documentElement.hasAttribute("data-game-loading")) play();
-      else playFrame.contentWindow.addEventListener("mbs-game-ready", play);   // the loaded window, whether or not the first one was reused
+      // A game's own TV link also returns to the outer TV rather than nesting another set.
+      if (new URL(doc.URL).pathname === "/tv/") exitGame();
     });
     screenTop = screen.scrollTop; screen.scrollTop = 0;
     tv.dataset.play = "";
     playFrame.src = url;
     screen.append(playFrame);
-    playFrame.contentWindow.addEventListener("mbs-game-ready", play);   // same origin; the load handler attaches again on the loaded window
+    enterGame();
   }
   function closePlay() {
     if (!playFrame) return;
@@ -409,14 +403,14 @@
   }
   channel.addEventListener("click", e => {
     const a = e.target.closest && e.target.closest("[data-network-launch] a[href]");
-    if (!a || !isGame || name === "goon" || !/^\/play\/[a-z0-9-]+\/$/.test(a.pathname)) return;
+    if (!a || a.origin !== location.origin || !(/^\/play\/[a-z0-9-]+\/$/.test(a.pathname) || a.pathname === "/gala/")) return;
     e.preventDefault();
     openPlay(a.href);
   });
 
+  if (gameBtn) gameBtn.addEventListener("click", () => (inGame() ? exitGame() : enterGame()));
   if (isGame && gameKey && gameBtn) {
     gameKey.hidden = false;
-    gameBtn.addEventListener("click", () => (inGame() ? exitGame() : enterGame()));
     // game mode survives a channel change within the tab, the same way the power state does. Fullscreen
     // cannot: it needs a gesture, so a restored session comes back in the in-page expanded mode.
     let wasGame = false; try { wasGame = sessionStorage.getItem("mbs-game") === "1"; } catch {}

@@ -114,3 +114,51 @@
   .cabinet-side-brand{letter-spacing:.05em}
 }
 .tv[data-state="off"] .channel-crt{visibility:hidden}
+
+/* Powered TV: less empty gold around the channel menu and more room for the picture.
+   Off-state projection keeps the shared 3D computer's original apertures. */
+.tv{--tv-menu-height:clamp(132px,17.5%,150px)}
+@media(min-width:1100px){.tv{--tv-menu-height:96px}}
+.tv:not([data-state="off"]):not([data-mode="game"]) .cabinet > .channel-crt{
+  top:2%;left:3%;width:94%;height:var(--tv-menu-height);
+  padding:5px;border-width:3px;border-radius:18px;
+}
+.tv:not([data-state="off"]):not([data-mode="game"]) .cabinet > .bezel{
+  top:calc(2% + var(--tv-menu-height) + 10px);bottom:22.75%;height:auto;
+  left:2%;width:96%;padding:3px;border-width:2px;
+}
+.tv:not([data-state="off"]) .cabinet-side-brand{width:8px;font-size:8px;left:auto;right:.1%}
+.tv:not([data-state="off"]) .cabinet-side-brand--left{left:.1%;right:auto}
+
+/* Game mode wins over every cabinet selector above. Only a safe-area-aware return
+   bar remains; the game/menu/loading page gets the rest of the viewport. */
+.tv[data-mode="game"] .cabinet{display:block;background:#09080c;box-shadow:none}
+.tv[data-mode="game"] .cabinet > .channel-crt{
+  position:absolute;inset:0 0 auto;width:100%;height:calc(44px + env(safe-area-inset-top));
+  min-height:0;display:block;padding:env(safe-area-inset-top) max(8px,env(safe-area-inset-right)) 0 max(8px,env(safe-area-inset-left));
+  border:0;border-radius:0;background:#09080c;box-shadow:none;visibility:visible;
+}
+.tv[data-mode="game"] .channel-crt .vfd{height:44px;padding:0;align-items:center}
+.tv[data-mode="game"] .channel-crt .vfd-ch,
+.tv[data-mode="game"] .channel-crt .vfd-show,
+.tv[data-mode="game"] .channel-crt .lcd-list,
+.tv[data-mode="game"] .cabinet > .panel,
+.tv[data-mode="game"] .cabinet-side-brand{display:none}
+.tv[data-mode="game"] .channel-crt .vfd-name{font-size:16px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.tv[data-mode="game"] .cabinet > .bezel{
+  position:absolute;inset:calc(44px + env(safe-area-inset-top)) 0 0;
+  width:100%;height:auto;padding:0;border:0;border-radius:0;background:#000;box-shadow:none;
+}
+.tv[data-mode="game"] .cabinet .glass{border-radius:0;box-shadow:none}
+.tv[data-mode="game"] #gameKey:not([hidden]){display:block}
+.tv[data-mode="game"] #gameKey .key.game{min-height:44px;padding:8px}
+
+/* The sponsor's playable arcade also leaves the tube; its existing close timer
+   and return lifecycle stay with the arcade. Ordinary sponsor cards stay in the TV. */
+#tv .tv-ad-layer:has(.tv-ad-overlay){position:fixed;inset:0;z-index:10000;border-radius:0}
+#tv .tv-ad-layer .tv-ad-overlay{padding:0;background:#09080c}
+#tv .tv-ad-layer .sponsor-arcade{width:100%;height:100%;max-height:none;border:0;border-radius:0;box-shadow:none}
+#tv .tv-ad-layer .sponsor-arcade > .sponsor-cap{min-height:44px;padding-top:env(safe-area-inset-top)}
+#tv .tv-ad-layer .sponsor-arcade > .sponsor-cap button{width:auto;min-height:44px;padding:0 12px;font-size:0}
+#tv .tv-ad-layer .sponsor-arcade > .sponsor-cap button::after{content:"BACK TO TV";font:700 14px/1 var(--system)}
+#tv .tv-ad-layer .sponsor-arcade > [data-arcade]{display:flex;flex:1}
