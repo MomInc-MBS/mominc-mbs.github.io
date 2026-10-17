@@ -109,8 +109,8 @@
     },
     {
       "url": "/gala/terminal/index.html",
-      "revision": "2e8e249135aeb1953067fdbdb0bf7ea69672e83f",
-      "bytes": 4460
+      "revision": "826b5cb34889e1bd3b3deb27bf8cb7150baf9b16",
+      "bytes": 4560
     },
     {
       "url": "/gala/war-room-access.js",
@@ -174,8 +174,8 @@
     },
     {
       "url": "/play/war-room/index.html",
-      "revision": "a8491d5afd3b79d66719fdf025e8d799b6a03001",
-      "bytes": 1929
+      "revision": "23c8e9cdb741e8cf112811f1328fadeeb933f4f2",
+      "bytes": 1956
     },
     {
       "url": "/shader-aurora.mjs",
@@ -429,8 +429,8 @@
     },
     {
       "url": "/tv/game-loader.js",
-      "revision": "6571cbdff70c41b1828ee47effefac8c241a8eb8",
-      "bytes": 12744
+      "revision": "506d9c3d0b049f08600542fc23a07e29bcca5982",
+      "bytes": 12752
     },
     {
       "url": "/tv/games/goon/assets/index-W2w8AfON.js",
@@ -444,8 +444,8 @@
     },
     {
       "url": "/tv/games/goon/war-room.html",
-      "revision": "bc6b61c44645756d37735415e10bae7a6e0339f5",
-      "bytes": 1334
+      "revision": "9b754d290d606cfe6d9c3162cdfb123f8fcbcd7a",
+      "bytes": 1434
     },
     {
       "url": "/tv/identity.css",
@@ -459,7 +459,7 @@
     },
     {
       "url": "/tv/index.html",
-      "revision": "f6500d0f1fc1515c1c58f4d0bf26023d9f025c81",
+      "revision": "06029fa4831b29dc7b5afde382ee946ec345a2dd",
       "bytes": 15343
     },
     {
@@ -544,8 +544,8 @@
     },
     {
       "url": "/tv/state.js",
-      "revision": "cc8aa116a6d9968300901305f15ad5c78d05535c",
-      "bytes": 26928
+      "revision": "a5a34b6f152fb2e7681dd5301ae696a984c7bb7a",
+      "bytes": 27376
     },
     {
       "url": "/tv/touch-controls.js",
@@ -571,5 +571,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "de7fc766c3dec1f06935"
+  "version": "2f8812c632c75f6ac17b"
 }

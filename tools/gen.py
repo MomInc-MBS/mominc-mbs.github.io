@@ -56,7 +56,7 @@ LANDING = u"""<!doctype html>
 <style>
   :root{{--bg:{bg}; --ink:{ink}; --accent:{accent}; --title-vw:{titlevw}vw;}}
 </style>
-<script src="/tv/phone-layout.js" defer></script></head>
+<script src="/tv/phone-layout.js" defer></script><script src="/tv/mbs-channels.js"></script><script src="/tv/state.js?mbs-rev=visit-hour-2"></script></head>
 <body class="g-{slug}" data-slug="{slug}" data-ch="{ch}" data-progress-key="{progress_key}"
       data-continue-cta="{continue_cta}" data-next-slug="{next_slug}" data-next-ch="{next_ch}"
       data-next-title="{next_title}" data-next-premise="{next_premise}" data-share-url="{site}/games/{slug}/"
@@ -118,8 +118,6 @@ LANDING = u"""<!doctype html>
   </footer>
 </main>
 
-<script src="../../tv/mbs-channels.js"></script>
-<script src="../../tv/state.js"></script>
 <script src="../../tv/card.js"></script>
 <script src="../../tv/network-flow.js"></script>
 <script src="../../tv/atmosphere.js"></script>
@@ -139,7 +137,7 @@ PLAY = u"""<!doctype html>
 <link rel="stylesheet" href="atmosphere.css">
 <link rel="stylesheet" href="network-flow.css">
 <style>body{{background:{bg}}}</style>
-<script src="/tv/phone-layout.js" defer></script></head>
+<script src="/tv/phone-layout.js" defer></script><script src="/tv/mbs-channels.js"></script><script src="/tv/state.js?mbs-rev=visit-hour-2"></script></head>
 <body>
 {orientation}
 <div class="stage"><div class="rail"><a class="exit" href="../games/{slug}/" aria-label="Back to {title}">&larr;<span>{title}</span></a></div><div class="glass"><div id="screen" class="screen"><div id="channel" class="channel"></div></div></div></div>
@@ -147,8 +145,6 @@ PLAY = u"""<!doctype html>
 <div class="meter" id="mbsMeter" hidden aria-hidden="true"></div>
 <div class="boot" id="boot"><p>Tuning {title}. <noscript>This one needs JavaScript. </noscript><a href="../games/{slug}/">Go back</a> if nothing arrives.</p></div>
 
-<script src="mbs-channels.js"></script>
-<script src="state.js"></script>
 <script src="mbs-runtime.js"></script>
 <script src="channel-runtime.js"></script>
 <script src="mbs-shim.js"></script>
@@ -188,7 +184,7 @@ COMING_SOON = u"""<!doctype html>
 <style>
   :root{{--bg:{bg}; --ink:{ink}; --accent:{accent}; --title-vw:{titlevw}vw;}}
 </style>
-<script src="/tv/phone-layout.js" defer></script></head>
+<script src="/tv/phone-layout.js" defer></script><script src="/tv/mbs-channels.js"></script><script src="/tv/state.js?mbs-rev=visit-hour-2"></script></head>
 <body class="g-{slug} is-coming-soon" data-slug="{slug}" data-ch="{ch}">
 <a class="skip" href="#play">Skip to link</a>
 <main>

@@ -19,13 +19,13 @@
     },
     {
       "url": "/games/djscratch/index.html",
-      "revision": "f65fc726a0fd16fbce54d92c04faf570ac92b07a",
-      "bytes": 7602
+      "revision": "5bf9dfc36ee920814c7ab0a06cad29999e4b9fb4",
+      "bytes": 7611
     },
     {
       "url": "/play/djscratch/index.html",
-      "revision": "f188d1a03273fd8333d38707ca81818200cc0370",
-      "bytes": 1988
+      "revision": "234255499ea7ccde86abb36070f81e149740bcc5",
+      "bytes": 2015
     },
     {
       "url": "/shader-aurora.mjs",
@@ -279,8 +279,8 @@
     },
     {
       "url": "/tv/game-loader.js",
-      "revision": "6571cbdff70c41b1828ee47effefac8c241a8eb8",
-      "bytes": 12744
+      "revision": "506d9c3d0b049f08600542fc23a07e29bcca5982",
+      "bytes": 12752
     },
     {
       "url": "/tv/identity.css",
@@ -294,7 +294,7 @@
     },
     {
       "url": "/tv/index.html",
-      "revision": "f6500d0f1fc1515c1c58f4d0bf26023d9f025c81",
+      "revision": "06029fa4831b29dc7b5afde382ee946ec345a2dd",
       "bytes": 15343
     },
     {
@@ -379,8 +379,8 @@
     },
     {
       "url": "/tv/state.js",
-      "revision": "cc8aa116a6d9968300901305f15ad5c78d05535c",
-      "bytes": 26928
+      "revision": "a5a34b6f152fb2e7681dd5301ae696a984c7bb7a",
+      "bytes": 27376
     },
     {
       "url": "/tv/touch-controls.js",
@@ -407,5 +407,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "78dbfb991d4246687549"
+  "version": "992ee3d61a1349f55216"
 }

@@ -447,7 +447,12 @@
   const STORY_KEYS = ['mbs-unlock','mbs-unlock-at','mbs-forms',BACKUP_KEY,
     'mbs-hand-ad-shown-v1','mbs-hand-decisions-v1','mbs-armie-hall-v2',
     'mbs-lilbf-museum','mbs-lilbf-museum-v2','mbs-lilbf-taught-v1',
-    'mbs-corgi-school','mbs-corgi-school-v2','mbs-corgi-school-v3'];
+    'mbs-corgi-school','mbs-corgi-school-v2','mbs-corgi-school-v3',
+    'mbs-off3d-locked','mbs-note-read','mbs-armie-hall-result',
+    'mbs-hand-profile-v1','mbs-dj-identity-v1','mbs-gala-run-v1',
+    'mbs-gala-character-created-v1','mbs-gala-completed-v1',
+    'mbs-goggles-v1','mbs-dg-line',COACH_KEY,COACH_BACKUP];
+  const VISIT_KEYS = ['mbs-on','mbs-game','mbs-hotwired','mbs-offer-shut',SESSION_KEY];
   let storyStartedAt = 0, storyTimer;
   function checkStorySession(reload = false) {
     const now = Date.now();
@@ -456,19 +461,21 @@
     const expired = now - started >= STORY_MS;
     const changed = storyStartedAt && storyStartedAt !== started;
     if (expired) {
-      let old;try { old = JSON.parse(safeGet(KEY)); } catch {}
       const next = ensureChannels(emptyState());
-      // Keep saved answers available for Coach setup, but clear the round's earns.
-      if (old?.drafts && typeof old.drafts === 'object') next.drafts = old.drafts;
-      if (old?.submissions && typeof old.submissions === 'object') next.submissions = old.submissions;
+      // Website profiles and round history last one hour. App progress has its own origin/store.
       next.storyVersion = 1;
       try {
         localStorage.setItem(KEY, JSON.stringify(next));
         STORY_KEYS.forEach(key => localStorage.removeItem(key));
-        sessionStorage.removeItem(SESSION_KEY);
+        VISIT_KEYS.forEach(key => localStorage.removeItem(key));
+      } catch {}
+      try {
+        [...STORY_KEYS,...VISIT_KEYS].forEach(key => sessionStorage.removeItem(key));
       } catch {}
       started = now;
     }
+    // Another tab already reset shared storage; this tab must also forget its private resume flags.
+    if (changed) try { [...STORY_KEYS,...VISIT_KEYS].forEach(key => sessionStorage.removeItem(key)); } catch {}
     storyStartedAt = started;
     try { if (safeGet(STORY_CLOCK_KEY) !== String(started)) localStorage.setItem(STORY_CLOCK_KEY, String(started)); } catch {}
     clearTimeout(storyTimer);

@@ -247,8 +247,47 @@ function page(path, scripts = [], search = '') {
     URL, URLSearchParams, MessageChannel, Event, setTimeout, clearTimeout,
     requestAnimationFrame: fn => setImmediate(fn), MutationObserver: class {observe() {} disconnect() {}}});
   return {window, document, attrs, ports, executed, nodes,
+    input(type, target, activate = () => {}) {
+      const event = {target, defaultPrevented: false, stopped: false,
+        preventDefault() {this.defaultPrevented = true;}, stopImmediatePropagation() {this.stopped = true;}};
+      for (const callback of callbacks[type] || []) {callback(event); if (event.stopped) break;}
+      if (!event.stopped) activate();
+      return event;
+    },
     domReady() {document.readyState = 'interactive';callbacks.DOMContentLoaded?.forEach(fn => fn());}};
 }
+
+test('a pending TV download keeps projected cabinet controls active and blocks game input', async t => {
+  const p = page('/tv/', [], '?ch=armie');
+  t.after(async () => {
+    p.ports.forEach(port => port.postMessage({type: 'ready'}));
+    await p.window.MBS_LOAD.finish();
+    p.ports.forEach(port => port.close());
+  });
+  p.domReady(); await turn(); await turn();
+  assert.ok(p.attrs.has('data-game-loading'));
+  // Include a child hit target: SVGs inside Power/dial buttons must find the cabinet ancestor.
+  const target = ancestor => ({closest(selector) {return selector.split(',').some(s => s.trim() === ancestor) ? this : null;}});
+  let powerClicks = 0;
+  const power = p.input('click', target('.off3d'), () => powerClicks++);
+  assert.equal(power.defaultPrevented, false, 'the projected Power click reaches its real-power forwarding listener');
+  assert.equal(powerClicks, 1);
+  for (const type of ['pointerdown', 'click', 'keydown']) {
+    for (const ancestor of ['.off3d', '.panel']) {
+      assert.equal(p.input(type, target(ancestor)).stopped, false, `${type} reaches wires/dial/cabinet controls`);
+    }
+    let gameActions = 0;
+    const game = p.input(type, target('#channel'), () => gameActions++);
+    assert.equal(game.defaultPrevented, true);
+    assert.equal(game.stopped, true);
+    assert.equal(gameActions, 0, 'game input stays blocked until its download finishes');
+  }
+  assert.ok(p.attrs.has('data-game-loading'), 'cabinet input does not release the download gate');
+  p.ports[0].postMessage({type: 'ready'});
+  await p.window.MBS_LOAD.finish();
+  assert.equal(p.input('click', target('#channel')).stopped, false);
+  p.ports.forEach(port => port.close());
+});
 
 test('a failed page download keeps character selection covered until Retry succeeds', async () => {
   const p = page('/tv/', [], '?ch=corgi');
@@ -312,13 +351,14 @@ test('Armie still downloads on page entry, before any character or Start action'
 });
 
 test('recovery scripts bypass stale installed packs but remain available offline', async () => {
-  for (const path of ['/tv/game-loader.js', '/tv/tv.js']) {
+  for (const path of ['/tv/game-loader.js', '/tv/tv.js', '/tv/mbs-runtime.js', '/tv/state.js', '/tv/run-progress.js', '/tv/dj-identity.js']) {
     const bodies = {[path]: 'old'};
     const w = worker({corgi: pack('corgi', [file(path, 'old')])}, bodies);
     await w.send('corgi').done;
     bodies[path] = 'new';
     const requestPath = path + '?mbs-rev=home-repair-2';
     assert.equal(await (await w.get(requestPath, {destination: 'script'})).text(), 'new');
+    assert.equal(await (await w.get(path, {destination: 'script'})).text(), 'new', 'unversioned bootstrap uses the current runtime too');
     w.state.offline = true;
     assert.equal(await (await w.get(requestPath, {destination: 'script'})).text(), 'old');
   }

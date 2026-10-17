@@ -84,8 +84,8 @@
     },
     {
       "url": "/gala/index.html",
-      "revision": "792f3cf2add0b2d9f8ca4bf55823785ee08ccf7c",
-      "bytes": 5214
+      "revision": "b2dba952cc62f3f02fc1658370815993820d6ce1",
+      "bytes": 5314
     },
     {
       "url": "/gala/music.html",
@@ -134,8 +134,8 @@
     },
     {
       "url": "/games/goon/index.html",
-      "revision": "e1f4ae0fe2471da98ab4f05498f6145f045d0265",
-      "bytes": 6221
+      "revision": "05c2fb7b274c29a69e11bc1893d2f4e56b9bf63a",
+      "bytes": 6230
     },
     {
       "url": "/handborne/fonts/anton.ttf",
@@ -149,8 +149,8 @@
     },
     {
       "url": "/play/goon/index.html",
-      "revision": "9037ff54176f8fbaec3b9528ec9ad9d5bdfe0050",
-      "bytes": 1714
+      "revision": "25909821e024d0996269c4abad2823c838eb485a",
+      "bytes": 1741
     },
     {
       "url": "/shader-aurora.mjs",
@@ -394,8 +394,8 @@
     },
     {
       "url": "/tv/game-loader.js",
-      "revision": "6571cbdff70c41b1828ee47effefac8c241a8eb8",
-      "bytes": 12744
+      "revision": "506d9c3d0b049f08600542fc23a07e29bcca5982",
+      "bytes": 12752
     },
     {
       "url": "/tv/games/goon/assets/index-gala-classic.js",
@@ -409,8 +409,8 @@
     },
     {
       "url": "/tv/games/goon/index.html",
-      "revision": "c791586966ac702ab6dd1195aab093b4722868cc",
-      "bytes": 2422
+      "revision": "576425383182ea8e4d2fdc279b2c22aba91f78b3",
+      "bytes": 2522
     },
     {
       "url": "/tv/identity.css",
@@ -424,7 +424,7 @@
     },
     {
       "url": "/tv/index.html",
-      "revision": "f6500d0f1fc1515c1c58f4d0bf26023d9f025c81",
+      "revision": "06029fa4831b29dc7b5afde382ee946ec345a2dd",
       "bytes": 15343
     },
     {
@@ -509,8 +509,8 @@
     },
     {
       "url": "/tv/state.js",
-      "revision": "cc8aa116a6d9968300901305f15ad5c78d05535c",
-      "bytes": 26928
+      "revision": "a5a34b6f152fb2e7681dd5301ae696a984c7bb7a",
+      "bytes": 27376
     },
     {
       "url": "/tv/touch-controls.js",
@@ -537,5 +537,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "58ab7476d7bbc2b1079e"
+  "version": "e0d8ab5116ea372ba5d9"
 }

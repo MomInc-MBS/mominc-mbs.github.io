@@ -180,7 +180,7 @@ self.addEventListener('fetch', event => {
     // Recovery/bootstrap scripts must be able to update even when an older pack
     // is installed. Actual pack-download fetches have no script destination and
     // still go through byte/hash verification. Retain the offline fallback.
-    if (request.destination === 'script' && ['/tv/game-loader.js', '/tv/tv.js'].includes(path)) {
+    if (request.destination === 'script' && ['/tv/game-loader.js', '/tv/mbs-runtime.js', '/tv/state.js', '/tv/run-progress.js', '/tv/dj-identity.js', '/tv/tv.js'].includes(path)) {
       try { const live = await fetch(request); if (live.ok) return live; } catch (_) {}
       if (asset) {
         const stored = await (await caches.open(FILES)).match(fileKey(asset.revision));
