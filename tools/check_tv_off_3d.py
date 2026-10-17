@@ -23,7 +23,7 @@ class _Quiet(SimpleHTTPRequestHandler):
 
 _srv = ThreadingHTTPServer(("127.0.0.1", 0), functools.partial(_Quiet, directory=ROOT))
 threading.Thread(target=_srv.serve_forever, daemon=True).start()
-BASE = "http://127.0.0.1:%d" % _srv.server_address[1]
+BASE = os.environ.get("MBS_LIVE_URL") or "http://127.0.0.1:%d" % _srv.server_address[1]
 NOTE = "Be smart. Beat the games. Beat Mom. Be free."
 ok, notes, errs = True, [], []
 
@@ -47,7 +47,7 @@ with sync_playwright() as pw:
     pg.on("pageerror", lambda e: errs.append(str(e)))
 
     def load():
-        pg.goto(BASE + "/tv/", wait_until="load")
+        pg.goto(BASE + "/tv/", wait_until="domcontentloaded", timeout=60000)
         pg.wait_for_function("() => document.getElementById('tv').dataset.off3d === 'on'", timeout=20000)
         pg.wait_for_timeout(800)
 
