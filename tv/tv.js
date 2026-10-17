@@ -407,6 +407,11 @@
     e.preventDefault();
     openPlay(a.href);
   });
+  // Inline games (the Doctor's lab) have buttons instead of a launch tile.
+  // Expand before their own click handler runs, retaining the same game DOM.
+  channel.addEventListener("click", e => {
+    if (isGame && !inGame() && e.target.closest?.("button")) enterGame();
+  }, true);
 
   if (gameBtn) gameBtn.addEventListener("click", () => (inGame() ? exitGame() : enterGame()));
   if (isGame && gameKey && gameBtn) {

@@ -204,8 +204,8 @@
     },
     {
       "url": "/tv/cabinet-match.css",
-      "revision": "c9a5acb7ba99f6989053ef439dd461ce74e44dcd",
-      "bytes": 10760
+      "revision": "3220ef18a654b72fb5477f22c1bb8397ef73bc0c",
+      "bytes": 10935
     },
     {
       "url": "/tv/card.js",
@@ -274,7 +274,7 @@
     },
     {
       "url": "/tv/index.html",
-      "revision": "7ff4b414601421ac2fd5bc6bd72c4e7813a1d57d",
+      "revision": "56872165d49357785ccdede2bd19a76d895c5433",
       "bytes": 15340
     },
     {
@@ -374,8 +374,8 @@
     },
     {
       "url": "/tv/tv.js",
-      "revision": "a0e9c0dbc1b32928f103b52ffc8076c242847a42",
-      "bytes": 35033
+      "revision": "b74dd8b9e442229e8d48b75fa36595e1469e5452",
+      "bytes": 35316
     },
     {
       "url": "/vendor/shaders/runtime.mjs",
@@ -388,5 +388,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "1baf3d22859b5c9a3673"
+  "version": "a0f3dff0393d84d9ec57"
 }

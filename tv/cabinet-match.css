@@ -152,6 +152,8 @@
 .tv[data-mode="game"] .cabinet .glass{border-radius:0;box-shadow:none}
 .tv[data-mode="game"] #gameKey:not([hidden]){display:block}
 .tv[data-mode="game"] #gameKey .key.game{min-height:44px;padding:8px}
+.tv:not([data-mode="game"]) #gameKey:not([hidden]){display:block;flex:none;margin-left:auto}
+.tv:not([data-mode="game"]) #gameKey .key.game::after{content:"PLAY FULL SCREEN"}
 
 /* The sponsor's playable arcade also leaves the tube; its existing close timer
    and return lifecycle stay with the arcade. Ordinary sponsor cards stay in the TV. */

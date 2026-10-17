@@ -11,7 +11,7 @@ test('every launch expands immediately and both return controls restore the same
     ['djscratch','/play/djscratch/'], ['girlfriend','/play/girlfriend/'], ['corgi','/play/corgi/'], ['goon','/gala/']]) {
     const callbacks = {}, frames = [], storage = new Map();
     const gameKey = {hidden:true}, gameBtn = {setAttribute(){}, addEventListener(type, fn){callbacks.back=fn;}};
-    const tv = {dataset:{}}, channel = {addEventListener(type, fn){callbacks.launch=fn;}}, screen = {scrollTop:37, append(frame){frames.push(frame);}};
+    const tv = {dataset:{}}, channel = {addEventListener(type, fn, capture){callbacks[capture?'inline':'launch']=fn;}}, screen = {scrollTop:37, append(frame){frames.push(frame);}};
     const document = {
       getElementById(id){return {gameKey,gameBtn,gameLegend:{}}[id];},
       documentElement:{requestFullscreen(){return Promise.reject(new Error('denied'));}},
@@ -34,5 +34,10 @@ test('every launch expands immediately and both return controls restore the same
     frames[1].contentDocument = {URL:'https://mominc.online/tv/?ch='+name};
     frames[1].load();
     assert.equal(tv.dataset.mode,undefined,name); assert.equal(frames[1].removed,true,name);
+    if (name === 'girlfriend') {
+      callbacks.inline({target:{closest:()=>({tagName:'BUTTON'})}});
+      assert.equal(tv.dataset.mode,'game'); assert.equal(frames.length,2,'inline lab keeps its DOM');
+      callbacks.back(); assert.equal(tv.dataset.mode,undefined);
+    }
   }
 });
