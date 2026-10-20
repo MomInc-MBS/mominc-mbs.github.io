@@ -5,15 +5,16 @@ function persist(){current.name=window.MBS_DJ.display();try{localStorage.setItem
 function change(fn){undo.push(structuredClone(current));if(undo.length>80)undo.shift();redo=[];fn();paint();persist();}
 function makeCanvas(look){const c=document.createElement('canvas');c.setAttribute('aria-hidden','true');A.draw(c,look,{weapon:false});return c;}
 const menus=[
- {id:'appearance',label:'Appearance',sections:['body','skin','face','hair','facial']},
- {id:'clothing',label:'Clothing',sections:['torso','shoulders','arms','hands','legs','feet','silk']},
+ {id:'appearance',label:'Appearance',sections:['body','skin','face','hair','facial','build','head','crown','jaw','tail']},
+ {id:'clothing',label:'Clothing',sections:['torso','shoulders','arms','hands','legs','feet','silk','trim']},
+ {id:'armour',label:'Armour',sections:['armor','alloy','shield']},
  {id:'accessories',label:'Accessories',sections:['headwear','neck','held','back','base']},
  {id:'companion',label:'Companion',sections:['pet']},
  {id:'equipment',label:'Weapons',sections:['weapons','upgrades','progress']},
  {id:'saved',label:'My looks',sections:['saved','share']},
 ];
-const extraLabels={silk:'Silk colour',weapons:'Weapon type',upgrades:'Upgrades',progress:'Coach progress',saved:'Saved avatars',share:'Save & share'};
-const focusPoints={body:[32,48],skin:[32,27],face:[32,24],hair:[32,13],facial:[32,31],headwear:[32,10],neck:[32,36],torso:[32,48],shoulders:[32,38],arms:[32,49],hands:[32,59],legs:[32,70],feet:[32,82],held:[52,53],back:[32,45],base:[32,89],pet:[10,75],silk:[32,48],weapons:[80,40],upgrades:[80,40]};
+const extraLabels={silk:'Silk colour',trim:'Trim colour',weapons:'Weapon type',upgrades:'Upgrades',progress:'Coach progress',saved:'Saved avatars',share:'Save & share'};
+const focusPoints={build:[32,48],head:[32,20],crown:[32,12],jaw:[32,28],tail:[40,62],armor:[32,45],alloy:[32,45],shield:[20,55],trim:[32,48],body:[32,48],skin:[32,27],face:[32,24],hair:[32,13],facial:[32,31],headwear:[32,10],neck:[32,36],torso:[32,48],shoulders:[32,38],arms:[32,49],hands:[32,59],legs:[32,70],feet:[32,82],held:[52,53],back:[32,45],base:[32,89],pet:[10,75],silk:[32,48],weapons:[80,40],upgrades:[80,40]};
 let menu=menus.find(item=>item.sections.includes(category))?.id||'appearance';
 const remembered=new Map([[menu,category]]);
 const categoryLabel=id=>A.sections.find(section=>section.id===id)?.label||extraLabels[id];
@@ -53,7 +54,7 @@ function mountMenus(){
 }
 
 function paintOptions(){
- const weapons=['weapons','upgrades','progress'].includes(category),saved=['saved','share'].includes(category),silk=category==='silk',section=A.sections.find(s=>s.id===category);
+ const weapons=['weapons','upgrades','progress'].includes(category),saved=['saved','share'].includes(category),silk=category==='silk'||category==='trim',dyeKey=category==='trim'?'trim':'dye',section=A.sections.find(s=>s.id===category);
  $('wardrobe').hidden=!category||saved;$('saved-looks').hidden=!saved;
  $('armory').hidden=!weapons;$('options').hidden=!section;$('silk-panel').hidden=!silk;$('retained-piece').hidden=true;
  $('looks').hidden=category!=='saved';$('save-actions').hidden=category!=='share';
@@ -66,7 +67,7 @@ function paintOptions(){
   for(const id of ['weapon-progress','coach-progress-import','weapon-day-note'])$(id).hidden=category!=='progress';
   window.GalaArmory?.refresh();return;
  }
- if(silk){$('category-note').textContent='Pick the color of your Gala outfit.';$('dye-name').textContent=$('dyes').children[current.dye]?.getAttribute('aria-label')||'';return;}
+ if(silk){$('category-note').textContent=dyeKey==='trim'?'Pick the second colour: trims, hair and details.':'Pick the color of your Gala outfit.';for(const [i,b] of [...$('dyes').children].entries())b.setAttribute('aria-pressed',String(i===(current[dyeKey]??current.dye)));$('dye-name').textContent=$('dyes').children[current[dyeKey]??current.dye]?.getAttribute('aria-label')||'';return;}
  const left=$('options').scrollLeft;$('category-note').textContent=section.note;
  const retained=!section.choices.includes(current.parts[category]);$('retained-piece').hidden=!retained;
  $('retained-piece').textContent=retained?'Wearing your saved '+section.names[current.parts[category]]+'. Choose a piece below to change it.':'';
@@ -86,10 +87,10 @@ function save(){current.name=window.MBS_DJ.display();const found=looks.findIndex
 function download(blob,name){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1500);}
 const filename=()=>((current.name||'gala-guest').replace(/[^a-z0-9-]/gi,'-').replace(/-+/g,'-').slice(0,40)||'gala-guest');
 mountMenus();
-A.dyes.forEach((color,i)=>{const b=document.createElement('button');b.type='button';b.style.setProperty('--swatch',color);b.setAttribute('aria-label',['Nebula velvet','Plasma rose','Tidal silk','Reactor satin','Comet gold','Void blue','Solar copper','Lunar pearl','Obsidian smoke','Glacier mint'][i]);b.onclick=()=>change(()=>current.dye=i);$('dyes').append(b);});
+A.dyes.forEach((color,i)=>{const b=document.createElement('button');b.type='button';b.style.setProperty('--swatch',color);b.setAttribute('aria-label',['Nebula velvet','Plasma rose','Tidal silk','Reactor satin','Comet gold','Void blue','Solar copper','Lunar pearl','Obsidian smoke','Glacier mint'][i]);b.onclick=()=>change(()=>{current[category==='trim'?'trim':'dye']=i;});$('dyes').append(b);});
 window.addEventListener('mbs:dj-identity',()=>{paint();persist();});window.addEventListener('storage',e=>{if(e.key===window.MBS_DJ.KEY){paint();persist();}});
 $('undo').onclick=()=>{if(!undo.length)return;redo.push(structuredClone(current));current=undo.pop();paint();persist();status('Last change undone.');};$('redo').onclick=()=>{if(!redo.length)return;undo.push(structuredClone(current));current=redo.pop();paint();persist();status('Change restored.');};
-$('random').onclick=()=>{change(()=>{for(const s of A.sections)current.parts[s.id]=s.choices[Math.floor(Math.random()*s.choices.length)];current.dye=Math.floor(Math.random()*10);});status('MOM has chosen something extravagant.');};
+$('random').onclick=()=>{change(()=>{for(const s of A.sections)current.parts[s.id]=s.choices[Math.floor(Math.random()*s.choices.length)];current.dye=Math.floor(Math.random()*10);current.trim=Math.floor(Math.random()*10);});status('MOM has chosen something extravagant.');};
 $('save').onclick=save;$('export').onclick=()=>{current.name=window.MBS_DJ.display();download(new Blob([JSON.stringify(current,null,2)],{type:'application/json'}),filename()+'.json');status('Look exported. Import it on another device.');};
 $('png').onclick=()=>{const c=document.createElement('canvas');c.width=$('avatar').width*8;c.height=$('avatar').height*8;const ctx=c.getContext('2d');ctx.imageSmoothingEnabled=false;ctx.drawImage($('avatar'),0,0,c.width,c.height);c.toBlob(blob=>{if(blob){download(blob,filename()+'.png');status('Portrait downloaded.');}},'image/png');};
 $('import').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{if(f.size>30000)throw Error('Pick a small look file.');const look=A.normalize(JSON.parse(await f.text()));change(()=>current=look);status('Imported '+(current.name||'your alien')+'.');}catch(err){status(err instanceof SyntaxError?'That file is not an avatar look.':err.message);}finally{e.target.value='';}};
