@@ -39,8 +39,8 @@
     },
     {
       "url": "/gala/avatar.js",
-      "revision": "45ccc31853a23b04add7a85b23a4c29332c6d387",
-      "bytes": 25900
+      "revision": "76fa13c46ffb0c77983c0ba4e9f5a0d305c2d794",
+      "bytes": 118794
     },
     {
       "url": "/gala/combat.mjs",
@@ -59,8 +59,8 @@
     },
     {
       "url": "/gala/gala.js",
-      "revision": "fd89d12a58c3df66adc48808c8162e74d3cc46ea",
-      "bytes": 11811
+      "revision": "b6221c2c121a092a391124b6563d4d606f504510",
+      "bytes": 12403
     },
     {
       "url": "/gala/gramophone.css",
@@ -89,8 +89,8 @@
     },
     {
       "url": "/gala/performer.js",
-      "revision": "8192c887c5b9169b5bef049c61b97bce493dbb7c",
-      "bytes": 5454
+      "revision": "f74cc1bcdf22cc7e6ef9ab1e792480e5d8ef84c7",
+      "bytes": 5773
     },
     {
       "url": "/gala/progress.js",
@@ -109,8 +109,8 @@
     },
     {
       "url": "/gala/terminal/index.html",
-      "revision": "826b5cb34889e1bd3b3deb27bf8cb7150baf9b16",
-      "bytes": 4560
+      "revision": "c9b403fc127be5732d7f26dcfc88fe1dcaf480df",
+      "bytes": 4552
     },
     {
       "url": "/gala/war-room-access.js",
@@ -571,5 +571,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "89e7159b8a760a0d836b"
+  "version": "a8981950998fb5a4ee42"
 }

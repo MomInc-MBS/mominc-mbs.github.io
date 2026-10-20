@@ -25,8 +25,10 @@
    ctx.clearRect(0,0,160,168);ctx.imageSmoothingEnabled=false;canvas.dataset.scene=scene.name;
    const seconds=scene.time/1000,wave=Math.sin(seconds*TAU*1.15),blink=!still&&(scene.name==='face'?(seconds>1.5&&seconds<1.68)||(seconds>3.2&&seconds<3.37):(time%4900>4570&&time%4900<4710));
    const pose={};if(scene.name==='walk')pose.walk=wave;if(scene.name==='pet')pose.petting=wave;if(scene.name==='weapon')pose.weapon=true;
-   const poseKey=JSON.stringify([blink,scene.name,scene.name==='walk'||scene.name==='pet'?Math.round(wave*10):0]);
-   if(poseKey!==lastPose){A.draw(body,look,{base:false,weapon:false,companion:false,prop:scene.name!=='weapon',blink,pose});lastPose=poseKey;}
+   // The DFO rig turns to walk along its path (the canvas flip mirrors it for the walk out).
+   const rig=A.renderer==='dfo-rig-1',yaw=rig&&scene.name==='walk'&&!still&&seconds<6.5?-Math.PI/2:undefined;
+   const poseKey=JSON.stringify([blink,scene.name,scene.name==='walk'||scene.name==='pet'?Math.round(wave*10):0,yaw??0]);
+   if(poseKey!==lastPose){A.draw(body,look,{base:false,weapon:false,companion:false,prop:scene.name!=='weapon',blink,pose,...(yaw==null?{}:{yaw})});lastPose=poseKey;}
    let offset=0,flip=false,zoom=0;
    if(scene.name==='walk'){
     if(seconds<2.6){offset=170*ease(seconds/2.6);flip=true;}
@@ -37,7 +39,8 @@
    const bob=still?0:Math.sin(time/850)*.8;
    if(zoom<1){ctx.globalAlpha=(1-zoom)*.5;ctx.fillStyle='#b69adb';ctx.beginPath();ctx.ellipse(80+offset,153,35,3,0,0,TAU);ctx.fill();ctx.globalAlpha=1;}
    ctx.save();ctx.translate(offset,0);if(flip){ctx.translate(160,0);ctx.scale(-1,1);}
-   if(scene.name==='walk'){
+   if(rig&&scene.name==='walk')ctx.drawImage(body,0,0,64,96,32,13+bob,96,144);
+   else if(scene.name==='walk'){
     ctx.drawImage(body,0,0,64,70,32,13+bob,96,105);
     ctx.drawImage(body,0,70,32,26,32,118+wave*2,48,39);
     ctx.drawImage(body,32,70,32,26,80,118-wave*2,48,39);
