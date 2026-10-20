@@ -39,8 +39,8 @@
     },
     {
       "url": "/gala/avatar.js",
-      "revision": "76fa13c46ffb0c77983c0ba4e9f5a0d305c2d794",
-      "bytes": 118794
+      "revision": "c6fd566cadff25b99069a7dd11e9e37ff9552137",
+      "bytes": 154202
     },
     {
       "url": "/gala/combat.mjs",
@@ -84,8 +84,8 @@
     },
     {
       "url": "/gala/index.html",
-      "revision": "186dbcc7b6bbbe94a621662f7887a708a3daa003",
-      "bytes": 5299
+      "revision": "945b658482dc6c79ca6ef528a41f434194cfd50a",
+      "bytes": 5294
     },
     {
       "url": "/gala/music.html",
@@ -124,8 +124,8 @@
     },
     {
       "url": "/gala/weapons.js",
-      "revision": "c3420e8200ea69daacf3c72e81879f16277c50af",
-      "bytes": 10734
+      "revision": "585414a61183841c4aeb17823b79bf62679b3f21",
+      "bytes": 11576
     },
     {
       "url": "/gala/workout-tracks.js",
@@ -409,8 +409,8 @@
     },
     {
       "url": "/tv/games/goon/index.html",
-      "revision": "12b43d2a4f219478f9d72578d44504c83f0735ff",
-      "bytes": 2509
+      "revision": "fa472e7df226ada6aef31bac4abb282f84bd5f8f",
+      "bytes": 2504
     },
     {
       "url": "/tv/identity.css",
@@ -537,5 +537,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "561f838ffeb41631e9c8"
+  "version": "f1a80e44db7bc61939f1"
 }

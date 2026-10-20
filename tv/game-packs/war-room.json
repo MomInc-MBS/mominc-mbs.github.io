@@ -39,8 +39,8 @@
     },
     {
       "url": "/gala/avatar.js",
-      "revision": "76fa13c46ffb0c77983c0ba4e9f5a0d305c2d794",
-      "bytes": 118794
+      "revision": "c6fd566cadff25b99069a7dd11e9e37ff9552137",
+      "bytes": 154202
     },
     {
       "url": "/gala/combat.mjs",
@@ -109,8 +109,8 @@
     },
     {
       "url": "/gala/terminal/index.html",
-      "revision": "c9b403fc127be5732d7f26dcfc88fe1dcaf480df",
-      "bytes": 4552
+      "revision": "0dc656a65f2decff161195efc286d49b483a175b",
+      "bytes": 4547
     },
     {
       "url": "/gala/war-room-access.js",
@@ -154,8 +154,8 @@
     },
     {
       "url": "/gala/weapons.js",
-      "revision": "c3420e8200ea69daacf3c72e81879f16277c50af",
-      "bytes": 10734
+      "revision": "585414a61183841c4aeb17823b79bf62679b3f21",
+      "bytes": 11576
     },
     {
       "url": "/gala/workout-tracks.js",
@@ -571,5 +571,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "a8981950998fb5a4ee42"
+  "version": "677b500e9de719367bfc"
 }
