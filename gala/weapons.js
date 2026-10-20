@@ -9,7 +9,11 @@ function requirements(value){const w=normalize(value),group=globalThis.MYR5Train
 function trainingProgress(value,progress=window.GalaProgress?.read()){return globalThis.MYR5Training?.trackProgress(progress,requirements(value).group)||{activeDays:0,completedSets:0,totalXp:0,strength:1};}
 function unlocked(value,progress=window.GalaProgress?.read()){const w=normalize(value);if(w.tier===0)return true;const r=requirements(w),p=trainingProgress(w,progress);return p.activeDays>=r.days&&p.totalXp>=r.xp;}
 function name(value){const w=normalize(value);return tiers[w.tier]+' '+types.find(t=>t.id===w.type).name;}
+const rigSprites=new Map();
+// The DFO-rig weapon (shared GalaAvatar renderer) replaces the flat sprite wherever a weapon is drawn.
+function rigSprite(value,palette){const A=window.GalaAvatar;if(!A?.weaponImage||!globalThis.document)return null;const key=value.type+':'+value.tier+':'+(palette?JSON.stringify(palette):'');let c=rigSprites.get(key);if(!c){const img=A.weaponImage(value,{palette});c=document.createElement('canvas');c.width=img.w;c.height=img.h;const x=c.getContext('2d'),d=x.createImageData(img.w,img.h);d.data.set(img.data);x.putImageData(d,0,0);rigSprites.set(key,c);if(rigSprites.size>80)rigSprites.delete(rigSprites.keys().next().value);}return c;}
 function draw(ctx,value,{x=0,y=0,scale=1,palette=null}={}){
+ {const sprite=rigSprite(normalize(value),palette);if(sprite){ctx.save();ctx.imageSmoothingEnabled=false;ctx.drawImage(sprite,x,y,40*scale,72*scale);ctx.restore();return;}}
  const w=normalize(value),i=types.findIndex(type=>type.id===w.type),t=w.tier;
  const ink='#111625',shell=palette?.shell||(t<8?'#59677e':t<16?'#889ab4':'#c4cae3'),dark='#283147',edge='#dbe8ff';
  const energy=palette?.energy||['#58e8ff','#76ffc8','#ba8cff','#ff879f','#ffd76c'][Math.min(4,Math.floor(t/5))],white='#f3ffff';
