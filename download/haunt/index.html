@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Haunt — Android house test</title>
+  <meta name="description" content="Download the native Haunt Android Phase 1 development build for house testing.">
+  <link rel="canonical" href="https://mominc.online/download/haunt/">
+  <style>
+    :root {
+      --background: #0a0a0f;
+      --foreground: #e8e8f0;
+      --muted: #a2a2b8;
+      --card: #12121a;
+      --border: #2a2a3a;
+      --primary: #c5c5e0;
+      --accent: #ff6b6b;
+      --radius: 8px;
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --font-mono: "SF Mono", "Fira Mono", "Droid Sans Mono", monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--background);
+      color: var(--foreground);
+      line-height: 1.5;
+    }
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { color: var(--accent); }
+    button, input, optgroup, select, textarea {
+      font-family: inherit; font-size: 100%; line-height: inherit; color: inherit;
+    }
+    /* Focus styles */
+    a:focus, button:focus, input:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    .skip-link { position: absolute; left: -999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+    .skip-link:focus { left: 2rem; top: 2rem; width: auto; height: auto; overflow: visible; background: var(--card); padding: 0.5rem; z-index: 100; }
+    /* Semantic landmarks */
+    header, main, footer { padding: 1.5rem 2rem; max-width: 100%; width: 100%; }
+    header { text-align: center; margin-bottom: 2rem; }
+    main { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; width: 100%; max-width: 420px; }
+    .download-btn { display: block; width: 100%; margin-top: 1rem; padding: 1rem; font-size: 1.1rem; font-weight: 600; text-align: center; overflow-wrap: anywhere; background: var(--primary); color: var(--background); border: none; border-radius: var(--radius); cursor: pointer; }
+    .download-btn:hover { background: var(--accent); color: var(--background); }
+    .download-btn:focus { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .metadata { font-size: 0.85rem; color: var(--muted); margin-top: 1rem; }
+    .metadata a { color: var(--primary); }
+    footer { text-align: center; font-size: 0.75rem; color: var(--muted); margin-top: 2rem; }
+    code { overflow-wrap: anywhere; }
+    section { max-width: 42rem; }
+    section ul { padding-left: 1.25rem; }
+    section li { margin-top: 0.5rem; }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header>
+    <h1>Haunt — Android house test</h1>
+    <p class="metadata">Phase 1 development build · join / scan / PLAY / STOP</p>
+  </header>
+
+  <main id="main">
+    <div class="card">
+      <p>Download the native Unity APK to participate in the Haunt AR house test.</p>
+
+      <a class="download-btn" href="./haunt-v4.apk" download="haunt-v4.apk">
+        Download haunt-v4.apk (30.8 MiB)
+      </a>
+
+      <div class="metadata">
+        <p>Version: <code>v4</code> | Size: 32,308,367 bytes (30.8 MiB)</p>
+        <p>Package: <code>com.horror.party.test</code></p>
+        <p>SHA-256: <code>3e93c103bffaade8a76e804ffcf34a1323f01a66ef6ee90a0018a304c0910481</code></p>
+        <p><a href="./release.json">release metadata</a> | <a href="./haunt-v4.apk.sha256">SHA‑256 sidecar</a></p>
+      </div>
+    </div>
+
+    <section>
+      <h2>Install & setup</h2>
+      <ul>
+        <li>Android <strong>arm64</strong> ARCore‑capable phone</li>
+        <li>Allow camera access for AR scanning</li>
+        <li>Same Wi‑Fi network as the house host PC</li>
+        <li>Open the downloaded APK and allow install from this browser if Android prompts</li>
+        <li>In the app, enter the host PC’s LAN Host URL</li>
+        <li>Create or join a room and follow the on‑screen room/scan steps</li>
+        <li>Scan the five tags, finish setup, then enter PLAY; STOP ends play</li>
+      </ul>
+      <p class="metadata">Phase 1 development build for join/scan/PLAY/STOP.<br>
+      Minotaur phone gameplay and real house AR qualification remain pending.</p>
+    </section>
+  </main>
+
+  <footer>
+    <a href="/">MOM Inc home</a>
+    <p>Canonical URL: https://mominc.online/download/haunt/</p>
+  </footer>
+</body>
+</html>

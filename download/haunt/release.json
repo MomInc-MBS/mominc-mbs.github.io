@@ -1,0 +1,23 @@
+{
+  "schema": "release-metadata/v1",
+  "name": "Haunt Android house test",
+  "filename": "haunt-v4.apk",
+  "bytes": 32308367,
+  "sha256": "3e93c103bffaade8a76e804ffcf34a1323f01a66ef6ee90a0018a304c0910481",
+  "package": "com.horror.party.test",
+  "versionCode": 4,
+  "versionName": "4",
+  "minSdk": 24,
+  "targetSdk": 34,
+  "abi": ["arm64-v8a"],
+  "buildType": "development-apk",
+  "permissions": ["android.permission.INTERNET", "android.permission.CAMERA"],
+  "capabilities": {
+    "phase1JoinScanPlayStop": true,
+    "minotaurPhoneGameplayIntegrated": false,
+    "physicalHouseQualificationComplete": false
+  },
+  "physicalTags": ["door", "window", "mirror", "vent", "corner"],
+  "canonicalDownloadUrl": "https://mominc.online/download/haunt/haunt-v4.apk",
+  "releaseUrl": "https://mominc.online/download/haunt/release.json"
+}
