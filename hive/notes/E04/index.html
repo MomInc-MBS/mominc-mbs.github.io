@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Test sleep, replay order, expansion and distillation independently · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#122c32"><link rel="canonical" href="https://mominc.online/hive/notes/E04/">
+<meta property="og:title" content="Test sleep, replay order, expansion and distillation independently · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=1"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=1">
+<script defer src="/hive/assets/hive.js?v=1"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/ROADMAP/">Build</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 286 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download Obsidian vault</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=experiment">Experiment</a><span>/</span><span>E04</span></div>
+<div class="doc-meta"><span class="badge">Hypothesis</span><span class="badge neutral">Not run</span></div><div class="doc-tools"><button class="copy-link" data-title="Test sleep, replay order, expansion and distillation independently" data-id="E04">Copy reference</button><a href="/hive/vault/40_Experiments/E04_Sleep_Factorial.md">Markdown source</a><a href="/hive/graph/?focus=E04">View connections</a><button class="print-page">Print</button></div>
+<article class="prose"><h1 id="test-sleep-replay-order-expansion-and-distillation-independently">Test sleep, replay order, expansion and distillation independently</h1>
+<blockquote>
+<p><strong>Status: proposed; not run.</strong> This design separates data schedule, added capacity and consolidation mechanisms. It is not a reproduction claim.</p>
+</blockquote>
+<h2 id="hypothesis">Hypothesis</h2>
+<p>Consolidation improves retention beyond extra capacity, training examples, feedback or compute.</p>
+<h2 id="implementation-class-declare-before-running">Implementation class — declare before running</h2>
+<ul>
+<li><strong>Paper-faithful candidate:</strong> specified architecture, equations, tasks and implementation choices match the selected paper version; list unresolved details before claiming a reproduction.</li>
+<li><strong>Partial implementation:</strong> named components are omitted or replaced; record every deviation.</li>
+<li><strong>HIVE analogue:</strong> external notes, agent routing or adapter workflows imitate a mechanism at system level; evaluate their own outcomes.</li>
+<li>Research specification: <a href="https://arxiv.org/html/2606.03979v2" rel="noreferrer">Google Sleep paper</a>.</li>
+</ul>
+<h2 id="factor-a-wake-update-data-schedule-only">Factor A: wake-update data schedule only</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Examples available during wake updates</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Current-only wake</td>
+<td>Current task only</td>
+</tr>
+<tr>
+<td>Interleaved wake</td>
+<td>Current and old examples mixed within batches</td>
+</tr>
+<tr>
+<td>Blocked wake</td>
+<td>Current and old examples in separate batches</td>
+</tr>
+</tbody>
+</table></div>
+<p>Offline data has a separate manifest: <code>none</code>, <code>verified replay</code>, <code>teacher samples</code>, or <code>filtered synthetic</code>. A current-only <strong>wake</strong> arm may rehearse offline; label that fact. A current-only <strong>total-learning</strong> arm cannot rehearse offline: those cells are <strong>NA</strong>.</p>
+<h2 id="factor-b-mechanism-contract">Factor B: mechanism contract</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Arm</th>
+<th>Updated modules and operations</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ordinary updates</td>
+<td>Update designated fast module F; no added slow capacity, consolidation or reset</td>
+</tr>
+<tr>
+<td>Expansion without sleep</td>
+<td>Unlock matched slow capacity S; train it by ordinary wake updates; no consolidation/reset/dreaming</td>
+</tr>
+<tr>
+<td>Matched-capacity distillation</td>
+<td>Fixed target adapter with matched storage/trainable capacity; same scheduled distillation budget; no hierarchical transfer/reset/dreaming</td>
+</tr>
+<tr>
+<td>Sleep without dreaming</td>
+<td>Fast F → slower S consolidation, then conditional reset; no synthetic rehearsal stage</td>
+</tr>
+<tr>
+<td>Full proposed sleep</td>
+<td>Same consolidation/reset plus the declared dreaming stage</td>
+</tr>
+</tbody>
+</table></div>
+<p>For parameter-learning arms, name F/S tensors, backbone freeze policy, update periods, ranks and allocated/active slots. An external-memory analogue identifies its corresponding stores instead of claiming tensor-level equivalence.</p>
+<h2 id="paper-style-mechanism-specification">Paper-style mechanism specification</h2>
+<ul>
+<li>Snapshot the pre-update teacher; compute but defer the fast-module update.</li>
+<li>Build the candidate with the prospective update and added slow capacity; train only designated new parameters.</li>
+<li>Use GKD/on-policy distillation plus LTI semantic/edit-similarity reward; log coefficients, sampling mixture and reward-model version.</li>
+<li>Dreaming: extra random expert activation, generated candidates, selection, then specified refinement.</li>
+</ul>
+<p><strong>HIVE acceptance rule:</strong> reset temporary fast slots only after retention/new-learning checks pass and the replacement checkpoint is durable. Otherwise retain the original state. Record this gate as an implementation addition.</p>
+<h2 id="compatibility-and-comparisons">Compatibility and comparisons</h2>
+<ul>
+<li>Use <strong>NA</strong>, with a reason, when the required trainable modules, expert routing or data permissions are absent.</li>
+<li>A frozen retrieval baseline has no wake-update schedule; it sits outside the factorial.</li>
+<li>Match expansion/capacity ledgers; add reset/no-reset and objective ablations when a contrast changes several mechanisms.</li>
+<li>Screen cheaply; confirm selected contrasts on unseen examples/orders. Preserve all screened results.</li>
+</ul>
+<h2 id="measures-falsifier-and-outputs">Measures, falsifier and outputs</h2>
+<ul>
+<li>Measure before learning, after each task, after consolidation and after reset.</li>
+<li>Count all updates, examples generated/scored/discarded, external feedback, verifier/router fanout, wall time and total stored growth.</li>
+<li>Report fixed-compute and fixed-example comparisons separately; include old/new accuracy, corrections and serving delay.</li>
+<li><strong>Falsifier:</strong> gains disappear under matched controls, or reset destroys retained knowledge. <strong>Revisit:</strong> implementation gaps or changed workloads.</li>
+<li>Pilot: one short stream. Confirmation: three task orders × five seeds by default, revised using variance/power.</li>
+<li>Save compatibility matrix, preregistered contrasts, module/update manifest, seeds, hashes, raw scores and deviation log.</li>
+</ul>
+<h2 id="related-research-paths">Related research paths</h2>
+<p><a href="/hive/notes/P02/">Sleep consolidation</a> · <a href="/hive/notes/P07/">Internal experts and expandable memory</a> · <a href="/hive/notes/P32/">Fair comparison and replication</a> · <a href="/hive/notes/P33/">Biology and physical translation</a></p>
+<h2 id="related-decisions">Related decisions</h2>
+<p><a href="/hive/notes/DECISIONS/">Open design decisions</a></p>
+</article><section class="backlinks"><h2>Referenced by <span>14</span></h2><div><a href="/hive/notes/P33/"><span>P33</span>Biology and physical translation<small>tested by</small></a><a href="/hive/notes/P32/"><span>P32</span>Fair comparison and replication<small>tested by</small></a><a href="/hive/notes/P07/"><span>P07</span>Internal experts and expandable memory<small>tested by</small></a><a href="/hive/notes/P02/"><span>P02</span>Sleep consolidation<small>tested by</small></a><a href="/hive/notes/C02/"><span>C02</span>The earlier replay test has a narrower scope<small>tested by</small></a><a href="/hive/notes/C01/"><span>C01</span>What the Google source establishes<small>tested by</small></a><a href="/hive/notes/EXPERIMENTS/"><span>EXPERIMENTS</span>Experiment index<small>related to</small></a><a href="/hive/notes/GOOGLE/"><span>GOOGLE</span>Google evidence and the change to HIVE<small>related to</small></a><a href="/hive/notes/HOME/"><span>HOME</span>HIVE framework and research vault<small>related to</small></a><a href="/hive/notes/T01/"><span>T01</span>Learning lifecycle<small>related to</small></a><a href="/hive/notes/ROADMAP/"><span>ROADMAP</span>Local build roadmap and work packages<small>related to</small></a><a href="/hive/notes/HISTORY/"><span>HISTORY</span>Previous research and attempted methods<small>related to</small></a><a href="/hive/notes/T10/"><span>T10</span>Research method and discovery<small>related to</small></a><a href="/hive/notes/T02/"><span>T02</span>Specialist structure<small>related to</small></a></div></section></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#hypothesis">Hypothesis</a><a class="toc-h2" href="#implementation-class-declare-before-running">Implementation class — declare before running</a><a class="toc-h2" href="#factor-a-wake-update-data-schedule-only">Factor A: wake-update data schedule only</a><a class="toc-h2" href="#factor-b-mechanism-contract">Factor B: mechanism contract</a><a class="toc-h2" href="#paper-style-mechanism-specification">Paper-style mechanism specification</a><a class="toc-h2" href="#compatibility-and-comparisons">Compatibility and comparisons</a><a class="toc-h2" href="#measures-falsifier-and-outputs">Measures, falsifier and outputs</a><a class="toc-h2" href="#related-research-paths">Related research paths</a><a class="toc-h2" href="#related-decisions">Related decisions</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework revision 0.2</span></a><span>Research prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download vault</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

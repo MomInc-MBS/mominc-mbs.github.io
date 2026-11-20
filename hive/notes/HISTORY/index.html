@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Previous research and attempted methods · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#122c32"><link rel="canonical" href="https://mominc.online/hive/notes/HISTORY/">
+<meta property="og:title" content="Previous research and attempted methods · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=1"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=1">
+<script defer src="/hive/assets/hive.js?v=1"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/ROADMAP/">Build</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" aria-current=page>Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" aria-current=page>Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 286 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download Obsidian vault</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=index">Index</a><span>/</span><span>HISTORY</span></div>
+<div class="doc-meta"><span class="badge">Navigation</span></div><div class="doc-tools"><button class="copy-link" data-title="Previous research and attempted methods" data-id="HISTORY">Copy reference</button><a href="/hive/vault/06_Previous_Work.md">Markdown source</a><a href="/hive/graph/?focus=HISTORY">View connections</a><button class="print-page">Print</button></div>
+<article class="prose"><h1 id="previous-research-and-attempted-methods">Previous research and attempted methods</h1>
+<h2 id="what-was-recovered">What was recovered</h2>
+<p>The package preserves 19 original project artifacts, a linked history page for each source document, 12 method-history pages, and navigable entries from the prior 100-project catalog. See <a href="/hive/notes/ARCHIVE/">Recovered original documents</a> and <a href="/hive/notes/CATALOG/">Prior 100-project research catalog</a>.</p>
+<h2 id="what-the-artifact-audit-establishes">What the artifact audit establishes</h2>
+<ul>
+<li>32 archived experiment manifest entries matched recorded file hashes and byte counts.</li>
+<li>Raw records document 360 small NumPy learning runs and 1,440 scheduling simulations.</li>
+<li>Central statistics were recalculated from the recorded JSON.</li>
+<li>The experiment training scripts were not rerun during this preparation.</li>
+<li>These artifacts do not document real-model tests on the user's RTX 5070 Ti.</li>
+</ul>
+<h2 id="findings-that-affect-the-new-plan">Findings that affect the new plan</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Prior result</th>
+<th>Implication</th>
+<th>Follow-up</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Conflicting tasks: mixed two-expert grouping 66.11%, compatible grouping 83.88%</td>
+<td>Organization deserves direct testing</td>
+<td><a href="/hive/notes/H02/">Specialist grouping, sharing, and interference</a> → <a href="/hive/notes/E06/">Use measured interference to test regrouping and routing</a></td>
+</tr>
+<tr>
+<td>Mostly shared tasks: generalist 91.03%, isolated experts 87.00%</td>
+<td>Sharing can help; isolation is not a universal winner</td>
+<td><a href="/hive/notes/H02/">Specialist grouping, sharing, and interference</a> → <a href="/hive/notes/D01/">Independent models or shared components</a></td>
+</tr>
+<tr>
+<td>Conflicting generalist: interleaved replay 74.47%, blocked replay 62.64%</td>
+<td>Keep the negative scheduling result within its tested scope</td>
+<td><a href="/hive/notes/H03/">Replay ordering and the reopened sleep branch</a> → <a href="/hive/notes/E04/">Test sleep, replay order, expansion and distillation independently</a></td>
+</tr>
+<tr>
+<td>Precise prose and precise numerical formats preserved all tested geometric labels</td>
+<td>Precision and representation are separate variables</td>
+<td><a href="/hive/notes/H05/">Representation precision and communication cost</a> → <a href="/hive/notes/E07/">Compare typed messages, precise prose and learned representations</a></td>
+</tr>
+<tr>
+<td>A stale translator lost accuracy after encoder drift</td>
+<td>Version bridges and test consumers together</td>
+<td><a href="/hive/notes/H06/">Private representations and translator drift</a> → <a href="/hive/notes/P15/">Learned codes and translators</a></td>
+</tr>
+<tr>
+<td>Well-formed semantic errors passed typed gates</td>
+<td>Syntax and authority checks do not establish truth</td>
+<td><a href="/hive/notes/H07/">Typed messages, authority, and semantic errors</a> → <a href="/hive/notes/P19/">Executable verification</a></td>
+</tr>
+<tr>
+<td>Scheduler studies used 4/8/16 workers</td>
+<td>Larger registry scales remain new experiments</td>
+<td><a href="/hive/notes/H12/">Model size, resource budgets, and larger hive scales</a> → <a href="/hive/notes/E10/">Scale 100, 1,000 and 10,000 logical experts with measured active workers</a></td>
+</tr>
+</tbody>
+</table></div>
+<p>All percentages are historical synthetic-task outcomes. Conditions and limitations are on the linked pages and in the original report.</p>
+<h2 id="method-pages">Method pages</h2>
+<ul>
+<li><a href="/hive/notes/H01/">Prior HIVE corpus and evidence lineage</a></li>
+<li><a href="/hive/notes/H02/">Specialist grouping, sharing, and interference</a></li>
+<li><a href="/hive/notes/H03/">Replay ordering and the reopened sleep branch</a></li>
+<li><a href="/hive/notes/H04/">Scheduling, selective activation, and graph topology</a></li>
+<li><a href="/hive/notes/H05/">Representation precision and communication cost</a></li>
+<li><a href="/hive/notes/H06/">Private representations and translator drift</a></li>
+<li><a href="/hive/notes/H07/">Typed messages, authority, and semantic errors</a></li>
+<li><a href="/hive/notes/H08/">Earlier architecture choices and open alternatives</a></li>
+<li><a href="/hive/notes/H09/">SOL, Grok, and Nemotron implementation workflow</a></li>
+<li><a href="/hive/notes/H10/">Video, studio interaction, and horror testbeds</a></li>
+<li><a href="/hive/notes/H11/">Inherited assumptions and disputed conclusions</a></li>
+<li><a href="/hive/notes/H12/">Model size, resource budgets, and larger hive scales</a></li>
+</ul>
+<h2 id="preserve-the-research-lineage">Preserve the research lineage</h2>
+<p><strong>Initial concept → architecture → source foundation → synthetic experiments → v0.1 build/training plan → SOL handoff → this revision.</strong></p>
+<p>A newer page can narrow or revise a conclusion while retaining the earlier page and the reason for the change.</p>
+</article><section class="backlinks"><h2>Referenced by <span>16</span></h2><div><a href="/hive/notes/H08/"><span>H08</span>Earlier architecture choices and open alternatives<small>subtopic of</small></a><a href="/hive/notes/H11/"><span>H11</span>Inherited assumptions and disputed conclusions<small>subtopic of</small></a><a href="/hive/notes/H12/"><span>H12</span>Model size, resource budgets, and larger hive scales<small>subtopic of</small></a><a href="/hive/notes/H01/"><span>H01</span>Prior HIVE corpus and evidence lineage<small>subtopic of</small></a><a href="/hive/notes/H06/"><span>H06</span>Private representations and translator drift<small>subtopic of</small></a><a href="/hive/notes/H03/"><span>H03</span>Replay ordering and the reopened sleep branch<small>subtopic of</small></a><a href="/hive/notes/H05/"><span>H05</span>Representation precision and communication cost<small>subtopic of</small></a><a href="/hive/notes/H09/"><span>H09</span>SOL, Grok, and Nemotron implementation workflow<small>subtopic of</small></a><a href="/hive/notes/H04/"><span>H04</span>Scheduling, selective activation, and graph topology<small>subtopic of</small></a><a href="/hive/notes/H02/"><span>H02</span>Specialist grouping, sharing, and interference<small>subtopic of</small></a><a href="/hive/notes/H07/"><span>H07</span>Typed messages, authority, and semantic errors<small>subtopic of</small></a><a href="/hive/notes/H10/"><span>H10</span>Video, studio interaction, and horror testbeds<small>subtopic of</small></a><a href="/hive/notes/EXPERIMENTS/"><span>EXPERIMENTS</span>Experiment index<small>related to</small></a><a href="/hive/notes/HOME/"><span>HOME</span>HIVE framework and research vault<small>related to</small></a><a href="/hive/notes/AUDIT/"><span>AUDIT</span>Package audit and validation scope<small>related to</small></a><a href="/hive/notes/ARCHIVE/"><span>ARCHIVE</span>Recovered original documents<small>related to</small></a></div></section></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#what-was-recovered">What was recovered</a><a class="toc-h2" href="#what-the-artifact-audit-establishes">What the artifact audit establishes</a><a class="toc-h2" href="#findings-that-affect-the-new-plan">Findings that affect the new plan</a><a class="toc-h2" href="#method-pages">Method pages</a><a class="toc-h2" href="#preserve-the-research-lineage">Preserve the research lineage</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework revision 0.2</span></a><span>Research prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download vault</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

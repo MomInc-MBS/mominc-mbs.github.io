@@ -1,0 +1,1438 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HIVE v0 1 Training and Build Plan · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#122c32"><link rel="canonical" href="https://mominc.online/hive/notes/original-HIVE_v0_1_Training_and_Build_Plan/">
+<meta property="og:title" content="HIVE v0 1 Training and Build Plan · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=1"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=1">
+<script defer src="/hive/assets/hive.js?v=1"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/ROADMAP/">Build</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 286 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download Obsidian vault</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=original">Archived original</a><span>/</span><span>original-HIVE_v0_1_Training_and_Build_Plan</span></div>
+<div class="doc-meta"><span class="badge">Preserved original</span><span class="badge neutral">Historical</span></div><div class="doc-tools"><button class="copy-link" data-title="HIVE v0 1 Training and Build Plan" data-id="original-HIVE_v0_1_Training_and_Build_Plan">Copy reference</button><a href="/hive/vault/90_Archive/Originals/HIVE_v0_1_Training_and_Build_Plan.md">Markdown source</a><button class="print-page">Print</button></div>
+<p class="archive-notice">Preserved historical original. Statements below reflect this source document; they are not a current implementation or a new measurement.</p><article class="prose"><h1 id="hive-first-edition-training-and-build-plan">HIVE First Edition Training and Build Plan</h1>
+<p><strong>Edition:</strong> HIVE v0.1<br />
+<strong>Prepared:</strong> 19 November 2026<br />
+<strong>Status:</strong> Implementation and training specification. Hardware performance, training time, and HIVE results must be measured during implementation.</p>
+<h2 id="1-the-build-decision">1. The build decision</h2>
+<p>Build HIVE as a persistent local system that learns how to assemble and operate tools, software, and small models. Its first specialty is <strong>model and tool orchestration</strong>: choose a suitable workflow, translate interfaces, execute dependent steps, check outcomes, recover from failures, and improve the responsible component.</p>
+<p>The first edition combines two language-model foundations, separately versioned specialist adapters, a compact decision model, deterministic tools, persistent memory, and a software runtime. Three control roles are available: planner/operator, checker, and a challenger used when needed. Their number is independent of the number of specialist groups.</p>
+<p>Your newest requirement is a release requirement: <strong>a recurring human intervention must be convertible into a tested tool, rule, workflow, or local supervisor that reduces future intervention and main-controller monitoring.</strong></p>
+<p>The practical starting point is 20 capability packages across five groups, expanding toward 100 through the same interfaces. A package may contain a trained neural specialist, a deterministic program, a model wrapper, or a service. Count these separately. Twenty packages do not imply twenty trained language models.</p>
+<h3 id="what-the-first-edition-must-demonstrate">What the first edition must demonstrate</h3>
+<ol>
+<li>Complete unfamiliar combinations of known tool operations.</li>
+<li>Handle a documented change in a tool or model interface.</li>
+<li>Retain earlier capabilities after targeted learning and a process restart.</li>
+<li>Detect stalled work without repeatedly polling through the head model.</li>
+<li>Learn a useful correction through an actual parameter update, alongside memory and workflow improvements.</li>
+<li>Choose better specialist/tool combinations than a fixed-workflow version under the same resource limits.</li>
+<li>Roll back an update that fails the release gates.</li>
+</ol>
+<p>The broad research hypothesis remains that selective communication and local learning can improve learning efficiency and capability per unit of resource. The first edition tests that hypothesis in a bounded domain. Frontier-model equivalence and general intelligence are later research questions.</p>
+<h3 id="first-demonstration">First demonstration</h3>
+<p>Give HIVE a request to retrieve records, apply a calculation with explicit units, invoke a model through a documented response schema, and save a checked report in a sandbox.</p>
+<p>During the sequence, change an API field, inject a stalled worker, and return one plausible but invalid model response. HIVE should repair or escalate each problem, complete only when the final-state checks pass, retain the verified correction, and handle a new variation after restart. Measure the improvement across repeated cases.</p>
+<h2 id="2-existing-resources-and-operating-limits">2. Existing resources and operating limits</h2>
+<p>The planning hardware is your reported <strong>RTX 5070 Ti with 16 GB VRAM and 64 GB DDR4 RAM</strong>. Your 15 November inventory recorded Ollama running, LM Studio installed with its server offline, Python 3.11/3.12 and uv installed, and Docker Desktop installed with its daemon unchecked. The earlier HIVE foundation recorded Ruflo connected and LAYA prepared with a deterministic fallback. These are earlier observations, not a fresh inspection of the PC. See the project sources in Section 17.</p>
+<h3 id="reuse-and-readiness">Reuse and readiness</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>First-edition use</th>
+<th>Initial action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python and uv</td>
+<td>Runtime, evaluation, training environments</td>
+<td>Create isolated environments and preserve a dependency lock</td>
+</tr>
+<tr>
+<td>Ollama</td>
+<td>Existing stock-model endpoints and deployment comparison</td>
+<td>Check endpoint, loaded models, schema handling, and measured memory</td>
+</tr>
+<tr>
+<td>Ruflo</td>
+<td>Adapter for useful coordination functions</td>
+<td>Run contract checks against the installed version</td>
+</tr>
+<tr>
+<td>LAYA</td>
+<td>Candidate decision/routing implementation</td>
+<td>Pin the actual checkpoint and engine; measure calibration</td>
+</tr>
+<tr>
+<td>Soup</td>
+<td>Existing prepared training frontend</td>
+<td>Inspect its environment; reuse only if it reproduces the chosen recipe</td>
+</tr>
+<tr>
+<td>LM Studio</td>
+<td>Optional model inspection using existing installation</td>
+<td>No dependency on it for the first executable build</td>
+</tr>
+<tr>
+<td>Docker Desktop</td>
+<td>Isolation for generated-code and simulated-tool tasks</td>
+<td>Verify daemon and resource limits before using it</td>
+</tr>
+<tr>
+<td>Studio Brain / Obsidian</td>
+<td>Read-only context source through an adapter</td>
+<td>Keep experimental training and authoritative runtime state separately versioned</td>
+</tr>
+</tbody>
+</table></div>
+<p>Use one canonical ML training path: <strong>PyTorch + Transformers + PEFT + TRL</strong>. An existing frontend can wrap that recipe if the outputs and configuration remain inspectable.</p>
+<h3 id="proposed-starting-limits">Proposed starting limits</h3>
+<p>These values are initial engineering limits, subject to the hardware pilot.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Resource</th>
+<th>Initial policy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GPU execution</td>
+<td>One inference or training job holding a GPU lease at a time; CPU tools and I/O may overlap</td>
+</tr>
+<tr>
+<td>Second concurrent GPU request</td>
+<td>Enable only after a measured throughput/latency benefit within the same memory cap</td>
+</tr>
+<tr>
+<td>HIVE VRAM allowance</td>
+<td>Start with a 12 GiB ceiling, reduced further when measured non-HIVE usage plus a 2 GiB reserve requires it</td>
+</tr>
+<tr>
+<td>HIVE host RAM</td>
+<td>Start with 32 GiB for interactive work; increase in the dedicated research profile only after measurement</td>
+</tr>
+<tr>
+<td>Controller sequence</td>
+<td>Start with 2,048 tokens total for input plus output; reserve 256–512 for the action and fit state into the remainder</td>
+</tr>
+<tr>
+<td>Controller action output</td>
+<td>Initially 256–512 tokens, with explicit action count and time limits</td>
+</tr>
+<tr>
+<td>Task graph</td>
+<td>Up to eight nodes in the first arena; up to 12 controller decisions per episode</td>
+</tr>
+<tr>
+<td>Recovery</td>
+<td>At most two permitted retry/repair attempts per failed step</td>
+</tr>
+<tr>
+<td>Training</td>
+<td>Exclusive GPU lease; active inference workers drained and conflicting model allocations released</td>
+</tr>
+<tr>
+<td>Retained model packages</td>
+<td>Incumbent, candidate, and one rollback package; shared immutable bases are deduplicated</td>
+</tr>
+<tr>
+<td>Replay</td>
+<td>2,000 eligible examples total, stratified across skills, protocols, and difficult cases</td>
+</tr>
+<tr>
+<td>Operational trace storage</td>
+<td>Newest 2,000 full episodes within an initial 10 GiB artifact cap; retain compact outcomes for longer</td>
+</tr>
+</tbody>
+</table></div>
+<p>Admission uses measured free memory, weights, activations or KV cache, runtime overhead, and competing processes. The 12 GiB ceiling is not a prediction of model size. Training activations and optimizer state are measured separately from inference.</p>
+<p>Frozen datasets, training-run evidence, and release lineage are pinned separately from rolling operational traces and counted in total storage. Cleanup must not remove artifacts referenced by retained experiments or releases. Set their disk allowance after measuring the initial corpus and available storage.</p>
+<p>Create two reproducible profiles: <strong>dedicated research</strong> and <strong>studio sharing</strong>. In the first training pilot, pause competing GPU workloads. Studio-sharing inference must be checked with your actual OBS, cameras, filters, and overlays.</p>
+<p>Ollama exposes model lifetime, queue, and request-parallel controls. Its documentation explains that parallel requests increase context-related memory. HIVE still needs its own admission policy and visible queue. <a href="https://docs.ollama.com/faq" rel="noreferrer">Ollama FAQ</a></p>
+<h2 id="3-architecture-and-specialist-groups">3. Architecture and specialist groups</h2>
+<pre><code class="language-mermaid">flowchart TD
+    U[&quot;User goal and constraints&quot;] --&gt; C[&quot;Planner and selected recipe&quot;]
+    C --&gt; R[&quot;Runtime and capability registry&quot;]
+    R --&gt; T[&quot;Tools and specialist workers&quot;]
+    T --&gt; V[&quot;Execution checks and checker&quot;]
+    V --&gt;|accepted evidence| O[&quot;Result and persistent memory&quot;]
+    V --&gt;|failed or incomplete| C
+    T --&gt; S[&quot;Local supervisor&quot;]
+    S --&gt;|bounded repair| T
+    S --&gt;|unresolved incident| C
+    V --&gt; L[&quot;Learning service&quot;]
+    S --&gt; L
+    L --&gt; E[&quot;Candidate evaluation&quot;]
+    E --&gt;|passes gates| R
+</code></pre>
+<p>The runtime owns execution state and limits. Models propose decisions through typed interfaces. The supervisor runs independently of the controller’s conversational context. The learning service creates candidate versions while the active system remains on its incumbent versions.</p>
+<h3 id="twenty-initial-capability-packages">Twenty initial capability packages</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Four packages</th>
+<th>Implementation emphasis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Control</td>
+<td>Planner/operator; route selector; evidence checker; conditional challenger</td>
+<td>Small models or classifiers with bounded decisions</td>
+</tr>
+<tr>
+<td>Protocol and repair</td>
+<td>Schema interpreter; tool-call translator; workflow sequencer; failure repairer</td>
+<td>Learned translation/diagnosis plus deterministic schema checks</td>
+</tr>
+<tr>
+<td>Execution</td>
+<td>Calculator/solver; SQLite worker; structured-data transformer; isolated Python/test worker</td>
+<td>Executable programs and external model wrappers</td>
+</tr>
+<tr>
+<td>Memory and evidence</td>
+<td>Document retrieval; provenance recorder; fact/version resolver; skill registry</td>
+<td>Persistent software services with targeted semantic assistance</td>
+</tr>
+<tr>
+<td>Maintenance and learning</td>
+<td>Progress watchdog; resource arbiter; teaching/data curator; experiment/promoter</td>
+<td>Deterministic monitoring, candidate generation, evaluation</td>
+</tr>
+</tbody>
+</table></div>
+<p>The execution group can expose several tools through one package. Retrieval can later include a web-search adapter. Package count is an organizational unit, not a parameter count.</p>
+<p>Every package declares a group owner, input/output representation, permitted actions, measured competence, evidence requirements, resource profile, and exact version. Group boundaries control memory access, update ownership, budgets, and which messages are exchanged.</p>
+<h3 id="the-three-control-roles">The three control roles</h3>
+<p><strong>Planner/operator:</strong> turns the goal into a bounded workflow, selects tools and specialists, and revises the plan from observations.</p>
+<p><strong>Checker:</strong> examines completion conditions, evidence, and contradictions. It can request additional checks or return incomplete. It cannot turn model agreement into proof.</p>
+<p><strong>Conditional challenger:</strong> activates for novel schemas, unresolved disagreement, repeated failure, or a high-value decision needing another approach. It proposes an alternative workflow or a targeted counterexample.</p>
+<p>Initially the challenger can use an existing foundation with a different prompt or adapter. Record shared parameters explicitly: different prompts or role names do not establish independent errors. Prefer independent executable checks whenever they exist.</p>
+<h2 id="4-model-and-software-choices">4. Model and software choices</h2>
+<h3 id="starting-neural-configuration">Starting neural configuration</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Default candidate</th>
+<th>Training target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Main planner/operator</td>
+<td>Qwen/Qwen3-1.7B with a controller adapter</td>
+<td>Bounded next-action and workflow selection</td>
+</tr>
+<tr>
+<td>Protocol translator</td>
+<td>Qwen/Qwen3-0.6B with its own adapter</td>
+<td>Correct current-schema tool calls</td>
+</tr>
+<tr>
+<td>Repair specialist</td>
+<td>Same 0.6B foundation with a separately trained adapter</td>
+<td>Local diagnosis and permitted repair</td>
+</tr>
+<tr>
+<td>Checker</td>
+<td>Separately trained 0.6B adapter plus deterministic checks</td>
+<td>Missing evidence, contradictions, incomplete tasks</td>
+</tr>
+<tr>
+<td>Challenger</td>
+<td>On-demand 1.7B role initially</td>
+<td>Alternative plan or additional test</td>
+</tr>
+<tr>
+<td>Route selector</td>
+<td>Small classifier baseline, then the pinned LAYA implementation</td>
+<td>Capability/recipe choice and calibrated abstention</td>
+</tr>
+</tbody>
+</table></div>
+<p>The official Qwen cards provide these text-model checkpoints and thinking/non-thinking controls. Use non-thinking mode for bounded control outputs at first. Model choice remains a measured baseline, with exact model, tokenizer, and chat-template revisions pinned. <a href="https://huggingface.co/Qwen/Qwen3-1.7B" rel="noreferrer">Qwen3-1.7B</a> · <a href="https://huggingface.co/Qwen/Qwen3-0.6B" rel="noreferrer">Qwen3-0.6B</a></p>
+<p>The 0.6B size is a starting experiment. If it fails the task threshold after the dataset and interface are sound, move only the failing capability to a larger measured candidate. Model size is a variable, not a commitment to accepting poor performance.</p>
+<h3 id="what-the-named-hive-technologies-do">What the named HIVE technologies do</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Technology</th>
+<th>Assigned role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LAYA</td>
+<td>Decision interface and routing experiment</td>
+</tr>
+<tr>
+<td>Ruflo</td>
+<td>Replaceable coordination integration</td>
+</tr>
+<tr>
+<td>NCM</td>
+<td>Separately budgeted concept-generation research branch</td>
+</tr>
+<tr>
+<td>LoRA / QLoRA</td>
+<td>Local specialist parameter updates</td>
+</tr>
+<tr>
+<td>SQLite and artifact store</td>
+<td>Durable task state, memories, evidence, and provenance</td>
+</tr>
+<tr>
+<td>Python tools and solvers</td>
+<td>Calculations, transformations, tests, and exact checks</td>
+</tr>
+<tr>
+<td>Typed messages</td>
+<td>Domain isolation and explicit cross-group translation</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>LAYA compatibility:</strong> the current repository distinguishes a new default reader/decision engine from classic encoder checkpoints. Pin the chosen engine explicitly, count its complete reader footprint, and calibrate on HIVE data. An upgrade is a candidate change requiring re-evaluation. <a href="https://github.com/NandhaKishorM/laya" rel="noreferrer">LAYA repository</a></p>
+<p><strong>Ruflo integration:</strong> reuse documented coordination capabilities behind an adapter; HIVE’s task journal and evaluation remain authoritative. <a href="https://github.com/ruvnet/ruflo/blob/main/plugins/ruflo-swarm/README.md" rel="noreferrer">Ruflo swarm documentation</a></p>
+<p><strong>NCM scope:</strong> Hazy Research’s Next-Concept Modeling provides coarse-to-fine generation and released task checkpoints/evaluation. Its first HIVE task is reproducing a released bounded task and comparing usefulness as a specialist. Confirm the selected revision’s training path before committing to custom training. <a href="https://github.com/HazyResearch/ncm" rel="noreferrer">NCM repository</a></p>
+<h3 id="serving-trained-specialists">Serving trained specialists</h3>
+<p>Use a <strong>Transformers + PEFT worker</strong> for the first trained adapters. Preserve Ollama for existing endpoints and the stock-model comparison. This avoids making training progress depend on an unverified conversion path.</p>
+<p>Once the native worker passes, optionally merge an adapter with its exact base, convert through a supported exporter, quantize, import as an immutable Ollama model, and rerun the behavior tests. Export is its own release gate. Current Ollama import documentation covers Safetensors and prepared GGUF models. <a href="https://docs.ollama.com/import" rel="noreferrer">Ollama import</a></p>
+<p>Swaps occur at task or explicit checkpoint boundaries. Drain the affected worker, check compatibility, load and probe the candidate, change the registry pointer, invalidate model-specific caches, and resume. A base-model or tokenizer change requires a complete compatible package. PEFT’s LoRA swapping support has compatibility restrictions; it does not permit arbitrary adapters across unrelated bases. <a href="https://huggingface.co/docs/peft/en/package_reference/hotswap" rel="noreferrer">PEFT hotswapping</a></p>
+<p>Pin the complete manifest at task admission. Promotion affects new tasks by default. A running task retains its versions unless an explicit checkpoint migration revalidates every remaining step against the candidate manifest.</p>
+<h2 id="5-runtime-contracts-and-execution">5. Runtime contracts and execution</h2>
+<h3 id="four-communication-channels">Four communication channels</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Channel</th>
+<th>Payload</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Control</td>
+<td>Task/attempt identity, selected action, capability, priority, deadline, budget, permission reference</td>
+</tr>
+<tr>
+<td>Task</td>
+<td>Typed inputs, units, constraints, required output, artifact references</td>
+</tr>
+<tr>
+<td>Evidence</td>
+<td>Observed outputs, source/version, executed checks, pass/fail/unknown, verification scope</td>
+</tr>
+<tr>
+<td>Teaching</td>
+<td>Failure class, corrected behavior, supporting evidence, target component, data eligibility</td>
+</tr>
+</tbody>
+</table></div>
+<p>Use structured fields for control, numbers, schemas, and evidence. Natural language remains useful for user intent, source text, and bounded explanations. Private latent languages are an experiment after explicit communication works.</p>
+<p>Every envelope includes task ID, attempt ID, parent event, producer/version, group namespace, representation version, and timestamps. Large content travels as an immutable artifact reference with a checksum.</p>
+<p>Ollama can accept a JSON schema and Pydantic can validate its result. HIVE must also check semantic prerequisites and actual outcomes. <a href="https://docs.ollama.com/capabilities/structured-outputs" rel="noreferrer">Structured outputs</a></p>
+<h3 id="controller-action-vocabulary">Controller action vocabulary</h3>
+<pre><code class="language-text">SELECT_RECIPE
+CALL_TOOL
+DELEGATE
+RUN_PARALLEL
+REQUEST_CHECK
+PROPOSE_SWAP
+REPAIR
+ASK_FOR_INFORMATION
+FINISH
+ABSTAIN
+</code></pre>
+<p>Each action carries typed arguments and a reason code. A free-text reason is optional and short. The controller receives only the current task state, relevant capability descriptions, a bounded evidence packet, and remaining budget.</p>
+<p>The runtime rejects unknown capabilities, incompatible versions, excess budgets, missing prerequisites, and unsupported actions. FINISH requests a completion check; it cannot mark itself successful.</p>
+<h3 id="durable-state-machine">Durable state machine</h3>
+<p>Normal progression:</p>
+<pre><code class="language-text">QUEUED -&gt; READY -&gt; RUNNING -&gt; VERIFYING -&gt; SUCCEEDED
+</code></pre>
+<p>Other states are RETRY_WAIT, BLOCKED, RECONCILING, FAILED, and CANCELLED.</p>
+<p>Write the state transition and associated event in one database transaction. A logical step may have multiple attempts, each with a lease and increasing fencing token. Late output from an expired attempt cannot overwrite newer state.</p>
+<p>Lease expiry does not prove that a GPU job stopped. Reassign GPU capacity only after confirming completion or termination and memory reclamation. If the backend cannot confirm this, quarantine or restart the affected worker/server and reconcile its tasks before admitting another GPU job.</p>
+<p>After a restart, reconcile previously running attempts against tool state and verified artifacts. A timeout after an external write is an uncertain result, not evidence that the write failed.</p>
+<h3 id="tool-isolation-and-retry-classes">Tool isolation and retry classes</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Operation class</th>
+<th>Retry policy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Read-only or demonstrated idempotent operation</td>
+<td>Bounded automatic retry</td>
+</tr>
+<tr>
+<td>Write with an idempotency key</td>
+<td>Reuse the original key and inspect result state</td>
+</tr>
+<tr>
+<td>Unknown outcome after a write</td>
+<td>Reconcile before further action</td>
+</tr>
+<tr>
+<td>Non-idempotent operation without reconciliation</td>
+<td>Escalate; no blind retry</td>
+</tr>
+</tbody>
+</table></div>
+<p>Generated Python executes in an isolated environment with explicit time, memory, output, and filesystem limits. Runtime workers use structured arguments. Cancellation terminates the owned process tree or container. Drain output continuously and bound logs.</p>
+<p>Tools expose meaningful progress such as completed records, bytes transferred, validated artifacts, or milestones. Heartbeats indicate liveness; they do not establish progress.</p>
+<h2 id="6-memory-and-knowledge-boundaries">6. Memory and knowledge boundaries</h2>
+<p>Implement a transparent memory layer before adding an elaborate graph backend.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Memory type</th>
+<th>Stored content</th>
+<th>Update rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Working state</td>
+<td>Current plan, tool observations, unresolved constraints</td>
+<td>Scoped to task; checkpointed</td>
+</tr>
+<tr>
+<td>Episodic</td>
+<td>What happened, versions, costs, outcomes</td>
+<td>Append event history; compact under retention policy</td>
+</tr>
+<tr>
+<td>Semantic</td>
+<td>Facts with evidence, timestamps, scope, conflicts</td>
+<td>Revise by source/version; retain supersession links</td>
+</tr>
+<tr>
+<td>Procedural</td>
+<td>Skills, tested recipes, fixes, adapters</td>
+<td>Immutable version plus promotion record</td>
+</tr>
+<tr>
+<td>Replay</td>
+<td>Verified training examples and retained skills</td>
+<td>Stratified bounded sample</td>
+</tr>
+<tr>
+<td>Graph relations</td>
+<td>Uses, depends-on, derived-from, supersedes</td>
+<td>SQLite edge table initially</td>
+</tr>
+</tbody>
+</table></div>
+<p>Begin retrieval with metadata and lexical search. Add embeddings only when an experiment shows better relevant recall within the same latency/memory budget.</p>
+<p>An observation, a model hypothesis, a source-supported claim, and an executable verified result have different statuses. A model summary does not inherit stronger status than its evidence.</p>
+<p>Memory records include provenance, group visibility, validity interval, confidence type where applicable, and deletion/retention policy. Group-local stores can share approved facts through explicit evidence messages.</p>
+<p>No training process reads final-test solutions or hidden environment state. The runtime receives only observations it would have in actual operation.</p>
+<h2 id="7-the-first-learning-arena">7. The first learning arena</h2>
+<p>Build an executable simulated service with ten operations. The service owns hidden expected state, while HIVE sees documented interfaces and normal returned observations.</p>
+<p>Separate runtime-visible checks from the evaluator-only scorer. The runtime may inspect documented tool results and public predicates; the hidden scorer independently judges terminal correctness. Training episodes can receive defined outcome feedback after execution. Sealed evaluation supplies no answer-key, repair, or intermediate hidden-test feedback to the controller, its memory, or its learner.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Purpose</th>
+<th>Independent outcome check</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>calculate</td>
+<td>Arithmetic, units, simple symbolic expressions</td>
+<td>Exact or tolerance-based expected value</td>
+</tr>
+<tr>
+<td>query_records</td>
+<td>Retrieve and aggregate sandbox records</td>
+<td>Database result and required filters</td>
+</tr>
+<tr>
+<td>search_docs</td>
+<td>Find relevant documents</td>
+<td>Fixture relevance and permissible source set</td>
+</tr>
+<tr>
+<td>read_doc</td>
+<td>Retrieve document text and version</td>
+<td>Exact source identity and content</td>
+</tr>
+<tr>
+<td>transform_records</td>
+<td>Normalize/filter structured records</td>
+<td>Output invariants and expected rows</td>
+</tr>
+<tr>
+<td>validate_payload</td>
+<td>Validate a versioned schema</td>
+<td>Schema and semantic constraints</td>
+</tr>
+<tr>
+<td>run_tests</td>
+<td>Check a small generated or repaired program</td>
+<td>Hidden cases plus explicit invariants</td>
+</tr>
+<tr>
+<td>get_job_status</td>
+<td>Observe an asynchronous task</td>
+<td>Actual job state and progress</td>
+</tr>
+<tr>
+<td>write_artifact</td>
+<td>Save a sandbox output</td>
+<td>Content hash, location, and idempotency behavior</td>
+</tr>
+<tr>
+<td>invoke_model</td>
+<td>Call a model through a registered interface</td>
+<td>Required output contract and downstream task correctness</td>
+</tr>
+</tbody>
+</table></div>
+<p>A live model response is an observation requiring checks. Simulated model responses provide controlled malformed, contradictory, missing, and correct cases. Live web search enters later through the same evidence boundary; reproducible source snapshots are used for the core evaluation.</p>
+<h3 id="curriculum-stages">Curriculum stages</h3>
+<ol>
+<li>One valid operation with all information present.</li>
+<li>Tool selection among relevant and irrelevant capabilities.</li>
+<li>Two-to-five dependent operations.</li>
+<li>Missing fields, ambiguity, unsupported requests, and stopping correctly.</li>
+<li>Renamed fields, enum changes, unit shifts, and schema-version negotiation.</li>
+<li>Transient failures, hangs, stale results, duplicate messages, and exhausted budgets.</li>
+<li>New combinations of known tools and new tool documentation.</li>
+<li>Earlier protocols revisited after new learning.</li>
+</ol>
+<p>Vary semantics as well as wording: negation, units, preconditions, output ordering, duplicate records, and conflicting source versions. A collection of near-identical paraphrases does not establish generalization.</p>
+<h2 id="8-dataset-construction-and-teacher-use">8. Dataset construction and teacher use</h2>
+<h3 id="proposed-first-corpus">Proposed first corpus</h3>
+<p>Create <strong>12,000 independently tracked episodes</strong>. An episode can yield several role-specific training examples; record the resulting count and token volume rather than calling each projection a new independent task.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Partition</th>
+<th style="text-align:right">Episodes</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Training</td>
+<td style="text-align:right">8,000</td>
+<td>SFT and recipe-learning experience</td>
+</tr>
+<tr>
+<td>Development</td>
+<td style="text-align:right">1,000</td>
+<td>Debugging and limited hyperparameter selection</td>
+</tr>
+<tr>
+<td>Calibration</td>
+<td style="text-align:right">500</td>
+<td>Routing/abstention calibration; no gradient training</td>
+</tr>
+<tr>
+<td>Promotion reserve</td>
+<td style="text-align:right">500</td>
+<td>Candidate comparisons with a predeclared limited evaluation budget</td>
+</tr>
+<tr>
+<td>Sealed release test</td>
+<td style="text-align:right">2,000</td>
+<td>Final reporting after configurations freeze</td>
+</tr>
+<tr>
+<td>Total</td>
+<td style="text-align:right">12,000</td>
+<td>Initial target, not a proven required minimum</td>
+</tr>
+</tbody>
+</table></div>
+<p>Begin with 300–500 checked seed episodes from the training allocation. Scale only after the generator, validator, and splits work.</p>
+<p>Assign scenario families, tool-schema variants, source documents, code templates, and mutation lineages to splits before creating paraphrases. Hold out entire workflow compositions and selected schema changes. Hash and deduplicate across splits.</p>
+<p>The promotion reserve is not an unlimited source of feedback. Limit candidate submissions, rotate new held-out families for later rounds, and retire any exposed cases into development. Preserve a fresh release test for later major releases.</p>
+<h3 id="training-allocation">Training allocation</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Case type</th>
+<th style="text-align:right">Share</th>
+<th style="text-align:right">Training episodes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Selection and one-step calls</td>
+<td style="text-align:right">25%</td>
+<td style="text-align:right">2,000</td>
+</tr>
+<tr>
+<td>Multi-step composition</td>
+<td style="text-align:right">20%</td>
+<td style="text-align:right">1,600</td>
+</tr>
+<tr>
+<td>Missing information, abstention, stopping</td>
+<td style="text-align:right">15%</td>
+<td style="text-align:right">1,200</td>
+</tr>
+<tr>
+<td>Faults and recovery</td>
+<td style="text-align:right">15%</td>
+<td style="text-align:right">1,200</td>
+</tr>
+<tr>
+<td>Schema/protocol changes</td>
+<td style="text-align:right">10%</td>
+<td style="text-align:right">800</td>
+</tr>
+<tr>
+<td>Evidence and memory-version handling</td>
+<td style="text-align:right">10%</td>
+<td style="text-align:right">800</td>
+</tr>
+<tr>
+<td>Adversarial and misleading inputs</td>
+<td style="text-align:right">5%</td>
+<td style="text-align:right">400</td>
+</tr>
+</tbody>
+</table></div>
+<p>These are starting proportions. Change them using development evidence before freezing the confirmatory configuration.</p>
+<h3 id="required-trace-fields">Required trace fields</h3>
+<p>Each episode records task/family/split, visible input, current schemas, permitted actions, tool/model/adapter versions, selected recipe, actions, actual tool outputs, evidence references, checker results, independent final-state outcome, costs, retries, termination reason, and correction provenance.</p>
+<p>Separate model-visible input from evaluator-only expected state. Audit a few rendered training examples directly; accidental answer-key exposure invalidates the experiment.</p>
+<h3 id="how-larger-models-help">How larger models help</h3>
+<p>A larger model may propose tasks, workflows, labels, and repairs. Execute its proposals in the arena. Accept a positive behavior label only when independent checks support it.</p>
+<p>Preserve unsuccessful behavior as a failure context, negative checker example, or recovery lesson. A workflow that eventually succeeds can still contain bad intermediate actions: do not train all of them as positive actions.</p>
+<p>For ambiguous requests, the correct target can be ASK_FOR_INFORMATION or ABSTAIN. For completed tasks, include stopping examples so that extra calls are not rewarded.</p>
+<p>Prefer compact visible decision traces and observed outcomes. Long reasoning transcripts are unnecessary for the initial controller objective.</p>
+<p>TRL supports tool-call messages, tool-role observations, and tool schema columns for SFT, with assistant-only loss when the chat template supplies the required masks. Inspect masks in the pinned environment. <a href="https://huggingface.co/docs/trl/sft_trainer" rel="noreferrer">TRL SFT documentation</a></p>
+<p>For recovery training, prefer next-action prompt/completion records: earlier failed actions stay in the masked prompt, and only the verified corrective action is a supervised completion. Alternatively use explicit per-turn loss masks. Assistant-only loss by itself still trains every assistant turn and therefore cannot exclude failed assistant actions.</p>
+<p>Teacher calls, purchased API usage, data generation, and rejected examples count toward total learning cost. A teacher-generated answer does not become ground truth through repetition.</p>
+<h2 id="9-training-sequence">9. Training sequence</h2>
+<h3 id="t0-establish-behavior-before-training">T0 — Establish behavior before training</h3>
+<p>Run the deterministic workflow baseline and a stock generalist through the same arena. Save success, false completion, tool errors, latency, memory, and intervention counts.</p>
+<p>Use the same tool wrappers and verifiers for every experimental arm. Establish the cost of a successful basic workflow before adding specialists.</p>
+<h3 id="t1-train-routing-and-translation">T1 — Train routing and translation</h3>
+<p>Train a simple route classifier as the minimum learned baseline. Compare the pinned LAYA implementation using the same cases and calibration set. Route labels include supported groups/recipes and an explicit uncertain/unsupported outcome.</p>
+<p>Train the 0.6B translator on intent plus current schema to produce valid tool calls. Include changed fields and units. Score downstream effects, not just valid JSON.</p>
+<p><strong>Exit:</strong> measurable improvement over the stock model on unseen protocol cases without losing earlier tool versions.</p>
+<h3 id="t2-train-the-planneroperator">T2 — Train the planner/operator</h3>
+<p>Train the 1.7B controller on current task state, a short candidate-capability list, observations, and remaining budget. Targets are bounded next actions, workflow selection, proper escalation, and stopping.</p>
+<p>Initially select from six reviewed recipes:</p>
+<ol>
+<li>Direct deterministic tool and check.</li>
+<li>Retrieve, transform/calculate, and check.</li>
+<li>Specialist, executable check, and bounded repair.</li>
+<li>Multiple independent candidates, separate checks, then selection.</li>
+<li>Tool workflow with conditional challenger.</li>
+<li>Clarification or abstention.</li>
+</ol>
+<p><strong>Exit:</strong> end-to-end gains over prompted roles using the same fixed recipes and budget.</p>
+<h3 id="t3-train-checker-and-local-repair">T3 — Train checker and local repair</h3>
+<p>Train the checker with correct, incorrect, unsupported, stale, and incomplete results. Include syntactically valid but semantically wrong arguments and plausible false completion claims.</p>
+<p>The repairer receives a bounded incident packet: expected and observed state, relevant schema, error/log excerpt, prior remedies, and remaining budget. It selects a permitted remedy.</p>
+<p><strong>Exit:</strong> fewer accepted bad outcomes and better correctly completed recoveries. An improved rejection rate accompanied by excessive abstention does not pass.</p>
+<h3 id="t4-learn-recipe-selection">T4 — Learn recipe selection</h3>
+<p>Evaluate safe alternative recipes on the same sandbox task families. Record the feasible candidate set, chosen recipe, actual outcome, cost, and selection probability if exploration is used.</p>
+<p>Begin with a supervised recipe ranker using these comparisons. Add a contextual-bandit policy only after coverage and logging are adequate. Use bounded sandbox exploration, such as an initial 10% allocation, rather than silently experimenting on external side effects.</p>
+<p><strong>Exit:</strong> improved quality/cost tradeoff against the same specialists with fixed recipes.</p>
+<h3 id="t5-run-a-targeted-parameter-learning-cycle">T5 — Run a targeted parameter-learning cycle</h3>
+<p>Cluster a recurring verified error, collect diverse corrections, train only the affected adapter or classifier, and evaluate its whole dependency neighborhood. Keep another group unchanged.</p>
+<p><strong>Exit:</strong> improvement on unseen variants, retained old skills, persistence after restart, and a successful rollback exercise.</p>
+<h3 id="t6-compare-independent-backbone-learning">T6 — Compare independent backbone learning</h3>
+<p>Run a separately budgeted 0.6B backbone-update pilot with actual backbone parameters trainable. Start with short sequences, batch one, checkpointing, and a measured optimizer footprint.</p>
+<p>Compare backbone and adapter learning on the same generative protocol task using the same 0.6B initialization and eligible data. Include duplicated frozen bases with separate adapters as an isolation control. Compare a fully trained compact classifier only on routing, next-action classification, or failure classification with equivalent output labels. Record unique/shared parameters and trainable masks.</p>
+<p>This preserves the independent-specialist research question. The adapter-based first edition can be released while a more expensive backbone experiment remains inconclusive.</p>
+<h3 id="starting-controller-sft-configuration">Starting controller SFT configuration</h3>
+<p>All values below are provisional HIVE settings.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Starting value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Foundation</td>
+<td>Exact revision of Qwen/Qwen3-1.7B</td>
+</tr>
+<tr>
+<td>Method</td>
+<td>QLoRA, frozen quantized base</td>
+</tr>
+<tr>
+<td>Quantization</td>
+<td>4-bit NF4, double quantization, BF16 compute after compatibility check</td>
+</tr>
+<tr>
+<td>LoRA rank / alpha</td>
+<td>16 / 32</td>
+</tr>
+<tr>
+<td>Dropout</td>
+<td>0.05</td>
+</tr>
+<tr>
+<td>Target layers</td>
+<td>All applicable linear layers, with resolved names recorded</td>
+</tr>
+<tr>
+<td>Sequence length</td>
+<td>2,048 tokens initially</td>
+</tr>
+<tr>
+<td>Microbatch / gradient accumulation</td>
+<td>1 / 16</td>
+</tr>
+<tr>
+<td>Learning rate</td>
+<td>1e-4; one predeclared comparison at 5e-5</td>
+</tr>
+<tr>
+<td>Epoch ceiling</td>
+<td>3; choose earlier checkpoint if development behavior is better</td>
+</tr>
+<tr>
+<td>Warmup</td>
+<td>3% of update steps</td>
+</tr>
+<tr>
+<td>Gradient norm clipping</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Gradient checkpointing</td>
+<td>Enabled</td>
+</tr>
+<tr>
+<td>Packing</td>
+<td>Disabled until masking and sequence boundaries are verified</td>
+</tr>
+<tr>
+<td>Optimizer</td>
+<td>Supported AdamW configuration; 8-bit option only after a compatibility pilot</td>
+</tr>
+<tr>
+<td>Supervised output</td>
+<td>Verified assistant decisions, excluding tool/user/evaluator content</td>
+</tr>
+<tr>
+<td>Checkpoint selection</td>
+<td>Executed outcomes, false acceptance, retention, and resource limits</td>
+</tr>
+</tbody>
+</table></div>
+<p>For the 0.6B worker, begin with rank 8 or 16 and 1,024-token examples where the task fits. Never silently truncate required schemas, constraints, or the target action.</p>
+<p>PEFT documents quantized-base adapter training and the NF4/double-quantization/BF16 setup. The exact curriculum, rank, sequence length, and acceptance criteria here are experimental choices. <a href="https://huggingface.co/docs/peft/developer_guides/quantization" rel="noreferrer">PEFT quantization</a></p>
+<h3 id="local-training-readiness-test">Local training readiness test</h3>
+<p>Before a full run, verify GPU detection, the chosen precision, quantized loading, forward/backward execution, an optimizer step, checkpoint saving, and reload parity. Record peak allocated and reserved VRAM.</p>
+<p>Pin Python, PyTorch, Transformers, PEFT, TRL, bitsandbytes, model, tokenizer, and CUDA-related versions after the successful pilot. Current bitsandbytes build documentation includes recent GPU targets on Linux and Windows, but the actual installed combination still needs this test. <a href="https://huggingface.co/docs/bitsandbytes/installation" rel="noreferrer">bitsandbytes installation</a></p>
+<p>Estimate training time from measured steps per second. For N role-specific records and an effective batch of 16, update steps per epoch are approximately ceiling(N / 16), adjusted for sampling and incomplete batches. No fixed hours-to-train promise is justified before the pilot.</p>
+<h2 id="10-adaptive-assembly-and-role-changes">10. Adaptive assembly and role changes</h2>
+<p>HIVE should learn several different kinds of change, with separate records for each.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Change</th>
+<th>Example</th>
+<th>Mechanism</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Selection</td>
+<td>Use a calculator, a model, or a retrieval tool</td>
+<td>Router/ranker update</td>
+</tr>
+<tr>
+<td>Expertise</td>
+<td>Use the protocol adapter instead of the repair adapter</td>
+<td>Compatible package selection</td>
+</tr>
+<tr>
+<td>Team</td>
+<td>Add a checker for a difficult task</td>
+<td>Recipe choice</td>
+</tr>
+<tr>
+<td>Oversight</td>
+<td>Move an incident to a more capable group supervisor</td>
+<td>Bounded delegation</td>
+</tr>
+<tr>
+<td>Workflow</td>
+<td>Run independent checks concurrently or reorder independent steps</td>
+<td>Graph candidate</td>
+</tr>
+<tr>
+<td>Knowledge</td>
+<td>Retain a verified mapping or source fact</td>
+<td>Memory/procedure update</td>
+</tr>
+<tr>
+<td>Parameters</td>
+<td>Correct a recurring translation error</td>
+<td>Targeted adapter/classifier training</td>
+</tr>
+<tr>
+<td>Foundation</td>
+<td>Replace a base model after comparative testing</td>
+<td>Complete package migration</td>
+</tr>
+</tbody>
+</table></div>
+<p>A learned controller proposes these changes; the runtime checks compatibility, authority, prerequisites, and resource limits.</p>
+<h3 id="search-procedure">Search procedure</h3>
+<p>Start from the six recipes in T2. Propose one change per candidate: replace one worker, add one check, modify one dependency, substitute a trained adapter, or install one local monitor.</p>
+<p>Reject graphs with missing capabilities, invalid representations, unbounded cycles, or costs outside the available budget. Allow parallel branches only when dependencies and side effects permit them.</p>
+<p>Use a proposed ceiling of ten graph candidates per offline experiment batch. Screen on development tasks, retain a short list, then use the separately limited promotion evaluation. Record failed candidates and search cost.</p>
+<p>Optimize <strong>verified completion subject to correctness and resource limits</strong>. Among acceptable candidates, prefer lower latency, lower compute, and fewer interruptions. A low-cost failure cannot beat a successful workflow merely through a weighted reward.</p>
+<p>RouteLLM provides a precedent for learning model selection from quality/cost signals. AFlow provides a precedent for searching executable workflows using execution feedback. The broader HIVE combination of tools, local supervisors, role swaps, and adapters is our proposed integration. <a href="https://arxiv.org/html/2406.18665v4" rel="noreferrer">RouteLLM</a> · <a href="https://arxiv.org/html/2410.10762v4" rel="noreferrer">AFlow</a></p>
+<h2 id="11-local-supervision-and-intervention-learning">11. Local supervision and intervention learning</h2>
+<h3 id="three-recovery-levels">Three recovery levels</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Trigger</th>
+<th>Response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Deterministic reflex</td>
+<td>Exit, deadline, meaningful progress stall, queue pressure, known error code</td>
+<td>Registered retry, backoff, worker restart, cancellation, or circuit breaker</td>
+</tr>
+<tr>
+<td>Local semantic repair</td>
+<td>Error needs interpretation within one group</td>
+<td>Small repair specialist with a compact incident packet</td>
+</tr>
+<tr>
+<td>Head escalation</td>
+<td>Cross-group problem, exhausted budget, changed goal, missing information/authority</td>
+<td>Single structured incident summary</td>
+</tr>
+</tbody>
+</table></div>
+<p>The supervisor watches process and task telemetry on the CPU. Normal health polling contributes no messages to the head’s context. A heartbeat cannot continually extend a stalled tool’s progress deadline.</p>
+<p>Set heartbeat and progress thresholds from each tool’s observed behavior. A five-second heartbeat may suit a short local tool; a lengthy compile needs a different progress contract. One timeout for every tool creates false alarms.</p>
+<h3 id="from-your-correction-to-a-permanent-improvement">From your correction to a permanent improvement</h3>
+<pre><code class="language-mermaid">flowchart TD
+    I[&quot;Observed failure or intervention&quot;] --&gt; P[&quot;Incident package&quot;]
+    P --&gt; D{&quot;Smallest sufficient change&quot;}
+    D --&gt; R[&quot;Rule or tool patch&quot;]
+    D --&gt; S[&quot;Skill or recipe&quot;]
+    D --&gt; M[&quot;Classifier or adapter&quot;]
+    R --&gt; T[&quot;Replay and unseen variants&quot;]
+    S --&gt; T
+    M --&gt; T
+    T --&gt; G{&quot;Promotion gates&quot;}
+    G --&gt;|pass| A[&quot;Versioned local support&quot;]
+    G --&gt;|fail| X[&quot;Retain incumbent&quot;]
+    A --&gt; O[&quot;Monitor recurrence and false alarms&quot;]
+    O --&gt; P
+</code></pre>
+<p>An incident package contains the trigger, expected result, actual result, affected versions, remedy, remedy preconditions, observed recovery evidence, negative cases where the remedy must not fire, and escalation conditions.</p>
+<p>For a frozen worker, build a progress watchdog. For a reproducible argument bug, patch the tool or translator. For a variable semantic failure, train a local specialist. Adding another model is justified by measured benefit when interpretation is necessary.</p>
+<p>Test every remedy on both the reproduced failure and nearby valid behavior. A supervisor that repeatedly kills legitimate long jobs has made the system worse.</p>
+<h3 id="proposed-supervision-outcome">Proposed supervision outcome</h3>
+<p>For the incident classes covered by the first supervisor, target at least a <strong>50% reduction in head-controller interruptions</strong>, with no reduction in verified recovery and no observed false recovery or duplicate effects in the critical incident suite.</p>
+<p>Also record human interventions and human minutes per 100 tasks. This measures your actual oversight burden rather than substituting a token count for it.</p>
+<h2 id="12-the-continuing-improvement-loop">12. The continuing improvement loop</h2>
+<p>The first edition has four distinguishable learning mechanisms:</p>
+<ol>
+<li><strong>Memory:</strong> retain verified observations and corrections.</li>
+<li><strong>Procedures:</strong> create or revise tested skills and local recovery rules.</li>
+<li><strong>Selection:</strong> improve the choice of existing recipes and specialists.</li>
+<li><strong>Weights:</strong> train adapters, classifiers, and the independent-backbone research arm.</li>
+</ol>
+<p>A release report must say which mechanisms changed and what improved. Stored transcripts alone do not count as parameter learning.</p>
+<h3 id="bounded-operating-cycle">Bounded operating cycle</h3>
+<ol>
+<li>Record executions and interventions.</li>
+<li>Cluster failures by reproducible cause and affected component.</li>
+<li>Check whether a simpler tool/schema/procedure correction is sufficient.</li>
+<li>Collect checked, diverse examples for the selected change.</li>
+<li>Train or build one candidate.</li>
+<li>Run component tests, workflow tests, and retained-skill evaluation.</li>
+<li>Shadow the candidate on replay or reversible work.</li>
+<li>Promote only if the fixed gates pass.</li>
+<li>Observe recurrence and regression; roll back when needed.</li>
+</ol>
+<p>An initial trigger for reviewing a repeated incident can be 20 occurrences. A weight-update batch should normally wait for at least 200 diverse eligible examples, including generated verified variants; a deterministic critical fix can proceed sooner with focused evidence. These are starting workflow limits.</p>
+<p>For continual SFT, begin with <strong>50% new verified cases, 40% retained examples, and 10% difficult abstention/adversarial cases</strong>. Keep the replay budget bounded and preserve rare skills. Change the mixture through a controlled comparison.</p>
+<p>All three allocations draw only from eligible training episodes. Replay never draws from retained-skill evaluation cases, and adversarial training never draws from the sealed checker audit. Retention is measured on disjoint held-out cases.</p>
+<p>Run training when the exclusive GPU lease is available. The running system uses an immutable incumbent package. Changes to the runtime’s permissions, evaluator, or promotion rules receive a separate code review and a fresh comparison; the candidate cannot redefine its own pass condition.</p>
+<h3 id="promotion-lifecycle">Promotion lifecycle</h3>
+<pre><code class="language-text">CANDIDATE -&gt; OFFLINE_PASSED -&gt; SHADOW_PASSED -&gt; CANARY -&gt; ACTIVE
+</code></pre>
+<p>In v0.1, a canary means a small eligible share of reversible local work, initially 5%, under the same budget. Replaying a read is acceptable; duplicating an external write merely to compare models is not.</p>
+<p>Promote a manifest that pins compatible runtime, model, tokenizer, adapter, tool, recipe, representation, and verifier/evaluator versions. Rollback restores that manifest. State/schema changes must preserve rollback compatibility or supply a separately tested migration/restore path. Compatible prior artifacts remain readable.</p>
+<p>A model rollback cannot undo an already executed external side effect. Such actions require explicit reconciliation or a registered compensating operation.</p>
+<h3 id="hallucination-and-contamination-control">Hallucination and contamination control</h3>
+<p>The practical target is a declining rate of unsupported accepted outputs. Zero hallucinations cannot be guaranteed.</p>
+<p>Ground calculations in tools, code claims in executed checks, and source claims in retrieved evidence. Preserve unknown/incomplete states. Test checker false acceptance and omissions.</p>
+<p>Separate incoming text from control authority. A retrieved page or tool response cannot change the action policy, modify tests, or promote its own content to verified training data.</p>
+<p>Keep the evaluator and sealed task truth outside the candidate’s writable environment. When the evaluator itself is corrected, rerun both baseline and candidate under the same version.</p>
+<p>Repeated adaptive evaluation can overfit a holdout even without direct gradient training on it. HIVE therefore limits promotion queries and uses fresh release tasks; it does not claim the formal guarantees of specialized reusable-holdout algorithms. <a href="https://proceedings.neurips.cc/paper_files/paper/2015/file/bad5f33780c42f2588878a9d07405083-Paper.pdf" rel="noreferrer">Adaptive data analysis and holdout reuse</a></p>
+<p>Agent Lightning’s current research separates an agent’s execution harness from its learner. It is a relevant later integration for agent-level RL, after supervised training, reward validity, and rollback already work. Its published results do not supply a 16 GB training-time estimate. <a href="https://arxiv.org/html/2608.17528v1" rel="noreferrer">Agent Lightning v1.0</a></p>
+<h2 id="13-evaluation-and-release-gates">13. Evaluation and release gates</h2>
+<h3 id="required-comparisons">Required comparisons</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Arm</th>
+<th>Configuration</th>
+<th>Main question</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>Deterministic recipes</td>
+<td>Is software alone sufficient for the tested task?</td>
+</tr>
+<tr>
+<td>B</td>
+<td>Feasible single generalist, frozen and learning versions</td>
+<td>Does HIVE add value over a straightforward model with the same support?</td>
+</tr>
+<tr>
+<td>C</td>
+<td>Fixed HIVE recipes with prompted roles</td>
+<td>What comes from organization before weight training?</td>
+</tr>
+<tr>
+<td>D</td>
+<td>Same fixed recipes with trained specialists</td>
+<td>What comes from specialization?</td>
+</tr>
+<tr>
+<td>E</td>
+<td>Same specialists with learned recipe selection</td>
+<td>What comes from learned allocation?</td>
+</tr>
+<tr>
+<td>F</td>
+<td>Same system with bounded workflow changes and local supervisors</td>
+<td>What comes from adaptive structure and local support?</td>
+</tr>
+</tbody>
+</table></div>
+<p>The learning generalist receives the same eligible corrections and comparable adaptation/tuning resources. All arms receive the same current tool documentation, admissible evidence, tools, checks, memory allowance, task budget, and hardware cap.</p>
+<p>Run focused ablations for memory-only versus weights-only versus combined learning; supervision enabled versus disabled; shared adapters versus independently updated tiny backbones. Keep the complete comparison tractable by running it in stages.</p>
+<p>Account for model loading, router work, teacher use, rejected candidates, retries, verification, and all adaptation. Equal token counts across different models are not equal computation. Where exact matching is impossible, report quality-resource tradeoffs under common caps.</p>
+<h3 id="metrics">Metrics</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Verified completion</td>
+<td>Correct terminal states divided by attempted tasks</td>
+</tr>
+<tr>
+<td>Wrong completion</td>
+<td>Incorrect tasks declared complete divided by all tasks declared complete</td>
+</tr>
+<tr>
+<td>Checker false acceptance</td>
+<td>Known-invalid candidates accepted divided by known-invalid candidates</td>
+</tr>
+<tr>
+<td>Coverage</td>
+<td>Answerable tasks receiving an attempted substantive solution</td>
+</tr>
+<tr>
+<td>Clarification/abstention</td>
+<td>Correct handling of missing or unsupported information</td>
+</tr>
+<tr>
+<td>Repeated reliability</td>
+<td>Share of tasks successful in all four repeated trials, reported separately from best-of-four</td>
+</tr>
+<tr>
+<td>Retention</td>
+<td>Previous-task accuracy after each new learning stage</td>
+</tr>
+<tr>
+<td>Learning efficiency</td>
+<td>Eligible feedback/examples and compute needed to reach a preset development threshold</td>
+</tr>
+<tr>
+<td>Recovery</td>
+<td>Correct recovery with state and side-effect constraints preserved</td>
+</tr>
+<tr>
+<td>Intervention burden</td>
+<td>Head calls, human interventions, and human minutes per 100 tasks</td>
+</tr>
+<tr>
+<td>Resource use</td>
+<td>Peak RAM/VRAM, p50/p95 latency, queue/load time, GPU time, tokens, storage</td>
+</tr>
+<tr>
+<td>Registry scaling</td>
+<td>Selection accuracy and cost at 20, 50, and 100 registered capabilities</td>
+</tr>
+</tbody>
+</table></div>
+<p>Final-state checks and repeated-trial reliability follow the useful evaluation principles in the original tau-bench. HIVE’s smaller arena remains separately implemented and versioned. <a href="https://arxiv.org/html/2406.12045v1" rel="noreferrer">tau-bench</a></p>
+<p>Record a task-by-update retention matrix. Test old protocols under their explicit versions so that a legitimate new fact or schema does not get misclassified as forgetting. Continual-learning work such as GEM motivates this evaluation; it does not prove that replay alone solves forgetting for HIVE. <a href="https://arxiv.org/html/1706.08840v6" rel="noreferrer">Gradient Episodic Memory</a></p>
+<h3 id="proposed-v01-gates">Proposed v0.1 gates</h3>
+<p>Freeze the thresholds after the feasibility pilot and before the final comparison. These are targets, not predictions.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Gate</th>
+<th>Proposed requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Basic scoped competence</td>
+<td>At least 90% verified completion on the declared in-scope standard workflows; report difficult/OOD slices separately</td>
+</tr>
+<tr>
+<td>Actual learning</td>
+<td>A targeted parameter update improves unseen variants, with old capability retained after reload</td>
+</tr>
+<tr>
+<td>Adaptive organization</td>
+<td>At least 5 percentage points higher completion than the same fixed system, or at least 15% lower predefined measured cost with quality within a 2-point noninferiority margin</td>
+</tr>
+<tr>
+<td>Statistical support</td>
+<td>Predeclare the primary metric/distribution and use a 95% paired interval: gain interval above zero, or cost-reduction interval above zero with quality-difference lower bound above −2 percentage points; point targets must also pass</td>
+</tr>
+<tr>
+<td>Retention</td>
+<td>Relative to the incumbent, no more than 2 percentage points average loss and no more than 5 points in a critical prior-task family; unresolved uncertainty remains inconclusive</td>
+</tr>
+<tr>
+<td>Invalid results</td>
+<td>Reject all 300 deliberately invalid outputs in the critical checker audit</td>
+</tr>
+<tr>
+<td>State integrity</td>
+<td>All critical restart, stale-result, cancellation, duplicate-write, and rollback tests pass</td>
+</tr>
+<tr>
+<td>Local supervision</td>
+<td>At least 50% fewer head interruptions for covered faults without degraded correct recovery</td>
+</tr>
+<tr>
+<td>Memory/resources</td>
+<td>Stay within the measured profile caps; no unbounded queue, log, or replay growth</td>
+</tr>
+<tr>
+<td>Evidence</td>
+<td>Every success record identifies its completed conditions and supporting checks</td>
+</tr>
+<tr>
+<td>Reproducibility</td>
+<td>Frozen manifests, data lineage, seeds, and reports permit a repeat run</td>
+</tr>
+</tbody>
+</table></div>
+<p>Passing a finite audit does not establish a zero real-world error rate. Report the relevant denominator and uncertainty.</p>
+<p>Use the 2,000-episode release allocation for 1,500 end-to-end cases, 300 invalid-result checker audits, and 200 supervision/state-integrity cases. Select a predeclared 200-case subset of the end-to-end cases for four trials total per task, including the original trial. This adds 600 executions per evaluated configuration/seed, not new independent scenarios.</p>
+<p>Use a small screening run for implementation decisions, then predeclare five seeds for the principal confirmatory comparison and freeze its sample size before inspecting results. Other ablations use separately declared screening budgets. Any later follow-up is a fresh, labeled experiment. Use paired task/family comparisons; do not treat repeated trials of one task as independent task families.</p>
+<p>If a gate is unresolved, identify the failing mechanism. Increase targeted evidence or revise the component before another release evaluation. Preserve failed and inconclusive results.</p>
+<h2 id="14-build-order-and-work-packages">14. Build order and work packages</h2>
+<p>The following is a planning estimate of <strong>roughly 6–10 working weeks for one experienced developer supported by coding agents</strong>, with overlap between independent work. It is not a training-throughput promise. Re-estimate after the hardware and data pilot.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Phase</th>
+<th style="text-align:right">Effort estimate</th>
+<th>Deliverable</th>
+<th>Exit evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0. Reproduce environment</td>
+<td style="text-align:right">1–2 days</td>
+<td>Hardware profile, dependency lock, model/source manifest</td>
+<td>Inference and one training update save/reload successfully</td>
+</tr>
+<tr>
+<td>1. Build execution foundation</td>
+<td style="text-align:right">4–6 days</td>
+<td>Contracts, journal, workers, leases, cancellation</td>
+<td>Deterministic tasks survive restart with no duplicate effects</td>
+</tr>
+<tr>
+<td>2. Build arena and baseline</td>
+<td style="text-align:right">3–5 days</td>
+<td>Ten operations, truth engine, splits, measurements</td>
+<td>Baseline and HIVE use the same checks and inputs</td>
+</tr>
+<tr>
+<td>3. Data and narrow specialists</td>
+<td style="text-align:right">4–7 days</td>
+<td>Checked seeds, corpus pipeline, router/translator</td>
+<td>Unseen schema improvement with retained old behavior</td>
+</tr>
+<tr>
+<td>4. Controller and checker</td>
+<td style="text-align:right">4–7 days</td>
+<td>Planner, checker, repair; fixed recipes</td>
+<td>End-to-end completion and rejection of bad outputs</td>
+</tr>
+<tr>
+<td>5. Supervision and intervention learning</td>
+<td style="text-align:right">4–7 days</td>
+<td>Watchdog, incident replay, candidate fixes</td>
+<td>Covered faults require fewer head/human interventions</td>
+</tr>
+<tr>
+<td>6. Adaptive selection and updates</td>
+<td style="text-align:right">5–8 days</td>
+<td>Recipe learner, graph candidates, adapter promotion</td>
+<td>Measured advantage plus successful rollback</td>
+</tr>
+<tr>
+<td>7. Release evaluation and scaling</td>
+<td style="text-align:right">4–6 days</td>
+<td>Comparison report, restart demo, packaged v0.1</td>
+<td>Declared release gates resolved</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="parallel-development-ownership">Parallel development ownership</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Workstream</th>
+<th>Owns</th>
+<th>Integration contract</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Runtime</td>
+<td>State, scheduling, resources, worker lifecycle</td>
+<td>Task and attempt schemas</td>
+</tr>
+<tr>
+<td>Arena/evaluation</td>
+<td>Tool fixtures, hidden truth, metrics, data splits</td>
+<td>Observation and scoring schemas</td>
+</tr>
+<tr>
+<td>Models/training</td>
+<td>Dataset projection, SFT, classifier, package export</td>
+<td>Model request/result and artifact manifest</td>
+</tr>
+<tr>
+<td>Memory/supervision</td>
+<td>Retrieval, provenance, incidents, local remedies</td>
+<td>Evidence and incident schemas</td>
+</tr>
+<tr>
+<td>Integration/review</td>
+<td>End-to-end behavior, compatibility, release report</td>
+<td>Frozen interfaces and release gates</td>
+</tr>
+</tbody>
+</table></div>
+<p>The evaluator’s hidden answers are kept out of the runtime/trainer workspace. Integrate at small checkpoints. Reviewers evaluate demonstrated behavior and failure handling, not only whether files compile.</p>
+<h3 id="proposed-repository-layout">Proposed repository layout</h3>
+<p>These are paths to implement in the project, not files already built by this plan.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Directory</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>hive/contracts/</td>
+<td>Pydantic schemas and representation versions</td>
+</tr>
+<tr>
+<td>hive/runtime/</td>
+<td>Scheduler, journal, budgets, leases, recovery</td>
+</tr>
+<tr>
+<td>hive/registry/</td>
+<td>Capability/recipe manifests and compatibility</td>
+</tr>
+<tr>
+<td>hive/workers/</td>
+<td>Tool, model, PEFT, and Ruflo adapters</td>
+</tr>
+<tr>
+<td>hive/memory/</td>
+<td>Evidence, episodes, facts, retrieval, procedural records</td>
+</tr>
+<tr>
+<td>hive/supervision/</td>
+<td>Progress monitors, incident signatures, approved remedies</td>
+</tr>
+<tr>
+<td>hive/learning/</td>
+<td>Data projections, SFT, replay, recipe learning</td>
+</tr>
+<tr>
+<td>hive/evaluation/</td>
+<td>Public harness and metrics; hidden data kept outside runtime access</td>
+</tr>
+<tr>
+<td>hive/promotion/</td>
+<td>Candidate stages, manifests, rollback</td>
+</tr>
+<tr>
+<td>configs/</td>
+<td>Frozen operating, training, and evaluation profiles</td>
+</tr>
+<tr>
+<td>tests/</td>
+<td>Critical contract, state, isolation, and regression checks</td>
+</tr>
+<tr>
+<td>reports/</td>
+<td>Comparative results and observed limitations</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="command-interface-to-implement">Command interface to implement</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Expected result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>hive doctor</td>
+<td>Report environment and model/runtime readiness</td>
+</tr>
+<tr>
+<td>hive arena generate</td>
+<td>Generate the versioned task partitions</td>
+</tr>
+<tr>
+<td>hive evaluate</td>
+<td>Execute a frozen comparison and write metrics</td>
+</tr>
+<tr>
+<td>hive train</td>
+<td>Build a candidate adapter/classifier from an eligible dataset</td>
+</tr>
+<tr>
+<td>hive run</td>
+<td>Execute one bounded user task</td>
+</tr>
+<tr>
+<td>hive incident replay</td>
+<td>Reproduce a failure and test a remedy</td>
+</tr>
+<tr>
+<td>hive promote</td>
+<td>Apply a previously qualified candidate manifest</td>
+</tr>
+<tr>
+<td>hive rollback</td>
+<td>Restore the retained compatible manifest</td>
+</tr>
+</tbody>
+</table></div>
+<p>These are proposed CLI contracts. Implementation must supply them and document the exact arguments before they are usable.</p>
+<h2 id="15-scaling-and-biological-design-ideas">15. Scaling and biological design ideas</h2>
+<p>At each stage, record four counts: <strong>registered, trained, loaded, and executing</strong>. Increase the registry from 20 to 50 to 100 while holding the active GPU allowance fixed.</p>
+<p>Include near-duplicate capabilities, obsolete schema versions, and misleadingly similar descriptions. Measure retrieval recall, wrong selections, unnecessary loads, context overhead, and completion. Synthetic distractors are benchmark fixtures and are not counted as implemented experts.</p>
+<p>Promote a new specialist when it has a distinct task boundary, enough checked training data, a verifier or clear evidence standard, and a measurable advantage over an existing worker or deterministic procedure.</p>
+<p>Biological inspiration is operationalized through testable mechanisms:</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Inspiration</th>
+<th>First implementation</th>
+<th>Measurement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Local reflexes</td>
+<td>Independent progress/watchdog service</td>
+<td>Interruptions and recovery correctness</td>
+</tr>
+<tr>
+<td>Local plasticity</td>
+<td>Update the responsible adapter or classifier</td>
+<td>New learning and unrelated-skill retention</td>
+</tr>
+<tr>
+<td>Selective signaling</td>
+<td>Group-local state and targeted evidence packets</td>
+<td>Context/communication cost and errors</td>
+</tr>
+<tr>
+<td>Consolidation</td>
+<td>Offline replay and candidate training</td>
+<td>Retention and adaptation efficiency</td>
+</tr>
+<tr>
+<td>Resource regulation</td>
+<td>Admission limits, queues, and GPU leases</td>
+<td>Stability under load</td>
+</tr>
+<tr>
+<td>Multiple timescales</td>
+<td>Fast tool remedies and slower learning</td>
+<td>Recovery latency and recurring-failure reduction</td>
+</tr>
+</tbody>
+</table></div>
+<p>Private latent languages, new learning rules, connectome-derived wiring, and NCM specialists remain separately budgeted experiments. Their interfaces are accommodated without making every research branch a prerequisite for a working first edition.</p>
+<h2 id="16-definition-of-the-first-completed-edition">16. Definition of the first completed edition</h2>
+<p>HIVE v0.1 is complete when the local package includes:</p>
+<ul>
+<li>A persistent runtime with typed group communication and 20 implemented capability packages.</li>
+<li>Two language-model foundations with independently versioned trained role adapters, plus a measured decision component.</li>
+<li>Working calculator, data, document, model-call, code-test, and sandbox-output operations.</li>
+<li>A progress supervisor that handles covered faults outside the head’s context.</li>
+<li>Versioned memory, skills, evidence, replay, and model packages.</li>
+<li>An executable training pipeline and at least one demonstrated parameter-learning improvement.</li>
+<li>A demonstrated incident-to-local-support cycle.</li>
+<li>Learned recipe selection tested against fixed composition.</li>
+<li>A repeatable evaluation report with resource accounting and retained-skill results.</li>
+<li>A tested restore path for task state and model/recipe versions.</li>
+</ul>
+<p>A system may be useful before it passes every research gate. Label that build a development prototype. Declare the first edition ready when its scoped claims are supported by the release evidence.</p>
+<p>The first work package is Phase 0 together with the arena skeleton: reproduce the environment, define the contracts, implement the ten operations, and establish the unchanged baseline. Those artifacts make subsequent training measurable.</p>
+<h2 id="17-sources-and-project-continuity">17. Sources and project continuity</h2>
+<h3 id="earlier-project-materials">Earlier project materials</h3>
+<ul>
+<li><a href="https://chatgpt.com/library?file_id=libfile_fde3_f-f3e3fea948fc8191a86c0fb50df79b39_08dd7e10f8d081918b684a802f5b489c&amp;account_id=personal" rel="noreferrer">HIVE Build Plan and Source Foundation</a>: existing architecture, tool-protocol domain, independent/shared learning experiments, inventory readiness, and evaluation principles.</li>
+<li><a href="https://chatgpt.com/library?file_id=libfile_fde3_f-883a8885b5dc8191902c8826ef127d96_08dd7e10f8d081918b684a802f5b489c&amp;account_id=personal" rel="noreferrer">HIVE AI Core Architecture</a>: groups, four communication channels, dynamic specialization, and memory layers.</li>
+<li><a href="https://chatgpt.com/library?file_id=libfile_fde3_f-88080c3151d4819190cf5eb539759407_08dd7e10f8d081918b684a802f5b489c&amp;account_id=personal" rel="noreferrer">Ian’s software inventory</a>: inventory snapshot of 15 November 2026.</li>
+<li><a href="https://chatgpt.com/library?file_id=libfile_fde3_f-5a766c260dc48191b6753fdb7b966138_08dd7e10f8d081918b684a802f5b489c&amp;account_id=personal" rel="noreferrer">Earlier HIVE validation proposal</a>: benchmark discovery context. Earlier hypothetical latency, adapter-switching, and large-model-equivalence targets are not carried forward as measured results.</li>
+</ul>
+<h3 id="implementation-sources-checked-for-this-plan">Implementation sources checked for this plan</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Implementation use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://huggingface.co/Qwen/Qwen3-1.7B" rel="noreferrer">Qwen3-1.7B</a> and <a href="https://huggingface.co/Qwen/Qwen3-0.6B" rel="noreferrer">Qwen3-0.6B</a></td>
+<td>Concrete initial text-model checkpoints</td>
+</tr>
+<tr>
+<td><a href="https://huggingface.co/docs/trl/sft_trainer" rel="noreferrer">TRL SFT</a></td>
+<td>Tool-call fine-tuning and supervised token masking</td>
+</tr>
+<tr>
+<td><a href="https://huggingface.co/docs/peft/developer_guides/quantization" rel="noreferrer">PEFT quantization</a></td>
+<td>Quantized-base adapter training</td>
+</tr>
+<tr>
+<td><a href="https://huggingface.co/docs/peft/en/package_reference/hotswap" rel="noreferrer">PEFT adapter swapping</a></td>
+<td>Compatible version changes</td>
+</tr>
+<tr>
+<td><a href="https://huggingface.co/docs/bitsandbytes/installation" rel="noreferrer">bitsandbytes installation</a></td>
+<td>Platform/build compatibility gate</td>
+</tr>
+<tr>
+<td><a href="https://docs.ollama.com/faq" rel="noreferrer">Ollama FAQ</a></td>
+<td>Model lifetime and concurrency controls</td>
+</tr>
+<tr>
+<td><a href="https://docs.ollama.com/capabilities/structured-outputs" rel="noreferrer">Ollama structured outputs</a></td>
+<td>Schema-bound output interface</td>
+</tr>
+<tr>
+<td><a href="https://docs.ollama.com/import" rel="noreferrer">Ollama model import</a></td>
+<td>Optional deployment conversion route</td>
+</tr>
+<tr>
+<td><a href="https://github.com/NandhaKishorM/laya" rel="noreferrer">LAYA</a></td>
+<td>Explicitly pinned decision-engine experiment</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ruvnet/ruflo/blob/main/plugins/ruflo-swarm/README.md" rel="noreferrer">Ruflo swarm</a></td>
+<td>Existing coordination adapter</td>
+</tr>
+<tr>
+<td><a href="https://github.com/HazyResearch/ncm" rel="noreferrer">Hazy Research NCM</a></td>
+<td>Bounded concept-model research branch</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="research-mapped-to-the-build">Research mapped to the build</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Research</th>
+<th>Applied idea</th>
+<th>Scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://arxiv.org/html/2406.18665v4" rel="noreferrer">RouteLLM</a></td>
+<td>Learn model choice from measured outcomes</td>
+<td>Supports routing precedent; does not establish arbitrary team optimization</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/html/2410.10762v4" rel="noreferrer">AFlow</a></td>
+<td>Search executable workflow changes</td>
+<td>HIVE graph limits and results require local evaluation</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/html/2608.17528v1" rel="noreferrer">Agent Lightning v1.0</a></td>
+<td>Separate deployment harness and learner</td>
+<td>Later RL integration path</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/html/2406.12045v1" rel="noreferrer">tau-bench</a></td>
+<td>Score final state and repeated reliability</td>
+<td>Evaluation principles; benchmark installation is optional</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/html/1706.08840v6" rel="noreferrer">GEM</a></td>
+<td>Track retention and transfer over learning stages</td>
+<td>Evaluation inspiration; first implementation uses a simpler replay baseline</td>
+</tr>
+<tr>
+<td><a href="https://proceedings.neurips.cc/paper_files/paper/2015/file/bad5f33780c42f2588878a9d07405083-Paper.pdf" rel="noreferrer">Adaptive holdout reuse</a></td>
+<td>Guard against repeated-evaluation overfitting</td>
+<td>No formal reusable-holdout guarantee claimed</td>
+</tr>
+</tbody>
+</table></div>
+<p>Pin exact source commits, model revisions, data versions, licenses, checksums, and successful environment versions during Phase 0. Repository support for an individual component does not establish the performance of the combined HIVE system.</p>
+</article></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#1-the-build-decision">1. The build decision</a><a class="toc-h3" href="#what-the-first-edition-must-demonstrate">What the first edition must demonstrate</a><a class="toc-h3" href="#first-demonstration">First demonstration</a><a class="toc-h2" href="#2-existing-resources-and-operating-limits">2. Existing resources and operating limits</a><a class="toc-h3" href="#reuse-and-readiness">Reuse and readiness</a><a class="toc-h3" href="#proposed-starting-limits">Proposed starting limits</a><a class="toc-h2" href="#3-architecture-and-specialist-groups">3. Architecture and specialist groups</a><a class="toc-h3" href="#twenty-initial-capability-packages">Twenty initial capability packages</a><a class="toc-h3" href="#the-three-control-roles">The three control roles</a><a class="toc-h2" href="#4-model-and-software-choices">4. Model and software choices</a><a class="toc-h3" href="#starting-neural-configuration">Starting neural configuration</a><a class="toc-h3" href="#what-the-named-hive-technologies-do">What the named HIVE technologies do</a><a class="toc-h3" href="#serving-trained-specialists">Serving trained specialists</a><a class="toc-h2" href="#5-runtime-contracts-and-execution">5. Runtime contracts and execution</a><a class="toc-h3" href="#four-communication-channels">Four communication channels</a><a class="toc-h3" href="#controller-action-vocabulary">Controller action vocabulary</a><a class="toc-h3" href="#durable-state-machine">Durable state machine</a><a class="toc-h3" href="#tool-isolation-and-retry-classes">Tool isolation and retry classes</a><a class="toc-h2" href="#6-memory-and-knowledge-boundaries">6. Memory and knowledge boundaries</a><a class="toc-h2" href="#7-the-first-learning-arena">7. The first learning arena</a><a class="toc-h3" href="#curriculum-stages">Curriculum stages</a><a class="toc-h2" href="#8-dataset-construction-and-teacher-use">8. Dataset construction and teacher use</a><a class="toc-h3" href="#proposed-first-corpus">Proposed first corpus</a><a class="toc-h3" href="#training-allocation">Training allocation</a><a class="toc-h3" href="#required-trace-fields">Required trace fields</a><a class="toc-h3" href="#how-larger-models-help">How larger models help</a><a class="toc-h2" href="#9-training-sequence">9. Training sequence</a><a class="toc-h3" href="#t0-establish-behavior-before-training">T0 — Establish behavior before training</a><a class="toc-h3" href="#t1-train-routing-and-translation">T1 — Train routing and translation</a><a class="toc-h3" href="#t2-train-the-planneroperator">T2 — Train the planner/operator</a><a class="toc-h3" href="#t3-train-checker-and-local-repair">T3 — Train checker and local repair</a><a class="toc-h3" href="#t4-learn-recipe-selection">T4 — Learn recipe selection</a><a class="toc-h3" href="#t5-run-a-targeted-parameter-learning-cycle">T5 — Run a targeted parameter-learning cycle</a><a class="toc-h3" href="#t6-compare-independent-backbone-learning">T6 — Compare independent backbone learning</a><a class="toc-h3" href="#starting-controller-sft-configuration">Starting controller SFT configuration</a><a class="toc-h3" href="#local-training-readiness-test">Local training readiness test</a><a class="toc-h2" href="#10-adaptive-assembly-and-role-changes">10. Adaptive assembly and role changes</a><a class="toc-h3" href="#search-procedure">Search procedure</a><a class="toc-h2" href="#11-local-supervision-and-intervention-learning">11. Local supervision and intervention learning</a><a class="toc-h3" href="#three-recovery-levels">Three recovery levels</a><a class="toc-h3" href="#from-your-correction-to-a-permanent-improvement">From your correction to a permanent improvement</a><a class="toc-h3" href="#proposed-supervision-outcome">Proposed supervision outcome</a><a class="toc-h2" href="#12-the-continuing-improvement-loop">12. The continuing improvement loop</a><a class="toc-h3" href="#bounded-operating-cycle">Bounded operating cycle</a><a class="toc-h3" href="#promotion-lifecycle">Promotion lifecycle</a><a class="toc-h3" href="#hallucination-and-contamination-control">Hallucination and contamination control</a><a class="toc-h2" href="#13-evaluation-and-release-gates">13. Evaluation and release gates</a><a class="toc-h3" href="#required-comparisons">Required comparisons</a><a class="toc-h3" href="#metrics">Metrics</a><a class="toc-h3" href="#proposed-v01-gates">Proposed v0.1 gates</a><a class="toc-h2" href="#14-build-order-and-work-packages">14. Build order and work packages</a><a class="toc-h3" href="#parallel-development-ownership">Parallel development ownership</a><a class="toc-h3" href="#proposed-repository-layout">Proposed repository layout</a><a class="toc-h3" href="#command-interface-to-implement">Command interface to implement</a><a class="toc-h2" href="#15-scaling-and-biological-design-ideas">15. Scaling and biological design ideas</a><a class="toc-h2" href="#16-definition-of-the-first-completed-edition">16. Definition of the first completed edition</a><a class="toc-h2" href="#17-sources-and-project-continuity">17. Sources and project continuity</a><a class="toc-h3" href="#earlier-project-materials">Earlier project materials</a><a class="toc-h3" href="#implementation-sources-checked-for-this-plan">Implementation sources checked for this plan</a><a class="toc-h3" href="#research-mapped-to-the-build">Research mapped to the build</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework revision 0.2</span></a><span>Research prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download vault</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

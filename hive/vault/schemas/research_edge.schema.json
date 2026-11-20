@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:hive:research_edge:1",
+  "title": "research_edge",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target": {
+      "type": "string",
+      "minLength": 1
+    },
+    "relation": {
+      "type": "string",
+      "enum": [
+        "subtopic_of",
+        "motivated_by",
+        "supported_by",
+        "challenged_by",
+        "different_scope",
+        "tested_by",
+        "derived_from",
+        "depends_on",
+        "adjacent_to",
+        "related_to",
+        "informs",
+        "observed_basis",
+        "replication_attempt",
+        "counterevidence_lead"
+      ]
+    },
+    "scope": {
+      "type": "string",
+      "minLength": 1
+    },
+    "provenance": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "required": [
+    "id",
+    "source",
+    "target",
+    "relation"
+  ],
+  "additionalProperties": false
+}

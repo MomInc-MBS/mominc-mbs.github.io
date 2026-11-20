@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HIVE AI Core Architecture · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#122c32"><link rel="canonical" href="https://mominc.online/hive/notes/original-HIVE_AI_Core_Architecture/">
+<meta property="og:title" content="HIVE AI Core Architecture · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=1"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=1">
+<script defer src="/hive/assets/hive.js?v=1"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/ROADMAP/">Build</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 286 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download Obsidian vault</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=original">Archived original</a><span>/</span><span>original-HIVE_AI_Core_Architecture</span></div>
+<div class="doc-meta"><span class="badge">Preserved original</span><span class="badge neutral">Historical</span></div><div class="doc-tools"><button class="copy-link" data-title="HIVE AI Core Architecture" data-id="original-HIVE_AI_Core_Architecture">Copy reference</button><a href="/hive/vault/90_Archive/Originals/HIVE_AI_Core_Architecture.md">Markdown source</a><button class="print-page">Print</button></div>
+<p class="archive-notice">Preserved historical original. Statements below reflect this source document; they are not a current implementation or a new measurement.</p><article class="prose"><h1 id="hive-ai-core-architecture-and-differentiation">HIVE AI — Core Architecture and Differentiation</h1>
+<h2 id="vision">Vision</h2>
+<p>HIVE AI is a proposed modular artificial intelligence ecosystem, not merely another large language model, conventional mixture-of-experts system, or group of chat agents. Its central idea is <strong>composable intelligence</strong>: independently specialized neural and non-neural systems communicate, learn, and temporarily assemble into larger problem-solving structures.</p>
+<p><strong>Research hypothesis:</strong> A coordinated collection of small, highly optimized intelligences may outperform a much larger general-purpose model on selected tasks while using fewer resources. This is a hypothesis to test, not an established result.</p>
+<h2 id="1-how-hive-differs-from-conventional-ai">1. How HIVE Differs from Conventional AI</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Conventional AI</th>
+<th>Proposed HIVE AI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>One general-purpose model</td>
+<td>Many independently specialized models and algorithms</td>
+</tr>
+<tr>
+<td>Knowledge concentrated in one weight system</td>
+<td>Expertise distributed across specialists and memory</td>
+</tr>
+<tr>
+<td>Natural language as dominant communication medium</td>
+<td>Domain-native representations and specialized translators</td>
+</tr>
+<tr>
+<td>Relatively fixed model roles</td>
+<td>Potentially reusable execution cores with swappable specialized modules</td>
+</tr>
+<tr>
+<td>Mostly sequential agent handoffs</td>
+<td>Parallel and asynchronous cooperation</td>
+</tr>
+<tr>
+<td>Broad general-purpose training</td>
+<td>Narrow targeted training and specialist teaching</td>
+</tr>
+<tr>
+<td>Single shared working context</td>
+<td>Local, shared, episodic, and hierarchical memory</td>
+</tr>
+<tr>
+<td>Produces an answer</td>
+<td>Generates, critiques, verifies, and improves outputs</td>
+</tr>
+<tr>
+<td>Scale by adding model size or compute</td>
+<td>Scale by adding, replacing, or improving narrow capabilities</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="2-nine-interconnected-architectural-layers">2. Nine Interconnected Architectural Layers</h2>
+<p>These are conceptual layers, <strong>not a strictly sequential pipeline</strong>. Communication can move in both directions and layers can operate concurrently.</p>
+<ol>
+<li><strong>Input and Perception:</strong> Speech, vision, structured data, task recognition and classification.</li>
+<li><strong>Logic and Decision:</strong> LAYA-inspired logical gates, routing, requirements checks, and uncertainty assessment.</li>
+<li><strong>Dynamic Neural Execution:</strong> Reusable execution cores, loadable roles, adapters, and skills where architectures permit.</li>
+<li><strong>Specialist Intelligence Hive:</strong> Independent expert models and non-neural solvers for narrowly defined domains.</li>
+<li><strong>Communication and Translation:</strong> Domain-native messaging protocols, representations, and translators.</li>
+<li><strong>Biological Coordination:</strong> Neuron- and cell-inspired selective signaling, local state, event-based communication, and distributed control.</li>
+<li><strong>Memory Ecosystem:</strong> Local, shared, episodic, procedural, and domain-specific memory.</li>
+<li><strong>Verification and Evolution:</strong> Critics, teachers, tests, performance feedback, targeted retraining, and adaptation.</li>
+<li><strong>Unified Intelligence and Identity:</strong> Coherent user-facing behavior across independently operating components.</li>
+</ol>
+<p><strong>Cross-cutting infrastructure:</strong> Ruflo-style orchestration, scheduling, tool execution, compute allocation, monitoring, and lifecycle management.</p>
+<h2 id="3-forms-of-intelligence-combined">3. Forms of Intelligence Combined</h2>
+<h3 id="a-neural-intelligence-learned-expertise">A. Neural Intelligence — Learned Expertise</h3>
+<p>Small specialized neural models for mathematics, geometry, speech, programming, vision, creative generation, and narrower functions. Not all experts need to be language models.</p>
+<h3 id="b-logical-intelligence-laya-inspired">B. Logical Intelligence — LAYA-Inspired</h3>
+<p>Decision trees, binary gates, classifiers, formal logic, and confidence calibration to identify the problem, check requirements, and select relevant expertise. A LAYA-like decision interface can be reusable across specialists.</p>
+<h3 id="c-biological-intelligence-communication-principles">C. Biological Intelligence — Communication Principles</h3>
+<p>Borrow design principles from neurons, cells, hormones, and distributed nervous systems: targeted signaling, selective activation, local state, asynchronous response, and coordination without universal knowledge.</p>
+<h3 id="d-conceptual-intelligence-ncm-inspired">D. Conceptual Intelligence — NCM-Inspired</h3>
+<p>Investigate concept-first and coarse-to-fine representations that do not force every reasoning step through natural-language token generation. NCM-style methods are candidates for some specialists, not requirements for every component.</p>
+<h3 id="e-programmatic-intelligence-executable-skills">E. Programmatic Intelligence — Executable Skills</h3>
+<p>Use deterministic code, symbolic solvers, search algorithms, simulations, and loadable adapters whenever they are more appropriate than neural approximation.</p>
+<h2 id="4-specialist-communities-not-just-specialist-models">4. Specialist Communities, Not Just Specialist Models</h2>
+<p>A domain such as mathematics becomes a community of cooperating experts rather than one mathematics chatbot.</p>
+<p><strong>Example mathematics community:</strong></p>
+<ul>
+<li>Mathematics domain overseer: selects the required expertise and coordinates work.</li>
+<li>Algebra expert: symbolic manipulation and equations.</li>
+<li>Geometry expert: geometric representations and spatial relationships.</li>
+<li>Proof expert: formal and informal proof construction.</li>
+<li>Numerical expert: numerical methods and exact computational tools.</li>
+<li>Logic expert: constraints and deductive structure.</li>
+<li>Pattern expert: pattern discovery and conjecture generation.</li>
+<li>Teacher: diagnoses weaknesses and prepares targeted training.</li>
+<li>Reviewer: challenges results and checks for errors.</li>
+<li>Translator: connects representations between specialists.</li>
+</ul>
+<p>Several specialists can work in parallel. Each may use a different internal representation or architecture. A higher-level specialist can be recruited when the local group cannot resolve a problem.</p>
+<p>The same community structure can be applied to biology, programming, physics, image generation, and other domains.</p>
+<h2 id="5-dynamic-specialization-changing-what-a-model-can-do">5. Dynamic Specialization: Changing What a Model Can Do</h2>
+<p>A major research direction is separating <strong>reusable neural execution machinery</strong> from <strong>specialized knowledge or programs</strong>, when technically feasible.</p>
+<p>For example, five approximately one-billion-parameter execution cores might load different compatible adapters or specialist modules depending on the task:</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Core</th>
+<th>Mathematics Configuration</th>
+<th>Creative Configuration</th>
+<th>Programming Configuration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Algebra</td>
+<td>Story</td>
+<td>Planning</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Geometry</td>
+<td>Images</td>
+<td>Coding</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Proofs</td>
+<td>Style</td>
+<td>Debugging</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Logic</td>
+<td>Composition</td>
+<td>Testing</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Review</td>
+<td>Critique</td>
+<td>Code review</td>
+</tr>
+</tbody>
+</table></div>
+<p>This is a <strong>research target</strong>, not a demonstrated capability. Reassigning a role label does not alter weights or create expertise. Real specialization requires trained modules, compatible architectures, or validated adaptation methods. Arbitrary transfer across incompatible models must not be assumed.</p>
+<h2 id="6-specialized-communication-channels">6. Specialized Communication Channels</h2>
+<p>Instead of repeatedly translating everything into conversational English, HIVE should explore four distinct channels:</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Channel</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Control</td>
+<td>Activate, pause, recruit, or terminate specialists</td>
+</tr>
+<tr>
+<td>Task</td>
+<td>Transfer structured problems and intermediate results</td>
+</tr>
+<tr>
+<td>Evidence</td>
+<td>Share results, uncertainty, provenance, and verification</td>
+</tr>
+<tr>
+<td>Teaching</td>
+<td>Transfer corrections, exercises, feedback, and skills</td>
+</tr>
+</tbody>
+</table></div>
+<p>Experts may use domain-native representations. Translators bridge incompatible representations while preserving meaning, constraints, and uncertainty.</p>
+<p>This takes inspiration from the fact that biological nervous, endocrine, and cellular systems communicate differently depending on purpose.</p>
+<h2 id="7-distributed-memory-and-learning">7. Distributed Memory and Learning</h2>
+<ul>
+<li><strong>Immediate memory:</strong> Active calculations, context, and temporary assemblies.</li>
+<li><strong>Domain memory:</strong> Specialist knowledge, mistakes, and successful techniques.</li>
+<li><strong>Episodic memory:</strong> Prior interactions, decisions, and experiences.</li>
+<li><strong>Procedural memory:</strong> Reusable programs, skills, adapters, and workflows.</li>
+<li><strong>Collective memory:</strong> Verified discoveries available across communities.</li>
+</ul>
+<p>A teacher can diagnose weak performance and trigger targeted improvement while other specialists continue operating. Distinguish retrieval and memory updates from adapter training, distillation, and direct weight updates; test these independently.</p>
+<h2 id="8-existing-technologies-and-their-roles">8. Existing Technologies and Their Roles</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Technology</th>
+<th>Proposed Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LAYA</td>
+<td>Logical decision and classification mechanisms</td>
+</tr>
+<tr>
+<td>Ruflo</td>
+<td>Orchestration, scheduling, task execution, and tools</td>
+</tr>
+<tr>
+<td>NCM</td>
+<td>Candidate concept-oriented or coarse-to-fine processing</td>
+</tr>
+<tr>
+<td>LoRA and adapters</td>
+<td>Efficient specialization and swappable compatible skills</td>
+</tr>
+<tr>
+<td>Existing image, speech, and reasoning models</td>
+<td>Prebuilt expert capabilities rather than reinventing them</td>
+</tr>
+<tr>
+<td>Symbolic AI and formal solvers</td>
+<td>Exact computation and verifiable reasoning</td>
+</tr>
+<tr>
+<td>Biologically inspired coordination</td>
+<td>Distributed control and selective communication</td>
+</tr>
+<tr>
+<td>Retrieval and memory systems</td>
+<td>Persistent knowledge and experience</td>
+</tr>
+</tbody>
+</table></div>
+<p>These are candidate components and research directions. Their inclusion does not prove the complete HIVE architecture works.</p>
+<h2 id="9-five-core-research-questions">9. Five Core Research Questions</h2>
+<ol>
+<li><strong>Specialization:</strong> How small can an expert become while maintaining excellent performance on a precisely defined task?</li>
+<li><strong>Composition:</strong> Can multiple narrow experts reliably achieve capabilities beyond those of individual members?</li>
+<li><strong>Communication:</strong> Can domain-native representations reduce latency and information loss relative to natural-language agent exchanges?</li>
+<li><strong>Adaptability:</strong> Can reusable execution cores change specialties efficiently without repeatedly loading entire models?</li>
+<li><strong>Efficiency:</strong> Can the complete hive improve output quality, latency, memory consumption, and compute cost compared with strong conventional baselines?</li>
+</ol>
+<h2 id="defining-principle">Defining Principle</h2>
+<blockquote>
+<p>A conventional multi-agent system coordinates models that already exist. <strong>HIVE aims to investigate a new architecture for how specialized intelligence is represented, assembled, communicated, taught, verified, and evolved.</strong></p>
+</blockquote>
+<p>Ruflo-like infrastructure coordinates execution. LAYA-inspired logic supports decisions. NCM-inspired methods may improve particular reasoning processes. Biological principles inform communication. Specialized neural and non-neural systems supply capabilities. The hive is the unified system assembled from those parts.</p>
+</article></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#vision">Vision</a><a class="toc-h2" href="#1-how-hive-differs-from-conventional-ai">1. How HIVE Differs from Conventional AI</a><a class="toc-h2" href="#2-nine-interconnected-architectural-layers">2. Nine Interconnected Architectural Layers</a><a class="toc-h2" href="#3-forms-of-intelligence-combined">3. Forms of Intelligence Combined</a><a class="toc-h3" href="#a-neural-intelligence-learned-expertise">A. Neural Intelligence — Learned Expertise</a><a class="toc-h3" href="#b-logical-intelligence-laya-inspired">B. Logical Intelligence — LAYA-Inspired</a><a class="toc-h3" href="#c-biological-intelligence-communication-principles">C. Biological Intelligence — Communication Principles</a><a class="toc-h3" href="#d-conceptual-intelligence-ncm-inspired">D. Conceptual Intelligence — NCM-Inspired</a><a class="toc-h3" href="#e-programmatic-intelligence-executable-skills">E. Programmatic Intelligence — Executable Skills</a><a class="toc-h2" href="#4-specialist-communities-not-just-specialist-models">4. Specialist Communities, Not Just Specialist Models</a><a class="toc-h2" href="#5-dynamic-specialization-changing-what-a-model-can-do">5. Dynamic Specialization: Changing What a Model Can Do</a><a class="toc-h2" href="#6-specialized-communication-channels">6. Specialized Communication Channels</a><a class="toc-h2" href="#7-distributed-memory-and-learning">7. Distributed Memory and Learning</a><a class="toc-h2" href="#8-existing-technologies-and-their-roles">8. Existing Technologies and Their Roles</a><a class="toc-h2" href="#9-five-core-research-questions">9. Five Core Research Questions</a><a class="toc-h2" href="#defining-principle">Defining Principle</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework revision 0.2</span></a><span>Research prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download vault</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

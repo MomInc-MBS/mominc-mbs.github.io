@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Single Video Interior 3D Mapping GitHub Repos · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#122c32"><link rel="canonical" href="https://mominc.online/hive/notes/original-Single_Video_Interior_3D_Mapping_GitHub_Repos/">
+<meta property="og:title" content="Single Video Interior 3D Mapping GitHub Repos · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=1"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=1">
+<script defer src="/hive/assets/hive.js?v=1"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/ROADMAP/">Build</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 286 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download Obsidian vault</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=original">Archived original</a><span>/</span><span>original-Single_Video_Interior_3D_Mapping_GitHub_Repos</span></div>
+<div class="doc-meta"><span class="badge">Preserved original</span><span class="badge neutral">Historical</span></div><div class="doc-tools"><button class="copy-link" data-title="Single Video Interior 3D Mapping GitHub Repos" data-id="original-Single_Video_Interior_3D_Mapping_GitHub_Repos">Copy reference</button><a href="/hive/vault/90_Archive/Originals/Single_Video_Interior_3D_Mapping_GitHub_Repos.md">Markdown source</a><button class="print-page">Print</button></div>
+<p class="archive-notice">Preserved historical original. Statements below reflect this source document; they are not a current implementation or a new measurement.</p><article class="prose"><h1 id="github-repositories-for-mapping-interiors-from-a-single-video">GitHub Repositories for Mapping Interiors from a Single Video</h1>
+<h2 id="project-goal">Project goal</h2>
+<p>Convert one continuous phone video of an interior into a coherent, navigable 3D room map, preferably without LiDAR or multiple recordings.</p>
+<h2 id="current-reconstruction-problem">Current reconstruction problem</h2>
+<p>The provided screenshots show a MASt3R-based workflow producing fragmented geometry, disconnected surfaces, and distorted meshes. The earlier testing notes also report unstable inferred focal lengths and a supplied example that appears broken in the native viewer. These observations suggest testing both alternative reconstruction methods and the mesh/viewer pipeline before blaming the captured footage.</p>
+<h2 id="three-approaches">Three approaches</h2>
+<ol>
+<li><strong>Metric 3D reconstruction:</strong> Estimate depth, camera positions, point clouds, and potentially meshes with approximate real-world scale.</li>
+<li><strong>Visual SLAM plus dense reconstruction:</strong> Track the moving camera and fuse observations into a spatially consistent map.</li>
+<li><strong>Gaussian splatting:</strong> Create realistic navigable views; a splat scene is not necessarily a clean, collision-ready mesh.</li>
+</ol>
+<h2 id="recommended-github-repositories">Recommended GitHub repositories</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Repository</th>
+<th>GitHub</th>
+<th>Main use</th>
+<th>Typical output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>VGGT</td>
+<td>https://github.com/facebookresearch/vggt</td>
+<td>Video/image-based camera, depth and geometry estimation</td>
+<td>Point clouds, camera poses, visualization/GLB</td>
+</tr>
+<tr>
+<td>2</td>
+<td>video-to-3dgs</td>
+<td>https://github.com/imcmurray/video-to-3dgs</td>
+<td>Video photogrammetry pipeline using COLMAP/OpenMVS and splatting tools</td>
+<td>Mesh, point cloud, Gaussian splat</td>
+</tr>
+<tr>
+<td>3</td>
+<td>AETHER-SLAM</td>
+<td>https://github.com/sahaj2310-tech/AETHER-SLAM</td>
+<td>Monocular RGB room scanning with depth estimation and TSDF fusion</td>
+<td>Room mesh (PLY)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>DROID-Splat</td>
+<td>https://github.com/ChenHoy/DROID-Splat</td>
+<td>Dense SLAM and Gaussian reconstruction</td>
+<td>Camera tracking and 3D Gaussian scene</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Nerfstudio</td>
+<td>https://github.com/nerfstudio-project/nerfstudio</td>
+<td>Phone-video neural scene reconstruction</td>
+<td>NeRF/3DGS, supported exports</td>
+</tr>
+<tr>
+<td>6</td>
+<td>video2mesh</td>
+<td>https://github.com/gzhangx/video2mesh</td>
+<td>Video-to-mesh reconstruction</td>
+<td>OBJ/PLY mesh, point cloud, camera poses</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Video-3D-Reconstruction</td>
+<td>https://github.com/LLP17/Video-3d-Reconstruction</td>
+<td>COLMAP-based video reconstruction pipeline</td>
+<td>3D mesh and viewer</td>
+</tr>
+<tr>
+<td>8</td>
+<td>photogrammetry_pipeline</td>
+<td>https://github.com/aivarsorups/photogrammetry_pipeline</td>
+<td>Windows-oriented COLMAP/OpenMVS reconstruction</td>
+<td>Photogrammetry meshes</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Monocular-3D</td>
+<td>https://github.com/Vedkhajone/Monocular-3D</td>
+<td>MiDaS depth, COLMAP camera poses, TSDF fusion</td>
+<td>GLB scene</td>
+</tr>
+<tr>
+<td>10</td>
+<td>SLAM3R</td>
+<td>https://github.com/PKU-VCL-3DV/SLAM3R</td>
+<td>Dense monocular-video reconstruction with global alignment</td>
+<td>Dense 3D reconstruction</td>
+</tr>
+<tr>
+<td>11</td>
+<td>SplatSLAM</td>
+<td>https://github.com/SplatSLAM-Project/SplatSLAM</td>
+<td>MASt3R-related SLAM with splatting and refinement</td>
+<td>Reconstructed Gaussian scene</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="suggested-test-priority">Suggested test priority</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Priority</th>
+<th>Repository</th>
+<th>Why test it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>SLAM3R</strong></td>
+<td>Alternative to a camera-calibration-dependent reconstruction workflow.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>VGGT</strong></td>
+<td>Straightforward baseline for video-derived geometry and camera poses.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>video-to-3dgs</strong></td>
+<td>Produces mesh-oriented results as well as visual reconstruction.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>AETHER-SLAM</strong></td>
+<td>Targets room mapping from an RGB camera.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>DROID-Splat</strong></td>
+<td>Useful comparison for tracking, calibration, and splat reconstruction.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="recommended-comparison">Recommended comparison</h2>
+<p>Process <strong>the same original room video</strong> through SLAM3R, VGGT, and video-to-3dgs. Compare:</p>
+<ul>
+<li>Continuity and alignment of walls, floors, and ceilings.</li>
+<li>Doorway and furniture geometry.</li>
+<li>Number of disconnected or floating fragments.</li>
+<li>Camera tracking and focal-length stability.</li>
+<li>Whether output can be exported to a usable mesh format (GLB, OBJ, or PLY).</li>
+<li>Approximate scale and ability to align the map to the phone's position.</li>
+<li>Reconstruction time and GPU memory requirements.</li>
+</ul>
+<p><strong>Important:</strong> A convincing rendering does not guarantee a structurally usable room map. The end goal is a coherent room model with connected surfaces and stable positions, not just an attractive novel-view rendering.</p>
+<h2 id="next-technical-decision">Next technical decision</h2>
+<p>If all three methods produce fragmented results, inspect input frame extraction, lens calibration, camera motion, image overlap, and the mesh viewer/export path. If point clouds are coherent but meshes are broken, prioritize the meshing/fusion and rendering stages rather than replacing the entire reconstruction engine.</p>
+<hr />
+<p><em>Repository links and descriptions are compiled from the preceding discussion; current maintenance status, hardware requirements, and individual feature support should be verified in each project's README before integration.</em></p>
+</article></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#project-goal">Project goal</a><a class="toc-h2" href="#current-reconstruction-problem">Current reconstruction problem</a><a class="toc-h2" href="#three-approaches">Three approaches</a><a class="toc-h2" href="#recommended-github-repositories">Recommended GitHub repositories</a><a class="toc-h2" href="#suggested-test-priority">Suggested test priority</a><a class="toc-h2" href="#recommended-comparison">Recommended comparison</a><a class="toc-h2" href="#next-technical-decision">Next technical decision</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework revision 0.2</span></a><span>Research prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download vault</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

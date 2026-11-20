@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AR Horror App 3D Mapping Development Handoff · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#122c32"><link rel="canonical" href="https://mominc.online/hive/notes/original-AR_Horror_App_3D_Mapping_Development_Handoff/">
+<meta property="og:title" content="AR Horror App 3D Mapping Development Handoff · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=1"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=1">
+<script defer src="/hive/assets/hive.js?v=1"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/ROADMAP/">Build</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 286 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download Obsidian vault</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=original">Archived original</a><span>/</span><span>original-AR_Horror_App_3D_Mapping_Development_Handoff</span></div>
+<div class="doc-meta"><span class="badge">Preserved original</span><span class="badge neutral">Historical</span></div><div class="doc-tools"><button class="copy-link" data-title="AR Horror App 3D Mapping Development Handoff" data-id="original-AR_Horror_App_3D_Mapping_Development_Handoff">Copy reference</button><a href="/hive/vault/90_Archive/Originals/AR_Horror_App_3D_Mapping_Development_Handoff.md">Markdown source</a><button class="print-page">Print</button></div>
+<p class="archive-notice">Preserved historical original. Statements below reflect this source document; they are not a current implementation or a new measurement.</p><article class="prose"><h1 id="ar-horror-app-interior-mapping-foundation-developer-handoff">AR Horror App — Interior Mapping Foundation &amp; Developer Handoff</h1>
+<p><strong>Purpose:</strong> Turn the repositories and findings in <code>Single_Video_Interior_3D_Mapping_GitHub_Repos.md</code> into an actionable implementation foundation for a room-aware AR horror application.</p>
+<p><strong>Status:</strong> Engineering plan, not a claim that any repository is installed, working, or integrated. Verify each project's license, requirements, current API, and output formats before adopting it.</p>
+<h2 id="1-product-objective">1. Product objective</h2>
+<p>A player scans an indoor environment with one continuous phone video. The app reconstructs a coherent room map, identifies usable structural surfaces and objects, aligns the virtual map with the physical room, and uses that spatial understanding to stage interactive horror encounters. Monsters should appear grounded in the room, hide behind real furniture, emerge from doorways, respond to player movement, and remain in plausible locations as the player walks around.</p>
+<p><strong>Critical architectural distinction:</strong> A prerecorded monocular video can build an <em>offline spatial map</em>, but reliable <em>live AR alignment</em> also needs a runtime camera-tracking and relocalization solution (e.g. a suitable platform AR SDK). Do not treat reconstruction camera poses as automatically equivalent to live tracking.</p>
+<h2 id="2-source-material-and-roles">2. Source material and roles</h2>
+<p>The supplied repository research describes three classes of reconstruction: metric 3D, visual SLAM with dense fusion, and Gaussian splatting. It also reports fragmented MASt3R geometry, unstable focal length estimates, and potentially faulty viewer/export behavior. These are starting observations, not independently reproduced diagnoses.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Repository</th>
+<th>URL</th>
+<th>Candidate role in this app</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SLAM3R</td>
+<td>https://github.com/PKU-VCL-3DV/SLAM3R</td>
+<td>First dense video reconstruction benchmark</td>
+</tr>
+<tr>
+<td>VGGT</td>
+<td>https://github.com/facebookresearch/vggt</td>
+<td>Baseline camera poses, depth, geometry</td>
+</tr>
+<tr>
+<td>video-to-3dgs</td>
+<td>https://github.com/imcmurray/video-to-3dgs</td>
+<td>Mesh/photogrammetry and visual-scene comparison</td>
+</tr>
+<tr>
+<td>AETHER-SLAM</td>
+<td>https://github.com/sahaj2310-tech/AETHER-SLAM</td>
+<td>Monocular room-mesh and fusion comparison</td>
+</tr>
+<tr>
+<td>DROID-Splat</td>
+<td>https://github.com/ChenHoy/DROID-Splat</td>
+<td>Tracking and splat benchmark</td>
+</tr>
+<tr>
+<td>Nerfstudio</td>
+<td>https://github.com/nerfstudio-project/nerfstudio</td>
+<td>Optional photorealistic visual representation</td>
+</tr>
+<tr>
+<td>video2mesh</td>
+<td>https://github.com/gzhangx/video2mesh</td>
+<td>Alternative mesh export path</td>
+</tr>
+<tr>
+<td>Video-3D-Reconstruction</td>
+<td>https://github.com/LLP17/Video-3d-Reconstruction</td>
+<td>COLMAP-based baseline</td>
+</tr>
+<tr>
+<td>photogrammetry_pipeline</td>
+<td>https://github.com/aivarsorups/photogrammetry_pipeline</td>
+<td>Windows-oriented photogrammetry fallback</td>
+</tr>
+<tr>
+<td>Monocular-3D</td>
+<td>https://github.com/Vedkhajone/Monocular-3D</td>
+<td>Depth + poses + TSDF / GLB alternative</td>
+</tr>
+<tr>
+<td>SplatSLAM</td>
+<td>https://github.com/SplatSLAM-Project/SplatSLAM</td>
+<td>MASt3R-related tracking/splat comparison</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Selection rule:</strong> Do not combine all 11 into production. Benchmark the top three first; choose one primary reconstruction backend and at most one fallback. Keep the rest as research or optional components.</p>
+<h2 id="3-proposed-system-architecture">3. Proposed system architecture</h2>
+<pre><code class="language-text">PHONE ROOM VIDEO
+  -&gt; Capture validation / metadata / frame extraction
+  -&gt; Reconstruction adapter (SLAM3R | VGGT | video-to-3dgs)
+  -&gt; Camera poses + depth / point cloud / optional splat
+  -&gt; Geometry cleanup + meshing + coordinate normalization
+  -&gt; Semantic analysis: floor, walls, ceiling, doors, furniture
+  -&gt; Scene manifest + collision mesh + occlusion mesh + visual assets
+  -&gt; Room package saved to device / app storage
+
+LIVE PHONE CAMERA + IMU
+  -&gt; Platform AR tracking + room relocalization
+  -&gt; World-to-room transform + tracking confidence
+  -&gt; Horror director + enemy AI + spawn rules
+  -&gt; Rendering, depth/occlusion, collision, spatial audio
+  -&gt; AR gameplay
+</code></pre>
+<p>Keep four representations distinct: <strong>visual render</strong> (mesh or splat), <strong>collision geometry</strong> (simplified mesh), <strong>occlusion geometry</strong> (stable depth/mesh), and <strong>semantic scene graph</strong> (labeled objects and surfaces). A photorealistic splat by itself is not a dependable physics or navigation map.</p>
+<h2 id="4-implementation-phases">4. Implementation phases</h2>
+<h3 id="phase-0-audit-and-establish-a-reproducible-baseline">Phase 0 — Audit and establish a reproducible baseline</h3>
+<ol>
+<li>Inspect existing AR horror app code, runtime, renderer, device targets, and current reconstruction pipeline. Do not assume a game engine or SDK.</li>
+<li>Inventory local software and GPU capability; distinguish installed, working, and merely downloaded tools.</li>
+<li>Preserve the original phone footage, capture metadata, MASt3R output, point cloud, mesh, and native-viewer screenshots.</li>
+<li>Create a fixed benchmark room video with a slow walkthrough, overlap, visible corners, furniture, and doorway. Record device, resolution, lens/camera intrinsics when available, and capture conditions.</li>
+<li>Check whether defects occur in the point cloud, meshing, export, coordinate transforms, or viewer before replacing the backend.</li>
+</ol>
+<p><strong>Deliverable:</strong> <code>baseline/</code> with reproducible inputs, commands, logs, sample outputs, and a short failure report.</p>
+<h3 id="phase-1-reconstruction-backend-bake-off">Phase 1 — Reconstruction backend bake-off</h3>
+<ol>
+<li>Run the <strong>same unmodified source video</strong> through SLAM3R, VGGT, and video-to-3dgs using documented configurations.</li>
+<li>Export camera poses, point clouds, meshes, and diagnostic views wherever supported.</li>
+<li>Evaluate wall/floor continuity, doorway geometry, furniture placement, floaters, camera trajectory stability, scale drift, run time, VRAM, and export compatibility.</li>
+<li>If results remain fragmented, inspect lens calibration, frame selection, blur, overlap, camera motion, and meshing/fusion independently.</li>
+<li>Test AETHER-SLAM as the next candidate for a room mesh; test DROID-Splat if tracking or visual reconstruction is the dominant problem.</li>
+</ol>
+<p><strong>Decision gate:</strong> Pick the backend that produces the most spatially coherent, reusable geometry—not simply the best-looking rendering. Record measurable evidence and known failure cases.</p>
+<h3 id="phase-2-convert-reconstruction-into-an-ar-ready-room-package">Phase 2 — Convert reconstruction into an AR-ready room package</h3>
+<ol>
+<li>Normalize coordinate systems, axes, units, orientation, and origin. Preserve the transform from reconstruction coordinates to room coordinates.</li>
+<li>Remove isolated fragments, fill small holes conservatively, and simplify meshes without erasing doorways or furniture silhouettes.</li>
+<li>Extract floor, wall, ceiling, and major object candidates; attach confidence values and allow manual correction.</li>
+<li>Generate independent render, collision, and occlusion assets; use GLB/PLY/OBJ as interchange formats only where the selected tools actually support them.</li>
+<li>Store provenance, calibration assumptions, scale confidence, and object IDs in a versioned scene manifest.</li>
+<li>Add a simple 3D inspection/debug viewer showing camera path, axes, surface labels, and geometry overlays.</li>
+</ol>
+<p><strong>Deliverable:</strong> A loadable <code>RoomPackage</code> that does not depend on the reconstruction tool being installed on the phone.</p>
+<h3 id="phase-3-live-ar-alignment-and-persistence">Phase 3 — Live AR alignment and persistence</h3>
+<ol>
+<li>Integrate the existing app's platform tracking SDK or choose a compatible AR runtime after inspecting the codebase.</li>
+<li>Align the reconstructed room to the live camera using shared visual features, user-confirmed landmarks, or a suitable relocalization method; do not assume a single monocular scan yields metric scale automatically.</li>
+<li>Save a room anchor/transform and reload it when the user returns.</li>
+<li>Track localization confidence; pause or downgrade precise interactions when tracking is lost.</li>
+<li>Debug by overlaying virtual walls, doors, and furniture outlines on the actual camera view while the user moves.</li>
+</ol>
+<p><strong>Deliverable:</strong> Virtual room features remain aligned through ordinary movement and can be recovered after tracking interruptions, within documented limitations.</p>
+<h3 id="phase-4-horror-specific-spatial-intelligence">Phase 4 — Horror-specific spatial intelligence</h3>
+<p>Implement a semantic room graph with entities such as <code>floor</code>, <code>wall</code>, <code>ceiling</code>, <code>doorway</code>, <code>window</code>, <code>table</code>, <code>chair</code>, <code>cabinet</code>, <code>bed</code>, and <code>unknown_obstacle</code>. These labels are <strong>target features to build</strong>, not promised outputs of the source repositories.</p>
+<p>Gameplay systems:</p>
+<ul>
+<li><strong>Spawn validator:</strong> Place enemies on appropriate surfaces, outside solid geometry, with enough clearance.</li>
+<li><strong>Occlusion:</strong> Allow monsters to move behind walls or furniture rather than drawing over them.</li>
+<li><strong>Line of sight:</strong> Trigger behaviors when the player can see a doorway, dark corner, or hiding place.</li>
+<li><strong>Navigation:</strong> Use a simplified walkable floor and obstacle map; avoid assuming arbitrary reconstructed meshes form a navigable surface.</li>
+<li><strong>Spatial audio:</strong> Anchor footsteps, knocks, whispers, and impacts to stable room locations.</li>
+<li><strong>Environmental events:</strong> Trigger doorframe appearances, corner peeks, furniture movement illusions, and ceiling/wall encounters according to verified geometry.</li>
+<li><strong>Safety constraints:</strong> No gameplay mechanic should require running, entering dangerous areas, or navigating with an obstructed real-world view.</li>
+</ul>
+<p><strong>Deliverable:</strong> One enemy can spawn, hide, emerge, move, and disappear in spatially credible ways in a mapped test room.</p>
+<h3 id="phase-5-gameplay-vertical-slice">Phase 5 — Gameplay vertical slice</h3>
+<p>Build a complete test encounter: scan room → inspect map → approve/correct surfaces → align live camera → enemy appears beyond a doorway → enemy becomes hidden behind a real obstacle → spatial sound directs attention → encounter ends → room state persists. Provide debug toggles for mesh, anchors, labels, visibility rays, spawn candidates, and tracking confidence.</p>
+<p><strong>Deliverable:</strong> A repeatable demonstration on the target phone, not just a desktop reconstruction preview.</p>
+<h3 id="phase-6-optimize-and-harden">Phase 6 — Optimize and harden</h3>
+<p>Measure scan processing time, device heat, RAM/VRAM, app storage, battery, frame rate, tracking drift, occlusion artifacts, and crash rate. Determine which reconstruction stages can run on-device and which require local desktop/server preprocessing. Test low-texture walls, mirrors, glass, dark rooms, motion blur, moving people, narrow halls, and large open rooms. Provide a graceful fallback when mapping confidence is inadequate.</p>
+<h2 id="5-recommended-code-organization">5. Recommended code organization</h2>
+<pre><code class="language-text">ar-horror/
+  app/                      # Existing app: preserve framework
+  capture/                  # Video input, metadata, quality checks
+  reconstruction/
+    adapters/
+      slam3r/
+      vggt/
+      video_to_3dgs/
+    benchmark/
+    normalization/
+  room_processing/
+    meshing/
+    semantics/
+    collision/
+    occlusion/
+  ar_runtime/
+    tracking/
+    relocalization/
+    anchors/
+  horror/
+    director/
+    spawning/
+    navigation/
+    perception/
+    audio/
+  schemas/
+  tools/room_inspector/
+  tests/
+  sample_rooms/
+  docs/
+</code></pre>
+<p>Wrap external repositories in adapters rather than copying their entire code into the application. Keep licenses and upstream versions documented. If an existing directory structure is already established, adapt this layout rather than reorganizing unnecessarily.</p>
+<h2 id="6-proposed-scene-data-contract">6. Proposed scene data contract</h2>
+<p>The following is a <strong>new application-level schema proposal</strong>, not an output format guaranteed by any listed repository:</p>
+<pre><code class="language-json">{
+  &quot;schema_version&quot;: &quot;1.0&quot;,
+  &quot;room_id&quot;: &quot;sample_room_001&quot;,
+  &quot;units&quot;: &quot;meters&quot;,
+  &quot;coordinate_system&quot;: &quot;documented_right_handed_room_frame&quot;,
+  &quot;reconstruction_backend&quot;: &quot;selected_backend&quot;,
+  &quot;source_video&quot;: &quot;capture/room.mp4&quot;,
+  &quot;room_to_reconstruction_transform&quot;: &quot;4x4_matrix_reference&quot;,
+  &quot;room_to_ar_world_transform&quot;: &quot;runtime_resolved_4x4_matrix&quot;,
+  &quot;scale_confidence&quot;: null,
+  &quot;assets&quot;: {
+    &quot;visual&quot;: &quot;room_visual.glb&quot;,
+    &quot;collision&quot;: &quot;room_collision.glb&quot;,
+    &quot;occlusion&quot;: &quot;room_occlusion.glb&quot;
+  },
+  &quot;surfaces&quot;: [
+    {&quot;id&quot;: &quot;floor_01&quot;, &quot;type&quot;: &quot;floor&quot;, &quot;confidence&quot;: 0.0}
+  ],
+  &quot;objects&quot;: [
+    {&quot;id&quot;: &quot;door_01&quot;, &quot;type&quot;: &quot;doorway&quot;, &quot;confidence&quot;: 0.0}
+  ],
+  &quot;spawn_zones&quot;: [],
+  &quot;tracking&quot;: {&quot;relocalization_method&quot;: &quot;to_be_selected&quot;}
+}
+</code></pre>
+<p>Replace illustrative values with measured data. Store matrices in a specified convention and validate them on import. A null scale confidence means unverified scale, not a successful metric reconstruction.</p>
+<h2 id="7-acceptance-tests-and-decision-gates">7. Acceptance tests and decision gates</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Pass condition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reconstruction integrity</td>
+<td>Main walls, floor, and doorways form a coherent, inspectable scene; major floating fragments identified</td>
+</tr>
+<tr>
+<td>Export/import</td>
+<td>Round-trip import preserves axes, orientation, scale assumptions, and geometry</td>
+</tr>
+<tr>
+<td>Semantic editing</td>
+<td>Developer can inspect and correct door/furniture/floor labels</td>
+</tr>
+<tr>
+<td>AR alignment</td>
+<td>Overlays remain acceptably aligned during a full walk around the test room; drift is measured</td>
+</tr>
+<tr>
+<td>Occlusion</td>
+<td>Monster disappears behind mapped solid objects from multiple camera angles</td>
+</tr>
+<tr>
+<td>Collision</td>
+<td>Monster does not visibly intersect major furniture or walls</td>
+</tr>
+<tr>
+<td>Persistence</td>
+<td>Reopening a saved room supports documented relocalization or an explicit recalibration flow</td>
+</tr>
+<tr>
+<td>Failure behavior</td>
+<td>Tracking loss and bad geometry do not trigger unsafe or broken gameplay</td>
+</tr>
+<tr>
+<td>Performance</td>
+<td>Target-device FPS, latency, memory, and heat are measured against agreed budgets</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Before coding:</strong> Agree numeric thresholds for positional error, angular drift, minimum frame rate, scan duration, and room coverage based on target hardware. Do not invent success metrics from repository descriptions.</p>
+<h2 id="8-handoff-instructions-for-the-implementing-developer-agent">8. Handoff instructions for the implementing developer / agent</h2>
+<ol>
+<li><strong>Read</strong> <code>Single_Video_Interior_3D_Mapping_GitHub_Repos.md</code> and this document first.</li>
+<li><strong>Inspect</strong> the existing app and current MASt3R pipeline before changing dependencies, architecture, or UI.</li>
+<li><strong>Verify</strong> repository URLs, licenses, model-weight terms, active setup instructions, supported exports, and platform constraints.</li>
+<li><strong>Reproduce</strong> the existing failure and isolate whether it is caused by reconstruction, meshing, transforms, or rendering.</li>
+<li><strong>Benchmark</strong> SLAM3R, VGGT, and video-to-3dgs against the same video, recording commands, results, timing, and GPU memory.</li>
+<li><strong>Choose</strong> one backend based on structural map quality; explain the selection and rejected alternatives.</li>
+<li><strong>Implement</strong> the RoomPackage contract and build a debug viewer before adding enemy behavior.</li>
+<li><strong>Integrate</strong> with existing AR tracking; explicitly solve room-to-live-camera alignment and scale.</li>
+<li><strong>Build</strong> one complete horror encounter using actual room geometry and validate it on a physical device.</li>
+<li><strong>Deliver</strong> working code, setup instructions, reproducible tests, sample room assets, performance measurements, and a known-issues list. Never report a feature complete solely because a demo image or desktop viewer looks correct.</li>
+</ol>
+<h3 id="required-progress-report-format">Required progress report format</h3>
+<p>For each phase report: <strong>implemented</strong>, <strong>verified on device</strong>, <strong>blocked</strong>, <strong>evidence/paths</strong>, <strong>next action</strong>. Clearly distinguish planned capabilities from demonstrated behavior.</p>
+<h2 id="9-immediate-first-sprint">9. Immediate first sprint</h2>
+<ul>
+<li>Day/task 1: Audit current code and hardware; collect failing MASt3R artifacts.</li>
+<li>Day/task 2: Build repeatable frame extraction and benchmark harness.</li>
+<li>Day/task 3: Run SLAM3R and VGGT on the reference capture.</li>
+<li>Day/task 4: Run video-to-3dgs and compare mesh/point-cloud outputs.</li>
+<li>Day/task 5: Inspect geometry and select primary/fallback strategy.</li>
+<li>Day/task 6: Implement RoomPackage export and a scene debug overlay.</li>
+<li>Day/task 7: Demonstrate a virtual object anchored to a real, reconstructed doorway with measured tracking error.</li>
+</ul>
+<p>Tasks are ordered work items, not guaranteed one-day estimates. Escalate early if dependencies, licensing, hardware, or device tracking make the plan infeasible.</p>
+<h2 id="10-non-negotiable-engineering-principles">10. Non-negotiable engineering principles</h2>
+<ul>
+<li>Prioritize <strong>coherent physical geometry</strong> over attractive splat renders.</li>
+<li>Never equate offline reconstruction with live AR localization.</li>
+<li>Keep rendering, occlusion, collision, and semantic data separate.</li>
+<li>Do not discard the existing app or working assets without justification.</li>
+<li>Use measured tests and inspect raw intermediate outputs.</li>
+<li>Maintain a clear path from <strong>one room video</strong> to <strong>one stable AR horror encounter</strong>.</li>
+</ul>
+<hr />
+<p><strong>Source:</strong> <code>Single_Video_Interior_3D_Mapping_GitHub_Repos.md</code>, supplied November 17, 2026. The repository roles and observed MASt3R issues come from that source. AR integration, horror mechanics, architecture, schemas, testing, and delivery phases are proposed implementation work rather than verified repository features.</p>
+</article></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#1-product-objective">1. Product objective</a><a class="toc-h2" href="#2-source-material-and-roles">2. Source material and roles</a><a class="toc-h2" href="#3-proposed-system-architecture">3. Proposed system architecture</a><a class="toc-h2" href="#4-implementation-phases">4. Implementation phases</a><a class="toc-h3" href="#phase-0-audit-and-establish-a-reproducible-baseline">Phase 0 — Audit and establish a reproducible baseline</a><a class="toc-h3" href="#phase-1-reconstruction-backend-bake-off">Phase 1 — Reconstruction backend bake-off</a><a class="toc-h3" href="#phase-2-convert-reconstruction-into-an-ar-ready-room-package">Phase 2 — Convert reconstruction into an AR-ready room package</a><a class="toc-h3" href="#phase-3-live-ar-alignment-and-persistence">Phase 3 — Live AR alignment and persistence</a><a class="toc-h3" href="#phase-4-horror-specific-spatial-intelligence">Phase 4 — Horror-specific spatial intelligence</a><a class="toc-h3" href="#phase-5-gameplay-vertical-slice">Phase 5 — Gameplay vertical slice</a><a class="toc-h3" href="#phase-6-optimize-and-harden">Phase 6 — Optimize and harden</a><a class="toc-h2" href="#5-recommended-code-organization">5. Recommended code organization</a><a class="toc-h2" href="#6-proposed-scene-data-contract">6. Proposed scene data contract</a><a class="toc-h2" href="#7-acceptance-tests-and-decision-gates">7. Acceptance tests and decision gates</a><a class="toc-h2" href="#8-handoff-instructions-for-the-implementing-developer-agent">8. Handoff instructions for the implementing developer / agent</a><a class="toc-h3" href="#required-progress-report-format">Required progress report format</a><a class="toc-h2" href="#9-immediate-first-sprint">9. Immediate first sprint</a><a class="toc-h2" href="#10-non-negotiable-engineering-principles">10. Non-negotiable engineering principles</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework revision 0.2</span></a><span>Research prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download vault</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

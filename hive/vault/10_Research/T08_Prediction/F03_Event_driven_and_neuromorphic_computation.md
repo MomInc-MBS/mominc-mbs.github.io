@@ -1,0 +1,37 @@
+---
+id: "F03"
+title: "Event-driven and neuromorphic computation"
+type: "frontier_path"
+status: "unexplored"
+evidence_status: "design_proposal"
+implementation_status: "not_implemented"
+created: "2026-11-20"
+tags:
+  - hive
+  - hive/frontier_path
+---
+
+# Event-driven and neuromorphic computation
+
+**Parent:** [Prediction and alternative intelligence](T08_Prediction.md)  
+**Status:** adjacent avenue; no HIVE result claimed.
+
+## New question
+
+Could small event-driven or dynamical components handle time-sensitive signals efficiently?
+
+## First discriminating test
+
+Choose one bounded temporal task; compare accuracy and end-to-end cost with a conventional classifier.
+
+## Research collection
+
+- Find an original mechanism paper and a reproducible implementation, if available.
+- Look for a competing approach and a failure boundary.
+- Link the source to a precise claim, not just to a topic name.
+- Estimate the minimum experiment using existing local tools.
+- Record an explicit stop/revisit condition if the path is currently too costly.
+
+## Connected work
+
+[Compare generalists, independent specialists, adapters and hybrids](../../40_Experiments/E03_Expert_Architecture_Comparison.md) · [Branching literature discovery](../T10_Research/P31_Branching_literature_discovery.md) · [Biology and physical translation](../T10_Research/P33_Biology_and_physical_translation.md) · [Topic-based research-agent workflow](../../70_Local_Build/B05_Research_Agent_Workflow.md) · [Evidence, disagreements, and research state](../../04_Evidence_and_Disagreement.md)

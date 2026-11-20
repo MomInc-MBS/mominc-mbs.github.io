@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HIVE AI Validation Benchmark Harness 1 · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#122c32"><link rel="canonical" href="https://mominc.online/hive/notes/original-HIVE_AI_Validation_Benchmark_Harness_1/">
+<meta property="og:title" content="HIVE AI Validation Benchmark Harness 1 · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=1"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=1">
+<script defer src="/hive/assets/hive.js?v=1"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/ROADMAP/">Build</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 286 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download Obsidian vault</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=original">Archived original</a><span>/</span><span>original-HIVE_AI_Validation_Benchmark_Harness_1</span></div>
+<div class="doc-meta"><span class="badge">Preserved original</span><span class="badge neutral">Historical</span></div><div class="doc-tools"><button class="copy-link" data-title="HIVE AI Validation Benchmark Harness 1" data-id="original-HIVE_AI_Validation_Benchmark_Harness_1">Copy reference</button><a href="/hive/vault/90_Archive/Originals/HIVE_AI_Validation_Benchmark_Harness_1.md">Markdown source</a><button class="print-page">Print</button></div>
+<p class="archive-notice">Preserved historical original. Statements below reflect this source document; they are not a current implementation or a new measurement.</p><article class="prose"><h1 id="hive-ai-experimental-validation-benchmark-evaluation-harness">HIVE AI — Experimental Validation Benchmark &amp; Evaluation Harness</h1>
+<h2 id="1-objective-core-hypothesis-test">1. Objective &amp; Core Hypothesis Test</h2>
+<p>Before building all nine architectural layers at full scale, HIVE AI must empirically validate its foundational research hypothesis:</p>
+<blockquote>
+<p><strong>Hypothesis:</strong> A coordinated community of small (~1B–3B parameter) dynamically specialized cores—communicating over typed, non-conversational channels and gated by deterministic verifiers—can match or outperform a monolithic frontier/dense baseline ($\ge 70\text{B}$ parameters) on verifiable reasoning tasks while reducing active VRAM footprint, energy cost, and end-to-end latency.</p>
+</blockquote>
+<p>To avoid the failure modes identified in historical multi-agent systems (cascading hallucinations, conversational token overhead, and router collapse), this benchmark isolates <strong>dynamic adapter reuse</strong>, <strong>typed channel communication</strong>, and <strong>neuro-symbolic verification</strong> in a controlled, reproducible testbed.</p>
+<hr />
+<h2 id="2-benchmark-domain-selection">2. Benchmark Domain Selection</h2>
+<p>We select <strong>Two Complementary Verifiable Domains</strong> so that neither symbolic solvers nor neural intuition alone can trivialize the test:</p>
+<ol>
+<li><strong>Formal &amp; Symbolic Mathematics (Olympiad Algebra &amp; Number Theory Subset):</strong>
+<ul>
+<li><strong>Dataset:</strong> 500 problems sampled from <em>MATH (Level 4–5)</em>, <em>PutnamBench</em>, and <em>miniF2F</em>.</li>
+<li><strong>Why:</strong> Requires creative lemma intuition (neural strength) paired with exact algebraic manipulation and formal proof checking (symbolic/deterministic strength).</li>
+</ul>
+</li>
+<li><strong>Algorithmic Software Engineering &amp; Bug Repair:</strong>
+<ul>
+<li><strong>Dataset:</strong> 300 isolated tasks from <em>SWE-bench Verified</em> and <em>LiveCodeBench (Hard)</em>.</li>
+<li><strong>Why:</strong> Tests multi-role assembly (Planner $\rightarrow$ Coder $\rightarrow$ Test Generator $\rightarrow$ Debugger) where unit test suites and AST linters serve as deterministic Layer 8 gates.</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h2 id="3-experimental-architecture-minimal-viable-hive">3. Experimental Architecture (Minimal Viable Hive)</h2>
+<p>Instead of loading five separate large models, the prototype runs <strong>one shared frozen base execution core</strong> (e.g., <code>Qwen2.5-3B-Instruct</code> or <code>Llama-3.2-3B</code>) served via a multi-adapter batching engine (<code>S-LoRA</code> / <code>vLLM</code> multi-LoRA), paired with lightweight non-neural modules.</p>
+<h3 id="component-topology">Component Topology</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Implementation</th>
+<th>Parameter / Compute Footprint</th>
+<th>Layer Mapping</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LAYA Router &amp; Gate</strong></td>
+<td>Fine-tuned <code>DeBERTa-v3-small</code> classifier + deterministic rule engine</td>
+<td>~140M params (&lt; 5ms latency)</td>
+<td>Layer 2 (Logic &amp; Decision)</td>
+</tr>
+<tr>
+<td><strong>Execution Core (Shared)</strong></td>
+<td>Frozen 3B dense backbone in FP16/BF16</td>
+<td>3.0B params (~6 GB VRAM)</td>
+<td>Layer 3 (Dynamic Execution)</td>
+</tr>
+<tr>
+<td><strong>Specialist Adapters</strong></td>
+<td>5 hot-swappable LoRA adapters ($r=32$): <code>Planner</code>, <code>Solver/Coder</code>, <code>Symbolic-Translator</code>, <code>Critic</code>, <code>Repair</code></td>
+<td>~40M params each (~80 MB/adapter)</td>
+<td>Layer 4 (Specialist Hive)</td>
+</tr>
+<tr>
+<td><strong>Programmatic Solvers</strong></td>
+<td><code>SymPy</code>, <code>Z3</code> SMT Solver, <code>Lean 4</code> REPL, <code>Pytest</code> sandbox</td>
+<td>CPU-bound deterministic processes</td>
+<td>Layer 4 / Programmatic</td>
+</tr>
+<tr>
+<td><strong>Channel Bus</strong></td>
+<td>Zero-copy local message queue enforcing strict JSON/Pydantic schemas</td>
+<td>Negligible overhead</td>
+<td>Layer 5 &amp; 6 (Channels)</td>
+</tr>
+<tr>
+<td><strong>Verification Gate</strong></td>
+<td>Deterministic invariant &amp; execution checker</td>
+<td>Rule + Sandbox</td>
+<td>Layer 8 (Verification)</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="4-typed-channel-schemas-eliminating-natural-language-drift">4. Typed Channel Schemas (Eliminating Natural-Language Drift)</h2>
+<p>Specialists are <strong>prohibited</strong> from exchanging free-form conversational paragraphs. All inter-module payloads must validate against four strict schemas:</p>
+<h3 id="a-control-channel-controlschemajson">A. Control Channel (<code>control.schema.json</code>)</h3>
+<p>Used by the LAYA gate and orchestrator to recruit, pause, or terminate specialists based on confidence thresholds.</p>
+<pre><code class="language-json">{
+  &quot;task_id&quot;: &quot;uuid-v4&quot;,
+  &quot;target_adapter&quot;: &quot;symbolic_translator_v1&quot;,
+  &quot;priority&quot;: 1,
+  &quot;compute_budget_tokens&quot;: 512,
+  &quot;action&quot;: &quot;ACTIVATE | PAUSE | TERMINATE | ESCALATE&quot;
+}
+</code></pre>
+<h3 id="b-task-channel-taskschemajson">B. Task Channel (<code>task.schema.json</code>)</h3>
+<p>Carries structured sub-problems, AST diffs, or formal expressions between specialists.</p>
+<pre><code class="language-json">{
+  &quot;task_id&quot;: &quot;uuid-v4&quot;,
+  &quot;domain&quot;: &quot;math.algebra&quot;,
+  &quot;state_representation&quot;: &quot;sympy_expr&quot;,
+  &quot;payload&quot;: &quot;Eq(x**3 - 6*x**2 + 11*x - 6, 0)&quot;,
+  &quot;constraints&quot;: [&quot;x in Integers&quot;, &quot;x &gt; 0&quot;],
+  &quot;parent_step_id&quot;: &quot;step-02&quot;
+}
+</code></pre>
+<h3 id="c-evidence-channel-evidenceschemajson">C. Evidence Channel (<code>evidence.schema.json</code>)</h3>
+<p>Propagates results alongside machine-verifiable provenance and calibrated uncertainty.</p>
+<pre><code class="language-json">{
+  &quot;step_id&quot;: &quot;step-03&quot;,
+  &quot;producer&quot;: &quot;z3_solver_node&quot;,
+  &quot;claim&quot;: &quot;x in {1, 2, 3}&quot;,
+  &quot;verification_status&quot;: &quot;PROVEN_DETERMINISTIC&quot;,
+  &quot;confidence&quot;: 1.0,
+  &quot;proof_artifact_ref&quot;: &quot;mem://episodic/task-99/z3_trace.smt2&quot;
+}
+</code></pre>
+<h3 id="d-teaching-channel-teachingschemajson">D. Teaching Channel (<code>teaching.schema.json</code>)</h3>
+<p>Triggered only when Layer 8 verification fails; packages counterexamples for immediate retry or offline LoRA fine-tuning.</p>
+<pre><code class="language-json">{
+  &quot;failed_step_id&quot;: &quot;step-03&quot;,
+  &quot;target_adapter&quot;: &quot;solver_coder_v1&quot;,
+  &quot;error_type&quot;: &quot;ASSERTION_FAILURE&quot;,
+  &quot;counterexample&quot;: &quot;Input x=2 yielded division by zero in denominator (x - 2)&quot;,
+  &quot;corrective_directive&quot;: &quot;Add domain exclusion constraint x != 2 before simplifying.&quot;
+}
+</code></pre>
+<hr />
+<h2 id="5-baselines-ablation-matrix">5. Baselines &amp; Ablation Matrix</h2>
+<p>To prove that gains come from <strong>HIVE’s architecture</strong> rather than any single component, evaluate five configurations under identical hardware constraints (single NVIDIA A100 80GB or dual RTX 4090s):</p>
+<ol>
+<li><strong>Baseline A (Monolithic Dense):</strong> Single <code>70B</code> parameter general-purpose model (e.g., <code>Llama-3.3-70B-Instruct</code> in 4-bit/8-bit) with Chain-of-Thought prompting.</li>
+<li><strong>Baseline B (Standard Multi-Agent Chat):</strong> Three <code>8B</code> models communicating via natural-language turns (AutoGen/CrewAI style) without typed channels or symbolic gates.</li>
+<li><strong>HIVE-Full (Proposed Prototype):</strong> Single <code>3B</code> frozen core + 5 hot-swappable LoRAs + LAYA router + Typed Channels + SymPy/Z3/Pytest deterministic gates.</li>
+<li><strong>Ablation 1 (No Deterministic Gate):</strong> <code>HIVE-Full</code> with Layer 8 symbolic/test verifiers disabled (tests how much verification prevents hallucination cascades).</li>
+<li><strong>Ablation 2 (Natural-Language Channel):</strong> <code>HIVE-Full</code> replacing JSON/AST Task &amp; Evidence schemas with unstructured English summaries (tests information loss and token latency).</li>
+</ol>
+<hr />
+<h2 id="6-evaluation-metrics-success-criteria">6. Evaluation Metrics &amp; Success Criteria</h2>
+<p>Each configuration is scored across five quantitative dimensions corresponding directly to HIVE AI's five core research questions:</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Research Question</th>
+<th>Primary Metric</th>
+<th>Secondary Metric</th>
+<th>Target Success Threshold</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1. Specialization</strong></td>
+<td>Pass@1 Accuracy per domain</td>
+<td>Adapter parameter size vs. accuracy curve</td>
+<td>$\ge 90%$ of 70B baseline accuracy using $\le 3\text{B}$ active core</td>
+</tr>
+<tr>
+<td><strong>2. Composition</strong></td>
+<td>Multi-step solve rate on composite tasks</td>
+<td>Gain over best single specialist ($\Delta_{\text{comp}}$)</td>
+<td>$\Delta_{\text{comp}} \ge +15%$ over any isolated adapter</td>
+</tr>
+<tr>
+<td><strong>3. Communication</strong></td>
+<td>Inter-specialist token overhead</td>
+<td>Semantic drift / schema validation error rate</td>
+<td>$\ge 60%$ fewer tokens than Baseline B; $&lt; 1%$ schema errors</td>
+</tr>
+<tr>
+<td><strong>4. Adaptability</strong></td>
+<td>Adapter swap latency (ms)</td>
+<td>Throughput (tasks/sec) under mixed workloads</td>
+<td>$&lt; 15\text{ms}$ context/adapter switch overhead via S-LoRA</td>
+</tr>
+<tr>
+<td><strong>5. Efficiency</strong></td>
+<td>Peak VRAM (GB) &amp; Joules per solved task</td>
+<td>End-to-end wall-clock latency (p50 / p95)</td>
+<td>$\ge 4\times$ lower VRAM and $\ge 2\times$ higher throughput than Baseline A</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="7-execution-roadmap-8-week-sprint">7. Execution Roadmap (8-Week Sprint)</h2>
+<ul>
+<li><strong>Weeks 1–2 (Infrastructure &amp; Schemas):</strong> Deploy <code>S-LoRA</code> / <code>vLLM</code> multi-adapter server, Pydantic channel bus, and sandboxed <code>SymPy</code>/<code>Z3</code>/<code>Pytest</code> workers.</li>
+<li><strong>Weeks 3–4 (Specialist Training):</strong> Distill and fine-tune the 5 narrow LoRA adapters (<code>Planner</code>, <code>Solver</code>, <code>Translator</code>, <code>Critic</code>, <code>Repair</code>) on domain-specific traces; train the <code>DeBERTa</code> LAYA router.</li>
+<li><strong>Weeks 5–6 (Integration &amp; Gating):</strong> Wire Layer 8 verification gates so failed outputs automatically emit <code>Teaching Channel</code> counterexamples (up to $K=3$ retry loops) before committing verified solutions to collective memory.</li>
+<li><strong>Weeks 7–8 (Benchmarking &amp; Ablations):</strong> Run the 800-task suite across Baselines A/B and Ablations 1/2; publish telemetry on accuracy, VRAM, latency, and failure taxonomy.</li>
+</ul>
+</article></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#1-objective-core-hypothesis-test">1. Objective &amp; Core Hypothesis Test</a><a class="toc-h2" href="#2-benchmark-domain-selection">2. Benchmark Domain Selection</a><a class="toc-h2" href="#3-experimental-architecture-minimal-viable-hive">3. Experimental Architecture (Minimal Viable Hive)</a><a class="toc-h3" href="#component-topology">Component Topology</a><a class="toc-h2" href="#4-typed-channel-schemas-eliminating-natural-language-drift">4. Typed Channel Schemas (Eliminating Natural-Language Drift)</a><a class="toc-h3" href="#a-control-channel-controlschemajson">A. Control Channel (`control.schema.json`)</a><a class="toc-h3" href="#b-task-channel-taskschemajson">B. Task Channel (`task.schema.json`)</a><a class="toc-h3" href="#c-evidence-channel-evidenceschemajson">C. Evidence Channel (`evidence.schema.json`)</a><a class="toc-h3" href="#d-teaching-channel-teachingschemajson">D. Teaching Channel (`teaching.schema.json`)</a><a class="toc-h2" href="#5-baselines-ablation-matrix">5. Baselines &amp; Ablation Matrix</a><a class="toc-h2" href="#6-evaluation-metrics-success-criteria">6. Evaluation Metrics &amp; Success Criteria</a><a class="toc-h2" href="#7-execution-roadmap-8-week-sprint">7. Execution Roadmap (8-Week Sprint)</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework revision 0.2</span></a><span>Research prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download vault</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

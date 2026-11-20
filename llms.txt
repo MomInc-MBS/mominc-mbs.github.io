@@ -26,6 +26,11 @@ The television lives at https://mominc.online/tv/ . A channel is a query on that
 - [MYR5 vs Zombies, Run!](https://mominc.online/compare/myr5-vs-zombies-run/)
 - [MYR5 vs Nike Training Club](https://mominc.online/compare/myr5-vs-nike-training-club/)
 
+## HIVE research reference
+
+- [HIVE framework and research vault](https://mominc.online/hive/): the complete framework 0.2 research reference prepared for Ian Myers on 20 November 2026. Includes 286 linked pages, full-text search, 2,381 typed graph connections, evidence labels, experiment designs, and 19 preserved originals. This is a research and implementation specification; proposed experiments do not imply executed results.
+- [HIVE agent reference](https://mominc.online/hive/llms.txt): stable page IDs, source Markdown paths, search index, graph exports, and citation rules.
+
 ## About
 
 - [The television](https://mominc.online/tv/): the set itself, tuned to no one until you pick a channel.

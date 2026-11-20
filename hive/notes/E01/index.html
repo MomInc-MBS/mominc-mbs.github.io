@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reproduce prior simulations and separate estimates from measurements · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#122c32"><link rel="canonical" href="https://mominc.online/hive/notes/E01/">
+<meta property="og:title" content="Reproduce prior simulations and separate estimates from measurements · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=1"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=1">
+<script defer src="/hive/assets/hive.js?v=1"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/ROADMAP/">Build</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 286 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download Obsidian vault</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=experiment">Experiment</a><span>/</span><span>E01</span></div>
+<div class="doc-meta"><span class="badge">Hypothesis</span><span class="badge neutral">Not run</span></div><div class="doc-tools"><button class="copy-link" data-title="Reproduce prior simulations and separate estimates from measurements" data-id="E01">Copy reference</button><a href="/hive/vault/40_Experiments/E01_Reproduce_Prior_Work.md">Markdown source</a><a href="/hive/graph/?focus=E01">View connections</a><button class="print-page">Print</button></div>
+<article class="prose"><h1 id="reproduce-prior-simulations-and-separate-estimates-from-measurements">Reproduce prior simulations and separate estimates from measurements</h1>
+<blockquote>
+<p><strong>Status: prior artifacts recovered; the additional reproduction protocol below is proposed.</strong> Recovered inventory: <strong>32 matching manifests, 360 learning records, and 1,440 scheduler records</strong>. Preserve these existing records; do not describe the entire history as unrun.</p>
+</blockquote>
+<h2 id="hypothesis">Hypothesis</h2>
+<p>Recorded simulation conclusions survive exact reconstruction; their dependence on assumptions can be measured separately.</p>
+<h2 id="evidence-classes">Evidence classes</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Record type</th>
+<th>What it can establish</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Recovered manifests and numerical records</td>
+<td>Recorded configuration/output provenance</td>
+</tr>
+<tr>
+<td>Exact rerun of original NumPy/code</td>
+<td>Reproducibility of the recorded simulation</td>
+</tr>
+<tr>
+<td>Analytical estimate</td>
+<td>Consequences of stated assumptions and equations</td>
+</tr>
+<tr>
+<td>Executed model benchmark</td>
+<td>Behavior of the identified real models and workload</td>
+</tr>
+<tr>
+<td>Proposal without an execution artifact</td>
+<td>A research idea; no invented trial result</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="procedure">Procedure</h2>
+<ol>
+<li>Start from the recovered originals and their hashes; link the 32-manifest/360-learning/1,440-scheduler inventory.</li>
+<li>Rerun the original code, configuration, task order and seeds before changing anything.</li>
+<li>Compare outputs using a declared numerical tolerance and the original measurement definitions.</li>
+<li>Keep repairs in a new version with a change log; never overwrite the original record.</li>
+<li>Run changed-assumption sensitivity trials as a separate experiment family.</li>
+</ol>
+<h2 id="outcomes-falsifier-and-revisit">Outcomes, falsifier and revisit</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Outcome</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>matched_original_configuration_reproduced</code></td>
+<td>Original conditions and outputs agree</td>
+</tr>
+<tr>
+<td><code>matched_original_configuration_failure</code></td>
+<td>Exact original conditions can run, but outputs disagree beyond tolerance</td>
+</tr>
+<tr>
+<td><code>changed_assumption_sensitivity</code></td>
+<td>Different assumptions change results; this is not a failed original reproduction</td>
+</tr>
+<tr>
+<td><code>blocked_reproduction</code></td>
+<td>Required code/data/environment is unavailable; no conclusion about reproducibility yet</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>Falsifier:</strong> a claimed robust ranking reverses under relevant plausible assumptions, or an exact rerun contradicts its recorded result.</li>
+<li><strong>Revisit:</strong> missing artifacts arrive, a bug is found, or real measurements replace simulated costs.</li>
+</ul>
+<h2 id="runs-and-outputs">Runs and outputs</h2>
+<ul>
+<li>Pilot: exact original seeds/order; deterministic calculations need no artificial seed replicates.</li>
+<li>Confirmation of sensitivity claims: three task orders × five seeds where stochastic, adjusted after variance/power assessment.</li>
+<li>Save original/corrected hashes, environment lock, commands, output comparisons, assumption tables and outcome labels.</li>
+<li>Simulation reproduction establishes simulation behavior; real-model capability needs its own evidence.</li>
+</ul>
+<h2 id="related-research-paths">Related research paths</h2>
+<p><a href="/hive/notes/P18/">Obsidian and Graphify</a> · <a href="/hive/notes/P31/">Branching literature discovery</a> · <a href="/hive/notes/P32/">Fair comparison and replication</a> · <a href="/hive/notes/P34/">Research-system improvement</a></p>
+<h2 id="related-decisions">Related decisions</h2>
+<p><a href="/hive/notes/D10/">Knowledge and runtime storage</a> · <a href="/hive/notes/D12/">How evidence changes a decision</a></p>
+</article><section class="backlinks"><h2>Referenced by <span>12</span></h2><div><a href="/hive/notes/P31/"><span>P31</span>Branching literature discovery<small>tested by</small></a><a href="/hive/notes/P32/"><span>P32</span>Fair comparison and replication<small>tested by</small></a><a href="/hive/notes/D12/"><span>D12</span>How evidence changes a decision<small>tested by</small></a><a href="/hive/notes/D10/"><span>D10</span>Knowledge and runtime storage<small>tested by</small></a><a href="/hive/notes/P18/"><span>P18</span>Obsidian and Graphify<small>tested by</small></a><a href="/hive/notes/P34/"><span>P34</span>Research-system improvement<small>tested by</small></a><a href="/hive/notes/EXPERIMENTS/"><span>EXPERIMENTS</span>Experiment index<small>related to</small></a><a href="/hive/notes/ROADMAP/"><span>ROADMAP</span>Local build roadmap and work packages<small>related to</small></a><a href="/hive/notes/T05/"><span>T05</span>Memory, evidence, and knowledge graphs<small>related to</small></a><a href="/hive/notes/DECISIONS/"><span>DECISIONS</span>Open design decisions<small>related to</small></a><a href="/hive/notes/AUDIT/"><span>AUDIT</span>Package audit and validation scope<small>related to</small></a><a href="/hive/notes/T10/"><span>T10</span>Research method and discovery<small>related to</small></a></div></section></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#hypothesis">Hypothesis</a><a class="toc-h2" href="#evidence-classes">Evidence classes</a><a class="toc-h2" href="#procedure">Procedure</a><a class="toc-h2" href="#outcomes-falsifier-and-revisit">Outcomes, falsifier and revisit</a><a class="toc-h2" href="#runs-and-outputs">Runs and outputs</a><a class="toc-h2" href="#related-research-paths">Related research paths</a><a class="toc-h2" href="#related-decisions">Related decisions</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework revision 0.2</span></a><span>Research prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download vault</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

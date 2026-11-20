@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Google evidence and the change to HIVE · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#122c32"><link rel="canonical" href="https://mominc.online/hive/notes/GOOGLE/">
+<meta property="og:title" content="Google evidence and the change to HIVE · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=1"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=1">
+<script defer src="/hive/assets/hive.js?v=1"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/ROADMAP/">Build</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 286 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download Obsidian vault</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=framework">Framework</a><span>/</span><span>GOOGLE</span></div>
+<div class="doc-meta"><span class="badge">Design proposal</span><span class="badge neutral">Not implemented</span></div><div class="doc-tools"><button class="copy-link" data-title="Google evidence and the change to HIVE" data-id="GOOGLE">Copy reference</button><a href="/hive/vault/02_Google_Evidence_and_Change.md">Markdown source</a><a href="/hive/graph/?focus=GOOGLE">View connections</a><button class="print-page">Print</button></div>
+<article class="prose"><h1 id="google-evidence-and-the-change-to-hive">Google evidence and the change to HIVE</h1>
+<h2 id="exact-source">Exact source</h2>
+<p>The relevant work is <a href="/hive/notes/S01/">The sleep framework: A new way for LLMs to retain knowledge in continual learning</a>, linked to <a href="/hive/notes/S02/">Language Models Need Sleep: Learning to Self-Modify and Consolidate Memories</a>. Related paths such as <a href="/hive/notes/S03/">Introducing Nested Learning: A new ML paradigm for continual learning</a>, <a href="/hive/notes/S04/">Titans + MIRAS: Helping AI have long-term memory</a>, <a href="/hive/notes/S05/">Sleep-time Compute: Beyond Inference Scaling at Test-time</a>, <a href="/hive/notes/S06/">Self-Adapting Language Models</a>, and <a href="/hive/notes/S08/">Do Language Models Need Sleep? Offline Recurrence for Improved Online Inference</a> remain separate.</p>
+<p><strong>Source interpretation:</strong> the evidence supports testing offline parametric consolidation and selected synthetic practice. It does not establish the whole HIVE architecture.</p>
+<h2 id="the-correction-to-our-earlier-interpretation">The correction to our earlier interpretation</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Earlier method</th>
+<th>What was tested</th>
+<th>What it can decide</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="/hive/notes/H03/">Replay ordering and the reopened sleep branch</a></td>
+<td>Identical minibatches in interleaved versus blocked order</td>
+<td>Replay scheduling in the recorded small synthetic models</td>
+</tr>
+<tr>
+<td><a href="/hive/notes/S02/">Language Models Need Sleep: Learning to Self-Modify and Consolidate Memories</a></td>
+<td>A different learning architecture and consolidation procedure</td>
+<td>Authors' results under their reported conditions</td>
+</tr>
+<tr>
+<td><a href="/hive/notes/E04/">Test sleep, replay order, expansion and distillation independently</a></td>
+<td>New controlled comparisons of the constituent mechanisms</td>
+<td>What transfers to a local HIVE workload</td>
+</tr>
+</tbody>
+</table></div>
+<p>The earlier blocked-replay result remains useful. Extending it into a rejection of sleep, expansion, distillation, or dreaming would be unsupported.</p>
+<h2 id="new-framework-work">New framework work</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Candidate behavior to implement</th>
+<th>Required comparison</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Learning journal</td>
+<td>Preserve verified experience and corrections</td>
+<td>Raw retrieval and current-data baseline</td>
+</tr>
+<tr>
+<td>Consolidation worker</td>
+<td>Produce a new stable memory or skill artifact</td>
+<td>Interleaved replay and equal-capacity controls</td>
+</tr>
+<tr>
+<td>Dream worker</td>
+<td>Propose unusual but checkable training tasks</td>
+<td>Verified real replay and random synthetic examples</td>
+</tr>
+<tr>
+<td>Capacity manager</td>
+<td>Track additions, compression, and retirement</td>
+<td>Fixed-capacity and declared-growth curves</td>
+</tr>
+<tr>
+<td>Release gate</td>
+<td>Check retained quality and compatibility</td>
+<td>No-change serving baseline</td>
+</tr>
+<tr>
+<td>Sleep scheduler</td>
+<td>Allocate learning time under live workload</td>
+<td>Whole-system, staggered, and idle-only operation</td>
+</tr>
+</tbody>
+</table></div>
+<p>These are HIVE engineering proposals: <a href="/hive/notes/P02/">Sleep consolidation</a>, <a href="/hive/notes/P03/">Dreaming and curriculum</a>, <a href="/hive/notes/P24/">Sleep without interrupting service</a>, and <a href="/hive/notes/E04/">Test sleep, replay order, expansion and distillation independently</a>–<a href="/hive/notes/E09/">Compare whole-system and per-specialist sleep during real service</a>.</p>
+<h2 id="keep-contrary-evidence-visible">Keep contrary evidence visible</h2>
+<p><a href="/hive/notes/S07/">Independent implementation: everrete/llm-sleep</a> records an independent implementation with a reported negative comparison and implementation gaps. Preserve it as a replication lead; inspect its choices before interpreting a failure as a verdict on the paper.</p>
+<h2 id="paper-fidelity-versus-an-engineering-analogue">Paper fidelity versus an engineering analogue</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Label</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Exact reproduction attempt</td>
+<td>Pinned paper version, resolved algorithm, matching architecture/data/evaluation, deviations enumerated</td>
+</tr>
+<tr>
+<td>Partial reproduction</td>
+<td>Reproduces a specified component or result only</td>
+</tr>
+<tr>
+<td>Sleep-inspired HIVE prototype</td>
+<td>Tests an adapted mechanism on HIVE tasks and hardware</td>
+</tr>
+<tr>
+<td>New HIVE extension</td>
+<td>Adds per-specialist scheduling, graph changes, or other mechanisms outside that source claim</td>
+</tr>
+</tbody>
+</table></div>
+<p>All four are useful. Record the correct label. The first local prototype should be described as an analogue until fidelity is established.</p>
+<p><a href="/hive/notes/EXPERIMENTS/">Experiment index</a> · <a href="/hive/notes/H03/">Replay ordering and the reopened sleep branch</a> · <a href="/hive/notes/SOURCES/">Primary sources and source trail</a></p>
+</article><section class="backlinks"><h2>Referenced by <span>1</span></h2><div><a href="/hive/notes/HOME/"><span>HOME</span>HIVE framework and research vault<small>related to</small></a></div></section></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#exact-source">Exact source</a><a class="toc-h2" href="#the-correction-to-our-earlier-interpretation">The correction to our earlier interpretation</a><a class="toc-h2" href="#new-framework-work">New framework work</a><a class="toc-h2" href="#keep-contrary-evidence-visible">Keep contrary evidence visible</a><a class="toc-h2" href="#paper-fidelity-versus-an-engineering-analogue">Paper fidelity versus an engineering analogue</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework revision 0.2</span></a><span>Research prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download vault</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

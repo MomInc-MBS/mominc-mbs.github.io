@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scale 100, 1,000 and 10,000 logical experts with measured active workers · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#122c32"><link rel="canonical" href="https://mominc.online/hive/notes/E10/">
+<meta property="og:title" content="Scale 100, 1,000 and 10,000 logical experts with measured active workers · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=1"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=1">
+<script defer src="/hive/assets/hive.js?v=1"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/ROADMAP/">Build</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 286 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download Obsidian vault</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=experiment">Experiment</a><span>/</span><span>E10</span></div>
+<div class="doc-meta"><span class="badge">Hypothesis</span><span class="badge neutral">Not run</span></div><div class="doc-tools"><button class="copy-link" data-title="Scale 100, 1,000 and 10,000 logical experts with measured active workers" data-id="E10">Copy reference</button><a href="/hive/vault/40_Experiments/E10_Logical_Expert_Registry_Scaling.md">Markdown source</a><a href="/hive/graph/?focus=E10">View connections</a><button class="print-page">Print</button></div>
+<article class="prose"><h1 id="scale-100-1000-and-10000-logical-experts-with-measured-active-workers">Scale 100, 1,000 and 10,000 logical experts with measured active workers</h1>
+<blockquote>
+<p><strong>Status: proposed; not run.</strong> Expert registry size, available parameter sets and simultaneously running models are different quantities.</p>
+</blockquote>
+<h2 id="hypothesis">Hypothesis</h2>
+<p>A large catalog of specialized roles/modules can remain useful with a smaller, dynamically scheduled active set; indexing, routing and coordination may become the bottlenecks.</p>
+<h2 id="arms">Arms</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Values to retain</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Logical expert registry</td>
+<td>100 / 1,000 / 10,000 entries</td>
+</tr>
+<tr>
+<td>Active workers</td>
+<td>Sweep from measured hardware feasibility; no fixed two-model cap</td>
+</tr>
+<tr>
+<td>Representation</td>
+<td>Prompts/tools / adapters / independent checkpoints / hybrid</td>
+</tr>
+<tr>
+<td>Routing</td>
+<td>Flat lookup / hierarchical routing / retrieval-assisted selection</td>
+</tr>
+<tr>
+<td>Scheduling</td>
+<td>Resident / queued / cached loading / mixed</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="procedure">Procedure</h2>
+<ol>
+<li>Benchmark registry/index operations with synthetic entries and explicit simulated task costs.</li>
+<li>Separately run real models at measured active-worker counts.</li>
+<li>Populate meaningful distinct specialists for capability tests; duplicated labels do not create new expertise.</li>
+<li>Measure warm and cold selection, loading, fanout, contention and failure recovery.</li>
+<li>Calibrate the simulation against measured runs; mark extrapolations beyond observed conditions.</li>
+</ol>
+<h2 id="measures-and-falsifier">Measures and falsifier</h2>
+<ul>
+<li>Route quality and search time; cache hit rate; queue wait; loading cost; useful concurrency.</li>
+<li>Task success per total cost; duplicated work; cascade failures; RAM/VRAM/disk footprint.</li>
+<li><strong>Falsifier:</strong> larger catalogs add noise/overhead without improved held-out task coverage, or simulated gains fail in real runs.</li>
+<li><strong>Revisit:</strong> better indexing, distinct expert training, hardware changes or new task diversity.</li>
+</ul>
+<h2 id="runs-and-outputs">Runs and outputs</h2>
+<ul>
+<li>Pilot: synthetic scheduling sweep and a small calibrated real-model run.</li>
+<li>Confirmation: three task orders × five seeds per selected configuration; expand with variance/power needs.</li>
+<li>Save registry manifest, distinct capability coverage, actual active counts, simulation assumptions and real runtime traces.</li>
+<li>Report orchestration scalability separately from intelligence or model-capability improvement.</li>
+</ul>
+<h2 id="related-research-paths">Related research paths</h2>
+<p><a href="/hive/notes/P10/">Communities and local recruitment</a> · <a href="/hive/notes/P11/">Adaptive graph and grouping</a> · <a href="/hive/notes/P22/">Logical expert scale</a> · <a href="/hive/notes/P23/">Admission and residency</a></p>
+<h2 id="related-decisions">Related decisions</h2>
+<p><a href="/hive/notes/D05/">Central or distributed control</a> · <a href="/hive/notes/D08/">Growth, compression, and scale</a></p>
+</article><section class="backlinks"><h2>Referenced by <span>14</span></h2><div><a href="/hive/notes/P11/"><span>P11</span>Adaptive graph and grouping<small>tested by</small></a><a href="/hive/notes/P23/"><span>P23</span>Admission and residency<small>tested by</small></a><a href="/hive/notes/D05/"><span>D05</span>Central or distributed control<small>tested by</small></a><a href="/hive/notes/P10/"><span>P10</span>Communities and local recruitment<small>tested by</small></a><a href="/hive/notes/F04/"><span>F04</span>Economic resource allocation<small>tested by</small></a><a href="/hive/notes/D08/"><span>D08</span>Growth, compression, and scale<small>tested by</small></a><a href="/hive/notes/C08/"><span>C08</span>Large expert counts remain unmeasured<small>tested by</small></a><a href="/hive/notes/P22/"><span>P22</span>Logical expert scale<small>tested by</small></a><a href="/hive/notes/T03/"><span>T03</span>Coordination and supervision<small>related to</small></a><a href="/hive/notes/EXPERIMENTS/"><span>EXPERIMENTS</span>Experiment index<small>related to</small></a><a href="/hive/notes/ROADMAP/"><span>ROADMAP</span>Local build roadmap and work packages<small>related to</small></a><a href="/hive/notes/DECISIONS/"><span>DECISIONS</span>Open design decisions<small>related to</small></a><a href="/hive/notes/HISTORY/"><span>HISTORY</span>Previous research and attempted methods<small>related to</small></a><a href="/hive/notes/T07/"><span>T07</span>Resources and scale<small>related to</small></a></div></section></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#hypothesis">Hypothesis</a><a class="toc-h2" href="#arms">Arms</a><a class="toc-h2" href="#procedure">Procedure</a><a class="toc-h2" href="#measures-and-falsifier">Measures and falsifier</a><a class="toc-h2" href="#runs-and-outputs">Runs and outputs</a><a class="toc-h2" href="#related-research-paths">Related research paths</a><a class="toc-h2" href="#related-decisions">Related decisions</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework revision 0.2</span></a><span>Research prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download vault</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

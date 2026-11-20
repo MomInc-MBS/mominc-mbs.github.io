@@ -1,0 +1,261 @@
+"""Build the HIVE web reference from an unmodified research-vault export.
+
+Usage: python tools/build_hive.py /path/to/HIVE_Framework_Research_Vault --zip /path/to/original.zip
+Requires markdown-it-py and PyYAML. Generated pages have stable, case-sensitive IDs.
+"""
+from __future__ import annotations
+
+import argparse
+import hashlib
+import html
+import json
+import math
+import posixpath
+import re
+import shutil
+from collections import Counter, defaultdict
+from pathlib import Path
+from urllib.parse import quote, unquote, urlsplit
+
+import yaml
+from markdown_it import MarkdownIt
+
+ROOT = Path(__file__).resolve().parents[1]
+OUT = ROOT / 'hive'
+BASE = '/hive/'
+ORIGIN = 'https://mominc.online'
+LABELS = {
+    'index': 'Index', 'framework': 'Framework', 'topic': 'Topic',
+    'research_path': 'Research path', 'frontier_path': 'Frontier path',
+    'source': 'Primary source', 'historical_source': 'Source history',
+    'prior_method': 'Prior method', 'legacy_catalog_entry': 'Legacy catalog',
+    'experiment': 'Experiment', 'decision': 'Decision', 'metaphor': 'Metaphor',
+    'claim': 'Claim', 'build': 'Local build', 'audit': 'Package audit',
+    'template': 'Template', 'original': 'Archived original',
+    'design_proposal': 'Design proposal',
+    'primary_source_reviewed': 'Primary source reviewed',
+    'prior_artifact_reviewed': 'Prior artifact reviewed',
+    'historical_import_not_reverified': 'Historical import · not reverified',
+    'preserved_original': 'Preserved original',
+    'primary_observation_linked': 'Primary observation linked',
+    'navigation': 'Navigation', 'hypothesis': 'Hypothesis',
+    'scoped_claim_with_links': 'Scoped claim with links', 'artifact_checks': 'Artifact checks',
+    'not_implemented': 'Not implemented', 'generated': 'Generated',
+}
+NAV = [('HOME', 'Start here'), ('FRAMEWORK', 'The framework'), ('MAP', 'Research map'),
+       ('DECISIONS', 'Open decisions'), ('EVIDENCE', 'Evidence & disagreement'),
+       ('HISTORY', 'Previous work'), ('ROADMAP', 'Build roadmap'), ('ARCHIVE', 'Original documents')]
+
+
+def esc(value):
+    return html.escape(str(value), quote=True)
+
+
+def label(value):
+    return LABELS.get(value, value.replace('_', ' ').capitalize())
+
+
+def url(node):
+    return BASE + 'notes/' + quote(node['id'], safe='') + '/'
+
+
+def write(path, text):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(text, encoding='utf-8', newline='\n')
+
+
+def frontmatter(text):
+    match = re.match(r'^---\r?\n(.*?)\r?\n---\r?\n', text, re.S)
+    return (yaml.safe_load(match[1]), text[match.end():]) if match else ({}, text)
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument('vault', type=Path)
+    ap.add_argument('--zip', type=Path, required=True)
+    args = ap.parse_args()
+    vault = args.vault.resolve()
+    graph = json.loads((vault / '99_Data/research_graph.json').read_text(encoding='utf-8'))
+    nodes = {n['id']: dict(n) for n in graph['nodes']}
+    by_path = {n['path']: n for n in nodes.values()}
+    for node in nodes.values():
+        meta, body = frontmatter((vault / node['path']).read_text(encoding='utf-8'))
+        node.update(body=body, tags=meta.get('tags', []))
+    # Originals receive a reading view as well as their byte-identical download.
+    originals = []
+    for p in sorted((vault / '90_Archive/Originals').glob('*')):
+        if p.suffix == '.md':
+            n = dict(id='original-' + p.stem, path=p.relative_to(vault).as_posix(),
+                     title=p.stem.replace('_', ' '), type='original',
+                     status='historical', evidence_status='preserved_original',
+                     implementation_status='historical', body=p.read_text(encoding='utf-8'), tags=[])
+            by_path[n['path']] = n
+            originals.append(n)
+
+    def resolve(path, current):
+        parsed = urlsplit(path)
+        if parsed.scheme or parsed.netloc or path.startswith(('#', '/')):
+            return path
+        relative = posixpath.normpath(posixpath.join(posixpath.dirname(current), unquote(parsed.path)))
+        dest = url(by_path[relative]) if relative in by_path else BASE + 'vault/' + quote(relative, safe='/')
+        return dest + ('?' + parsed.query if parsed.query else '') + ('#' + parsed.fragment if parsed.fragment else '')
+
+    # A small heading index gives every rendered section a stable anchor.
+    def render(node):
+        md = MarkdownIt('commonmark', {'html': False}).enable('table').enable('strikethrough')
+        tokens = md.parse(node['body'])
+        toc, seen = [], Counter()
+        for i, t in enumerate(tokens):
+            if t.type == 'heading_open':
+                title = tokens[i + 1].content
+                anchor = re.sub(r'[^\w\s-]', '', title.lower()).strip()
+                anchor = re.sub(r'\s+', '-', anchor)
+                seen[anchor] += 1
+                if seen[anchor] > 1:
+                    anchor += '-' + str(seen[anchor])
+                t.attrSet('id', anchor)
+                if t.tag in ('h2', 'h3'):
+                    toc.append((t.tag, anchor, title))
+            for child in (t.children or []):
+                if child.type == 'link_open':
+                    href = child.attrGet('href')
+                    child.attrSet('href', resolve(href, node['path']))
+                    if href.startswith(('https://', 'http://')):
+                        child.attrSet('rel', 'noreferrer')
+                elif child.type == 'image':
+                    child.attrSet('src', resolve(child.attrGet('src'), node['path']))
+                    child.attrSet('loading', 'lazy')
+        result = md.renderer.render(tokens, md.options, {})
+        result = re.sub(r'<table>(.*?)</table>', r'<div class="table-wrap" tabindex="0">' + r'<table>\1</table></div>', result, flags=re.S)
+        return '\n'.join(line.rstrip() for line in result.split('\n')), toc
+
+    def shell(title, content, path, active='', description='', extra='', body_class=''):
+        navlinks = ''.join(f'<a href="{url(nodes[k])}" {"aria-current=page" if k == active else ""}>{esc(t)}</a>' for k, t in NAV if k in nodes)
+        return f'''<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{esc(title)} · HIVE</title><meta name="description" content="{esc(description or 'The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.')}">
+<meta name="theme-color" content="#122c32"><link rel="canonical" href="{ORIGIN}{path}">
+<meta property="og:title" content="{esc(title)} · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="{BASE}assets/hive.svg" type="image/svg+xml"><link rel="stylesheet" href="{BASE}assets/hive.css?v=1"><link rel="stylesheet" href="{BASE}assets/diagrams.css?v=1">
+<script defer src="{BASE}assets/hive.js?v=1"></script>{extra}</head>
+<body class="{body_class}"><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="{BASE}" aria-label="HIVE home"><img src="{BASE}assets/hive.svg" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="{url(nodes['FRAMEWORK'])}">Framework</a><a href="{BASE}explore/">Explore</a><a href="{BASE}graph/">Graph</a><a href="{url(nodes['ROADMAP'])}">Build</a></nav>
+<a class="search-trigger" href="{BASE}search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden>{navlinks}<a href="{BASE}explore/">Browse all pages</a><a href="{BASE}graph/">Interactive graph</a></nav>
+{content}
+<footer class="footer"><a class="footer-brand" href="{BASE}">HIVE <span>/ Framework revision 0.2</span></a><span>Research prepared for Ian Myers · 20 Nov 2026</span><div><a href="{BASE}downloads/HIVE_Framework_Research_Vault.zip" download>Download vault</a><a href="{BASE}llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>'''
+
+    OUT.mkdir(exist_ok=True)
+    # Copy without transforming any source bytes, including the 19 originals.
+    shutil.copytree(vault, OUT / 'vault', dirs_exist_ok=True, ignore=shutil.ignore_patterns('.obsidian', '__pycache__'))
+    (OUT / 'downloads').mkdir(exist_ok=True)
+    shutil.copyfile(args.zip, OUT / 'downloads/HIVE_Framework_Research_Vault.zip')
+    inbound = defaultdict(list)
+    for edge in graph['edges']:
+        inbound[edge['target']].append(edge)
+
+    for node in [*nodes.values(), *originals]:
+        rendered, toc = render(node)
+        related = [e for e in inbound[node['id']] if e['source'] != node['id']]
+        # Show the stronger typed relationships before general related-to links.
+        related.sort(key=lambda e: (e['relation'] == 'related_to', e['relation'], nodes[e['source']]['title']))
+        seen_related, items = set(), []
+        for e in related:
+            if e['source'] in seen_related:
+                continue
+            seen_related.add(e['source'])
+            items.append(f'<a href="{url(nodes[e["source"]])}"><span>{esc(e["source"])}</span>{esc(nodes[e["source"]]["title"])}<small>{esc(e["relation"].replace("_", " "))}</small></a>')
+        backlinks = f'<section class="backlinks"><h2>Referenced by <span>{len(items)}</span></h2><div>{"".join(items)}</div></section>' if items else ''
+        navlinks = ''.join(f'<a href="{url(nodes[k])}" {"aria-current=page" if k == node["id"] else ""}>{esc(t)}</a>' for k, t in NAV if k in nodes)
+        toc_html = ''.join(f'<a class="toc-{level}" href="#{esc(anchor)}">{esc(title)}</a>' for level, anchor, title in toc)
+        status = f'<span class="badge">{esc(label(node["evidence_status"]))}</span>'
+        impl = node.get('implementation_status', '')
+        status += f'<span class="badge neutral">{esc(label(impl))}</span>' if impl and impl != 'generated' else ''
+        graph_link = f'<a href="{BASE}graph/?focus={quote(node["id"])}">View connections</a>' if node['id'] in nodes else ''
+        notice = '<p class="archive-notice">Preserved historical original. Statements below reflect this source document; they are not a current implementation or a new measurement.</p>' if node['type'] == 'original' else ''
+        content = f'''<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p>{navlinks}<div class="sidebar-rule"></div><a href="{BASE}explore/">Browse all 286 pages</a><a href="{BASE}explore/?type=experiment">Experiments</a><a href="{BASE}explore/?type=source">Primary sources</a><a href="{BASE}explore/?type=legacy_catalog_entry">100-project catalog</a><a href="{BASE}downloads/HIVE_Framework_Research_Vault.zip" download>Download Obsidian vault</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="{BASE}">HIVE</a><span>/</span><a href="{BASE}explore/?type={node['type']}">{esc(label(node['type']))}</a><span>/</span><span>{esc(node['id'])}</span></div>
+<div class="doc-meta">{status}</div><div class="doc-tools"><button class="copy-link" data-title="{esc(node['title'])}" data-id="{esc(node['id'])}">Copy reference</button><a href="{BASE}vault/{quote(node['path'], safe='/')}">Markdown source</a>{graph_link}<button class="print-page">Print</button></div>
+{notice}<article class="prose">{rendered}</article>{backlinks}</main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p>{toc_html}<a class="back-top" href="#main">Back to top</a></aside></div>'''
+        write(OUT / 'notes' / node['id'] / 'index.html', shell(node['title'], content, url(node), node['id']))
+
+    count = Counter(n['type'] for n in nodes.values())
+    def card(node_id, desc):
+        n = nodes[node_id]
+        return f'<a class="entry-card" href="{url(n)}"><span class="eyebrow">{esc(label(n["type"]))}</span><h3>{esc(n["title"])}</h3><p>{esc(desc)}</p><span class="card-link">Read {esc(node_id)}</span></a>'
+
+    topics = [n for n in nodes.values() if n['type'] == 'topic']
+    topic_list = ''.join(f'<a class="topic-row" href="{url(n)}"><span class="topic-id">{n["id"]}</span><span>{esc(n["title"])}</span><span class="topic-open">Explore</span></a>' for n in topics)
+    home = f'''<main id="main"><section class="hero"><div class="hero-copy"><div class="eyebrow light">MOM INC. / RESEARCH & SYSTEMS</div><p class="revision">Framework 0.2 <span>20 November 2026</span></p><h1>Many specialists.<br>One evolving <em>HIVE.</em></h1><p class="hero-deck">A framework for systems that assemble specialists, learn from verified experience, and improve how they work together.</p><p class="hero-sub">Follow the ideas. Inspect the evidence. Keep the alternatives open.</p><div class="hero-actions"><a class="button primary" href="{url(nodes['FRAMEWORK'])}">Read the framework</a><a class="button ghost" href="{BASE}explore/">Explore the vault</a></div></div>
+<div class="hero-system" aria-label="Proposed HIVE learning loop"><div class="system-caption">THE PROPOSED LEARNING LOOP</div><div class="system-core"><img src="{BASE}assets/hive.svg" width="56" height="56" alt=""><strong>HIVE</strong><span>State · selection · resources</span></div><div class="system-stages"><span>Specialists & tools</span><b>+</b><span>Verification</span><b>+</b><span>Evidence & experience</span></div><div class="system-return"><span>Candidate learning</span><span>Retention tests</span><span>Version registry</span></div><div class="system-foot">A candidate is promoted only after its gates pass.</div></div></section>
+<div class="stats-strip"><div><strong>{len(nodes)}</strong><span>linked research pages</span></div><div><strong>{count['topic']}</strong><span>research topics</span></div><div><strong>{count['experiment']}</strong><span>experiment designs</span></div><div><strong>19</strong><span>preserved originals</span></div><a href="{BASE}graph/">Explore {len(graph['edges']):,} connections</a></div>
+<section class="home-section"><div class="section-heading"><div><p class="eyebrow">FIND YOUR STARTING POINT</p><h2>A working record,<br>with the reasoning attached.</h2></div><p>This is a research and implementation specification. The vault preserves proposals, disagreements, prior results, and the tests that could change a decision.</p></div><div class="entry-grid">{card('HOME', 'The purpose, structure, and evidence conventions behind this vault.')}{card('GOOGLE', 'What the sleep and continual-learning evidence changes—and what it does not establish.')}{card('DECISIONS', 'Compare live alternatives, tradeoffs, and the evidence needed to choose.')}{card('ROADMAP', 'Work packages, dependency order, and acceptance gates for the local build.')}</div></section>
+<section class="topic-section"><div><p class="eyebrow">TEN CONNECTED TOPICS</p><h2>Follow a question<br>through the research.</h2><p>Every path connects to decisions, experiments, earlier methods, and sources. A connection is context; it is not proof.</p><a class="text-link" href="{BASE}graph/">Open the research graph</a></div><div class="topic-list">{topic_list}</div></section>
+<section class="home-section evidence-section"><div><p class="eyebrow">KEEP THE RECORD HONEST</p><h2>Evidence has a history.</h2><p>Primary-source findings belong to their authors. Historical imports retain their original scope. Proposed experiments have no implied result.</p><a class="text-link" href="{url(nodes['EVIDENCE'])}">Read the evidence conventions</a></div><div class="evidence-key"><div><span class="badge">Primary source reviewed</span><p>Inspected source, with its limits intact.</p></div><div><span class="badge neutral">Design proposal</span><p>An implementation path still to test.</p></div><div><span class="badge historical">Historical import</span><p>Preserved prior work, not a fresh measurement.</p></div></div></section>
+<section class="download-band"><div><p class="eyebrow light">TAKE THE WHOLE RECORD</p><h2>Your vault. In your tools.</h2><p>All notes, schemas, the Canvas, graph exports, and original documents. Ready to open in Obsidian.</p></div><a class="button primary" href="{BASE}downloads/HIVE_Framework_Research_Vault.zip" download>Download research vault <small>ZIP · 2.4 MB</small></a></section></main>'''
+    write(OUT / 'index.html', shell('Framework & research vault', home, BASE, body_class='home'))
+
+    search_records = []
+    for n in nodes.values():
+        text = re.sub(r'\[([^]]+)\]\([^)]*\)', r'\1', n['body'])
+        text = re.sub(r'[`#*|>]', '', text)
+        search_records.append({k: n[k] for k in ['id', 'title', 'type', 'evidence_status', 'implementation_status']} | dict(url=url(n), text=re.sub(r'\s+', ' ', text), tags=n['tags']))
+    write(OUT / 'search-index.json', json.dumps(search_records, ensure_ascii=False, separators=(',', ':')))
+    types = sorted(count, key=label)
+    type_options = ''.join(f'<option value="{t}">{esc(label(t))} ({count[t]})</option>' for t in types)
+    evs = sorted({n['evidence_status'] for n in nodes.values()}, key=label)
+    ev_options = ''.join(f'<option value="{e}">{esc(label(e))}</option>' for e in evs)
+    for kind in ['search', 'explore']:
+        is_search = kind == 'search'
+        heading = 'Search the vault.' if is_search else 'The whole research record.'
+        intro = 'Find a phrase, source, decision, or stable page ID.' if is_search else 'Browse 286 pages. Follow a topic, compare alternatives, or go straight to the source.'
+        static_cards = ''.join(f'<a class="result" href="{url(n)}"><div class="result-meta"><span>{n["id"]}</span><span>{esc(label(n["type"]))}</span></div><h2>{esc(n["title"])}</h2><span class="badge">{esc(label(n["evidence_status"]))}</span></a>' for n in nodes.values())
+        content = f'''<main id="main" class="browse-main"><p class="eyebrow">HIVE / {'SEARCH' if is_search else 'EXPLORE'}</p><h1>{heading}</h1><p class="page-intro">{intro}</p><form id="vault-search" role="search"><div class="search-field"><label for="query">Search all page content</label><div><input id="query" name="q" type="search" placeholder="Try sleep, evidence, routing, or P02" autocomplete="off"><button class="button dark" type="submit">Search</button></div></div><div class="filters"><label>Page type<select id="type-filter" name="type"><option value="">All page types</option>{type_options}</select></label><label>Evidence status<select id="evidence-filter" name="evidence"><option value="">All evidence statuses</option>{ev_options}</select></label><button class="reset-filter" type="reset">Clear filters</button></div></form><p id="result-count" class="result-count" aria-live="polite">286 pages in the vault</p><div id="results" class="results">{static_cards}</div><p id="search-error" role="alert" hidden></p><noscript><p>All pages are listed above. Enable JavaScript for full-text search and filters.</p></noscript></main>'''
+        write(OUT / kind / 'index.html', shell('Search' if is_search else 'Explore', content, BASE + kind + '/', extra='<script defer src="/hive/assets/search.js?v=1"></script>'))
+
+    graph_export = dict(schema_version=graph['schema_version'], generated_date=graph['generated_date'],
+                        nodes=[{k: n[k] for k in ['id', 'title', 'type', 'evidence_status']} | dict(url=url(n)) for n in nodes.values()], edges=graph['edges'])
+    write(OUT / 'graph.json', json.dumps(graph_export, ensure_ascii=False, separators=(',', ':')))
+    graph_content = f'''<main id="main" class="graph-main"><div class="graph-heading"><div><p class="eyebrow">HIVE / CONNECTIONS</p><h1>The research graph.</h1><p>286 pages. 2,381 typed connections. Select a page to inspect its neighborhood.</p></div><a class="text-link" href="{BASE}vault/99_Data/research_graph.json" download>Download graph JSON</a></div><div class="graph-controls"><label>Find a page<input id="graph-query" type="search" placeholder="Search by title or ID"></label><label>Relationship<select id="relation-filter"><option value="">All relationships</option>{''.join(f'<option value="{r}">{r.replace("_", " ")}</option>' for r in sorted({e['relation'] for e in graph['edges']}))}</select></label><button id="graph-reset">Show full graph</button></div><p class="graph-note">Connections describe research relationships, not validation or authority. On a selected page, inspect a typed link before drawing a conclusion.</p><div class="graph-workspace"><div class="graph-canvas"><svg id="research-graph" viewBox="0 0 1000 760" role="img" aria-label="Research graph; use the page list to select a node"></svg><div id="graph-legend"></div></div><aside class="graph-panel"><p id="graph-summary" role="status">Loading graph…</p><div id="graph-selection"></div><div id="graph-pages" class="graph-pages"></div></aside></div><noscript><p>The interactive graph needs JavaScript. <a href="{BASE}explore/">Browse all pages</a> or download the JSON above.</p></noscript></main>'''
+    write(OUT / 'graph/index.html', shell('Research graph', graph_content, BASE + 'graph/', extra='<script defer src="/hive/assets/graph.js?v=1"></script>'))
+    llms = f'''# HIVE framework & research vault
+
+> Framework revision 0.2, prepared for Ian Myers on 2026-11-20. Research and implementation specification, not a claim of a running or trained HIVE system.
+
+Canonical home: {ORIGIN}/hive/
+Search: {ORIGIN}/hive/search/?q=your-query
+Browse: {ORIGIN}/hive/explore/
+Graph: {ORIGIN}/hive/graph/
+Full-text machine index (286 pages): {ORIGIN}/hive/search-index.json
+Typed graph: {ORIGIN}/hive/graph.json
+Original package: {ORIGIN}/hive/downloads/HIVE_Framework_Research_Vault.zip
+
+## Reading rules
+
+- Page IDs are stable; cite /hive/notes/ID/ and heading anchors.
+- Each HTML page includes full readable text without JavaScript.
+- Source Markdown is under /hive/vault/ with original relative paths.
+- Preserve evidence_status and implementation_status when citing.
+- Historical imports, proposed experiments, simulations, and real measurements are distinct.
+- A graph edge is a relation, not proof. Proposed experiments do not imply results.
+- The archive preserves 19 originals byte for byte.
+
+## Entry points
+
+''' + '\n'.join(f'- [{nodes[k]["title"]}]({ORIGIN}{url(nodes[k])})' for k, _ in NAV if k in nodes) + '\n'
+    write(OUT / 'llms.txt', llms)
+    all_pages = [BASE, BASE + 'explore/', BASE + 'search/', BASE + 'graph/'] + [url(n) for n in [*nodes.values(), *originals]]
+    write(OUT / 'sitemap.xml', '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + '\n'.join(f'<url><loc>{ORIGIN}{p}</loc></url>' for p in all_pages) + '\n</urlset>\n')
+    manifest = dict(framework_revision='0.2', source_zip_sha256=hashlib.sha256(args.zip.read_bytes()).hexdigest(),
+                    counts=dict(research_pages=len(nodes), graph_edges=len(graph['edges']), originals=19),
+                    scope='Published research reference. No live HIVE runtime or new learning measurements are implied.')
+    write(OUT / 'build-manifest.json', json.dumps(manifest, indent=2) + '\n')
+    print(f'Built {len(nodes)} research pages, {len(originals)} original reading views, search, graph, and downloads into {OUT}')
+
+
+if __name__ == '__main__':
+    main()

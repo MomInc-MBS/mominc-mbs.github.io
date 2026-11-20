@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AR Horror Haunt Development Multi Agent Orchestration · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#122c32"><link rel="canonical" href="https://mominc.online/hive/notes/original-AR_Horror_Haunt_Development_Multi_Agent_Orchestration/">
+<meta property="og:title" content="AR Horror Haunt Development Multi Agent Orchestration · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=1"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=1">
+<script defer src="/hive/assets/hive.js?v=1"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/ROADMAP/">Build</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 286 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download Obsidian vault</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=original">Archived original</a><span>/</span><span>original-AR_Horror_Haunt_Development_Multi_Agent_Orchestration</span></div>
+<div class="doc-meta"><span class="badge">Preserved original</span><span class="badge neutral">Historical</span></div><div class="doc-tools"><button class="copy-link" data-title="AR Horror Haunt Development Multi Agent Orchestration" data-id="original-AR_Horror_Haunt_Development_Multi_Agent_Orchestration">Copy reference</button><a href="/hive/vault/90_Archive/Originals/AR_Horror_Haunt_Development_Multi_Agent_Orchestration.md">Markdown source</a><button class="print-page">Print</button></div>
+<p class="archive-notice">Preserved historical original. Statements below reflect this source document; they are not a current implementation or a new measurement.</p><article class="prose"><h1 id="ar-horror-app-parallel-haunt-development-orchestration">AR Horror App — Parallel Haunt Development Orchestration</h1>
+<blockquote>
+<p><strong>Execution handoff:</strong> Astra (head orchestrator) → Sol (section overseer) → Luna (initial coder) → Grok 4.7 (reviewer) → [on failure: NVIDIA Nemotron (problem solver) → Terra (solution coder) → Grok 4.7 (re-review), max 3 cycles] → Sol (section-vision verification) → Astra (main-vision integration)</p>
+<p><strong>Primary objective:</strong> Continue implementing the already-designed haunts against a metric-scale, fixed-point 3D test environment while real-world mapping, relocalization, and geolocation remain unresolved. Preserve all existing work and make haunt logic portable to the final room maps.</p>
+</blockquote>
+<h2 id="0-mandatory-operating-rules">0. Mandatory operating rules</h2>
+<ol>
+<li><strong>Inspect the existing repository first.</strong> Identify actual app framework, renderer, device targets, AR SDK, existing haunt code, existing directions, asset paths, and the current mapping pipeline. Do not assume Unity, Unreal, Godot, React, or a new engine.</li>
+<li><strong>Use the user's existing haunt designs and directions as the source of truth.</strong> Do not invent or redesign haunts, rewrite their narrative behavior, or silently drop requirements.</li>
+<li><strong>Do not block haunt coding on GPS/geolocation.</strong> Develop in a metric local coordinate frame. GPS position, real-room reconstruction, and phone-to-room alignment are separate integration concerns.</li>
+<li><strong>Do not confuse a metric scene with real-world alignment.</strong> Verify units and imported dimensions; do not claim an open-source test room proves real-world geolocation or AR relocalization.</li>
+<li><strong>Reuse existing software and dependencies where possible.</strong> Check the user's software inventory and actual installation/readiness before introducing a tool.</li>
+<li><strong>Never overwrite or replace the existing reconstruction pipeline.</strong> Preserve existing MASt3R or other mapping integrations. Keep the <code>RoomPackage</code> boundary and <code>room_to_ar_world_transform</code> concept.</li>
+<li><strong>Isolate parallel edits.</strong> Luna and Terra must use separate branches/worktrees or controlled sequential handoffs. Terra implements approved solutions to findings from Luna’s work; no concurrent shared-file edits without Sol’s ownership assignment.</li>
+<li><strong>No unverified completion claims.</strong> Every completed task needs evidence: changed files, test command/output, and any remaining limitations.</li>
+<li><strong>Licensing gate.</strong> Confirm source asset and dependency licenses, including commercial-use permissions, before committing third-party assets or models.</li>
+<li><strong>Keep changes incremental and reversible.</strong> Small commits, reproducible setup, and no destructive migrations.</li>
+<li><strong>Astra sets the shared contract before mass implementation.</strong> Freeze a versioned <code>RoomPackage</code> interface, metric unit and axis convention, named placement resolver, player pose interface, and test requirements before Sol assigns multiple haunt sections. Changes require a documented compatibility review.</li>
+<li><strong>Tests are mandatory evidence, not optional review commentary.</strong> Run applicable automated checks before each Grok submission, again after Terra repairs, and at Astra integration. Failures or missing checks block promotion unless an explicit exception is approved and documented.</li>
+<li><strong>Maximum three corrective cycles per finding group.</strong> After the third unsuccessful Nemotron → Terra → Grok cycle, stop automatic repair and escalate to Sol; architectural or scope issues go to Astra. Do not loop indefinitely.</li>
+<li><strong>Independent review inputs.</strong> Grok receives source requirements, actual diffs, test output, and reproduction steps—not only the coder's narrative. Nemotron receives concrete failing evidence, relevant code, and prior attempted fixes.</li>
+<li><strong>Only versioned, auditable section packages reach Astra.</strong> Include branch/commit, interface version, tests/logs, Grok verdict, Sol acceptance, known limitations, integration steps, and rollback instructions.</li>
+</ol>
+<h2 id="1-command-hierarchy-and-responsibilities">1. Command hierarchy and responsibilities</h2>
+<pre><code class="language-text">ASTRA — HEAD ORCHESTRATOR / MAIN VISION
+└── SOL — SECTION OVERSEER / SECTION VISION
+    └── LUNA — PRIMARY FEATURE CODER
+         └── AUTOMATED TESTS (must run)
+              └── GROK 4.7 — INDEPENDENT REVIEW
+                   ├── PASS ────────────────────────────────┐
+                   └── CHANGES REQUIRED                     │
+                        └── NVIDIA NEMOTRON — ROOT CAUSE    │
+                             └── TERRA — TARGETED REPAIR    │
+                                  └── AUTOMATED REGRESSION  │
+                                       └── GROK RE-REVIEW   │
+                                            ├── PASS ───────┤
+                                            └── FAIL: retry │
+                                                max 3; then│
+                                                escalate   │
+                                                           ▼
+                                     SOL — SECTION ACCEPTANCE
+                                                           ▼
+                                     ASTRA — INTEGRATION TESTS
+                                            + FINAL MERGE
+</code></pre>
+<p><strong>Strict sequence:</strong> Luna implements the assigned haunt or section first. Grok 4.7 reviews Luna’s implementation. If Grok identifies a defect, gap, or blocker, NVIDIA Nemotron diagnoses it and proposes a concrete solution. Terra implements that solution. Grok reviews Terra’s changes. Sol verifies the complete result meets the <strong>section vision</strong>, not merely that tests pass. Astra then integrates the Sol-approved section into the <strong>main vision</strong>. No role may bypass these gates.</p>
+<p><strong>Clean first-pass rule:</strong> If Grok passes Luna’s work with no changes required, Nemotron and Terra are not invoked for artificial rework; the deliverable proceeds to Sol. If Terra’s solution fails Grok’s review, loop <strong>Grok → Nemotron → Terra → automated tests → Grok</strong> for at most <strong>three repair cycles</strong>. After three unsuccessful cycles, halt and escalate to Sol (and to Astra for architecture/scope decisions). If Sol rejects section fit, Sol sends precise findings into the same solution loop. Astra can reject integration and return work to Sol with project-level feedback.</p>
+<p><strong>Availability rule:</strong> Use actual configured agents/models only. Verify that the local system can invoke Astra, Sol, Luna, Terra, Grok 4.7, and NVIDIA Nemotron; do not assume a model name means an accessible endpoint or claim that a review happened without a real run. If unavailable, mark that gate BLOCKED and report it to Astra.</p>
+<h3 id="astra-head-orchestrator-main-vision-authority">Astra — Head orchestrator / main-vision authority</h3>
+<ul>
+<li>Own the complete AR horror app vision, priorities, integration strategy, and final approval.</li>
+<li>Delegate bounded sections with written acceptance criteria to Sol.</li>
+<li>Receive only Sol-verified section packages, review cross-section compatibility, and authorize integration into the main project.</li>
+<li>Resolve scope conflicts and project-level blockers; never bypass Sol’s verification or Grok’s review.</li>
+<li>Maintain the overall roadmap, integration status, and rollback decisions.</li>
+</ul>
+<h3 id="sol-overseer-section-vision-authority">Sol — Overseer / section-vision authority</h3>
+<ul>
+<li>Translate Astra’s assignment into a concrete section vision, requirements checklist, and test criteria grounded in the user's existing haunt directions.</li>
+<li>Manage Luna, Grok 4.7, Nemotron, and Terra through conditional routing, a three-cycle repair limit, and evidence-based acceptance.</li>
+<li>Ensure the approved metric-scale sandbox, <code>RoomPackage</code> boundary, and existing project interfaces are respected.</li>
+<li>After Grok PASS, independently verify the <strong>whole section</strong>: intended experience, haunt directions, compatibility, portability, tests, and integration constraints.</li>
+<li>Return unmet requirements for correction; submit only verified, evidence-backed packages to Astra.</li>
+</ul>
+<h3 id="luna-initial-coder">Luna — Initial coder</h3>
+<ul>
+<li>Implement the original haunt/section assignment using existing designs, code, and assets.</li>
+<li>Add unit/integration tests, deterministic replay, and placement-independent behavior.</li>
+<li>Deliver a commit/branch, implementation notes, requirement-to-code mapping, and test evidence to Grok 4.7.</li>
+<li>Do not self-approve, merge, or bypass the reviewer.</li>
+</ul>
+<h3 id="grok-47-independent-reviewer-two-checkpoints">Grok 4.7 — Independent reviewer (two checkpoints)</h3>
+<ul>
+<li><strong>Review 1:</strong> Examine Luna’s implementation against original directions, interfaces, tests, spatial correctness, and section acceptance criteria.</li>
+<li>Return PASS, CHANGES REQUIRED, or BLOCKED, with exact reproduction steps and file/line findings. Inspect actual diffs, original requirements, and executed test evidence; do not accept coder summaries as proof.</li>
+<li><strong>Review 2:</strong> Independently review Terra’s implementation of Nemotron’s solution, including regression tests and the original requirements.</li>
+<li>Reject incomplete fixes and return findings to Nemotron/Terra; pass only verified work to Sol.</li>
+<li>Use the same reviewer role at both gates; queue work if only one Grok session exists.</li>
+</ul>
+<h3 id="nvidia-nemotron-problem-solver-diagnosis-and-fix-specification">NVIDIA Nemotron — Problem solver / diagnosis and fix specification</h3>
+<ul>
+<li>Receive Grok’s actionable findings, relevant code, logs, tests, and section criteria.</li>
+<li>Diagnose root cause from failing tests/logs, source code, and prior attempts; assess alternatives and propose the smallest compatible fix. On repeated failure, revise the diagnosis instead of repeating the same proposal.</li>
+<li>Give Terra an explicit implementation plan: files/interfaces affected, expected behavior, tests, risks, and acceptance criteria.</li>
+<li>Escalate ambiguous requirements to Sol rather than inventing new haunt behavior.</li>
+<li>Do not silently implement, approve, or merge code; the solution-design role is distinct from Terra’s coding role.</li>
+</ul>
+<h3 id="terra-solution-coder">Terra — Solution coder</h3>
+<ul>
+<li>Implement Nemotron’s approved corrective plan in an isolated branch/worktree or controlled handoff from Luna’s changes.</li>
+<li>Add regression tests demonstrating that the reported defect is fixed without breaking the original haunt requirements.</li>
+<li>Submit code, test evidence, and a finding-by-finding resolution matrix to Grok 4.7 for the second review.</li>
+<li>Address review failures through the Nemotron → Terra → Grok loop; do not self-approve or merge.</li>
+</ul>
+<h2 id="2-phase-plan-and-ownership">2. Phase plan and ownership</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Responsible roles</th>
+<th>Exit condition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0 — Repository discovery</td>
+<td>Astra delegates; Sol inventories</td>
+<td>Verified app framework, existing haunt manifest, source assets, and integration constraints</td>
+</tr>
+<tr>
+<td>1 — Metric sandbox</td>
+<td>Luna implements; Grok reviews; Nemotron/Terra resolve findings</td>
+<td>Verified meter scale, simulated player, collision/occlusion checks; Sol confirms sandbox section vision</td>
+</tr>
+<tr>
+<td>2 — Portable haunt contract</td>
+<td>Sol defines; Luna codes; full review/fix pipeline</td>
+<td><code>RoomPackage</code>, named placements, triggers, tests, and debug replay accepted</td>
+</tr>
+<tr>
+<td>3 — Single-haunt vertical slice</td>
+<td>Luna → Grok → Nemotron/Terra as needed → Grok → Sol</td>
+<td>Original directions satisfied, full replay works, Sol accepts</td>
+</tr>
+<tr>
+<td>4 — Portability proof</td>
+<td>Same pipeline</td>
+<td>Same haunt works in two arrangements without rewriting behavior</td>
+</tr>
+<tr>
+<td>5 — Remaining haunt sections</td>
+<td>Sol assigns one bounded section at a time through full pipeline</td>
+<td>Each section passes Grok and Sol vision verification</td>
+</tr>
+<tr>
+<td>6 — Main integration</td>
+<td>Astra accepts Sol-approved sections</td>
+<td>Main-vision compatibility, integration tests, and rollback path verified</td>
+</tr>
+<tr>
+<td>7 — Real-room adapter (later)</td>
+<td>Astra assigns; Sol oversees full pipeline</td>
+<td>Physical scale, room alignment, tracking/relocalization validated on target device</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Dependency gate:</strong> Prove portability on one representative haunt before expanding to the full catalog. Nemotron and Terra are the corrective-solution stage, not an independent second stream of unrelated haunt assignments. Astra can run multiple independent section pipelines only when real agent capacity, code ownership, and review capacity are verified.</p>
+<h2 id="3-test-environment-requirements">3. Test environment requirements</h2>
+<p>Use an open-source scene with known dimensions and an explicit coordinate system, or create a simple meter-scaled test room if importing a third-party scene would slow development. One candidate to evaluate is <a href="https://github.com/mertgulerx/world-collection" rel="noreferrer">mertgulerx/world-collection</a>, including its office scenes; confirm actual file formats, dimensions, licensing, and import compatibility before choosing it. A Gazebo/SDF scene may require conversion into the existing renderer.</p>
+<p>The test environment must provide:</p>
+<ul>
+<li>A defined origin and axis convention; distances in meters.</li>
+<li>Walls, doorways, furniture or obstacles as needed by the existing haunts.</li>
+<li>Visual geometry, collision geometry, and occlusion geometry (logically separate even if they share simple meshes initially).</li>
+<li>A simulated player transform: position, rotation, movement, and relevant interactions.</li>
+<li>Debug overlays for spawn points, waypoints, trigger volumes, line of sight, and active haunt states.</li>
+<li>A repeatable scale test: reference length, two markers separated by a known number of meters, and collision alignment.</li>
+</ul>
+<p><strong>Important:</strong> The environment is a test harness, not a substitute for proving real-room reconstruction or AR alignment.</p>
+<h2 id="4-portable-data-contracts-illustrative-adapt-to-existing-code">4. Portable data contracts (illustrative; adapt to existing code)</h2>
+<p>Do not force these exact field names if the app already has equivalent schemas.</p>
+<pre><code class="language-json">{
+  &quot;room_id&quot;: &quot;sandbox_office_01&quot;,
+  &quot;units&quot;: &quot;meters&quot;,
+  &quot;coordinate_system&quot;: &quot;documented_local_frame&quot;,
+  &quot;visual_geometry&quot;: &quot;existing_or_imported_scene_reference&quot;,
+  &quot;collision_geometry&quot;: &quot;collision_reference&quot;,
+  &quot;occlusion_geometry&quot;: &quot;occlusion_reference&quot;,
+  &quot;named_points&quot;: {
+    &quot;doorway_a&quot;: [2.0, 0.0, 4.0],
+    &quot;behind_wall_a&quot;: [5.0, 0.0, 4.0]
+  },
+  &quot;room_to_ar_world_transform&quot;: null,
+  &quot;scale_verified&quot;: false
+}
+</code></pre>
+<p>The numeric values above are <strong>examples only</strong>, not measured positions. <code>room_to_ar_world_transform</code> remains unset until the room is aligned with an actual AR session. The axis order must be adapted to the chosen engine.</p>
+<pre><code class="language-json">{
+  &quot;haunt_id&quot;: &quot;EXISTING_HAUNT_ID&quot;,
+  &quot;behavior_ref&quot;: &quot;existing_haunt_implementation&quot;,
+  &quot;spatial_requirements&quot;: [&quot;spawn&quot;, &quot;trigger&quot;, &quot;route&quot;],
+  &quot;placement&quot;: {
+    &quot;spawn&quot;: &quot;doorway_a&quot;,
+    &quot;trigger&quot;: &quot;hallway_trigger_a&quot;,
+    &quot;route&quot;: [&quot;doorway_a&quot;, &quot;behind_wall_a&quot;]
+  }
+}
+</code></pre>
+<p><strong>Rule:</strong> A haunt reads named roles through a room/placement resolver. No haunt should directly depend on sandbox scene coordinates or asset-specific mesh names. The final room can supply different bindings to the same roles.</p>
+<h2 id="5-assignment-and-sequential-reviewsolution-protocol">5. Assignment and sequential review/solution protocol</h2>
+<p>Astra maintains a canonical manifest derived from <strong>existing</strong> haunt directions and a versioned shared haunt/room contract. Each entry records exact haunt ID, source files, section vision, spatial requirements, assigned Luna implementation, Grok first verdict, Nemotron diagnosis (if required), Terra corrective commit (if required), Grok second verdict, Sol section acceptance, and Astra integration status.</p>
+<h3 id="required-per-section-workflow">Required per-section workflow</h3>
+<ol>
+<li><strong>Astra → Sol:</strong> Assign a bounded section and state its contribution to the overall app vision.</li>
+<li><strong>Sol → Luna:</strong> Supply verified directions, relevant assets, interfaces, spatial roles, and acceptance criteria.</li>
+<li><strong>Luna → automated checks → Grok:</strong> Implement the section, execute applicable tests, and submit actual commit/diff, logs, and requirements checklist. A failed/missing mandatory test is not a review PASS.</li>
+<li><strong>Grok review 1:</strong> PASS proceeds to Sol; CHANGES REQUIRED/BLOCKED produces a specific findings packet.</li>
+<li><strong>Grok → Nemotron:</strong> For actionable findings, diagnose root causes and design concrete, compatible fixes; escalate unresolved specifications to Sol.</li>
+<li><strong>Nemotron → Terra:</strong> Implement the proposed solutions and regression tests in an isolated branch or controlled handoff.</li>
+<li><strong>Terra → automated regression checks → Grok re-review:</strong> Review every fix and check for regressions. On failure, repeat steps 5–7, recording the attempt number and changed diagnosis. <strong>Maximum three repair cycles</strong>; if still failing, halt and escalate to Sol. On PASS, send the full package to Sol.</li>
+<li><strong>Sol section verification:</strong> Verify that the whole delivered section accomplishes its intended vision, follows original haunt directions, passes portability and integration checks, and has adequate evidence. Reject with precise findings if not.</li>
+<li><strong>Sol → Astra:</strong> Submit the accepted section, tests, review record, known limitations, and integration instructions.</li>
+<li><strong>Astra main-vision integration:</strong> Confirm the section advances the overall AR horror app, verify its versioned delivery package, run automated cross-section integration checks, authorize merge only on success, and assign the next section. If rejected, return it to Sol for another correction cycle.</li>
+</ol>
+<h3 id="code-ownership-and-handoff">Code ownership and handoff</h3>
+<ul>
+<li><strong>Sol-controlled:</strong> shared runtime contracts, room schema, tracking adapter, collision/occlusion integration, and section acceptance criteria.</li>
+<li><strong>Luna-owned:</strong> initial implementation of assigned sections and first-pass tests.</li>
+<li><strong>Terra-owned:</strong> changes specifically required to implement Nemotron’s corrective solutions and regression tests.</li>
+<li><strong>Grok-owned:</strong> review findings, verdicts, and review evidence; no unreviewed code changes.</li>
+<li><strong>Nemotron-owned:</strong> diagnosis and proposed fixes; no silent code merges.</li>
+<li><strong>Astra-owned:</strong> main-vision acceptance and final integration authorization.</li>
+<li>Preserve commits and branch provenance. Terra should base corrective work on the reviewed Luna commit; never overwrite uncommitted Luna work. Shared-interface changes require Sol approval.</li>
+</ul>
+<h2 id="6-acceptance-criteria">6. Acceptance criteria</h2>
+<h3 id="per-haunt">Per haunt</h3>
+<ul>
+<li>Matches the original written directions and uses existing approved assets.</li>
+<li>Uses metric distances and named placement roles; no hardcoded test-room locations in behavior code.</li>
+<li>Runs from start to finish, resets cleanly, and can be replayed.</li>
+<li>Handles missing placement or incompatible geometry with an explicit diagnostic rather than crashing.</li>
+<li>Has executed automated test results, Grok 4.7 PASS verdict (including second review if Terra made changes), Sol section-vision acceptance, and Astra integration approval.</li>
+</ul>
+<h3 id="system-wide">System-wide</h3>
+<ul>
+<li>One representative haunt works in two different spatial arrangements with <strong>no changes to behavior code</strong>.</li>
+<li>Multiple haunts coexist without event-state leaks or shared-file conflicts.</li>
+<li>Debug tools show triggers, routes, player pose, and state transitions.</li>
+<li>A final room can be swapped in via the <code>RoomPackage</code>/placement interface without reimplementing haunt logic.</li>
+<li>No claim that real-world scale, occlusion, relocalization, or geolocation is validated until device tests prove it.</li>
+</ul>
+<h2 id="7-reporting-cadence-and-escalation">7. Reporting cadence and escalation</h2>
+<p>For each completed section, <strong>Sol</strong> sends Astra:</p>
+<pre><code class="language-text">SECTION / HAUNT ID: &lt;identifier&gt;
+SECTION VISION: &lt;intended outcome and source directions&gt;
+LUNA INITIAL IMPLEMENTATION: &lt;commit, tests, requirements mapping&gt;
+GROK REVIEW 1: &lt;PASS / CHANGES REQUIRED / BLOCKED; findings&gt;
+NEMOTRON SOLUTION: &lt;root cause and proposed fix, or NOT REQUIRED&gt;
+TERRA SOLUTION CODE: &lt;commit, regression tests, or NOT REQUIRED&gt;
+GROK REVIEW 2: &lt;PASS / CHANGES REQUIRED / BLOCKED, or NOT REQUIRED&gt;
+SOL SECTION-VISION VERIFICATION: &lt;PASS / REJECT; evidence&gt;
+INTERFACE / ROOMPACKAGE VERSION: &lt;version&gt;
+REPAIR CYCLES: &lt;0-3; failure history if any&gt;
+AUTOMATED TEST COMMANDS / RESULTS: &lt;commands, logs, pass/fail, environment&gt;
+BRANCH / COMMIT / DIFF: &lt;immutable identifiers&gt;
+KNOWN LIMITATIONS: &lt;items and impact&gt;
+INTEGRATION / ROLLBACK INSTRUCTIONS: &lt;steps&gt;
+ASTRA ACTION REQUEST: &lt;integrate / return for correction / escalate&gt;
+</code></pre>
+<p>No automatic promotion on the basis of a coder’s self-report. If a review/model is unavailable, preserve the pending work and mark the gate BLOCKED. If a finding is a specification conflict, Sol resolves it against existing directions and escalates scope changes to Astra. Real-world AR mapping remains separately unverified until physical device testing.</p>
+<h2 id="8-quality-gates-independence-and-bounded-escalation">8. Quality gates, independence, and bounded escalation</h2>
+<h3 id="gate-a-astras-shared-contract-before-parallel-haunt-work">Gate A — Astra's shared contract (before parallel haunt work)</h3>
+<p>Astra and Sol inspect the existing app and record the <strong>versioned</strong> canonical interfaces for <code>RoomPackage</code>, coordinate origin and axis order, meters-per-unit, placement resolver, simulated/live player pose, collision/occlusion inputs, and haunt lifecycle. This is a contract decision, <strong>not</strong> permission to replace existing architecture. Run one-haunt portability proof before broad assignment. Any incompatible schema edit requires Sol's change proposal and Astra's approval.</p>
+<h3 id="gate-b-executed-tests-before-grok">Gate B — Executed tests before Grok</h3>
+<p>Luna must run the available relevant checks and supply command lines, environment, exit codes, and logs. Required behaviors for a relevant haunt include trigger boundaries and distances, spawn validity, collision/line-of-sight as applicable, event timing, animation/audio sequencing, clean reset/replay, missing-placement handling, and a second placement arrangement. Not every haunt requires every behavior; Sol maps checks to the actual directions. Grok independently compares the implementation and evidence to source requirements. A model's assertion of success does <strong>not</strong> substitute for a test run.</p>
+<h3 id="gate-c-conditional-repair-maximum-three-attempts">Gate C — Conditional repair, maximum three attempts</h3>
+<ul>
+<li><strong>PASS on Luna's first review:</strong> Skip Nemotron and Terra entirely; send to Sol.</li>
+<li><strong>First failed review:</strong> Nemotron provides a root-cause hypothesis grounded in logs/diffs; Terra repairs and adds a regression test; tests run; Grok re-reviews.</li>
+<li><strong>Second failed review:</strong> Nemotron must re-examine its hypothesis using the new failure evidence and history, not repeat the same patch; Terra revises; tests run; Grok re-reviews.</li>
+<li><strong>Third failed review:</strong> One final evidence-backed repair may be attempted. If Grok still rejects, <strong>STOP automatic retries</strong> and send the complete failure history to Sol. Sol decides whether to revise the section specification, reassign, or escalate architectural/scope decisions to Astra. No silent fourth attempt.</li>
+<li><strong>BLOCKED (missing model, unavailable tools, irreproducible environment, unclear requirements):</strong> Do not pretend a review or fix happened. Sol owns unblock decisions.</li>
+</ul>
+<h3 id="gate-d-sol-verifies-section-vision">Gate D — Sol verifies section vision</h3>
+<p>Sol checks the original haunt directions and section acceptance criteria <strong>independently of Grok's code-quality verdict</strong>. Verify gameplay experience, portable placement, compatibility, evidence, and known limitations. If rejected, Sol issues a precise requirement gap and routes it to the appropriate owner; the three-attempt cap still applies to the same unresolved issue.</p>
+<h3 id="gate-e-astra-integrates-only-verified-deliverables">Gate E — Astra integrates only verified deliverables</h3>
+<p>The section package must contain: source requirement IDs; branch and commit hash; diff; shared interface version; executed test commands, environment and logs; Grok PASS; Sol acceptance; known limitations; integration steps; rollback plan. Astra checks for schema compatibility, cross-haunt interference, shared-state leaks, and main-app regressions in the target branch before authorizing a merge. A sandbox PASS does not imply real-device AR alignment is verified.</p>
+<h3 id="agent-evidence-boundaries">Agent evidence boundaries</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Agent</th>
+<th>Authority</th>
+<th>Must not substitute for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Astra</td>
+<td>Master architecture, prioritization, merge approval</td>
+<td>Executed integration tests</td>
+</tr>
+<tr>
+<td>Sol</td>
+<td>Section specification, assignments, section acceptance</td>
+<td>Grok's independent code review</td>
+</tr>
+<tr>
+<td>Luna</td>
+<td>First implementation and test creation</td>
+<td>Reviewer verdict</td>
+</tr>
+<tr>
+<td>Grok 4.7</td>
+<td>Independent diff/requirement/test review</td>
+<td>Actual test execution or Sol's vision acceptance</td>
+</tr>
+<tr>
+<td>NVIDIA Nemotron</td>
+<td>Failure diagnosis and repair specification</td>
+<td>Terra's implementation or test evidence</td>
+</tr>
+<tr>
+<td>Terra</td>
+<td>Targeted repair and regression tests</td>
+<td>Grok's re-review</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="8-copy-paste-launch-directive-for-the-local-orchestrator">8. Copy-paste launch directive for the local orchestrator</h2>
+<blockquote>
+<p><strong>ASTRA: You are the head orchestrator and own the complete AR horror app vision. SOL is the section overseer and must verify each section accomplishes its intended vision before sending it to you. Execute this exact pipeline for each assigned section: SOL briefs LUNA; LUNA writes the initial haunt code and tests; GROK 4.7 independently reviews LUNA's work; if GROK finds defects or gaps, NVIDIA NEMOTRON diagnoses the problems and specifies fixes; TERRA codes those solutions and regression tests; GROK 4.7 reviews TERRA's corrections; repeat the NEMOTRON → TERRA → automated tests → GROK loop <strong>at most three times</strong> per unresolved finding, then STOP and escalate to SOL (ASTRA for architecture/scope). SOL then independently verifies the completed section against its original directions, tests, and section vision. Only SOL-approved sections return to ASTRA for cross-project review and integration into the main vision. If GROK passes LUNA's first implementation, skip unnecessary NEMOTRON/TERRA rework and send directly to SOL. Do not skip required review or acceptance gates. Before distributing multiple haunts, establish a versioned shared <code>RoomPackage</code>, meter/axis convention, named-placement resolver, player-pose interface, and test contract; prove portability with one haunt. Start by inspecting the existing repository, approved haunt directions, local software availability, and mapping handoff. Do not assume a game engine or that named models are actually accessible. Build a verified meter-scale sandbox and portable fixed-point <code>RoomPackage</code> interface so haunt development continues without waiting for real-room geolocation. Preserve existing code, assets, mapping integrations, and original haunt behavior. Run actual tests before every review and at integration. Give GROK the original requirements, actual diff and logs, not just LUNA/TERRA summaries; give NEMOTRON concrete failures and previous attempts. Require a versioned section package with commits, test logs, review verdicts, repair history, SOL acceptance, known limitations, integration and rollback instructions. Never claim completion without verified execution.</strong></p>
+</blockquote>
+<h2 id="9-immediate-first-actions">9. Immediate first actions</h2>
+<ol>
+<li><strong>Astra:</strong> Establish main vision and assign the metric-sandbox section to Sol.</li>
+<li><strong>Sol:</strong> Inspect the repository, establish section acceptance criteria, and brief Luna.</li>
+<li><strong>Luna:</strong> Implement the sandbox and first representative haunt; submit tests and commit to Grok.</li>
+<li><strong>Grok 4.7:</strong> Review Luna's work and issue PASS or actionable findings.</li>
+<li><strong>NVIDIA Nemotron:</strong> Only on a failed review, diagnose concrete findings and specify a minimal compatible fix; reconsider diagnosis on repeated failure.</li>
+<li><strong>Terra:</strong> Implement Nemotron's fix and regression tests; resubmit to Grok.</li>
+<li><strong>Grok 4.7:</strong> Review Terra's tested fixes; cap the repair loop at three cycles, then escalate unresolved failures to Sol; send PASS to Sol.</li>
+<li><strong>Sol:</strong> Verify the entire section meets its vision and is ready for integration.</li>
+<li><strong>Astra:</strong> Pull the accepted section into the main vision, run integration checks, and assign the next section.</li>
+</ol>
+<p><strong>Definition of success:</strong> Existing haunt coding proceeds in a metric sandbox despite unresolved real-world mapping. Luna codes, Grok reviews, Nemotron solves review findings, Terra implements solutions, Grok verifies the corrections, Sol validates section vision, and Astra integrates each accepted section into the overall app.</p>
+</article></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#0-mandatory-operating-rules">0. Mandatory operating rules</a><a class="toc-h2" href="#1-command-hierarchy-and-responsibilities">1. Command hierarchy and responsibilities</a><a class="toc-h3" href="#astra-head-orchestrator-main-vision-authority">Astra — Head orchestrator / main-vision authority</a><a class="toc-h3" href="#sol-overseer-section-vision-authority">Sol — Overseer / section-vision authority</a><a class="toc-h3" href="#luna-initial-coder">Luna — Initial coder</a><a class="toc-h3" href="#grok-47-independent-reviewer-two-checkpoints">Grok 4.7 — Independent reviewer (two checkpoints)</a><a class="toc-h3" href="#nvidia-nemotron-problem-solver-diagnosis-and-fix-specification">NVIDIA Nemotron — Problem solver / diagnosis and fix specification</a><a class="toc-h3" href="#terra-solution-coder">Terra — Solution coder</a><a class="toc-h2" href="#2-phase-plan-and-ownership">2. Phase plan and ownership</a><a class="toc-h2" href="#3-test-environment-requirements">3. Test environment requirements</a><a class="toc-h2" href="#4-portable-data-contracts-illustrative-adapt-to-existing-code">4. Portable data contracts (illustrative; adapt to existing code)</a><a class="toc-h2" href="#5-assignment-and-sequential-reviewsolution-protocol">5. Assignment and sequential review/solution protocol</a><a class="toc-h3" href="#required-per-section-workflow">Required per-section workflow</a><a class="toc-h3" href="#code-ownership-and-handoff">Code ownership and handoff</a><a class="toc-h2" href="#6-acceptance-criteria">6. Acceptance criteria</a><a class="toc-h3" href="#per-haunt">Per haunt</a><a class="toc-h3" href="#system-wide">System-wide</a><a class="toc-h2" href="#7-reporting-cadence-and-escalation">7. Reporting cadence and escalation</a><a class="toc-h2" href="#8-quality-gates-independence-and-bounded-escalation">8. Quality gates, independence, and bounded escalation</a><a class="toc-h3" href="#gate-a-astras-shared-contract-before-parallel-haunt-work">Gate A — Astra&#x27;s shared contract (before parallel haunt work)</a><a class="toc-h3" href="#gate-b-executed-tests-before-grok">Gate B — Executed tests before Grok</a><a class="toc-h3" href="#gate-c-conditional-repair-maximum-three-attempts">Gate C — Conditional repair, maximum three attempts</a><a class="toc-h3" href="#gate-d-sol-verifies-section-vision">Gate D — Sol verifies section vision</a><a class="toc-h3" href="#gate-e-astra-integrates-only-verified-deliverables">Gate E — Astra integrates only verified deliverables</a><a class="toc-h3" href="#agent-evidence-boundaries">Agent evidence boundaries</a><a class="toc-h2" href="#8-copy-paste-launch-directive-for-the-local-orchestrator">8. Copy-paste launch directive for the local orchestrator</a><a class="toc-h2" href="#9-immediate-first-actions">9. Immediate first actions</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework revision 0.2</span></a><span>Research prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download vault</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

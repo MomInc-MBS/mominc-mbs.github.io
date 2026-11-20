@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:hive:experiment_record:1",
+  "title": "experiment_record",
+  "type": "object",
+  "properties": {
+    "experiment_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "planned",
+        "running",
+        "completed",
+        "failed",
+        "stopped",
+        "blocked"
+      ]
+    },
+    "fidelity": {
+      "type": "string",
+      "enum": [
+        "exact_reproduction_attempt",
+        "partial_reproduction",
+        "hive_analogue",
+        "new_hive_extension"
+      ]
+    },
+    "code_hash": {
+      "type": "string",
+      "minLength": 1
+    },
+    "config_hash": {
+      "type": "string",
+      "minLength": 1
+    },
+    "data_hash": {
+      "type": "string",
+      "minLength": 1
+    },
+    "model_hashes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "environment_manifest": {
+      "type": "string",
+      "minLength": 1
+    },
+    "hardware_manifest": {
+      "type": "string",
+      "minLength": 1
+    },
+    "seed": {
+      "type": "integer"
+    },
+    "task_order": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "arms": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "budget_manifest": {
+      "type": "string",
+      "minLength": 1
+    },
+    "external_feedback_manifest": {
+      "type": "string",
+      "minLength": 1
+    },
+    "raw_outputs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "checker_versions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "metrics": {
+      "type": "object"
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "interpretation": {
+      "type": "string",
+      "minLength": 1
+    },
+    "deviations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "required": [
+    "experiment_id",
+    "run_id",
+    "status",
+    "fidelity",
+    "arms",
+    "budget_manifest",
+    "external_feedback_manifest"
+  ],
+  "additionalProperties": false
+}

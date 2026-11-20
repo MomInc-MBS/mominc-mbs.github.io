@@ -1,0 +1,751 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HIVE Simulation Findings and Starting Plan · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#122c32"><link rel="canonical" href="https://mominc.online/hive/notes/original-HIVE_Simulation_Findings_and_Starting_Plan/">
+<meta property="og:title" content="HIVE Simulation Findings and Starting Plan · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=1"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=1">
+<script defer src="/hive/assets/hive.js?v=1"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/ROADMAP/">Build</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 286 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download Obsidian vault</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=original">Archived original</a><span>/</span><span>original-HIVE_Simulation_Findings_and_Starting_Plan</span></div>
+<div class="doc-meta"><span class="badge">Preserved original</span><span class="badge neutral">Historical</span></div><div class="doc-tools"><button class="copy-link" data-title="HIVE Simulation Findings and Starting Plan" data-id="original-HIVE_Simulation_Findings_and_Starting_Plan">Copy reference</button><a href="/hive/vault/90_Archive/Originals/HIVE_Simulation_Findings_and_Starting_Plan.md">Markdown source</a><button class="print-page">Print</button></div>
+<p class="archive-notice">Preserved historical original. Statements below reflect this source document; they are not a current implementation or a new measurement.</p><article class="prose"><h1 id="hive-simulation-findings-and-the-first-build-configuration">HIVE: simulation findings and the first build configuration</h1>
+<p><strong>Research and experiments completed: November 18, 2026.</strong></p>
+<h2 id="decision">Decision</h2>
+<p>Build the first HIVE community around <strong>four functional modules, two small language-learning compartments, a compact visual encoder, and a deterministic scheduler</strong>. Let modules exchange typed numerical representations directly when the task supports them. Keep a broader language model available as a measured reference or optional fallback. Start with interleaved verified replay and test additional consolidation during idle periods.</p>
+<p>The experiments support a narrower and more useful claim than “more specialists are always smarter”: <strong>the right sharing boundaries can improve retention and reduce active computation, while the wrong boundaries can damage both transfer and accuracy.</strong> The strongest result was a 17.76 percentage-point change produced by regrouping the same two experts, with the same total capacity and training budget, on a deliberately conflicting synthetic workload.</p>
+<p>This is a <strong>provisional engineering starting point</strong>, not a mathematically optimal architecture or a validated billion-parameter size. The tests were actual CPU computations and neural-network training; they did not run pretrained LLMs, real image recognition, or the user's RTX 5070 Ti. They establish mechanisms worth testing and expose failures that the build must handle.</p>
+<p>The earlier HIVE Build Plan and Source Foundation remains the larger code and literature catalog. This report adds executable evidence, a concrete candidate configuration, and the next experiment needed to select real model sizes.</p>
+<h2 id="1-what-was-actually-run">1. What was actually run</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Study</th>
+<th>Execution</th>
+<th>Main question</th>
+<th>Evidence boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Continual neural learning</td>
+<td>360 NumPy MLP training runs; five seeds; three capacities; four organizations; three schedules; two rule regimes</td>
+<td>When do sharing, isolation, grouping and replay help?</td>
+<td>Real optimization on synthetic labeled tasks; not LLM intelligence</td>
+</tr>
+<tr>
+<td>Representation preservation</td>
+<td>50,000 held-out geometric scenes; three decisions per scene; five representations</td>
+<td>Which information survives serialization and compression?</td>
+<td>Actual numerical reconstruction; not visual perception</td>
+</tr>
+<tr>
+<td>Learned translation</td>
+<td>Ten seeds; private eight-dimensional spaces; paired training sets from 4 to 256 examples</td>
+<td>Can private representations communicate, and what happens after drift?</td>
+<td>Actual fitted linear translators in an intentionally simple setting</td>
+</tr>
+<tr>
+<td>Message boundaries</td>
+<td>30,000 generated messages evaluated under four gate policies</td>
+<td>Which mistakes do types, versions and permissions block?</td>
+<td>Deterministic gate validation; not a security proof or neural corruption test</td>
+</tr>
+<tr>
+<td>Communication and scheduling</td>
+<td>1,440 discrete-event runs; 345,600 simulated end-to-end task requests</td>
+<td>How do graph topology, activation policy and shared hardware interact?</td>
+<td>Synthetic workload with assumed normalized service costs; not measured GPU time</td>
+</tr>
+</tbody>
+</table></div>
+<p>The learning grid used exactly <strong>360 optimizer updates and 11,520 sample presentations per run</strong>, for 4,147,200 presentations across the grid. The measured training-grid runtime was 14.32 seconds in this CPU environment. The representation run took about 2.73 seconds; the corrected scheduling grid took 61.87 seconds. These runtimes describe these small programs, including their particular evaluation overhead. They are not forecasts for training or serving language models.</p>
+<p>All source code, seeds, raw records, summary statistics, plots and reproduction commands are included in the accompanying experiment bundle.</p>
+<h2 id="2-organization-the-clearest-positive-result">2. Organization: the clearest positive result</h2>
+<h3 id="design">Design</h3>
+<p>Each learning run presented four domains sequentially. All models received the same 16 numerical input features and the same explicit domain tag. Each domain had 512 available training examples and a separate 512-example held-out evaluation set.</p>
+<p>Two rule regimes created a useful contrast:</p>
+<ul>
+<li><strong>Mostly shared rules:</strong> the domains depended mainly on the same underlying function, with small private differences.</li>
+<li><strong>Conflicting rules:</strong> part of that common function changed sign between domains, with stronger private differences.</li>
+</ul>
+<p>These were constructed situations, not estimates of how often real HIVE workloads will share or conflict. A domain tag made routing correct by construction, while a separate routing-error sensitivity examined wrong expert selection.</p>
+<p>The tested organizations were one generalist, two experts with mixed conflicting rules, two experts with compatible rules, and four independent experts. Total parameters were approximately matched at 1,024, 4,096 and 8,192; the actual counts are in the raw data. At the middle budget, the generalist had 4,096 parameters, each two-expert system had 4,052, and the four-expert system had 4,056.</p>
+<p>“Compatible” grouping was known from the task generator. This was a control for the importance of grouping, not a demonstration that a router or clustering algorithm discovered the right organization.</p>
+<h3 id="results-with-the-same-interleaved-replay-schedule">Results with the same interleaved replay schedule</h3>
+<p>Final accuracy averages all four domains equally, then averages across five seeds.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Organization at approximately 4,096 total parameters</th>
+<th style="text-align:right">Mostly shared rules</th>
+<th style="text-align:right">Conflicting rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>One generalist</td>
+<td style="text-align:right">91.03%</td>
+<td style="text-align:right">74.47%</td>
+</tr>
+<tr>
+<td>Two experts, mixed-rule pairs</td>
+<td style="text-align:right">89.59%</td>
+<td style="text-align:right">66.11%</td>
+</tr>
+<tr>
+<td>Two experts, compatible-rule pairs</td>
+<td style="text-align:right">89.80%</td>
+<td style="text-align:right">83.88%</td>
+</tr>
+<tr>
+<td>Four independent experts</td>
+<td style="text-align:right">87.00%</td>
+<td style="text-align:right">88.98%</td>
+</tr>
+</tbody>
+</table></div>
+<p>Regrouping the same two experts improved the conflicting-task score from <strong>66.11% to 83.88%</strong>: a paired difference of <strong>17.76 percentage points</strong>, with a descriptive 95% t interval of ±6.75 points across the five seeds. The interval is not adjusted for searching multiple configurations and should not be treated as a prediction interval for a real application.</p>
+<p>The organization mattered more than simply adding capacity to the poorly grouped configuration. Under interleaved replay, doubling that mixed-pair system from roughly 4,096 to 8,192 total parameters changed its conflicting-task accuracy only from 66.11% to 66.27%.</p>
+<p>The other regime constrains the interpretation. When rules were mostly shared, the generalist performed better than the isolated specialists. Before training on a new shared-rule domain, the middle-sized generalist already averaged 88.76% accuracy; the independent specialists averaged 49.32%. Shared learning transferred useful structure. Isolation removed that transfer path.</p>
+<h3 id="what-hive-should-learn-from-this">What HIVE should learn from this</h3>
+<p>Choose a specialist boundary by measuring <strong>which learning updates help or harm other tasks</strong>. Topic names alone do not reveal that relationship.</p>
+<p>A practical procedure is to maintain a transfer matrix. After training a candidate on task family A, evaluate changes on held-out families B, C and D. Positive effects suggest useful sharing; repeated negative effects suggest separate update ownership. Also record how much information families exchange, how costly their shared encoder is, and whether they need different output contracts.</p>
+<p>This favors modules that own coherent representations and learning objectives, such as geometry/state estimation, tool selection, or evidence evaluation. It does not require a separate full language model for each label, document type or tiny action.</p>
+<p>The present experiment did not include a shared frozen encoder with private heads, a soft mixture of experts, or a learned grouping algorithm. Those are follow-up candidates, not measured winners.</p>
+<h2 id="3-size-what-the-experiment-can-and-cannot-select">3. Size: what the experiment can and cannot select</h2>
+<p>At the three tested capacities, the following results used <strong>interleaved replay throughout</strong>.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th style="text-align:right">Approximate total parameter target</th>
+<th style="text-align:right">Shared-rule generalist</th>
+<th style="text-align:right">Conflicting-rule generalist</th>
+<th style="text-align:right">Conflicting compatible pair</th>
+<th style="text-align:right">Conflicting four experts</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">1,024</td>
+<td style="text-align:right">90.75%</td>
+<td style="text-align:right">70.03%</td>
+<td style="text-align:right">82.44%</td>
+<td style="text-align:right">86.75%</td>
+</tr>
+<tr>
+<td style="text-align:right">4,096</td>
+<td style="text-align:right">91.03%</td>
+<td style="text-align:right">74.47%</td>
+<td style="text-align:right">83.88%</td>
+<td style="text-align:right">88.98%</td>
+</tr>
+<tr>
+<td style="text-align:right">8,192</td>
+<td style="text-align:right">90.46%</td>
+<td style="text-align:right">75.53%</td>
+<td style="text-align:right">83.97%</td>
+<td style="text-align:right">89.69%</td>
+</tr>
+</tbody>
+</table></div>
+<p>Capacity helped some conditions, but the gains became modest under this fixed training schedule. The slight decline in the shared generalist is not evidence that larger models are generally worse: the optimizer, number of updates and data were fixed, and the differences have uncertainty.</p>
+<p><strong>There is no justified conversion from a 4,096-parameter synthetic MLP to a 0.6B, 1.7B or 4B language model.</strong> Pretraining, tokenizer, architecture, quantization, task complexity, sequence length and hardware all change the comparison.</p>
+<p>The useful size rule is operational: select the <strong>smallest complete system that meets the required accuracy, retention and latency</strong>, then retain a larger candidate only where it measurably improves difficult cases. Track stored parameters and active parameters separately.</p>
+<p>At the middle budget:</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Quantity</th>
+<th style="text-align:right">One generalist</th>
+<th style="text-align:right">Four experts</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Total stored trainable parameters</td>
+<td style="text-align:right">4,096</td>
+<td style="text-align:right">4,056</td>
+</tr>
+<tr>
+<td>Active parameters per example</td>
+<td style="text-align:right">4,096</td>
+<td style="text-align:right">1,014</td>
+</tr>
+<tr>
+<td>Training presentations</td>
+<td style="text-align:right">11,520</td>
+<td style="text-align:right">11,520</td>
+</tr>
+<tr>
+<td>Estimated training matrix MACs</td>
+<td style="text-align:right">94.3 million</td>
+<td style="text-align:right">23.3 million</td>
+</tr>
+</tbody>
+</table></div>
+<p>MACs are multiply-accumulates estimated from the executed matrix shapes. The estimate excludes routing, biases, activations, optimizer operations, evaluation and memory transfers. Known-domain routing had no learned parameters. These numbers demonstrate sparse activation in this program; they do not establish four times faster real-world learning or four times as many tokens per second.</p>
+<p>The experiment also records an 80% acquisition marker requiring two consecutive evaluation probes. Nonattaining runs are retained as censored values. The probes were coarse, and evaluations did not control training. We therefore do not claim a general multiplier in examples required to learn.</p>
+<h2 id="4-replay-and-sleep-a-useful-negative-result">4. Replay and “sleep”: a useful negative result</h2>
+<p>The learning schedules had equal presentation counts. Interleaved and blocked replay used <strong>exactly the same minibatches in a different order</strong>.</p>
+<ul>
+<li>Current-data-only training spent all 90 minibatches in a stage on its current domain.</li>
+<li>Interleaved replay used two current-domain minibatches followed by one old-domain minibatch.</li>
+<li>Blocked replay used all 60 current-domain minibatches, then all 30 old-domain minibatches.</li>
+</ul>
+<p>The first stage had no old tasks and used identical current training in every schedule. Replay used a bounded store of 64 previously observed examples per domain, with a total capacity of 256 records. It received no extra update budget.</p>
+<p>For the conflicting-task generalist at approximately 4,096 parameters:</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Schedule</th>
+<th style="text-align:right">Final accuracy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Current data only</td>
+<td style="text-align:right">54.31%</td>
+</tr>
+<tr>
+<td>Interleaved replay</td>
+<td style="text-align:right">74.47%</td>
+</tr>
+<tr>
+<td>Blocked replay</td>
+<td style="text-align:right">62.64%</td>
+</tr>
+</tbody>
+</table></div>
+<p>Interleaving exceeded blocked replay by <strong>11.84 percentage points</strong>, with a paired descriptive 95% t interval of ±5.78 points. The final old-task block could overwrite recent conflicting learning.</p>
+<p>Four isolated experts reached 90.42% with current-only training and 88.98% with either replay ordering. With completely separate parameters, updates to another expert cannot alter an expert's weights; interleaved and blocked schedules therefore gave exactly identical final outputs for that arm. Replay still displaced learning from fresh current examples and repeatedly sampled a much smaller store.</p>
+<p>This supplies an important requirement for HIVE: <strong>a consolidation cycle must earn its compute by improving retention, generalization, compression or availability.</strong> Calling it sleep supplies no benefit by itself. This experiment did not simulate REM, dreaming, synaptic downscaling, a learned sleep controller, or generative replay.</p>
+<h2 id="5-graph-selective-activation-matters-before-elaborate-topology">5. Graph: selective activation matters before elaborate topology</h2>
+<p>The scheduler study compared four connection graphs independently of the activation policy:</p>
+<ol>
+<li>A direct mesh.</li>
+<li>A central forwarding hub.</li>
+<li>A community tree with local and global routers.</li>
+<li>Local communities with direct internal links and bridges between community leaders.</li>
+</ol>
+<p>Each graph was tested with selective activation and with broadcast-to-all activation. A mesh is a set of available connections; it does not require all nodes to converse.</p>
+<p>Every run shared <strong>one serial accelerator</strong> and <strong>four CPU message-service lanes</strong>. Extra modules did not receive imaginary extra GPUs. A task first executed at its source and then requested one, two or three other workers, with probabilities 0.6, 0.3 and 0.1. Each useful worker execution averaged one normalized work unit. All graphs received the same task trace and worker durations within each paired comparison.</p>
+<p>The sweep covered 4, 8 and 16 workers; two within-community selection preferences; two offered useful loads; three message-service costs; and five seeds. Node CPU service and link traversal each cost 0.001, 0.03 or 0.3 times the mean worker service. These are explicitly assumed sensitivity values.</p>
+<h3 id="work-performed">Work performed</h3>
+<p>Under one representative workload selection, mean accelerator work per task was:</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th style="text-align:right">Available workers</th>
+<th style="text-align:right">Selective activation</th>
+<th style="text-align:right">Broadcast activation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">4</td>
+<td style="text-align:right">2.50 units</td>
+<td style="text-align:right">4.01 units</td>
+</tr>
+<tr>
+<td style="text-align:right">8</td>
+<td style="text-align:right">2.47 units</td>
+<td style="text-align:right">8.00 units</td>
+</tr>
+<tr>
+<td style="text-align:right">16</td>
+<td style="text-align:right">2.50 units</td>
+<td style="text-align:right">16.00 units</td>
+</tr>
+</tbody>
+</table></div>
+<p>Broadcast was defined to run and await every peer. No extra answer-quality benefit was assigned to those redundant executions. The larger cost is a consequence of that workload definition. It is useful for exposing unnecessary work, but it is not an independently discovered intelligence advantage.</p>
+<p>The arrivals were normalized to useful work. Expected broadcast load is useful load multiplied by workers/2.5. Thus 16-worker broadcast at useful load 0.8 has expected actual accelerator load 5.12 and would not reach a stable queue under continuing arrivals. All reported runs contain 240 arrivals followed by a full drain. Their latency and throughput are <strong>finite-run outcomes</strong>, not steady-state capacity estimates.</p>
+<h3 id="topology-at-four-workers">Topology at four workers</h3>
+<p>For selective activation, locality preference 0.8 and useful offered load 0.8:</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Topology</th>
+<th style="text-align:right">Available directed links</th>
+<th style="text-align:right">Mean latency when a message step costs 0.001</th>
+<th style="text-align:right">Mean latency when it costs 0.3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Direct mesh</td>
+<td style="text-align:right">12</td>
+<td style="text-align:right">7.40</td>
+<td style="text-align:right">9.13</td>
+</tr>
+<tr>
+<td>Community bridges</td>
+<td style="text-align:right">6</td>
+<td style="text-align:right">7.40</td>
+<td style="text-align:right">9.72</td>
+</tr>
+<tr>
+<td>Central hub</td>
+<td style="text-align:right">8</td>
+<td style="text-align:right">7.40</td>
+<td style="text-align:right">10.29</td>
+</tr>
+<tr>
+<td>Community tree</td>
+<td style="text-align:right">12</td>
+<td style="text-align:right">7.41</td>
+<td style="text-align:right">11.33</td>
+</tr>
+</tbody>
+</table></div>
+<p>Units are normalized to a mean worker execution of one. At cheap communication, topology barely changed latency because the common accelerator dominated. At expensive communication, extra forwarding increased delay.</p>
+<p>The mesh did not pay an edge-maintenance, authentication, discovery or translator-training cost in this simulator. Accordingly, the study does not establish it as globally optimal. At larger scale, those costs and ownership constraints can justify communities.</p>
+<p><strong>Starting graph:</strong> a small deterministic control scheduler, with direct allowlisted data exchanges among the first modules. Let the scheduler choose who runs; allow approved tensor payloads to travel directly between producer and consumer. Introduce deeper communities when observed traffic, interference or operational ownership makes them useful. A central control plane need not sit inside every numerical data path.</p>
+<h2 id="6-native-representations-preserve-information-then-compress-deliberately">6. Native representations: preserve information, then compress deliberately</h2>
+<p>The representation study generated four 2D points per scene and tested three decisions: nearest point, orientation and segment crossing. The source coordinates already contained all necessary information. No camera image had to be recognized.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Representation</th>
+<th style="text-align:right">Original task labels preserved</th>
+<th style="text-align:right">Mean payload bytes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Float32 binary</td>
+<td style="text-align:right">100.00%</td>
+<td style="text-align:right">32.00</td>
+</tr>
+<tr>
+<td>Full-precision numerical JSON</td>
+<td style="text-align:right">100.00%</td>
+<td style="text-align:right">155.02</td>
+</tr>
+<tr>
+<td>Precise coordinate prose</td>
+<td style="text-align:right">100.00%</td>
+<td style="text-align:right">171.00</td>
+</tr>
+<tr>
+<td>Five-bin coarse words</td>
+<td style="text-align:right">86.97%</td>
+<td style="text-align:right">82.49</td>
+</tr>
+<tr>
+<td>Identical five-bin numerical codes</td>
+<td style="text-align:right">86.97%</td>
+<td style="text-align:right">8.00</td>
+</tr>
+</tbody>
+</table></div>
+<p>Precise prose retained every tested label. The two coarse encodings lost exactly the same information for every seed. The demonstrated loss came from quantization, not from the mere existence of English.</p>
+<p>Binary float32 used approximately <strong>4.84 times fewer payload bytes than JSON</strong> and <strong>5.34 times fewer than the tested prose format</strong>, while retaining every tested label. These ratios exclude message headers, provenance and transport overhead; they are not token-speed ratios. Near a sufficiently sensitive decision boundary, finite-precision numbers can also change outcomes.</p>
+<p>The design implication is to keep domain-native information available whenever a downstream consumer can use it. A visual path can be image → encoder features → tracking/state estimation → planner, with text generated for the user or when a language-based decision is genuinely needed.</p>
+<p>This is technically well grounded in existing research code. DINOv3 exposes visual features and compact encoders; CLIP provides image and text feature APIs in an explicitly aligned space; V-JEPA supplies video representation and latent-prediction research. These precedents do not make arbitrary hidden vectors compatible. [C1–C3]</p>
+<p>Dense features can also be larger than prose. For example, 256 tokens × 384 values × 2 bytes is 196,608 bytes, while one pooled 384-value float16 vector is 768 bytes. These are arithmetic examples. The relevant question is which representation preserves enough information for the actual downstream task at an acceptable compute, storage and communication cost.</p>
+<h2 id="7-private-languages-need-versioned-translation">7. Private languages need versioned translation</h2>
+<p>In the translation experiment, producer and consumer represented the same scene in different random eight-dimensional coordinate systems. A fitted 8 × 8 linear translator connected them. Evaluation scenes were held out from fitting.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Condition</th>
+<th style="text-align:right">Task labels preserved</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Different private spaces without translation</td>
+<td style="text-align:right">49.91%</td>
+</tr>
+<tr>
+<td>Translator fitted from 16 noisy paired examples</td>
+<td style="text-align:right">94.87%</td>
+</tr>
+<tr>
+<td>Translator fitted from 64 noisy paired examples</td>
+<td style="text-align:right">97.84%</td>
+</tr>
+<tr>
+<td>Translator fitted from 256 noisy paired examples</td>
+<td style="text-align:right">98.95%</td>
+</tr>
+<tr>
+<td>Producer representation changes; old 64-pair translator remains</td>
+<td style="text-align:right">50.26%</td>
+</tr>
+</tbody>
+</table></div>
+<p>Training noise had standard deviation 0.02 independently on both sides of a pair. Test coordinates were noise-free. The task mix has different class balances, so the near-50% results are not a universal chance baseline.</p>
+<p>These linear spaces are much easier to align than unrelated pretrained encoders. The paired-example counts should not be extrapolated. The durable finding is architectural: <strong>same shape does not imply same meaning</strong>, and an encoder update can invalidate its consumers.</p>
+<p>HIVE should identify each representation by its producer model, checkpoint/version, preprocessing, shape, units and coordinate conventions. A translator belongs to a specific source–destination version pair. Validate and promote the encoder, translator and consumer together; keep older embeddings tagged so they can be migrated, re-encoded or rejected.</p>
+<p>Where modules can use the same stable encoder, a shared representation may remove the translator entirely. Where they need private spaces, train translators on paired observations and evaluate downstream decisions, not just reconstruction error. Unnecessary translators are another source of latency and failure.</p>
+<h2 id="8-contamination-separate-the-mechanisms">8. Contamination: separate the mechanisms</h2>
+<p>The gate study generated 30,000 messages: valid messages and equal numbers with a wrong recipient, stale representation, wrong units, an unauthorized writer, or a valid-looking payload for the wrong scene.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Gate</th>
+<th style="text-align:right">Invalid messages accepted</th>
+<th style="text-align:right">Unauthorized write cases accepted</th>
+<th style="text-align:right">Well-formed wrong-semantic cases accepted</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Shape and finite-number checks</td>
+<td style="text-align:right">100%</td>
+<td style="text-align:right">100%</td>
+<td style="text-align:right">100%</td>
+</tr>
+<tr>
+<td>Add recipient, representation version and units</td>
+<td style="text-align:right">40%</td>
+<td style="text-align:right">100%</td>
+<td style="text-align:right">100%</td>
+</tr>
+<tr>
+<td>Add writer and namespace capability checks</td>
+<td style="text-align:right">20%</td>
+<td style="text-align:right">0%</td>
+<td style="text-align:right">100%</td>
+</tr>
+<tr>
+<td>Add numerical range checks</td>
+<td style="text-align:right">20%</td>
+<td style="text-align:right">0%</td>
+<td style="text-align:right">100%</td>
+</tr>
+</tbody>
+</table></div>
+<p>All valid messages were accepted. The remaining 20% of the artificially balanced invalid set were the well-formed semantic errors. Authentication identities were supplied by the harness; it did not implement cryptographic authentication, process sandboxing, a live memory database or model weight writes.</p>
+<p>This validates specific rules under specified injections. It does not establish zero contamination, real deployment failure rates or a security proof.</p>
+<p>HIVE needs distinct controls for distinct failure paths:</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Failure mechanism</th>
+<th>Proposed control</th>
+<th>What remains possible</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Updating one skill damages another</td>
+<td>Independent update owners where measured interference is harmful; retention evaluation for shared weights</td>
+<td>Within-module forgetting; harmful shared-encoder changes</td>
+</tr>
+<tr>
+<td>Wrong representation or units</td>
+<td>Typed/versioned envelopes and tested translators</td>
+<td>Correctly typed but wrong values</td>
+</tr>
+<tr>
+<td>Wrong memory recipient or writer</td>
+<td>Enforced namespaces and capability checks outside the model</td>
+<td>Mistakes by an authorized writer</td>
+</tr>
+<tr>
+<td>False evidence becomes durable belief</td>
+<td>Provenance, source checks, quarantined candidates, corroboration where available</td>
+<td>Uncertain or false external sources</td>
+</tr>
+<tr>
+<td>Bad synthetic examples reinforce themselves</td>
+<td>Mark synthetic origin; require external checks before factual promotion</td>
+<td>Simulator errors and incomplete validators</td>
+</tr>
+<tr>
+<td>Bad routing propagates an error</td>
+<td>Measured router calibration, abstention/escalation, bounded fanout</td>
+<td>Ambiguous tasks and correlated errors</td>
+</tr>
+</tbody>
+</table></div>
+<p>Different alphabets or latent spaces can make accidental interpretation less likely, but <strong>they are not an authorization boundary</strong>. Permissions must be enforced by the runtime. A model's instruction to “write only to its own memory” is weaker than a memory service that cannot accept a write without the appropriate capability.</p>
+<p>Use the existing four HIVE channels with distinct authority:</p>
+<ul>
+<li><strong>Control:</strong> scheduling, budgets, cancellation and capability decisions.</li>
+<li><strong>Task:</strong> tensors, structured state, tool requests and results.</li>
+<li><strong>Evidence:</strong> observations, source identity, timestamps and uncertainty.</li>
+<li><strong>Teaching:</strong> proposed training examples or parameter changes, admitted through a validation process.</li>
+</ul>
+<p>A Task message must not automatically acquire Teaching authority. Successful transport, valid syntax and high model confidence do not establish truth.</p>
+<h2 id="9-biology-translated-into-an-engineered-lifecycle">9. Biology translated into an engineered lifecycle</h2>
+<p>Biological systems suggest useful experiments, but the translation must identify the mechanism being borrowed.</p>
+<p>Experiments suppressing post-learning hippocampal sharp-wave ripples impaired a rat spatial-memory task. A separate causal mouse study disrupted REM-associated theta activity and impaired particular forms of memory. These support studying complementary consolidation processes, not equating all learning or cleanup with REM. [B1–B2]</p>
+<p>Mouse cortical microscopy found selective sleep-associated synaptic scaling, with some larger stable synapses relatively spared. That motivates testing selective maintenance and retention policies, not uniformly shrinking every model weight. [B3]</p>
+<p>The waste-clearance literature is more complicated than a single slogan: primary studies using different measurements have reported increased sleep-linked transport/clearance mechanisms and reduced tracer clearance during sleep. Software garbage collection should be justified by measured memory, latency and data-quality costs regardless of that biological dispute. [B4–B5]</p>
+<p>The digestive, immune, endocrine and nervous systems share signals. For example, microbial fermentation metabolites affect immune-cell regulation through specific receptors, and neural stimulation can alter inflammatory responses. Their specificity depends on receptors, location and context rather than completely incompatible languages. The software inference is controlled reception and scoped influence. [B6–B7]</p>
+<h3 id="proposed-hive-cycles">Proposed HIVE cycles</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Trigger</th>
+<th>Operation</th>
+<th>Product</th>
+<th>Control</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Active operation</td>
+<td>Incoming work</td>
+<td>Perceive, route, retrieve, act, record outcomes</td>
+<td>Task results and bounded recent experience</td>
+<td>Latency and resource budgets</td>
+</tr>
+<tr>
+<td>Brief maintenance</td>
+<td>Low queue pressure or buffer thresholds</td>
+<td>Deduplicate records, validate contracts, expire temporary state</td>
+<td>Cleaner buffers and available cache</td>
+<td>Preserve evidence links and protected records</td>
+</tr>
+<tr>
+<td>Verified rehearsal</td>
+<td>Enough new checked examples</td>
+<td>Mix new, old, rare and failure examples</td>
+<td>Candidate skill update</td>
+<td>Compare with equal-budget interleaved replay</td>
+</tr>
+<tr>
+<td>Consolidation</td>
+<td>Idle compute and a validated update need</td>
+<td>Train/compact a candidate; migrate compatible state</td>
+<td>Smaller or better-retaining skill</td>
+<td>Held-out retention and interface tests</td>
+</tr>
+<tr>
+<td>Counterfactual rehearsal</td>
+<td>A measurable coverage gap</td>
+<td>Generate alternative task states in a simulator</td>
+<td>Marked synthetic examples</td>
+<td>Simulator checks; no automatic factual promotion</td>
+</tr>
+<tr>
+<td>Resource recovery</td>
+<td>Memory or model-version pressure</td>
+<td>Release caches, compact indices, retire obsolete versions</td>
+<td>Recovered storage/VRAM and simpler state</td>
+<td>Keep rollback and required provenance</td>
+</tr>
+<tr>
+<td>Promotion</td>
+<td>Candidate passes gates</td>
+<td>Switch model, translator and interface versions together</td>
+<td>Updated active module</td>
+<td>Atomic deployment and rollback</td>
+</tr>
+</tbody>
+</table></div>
+<p>“Production” in this system means producing useful state estimates, actions, evidence, memories and candidate skills. “Waste” means duplicate records, obsolete embeddings, abandoned contexts, unsupported candidates and idle cached state. Maintain a ledger so the value of cleanup can be measured.</p>
+<p>Do not copy a fixed human 90-minute schedule. Use workload, learning backlog, drift and memory pressure. On a shared GPU, consolidation has an opportunity cost even during apparent idle time; charge its accelerator time, replay storage and energy to the system.</p>
+<h3 id="what-to-remember-and-what-to-forget">What to remember and what to forget</h3>
+<p>Use distinct storage timescales:</p>
+<ol>
+<li>Short-lived working state for the current task.</li>
+<li>A bounded episodic buffer with provenance, timestamps and outcomes.</li>
+<li>A smaller validated semantic store for stable facts and procedures.</li>
+<li>Model parameters for skills that have demonstrated transfer beyond their original examples.</li>
+<li>A bounded audit/rollback history with explicit retention rules.</li>
+</ol>
+<p>Choose replay records using a mixture of recent, representative, rare and high-consequence cases. Avoid a pure “least recently used” knowledge policy, because rare information can be valuable. A concrete first ablation can compare a balanced reservoir against a mixture with a protected rare-case quota; the quota is a tunable proposal, not a result of these experiments.</p>
+<p>Use replacement/supersession markers for changed facts, so an old fact is not silently treated as current. Deleting a source record or retrieval entry does not by itself remove information already learned in model weights. That is a separate unlearning problem.</p>
+<h2 id="10-concrete-model-and-module-starting-point">10. Concrete model and module starting point</h2>
+<h3 id="functional-layout">Functional layout</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Functional module</th>
+<th>Initial implementation</th>
+<th>Learning boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Perception and state</td>
+<td>Compact frozen visual encoder; numerical geometry/tracking state; small task heads</td>
+<td>Private heads first; encoder updates only with consumer/translator regression checks</td>
+</tr>
+<tr>
+<td>Tool selection and execution</td>
+<td>A small language core for selection/schema repair plus deterministic executors</td>
+<td>Own examples, updates and outcome feedback</td>
+</tr>
+<tr>
+<td>Evidence and memory</td>
+<td>Retrieval, provenance and contradiction checks; second small language core where needed</td>
+<td>Own memory namespace and update candidate</td>
+</tr>
+<tr>
+<td>Language and integration</td>
+<td>Human-facing explanations and composition; broader model available for difficult cases</td>
+<td>Broad model changes evaluated separately</td>
+</tr>
+</tbody>
+</table></div>
+<p>The four functions do not require four full language-model copies. A visual head, deterministic executor and memory index can provide much of the work. A LAYA-style typed decision interface can be attached to a functional owner without creating another full backbone.</p>
+<h3 id="first-candidate-sizes">First candidate sizes</h3>
+<p>Use <strong>two independently owned 0.6B language cores</strong> as the first local specialization candidate, with a <strong>1.7B reference/fallback</strong> evaluated separately. Qwen3's official 0.6B, 1.7B and 4B checkpoints provide a convenient same-family pilot ladder; they are starting candidates, not winners established by this simulation. [M1–M3]</p>
+<p>For vision, DINOv3's official ViT-S/16 is 21M parameters. Begin with a frozen encoder and task-specific heads; verify the custom DINOv3 terms before adoption. V-JEPA 2.1 offers an 80M ViT-B/16 encoder as a later temporal-representation experiment, but that encoder alone is not an entire action-conditioned world model. [C1–C2]</p>
+<p>If both 0.6B copies and the 1.7B fallback are included, the language backbones total approximately <strong>2.9B parameters</strong>, regardless of how often the fallback is used. Count it in stored capacity and include its runtime whenever called. Every baseline should receive the same fallback access, with usage reported.</p>
+<p>The reported RTX 5070 Ti has 16 GB of GDDR7 and nominal memory bandwidth of 896 GB/s according to NVIDIA. That is a hardware specification, not an LLM benchmark. OBS, camera effects, cache, activations, backend allocations and optimizer states must be measured on the actual machine. [H1]</p>
+<p>For intuition only, raw weight storage follows parameters × bits/8:</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th style="text-align:right">Parameters</th>
+<th style="text-align:right">Raw 4-bit weights</th>
+<th style="text-align:right">Raw 16-bit weights</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">0.6B</td>
+<td style="text-align:right">0.30 GB</td>
+<td style="text-align:right">1.20 GB</td>
+</tr>
+<tr>
+<td style="text-align:right">1.7B</td>
+<td style="text-align:right">0.85 GB</td>
+<td style="text-align:right">3.40 GB</td>
+</tr>
+<tr>
+<td style="text-align:right">4.0B</td>
+<td style="text-align:right">2.00 GB</td>
+<td style="text-align:right">8.00 GB</td>
+</tr>
+<tr>
+<td style="text-align:right">Two 0.6B cores plus 1.7B fallback</td>
+<td style="text-align:right">1.45 GB</td>
+<td style="text-align:right">5.80 GB</td>
+</tr>
+</tbody>
+</table></div>
+<p>These are decimal GB arithmetic lower bounds, excluding quantization metadata, caches, vision, memory services and all training state. They are not residency recommendations. Full training can require much more memory than inference. Train a candidate in an isolated maintenance window and measure its peak; do not infer that an inference fit implies a training fit.</p>
+<h3 id="keep-two-learning-claims-distinct">Keep two learning claims distinct</h3>
+<p>A frozen backbone with private LoRA adapters is a practical comparison arm. It does not demonstrate independently adapting the backbone. The stronger hypothesis arm must update independent small networks or independent backbone parameters, with separate ownership and retention tests. The CPU learning study did the former: each expert was a separately trained complete MLP.</p>
+<p>For a real pilot, start with independent trainable visual/task heads and a manageable local adaptation procedure. Benchmark shared-base adapters as their own control. Only increase the amount of independently trained backbone when the task gain justifies its memory and update cost.</p>
+<h2 id="11-how-to-select-the-real-starting-size-on-the-users-machine">11. How to select the real starting size on the user's machine</h2>
+<p>The next experiment should use a small but real HIVE workload with verifiable outcomes: tool selection, typed schema repair, retrieval-backed evidence decisions and visual state decisions. Separate training, development and sealed evaluation sets, and hold out new task compositions.</p>
+<h3 id="run-sequence">Run sequence</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Work</th>
+<th>Decision produced</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hardware baseline</td>
+<td>Measure free/peak VRAM, first-result latency and completed-task rate with normal OBS/camera workload</td>
+<td>Real serving and maintenance budgets</td>
+</tr>
+<tr>
+<td>Size ladder</td>
+<td>Evaluate 0.6B, 1.7B and 4B within one family and consistent decoding conditions</td>
+<td>Smallest single-model candidate meeting the task gates</td>
+</tr>
+<tr>
+<td>Organization</td>
+<td>Compare generalist, shared-base adapters, two independent compartments and four compartments</td>
+<td>Whether measured interference justifies each split</td>
+</tr>
+<tr>
+<td>Representation path</td>
+<td>Compare direct numerical/latent transfer, precise structured text and caption-mediated transfer</td>
+<td>Which path preserves task quality at lowest end-to-end cost</td>
+</tr>
+<tr>
+<td>Learning cycle</td>
+<td>Compare current-only, interleaved replay and mixed-data consolidation at matched budgets</td>
+<td>Whether the maintenance cycle earns its cost</td>
+</tr>
+<tr>
+<td>Drift and faults</td>
+<td>Change facts, schemas and encoder versions; inject invalid and valid-looking false messages</td>
+<td>What gets contained and what needs evidence checks</td>
+</tr>
+<tr>
+<td>Long run</td>
+<td>Run bounded memory through many sequential tasks and repeated updates</td>
+<td>Retention, resource stability and maintenance overhead</td>
+</tr>
+</tbody>
+</table></div>
+<p>The comparison should match evidence, tools, external feedback, decoder settings and escalation opportunities. Report all stored models, active computation, translators, retrieval, replay, retries and maintenance. If the configurations have different total capacity, treat them as a measured quality–resource tradeoff rather than an exact parameter-controlled causal comparison.</p>
+<h3 id="initial-acceptance-gates">Initial acceptance gates</h3>
+<p>These are <strong>proposed engineering gates</strong>, not achieved outcomes:</p>
+<ul>
+<li>Meet the application's task-quality requirement and remain within two percentage points of the chosen reference where noninferiority is the goal.</li>
+<li>Report worst-domain and average retention, including rare tasks; a candidate first target is at most five percentage points average forgetting and ten for any protected task family.</li>
+<li>Prefer fewer corrected examples to reach a fixed retained-quality threshold; keep nonattainers visible.</li>
+<li>Measure completed correct tasks per second, p50/p95 end-to-end latency and total accelerator time, with the same error and abstention policy.</li>
+<li>Report memory growth, maintenance time, actual peak VRAM and storage over the long run.</li>
+<li>Admit a new module only when its gain exceeds routing, translation, storage, maintenance and evaluation cost.</li>
+<li>Reject a promoted encoder/translator pair if held-out downstream behavior regresses beyond its gate.</li>
+<li>Keep authorization-violation rejection separate from semantic-truth accuracy.</li>
+</ul>
+<p>Use development results to choose the configuration, then estimate the final tradeoff on fresh data and new task orders. The small experiment's descriptive intervals are insufficient for selecting a production architecture by tiny score differences.</p>
+<h2 id="12-what-local-speed-could-realistically-improve">12. What local speed could realistically improve</h2>
+<p>HIVE can improve time to a useful answer by avoiding unnecessary generations, retaining reusable state, activating only needed workers, performing direct numerical decisions, reducing repeated prefill, and reusing encoded inputs. Those are testable system improvements.</p>
+<p>They do not automatically increase a decoder's raw tokens per second. A system that removes two intermediate text generations may finish much sooner while its final language model generates at exactly the same token rate. Vision heads and numerical planners may produce no language tokens at all.</p>
+<p>Consequently, use <strong>correct completed tasks per second, latency at fixed quality, retained competence per feedback example, and total resource cost</strong> as primary measures. Record decoder tokens per second as one component, with tokenizer, prefill, output length, batch size and hardware conditions stated.</p>
+<p>Local/cloud comparisons also need matched tasks, tools, reasoning budget and quality. Network latency, cloud batching and model architecture differ. The present evidence does not show HIVE matching frontier models on general reasoning, nor does it show a cloud-equivalent token rate. It gives a concrete route to finding narrower workloads where organization and direct computation deliver a better local result.</p>
+<h2 id="13-reproducibility-and-limitations">13. Reproducibility and limitations</h2>
+<p>The bundle contains all three experiment directories and a root reproduction script. Python, NumPy and Matplotlib are sufficient; no network, GPU or model download is needed for these studies. The scripts regenerate raw data and figures. Plot rendering and minor floating-point details can vary by environment; timing is inherently machine dependent.</p>
+<p>Validation included finite differences for handwritten neural gradients, checks on all presentation/update counts and parameter budgets, exact replay-order invariance for isolated experts, matched coarse-word/coarse-code information loss, and complete scheduler work accounting. An independently reviewed CPU scheduler issue was corrected before reporting graph outcomes: packets waiting on busy nodes no longer reserve otherwise idle CPU lanes in advance.</p>
+<p>Material limitations remain:</p>
+<ul>
+<li>Tasks and labels are synthetic; the prevalence and difficulty of real conflicts are unknown.</li>
+<li>Routing and compatible grouping are optimistic known-structure controls.</li>
+<li>The learning study uses a fixed optimizer and update budget, not per-architecture tuning.</li>
+<li>Shared encoders, adapters, attention, recurrent memory and very long sequences are not simulated.</li>
+<li>The representation study tests coordinate preservation, not perception.</li>
+<li>Translation is linear and low-dimensional; arbitrary learned spaces can be much harder.</li>
+<li>Boundary validation uses simulated authenticated identities and a specified corruption mixture.</li>
+<li>The graph study omits model loading, batching, KV caches, graph maintenance and accuracy benefits from collaboration.</li>
+<li>Biological mechanisms motivate experiments but do not validate software analogies.</li>
+<li>No model-size optimum, endless learning, zero contamination or frontier-level performance has been established.</li>
+</ul>
+<h2 id="primary-sources">Primary sources</h2>
+<h3 id="biological-mechanisms">Biological mechanisms</h3>
+<ul>
+<li><strong>B1.</strong> Girardeau et al. (2009), <em>Selective suppression of hippocampal ripples impairs spatial memory</em>. <a href="https://buzsakilab.com/content/PDFs/Girardeau2009NatNeurosci.pdf" rel="noreferrer">Author-hosted paper</a>.</li>
+<li><strong>B2.</strong> Boyce et al. (2016), <em>Causal evidence for the role of REM sleep theta rhythm in contextual memory consolidation</em>. <a href="https://pubmed.ncbi.nlm.nih.gov/27174984/" rel="noreferrer">PubMed / Science</a>.</li>
+<li><strong>B3.</strong> de Vivo et al. (2017), <em>Ultrastructural evidence for synaptic scaling across the wake/sleep cycle</em>. <a href="https://pubmed.ncbi.nlm.nih.gov/28154076/" rel="noreferrer">PubMed / Science</a>.</li>
+<li><strong>B4.</strong> Hauglund et al. (2025), <em>Norepinephrine-mediated slow vasomotion drives glymphatic clearance during sleep</em>. <a href="https://pubmed.ncbi.nlm.nih.gov/39788123/" rel="noreferrer">PubMed / Cell</a>.</li>
+<li><strong>B5.</strong> Miao et al. (2024), <em>Brain clearance is reduced during sleep and anesthesia</em>. <a href="https://pubmed.ncbi.nlm.nih.gov/38741022/" rel="noreferrer">PubMed / Nature Neuroscience</a>.</li>
+<li><strong>B6.</strong> Borovikova et al. (2000), <em>Vagus nerve stimulation attenuates the systemic inflammatory response to endotoxin</em>. <a href="https://www.nature.com/articles/35013070" rel="noreferrer">Nature</a>.</li>
+<li><strong>B7.</strong> Smith et al. (2013), <em>The microbial metabolites, short chain fatty acids, regulate colonic Treg cell homeostasis</em>. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3807819/" rel="noreferrer">Author manuscript</a>.</li>
+</ul>
+<h3 id="numerical-and-learned-communication">Numerical and learned communication</h3>
+<ul>
+<li><strong>C1.</strong> Meta, <a href="https://github.com/facebookresearch/dinov3" rel="noreferrer">DINOv3 official code and checkpoints</a>. ViT-S/16 is listed at 21M parameters; custom DINOv3 terms apply.</li>
+<li><strong>C2.</strong> Meta, <a href="https://github.com/facebookresearch/vjepa2" rel="noreferrer">V-JEPA 2 / 2.1 official code and checkpoints</a>. The V-JEPA 2.1 ViT-B/16 encoder is listed at 80M.</li>
+<li><strong>C3.</strong> OpenAI, <a href="https://github.com/openai/CLIP" rel="noreferrer">CLIP official research code</a>. Explicit image and text feature interfaces.</li>
+<li><strong>C4.</strong> Meta, <a href="https://github.com/facebookresearch/SONAR" rel="noreferrer">SONAR</a>. Matched speech/text embedding and decoding research; not a universal protocol.</li>
+<li><strong>C5.</strong> Meta, <a href="https://github.com/facebookresearch/EGG" rel="noreferrer">EGG</a>. Learned discrete/continuous communication games; archived August 10, 2026, so use as research scaffolding.</li>
+</ul>
+<h3 id="candidate-model-family-and-hardware">Candidate model family and hardware</h3>
+<ul>
+<li><strong>M1.</strong> Qwen, <a href="https://huggingface.co/Qwen/Qwen3-0.6B" rel="noreferrer">Qwen3-0.6B official model card</a>.</li>
+<li><strong>M2.</strong> Qwen, <a href="https://huggingface.co/Qwen/Qwen3-1.7B" rel="noreferrer">Qwen3-1.7B official model card</a>.</li>
+<li><strong>M3.</strong> Qwen, <a href="https://huggingface.co/Qwen/Qwen3-4B" rel="noreferrer">Qwen3-4B official model card</a>.</li>
+<li><strong>H1.</strong> NVIDIA, <a href="https://www.nvidia.com/en-us/geforce/graphics-cards/50-series/rtx-5070-family/" rel="noreferrer">GeForce RTX 5070 family specifications</a>.</li>
+</ul>
+<p>Repository availability and these source statements were checked for this research. Research code, pretrained weights, and downstream use can carry different licenses. The experiment bundle contains our simulation code and source links; it does not redistribute third-party model weights.</p>
+</article></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#decision">Decision</a><a class="toc-h2" href="#1-what-was-actually-run">1. What was actually run</a><a class="toc-h2" href="#2-organization-the-clearest-positive-result">2. Organization: the clearest positive result</a><a class="toc-h3" href="#design">Design</a><a class="toc-h3" href="#results-with-the-same-interleaved-replay-schedule">Results with the same interleaved replay schedule</a><a class="toc-h3" href="#what-hive-should-learn-from-this">What HIVE should learn from this</a><a class="toc-h2" href="#3-size-what-the-experiment-can-and-cannot-select">3. Size: what the experiment can and cannot select</a><a class="toc-h2" href="#4-replay-and-sleep-a-useful-negative-result">4. Replay and “sleep”: a useful negative result</a><a class="toc-h2" href="#5-graph-selective-activation-matters-before-elaborate-topology">5. Graph: selective activation matters before elaborate topology</a><a class="toc-h3" href="#work-performed">Work performed</a><a class="toc-h3" href="#topology-at-four-workers">Topology at four workers</a><a class="toc-h2" href="#6-native-representations-preserve-information-then-compress-deliberately">6. Native representations: preserve information, then compress deliberately</a><a class="toc-h2" href="#7-private-languages-need-versioned-translation">7. Private languages need versioned translation</a><a class="toc-h2" href="#8-contamination-separate-the-mechanisms">8. Contamination: separate the mechanisms</a><a class="toc-h2" href="#9-biology-translated-into-an-engineered-lifecycle">9. Biology translated into an engineered lifecycle</a><a class="toc-h3" href="#proposed-hive-cycles">Proposed HIVE cycles</a><a class="toc-h3" href="#what-to-remember-and-what-to-forget">What to remember and what to forget</a><a class="toc-h2" href="#10-concrete-model-and-module-starting-point">10. Concrete model and module starting point</a><a class="toc-h3" href="#functional-layout">Functional layout</a><a class="toc-h3" href="#first-candidate-sizes">First candidate sizes</a><a class="toc-h3" href="#keep-two-learning-claims-distinct">Keep two learning claims distinct</a><a class="toc-h2" href="#11-how-to-select-the-real-starting-size-on-the-users-machine">11. How to select the real starting size on the user&#x27;s machine</a><a class="toc-h3" href="#run-sequence">Run sequence</a><a class="toc-h3" href="#initial-acceptance-gates">Initial acceptance gates</a><a class="toc-h2" href="#12-what-local-speed-could-realistically-improve">12. What local speed could realistically improve</a><a class="toc-h2" href="#13-reproducibility-and-limitations">13. Reproducibility and limitations</a><a class="toc-h2" href="#primary-sources">Primary sources</a><a class="toc-h3" href="#biological-mechanisms">Biological mechanisms</a><a class="toc-h3" href="#numerical-and-learned-communication">Numerical and learned communication</a><a class="toc-h3" href="#candidate-model-family-and-hardware">Candidate model family and hardware</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework revision 0.2</span></a><span>Research prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download vault</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

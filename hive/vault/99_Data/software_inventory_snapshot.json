@@ -1,0 +1,314 @@
+[
+  {
+    "tool": "Obsidian 1.13.4",
+    "status": "Installed in 2026-11-15 snapshot",
+    "local_path": "C:/Users/ianmy/OneDrive/Documents/Obsidian/Obsidian.exe",
+    "role": "Human-readable research and decision pages",
+    "verification_needed": "Confirm current executable and vault selection; import new HIVE folder without overwriting unrelated notes.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "Existing Obsidian vault",
+    "status": "Recorded in 2026-11-15 snapshot",
+    "local_path": "D:/MIcroMillionaire",
+    "role": "Existing linked studio knowledge base",
+    "verification_needed": "Confirm exact current path, backup/versioning, note conventions, and boundaries before integration.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "Studio Brain",
+    "status": "Running in 2026-11-15 snapshot",
+    "local_path": "D:/Tools/studio-brain/brain.py",
+    "role": "Read/retrieve vault context and evidence-backed notes",
+    "verification_needed": "Recheck brain_context/brain_search availability and documented write interface; preserve source provenance.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "Graphify",
+    "status": "Source only in 2026-11-15 snapshot",
+    "local_path": "D:/External Tools/graphify",
+    "role": "Candidate graph indexing and retrieval adapter; likely tool meant by graphy",
+    "verification_needed": "Inspect Graphify-Labs/graphify revision, environment, entrypoint, formats, and local smoke test; identity is an inference from inventory.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "Ruflo",
+    "status": "Connected in 2026-11-15 snapshot",
+    "local_path": "D:/.swarm",
+    "role": "Existing agent coordination adapter and shared memory pointers",
+    "verification_needed": "Recheck MCP schema and routing; do not infer durable execution guarantees from an earlier responding tool.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "LAYA",
+    "status": "Prepared; localhost:8791 offline in 2026-11-15 snapshot",
+    "local_path": "D:/envs/laya",
+    "role": "Candidate typed router/classifier",
+    "verification_needed": "Inspect D:/Repos/laya, cached model, engine/version, service startup, calibration; brain previously used deterministic fallback.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "Code Review Graph",
+    "status": "Prepared in 2026-11-15 snapshot",
+    "local_path": "D:/envs/code-review-graph",
+    "role": "Optional code structure index",
+    "verification_needed": "Verify entrypoint/environment and D:/External Tools/code-review-graph; keep code graph distinct from evidence graph.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "Ollama 0.40.16",
+    "status": "Running in 2026-11-15 snapshot",
+    "local_path": "C:/Users/ianmy/AppData/Local/Programs/Ollama/ollama.exe",
+    "role": "Existing local model endpoint",
+    "verification_needed": "Repeat model discovery and actual inference; previous /api/tags succeeded but no inference was requested.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "myr5-hold-local:latest",
+    "status": "Listed by live Ollama API in snapshot; approximately 5.6 GB",
+    "local_path": "D:/Ollama/models",
+    "role": "Existing model baseline candidate",
+    "verification_needed": "Verify loadability, task quality, provenance, resource use, context and structured-output behavior.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "LM Studio 0.4.26+4",
+    "status": "Installed; localhost:1234 offline in snapshot",
+    "local_path": "C:/Users/ianmy/AppData/Local/Programs/LM Studio/LM Studio.exe",
+    "role": "Optional downloaded-model serving and inspection",
+    "verification_needed": "Start only when needed; verify exact model API, supported formats, inference, and competing GPU load.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "Soup",
+    "status": "Prepared; GPU training not verified",
+    "local_path": "D:/envs/soup-p02",
+    "role": "Candidate frontend for inspectable fine-tuning recipes",
+    "verification_needed": "Also inspect D:/envs/soup-p02-gpu and D:/External Tools/Soup; verify forward/backward step, save/reload parity, and peak memory.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "Cursor 3.19.13",
+    "status": "Installed in snapshot",
+    "local_path": "C:/Users/ianmy/AppData/Local/Programs/cursor/Cursor.exe",
+    "role": "Existing coding editor",
+    "verification_needed": "Verify chosen model/provider and repository access.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "Orca",
+    "status": "Installed in snapshot",
+    "local_path": "C:/Users/ianmy/AppData/Local/Programs/orca/Orca.exe",
+    "role": "Worktree-based coding-agent coordination",
+    "verification_needed": "Verify configured agents, isolated worktrees, and interfaces; source also D:/External Tools/orca.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "Codex CLI 0.159.2",
+    "status": "Installed in snapshot",
+    "local_path": "C:/Users/ianmy/AppData/Roaming/npm/codex.cmd",
+    "role": "Local coding-agent harness for SOL role if configured",
+    "verification_needed": "Verify available model IDs, authorization, tool support, and whether execution is local or hosted.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "Claude Code CLI",
+    "status": "Installed in snapshot",
+    "local_path": "C:/Users/ianmy/.local/bin/claude.exe",
+    "role": "Available alternative coding harness",
+    "verification_needed": "Verify configured provider and capability; no silent substitution for a named assigned model.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "OpenCode CLI 1.18.33",
+    "status": "Installed in snapshot",
+    "local_path": "C:/Users/ianmy/AppData/Roaming/npm/opencode.cmd",
+    "role": "Alternative harness with supported local or hosted providers",
+    "verification_needed": "Verify actual provider/model wiring; source also D:/Repos/opencode.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "Grok Bot 0.79.4",
+    "status": "Installed in snapshot",
+    "local_path": "C:/Program Files/Grok Bot",
+    "role": "Existing agent desktop interface",
+    "verification_needed": "Verify service access and actual tool interface; installation does not establish local model inference.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "Grok Build 1.0.5",
+    "status": "Installed; grok.exe resolved on PATH in snapshot",
+    "local_path": "C:/Users/ianmy/AppData/Local/Microsoft/WinGet/Packages/xAI.GrokBuild_Microsoft.Winget.Source_8wekyb3d8bbwe",
+    "role": "Named Grok integration coder harness candidate",
+    "verification_needed": "Verify provider, model, credentials, execution scope, and cost policy.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "OmniRoute 3.8.50",
+    "status": "Installed; credentials/server unverified",
+    "local_path": "C:/Users/ianmy/AppData/Roaming/npm/omniroute.cmd",
+    "role": "Optional gateway for existing providers",
+    "verification_needed": "Verify server and models; keep optional until a configured route is demonstrated.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "Python 3.11.9 / 3.12.10",
+    "status": "Installed in snapshot",
+    "local_path": "C:/Users/ianmy/AppData/Local/Programs/Python",
+    "role": "Runtime, research scripts, local services",
+    "verification_needed": "Choose and pin an isolated environment after compatibility test.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "uv 0.12.2",
+    "status": "Installed in snapshot",
+    "local_path": "C:/Users/ianmy/AppData/Local/Microsoft/WinGet/Packages/astral-sh.uv_Microsoft.Winget.Source_8wekyb3d8bbwe",
+    "role": "Reproducible Python environments",
+    "verification_needed": "Verify launcher and create project-specific lock/environment.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "Node.js 24.19.0",
+    "status": "Installed in snapshot",
+    "local_path": "C:/Program Files/nodejs/node.exe",
+    "role": "JavaScript/MCP/indexing dependencies",
+    "verification_needed": "Verify versions required by selected local adapters.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "Git and GitHub CLI",
+    "status": "Installed in snapshot",
+    "local_path": "C:/Program Files/Git",
+    "role": "Source lineage, worktrees, reviewable changes",
+    "verification_needed": "Verify local Git and repository status; remote publishing is a separate action. GitHub CLI path C:/Program Files/GitHub CLI.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "Docker Desktop 4.95.0",
+    "status": "Installed; daemon unverified",
+    "local_path": "C:/Program Files/Docker/Docker",
+    "role": "Optional process isolation for generated-code and tool tests",
+    "verification_needed": "Verify daemon, filesystem restrictions, resource caps, and cancellation.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "anydoc 0.2.4",
+    "status": "Installed in snapshot",
+    "local_path": "C:/Users/ianmy/AppData/Roaming/npm/anydoc.cmd",
+    "role": "Candidate document-to-text import adapter",
+    "verification_needed": "Verify formats and extraction fidelity; preserve original files beside derived text.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "OBS Studio 32.2.2",
+    "status": "Installed in snapshot",
+    "local_path": "C:/Program Files/obs-studio/bin/64bit/obs64.exe",
+    "role": "Studio workload and interaction testbed",
+    "verification_needed": "Verify actual path/version from current inventory and measure camera/filter GPU headroom; API readiness not implied.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "FFmpeg / ffprobe 9.0",
+    "status": "Installed; commands resolved in snapshot",
+    "local_path": "C:/Users/ianmy/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe",
+    "role": "Deterministic video/media workers and artifact verification",
+    "verification_needed": "Check current command resolution and supported codecs on a local fixture.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "MOM Channel Surf",
+    "status": "Running in snapshot",
+    "local_path": "C:/Users/ianmy/Documents/Codex/Apps/MOM Channel Surf",
+    "role": "Existing playback/overlay integration target",
+    "verification_needed": "Inspect documented interface; observed Python process does not prove HIVE call-loop capability.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "Unity 6000.6.8f1",
+    "status": "Running in snapshot",
+    "local_path": "C:/Users/ianmy/Unity/Hub/Editor/6000.6.8f1/Editor/Unity.exe",
+    "role": "Horror/haunt simulation and gameplay testbed",
+    "verification_needed": "Verify actual project version and interface; preserve current project setup.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "gpt-oss-20b",
+    "status": "Downloaded model file(s) verified in snapshot",
+    "local_path": "D:/LMStudio/models/lmstudio-community/gpt-oss-20b-GGUF",
+    "role": "Existing baseline/worker candidate, subject to measurement",
+    "verification_needed": "GGUF verified; load/task fit not established. A GGUF file does not establish a compatible trainable checkpoint.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "Qwen3.5-9B",
+    "status": "Downloaded model file(s) verified in snapshot",
+    "local_path": "D:/LMStudio/models/lmstudio-community/Qwen3.5-9B-GGUF",
+    "role": "Existing baseline/worker candidate, subject to measurement",
+    "verification_needed": "GGUF and projector verified; load/task fit not established. A GGUF file does not establish a compatible trainable checkpoint.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "Qwen3.6-35B-A3B",
+    "status": "Downloaded model file(s) verified in snapshot",
+    "local_path": "D:/LMStudio/models/lmstudio-community/Qwen3.6-35B-A3B-GGUF",
+    "role": "Existing baseline/worker candidate, subject to measurement",
+    "verification_needed": "GGUF and projector verified; total storage and active compute differ. A GGUF file does not establish a compatible trainable checkpoint.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "Qwen3.8-27B",
+    "status": "Downloaded model file(s) verified in snapshot",
+    "local_path": "D:/LMStudio/models/lmstudio-community/Qwen3.8-27B-GGUF",
+    "role": "Existing baseline/worker candidate, subject to measurement",
+    "verification_needed": "GGUF and projector verified; load/task fit not established. A GGUF file does not establish a compatible trainable checkpoint.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "Devstral Small 2 24B Instruct 2512",
+    "status": "Downloaded model file(s) verified in snapshot",
+    "local_path": "D:/LMStudio/models/lmstudio-community/Devstral-Small-2-24B-Instruct-2512-GGUF",
+    "role": "Existing baseline/worker candidate, subject to measurement",
+    "verification_needed": "GGUF and projector verified; load/task fit not established. A GGUF file does not establish a compatible trainable checkpoint.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "Muse Glimmer 30B",
+    "status": "Downloaded model file(s) verified in snapshot",
+    "local_path": "D:/LMStudio/models/lmstudio-community/Muse-Glimmer-30B-GGUF",
+    "role": "Existing baseline/worker candidate, subject to measurement",
+    "verification_needed": "GGUF/projector verified; filename about 17 GB, fitting not tested. A GGUF file does not establish a compatible trainable checkpoint.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "Ornith 1.0 9B",
+    "status": "Downloaded model file(s) verified in snapshot",
+    "local_path": "D:/LMStudio/models/ornith-ai/Ornith-1.0-9B-GGUF",
+    "role": "Existing baseline/worker candidate, subject to measurement",
+    "verification_needed": "GGUF verified; load/task fit not established. A GGUF file does not establish a compatible trainable checkpoint.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "Qwen3.5 9B Antidoom run9",
+    "status": "Downloaded model file(s) verified in snapshot",
+    "local_path": "D:/LMStudio/models/jiguack/qwen35-9b-antidoom",
+    "role": "Existing baseline/worker candidate, subject to measurement",
+    "verification_needed": "Q4_K_M GGUF verified; training recipe/result not audited here. A GGUF file does not establish a compatible trainable checkpoint.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "Colibri P02F / OLMoE research model stores",
+    "status": "Directories observed; completeness unverified",
+    "local_path": "D:/models",
+    "role": "Candidate storage-tier/MoE research assets",
+    "verification_needed": "Inspect colibri-p02f, olmoe-source-p02f and olmoe-source-p02f2 with engine and checksum/manifest checks.",
+    "source_file": "Ian-AI-Generation-and-Game-Design-Software.pdf"
+  },
+  {
+    "tool": "SOL and NVIDIA Nemotron model endpoints",
+    "status": "Named in prior HIVE handoff; reachable endpoints not established by recovered inventory",
+    "local_path": null,
+    "role": "SOL lead and Nemotron support coder",
+    "verification_needed": "Discover exact invocation, model ID, provider, locality, tool support, rate limits and available authorization. Never report an assigned role as executed without endpoint evidence.",
+    "source_file": "HIVE_SOL_Execution_Handoff.md"
+  }
+]

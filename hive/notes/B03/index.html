@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Graphify and knowledge adapters · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#122c32"><link rel="canonical" href="https://mominc.online/hive/notes/B03/">
+<meta property="og:title" content="Graphify and knowledge adapters · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=1"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=1">
+<script defer src="/hive/assets/hive.js?v=1"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/ROADMAP/">Build</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 286 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download Obsidian vault</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=build">Local build</a><span>/</span><span>B03</span></div>
+<div class="doc-meta"><span class="badge">Design proposal</span><span class="badge neutral">Not implemented</span></div><div class="doc-tools"><button class="copy-link" data-title="Graphify and knowledge adapters" data-id="B03">Copy reference</button><a href="/hive/vault/70_Local_Build/B03_Graphify_and_Knowledge_Adapters.md">Markdown source</a><a href="/hive/graph/?focus=B03">View connections</a><button class="print-page">Print</button></div>
+<article class="prose"><h1 id="graphify-and-knowledge-adapters">Graphify and knowledge adapters</h1>
+<h2 id="responsibilities">Responsibilities</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Surface</th>
+<th>Owns</th>
+<th>Must not silently imply</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Obsidian</td>
+<td>Authored research notes, decisions, navigation</td>
+<td>A linked claim is true</td>
+</tr>
+<tr>
+<td>Graphify</td>
+<td>Derived code/document relationships for retrieval</td>
+<td>An inferred relation is evidence</td>
+</tr>
+<tr>
+<td>Studio Brain</td>
+<td>Existing vault retrieval interface</td>
+<td>Every retrieved note is current</td>
+</tr>
+<tr>
+<td>Runtime event store</td>
+<td>Executed tasks and outcomes</td>
+<td>A proposed experiment was run</td>
+</tr>
+<tr>
+<td>Model registry</td>
+<td>Exact serving and candidate artifacts</td>
+<td>A note edit retrained a model</td>
+</tr>
+</tbody>
+</table></div>
+<p>Graphify's official source describes deterministic AST code analysis and model-assisted semantic processing for some document/media inputs. Check the locally installed revision and provider configuration: <a href="/hive/notes/S09/">Graphify official repository</a>.</p>
+<h2 id="adapter-contract-to-implement">Adapter contract to implement</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Required result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>inventory</td>
+<td>Supported formats, version, entrypoint, provider/locality</td>
+</tr>
+<tr>
+<td>ingest(snapshot)</td>
+<td>Input hashes, index revision, skipped/error records</td>
+</tr>
+<tr>
+<td>query(question, filters)</td>
+<td>Node IDs, source paths, locators, relation type, derivation</td>
+</tr>
+<tr>
+<td>neighbors(node_id)</td>
+<td>Typed edges with provenance</td>
+</tr>
+<tr>
+<td>invalidate(source_hash)</td>
+<td>Stale derived records identified</td>
+</tr>
+<tr>
+<td>export(snapshot)</td>
+<td>Rebuildable nodes and edges</td>
+</tr>
+</tbody>
+</table></div>
+<p>These are HIVE interface requirements, not claims that Graphify exposes commands with these names.</p>
+<h2 id="initial-workflow">Initial workflow</h2>
+<ul>
+<li>Inspect D:/External Tools/graphify and its checked-out instructions.</li>
+<li>Smoke-test on a small source subset.</li>
+<li>Confirm whether document processing can run through a configured local model.</li>
+<li>If it cannot, keep raw-note and deterministic code paths usable while recording the semantic path as unavailable.</li>
+<li>Preserve Graphify's extracted/inferred distinction and HIVE's claim status separately.</li>
+<li>Compare retrieval against simple filename/text search and direct links.</li>
+<li>Rebuild after source changes; never trust a stale index without its source revision.</li>
+</ul>
+<h2 id="first-graph-questions">First graph questions</h2>
+<ul>
+<li>Which prior experiment actually tested this claim?</li>
+<li>Which result challenges the preferred method?</li>
+<li>Which metaphor motivated this implementation?</li>
+<li>Which code modules implement the mechanism?</li>
+<li>Which task and resource assumptions would reopen the decision?</li>
+</ul>
+</article><section class="backlinks"><h2>Referenced by <span>2</span></h2><div><a href="/hive/notes/ROADMAP/"><span>ROADMAP</span>Local build roadmap and work packages<small>related to</small></a><a href="/hive/notes/HANDOFF/"><span>HANDOFF</span>Local coding-agent handoff<small>related to</small></a></div></section></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#responsibilities">Responsibilities</a><a class="toc-h2" href="#adapter-contract-to-implement">Adapter contract to implement</a><a class="toc-h2" href="#initial-workflow">Initial workflow</a><a class="toc-h2" href="#first-graph-questions">First graph questions</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework revision 0.2</span></a><span>Research prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download vault</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

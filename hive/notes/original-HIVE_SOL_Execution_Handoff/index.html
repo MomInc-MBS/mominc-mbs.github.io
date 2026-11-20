@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HIVE SOL Execution Handoff · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#122c32"><link rel="canonical" href="https://mominc.online/hive/notes/original-HIVE_SOL_Execution_Handoff/">
+<meta property="og:title" content="HIVE SOL Execution Handoff · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=1"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=1">
+<script defer src="/hive/assets/hive.js?v=1"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/ROADMAP/">Build</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 286 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download Obsidian vault</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=original">Archived original</a><span>/</span><span>original-HIVE_SOL_Execution_Handoff</span></div>
+<div class="doc-meta"><span class="badge">Preserved original</span><span class="badge neutral">Historical</span></div><div class="doc-tools"><button class="copy-link" data-title="HIVE SOL Execution Handoff" data-id="original-HIVE_SOL_Execution_Handoff">Copy reference</button><a href="/hive/vault/90_Archive/Originals/HIVE_SOL_Execution_Handoff.md">Markdown source</a><button class="print-page">Print</button></div>
+<p class="archive-notice">Preserved historical original. Statements below reflect this source document; they are not a current implementation or a new measurement.</p><article class="prose"><h1 id="hive-v01-sol-execution-handoff">HIVE v0.1 — SOL Execution Handoff</h1>
+<p><strong>Date:</strong> 2026-11-19<br />
+<strong>Mission:</strong> Build a reliable local HIVE software foundation using SOL as lead orchestrator, Grok as integration coder/reviewer, and NVIDIA Nemotron as support coder/problem solver. Do not enable autonomous weight updates or unreviewed self-modification during foundation construction.</p>
+<h2 id="1-operating-contract">1. Operating contract</h2>
+<p>SOL owns architecture, sequencing, task decomposition, integration decisions, acceptance, and the current project state. Grok owns connector implementations, software interfaces, API smoke tests, and cross-review of Nemotron work. Nemotron owns typed contracts, capability manifests, memory schema, diagnostic workers, failure classification, watchdogs, and independent tests. Reassign work based on actual measured model/tool capability rather than assumed strengths. Each agent has a distinct Git worktree and cannot write to another agent's worktree. Merge only through SOL after executable checks.</p>
+<p><strong>Do not assume SOL, Grok, or Nemotron is reachable as a configured endpoint.</strong> First discover their exact runtime, model IDs, authorization, invocation interface, rate limits, context limits, and whether they support tools and file operations. If any endpoint is unavailable, log the blocker and continue independent foundation work; do not silently substitute a different model or claim that a task was executed.</p>
+<h2 id="2-environment-and-resource-assumptions">2. Environment and resource assumptions</h2>
+<p>Target Windows workstation: RTX 5070 Ti (reported 16 GB VRAM), 64 GB RAM. Existing inventory dated November 15, 2026 lists Python 3.11/3.12, uv, Node.js, Ollama running at inventory time, Ruflo connected at inventory time, LAYA prepared with service offline, LM Studio installed with server offline, Docker Desktop installed with daemon unverified, and local coding CLIs. Reverify all statuses at execution time. Account for OBS, camera, filter and video workloads. Run two profiles: isolated research and studio-sharing. Initial GPU lease count: 1. Initial HIVE VRAM ceiling: 12 GiB when the GPU is otherwise idle; dynamically lower it based on observed availability. Never start training while streaming without an explicitly tested resource profile.</p>
+<h2 id="3-initial-architecture">3. Initial architecture</h2>
+<ul>
+<li><strong>Task runtime</strong>: owns immutable task IDs, dependency DAG, task journal, state transitions, leases, deadlines, cancellation, resource caps, and idempotency keys.</li>
+<li><strong>Capability registry</strong>: stores capabilities, executable endpoints, versions, tool schemas, costs, permissions, health and test status, compatible representations and specialist owner.</li>
+<li><strong>Workers</strong>: Python tool workers, inference wrappers, Ruflo adapter (optional), and narrow specialists. Each is replaceable behind a typed interface.</li>
+<li><strong>Channels</strong>: Control, Task, Evidence, Teaching; Pydantic versioned envelopes with source, destination, parent IDs, schema version, evidence references, provenance, uncertainty and resource budget.</li>
+<li><strong>Memory</strong>: SQLite with migrations and bounded working, episodic, semantic, procedural, replay and collective namespaces; no unverified proposal promoted to fact.</li>
+<li><strong>Local supervisors</strong>: deterministic progress watchdog, timeout controller, resource monitor, retry policy and escalation packet builder. They must not require the lead controller to poll every operation.</li>
+<li><strong>Verifier</strong>: evaluates actual tool state, tests, constraints and provenance; independent of the proposing worker.</li>
+<li><strong>Learning staging</strong>: collects verified traces, replay data, candidate procedures and adapters, immutable versions, regression evaluations and rollback pointers. Parameter-training jobs remain disabled until the foundation release gate.</li>
+</ul>
+<p>Register 20 capabilities across five groups (control, protocol/repair, execution, memory/evidence, maintenance/learning), with a registry and load policies that can scale to 50 and 100 entries without requiring simultaneous GPU residency. Track registered, trained, loaded, and executing counts separately.</p>
+<h2 id="4-repository-layout">4. Repository layout</h2>
+<pre><code class="language-text">hive/
+  README.md
+  pyproject.toml
+  uv.lock
+  .env.example
+  configs/{research.yaml,studio.yaml,permissions.yaml}
+  docs/{architecture.md,adr/,inventory.md,runbook.md}
+  contracts/{control.py,task.py,evidence.py,teaching.py,capability.py}
+  core/{scheduler.py,journal.py,leases.py,registry.py,resources.py,permissions.py}
+  adapters/{ollama.py,ruflo.py,laya.py,model_provider.py,tools.py}
+  workers/{calculator.py,sqlite_worker.py,retrieval.py,python_sandbox.py,model_worker.py}
+  supervisors/{watchdog.py,retry.py,resource_monitor.py,incident.py}
+  memory/{db.py,migrations/,retention.py,provenance.py}
+  verification/{outcome.py,schemas.py,checks.py}
+  learning/{trace_store.py,training_queue.py,candidates.py,promotion.py,rollback.py}
+  arena/{operations.py,simulator.py,generator.py,truth.py,splits.py}
+  experiments/{baselines.py,metrics.py,compare.py}
+  tests/{unit/,integration/,failure_injection/,regression/,acceptance/}
+  scripts/{doctor.py,smoke.py,run_demo.py,export_manifest.py}
+  artifacts/  # ignored, bounded and versioned
+</code></pre>
+<h2 id="5-execution-phases-and-work-tickets">5. Execution phases and work tickets</h2>
+<h3 id="phase-0-discovery-and-contracts-must-complete-first">Phase 0 — Discovery and contracts (must complete first)</h3>
+<ul>
+<li><strong>GROK-001</strong> Inspect software and endpoints read-only: Python, uv, GPU/driver, Ollama models, Ruflo, LAYA, LM Studio, available Grok/Nemotron/SOL invocation. Write <code>docs/inventory.md</code> and machine-readable <code>artifacts/capabilities-discovered.json</code>. Include observed evidence, failures, readiness and versions. No blind installs.</li>
+<li><strong>NEM-001</strong> Define Pydantic channel envelopes, capability manifest, error taxonomy, version compatibility and JSON Schema export. Write contract tests including malformed fields, missing provenance and incompatible versions.</li>
+<li><strong>SOL-001</strong> Review architecture decisions and publish <code>docs/architecture.md</code>, permissions and resource policy. Assign independent worktrees and record ticket acceptance criteria.</li>
+<li><strong>Gate 0</strong> Reproducible environment; verified model endpoint or explicit blocker; contracts pass unit tests; no undocumented system changes.</li>
+</ul>
+<h3 id="phase-1-runtime-and-connections">Phase 1 — Runtime and connections</h3>
+<ul>
+<li><strong>GROK-002</strong> Implement Ollama model wrapper with model discovery, bounded request, cancellation, timeout, response parsing and resource telemetry. Add a Ruflo adapter behind the same capability interface; do not make Ruflo a required dependency for the minimal runtime. Add LAYA integration only after a verified local startup, with a deterministic routing fallback clearly labeled.</li>
+<li><strong>NEM-002</strong> Implement SQLite migrations, event journal, provenance and bounded retention; enforce ownership and no duplicate task effects.</li>
+<li><strong>SOL-002</strong> Implement task scheduler, capability registry, leases, idempotent task state machine, budgets and worker health. No model controls execution status directly.</li>
+<li><strong>Gate 1</strong> Two workers communicate through contracts, one model and one deterministic tool can run, every output has an attributable source, task interruption/restart is safe.</li>
+</ul>
+<h3 id="phase-2-local-oversight-and-verification">Phase 2 — Local oversight and verification</h3>
+<ul>
+<li><strong>NEM-003</strong> Implement watchdog: heartbeat plus meaningful progress markers; stalled/failed/cancelled distinctions; bounded retries, backoff, quarantine and escalation. Supervisor handles known operational failures without lead-model polling.</li>
+<li><strong>GROK-003</strong> Build deterministic verifier, outcome checker, tool schema tests and failure injection tests. Cross-review watchdog and memory changes.</li>
+<li><strong>SOL-003</strong> Integrate incident packets and escalation; only head controller handles unresolved or cross-group incidents.</li>
+<li><strong>Gate 2</strong> Forced stall, stale result, invalid payload, retry exhaustion, restart and duplicate-write tests pass. No silent false-success reports.</li>
+</ul>
+<h3 id="phase-3-arena-and-training-preparation">Phase 3 — Arena and training preparation</h3>
+<ul>
+<li><strong>GROK-004</strong> Implement ten sandboxed operations: calculate, query records, search docs, read doc, transform, validate, run tests, get job status, write artifact, invoke model. Build API changes (renamed fields, units, enum changes, missing arguments), faults and chained workflows.</li>
+<li><strong>NEM-004</strong> Build independent truth engine, task generators, source/task-family split, training trace collector and baseline metrics. Start with 300–500 hand-checked seed episodes; proposed total 12,000 episodes: 8,000 train, 1,000 dev, 500 calibration, 500 promotion, 2,000 sealed release. Never expose sealed truth to runtime or candidate generator.</li>
+<li><strong>SOL-004</strong> Establish deterministic, generalist-with-tools and fixed-role HIVE baselines with identical tools and feedback; record accuracy, cost, p50/p95 latency, RAM/VRAM, interventions and failures.</li>
+<li><strong>Gate 3</strong> Independent rerun recreates results; held-out task families do not leak through paraphrases or common templates.</li>
+</ul>
+<h3 id="phase-4-controlled-learning-staging-not-autonomous-training">Phase 4 — Controlled learning staging, NOT autonomous training</h3>
+<ul>
+<li><strong>NEM-005</strong> Implement verified incident-to-teaching example conversion and bounded replay stores. Separate memory, procedure, routing and parameter-change events.</li>
+<li><strong>GROK-005</strong> Implement model/adapter registry, compatibility check, candidate artifact loader, atomic promotion and rollback; training remains disabled by default. Compare native Transformers/PEFT worker with deployed inference parity only after test coverage.</li>
+<li><strong>SOL-005</strong> Define promotion gate and prepare next-phase controller training tickets. No live self-training without explicit authorization and frozen benchmark.</li>
+<li><strong>Gate 4</strong> Candidate procedure update can be tested, accepted/rejected and rolled back; incumbent is retained; no unverified learning result is deployed.</li>
+</ul>
+<h2 id="6-required-task-state-machine">6. Required task state machine</h2>
+<p><code>CREATED -&gt; VALIDATED -&gt; QUEUED -&gt; LEASED -&gt; RUNNING -&gt; VERIFYING -&gt; {SUCCEEDED, FAILED, BLOCKED, CANCELLED}</code>. <code>RUNNING -&gt; RECOVERING -&gt; RUNNING</code> only under bounded retry policy. Persist every transition with timestamp, actor, version, idempotency key, and evidence reference. Worker output alone cannot transition a task to SUCCEEDED.</p>
+<h2 id="7-agent-handoff-packet">7. Agent handoff packet</h2>
+<p>Each SOL assignment to Grok or Nemotron MUST include:</p>
+<pre><code class="language-yaml">ticket_id: GROK-002
+objective: &quot;Implement Ollama capability adapter&quot;
+allowed_paths: [&quot;adapters/ollama.py&quot;, &quot;tests/integration/test_ollama.py&quot;]
+inputs: [&quot;contracts/capability.py&quot;, &quot;configs/research.yaml&quot;]
+interfaces: [&quot;CapabilityManifest v1&quot;, &quot;TaskEnvelope v1&quot;, &quot;EvidenceEnvelope v1&quot;]
+acceptance_tests: [&quot;model discovery&quot;, &quot;timeout&quot;, &quot;cancel&quot;, &quot;schema validation&quot;, &quot;failure report&quot;]
+resource_limits: {gpu_leases: 1, max_attempts: 2}
+permissions: [&quot;read repository&quot;, &quot;edit assigned worktree&quot;, &quot;run local tests&quot;]
+forbidden: [&quot;modify hidden test fixtures&quot;, &quot;install unapproved packages&quot;, &quot;write outside repo&quot;]
+reviewer: &quot;NVIDIA Nemotron&quot;
+report_format: [&quot;commit&quot;, &quot;files changed&quot;, &quot;tests&quot;, &quot;evidence&quot;, &quot;risks&quot;, &quot;blockers&quot;]
+</code></pre>
+<p>Grok and Nemotron report completed work only with a commit hash, actual test command/output and observed endpoint status. SOL independently executes or verifies the tests before merge. Reviewers cannot edit protected benchmark or promotion criteria.</p>
+<h2 id="8-model-team-workflow">8. Model-team workflow</h2>
+<ol>
+<li>SOL selects next ready ticket based on dependencies and resource budgets.</li>
+<li>SOL sends independent tickets to Grok and Nemotron; shared interfaces are frozen for that sprint.</li>
+<li>Each coder works in its own worktree and commits changes.</li>
+<li>Peer reviewer inspects diff, test quality, contract compliance, failure handling and resource assumptions.</li>
+<li>Automated tests execute in a controlled environment. Test failure returns a bounded repair packet to the responsible coder.</li>
+<li>SOL merges only after acceptance; integration suite runs after merge.</li>
+<li>Journal records merged revision, capability changes, unresolved risks and next tickets.</li>
+<li>Repeated manual interventions become incident patterns and proposed local monitors/procedures, not automatic live weight edits.</li>
+</ol>
+<p>Do not let the reviewer be the sole oracle. All claims of success require executable evidence. If a model endpoint is unavailable, mark its ticket BLOCKED and continue independent tasks without pretending the role ran.</p>
+<h2 id="9-permission-boundaries">9. Permission boundaries</h2>
+<p>Allowed without additional user approval: inspect local project files, create/edit in assigned HIVE worktrees, run approved tests, build manifests, write local documentation and non-destructive sandbox artifacts. Require explicit approval for: installs outside approved lockfiles, changing unrelated projects, deleting user data, external publishing, paid model/API usage, credential access beyond already authorized services, network exposure, training live model weights, and deployment of self-modifying code. Preserve secrets in environment variables; redact logs.</p>
+<h2 id="10-foundation-acceptance-demonstration">10. Foundation acceptance demonstration</h2>
+<p>Run one structured task that: selects a capability; invokes a local model; calls a deterministic tool; exchanges typed messages between two workers; encounters an injected stall; watchdog recovers or escalates; independent verifier checks final state; provenance is persisted; process restarts without duplicating side effects. Record a single command to rerun the demonstration plus test and telemetry reports.</p>
+<p><strong>Foundation release gate:</strong> all required behaviors pass, no critical unverified success, permission tests pass, restart/idempotency pass, complete task history survives restart, rollback works, and resource caps are respected. At that point enable the <em>next phase</em> (controller and specialist training) through a separate explicit decision, not by automatic recursion.</p>
+<h2 id="11-initial-sol-instruction-paste-into-sol">11. Initial SOL instruction (paste into SOL)</h2>
+<blockquote>
+<p>You are SOL, the lead development orchestrator for HIVE v0.1. Your task is to construct the reliable local software foundation described in this handoff using Grok as integration coder/reviewer and NVIDIA Nemotron as support coder/problem solver. First inspect the repository and verify whether each model and service is reachable. Do not invent successful tool calls, installations, training, or test results. Create an execution board of Phase 0–4 tickets and dependency gates. Assign separate worktrees and explicit allowed paths. Start Phase 0 immediately: request a read-only inventory from Grok, typed interface contracts from Nemotron, and produce the architecture decision record yourself. Merge only after independent executable tests. Preserve all changes and decisions in versioned artifacts. Never enable autonomous weight updates, modify unrelated projects, expose secrets, or spend API credits without approval. Your final output after each phase must include completed tickets, commits, test evidence, blockers, measured resource usage, and the next unblocked tasks. If Grok or Nemotron is unavailable, mark the endpoint unavailable and proceed with only the tasks that can be truthfully completed.</p>
+</blockquote>
+<h2 id="12-transition-to-training">12. Transition to training</h2>
+<p>Only after the foundation gate, start the separately controlled curriculum: train router and protocol translator; train bounded planner/operator; train checker and repairer; learn workflow selection; compare independent and shared adapters; evaluate unseen changed protocols, forgetting, intervention reduction, resource use, restart and rollback. Every candidate update is evaluated against frozen tests and promoted atomically; human-approved enablement is required for any automated parameter-learning cycle.</p>
+</article></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#1-operating-contract">1. Operating contract</a><a class="toc-h2" href="#2-environment-and-resource-assumptions">2. Environment and resource assumptions</a><a class="toc-h2" href="#3-initial-architecture">3. Initial architecture</a><a class="toc-h2" href="#4-repository-layout">4. Repository layout</a><a class="toc-h2" href="#5-execution-phases-and-work-tickets">5. Execution phases and work tickets</a><a class="toc-h3" href="#phase-0-discovery-and-contracts-must-complete-first">Phase 0 — Discovery and contracts (must complete first)</a><a class="toc-h3" href="#phase-1-runtime-and-connections">Phase 1 — Runtime and connections</a><a class="toc-h3" href="#phase-2-local-oversight-and-verification">Phase 2 — Local oversight and verification</a><a class="toc-h3" href="#phase-3-arena-and-training-preparation">Phase 3 — Arena and training preparation</a><a class="toc-h3" href="#phase-4-controlled-learning-staging-not-autonomous-training">Phase 4 — Controlled learning staging, NOT autonomous training</a><a class="toc-h2" href="#6-required-task-state-machine">6. Required task state machine</a><a class="toc-h2" href="#7-agent-handoff-packet">7. Agent handoff packet</a><a class="toc-h2" href="#8-model-team-workflow">8. Model-team workflow</a><a class="toc-h2" href="#9-permission-boundaries">9. Permission boundaries</a><a class="toc-h2" href="#10-foundation-acceptance-demonstration">10. Foundation acceptance demonstration</a><a class="toc-h2" href="#11-initial-sol-instruction-paste-into-sol">11. Initial SOL instruction (paste into SOL)</a><a class="toc-h2" href="#12-transition-to-training">12. Transition to training</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework revision 0.2</span></a><span>Research prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download vault</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

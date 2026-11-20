@@ -1,0 +1,328 @@
+{
+  "nodes": [
+    {
+      "id": "HOME",
+      "type": "file",
+      "file": "00_START_HERE.md",
+      "x": 480,
+      "y": -420,
+      "width": 460,
+      "height": 260,
+      "color": "4"
+    },
+    {
+      "id": "FRAMEWORK",
+      "type": "file",
+      "file": "01_Framework.md",
+      "x": 0,
+      "y": -80,
+      "width": 420,
+      "height": 260,
+      "color": "4"
+    },
+    {
+      "id": "GOOGLE",
+      "type": "file",
+      "file": "02_Google_Evidence_and_Change.md",
+      "x": 480,
+      "y": -80,
+      "width": 460,
+      "height": 260,
+      "color": "3"
+    },
+    {
+      "id": "EVIDENCE",
+      "type": "file",
+      "file": "04_Evidence_and_Disagreement.md",
+      "x": 1000,
+      "y": -80,
+      "width": 460,
+      "height": 260,
+      "color": "6"
+    },
+    {
+      "id": "T01",
+      "type": "file",
+      "file": "10_Research/T01_Learning/T01_Learning.md",
+      "x": 0,
+      "y": 280,
+      "width": 440,
+      "height": 320,
+      "color": "1"
+    },
+    {
+      "id": "T02",
+      "type": "file",
+      "file": "10_Research/T02_Specialists/T02_Specialists.md",
+      "x": 500,
+      "y": 280,
+      "width": 440,
+      "height": 320,
+      "color": "2"
+    },
+    {
+      "id": "T03",
+      "type": "file",
+      "file": "10_Research/T03_Coordination/T03_Coordination.md",
+      "x": 1000,
+      "y": 280,
+      "width": 440,
+      "height": 320,
+      "color": "3"
+    },
+    {
+      "id": "T04",
+      "type": "file",
+      "file": "10_Research/T04_Communication/T04_Communication.md",
+      "x": 0,
+      "y": 690,
+      "width": 440,
+      "height": 320,
+      "color": "4"
+    },
+    {
+      "id": "T05",
+      "type": "file",
+      "file": "10_Research/T05_Memory/T05_Memory.md",
+      "x": 500,
+      "y": 690,
+      "width": 440,
+      "height": 320,
+      "color": "5"
+    },
+    {
+      "id": "T06",
+      "type": "file",
+      "file": "10_Research/T06_Verification/T06_Verification.md",
+      "x": 1000,
+      "y": 690,
+      "width": 440,
+      "height": 320,
+      "color": "6"
+    },
+    {
+      "id": "T07",
+      "type": "file",
+      "file": "10_Research/T07_Resources/T07_Resources.md",
+      "x": 0,
+      "y": 1100,
+      "width": 440,
+      "height": 320,
+      "color": "1"
+    },
+    {
+      "id": "T08",
+      "type": "file",
+      "file": "10_Research/T08_Prediction/T08_Prediction.md",
+      "x": 500,
+      "y": 1100,
+      "width": 440,
+      "height": 320,
+      "color": "2"
+    },
+    {
+      "id": "T09",
+      "type": "file",
+      "file": "10_Research/T09_Applications/T09_Applications.md",
+      "x": 1000,
+      "y": 1100,
+      "width": 440,
+      "height": 320,
+      "color": "3"
+    },
+    {
+      "id": "T10",
+      "type": "file",
+      "file": "10_Research/T10_Research/T10_Research.md",
+      "x": 0,
+      "y": 1510,
+      "width": 440,
+      "height": 320,
+      "color": "4"
+    },
+    {
+      "id": "HISTORY",
+      "type": "file",
+      "file": "06_Previous_Work.md",
+      "x": 0,
+      "y": 1980,
+      "width": 440,
+      "height": 290,
+      "color": "2"
+    },
+    {
+      "id": "DECISIONS",
+      "type": "file",
+      "file": "05_Open_Decisions.md",
+      "x": 500,
+      "y": 1980,
+      "width": 440,
+      "height": 290,
+      "color": "2"
+    },
+    {
+      "id": "EXPERIMENTS",
+      "type": "file",
+      "file": "40_Experiments/00_Experiment_Index.md",
+      "x": 1000,
+      "y": 1980,
+      "width": 440,
+      "height": 290,
+      "color": "2"
+    },
+    {
+      "id": "METAPHORS",
+      "type": "file",
+      "file": "20_Metaphors/00_Metaphor_Index.md",
+      "x": 0,
+      "y": 2360,
+      "width": 440,
+      "height": 290,
+      "color": "6"
+    },
+    {
+      "id": "SOURCES",
+      "type": "file",
+      "file": "60_Sources/00_Source_Index.md",
+      "x": 500,
+      "y": 2360,
+      "width": 440,
+      "height": 290,
+      "color": "6"
+    },
+    {
+      "id": "ROADMAP",
+      "type": "file",
+      "file": "07_Local_Build_Roadmap.md",
+      "x": 1000,
+      "y": 2360,
+      "width": 440,
+      "height": 290,
+      "color": "6"
+    }
+  ],
+  "edges": [
+    {
+      "id": "nav_T01",
+      "fromNode": "HOME",
+      "fromSide": "bottom",
+      "toNode": "T01",
+      "toSide": "top",
+      "label": "research topic"
+    },
+    {
+      "id": "nav_T02",
+      "fromNode": "HOME",
+      "fromSide": "bottom",
+      "toNode": "T02",
+      "toSide": "top",
+      "label": "research topic"
+    },
+    {
+      "id": "nav_T03",
+      "fromNode": "HOME",
+      "fromSide": "bottom",
+      "toNode": "T03",
+      "toSide": "top",
+      "label": "research topic"
+    },
+    {
+      "id": "nav_T04",
+      "fromNode": "HOME",
+      "fromSide": "bottom",
+      "toNode": "T04",
+      "toSide": "top",
+      "label": "research topic"
+    },
+    {
+      "id": "nav_T05",
+      "fromNode": "HOME",
+      "fromSide": "bottom",
+      "toNode": "T05",
+      "toSide": "top",
+      "label": "research topic"
+    },
+    {
+      "id": "nav_T06",
+      "fromNode": "HOME",
+      "fromSide": "bottom",
+      "toNode": "T06",
+      "toSide": "top",
+      "label": "research topic"
+    },
+    {
+      "id": "nav_T07",
+      "fromNode": "HOME",
+      "fromSide": "bottom",
+      "toNode": "T07",
+      "toSide": "top",
+      "label": "research topic"
+    },
+    {
+      "id": "nav_T08",
+      "fromNode": "HOME",
+      "fromSide": "bottom",
+      "toNode": "T08",
+      "toSide": "top",
+      "label": "research topic"
+    },
+    {
+      "id": "nav_T09",
+      "fromNode": "HOME",
+      "fromSide": "bottom",
+      "toNode": "T09",
+      "toSide": "top",
+      "label": "research topic"
+    },
+    {
+      "id": "nav_T10",
+      "fromNode": "HOME",
+      "fromSide": "bottom",
+      "toNode": "T10",
+      "toSide": "top",
+      "label": "research topic"
+    },
+    {
+      "id": "edge_GOOGLE_T01",
+      "fromNode": "GOOGLE",
+      "toNode": "T01",
+      "label": "motivates"
+    },
+    {
+      "id": "edge_T01_EXPERIMENTS",
+      "fromNode": "T01",
+      "toNode": "EXPERIMENTS",
+      "label": "tested by"
+    },
+    {
+      "id": "edge_T03_DECISIONS",
+      "fromNode": "T03",
+      "toNode": "DECISIONS",
+      "label": "open choices"
+    },
+    {
+      "id": "edge_T10_SOURCES",
+      "fromNode": "T10",
+      "toNode": "SOURCES",
+      "label": "source trail"
+    },
+    {
+      "id": "edge_T09_ROADMAP",
+      "fromNode": "T09",
+      "toNode": "ROADMAP",
+      "label": "daily validation"
+    },
+    {
+      "id": "edge_HISTORY_T01",
+      "fromNode": "HISTORY",
+      "toNode": "T01",
+      "label": "prior evidence"
+    },
+    {
+      "id": "edge_METAPHORS_T08",
+      "fromNode": "METAPHORS",
+      "toNode": "T08",
+      "label": "mechanism ideas"
+    }
+  ]
+}

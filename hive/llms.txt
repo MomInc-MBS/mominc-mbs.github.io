@@ -1,0 +1,32 @@
+# HIVE framework & research vault
+
+> Framework revision 0.2, prepared for Ian Myers on 2026-11-20. Research and implementation specification, not a claim of a running or trained HIVE system.
+
+Canonical home: https://mominc.online/hive/
+Search: https://mominc.online/hive/search/?q=your-query
+Browse: https://mominc.online/hive/explore/
+Graph: https://mominc.online/hive/graph/
+Full-text machine index (286 pages): https://mominc.online/hive/search-index.json
+Typed graph: https://mominc.online/hive/graph.json
+Original package: https://mominc.online/hive/downloads/HIVE_Framework_Research_Vault.zip
+
+## Reading rules
+
+- Page IDs are stable; cite /hive/notes/ID/ and heading anchors.
+- Each HTML page includes full readable text without JavaScript.
+- Source Markdown is under /hive/vault/ with original relative paths.
+- Preserve evidence_status and implementation_status when citing.
+- Historical imports, proposed experiments, simulations, and real measurements are distinct.
+- A graph edge is a relation, not proof. Proposed experiments do not imply results.
+- The archive preserves 19 originals byte for byte.
+
+## Entry points
+
+- [HIVE framework and research vault](https://mominc.online/hive/notes/HOME/)
+- [The proposed HIVE framework](https://mominc.online/hive/notes/FRAMEWORK/)
+- [Topic-first research map](https://mominc.online/hive/notes/MAP/)
+- [Open design decisions](https://mominc.online/hive/notes/DECISIONS/)
+- [Evidence, disagreements, and research state](https://mominc.online/hive/notes/EVIDENCE/)
+- [Previous research and attempted methods](https://mominc.online/hive/notes/HISTORY/)
+- [Local build roadmap and work packages](https://mominc.online/hive/notes/ROADMAP/)
+- [Recovered original documents](https://mominc.online/hive/notes/ARCHIVE/)

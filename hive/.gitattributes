@@ -1,0 +1,7 @@
+# The source vault and original ZIP are evidence, not checkout-normalized text.
+vault/** -text -whitespace
+downloads/** binary
+assets/vendor/** -whitespace
+*.pdf binary
+*.docx binary
+*.zip binary

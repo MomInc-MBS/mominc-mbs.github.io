@@ -1,0 +1,1928 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HIVE Build Plan and Source Foundation · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#122c32"><link rel="canonical" href="https://mominc.online/hive/notes/original-HIVE_Build_Plan_and_Source_Foundation/">
+<meta property="og:title" content="HIVE Build Plan and Source Foundation · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=1"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=1">
+<script defer src="/hive/assets/hive.js?v=1"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/ROADMAP/">Build</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 286 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download Obsidian vault</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=original">Archived original</a><span>/</span><span>original-HIVE_Build_Plan_and_Source_Foundation</span></div>
+<div class="doc-meta"><span class="badge">Preserved original</span><span class="badge neutral">Historical</span></div><div class="doc-tools"><button class="copy-link" data-title="HIVE Build Plan and Source Foundation" data-id="original-HIVE_Build_Plan_and_Source_Foundation">Copy reference</button><a href="/hive/vault/90_Archive/Originals/HIVE_Build_Plan_and_Source_Foundation.md">Markdown source</a><button class="print-page">Print</button></div>
+<p class="archive-notice">Preserved historical original. Statements below reflect this source document; they are not a current implementation or a new measurement.</p><article class="prose"><h1 id="hive-build-plan-and-source-foundation">HIVE Build Plan and Source Foundation</h1>
+<p>Research date: 18 November 2026<br />
+Status: implementation specification and research foundation; the integrated system has not yet been built or benchmarked.</p>
+<p><strong>Foundation collected:</strong> 100 distinct code/model resources (96 code projects and 4 checkpoint candidates), plus 30 primary research papers.</p>
+<h2 id="contents">Contents</h2>
+<ul>
+<li>Sections 1–4: hypothesis, existing resources, architecture, and selected stack.</li>
+<li>Sections 5–7: communication, memory, and targeted learning.</li>
+<li>Sections 8–10: task families, fair comparisons, metrics, and decision gates.</li>
+<li>Sections 11–14: biology experiments, build stages, work packages, and first backlog.</li>
+<li>Section 15 and Appendix A: the complete code and model catalog.</li>
+<li>Appendix B: primary research mapped to HIVE experiments.</li>
+<li>Appendix C: source status and implementation handoff requirements.</li>
+</ul>
+<h2 id="1-the-hypothesis-and-the-build-decision">1. The hypothesis and the build decision</h2>
+<p><strong>Hypothesis:</strong> Selectively communicating specialists, local adaptation, and multiple memory timescales can acquire and retain useful capability more efficiently than a comparable general model under the same resource constraints.</p>
+<p>HIVE is a modular, persistent, self-improving cognitive system implemented first in software. Its defining research concerns are independently measurable specialization, selective communication, durable adaptation, and bounded resource use. Biological mechanisms supply testable design ideas. Existing code supplies runtimes, training primitives, memory indexes, simulators, and evaluators.</p>
+<p>The first deliverable is a small experimental HIVE that learns successive model/tool communication tasks, retains earlier capabilities, and demonstrates transfer to unfamiliar combinations. It must contain actual learned specialists and an adaptation loop. A successful one-off answer, a collection of role prompts, or a growing transcript alone does not establish the hypothesis.</p>
+<h3 id="the-decisions-this-plan-makes">The decisions this plan makes</h3>
+<ol>
+<li>Start with model/tool communication, matching the previously established first community. Use executable simulated tools and changing protocols so success can be checked.</li>
+<li>Build independently parameterized specialists and a shared-backbone adapter configuration as separate experimental arms.</li>
+<li>Give every specialist a LAYA-style decision interface. Initially serve a reusable classifier through that interface instead of duplicating an entire decision encoder for every role.</li>
+<li>Use the same tools, evidence, memory allowance, feedback allowance, and hardware caps for competing systems.</li>
+<li>Distinguish immediate experience storage, procedural skill acquisition, router updates, and parameter learning in both implementation and reporting.</li>
+<li>Keep the initial runtime small: Python, one training stack, one memory backend, one inference backend, and explicit message contracts.</li>
+<li>Run NCM, compact recurrent solvers, learned private codes, and biological connectivity as controlled research branches with their own budgets.</li>
+<li>Expand toward the intended 50-plus roles and multiple domain communities only after the first community passes retention, composition, and resource gates.</li>
+</ol>
+<p>The broad source catalog is a selection pool. Components marked as alternatives are substitutes to compare, not an instruction to install them all.</p>
+<h2 id="2-what-carries-forward-and-what-changes">2. What carries forward and what changes</h2>
+<p>The earlier HIVE architecture supplies the nine conceptual layers, specialist communities, replaceable head, domain-native representations, and four channels: Control, Task, Evidence, and Teaching. These remain the conceptual foundation.</p>
+<p>The earlier stack mapping is useful for discovering components. Its proposed latency, resource, and correctness claims become measurements in this plan. Schema validity does not establish semantic truth. A passing test suite establishes the behavior covered by those tests. Formal verification applies to a specific formal statement under explicit assumptions.</p>
+<p>The earlier benchmark emphasized a small shared backbone against a 70B model on difficult mathematics and software engineering. That comparison can become a later capability reference. The primary experiment here uses a strong resource-matched generalist with the same supporting tools and learning opportunities. Shared-backbone adapters are an efficiency comparator; they do not stand in for the whole independent-specialist hypothesis.</p>
+<p>The earlier 100-project report is a discovery source. Historical labels such as succeeded, failed, or abandoned are not treated as experimental evidence for HIVE. Current repository documentation and original papers govern the selections below.</p>
+<h3 id="existing-local-starting-point">Existing local starting point</h3>
+<p>The 15 November 2026 software inventory reports the following. These are inventory observations, not fresh checks of the user's PC.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Existing resource</th>
+<th>Inventory readiness</th>
+<th>Use in this plan</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RTX 5070 Ti and 64 GB RAM</td>
+<td>User-reported hardware</td>
+<td>Local research target; measure actual available VRAM, RAM, storage, drivers, and competing workload</td>
+</tr>
+<tr>
+<td>Ollama</td>
+<td>Running when inventoried; model listing responded</td>
+<td>Existing inference API for an initial integration smoke test and later deployment comparison</td>
+</tr>
+<tr>
+<td>LM Studio</td>
+<td>Installed; server offline when inventoried</td>
+<td>Optional existing model inspection/server tool</td>
+</tr>
+<tr>
+<td>Ruflo</td>
+<td>Connected; routing tools responded</td>
+<td>Inspect and reuse relevant coordination adapters</td>
+</tr>
+<tr>
+<td>Laya</td>
+<td>Prepared; cached model; service offline; deterministic fallback used</td>
+<td>First routing/classification experiment after a local loading and calibration check</td>
+</tr>
+<tr>
+<td>Python 3.11/3.12, Node.js, uv</td>
+<td>Installed</td>
+<td>Reuse isolated environments and the existing development toolchain</td>
+</tr>
+<tr>
+<td>Docker Desktop</td>
+<td>Installed; daemon not checked</td>
+<td>Evaluate as a process/container option where needed</td>
+</tr>
+<tr>
+<td>Soup</td>
+<td>Prepared; GPU training not established</td>
+<td>Inspect before introducing another training frontend</td>
+</tr>
+<tr>
+<td>Existing Qwen and other model caches</td>
+<td>Weight files or caches recorded, with differing readiness</td>
+<td>Larger reference baselines only after load and resource checks</td>
+</tr>
+</tbody>
+</table></div>
+<p>Keep OBS, cameras, effects, and streaming workloads in the hardware accounting. Create two reproducible profiles: an isolated research session and a studio-sharing session. The plan does not assume the same training workload is feasible in both.</p>
+<p>Source: Ian-AI-Generation-and-Game-Design-Software.pdf, inventory dated 15 November 2026; previously supplied hardware description.</p>
+<h2 id="3-architecture-of-the-first-experimental-hive">3. Architecture of the first experimental HIVE</h2>
+<h3 id="31-components">3.1 Components</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Responsibility</th>
+<th>Initial implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Intent interface</td>
+<td>Holds the user's goal, constraints, interruption signal, and permitted actions</td>
+<td>Small explicit task object; optional language interface outside the core experiment</td>
+</tr>
+<tr>
+<td>Decision gate</td>
+<td>Classifies inputs, chooses a skill, checks prerequisites, and requests help</td>
+<td>LAYA plus deterministic prerequisite checks; compare against a small trained classifier</td>
+</tr>
+<tr>
+<td>Specialist registry</td>
+<td>Records competence, compatible representations, resource estimates, and versions</td>
+<td>Local manifest and capability records</td>
+</tr>
+<tr>
+<td>Specialist workers</td>
+<td>Execute independently learned narrow functions</td>
+<td>Two small separately adapted language models plus small classifiers and deterministic workers</td>
+</tr>
+<tr>
+<td>Translator workers</td>
+<td>Convert between domain representations while retaining meaning and uncertainty</td>
+<td>Typed representations first; learned translators as a later controlled branch</td>
+</tr>
+<tr>
+<td>Scheduler</td>
+<td>Activates relevant workers, enforces resource budgets, and handles cancellation</td>
+<td>Python asynchronous workers and bounded queues</td>
+</tr>
+<tr>
+<td>Memory manager</td>
+<td>Stores, retrieves, revises, consolidates, and expires records</td>
+<td>SQLite with explicit provenance; one optional vector index</td>
+</tr>
+<tr>
+<td>Verifiers</td>
+<td>Check execution results, constraints, and task success</td>
+<td>Simulated tool state, pytest/Hypothesis, and a solver where appropriate</td>
+</tr>
+<tr>
+<td>Teaching controller</td>
+<td>Builds verified correction batches and targets the responsible component</td>
+<td>Explicit error taxonomy, bounded replay, and targeted training jobs</td>
+</tr>
+<tr>
+<td>Promotion controller</td>
+<td>Evaluates candidate updates and publishes compatible versions</td>
+<td>Immutable artifacts, retained incumbent, measured regression gates</td>
+</tr>
+<tr>
+<td>Resource recorder</td>
+<td>Accounts for learning, execution, communication, memory, and latency</td>
+<td>Local run records plus MLflow/OS/GPU measurements as needed</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="32-core-feedback-structure">3.2 Core feedback structure</h3>
+<pre><code class="language-mermaid">flowchart TD
+    I[&quot;User goal and constraints&quot;] --&gt; G[&quot;Decision gate and scheduler&quot;]
+    G --&gt; S[&quot;Relevant specialist community&quot;]
+    S &lt;--&gt; T[&quot;Domain translators&quot;]
+    S &lt;--&gt; M[&quot;Working and persistent memory&quot;]
+    S --&gt; V[&quot;Execution and verification&quot;]
+    V --&gt; O[&quot;Result with evidence&quot;]
+    V --&gt; L[&quot;Targeted learning controller&quot;]
+    L --&gt; C[&quot;Candidate evaluation&quot;]
+    C --&gt;|promote version| S
+    C --&gt;|retain incumbent| S
+    V --&gt;|verified experience| M
+</code></pre>
+<p>Workers exchange only the information needed for their current subproblem. Parallelism is used when separate candidates or independent checks can help. The scheduler measures whether that parallelism saves elapsed time after queueing, memory, and communication costs are included.</p>
+<h3 id="33-the-first-specialist-community">3.3 The first specialist community</h3>
+<p>The first domain is communication with models and tools. Begin with five functional roles, which need not correspond to five language-model copies:</p>
+<ol>
+<li><strong>Requirement parser:</strong> converts a request and supplied evidence into a precise task representation.</li>
+<li><strong>Protocol translator:</strong> maps that representation into a particular tool or model interface.</li>
+<li><strong>Execution/repair specialist:</strong> identifies failures and proposes a valid repair from available feedback.</li>
+<li><strong>Decision specialist:</strong> selects among supported workers, checks prerequisites, and escalates unfamiliar inputs.</li>
+<li><strong>Verification/teaching controller:</strong> checks outcomes and assigns corrections to the responsible component.</li>
+</ol>
+<p>The parser and translator/repair workers receive independently versioned learned parameters in the independent-specialist arm. Routing can use a much smaller encoder or classifier. Verification should use executable task truth wherever possible. A teacher that selects exercises does not need a full copy of every subject expert.</p>
+<p>For meaningful composition, include tasks that require more than one worker's competence: interpreting a novel instruction, translating it into a changed schema, executing multiple dependent calls, and repairing a failure without damaging unrelated behavior.</p>
+<h3 id="34-independent-and-shared-components">3.4 Independent and shared components</h3>
+<p><strong>Independent-specialist arm:</strong> separate model parameter sets with actual independent backbone adaptation, or independently trained compact networks. Train one worker while keeping the others fixed; explicitly record any shared embeddings, encoders, or routers. Every arm records its base initialization, unique and shared parameter identities, trainable mask, and update owner. Two copied frozen backbones with separate LoRAs form a duplicated-backbone control, not evidence for independent representational learning.</p>
+<p><strong>Shared-backbone arm:</strong> one frozen base plus separately trained compatible adapters. Count the shared base once in stored capacity and once per actual resident copy. This arm tests whether adapter reuse provides a better efficiency tradeoff than full independence.</p>
+<p><strong>Hybrid arm, later:</strong> shared low-level components plus independently adaptable higher-level specialists. Any shared trainable component expands the regression scope to every dependent skill.</p>
+<p>Pretrained comparisons measure the resulting systems; different checkpoint sizes and pretraining histories can confound architectural attribution. Add a small from-scratch experiment with matched total parameter budgets, task-training exposure, optimization allowances, and initialization procedures. Treat upstream pretraining as an inherited resource unless its actual cost is available; report post-pretraining adaptation claims separately from lifetime-training claims.</p>
+<p>A renamed prompt is not recorded as a newly trained expert. Adapters cannot be moved between incompatible backbones without a validated conversion or retraining procedure. Hidden vectors from different models do not acquire common semantics merely because their dimensions match.</p>
+<h2 id="4-initial-technology-selection">4. Initial technology selection</h2>
+<p>The following is the proposed starting stack. Repository capabilities are sourced in the catalog; the selection and integration choices are engineering proposals.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Initial choice</th>
+<th>Why it is in the first build</th>
+<th>Controlled alternative</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Implementation</td>
+<td>Python with isolated uv environment</td>
+<td>Small integration surface and shared ML tooling</td>
+<td>Existing Ruflo integration through a thin adapter</td>
+</tr>
+<tr>
+<td>Trainable models</td>
+<td>PyTorch + Transformers + PEFT</td>
+<td>One explicit training path and inspectable parameter ownership</td>
+<td>One of torchtune, LLaMA-Factory, Axolotl, or inspected Soup</td>
+</tr>
+<tr>
+<td>First model scale</td>
+<td>Qwen3-0.6B independent workers and Qwen3-1.7B generalist reference</td>
+<td>Concrete text-only starting sizes; exact budget matching follows measured complete footprint</td>
+<td>Qwen3.5-0.8B/2B compatibility and quality pilot</td>
+</tr>
+<tr>
+<td>Decision interface</td>
+<td>LAYA with held-out calibration and deterministic prerequisite checks</td>
+<td>Preserves the intended yes/no, score, and choice layer</td>
+<td>Small task-trained classifier; oracle routing only as a diagnostic</td>
+</tr>
+<tr>
+<td>First inference experiment</td>
+<td>Transformers for all neural comparison arms</td>
+<td>Avoids confusing runtime differences with architecture differences</td>
+<td>Existing Ollama/llama.cpp after model/export parity checks</td>
+</tr>
+<tr>
+<td>Persistent state</td>
+<td>SQLite records and artifact references</td>
+<td>Transparent writes, revisions, namespace isolation, and restart behavior</td>
+<td>One vector index; graph memory only when a graph task justifies it</td>
+</tr>
+<tr>
+<td>Retrieval</td>
+<td>Lexical/metadata baseline, then one embedding model and FAISS or Qdrant</td>
+<td>Measures whether learned retrieval adds value</td>
+<td>HippoRAG/Graphiti as separate memory experiments</td>
+</tr>
+<tr>
+<td>Contracts</td>
+<td>Pydantic and versioned domain payloads</td>
+<td>Makes dependencies and error attribution explicit</td>
+<td>Protobuf when transport volume warrants it</td>
+</tr>
+<tr>
+<td>Work scheduling</td>
+<td>Local asynchronous workers, bounded queues, cancellation</td>
+<td>Fits one workstation and exposes actual overhead</td>
+<td>NATS or Ray only after the local scaling bottleneck is measured</td>
+</tr>
+<tr>
+<td>Checks</td>
+<td>Simulated tools + pytest + Hypothesis</td>
+<td>Reproducible feedback and generated edge cases</td>
+<td>SymPy/Z3 for tasks with formal structure</td>
+</tr>
+<tr>
+<td>Experiment records</td>
+<td>JSONL/SQLite run records; MLflow when useful</td>
+<td>Small initial footprint and reproducible resource accounting</td>
+<td>OpenTelemetry for multi-process tracing</td>
+</tr>
+<tr>
+<td>Continual learning</td>
+<td>Bounded replay plus local supervised updates</td>
+<td>Establishes a simple, inspectable learning baseline</td>
+<td>EWC, continual-backprop mechanisms, or compact recurrent models in controlled tasks</td>
+</tr>
+</tbody>
+</table></div>
+<p>Model sizes here are candidate configurations, not a claim that two particular models exactly match a third's total budget. The final comparison must include the gate, memory, runtime copies, embeddings, translators, optimizer state, and all worker activity.</p>
+<h3 id="where-laya-ruflo-and-ncm-belong">Where LAYA, Ruflo, and NCM belong</h3>
+<p><strong>LAYA:</strong> use its typed decision model as a trainable routing/classification component. Its own current documentation describes limitations in base zero-shot decision performance and confidence calibration. Fit and evaluate it on HIVE's task distribution. A yes/no output format does not make a prediction logically certain. Each specialist receives a decision interface; the implementation may share an encoder to avoid unnecessary duplication. <a href="https://github.com/NandhaKishorM/laya" rel="noreferrer">Official repository</a></p>
+<p><strong>Ruflo:</strong> inspect the already available coordination integration and reuse useful scheduling, messaging, or memory interfaces. Keep it behind HIVE's contracts so an experiment can run with a minimal scheduler. Its presence alone does not establish independent specialist learning. Attribute any learning claim to the particular mechanism actually exercised. <a href="https://github.com/ruvnet/ruflo" rel="noreferrer">Official repository</a></p>
+<p><strong>NCM:</strong> this name is resolved here to Hazy Research's Next-Concept Modeling. It provides a coarse-to-fine text-generation architecture with a learned multiscale tokenizer and generator. The released repository documents checkpoints and evaluation for particular tasks. Make reproduction of a released task the first milestone; inspect whether the full required training path is available before planning a new trained specialist. Its published speed comparisons do not predict HIVE's workstation performance. <a href="https://github.com/HazyResearch/ncm" rel="noreferrer">Code</a> · <a href="https://arxiv.org/abs/2610.14162" rel="noreferrer">Paper</a></p>
+<h2 id="5-communication-contracts">5. Communication contracts</h2>
+<p>Keep the common envelope small. It expresses transport, identity, versions, and accountability. It does not force every domain to use the same internal semantics.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Envelope field</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>message_id, task_id, parent_id</td>
+<td>Reconstruct causal history and deduplicate retries</td>
+</tr>
+<tr>
+<td>channel</td>
+<td>Control, Task, Evidence, or Teaching</td>
+</tr>
+<tr>
+<td>producer_id and version</td>
+<td>Identify the exact worker producing the message</td>
+</tr>
+<tr>
+<td>recipient/capability</td>
+<td>Address a specific worker or request a capability</td>
+</tr>
+<tr>
+<td>representation_id and version</td>
+<td>Identify the payload language and compatible translators</td>
+</tr>
+<tr>
+<td>evidence_refs</td>
+<td>Attach the basis for claims</td>
+</tr>
+<tr>
+<td>assumptions and validity scope</td>
+<td>State conditions under which the payload applies</td>
+</tr>
+<tr>
+<td>uncertainty_kind and value</td>
+<td>Distinguish calibrated probability, unknown uncertainty, and solver status</td>
+</tr>
+<tr>
+<td>resource_budget and deadline</td>
+<td>Bound additional computation and waiting</td>
+</tr>
+<tr>
+<td>payload or artifact_ref</td>
+<td>Carry small data directly and refer to large immutable artifacts</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="channel-behavior">Channel behavior</h3>
+<ul>
+<li><strong>Control:</strong> activate, pause, cancel, recruit, backpressure, and version negotiation.</li>
+<li><strong>Task:</strong> problem descriptions, structured state, partial solutions, and constraints.</li>
+<li><strong>Evidence:</strong> observations, execution results, counterexamples, provenance, and verification scope.</li>
+<li><strong>Teaching:</strong> localized error records, training examples, replay requests, candidate updates, and promotion results.</li>
+</ul>
+<h3 id="translation-evaluation">Translation evaluation</h3>
+<p>Start with explicit task schemas, ASTs, tool-call structures, and domain-specific arrays. Compare them against a natural-language channel with equivalent information. Then test learned compact codes between compatible workers.</p>
+<p>Score translation by downstream semantics: executing the translated instruction must preserve the intended effect, units, constraints, and uncertainty. Round-trip reconstruction alone can conceal a shared error. Include missing fields, negation, unknown units, outdated schemas, and mutually inconsistent messages.</p>
+<p>Private communication codes are versioned artifacts. A new encoder requires a compatible decoder or translator. Promote the pair together and measure the adaptation burden imposed on other workers.</p>
+<h2 id="6-memory-and-forgetting">6. Memory and forgetting</h2>
+<h3 id="61-memory-types-and-ownership">6.1 Memory types and ownership</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Memory</th>
+<th>Contents</th>
+<th>Update behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Working state</td>
+<td>Current task, local hypotheses, active tool results</td>
+<td>Bounded; released or summarized when task ends</td>
+</tr>
+<tr>
+<td>Episodic records</td>
+<td>Observations, decisions, failures, feedback, outcomes</td>
+<td>Append with provenance; later compression or retirement</td>
+</tr>
+<tr>
+<td>Semantic records</td>
+<td>Accepted facts and rules with scope and temporal validity</td>
+<td>Revision and contradiction handling</td>
+</tr>
+<tr>
+<td>Procedural artifacts</td>
+<td>Tested code, compatible adapters, policies, reusable procedures</td>
+<td>Immutable versions with capability tests</td>
+</tr>
+<tr>
+<td>Replay buffer</td>
+<td>Selected training experiences and counterexamples</td>
+<td>Fixed budget with explicit replacement policy</td>
+</tr>
+<tr>
+<td>Collective knowledge</td>
+<td>Findings useful across communities</td>
+<td>Promote only with evidence and stated scope</td>
+</tr>
+</tbody>
+</table></div>
+<p>Every record should identify its source, owner, scope, creation time, validity interval if relevant, verification status, dependent artifacts, and replacement/deletion lineage. A generated suggestion enters as a proposal, not as an observed fact.</p>
+<h3 id="62-the-first-forgetting-policies">6.2 The first forgetting policies</h3>
+<p>Implement a transparent baseline before learning a sophisticated retention policy:</p>
+<ol>
+<li>Enforce a byte budget per memory category and per specialist.</li>
+<li>Prefer current authoritative records when older facts have been superseded.</li>
+<li>Retain representative examples, surprising verified failures, and rare high-consequence exceptions.</li>
+<li>Compare recency, reservoir sampling, stratified replay, and usefulness estimates under the same budget.</li>
+<li>Record what was removed or compressed in bounded bookkeeping, without retaining the full discarded payload indirectly.</li>
+<li>Test the effect of removal on future decisions and on retraining.</li>
+</ol>
+<p>Moving an item out of retrieval does not erase its influence from trained parameters. If a corrected or withdrawn fact has already been consolidated into an adapter, invalidate the dependent artifact and evaluate repair or retraining. Do not claim exact machine unlearning from deletion of a database row.</p>
+<h3 id="63-four-different-adaptation-events">6.3 Four different adaptation events</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Event</th>
+<th>Immediate effect</th>
+<th>Evidence needed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Memory write</td>
+<td>Changes available evidence</td>
+<td>Correct retrieval and use in a later episode</td>
+</tr>
+<tr>
+<td>Procedure creation</td>
+<td>Adds executable behavior</td>
+<td>Success on hidden input variants</td>
+</tr>
+<tr>
+<td>Router update</td>
+<td>Changes expert selection</td>
+<td>Improved allocation on held-out requests without collapse</td>
+</tr>
+<tr>
+<td>Weight/adapter update</td>
+<td>Changes a model's function</td>
+<td>Generalization, retention, calibration, and resource tests</td>
+</tr>
+</tbody>
+</table></div>
+<p>Test these effects separately. A memory-only system can learn useful behavior at the system level, but a claim about improved specialist parameters requires a weight-learning experiment. After a parameter update, evaluate novel related cases with the original correction episode and equivalent answer-bearing records excluded from retrieval. Apply the same admissible-information restriction to every arm, including the memory-only control.</p>
+<h2 id="7-the-targeted-teaching-loop">7. The targeted teaching loop</h2>
+<ol>
+<li><strong>Observe:</strong> capture the request, versions, intermediate representations, execution, and outcome.</li>
+<li><strong>Locate the error:</strong> distinguish missing evidence, wrong retrieval, wrong routing, mistranslation, faulty domain reasoning, invalid execution, and incorrect verification.</li>
+<li><strong>Check the diagnosis:</strong> replay the failure with a controlled replacement or additional observation. Avoid assigning every failure to the final responder.</li>
+<li><strong>Build feedback:</strong> create the smallest verified correction with its applicable conditions and a counterexample to the old behavior.</li>
+<li><strong>Respond immediately:</strong> update the relevant memory or temporary procedure where justified.</li>
+<li><strong>Accumulate bounded training data:</strong> combine the new experience with replay from earlier capabilities.</li>
+<li><strong>Train locally:</strong> update only the responsible worker or explicit set of dependent components.</li>
+<li><strong>Evaluate:</strong> use development data, retained-skill probes, calibration checks, resource measurements, and adversarial interface cases.</li>
+<li><strong>Promote atomically:</strong> publish a versioned model/procedure and all compatible translators together.</li>
+<li><strong>Monitor:</strong> detect regression or drift; restore the retained incumbent when promotion conditions fail.</li>
+</ol>
+<p>For every paired episode, the externally supplied feedback payload is identical across arms. The simulator's hidden answer keys, latent rules, future events, and final-test outcomes are inaccessible to the runtime. Additional error diagnosis performed by HIVE counts toward its compute budget. Oracle error localization, like oracle routing, is a labeled diagnostic only.</p>
+<p>The sealed final test set never supplies training feedback. Use separate training feedback, development/calibration, and final evaluation partitions. Synthetic teacher outputs require checking against task truth; teacher agreement is not a substitute for it.</p>
+<p>Retain a bounded number of rollback versions and account for them in storage. Large teachers may help generate training data, but their usage must be recorded separately and either shared across competing methods or excluded from the equal-budget claim.</p>
+<h2 id="8-experimental-tasks">8. Experimental tasks</h2>
+<h3 id="task-family-a-learning-model-and-tool-protocols">Task family A: Learning model and tool protocols</h3>
+<p>This is the first full build target.</p>
+<p>Create a deterministic simulated service with several small APIs: document retrieval, record updates, structured calculations, and dependency-constrained actions. Provide interface documentation and examples in training. Introduce controlled changes over a sequence of tasks:</p>
+<ul>
+<li>Renamed fields and changed enum values.</li>
+<li>New argument constraints and unit conventions.</li>
+<li>Missing information that requires a clarification or retrieval step.</li>
+<li>New combinations of known tools.</li>
+<li>Recoverable failures and changed error messages.</li>
+<li>Irrelevant tools and near-duplicate capabilities.</li>
+</ul>
+<p>Success means reaching the correct final service state with the correct arguments and respecting task constraints. Schema-valid JSON alone does not receive full credit. Include held-out combinations and later returns to earlier protocols.</p>
+<p>Use BFCL as a source of task/evaluation ideas or an external check, while keeping the custom evolving protocol environment independently generated and exactly scored.</p>
+<h3 id="task-family-b-selective-memory-under-changing-facts">Task family B: Selective memory under changing facts</h3>
+<p>Generate bounded synthetic histories with explicit truth and timestamps. Include updates, contradictions, rare important events, repeated irrelevant material, and unanswerable queries. Evaluate whether the system uses the current relevant evidence and declines unsupported claims.</p>
+<p>Compare the same memory and retrieval budget across systems. Use LongMemEval or LoCoMo as external checks of memory behavior, with exact dataset and scoring versions pinned. These benchmarks do not by themselves establish weight learning.</p>
+<h3 id="task-family-c-closed-loop-planning-and-local-correction">Task family C: Closed-loop planning and local correction</h3>
+<p>Use MiniGrid/BabyAI or another small controllable environment. Start with structured state to avoid conflating perception with learning. Introduce changed action effects, temporary obstacles, delayed consequences, and tasks requiring novel combinations of known skills.</p>
+<p>Evaluate a short set of candidate actions or plans, execute one, observe the result, and adapt the responsible policy or model. Later add a perception branch if the learning result survives the structured-state setting.</p>
+<p>This tests the user's earlier idea of predicting alternatives and learning locally from a failed action. A text-only protocol success is insufficient evidence for general sensorimotor intelligence.</p>
+<h3 id="task-family-d-program-repair-and-exact-reasoning">Task family D: Program repair and exact reasoning</h3>
+<p>After the first three families work, add short program-repair tasks with hidden tests, generated edge cases, and formal constraints. EvalPlus, SymPy, Z3, Lean, and associated datasets can support increasingly difficult tests.</p>
+<p>Begin with tasks small enough to permit many controlled trials. Larger SWE-bench or Olympiad comparisons belong after the learning and accounting machinery is stable.</p>
+<h2 id="9-baselines-and-ablations">9. Baselines and ablations</h2>
+<h3 id="91-required-comparison-systems">9.1 Required comparison systems</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Arm</th>
+<th>Configuration</th>
+<th>Question it answers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rules</td>
+<td>Deterministic routing and executable tools where sufficient</td>
+<td>Is the test too simple to require the proposed learned architecture?</td>
+</tr>
+<tr>
+<td>Generalist frozen</td>
+<td>One model plus the same tools, evidence, and bounded memory</td>
+<td>What does the architecture add without weight adaptation?</td>
+</tr>
+<tr>
+<td>Generalist learning</td>
+<td>One model with the same feedback and comparable adaptation resources</td>
+<td>Does specialization improve learning efficiency?</td>
+</tr>
+<tr>
+<td>Role-prompt system</td>
+<td>Several roles using an equivalent aggregate budget</td>
+<td>What do role decomposition and orchestration alone contribute?</td>
+</tr>
+<tr>
+<td>Shared-base specialists</td>
+<td>One frozen base plus trained adapters</td>
+<td>How much does shared representation reduce size and learning cost?</td>
+</tr>
+<tr>
+<td>Independent HIVE</td>
+<td>Independently parameterized specialists with controlled local learning</td>
+<td>Does independent specialization improve retention and adaptation?</td>
+</tr>
+<tr>
+<td>HIVE hybrid</td>
+<td>Selective shared components and independent high-level workers</td>
+<td>Where does sharing help, and where does it introduce interference?</td>
+</tr>
+</tbody>
+</table></div>
+<p>Every system receives the same task interface, admissible evidence, deterministic tools, feedback opportunity, and evaluation environment. Baselines may use memory, retrieval, and verification. Do not handicap a generalist by withholding supporting infrastructure.</p>
+<h3 id="92-minimum-mechanism-ablations">9.2 Minimum mechanism ablations</h3>
+<p>Change one major mechanism at a time, then test important interactions:</p>
+<ul>
+<li>Selective communication versus broadcast or full-history sharing.</li>
+<li>Structured domain payloads versus equivalent natural-language messages.</li>
+<li>Local parameter updates versus global updates.</li>
+<li>Memory-only adaptation versus parameter-only adaptation versus both.</li>
+<li>Replay/consolidation versus no replay with equal update budgets.</li>
+<li>Learned routing versus simple rules; oracle routing as an upper-bound diagnostic.</li>
+<li>Independent workers versus shared adapters.</li>
+<li>Learned private codes versus explicit domain representations.</li>
+<li>Verifier-guided candidate search versus a single-trajectory baseline allowed to use its budget for reasoning and checking. Compare success-versus-compute and success-versus-latency curves under common caps; record actual consumption. Equal token counts across different models do not imply equal computation.</li>
+</ul>
+<p>For the three central mechanisms, use a small factorial experiment where feasible: communication selectivity, local learning, and multiple memory timescales. This helps identify whether combined gains come from one strong component or from their interaction.</p>
+<h3 id="93-budget-accounting">9.3 Budget accounting</h3>
+<p>Record at least:</p>
+<ul>
+<li><strong>Deployment storage:</strong> all weights, adapters, tokenizers, embedding models, indexes, memory records, procedures, and retained rollback versions.</li>
+<li><strong>Peak active memory:</strong> total process RAM and total GPU memory, including caches and concurrent workers.</li>
+<li><strong>Training peak:</strong> optimizer state, gradients, activations, replay batches, and resident teacher resources.</li>
+<li><strong>Experience cost:</strong> unique examples/episodes, repeated presentations, feedback events, and teacher-generated examples.</li>
+<li><strong>Compute cost:</strong> training steps, tokens, calls, wall time, and supported hardware measurements; include failed candidates, retries, routing, translation, retrieval, and verification.</li>
+<li><strong>Latency:</strong> cold start, warm p50/p95, model loading, queueing, cancellation, and end-to-end task completion.</li>
+<li><strong>Energy:</strong> GPU energy where measurable; distinguish it from full-machine energy. Use a wall meter for a full-system claim.</li>
+<li><strong>Lifetime cost:</strong> cost to learn plus cost to use the learned capability over a stated horizon.</li>
+</ul>
+<p>Parameter count alone is insufficient. Active parameters in a sparse model do not equal total stored parameters. A small worker with a large external teacher or growing memory store is not automatically a small complete system.</p>
+<p>When several resource dimensions cannot be matched exactly, apply hard caps and report a Pareto comparison. Make the tradeoffs visible rather than collapsing them into one arbitrary intelligence score.</p>
+<h3 id="94-trial-design">9.4 Trial design</h3>
+<p>Suggested pilot configuration, adjustable before the confirmatory run:</p>
+<ul>
+<li>Ten sequential task blocks with three counterbalanced orderings.</li>
+<li>Five random seeds for confirmatory learning comparisons; a smaller pilot is acceptable for debugging.</li>
+<li>Fixed maximum budgets for examples, repeated presentations, update steps, memory bytes, and per-task inference; record learning curves within those ceilings.</li>
+<li>Comparable development/hyperparameter-search budgets for HIVE and baselines; record tuning cost separately from deployment adaptation.</li>
+<li>Tests immediately after learning, after several intervening tasks, and after process restart.</li>
+<li>Disjoint generators or templates for training and final generalization.</li>
+<li>Separate development and final seeds; freeze hyperparameters before the final run.</li>
+<li>Confidence intervals over independent seeds or task sequences, not thousands of correlated tokens.</li>
+</ul>
+<p>Report failures and timeouts as outcomes. Do not drop tasks that the router could not handle.</p>
+<h2 id="10-measures-and-proposed-decision-gates">10. Measures and proposed decision gates</h2>
+<p>These are proposed engineering acceptance criteria, not predictions or claims of established feasibility. Lock exact thresholds after the pilot and before the confirmatory experiment.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Measure</th>
+<th>Proposed gate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>New learning</td>
+<td>Examples/feedback events to a fixed held-out success level</td>
+<td>At least 25% fewer than the strongest matched learning baseline</td>
+</tr>
+<tr>
+<td>Learning computation</td>
+<td>Total adaptation time/compute to that same level</td>
+<td>No hidden compensating increase; report any tradeoff separately</td>
+</tr>
+<tr>
+<td>Retention</td>
+<td>Earlier-task performance relative to each system's own acquired competence and the baseline</td>
+<td>Proposed average forgetting cap of 5 percentage points, per-task cap of 10 points, and no more than 2 points below the matched baseline</td>
+</tr>
+<tr>
+<td>Reliable answers</td>
+<td>False claims/actions at matched answer coverage</td>
+<td>No worse than the matched baseline, with uncertainty intervals</td>
+</tr>
+<tr>
+<td>Composition</td>
+<td>Held-out combinations against the learning generalist and the same experts using fixed/rule-based composition</td>
+<td>Positive improvement under common resource caps; isolated-worker scores are additional diagnostics</td>
+</tr>
+<tr>
+<td>Size</td>
+<td>Complete deployment storage and peak active memory</td>
+<td>Within the declared cap; superiority claims require a measured frontier improvement</td>
+</tr>
+<tr>
+<td>Translation</td>
+<td>Semantic preservation and correct downstream effects</td>
+<td>Meet the task threshold; syntax validity alone cannot pass</td>
+</tr>
+<tr>
+<td>Persistence</td>
+<td>Bounded-state operation, restart recovery, correction durability</td>
+<td>No unbounded memory growth; earlier verified corrections survive restart</td>
+</tr>
+<tr>
+<td>Reproducibility</td>
+<td>Exact configs, versions, data splits, seeds, and records</td>
+<td>Independent rerun reproduces the qualitative result</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="metric-definitions">Metric definitions</h3>
+<p>Let R(t,j) be held-out performance on task j after training block t. Keep the full task-by-time matrix. Define forgetting for an earlier task as its highest earlier measured score minus its current score, and report the mean and worst task. Evaluate old protocols under their explicit version so legitimate replacement of a current fact is not miscounted as skill loss.</p>
+<p>For each task family, predefine a competence threshold tau. N_tau is the number of feedback events needed to attain that threshold on a prescheduled development probe, sustained across two probes, while satisfying the retention condition. Also report distinct examples, total repeated presentations, elapsed adaptation time, and compute to that point. A run that never reaches the criterion within its budget is nonattaining/censored; do not omit it or invent a finite speedup ratio. Keep final-test measurements separate.</p>
+<p>Report answer coverage, incorrect assertions, unnecessary abstentions, current-fact accuracy, routing errors, and translation errors separately. An always-abstaining system cannot win the reliability comparison.</p>
+<p>A second success route is equal learning/quality with substantially smaller total resource use. Keep the size and learning claims separate until both are demonstrated.</p>
+<p>Reject or narrow the hypothesis if improvements disappear when the generalist gets the same tools and memory, if the advantage depends on an uncounted teacher, if old skills degrade, or if a simpler classifier/procedure achieves the same result.</p>
+<h2 id="11-biological-mechanisms-as-controlled-experiments">11. Biological mechanisms as controlled experiments</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Biological idea</th>
+<th>Software experiment</th>
+<th>Matched comparison and readout</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fast and slow learning systems</td>
+<td>Immediate episodic capture plus slower integration/replay</td>
+<td>Memory-only, parameter-only, and combined systems; retention and generalization</td>
+</tr>
+<tr>
+<td>Selective signaling</td>
+<td>Send targeted messages only when relevant state changes</td>
+<td>Broadcast with the same information; bytes, latency, task success</td>
+</tr>
+<tr>
+<td>Local plasticity</td>
+<td>Update the circuit implicated by a verified error</td>
+<td>Global update with comparable compute; retention and new learning</td>
+</tr>
+<tr>
+<td>Neuromodulatory gating</td>
+<td>Use surprise, uncertainty, and outcomes to decide what to store or learn</td>
+<td>Random/recency gates; information retained per byte and learning per example</td>
+</tr>
+<tr>
+<td>Resource homeostasis</td>
+<td>Bound worker activation, memory occupancy, and training queues</td>
+<td>Ungated scheduling under the same global cap; overload and recovery behavior</td>
+</tr>
+<tr>
+<td>Consolidation/replay</td>
+<td>Interleave representative older experiences during adaptation</td>
+<td>Equal-compute no-replay and random-replay controls</td>
+</tr>
+<tr>
+<td>Sparse biological connectivity</td>
+<td>Test a biologically informed connectivity pattern in a small task model</td>
+<td>Random sparse and learned sparse graphs with equal nodes/edges/compute</td>
+</tr>
+<tr>
+<td>Multiple prediction timescales</td>
+<td>Compare short-horizon reflexes and longer-horizon planning</td>
+<td>Single-timescale controller with equivalent capacity</td>
+</tr>
+</tbody>
+</table></div>
+<p>Connectome tools describe structure and help formulate experiments. A wiring map alone does not specify a complete learning rule, neuronal dynamics, sensory grounding, or a general intelligence. FlyVis and related task-trained models offer a more concrete experimental bridge than importing an entire connectome into an otherwise unspecified network.</p>
+<h2 id="12-build-stages-and-exit-conditions">12. Build stages and exit conditions</h2>
+<p>Progress is controlled by evidence, not a promised calendar. A short pilot determines realistic iteration time on the actual workstation.</p>
+<h3 id="stage-0-reproducible-local-foundation">Stage 0: Reproducible local foundation</h3>
+<ul>
+<li>Inspect the current software inventory against the machine: available GPU memory, driver/PyTorch support, Python environments, Ollama/Ruflo endpoints, Laya startup, existing model files, and OBS load.</li>
+<li>Create an isolated research environment and record its exact versions.</li>
+<li>Establish a source manifest with repository URL, revision, license scope, model revision, artifact hash, installation notes, and local smoke-test status.</li>
+<li>Define storage and active-memory caps for research and studio-sharing profiles.</li>
+<li>Create the task generator, separate data splits, resource recorder, and baseline evaluator.</li>
+</ul>
+<p><strong>Exit:</strong> one generalist and one minimal learned worker solve the same small executable task set with complete measurements. The local experiment can be recreated from the recorded environment.</p>
+<h3 id="stage-1-nonlearning-hive-with-accountable-components">Stage 1: Nonlearning HIVE with accountable components</h3>
+<ul>
+<li>Implement contracts, worker registry, bounded queues, cancellation, and error propagation.</li>
+<li>Connect two independent workers, the gate, one translator, and deterministic verifiers.</li>
+<li>Implement SQLite records, provenance, revisions, and restart recovery.</li>
+<li>Run the frozen generalist and frozen HIVE with identical tools and evidence.</li>
+</ul>
+<p><strong>Exit:</strong> every output has attributable evidence; the system handles timeouts, contradictory evidence, missing fields, and restart without silently accepting unsupported results. Coordination overhead is measured.</p>
+<h3 id="stage-2-real-local-learning">Stage 2: Real local learning</h3>
+<ul>
+<li>Add the teaching record, error localization, bounded replay, and candidate training.</li>
+<li>Train the responsible worker on verified failures.</li>
+<li>Add held-out generalization, retained-skill probes, and atomic promotion.</li>
+<li>Run both the independent-worker and shared-adapter arms.</li>
+</ul>
+<p><strong>Exit:</strong> a verified correction changes later behavior on unseen related tasks, persists after restart, and leaves unrelated skills within the accepted regression limit.</p>
+<h3 id="stage-3-selective-memory-and-forgetting">Stage 3: Selective memory and forgetting</h3>
+<ul>
+<li>Implement memory byte caps, supersession, rare-exception retention, and alternative replay policies.</li>
+<li>Add memory-only, weight-only, and combined adaptation controls.</li>
+<li>Evaluate changed facts, long distractor histories, and delayed reuse.</li>
+<li>Track dependencies from memory facts to consolidated artifacts.</li>
+</ul>
+<p><strong>Exit:</strong> the system remains within its memory cap, retrieves current relevant evidence, avoids reviving superseded facts, and distinguishes retrieval improvement from learned generalization.</p>
+<h3 id="stage-4-confirmatory-hypothesis-test">Stage 4: Confirmatory hypothesis test</h3>
+<ul>
+<li>Freeze task generators, final test splits, thresholds, and hyperparameters.</li>
+<li>Run the required baselines and mechanism ablations.</li>
+<li>Use multiple seeds and sequence orders.</li>
+<li>Report resource/quality frontiers and all unsuccessful tasks.</li>
+</ul>
+<p><strong>Exit:</strong> a reproducible result supports a specifically scoped claim, or the hypothesis is narrowed with a clear failure diagnosis. No expansion is justified solely by a convincing demo.</p>
+<h3 id="stage-5-compact-circuit-and-representation-experiments">Stage 5: Compact-circuit and representation experiments</h3>
+<p>Run bounded parallel branches:</p>
+<ul>
+<li>NCM reproduction on a released task, followed by one narrow translator or solver experiment if the necessary training path is available.</li>
+<li>TRM/HRM-style recurrent solvers on structured tasks with total training effort counted.</li>
+<li>Learned private communication with compatible encoder/decoder promotion.</li>
+<li>Continual-backprop or other plasticity methods in an appropriate small controlled model.</li>
+<li>Biological connectivity motifs against matched random and learned sparse controls.</li>
+</ul>
+<p><strong>Exit:</strong> each branch earns integration through a measured benefit. Archive unsuccessful variants with their results so they do not re-enter as unsupported assumptions.</p>
+<h3 id="stage-6-additional-communities-and-assistant-integration">Stage 6: Additional communities and assistant integration</h3>
+<ul>
+<li>Add one new community at a time: code repair, formal reasoning, perception, or small-world planning.</li>
+<li>Require competence tests, representation contracts, update ownership, resource estimates, and failure behavior for each new worker.</li>
+<li>Add persistent user-facing intention and presentation layers.</li>
+<li>Expand toward the desired role library through measured need, shared services, and loadable compatible skills.</li>
+<li>Introduce larger scheduling systems only when one-workstation constraints or multi-machine use justify them.</li>
+</ul>
+<p><strong>Exit:</strong> adding a community improves useful capability without breaking earlier communities or exceeding the declared resource policy.</p>
+<h2 id="13-implementation-work-packages">13. Implementation work packages</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Work package</th>
+<th>Concrete outputs</th>
+<th>Depends on</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Environment and manifest</td>
+<td>Reproducible environment, resource profiles, exact source/model lock records</td>
+<td>Stage 0 audit</td>
+</tr>
+<tr>
+<td>Benchmark generator</td>
+<td>Executable protocol tasks, truth state, split generators, sequence definitions</td>
+<td>Task specification</td>
+</tr>
+<tr>
+<td>Generalist baselines</td>
+<td>Frozen and learning baselines with identical tool/memory access</td>
+<td>Environment and tasks</td>
+</tr>
+<tr>
+<td>Contracts and registry</td>
+<td>Four channels, versioned payloads, capability discovery</td>
+<td>Task specification</td>
+</tr>
+<tr>
+<td>Specialist workers</td>
+<td>Independent trained workers and shared-adapter comparison</td>
+<td>Baselines and contracts</td>
+</tr>
+<tr>
+<td>Memory manager</td>
+<td>Provenance, supersession, retrieval, bounded forgetting</td>
+<td>Contracts</td>
+</tr>
+<tr>
+<td>Teaching controller</td>
+<td>Failure diagnosis, correction batches, replay, local updates</td>
+<td>Workers and verifiers</td>
+</tr>
+<tr>
+<td>Promotion and compatibility</td>
+<td>Regression reports, rollback, translator compatibility</td>
+<td>Teaching and retained-task suite</td>
+</tr>
+<tr>
+<td>Resource accounting</td>
+<td>Complete storage/RAM/VRAM/latency/training records</td>
+<td>All runtime operations</td>
+</tr>
+<tr>
+<td>Confirmatory evaluation</td>
+<td>Frozen experimental matrix, intervals, frontier report</td>
+<td>All earlier packages</td>
+</tr>
+<tr>
+<td>Research branches</td>
+<td>NCM, recurrent circuits, private codes, biological motifs</td>
+<td>Stable small-task harness</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="proposed-repository-boundaries">Proposed repository boundaries</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Directory</th>
+<th>Ownership</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>contracts/</td>
+<td>Envelopes, domain payload schemas, version compatibility</td>
+</tr>
+<tr>
+<td>runtime/</td>
+<td>Registry, scheduler, cancellation, resource budgets</td>
+</tr>
+<tr>
+<td>experts/</td>
+<td>Worker adapters and declared trainable parameter ownership</td>
+</tr>
+<tr>
+<td>translators/</td>
+<td>Representation conversion and semantic tests</td>
+</tr>
+<tr>
+<td>memory/</td>
+<td>Records, retrieval, revisions, forgetting, replay</td>
+</tr>
+<tr>
+<td>learning/</td>
+<td>Feedback attribution, local training, consolidation, promotion</td>
+</tr>
+<tr>
+<td>environments/</td>
+<td>Simulated tools and closed-loop task generators</td>
+</tr>
+<tr>
+<td>baselines/</td>
+<td>Generalist, role-prompt, adapter, and deterministic controls</td>
+</tr>
+<tr>
+<td>evaluation/</td>
+<td>Sequence runner, scoring, intervals, ablations</td>
+</tr>
+<tr>
+<td>manifests/</td>
+<td>Exact source revisions, model hashes, licenses, environments</td>
+</tr>
+<tr>
+<td>experiments/</td>
+<td>Immutable configurations and run references</td>
+</tr>
+<tr>
+<td>docs/</td>
+<td>Decisions, results, operator notes, and failure analyses</td>
+</tr>
+</tbody>
+</table></div>
+<p>Do not let one orchestration framework own specialist identity, memory format, or training artifacts. Those should remain inspectable HIVE contracts.</p>
+<h2 id="14-first-implementation-backlog">14. First implementation backlog</h2>
+<ol>
+<li>Resolve local environment and free-resource measurements.</li>
+<li>Reuse the available Laya/Ruflo/Ollama installations only where the audit confirms compatibility.</li>
+<li>Pin one model family, one training runtime, and a common inference path.</li>
+<li>Build a small deterministic tool service and disjoint task generators.</li>
+<li>Implement the frozen and learning generalist baselines.</li>
+<li>Define the four channel schemas and worker capability manifest.</li>
+<li>Add two independent learned workers and a shared-adapter comparison.</li>
+<li>Implement verifier-backed outcomes and an explicit error taxonomy.</li>
+<li>Store episodes and current facts with provenance and revisions.</li>
+<li>Add bounded replay and a local update to one worker.</li>
+<li>Test unseen transfer, unrelated skill retention, and restart durability.</li>
+<li>Freeze the first comparative experiment and report complete cost/quality results.</li>
+</ol>
+<p>The first accepted milestone is a measured correction-to-generalization loop. This is the foundation on which the broader cognitive organism can be built.</p>
+<h2 id="15-source-catalog">15. Source catalog</h2>
+<p>The following appendices distinguish reusable code, pretrained model artifacts, experimental implementations, and research papers. Each entry links to a primary source. An available repository is not evidence that it is installed, compatible with the local workstation, or capable of satisfying the full HIVE hypothesis.</p>
+<p><strong>Disposition legend:</strong> Core candidate = selected or directly relevant to the first implementation; Alternative = compare against the selected component; Research reference = reproduce or borrow a mechanism in an isolated experiment; Later = useful after the initial learning result.</p>
+<p>License labels describe only the scope checked in the linked source. Model weights, datasets, optional packages, and transitive dependencies may have separate terms. Pin and inspect the exact selected revisions before integration.</p>
+<h2 id="appendix-a-code-and-model-catalog">Appendix A. Code and model catalog</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Category</th>
+<th style="text-align:right">Resources</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Named HIVE foundations and existing local tools</td>
+<td style="text-align:right">5</td>
+</tr>
+<tr>
+<td>Learning libraries and model adaptation</td>
+<td style="text-align:right">14</td>
+</tr>
+<tr>
+<td>Compact execution and neural architectures</td>
+<td style="text-align:right">7</td>
+</tr>
+<tr>
+<td>Continual learning and recurrent specialists</td>
+<td style="text-align:right">8</td>
+</tr>
+<tr>
+<td>Memory and retrieval</td>
+<td style="text-align:right">15</td>
+</tr>
+<tr>
+<td>Communication and coordination</td>
+<td style="text-align:right">8</td>
+</tr>
+<tr>
+<td>Verification and representations</td>
+<td style="text-align:right">9</td>
+</tr>
+<tr>
+<td>Evaluation frameworks and datasets</td>
+<td style="text-align:right">8</td>
+</tr>
+<tr>
+<td>Closed-loop environments and world models</td>
+<td style="text-align:right">9</td>
+</tr>
+<tr>
+<td>Biological modeling and connectome tools</td>
+<td style="text-align:right">9</td>
+</tr>
+<tr>
+<td>Measurement and reproducibility</td>
+<td style="text-align:right">4</td>
+</tr>
+<tr>
+<td>Pretrained model checkpoint candidates</td>
+<td style="text-align:right">4</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="named-hive-foundations-and-existing-local-tools">Named HIVE foundations and existing local tools</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>ID and primary source</th>
+<th>What the project supplies</th>
+<th>Proposed HIVE use and boundary</th>
+<th>Disposition and license scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C001 <a href="https://github.com/NandhaKishorM/laya" rel="noreferrer">LAYA</a></td>
+<td>Non-autoregressive typed choice, score, and yes/no decision models.</td>
+<td>Train and calibrate a reusable decision gate for each specialist interface. <strong>Boundary:</strong> Task-specific accuracy and calibration require held-out tests; a typed decision is not a formal proof. Reuse encoders where appropriate instead of duplicating them by role.</td>
+<td>Core candidate; Apache-2.0 repository label; check the chosen checkpoint.</td>
+</tr>
+<tr>
+<td>C002 <a href="https://github.com/ruvnet/ruflo" rel="noreferrer">Ruflo</a></td>
+<td>Agent coordination harness with tool, memory, and scheduling integrations.</td>
+<td>Inspect the existing local integration and adapt useful infrastructure behind HIVE contracts. <strong>Boundary:</strong> Attribute learning to the actual mechanism used. The harness and role definitions do not by themselves create independently trained experts.</td>
+<td>Alternative; MIT</td>
+</tr>
+<tr>
+<td>C003 <a href="https://github.com/HazyResearch/ncm" rel="noreferrer">Next-Concept Modeling (NCM)</a></td>
+<td>Multiscale discrete tokenizer and coarse-to-fine generator with released task checkpoints and evaluation code.</td>
+<td>Reproduce a released task and test a narrow compact translator or solver branch. <strong>Boundary:</strong> Inspect the availability of the full required training path before custom training. Published diffusion-baseline results do not establish workstation speed or HIVE-wide learning.</td>
+<td>Research reference; MIT repository code; check checkpoint/data terms.</td>
+</tr>
+<tr>
+<td>C004 <a href="https://github.com/ollama/ollama" rel="noreferrer">Ollama</a></td>
+<td>Local model loading and inference service.</td>
+<td>Reuse the inventoried local API for integration checks; compare deployment after training/export parity. <strong>Boundary:</strong> A running model server is not a weight-training loop; measure all resident models and model-switching costs.</td>
+<td>Alternative; Not independently rechecked for this catalog; inspect selected revision.</td>
+</tr>
+<tr>
+<td>C005 <a href="https://github.com/MakazhanAlpamys/Soup" rel="noreferrer">Soup</a></td>
+<td>Configuration-driven language-model fine-tuning with memory-oriented training methods.</td>
+<td>Inspect the already prepared local environments before selecting another training frontend. <strong>Boundary:</strong> Inventory establishes preparation, not a working GPU run. Reproduce claimed memory/throughput behavior with the selected model and driver.</td>
+<td>Alternative; Not independently verified; inspect selected revision.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="learning-libraries-and-model-adaptation">Learning libraries and model adaptation</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>ID and primary source</th>
+<th>What the project supplies</th>
+<th>Proposed HIVE use and boundary</th>
+<th>Disposition and license scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C006 <a href="https://github.com/pytorch/pytorch" rel="noreferrer">PyTorch</a></td>
+<td>Tensor computation, automatic differentiation, neural modules, and CPU/GPU execution.</td>
+<td>Implement tiny independent specialists, routers, local update rules, and matched dense baselines in one measurable training substrate. <strong>Boundary:</strong> Choose and pin a build compatible with the actual GPU and driver; no local hardware compatibility or throughput was tested here.</td>
+<td>Core candidate; BSD-style license; inspect bundled third-party notices.</td>
+</tr>
+<tr>
+<td>C007 <a href="https://github.com/huggingface/transformers" rel="noreferrer">Transformers</a></td>
+<td>Model definitions, pretrained-model loading, tokenization integration, training, and inference interfaces.</td>
+<td>Common interface for the initial compact language specialist and comparable general-model baselines. <strong>Boundary:</strong> A shared library interface does not make different model representations or adapters interchangeable; model weights have their own licenses.</td>
+<td>Core candidate; Apache-2.0 (repository code).</td>
+</tr>
+<tr>
+<td>C008 <a href="https://github.com/huggingface/peft" rel="noreferrer">PEFT</a></td>
+<td>Parameter-efficient fine-tuning methods including LoRA, integrated with Transformers.</td>
+<td>Train isolated specialist adapter deltas while holding a shared backbone fixed; compare against independently parameterized specialists. <strong>Boundary:</strong> Adapters sharing one frozen backbone are a distinct architecture from fully independent models. Compatibility requires the correct base architecture, shapes, target modules, and checkpoint.</td>
+<td>Core candidate; Apache-2.0.</td>
+</tr>
+<tr>
+<td>C009 <a href="https://github.com/huggingface/trl" rel="noreferrer">TRL</a></td>
+<td>Post-training trainers including supervised fine-tuning, preference optimization, and reward-based methods.</td>
+<td>Add outcome-supervised or preference-supervised updates after reliable task rewards and retention evaluations exist. <strong>Boundary:</strong> Generated rewards and synthetic preferences require independent validation. This training toolkit does not itself solve continual learning or feedback quality.</td>
+<td>Alternative; Apache-2.0.</td>
+</tr>
+<tr>
+<td>C010 <a href="https://github.com/meta-pytorch/torchtune" rel="noreferrer">torchtune</a></td>
+<td>PyTorch-native post-training recipes and reusable training components.</td>
+<td>Alternative transparent recipe layer for controlled fine-tuning experiments. <strong>Boundary:</strong> Select one main training recipe stack rather than combining several competing stacks. Validate model support and package versions before adoption.</td>
+<td>Alternative; BSD-3-Clause.</td>
+</tr>
+<tr>
+<td>C011 <a href="https://github.com/unslothai/unsloth" rel="noreferrer">Unsloth</a></td>
+<td>Optimized local model training and inference tooling; optional desktop/Studio interface.</td>
+<td>Benchmark whether optimized adaptation reduces wall-clock training time and peak memory for the chosen specialist. <strong>Boundary:</strong> Measure against the same model, data, optimizer target, and quality. Core and UI components have different license scopes.</td>
+<td>Alternative; Apache-2.0 for the core package; AGPL-3.0 for some optional components including Studio UI.</td>
+</tr>
+<tr>
+<td>C012 <a href="https://github.com/axolotl-ai-cloud/axolotl" rel="noreferrer">Axolotl</a></td>
+<td>Configuration-driven fine-tuning and post-training pipelines covering multiple methods and model families.</td>
+<td>Alternative repeatable experiment launcher for specialists and baseline training. <strong>Boundary:</strong> Its breadth adds dependencies; select only if it simplifies the actual chosen experiment. No claimed speedup or GPU support was validated here.</td>
+<td>Alternative; Apache-2.0.</td>
+</tr>
+<tr>
+<td>C013 <a href="https://github.com/hiyouga/LlamaFactory" rel="noreferrer">LlamaFactory</a></td>
+<td>CLI/UI fine-tuning framework supporting multiple model families and full, frozen, and adapter-based updates.</td>
+<td>Alternative accessible specialist training front end and recipe source. <strong>Boundary:</strong> Use it as an alternative to the other fine-tuning harnesses, not an additional mandatory runtime layer.</td>
+<td>Alternative; Apache-2.0.</td>
+</tr>
+<tr>
+<td>C014 <a href="https://github.com/bitsandbytes-foundation/bitsandbytes" rel="noreferrer">bitsandbytes</a></td>
+<td>Low-bit linear operations and memory-saving optimizers for PyTorch, used by common QLoRA workflows.</td>
+<td>Test quantized-base adapter training and reduced optimizer memory on the local machine. <strong>Boundary:</strong> Quantization effects on task quality, calibration, kernels, and actual end-to-end latency must be measured. Low-bit storage alone is not evidence of faster learning.</td>
+<td>Alternative; MIT.</td>
+</tr>
+<tr>
+<td>C015 <a href="https://github.com/pytorch/ao" rel="noreferrer">TorchAO</a></td>
+<td>PyTorch quantization primitives and training/inference workflows.</td>
+<td>Reference and alternative for quantization experiments where a supported recipe benefits the selected specialist. <strong>Boundary:</strong> The current official README says new feature development is being minimized and consolidated into torch and consuming repositories. Avoid treating this as an unquestioned long-term core dependency.</td>
+<td>Alternative; BSD-3-Clause-style license (three redistribution conditions inspected).</td>
+</tr>
+<tr>
+<td>C016 <a href="https://github.com/safetensors/safetensors" rel="noreferrer">safetensors</a></td>
+<td>Serialization format and tools for storing and loading tensor weights.</td>
+<td>Versioned specialist/adaptor checkpoints and reproducible rollback artifacts. <strong>Boundary:</strong> Tensor serialization does not include a complete semantic compatibility contract; record base checkpoint, architecture, tokenizer, schema, and evaluation metadata separately.</td>
+<td>Core candidate; Apache-2.0.</td>
+</tr>
+<tr>
+<td>C017 <a href="https://github.com/huggingface/accelerate" rel="noreferrer">Accelerate</a></td>
+<td>Device placement, mixed precision, and launch/distributed-training utilities for PyTorch workflows.</td>
+<td>Use through the chosen training stack or for a minimal repeatable launcher. <strong>Boundary:</strong> It is execution infrastructure. It does not itself define a learning rule, memory policy, or independent expert boundary.</td>
+<td>Alternative; Apache-2.0.</td>
+</tr>
+<tr>
+<td>C018 <a href="https://github.com/microsoft/LoRA" rel="noreferrer">LoRA / loralib</a></td>
+<td>Original low-rank adaptation implementation and examples.</td>
+<td>Reference for implementing low-rank updates in custom tiny specialist architectures that are not supported by higher-level tooling. <strong>Boundary:</strong> Prefer PEFT for supported standard models; the original reference package is not an additional mandatory stack component.</td>
+<td>Research reference; MIT.</td>
+</tr>
+<tr>
+<td>C019 <a href="https://github.com/stanfordnlp/dspy" rel="noreferrer">DSPy</a></td>
+<td>Composable LM programs with prompt and weight optimization methods.</td>
+<td>Baseline and tooling for improving routing, retrieval, and translator prompts against measured objectives. <strong>Boundary:</strong> Distinguish prompt optimization, demonstration selection, and weight training; include optimizer/teacher search costs and held-out validation.</td>
+<td>Alternative; MIT</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="compact-execution-and-neural-architectures">Compact execution and neural architectures</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>ID and primary source</th>
+<th>What the project supplies</th>
+<th>Proposed HIVE use and boundary</th>
+<th>Disposition and license scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C020 <a href="https://github.com/ggml-org/llama.cpp" rel="noreferrer">llama.cpp</a></td>
+<td>C/C++ inference with GGUF models, multiple hardware backends, and an HTTP server; current server supports model routing/loading controls.</td>
+<td>Candidate compact deployment backend after training experiments establish a useful model; measure warm/cold loading and CPU/GPU memory use. <strong>Boundary:</strong> It is primarily an inference backend. Training-to-GGUF and adapter export need compatibility checks; server documentation notes that different LoRA configurations cannot necessarily share the same inference batch.</td>
+<td>Core candidate; MIT.</td>
+</tr>
+<tr>
+<td>C021 <a href="https://github.com/vllm-project/vllm" rel="noreferrer">vLLM</a></td>
+<td>Inference/serving engine with KV-cache management, batching, structured output support, and multi-LoRA serving.</td>
+<td>Alternative when concurrent adapter requests and GPU throughput become the bottleneck. <strong>Boundary:</strong> Throughput-oriented serving can have a larger resident footprint than a simple single-model process. Benchmark the actual model, adapter configuration, and shared-GPU workload.</td>
+<td>Alternative; Apache-2.0.</td>
+</tr>
+<tr>
+<td>C022 <a href="https://github.com/sgl-project/sglang" rel="noreferrer">SGLang</a></td>
+<td>Serving framework for language and multimodal models with inference optimizations.</td>
+<td>Alternative serving backend for workloads with repeated prefixes or structured multi-step calls. <strong>Boundary:</strong> Adoption should follow workload measurements; adding a second serving engine before identifying a bottleneck complicates the initial experiment.</td>
+<td>Alternative; Apache-2.0.</td>
+</tr>
+<tr>
+<td>C023 <a href="https://github.com/state-spaces/mamba" rel="noreferrer">Mamba</a></td>
+<td>Selective state-space sequence-model components and reference models.</td>
+<td>Compare a recurrent/state-space specialist against an attention-based specialist on streaming tasks with bounded recurrent state. <strong>Boundary:</strong> Compressed recurrent state does not preserve arbitrary history exactly and is not a full persistent-memory system. Kernel support and training behavior require validation.</td>
+<td>Research reference; Apache-2.0.</td>
+</tr>
+<tr>
+<td>C024 <a href="https://github.com/BlinkDL/RWKV-LM" rel="noreferrer">RWKV-LM</a></td>
+<td>Recurrent language-model implementations with fixed-size recurrent state during streaming inference.</td>
+<td>Alternative streaming specialist and state-adaptation experiment under a bounded active-memory budget. <strong>Boundary:</strong> Repository claims of unbounded context describe continued processing, not exact unlimited recall. Verify the chosen version, checkpoint, trainer, and runtime together.</td>
+<td>Research reference; Apache-2.0 (repository code).</td>
+</tr>
+<tr>
+<td>C025 <a href="https://github.com/microsoft/BitNet" rel="noreferrer">BitNet</a></td>
+<td>Official inference framework for supported low-bit BitNet-family language models.</td>
+<td>Investigate whether a compatible low-bit specialist reduces total deployment cost, including CPU options. <strong>Boundary:</strong> This is not a universal converter that makes any existing full-precision model a native low-bit model. Check model-card terms separately from repository code.</td>
+<td>Research reference; MIT (framework code).</td>
+</tr>
+<tr>
+<td>C026 <a href="https://github.com/Dao-AILab/flash-attention" rel="noreferrer">FlashAttention</a></td>
+<td>Memory-efficient exact attention implementations and optimized GPU kernels.</td>
+<td>Optional kernel optimization after the initial model and training recipe work correctly. <strong>Boundary:</strong> Kernel-generation, GPU-generation, dtype, and build support differ. Execution speed improvements do not establish improved sample efficiency.</td>
+<td>Alternative; BSD-3-Clause.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="continual-learning-and-recurrent-specialists">Continual learning and recurrent specialists</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>ID and primary source</th>
+<th>What the project supplies</th>
+<th>Proposed HIVE use and boundary</th>
+<th>Disposition and license scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C027 <a href="https://github.com/arcee-ai/mergekit" rel="noreferrer">mergekit</a></td>
+<td>Tools for merging compatible pretrained model weights.</td>
+<td>Controlled experiment for compressing or combining learned specialist changes after retaining separate evaluated versions. <strong>Boundary:</strong> Merging can damage capabilities and does not generally transfer a skill between arbitrary independent architectures. Treat merging as an experiment with retention tests.</td>
+<td>Research reference; LGPL-3.0 (current repository).</td>
+</tr>
+<tr>
+<td>C028 <a href="https://github.com/ContinualAI/avalanche" rel="noreferrer">Avalanche</a></td>
+<td>PyTorch library for continual-learning streams, training strategies, benchmarks, and evaluation.</td>
+<td>Initial controlled continual-learning baselines and retention measurements for small classifiers and specialists. <strong>Boundary:</strong> A continual-learning library does not automatically provide a drop-in lifelong-learning solution for language models; adapt streams, losses, and evaluation to the task.</td>
+<td>Core candidate; MIT.</td>
+</tr>
+<tr>
+<td>C029 <a href="https://github.com/aimagelab/mammoth" rel="noreferrer">Mammoth</a></td>
+<td>Continual-learning benchmark framework and official implementation lineage for Dark Experience Replay.</td>
+<td>Independent reference for replay methods and fair comparison with straightforward rehearsal baselines. <strong>Boundary:</strong> Its benchmark configurations are not automatically representative of an open-ended HIVE deployment. Reuse methods with clearly defined task/data boundaries.</td>
+<td>Alternative; MIT; repository also contains notices for included components.</td>
+</tr>
+<tr>
+<td>C030 <a href="https://github.com/shibhansh/loss-of-plasticity" rel="noreferrer">Loss of Plasticity / Continual Backprop</a></td>
+<td>Author code reproducing loss-of-plasticity experiments and continual-backpropagation interventions.</td>
+<td>Test whether selectively renewing underused units helps a tiny specialist keep learning through a long task stream. <strong>Boundary:</strong> Results are from specified supervised and reinforcement-learning experiments; resetting units is not a proven universal solution for pretrained language models.</td>
+<td>Research reference; MIT.</td>
+</tr>
+<tr>
+<td>C031 <a href="https://github.com/mmasana/FACIL" rel="noreferrer">FACIL</a></td>
+<td>Reference implementations and evaluation configurations for class-incremental learning.</td>
+<td>Additional controlled comparison of task order, exemplars, and retention tradeoffs. <strong>Boundary:</strong> Primarily an image-classification research framework, so treat its code and methods as references rather than the assistant runtime.</td>
+<td>Research reference; MIT.</td>
+</tr>
+<tr>
+<td>C032 <a href="https://github.com/sapientinc/HRM" rel="noreferrer">Hierarchical Reasoning Model (HRM)</a></td>
+<td>Official recurrent reasoning implementation with coupled slow and fast modules for structured puzzle tasks.</td>
+<td>Reference architecture for a small non-chat specialist that performs iterative latent computation with multiple timescales. <strong>Boundary:</strong> Task-specific puzzle results do not establish general language competence. Count augmentation, repeated training epochs, and recurrent computation rather than quoting source-example count alone.</td>
+<td>Research reference; Apache-2.0.</td>
+</tr>
+<tr>
+<td>C033 <a href="https://github.com/SamsungSAILMontreal/TinyRecursiveModels" rel="noreferrer">Tiny Recursive Models (TRM)</a></td>
+<td>Author implementation of recursive latent reasoning with a small network on structured reasoning benchmarks.</td>
+<td>Compare a tiny recursive solver against a larger one-pass specialist under equal total training and inference budgets. <strong>Boundary:</strong> Official repository is archived/read-only as of the observed page (archived April 1, 2026). Treat as a reproducible research fork; reported puzzle performance is not general assistant capability.</td>
+<td>Research reference; MIT.</td>
+</tr>
+<tr>
+<td>C034 <a href="https://github.com/google-deepmind/reverb" rel="noreferrer">Reverb</a></td>
+<td>Replay data storage/transport with configurable sampling, removal, and rate limiting.</td>
+<td>Reference/alternative for bounded replay buffers and selective teaching. <strong>Boundary:</strong> Official README warns it is not production hardened, supports Linux, and has TensorFlow-version compatibility constraints. A simple local buffer is enough initially.</td>
+<td>Research reference; Apache-2.0</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="memory-and-retrieval">Memory and retrieval</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>ID and primary source</th>
+<th>What the project supplies</th>
+<th>Proposed HIVE use and boundary</th>
+<th>Disposition and license scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C035 <a href="https://github.com/letta-ai/letta-code" rel="noreferrer">Letta / MemGPT lineage</a></td>
+<td>Stateful agent harness with persistent memory and editable skills/prompts.</td>
+<td>Alternative implementation and comparison for hierarchical memory/control flow. <strong>Boundary:</strong> Current letta-ai/letta README redirects development to letta-code; retired V1 server is on archive branch. Memory rewriting is not evidence of neural skill learning.</td>
+<td>Alternative; Apache-2.0</td>
+</tr>
+<tr>
+<td>C036 <a href="https://github.com/mem0ai/mem0" rel="noreferrer">Mem0</a></td>
+<td>Memory extraction, indexing, and retrieval infrastructure for agents.</td>
+<td>Compare external-memory policies using the same local model and feedback stream. <strong>Boundary:</strong> Current headline managed-service benchmark scores include proprietary optimizations absent from the OSS SDK. Independently test add-only accumulation, agent-generated facts, correction, and forgetting.</td>
+<td>Alternative; Apache-2.0</td>
+</tr>
+<tr>
+<td>C037 <a href="https://github.com/getzep/graphiti" rel="noreferrer">Graphiti</a></td>
+<td>Incremental temporal context graphs, provenance, and hybrid retrieval.</td>
+<td>Strong candidate for facts with validity periods and explicit supersession. <strong>Boundary:</strong> Graph construction requires supplied backend/model components and application logic; extraction can be wrong. Zep service performance does not automatically transfer to local Graphiti.</td>
+<td>Alternative; Apache-2.0</td>
+</tr>
+<tr>
+<td>C038 <a href="https://github.com/topoteretes/cognee" rel="noreferrer">Cognee</a></td>
+<td>Turns documents/conversations into searchable graph and vector context.</td>
+<td>Alternative graph-based memory integration to compare against a transparent baseline. <strong>Boundary:</strong> Additional extraction, schema, and indexing machinery must earn its resource cost; treat generated relations as claims requiring provenance.</td>
+<td>Alternative; Apache-2.0</td>
+</tr>
+<tr>
+<td>C039 <a href="https://github.com/OSU-NLP-Group/HippoRAG" rel="noreferrer">HippoRAG / HippoRAG 2</a></td>
+<td>Knowledge graphs plus Personalized PageRank and passage retrieval for associative memory.</td>
+<td>Research comparison for multi-hop factual recall and non-parametric adaptation. <strong>Boundary:</strong> External knowledge acquisition is distinct from parameter learning. Count offline indexing/model cost and rebuild indexes when model identity changes.</td>
+<td>Research reference; MIT</td>
+</tr>
+<tr>
+<td>C040 <a href="https://github.com/HKUDS/LightRAG" rel="noreferrer">LightRAG</a></td>
+<td>Graph-enhanced retrieval-augmented generation with configurable model/storage components.</td>
+<td>Alternative for graph retrieval and document-memory ingestion. <strong>Boundary:</strong> Do not install alongside every competing memory framework. Extraction and retrieval quality need identical-corpus comparisons.</td>
+<td>Alternative; MIT</td>
+</tr>
+<tr>
+<td>C041 <a href="https://github.com/facebookresearch/faiss" rel="noreferrer">FAISS</a></td>
+<td>Dense-vector similarity search and clustering, with CPU/GPU implementations.</td>
+<td>Candidate baseline index for semantic episode retrieval; start with exact search at small scale. <strong>Boundary:</strong> Not a transactional memory database or evidence validator; preserve authoritative records separately and version the embedding space.</td>
+<td>Core candidate; MIT</td>
+</tr>
+<tr>
+<td>C042 <a href="https://github.com/qdrant/qdrant" rel="noreferrer">Qdrant</a></td>
+<td>Vector storage/search with payload filtering.</td>
+<td>Alternative once richer filtering, service isolation, or scale warrants a database process. <strong>Boundary:</strong> Service overhead and memory must be counted; retrieval isolation does not isolate learned parameters.</td>
+<td>Alternative; Apache-2.0</td>
+</tr>
+<tr>
+<td>C043 <a href="https://github.com/lancedb/lancedb" rel="noreferrer">LanceDB</a></td>
+<td>Embedded vector/multimodal retrieval built on the Lance data format.</td>
+<td>Alternative for disk-backed retrieval and versioned datasets. <strong>Boundary:</strong> Evaluate its whole storage/index footprint against SQLite plus one index; select one initial retrieval backend.</td>
+<td>Alternative; Apache-2.0</td>
+</tr>
+<tr>
+<td>C044 <a href="https://github.com/asg017/sqlite-vec" rel="noreferrer">sqlite-vec</a></td>
+<td>SQLite extension for vector storage/search, including float, int8, and binary vectors.</td>
+<td>Low-infrastructure alternative to a separate vector index/service. <strong>Boundary:</strong> Official README marks it pre-v1 with possible breaking changes. Pin versions and measure recall/latency at the intended scale.</td>
+<td>Alternative; MIT OR Apache-2.0</td>
+</tr>
+<tr>
+<td>C045 <a href="https://github.com/huggingface/sentence-transformers" rel="noreferrer">Sentence Transformers</a></td>
+<td>Embedding, reranking, and retrieval-model training/inference.</td>
+<td>One small CPU-capable encoder for baseline retrieval; later train retrieval from task feedback. <strong>Boundary:</strong> Library license does not determine every model license. Pin encoder/version and do not mix incompatible embeddings.</td>
+<td>Core candidate; Apache-2.0</td>
+</tr>
+<tr>
+<td>C046 <a href="https://github.com/FlagOpen/FlagEmbedding" rel="noreferrer">FlagEmbedding / BGE</a></td>
+<td>Retrieval embedding/reranking toolkit and model family.</td>
+<td>Alternative encoder/reranker family for multilingual or specialized retrieval. <strong>Boundary:</strong> Check exact checkpoint license and size; a large reranker can erase the savings from a small answering specialist.</td>
+<td>Alternative; MIT (code)</td>
+</tr>
+<tr>
+<td>C047 <a href="https://github.com/networkx/networkx" rel="noreferrer">NetworkX</a></td>
+<td>Python graph representation and analysis algorithms.</td>
+<td>Small transparent baseline for dependency, provenance, and memory-link graphs. <strong>Boundary:</strong> In-memory Python graphs add overhead and are not a persistent graph database; use only at measured scale.</td>
+<td>Alternative; BSD-3-Clause</td>
+</tr>
+<tr>
+<td>C048 <a href="https://sqlite.org/src" rel="noreferrer">SQLite</a></td>
+<td>Embedded transactional SQL storage in ordinary files.</td>
+<td>Initial event/episode store, provenance, validity intervals, specialist namespace, and update registry. <strong>Boundary:</strong> Application must define retention, conflicting-claim semantics, concurrent-write policy, and evidence promotion; persistence alone is not learning.</td>
+<td>Core candidate; Public domain</td>
+</tr>
+<tr>
+<td>C049 <a href="https://github.com/agiresearch/A-mem" rel="noreferrer">A-MEM</a></td>
+<td>Agent-organized notes with attributes, links, and updates inspired by Zettelkasten.</td>
+<td>Alternative for HIVE's interconnected memory organization and adaptive retrieval. <strong>Boundary:</strong> This repo is the memory library; paper-result reproduction uses WujiangXu/AgenticMemory. Generated links and revisions need evidence checks and bounded growth.</td>
+<td>Research reference; MIT</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="communication-and-coordination">Communication and coordination</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>ID and primary source</th>
+<th>What the project supplies</th>
+<th>Proposed HIVE use and boundary</th>
+<th>Disposition and license scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C050 <a href="https://github.com/langchain-ai/langgraph" rel="noreferrer">LangGraph</a></td>
+<td>Stateful workflow execution with checkpoints and durable execution abstractions.</td>
+<td>Optional execution harness or orchestration baseline. <strong>Boundary:</strong> Workflow persistence provides infrastructure; it does not implement independent neural learning or validate HIVE's hypothesis.</td>
+<td>Alternative; MIT</td>
+</tr>
+<tr>
+<td>C051 <a href="https://github.com/ray-project/ray" rel="noreferrer">Ray</a></td>
+<td>Tasks, stateful actors, distributed training/serving libraries.</td>
+<td>Later specialist worker isolation and multi-process/multi-machine scheduling. <strong>Boundary:</strong> Measure orchestration and serialization overhead first; multiple GPU actors do not create extra physical VRAM.</td>
+<td>Alternative; Apache-2.0</td>
+</tr>
+<tr>
+<td>C052 <a href="https://github.com/nats-io/nats-server" rel="noreferrer">NATS / JetStream</a></td>
+<td>Publish/subscribe and request/reply messaging; JetStream adds durable streams.</td>
+<td>Later transport for Control, Task, Evidence, and Teaching channels. <strong>Boundary:</strong> Core NATS is at-most-once; JetStream offers persistence and at-least-once delivery. Handle duplicates with idempotent task/update IDs.</td>
+<td>Alternative; Apache-2.0</td>
+</tr>
+<tr>
+<td>C053 <a href="https://github.com/zeromq/libzmq" rel="noreferrer">ZeroMQ</a></td>
+<td>Asynchronous queues and messaging patterns over sockets.</td>
+<td>Alternative local inter-process transport for specialist messages. <strong>Boundary:</strong> Delivery semantics, durable recovery, backpressure, and audit records remain application responsibilities.</td>
+<td>Alternative; MPL-2.0</td>
+</tr>
+<tr>
+<td>C054 <a href="https://github.com/pydantic/pydantic" rel="noreferrer">Pydantic</a></td>
+<td>Python type-based data validation.</td>
+<td>Validate shared transport envelopes and typed evidence/update records. <strong>Boundary:</strong> Schema validity does not establish semantic truth. Keep domain-native payloads and translator identities separate from transport fields.</td>
+<td>Core candidate; MIT</td>
+</tr>
+<tr>
+<td>C055 <a href="https://github.com/protocolbuffers/protobuf" rel="noreferrer">Protocol Buffers</a></td>
+<td>Language-neutral structured data serialization and generated bindings.</td>
+<td>Later compact transport between heterogeneous specialist implementations. <strong>Boundary:</strong> Version schemas and field meaning; binary packing is not a learned private language or semantic translator.</td>
+<td>Alternative; BSD-3-Clause</td>
+</tr>
+<tr>
+<td>C056 <a href="https://github.com/facebookresearch/EGG" rel="noreferrer">EGG</a></td>
+<td>PyTorch toolkit for multi-agent games with learned discrete/continuous communication.</td>
+<td>Controlled experiments on private codes, translator learning, message length, and cross-play. <strong>Boundary:</strong> Success on sender/receiver games does not establish general interoperable expert languages. Test unseen combinations and replacement peers.</td>
+<td>Research reference; MIT</td>
+</tr>
+<tr>
+<td>C057 <a href="https://github.com/facebookresearch/BenchMARL" rel="noreferrer">BenchMARL</a></td>
+<td>Standardized multi-agent reinforcement-learning training/benchmarking on TorchRL.</td>
+<td>Controlled evaluation harness for selective communication and coordination policies. <strong>Boundary:</strong> Environment rewards and trained-agent budgets must match; full LLM-specialist integration is additional work.</td>
+<td>Research reference; MIT</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="verification-and-representations">Verification and representations</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>ID and primary source</th>
+<th>What the project supplies</th>
+<th>Proposed HIVE use and boundary</th>
+<th>Disposition and license scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C058 <a href="https://github.com/sympy/sympy" rel="noreferrer">SymPy</a></td>
+<td>Python computer algebra and symbolic mathematics.</td>
+<td>Exact transformations and checked targets for a narrow algebra or expression translator. <strong>Boundary:</strong> Correct symbolic manipulation assumes the original problem was represented correctly; preserve domain restrictions and units.</td>
+<td>Later; Not independently verified in this pass; inspect LICENSE.</td>
+</tr>
+<tr>
+<td>C059 <a href="https://github.com/Z3Prover/z3" rel="noreferrer">Z3</a></td>
+<td>Satisfiability-modulo-theories solving and constraint reasoning.</td>
+<td>Check structured constraints, generate counterexamples, and verify narrow translated tasks. <strong>Boundary:</strong> A solver answer applies to the encoded assumptions; translation errors and unsupported theories remain separate failure modes.</td>
+<td>Later; MIT per official Z3 documentation; inspect selected build notices.</td>
+</tr>
+<tr>
+<td>C060 <a href="https://github.com/cvc5/cvc5" rel="noreferrer">cvc5</a></td>
+<td>Automated theorem proving for satisfiability-modulo-theories problems.</td>
+<td>Alternative solver and cross-check source for selected constraint theories. <strong>Boundary:</strong> Choose supported theories and measure solve costs; a second solver is not needed for every initial task.</td>
+<td>Alternative; Not independently verified; inspect COPYING and selected dependencies.</td>
+</tr>
+<tr>
+<td>C061 <a href="https://github.com/leanprover/lean4" rel="noreferrer">Lean 4</a></td>
+<td>Programming language and theorem prover with kernel-checked proofs.</td>
+<td>Later proof-specialist community and formal verification of precisely stated claims. <strong>Boundary:</strong> Formalizing the intended problem is part of the task. Proof checking is not a truth guarantee for an incorrectly formalized external claim.</td>
+<td>Later; Apache-2.0 repository label; inspect component notices.</td>
+</tr>
+<tr>
+<td>C062 <a href="https://github.com/mlc-ai/xgrammar" rel="noreferrer">XGrammar</a></td>
+<td>Constrained structured generation and grammar-engine integration.</td>
+<td>Enforce supported output grammars for task, evidence, and translator payloads. <strong>Boundary:</strong> Grammar validity does not establish semantic correctness; integration must match the selected tokenizer and runtime.</td>
+<td>Alternative; Apache-2.0</td>
+</tr>
+<tr>
+<td>C063 <a href="https://github.com/dottxt-ai/outlines" rel="noreferrer">Outlines</a></td>
+<td>Constrained structured output generation for model calls.</td>
+<td>Produce valid routing decisions, evidence envelopes, and proposed update objects. <strong>Boundary:</strong> Grammar/schema compliance does not establish truth, calibration, or interoperability across private representations.</td>
+<td>Alternative; Apache-2.0</td>
+</tr>
+<tr>
+<td>C064 <a href="https://github.com/HypothesisWorks/hypothesis" rel="noreferrer">Hypothesis</a></td>
+<td>Property-based test generation for Python.</td>
+<td>Generate protocol edge cases, invariant violations, and counterexamples for teaching. <strong>Boundary:</strong> Properties must be specified correctly; generated examples do not establish universal correctness.</td>
+<td>Core candidate; Not independently verified; inspect LICENSE.txt and component notices.</td>
+</tr>
+<tr>
+<td>C065 <a href="https://github.com/pytest-dev/pytest" rel="noreferrer">pytest</a></td>
+<td>Python testing framework.</td>
+<td>Executable task checks, regression suites, and candidate-update gates. <strong>Boundary:</strong> Keep final test cases inaccessible to training; passing visible tests alone is not sufficient.</td>
+<td>Core candidate; MIT</td>
+</tr>
+<tr>
+<td>C066 <a href="https://github.com/tree-sitter/tree-sitter" rel="noreferrer">Tree-sitter</a></td>
+<td>Incremental parsing infrastructure for programming tools.</td>
+<td>Structured syntax representations for a later code/translation community. <strong>Boundary:</strong> A parsed tree says nothing by itself about program behavior; pair it with execution or semantic checks.</td>
+<td>Later; MIT for core; grammars have separate terms.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="evaluation-frameworks-and-datasets">Evaluation frameworks and datasets</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>ID and primary source</th>
+<th>What the project supplies</th>
+<th>Proposed HIVE use and boundary</th>
+<th>Disposition and license scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C067 <a href="https://github.com/EleutherAI/lm-evaluation-harness" rel="noreferrer">lm-evaluation-harness</a></td>
+<td>Framework for few-shot language-model evaluations.</td>
+<td>Measure baseline and post-update capability on fixed held-out tasks. <strong>Boundary:</strong> Static benchmark accuracy does not establish continual learning; task datasets have their own terms.</td>
+<td>Core candidate; MIT</td>
+</tr>
+<tr>
+<td>C068 <a href="https://github.com/UKGovernmentBEIS/inspect_ai" rel="noreferrer">Inspect AI</a></td>
+<td>Extensible evaluation framework with tools, multi-turn tasks, solvers and scorers.</td>
+<td>Run identical evaluation procedures across HIVE and general-model baselines. <strong>Boundary:</strong> HIVE-specific learning sequences, budget meters and deterministic scorers still need implementation.</td>
+<td>Core candidate; MIT</td>
+</tr>
+<tr>
+<td>C069 <a href="https://github.com/huggingface/lighteval" rel="noreferrer">Lighteval</a></td>
+<td>LLM evaluation toolkit supporting multiple backends.</td>
+<td>Alternative baseline evaluation runner where it matches the chosen serving stack. <strong>Boundary:</strong> Choose one main runner; avoid reconciling subtly different prompt/scoring defaults without need.</td>
+<td>Alternative; MIT</td>
+</tr>
+<tr>
+<td>C070 <a href="https://github.com/evalplus/evalplus" rel="noreferrer">EvalPlus</a></td>
+<td>Expanded tests for evaluating generated code.</td>
+<td>Test a later coding specialist using executable correctness and repeated-error metrics. <strong>Boundary:</strong> Code-test success is domain-specific; run generated programs in a constrained evaluation environment.</td>
+<td>Alternative; Apache-2.0</td>
+</tr>
+<tr>
+<td>C071 <a href="https://github.com/ShishirPatil/gorilla" rel="noreferrer">Berkeley Function Calling Leaderboard / Gorilla</a></td>
+<td>Code and datasets for evaluating function calls, including multi-turn and agentic task versions.</td>
+<td>Evaluate routing to tools, argument correctness, state handling and recovery. <strong>Boundary:</strong> Pin the BFCL version and subset; a tool-calling score alone does not establish learning efficiency.</td>
+<td>Alternative; Apache-2.0 repository label; inspect selected data and subcomponent terms</td>
+</tr>
+<tr>
+<td>C072 <a href="https://github.com/xiaowu0162/LongMemEval" rel="noreferrer">LongMemEval</a></td>
+<td>Long-term interactive memory benchmark with information extraction, updates, temporal reasoning and abstention.</td>
+<td>Evaluate retrieval and revision independently from durable parameter learning. <strong>Boundary:</strong> Official repo has cleaned histories and points to V2; pin dataset revision and scorer. Do not tune on final test answers.</td>
+<td>Core candidate; MIT repository label; inspect chosen dataset terms</td>
+</tr>
+<tr>
+<td>C073 <a href="https://github.com/snap-research/locomo" rel="noreferrer">LoCoMo</a></td>
+<td>Conversation data and evaluation code for long-term memory QA and related tasks.</td>
+<td>Secondary test of long-range conversational retrieval and evidence tracking. <strong>Boundary:</strong> The public release has ten conversations; split by conversation and report all evaluated categories. License is noncommercial.</td>
+<td>Research reference; CC-BY-NC-4.0 in repository LICENSE.txt</td>
+</tr>
+<tr>
+<td>C074 <a href="https://github.com/google-research/rliable" rel="noreferrer">rliable</a></td>
+<td>Bootstrap intervals, performance profiles and robust aggregate benchmark metrics.</td>
+<td>Report uncertainty and cross-task variation for repeated HIVE experiments. <strong>Boundary:</strong> Repository archived October 15, 2025; use as a pinned reference and verify dependencies.</td>
+<td>Research reference; Apache-2.0</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="closed-loop-environments-and-world-models">Closed-loop environments and world models</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>ID and primary source</th>
+<th>What the project supplies</th>
+<th>Proposed HIVE use and boundary</th>
+<th>Disposition and license scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C075 <a href="https://github.com/Farama-Foundation/Gymnasium" rel="noreferrer">Gymnasium</a></td>
+<td>Standard interface and reference environments for single-agent reinforcement learning.</td>
+<td>Define observation, action, reward, termination and reset contracts for closed-loop tests. <strong>Boundary:</strong> An interface supplies neither planning nor learning; select environments with known ground truth.</td>
+<td>Core candidate; MIT</td>
+</tr>
+<tr>
+<td>C076 <a href="https://github.com/Farama-Foundation/Minigrid" rel="noreferrer">MiniGrid</a></td>
+<td>Lightweight configurable grid-world environments using Gymnasium.</td>
+<td>First closed-loop test of partial observation, reusable skills, changed conditions and local correction. <strong>Boundary:</strong> Grid-world success is an early mechanism test; it does not demonstrate general assistant or robot competence.</td>
+<td>Core candidate; Apache-2.0 according to inspected LICENSE</td>
+</tr>
+<tr>
+<td>C077 <a href="https://github.com/Farama-Foundation/PettingZoo" rel="noreferrer">PettingZoo</a></td>
+<td>API, environments and utilities for multi-agent reinforcement learning.</td>
+<td>Test selective signaling, role specialization and coordination under message limits. <strong>Boundary:</strong> Multiple environment agents are not equivalent to cognitive specialists; the mapping must be explicit.</td>
+<td>Alternative; MIT</td>
+</tr>
+<tr>
+<td>C078 <a href="https://github.com/awarelab/continual_world" rel="noreferrer">Continual World</a></td>
+<td>Sequential robot-control tasks built on MetaWorld with baseline algorithms and result scripts.</td>
+<td>Later tests of forward transfer, forgetting and recurring tasks. <strong>Boundary:</strong> README uses older MuJoCo/mujoco_py dependencies; reproduction and current compatibility need checking.</td>
+<td>Research reference; Not verified; no repository license was established in this inspection</td>
+</tr>
+<tr>
+<td>C079 <a href="https://github.com/google-deepmind/bsuite" rel="noreferrer">bsuite</a></td>
+<td>Small experiments for investigating reinforcement-learning capabilities.</td>
+<td>Separate exploration, memory and learning behavior instead of relying on one aggregate score. <strong>Boundary:</strong> Designed for RL agents; adapting language interfaces changes the measured task and must be documented.</td>
+<td>Alternative; Apache-2.0</td>
+</tr>
+<tr>
+<td>C080 <a href="https://github.com/danijar/crafter" rel="noreferrer">Crafter</a></td>
+<td>Survival-style benchmark spanning multiple agent capabilities.</td>
+<td>Later test of reusable skill acquisition and long-horizon progress. <strong>Boundary:</strong> Success depends on exploration and environment training; it is substantially broader than an initial routing experiment.</td>
+<td>Alternative; MIT</td>
+</tr>
+<tr>
+<td>C081 <a href="https://github.com/danijar/dreamerv3" rel="noreferrer">DreamerV3</a></td>
+<td>Learns an environment model and improves behavior through imagined trajectories.</td>
+<td>Reference for HIVE's parallel future prediction and reusable action-policy learning. <strong>Boundary:</strong> A separate control-learning research branch; training cost and model error must be measured, not assumed small.</td>
+<td>Research reference; MIT</td>
+</tr>
+<tr>
+<td>C082 <a href="https://github.com/neurogym/neurogym" rel="noreferrer">NeuroGym</a></td>
+<td>Curated neuroscience tasks under a common interface.</td>
+<td>Controlled tests of working memory, context-dependent decisions and temporal integration. <strong>Boundary:</strong> Task similarity to a neuroscience experiment does not imply the resulting learner is biologically faithful.</td>
+<td>Alternative; Apache-2.0</td>
+</tr>
+<tr>
+<td>C083 <a href="https://github.com/vwxyzjn/cleanrl" rel="noreferrer">CleanRL</a></td>
+<td>Readable single-file implementations of reinforcement-learning algorithms.</td>
+<td>Build transparent baseline policies and inspect optimization details. <strong>Boundary:</strong> Treat it as reference implementations, not an interchangeable modular component framework.</td>
+<td>Alternative; MIT for CleanRL developers; additional component notices in LICENSE</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="biological-modeling-and-connectome-tools">Biological modeling and connectome tools</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>ID and primary source</th>
+<th>What the project supplies</th>
+<th>Proposed HIVE use and boundary</th>
+<th>Disposition and license scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C084 <a href="https://github.com/brian-team/brian2" rel="noreferrer">Brian2</a></td>
+<td>Clock-driven simulator for spiking neural networks.</td>
+<td>Small experiments in local plasticity, inhibition, timing and neuromodulatory rules. <strong>Boundary:</strong> Simulation cost is not biological energy cost; a spiking implementation is not automatically more efficient on a GPU.</td>
+<td>Research reference; CeCILL-2.1</td>
+</tr>
+<tr>
+<td>C085 <a href="https://github.com/nengo/nengo" rel="noreferrer">Nengo</a></td>
+<td>Builds spiking and non-spiking neural models with extensible neuron types and learning rules.</td>
+<td>Alternative for experiments in neural representation, recurrent dynamics and learned communication. <strong>Boundary:</strong> Large-scale neural modeling does not supply HIVE's language or lifelong-learning competence.</td>
+<td>Research reference; GPL-v2 in inspected LICENSE.rst; component notices also present</td>
+</tr>
+<tr>
+<td>C086 <a href="https://github.com/norse/norse" rel="noreferrer">Norse</a></td>
+<td>PyTorch components for deep learning with spiking neural networks.</td>
+<td>Test event-driven specialist candidates in the same broader tensor ecosystem. <strong>Boundary:</strong> Event sparsity does not guarantee wall-clock or energy savings on the available hardware.</td>
+<td>Research reference; LGPL-3.0</td>
+</tr>
+<tr>
+<td>C087 <a href="https://github.com/jeshraghian/snntorch" rel="noreferrer">snnTorch</a></td>
+<td>Python/PyTorch tooling for deep and online learning with spiking networks.</td>
+<td>Alternative implementation for a small local-learning or temporal-classification specialist. <strong>Boundary:</strong> Training method, state size and accuracy must be compared with a conventional recurrent baseline.</td>
+<td>Research reference; MIT</td>
+</tr>
+<tr>
+<td>C088 <a href="https://github.com/navis-org/navis" rel="noreferrer">navis</a></td>
+<td>Analysis and visualization of neuroanatomical data.</td>
+<td>Extract and analyze biological graph motifs before testing synthetic counterparts. <strong>Boundary:</strong> Morphology and connectivity analysis are not a working cognition or learning system.</td>
+<td>Research reference; GPL-3.0</td>
+</tr>
+<tr>
+<td>C089 <a href="https://github.com/navis-org/fafbseg-py" rel="noreferrer">fafbseg-py</a></td>
+<td>Tools for working with the FlyWire connectome, interoperable with navis.</td>
+<td>Retrieve circuit structure for topology and pathway experiments. <strong>Boundary:</strong> Use a pinned connectome release; anatomical edges omit much of the dynamics and learning rules needed for behavior.</td>
+<td>Research reference; GPL-3.0</td>
+</tr>
+<tr>
+<td>C090 <a href="https://github.com/CAVEconnectome/CAVEclient" rel="noreferrer">CAVEclient</a></td>
+<td>Python client for Connectome Annotation Versioning Engine APIs.</td>
+<td>Access versioned annotations and connectivity data reproducibly. <strong>Boundary:</strong> Data-service access and dataset permissions are separate from the client license; no cognition is supplied.</td>
+<td>Research reference; MIT</td>
+</tr>
+<tr>
+<td>C091 <a href="https://github.com/TuragaLab/flyvis" rel="noreferrer">FlyVis</a></td>
+<td>Official PyTorch implementation of a task-optimized model of the fly visual system.</td>
+<td>Test whether biological connectivity constraints improve a narrow visual computation under matched budgets. <strong>Boundary:</strong> Evidence concerns fly visual-system modeling; it does not establish general intelligence or autonomous lifelong learning.</td>
+<td>Research reference; MIT</td>
+</tr>
+<tr>
+<td>C092 <a href="https://github.com/philshiu/Drosophila_brain_model" rel="noreferrer">Drosophila brain model</a></td>
+<td>Leaky integrate-and-fire brain model with neuronal activation and silencing experiments.</td>
+<td>Reference for modular perturbation, signal propagation and sensorimotor circuit hypotheses. <strong>Boundary:</strong> The implemented experiment is a constrained neural simulation; it is not a complete freely learning digital fly.</td>
+<td>Research reference; MIT</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="measurement-and-reproducibility">Measurement and reproducibility</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>ID and primary source</th>
+<th>What the project supplies</th>
+<th>Proposed HIVE use and boundary</th>
+<th>Disposition and license scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C093 <a href="https://github.com/mlflow/mlflow" rel="noreferrer">MLflow</a></td>
+<td>Experiment, model, evaluation, and trace management.</td>
+<td>Track configurations, update candidates, model artifacts, and resource measurements. <strong>Boundary:</strong> Record HIVE's complete accounting explicitly. Optional system metrics require supporting packages and suitable sampling resolution.</td>
+<td>Alternative; Apache-2.0</td>
+</tr>
+<tr>
+<td>C094 <a href="https://github.com/open-telemetry/opentelemetry-python" rel="noreferrer">OpenTelemetry Python</a></td>
+<td>APIs/SDK for tracing and metrics.</td>
+<td>Trace specialist calls, message IDs, latency, and resource accounting. <strong>Boundary:</strong> Instrument causal/task IDs and budgets explicitly; traces by themselves do not prove evidence correctness. Logs API stability differs from traces/metrics.</td>
+<td>Alternative; Apache-2.0</td>
+</tr>
+<tr>
+<td>C095 <a href="https://github.com/giampaolo/psutil" rel="noreferrer">psutil</a></td>
+<td>Process and system monitoring for Python.</td>
+<td>Record CPU activity, process memory, and relevant system load. <strong>Boundary:</strong> GPU memory and energy require additional measurements. Full-machine and per-process metrics must remain distinct.</td>
+<td>Core candidate; BSD-3-Clause</td>
+</tr>
+<tr>
+<td>C096 <a href="https://github.com/treeverse/dvc" rel="noreferrer">DVC</a></td>
+<td>Git-associated data/model versioning, pipelines, and experiment tracking.</td>
+<td>Track immutable training/replay snapshots and reproduce update candidates. <strong>Boundary:</strong> Original iterative/dvc URL currently redirects to treeverse/dvc. Historical data versions also consume disk and need explicit retention budgets.</td>
+<td>Alternative; Apache-2.0</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="pretrained-model-checkpoint-candidates">Pretrained model checkpoint candidates</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>ID and primary source</th>
+<th>What the project supplies</th>
+<th>Proposed HIVE use and boundary</th>
+<th>Disposition and license scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C097 <a href="https://huggingface.co/Qwen/Qwen3-0.6B" rel="noreferrer">Qwen3-0.6B</a></td>
+<td>Small pretrained text-generation checkpoint in Transformers format.</td>
+<td>Concrete initial language-worker candidate for independent adaptation and adapter controls. <strong>Boundary:</strong> Checkpoint size does not establish task competence. Record training mask, complete footprint, tokenizer, quantization, and retained-skill results.</td>
+<td>Core candidate; Apache-2.0 model-card label.</td>
+</tr>
+<tr>
+<td>C098 <a href="https://huggingface.co/Qwen/Qwen3-1.7B" rel="noreferrer">Qwen3-1.7B</a></td>
+<td>Larger text checkpoint from the same named family.</td>
+<td>Practical generalist reference with access to the same tools, memory, and updates. <strong>Boundary:</strong> Different pretraining histories confound architectural attribution. Match complete resource caps and include a controlled small-model experiment.</td>
+<td>Core candidate; Apache-2.0 model-card label.</td>
+</tr>
+<tr>
+<td>C099 <a href="https://huggingface.co/Qwen/Qwen3.5-0.8B" rel="noreferrer">Qwen3.5-0.8B</a></td>
+<td>Compact image/text checkpoint distributed in Transformers format.</td>
+<td>Current alternative for a compact worker and later multimodal integration. <strong>Boundary:</strong> Evaluate text-only use and full architecture/runtime/adapter support. Do not silently omit unused vision components from storage accounting.</td>
+<td>Alternative; Apache-2.0 model-card label.</td>
+</tr>
+<tr>
+<td>C100 <a href="https://huggingface.co/Qwen/Qwen3.5-2B" rel="noreferrer">Qwen3.5-2B</a></td>
+<td>Larger compact image/text checkpoint in the same family.</td>
+<td>Matched-family practical baseline for a Qwen3.5 worker configuration. <strong>Boundary:</strong> Actual deployment bytes, learning cost, and retained skill must decide selection; no local performance is asserted.</td>
+<td>Alternative; Apache-2.0 model-card label.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="appendix-b-primary-research-foundation">Appendix B. Primary research foundation</h2>
+<p>These papers motivate specific experiments. Their reported results apply to their evaluated tasks and conditions; HIVE must establish its own gains.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>ID and paper</th>
+<th>Finding or mechanism</th>
+<th>HIVE experiment and scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P01 <a href="https://arxiv.org/abs/2203.15556" rel="noreferrer">Training Compute-Optimal Large Language Models</a> (2022)</td>
+<td>Balancing parameter count and training data changes the capability achievable with a fixed training compute budget.</td>
+<td>Compare complete resource allocations rather than treating parameter count as intelligence. <strong>Scope:</strong> A smaller deployed model trained on more data is not automatically more sample-efficient.</td>
+</tr>
+<tr>
+<td>P02 <a href="https://arxiv.org/abs/2408.03314" rel="noreferrer">Scaling LLM Test-Time Compute Optimally can be More Effective than Scaling Model Parameters</a> (2024)</td>
+<td>Adaptive search and revision strategies can use inference computation more effectively in studied reasoning settings.</td>
+<td>Test candidate generation and verification as a separate dimension from retained learning. <strong>Scope:</strong> Returns depend on prompt difficulty, initial competence, and the selection method.</td>
+</tr>
+<tr>
+<td>P03 <a href="https://arxiv.org/abs/2205.14135" rel="noreferrer">FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness</a> (2022)</td>
+<td>Reorganizing attention around memory traffic improves execution efficiency.</td>
+<td>Optimize a proven specialist's implementation without confusing hardware efficiency with sample efficiency. <strong>Scope:</strong> Published speedups apply to particular models, kernels, hardware, and workloads.</td>
+</tr>
+<tr>
+<td>P04 <a href="https://aclanthology.org/2024.acl-long.70/" rel="noreferrer">DeepSeekMoE: Towards Ultimate Expert Specialization in Mixture-of-Experts Language Models</a> (2024)</td>
+<td>Fine-grained routed experts and shared experts address specialization and redundancy.</td>
+<td>Reference a tested sparse-computation design and distinguish active compute from total stored capacity. <strong>Scope:</strong> Internal MoE experts do not automatically constitute independently learning semantic communities.</td>
+</tr>
+<tr>
+<td>P05 <a href="https://www.nature.com/articles/s41586-026-10549-w" rel="noreferrer">Evaluating large language models for accuracy incentivizes hallucinations</a> (2026)</td>
+<td>Accuracy-based evaluation can reward unwarranted guessing and conceal the value of calibrated abstention.</td>
+<td>Measure false assertions at matched coverage and provide explicit uncertainty objectives. <strong>Scope:</strong> Changed incentives are one mechanism; evidence quality, reasoning, and verification still matter.</td>
+</tr>
+<tr>
+<td>P06 <a href="https://arxiv.org/abs/2610.14162" rel="noreferrer">Next-Concept Modeling: Fast, Parallel Coarse-to-Fine Text Generation</a> (2026)</td>
+<td>A learned hierarchy of discrete text codes enables coarse-to-fine parallel generation on evaluated tasks.</td>
+<td>Reproduce a released task, then evaluate a narrowly scoped translator or solver with all tokenizer/generator costs counted. <strong>Scope:</strong> Generation gains against the paper's baselines do not establish lifelong learning or universal latent communication.</td>
+</tr>
+<tr>
+<td>P07 <a href="https://arxiv.org/abs/2106.09685" rel="noreferrer">LoRA: Low-Rank Adaptation of Large Language Models</a> (2021)</td>
+<td>Freezing a pretrained backbone and learning low-rank weight changes can reduce trainable parameters and adaptation storage in evaluated tasks.</td>
+<td>Establish the shared-backbone adapter arm; measure total base-plus-adapter capacity and compare to independently trained specialists. <strong>Scope:</strong> A low-rank update is tied to compatible model weights and dimensions; low adaptation cost does not by itself show rapid continual learning or cross-architecture skill portability.</td>
+</tr>
+<tr>
+<td>P08 <a href="https://arxiv.org/abs/2305.14314" rel="noreferrer">QLoRA: Efficient Finetuning of Quantized LLMs</a> (2023)</td>
+<td>Adapter training through a frozen quantized base reduces memory requirements using low-bit representations and other memory-saving mechanisms.</td>
+<td>Candidate local adaptation route after full-precision correctness is established; measure retained accuracy and memory under the same training data. <strong>Scope:</strong> The paper's hardware and model results are task/configuration specific. Quantized base storage is separate from optimizer, activations, and inference state.</td>
+</tr>
+<tr>
+<td>P09 <a href="https://www.nature.com/articles/s41586-024-07711-7" rel="noreferrer">Loss of plasticity in deep continual learning</a> (2024)</td>
+<td>Continued training can reduce the ability to learn subsequent tasks; interventions including continual backpropagation can preserve plasticity in tested settings.</td>
+<td>Measure time/examples to learn each successive task as well as retention of old tasks; test selective unit renewal in tiny experts. <strong>Scope:</strong> Evidence in the paper's supervised and reinforcement-learning settings does not establish a universal solution for continually adapting pretrained LLMs.</td>
+</tr>
+<tr>
+<td>P10 <a href="https://arxiv.org/abs/1606.04671" rel="noreferrer">Progressive Neural Networks</a> (2016)</td>
+<td>Freezing old network columns protects prior computations while new columns learn to reuse their features through lateral connections.</td>
+<td>Isolation-and-transfer baseline; establish the benefit and resource cost of explicit specialist boundaries. <strong>Scope:</strong> Capacity grows with tasks, and choosing the appropriate component requires routing/task information. HIVE must control growth and account for routing errors.</td>
+</tr>
+<tr>
+<td>P11 <a href="https://arxiv.org/abs/2004.07211" rel="noreferrer">Dark Experience for General Continual Learning: a Strong, Simple Baseline</a> (2020)</td>
+<td>Combining rehearsal with stored output targets and regularization provides a strong baseline for sequential learning, including blurred task boundaries.</td>
+<td>Require HIVE to beat a resource-matched replay baseline before attributing gains to elaborate specialist organization. <strong>Scope:</strong> Stored samples and targets consume memory and replay computation, which must be counted in the shared budget.</td>
+</tr>
+<tr>
+<td>P12 <a href="https://arxiv.org/abs/2312.00752" rel="noreferrer">Mamba: Linear-Time Sequence Modeling with Selective State Spaces</a> (2023)</td>
+<td>Input-dependent state-space dynamics permit selective propagation of information with efficient sequence processing.</td>
+<td>Experiment with a bounded-state temporal specialist and compare with an attention-based specialist on the same stream. <strong>Scope:</strong> Sequence-state selection is not equivalent to explicit factual memory management or stable lifelong weight adaptation.</td>
+</tr>
+<tr>
+<td>P13 <a href="https://arxiv.org/abs/2506.21734" rel="noreferrer">Hierarchical Reasoning Model</a> (2025)</td>
+<td>Coupled recurrent modules operating at different timescales solve structured reasoning tasks with a comparatively small parameter count in the reported experiments.</td>
+<td>Prototype a narrow planning or structured-reasoning specialist that performs iterative latent computation. <strong>Scope:</strong> The reported 27M-parameter model and small original dataset do not imply low total training cost or human-general reasoning; account for augmentation and repeated computation.</td>
+</tr>
+<tr>
+<td>P14 <a href="https://arxiv.org/abs/2510.04871" rel="noreferrer">Less is More: Recursive Reasoning with Tiny Networks</a> (2025)</td>
+<td>A small recursive model achieves strong results on selected structured puzzle tasks, challenging parameter count as the sole predictor of task competence.</td>
+<td>Test recurrence and specialist size as independent experimental variables rather than assuming every specialist needs a billion-parameter language model. <strong>Scope:</strong> The paper's reported 7M-parameter result is domain-specific; recursion shifts work into repeated computation. Official reference code is archived.</td>
+</tr>
+<tr>
+<td>P15 <a href="https://stanford.edu/~jlmcc/papers/McCMcNaughtonOReilly95.pdf" rel="noreferrer">Why There Are Complementary Learning Systems in the Hippocampus and Neocortex</a> (1995)</td>
+<td>Computational account combines rapid storage of specific experiences with slower interleaved integration into structured knowledge.</td>
+<td>Fast episode writes plus selective replay into slower specialist adaptation. <strong>Scope:</strong> A biological/computational hypothesis; a database and replay buffer do not reproduce a human memory system.</td>
+</tr>
+<tr>
+<td>P16 <a href="https://arxiv.org/abs/2310.08560" rel="noreferrer">MemGPT: Towards LLMs as Operating Systems</a> (2023)</td>
+<td>Hierarchical memory management moves information between limited active context and external tiers.</td>
+<td>Bound working context while testing exact recall, omission, rehydration, and restart behavior. <strong>Scope:</strong> External state and control-flow gains do not establish permanent neural skill acquisition.</td>
+</tr>
+<tr>
+<td>P17 <a href="https://arxiv.org/abs/2502.14802" rel="noreferrer">From RAG to Memory: Non-Parametric Continual Learning for Large Language Models</a> (2025)</td>
+<td>HippoRAG 2 combines graph retrieval/PageRank with passage integration for factual, associative, and sense-making tasks.</td>
+<td>Compare graph-assisted multi-hop retrieval against exact/lexical/vector baselines on the same corpus and total indexing budget. <strong>Scope:</strong> Measure non-parametric knowledge adaptation separately from parametric generalization and count indexing cost.</td>
+</tr>
+<tr>
+<td>P18 <a href="https://arxiv.org/abs/2501.13956" rel="noreferrer">Zep: A Temporal Knowledge Graph Architecture for Agent Memory</a> (2025)</td>
+<td>Temporal graph design integrates conversational/structured facts while maintaining historical relationships.</td>
+<td>Introduce contradictory and superseded facts; test time-aware retrieval and provenance. <strong>Scope:</strong> Reported Zep service results are not direct guarantees for a custom local Graphiti build.</td>
+</tr>
+<tr>
+<td>P19 <a href="https://proceedings.mlr.press/v97/das19a.html" rel="noreferrer">TarMAC: Targeted Multi-Agent Communication</a> (2019)</td>
+<td>Agents learn message content and recipients through downstream task reward in partially observable cooperative tasks.</td>
+<td>Compare broadcast, fixed routing, learned targeted communication, and no communication at matched budgets. <strong>Scope:</strong> Task-specific multi-agent RL evidence does not establish learned translators for arbitrary pretrained LLM representations.</td>
+</tr>
+<tr>
+<td>P20 <a href="https://arxiv.org/abs/1605.06676" rel="noreferrer">Learning to Communicate with Deep Multi-Agent Reinforcement Learning</a> (2016)</td>
+<td>RIAL and DIAL learn communication protocols; DIAL passes learning signals through communication during centralized training.</td>
+<td>Train small senders/receivers and adapters on controlled information-sharing tasks before scaling to heterogeneous experts. <strong>Scope:</strong> Centralized training assumptions and discrete execution mismatch must be accounted for; protocol interoperability is unproven outside training populations.</td>
+</tr>
+<tr>
+<td>P21 <a href="https://arxiv.org/abs/1511.05952" rel="noreferrer">Prioritized Experience Replay</a> (2015)</td>
+<td>Replaying selected important transitions more often improves learning efficiency in tested DQN settings.</td>
+<td>Compare uniform, recency-based, and error/novelty-prioritized bounded replay for retained and new-task learning. <strong>Scope:</strong> RL priority definitions do not automatically transfer to text corrections; handle biased sampling and protect rare important cases.</td>
+</tr>
+<tr>
+<td>P22 <a href="https://arxiv.org/abs/2502.12110" rel="noreferrer">A-MEM: Agentic Memory for LLM Agents</a> (2025)</td>
+<td>Dynamically indexes, links, and revises structured memory notes using Zettelkasten-inspired organization.</td>
+<td>Compare learned linking and contextual revision against fixed-schema notes at equal memory/write budgets. <strong>Scope:</strong> Memory reorganization needs factual validation; evaluate graph growth, stale links, and unsupported derived claims.</td>
+</tr>
+<tr>
+<td>P23 <a href="https://arxiv.org/abs/2410.10813" rel="noreferrer">LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory</a> (2024)</td>
+<td>Separates memory indexing, retrieval and reading, and tests extraction, updates, temporal reasoning, multi-session reasoning and abstention.</td>
+<td>Use memory tests to identify where a failure occurred; a recall improvement cannot by itself establish a new learned skill.</td>
+</tr>
+<tr>
+<td>P24 <a href="https://arxiv.org/abs/2402.17753" rel="noreferrer">Evaluating Very Long-Term Conversational Memory of LLM Agents</a> (2024)</td>
+<td>Introduces LoCoMo with generated conversations checked by humans and tests long-term temporal and causal memory.</td>
+<td>Use as a secondary conversational-memory test with conversation-level separation; retain the release and scoring definitions.</td>
+</tr>
+<tr>
+<td>P25 <a href="https://arxiv.org/abs/2105.10919" rel="noreferrer">Continual World: A Robotic Benchmark For Continual Reinforcement Learning</a> (2021)</td>
+<td>Emphasizes forward transfer alongside forgetting and resource constraints in sequential control tasks.</td>
+<td>Measure whether later tasks become easier to learn, not only whether previous performance survives.</td>
+</tr>
+<tr>
+<td>P26 <a href="https://arxiv.org/abs/2108.13264" rel="noreferrer">Deep Reinforcement Learning at the Edge of the Statistical Precipice</a> (2021)</td>
+<td>Shows that conclusions from point estimates with few runs can be unreliable; develops interval estimates and performance profiles.</td>
+<td>Use paired seeds/task orders, uncertainty intervals and per-task results; avoid declaring a win from one run.</td>
+</tr>
+<tr>
+<td>P27 <a href="https://www.nature.com/articles/s41586-024-07558-y" rel="noreferrer">Neuronal wiring diagram of an adult brain</a> (2024)</td>
+<td>Provides a whole adult fly brain chemical-synapse wiring map with annotations and programmatic access.</td>
+<td>Use topology and pathway structure to formulate experiments; connectivity alone does not encode all dynamics, plasticity, or behavior.</td>
+</tr>
+<tr>
+<td>P28 <a href="https://www.nature.com/articles/s41586-024-07763-9" rel="noreferrer">A Drosophila computational brain model reveals sensorimotor processing</a> (2024)</td>
+<td>Combines connectome structure and neurotransmitter identity in a leaky-integrate-and-fire model and tests feeding/grooming circuit predictions.</td>
+<td>Adopt the experimental pattern of perturbing a module and predicting effects; do not claim the model reproduces general intelligence.</td>
+</tr>
+<tr>
+<td>P29 <a href="https://www.nature.com/articles/s41586-024-07939-3" rel="noreferrer">Connectome-constrained networks predict neural activity across the fly visual system</a> (2024)</td>
+<td>Task-optimized networks constrained by connectome structure predict aspects of neural activity in the fly visual system.</td>
+<td>Compare biological constraints with random and learned connectivity at equal edge, parameter and training budgets.</td>
+</tr>
+<tr>
+<td>P30 <a href="https://arxiv.org/abs/2301.04104" rel="noreferrer">Mastering Diverse Domains through World Models</a> (2023)</td>
+<td>DreamerV3 learns an environment model and trains behavior with imagined future scenarios across diverse control tasks.</td>
+<td>Use as a reference for prospective simulation, while accounting for world-model training, rollout cost, and accumulated prediction error.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="appendix-c-source-status-and-implementation-handoff">Appendix C. Source status and implementation handoff</h2>
+<h3 id="current-status-findings-that-change-integration-choices">Current status findings that change integration choices</h3>
+<ul>
+<li>LAYA requires task-specific decision training and held-out confidence calibration; preserve a deterministic prerequisite/fallback path.</li>
+<li>Letta's old repository directs current development to letta-code; identify whether the new harness or the archived server is being used.</li>
+<li>Mem0's managed-platform benchmark claims are distinct from the local OSS SDK.</li>
+<li>TorchAO's current source describes a consolidation of development; select a supported concrete recipe rather than making the package a permanent architectural dependency.</li>
+<li>Unsloth has component-specific licensing; the core and optional Studio components require separate review.</li>
+<li>TRM and rliable have archived reference repositories; preserve exact revisions for reproduction and do not assume ongoing support.</li>
+<li>LongMemEval has multiple history/data versions and a V2 path; freeze the dataset and scorer together.</li>
+<li>LoCoMo's inspected repository license is noncommercial; keep evaluation/reuse scope explicit.</li>
+<li>SQLite/vector indexes, graph memory, latent representations, adapters, and data-service clients have different responsibilities. They are not interchangeable forms of a solved memory system.</li>
+</ul>
+<p>Each item is linked to its official source in Appendix A. No listed package has been installed, combined, or benchmarked as HIVE during preparation of this plan.</p>
+<h3 id="source-and-artifact-manifest-to-create-during-stage-0">Source and artifact manifest to create during Stage 0</h3>
+<p>For every selected component, record: official URL; exact commit/tag; retrieval date; code license; selected model/dataset license; artifact checksum; environment lock; hardware/driver profile; install result; smoke-test result; required inputs; outputs; resource observations; and the reason it is selected over its alternative.</p>
+<p>All imports, caches, generated datasets, indexes, logs, replay buffers, and retained model versions belong in an explicit retention policy. Keep a bounded reproducibility record without quietly retaining every historical payload outside the declared budget.</p>
+<h3 id="review-priorities-for-the-implementer">Review priorities for the implementer</h3>
+<ol>
+<li>Build the paired baseline and task truth before optimizing a specialist.</li>
+<li>Give competing arms identical external feedback; keep oracle truth out of runtime access.</li>
+<li>Preserve exact ownership of shared and independent parameters.</li>
+<li>Verify unseen transfer without retrieving the original answer-bearing correction.</li>
+<li>Require absolute retention as well as comparison with a baseline.</li>
+<li>Count the full system, including diagnostic, teaching, and recovery work.</li>
+<li>Promote representation-compatible artifacts atomically.</li>
+<li>Expand only on a reproducible, specifically scoped result.</li>
+</ol>
+<h3 id="earlier-project-materials-used-as-context">Earlier project materials used as context</h3>
+<ul>
+<li>HIVE_AI_Core_Architecture.md: conceptual layers, specialist communities, channels, and composable-intelligence goal.</li>
+<li>HIVE AI Open-Source Stack Mapping (1).md: earlier component candidates and interface ideas.</li>
+<li>HIVE AI Validation Benchmark &amp; Harness (1).md: earlier experimental proposal, revised here for learning efficiency and fair whole-system comparisons.</li>
+<li>HIVE 100 similar projects report.md: discovery context only; its historical success/failure labels are not evidence for the present hypothesis.</li>
+<li>Ian-AI-Generation-and-Game-Design-Software.pdf: local inventory snapshot dated 15 November 2026, with readiness distinctions preserved.</li>
+</ul>
+<p>The build is ready to begin with Stage 0 and the first protocol-learning environment. The research claim remains contingent on the comparative results.</p>
+</article></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#contents">Contents</a><a class="toc-h2" href="#1-the-hypothesis-and-the-build-decision">1. The hypothesis and the build decision</a><a class="toc-h3" href="#the-decisions-this-plan-makes">The decisions this plan makes</a><a class="toc-h2" href="#2-what-carries-forward-and-what-changes">2. What carries forward and what changes</a><a class="toc-h3" href="#existing-local-starting-point">Existing local starting point</a><a class="toc-h2" href="#3-architecture-of-the-first-experimental-hive">3. Architecture of the first experimental HIVE</a><a class="toc-h3" href="#31-components">3.1 Components</a><a class="toc-h3" href="#32-core-feedback-structure">3.2 Core feedback structure</a><a class="toc-h3" href="#33-the-first-specialist-community">3.3 The first specialist community</a><a class="toc-h3" href="#34-independent-and-shared-components">3.4 Independent and shared components</a><a class="toc-h2" href="#4-initial-technology-selection">4. Initial technology selection</a><a class="toc-h3" href="#where-laya-ruflo-and-ncm-belong">Where LAYA, Ruflo, and NCM belong</a><a class="toc-h2" href="#5-communication-contracts">5. Communication contracts</a><a class="toc-h3" href="#channel-behavior">Channel behavior</a><a class="toc-h3" href="#translation-evaluation">Translation evaluation</a><a class="toc-h2" href="#6-memory-and-forgetting">6. Memory and forgetting</a><a class="toc-h3" href="#61-memory-types-and-ownership">6.1 Memory types and ownership</a><a class="toc-h3" href="#62-the-first-forgetting-policies">6.2 The first forgetting policies</a><a class="toc-h3" href="#63-four-different-adaptation-events">6.3 Four different adaptation events</a><a class="toc-h2" href="#7-the-targeted-teaching-loop">7. The targeted teaching loop</a><a class="toc-h2" href="#8-experimental-tasks">8. Experimental tasks</a><a class="toc-h3" href="#task-family-a-learning-model-and-tool-protocols">Task family A: Learning model and tool protocols</a><a class="toc-h3" href="#task-family-b-selective-memory-under-changing-facts">Task family B: Selective memory under changing facts</a><a class="toc-h3" href="#task-family-c-closed-loop-planning-and-local-correction">Task family C: Closed-loop planning and local correction</a><a class="toc-h3" href="#task-family-d-program-repair-and-exact-reasoning">Task family D: Program repair and exact reasoning</a><a class="toc-h2" href="#9-baselines-and-ablations">9. Baselines and ablations</a><a class="toc-h3" href="#91-required-comparison-systems">9.1 Required comparison systems</a><a class="toc-h3" href="#92-minimum-mechanism-ablations">9.2 Minimum mechanism ablations</a><a class="toc-h3" href="#93-budget-accounting">9.3 Budget accounting</a><a class="toc-h3" href="#94-trial-design">9.4 Trial design</a><a class="toc-h2" href="#10-measures-and-proposed-decision-gates">10. Measures and proposed decision gates</a><a class="toc-h3" href="#metric-definitions">Metric definitions</a><a class="toc-h2" href="#11-biological-mechanisms-as-controlled-experiments">11. Biological mechanisms as controlled experiments</a><a class="toc-h2" href="#12-build-stages-and-exit-conditions">12. Build stages and exit conditions</a><a class="toc-h3" href="#stage-0-reproducible-local-foundation">Stage 0: Reproducible local foundation</a><a class="toc-h3" href="#stage-1-nonlearning-hive-with-accountable-components">Stage 1: Nonlearning HIVE with accountable components</a><a class="toc-h3" href="#stage-2-real-local-learning">Stage 2: Real local learning</a><a class="toc-h3" href="#stage-3-selective-memory-and-forgetting">Stage 3: Selective memory and forgetting</a><a class="toc-h3" href="#stage-4-confirmatory-hypothesis-test">Stage 4: Confirmatory hypothesis test</a><a class="toc-h3" href="#stage-5-compact-circuit-and-representation-experiments">Stage 5: Compact-circuit and representation experiments</a><a class="toc-h3" href="#stage-6-additional-communities-and-assistant-integration">Stage 6: Additional communities and assistant integration</a><a class="toc-h2" href="#13-implementation-work-packages">13. Implementation work packages</a><a class="toc-h3" href="#proposed-repository-boundaries">Proposed repository boundaries</a><a class="toc-h2" href="#14-first-implementation-backlog">14. First implementation backlog</a><a class="toc-h2" href="#15-source-catalog">15. Source catalog</a><a class="toc-h2" href="#appendix-a-code-and-model-catalog">Appendix A. Code and model catalog</a><a class="toc-h3" href="#named-hive-foundations-and-existing-local-tools">Named HIVE foundations and existing local tools</a><a class="toc-h3" href="#learning-libraries-and-model-adaptation">Learning libraries and model adaptation</a><a class="toc-h3" href="#compact-execution-and-neural-architectures">Compact execution and neural architectures</a><a class="toc-h3" href="#continual-learning-and-recurrent-specialists">Continual learning and recurrent specialists</a><a class="toc-h3" href="#memory-and-retrieval">Memory and retrieval</a><a class="toc-h3" href="#communication-and-coordination">Communication and coordination</a><a class="toc-h3" href="#verification-and-representations">Verification and representations</a><a class="toc-h3" href="#evaluation-frameworks-and-datasets">Evaluation frameworks and datasets</a><a class="toc-h3" href="#closed-loop-environments-and-world-models">Closed-loop environments and world models</a><a class="toc-h3" href="#biological-modeling-and-connectome-tools">Biological modeling and connectome tools</a><a class="toc-h3" href="#measurement-and-reproducibility">Measurement and reproducibility</a><a class="toc-h3" href="#pretrained-model-checkpoint-candidates">Pretrained model checkpoint candidates</a><a class="toc-h2" href="#appendix-b-primary-research-foundation">Appendix B. Primary research foundation</a><a class="toc-h2" href="#appendix-c-source-status-and-implementation-handoff">Appendix C. Source status and implementation handoff</a><a class="toc-h3" href="#current-status-findings-that-change-integration-choices">Current status findings that change integration choices</a><a class="toc-h3" href="#source-and-artifact-manifest-to-create-during-stage-0">Source and artifact manifest to create during Stage 0</a><a class="toc-h3" href="#review-priorities-for-the-implementer">Review priorities for the implementer</a><a class="toc-h3" href="#earlier-project-materials-used-as-context">Earlier project materials used as context</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework revision 0.2</span></a><span>Research prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download vault</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

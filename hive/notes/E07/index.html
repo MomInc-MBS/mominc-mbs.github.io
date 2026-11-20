@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compare typed messages, precise prose and learned representations · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#122c32"><link rel="canonical" href="https://mominc.online/hive/notes/E07/">
+<meta property="og:title" content="Compare typed messages, precise prose and learned representations · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=1"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=1">
+<script defer src="/hive/assets/hive.js?v=1"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/ROADMAP/">Build</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 286 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download Obsidian vault</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=experiment">Experiment</a><span>/</span><span>E07</span></div>
+<div class="doc-meta"><span class="badge">Hypothesis</span><span class="badge neutral">Not run</span></div><div class="doc-tools"><button class="copy-link" data-title="Compare typed messages, precise prose and learned representations" data-id="E07">Copy reference</button><a href="/hive/vault/40_Experiments/E07_Communication_Representations.md">Markdown source</a><a href="/hive/graph/?focus=E07">View connections</a><button class="print-page">Print</button></div>
+<article class="prose"><h1 id="compare-typed-messages-precise-prose-and-learned-representations">Compare typed messages, precise prose and learned representations</h1>
+<blockquote>
+<p><strong>Status: proposed; not run.</strong> A representation is evaluated by information preserved and actions enabled.</p>
+</blockquote>
+<h2 id="hypothesis">Hypothesis</h2>
+<p>Typed or learned inter-expert messages can reduce communication cost while retaining task-relevant meaning; translation and drift may offset the saving.</p>
+<h2 id="arms">Arms</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Arm</th>
+<th>Message format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>Precise natural language with an agreed vocabulary</td>
+</tr>
+<tr>
+<td>B</td>
+<td>Typed schemas, units, enums and explicit evidence identifiers</td>
+</tr>
+<tr>
+<td>C</td>
+<td>Domain-native objects: graphs, equations, timelines or spatial state</td>
+</tr>
+<tr>
+<td>D</td>
+<td>Learned latent messages plus a trained/versioned translator</td>
+</tr>
+<tr>
+<td>E</td>
+<td>Hybrid typed envelope with a domain-native or latent payload</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="procedure">Procedure</h2>
+<ol>
+<li>Reuse identical source tasks and downstream decisions across arms.</li>
+<li>Test missing fields, unit changes, contradictions, unseen tasks and upgraded specialists.</li>
+<li>Measure end-to-end results, not compression alone.</li>
+<li>For learned messages, version both encoder and decoder; test old/new combinations and round-trip meaning preservation.</li>
+<li>Keep control authority and evidence provenance explicit regardless of payload format.</li>
+</ol>
+<h2 id="measures-and-falsifier">Measures and falsifier</h2>
+<ul>
+<li>Task success; lost constraints; semantic/unit errors; decode cost; bandwidth; latency; cross-version failures.</li>
+<li>Independent auditability and leakage of unrelated domain information into decisions.</li>
+<li><strong>Falsifier:</strong> compressed messages save tokens but increase consequential errors or fail after routine component updates.</li>
+<li><strong>Revisit:</strong> better translators, schema revisions or a new domain with different native structure.</li>
+</ul>
+<h2 id="runs-and-outputs">Runs and outputs</h2>
+<ul>
+<li>Pilot: constrained messages with known target meaning.</li>
+<li>Confirmation: three task orders × five seeds; include unseen schemas/tasks and version-transition cases.</li>
+<li>Save schemas, encoder/decoder hashes, source/decoded examples, decision traces and compatibility results.</li>
+<li>Different representations alone do not guarantee isolation or prevent cross-contamination.</li>
+</ul>
+<h2 id="related-research-paths">Related research paths</h2>
+<p><a href="/hive/notes/P08/">Deterministic and nonlanguage experts</a> · <a href="/hive/notes/P13/">Typed channels</a> · <a href="/hive/notes/P14/">Domain-native representations</a> · <a href="/hive/notes/P15/">Learned codes and translators</a> · <a href="/hive/notes/P21/">Contamination and boundaries</a> · <a href="/hive/notes/P27/">NCM and dynamical specialists</a> · <a href="/hive/notes/P30/">Horror haunt game</a> · <a href="/hive/notes/P33/">Biology and physical translation</a></p>
+<h2 id="related-decisions">Related decisions</h2>
+<p><a href="/hive/notes/D06/">Language or native representation</a></p>
+</article><section class="backlinks"><h2>Referenced by <span>22</span></h2><div><a href="/hive/notes/P33/"><span>P33</span>Biology and physical translation<small>tested by</small></a><a href="/hive/notes/P21/"><span>P21</span>Contamination and boundaries<small>tested by</small></a><a href="/hive/notes/P08/"><span>P08</span>Deterministic and nonlanguage experts<small>tested by</small></a><a href="/hive/notes/P14/"><span>P14</span>Domain-native representations<small>tested by</small></a><a href="/hive/notes/P30/"><span>P30</span>Horror haunt game<small>tested by</small></a><a href="/hive/notes/D06/"><span>D06</span>Language or native representation<small>tested by</small></a><a href="/hive/notes/P15/"><span>P15</span>Learned codes and translators<small>tested by</small></a><a href="/hive/notes/F05/"><span>F05</span>Metamorphic and compositional testing<small>tested by</small></a><a href="/hive/notes/P27/"><span>P27</span>NCM and dynamical specialists<small>tested by</small></a><a href="/hive/notes/C05/"><span>C05</span>Precise prose was not the source of information loss<small>tested by</small></a><a href="/hive/notes/C07/"><span>C07</span>Translator compatibility can drift<small>tested by</small></a><a href="/hive/notes/P13/"><span>P13</span>Typed channels<small>tested by</small></a><a href="/hive/notes/C06/"><span>C06</span>Valid messages can still be false<small>tested by</small></a><a href="/hive/notes/T09/"><span>T09</span>Daily application laboratories<small>related to</small></a><a href="/hive/notes/EXPERIMENTS/"><span>EXPERIMENTS</span>Experiment index<small>related to</small></a><a href="/hive/notes/DECISIONS/"><span>DECISIONS</span>Open design decisions<small>related to</small></a><a href="/hive/notes/T08/"><span>T08</span>Prediction and alternative intelligence<small>related to</small></a><a href="/hive/notes/HISTORY/"><span>HISTORY</span>Previous research and attempted methods<small>related to</small></a><a href="/hive/notes/T04/"><span>T04</span>Representations and communication<small>related to</small></a><a href="/hive/notes/T10/"><span>T10</span>Research method and discovery<small>related to</small></a><a href="/hive/notes/T02/"><span>T02</span>Specialist structure<small>related to</small></a><a href="/hive/notes/T06/"><span>T06</span>Verification and contamination<small>related to</small></a></div></section></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#hypothesis">Hypothesis</a><a class="toc-h2" href="#arms">Arms</a><a class="toc-h2" href="#procedure">Procedure</a><a class="toc-h2" href="#measures-and-falsifier">Measures and falsifier</a><a class="toc-h2" href="#runs-and-outputs">Runs and outputs</a><a class="toc-h2" href="#related-research-paths">Related research paths</a><a class="toc-h2" href="#related-decisions">Related decisions</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework revision 0.2</span></a><span>Research prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download vault</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

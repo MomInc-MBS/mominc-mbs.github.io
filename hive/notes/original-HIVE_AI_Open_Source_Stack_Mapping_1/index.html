@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HIVE AI Open Source Stack Mapping 1 · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#122c32"><link rel="canonical" href="https://mominc.online/hive/notes/original-HIVE_AI_Open_Source_Stack_Mapping_1/">
+<meta property="og:title" content="HIVE AI Open Source Stack Mapping 1 · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=1"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=1">
+<script defer src="/hive/assets/hive.js?v=1"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/ROADMAP/">Build</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 286 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download Obsidian vault</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=original">Archived original</a><span>/</span><span>original-HIVE_AI_Open_Source_Stack_Mapping_1</span></div>
+<div class="doc-meta"><span class="badge">Preserved original</span><span class="badge neutral">Historical</span></div><div class="doc-tools"><button class="copy-link" data-title="HIVE AI Open Source Stack Mapping 1" data-id="original-HIVE_AI_Open_Source_Stack_Mapping_1">Copy reference</button><a href="/hive/vault/90_Archive/Originals/HIVE_AI_Open_Source_Stack_Mapping_1.md">Markdown source</a><button class="print-page">Print</button></div>
+<p class="archive-notice">Preserved historical original. Statements below reflect this source document; they are not a current implementation or a new measurement.</p><article class="prose"><h1 id="hive-ai-9-layer-open-source-architecture-component-mapping">HIVE AI — 9-Layer Open-Source Architecture &amp; Component Mapping</h1>
+<h2 id="overview">Overview</h2>
+<p>Rather than building every subsystem from scratch, HIVE AI can be assembled by integrating battle-tested open-source infrastructure, modular neural frameworks, neuro-symbolic engines, and event-driven protocols—while reserving custom research engineering for <strong>dynamic role composition</strong>, <strong>domain-native translators</strong>, and <strong>closed-loop specialist teaching</strong>.</p>
+<hr />
+<h2 id="cross-cutting-infrastructure-ruflo-style-orchestration">Cross-Cutting Infrastructure (Ruflo-Style Orchestration)</h2>
+<p>Before mapping individual layers, the underlying runtime must support <strong>asynchronous, parallel, cyclic execution</strong> rather than rigid linear chains.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>Recommended OSS Component</th>
+<th>Role in HIVE AI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Stateful Cyclic Graph Engine</strong></td>
+<td><strong>LangGraph</strong> or <strong>LlamaIndex Workflows</strong></td>
+<td>Manages parallel specialist recruitment, cyclic critique/repair loops, and deterministic state checkpoints.</td>
+</tr>
+<tr>
+<td><strong>Distributed Actor Runtime</strong></td>
+<td><strong>Ray (Ray Core / Ray Serve)</strong></td>
+<td>Schedules heterogeneous workloads (GPU neural cores + CPU symbolic solvers) across nodes with fault tolerance.</td>
+</tr>
+<tr>
+<td><strong>Universal Tool &amp; Data Protocol</strong></td>
+<td><strong>Anthropic MCP (Model Context Protocol)</strong></td>
+<td>Standardizes how specialists connect to external tools, compilers, databases, and sandboxes without custom glue.</td>
+</tr>
+<tr>
+<td><strong>Inter-Agent Discovery &amp; Routing</strong></td>
+<td><strong>Google A2A Protocol</strong> + <strong>NATS / Redis Streams</strong></td>
+<td>High-throughput pub/sub event bus implementing HIVE's four typed channels (<code>Control</code>, <code>Task</code>, <code>Evidence</code>, <code>Teaching</code>).</td>
+</tr>
+<tr>
+<td><strong>Observability &amp; Tracing</strong></td>
+<td><strong>OpenTelemetry</strong> + <strong>Arize Phoenix / Langfuse</strong></td>
+<td>Tracks multi-channel message provenance, token/compute cost per specialist, and failure bottlenecks.</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="layer-by-layer-open-source-mapping">Layer-by-Layer Open-Source Mapping</h2>
+<h3 id="layer-1-input-and-perception">Layer 1: Input and Perception</h3>
+<p><em>Objective: Convert raw multimodal inputs into structured task representations and route them without forcing early language bottlenecking.</em></p>
+<ul>
+<li><strong>Vision &amp; Document Perception:</strong> <code>Florence-2</code> (lightweight 0.23B/0.77B vision specialist) or <code>Qwen2.5-VL-3B</code> for diagrams, geometry figures, and UI parsing.</li>
+<li><strong>Speech &amp; Audio:</strong> <code>Whisper-large-v3-turbo</code> or <code>Moonshine</code> (ultra-low-latency streaming ASR).</li>
+<li><strong>Structured Data &amp; Task Classification:</strong> <code>SetFit</code> (few-shot sentence transformer classifier) or <code>ModernBERT-base</code> for rapid domain and modality tagging.</li>
+</ul>
+<h3 id="layer-2-logic-and-decision-laya-inspired">Layer 2: Logic and Decision (LAYA-Inspired)</h3>
+<p><em>Objective: Perform ultra-fast logical gating, requirement checks, uncertainty estimation, and routing decisions.</em></p>
+<ul>
+<li><strong>Lightweight Neural Routers:</strong> <code>RouteLLM</code> (Matrix Factorization / BERT routers) and <code>Arch-Router</code> for sub-10ms specialist selection.</li>
+<li><strong>Formal Rule &amp; Policy Engines:</strong> <code>Open Policy Agent (OPA / Rego)</code> or <code>Durable Rules</code> for deterministic requirement checks and guardrails.</li>
+<li><strong>Uncertainty &amp; Confidence Calibration:</strong> <code>MAPIE</code> (conformal prediction in Python) or token-level entropy/logprob calibration gates to trigger escalation when a small specialist is uncertain.</li>
+</ul>
+<h3 id="layer-3-dynamic-neural-execution">Layer 3: Dynamic Neural Execution</h3>
+<p><em>Objective: Run reusable frozen execution cores that dynamically swap specialized modules and adapters with minimal memory overhead.</em></p>
+<ul>
+<li><strong>Multi-LoRA Inference Engines:</strong>
+<ul>
+<li><strong>S-LoRA / Punica:</strong> Custom CUDA kernels enabling hundreds of concurrent LoRA adapters to be batched simultaneously on a single GPU core.</li>
+<li><strong>LoRAX (Predibase) / vLLM Multi-LoRA:</strong> Production-ready dynamic adapter loading and hot-swapping over shared base models (<code>Qwen2.5-3B</code>, <code>Llama-3.2-3B</code>, <code>Phi-4-mini</code>).</li>
+</ul>
+</li>
+<li><strong>Post-Hoc Specialist Merging &amp; Composition:</strong>
+<ul>
+<li><strong>MergeKit:</strong> Implements <code>TIES-Merging</code>, <code>DARE</code>, and <code>Task Arithmetic</code> to statically or dynamically fuse compatible specialist adapters when multi-domain reasoning is required.</li>
+</ul>
+</li>
+</ul>
+<h3 id="layer-4-specialist-intelligence-hive">Layer 4: Specialist Intelligence Hive</h3>
+<p><em>Objective: Combine narrow neural models with deterministic programmatic solvers and formal engines.</em></p>
+<ul>
+<li><strong>Programmatic &amp; Symbolic Solvers:</strong>
+<ul>
+<li><strong>Mathematics &amp; Logic:</strong> <code>SymPy</code> (symbolic algebra), <code>Z3</code> / <code>cvc5</code> (SMT constraint solving), <code>Lean 4</code> + <code>LeanDojo</code> (formal theorem proving).</li>
+<li><strong>Code Execution &amp; Verification:</strong> <code>E2B</code> (open-source microVM sandboxes), <code>Docker</code> rootless containers, and <code>Tree-sitter</code> (fast incremental AST parsing).</li>
+</ul>
+</li>
+<li><strong>Narrow Neural Specialists (1B–7B class):</strong>
+<ul>
+<li><strong>Math/Reasoning:</strong> <code>Qwen2.5-Math-1.5B/7B</code> or <code>DeepSeek-R1-Distill-Qwen-1.5B</code>.</li>
+<li><strong>Coding:</strong> <code>Qwen2.5-Coder-3B</code> or <code>OpenCoder-1.5B</code>.</li>
+<li><strong>Continuous-Time / Edge Dynamics:</strong> <code>ncps</code> (Neural Circuit Policies / Liquid Neural Networks) for compact, causal time-series and control tasks.</li>
+</ul>
+</li>
+</ul>
+<h3 id="layer-5-communication-and-translation">Layer 5: Communication and Translation</h3>
+<p><em>Objective: Enable domain-native representations and structured cross-specialist translation without conversational bloat.</em></p>
+<ul>
+<li><strong>Structured Schema Enforcement:</strong> <code>Pydantic v2</code>, <code>Outlines</code>, <code>XGrammar</code>, or <code>Guidance</code> (constrained grammar decoding guaranteeing 100% valid JSON, AST, or formal syntax output from small models).</li>
+<li><strong>Latent &amp; Concept-Space Research Primitives:</strong>
+<ul>
+<li><strong>Meta SONAR:</strong> Multilingual, modality-agnostic sentence/concept embedding space for concept-level exchange (aligning with NCM-inspired reasoning).</li>
+<li><strong>Coconut / Latent Reasoning Repos:</strong> Experimental continuous-thought hidden-state passing between compatible transformer layers.</li>
+</ul>
+</li>
+</ul>
+<h3 id="layer-6-biological-coordination">Layer 6: Biological Coordination</h3>
+<p><em>Objective: Implement selective activation, asynchronous event signaling, local state, and decentralized control.</em></p>
+<ul>
+<li><strong>Event-Driven Actor &amp; Pub/Sub Systems:</strong>
+<ul>
+<li><strong>NATS JetStream</strong> or <strong>ZeroMQ:</strong> Sub-millisecond topic-based signaling (<code>hive.control.*</code>, <code>hive.evidence.*</code>) mimicking selective synaptic/hormonal broadcast.</li>
+<li><strong>Temporal.io</strong> or <strong>Burr (DAGWorks):</strong> Manages local state machines per specialist with durable event histories and asynchronous wake/sleep cycles.</li>
+</ul>
+</li>
+<li><strong>Neuromorphic &amp; Spiking Exploration (R&amp;D):</strong> <code>Lava</code> (Intel's open-source neuromorphic framework) or <code>snnTorch</code> for prototyping event-driven sparse activation.</li>
+</ul>
+<h3 id="layer-7-memory-ecosystem">Layer 7: Memory Ecosystem</h3>
+<p><em>Objective: Separate immediate working context from domain, episodic, procedural, and verified collective memory.</em></p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>HIVE Memory Tier</th>
+<th>Recommended OSS Component</th>
+<th>Implementation Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Immediate Memory</strong></td>
+<td><code>Redis</code> / In-process state graph</td>
+<td>Short-lived task blackboard holding active ASTs, variable bindings, and intermediate evidence.</td>
+</tr>
+<tr>
+<td><strong>Episodic &amp; Hierarchical Memory</strong></td>
+<td><strong>Letta (formerly MemGPT)</strong> or <strong>Mem0</strong></td>
+<td>OS-style virtual context paging; compresses and archives interaction trajectories and past decisions.</td>
+</tr>
+<tr>
+<td><strong>Domain &amp; Collective Knowledge</strong></td>
+<td><strong>Qdrant</strong> (Vector) + <strong>Neo4j / FalkorDB</strong> (Knowledge Graph)</td>
+<td>Hybrid vector + graph retrieval (<code>GraphRAG</code> / <code>LightRAG</code>) storing verified facts and domain rules.</td>
+</tr>
+<tr>
+<td><strong>Procedural Memory (Skills)</strong></td>
+<td><strong>Voyager-style Git/Vector Skill Library</strong> + <strong>HuggingFace Hub / MinIO</strong></td>
+<td>Stores verified executable Python/Lean scripts alongside hot-swappable <code>.safetensors</code> LoRA adapters.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="layer-8-verification-and-evolution">Layer 8: Verification and Evolution</h3>
+<p><em>Objective: Challenge outputs, reject unverified claims, generate targeted exercises, and continually improve weak specialists.</em></p>
+<ul>
+<li><strong>Deterministic Critics &amp; Verifiers:</strong> <code>Pytest</code>, <code>Hypothesis</code> (property-based testing), <code>Lean 4</code> kernel, and <code>Guardrails AI</code> / <code>NeMo Guardrails</code>.</li>
+<li><strong>Declarative Prompt &amp; Pipeline Optimization:</strong> <strong>DSPy</strong> (automatically compiles and optimizes module prompts and few-shot demonstrations against deterministic metric functions).</li>
+<li><strong>Targeted Specialist Retraining (Teaching Loop):</strong>
+<ul>
+<li><strong>Unsloth</strong> or <strong>Axolotl:</strong> Ultra-fast, low-VRAM LoRA fine-tuning pipelines triggered offline/asynchronously when the <code>Teaching Channel</code> accumulates verified counterexamples.</li>
+<li><strong>OpenRLHF / TRL (GRPO):</strong> Group Relative Policy Optimization using verifiable rewards (math/code pass rates) to strengthen specialist adapters without human labeling.</li>
+</ul>
+</li>
+</ul>
+<h3 id="layer-9-unified-intelligence-and-identity">Layer 9: Unified Intelligence and Identity</h3>
+<p><em>Objective: Synthesize asynchronous multi-specialist outputs into a coherent, calibrated, user-facing response.</em></p>
+<ul>
+<li><strong>Synthesis &amp; Response Rendering:</strong> Lightweight <code>3B–8B</code> Synthesizer adapter constrained via <code>Pydantic</code> + streaming SSE/WebSockets (<code>FastAPI</code>), surfacing confidence intervals and verifiable citations from the <code>Evidence Channel</code>.</li>
+</ul>
+<hr />
+<h2 id="summary-integration-blueprint">Summary Integration Blueprint</h2>
+<pre><code class="language-text">[User Input]
+     │
+     ▼
+[Layer 1: Florence-2 / Whisper / ModernBERT] ──► Structured Task Payload
+     │
+     ▼
+[Layer 2: LAYA Gate (RouteLLM + OPA + Conformal Uncertainty)]
+     │
+     ├──(Control Channel: NATS)──► [Layer 3: vLLM / S-LoRA Shared 3B Core]
+     │                                    │
+     │                             (Hot-Swaps LoRAs)
+     │                                    ▼
+     │                             [Layer 4: Math / Code / Logic Specialists]
+     │                                    │
+     ├──(Task/Evidence: XGrammar JSON)────┼──► [Layer 4: SymPy / Z3 / Lean 4 / E2B]
+     │                                    │
+     ▼                                    ▼
+[Layer 7: Redis / Qdrant / FalkorDB / Letta] ◄──(Gated Write)── [Layer 8: Verifiers + DSPy + Unsloth/GRPO]
+     │
+     ▼
+[Layer 9: Unified Synthesizer + Provenance Output]
+</code></pre>
+<h2 id="key-architectural-takeaway">Key Architectural Takeaway</h2>
+<p>By combining <strong>S-LoRA / vLLM</strong> (Layer 3), <strong>XGrammar / Pydantic</strong> (Layer 5), <strong>SymPy / Z3 / Lean 4</strong> (Layer 4), and <strong>NATS + LangGraph</strong> (Orchestration), you can build a working, testable HIVE prototype using <strong>100% open-source components</strong>—focusing your original research effort on <strong>LAYA routing policies</strong>, <strong>cross-specialist translators</strong>, and <strong>automated Teaching-Channel adapter evolution</strong>.</p>
+</article></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#overview">Overview</a><a class="toc-h2" href="#cross-cutting-infrastructure-ruflo-style-orchestration">Cross-Cutting Infrastructure (Ruflo-Style Orchestration)</a><a class="toc-h2" href="#layer-by-layer-open-source-mapping">Layer-by-Layer Open-Source Mapping</a><a class="toc-h3" href="#layer-1-input-and-perception">Layer 1: Input and Perception</a><a class="toc-h3" href="#layer-2-logic-and-decision-laya-inspired">Layer 2: Logic and Decision (LAYA-Inspired)</a><a class="toc-h3" href="#layer-3-dynamic-neural-execution">Layer 3: Dynamic Neural Execution</a><a class="toc-h3" href="#layer-4-specialist-intelligence-hive">Layer 4: Specialist Intelligence Hive</a><a class="toc-h3" href="#layer-5-communication-and-translation">Layer 5: Communication and Translation</a><a class="toc-h3" href="#layer-6-biological-coordination">Layer 6: Biological Coordination</a><a class="toc-h3" href="#layer-7-memory-ecosystem">Layer 7: Memory Ecosystem</a><a class="toc-h3" href="#layer-8-verification-and-evolution">Layer 8: Verification and Evolution</a><a class="toc-h3" href="#layer-9-unified-intelligence-and-identity">Layer 9: Unified Intelligence and Identity</a><a class="toc-h2" href="#summary-integration-blueprint">Summary Integration Blueprint</a><a class="toc-h2" href="#key-architectural-takeaway">Key Architectural Takeaway</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework revision 0.2</span></a><span>Research prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download vault</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>
