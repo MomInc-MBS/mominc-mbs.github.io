@@ -10,7 +10,7 @@
   let records, timeout;
   const titles = {
     research_path:'Research path',frontier_path:'Frontier path',legacy_catalog_entry:'Legacy catalog',historical_source:'Source history',prior_method:'Prior method',source:'Primary source',build:'Local build',
-    historical_import_not_reverified:'Historical import · not reverified',primary_source_reviewed:'Primary source reviewed',design_proposal:'Design proposal',preserved_original:'Preserved original',prior_artifact_reviewed:'Prior artifact reviewed',primary_observation_linked:'Primary observation linked',scoped_claim_with_links:'Scoped claim with links',artifact_checks:'Artifact checks'
+    historical_import_not_reverified:'Historical import · not reverified',primary_source_reviewed:'Primary source reviewed',design_proposal:'Design proposal',preserved_original:'Preserved original',prior_artifact_reviewed:'Prior artifact reviewed',primary_observation_linked:'Primary observation linked',scoped_claim_with_links:'Scoped claim with links',artifact_checks:'Artifact checks',proposed_implementation:'Proposed implementation'
   };
   const label = s => titles[s] || s.replaceAll('_',' ').replace(/^./, c => c.toUpperCase());
   const esc = s => String(s).replace(/[&<>"']/g,c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

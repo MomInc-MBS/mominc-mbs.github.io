@@ -28,7 +28,8 @@ The television lives at https://mominc.online/tv/ . A channel is a query on that
 
 ## HIVE research reference
 
-- [HIVE framework and research vault](https://mominc.online/hive/): the complete framework 0.2 research reference prepared for Ian Myers on 20 November 2026. Includes 286 linked pages, full-text search, 2,381 typed graph connections, evidence labels, experiment designs, and 19 preserved originals. This is a research and implementation specification; proposed experiments do not imply executed results.
+- [HIVE framework and research vault](https://mominc.online/hive/): framework 0.2 with current coder directions revision 0.4, prepared for Ian Myers on 20 November 2026. Includes 287 linked pages, full-text search, 2,391 typed graph connections, evidence labels, experiment designs, and 19 preserved originals. This is a research and implementation specification; proposed experiments do not imply executed results.
+- [Current HIVE coder directions, revision 0.4](https://mominc.online/hive/notes/CODER/): the complete three-conversation coder packet covering philosophy and mythology, 25 comparison projects, fictional hive minds, architecture, contracts, build sequence, acceptance scenarios, open decisions, and source-recovery limits. These directions take precedence over the earlier 0.2 handoff. The supplied Markdown is downloadable separately; the original vault ZIP remains unchanged.
 - [HIVE agent reference](https://mominc.online/hive/llms.txt): stable page IDs, source Markdown paths, search index, graph exports, and citation rules.
 
 ## About

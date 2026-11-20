@@ -1,9 +1,18 @@
 {
   "framework_revision": "0.2",
+  "coder_revision": "0.4",
+  "updates": [
+    {
+      "id": "CODER",
+      "path": "updates/HIVE_Coder_Information_Packet_2026-11-20.md",
+      "revision": "0.4",
+      "sha256": "0fb0686f8357a6ba0a7d53c8a5bb6e330fcbc166edffa999e6d61749427ed03d"
+    }
+  ],
   "source_zip_sha256": "2b726d055a17a25495854890d8d0001cb791006273e0f8eb5515788b7e00c61a",
   "counts": {
-    "research_pages": 286,
-    "graph_edges": 2381,
+    "research_pages": 287,
+    "graph_edges": 2391,
     "originals": 19
   },
   "scope": "Published research reference. No live HIVE runtime or new learning measurements are implied."

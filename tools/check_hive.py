@@ -32,6 +32,8 @@ class Page(HTMLParser):
 
 def main():
     errors = []
+    updates = json.loads((OUT / 'updates/index.json').read_text(encoding='utf-8'))
+    expected_pages = 286 + len(updates['entries'])
     docs = {p: Page(p.read_text(encoding='utf-8')) for p in OUT.rglob('*.html')}
     checked = 0
     for p, page in docs.items():
@@ -56,8 +58,14 @@ def main():
     graph = json.loads((OUT / 'graph.json').read_text(encoding='utf-8'))
     index = json.loads((OUT / 'search-index.json').read_text(encoding='utf-8'))
     ids = {n['id'] for n in graph['nodes']}
-    if ids != {n['id'] for n in index} or len(ids) != 286:
-        errors.append('Search and graph IDs differ or 286 canonical pages not present')
+    if ids != {n['id'] for n in index} or len(ids) != expected_pages:
+        errors.append('Search and graph IDs differ or canonical pages are missing')
+    for entry in updates['entries']:
+        source = OUT / entry['path']
+        if hashlib.sha256(source.read_bytes()).hexdigest() != entry['sha256']:
+            errors.append('Supplied update bytes changed: ' + entry['path'])
+    if updates['current_coder_id'] not in ids:
+        errors.append('Current coder directions are missing')
     for n in graph['nodes']:
         if not (OUT / 'notes' / n['id'] / 'index.html').is_file():
             errors.append(f'Graph page missing: {n["id"]}')

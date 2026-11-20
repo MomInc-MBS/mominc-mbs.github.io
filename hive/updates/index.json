@@ -1,0 +1,74 @@
+{
+  "current_coder_id": "CODER",
+  "entries": [
+    {
+      "id": "CODER",
+      "path": "updates/HIVE_Coder_Information_Packet_2026-11-20.md",
+      "title": "Coder directions — revision 0.4",
+      "type": "build",
+      "status": "proposed",
+      "evidence_status": "proposed_implementation",
+      "implementation_status": "not_implemented",
+      "revision": "0.4",
+      "sha256": "0fb0686f8357a6ba0a7d53c8a5bb6e330fcbc166edffa999e6d61749427ed03d",
+      "tags": [
+        "hive",
+        "hive/coder-directions",
+        "revision/0.4"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "source": "CODER",
+      "target": "FRAMEWORK",
+      "relation": "derived_from"
+    },
+    {
+      "source": "CODER",
+      "target": "HANDOFF",
+      "relation": "supersedes"
+    },
+    {
+      "source": "CODER",
+      "target": "ROADMAP",
+      "relation": "informs"
+    },
+    {
+      "source": "CODER",
+      "target": "P09",
+      "relation": "related_to"
+    },
+    {
+      "source": "CODER",
+      "target": "P12",
+      "relation": "related_to"
+    },
+    {
+      "source": "CODER",
+      "target": "P13",
+      "relation": "related_to"
+    },
+    {
+      "source": "CODER",
+      "target": "P16",
+      "relation": "related_to"
+    },
+    {
+      "source": "CODER",
+      "target": "P19",
+      "relation": "related_to"
+    },
+    {
+      "source": "HOME",
+      "target": "CODER",
+      "relation": "related_to"
+    },
+    {
+      "source": "ROADMAP",
+      "target": "CODER",
+      "relation": "related_to"
+    }
+  ],
+  "scope": "User-supplied coder packet revision 0.4 is the current handoff. Typed update relations are editorial navigation; no new runtime, source verification, or measured result is implied."
+}

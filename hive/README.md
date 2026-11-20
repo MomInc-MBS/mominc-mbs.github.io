@@ -2,13 +2,19 @@
 
 Live URL: https://mominc.online/hive/
 
-The 286 canonical research pages use stable IDs in `/hive/notes/ID/`. Search covers
-the complete text of every canonical page. The interactive graph uses all 2,381
-original typed edges; focusing a page displays its direct neighborhood and the
+The 287 reference pages use stable IDs in `/hive/notes/ID/`. Search covers
+the complete text of every page. The interactive graph preserves all 2,381
+original typed edges and adds 10 editorial links for the current handoff;
+focusing a page displays its direct neighborhood and the
 source/relationship/target of each link. Text remains readable without JavaScript.
 
 `vault/` preserves the supplied source bytes (excluding Obsidian editor settings).
 `downloads/HIVE_Framework_Research_Vault.zip` is the unchanged original attachment.
+The current coder directions are revision 0.4 at `/hive/notes/CODER/`. The supplied
+Markdown packet is preserved byte for byte in `updates/`; `updates/index.json`
+records its digest, revision, and editorial graph links. The original HANDOFF and
+ROADMAP pages link to these newer directions while preserving the 0.2 content.
+The current packet has a separate download; the original ZIP remains version 0.2.
 Twelve archived Markdown documents also have browser reading views. Other original
 formats remain available directly from the archive index. Evidence and
 implementation labels come from the source graph. Publication adds no runtime,
@@ -25,6 +31,8 @@ python tools/gen_game_packs.py
 ```
 
 The ZIP input must be outside the generated output directory during rebuilding.
+Keep the tracked `hive/updates/` directory: the builder includes those records
+without rewriting the original vault or treating its proposals as measurements.
 The existing site's `AGENTS.md` requires game-pack regeneration before publication.
 No package install or JavaScript compilation is needed to serve the site.
 

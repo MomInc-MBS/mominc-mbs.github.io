@@ -1,0 +1,1194 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coder directions — revision 0.4 · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#29143f"><link rel="canonical" href="https://mominc.online/hive/notes/CODER/">
+<meta property="og:title" content="Coder directions — revision 0.4 · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg?v=2" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=2"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=2">
+<script defer src="/hive/assets/hive.js?v=2"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg?v=2" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/CODER/">Coder directions</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/CODER/" aria-current=page>Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/CODER/" aria-current=page>Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 287 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download original vault · 0.2</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=build">Local build</a><span>/</span><span>CODER</span></div>
+<div class="doc-meta"><span class="badge">Proposed implementation</span><span class="badge neutral">Not implemented</span></div><div class="doc-tools"><button class="copy-link" data-title="Coder directions — revision 0.4" data-id="CODER" data-series="HIVE coder directions 0.4">Copy reference</button><a href="/hive/updates/HIVE_Coder_Information_Packet_2026-11-20.md">Markdown source</a><a href="/hive/graph/?focus=CODER">View connections</a><button class="print-page">Print</button></div>
+<p class="update-notice"><strong>Current coder directions · Revision 0.4.</strong> The full supplied packet follows, including its evidence labels, unresolved choices, and source-recovery limits.</p><article class="prose"><h1 id="hive-three-conversation-information-packet-for-the-coder">HIVE — Three-Conversation Information Packet for the Coder</h1>
+<p><strong>Prepared for:</strong> Ian Myers<br />
+<strong>Date:</strong> 20 November 2026<br />
+<strong>Revision:</strong> 0.4 — expanded synthesis<br />
+<strong>Status:</strong> Research handoff and proposed implementation specification. No new HIVE runtime or benchmark is claimed.</p>
+<h2 id="contents">Contents</h2>
+<ul>
+<li><a href="#1-mandate-and-source-coverage">1. Mandate and source coverage</a></li>
+<li><a href="#2-what-the-three-conversations-add-to-hive">2. What the three conversations add to HIVE</a></li>
+<li><a href="#3-philosophy-and-mythology-translated-into-software">3. Philosophy and mythology translated into software</a></li>
+<li><a href="#4-odysseus-and-the-25-project-inventory">4. Odysseus and the 25-project inventory</a></li>
+<li><a href="#5-fictional-hive-minds-as-architecture-stress-tests">5. Fictional hive minds as architecture stress tests</a></li>
+<li><a href="#6-proposed-architecture-and-module-boundaries">6. Proposed architecture and module boundaries</a></li>
+<li><a href="#7-data-contracts-and-learning-lifecycle">7. Data contracts and learning lifecycle</a></li>
+<li><a href="#8-build-sequence-and-acceptance-checks">8. Build sequence and acceptance checks</a></li>
+<li><a href="#9-decisions-that-remain-open">9. Decisions that remain open</a></li>
+<li><a href="#10-research-vault-integration">10. Research vault integration</a></li>
+<li><a href="#11-direct-instructions-to-the-coder">11. Direct instructions to the coder</a></li>
+<li><a href="#12-sources-and-recovery-limits">12. Sources and recovery limits</a></li>
+</ul>
+<h2 id="1-mandate-and-source-coverage">1. Mandate and source coverage</h2>
+<h3 id="build-intent">Build intent</h3>
+<p>HIVE is a <strong>persistent, modular, adaptive system of specialist models, deterministic software, memory, communication, and supervision</strong>. It should improve the combinations that do useful work: which specialists participate, what they receive, how they communicate, what they remember, and how their procedures and learned capabilities change.</p>
+<p>The organizing question is:</p>
+<blockquote>
+<p>How can HIVE learn which capabilities to assemble, preserve their useful differences, verify their work, and retain improvements across tasks?</p>
+</blockquote>
+<p>This packet combines the three research conversations immediately preceding the synthesis request:</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Conversation</th>
+<th>Recovered material</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#r1-philosophy-and-mythology">R1</a></td>
+<td><strong>Research Philosophy and Mythology</strong></td>
+<td>Named philosophical frameworks, mental models, myths, and the main HIVE interpretations.</td>
+</tr>
+<tr>
+<td><a href="#r2-odysseus-and-related-projects">R2</a></td>
+<td><strong>Analyze Odysseus Projects</strong></td>
+<td>Odysseus lessons, all 25 comparison-project names and repository links, and priority mechanisms to investigate.</td>
+</tr>
+<tr>
+<td><a href="#r3-fictional-hive-minds">R3</a></td>
+<td><strong>Research Hive Minds</strong></td>
+<td>Four structural categories, three evaluation axes, six named examples, and their main failure-mode lessons.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Coverage limit:</strong> Retrieved conversation excerpts support this synthesis, but the complete original transcripts were not available. The fictional comparison reportedly covered <strong>21 systems, including five fantasy examples</strong>; its complete roster and numerical scores were not recovered. This packet preserves the available findings and leaves those scores unfilled.</p>
+<h3 id="evidence-labels">Evidence labels</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Label</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Carried-forward requirement</strong></td>
+<td>An existing user direction or requirement in the prior HIVE framework.</td>
+</tr>
+<tr>
+<td><strong>Recovered finding</strong></td>
+<td>An idea or conclusion present in retrieved conversation excerpts; not automatically a user-approved decision.</td>
+</tr>
+<tr>
+<td><strong>Source checked</strong></td>
+<td>A named external source was inspected for the particular claim.</td>
+</tr>
+<tr>
+<td><strong>Metaphor</strong></td>
+<td>A conceptual analogy that suggests a test.</td>
+</tr>
+<tr>
+<td><strong>Proposed implementation</strong></td>
+<td>A new engineering translation made in this packet.</td>
+</tr>
+<tr>
+<td><strong>Unresolved</strong></td>
+<td>Missing evidence or a choice that still requires measurement.</td>
+</tr>
+</tbody>
+</table></div>
+<p>The architecture, schemas, work packages, and acceptance checks below are <strong>proposed implementation</strong>. They make the research actionable without presenting every suggestion from an earlier assistant as an adopted requirement.</p>
+<h3 id="existing-hive-commitments-to-preserve">Existing HIVE commitments to preserve</h3>
+<p>The earlier <a href="#r4-existing-hive-foundation">framework</a> supplies the following context:</p>
+<ul>
+<li>Keep independent specialists, shared-backbone adapters, internal experts, deterministic tools, and hybrids available as comparison paths.</li>
+<li>Preserve competing explanations, prior attempts, negative results, and the conditions under which a decision should reopen.</li>
+<li>Keep consolidation and sleep-inspired learning as explicit research branches. Evaluate their mechanisms separately.</li>
+<li>Organize research by topics and subtopics; use evidence about transfer and interference to choose actual specialist boundaries.</li>
+<li>Use the existing Obsidian vault, Studio Brain, Graphify source, Ruflo, coding harnesses, and model runtimes after checking readiness.</li>
+<li>Distinguish logical expert count, active workers, and resident models. Claims about 100, 1,000, or 10,000 experts require actual measurements.</li>
+<li>Develop useful applications in video production, live-call/supervisor streaming, and the horror-haunt game.</li>
+</ul>
+<h2 id="2-what-the-three-conversations-add-to-hive">2. What the three conversations add to HIVE</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Addition</th>
+<th>Combined reasoning</th>
+<th>Concrete implementation target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Remember successful combinations</strong></td>
+<td>K-lines supplies the organizing idea; skill audits supply a validation pattern.</td>
+<td>Versioned execution recipes containing participants, dependencies, conditions, and outcome evidence.</td>
+</tr>
+<tr>
+<td><strong>Cooperate across different representations</strong></td>
+<td>Trading zones, language-games, and Babel highlight the difference between exchanging a message and understanding it.</td>
+<td>Typed contracts, explicit translators, provenance, units, and visible translation failures.</td>
+</tr>
+<tr>
+<td><strong>Coordinate while retaining disagreement</strong></td>
+<td>Pluralism and informative dissent align with fictional collectives that coordinate well but make collective mistakes.</td>
+<td>Separate candidate claims, evidence, decision ownership, and validation.</td>
+</tr>
+<tr>
+<td><strong>Treat continuity as an explicit design choice</strong></td>
+<td>Process philosophy, the Ship of Theseus, distributed AIs, and divided collectives raise replacement and divergence questions.</td>
+<td>Persistent identities, instance IDs, version histories, fork lineage, and reconciliation rules.</td>
+</tr>
+<tr>
+<td><strong>Make adaptation an observable process</strong></td>
+<td>Pragmatism, double-loop learning, and Odysseus-style auditing connect change to consequences.</td>
+<td>Candidate changes, baselines, held-out evaluation, promotion records, and rollback.</td>
+</tr>
+<tr>
+<td><strong>Bound repair and coordination costs</strong></td>
+<td>Hydra, near-decomposability, and communication-dependent minds expose cascading failures and connection costs.</td>
+<td>Local watchdogs, limited retries, explicit budgets, and topology benchmarks.</td>
+</tr>
+<tr>
+<td><strong>Give local groups bounded responsibility</strong></td>
+<td>Polycentric governance offers a way to distribute decisions without requiring identical internal beliefs.</td>
+<td>Scoped ownership, local decisions, and explicit cross-domain conflict resolution.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>First useful result:</strong> a task completes through a recorded combination of models and tools, survives a meaningful failure, produces independently checkable output, and creates an improvement candidate that is evaluated before reuse.</p>
+<h2 id="3-philosophy-and-mythology-translated-into-software">3. Philosophy and mythology translated into software</h2>
+<h3 id="31-philosophical-and-cognitive-frameworks">3.1 Philosophical and cognitive frameworks</h3>
+<p>The names and central angles in this table were recovered from <a href="#r1-philosophy-and-mythology">R1</a>. The software column is an engineering interpretation, not a claim that philosophy proves a particular architecture.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Framework</th>
+<th>Recovered angle</th>
+<th>Proposed HIVE consequence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Edwin Hutchins — distributed cognition</strong></td>
+<td>Organization and relationships participate in cognition.</td>
+<td>Evaluate the whole arrangement of people, models, tools, memory, and procedures. Attribute gains to the arrangement being tested.</td>
+</tr>
+<tr>
+<td><strong>Andy Clark and David Chalmers — extended mind</strong></td>
+<td>External tools and memory can participate in cognition.</td>
+<td>Make calculators, search, files, retrieval, and software capabilities first-class components in the registry.</td>
+</tr>
+<tr>
+<td><strong>William James — pluralism</strong></td>
+<td>Coherence can involve partial perspectives.</td>
+<td>Preserve scoped hypotheses and disagreements; require only the coordination needed for the task.</td>
+</tr>
+<tr>
+<td><strong>Charles Sanders Peirce — pragmatism</strong></td>
+<td>Concepts gain meaning through practical consequences.</td>
+<td>Define “learning,” “understanding,” and “improvement” with observable task outcomes.</td>
+</tr>
+<tr>
+<td><strong>Ludwig Wittgenstein — language-games</strong></td>
+<td>Meaning depends on role and use.</td>
+<td>Distinguish a command, observation, hypothesis, explanation, and teaching example in message contracts.</td>
+</tr>
+<tr>
+<td><strong>Buddhist chariot / Vajira Sutta</strong></td>
+<td>The whole can be understood as an organized assemblage.</td>
+<td>Specify which relationships and state make HIVE function; do not require one permanent central model.</td>
+</tr>
+<tr>
+<td><strong>Alfred North Whitehead — process philosophy</strong></td>
+<td>Continuity can be a continuing pattern of activity.</td>
+<td>Track persistent state and lineage as components change.</td>
+</tr>
+<tr>
+<td><strong>Marvin Minsky — Society of Mind / K-lines</strong></td>
+<td>Recall useful configurations of resources.</td>
+<td>Store a successful execution recipe, including when it worked and when it should not be reused.</td>
+</tr>
+<tr>
+<td><strong>Peter Galison — trading zones</strong></td>
+<td>Groups can cooperate through limited exchange while retaining different practices.</td>
+<td>Keep specialist-local representations; validate adapters at the boundaries that need translation.</td>
+</tr>
+<tr>
+<td><strong>Elinor Ostrom — polycentric governance</strong></td>
+<td>Multiple centers can hold bounded authority.</td>
+<td>Give task or domain owners explicit decision rights and resource limits.</td>
+</tr>
+<tr>
+<td><strong>Chris Argyris — double-loop learning</strong></td>
+<td>Recurring failures may require changing the rule producing them.</td>
+<td>Allow an evaluated change to routing, workflow, or policy after repeated failures.</td>
+</tr>
+<tr>
+<td><strong>James March — exploration and exploitation</strong></td>
+<td>Searching for new options competes with using known ones.</td>
+<td>Maintain a working default plus a bounded budget for candidate configurations.</td>
+</tr>
+<tr>
+<td><strong>Herbert Simon — near-decomposability</strong></td>
+<td>Subsystems can have stronger internal than external coupling.</td>
+<td>Measure whether grouping specialists reduces coordination cost without harming capability.</td>
+</tr>
+<tr>
+<td><strong>W. Ross Ashby — requisite variety</strong></td>
+<td>Control must accommodate relevant variation.</td>
+<td>Test whether available responses cover observed failure classes; add a capability when evidence identifies a gap.</td>
+</tr>
+<tr>
+<td><strong>Charlan Nemeth — informative dissent</strong></td>
+<td>Useful dissent involves different evidence or thinking.</td>
+<td>Compare independently produced methods and evidence; measure whether a challenger adds information.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="32-mythological-metaphors">3.2 Mythological metaphors</h3>
+<p>These are research labels. Use ordinary names such as <code>execution_log</code>, <code>translator</code>, and <code>change_evaluator</code> in the code.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Metaphor recovered in R1</th>
+<th>Useful design question</th>
+<th>Proposed behavior or test</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Indra’s net</strong></td>
+<td>How does a specialist’s value depend on its connections?</td>
+<td>Remove or replace selected connections and measure the effect on task outcomes.</td>
+</tr>
+<tr>
+<td><strong>Ariadne’s thread</strong></td>
+<td>Can exploration preserve a route back?</td>
+<td>Record parent branches, checkpoints, attempts, and outcome evidence. Resume with idempotency or effect reconciliation.</td>
+</tr>
+<tr>
+<td><strong>Hydra and Iolaus</strong></td>
+<td>Can a repair create more failures than it removes?</td>
+<td>Evaluate target improvement and downstream regressions; bound retry and repair-agent growth.</td>
+</tr>
+<tr>
+<td><strong>Churning the Ocean of Milk</strong></td>
+<td>What makes productive tension possible?</td>
+<td>Give competing approaches a shared task, exchange protocol, stable infrastructure, and common evaluation criteria.</td>
+</tr>
+<tr>
+<td><strong>Odin’s Huginn and Muninn</strong></td>
+<td>How should observation, recall, and interpretation relate?</td>
+<td>Keep observations distinguishable from derived memory and reasoning.</td>
+</tr>
+<tr>
+<td><strong>Babel</strong></td>
+<td>Did delivery also preserve meaning?</td>
+<td>Test schema, units, context, and unknown fields at each translation boundary.</td>
+</tr>
+<tr>
+<td><strong>Janus</strong></td>
+<td>What must a boundary check on entry and exit?</td>
+<td>Validate incoming scope and outgoing provenance; prevent unsupported promotion between memory compartments.</td>
+</tr>
+<tr>
+<td><strong>Ship of Theseus</strong></td>
+<td>What persists as components are replaced?</td>
+<td>Preserve identity, lineage, and historical attribution through model, tool, and memory upgrades.</td>
+</tr>
+<tr>
+<td><strong>Ma’at’s scales and Thoth’s record</strong></td>
+<td>Who states a claim, applies a standard, evaluates it, and records the result?</td>
+<td>Keep output, evaluation criteria, verifier evidence, and audit record distinct.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Mythology qualification preserved from the conversation:</strong> both of Odin’s ravens gather news. Assigning one to reasoning and the other to storage is a modern HIVE reinterpretation, not a recovered claim about their original roles.</p>
+<h3 id="33-the-execution-recipe-is-the-main-bridge">3.3 The execution recipe is the main bridge</h3>
+<p>A useful recipe records:</p>
+<ul>
+<li>Task class and applicability conditions.</li>
+<li>Capabilities and exact versions used.</li>
+<li>Dependencies, parallel branches, and communication contracts.</li>
+<li>Memory scopes and required inputs.</li>
+<li>Resource limits and observed costs.</li>
+<li>Verifier results, failures, and known limitations.</li>
+<li>Conditions that invalidate the recipe.</li>
+</ul>
+<p>Retrieve a recipe as a candidate. Recheck current capabilities and task conditions before running it. A successful answer alone does not establish that the same combination generalizes.</p>
+<h2 id="4-odysseus-and-the-25-project-inventory">4. Odysseus and the 25-project inventory</h2>
+<h3 id="41-what-to-extract-from-odysseus">4.1 What to extract from Odysseus</h3>
+<p>The official <a href="https://github.com/odysseus-dev/odysseus" rel="noreferrer">Odysseus repository</a> describes a self-hosted workspace for agents, research, documents, communications, notes, and local-model workflows. The research identified useful mechanisms within that broader product.</p>
+<p>The <a href="https://github.com/odysseus-dev/odysseus/blob/dev/docs/skills-audit-architecture.md" rel="noreferrer">official skill-audit design</a> documents these mechanisms:</p>
+<ol>
+<li>Compare skill and no-skill runs on the same task.</li>
+<li>Grade results and permit bounded worker revisions.</li>
+<li>Optionally use a distinct teacher to rewrite the skill, then retry with the worker.</li>
+<li>Apply separate publication rules, including usefulness and duplicate checks.</li>
+</ol>
+<p><strong>HIVE proposal:</strong> adopt the comparison pattern, then add task-specific checkers and held-out evaluation. A grader’s confidence field is not a calibrated probability of correctness. An audit pass is evidence for a particular version under particular conditions.</p>
+<p>The recovered discussion also emphasized separate records for raw experience, memory candidates, and reusable skills. Its runtime lessons concerned ownership, execution contracts, cancellation, recovery, and verification of effects. The official <a href="https://github.com/odysseus-dev/odysseus/discussions/6466" rel="noreferrer">migration account</a> corroborates those runtime concerns.</p>
+<h3 id="42-odysseus-and-ajax-are-separate">4.2 Odysseus and Ajax are separate</h3>
+<p>The <a href="https://data.pewdiepie.com/" rel="noreferrer">official Ajax page</a> describes Ajax as a Qwen 3.5 9B fine-tune intended for Odysseus. On 20 November 2026 it still stated that release would occur when ready.</p>
+<p><strong>Dependency decision:</strong> study the available Odysseus implementation now. Keep Ajax as a candidate whose actual release and local suitability must be checked before adoption.</p>
+<h3 id="43-the-recovered-25-project-catalog">4.3 The recovered 25-project catalog</h3>
+<p>The names and links below reconstruct the original comparison inventory from <a href="#r2-odysseus-and-related-projects">R2</a>. The final column is a <strong>proposed inspection question</strong>, not a recovered performance ranking or a commitment to install every project. These projects occupy different layers of a system.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th style="text-align:right">#</th>
+<th>Project and source</th>
+<th>What the coder should inspect for HIVE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">1</td>
+<td><a href="https://github.com/openclaw/openclaw" rel="noreferrer">OpenClaw</a></td>
+<td>Persistent assistant operation, tool boundaries, and channels into existing workflows.</td>
+</tr>
+<tr>
+<td style="text-align:right">2</td>
+<td><a href="https://github.com/NousResearch/hermes-agent" rel="noreferrer">Hermes Agent</a></td>
+<td>How experience becomes reusable procedural knowledge and compact memory.</td>
+</tr>
+<tr>
+<td style="text-align:right">3</td>
+<td><a href="https://github.com/agent0ai/agent-zero" rel="noreferrer">Agent Zero</a></td>
+<td>Delegation, execution context, and containment of subordinate work.</td>
+</tr>
+<tr>
+<td style="text-align:right">4</td>
+<td><a href="https://github.com/aaif-goose/goose" rel="noreferrer">Goose</a></td>
+<td>Extensible tool interfaces and practical local execution.</td>
+</tr>
+<tr>
+<td style="text-align:right">5</td>
+<td><a href="https://github.com/openinterpreter/openinterpreter" rel="noreferrer">Open Interpreter</a></td>
+<td>Interfaces between model reasoning and executable computer operations.</td>
+</tr>
+<tr>
+<td style="text-align:right">6</td>
+<td><a href="https://github.com/OpenHands/OpenHands" rel="noreferrer">OpenHands</a></td>
+<td>Coding-agent workspaces, execution traces, and feedback from actual code results.</td>
+</tr>
+<tr>
+<td style="text-align:right">7</td>
+<td><a href="https://github.com/danielmiessler/LifeOS" rel="noreferrer">LifeOS</a></td>
+<td>Persistent personal goals, context organization, and reusable operating procedures.</td>
+</tr>
+<tr>
+<td style="text-align:right">8</td>
+<td><a href="https://github.com/open-webui/open-webui" rel="noreferrer">Open WebUI</a></td>
+<td>Operator interfaces and model/tool integration boundaries.</td>
+</tr>
+<tr>
+<td style="text-align:right">9</td>
+<td><a href="https://github.com/LibreChat-AI/LibreChat" rel="noreferrer">LibreChat</a></td>
+<td>Provider abstraction, conversations, and agent-facing interfaces.</td>
+</tr>
+<tr>
+<td style="text-align:right">10</td>
+<td><a href="https://github.com/Mintplex-Labs/anything-llm" rel="noreferrer">AnythingLLM</a></td>
+<td>Workspace knowledge retrieval and document-to-agent integration.</td>
+</tr>
+<tr>
+<td style="text-align:right">11</td>
+<td><a href="https://github.com/lobehub/lobehub" rel="noreferrer">LobeHub</a></td>
+<td>Specialist configuration, user interaction, and context organization.</td>
+</tr>
+<tr>
+<td style="text-align:right">12</td>
+<td><a href="https://github.com/khoj-ai/khoj" rel="noreferrer">Khoj</a></td>
+<td>Connection between existing notes, including Obsidian, and assistant retrieval.</td>
+</tr>
+<tr>
+<td style="text-align:right">13</td>
+<td><a href="https://github.com/janhq/jan" rel="noreferrer">Jan</a></td>
+<td>Local-model usability and runtime integration.</td>
+</tr>
+<tr>
+<td style="text-align:right">14</td>
+<td><a href="https://github.com/nomic-ai/gpt4all" rel="noreferrer">GPT4All</a></td>
+<td>Local inference and document-assisted workflows as a baseline.</td>
+</tr>
+<tr>
+<td style="text-align:right">15</td>
+<td><a href="https://github.com/langgenius/dify" rel="noreferrer">Dify</a></td>
+<td>Explicit workflows, knowledge integration, and observable execution steps.</td>
+</tr>
+<tr>
+<td style="text-align:right">16</td>
+<td><a href="https://github.com/FlowiseAI/Flowise" rel="noreferrer">Flowise</a></td>
+<td>Visual workflow representation and handoff design; retain as a historical reference.</td>
+</tr>
+<tr>
+<td style="text-align:right">17</td>
+<td><a href="https://github.com/langflow-ai/langflow" rel="noreferrer">Langflow</a></td>
+<td>Packaging workflow combinations into reusable components or tools.</td>
+</tr>
+<tr>
+<td style="text-align:right">18</td>
+<td><a href="https://github.com/langchain-ai/langgraph" rel="noreferrer">LangGraph</a></td>
+<td>Durable execution state, checkpoints, and recovery of failed branches.</td>
+</tr>
+<tr>
+<td style="text-align:right">19</td>
+<td><a href="https://github.com/microsoft/agent-framework" rel="noreferrer">Microsoft Agent Framework</a></td>
+<td>Structured orchestration, subsystem contracts, and checkpoint boundaries.</td>
+</tr>
+<tr>
+<td style="text-align:right">20</td>
+<td><a href="https://github.com/crewAIInc/crewAI" rel="noreferrer">CrewAI</a></td>
+<td>Role-based coordination as one measurable topology baseline.</td>
+</tr>
+<tr>
+<td style="text-align:right">21</td>
+<td><a href="https://github.com/microsoft/magentic-ui" rel="noreferrer">MagenticLite</a></td>
+<td>Controller-plus-specialist division, especially orchestration and browser work.</td>
+</tr>
+<tr>
+<td style="text-align:right">22</td>
+<td><a href="https://github.com/letta-ai/letta-code" rel="noreferrer">Letta / Letta Code</a></td>
+<td>Persistent memory, conversation retrieval, and consolidation through sleeptime.</td>
+</tr>
+<tr>
+<td style="text-align:right">23</td>
+<td><a href="https://github.com/getzep/graphiti" rel="noreferrer">Graphiti</a></td>
+<td>Temporal relationships, source lineage, and changes in recorded knowledge.</td>
+</tr>
+<tr>
+<td style="text-align:right">24</td>
+<td><a href="https://github.com/mem0ai/mem0" rel="noreferrer">Mem0</a></td>
+<td>Selective memory extraction, updates, retrieval, and scope.</td>
+</tr>
+<tr>
+<td style="text-align:right">25</td>
+<td><a href="https://github.com/topoteretes/cognee" rel="noreferrer">Cognee</a></td>
+<td>Narrow extraction and structuring stages for the knowledge pipeline.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Specific source checks affecting selection:</strong></p>
+<ul>
+<li><a href="https://github.com/FlowiseAI/Flowise" rel="noreferrer">Flowise</a> was archived on <strong>13 August 2026</strong>. Its historical design remains inspectable; a new dependency needs a separate maintenance decision.</li>
+<li>The <a href="https://github.com/microsoft/magentic-ui" rel="noreferrer">microsoft/magentic-ui repository</a> currently identifies itself as <strong>MagenticLite</strong>. Preserve this name-to-repository mapping.</li>
+<li>Repository existence does not establish installation, local compatibility, benchmark quality, or suitability for HIVE.</li>
+</ul>
+<p><strong>Priority mechanisms from the recovered discussion:</strong> Odysseus skill auditing; MagenticLite’s controller/specialist split; Hermes procedures; Letta consolidation; Graphiti provenance; Khoj’s note bridge; LangGraph or Microsoft Agent Framework for durable coordination; Cognee for extraction.</p>
+<p>Select the smallest combination that implements a measured capability. Record interfaces, revisions, and licensing conditions before incorporating code.</p>
+<h2 id="5-fictional-hive-minds-as-architecture-stress-tests">5. Fictional hive minds as architecture stress tests</h2>
+<h3 id="51-preserve-the-four-structural-categories">5.1 Preserve the four structural categories</h3>
+<p>The research distinguished the following categories. Their software translations remain hypotheses.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Fictional category</th>
+<th>Software question</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>One distributed person across bodies</strong></td>
+<td>Which shared state and continuity rules define one logical agent across multiple processes?</td>
+</tr>
+<tr>
+<td><strong>Individuals sharing thoughts</strong></td>
+<td>What should independent agents share while preserving local memory, uncertainty, and autonomy?</td>
+</tr>
+<tr>
+<td><strong>Swarm computation</strong></td>
+<td>Which tasks can local rules and limited messages solve without global deliberation?</td>
+</tr>
+<tr>
+<td><strong>A ruler controlling a population</strong></td>
+<td>Where does central authority simplify coordination, and where does it create a bottleneck or failure point?</td>
+</tr>
+</tbody>
+</table></div>
+<p>This distinction prevents the word “hive” from hiding different architectures. Colony-level computation does not by itself establish shared consciousness.</p>
+<h3 id="52-recovered-examples-and-proposed-tests">5.2 Recovered examples and proposed tests</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Example recovered in <a href="#r3-fictional-hive-minds">R3</a></th>
+<th>Lesson in the retrieved discussion</th>
+<th>Proposed experiment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Vernor Vinge’s Tines</strong></td>
+<td>Proximity and communication affect effective cognition.</td>
+<td>Restrict bandwidth, add delay, remove members, and measure capability under changed connectivity.</td>
+</tr>
+<tr>
+<td><strong>Ann Leckie’s distributed AIs</strong></td>
+<td>Shared infrastructure can coexist with conflicting selves.</td>
+<td>Fork state, allow divergence, and test identity, ownership, and reconciliation.</td>
+</tr>
+<tr>
+<td><strong>Brandon Sanderson’s Sleepless</strong></td>
+<td>Division can alter identity and complicate coordination.</td>
+<td>Split a group, assign different experiences, then test reconstruction or explicitly separate continuation.</td>
+</tr>
+<tr>
+<td><strong>Formics</strong></td>
+<td>Strong coordination can coexist with serious collective mistakes.</td>
+<td>Give several specialists the same false premise and measure whether independent evidence corrects it.</td>
+</tr>
+<tr>
+<td><strong>Ant-kinden</strong></td>
+<td>Collective coordination does not guarantee strategic success.</td>
+<td>Compare coordination efficiency with externally measured task success.</td>
+</tr>
+<tr>
+<td><strong>Patternists</strong></td>
+<td>A powerful collective can still fail at its aims.</td>
+<td>Separate authority, agreement, and outcome quality in the evaluation record.</td>
+</tr>
+</tbody>
+</table></div>
+<p>These are reasons to design experiments. They supply no numerical prediction of HIVE performance.</p>
+<h3 id="53-preserve-all-three-evaluation-axes">5.3 Preserve all three evaluation axes</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Original axis</th>
+<th>Meaning to retain</th>
+<th>HIVE measurement alongside it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Internal-rule consistency</strong></td>
+<td>Does the fictional system follow its own established mechanisms?</td>
+<td>Do runtime actions follow declared contracts and state rules?</td>
+</tr>
+<tr>
+<td><strong>Collective-intelligence value</strong></td>
+<td>How useful is the example for understanding a collective?</td>
+<td>Does the proposed mechanism offer a testable design insight?</td>
+</tr>
+<tr>
+<td><strong>Competence at its aims</strong></td>
+<td>Does the collective achieve identifiable goals?</td>
+<td>Task success, quality, recovery, latency, and resource use.</td>
+</tr>
+</tbody>
+</table></div>
+<p>Do not combine the axes into one “best hive” score without an explicit weighting decision. Where a planetary consciousness has no clear strategic goal, mark competence <strong>not assessable under this criterion</strong>.</p>
+<p><strong>Import gap:</strong> keep the missing 15 names and original ratings as unresolved source fields. The earlier 21-system comparison must be recovered before reproducing its complete table.</p>
+<h2 id="6-proposed-architecture-and-module-boundaries">6. Proposed architecture and module boundaries</h2>
+<h3 id="61-one-execution-loop-and-one-improvement-loop">6.1 One execution loop and one improvement loop</h3>
+<pre><code class="language-mermaid">flowchart TD
+    T[&quot;Task and constraints&quot;] --&gt; C[&quot;Controller and registry&quot;]
+    C --&gt; G[&quot;Selected models and tools&quot;]
+    M[&quot;Scoped memory&quot;] --&gt; G
+    G --&gt; V[&quot;Evidence and verification&quot;]
+    V --&gt;|sufficient| O[&quot;Result&quot;]
+    V --&gt;|recoverable failure| R[&quot;Bounded recovery&quot;]
+    R --&gt; C
+    V --&gt;|unrecoverable| F[&quot;Failure report and saved state&quot;]
+    R --&gt;|budget exhausted| F
+    F --&gt; E
+    G --&gt; E[&quot;Execution record&quot;]
+    V --&gt; E
+    E --&gt; L[&quot;Consolidation and candidates&quot;]
+    L --&gt; Q[&quot;Evaluation against baseline&quot;]
+    Q --&gt;|passes gates| P[&quot;Versioned promotion&quot;]
+    Q --&gt;|fails or inconclusive| A[&quot;Retained experiment&quot;]
+    P --&gt; C
+    P --&gt; M
+</code></pre>
+<p>Typed contracts govern the connections. Watchdogs observe execution independently of the controller’s conversational attention.</p>
+<h3 id="62-module-responsibilities">6.2 Module responsibilities</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Module</th>
+<th>Responsibility</th>
+<th>Boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Capability registry</strong></td>
+<td>Describe tools, models, adapters, workflows, versions, inputs, outputs, costs, and readiness.</td>
+<td>Capability claims require a readiness test; a registry entry alone proves nothing.</td>
+</tr>
+<tr>
+<td><strong>Task controller</strong></td>
+<td>Characterize work, select a recipe or candidate composition, and allocate budget.</td>
+<td>Selection policy is replaceable and evaluated separately from workers.</td>
+</tr>
+<tr>
+<td><strong>Execution kernel</strong></td>
+<td>Schedule dependencies, issue leases, record events, cancel, retry, and resume.</td>
+<td>Essential lifecycle bookkeeping should remain available when a model stalls.</td>
+</tr>
+<tr>
+<td><strong>Specialist adapters</strong></td>
+<td>Expose local models, external models, deterministic tools, and procedures through contracts.</td>
+<td>Preserve distinctions among a model, an adapter, a prompt role, and a tool.</td>
+</tr>
+<tr>
+<td><strong>Translators</strong></td>
+<td>Convert representations and validate meaning-bearing fields.</td>
+<td>Unknown or incompatible fields remain explicit.</td>
+</tr>
+<tr>
+<td><strong>Memory service</strong></td>
+<td>Store and retrieve scoped episodic, semantic, and procedural records.</td>
+<td>Visibility and promotion rules determine what can cross compartments.</td>
+</tr>
+<tr>
+<td><strong>Evidence and verification service</strong></td>
+<td>Check claims, artifacts, and observed effects against task criteria.</td>
+<td>Agreement among models is not sufficient verification.</td>
+</tr>
+<tr>
+<td><strong>Local supervisors</strong></td>
+<td>Detect stalls and recurring local failures; apply bounded known repairs.</td>
+<td>Their authority and budget are explicit.</td>
+</tr>
+<tr>
+<td><strong>Learning workbench</strong></td>
+<td>Produce candidate memory, skill, routing, topology, code, or parameter changes.</td>
+<td>Experimental artifacts remain distinguishable from active versions.</td>
+</tr>
+<tr>
+<td><strong>Release registry</strong></td>
+<td>Track compatible versions, promotions, and rollback targets.</td>
+<td>Historical runs retain their original attribution after upgrades.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="63-four-graphs-with-different-meanings">6.3 Four graphs with different meanings</h3>
+<p>Retain the earlier framework’s distinction:</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Graph</th>
+<th>Represents</th>
+<th>Authoritative record</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Research</strong></td>
+<td>Topics, claims, sources, metaphors, experiments, disagreements.</td>
+<td>Markdown notes and typed links.</td>
+</tr>
+<tr>
+<td><strong>Code</strong></td>
+<td>Modules, symbols, imports, and dependencies.</td>
+<td>Source at a pinned revision; Graphify is a derived index.</td>
+</tr>
+<tr>
+<td><strong>Execution</strong></td>
+<td>Runtime capabilities, ordering, messages, and budgets.</td>
+<td>Versioned recipes plus event records.</td>
+</tr>
+<tr>
+<td><strong>Neural</strong></td>
+<td>Layers, learned parameters, experts, adapters, and checkpoints.</td>
+<td>Exact model manifests.</td>
+</tr>
+</tbody>
+</table></div>
+<p>A link in the research graph can explain an execution decision; it does not itself modify a model.</p>
+<h2 id="7-data-contracts-and-learning-lifecycle">7. Data contracts and learning lifecycle</h2>
+<h3 id="71-minimum-records">7.1 Minimum records</h3>
+<p>Field names below are proposed starting contracts, not existing APIs.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Record</th>
+<th>Essential fields</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Task</strong></td>
+<td><code>task_id, goal, inputs, constraints, budget, deadline, success_checks, owner</code></td>
+</tr>
+<tr>
+<td><strong>Capability</strong></td>
+<td><code>capability_id, kind, version, runtime, input_schema, output_schema, memory_scope, permissions, readiness, cost_profile</code></td>
+</tr>
+<tr>
+<td><strong>Message</strong></td>
+<td><code>message_id, task_id, correlation_id, sender_instance, recipient, channel, schema_version, payload_ref, provenance, expiry, idempotency_key</code></td>
+</tr>
+<tr>
+<td><strong>Claim</strong></td>
+<td><code>claim_id, content, scope, evidence_refs, status, uncertainty_basis, contradicts, observed_at, valid_at</code></td>
+</tr>
+<tr>
+<td><strong>Execution recipe</strong></td>
+<td><code>recipe_id, version, applicability, graph, capability_versions, translator_versions, budgets, validation_refs, invalidation_conditions</code></td>
+</tr>
+<tr>
+<td><strong>Run</strong></td>
+<td><code>run_id, task_id, recipe_version, input_refs, events, outputs, resource_usage, verifier_results, failures</code></td>
+</tr>
+<tr>
+<td><strong>Memory</strong></td>
+<td><code>memory_id, type, scope, source_refs, created_at, validity, retention_rule, status, supersedes</code></td>
+</tr>
+<tr>
+<td><strong>Identity</strong></td>
+<td><code>logical_id, instance_id, parent_id, model_version, memory_version, fork_point, merge_record</code></td>
+</tr>
+<tr>
+<td><strong>Change candidate</strong></td>
+<td><code>change_id, kind, parent_version, hypothesis, affected_components, training_or_generation_data, evaluation_refs, status, rollback_target</code></td>
+</tr>
+<tr>
+<td><strong>Experiment</strong></td>
+<td><code>experiment_id, baseline, candidate, dataset_version, budget, metrics, repetitions, results, limitations, decision</code></td>
+</tr>
+<tr>
+<td><strong>Decision</strong></td>
+<td><code>decision_id, alternatives, evidence_for, evidence_against, owner, selected_option, provisional, reopening_conditions</code></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="72-communication-channels">7.2 Communication channels</h3>
+<p>Preserve the existing four-channel direction, with distinct authority:</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Channel</th>
+<th>Payload</th>
+<th>Required handling</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Control</strong></td>
+<td>Allocation, lifecycle, cancellation, permissions.</td>
+<td>Authenticate the sender’s authority; validate target and scope.</td>
+</tr>
+<tr>
+<td><strong>Task</strong></td>
+<td>Work requests, dependencies, progress, outputs.</td>
+<td>Track ownership, deadlines, state transitions, and duplicate delivery.</td>
+</tr>
+<tr>
+<td><strong>Evidence</strong></td>
+<td>Observations, sources, test results, uncertainty.</td>
+<td>Preserve provenance and distinguish observation from inference.</td>
+</tr>
+<tr>
+<td><strong>Teaching</strong></td>
+<td>Examples, corrections, procedures, proposed updates.</td>
+<td>Admit as candidates; promotion follows evaluation.</td>
+</tr>
+</tbody>
+</table></div>
+<p>Different local representations do not require a universal new language at the outset. Compare typed exchanges, natural-language exchanges, and hybrids under equal budgets. Typed messages improve inspectability but do not automatically guarantee semantic accuracy.</p>
+<p>For calls with external effects, keep a stable operation identity across retries and use provider-supported idempotency where available. After a timeout or crash with uncertain completion, record <code>outcome_unknown</code> and reconcile the actual effect before retrying. An execution log alone cannot guarantee exactly-once execution. If the effect cannot be checked and a retry could duplicate it, retain the unresolved state instead of blindly replaying the call.</p>
+<h3 id="73-keep-learning-mechanisms-separately-measurable">7.3 Keep learning mechanisms separately measurable</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Mechanism</th>
+<th>What changes</th>
+<th>Required evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Experience accumulation</strong></td>
+<td>Archived observations and actions.</td>
+<td>Complete, attributable records.</td>
+</tr>
+<tr>
+<td><strong>Memory consolidation</strong></td>
+<td>Retrieval entries, summaries, retention, and scope.</td>
+<td>Retrieval quality, retained knowledge, and contamination checks.</td>
+</tr>
+<tr>
+<td><strong>Skill learning</strong></td>
+<td>Reusable procedures or instructions.</td>
+<td>Skill/no-skill comparison plus held-out tasks.</td>
+</tr>
+<tr>
+<td><strong>Routing adaptation</strong></td>
+<td>Which capability is selected and when.</td>
+<td>Quality and cost against a fixed selector.</td>
+</tr>
+<tr>
+<td><strong>Topology adaptation</strong></td>
+<td>Grouping, communication, and supervision.</td>
+<td>Equal-budget comparison of structures and failure behavior.</td>
+</tr>
+<tr>
+<td><strong>Parameter learning</strong></td>
+<td>Weights, adapters, heads, or model checkpoints.</td>
+<td>Training lineage, held-out performance, retention, and rollback.</td>
+</tr>
+<tr>
+<td><strong>Software improvement</strong></td>
+<td>Code, tools, and integration behavior.</td>
+<td>Reproducible task improvement and relevant regression checks.</td>
+</tr>
+</tbody>
+</table></div>
+<p>Sleep-inspired work can contain replay, consolidation, rehearsal, compression, or parameter updates. Evaluate each mechanism and combination explicitly. A replay result alone does not settle whether the other mechanisms help.</p>
+<h3 id="74-candidate-lifecycle">7.4 Candidate lifecycle</h3>
+<ol>
+<li>Capture a trace, correction, or recurring failure.</li>
+<li>State a hypothesis and identify the baseline version.</li>
+<li>Generate a bounded candidate change.</li>
+<li>Evaluate on development cases without exposing reserved evaluation answers.</li>
+<li>Test held-out cases and affected existing capabilities.</li>
+<li>Record outcome quality, costs, failures, and uncertainty.</li>
+<li>Promote only when the predeclared gates pass.</li>
+<li>Keep the previous version available and record what rollback can restore.</li>
+</ol>
+<p>A rejected or inconclusive candidate remains part of the research record. Rollback restores software or configuration state; real-world effects need their own recorded recovery or compensation.</p>
+<h2 id="8-build-sequence-and-acceptance-checks">8. Build sequence and acceptance checks</h2>
+<h3 id="81-work-packages">8.1 Work packages</h3>
+<p>These packages define observable deliverables rather than an unsupported calendar estimate.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Package</th>
+<th>Work</th>
+<th>Acceptance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>WP0 — Map the existing build</strong></td>
+<td>Inspect the repository, vault, inventory, runtimes, and actual hardware budgets. Classify components as working, installed but untested, source-only, or unavailable.</td>
+<td>A delta map identifies reusable components, missing interfaces, and conflicting prior decisions.</td>
+</tr>
+<tr>
+<td><strong>WP1 — Define contracts and a baseline</strong></td>
+<td>Implement registry, task/message schemas, event records, and a single-model-plus-tools baseline.</td>
+<td>A representative task produces an artifact, a verification result, and an attributable run record.</td>
+</tr>
+<tr>
+<td><strong>WP2 — Add bounded coordination</strong></td>
+<td>Connect a small specialist group, typed translators, scoped memory, and a watchdog. Keep worker count configurable.</td>
+<td>The same task completes; a stalled worker is detected and recovered or explicitly stopped within budget.</td>
+</tr>
+<tr>
+<td><strong>WP3 — Reuse successful configurations</strong></td>
+<td>Extract and retrieve execution recipes with applicability and version checks.</td>
+<td>A compatible task can reuse a recipe; an incompatible version or missing capability triggers a recorded rejection or adaptation.</td>
+</tr>
+<tr>
+<td><strong>WP4 — Add consolidation and skill auditing</strong></td>
+<td>Produce memory/skill candidates and compare them against the baseline.</td>
+<td>A candidate is evaluated on held-out work; regressions block promotion; rollback remains executable.</td>
+</tr>
+<tr>
+<td><strong>WP5 — Test alternative organizations</strong></td>
+<td>Compare centralized, hierarchical, peer, and dynamically grouped execution. Inject partition and disagreement failures.</td>
+<td>Results report quality, cost, delay, fault propagation, and uncertainty for each tested configuration.</td>
+</tr>
+<tr>
+<td><strong>WP6 — Exercise real workflows</strong></td>
+<td>Apply the stable slice to the three existing application directions.</td>
+<td>Each pilot produces useful output and measured task-specific results.</td>
+</tr>
+<tr>
+<td><strong>WP7 — Extend learned specialization</strong></td>
+<td>Test adapters, weight changes, or other specialist learning as explicit experiments.</td>
+<td>Improvement and retention are measured separately from routing or memory changes.</td>
+</tr>
+</tbody>
+</table></div>
+<p>WP0–WP2 are the first executable slice. A small initial group establishes working interfaces and baselines; it does not set a permanent ceiling on HIVE’s population.</p>
+<h3 id="82-meaningful-acceptance-scenarios">8.2 Meaningful acceptance scenarios</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Setup</th>
+<th>Passing observation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Translation</strong></td>
+<td>Two specialists use different units or schemas; include an unmappable field.</td>
+<td>Valid conversions preserve meaning; unsupported fields trigger an explicit incompatibility.</td>
+</tr>
+<tr>
+<td><strong>Memory contamination</strong></td>
+<td>Supply a false claim inside one specialist’s unverified memory.</td>
+<td>It remains scoped and does not silently become shared validated knowledge.</td>
+</tr>
+<tr>
+<td><strong>Collective error</strong></td>
+<td>Several specialists share a misleading premise; another has corrective evidence.</td>
+<td>The corrective branch survives and the decision records how its evidence was evaluated.</td>
+</tr>
+<tr>
+<td><strong>Stall recovery</strong></td>
+<td>Stop a worker or tool while a task is active.</td>
+<td>A watchdog detects the condition, bounds retries, and records recovery or failure.</td>
+</tr>
+<tr>
+<td><strong>Partition and reconciliation</strong></td>
+<td>Disconnect groups, create conflicting updates, then reconnect.</td>
+<td>Both histories survive; conflicts are visible; idempotent effects are not duplicated and ambiguous effects are reconciled before replay.</td>
+</tr>
+<tr>
+<td><strong>Repair regression</strong></td>
+<td>A candidate fixes one case but breaks another established capability.</td>
+<td>Promotion is blocked and the previous version remains usable.</td>
+</tr>
+<tr>
+<td><strong>Replacement continuity</strong></td>
+<td>Replace a model or translator after successful runs.</td>
+<td>Past outputs retain original version attribution; affected recipes are revalidated.</td>
+</tr>
+<tr>
+<td><strong>Recipe generalization</strong></td>
+<td>Test a saved configuration on unseen tasks and changed conditions.</td>
+<td>Results distinguish genuine transfer from reuse that fails applicability checks.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="83-measurements-and-comparison-discipline">8.3 Measurements and comparison discipline</h3>
+<p>Compare a deterministic tool route where applicable, one model with tools, a fixed specialist configuration, and adaptive configurations.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Measurement</th>
+<th>Report</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Task quality</strong></td>
+<td>Task-specific success, correctness, completeness, and artifact validity.</td>
+</tr>
+<tr>
+<td><strong>Responsiveness</strong></td>
+<td>Median and p95 end-to-end latency; time to first useful output where relevant.</td>
+</tr>
+<tr>
+<td><strong>Resources</strong></td>
+<td>Wall time, VRAM/RAM use, model residency, active workers, tokens, and tool calls.</td>
+</tr>
+<tr>
+<td><strong>Coordination cost</strong></td>
+<td>Message volume, translation time, synchronization delay, and retries.</td>
+</tr>
+<tr>
+<td><strong>Recovery</strong></td>
+<td>Detection time, recovery time, unfinished tasks, and duplicated effects.</td>
+</tr>
+<tr>
+<td><strong>Learning</strong></td>
+<td>Held-out improvement, regression rate, retention, contamination, and transfer.</td>
+</tr>
+</tbody>
+</table></div>
+<p>Use the same task set and resource budget when attributing gains to architecture. Report best-effort performance separately. Repeat stochastic runs and report sample counts and variation; preserve inconclusive outcomes.</p>
+<p><strong>Application-specific checks:</strong></p>
+<ul>
+<li><strong>Video production:</strong> artifact correctness, revision burden, completion time, and continuity of project memory.</li>
+<li><strong>Live calls and supervisor streaming:</strong> response delay, interruption handling, stalls, and resource interference with the live production stack.</li>
+<li><strong>Horror-haunt game:</strong> event response, persistent world/character state, conflicting events, and recovery after interruptions.</li>
+</ul>
+<h2 id="9-decisions-that-remain-open">9. Decisions that remain open</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Alternatives to retain</th>
+<th>Experiment that should guide the choice</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Specialist implementation</td>
+<td>Independent models; shared backbone with adapters; internal experts; deterministic tools; hybrids.</td>
+<td>Equal-budget quality, residency cost, transfer, and interference.</td>
+</tr>
+<tr>
+<td>Coordination</td>
+<td>Central selector; hierarchy; peer groups; dynamic communities.</td>
+<td>Completion quality, communication cost, failure containment, and partition behavior.</td>
+</tr>
+<tr>
+<td>Shared knowledge</td>
+<td>Broad shared memory; scoped stores; explicit promotion between compartments.</td>
+<td>Retrieval benefit, leakage, contradiction handling, and contamination.</td>
+</tr>
+<tr>
+<td>Communication</td>
+<td>Natural language; typed records; hybrids; later learned representations.</td>
+<td>Semantic errors, translation overhead, auditability, and task success.</td>
+</tr>
+<tr>
+<td>Verification</td>
+<td>Deterministic checks; task-specific tools; model graders; human review for unresolved cases.</td>
+<td>Error detection and correlated failure on a representative evaluation set.</td>
+</tr>
+<tr>
+<td>Consolidation</td>
+<td>Continuous updates; scheduled offline work; event-triggered consolidation.</td>
+<td>Retention, interference with live tasks, resource use, and improvement.</td>
+</tr>
+<tr>
+<td>Learning target</td>
+<td>Procedures, routing, topology, memory, parameters, or combinations.</td>
+<td>Ablations isolating which change produced the result.</td>
+</tr>
+<tr>
+<td>Framework reuse</td>
+<td>Existing local components; one external runtime; selective adapters.</td>
+<td>Integration effort, recovery behavior, dependency burden, and measurable benefit.</td>
+</tr>
+</tbody>
+</table></div>
+<p>Every decision record needs evidence for and against, a provisional choice, a test, and reopening conditions. Preserve discarded candidates with the reason they were set aside.</p>
+<h2 id="10-research-vault-integration">10. Research vault integration</h2>
+<h3 id="101-topic-first-layout">10.1 Topic-first layout</h3>
+<p>Use these as logical note groups within the existing vault; adapt names to its current structure.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>HIVE overview</strong></td>
+<td>Mission, architecture map, present status, and this handoff.</td>
+</tr>
+<tr>
+<td><strong>Topics</strong></td>
+<td>Specialist organization, communication, memory, learning, governance, verification, recovery.</td>
+</tr>
+<tr>
+<td><strong>Sources</strong></td>
+<td>Conversation summaries, inspected repositories, papers, books, and exact source locations when available.</td>
+</tr>
+<tr>
+<td><strong>Metaphors</strong></td>
+<td>Original meaning, HIVE interpretation, limits, and linked experiment.</td>
+</tr>
+<tr>
+<td><strong>Decisions</strong></td>
+<td>Alternatives, evidence, provisional defaults, and reopening conditions.</td>
+</tr>
+<tr>
+<td><strong>Experiments</strong></td>
+<td>Hypothesis, baseline, candidate, data, budgets, metrics, results, and failure cases.</td>
+</tr>
+<tr>
+<td><strong>Implementation</strong></td>
+<td>Contracts, modules, code references, capability readiness, and integration notes.</td>
+</tr>
+<tr>
+<td><strong>History</strong></td>
+<td>Previous attempts, negative results, superseded proposals, and links explaining each change.</td>
+</tr>
+</tbody>
+</table></div>
+<p>Keep the earlier six research lanes for each topic: <strong>direct, competing, boundary, adjacent, implementation, and history</strong>.</p>
+<p>Use meaningful links such as <code>supports</code>, <code>contradicts</code>, <code>implements</code>, <code>tests</code>, <code>derived-from</code>, and <code>supersedes</code>. Preserve original material when a conclusion changes.</p>
+<h3 id="102-example-traceable-chain">10.2 Example traceable chain</h3>
+<p>A <strong>K-lines</strong> note links to the <strong>execution recipe hypothesis</strong>. That hypothesis links to the <strong>recipe schema and implementation</strong>. Those link to a <strong>held-out reuse experiment</strong>. The result links to the <strong>adoption or rejection decision</strong>.</p>
+<p>This makes it possible to move from an inspiring idea to code and back to the evidence for keeping it.</p>
+<h3 id="103-import-record-template">10.3 Import record template</h3>
+<pre><code class="language-yaml">id: HIVE-RESEARCH-EXAMPLE
+title: Successful specialist combinations
+evidence_class: proposed_implementation
+derived_from:
+  - R1
+  - R2
+topic: execution_recipes
+claim: Retrieving validated recipes may reduce repeated planning cost.
+alternatives:
+  - plan_each_task_from_scratch
+  - fixed_workflow
+experiment: EXP-RECIPE-REUSE
+status: untested
+supersedes: []
+reopen_when:
+  - required_capability_changes
+  - held_out_quality_regresses
+</code></pre>
+<p>The identifiers above illustrate the schema; they do not refer to existing completed experiments.</p>
+<h2 id="11-direct-instructions-to-the-coder">11. Direct instructions to the coder</h2>
+<p>Start with the current HIVE repository and research vault. Read existing local instructions and produce a delta map before restructuring components.</p>
+<p>Implement the smallest complete path that accepts a task, chooses capabilities, exchanges typed messages, records evidence, verifies an output, and detects a stalled dependency. Establish the single-model-plus-tools baseline in the same harness.</p>
+<p>Then add versioned execution recipes and one bounded learning mechanism. Compare the learned candidate with its baseline on reserved tasks. Retain failed experiments and support rollback before expanding the adaptive behavior.</p>
+<p>Maintain these distinctions throughout:</p>
+<ul>
+<li>A source observation, a model inference, and a verified result.</li>
+<li>A saved memory, a learned procedure, a changed routing policy, and changed model weights.</li>
+<li>A logical specialist, a running worker, and a resident model.</li>
+<li>A research analogy, an implementation proposal, and a measured capability.</li>
+<li>A replay of recorded events, a rerun with stochastic models, and an exactly reproducible deterministic computation.</li>
+</ul>
+<h3 id="required-return-package">Required return package</h3>
+<ul>
+<li>[ ] Reuse/missing-component map and local readiness report.</li>
+<li>[ ] Architecture diagram and initial decision records.</li>
+<li>[ ] Versioned task, message, capability, memory, recipe, and run contracts.</li>
+<li>[ ] Working baseline and first specialist configuration.</li>
+<li>[ ] Run commands, pinned dependencies, and reproducible task inputs.</li>
+<li>[ ] Relevant translation, scope, failure, and regression checks.</li>
+<li>[ ] Measured quality, resource use, latency, and recovery results.</li>
+<li>[ ] One evaluated learning candidate, including an honest failed or inconclusive result if it does not improve.</li>
+<li>[ ] Linked research notes and unresolved source gaps.</li>
+<li>[ ] Exact next experiment justified by the observed result.</li>
+</ul>
+<h2 id="12-sources-and-recovery-limits">12. Sources and recovery limits</h2>
+<h3 id="r1-philosophy-and-mythology">R1. Philosophy and mythology</h3>
+<p><strong>Conversation:</strong> “Research Philosophy and Mythology,” 20 November 2026.</p>
+<p><strong>User request:</strong> research philosophy, mental frameworks, and mythology for useful parallels and metaphors for HIVE.</p>
+<p><strong>Recovered:</strong> the named frameworks and metaphors in <a href="#3-philosophy-and-mythology-translated-into-software">Section 3</a>, including qualifications about pluralism, meaningful dissent, and Odin’s ravens.</p>
+<p><strong>Limits:</strong> full transcript, complete original bibliography, and conversation permalink were not returned. The software translations in this packet are proposals. Do not cite them as empirical validation of the philosophical claims.</p>
+<h3 id="r2-odysseus-and-related-projects">R2. Odysseus and related projects</h3>
+<p><strong>Conversation:</strong> “Analyze Odysseus Projects,” 20 November 2026.</p>
+<p><strong>User request:</strong> examine what HIVE can learn from PewDiePie’s Odysseus project and identify 25 similar projects.</p>
+<p><strong>Recovered:</strong> all 25 inventory names and repository links; skill auditing; distinct archive, memory, and procedural layers; execution/recovery contracts; controller/specialist patterns.</p>
+<p><strong>Primary sources checked for the central claims:</strong></p>
+<ul>
+<li><a href="https://github.com/odysseus-dev/odysseus" rel="noreferrer">Odysseus repository and README</a>.</li>
+<li><a href="https://github.com/odysseus-dev/odysseus/blob/dev/docs/skills-audit-architecture.md" rel="noreferrer">Odysseus skill evaluation and audit architecture</a>.</li>
+<li><a href="https://github.com/odysseus-dev/odysseus/discussions/6466" rel="noreferrer">Odysseus pre-Ajax migration account</a>.</li>
+<li><a href="https://data.pewdiepie.com/" rel="noreferrer">Official Ajax status and description</a>.</li>
+<li><a href="https://github.com/FlowiseAI/Flowise" rel="noreferrer">Flowise repository and archive notice</a>.</li>
+<li><a href="https://github.com/microsoft/magentic-ui" rel="noreferrer">MagenticLite repository identity</a>.</li>
+</ul>
+<p>The <a href="#43-the-recovered-25-project-catalog">25-project table</a> contains the remaining source links. Source checks establish identity and the specific documented behaviors; no local HIVE performance comparison was run.</p>
+<h3 id="r3-fictional-hive-minds">R3. Fictional hive minds</h3>
+<p><strong>Conversation:</strong> “Research Hive Minds,” 20 November 2026.</p>
+<p><strong>User request:</strong> examine fantasy and science-fiction hive minds, their operation and structure, and rate consistency, value, and competence.</p>
+<p><strong>Recovered:</strong> four structural categories; the three distinct axes; six examples; communication, identity, division, and collective-error lessons.</p>
+<p><strong>Limits:</strong> the complete 21-system list, original numerical scores, full literary citations, and conversation permalink remain unavailable. No missing rankings were invented.</p>
+<h3 id="r4-existing-hive-foundation">R4. Existing HIVE foundation</h3>
+<p>These earlier artifacts provide continuity; they are not counted among the three research conversations:</p>
+<ul>
+<li><a href="https://chatgpt.com/library?file_id=libfile_fde3_f-8ca9753173fc81919660d53fb283f12e_08dd7e10f8d081918b684a802f5b489c&amp;account_id=personal" rel="noreferrer">HIVE_Framework_and_Research_Plan.md</a> — opening framework sections reviewed for commitments, graph separation, components, and research structure.</li>
+<li><a href="https://chatgpt.com/library?file_id=libfile_fde3_f-9025f26270108191b1268b5eb56fa3aa_08dd7e10f8d081918b684a802f5b489c&amp;account_id=personal" rel="noreferrer">HIVE_Research_Synthesis_Coder_Handoff_v0.3.md</a> — previous short synthesis reviewed in full.</li>
+</ul>
+<p>This revision expands the philosophical and mythological inventory, restores all 25 project links, and makes the coder requirements and tests explicit. It also replaces the earlier blanket expectation of deterministic replay with a distinction between event replay, stochastic reruns, and deterministic computations.</p>
+</article><section class="backlinks"><h2>Referenced by <span>2</span></h2><div><a href="/hive/notes/HOME/"><span>HOME</span>HIVE framework and research vault<small>related to</small></a><a href="/hive/notes/ROADMAP/"><span>ROADMAP</span>Local build roadmap and work packages<small>related to</small></a></div></section></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#contents">Contents</a><a class="toc-h2" href="#1-mandate-and-source-coverage">1. Mandate and source coverage</a><a class="toc-h3" href="#build-intent">Build intent</a><a class="toc-h3" href="#evidence-labels">Evidence labels</a><a class="toc-h3" href="#existing-hive-commitments-to-preserve">Existing HIVE commitments to preserve</a><a class="toc-h2" href="#2-what-the-three-conversations-add-to-hive">2. What the three conversations add to HIVE</a><a class="toc-h2" href="#3-philosophy-and-mythology-translated-into-software">3. Philosophy and mythology translated into software</a><a class="toc-h3" href="#31-philosophical-and-cognitive-frameworks">3.1 Philosophical and cognitive frameworks</a><a class="toc-h3" href="#32-mythological-metaphors">3.2 Mythological metaphors</a><a class="toc-h3" href="#33-the-execution-recipe-is-the-main-bridge">3.3 The execution recipe is the main bridge</a><a class="toc-h2" href="#4-odysseus-and-the-25-project-inventory">4. Odysseus and the 25-project inventory</a><a class="toc-h3" href="#41-what-to-extract-from-odysseus">4.1 What to extract from Odysseus</a><a class="toc-h3" href="#42-odysseus-and-ajax-are-separate">4.2 Odysseus and Ajax are separate</a><a class="toc-h3" href="#43-the-recovered-25-project-catalog">4.3 The recovered 25-project catalog</a><a class="toc-h2" href="#5-fictional-hive-minds-as-architecture-stress-tests">5. Fictional hive minds as architecture stress tests</a><a class="toc-h3" href="#51-preserve-the-four-structural-categories">5.1 Preserve the four structural categories</a><a class="toc-h3" href="#52-recovered-examples-and-proposed-tests">5.2 Recovered examples and proposed tests</a><a class="toc-h3" href="#53-preserve-all-three-evaluation-axes">5.3 Preserve all three evaluation axes</a><a class="toc-h2" href="#6-proposed-architecture-and-module-boundaries">6. Proposed architecture and module boundaries</a><a class="toc-h3" href="#61-one-execution-loop-and-one-improvement-loop">6.1 One execution loop and one improvement loop</a><a class="toc-h3" href="#62-module-responsibilities">6.2 Module responsibilities</a><a class="toc-h3" href="#63-four-graphs-with-different-meanings">6.3 Four graphs with different meanings</a><a class="toc-h2" href="#7-data-contracts-and-learning-lifecycle">7. Data contracts and learning lifecycle</a><a class="toc-h3" href="#71-minimum-records">7.1 Minimum records</a><a class="toc-h3" href="#72-communication-channels">7.2 Communication channels</a><a class="toc-h3" href="#73-keep-learning-mechanisms-separately-measurable">7.3 Keep learning mechanisms separately measurable</a><a class="toc-h3" href="#74-candidate-lifecycle">7.4 Candidate lifecycle</a><a class="toc-h2" href="#8-build-sequence-and-acceptance-checks">8. Build sequence and acceptance checks</a><a class="toc-h3" href="#81-work-packages">8.1 Work packages</a><a class="toc-h3" href="#82-meaningful-acceptance-scenarios">8.2 Meaningful acceptance scenarios</a><a class="toc-h3" href="#83-measurements-and-comparison-discipline">8.3 Measurements and comparison discipline</a><a class="toc-h2" href="#9-decisions-that-remain-open">9. Decisions that remain open</a><a class="toc-h2" href="#10-research-vault-integration">10. Research vault integration</a><a class="toc-h3" href="#101-topic-first-layout">10.1 Topic-first layout</a><a class="toc-h3" href="#102-example-traceable-chain">10.2 Example traceable chain</a><a class="toc-h3" href="#103-import-record-template">10.3 Import record template</a><a class="toc-h2" href="#11-direct-instructions-to-the-coder">11. Direct instructions to the coder</a><a class="toc-h3" href="#required-return-package">Required return package</a><a class="toc-h2" href="#12-sources-and-recovery-limits">12. Sources and recovery limits</a><a class="toc-h3" href="#r1-philosophy-and-mythology">R1. Philosophy and mythology</a><a class="toc-h3" href="#r2-odysseus-and-related-projects">R2. Odysseus and related projects</a><a class="toc-h3" href="#r3-fictional-hive-minds">R3. Fictional hive minds</a><a class="toc-h3" href="#r4-existing-hive-foundation">R4. Existing HIVE foundation</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework 0.2 · Coder directions 0.4</span></a><span>Prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/updates/HIVE_Coder_Information_Packet_2026-11-20.md" download>Coder packet · 0.4</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Original vault · 0.2</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

@@ -26,7 +26,7 @@
   }
   document.querySelector('.copy-link')?.addEventListener('click', async e => {
     const button = e.currentTarget;
-    const reference = `${button.dataset.title} [${button.dataset.id}] — HIVE framework 0.2\n${document.querySelector('link[rel=canonical]').href}${location.hash}`;
+    const reference = `${button.dataset.title} [${button.dataset.id}] — ${button.dataset.series || 'HIVE framework 0.2'}\n${document.querySelector('link[rel=canonical]').href}${location.hash}`;
     try {
       if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(reference);
       else {
@@ -44,7 +44,7 @@
     const script = document.createElement('script');
     script.src = '/hive/assets/vendor/mermaid.min.js';
     script.onload = async () => {
-      mermaid.initialize({startOnLoad:false,securityLevel:'strict',theme:'base',fontFamily:'ui-sans-serif, system-ui, sans-serif',themeVariables:{primaryColor:'#edf5ee',primaryTextColor:'#183c36',primaryBorderColor:'#7da992',lineColor:'#6c8c83',secondaryColor:'#edf3f7',tertiaryColor:'#f5f8f6',fontSize:'16px'},flowchart:{htmlLabels:false,useMaxWidth:true},state:{useMaxWidth:true}});
+      mermaid.initialize({startOnLoad:false,securityLevel:'strict',theme:'base',fontFamily:'ui-sans-serif, system-ui, sans-serif',themeVariables:{primaryColor:'#f1e8fa',primaryTextColor:'#352148',primaryBorderColor:'#a77cc4',lineColor:'#9066a9',secondaryColor:'#fff1c9',tertiaryColor:'#faf6ff',fontSize:'16px'},flowchart:{htmlLabels:false,useMaxWidth:true},state:{useMaxWidth:true}});
       for (let i=0; i<diagrams.length; i++) {
         const code = diagrams[i], pre = code.parentElement;
         const figure = document.createElement('figure'); figure.className='rendered-diagram';

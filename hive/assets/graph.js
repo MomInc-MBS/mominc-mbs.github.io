@@ -7,7 +7,7 @@
   const query = document.getElementById('graph-query');
   const relation = document.getElementById('relation-filter');
   const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const palette=['#d5f68a','#88cbbb','#6fb7db','#c7a1e3','#e3b781','#89a4e2','#db9fbb','#83c2ce','#b8ba82','#a5ccc5','#bab4db','#e3c5b8','#a2b38e','#aac4d7','#bca9a0','#d4dcbd'];
+  const palette=['#f1ce73','#b68bdb','#e1bb64','#d7b6f3','#f5dd9c','#a775cb','#d4ac5e','#e1c9f2','#ccb069','#c6a6e6','#e6c681','#bd99dd','#f4e1b5','#cfb8e8','#c7a063','#ead7fa'];
   let data, byId, focus = new URLSearchParams(location.search).get('focus') || '';
   function draw() {
     const selected = byId.get(focus);
