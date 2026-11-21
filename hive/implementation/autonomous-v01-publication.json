@@ -81,5 +81,6 @@
     "tests/unit/test_subjects.py": "fe4a2c1efa8cff74903ff32d1ea8a607f50e16395cc91cb03e1d0f57e9a5ea02"
   },
   "scope": "Committed public source and evidence; private evaluator store and per-case holdout outputs excluded.",
-  "website_checks": "implementation/autonomous-v01-website-checks.json"
+  "website_checks": "implementation/autonomous-v01-website-checks.json",
+  "live_website_checks": "implementation/autonomous-v01-live-checks.json"
 }
