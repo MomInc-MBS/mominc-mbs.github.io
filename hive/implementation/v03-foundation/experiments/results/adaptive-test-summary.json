@@ -1,0 +1,10 @@
+{
+  "runtime_commit": "3d5522ae60735f3c7ffb2b754022c2ae3a328436",
+  "runtime_source_sha256": "280dbffd41e0e892532f210aa688fea99c99971dbaaa7ddb3db0de52ac9e6225",
+  "pytest_runtime": {"passed": 122, "failed": 0, "seconds": 72.61, "command": "python -m pytest -q", "log": "adaptive-pytest.txt"},
+  "pytest_exporter": {"passed": 10, "skipped": 1, "failed": 0, "seconds": 7.48, "command": "python -m pytest -q tests/unit/test_export_snapshot.py", "skip_reason": "Windows test symlink creation unavailable"},
+  "tester_army": {"passed": 2, "failed": 0, "target": "tools-only CLI", "model_calls": 0, "report": "adaptive-e2e/report.json"},
+  "labels": {"controller_tests": "synthetic adapters; no model inference", "live_experiment": "separate real Ollama run in adaptive-real-model.json"},
+  "resolved_defects": ["STOP reported as error", "wrong-job evidence substitution", "unverified partial-resume candidate cache", "non-atomic experimental incumbent decision"],
+  "initial_e2e_failure": "adaptive-e2e-initial-failure.json"
+}

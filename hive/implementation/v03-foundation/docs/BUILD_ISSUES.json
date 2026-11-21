@@ -1,0 +1,237 @@
+{
+  "source": "Ian's HIVE_ASTRA_AUTONOMOUS_BUILD_PROMPT.md, authorized 2026-11-20",
+  "target": "D:/Repos/hive-ai build/v0.3; public evidence MomInc-MBS/mominc-mbs.github.io main https://mominc.online/hive/",
+  "issues": [
+    {
+      "id": "HIVE-001",
+      "priority": "P0",
+      "owner": "ASTRA",
+      "depends": [],
+      "title": "Verify environment and real local model",
+      "evidence": "doctor JSON, exact model digest, real request/output",
+      "state": "completed"
+    },
+    {
+      "id": "HIVE-002",
+      "priority": "P0",
+      "owner": "LUNA",
+      "depends": [
+        "HIVE-001"
+      ],
+      "title": "Executable task/model/verifier/evidence vertical slice",
+      "evidence": "CLI run plus independently reproduced verifier result",
+      "state": "completed"
+    },
+    {
+      "id": "HIVE-003",
+      "priority": "P0",
+      "owner": "TERRA",
+      "depends": [
+        "HIVE-002"
+      ],
+      "title": "Durable queue, owner generation, crash recovery",
+      "evidence": "child-process crash/restart and stale-result rejection tests",
+      "state": "completed"
+    },
+    {
+      "id": "HIVE-004",
+      "priority": "P0",
+      "owner": "ASTRA",
+      "depends": [
+        "HIVE-003"
+      ],
+      "title": "Failure creates bounded discriminating next action",
+      "evidence": "Real development-model failure -> persisted tool successor -> verified pass; experiments/results/C3-real-failure-recovery.json",
+      "state": "completed"
+    },
+    {
+      "id": "HIVE-005",
+      "priority": "P0",
+      "owner": "SOL",
+      "depends": [
+        "HIVE-002"
+      ],
+      "title": "Feedback-driven fixed/greedy/UCB/random policy comparisons",
+      "evidence": "persisted valid development updates change later choices; no holdout updates",
+      "state": "completed"
+    },
+    {
+      "id": "HIVE-006",
+      "priority": "P0",
+      "owner": "ASTRA",
+      "depends": [
+        "HIVE-005"
+      ],
+      "title": "Predeclared paired experiment, three splits, ablation",
+      "evidence": "108 real calls, 18/12/24 splits, frozen replay and ablation; C5-policy-comparison.json; candidate QUARANTINED",
+      "state": "completed"
+    },
+    {
+      "id": "HIVE-007",
+      "priority": "P0",
+      "owner": "SOL/TERRA",
+      "depends": [
+        "HIVE-006"
+      ],
+      "title": "Fail-closed promotion and regression rollback",
+      "evidence": "Fail-closed gates and synthetic positive promotion/regression rollback tests; no real candidate approved",
+      "state": "completed"
+    },
+    {
+      "id": "HIVE-008",
+      "priority": "P0",
+      "owner": "GROK/NVIDIA/ASTRA",
+      "depends": [
+        "HIVE-002"
+      ],
+      "title": "Independent adversarial critique and fixes",
+      "evidence": "actual provider review receipts, counterexample regressions, accepted/rejected rationale",
+      "state": "completed"
+    },
+    {
+      "id": "HIVE-009",
+      "priority": "P0",
+      "owner": "ASTRA",
+      "depends": [
+        "HIVE-004",
+        "HIVE-006"
+      ],
+      "title": "Bounded observable worker and startup/status/stop/resume",
+      "evidence": "CLI subprocess journeys, durable resource reservations, kill switch",
+      "state": "completed"
+    },
+    {
+      "id": "HIVE-010",
+      "priority": "P0",
+      "owner": "ASTRA",
+      "depends": [
+        "HIVE-008",
+        "HIVE-009"
+      ],
+      "title": "Commit reproducible v0.1 with honest evidence and next queue",
+      "evidence": "52 passing pytest tests, passing CLI journey, real model evidence, README walkthrough; implementation commit containing this issue register",
+      "state": "completed"
+    },
+    {
+      "id": "HIVE-011",
+      "priority": "P1",
+      "owner": "SOL",
+      "depends": [
+        "HIVE-006"
+      ],
+      "title": "Compare objectives and prior sensitivity",
+      "evidence": "Alternative objective and Beta-prior sensitivity diagnostics in C5-policy-comparison.json; descriptive only",
+      "state": "completed"
+    },
+    {
+      "id": "HIVE-012",
+      "priority": "P2",
+      "owner": "SOL/LUNA",
+      "depends": [
+        "HIVE-010"
+      ],
+      "title": "Separate memory/workflow/verifier learning ablations",
+      "evidence": "new predeclared experiments, contamination controls, independent labels",
+      "state": "queued; not claimed implemented"
+    },
+    {
+      "id": "HIVE-013",
+      "priority": "P3",
+      "owner": "ASTRA",
+      "depends": [
+        "HIVE-012"
+      ],
+      "title": "Specialist fine-tuning only after sufficient data pipeline evidence",
+      "evidence": "new authorized training budget, unseen evaluation, forgetting test",
+      "state": "deferred per directive"
+    },
+    {
+      "id": "HIVE-V03-001",
+      "priority": "P0",
+      "owner": "ASTRA",
+      "title": "Pinned v0.2.1 base and bounded E0 reproduction",
+      "state": "completed_with_observability_defect",
+      "depends": [],
+      "evidence": "v03-e0-decision.json; 30 approved calls; 36 observations; fresh-process replay zero calls"
+    },
+    {
+      "id": "HIVE-V03-002",
+      "priority": "P0",
+      "owner": "LUNA/TERRA",
+      "title": "Immutable benchmark registry and exposure controls",
+      "state": "implemented_synthetic_verified",
+      "depends": [
+        "HIVE-V03-001"
+      ],
+      "evidence": "benchmark_registry.py; v03-terra-controls.json"
+    },
+    {
+      "id": "HIVE-V03-003",
+      "priority": "P0",
+      "owner": "LUNA/TERRA",
+      "title": "Integrate independent evaluator and dev-only candidate adapter",
+      "state": "queued",
+      "depends": [
+        "HIVE-V03-002"
+      ],
+      "evidence": "zero-inference campaign; actual hash binding; aggregate spending ledger"
+    },
+    {
+      "id": "HIVE-V03-004",
+      "priority": "P0",
+      "owner": "SOL/NVIDIA/GROK",
+      "title": "Inventory independent sources and freeze diagnostic E1",
+      "state": "draft_blocked",
+      "depends": [
+        "HIVE-V03-001",
+        "HIVE-V03-003"
+      ],
+      "evidence": "v03-e1-design.json; source inventory/calibration/approval missing"
+    },
+    {
+      "id": "HIVE-V03-005",
+      "priority": "P1",
+      "owner": "ASTRA/SOL",
+      "title": "Execute authorized E1 and preserve rejection-to-next-hypothesis",
+      "state": "queued",
+      "depends": [
+        "HIVE-V03-004"
+      ],
+      "evidence": "all arms, actual costs, fixed strongest baseline, new-data provenance"
+    },
+    {
+      "id": "HIVE-V03-006",
+      "priority": "P1",
+      "owner": "SOL/LUNA",
+      "title": "Chronological E2 and later mechanism ablations",
+      "state": "deferred",
+      "depends": [
+        "HIVE-V03-005"
+      ],
+      "evidence": "new future sources, no-learning control, retention, independent review"
+    },
+    {
+      "id": "HIVE-V03-007",
+      "priority": "P1",
+      "owner": "ASTRA",
+      "title": "Stale generic stop reason after adaptive resume/completion",
+      "state": "fixed_synthetic_verified",
+      "depends": [
+        "HIVE-V03-001"
+      ],
+      "evidence": "Real v0.2.1 E0 counterexample; v0.3 test_stop_resume_completion_replaces_stale_status_reason"
+    },
+    {
+      "id": "HIVE-V03-008",
+      "priority": "P1",
+      "owner": "GROK/LUNA/SOL/TERRA/ASTRA",
+      "title": "Close canonical-alias, hidden-field and E0 wrapper counterexamples",
+      "state": "fixed_synthetic_verified",
+      "depends": [
+        "HIVE-V03-002",
+        "HIVE-V03-007"
+      ],
+      "evidence": "v03-grok-review.json; registry unit and independent adversarial controls; wrapper regressions; no new real inference"
+    }
+  ]
+}

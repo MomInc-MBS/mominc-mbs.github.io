@@ -48,7 +48,7 @@
       "implementation_status": "implemented_scoped_pilot",
       "date": "2026-11-21",
       "citation_label": "HIVE empirical pilot (21 November 2026 UTC)",
-      "sha256": "53a5ef8ed3743299eac9713c3aeeed7fff33eca8d438a7df0cd47143d1de99bf",
+      "sha256": "ec91991eccfa67477f31b575de8e02a9e9c2983453e03a73c67297563487e3ed",
       "tags": [
         "hive",
         "empirical-pilot",
@@ -228,6 +228,24 @@
         "measured"
       ],
       "sha256": "a5d760c97a9db7dca9ac4d6281c86fd32c0abd7ba4b9cf1426fdf3fb8b9ee8b6"
+    },
+    {
+      "id": "V03",
+      "path": "implementation/V03_FOUNDATION.md",
+      "title": "v0.3 foundation and next experiment",
+      "type": "build",
+      "status": "experimental",
+      "evidence_status": "real_v021_reproduction_and_v03_synthetic_tests",
+      "implementation_status": "partial_foundation_E1_draft",
+      "date": "2026-11-21",
+      "citation_label": "HIVE v0.3 foundation (21 November 2026 UTC)",
+      "tags": [
+        "hive",
+        "v0.3",
+        "benchmark-integrity",
+        "experimental"
+      ],
+      "sha256": "8dd69dabf7084a5d30bf6f7a15c4cdc75f88a7aa41bf2b3c0862ed18636f7d9a"
     }
   ],
   "edges": [
@@ -560,10 +578,40 @@
       "source": "ADAPTIVE",
       "target": "CONTROLLER",
       "relation": "related_to"
+    },
+    {
+      "source": "STATUS",
+      "target": "V03",
+      "relation": "related_to"
+    },
+    {
+      "source": "CONTROLLER",
+      "target": "V03",
+      "relation": "related_to"
+    },
+    {
+      "source": "RUNS",
+      "target": "V03",
+      "relation": "related_to"
+    },
+    {
+      "source": "GAPS",
+      "target": "V03",
+      "relation": "related_to"
+    },
+    {
+      "source": "LEDGER",
+      "target": "V03",
+      "relation": "related_to"
+    },
+    {
+      "source": "RELEASES",
+      "target": "V03",
+      "relation": "related_to"
     }
   ],
   "scope": "The supplied coder packet remains revision 0.4. The adaptive-organization research handoff is a dated addendum with provisional decisions and untested proposals. Editorial links provide navigation; original source and evidence records are preserved.",
   "latest_research_id": "ADAPTIVE",
   "implementation_status_id": "STATUS",
-  "latest_implementation_id": "CONTROLLER"
+  "latest_implementation_id": "V03"
 }

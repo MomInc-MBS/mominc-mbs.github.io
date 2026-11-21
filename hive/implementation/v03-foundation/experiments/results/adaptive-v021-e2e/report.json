@@ -1,0 +1,149 @@
+{
+  "schemaVersion": "report-1",
+  "run": {
+    "id": "01a1fd1e-2613-7f5c-818d-9bda2604368a",
+    "specVersion": "0.1",
+    "runner": {
+      "name": "e2e",
+      "version": "0.21.1"
+    },
+    "status": "passed",
+    "exitCode": 0,
+    "startedAt": "2026-11-21T07:59:34.106Z",
+    "finishedAt": "2026-11-21T07:59:40.949Z",
+    "project": {
+      "id": "hive-local",
+      "configDigest": "48d3cf02481507b7d460880e730c2f9a3c298110ec437aeb1d15605bad2d093a"
+    },
+    "environment": {
+      "ci": false,
+      "trustNoticeShown": false,
+      "os": "win32 10.0.26200",
+      "arch": "x64",
+      "runtime": "node v24.19.0"
+    },
+    "vcs": {
+      "commit": "0787898b0f45f05fc84315c58eaeb5de7216bad6",
+      "branch": "build/autonomous-v0.1",
+      "dirty": true
+    },
+    "targets": [
+      {
+        "id": "cli",
+        "index": 0,
+        "platform": "tools",
+        "environment": "test",
+        "engine": {
+          "name": "none",
+          "version": "unversioned",
+          "spiVersion": 1
+        },
+        "capabilities": [],
+        "artifactCapabilities": [],
+        "stateCapability": false
+      }
+    ],
+    "serialGroups": [],
+    "results": [
+      {
+        "id": "7411f548b1290086181bccd7b7a06a6dc4ebefbe27db10dca010f3ce96c4b39a",
+        "testId": "tests/e2e/adaptive.e2e.ts::adaptive%20CLI%20resumes%20after%20STOP%20and%20retains%20completed%20evidence%20without%20new%20work%20%28synthetic%29",
+        "kind": "test",
+        "declarationIndex": 0,
+        "titlePath": [
+          "adaptive CLI resumes after STOP and retains completed evidence without new work (synthetic)"
+        ],
+        "file": "tests/e2e/adaptive.e2e.ts",
+        "source": {
+          "file": "tests/e2e/adaptive.e2e.ts",
+          "line": 28,
+          "column": 1
+        },
+        "targetId": "cli",
+        "platform": "tools",
+        "agent": "default",
+        "repeat": 0,
+        "tags": [],
+        "selected": true,
+        "status": "passed",
+        "attempts": [
+          {
+            "id": "01a1fd1e-27f5-7913-8dbc-92b9da4228aa",
+            "index": 0,
+            "status": "passed",
+            "startedAt": "2026-11-21T07:59:34.389Z",
+            "durationMs": 5146,
+            "artifacts": [],
+            "secondaryErrors": [],
+            "cleanup": "complete",
+            "steps": []
+          }
+        ]
+      },
+      {
+        "id": "4c90e4b0262f56e1d8bb470f710a86204826db27cae42b8fdf373af7eb643f4b",
+        "testId": "tests/e2e/cli.e2e.ts::CLI%20queues%2C%20stops%2C%20resumes%2C%20verifies%20and%20restores%20a%20task",
+        "kind": "test",
+        "declarationIndex": 0,
+        "titlePath": [
+          "CLI queues, stops, resumes, verifies and restores a task"
+        ],
+        "file": "tests/e2e/cli.e2e.ts",
+        "source": {
+          "file": "tests/e2e/cli.e2e.ts",
+          "line": 13,
+          "column": 1
+        },
+        "targetId": "cli",
+        "platform": "tools",
+        "agent": "default",
+        "repeat": 0,
+        "tags": [],
+        "selected": true,
+        "status": "passed",
+        "attempts": [
+          {
+            "id": "01a1fd1e-3c16-7737-ad51-5b513577da8c",
+            "index": 0,
+            "status": "passed",
+            "startedAt": "2026-11-21T07:59:39.543Z",
+            "durationMs": 1392,
+            "artifacts": [],
+            "secondaryErrors": [],
+            "cleanup": "complete",
+            "steps": []
+          }
+        ]
+      }
+    ],
+    "errors": [],
+    "summary": {
+      "discovered": 2,
+      "selected": 2,
+      "executed": 2,
+      "passed": 2,
+      "failed": 0,
+      "flaky": 0,
+      "skipped": 0
+    },
+    "limits": {
+      "maxAgentContextBytes": 16384,
+      "maxLedgerBytes": 8192,
+      "maxObservationBytes": 262144,
+      "maxEventsPerStep": 1000,
+      "maxModelTokensPerCall": 64000
+    },
+    "usage": {
+      "discoveredResults": 2,
+      "maxAgentContextBytes": 0,
+      "maxLedgerBytes": 0,
+      "maxObservationBytes": 0,
+      "artifactBytes": 0,
+      "downloads": 0,
+      "events": 0,
+      "modelTokens": 0,
+      "maxModelCallsInStep": 0,
+      "maxActionStepsInStep": 0
+    }
+  }
+}

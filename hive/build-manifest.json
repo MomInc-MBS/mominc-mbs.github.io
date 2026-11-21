@@ -19,7 +19,7 @@
       "id": "STATUS",
       "path": "implementation/CURRENT_STATE.md",
       "date": "2026-11-21",
-      "sha256": "53a5ef8ed3743299eac9713c3aeeed7fff33eca8d438a7df0cd47143d1de99bf"
+      "sha256": "ec91991eccfa67477f31b575de8e02a9e9c2983453e03a73c67297563487e3ed"
     },
     {
       "id": "CAPABILITIES",
@@ -81,12 +81,18 @@
       "revision": "0.2.1",
       "date": "2026-11-21",
       "sha256": "a5d760c97a9db7dca9ac4d6281c86fd32c0abd7ba4b9cf1426fdf3fb8b9ee8b6"
+    },
+    {
+      "id": "V03",
+      "path": "implementation/V03_FOUNDATION.md",
+      "date": "2026-11-21",
+      "sha256": "8dd69dabf7084a5d30bf6f7a15c4cdc75f88a7aa41bf2b3c0862ed18636f7d9a"
     }
   ],
   "source_zip_sha256": "2b726d055a17a25495854890d8d0001cb791006273e0f8eb5515788b7e00c61a",
   "counts": {
-    "research_pages": 299,
-    "graph_edges": 2447,
+    "research_pages": 300,
+    "graph_edges": 2453,
     "originals": 19
   },
   "scope": "Static research reference plus executable local model/tool controller evidence. No production model runtime or compounding-learning claim."

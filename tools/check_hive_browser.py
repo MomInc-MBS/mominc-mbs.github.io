@@ -16,7 +16,8 @@ errors,failed=[],[]
 views={'STATUS':'Implementation Status','RUNS':'Experiment Registry','CAPABILITIES':'Capability Registry',
        'LEARNING':'Learning Progress','LEDGER':'Decision Ledger','GAPS':'Known Gaps','RELEASES':'Change / Release History',
        'PROTOTYPE':'Autonomous local prototype — v0.1',
-       'CONTROLLER':'Adaptive verified controller — v0.2'}
+       'CONTROLLER':'Adaptive verified controller — v0.2',
+       'V03':'HIVE v0.3 foundation — 21 November 2026'}
 
 with sync_playwright() as p:
     browser=p.chromium.launch(headless=True)
@@ -42,6 +43,16 @@ with sync_playwright() as p:
     assert adaptive_download.status==200
     assert hashlib.sha256(adaptive_download.body()).hexdigest()==adaptive_publication['download_sha256']
     page.screenshot(path=str(out/'controller-desktop.png'))
+    page.goto(base+'/hive/notes/V03/')
+    expect(page.locator('.prose')).to_contain_text('1,008 generated tokens')
+    expect(page.locator('.prose')).to_contain_text('E1 cannot freeze or run yet')
+    v03_publication=json.loads(Path('hive/implementation/v03-foundation-publication.json').read_text())
+    v03_download=ctx.request.get(base+'/hive/'+v03_publication['download'])
+    assert v03_download.status==200
+    assert hashlib.sha256(v03_download.body()).hexdigest()==v03_publication['download_sha256']
+    expect(page.locator('.prose img')).to_have_count(1)
+    assert page.locator('.prose img').evaluate('(el)=>el.complete && el.naturalWidth>0')
+    page.screenshot(path=str(out/'v03-desktop.png'))
     page.goto(base+'/hive/notes/PROTOTYPE/')
     expect(page.locator('.prose')).to_contain_text('Learned candidate QUARANTINED')
     expect(page.locator('.prose table')).to_contain_text('23/24')
@@ -122,6 +133,8 @@ with sync_playwright() as p:
             page.screenshot(path=str(out/'learning-mobile.png'))
             page.goto(base+'/hive/notes/PROTOTYPE/')
             page.screenshot(path=str(out/'prototype-mobile.png'))
+            page.goto(base+'/hive/notes/V03/')
+            page.screenshot(path=str(out/'v03-mobile.png'))
     plain=browser.new_context(java_script_enabled=False)
     note=plain.new_page()
     for key in views:
@@ -133,6 +146,7 @@ assert not failed,failed
 report=dict(ok=True,base=base,views=list(views),widths=[1440,1024,900,390,320],physical_phone=False,
             no_javascript=True,search_graph=True,existing_diagrams=7,adaptive_diagram=True,adaptive_equations=2,
             prototype_download_digest=True,prototype_search_graph=True,adaptive_download_digest=True,
+            v03_download_digest=True,v03_chart_loaded=True,
             page_errors=errors,failed_requests=failed)
 (out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report,indent=2))
