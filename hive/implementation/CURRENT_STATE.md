@@ -1,5 +1,19 @@
 # Implementation Status
 
+## Latest milestone: autonomous local prototype v0.1
+
+**IMPLEMENTED / MEASURED; learned policy QUARANTINED.** A separate local HIVE
+prototype now exercises real Ollama inference, verified feedback routing, durable
+failure follow-up, crash recovery and checkpoint rollback. It passed 52 tests,
+a CLI journey, and six fresh-inference reproduction cases. No real candidate has
+been promoted; broad improvement remains unproven.
+
+[Read the complete milestone, comparisons, source and limitations](/hive/notes/PROTOTYPE/).
+Last verified for this update: **21 November 2026 UTC**. The earlier CPU caption
+pilot below retains its own scope, dates and rejected candidate.
+
+## Earlier caption-pilot record
+
 [Implementation status](/hive/notes/STATUS/) · [Experiment registry](/hive/notes/RUNS/) · [Capability registry](/hive/notes/CAPABILITIES/) · [Learning progress](/hive/notes/LEARNING/) · [Decision ledger](/hive/notes/LEDGER/) · [Known gaps](/hive/notes/GAPS/) · [Change / release history](/hive/notes/RELEASES/)
 
 **IMPLEMENTED / MEASURED, narrow local pilot.** The first empirical engine now executes caption-validation tasks, records evidence, proposes a bounded procedure from development failures, compares it with a frozen control, rejects it when benefit is absent, and tests local version rollback. The public site remains a static reference.

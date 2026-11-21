@@ -1,5 +1,18 @@
 # Decision Ledger
 
+## Autonomous v0.1 decision: publish evidence, retain quarantine
+
+The new [local prototype](/hive/notes/PROTOTYPE/) uses a small Python/SQLite worker
+and independent deterministic evaluators. Independent experiment review retains
+QUARANTINE despite a later six-case inference reproduction pass: correlated
+synthetic families and deterministic-baseline dominance remain unresolved.
+Publication ships the tested source and honest progress record; it does not install
+an experimental champion or grant new runtime permissions.
+
+Last verified for this update: **21 November 2026 UTC**.
+
+## Earlier caption-pilot decisions
+
 | Decision | Alternatives retained | Evidence / confidence | Revisit trigger |
 |---|---|---|---|
 | Use standard-library SQLite + JSON artifacts | Major graph DB, distributed event bus | Append-only/concurrent tests; high for this small local workload | Measured write/contention or retrieval bottleneck |

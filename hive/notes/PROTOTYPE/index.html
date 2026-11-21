@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Autonomous local prototype — v0.1 · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#29143f"><link rel="canonical" href="https://mominc.online/hive/notes/PROTOTYPE/">
+<meta property="og:title" content="Autonomous local prototype — v0.1 · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg?v=2" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=3"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=2"><link rel="stylesheet" href="/hive/assets/research.css?v=1">
+<script defer src="/hive/assets/hive.js?v=3"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg?v=2" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/STATUS/">Implementation</a><a href="/hive/notes/CODER/">Coder directions</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/PROTOTYPE/" aria-current=page>Local prototype - v0.1</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/PROTOTYPE/" aria-current=page>Local prototype - v0.1</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 298 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download original vault · 0.2</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=build">Local build</a><span>/</span><span>PROTOTYPE</span></div>
+<div class="doc-meta"><span class="badge">Measured</span><span class="badge neutral">Experimental quarantined</span></div><div class="doc-tools"><button class="copy-link" data-title="Autonomous local prototype — v0.1" data-id="PROTOTYPE" data-series="HIVE autonomous local prototype v0.1 (21 November 2026 UTC)">Copy reference</button><a href="/hive/implementation/AUTONOMOUS_V01.md">Markdown source</a><a href="/hive/graph/?focus=PROTOTYPE">View connections</a><button class="print-page">Print</button></div>
+<article class="prose"><h1 id="autonomous-local-prototype-v01">Autonomous local prototype — v0.1</h1>
+<p><strong>IMPLEMENTED / MEASURED. Learned candidate QUARANTINED.</strong> HIVE now has a local
+Python/SQLite executor that calls a real local model, verifies its outputs,
+retains evidence across restarts, and changes routing from development feedback.
+This is a separate experiment from the earlier <a href="/hive/notes/BASELINE/">caption pilot</a>.
+It demonstrates policy adaptation within a small synthetic suite, not general
+superiority or model-weight training. The public website remains a static record.</p>
+<p>Last verified: <strong>21 November 2026 UTC (20 November locally)</strong>.
+Source commit: <code>9c6c33170d0d94bb0aecbbadc2842ad7731136de</code> in the local HIVE repo.
+The <a href="/hive/implementation/autonomous-v01-publication.json">publication manifest</a>
+binds the exported files and download to that commit.</p>
+<h2 id="what-runs">What runs</h2>
+<ul>
+<li>A task declares measurable success criteria before execution. The CLI selects
+a model/tool route, records requests, outputs and resource usage, and checks the
+result with an independent deterministic verifier.</li>
+<li>A durable SQLite queue retains ownership, history, feedback and checkpoints.
+A real failed development task automatically queued a successful tool follow-up.
+Process-crash recovery, stop/resume, stale-owner rejection and rollback are tested.</li>
+<li>Fixed, random, greedy and UCB policies are compared. Beta reliability and
+cost-aware utility update only from valid development observations. Alternative
+objectives and prior sensitivity are descriptive diagnostics.</li>
+<li>The candidate freezes before validation. Holdout IDs are consumed before
+dispatch; validation and holdout outputs never update the policy. Promotion
+requires trusted independent evidence review. No real candidate was promoted.</li>
+</ul>
+<h2 id="recorded-experiment">Recorded experiment</h2>
+<p>One real Ollama model: <code>myr5-hold-local:latest</code>, Qwen 9B Q4_K_M, on an RTX 5070 Ti.
+Exact model digest:
+<code>a45646773d1ee8a6c1557c7de09a68e78a74f2990c4174a1408f65e777db150c</code>.
+The preregistered matrix contains <strong>18 development, 12 validation and 24 held-out
+tasks</strong>, six synthetic families, three routes, 108 model calls and 162 observations.
+The policies below replay shared outcomes; they are not separate online deployments.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Policy</th>
+<th style="text-align:right">Held-out verified passes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fixed direct model</td>
+<td style="text-align:right">12/24</td>
+</tr>
+<tr>
+<td>Learning disabled</td>
+<td style="text-align:right">12/24</td>
+</tr>
+<tr>
+<td>Seeded random</td>
+<td style="text-align:right">16/24</td>
+</tr>
+<tr>
+<td>Greedy</td>
+<td style="text-align:right">23/24</td>
+</tr>
+<tr>
+<td>UCB</td>
+<td style="text-align:right">23/24</td>
+</tr>
+<tr>
+<td>Deterministic tools</td>
+<td style="text-align:right">24/24</td>
+</tr>
+<tr>
+<td>Fixed model-plus-tool team</td>
+<td style="text-align:right">24/24</td>
+</tr>
+</tbody>
+</table></div>
+<p>The UCB-minus-direct quality difference is 0.4583; the descriptive paired 95%
+bootstrap interval is [0.25, 0.6667]. The rows share six family templates, so this
+interval cannot establish broad statistical superiority. Greedy ties UCB;
+deterministic tools outperform both. The learning-disabled comparison supports a
+within-suite contribution from learned routing, not an advantage over the best tool.</p>
+<p>The campaign generated 3,725 tokens. Selected UCB outcomes used 586 tokens and
+7.657 seconds, versus 1,053 tokens and 11.784 seconds for fixed direct, with 24
+model calls each. Tool-only used no model tokens; its near-zero recorded latency
+is below clock resolution, not physically zero compute cost. Equal per-call caps
+do not imply equal realized cost. Validation and per-category aggregates are in
+the <a href="/hive/implementation/autonomous-v01/experiments/results/C5-policy-comparison.json">full comparison</a>.</p>
+<h2 id="verification-and-decision">Verification and decision</h2>
+<p><strong>52 pytest tests passed</strong>, plus the tools-only CLI end-to-end journey and a clean
+Git-archive task/review/status check. All 162 saved outputs reverified in a fresh
+process. A separate six-case fresh-inference check matched all six original
+verified scores with an unchanged policy. These are different reproduction checks.</p>
+<p>Grok supplied adversarial code review and an independent experiment review;
+the configured NVIDIA Nemotron reviewer supplied mathematical critique.
+Recommendations were assessed against evidence, not treated as proof. Review
+findings produced fail-closed and recovery regression tests. The experiment
+review recommends <strong>QUARANTINE</strong>. Its packet preceded the later six-case inference
+check; that pass does not resolve the stronger-baseline or correlated-template limits.</p>
+<p>Positive promotion and regression rollback are exercised with explicitly synthetic
+test approvals. They do not authorize a real policy release. Website publication
+publishes source and evidence; it does not install the experimental policy.</p>
+<h2 id="source-evidence-and-reproduction">Source, evidence and reproduction</h2>
+<ul>
+<li><a href="/hive/downloads/HIVE_Autonomous_Local_v0.1_9c6c331.zip">Complete source ZIP</a></li>
+<li><a href="/hive/implementation/autonomous-v01/README.md">Run instructions</a></li>
+<li><a href="/hive/implementation/autonomous-v01/docs/EXPERIMENT_LOG.md">Build and experiment log</a></li>
+<li><a href="/hive/implementation/autonomous-v01/docs/REVIEW_DECISIONS.md">Review findings and dispositions</a></li>
+<li><a href="/hive/implementation/autonomous-v01/experiments/results/C6-live-reproduction.json">Six fresh-inference checks</a></li>
+<li><a href="/hive/implementation/autonomous-v01/experiments/results/governance-decision.json">Final governance decision</a></li>
+<li><a href="/hive/implementation/autonomous-v01/docs/NEXT_ACTIONS.md">Next experiments</a></li>
+</ul>
+<p>Extract the ZIP and follow its README. Python 3.11+ runs the core without runtime
+dependencies; pytest is needed for tests. Real inference requires local Ollama
+and the installed model. Nothing downloads a model automatically. The ZIP exports
+committed source and public evidence only: private evaluator stores, holdout labels
+and per-case holdout outputs are excluded. A new local campaign creates new evidence;
+it cannot reconstruct the original private holdout artifacts from public aggregates.</p>
+<h2 id="limits-and-next-action">Limits and next action</h2>
+<p>The build used <strong>118 of its 120 local-model requests</strong>, including probes and the
+six fresh checks. Workers are stopped. A full new comparison exceeds the remaining
+two requests. Next: preregister independent task families and a fresh holdout,
+including an incorrect-tool control, under a new bounded mission.</p>
+<p>The code-repair evaluator uses finite patch fixtures, not arbitrary repository
+editing. Memory learning, workflow learning and verifier calibration remain
+separate queued experiments. No weights were trained. Application budgets do not
+enforce OS CPU/GPU quotas on Ollama. Holdout separation is a trusted-local logical
+boundary, not protection against the filesystem owner. Repeated improvement across
+independent experiments remains unproven.</p>
+<h2 id="ongoing-publication">Ongoing publication</h2>
+<p>Ian requested live repository updates as completed work and experiments progress.
+Each verified milestone will publish its source revision, evidence, failures,
+decision, limitations and next action here. Publishing a report does not promote
+a candidate, replenish an inference budget or imply a worker is still running.</p>
+</article><section class="backlinks"><h2>Referenced by <span>9</span></h2><div><a href="/hive/notes/ADAPTIVE/"><span>ADAPTIVE</span>Adaptive organization and self-learning<small>related to</small></a><a href="/hive/notes/CAPABILITIES/"><span>CAPABILITIES</span>Capability Registry<small>related to</small></a><a href="/hive/notes/RELEASES/"><span>RELEASES</span>Change / Release History<small>related to</small></a><a href="/hive/notes/CODER/"><span>CODER</span>Coder directions — revision 0.4<small>related to</small></a><a href="/hive/notes/LEDGER/"><span>LEDGER</span>Decision Ledger<small>related to</small></a><a href="/hive/notes/RUNS/"><span>RUNS</span>Experiment Registry<small>related to</small></a><a href="/hive/notes/STATUS/"><span>STATUS</span>Implementation Status<small>related to</small></a><a href="/hive/notes/GAPS/"><span>GAPS</span>Known Gaps<small>related to</small></a><a href="/hive/notes/LEARNING/"><span>LEARNING</span>Learning Progress<small>related to</small></a></div></section></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#what-runs">What runs</a><a class="toc-h2" href="#recorded-experiment">Recorded experiment</a><a class="toc-h2" href="#verification-and-decision">Verification and decision</a><a class="toc-h2" href="#source-evidence-and-reproduction">Source, evidence and reproduction</a><a class="toc-h2" href="#limits-and-next-action">Limits and next action</a><a class="toc-h2" href="#ongoing-publication">Ongoing publication</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework 0.2 · Coder directions 0.4</span></a><span>Prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/updates/HIVE_Research_Update_Adaptive_Organization_and_Self_Learning_2026-11-20.md" download>Research update</a><a href="/hive/updates/HIVE_Coder_Information_Packet_2026-11-20.md" download>Coder packet · 0.4</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Original vault · 0.2</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

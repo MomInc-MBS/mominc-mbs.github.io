@@ -1,5 +1,18 @@
 # Change / Release History
 
+## 2026-11-20 local / 2026-11-21 UTC ? autonomous prototype v0.1
+
+Ian requested live repository updates for completed progress and experiments.
+Published the exact source snapshot `9c6c331`, downloadable ZIP, full public
+experiment evidence and [prototype milestone](/hive/notes/PROTOTYPE/), linked from
+implementation status, the experiment registry, search and graph. 52 runtime tests,
+the CLI journey and six fresh-inference checks pass. The learned candidate remains
+QUARANTINED; the prior caption-pilot rejection remains intact. Private evaluator
+stores and per-case holdout outputs are not published. Workers are stopped after
+118/120 local calls; the next broader experiment requires a new bounded mission.
+
+Last verified for this update: **21 November 2026 UTC**.
+
 ## 2026-11-20 local / 2026-11-21 UTC — empirical pilot
 
 **Website publication approved by Ian. Experimental candidate remains undeployed.** Base `60b1412`; release through [PR #46](https://github.com/MomInc-MBS/mominc-mbs.github.io/pull/46).
