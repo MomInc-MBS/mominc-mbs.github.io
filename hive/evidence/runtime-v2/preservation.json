@@ -1,0 +1,9 @@
+{
+  "files_checked": 696,
+  "unchanged": 696,
+  "changed": [],
+  "original_archives_fixtures_prior_evidence_unchanged": true,
+  "baseline_ref": "preservation-baseline.json",
+  "snapshot_sha256": "cfc8ae73e3b8849441d1945886f0277d09b3fc6f5880350914c05ce89521aa73",
+  "graph_extension": "hive/implementation/runtime-v2/research_graph_overlay.json; immutable base untouched"
+}

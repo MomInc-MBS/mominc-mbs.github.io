@@ -1,0 +1,89 @@
+{
+  "task": {
+    "task_id": "caller-submitted-demo",
+    "task_type": "caption-validation",
+    "input_ref": "sample.srt",
+    "input_hash": "f67425ff54820d9f3424fa35e70e06736b3db1f5497373b77b5d910b8e3c9489",
+    "success_criteria_version": "caption-rubric-1",
+    "permissions": [
+      "read-fixture",
+      "run-ffprobe"
+    ],
+    "resource_budget": {
+      "wall_seconds": 3,
+      "input_bytes": 65536,
+      "concurrency": 1
+    },
+    "split_id": "live",
+    "created_at": "2026-11-21T05:35:20.520911+00:00"
+  },
+  "episode": {
+    "actual": true,
+    "config_id": "rules",
+    "episode_id": "9f742206d03b43968bf29a1775bbc5a7",
+    "errors": [],
+    "expected": true,
+    "family": "caption",
+    "input_hash": "f67425ff54820d9f3424fa35e70e06736b3db1f5497373b77b5d910b8e3c9489",
+    "input_ref": "inputs/f67425ff54820d9f3424fa35e70e06736b3db1f5497373b77b5d910b8e3c9489.srt",
+    "output_hash": "f16f9ebe4fa5222b84e4a0ef187952d2d748a6f01acd34b87b2ee9c59a2453c2",
+    "output_ref": "outputs/f16f9ebe4fa5222b84e4a0ef187952d2d748a6f01acd34b87b2ee9c59a2453c2.json",
+    "passed": true,
+    "policy_hash": "ec4bb5e930877a87aa9b709de4a3601b00063481d2d57732a24d4cfbd659b4fa",
+    "resources": {
+      "cpu_seconds": 0.09375,
+      "peak_rss_bytes": 23687168,
+      "scope": "worker process only; ffprobe child/GPU attribution unavailable"
+    },
+    "source_group": "caller-submitted-demo",
+    "split_id": "live",
+    "status": "completed",
+    "task_hash": "001140d3fed5d08f811d64327f7e7efcd15d4899867594968183f4681067ea86",
+    "task_id": "caller-submitted-demo",
+    "timings": {
+      "adapter_seconds": 0.11371569999027997,
+      "verification_seconds": 0.000602099928073585,
+      "wall_seconds": 0.12836710002738982
+    }
+  },
+  "audit": {
+    "ok": true,
+    "episodes": 1,
+    "verified": 1,
+    "chain_head": "42900d5a2f586f661d7db2dd9c17c5fd670cb98b4ce911ae9785815c5c3d92a8"
+  },
+  "policy_after_restart": {
+    "allowed": [
+      "rules",
+      "probe",
+      "combined"
+    ],
+    "estimates": {
+      "combined": {
+        "cost": 0,
+        "latency": 0,
+        "p": 0.99,
+        "risk": 0
+      },
+      "probe": {
+        "cost": 0,
+        "latency": 0,
+        "p": 0.5,
+        "risk": 0
+      },
+      "rules": {
+        "cost": 0,
+        "latency": 0,
+        "p": 1,
+        "risk": 0
+      }
+    },
+    "policy_id": "rules-baseline-2",
+    "weights": {
+      "cost": 0.1,
+      "latency": 0.1,
+      "risk": 1,
+      "value": 1
+    }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "candidate_id": "probe-guard",
+  "parent_version": "probe",
+  "change_type": "procedure",
+  "diff_or_artifact_ref": "captions.execute:probe-guard",
+  "hypothesis": "Reject invalid timing/structure before ffprobe; reduce false acceptance and unnecessary tool calls.",
+  "training_data_refs": [
+    "11a1319969744b588257fdf49cb5c00b",
+    "03121b41a9af4c63b3b06d034bf83552",
+    "035da4d9775d4b3cb75796995f644aa1",
+    "cdb7e5151dd24340863d81f16c1e2bdd",
+    "81c0c61e21f640cca6f33db78c3b9780",
+    "e140e1a9ff96400fb5a76ad671721318",
+    "8b8f7d5dbfe642dcaab5adc6cd758d3a",
+    "75187ce3ebc7415a92c7f64792721b2d",
+    "26235233a9204b9c8ae6b16978ed54b6",
+    "83b701626b3f40ac8806ce7278bc9d06",
+    "fe4eb8e62c734ae7896424aedd2ee458",
+    "7d6e78d0c3ee44a8995199ebaa0992a1",
+    "ac092093a6e84e62bdc1614effb19377",
+    "f1a9de3e51934b669abe05aa261d57d7",
+    "f485ec683c61459ea5b5cd93fd86045a",
+    "4510f6379a26434991e7acdf02fb0144",
+    "67873c34270b4571a2ce5ed76304c6db",
+    "3ac48715b4eb4e6c9f69fb5163b3ad6a",
+    "3c9eb6f08ad64ee1a360ff3abf55dcf5",
+    "51d6a161214d4d8cbd44b42d84fb5d3b",
+    "5d41c8d24f0b4fde8fc0d041d326f0fb",
+    "95dc2d6df8ee427984b6fe50c61ea1fc",
+    "60b76b07c42f418bb9929c323d4a3b4b",
+    "c3554b4067c94489aa872732f4a5e8a4",
+    "947f4970351f44cb8a0cce6146d084c3",
+    "9e05e2e6279842bdbcfeaa1962b220f7",
+    "82878086356540c2af2927890a94e8c7",
+    "877d87802861438bb851d2ff27a443b9",
+    "72e6815bca324bff9461163d80591790",
+    "d6e279386d83413e97d8f5b06c345df7",
+    "4cb74f0d108d4264a8f97ee5075ca82f",
+    "f3fc1d1ba67647b89d379ea9b0b4637e"
+  ],
+  "scope": "local-staging",
+  "procedure": {
+    "before": [
+      "ffprobe"
+    ],
+    "after": [
+      "rules",
+      "ffprobe-only-if-rules-pass"
+    ],
+    "allowed_code": "captions-1"
+  },
+  "policy": {
+    "policy_id": "fixed-probe-guard",
+    "allowed": [
+      "probe-guard"
+    ],
+    "estimates": {
+      "probe-guard": {
+        "p": 1,
+        "cost": 0,
+        "latency": 0,
+        "risk": 0
+      }
+    },
+    "weights": {
+      "value": 1,
+      "cost": 0.1,
+      "latency": 0.1,
+      "risk": 1
+    }
+  },
+  "comparison_baseline": "rules"
+}

@@ -1,0 +1,5 @@
+{
+  "scope": "worker process only; not total process tree or GPU",
+  "mean_worker_cpu_seconds": 0.11127387152777778,
+  "peak_worker_rss_bytes": 24190976
+}

@@ -1,0 +1,43 @@
+{
+  "schema_version": "hive-research-overlay-1",
+  "base_graph": "hive/vault/99_Data/research_graph.json",
+  "base_sha256": "3c1961d0bdc3bdf01dec06875b8726c3d2695527709e056472ddb9e4e8a0edc3",
+  "nodes": [
+    {
+      "id": "RUNTIME2",
+      "title": "Runtime v2 and bounded learning acceleration",
+      "type": "build",
+      "path": "70_Local_Build/B09_Runtime_v2_and_Learning_Acceleration.md",
+      "status": "implemented_local",
+      "evidence_status": "scoped_local_measurement",
+      "implementation_status": "tested_local_not_deployed"
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge_runtime2_home",
+      "source": "RUNTIME2",
+      "target": "HOME",
+      "relation": "subtopic_of"
+    },
+    {
+      "id": "edge_runtime2_roadmap",
+      "source": "RUNTIME2",
+      "target": "ROADMAP",
+      "relation": "implements"
+    },
+    {
+      "id": "edge_runtime2_b01",
+      "source": "RUNTIME2",
+      "target": "B01",
+      "relation": "grounded_in"
+    },
+    {
+      "id": "edge_runtime2_decisions",
+      "source": "RUNTIME2",
+      "target": "DECISIONS",
+      "relation": "tested_by"
+    }
+  ],
+  "scope": "Additive research metadata only. Preserve the supplied base export unchanged; execution authority remains separate."
+}
