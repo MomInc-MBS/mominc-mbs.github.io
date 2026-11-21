@@ -1,0 +1,21 @@
+{
+  "ok": true,
+  "vault": "C:\\Users\\ianmy\\Documents\\Codex\\hive-release-20261120\\hive\\vault",
+  "counts": {
+    "graph_nodes": 287,
+    "graph_edges": 2385,
+    "generated_markdown_nodes": 287,
+    "markdown_links_checked": 1815,
+    "external_links_ignored": 416,
+    "wikilinks_checked": 0,
+    "archive_files": 19,
+    "archive_bytes": 2553357,
+    "canvas_nodes": 20,
+    "canvas_edges": 17,
+    "reachable_nodes": 287,
+    "orphan_nodes": 0
+  },
+  "error_count": 0,
+  "errors": [],
+  "implementation_links_checked": 36
+}

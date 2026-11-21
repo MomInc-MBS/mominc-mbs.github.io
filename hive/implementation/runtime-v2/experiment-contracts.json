@@ -1,0 +1,304 @@
+{
+  "ComputeBudget": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:hive:ComputeBudget:1",
+    "type": "object",
+    "properties": {
+      "max_trials": {
+        "type": "integer"
+      },
+      "task_calls": {
+        "type": "integer"
+      },
+      "wall_seconds": {
+        "type": "number"
+      },
+      "concurrency": {
+        "type": "integer"
+      },
+      "retry_cap": {
+        "type": "integer"
+      },
+      "dollars": {
+        "type": "number"
+      },
+      "gpu_seconds": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "max_trials",
+      "task_calls",
+      "wall_seconds",
+      "concurrency",
+      "retry_cap",
+      "dollars",
+      "gpu_seconds"
+    ],
+    "additionalProperties": false
+  },
+  "MetricDefinition": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:hive:MetricDefinition:1",
+    "type": "object",
+    "properties": {
+      "metric_id": {
+        "type": "string"
+      },
+      "unit": {
+        "type": "string"
+      },
+      "direction": {
+        "type": "string"
+      },
+      "scope": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "metric_id",
+      "unit",
+      "direction",
+      "scope"
+    ],
+    "additionalProperties": false
+  },
+  "DatasetSplit": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:hive:DatasetSplit:1",
+    "type": "object",
+    "properties": {
+      "dataset_hash": {
+        "type": "string"
+      },
+      "dev_ids": {
+        "type": "array"
+      },
+      "evaluation_ids": {
+        "type": "array"
+      },
+      "holdout_status": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "dataset_hash",
+      "dev_ids",
+      "evaluation_ids",
+      "holdout_status"
+    ],
+    "additionalProperties": false
+  },
+  "ExperimentSpec": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:hive:ExperimentSpec:1",
+    "type": "object",
+    "properties": {
+      "experiment_id": {
+        "type": "string"
+      },
+      "seeds": {
+        "type": "array"
+      },
+      "arms": {
+        "type": "array"
+      },
+      "trials_per_arm": {
+        "type": "integer"
+      },
+      "evaluation_trials": {
+        "type": "integer"
+      },
+      "budget_scope": {
+        "type": "string"
+      },
+      "budget": {
+        "type": "object"
+      },
+      "aggregate_budget": {
+        "type": "object"
+      },
+      "dataset": {
+        "type": "object"
+      },
+      "metrics": {
+        "type": "array"
+      },
+      "source_hashes": {
+        "type": "object"
+      },
+      "selection_rule": {
+        "type": "string"
+      },
+      "environment": {
+        "type": "object"
+      }
+    },
+    "required": [
+      "experiment_id",
+      "seeds",
+      "arms",
+      "trials_per_arm",
+      "evaluation_trials",
+      "budget_scope",
+      "budget",
+      "aggregate_budget",
+      "dataset",
+      "metrics",
+      "source_hashes",
+      "selection_rule",
+      "environment"
+    ],
+    "additionalProperties": false
+  },
+  "CandidateLineage": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:hive:CandidateLineage:1",
+    "type": "object",
+    "properties": {
+      "candidate_hash": {
+        "type": "string"
+      },
+      "parent_hash": {
+        "type": "string"
+      },
+      "method": {
+        "type": "string"
+      },
+      "seed": {
+        "type": "integer"
+      },
+      "generation": {
+        "type": "integer"
+      },
+      "development_trial_refs": {
+        "type": "array"
+      },
+      "recipe": {
+        "type": "object"
+      }
+    },
+    "required": [
+      "candidate_hash",
+      "parent_hash",
+      "method",
+      "seed",
+      "generation",
+      "development_trial_refs",
+      "recipe"
+    ],
+    "additionalProperties": false
+  },
+  "TrialResult": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:hive:TrialResult:1",
+    "type": "object",
+    "properties": {
+      "trial_id": {
+        "type": "string"
+      },
+      "arm": {
+        "type": "string"
+      },
+      "seed": {
+        "type": "integer"
+      },
+      "index": {
+        "type": "integer"
+      },
+      "phase": {
+        "type": "string"
+      },
+      "candidate_hash": {
+        "type": "string"
+      },
+      "status": {
+        "type": "string"
+      },
+      "reason": {
+        "type": "string"
+      },
+      "task_count": {
+        "type": "integer"
+      },
+      "successes": {
+        "type": "integer"
+      },
+      "charged_calls": {
+        "type": "integer"
+      },
+      "mean_wall_seconds": {
+        "type": "number"
+      },
+      "wall_seconds": {
+        "type": "number"
+      },
+      "cpu_seconds": {
+        "type": "number"
+      },
+      "peak_rss_bytes": {
+        "type": "integer"
+      },
+      "cost_known": {
+        "type": "boolean"
+      },
+      "state_ref": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "trial_id",
+      "arm",
+      "seed",
+      "index",
+      "phase",
+      "candidate_hash",
+      "status",
+      "reason",
+      "task_count",
+      "successes",
+      "charged_calls",
+      "mean_wall_seconds",
+      "wall_seconds",
+      "cpu_seconds",
+      "peak_rss_bytes",
+      "cost_known",
+      "state_ref"
+    ],
+    "additionalProperties": false
+  },
+  "PromotionDecision": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:hive:PromotionDecision:1",
+    "type": "object",
+    "properties": {
+      "candidate_hash": {
+        "type": "string"
+      },
+      "eligible": {
+        "type": "boolean"
+      },
+      "gates": {
+        "type": "object"
+      },
+      "evidence_ref": {
+        "type": "string"
+      },
+      "authority": {
+        "type": "string"
+      },
+      "deployed": {
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "candidate_hash",
+      "eligible",
+      "gates",
+      "evidence_ref",
+      "authority",
+      "deployed"
+    ],
+    "additionalProperties": false
+  }
+}

@@ -1,0 +1,2 @@
+# Optional CPU-only proposal generator; never imported by the core runtime.
+optuna==5.1.0

@@ -1,0 +1,22 @@
+{
+  "audit.json": {
+    "bytes": 193,
+    "sha256": "196cf7be8e24e2b8105c858a0b82fcdc143cd519dfad93f38d12e36f5666aee7"
+  },
+  "experiment.json": {
+    "bytes": 7498,
+    "sha256": "c0a2c697b417117e900c67ca244790ec1da04f9e42f25f9d73b68efa40554e05"
+  },
+  "reproduce.zip": {
+    "bytes": 7151447,
+    "sha256": "d4fc0e88f5a008dc42aa25fcb408a2defffe7bd800bd8e79bd34cab2b2ca5539"
+  },
+  "results.json": {
+    "bytes": 44670,
+    "sha256": "49199f3ab0b571badf2b8969135f0c3e2fab457e3ee69e726643646a944740b1"
+  },
+  "search-events.jsonl": {
+    "bytes": 181321,
+    "sha256": "342632fdf5eb8996dd9e4c71e25c20798feee093b8d8821ecd67776b3ed73dc0"
+  }
+}

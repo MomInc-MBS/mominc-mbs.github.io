@@ -1,0 +1,9 @@
+{
+  "command": "HIVE_OPTUNA_PYTHON=isolated-pinned-env python -m unittest tools.hive_engine.test_engine tools.hive_engine.test_runtime tools.hive_engine.test_governor tools.hive_engine.test_search -v",
+  "tests": 38,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "elapsed_seconds": 31.032,
+  "observation": "Captured runner output: Ran 38 tests in 31.032s; OK. Includes actual Optuna process. Positive acceptance uses injected faults and is not learning evidence."
+}
