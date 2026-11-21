@@ -39,6 +39,27 @@
     } catch { toast('Copy unavailable. Use the page URL to reference this note.'); }
   });
   document.querySelector('.print-page')?.addEventListener('click', () => window.print());
+  const formulas = [...document.querySelectorAll('pre > code.language-math')];
+  if (formulas.length) {
+    const style = document.createElement('link');
+    style.rel = 'stylesheet'; style.href = '/hive/assets/vendor/katex/katex.min.css';
+    document.head.append(style);
+    const script = document.createElement('script');
+    script.src = '/hive/assets/vendor/katex/katex.min.js';
+    script.onload = () => {
+      formulas.forEach(code => {
+        const figure = document.createElement('figure'); figure.className = 'rendered-formula';
+        const view = document.createElement('div'); view.className = 'formula-view';
+        try {
+          katex.render(code.textContent, view, {displayMode:true,throwOnError:true,trust:false,strict:'error'});
+          const source = document.createElement('details');
+          const title = document.createElement('summary'); title.textContent = 'Formula source'; source.append(title);
+          const pre = code.parentElement; pre.replaceWith(figure); source.append(pre); figure.append(view,source);
+        } catch { /* Preserve the readable source if typesetting is unavailable. */ }
+      });
+    };
+    document.head.append(script);
+  }
   const diagrams = [...document.querySelectorAll('pre > code.language-mermaid')];
   if (diagrams.length) {
     const script = document.createElement('script');

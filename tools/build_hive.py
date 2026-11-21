@@ -19,6 +19,7 @@ from urllib.parse import quote, unquote, urlsplit
 
 import yaml
 from markdown_it import MarkdownIt
+from markdown_it.token import Token
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'hive'
@@ -42,8 +43,9 @@ LABELS = {
     'scoped_claim_with_links': 'Scoped claim with links', 'artifact_checks': 'Artifact checks',
     'not_implemented': 'Not implemented', 'generated': 'Generated',
     'proposed_implementation': 'Proposed implementation',
+    'research_synthesis_and_provisional_decision': 'Research synthesis · Provisional decision',
 }
-NAV = [('HOME', 'Start here'), ('CODER', 'Coder directions · 0.4'), ('FRAMEWORK', 'The framework'), ('MAP', 'Research map'),
+NAV = [('HOME', 'Start here'), ('ADAPTIVE', 'Latest research update'), ('CODER', 'Coder directions · 0.4'), ('FRAMEWORK', 'The framework'), ('MAP', 'Research map'),
        ('DECISIONS', 'Open decisions'), ('EVIDENCE', 'Evidence & disagreement'),
        ('HISTORY', 'Previous work'), ('ROADMAP', 'Build roadmap'), ('ARCHIVE', 'Original documents')]
 
@@ -93,7 +95,8 @@ def main():
             raise ValueError('Update source digest mismatch: ' + entry['path'])
         if entry['id'] in nodes:
             raise ValueError('Update ID would overwrite original research: ' + entry['id'])
-        node = dict(entry, body=source.read_text(encoding='utf-8'), source_url=BASE + entry['path'])
+        _, body = frontmatter(source.read_text(encoding='utf-8'))
+        node = dict(entry, body=body, source_url=BASE + entry['path'])
         nodes[node['id']] = node
         by_path[node['path']] = node
     for i, edge in enumerate(updates['edges']):
@@ -101,6 +104,7 @@ def main():
             raise ValueError('Unknown update relationship endpoint')
         graph['edges'].append(dict(id=f'update_0_4_{i + 1:03}', **edge))
     current_coder = nodes[updates['current_coder_id']]
+    latest_research = nodes[updates['latest_research_id']]
     # Originals receive a reading view as well as their byte-identical download.
     originals = []
     for p in sorted((vault / '90_Archive/Originals').glob('*')):
@@ -111,6 +115,10 @@ def main():
                      implementation_status='historical', body=p.read_text(encoding='utf-8'), tags=[])
             by_path[n['path']] = n
             originals.append(n)
+
+    wiki_paths = defaultdict(list)
+    for n in by_path.values():
+        wiki_paths[Path(n['path']).stem.casefold()].append(n)
 
     def resolve(path, current):
         parsed = urlsplit(path)
@@ -123,8 +131,25 @@ def main():
     # A small heading index gives every rendered section a stable anchor.
     def render(node):
         md = MarkdownIt('commonmark', {'html': False}).enable('table').enable('strikethrough')
-        tokens = md.parse(node['body'])
+        body = re.sub(r'^\\\[[ \t]*\n([\s\S]*?)\n\\\][ \t]*$',
+                      lambda m: '```math\n' + m[1] + '\n```', node['body'], flags=re.M)
+        # Table separators inside mathematical/code notation are content, not
+        # additional columns. Fenced examples retain their exact visible text.
+        lines, fence = [], None
+        for line in body.splitlines():
+            marker = re.match(r'^\s{0,3}(`{3,}|~{3,})', line)
+            if marker:
+                if fence is None:
+                    fence = marker[1]
+                elif marker[1][0] == fence[0] and len(marker[1]) >= len(fence):
+                    fence = None
+            elif fence is None and line.lstrip().startswith('|'):
+                line = re.sub(r'`[^`]+`', lambda m: re.sub(r'(?<!\\)\|', r'\\|', m[0]), line)
+            lines.append(line)
+        body = '\n'.join(lines)
+        tokens = md.parse(body)
         toc, seen = [], Counter()
+        missing_sources = set()
         for i, t in enumerate(tokens):
             if t.type == 'heading_open':
                 title = tokens[i + 1].content
@@ -136,6 +161,35 @@ def main():
                 t.attrSet('id', anchor)
                 if t.tag in ('h2', 'h3'):
                     toc.append((t.tag, anchor, title))
+            # Wiki references resolve only to actual supplied documents. A missing
+            # source points to an explicit gap record rather than an invented page.
+            if t.type == 'inline':
+                expanded = []
+                for child in t.children or []:
+                    if child.type != 'text' or '[[' not in child.content:
+                        expanded.append(child)
+                        continue
+                    start = 0
+                    for match in re.finditer(r'\[\[([^\[\]\n]+)\]\]', child.content):
+                        prefix = Token('text', '', 0)
+                        prefix.content = child.content[start:match.start()]
+                        expanded.append(prefix)
+                        name = match[1]
+                        candidates = wiki_paths.get(name.removesuffix('.md').casefold(), [])
+                        link = Token('link_open', 'a', 1)
+                        link.attrSet('href', url(candidates[0]) if len(candidates) == 1 else '#source-gaps')
+                        if len(candidates) != 1:
+                            missing_sources.add(name)
+                            link.attrSet('class', 'source-gap-link')
+                            link.attrSet('title', 'Source file not supplied; see source gaps below')
+                        text = Token('text', '', 0)
+                        text.content = name
+                        expanded.extend([link, text, Token('link_close', 'a', -1)])
+                        start = match.end()
+                    suffix = Token('text', '', 0)
+                    suffix.content = child.content[start:]
+                    expanded.append(suffix)
+                t.children = expanded
             for child in (t.children or []):
                 if child.type == 'link_open':
                     href = child.attrGet('href')
@@ -147,6 +201,11 @@ def main():
                     child.attrSet('loading', 'lazy')
         result = md.renderer.render(tokens, md.options, {})
         result = re.sub(r'<table>(.*?)</table>', r'<div class="table-wrap" tabindex="0">' + r'<table>\1</table></div>', result, flags=re.S)
+        if missing_sources:
+            names = ''.join(f'<li>{esc(name)}</li>' for name in sorted(missing_sources))
+            result += f'<section class="source-gaps" id="source-gaps"><h2>Source files not supplied</h2><p>The update names these documents, but they are not included in the supplied reference materials. Their underlying claims and duplicate-file hashes have not been independently checked for this publication.</p><ul>{names}</ul></section>'
+            toc.append(('h2', 'source-gaps', 'Source files not supplied'))
+        node['unresolved_sources'] = sorted(missing_sources)
         return '\n'.join(line.rstrip() for line in result.split('\n')), toc
 
     def shell(title, content, path, active='', description='', extra='', body_class=''):
@@ -156,16 +215,16 @@ def main():
 <title>{esc(title)} · HIVE</title><meta name="description" content="{esc(description or 'The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.')}">
 <meta name="theme-color" content="#29143f"><link rel="canonical" href="{ORIGIN}{path}">
 <meta property="og:title" content="{esc(title)} · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
-<link rel="icon" href="{BASE}assets/hive.svg?v=2" type="image/svg+xml"><link rel="stylesheet" href="{BASE}assets/hive.css?v=2"><link rel="stylesheet" href="{BASE}assets/diagrams.css?v=2">
-<script defer src="{BASE}assets/hive.js?v=2"></script>{extra}</head>
+<link rel="icon" href="{BASE}assets/hive.svg?v=2" type="image/svg+xml"><link rel="stylesheet" href="{BASE}assets/hive.css?v=3"><link rel="stylesheet" href="{BASE}assets/diagrams.css?v=2"><link rel="stylesheet" href="{BASE}assets/research.css?v=1">
+<script defer src="{BASE}assets/hive.js?v=3"></script>{extra}</head>
 <body class="{body_class}"><a class="skip" href="#main">Skip to content</a>
 <header class="masthead"><a class="brand" href="{BASE}" aria-label="HIVE home"><img src="{BASE}assets/hive.svg?v=2" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
-<nav class="topnav" aria-label="Primary"><a href="{url(nodes['FRAMEWORK'])}">Framework</a><a href="{BASE}explore/">Explore</a><a href="{BASE}graph/">Graph</a><a href="{url(current_coder)}">Coder directions</a></nav>
+<nav class="topnav" aria-label="Primary"><a href="{url(nodes['FRAMEWORK'])}">Framework</a><a href="{BASE}explore/">Explore</a><a href="{BASE}graph/">Graph</a><a href="{url(current_coder)}">Coder directions</a><a href="{url(latest_research)}">Research update</a></nav>
 <a class="search-trigger" href="{BASE}search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
 <button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
 <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden>{navlinks}<a href="{BASE}explore/">Browse all pages</a><a href="{BASE}graph/">Interactive graph</a></nav>
 {content}
-<footer class="footer"><a class="footer-brand" href="{BASE}">HIVE <span>/ Framework 0.2 · Coder directions 0.4</span></a><span>Prepared for Ian Myers · 20 Nov 2026</span><div><a href="{source_url(current_coder)}" download>Coder packet · 0.4</a><a href="{BASE}downloads/HIVE_Framework_Research_Vault.zip" download>Original vault · 0.2</a><a href="{BASE}llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<footer class="footer"><a class="footer-brand" href="{BASE}">HIVE <span>/ Framework 0.2 · Coder directions 0.4</span></a><span>Prepared for Ian Myers · 20 Nov 2026</span><div><a href="{source_url(latest_research)}" download>Research update</a><a href="{source_url(current_coder)}" download>Coder packet · 0.4</a><a href="{BASE}downloads/HIVE_Framework_Research_Vault.zip" download>Original vault · 0.2</a><a href="{BASE}llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
 <div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>'''
 
     OUT.mkdir(exist_ok=True)
@@ -200,7 +259,11 @@ def main():
             notice += f'<p class="update-notice">Coder directions have been updated. <a href="{url(current_coder)}">Read the current revision 0.4 handoff</a>. This page preserves the earlier framework 0.2 material.</p>'
         if node['id'] == current_coder['id']:
             notice += '<p class="update-notice"><strong>Current coder directions · Revision 0.4.</strong> The full supplied packet follows, including its evidence labels, unresolved choices, and source-recovery limits.</p>'
-        citation_version = f'HIVE coder directions {node["revision"]}' if node.get('revision') else 'HIVE framework 0.2'
+        if node['id'] in ('CODER', 'FRAMEWORK', 'ROADMAP', 'HOME', 'D02', 'D05', 'D07', 'D09', 'B07'):
+            notice += f'<p class="research-notice"><strong>Latest research addendum.</strong> <a href="{url(latest_research)}">Adaptive organization and self-learning</a> adds provisional organizational direction, learning priorities, formula candidates, and proposed tests. Read it alongside this earlier material.</p>'
+        if node['id'] == latest_research['id']:
+            notice += '<p class="research-notice"><strong>Latest research update · 20 November 2026.</strong> This is a research synthesis and provisional design handoff. Proposed mechanisms and experiments are not implementation or benchmark evidence.</p>'
+        citation_version = node.get('citation_label') or (f'HIVE coder directions {node["revision"]}' if node.get('revision') else 'HIVE framework 0.2')
         content = f'''<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p>{navlinks}<div class="sidebar-rule"></div><a href="{BASE}explore/">Browse all {len(nodes)} pages</a><a href="{BASE}explore/?type=experiment">Experiments</a><a href="{BASE}explore/?type=source">Primary sources</a><a href="{BASE}explore/?type=legacy_catalog_entry">100-project catalog</a><a href="{BASE}downloads/HIVE_Framework_Research_Vault.zip" download>Download original vault · 0.2</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
 <main id="main" class="doc-main"><div class="breadcrumb"><a href="{BASE}">HIVE</a><span>/</span><a href="{BASE}explore/?type={node['type']}">{esc(label(node['type']))}</a><span>/</span><span>{esc(node['id'])}</span></div>
 <div class="doc-meta">{status}</div><div class="doc-tools"><button class="copy-link" data-title="{esc(node['title'])}" data-id="{esc(node['id'])}" data-series="{esc(citation_version)}">Copy reference</button><a href="{source_url(node)}">Markdown source</a>{graph_link}<button class="print-page">Print</button></div>
@@ -218,10 +281,10 @@ def main():
     home = f'''<main id="main"><section class="hero"><div class="hero-copy"><div class="eyebrow light">MOM INC. / RESEARCH & SYSTEMS</div><p class="revision">Coder directions 0.4 <span>Framework 0.2</span></p><h1>Many specialists.<br>One evolving <em>HIVE.</em></h1><p class="hero-deck">A framework for systems that assemble specialists, learn from verified experience, and improve how they work together.</p><p class="hero-sub">Follow the ideas. Inspect the evidence. Keep the alternatives open.</p><div class="hero-actions"><a class="button primary" href="{url(current_coder)}">Read coder directions</a><a class="button ghost" href="{BASE}explore/">Explore the vault</a></div></div>
 <div class="hero-system" aria-label="Proposed HIVE learning loop"><div class="system-caption">THE PROPOSED LEARNING LOOP</div><div class="system-core"><img src="{BASE}assets/hive.svg?v=2" width="56" height="56" alt=""><strong>HIVE</strong><span>State · selection · resources</span></div><div class="system-stages"><span>Specialists & tools</span><b>+</b><span>Verification</span><b>+</b><span>Evidence & experience</span></div><div class="system-return"><span>Candidate learning</span><span>Retention tests</span><span>Version registry</span></div><div class="system-foot">A candidate is promoted only after its gates pass.</div></div></section>
 <div class="stats-strip"><div><strong>{len(nodes)}</strong><span>linked research pages</span></div><div><strong>{count['topic']}</strong><span>research topics</span></div><div><strong>{count['experiment']}</strong><span>experiment designs</span></div><div><strong>19</strong><span>preserved originals</span></div><a href="{BASE}graph/">Explore {len(graph['edges']):,} connections</a></div>
-<section class="home-section"><div class="section-heading"><div><p class="eyebrow">FIND YOUR STARTING POINT</p><h2>A working record,<br>with the reasoning attached.</h2></div><p>This is a research and implementation specification. The vault preserves proposals, disagreements, prior results, and the tests that could change a decision.</p></div><div class="entry-grid">{card('CODER', 'The current revision 0.4 handoff: architecture, contracts, build sequence, and acceptance checks.')}{card('GOOGLE', 'What the sleep and continual-learning evidence changes—and what it does not establish.')}{card('DECISIONS', 'Compare live alternatives, tradeoffs, and the evidence needed to choose.')}{card('ROADMAP', 'Work packages, dependency order, and acceptance gates for the local build.')}</div></section>
+<section class="latest-update"><div><p class="eyebrow">LATEST RESEARCH / 20 NOV 2026</p><h2>Adaptive organization and self-learning.</h2><p>Organization as a learnable component. Separate learning loops, a formula registry, and tests that preserve competing approaches.</p></div><a class="button dark" href="{url(latest_research)}">Read research update</a></section><section class="home-section"><div class="section-heading"><div><p class="eyebrow">FIND YOUR STARTING POINT</p><h2>A working record,<br>with the reasoning attached.</h2></div><p>This is a research and implementation specification. The vault preserves proposals, disagreements, prior results, and the tests that could change a decision.</p></div><div class="entry-grid">{card('ADAPTIVE', 'The latest research: adaptive organizational duality, self-learning priorities, formula candidates, and proposed experiments.')}{card('GOOGLE', 'What the sleep and continual-learning evidence changes—and what it does not establish.')}{card('DECISIONS', 'Compare live alternatives, tradeoffs, and the evidence needed to choose.')}{card('ROADMAP', 'Work packages, dependency order, and acceptance gates for the local build.')}</div></section>
 <section class="topic-section"><div><p class="eyebrow">TEN CONNECTED TOPICS</p><h2>Follow a question<br>through the research.</h2><p>Every path connects to decisions, experiments, earlier methods, and sources. A connection is context; it is not proof.</p><a class="text-link" href="{BASE}graph/">Open the research graph</a></div><div class="topic-list">{topic_list}</div></section>
 <section class="home-section evidence-section"><div><p class="eyebrow">KEEP THE RECORD HONEST</p><h2>Evidence has a history.</h2><p>Primary-source findings belong to their authors. Historical imports retain their original scope. Proposed experiments have no implied result.</p><a class="text-link" href="{url(nodes['EVIDENCE'])}">Read the evidence conventions</a></div><div class="evidence-key"><div><span class="badge">Primary source reviewed</span><p>Inspected source, with its limits intact.</p></div><div><span class="badge neutral">Design proposal</span><p>An implementation path still to test.</p></div><div><span class="badge historical">Historical import</span><p>Preserved prior work, not a fresh measurement.</p></div></div></section>
-<section class="download-band"><div><p class="eyebrow light">TAKE THE WHOLE RECORD</p><h2>Your vault. In your tools.</h2><p>All notes, schemas, the Canvas, graph exports, and original documents. The original Obsidian vault and the latest coder directions, each preserved as supplied.</p></div><div class="download-actions"><a class="button primary" href="{source_url(current_coder)}" download>Download coder packet <small>Markdown · Revision 0.4</small></a><a class="button ghost" href="{BASE}downloads/HIVE_Framework_Research_Vault.zip" download>Download original vault <small>ZIP · Framework 0.2</small></a></div></section></main>'''
+<section class="download-band"><div><p class="eyebrow light">TAKE THE WHOLE RECORD</p><h2>Your vault. In your tools.</h2><p>All notes, schemas, the Canvas, graph exports, and original documents. The original Obsidian vault, coder directions, and research addendum, each preserved as supplied.</p></div><div class="download-actions"><a class="button primary" href="{source_url(latest_research)}" download>Download research update <small>Markdown · 20 November 2026</small></a><a class="button ghost" href="{source_url(current_coder)}" download>Download coder packet <small>Markdown · Revision 0.4</small></a><a class="button ghost" href="{BASE}downloads/HIVE_Framework_Research_Vault.zip" download>Download original vault <small>ZIP · Framework 0.2</small></a></div></section></main>'''
     write(OUT / 'index.html', shell('Framework & research vault', home, BASE, body_class='home'))
 
     search_records = []
@@ -240,16 +303,16 @@ def main():
         intro = 'Find a phrase, source, decision, or stable page ID.' if is_search else f'Browse {len(nodes)} pages. Follow a topic, compare alternatives, or go straight to the source.'
         static_cards = ''.join(f'<a class="result" href="{url(n)}"><div class="result-meta"><span>{n["id"]}</span><span>{esc(label(n["type"]))}</span></div><h2>{esc(n["title"])}</h2><span class="badge">{esc(label(n["evidence_status"]))}</span></a>' for n in nodes.values())
         content = f'''<main id="main" class="browse-main"><p class="eyebrow">HIVE / {'SEARCH' if is_search else 'EXPLORE'}</p><h1>{heading}</h1><p class="page-intro">{intro}</p><form id="vault-search" role="search"><div class="search-field"><label for="query">Search all page content</label><div><input id="query" name="q" type="search" placeholder="Try sleep, evidence, routing, or P02" autocomplete="off"><button class="button dark" type="submit">Search</button></div></div><div class="filters"><label>Page type<select id="type-filter" name="type"><option value="">All page types</option>{type_options}</select></label><label>Evidence status<select id="evidence-filter" name="evidence"><option value="">All evidence statuses</option>{ev_options}</select></label><button class="reset-filter" type="reset">Clear filters</button></div></form><p id="result-count" class="result-count" aria-live="polite">{len(nodes)} pages in the vault</p><div id="results" class="results">{static_cards}</div><p id="search-error" role="alert" hidden></p><noscript><p>All pages are listed above. Enable JavaScript for full-text search and filters.</p></noscript></main>'''
-        write(OUT / kind / 'index.html', shell('Search' if is_search else 'Explore', content, BASE + kind + '/', extra='<script defer src="/hive/assets/search.js?v=2"></script>'))
+        write(OUT / kind / 'index.html', shell('Search' if is_search else 'Explore', content, BASE + kind + '/', extra='<script defer src="/hive/assets/search.js?v=3"></script>'))
 
     graph_export = dict(schema_version=graph['schema_version'], generated_date=graph['generated_date'],
-                        nodes=[{k: n[k] for k in ['id', 'title', 'type', 'evidence_status']} | dict(url=url(n), source_url=source_url(n), revision=n.get('revision')) for n in nodes.values()], edges=graph['edges'])
+                        nodes=[{k: n[k] for k in ['id', 'title', 'type', 'evidence_status']} | dict(url=url(n), source_url=source_url(n), revision=n.get('revision'), source_id=n.get('source_id'), unresolved_sources=n.get('unresolved_sources', [])) for n in nodes.values()], edges=graph['edges'])
     write(OUT / 'graph.json', json.dumps(graph_export, ensure_ascii=False, separators=(',', ':')))
     graph_content = f'''<main id="main" class="graph-main"><div class="graph-heading"><div><p class="eyebrow">HIVE / CONNECTIONS</p><h1>The research graph.</h1><p>{len(nodes)} pages. {len(graph['edges']):,} typed connections. Select a page to inspect its neighborhood.</p></div><a class="text-link" href="{BASE}graph.json" download>Download graph JSON</a></div><div class="graph-controls"><label>Find a page<input id="graph-query" type="search" placeholder="Search by title or ID"></label><label>Relationship<select id="relation-filter"><option value="">All relationships</option>{''.join(f'<option value="{r}">{r.replace("_", " ")}</option>' for r in sorted({e['relation'] for e in graph['edges']}))}</select></label><button id="graph-reset">Show full graph</button></div><p class="graph-note">Connections describe research relationships, not validation or authority. On a selected page, inspect a typed link before drawing a conclusion.</p><div class="graph-workspace"><div class="graph-canvas"><svg id="research-graph" viewBox="0 0 1000 760" role="img" aria-label="Research graph; use the page list to select a node"></svg><div id="graph-legend"></div></div><aside class="graph-panel"><p id="graph-summary" role="status">Loading graph…</p><div id="graph-selection"></div><div id="graph-pages" class="graph-pages"></div></aside></div><noscript><p>The interactive graph needs JavaScript. <a href="{BASE}explore/">Browse all pages</a> or download the JSON above.</p></noscript></main>'''
     write(OUT / 'graph/index.html', shell('Research graph', graph_content, BASE + 'graph/', extra='<script defer src="/hive/assets/graph.js?v=2"></script>'))
     llms = f'''# HIVE framework & research vault
 
-> Framework revision 0.2 with current coder directions revision 0.4, supplied by Ian Myers on 2026-11-20. Research and implementation specification, not a claim of a running or trained HIVE system.
+> Framework revision 0.2, coder directions revision 0.4, and the adaptive-organization research addendum supplied by Ian Myers on 2026-11-20. Research and implementation specification, not a claim of a running or trained HIVE system.
 
 Canonical home: {ORIGIN}/hive/
 Search: {ORIGIN}/hive/search/?q=your-query
@@ -267,7 +330,11 @@ Original package: {ORIGIN}/hive/downloads/HIVE_Framework_Research_Vault.zip
 - Current coder directions are at /hive/notes/CODER/ (revision 0.4); cite these for current implementation instructions.
 - The supplied packet is at /hive/updates/HIVE_Coder_Information_Packet_2026-11-20.md.
 - HANDOFF and ROADMAP preserve framework 0.2 context; the newer coder packet takes precedence for current directions.
-- The original ZIP remains framework 0.2; download the revision 0.4 coder packet separately for the latest directions.
+- The latest research addendum is /hive/notes/ADAPTIVE/: adaptive organizational duality, six learning layers, formula registry, promotion governor, and eight proposed experiments. Read it alongside CODER.
+- The addendum is a synthesis with provisional decisions; do not report it as measured implementation evidence.
+- Source documents named but not supplied are explicitly listed under the addendum source-gaps section.
+- Current graph update links are editorial navigation and retain their relation types.
+- The original ZIP remains framework 0.2; download the coder packet and research addendum separately for the current reference.
 - Preserve evidence_status and implementation_status when citing.
 - Historical imports, proposed experiments, simulations, and real measurements are distinct.
 - A graph edge is a relation, not proof. Proposed experiments do not imply results.
@@ -279,7 +346,7 @@ Original package: {ORIGIN}/hive/downloads/HIVE_Framework_Research_Vault.zip
     write(OUT / 'llms.txt', llms)
     all_pages = [BASE, BASE + 'explore/', BASE + 'search/', BASE + 'graph/'] + [url(n) for n in [*nodes.values(), *originals]]
     write(OUT / 'sitemap.xml', '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + '\n'.join(f'<url><loc>{ORIGIN}{p}</loc></url>' for p in all_pages) + '\n</urlset>\n')
-    manifest = dict(framework_revision='0.2', coder_revision=current_coder['revision'], updates=[{k: n[k] for k in ['id', 'path', 'revision', 'sha256']} for n in updates['entries']], source_zip_sha256=hashlib.sha256(args.zip.read_bytes()).hexdigest(),
+    manifest = dict(framework_revision='0.2', coder_revision=current_coder['revision'], latest_research_id=latest_research['id'], updates=[{k: n[k] for k in ['id', 'path', 'revision', 'date', 'sha256'] if k in n} for n in updates['entries']], source_zip_sha256=hashlib.sha256(args.zip.read_bytes()).hexdigest(),
                     counts=dict(research_pages=len(nodes), graph_edges=len(graph['edges']), originals=19),
                     scope='Published research reference. No live HIVE runtime or new learning measurements are implied.')
     write(OUT / 'build-manifest.json', json.dumps(manifest, indent=2) + '\n')

@@ -2,9 +2,9 @@
 
 Live URL: https://mominc.online/hive/
 
-The 287 reference pages use stable IDs in `/hive/notes/ID/`. Search covers
+The 288 reference pages use stable IDs in `/hive/notes/ID/`. Search covers
 the complete text of every page. The interactive graph preserves all 2,381
-original typed edges and adds 10 editorial links for the current handoff;
+original typed edges and adds 32 editorial links for the current handoff and research addendum;
 focusing a page displays its direct neighborhood and the
 source/relationship/target of each link. Text remains readable without JavaScript.
 
@@ -15,6 +15,12 @@ Markdown packet is preserved byte for byte in `updates/`; `updates/index.json`
 records its digest, revision, and editorial graph links. The original HANDOFF and
 ROADMAP pages link to these newer directions while preserving the 0.2 content.
 The current packet has a separate download; the original ZIP remains version 0.2.
+The latest research addendum is `/hive/notes/ADAPTIVE/`, supplied on 20 November
+2026. It adds adaptive organizational duality, six learning layers, a formula
+registry, a promotion governor, and eight proposed experiments. Its source file
+is preserved in `updates/`. Source wiki links resolve to actual supplied documents;
+five unavailable documents are explicitly listed as gaps. The addendum supplements
+the 0.4 coder packet and preserves alternatives and earlier evidence.
 Twelve archived Markdown documents also have browser reading views. Other original
 formats remain available directly from the archive index. Evidence and
 implementation labels come from the source graph. Publication adds no runtime,
@@ -39,3 +45,6 @@ No package install or JavaScript compilation is needed to serve the site.
 Diagrams render from preserved Mermaid source with a local, pinned Mermaid 10.9.3
 bundle. Its MIT license is in `assets/vendor/MERMAID-LICENSE.txt`. Source diagrams
 remain available if JavaScript fails and in expandable source panels after rendering.
+The new addendum's two display equations render using a locally vendored KaTeX
+0.19.1 bundle; its license and verified npm integrity are in `assets/vendor/katex/`.
+Formula source remains readable without JavaScript and in expandable source panels.

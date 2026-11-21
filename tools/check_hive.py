@@ -66,6 +66,8 @@ def main():
             errors.append('Supplied update bytes changed: ' + entry['path'])
     if updates['current_coder_id'] not in ids:
         errors.append('Current coder directions are missing')
+    if updates['latest_research_id'] not in ids:
+        errors.append('Latest research update is missing')
     for n in graph['nodes']:
         if not (OUT / 'notes' / n['id'] / 'index.html').is_file():
             errors.append(f'Graph page missing: {n["id"]}')

@@ -13,6 +13,7 @@
     historical_import_not_reverified:'Historical import · not reverified',primary_source_reviewed:'Primary source reviewed',design_proposal:'Design proposal',preserved_original:'Preserved original',prior_artifact_reviewed:'Prior artifact reviewed',primary_observation_linked:'Primary observation linked',scoped_claim_with_links:'Scoped claim with links',artifact_checks:'Artifact checks',proposed_implementation:'Proposed implementation'
   };
   const label = s => titles[s] || s.replaceAll('_',' ').replace(/^./, c => c.toUpperCase());
+  titles.research_synthesis_and_provisional_decision = 'Research synthesis · Provisional decision';
   const esc = s => String(s).replace(/[&<>"']/g,c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   function snippet(record, words) {
     let offset = words.length ? record.text.toLowerCase().indexOf(words[0]) : 0;

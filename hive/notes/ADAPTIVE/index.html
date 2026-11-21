@@ -1,0 +1,890 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adaptive organization and self-learning · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#29143f"><link rel="canonical" href="https://mominc.online/hive/notes/ADAPTIVE/">
+<meta property="og:title" content="Adaptive organization and self-learning · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg?v=2" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=3"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=2"><link rel="stylesheet" href="/hive/assets/research.css?v=1">
+<script defer src="/hive/assets/hive.js?v=3"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg?v=2" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/CODER/">Coder directions</a><a href="/hive/notes/ADAPTIVE/">Research update</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/ADAPTIVE/" aria-current=page>Latest research update</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/ADAPTIVE/" aria-current=page>Latest research update</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 288 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download original vault · 0.2</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=framework">Framework</a><span>/</span><span>ADAPTIVE</span></div>
+<div class="doc-meta"><span class="badge">Research synthesis · Provisional decision</span><span class="badge neutral">Not implemented</span></div><div class="doc-tools"><button class="copy-link" data-title="Adaptive organization and self-learning" data-id="ADAPTIVE" data-series="HIVE research update (20 November 2026)">Copy reference</button><a href="/hive/updates/HIVE_Research_Update_Adaptive_Organization_and_Self_Learning_2026-11-20.md">Markdown source</a><a href="/hive/graph/?focus=ADAPTIVE">View connections</a><button class="print-page">Print</button></div>
+<p class="research-notice"><strong>Latest research update · 20 November 2026.</strong> This is a research synthesis and provisional design handoff. Proposed mechanisms and experiments are not implementation or benchmark evidence.</p><article class="prose"><h1 id="hive-research-update-adaptive-organization-and-self-learning">HIVE — Research Update: Adaptive Organization and Self-Learning</h1>
+<blockquote>
+<p><strong>Database update purpose:</strong> Add the recent organizational findings and decisions to the HIVE knowledge base. This is a <strong>research and design handoff</strong>, not a claim that the proposed architecture has been built or proven. Keep conflicting approaches as separate, linkable candidates. Prioritize the <strong>self-learning system</strong>, because successful compounding learning could improve other HIVE capabilities.</p>
+</blockquote>
+<h2 id="0-change-log-what-is-new">0. Change log — what is new</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Finding / change</th>
+<th>Classification</th>
+<th>Database action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NEW-01</td>
+<td><strong>Organization itself is a learnable component.</strong> Topology, routing, communication, verification, group membership, and memory access can be treated as adjustable variables.</td>
+<td>Research-derived design hypothesis</td>
+<td>Add to core architecture thesis.</td>
+</tr>
+<tr>
+<td>NEW-02</td>
+<td><strong>Do not choose one side of most organizational tensions.</strong> Use both where complementary; switch or blend according to task conditions.</td>
+<td><strong>User-selected design direction</strong></td>
+<td>Promote to provisional architectural requirement.</td>
+</tr>
+<tr>
+<td>NEW-03</td>
+<td>Distinguish <strong>composition, reliability, current-task adaptation, persistent learning, and integrated individuality</strong>.</td>
+<td>Conceptual clarification</td>
+<td>Create separate concepts and benchmarks.</td>
+</tr>
+<tr>
+<td>NEW-04</td>
+<td>Separate <strong>specialist learning</strong> from <strong>organizational learning</strong>. Improvement can occur without changing any model weights.</td>
+<td>Architecture principle; not yet a HIVE measurement</td>
+<td>Create independent update and evaluation loops.</td>
+</tr>
+<tr>
+<td>NEW-05</td>
+<td><strong>Communication and coordination have costs.</strong> More agents, debate, and shared context can reduce performance.</td>
+<td>Research-supported boundary condition</td>
+<td>Require matched-budget baselines and ablation tests.</td>
+</tr>
+<tr>
+<td>NEW-06</td>
+<td><strong>Memory is not learning.</strong> Outcomes must change future behavior and survive independent testing to count as learned improvement.</td>
+<td>Conceptual + engineering principle</td>
+<td>Separate memory, skills, routing, weights, and topology updates.</td>
+</tr>
+<tr>
+<td>NEW-07</td>
+<td>Treat the <strong>governing/rating formulas as a family</strong>, selected by task and framework—not a universal score.</td>
+<td>User research priority + proposed design</td>
+<td>Create formula registry, contexts, constraints, and experiments.</td>
+</tr>
+<tr>
+<td>NEW-08</td>
+<td>Preserve <strong>independent disagreement</strong>, evidence provenance, fault isolation, rollback, and autonomy within bounds.</td>
+<td>Convergent engineering principle</td>
+<td>Add architectural invariants and failure tests.</td>
+</tr>
+<tr>
+<td>NEW-09</td>
+<td>Biological, spiritual, philosophical, and fictional hive examples suggest hypotheses but <strong>do not demonstrate</strong> machine consciousness, universal swarm superiority, or specific AI mechanisms.</td>
+<td>Evidence boundary</td>
+<td>Store analogy and empirical evidence separately.</td>
+</tr>
+<tr>
+<td>NEW-10</td>
+<td>Prefer <strong>selectively permeable specialist boundaries</strong>: isolation by process/store/permissions/protocol, with typed translators at boundaries; language choice alone does not prevent contamination.</td>
+<td>Prior HIVE design inference</td>
+<td>Add information-flow security research item.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="evidence-legend">Evidence legend</h3>
+<ul>
+<li><strong>[SOURCE]</strong> Explicit in the uploaded research files or established work cited in those files.</li>
+<li><strong>[SYNTHESIS]</strong> Reasoned integration of the sources; not necessarily independently experimentally confirmed.</li>
+<li><strong>[DECISION]</strong> Direction expressly chosen in recent HIVE discussions; not proof of efficacy.</li>
+<li><strong>[HYPOTHESIS]</strong> Proposed implementation or expected benefit requiring tests.</li>
+<li><strong>[OPEN]</strong> Unresolved empirical or architectural question.</li>
+<li><strong>[ANALOGY]</strong> Biological, spiritual, sociological, or fictional parallel, not a validated AI mechanism.</li>
+<li><strong>[PREVIOUS-WORK]</strong> Recovered from earlier HIVE discussion; not retested for this packet.</li>
+</ul>
+<hr />
+<h2 id="1-core-thesis-and-the-five-different-outcomes">1. Core thesis and the five different outcomes</h2>
+<p><strong>Core thesis [SYNTHESIS]:</strong> HIVE is a modular, persistent, self-improving cognitive organization in which the <strong>relationships among imperfect specialists</strong> are themselves designed, observed, tested, and eventually adapted. The framework can contribute capability independently of changes to specialist weights.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Outcome</th>
+<th>Meaning</th>
+<th>What would demonstrate it</th>
+<th>What it does <em>not</em> establish</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Compositional capability</strong></td>
+<td>Specialists jointly complete a task no single specialist covers end-to-end.</td>
+<td>End-to-end success with demonstrated complementary contributions.</td>
+<td>That the group learns or is more accurate on all tasks.</td>
+</tr>
+<tr>
+<td><strong>Collective reliability</strong></td>
+<td>Diverse error paths, verification, and recovery increase successful completion.</td>
+<td>Higher held-out task success, with matched cost/compute.</td>
+<td>Consciousness or novelty of intelligence.</td>
+</tr>
+<tr>
+<td><strong>Adaptive coordination</strong></td>
+<td>The group changes its operating mode in response to a task, failure, or available compute.</td>
+<td>Observable, beneficial selection of routing/topology/checking policy.</td>
+<td>Persistent improvement across later tasks.</td>
+</tr>
+<tr>
+<td><strong>Persistent learning</strong></td>
+<td>The organization retains an update that improves subsequent unfamiliar tasks.</td>
+<td>Future held-out gain, transferable learning, bounded forgetting, reproducibility.</td>
+<td>Any specific change to neural weights.</td>
+</tr>
+<tr>
+<td><strong>Integrated individuality</strong></td>
+<td>Components form an unusually tightly dependent collective; in biology this has specific evolutionary criteria.</td>
+<td>Would require its own carefully defined technical test.</td>
+<td>Subjective awareness or an AI “soul.”</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Important distinction:</strong> Increased task success under collaboration is not automatically evidence of a new unified mind. The engineering goal is measurable cognitive capability and learning; consciousness remains a separate philosophical and scientific question.</p>
+<hr />
+<h2 id="2-twelve-consolidated-organizational-principles">2. Twelve consolidated organizational principles</h2>
+<p>This unifies the five computational clusters and nine biological/spiritual themes with the preceding HIVE analysis. The list is a <strong>working taxonomy</strong>, not twelve proven laws jointly necessary for every system.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Principle</th>
+<th>Mechanism and HIVE translation</th>
+<th>Risks / limits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ORG-01</code></td>
+<td><strong>Dependency-aware decomposition</strong></td>
+<td>Divide tasks where coupling is low; preserve interdependent constraints and handoff meaning.</td>
+<td>Too many handoffs; missing global constraints.</td>
+</tr>
+<tr>
+<td><code>ORG-02</code></td>
+<td><strong>Complementary diversity</strong></td>
+<td>Different capabilities, tools, inputs, and error patterns—not merely more copies of one model.</td>
+<td>Correlated failures; costly redundancy.</td>
+</tr>
+<tr>
+<td><code>ORG-03</code></td>
+<td><strong>Competence-aware routing</strong></td>
+<td>Choose workers by demonstrated task-conditioned success, cost, latency, and uncertainty.</td>
+<td>Miscalibration; controller bottleneck.</td>
+</tr>
+<tr>
+<td><code>ORG-04</code></td>
+<td><strong>Typed selective communication</strong></td>
+<td>Explicit claims, evidence, sources, semantics, validity windows, and receivers.</td>
+<td>Semantic contamination; message floods.</td>
+</tr>
+<tr>
+<td><code>ORG-05</code></td>
+<td><strong>Independent verification</strong></td>
+<td>Separate generating candidates from executable checks, independent evidence, and environmental results.</td>
+<td>Shared verifier blind spots; excessive rejection.</td>
+</tr>
+<tr>
+<td><code>ORG-06</code></td>
+<td><strong>Epistemic memory</strong></td>
+<td>Store hypothesis, evidence, accepted result, failed experiment, and reusable skill distinctly.</td>
+<td>False information promoted to trusted memory.</td>
+</tr>
+<tr>
+<td><code>ORG-07</code></td>
+<td><strong>Fault containment</strong></td>
+<td>Timeouts, least privilege, isolation, rollback, circuit breakers, graceful fallback.</td>
+<td>Cascading failures; lost recovery state.</td>
+</tr>
+<tr>
+<td><code>ORG-08</code></td>
+<td><strong>Flexible topology</strong></td>
+<td>Allow central, distributed, nested, and hybrid coordination according to dependencies.</td>
+<td>Over-orchestration or chaotic local interactions.</td>
+</tr>
+<tr>
+<td><code>ORG-09</code></td>
+<td><strong>Exploration and selection</strong></td>
+<td>Maintain competing solutions; select using tests and graded evidence.</td>
+<td>Premature consensus; lock-in; reward hacking.</td>
+</tr>
+<tr>
+<td><code>ORG-10</code></td>
+<td><strong>System-level objectives and budgets</strong></td>
+<td>Allocate compute, memory, bandwidth, and authority by collective outcomes.</td>
+<td>Local optimization harming overall performance.</td>
+</tr>
+<tr>
+<td><code>ORG-11</code></td>
+<td><strong>Lifecycle and renewal</strong></td>
+<td>Reuse, retrain, compress, prune, replace, or revive elements after evaluation.</td>
+<td>Instability, regressions, catastrophic forgetting.</td>
+</tr>
+<tr>
+<td><code>ORG-12</code></td>
+<td><strong>Shared operational purpose with dissent</strong></td>
+<td>Clear task goals, policies, and allowed actions; protect independent criticism.</td>
+<td>Groupthink and suppressing legitimate alternatives.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Cross-domain notes [ANALOGY]:</strong> Immune repertoires suggest diversity, bee scouts suggest competing exploration with a quorum, multicellularity suggests differentiated roles and conflict management, and social/spiritual traditions suggest questions of purpose and mutual obligation. These are <strong>sources of design questions</strong>, not proof that their literal biological or theological mechanisms transfer to software.</p>
+<hr />
+<h2 id="3-major-decision-adaptive-organizational-duality">3. Major decision: adaptive organizational duality</h2>
+<p><strong>Decision <code>DEC-ORG-BOTH-001</code> [DECISION]:</strong> Most disagreements should be treated as <strong>potentially complementary operating modes</strong>. HIVE must not hard-code centralized versus decentralized, competition versus cooperation, or shared versus isolated state as mutually exclusive universal choices. Preserve all useful candidates and test when to operate them simultaneously, switch between them, or blend them.</p>
+<h3 id="31-three-distinct-meanings-of-use-both">3.1 Three distinct meanings of “use both”</h3>
+<ol>
+<li><strong>Simultaneous combination:</strong> Different mechanisms run concurrently because they do different jobs (e.g., central policy constraints alongside autonomous local workers).</li>
+<li><strong>Contextual switching:</strong> One mode replaces another when task properties or costs change (e.g., independent search for parallel problems, tighter control for interdependent execution).</li>
+<li><strong>Adaptive blending:</strong> The controller continuously varies strength, budget, membership, and information flow across modes (e.g., percentage of compute used for exploration versus verification).</li>
+</ol>
+<p><strong>Constraint:</strong> “Use both” does <strong>not</strong> mean activate all mechanisms all the time. Each must justify its cost, interference, safety implications, and effect on whole-system performance.</p>
+<h3 id="32-discrepancy-to-combination-decision-table">3.2 Discrepancy-to-combination decision table</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Duality</th>
+<th>Combined policy candidate</th>
+<th>Potential selection signals</th>
+<th>Failure conditions to measure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Centralized ↔ decentralized</strong></td>
+<td>Central policy/constraint management; autonomous local execution and recruitment.</td>
+<td>Coupling, deadlines, criticality, failure rates, communication load.</td>
+<td>Bottlenecks; unsupervised drift.</td>
+</tr>
+<tr>
+<td><strong>Cooperation ↔ competition</strong></td>
+<td>Shared final objective; independent candidate-generation and competing proposals.</td>
+<td>Uncertainty, alternative count, verification quality.</td>
+<td>Conformity; adversarial waste.</td>
+</tr>
+<tr>
+<td><strong>Consensus ↔ disagreement</strong></td>
+<td>Preserve dissent during exploration; commit after evidence-based choice or explicit deadline/quorum.</td>
+<td>Verifiability, irreversibility, time budget.</td>
+<td>Majority confidently wrong; paralysis.</td>
+</tr>
+<tr>
+<td><strong>Specialization ↔ redundancy</strong></td>
+<td>Primary narrow specialists plus overlapping fallback/checker coverage.</td>
+<td>Failure severity, costs, availability, correlated error.</td>
+<td>Brittle dependency; unnecessary copies.</td>
+</tr>
+<tr>
+<td><strong>Shared ↔ isolated memory</strong></td>
+<td>Shared evidence registry/index; protected local scratchpads, procedures, and parameter state.</td>
+<td>Sensitivity, relevance, source trust, recency, access needs.</td>
+<td>Contamination, leakage, loss of context.</td>
+</tr>
+<tr>
+<td><strong>Dependence ↔ independence</strong></td>
+<td>Reusable standalone modules form temporary tightly coupled teams where needed.</td>
+<td>Task dependency graph, interface maturity, recovery cost.</td>
+<td>Irreversible coupling; integration overhead.</td>
+</tr>
+<tr>
+<td><strong>Exploration ↔ exploitation</strong></td>
+<td>Stable production policy plus bounded experiment lanes.</td>
+<td>Novelty, expected information gain, remaining budget, error tolerance.</td>
+<td>Stagnation; experimental instability.</td>
+</tr>
+<tr>
+<td><strong>Autonomy ↔ policing</strong></td>
+<td>Local discretion constrained by contracts, monitors, and reversible interventions.</td>
+<td>Risk level, observed reliability, novelty, rule violations.</td>
+<td>Overcontrol; unchecked errors.</td>
+</tr>
+<tr>
+<td><strong>Stability ↔ evolution</strong></td>
+<td>Tested baseline serves tasks while candidate improvements undergo replay/regression tests.</td>
+<td>Held-out gains, forgetting, cost and recovery.</td>
+<td>Catastrophic regressions; frozen design.</td>
+</tr>
+<tr>
+<td><strong>Small ↔ large teams</strong></td>
+<td>Dynamic staffing and compute allocation; recruit additional workers only when marginal value is positive.</td>
+<td>Subtask independence, expected gains, latency and budget.</td>
+<td>Coordination cost exceeds added capability.</td>
+</tr>
+<tr>
+<td><strong>Shared representations ↔ specialist representations</strong></td>
+<td>Typed common contracts at the boundary; local embeddings/modalities with explicit translators.</td>
+<td>Fidelity of translation, alignment need, contamination risk.</td>
+<td>Translation loss; interoperability cost.</td>
+</tr>
+<tr>
+<td><strong>Online ↔ offline learning</strong></td>
+<td>Fast response-time correction and slower batch consolidation, evaluation, retraining, or pruning.</td>
+<td>Task urgency, replay availability, change risk.</td>
+<td>Unchecked self-edits; stale information.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="33-governing-principle">3.3 Governing principle</h3>
+<blockquote>
+<p><strong>Unity without uniformity:</strong> HIVE needs sufficient shared constraints to act coherently, and sufficient differentiated independence to discover mistakes, remain replaceable, and continue learning.</p>
+</blockquote>
+<p><strong>Unresolved [OPEN]:</strong> The optimal switch/blend policy and its cost are not established. An adaptive hybrid is a <strong>candidate</strong>, not a demonstrated winner over a simpler controller.</p>
+<hr />
+<h2 id="4-what-should-be-learnable-independent-layers">4. What should be learnable — independent layers</h2>
+<p>The initial priority is to improve <strong>learning speed, retention, transfer, and reliable promotion of improvements</strong>. Keep at least six different update targets separate:</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Adjustable variables (“dials”)</th>
+<th>How improvement would appear</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>L1</code> External / episodic memory</td>
+<td>Retention, retrieval, relevance, provenance, confidence evidence</td>
+<td>Better recall/use of prior evidence without escalating stale errors.</td>
+</tr>
+<tr>
+<td><code>L2</code> Procedural skills</td>
+<td>Tool sequences, reusable workflows, preconditions, success checks</td>
+<td>Faster, cheaper, more reliable completion of repeatable tasks.</td>
+</tr>
+<tr>
+<td><code>L3</code> Routing and resource policy</td>
+<td>Specialist selection, effort, parallelism, escalation threshold</td>
+<td>Better outcomes per resource and less avoidable delay.</td>
+</tr>
+<tr>
+<td><code>L4</code> Specialist parameters</td>
+<td>Fine-tuning, adapters, distillation, selective pruning</td>
+<td>Improved measured specialist task performance.</td>
+</tr>
+<tr>
+<td><code>L5</code> Organizational topology</td>
+<td>Team membership, control structure, verification depth, interaction graph</td>
+<td>Better collective performance with the same or comparable components.</td>
+</tr>
+<tr>
+<td><code>L6</code> Communication and representation</td>
+<td>Protocol, schema, bandwidth, translators, isolation, representation choice</td>
+<td>Less handoff loss and contamination at useful coordination cost.</td>
+</tr>
+</tbody>
+</table></div>
+<p>Other variables include <strong>when</strong> to verify, when to abstain, when to reuse a cached result, when to combine specialists, and when to deactivate or replace a component.</p>
+<p><strong>Non-equivalences to preserve:</strong></p>
+<ul>
+<li>Memory accumulation ≠ procedural learning ≠ weight updates ≠ organizational policy learning.</li>
+<li>A different programming language (Rust, Python, C++, JavaScript, etc.) ≠ automatic isolation; process, permission, storage, schema, and validation boundaries matter.</li>
+<li>Quantization ≠ pruning ≠ distillation ≠ fine-tuning ≠ adapter switching. Each trades capability, cost, and reversibility differently.</li>
+<li>Different model identities ≠ uncorrelated errors. Measure correlation empirically.</li>
+</ul>
+<h3 id="41-dual-learning-loops">4.1 Dual learning loops</h3>
+<pre><code class="language-mermaid">flowchart TD
+    A[Task and observations] --&gt; B[Decompose and select operating modes]
+    B --&gt; C[Recruit specialists and tools]
+    C --&gt; D[Local compute and selective exchange]
+    D --&gt; E[Independent tests and evidence]
+    E --&gt; F{Pass constraints?}
+    F --&gt;|No| G[Revise / isolate / escalate / abstain]
+    G --&gt; B
+    F --&gt;|Yes| H[Commit result and provenance]
+    H --&gt; I[Experience log and graded memory]
+    I --&gt; J[Learning workbench: propose one bounded change]
+    J --&gt; K[Replay + held-out + regression evaluation]
+    K --&gt; L{Promotion governor passes?}
+    L --&gt;|No| M[Reject, archive evidence, keep baseline]
+    L --&gt;|Yes| N[Promote versioned policy, skill, or model]
+    N --&gt; B
+</code></pre>
+<p><strong>Fast/task loop:</strong> Observe → decompose → recruit → work → verify → recover/commit.</p>
+<p><strong>Slow/improvement loop:</strong> Attribute outcome → propose bounded update → evaluate against unchanged serving baseline → promote or roll back → record conditions and evidence.</p>
+<p><strong>[HYPOTHESIS]</strong> The slow loop can improve the group while weights remain frozen, by changing topology, routing, coordination, verification, or memory policies. This must be tested against static and simpler baselines.</p>
+<h3 id="42-why-self-learning-comes-first">4.2 Why self-learning comes first</h3>
+<p>Compounding learning requires more than recalling successful past solutions. A stronger measurable criterion is <strong>future unfamiliar tasks becoming learnable with fewer examples, less compute, or fewer trials without unacceptable forgetting</strong>. Track that separately from routine-task acceleration through caching or skill reuse.</p>
+<p>Previous HIVE research considered periodic consolidation/replay (“sleep-like” cycles). One earlier <strong>replay comparison</strong>, not a complete HIVE sleep system, reported interleaved replay <strong>74.47%</strong>, blocked replay <strong>62.64%</strong>, and current-only <strong>54.31%</strong> under that study's evaluation. Preserve those numbers with their original context; do <strong>not</strong> relabel them as HIVE benchmark results, proof of dreaming, or proof of beneficial autonomous weight changes. <code>[PREVIOUS-WORK]</code></p>
+<hr />
+<h2 id="5-governing-formulas-and-rating-layers-self-learning-priority">5. Governing formulas and rating layers (self-learning priority)</h2>
+<p><strong>Decision / research direction [DECISION]:</strong> No single formula should be assumed optimal across every procedure framework. Build a <strong>formula registry</strong>: each candidate specifies the decision it governs, inputs, assumptions, constraints, evidence, calibration method, and benchmark. Keep local scores distinct from the global objective.</p>
+<h3 id="51-existing-mathematical-families-worth-testing">5.1 Existing mathematical families worth testing</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Formula family</th>
+<th>Representative expression</th>
+<th>Suitable role</th>
+<th>Important limitation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bayesian update</strong></td>
+<td><code>P(H|D) = P(D|H) P(H) / P(D)</code></td>
+<td>Revise belief using evidence.</td>
+<td>Requires meaningful hypotheses, likelihoods and priors.</td>
+</tr>
+<tr>
+<td><strong>Expected information gain</strong></td>
+<td><code>EIG(e) = H(Θ|D) − E_y[H(Θ|D,e,y)]</code></td>
+<td>Choose informative experiments/observations.</td>
+<td>Information gain alone may not improve task utility.</td>
+</tr>
+<tr>
+<td><strong>Learning progress</strong></td>
+<td><code>LP_t = S_t − S_(t−k)</code></td>
+<td>Detect whether skills are improving on a stable metric.</td>
+<td>Can chase noise or easy-to-game tests.</td>
+</tr>
+<tr>
+<td><strong>Value of computation</strong></td>
+<td><code>VOC(c) = E_z[max_a U(a|D,z_c)] − max_a U(a|D) − C(c)</code></td>
+<td>Decide whether another agent call/check/search is worth its cost.</td>
+<td>Utility and future evidence must be estimated.</td>
+</tr>
+<tr>
+<td><strong>Upper confidence bound / bandits</strong></td>
+<td><code>UCB_i = r̄_i + c √(ln(t)/n_i)</code></td>
+<td>Explore potentially good specialists/strategies while exploiting known ones.</td>
+<td>Standard assumptions may fail for changing tasks and correlated arms.</td>
+</tr>
+<tr>
+<td><strong>Temporal-difference error</strong></td>
+<td><code>δ_t = r_t + γ max_a Q(s_(t+1),a) − Q(s_t,a_t)</code></td>
+<td>Learn sequential action/routing policies.</td>
+<td>Reward design and nonstationarity can mislead.</td>
+</tr>
+<tr>
+<td><strong>Prioritized replay, EWC, information bottleneck</strong></td>
+<td>See primary work / prior formula research</td>
+<td>Retention, consolidation, forgetting constraints, compression.</td>
+<td>No universal objective or proven HIVE integration yet.</td>
+</tr>
+<tr>
+<td><strong>Difference rewards / credit assignment</strong></td>
+<td>Compare observed group outcome to a counterfactual baseline.</td>
+<td>Estimate which specialist and organizational change contributed.</td>
+<td>Counterfactual baselines may be costly or biased.</td>
+</tr>
+<tr>
+<td><strong>Meta-learning, constrained policy improvement</strong></td>
+<td>Family of task-dependent methods</td>
+<td>Improve learning-to-learn and promote safe bounded updates.</td>
+<td>Complex testing and stability requirements.</td>
+</tr>
+</tbody>
+</table></div>
+<p><em>The equations in this subsection are standard representative forms recovered from the recent governing-formulas discussion; they have <strong>not</strong> been tested within HIVE. Notation must be defined and calibrated for each implementation.</em></p>
+<h3 id="52-proposed-hive-formulas-unvalidated-design-candidates">5.2 Proposed HIVE formulas — unvalidated design candidates</h3>
+<p><strong>Expected Learning Value (candidate)</strong></p>
+<pre><code class="language-math">V(e\mid x)=\mathbb{E}[\Delta J_{\mathrm{future}}\mid e,x]-\lambda_C C(e)-\lambda_F F(e)-\lambda_R R(e)
+</code></pre>
+<ul>
+<li><code>e</code>: proposed experiment or learning intervention; <code>x</code>: current state/context.</li>
+<li><code>ΔJ_future</code>: expected improvement on <em>future</em> task performance, not only present-task success.</li>
+<li><code>C</code>: compute/time/energy cost; <code>F</code>: expected forgetting/interference; <code>R</code>: risk of regression/unsafe change.</li>
+<li><code>λ</code>: context-dependent trade-off weights; <strong>not empirically fitted yet</strong>.</li>
+<li>Use a <strong>vector of raw metrics and explicit hard constraints</strong> alongside any aggregate score to prevent a high score from disguising a catastrophic regression.</li>
+</ul>
+<p><strong>Promotion governor (candidate)</strong></p>
+<pre><code class="language-math">\operatorname{Promote}(u)=\mathbf{1}\!\left[\mathrm{LCB}(\Delta J_u)&gt;\delta\ \land\ \mathrm{RegressionGates}(u)=\mathrm{pass}\right]
+</code></pre>
+<ul>
+<li><code>u</code>: proposed update; <code>LCB</code>: defensible lower confidence bound of measured gain on held-out evaluation; <code>δ</code>: required benefit margin.</li>
+<li>Regression gates should cover failure rate, forgetting, resource budgets, reproducibility, and rollback readiness.</li>
+<li>This is a <strong>proposal</strong>, not a validated probability model or automatic authority to deploy changes.</li>
+</ul>
+<h3 id="53-candidate-measurement-dashboard">5.3 Candidate measurement dashboard</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Question answered</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Held-out task success</td>
+<td>Is the whole system more capable?</td>
+</tr>
+<tr>
+<td>Reliability / critical failure rate</td>
+<td>Are errors less frequent and less consequential?</td>
+</tr>
+<tr>
+<td>Total compute, wall-clock latency, and energy proxy</td>
+<td>Is the gain worth the resources?</td>
+</tr>
+<tr>
+<td>Cost per <em>correct</em> task completion</td>
+<td>Does orchestration improve efficiency?</td>
+</tr>
+<tr>
+<td>Error correlation and diversity contribution</td>
+<td>Do additional specialists add independent value?</td>
+</tr>
+<tr>
+<td>Examples/trials to competence on new tasks</td>
+<td>Is learning genuinely faster?</td>
+</tr>
+<tr>
+<td>Transfer gain to novel tasks</td>
+<td>Does earlier learning help later tasks?</td>
+</tr>
+<tr>
+<td>Forgetting / regression on older skills</td>
+<td>Was anything important damaged?</td>
+</tr>
+<tr>
+<td>Retained gain across sessions and versions</td>
+<td>Is learning persistent?</td>
+</tr>
+<tr>
+<td>Routing and organization contribution</td>
+<td>Did topology/policy improve outcomes beyond static baselines?</td>
+</tr>
+<tr>
+<td>Verification precision/recall and abstention</td>
+<td>Do checking and rejection help rather than merely slow work?</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>No invented global HIVE score:</strong> Collect outcomes by task family, risk level, and budget before fitting a decision policy. Pareto trade-offs may be more informative than a single scalar rating.</p>
+<hr />
+<h2 id="6-hive-information-boundaries-and-contamination-controls">6. HIVE information boundaries and contamination controls</h2>
+<p><strong>[SYNTHESIS / PREVIOUS-WORK]</strong> A specialist is not isolated simply because it uses another coding language, model, or memory format. Meaningful separation requires controls over <strong>who can read/write what, which claims cross a boundary, and under what verification standard</strong>.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Boundary</th>
+<th>Candidate mechanism</th>
+<th>Protected against</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Execution</td>
+<td>Separate processes, timeouts, resource quotas, sandboxing, restricted tools</td>
+<td>Crashes, uncontrolled actions, resource exhaustion</td>
+</tr>
+<tr>
+<td>Knowledge</td>
+<td>Local stores, access controls, provenance, epistemic-state flags</td>
+<td>Unverified claims becoming collective fact</td>
+</tr>
+<tr>
+<td>Communication</td>
+<td>Typed contracts, validation, translation, versioned schemas</td>
+<td>Representation mismatch, semantic contamination</td>
+</tr>
+<tr>
+<td>Model updates</td>
+<td>Versioned adapters/weights; offline tests; explicit promotion</td>
+<td>Cross-task interference and unreviewed parameter changes</td>
+</tr>
+<tr>
+<td>Organizational updates</td>
+<td>Controller candidate isolation, policy registry, rollback</td>
+<td>Bad global routing/topology changes</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Proposed message contract fields:</strong> <code>message_id</code>, <code>source_agent</code>, <code>task_id</code>, <code>type</code> (<code>observation|hypothesis|proposal|test_result|verified_claim</code>), <code>payload_schema</code>, <code>evidence_refs</code>, <code>confidence_basis</code>, <code>validation_status</code>, <code>scope</code>, <code>permissions</code>, <code>timestamp</code>, <code>expiry</code>, <code>model_version</code>, <code>procedure_version</code>.</p>
+<p><strong>Important:</strong> These are design fields, not evidence that a particular transport or isolation method guarantees safety.</p>
+<hr />
+<h2 id="7-alternative-architectures-to-preserve">7. Alternative architectures to preserve</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Candidate</th>
+<th>Character</th>
+<th>Reason to test</th>
+<th>Primary risk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ARCH-A</code> <strong>Orchestrated specialists</strong></td>
+<td>Controller/router, explicitly assigned workers, independent checks.</td>
+<td>Clear dependencies, auditability, predictable workflows.</td>
+<td>Central bottleneck, single controller error.</td>
+</tr>
+<tr>
+<td><code>ARCH-B</code> <strong>Distributed collective</strong></td>
+<td>Local rules, events/shared artifacts, distributed recruitment/selection.</td>
+<td>Parallel search and local responsiveness.</td>
+<td>Signal storms, premature convergence, attribution difficulty.</td>
+</tr>
+<tr>
+<td><code>ARCH-C</code> <strong>Adaptive hybrid</strong></td>
+<td>Central constraints + local independence + policy-controlled switching/blending.</td>
+<td>Potentially combines benefits of A and B for varying tasks.</td>
+<td>Complexity and overhead may exceed benefits.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Hold the specialist set fixed</strong> during an initial architecture comparison where possible; otherwise improvements could be wrongly attributed to organizational policy. Also test a capable single-model-with-tools baseline under matched budget.</p>
+<hr />
+<h2 id="8-first-experimental-priorities-not-completed">8. First experimental priorities (not completed)</h2>
+<p>The highest-priority experiments measure <strong>organizational self-learning</strong>, not merely whether multi-agent output sounds sophisticated.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Order</th>
+<th>Test</th>
+<th>A/B (or more) comparison</th>
+<th>Primary outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>EXP-01</code></td>
+<td>Organization changes without weight changes</td>
+<td>Frozen models + static orchestration vs frozen models + adaptive organizational policy.</td>
+<td>Held-out quality and cost gain attributable to organization.</td>
+</tr>
+<tr>
+<td><code>EXP-02</code></td>
+<td>Contextual switching vs always-on hybrid</td>
+<td>Fixed central, fixed distributed, always-on both, adaptive selector.</td>
+<td>Task-conditioned benefit net of routing overhead.</td>
+</tr>
+<tr>
+<td><code>EXP-03</code></td>
+<td>Independent dissent and checking</td>
+<td>Single result vs majority vote vs independent evidence-checked proposals.</td>
+<td>Correctness, correlated errors, compute cost.</td>
+</tr>
+<tr>
+<td><code>EXP-04</code></td>
+<td>Memory and contamination</td>
+<td>Unrestricted shared memory vs typed selective shared evidence + private working stores.</td>
+<td>Error propagation, task success, latency.</td>
+</tr>
+<tr>
+<td><code>EXP-05</code></td>
+<td>Compounding future learning</td>
+<td>No retention vs retrieval-only vs procedural updates vs organizational updates.</td>
+<td>Examples/trials to competence on unfamiliar tasks.</td>
+</tr>
+<tr>
+<td><code>EXP-06</code></td>
+<td>Rehearsal / consolidation</td>
+<td>No replay, interleaved replay, blocked replay, other clearly defined interventions.</td>
+<td>Retention, forgetting, transfer, resource cost.</td>
+</tr>
+<tr>
+<td><code>EXP-07</code></td>
+<td>Dynamic group size</td>
+<td>One tool-equipped agent, several fixed agents, adaptive staffing.</td>
+<td>Correct tasks per resource and wall-clock.</td>
+</tr>
+<tr>
+<td><code>EXP-08</code></td>
+<td>Hybrid specialists and software</td>
+<td>Generalist only vs specialists only vs specialist + deterministic software/checkers.</td>
+<td>End-to-end verified reliability and efficiency.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Minimum evaluation requirements:</strong> seeded, reproducible workloads; task taxonomy; resource tracking; comparable tool/data access; held-out tests; ablations; explicit failed cases; versioned configurations; independent reference checks where feasible; rollback after regression.</p>
+<p><strong>Suggested but unvalidated engineering thresholds from an earlier HIVE plan:</strong> ≥25% fewer examples to held-out competence; no more than 5 average percentage points and 10 on any one old-task benchmark of forgetting; no worse reliability than baseline; bounded cost. Treat these strictly as <strong>proposal-stage acceptance targets</strong>, not empirical discoveries or universal standards.</p>
+<hr />
+<h2 id="9-open-disputes-retain-both-views-do-not-silently-resolve">9. Open disputes: retain both views, do not silently resolve</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Views to preserve</th>
+<th>Current status / necessary test</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DISP-01</code> Swarm/distributed control ↔ central orchestration</td>
+<td>Conditional design trade-off; run <code>EXP-02</code>.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>DISP-02</code> Consensus/majority ↔ competitive independent proposals</td>
+<td>Correlated errors and objective checking matter; run <code>EXP-03</code>.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>DISP-03</code> Common global memory ↔ protected specialist memory</td>
+<td>Typed, selective sharing is candidate compromise; run <code>EXP-04</code>.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>DISP-04</code> Shared model/backbone ↔ independent specialists/adapters</td>
+<td>Compare total cost, specialization gains, and interference on identical workloads.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>DISP-05</code> Natural-language messaging ↔ structured/latent translators</td>
+<td>Compare fidelity, throughput, interpretability and isolation; no assumed winner.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>DISP-06</code> Fully autonomous improvement ↔ governed changes</td>
+<td>Default to evaluated/versioned promotions until independent evidence supports less oversight.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>DISP-07</code> Many small experts ↔ a single larger workhorse</td>
+<td>Evaluate matched compute, tools and quality; neither wins universally.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>DISP-08</code> Continuous online adaptation ↔ periodic consolidation</td>
+<td>Test by change type and forgetting/latency cost.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>DISP-09</code> Tighter integration ↔ replaceability</td>
+<td>Tight coupling may aid some tasks but increases recovery/maintenance risk.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>DISP-10</code> Biological organizational analogy ↔ independently verified computation</td>
+<td>Use analogies to generate hypotheses, never to close empirical questions.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>DISP-11</code> Shared purpose ↔ plural independent dissent</td>
+<td>Preserve goal alignment without treating internal agreement as truth.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>DISP-12</code> One formula ↔ context-dependent formula families</td>
+<td>Current user direction prefers formula selection by framework; benchmark choice.</td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="claims-to-quarantine-or-annotate">Claims to quarantine or annotate</h3>
+<ul>
+<li>A larger group <strong>must</strong> be more intelligent. <strong>Unsupported</strong>; collaboration has measurable overhead and can decrease performance.</li>
+<li>Several differently prompted/models <strong>must</strong> provide independent evidence. <strong>Unsupported</strong> without error-correlation measurement.</li>
+<li>Passing an internal critic <strong>proves</strong> truth. <strong>Unsupported</strong> unless check validity/coverage is established.</li>
+<li>Shared memory <strong>automatically</strong> becomes learning. <strong>False distinction</strong>; retention and behavioral improvement must be measured separately.</li>
+<li>Evolutionary mutual dependence <strong>should</strong> make software modules irreversible. <strong>Misapplied analogy</strong>; replaceability is usually an engineering advantage.</li>
+<li>Forest fungal networks are an established benevolent distributed intelligence. <strong>Contested/overstated</strong> in the research source.</li>
+<li>Neural/global integration establishes artificial consciousness. <strong>Unresolved</strong> and separate from demonstrated task competence.</li>
+<li>Immune receptor diversity estimates describe all receptors already present in one individual. <strong>Overgeneralized</strong>; theoretical and realized diversity must be distinguished.</li>
+<li>Spiritual, sociological, biological, and computational explanations have identical causal mechanisms. <strong>Category error</strong>; use structural similarities without conflating meanings.</li>
+<li>The biological/spiritual source's reported <strong>November 21, 2026</strong> live checks were completed by <strong>November 20, 2026</strong>. <strong>Inconsistent provenance metadata</strong>; verify before reusing the claims as live-checked on that date.</li>
+</ul>
+<hr />
+<h2 id="10-data-ingestion-versioning-and-provenance">10. Data ingestion, versioning, and provenance</h2>
+<h3 id="101-required-record-types">10.1 Required record types</h3>
+<p>Use separate records (or equivalent database tables) for:</p>
+<ul>
+<li><strong>Source</strong> — original file, paper, URL, original claim, retrieval/verification status, publication date.</li>
+<li><strong>Principle</strong> — normalized principle ID, precise meaning, domain, supporting sources, boundaries.</li>
+<li><strong>Finding</strong> — observation or conclusion with evidence class and possible falsifiers.</li>
+<li><strong>Design decision</strong> — decision ID, who/what authorized it, status, options retained.</li>
+<li><strong>Hypothesis</strong> — expected benefit, mechanism, conditions, risks, test plan.</li>
+<li><strong>Experiment</strong> — protocol, models, fixed resources, seed, baseline, outcome, result files, regressions.</li>
+<li><strong>Policy/formula</strong> — inputs, objective, assumptions, version, context, thresholds, evidence.</li>
+<li><strong>Failure/contradiction</strong> — case, provenance, severity, replication, unresolved explanations.</li>
+</ul>
+<h3 id="102-suggested-decision-record">10.2 Suggested decision record</h3>
+<pre><code class="language-yaml">id: DEC-ORG-BOTH-001
+title: Adaptive organizational duality
+status: selected_provisional_direction
+origin: user_discussion_2026-11-20
+assertion: &quot;Preserve both sides of most organization trade-offs; combine, switch, or blend contextually.&quot;
+constraints:
+  - preserve_independent_disagreement
+  - do_not_activate_every_mode_unconditionally
+  - compare_to_simpler_matched_budget_baselines
+  - require_independent_evaluation_before_promotion
+alternatives_retained:
+  - fixed_central
+  - fixed_distributed
+  - always_on_hybrid
+  - adaptive_selector
+implemented: false
+validated: false
+linked_experiments: [EXP-01, EXP-02]
+</code></pre>
+<h3 id="103-suggested-experiment-record">10.3 Suggested experiment record</h3>
+<pre><code class="language-yaml">id: EXP-01
+question: Does adaptive organization help with frozen specialist weights?
+status: proposed
+fixed:
+  - specialist_models_and_versions
+  - tool_access
+  - evaluation_tasks_and_data
+  - compute_budget_where_comparable
+independent_variable: organizational_policy
+dependent_variables:
+  - held_out_task_success
+  - cost_per_correct_completion
+  - latency
+  - regression_rate
+baselines:
+  - capable_single_model_plus_tools
+  - static_multi_agent_pipeline
+hypothesis: adaptive_policy_improves_net_performance
+result: null
+provenance_required: true
+</code></pre>
+<h3 id="104-merge-rules">10.4 Merge rules</h3>
+<ol>
+<li><strong>Append, do not erase</strong> contradictory theories or historical unsuccessful methods.</li>
+<li>Cite original sources and distinguish their claims from HIVE translations and user choices.</li>
+<li>Treat the two <code>Organizational Principles of Multi-Agent Systems</code> uploads as <strong>duplicate copies, not independent confirmations</strong> (identical file hashes in this environment).</li>
+<li>Add backlinks using the actual document names below; create new pages only if the vault lacks those records.</li>
+<li>Mark every speculative mechanism as <code>proposed</code> until its experiment has reported results.</li>
+<li>A change to the working system needs a named baseline, metric, version, regression test, and rollback path.</li>
+</ol>
+<hr />
+<h2 id="11-research-index-and-source-links">11. Research index and source links</h2>
+<h3 id="files-to-link-inside-obsidian-knowledge-base">Files to link inside Obsidian / knowledge base</h3>
+<ul>
+<li><a href="#source-gaps" class="source-gap-link" title="Source file not supplied; see source gaps below">HIVE_Consolidated_Organizational_Principles_and_Discrepancies</a> — source consolidation and discrepancy ledger; the principal predecessor to this packet.</li>
+<li><a href="#source-gaps" class="source-gap-link" title="Source file not supplied; see source gaps below">Organizational Principles of Multi-Agent Systems</a> — computational five-cluster research.</li>
+<li><a href="#source-gaps" class="source-gap-link" title="Source file not supplied; see source gaps below">Organizational Principles of Multi-Agent Systems (1)</a> — duplicate; retain only if preserving upload provenance.</li>
+<li><a href="#source-gaps" class="source-gap-link" title="Source file not supplied; see source gaps below">Spiritual and Biological Organizational Principles</a> — biology/spirituality comparative source; analogies and empirical claims must remain distinguished.</li>
+<li><a href="#source-gaps" class="source-gap-link" title="Source file not supplied; see source gaps below">HIVE_Framework_and_Research_Plan</a> — prior topic/subtopic research approach and competing options (if present in vault).</li>
+<li><a href="/hive/notes/original-HIVE_Build_Plan_and_Source_Foundation/">HIVE_Build_Plan_and_Source_Foundation</a> — previous build decisions and early learning constraints (if present in vault).</li>
+</ul>
+<h3 id="external-literature-identified-in-earlier-research-not-rechecked-live-in-this-handoff">External literature identified in earlier research (not rechecked live in this handoff)</h3>
+<ul>
+<li><a href="https://www.andrew.cmu.edu/course/15-440/assets/READINGS/simon-architecture-of-complexity-1962.pdf" rel="noreferrer">Simon — <em>The Architecture of Complexity</em></a>: near-decomposability and modular organization.</li>
+<li><a href="https://www.cs.toronto.edu/~hinton/absps/jjnh91.pdf" rel="noreferrer">Jacobs et al. — <em>Adaptive Mixtures of Local Experts</em></a>: jointly learned experts and routing.</li>
+<li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4547252/" rel="noreferrer">West et al. — major evolutionary transitions in individuality</a>: biological cooperation versus integrated individuality.</li>
+<li><a href="https://www.nature.com/articles/s42256-026-01268-y" rel="noreferrer">Yang et al. (2026) — capable language models and collaboration</a>: task-specific limits of multi-agent gains; check paper's exact conditions before generalization.</li>
+<li><a href="https://aclanthology.org/2025.findings-acl.606/" rel="noreferrer">Kaesberg et al. (2025) — <em>Voting or Consensus?</em></a>: debate aggregation alternatives.</li>
+<li><a href="https://www.nature.com/articles/s41559-023-01986-1" rel="noreferrer">Karst et al. (2023) — common mycorrhizal network claims</a>: evidence caution for fungal-network metaphors.</li>
+<li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12137136/" rel="noreferrer">Cogitate Consortium (2025) — adversarial consciousness-theory testing</a>: competing consciousness claims remain unresolved.</li>
+<li><a href="https://arxiv.org/abs/2305.11738" rel="noreferrer">CRITIC: Tool-Interactive Critiquing</a>: model refinement driven by tool feedback.</li>
+<li><a href="https://www.nature.com/articles/s41586-023-06747-5" rel="noreferrer">AlphaGeometry, <em>Nature</em></a>: learned search paired with symbolic checking in a specific math domain.</li>
+</ul>
+<h3 id="terms-and-reminders-for-the-database">Terms and reminders for the database</h3>
+<p><code>organization-is-learnable</code> · <code>conditional-cooperation</code> · <code>adaptive-duality</code> · <code>selective-communication</code> · <code>preserved-dissent</code> · <code>organizational-credit-assignment</code> · <code>compounding-learning</code> · <code>formula-registry</code> · <code>promotion-governor</code> · <code>epistemic-memory</code> · <code>failure-containment</code> · <code>fixed-weight-organization-benchmark</code> · <code>evidence-ledger</code> · <code>multiple-topologies</code></p>
+<hr />
+<h2 id="12-final-retained-direction">12. Final retained direction</h2>
+<p><strong>[DECISION + HYPOTHESIS]</strong> HIVE's central differentiator is not merely assembling specialists. It is developing a <strong>measurably self-improving organization</strong> that can decide:</p>
+<ol>
+<li>Which specialists, tools, and representations to activate.</li>
+<li>How they communicate and which state they may share.</li>
+<li>When to be centralized, distributed, collaborative, competitive, autonomous, or tightly checked.</li>
+<li>When to change a workflow, memory, policy, model, or organizational topology.</li>
+<li>Which improvements are real, generalizable, affordable, recoverable, and worth preserving.</li>
+</ol>
+<p><strong>Research priority:</strong> Build and verify the self-learning governor and its evidence/measurement loop <strong>before</strong> assuming that added agents or self-modification necessarily create compounding intelligence.</p>
+<p><strong>Status at issuance:</strong> Research synthesis and selected design direction only; no new HIVE benchmark or working implementation is asserted by this document.</p>
+<section class="source-gaps" id="source-gaps"><h2>Source files not supplied</h2><p>The update names these documents, but they are not included in the supplied reference materials. Their underlying claims and duplicate-file hashes have not been independently checked for this publication.</p><ul><li>HIVE_Consolidated_Organizational_Principles_and_Discrepancies</li><li>HIVE_Framework_and_Research_Plan</li><li>Organizational Principles of Multi-Agent Systems</li><li>Organizational Principles of Multi-Agent Systems (1)</li><li>Spiritual and Biological Organizational Principles</li></ul></section></article><section class="backlinks"><h2>Referenced by <span>2</span></h2><div><a href="/hive/notes/CODER/"><span>CODER</span>Coder directions — revision 0.4<small>related to</small></a><a href="/hive/notes/HOME/"><span>HOME</span>HIVE framework and research vault<small>related to</small></a></div></section></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#0-change-log-what-is-new">0. Change log — what is new</a><a class="toc-h3" href="#evidence-legend">Evidence legend</a><a class="toc-h2" href="#1-core-thesis-and-the-five-different-outcomes">1. Core thesis and the five different outcomes</a><a class="toc-h2" href="#2-twelve-consolidated-organizational-principles">2. Twelve consolidated organizational principles</a><a class="toc-h2" href="#3-major-decision-adaptive-organizational-duality">3. Major decision: adaptive organizational duality</a><a class="toc-h3" href="#31-three-distinct-meanings-of-use-both">3.1 Three distinct meanings of “use both”</a><a class="toc-h3" href="#32-discrepancy-to-combination-decision-table">3.2 Discrepancy-to-combination decision table</a><a class="toc-h3" href="#33-governing-principle">3.3 Governing principle</a><a class="toc-h2" href="#4-what-should-be-learnable-independent-layers">4. What should be learnable — independent layers</a><a class="toc-h3" href="#41-dual-learning-loops">4.1 Dual learning loops</a><a class="toc-h3" href="#42-why-self-learning-comes-first">4.2 Why self-learning comes first</a><a class="toc-h2" href="#5-governing-formulas-and-rating-layers-self-learning-priority">5. Governing formulas and rating layers (self-learning priority)</a><a class="toc-h3" href="#51-existing-mathematical-families-worth-testing">5.1 Existing mathematical families worth testing</a><a class="toc-h3" href="#52-proposed-hive-formulas-unvalidated-design-candidates">5.2 Proposed HIVE formulas — unvalidated design candidates</a><a class="toc-h3" href="#53-candidate-measurement-dashboard">5.3 Candidate measurement dashboard</a><a class="toc-h2" href="#6-hive-information-boundaries-and-contamination-controls">6. HIVE information boundaries and contamination controls</a><a class="toc-h2" href="#7-alternative-architectures-to-preserve">7. Alternative architectures to preserve</a><a class="toc-h2" href="#8-first-experimental-priorities-not-completed">8. First experimental priorities (not completed)</a><a class="toc-h2" href="#9-open-disputes-retain-both-views-do-not-silently-resolve">9. Open disputes: retain both views, do not silently resolve</a><a class="toc-h3" href="#claims-to-quarantine-or-annotate">Claims to quarantine or annotate</a><a class="toc-h2" href="#10-data-ingestion-versioning-and-provenance">10. Data ingestion, versioning, and provenance</a><a class="toc-h3" href="#101-required-record-types">10.1 Required record types</a><a class="toc-h3" href="#102-suggested-decision-record">10.2 Suggested decision record</a><a class="toc-h3" href="#103-suggested-experiment-record">10.3 Suggested experiment record</a><a class="toc-h3" href="#104-merge-rules">10.4 Merge rules</a><a class="toc-h2" href="#11-research-index-and-source-links">11. Research index and source links</a><a class="toc-h3" href="#files-to-link-inside-obsidian-knowledge-base">Files to link inside Obsidian / knowledge base</a><a class="toc-h3" href="#external-literature-identified-in-earlier-research-not-rechecked-live-in-this-handoff">External literature identified in earlier research (not rechecked live in this handoff)</a><a class="toc-h3" href="#terms-and-reminders-for-the-database">Terms and reminders for the database</a><a class="toc-h2" href="#12-final-retained-direction">12. Final retained direction</a><a class="toc-h2" href="#source-gaps">Source files not supplied</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework 0.2 · Coder directions 0.4</span></a><span>Prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/updates/HIVE_Research_Update_Adaptive_Organization_and_Self_Learning_2026-11-20.md" download>Research update</a><a href="/hive/updates/HIVE_Coder_Information_Packet_2026-11-20.md" download>Coder packet · 0.4</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Original vault · 0.2</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

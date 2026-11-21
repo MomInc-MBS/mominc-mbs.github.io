@@ -16,6 +16,27 @@
         "hive/coder-directions",
         "revision/0.4"
       ]
+    },
+    {
+      "id": "ADAPTIVE",
+      "source_id": "HIVE-RESEARCH-UPDATE-2026-11-20-ADAPTIVE-ORGANIZATION",
+      "path": "updates/HIVE_Research_Update_Adaptive_Organization_and_Self_Learning_2026-11-20.md",
+      "title": "Adaptive organization and self-learning",
+      "type": "framework",
+      "status": "provisional",
+      "evidence_status": "research_synthesis_and_provisional_decision",
+      "implementation_status": "not_implemented",
+      "date": "2026-11-20",
+      "citation_label": "HIVE research update (20 November 2026)",
+      "sha256": "f76e7b724ef6305ce0add7279da547e5a213f71c62298706ed9594a48661d3df",
+      "tags": [
+        "hive",
+        "hive/research-update",
+        "adaptive-organization",
+        "self-learning",
+        "formula-registry",
+        "promotion-governor"
+      ]
     }
   ],
   "edges": [
@@ -68,7 +89,118 @@
       "source": "ROADMAP",
       "target": "CODER",
       "relation": "related_to"
+    },
+    {
+      "source": "ADAPTIVE",
+      "target": "FRAMEWORK",
+      "relation": "informs"
+    },
+    {
+      "source": "ADAPTIVE",
+      "target": "CODER",
+      "relation": "informs"
+    },
+    {
+      "source": "ADAPTIVE",
+      "target": "ROADMAP",
+      "relation": "informs"
+    },
+    {
+      "source": "ADAPTIVE",
+      "target": "D02",
+      "relation": "related_to"
+    },
+    {
+      "source": "ADAPTIVE",
+      "target": "D05",
+      "relation": "related_to"
+    },
+    {
+      "source": "ADAPTIVE",
+      "target": "D06",
+      "relation": "related_to"
+    },
+    {
+      "source": "ADAPTIVE",
+      "target": "D07",
+      "relation": "related_to"
+    },
+    {
+      "source": "ADAPTIVE",
+      "target": "D09",
+      "relation": "related_to"
+    },
+    {
+      "source": "ADAPTIVE",
+      "target": "D12",
+      "relation": "related_to"
+    },
+    {
+      "source": "ADAPTIVE",
+      "target": "P09",
+      "relation": "related_to"
+    },
+    {
+      "source": "ADAPTIVE",
+      "target": "P11",
+      "relation": "related_to"
+    },
+    {
+      "source": "ADAPTIVE",
+      "target": "P16",
+      "relation": "related_to"
+    },
+    {
+      "source": "ADAPTIVE",
+      "target": "P17",
+      "relation": "related_to"
+    },
+    {
+      "source": "ADAPTIVE",
+      "target": "P19",
+      "relation": "related_to"
+    },
+    {
+      "source": "ADAPTIVE",
+      "target": "P21",
+      "relation": "related_to"
+    },
+    {
+      "source": "ADAPTIVE",
+      "target": "P24",
+      "relation": "related_to"
+    },
+    {
+      "source": "ADAPTIVE",
+      "target": "E03",
+      "relation": "related_to"
+    },
+    {
+      "source": "ADAPTIVE",
+      "target": "E06",
+      "relation": "related_to"
+    },
+    {
+      "source": "ADAPTIVE",
+      "target": "E08",
+      "relation": "related_to"
+    },
+    {
+      "source": "ADAPTIVE",
+      "target": "B07",
+      "relation": "related_to"
+    },
+    {
+      "source": "CODER",
+      "target": "ADAPTIVE",
+      "relation": "related_to"
+    },
+    {
+      "source": "HOME",
+      "target": "ADAPTIVE",
+      "relation": "related_to"
     }
   ],
-  "scope": "User-supplied coder packet revision 0.4 is the current handoff. Typed update relations are editorial navigation; no new runtime, source verification, or measured result is implied."
+  "scope": "The supplied coder packet remains revision 0.4. The adaptive-organization research handoff is a dated addendum with provisional decisions and untested proposals. Editorial links provide navigation; original source and evidence records are preserved.",
+  "latest_research_id": "ADAPTIVE"
 }

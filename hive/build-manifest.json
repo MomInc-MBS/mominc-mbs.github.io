@@ -1,18 +1,25 @@
 {
   "framework_revision": "0.2",
   "coder_revision": "0.4",
+  "latest_research_id": "ADAPTIVE",
   "updates": [
     {
       "id": "CODER",
       "path": "updates/HIVE_Coder_Information_Packet_2026-11-20.md",
       "revision": "0.4",
       "sha256": "0fb0686f8357a6ba0a7d53c8a5bb6e330fcbc166edffa999e6d61749427ed03d"
+    },
+    {
+      "id": "ADAPTIVE",
+      "path": "updates/HIVE_Research_Update_Adaptive_Organization_and_Self_Learning_2026-11-20.md",
+      "date": "2026-11-20",
+      "sha256": "f76e7b724ef6305ce0add7279da547e5a213f71c62298706ed9594a48661d3df"
     }
   ],
   "source_zip_sha256": "2b726d055a17a25495854890d8d0001cb791006273e0f8eb5515788b7e00c61a",
   "counts": {
-    "research_pages": 287,
-    "graph_edges": 2391,
+    "research_pages": 288,
+    "graph_edges": 2413,
     "originals": 19
   },
   "scope": "Published research reference. No live HIVE runtime or new learning measurements are implied."
