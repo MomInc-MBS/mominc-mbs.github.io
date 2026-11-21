@@ -1,0 +1,114 @@
+{
+  "schemaVersion": "report-1",
+  "run": {
+    "id": "01a1fccd-76d4-79c1-929a-b38cca67b518",
+    "specVersion": "0.1",
+    "runner": {
+      "name": "e2e",
+      "version": "0.21.1"
+    },
+    "status": "passed",
+    "exitCode": 0,
+    "startedAt": "2026-11-21T06:31:26.295Z",
+    "finishedAt": "2026-11-21T06:31:27.886Z",
+    "project": {
+      "id": "hive-local",
+      "configDigest": "48d3cf02481507b7d460880e730c2f9a3c298110ec437aeb1d15605bad2d093a"
+    },
+    "environment": {
+      "ci": false,
+      "trustNoticeShown": false,
+      "os": "win32 10.0.26200",
+      "arch": "x64",
+      "runtime": "node v24.19.0"
+    },
+    "vcs": {
+      "commit": "2e14c0e33d70ccb7f436dc84275151e7568913d6",
+      "branch": "build/autonomous-v0.1",
+      "dirty": true
+    },
+    "targets": [
+      {
+        "id": "cli",
+        "index": 0,
+        "platform": "tools",
+        "environment": "test",
+        "engine": {
+          "name": "none",
+          "version": "unversioned",
+          "spiVersion": 1
+        },
+        "capabilities": [],
+        "artifactCapabilities": [],
+        "stateCapability": false
+      }
+    ],
+    "serialGroups": [],
+    "results": [
+      {
+        "id": "4c90e4b0262f56e1d8bb470f710a86204826db27cae42b8fdf373af7eb643f4b",
+        "testId": "tests/e2e/cli.e2e.ts::CLI%20queues%2C%20stops%2C%20resumes%2C%20verifies%20and%20restores%20a%20task",
+        "kind": "test",
+        "declarationIndex": 0,
+        "titlePath": [
+          "CLI queues, stops, resumes, verifies and restores a task"
+        ],
+        "file": "tests/e2e/cli.e2e.ts",
+        "source": {
+          "file": "tests/e2e/cli.e2e.ts",
+          "line": 13,
+          "column": 1
+        },
+        "targetId": "cli",
+        "platform": "tools",
+        "agent": "default",
+        "repeat": 0,
+        "tags": [],
+        "selected": true,
+        "status": "passed",
+        "attempts": [
+          {
+            "id": "01a1fccd-7848-75b7-b202-8577a45d2d28",
+            "index": 0,
+            "status": "passed",
+            "startedAt": "2026-11-21T06:31:26.536Z",
+            "durationMs": 1336,
+            "artifacts": [],
+            "secondaryErrors": [],
+            "cleanup": "complete",
+            "steps": []
+          }
+        ]
+      }
+    ],
+    "errors": [],
+    "summary": {
+      "discovered": 1,
+      "selected": 1,
+      "executed": 1,
+      "passed": 1,
+      "failed": 0,
+      "flaky": 0,
+      "skipped": 0
+    },
+    "limits": {
+      "maxAgentContextBytes": 16384,
+      "maxLedgerBytes": 8192,
+      "maxObservationBytes": 262144,
+      "maxEventsPerStep": 1000,
+      "maxModelTokensPerCall": 64000
+    },
+    "usage": {
+      "discoveredResults": 1,
+      "maxAgentContextBytes": 0,
+      "maxLedgerBytes": 0,
+      "maxObservationBytes": 0,
+      "artifactBytes": 0,
+      "downloads": 0,
+      "events": 0,
+      "modelTokens": 0,
+      "maxModelCallsInStep": 0,
+      "maxActionStepsInStep": 0
+    }
+  }
+}

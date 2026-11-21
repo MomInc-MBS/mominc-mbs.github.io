@@ -1,0 +1,3 @@
+# Experiment provenance hashes exact runtime bytes. Preserve this frozen source
+# snapshot across checkouts, regardless of the operator's core.autocrlf setting.
+src/hive/** -text whitespace=blank-at-eol,space-before-tab,cr-at-eol,-blank-at-eof

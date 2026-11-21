@@ -24,3 +24,5 @@ hive/implementation/*.md -text
 hive/evidence/** -text
 # Versioned source export is bound to the publication manifest, including EOLs.
 hive/implementation/autonomous-v01/** -text whitespace=blank-at-eol,space-before-tab,cr-at-eol,-blank-at-eof
+hive/implementation/adaptive-v02/** -text whitespace=blank-at-eol,space-before-tab,cr-at-eol,-blank-at-eof
+hive/implementation/adaptive-v021/** -text whitespace=blank-at-eol,space-before-tab,cr-at-eol,-blank-at-eof

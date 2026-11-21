@@ -1,0 +1,62 @@
+{
+  "build": {
+    "commit": "2e14c0e33d70ccb7f436dc84275151e7568913d6",
+    "source_sha256": "25f1ce8593ce11c2b70905c41d1348349f82d81aa86c7e4becf718a6f8dc5d9c",
+    "version": "0.1.0"
+  },
+  "config": {
+    "allow_fixtures": false,
+    "concurrency": 1,
+    "endpoint": "http://127.0.0.1:11434",
+    "max_cycles": 240,
+    "max_requests": 120,
+    "max_retries": 2,
+    "max_storage_bytes": 268435456,
+    "max_tokens": 128,
+    "max_total_tokens": 15360,
+    "max_wall_s": 2700,
+    "model": "myr5-hold-local:latest",
+    "routes": [
+      "local_direct",
+      "local_tool"
+    ],
+    "seed": 42,
+    "timeout_s": 120
+  },
+  "created": 1795242801.3288505,
+  "hypothesis": "Development feedback changes category routing and improves held-out quality versus fixed local_direct at equal per-call token limits.",
+  "primary_baseline": "fixed local_direct",
+  "primary_candidate": "ucb",
+  "promotion": "95% paired CI lower > 0 plus all hard gates; six task families insufficient for general superiority.",
+  "routes": [
+    "local_direct",
+    "local_tool",
+    "tool"
+  ],
+  "runtime": {
+    "available": true,
+    "endpoint": "http://127.0.0.1:11434",
+    "error": null,
+    "models": [
+      {
+        "available": true,
+        "digest": "a45646773d1ee8a6c1557c7de09a68e78a74f2990c4174a1408f65e777db150c",
+        "id": "myr5-hold-local:latest"
+      }
+    ]
+  },
+  "splits": {
+    "development": 3,
+    "holdout": 4,
+    "validation": 2
+  },
+  "stopping_rule": "One fixed campaign; no extension after seeing holdout; stop at budget or kill switch.",
+  "version": 1,
+  "weights": {
+    "latency": 0.05,
+    "quality": 1.0,
+    "robustness": 0.25,
+    "tokens": 0.05,
+    "unsupported": 1.0
+  }
+}

@@ -1,5 +1,20 @@
 # Implementation Status
 
+## Latest executed increment: adaptive controller v0.2
+
+**IMPLEMENTED / MEASURED; experimental checkpoints only.** The new controller
+completed 30 real local-model calls. Direct model 3/6 → learned router 5/6;
+it rejected a 4/6 regression, retained its checkpoint, then continued to
+deterministic tools at 6/6. All 36 observations and decisions reverified in a
+fresh process with zero new calls. Current v0.2.1 passed 136 tests and both CLI journeys; one Windows symlink
+test was skipped. The measured run retains its v0.2.0 source snapshot.
+
+[Executable controller, source, results and limits](/hive/notes/CONTROLLER/).
+Last verified: **21 November 2026 UTC**. Repeated validation supports only this
+finite selection experiment; broad learning and strong-baseline superiority
+remain unproven. Earlier records below retain their original scope.
+
+
 ## Latest milestone: autonomous local prototype v0.1
 
 **IMPLEMENTED / MEASURED; learned policy QUARANTINED.** A separate local HIVE

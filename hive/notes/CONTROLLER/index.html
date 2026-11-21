@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adaptive verified controller — v0.2 · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#29143f"><link rel="canonical" href="https://mominc.online/hive/notes/CONTROLLER/">
+<meta property="og:title" content="Adaptive verified controller — v0.2 · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg?v=2" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=3"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=2"><link rel="stylesheet" href="/hive/assets/research.css?v=1">
+<script defer src="/hive/assets/hive.js?v=3"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg?v=2" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/STATUS/">Implementation</a><a href="/hive/notes/CODER/">Coder directions</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/CONTROLLER/" aria-current=page>Adaptive controller - v0.2</a><a href="/hive/notes/PROTOTYPE/" >Local prototype - v0.1</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/CONTROLLER/" aria-current=page>Adaptive controller - v0.2</a><a href="/hive/notes/PROTOTYPE/" >Local prototype - v0.1</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 299 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download original vault · 0.2</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=build">Local build</a><span>/</span><span>CONTROLLER</span></div>
+<div class="doc-meta"><span class="badge">Measured</span><span class="badge neutral">Implemented scoped pilot</span></div><div class="doc-tools"><button class="copy-link" data-title="Adaptive verified controller — v0.2" data-id="CONTROLLER" data-series="HIVE adaptive controller (21 November 2026 UTC)">Copy reference</button><a href="/hive/implementation/ADAPTIVE_V02.md">Markdown source</a><a href="/hive/graph/?focus=CONTROLLER">View connections</a><button class="print-page">Print</button></div>
+<article class="prose"><h1 id="adaptive-verified-controller-v02">Adaptive verified controller — v0.2</h1>
+<h2 id="current-executable-v021">Current executable: v0.2.1</h2>
+<p>The post-review runtime passed <strong>136 tests</strong>, with one Windows symlink test
+skipped, and both Tester Army CLI journeys. It fixes persistent request/token
+pause reasons, immediately blocks model identity drift, holds ownership through
+cleanup, isolates experimental feedback even after process death, and records
+wall usage atomically. Grok identified these edge cases; the targeted regressions
+now pass. NVIDIA's statistics critique also removed utility-only acceptance.</p>
+<p><a href="/hive/downloads/HIVE_Adaptive_Controller_v0.2.1.zip">Download current executable source and evidence</a> ·
+<a href="/hive/implementation/adaptive-v021-publication.json">Current source manifest</a> ·
+<a href="/hive/implementation/adaptive-v021/src/hive/adaptive.py">Current controller source</a> ·
+<a href="/hive/implementation/adaptive-v021/experiments/results/adaptive-v021-tests.xml">Final test results</a> ·
+<a href="/hive/implementation/adaptive-v021/experiments/results/adaptive-grok-review.json">Grok review and dispositions</a></p>
+<p><strong>Measurement provenance:</strong> the real 30-call run below executed v0.2.0. Its
+original executable snapshot is preserved separately. The later review fixes
+used synthetic tests and spent no further model calls. Changing source cannot
+silently resume an older experiment store.</p>
+<h2 id="preserved-v020-experiment-and-executable">Preserved v0.2.0 experiment and executable</h2>
+<p><a href="/hive/downloads/HIVE_Adaptive_Controller_v0.2.zip">Download executable source and public evidence</a> ·
+<a href="/hive/implementation/adaptive-v02-publication.json">Publication manifest</a> ·
+<a href="/hive/implementation/adaptive-v02/experiments/results/adaptive-real-model.json">Real run</a> ·
+<a href="/hive/implementation/adaptive-v02/experiments/results/adaptive-fresh-process-verification.json">Fresh-process verification</a> ·
+<a href="/hive/implementation/adaptive-v02/experiments/results/adaptive-test-summary.json">Tests</a> ·
+<a href="/hive/implementation/adaptive-v02/src/hive/adaptive.py">Controller source</a></p>
+<p>Last verified: 21 November 2026 UTC. Executable runtime commit
+<code>3d5522ae60735f3c7ffb2b754022c2ae3a328436</code>.</p>
+<p>The <code>adaptive</code> CLI now constructs a frozen router from verified development
+feedback, tests it, verifies paired results, diagnoses rejection, retains or
+replaces an experimental checkpoint, and continues through bounded alternatives.
+This changes routing policy, not model weights or arbitrary repository code.</p>
+<h2 id="executed-local-run">Executed local run</h2>
+<p>Run <code>d8a941b2f587</code> used real Ollama inference with <code>myr5-hold-local:latest</code>,
+Qwen 9B Q4_K_M. Model manifest:
+<code>a45646773d1ee8a6c1557c7de09a68e78a74f2990c4174a1408f65e777db150c</code>.
+Twelve development observations trained the frozen router. The same six separate
+validation tasks were then executed for each candidate and baseline.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Route</th>
+<th style="text-align:right">Verified passes</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Direct local model baseline</td>
+<td style="text-align:right">3/6</td>
+<td>Initial experimental incumbent</td>
+</tr>
+<tr>
+<td>Learned greedy router</td>
+<td style="text-align:right">5/6</td>
+<td>Accepted experimentally; two wins, zero losses</td>
+</tr>
+<tr>
+<td>Fixed model-plus-tool</td>
+<td style="text-align:right">4/6</td>
+<td>Rejected for a critical regression; retained learned router</td>
+</tr>
+<tr>
+<td>Deterministic tools</td>
+<td style="text-align:right">6/6</td>
+<td>Continued after rejection; accepted experimentally</td>
+</tr>
+</tbody>
+</table></div>
+<p>Thirty model calls, 36 observations, 1,013 generated tokens, 3,840 reserved tokens,
+23.451 active execution seconds. Mission caps were 48 requests, 6,144 reserved
+tokens, 900 active seconds, 100 cycles, 64 MiB artifacts and one local inference.
+The completed run has 18 unspent requests; the controller does not reset budgets
+or launch an unbounded daemon. Approved checkpoint remains null.</p>
+<p>The report is <code>experiments/results/adaptive-real-model.json</code>; fresh-process
+verification is <code>experiments/results/adaptive-fresh-process-verification.json</code>.
+All 36 saved observations and candidate decisions reverified with zero new model
+calls. The private SQLite store remains under <code>.hive/adaptive-v02-20261121</code>.</p>
+<h2 id="tests-and-defects-resolved">Tests and defects resolved</h2>
+<p>122 runtime tests passed. Two Tester Army tools-only CLI journeys passed,
+including STOP → resume → completed replay without spending more budget.
+The exporter passed 10 tests; one filesystem symlink test was skipped because
+Windows did not permit creating the test symlink.</p>
+<p>The initial STOP CLI failure is retained in
+<code>experiments/results/adaptive-e2e-initial-failure.json</code>. Fixed defects include
+ordinary STOP returning an error, wrong-job evidence substitution, unchecked
+cached evidence on partial resume, and a process-death window splitting an
+incumbent change from its decision. Decisions now commit atomically and reproduce
+from verified evidence on resume. Tests inject death at that write boundary,
+test a real child-process exit, corrupt evidence, alter plans and exhaust budgets.</p>
+<h2 id="research-and-limits">Research and limits</h2>
+<p>Sol implemented paired descriptive assessment; Luna implemented the controller;
+Terra tested recovery and adversarial cases. NVIDIA Nemotron reviewed the
+statistical plan. Its useful challenge removed utility-only acceptance: quality
+must improve strictly without critical regression. Utility and family dispersion
+are descriptive. The NVIDIA review and dispositions are saved with the results.</p>
+<p>Repeated validation is candidate-selection evidence, not an unused holdout.
+Six correlated synthetic families and one model cannot demonstrate generalization,
+compounding learning, weight training or superiority over the strongest simple
+baseline. Deterministic tools won this run. Their measured zero latency is below
+timer resolution, not zero physical compute. A candidate's acceptance is only
+experimental; it cannot approve its own production checkpoint.</p>
+<p>The next research bottleneck is a preregistered suite with unseen families and
+tasks on which neither simple route saturates. Repeated inference and negative
+controls must precede any broad gain claim. Model output still cannot execute
+arbitrary code, change evaluators, or expand resource limits.</p>
+<h2 id="execute">Execute</h2>
+<pre><code class="language-powershell">$env:PYTHONPATH = &quot;$PWD\src&quot;
+python -m hive --store .hive/new-adaptive adaptive --config configs/adaptive.json --rounds 3 --output experiments/results/new-adaptive.json
+python scripts/verify_adaptive.py --store .hive/new-adaptive --config configs/adaptive.json --output experiments/results/new-verification.json
+</code></pre>
+<p>A new store spends a new budget; the example is not an instruction to run
+repeatedly without an aggregate limit. Restart the identical adaptive command
+with its original store, source and configuration to resume an interrupted run.</p>
+</article><section class="backlinks"><h2>Referenced by <span>9</span></h2><div><a href="/hive/notes/ADAPTIVE/"><span>ADAPTIVE</span>Adaptive organization and self-learning<small>related to</small></a><a href="/hive/notes/PROTOTYPE/"><span>PROTOTYPE</span>Autonomous local prototype — v0.1<small>related to</small></a><a href="/hive/notes/CAPABILITIES/"><span>CAPABILITIES</span>Capability Registry<small>related to</small></a><a href="/hive/notes/RELEASES/"><span>RELEASES</span>Change / Release History<small>related to</small></a><a href="/hive/notes/LEDGER/"><span>LEDGER</span>Decision Ledger<small>related to</small></a><a href="/hive/notes/RUNS/"><span>RUNS</span>Experiment Registry<small>related to</small></a><a href="/hive/notes/STATUS/"><span>STATUS</span>Implementation Status<small>related to</small></a><a href="/hive/notes/GAPS/"><span>GAPS</span>Known Gaps<small>related to</small></a><a href="/hive/notes/LEARNING/"><span>LEARNING</span>Learning Progress<small>related to</small></a></div></section></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#current-executable-v021">Current executable: v0.2.1</a><a class="toc-h2" href="#preserved-v020-experiment-and-executable">Preserved v0.2.0 experiment and executable</a><a class="toc-h2" href="#executed-local-run">Executed local run</a><a class="toc-h2" href="#tests-and-defects-resolved">Tests and defects resolved</a><a class="toc-h2" href="#research-and-limits">Research and limits</a><a class="toc-h2" href="#execute">Execute</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework 0.2 · Coder directions 0.4</span></a><span>Prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/updates/HIVE_Research_Update_Adaptive_Organization_and_Self_Learning_2026-11-20.md" download>Research update</a><a href="/hive/updates/HIVE_Coder_Information_Packet_2026-11-20.md" download>Coder packet · 0.4</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Original vault · 0.2</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

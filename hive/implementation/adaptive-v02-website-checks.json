@@ -1,0 +1,33 @@
+{
+  "ok": true,
+  "base": "http://127.0.0.1:8878",
+  "views": [
+    "STATUS",
+    "RUNS",
+    "CAPABILITIES",
+    "LEARNING",
+    "LEDGER",
+    "GAPS",
+    "RELEASES",
+    "PROTOTYPE",
+    "CONTROLLER"
+  ],
+  "widths": [
+    1440,
+    1024,
+    900,
+    390,
+    320
+  ],
+  "physical_phone": false,
+  "no_javascript": true,
+  "search_graph": true,
+  "existing_diagrams": 7,
+  "adaptive_diagram": true,
+  "adaptive_equations": 2,
+  "prototype_download_digest": true,
+  "prototype_search_graph": true,
+  "adaptive_download_digest": true,
+  "page_errors": [],
+  "failed_requests": []
+}
