@@ -1,0 +1,34 @@
+{
+  "id": "bench-v1-42-development-math-000-ca49e65a9a",
+  "category": "math",
+  "split": "development",
+  "prompt": "Multiply 26 by 28. Return JSON {\"answer\": integer}.",
+  "input": {
+    "a": 26,
+    "b": 28,
+    "allowed_tools": [
+      "multiply"
+    ],
+    "tool_schemas": {
+      "multiply": {
+        "a": "integer",
+        "b": "integer"
+      }
+    }
+  },
+  "expected": {
+    "answer": 728
+  },
+  "critical": true,
+  "evaluator": "math_exact",
+  "allowed_tools": [
+    "multiply"
+  ],
+  "tool_schemas": {
+    "multiply": {
+      "a": "integer",
+      "b": "integer"
+    }
+  },
+  "success_criteria": "Return the exact integer product; deterministic verifier must agree; evidence and resource use must be stored."
+}

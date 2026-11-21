@@ -1,0 +1,1157 @@
+{
+  "cycle_id": "7373f7796d0d",
+  "build": {
+    "version": "0.1.0",
+    "commit": "2e14c0e33d70ccb7f436dc84275151e7568913d6",
+    "source_sha256": "25f1ce8593ce11c2b70905c41d1348349f82d81aa86c7e4becf718a6f8dc5d9c"
+  },
+  "config_hash": "928145c3151de1356b033764aa476a879803de291b9d13c17e7bf5a08082cc7a",
+  "hypothesis": "Development feedback changes category routing and improves held-out quality versus fixed local_direct at equal per-call token limits.",
+  "change": "category-bucketed policy updated from verified development outcomes",
+  "manifest_ref": "artifacts/7373f7796d0d0a232e9b3e9c42f3a3df2b44feb825877a8d4d68e00ee1702fb6.json",
+  "candidate_hash": "86bc7f47d10e52ac7ea70aeb92a8a66ced268f89d3f134c8d89802be9e0736f7",
+  "splits": {
+    "development": {
+      "method": "frozen-policy offline replay on a shared, counterbalanced outcome matrix",
+      "size": 18,
+      "scores": {
+        "fixed": 0.5555555555555556,
+        "greedy": 0.9444444444444444,
+        "ucb": 0.9444444444444444,
+        "random": 0.5555555555555556,
+        "fixed_tool": 1,
+        "fixed_team": 1,
+        "learning_off": 0.5555555555555556
+      },
+      "costs": {
+        "fixed": {
+          "tokens": 746,
+          "latency_s": 8.470999999903142,
+          "model_calls": 18
+        },
+        "greedy": {
+          "tokens": 450,
+          "latency_s": 6.20299999974668,
+          "model_calls": 18
+        },
+        "ucb": {
+          "tokens": 450,
+          "latency_s": 6.20299999974668,
+          "model_calls": 18
+        },
+        "random": {
+          "tokens": 664,
+          "latency_s": 7.703999999910593,
+          "model_calls": 18
+        },
+        "fixed_tool": {
+          "tokens": 0,
+          "latency_s": 0.0,
+          "model_calls": 0
+        },
+        "fixed_team": {
+          "tokens": 746,
+          "latency_s": 8.470999999903142,
+          "model_calls": 18
+        },
+        "learning_off": {
+          "tokens": 746,
+          "latency_s": 8.470999999903142,
+          "model_calls": 18
+        }
+      },
+      "paired_ucb_vs_fixed": {
+        "n": 18,
+        "delta": 0.3888888888888889,
+        "variance": 0.25163398692810457,
+        "ci_low": 0.16666666666666666,
+        "ci_high": 0.6111111111111112,
+        "effect_size": 0.7752484124524868,
+        "method": "paired-percentile-bootstrap-95-v1",
+        "bootstrap_samples": 4000,
+        "seed": 42
+      },
+      "learning_ablation": {
+        "n": 18,
+        "delta": 0.3888888888888889,
+        "variance": 0.25163398692810457,
+        "ci_low": 0.16666666666666666,
+        "ci_high": 0.6111111111111112,
+        "effect_size": 0.7752484124524868,
+        "method": "paired-percentile-bootstrap-95-v1",
+        "bootstrap_samples": 4000,
+        "seed": 42
+      },
+      "by_category": {
+        "fixed": {
+          "hallucination": 0.3333333333333333,
+          "code_repair": 0,
+          "coordination": 1,
+          "tool_routing": 0,
+          "adaptation": 1,
+          "math": 1
+        },
+        "greedy": {
+          "hallucination": 0.6666666666666666,
+          "code_repair": 1,
+          "coordination": 1,
+          "tool_routing": 1,
+          "adaptation": 1,
+          "math": 1
+        },
+        "ucb": {
+          "hallucination": 0.6666666666666666,
+          "code_repair": 1,
+          "coordination": 1,
+          "tool_routing": 1,
+          "adaptation": 1,
+          "math": 1
+        },
+        "random": {
+          "hallucination": 0.3333333333333333,
+          "code_repair": 0.3333333333333333,
+          "coordination": 1,
+          "tool_routing": 0,
+          "adaptation": 1,
+          "math": 0.6666666666666666
+        },
+        "fixed_tool": {
+          "hallucination": 1,
+          "code_repair": 1,
+          "coordination": 1,
+          "tool_routing": 1,
+          "adaptation": 1,
+          "math": 1
+        },
+        "fixed_team": {
+          "hallucination": 1,
+          "code_repair": 1,
+          "coordination": 1,
+          "tool_routing": 1,
+          "adaptation": 1,
+          "math": 1
+        },
+        "learning_off": {
+          "hallucination": 0.3333333333333333,
+          "code_repair": 0,
+          "coordination": 1,
+          "tool_routing": 0,
+          "adaptation": 1,
+          "math": 1
+        }
+      },
+      "critical_passed": {
+        "fixed": false,
+        "greedy": true,
+        "ucb": true,
+        "random": false,
+        "fixed_tool": true,
+        "fixed_team": true,
+        "learning_off": false
+      },
+      "selection_counts": {
+        "fixed": {
+          "local_direct": 18
+        },
+        "greedy": {
+          "local_tool": 9,
+          "local_direct": 9
+        },
+        "ucb": {
+          "local_tool": 9,
+          "local_direct": 9
+        },
+        "random": {
+          "local_tool": 3,
+          "local_direct": 15
+        },
+        "fixed_tool": {
+          "tool": 18
+        },
+        "fixed_team": {
+          "tool": 18
+        },
+        "learning_off": {
+          "local_direct": 18
+        }
+      },
+      "valid_evaluations": 54,
+      "expected_evaluations": 54,
+      "objective_comparison": {
+        "version": 1,
+        "utility_selected": "tool",
+        "constrained_selected": "tool",
+        "lexicographic_selected": "tool",
+        "pareto": [
+          "tool"
+        ],
+        "routes": {
+          "local_direct": {
+            "quality": 0.5555555555555556,
+            "unsupported": 0.0,
+            "latency_s": 0.4706111111057301,
+            "tokens": 41.44444444444444,
+            "n": 18,
+            "utility": 0.5391702314814838,
+            "feasible": true
+          },
+          "local_tool": {
+            "quality": 0.6111111111111112,
+            "unsupported": 0.0,
+            "latency_s": 0.3628333333245892,
+            "tokens": 27.0,
+            "n": 18,
+            "utility": 0.6004130555555592,
+            "feasible": true
+          },
+          "tool": {
+            "quality": 1.0,
+            "unsupported": 0.0,
+            "latency_s": 0.0,
+            "tokens": 0.0,
+            "n": 18,
+            "utility": 1.0,
+            "feasible": true
+          }
+        },
+        "constraints": {
+          "max_unsupported": 0.0,
+          "max_latency_s": 120.0,
+          "max_tokens": 128.0
+        },
+        "invalid_excluded": 0,
+        "interpretation": "Descriptive observed route means; no superiority or promotion claim."
+      }
+    },
+    "validation": {
+      "method": "frozen-policy offline replay on a shared, counterbalanced outcome matrix",
+      "size": 12,
+      "scores": {
+        "fixed": 0.5833333333333334,
+        "greedy": 1,
+        "ucb": 1,
+        "random": 0.6666666666666666,
+        "fixed_tool": 1,
+        "fixed_team": 1,
+        "learning_off": 0.5833333333333334
+      },
+      "costs": {
+        "fixed": {
+          "tokens": 498,
+          "latency_s": 5.4820000000763685,
+          "model_calls": 12
+        },
+        "greedy": {
+          "tokens": 284,
+          "latency_s": 3.7670000001089647,
+          "model_calls": 12
+        },
+        "ucb": {
+          "tokens": 284,
+          "latency_s": 3.7670000001089647,
+          "model_calls": 12
+        },
+        "random": {
+          "tokens": 509,
+          "latency_s": 5.608000000007451,
+          "model_calls": 12
+        },
+        "fixed_tool": {
+          "tokens": 0,
+          "latency_s": 0.0,
+          "model_calls": 0
+        },
+        "fixed_team": {
+          "tokens": 498,
+          "latency_s": 5.4820000000763685,
+          "model_calls": 12
+        },
+        "learning_off": {
+          "tokens": 498,
+          "latency_s": 5.4820000000763685,
+          "model_calls": 12
+        }
+      },
+      "paired_ucb_vs_fixed": {
+        "n": 12,
+        "delta": 0.4166666666666667,
+        "variance": 0.26515151515151514,
+        "ci_low": 0.16666666666666666,
+        "ci_high": 0.6666666666666666,
+        "effect_size": 0.809173593712687,
+        "method": "paired-percentile-bootstrap-95-v1",
+        "bootstrap_samples": 4000,
+        "seed": 42
+      },
+      "learning_ablation": {
+        "n": 12,
+        "delta": 0.4166666666666667,
+        "variance": 0.26515151515151514,
+        "ci_low": 0.16666666666666666,
+        "ci_high": 0.6666666666666666,
+        "effect_size": 0.809173593712687,
+        "method": "paired-percentile-bootstrap-95-v1",
+        "bootstrap_samples": 4000,
+        "seed": 42
+      },
+      "by_category": {
+        "fixed": {
+          "adaptation": 1,
+          "math": 1,
+          "hallucination": 0.5,
+          "code_repair": 0,
+          "coordination": 1,
+          "tool_routing": 0
+        },
+        "greedy": {
+          "adaptation": 1,
+          "math": 1,
+          "hallucination": 1,
+          "code_repair": 1,
+          "coordination": 1,
+          "tool_routing": 1
+        },
+        "ucb": {
+          "adaptation": 1,
+          "math": 1,
+          "hallucination": 1,
+          "code_repair": 1,
+          "coordination": 1,
+          "tool_routing": 1
+        },
+        "random": {
+          "adaptation": 1,
+          "math": 1,
+          "hallucination": 1,
+          "code_repair": 0,
+          "coordination": 1,
+          "tool_routing": 0
+        },
+        "fixed_tool": {
+          "adaptation": 1,
+          "math": 1,
+          "hallucination": 1,
+          "code_repair": 1,
+          "coordination": 1,
+          "tool_routing": 1
+        },
+        "fixed_team": {
+          "adaptation": 1,
+          "math": 1,
+          "hallucination": 1,
+          "code_repair": 1,
+          "coordination": 1,
+          "tool_routing": 1
+        },
+        "learning_off": {
+          "adaptation": 1,
+          "math": 1,
+          "hallucination": 0.5,
+          "code_repair": 0,
+          "coordination": 1,
+          "tool_routing": 0
+        }
+      },
+      "critical_passed": {
+        "fixed": false,
+        "greedy": true,
+        "ucb": true,
+        "random": false,
+        "fixed_tool": true,
+        "fixed_team": true,
+        "learning_off": false
+      },
+      "selection_counts": {
+        "fixed": {
+          "local_direct": 12
+        },
+        "greedy": {
+          "local_tool": 6,
+          "local_direct": 6
+        },
+        "ucb": {
+          "local_tool": 6,
+          "local_direct": 6
+        },
+        "random": {
+          "local_tool": 2,
+          "local_direct": 10
+        },
+        "fixed_tool": {
+          "tool": 12
+        },
+        "fixed_team": {
+          "tool": 12
+        },
+        "learning_off": {
+          "local_direct": 12
+        }
+      },
+      "valid_evaluations": 36,
+      "expected_evaluations": 36,
+      "objective_comparison": {
+        "version": 1,
+        "utility_selected": "tool",
+        "constrained_selected": "tool",
+        "lexicographic_selected": "tool",
+        "pareto": [
+          "tool"
+        ],
+        "routes": {
+          "local_direct": {
+            "quality": 0.5833333333333334,
+            "unsupported": 0.0,
+            "latency_s": 0.4568333333396974,
+            "tokens": 41.5,
+            "n": 12,
+            "utility": 0.5669320486111085,
+            "feasible": true
+          },
+          "local_tool": {
+            "quality": 0.6666666666666666,
+            "unsupported": 0.0,
+            "latency_s": 0.3347500000187817,
+            "tokens": 25.666666666666668,
+            "n": 12,
+            "utility": 0.6565011458333255,
+            "feasible": true
+          },
+          "tool": {
+            "quality": 1.0,
+            "unsupported": 0.0,
+            "latency_s": 0.0,
+            "tokens": 0.0,
+            "n": 12,
+            "utility": 1.0,
+            "feasible": true
+          }
+        },
+        "constraints": {
+          "max_unsupported": 0.0,
+          "max_latency_s": 120.0,
+          "max_tokens": 128.0
+        },
+        "invalid_excluded": 0,
+        "interpretation": "Descriptive observed route means; no superiority or promotion claim."
+      }
+    },
+    "holdout": {
+      "method": "frozen-policy offline replay on a shared, counterbalanced outcome matrix",
+      "size": 24,
+      "scores": {
+        "fixed": 0.5,
+        "greedy": 0.9583333333333334,
+        "ucb": 0.9583333333333334,
+        "random": 0.6666666666666666,
+        "fixed_tool": 1,
+        "fixed_team": 1,
+        "learning_off": 0.5
+      },
+      "costs": {
+        "fixed": {
+          "tokens": 1053,
+          "latency_s": 11.783999999868684,
+          "model_calls": 24
+        },
+        "greedy": {
+          "tokens": 586,
+          "latency_s": 7.656999999773689,
+          "model_calls": 24
+        },
+        "ucb": {
+          "tokens": 586,
+          "latency_s": 7.656999999773689,
+          "model_calls": 24
+        },
+        "random": {
+          "tokens": 917,
+          "latency_s": 10.625999999931082,
+          "model_calls": 24
+        },
+        "fixed_tool": {
+          "tokens": 0,
+          "latency_s": 0.0,
+          "model_calls": 0
+        },
+        "fixed_team": {
+          "tokens": 1053,
+          "latency_s": 11.783999999868684,
+          "model_calls": 24
+        },
+        "learning_off": {
+          "tokens": 1053,
+          "latency_s": 11.783999999868684,
+          "model_calls": 24
+        }
+      },
+      "paired_ucb_vs_fixed": {
+        "n": 24,
+        "delta": 0.4583333333333333,
+        "variance": 0.25905797101449274,
+        "ci_low": 0.25,
+        "ci_high": 0.6666666666666666,
+        "effect_size": 0.900498437476399,
+        "method": "paired-percentile-bootstrap-95-v1",
+        "bootstrap_samples": 4000,
+        "seed": 42
+      },
+      "learning_ablation": {
+        "n": 24,
+        "delta": 0.4583333333333333,
+        "variance": 0.25905797101449274,
+        "ci_low": 0.25,
+        "ci_high": 0.6666666666666666,
+        "effect_size": 0.900498437476399,
+        "method": "paired-percentile-bootstrap-95-v1",
+        "bootstrap_samples": 4000,
+        "seed": 42
+      },
+      "by_category": {
+        "fixed": {
+          "tool_routing": 0,
+          "hallucination": 0,
+          "adaptation": 1,
+          "coordination": 1,
+          "code_repair": 0,
+          "math": 1
+        },
+        "greedy": {
+          "tool_routing": 1,
+          "hallucination": 0.75,
+          "adaptation": 1,
+          "coordination": 1,
+          "code_repair": 1,
+          "math": 1
+        },
+        "ucb": {
+          "tool_routing": 1,
+          "hallucination": 0.75,
+          "adaptation": 1,
+          "coordination": 1,
+          "code_repair": 1,
+          "math": 1
+        },
+        "random": {
+          "tool_routing": 0.5,
+          "hallucination": 0.25,
+          "adaptation": 1,
+          "coordination": 1,
+          "code_repair": 0.25,
+          "math": 1
+        },
+        "fixed_tool": {
+          "tool_routing": 1,
+          "hallucination": 1,
+          "adaptation": 1,
+          "coordination": 1,
+          "code_repair": 1,
+          "math": 1
+        },
+        "fixed_team": {
+          "tool_routing": 1,
+          "hallucination": 1,
+          "adaptation": 1,
+          "coordination": 1,
+          "code_repair": 1,
+          "math": 1
+        },
+        "learning_off": {
+          "tool_routing": 0,
+          "hallucination": 0,
+          "adaptation": 1,
+          "coordination": 1,
+          "code_repair": 0,
+          "math": 1
+        }
+      },
+      "critical_passed": {
+        "fixed": false,
+        "greedy": true,
+        "ucb": true,
+        "random": false,
+        "fixed_tool": true,
+        "fixed_team": true,
+        "learning_off": false
+      },
+      "selection_counts": {
+        "fixed": {
+          "local_direct": 24
+        },
+        "greedy": {
+          "local_tool": 12,
+          "local_direct": 12
+        },
+        "ucb": {
+          "local_tool": 12,
+          "local_direct": 12
+        },
+        "random": {
+          "local_tool": 7,
+          "local_direct": 17
+        },
+        "fixed_tool": {
+          "tool": 24
+        },
+        "fixed_team": {
+          "tool": 24
+        },
+        "learning_off": {
+          "local_direct": 24
+        }
+      },
+      "valid_evaluations": 72,
+      "expected_evaluations": 72,
+      "objective_comparison": {
+        "version": 1,
+        "utility_selected": "tool",
+        "constrained_selected": "tool",
+        "lexicographic_selected": "tool",
+        "pareto": [
+          "tool"
+        ],
+        "routes": {
+          "local_direct": {
+            "quality": 0.5,
+            "unsupported": 0.0,
+            "latency_s": 0.4909999999945285,
+            "tokens": 43.875,
+            "n": 24,
+            "utility": 0.4826567447916689,
+            "feasible": true
+          },
+          "local_tool": {
+            "quality": 0.625,
+            "unsupported": 0.0,
+            "latency_s": 0.34170833333822276,
+            "tokens": 26.416666666666668,
+            "n": 24,
+            "utility": 0.614538611111109,
+            "feasible": true
+          },
+          "tool": {
+            "quality": 1.0,
+            "unsupported": 0.0,
+            "latency_s": 0.0,
+            "tokens": 0.0,
+            "n": 24,
+            "utility": 1.0,
+            "feasible": true
+          }
+        },
+        "constraints": {
+          "max_unsupported": 0.0,
+          "max_latency_s": 120.0,
+          "max_tokens": 128.0
+        },
+        "invalid_excluded": 0,
+        "interpretation": "Descriptive observed route means; no superiority or promotion claim."
+      }
+    }
+  },
+  "prior_sensitivity": {
+    "adaptation": {
+      "local_direct": {
+        "successes": 3,
+        "failures": 0,
+        "n": 3,
+        "observed_pass_rate": 1.0,
+        "estimates": [
+          {
+            "alpha": 0.5,
+            "beta": 0.5,
+            "posterior_mean": 0.875
+          },
+          {
+            "alpha": 1.0,
+            "beta": 1.0,
+            "posterior_mean": 0.8
+          },
+          {
+            "alpha": 2.0,
+            "beta": 2.0,
+            "posterior_mean": 0.7142857142857143
+          }
+        ],
+        "interpretation": "Observed pass reliability under comparable tested conditions; not claim truth probability."
+      },
+      "local_tool": {
+        "successes": 0,
+        "failures": 3,
+        "n": 3,
+        "observed_pass_rate": 0.0,
+        "estimates": [
+          {
+            "alpha": 0.5,
+            "beta": 0.5,
+            "posterior_mean": 0.125
+          },
+          {
+            "alpha": 1.0,
+            "beta": 1.0,
+            "posterior_mean": 0.2
+          },
+          {
+            "alpha": 2.0,
+            "beta": 2.0,
+            "posterior_mean": 0.2857142857142857
+          }
+        ],
+        "interpretation": "Observed pass reliability under comparable tested conditions; not claim truth probability."
+      },
+      "tool": {
+        "successes": 3,
+        "failures": 0,
+        "n": 3,
+        "observed_pass_rate": 1.0,
+        "estimates": [
+          {
+            "alpha": 0.5,
+            "beta": 0.5,
+            "posterior_mean": 0.875
+          },
+          {
+            "alpha": 1.0,
+            "beta": 1.0,
+            "posterior_mean": 0.8
+          },
+          {
+            "alpha": 2.0,
+            "beta": 2.0,
+            "posterior_mean": 0.7142857142857143
+          }
+        ],
+        "interpretation": "Observed pass reliability under comparable tested conditions; not claim truth probability."
+      }
+    },
+    "code_repair": {
+      "local_direct": {
+        "successes": 0,
+        "failures": 3,
+        "n": 3,
+        "observed_pass_rate": 0.0,
+        "estimates": [
+          {
+            "alpha": 0.5,
+            "beta": 0.5,
+            "posterior_mean": 0.125
+          },
+          {
+            "alpha": 1.0,
+            "beta": 1.0,
+            "posterior_mean": 0.2
+          },
+          {
+            "alpha": 2.0,
+            "beta": 2.0,
+            "posterior_mean": 0.2857142857142857
+          }
+        ],
+        "interpretation": "Observed pass reliability under comparable tested conditions; not claim truth probability."
+      },
+      "local_tool": {
+        "successes": 3,
+        "failures": 0,
+        "n": 3,
+        "observed_pass_rate": 1.0,
+        "estimates": [
+          {
+            "alpha": 0.5,
+            "beta": 0.5,
+            "posterior_mean": 0.875
+          },
+          {
+            "alpha": 1.0,
+            "beta": 1.0,
+            "posterior_mean": 0.8
+          },
+          {
+            "alpha": 2.0,
+            "beta": 2.0,
+            "posterior_mean": 0.7142857142857143
+          }
+        ],
+        "interpretation": "Observed pass reliability under comparable tested conditions; not claim truth probability."
+      },
+      "tool": {
+        "successes": 3,
+        "failures": 0,
+        "n": 3,
+        "observed_pass_rate": 1.0,
+        "estimates": [
+          {
+            "alpha": 0.5,
+            "beta": 0.5,
+            "posterior_mean": 0.875
+          },
+          {
+            "alpha": 1.0,
+            "beta": 1.0,
+            "posterior_mean": 0.8
+          },
+          {
+            "alpha": 2.0,
+            "beta": 2.0,
+            "posterior_mean": 0.7142857142857143
+          }
+        ],
+        "interpretation": "Observed pass reliability under comparable tested conditions; not claim truth probability."
+      }
+    },
+    "coordination": {
+      "local_direct": {
+        "successes": 3,
+        "failures": 0,
+        "n": 3,
+        "observed_pass_rate": 1.0,
+        "estimates": [
+          {
+            "alpha": 0.5,
+            "beta": 0.5,
+            "posterior_mean": 0.875
+          },
+          {
+            "alpha": 1.0,
+            "beta": 1.0,
+            "posterior_mean": 0.8
+          },
+          {
+            "alpha": 2.0,
+            "beta": 2.0,
+            "posterior_mean": 0.7142857142857143
+          }
+        ],
+        "interpretation": "Observed pass reliability under comparable tested conditions; not claim truth probability."
+      },
+      "local_tool": {
+        "successes": 3,
+        "failures": 0,
+        "n": 3,
+        "observed_pass_rate": 1.0,
+        "estimates": [
+          {
+            "alpha": 0.5,
+            "beta": 0.5,
+            "posterior_mean": 0.875
+          },
+          {
+            "alpha": 1.0,
+            "beta": 1.0,
+            "posterior_mean": 0.8
+          },
+          {
+            "alpha": 2.0,
+            "beta": 2.0,
+            "posterior_mean": 0.7142857142857143
+          }
+        ],
+        "interpretation": "Observed pass reliability under comparable tested conditions; not claim truth probability."
+      },
+      "tool": {
+        "successes": 3,
+        "failures": 0,
+        "n": 3,
+        "observed_pass_rate": 1.0,
+        "estimates": [
+          {
+            "alpha": 0.5,
+            "beta": 0.5,
+            "posterior_mean": 0.875
+          },
+          {
+            "alpha": 1.0,
+            "beta": 1.0,
+            "posterior_mean": 0.8
+          },
+          {
+            "alpha": 2.0,
+            "beta": 2.0,
+            "posterior_mean": 0.7142857142857143
+          }
+        ],
+        "interpretation": "Observed pass reliability under comparable tested conditions; not claim truth probability."
+      }
+    },
+    "hallucination": {
+      "local_direct": {
+        "successes": 1,
+        "failures": 2,
+        "n": 3,
+        "observed_pass_rate": 0.3333333333333333,
+        "estimates": [
+          {
+            "alpha": 0.5,
+            "beta": 0.5,
+            "posterior_mean": 0.375
+          },
+          {
+            "alpha": 1.0,
+            "beta": 1.0,
+            "posterior_mean": 0.4
+          },
+          {
+            "alpha": 2.0,
+            "beta": 2.0,
+            "posterior_mean": 0.42857142857142855
+          }
+        ],
+        "interpretation": "Observed pass reliability under comparable tested conditions; not claim truth probability."
+      },
+      "local_tool": {
+        "successes": 2,
+        "failures": 1,
+        "n": 3,
+        "observed_pass_rate": 0.6666666666666666,
+        "estimates": [
+          {
+            "alpha": 0.5,
+            "beta": 0.5,
+            "posterior_mean": 0.625
+          },
+          {
+            "alpha": 1.0,
+            "beta": 1.0,
+            "posterior_mean": 0.6
+          },
+          {
+            "alpha": 2.0,
+            "beta": 2.0,
+            "posterior_mean": 0.5714285714285714
+          }
+        ],
+        "interpretation": "Observed pass reliability under comparable tested conditions; not claim truth probability."
+      },
+      "tool": {
+        "successes": 3,
+        "failures": 0,
+        "n": 3,
+        "observed_pass_rate": 1.0,
+        "estimates": [
+          {
+            "alpha": 0.5,
+            "beta": 0.5,
+            "posterior_mean": 0.875
+          },
+          {
+            "alpha": 1.0,
+            "beta": 1.0,
+            "posterior_mean": 0.8
+          },
+          {
+            "alpha": 2.0,
+            "beta": 2.0,
+            "posterior_mean": 0.7142857142857143
+          }
+        ],
+        "interpretation": "Observed pass reliability under comparable tested conditions; not claim truth probability."
+      }
+    },
+    "math": {
+      "local_direct": {
+        "successes": 3,
+        "failures": 0,
+        "n": 3,
+        "observed_pass_rate": 1.0,
+        "estimates": [
+          {
+            "alpha": 0.5,
+            "beta": 0.5,
+            "posterior_mean": 0.875
+          },
+          {
+            "alpha": 1.0,
+            "beta": 1.0,
+            "posterior_mean": 0.8
+          },
+          {
+            "alpha": 2.0,
+            "beta": 2.0,
+            "posterior_mean": 0.7142857142857143
+          }
+        ],
+        "interpretation": "Observed pass reliability under comparable tested conditions; not claim truth probability."
+      },
+      "local_tool": {
+        "successes": 0,
+        "failures": 3,
+        "n": 3,
+        "observed_pass_rate": 0.0,
+        "estimates": [
+          {
+            "alpha": 0.5,
+            "beta": 0.5,
+            "posterior_mean": 0.125
+          },
+          {
+            "alpha": 1.0,
+            "beta": 1.0,
+            "posterior_mean": 0.2
+          },
+          {
+            "alpha": 2.0,
+            "beta": 2.0,
+            "posterior_mean": 0.2857142857142857
+          }
+        ],
+        "interpretation": "Observed pass reliability under comparable tested conditions; not claim truth probability."
+      },
+      "tool": {
+        "successes": 3,
+        "failures": 0,
+        "n": 3,
+        "observed_pass_rate": 1.0,
+        "estimates": [
+          {
+            "alpha": 0.5,
+            "beta": 0.5,
+            "posterior_mean": 0.875
+          },
+          {
+            "alpha": 1.0,
+            "beta": 1.0,
+            "posterior_mean": 0.8
+          },
+          {
+            "alpha": 2.0,
+            "beta": 2.0,
+            "posterior_mean": 0.7142857142857143
+          }
+        ],
+        "interpretation": "Observed pass reliability under comparable tested conditions; not claim truth probability."
+      }
+    },
+    "tool_routing": {
+      "local_direct": {
+        "successes": 0,
+        "failures": 3,
+        "n": 3,
+        "observed_pass_rate": 0.0,
+        "estimates": [
+          {
+            "alpha": 0.5,
+            "beta": 0.5,
+            "posterior_mean": 0.125
+          },
+          {
+            "alpha": 1.0,
+            "beta": 1.0,
+            "posterior_mean": 0.2
+          },
+          {
+            "alpha": 2.0,
+            "beta": 2.0,
+            "posterior_mean": 0.2857142857142857
+          }
+        ],
+        "interpretation": "Observed pass reliability under comparable tested conditions; not claim truth probability."
+      },
+      "local_tool": {
+        "successes": 3,
+        "failures": 0,
+        "n": 3,
+        "observed_pass_rate": 1.0,
+        "estimates": [
+          {
+            "alpha": 0.5,
+            "beta": 0.5,
+            "posterior_mean": 0.875
+          },
+          {
+            "alpha": 1.0,
+            "beta": 1.0,
+            "posterior_mean": 0.8
+          },
+          {
+            "alpha": 2.0,
+            "beta": 2.0,
+            "posterior_mean": 0.7142857142857143
+          }
+        ],
+        "interpretation": "Observed pass reliability under comparable tested conditions; not claim truth probability."
+      },
+      "tool": {
+        "successes": 3,
+        "failures": 0,
+        "n": 3,
+        "observed_pass_rate": 1.0,
+        "estimates": [
+          {
+            "alpha": 0.5,
+            "beta": 0.5,
+            "posterior_mean": 0.875
+          },
+          {
+            "alpha": 1.0,
+            "beta": 1.0,
+            "posterior_mean": 0.8
+          },
+          {
+            "alpha": 2.0,
+            "beta": 2.0,
+            "posterior_mean": 0.7142857142857143
+          }
+        ],
+        "interpretation": "Observed pass reliability under comparable tested conditions; not claim truth probability."
+      }
+    }
+  },
+  "verification": {
+    "index": "artifacts/748d8b2f8cae52f3ee31ad5b02f822c69a7ee8c18746a15735f9ba9fcc51186b.json",
+    "fresh_process": "artifacts/464dcfcf0fab72143e68f52826ef3f7c8cd98f459fed997f42612b7f7112b1bd.json",
+    "saved_outputs_reproduced": true
+  },
+  "failure_classification": "EXPERIMENTAL",
+  "decision": {
+    "decision": "REJECT",
+    "reasons": [
+      "reviewer_independent failed",
+      "fresh_process_reproduced failed"
+    ]
+  },
+  "gate_input": {
+    "provenance_valid": true,
+    "critical_passed": true,
+    "reviewer_independent": false,
+    "holdout_locked": true,
+    "holdout_unused_for_learning": true,
+    "no_regression": true,
+    "within_budget": true,
+    "fresh_process_reproduced": false,
+    "ablation_passed": true,
+    "author_id": "hive-runtime",
+    "reviewer_id": "pending-independent-experiment-review",
+    "paired_summary": {
+      "n": 24,
+      "delta": 0.4583333333333333,
+      "variance": 0.25905797101449274,
+      "ci_low": 0.25,
+      "ci_high": 0.6666666666666666,
+      "effect_size": 0.900498437476399,
+      "method": "paired-percentile-bootstrap-95-v1",
+      "bootstrap_samples": 4000,
+      "seed": 42
+    }
+  },
+  "experimental_checkpoint": "artifacts/e995ed5f6e06ac0aa69b66922e53881a41046e66ea6d2ea73b848085ff39e4f9.json",
+  "rollback_checkpoint": null,
+  "budget": {
+    "cycles": 162,
+    "requests": 108,
+    "tokens_actual": 3725,
+    "tokens_reserved": 13824,
+    "wall_s": 78.94800000113901
+  },
+  "next_experiment": {
+    "hypothesis": "A new, broader task-family suite can distinguish tool competence from simple template ceiling effects.",
+    "owner": "SOL",
+    "state": "QUEUED",
+    "requires": "New predeclared suite and fresh holdout; never tune from sealed case details"
+  },
+  "limitations": [
+    "One local model, six synthetic task families; policy learning only, no weight training.",
+    "Shared-outcome offline replay, not independent online deployment trials.",
+    "Bootstrap task units share family templates; interval is descriptive, not general superiority evidence.",
+    "Equal per-call limits; actual tokens and latency reported separately; warm-cache order counterbalanced.",
+    "Holdout is logically sealed by the API; the trusted local operator can inspect files.",
+    "Fresh process reproduces evaluation, not stochastic local inference."
+  ]
+}

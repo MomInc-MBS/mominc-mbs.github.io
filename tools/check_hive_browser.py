@@ -15,7 +15,8 @@ manifest=json.loads(Path('hive/build-manifest.json').read_text())
 errors,failed=[],[]
 views={'STATUS':'Implementation Status','RUNS':'Experiment Registry','CAPABILITIES':'Capability Registry',
        'LEARNING':'Learning Progress','LEDGER':'Decision Ledger','GAPS':'Known Gaps','RELEASES':'Change / Release History',
-       'PROTOTYPE':'Autonomous local prototype — v0.1'}
+       'PROTOTYPE':'Autonomous local prototype — v0.1',
+       'CONTROLLER':'Adaptive verified controller — v0.2'}
 
 with sync_playwright() as p:
     browser=p.chromium.launch(headless=True)
@@ -34,6 +35,13 @@ with sync_playwright() as p:
         expect(page.locator('.prose h1')).to_have_text(title)
         expect(page.locator('.prose')).to_contain_text('Last verified:')
         assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'),key
+    page.goto(base+'/hive/notes/CONTROLLER/')
+    expect(page.locator('.prose')).to_contain_text('Repeated validation')
+    adaptive_publication=json.loads(Path('hive/implementation/adaptive-v021-publication.json').read_text())
+    adaptive_download=ctx.request.get(base+'/hive/'+adaptive_publication['download'])
+    assert adaptive_download.status==200
+    assert hashlib.sha256(adaptive_download.body()).hexdigest()==adaptive_publication['download_sha256']
+    page.screenshot(path=str(out/'controller-desktop.png'))
     page.goto(base+'/hive/notes/PROTOTYPE/')
     expect(page.locator('.prose')).to_contain_text('Learned candidate QUARANTINED')
     expect(page.locator('.prose table')).to_contain_text('23/24')
@@ -124,7 +132,7 @@ assert not errors,errors
 assert not failed,failed
 report=dict(ok=True,base=base,views=list(views),widths=[1440,1024,900,390,320],physical_phone=False,
             no_javascript=True,search_graph=True,existing_diagrams=7,adaptive_diagram=True,adaptive_equations=2,
-            prototype_download_digest=True,prototype_search_graph=True,
+            prototype_download_digest=True,prototype_search_graph=True,adaptive_download_digest=True,
             page_errors=errors,failed_requests=failed)
 (out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report,indent=2))
