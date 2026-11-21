@@ -1,0 +1,12 @@
+{
+  "check": "clean Git archive CLI task-file, fresh-process verification and restored status",
+  "staged_tree": "9eb287b84866115f3d82dd312e7e21b37c6dd2f5",
+  "source_sha256": "25f1ce8593ce11c2b70905c41d1348349f82d81aa86c7e4becf718a6f8dc5d9c",
+  "source_matches_campaign": true,
+  "task_passed": true,
+  "history_restored": true,
+  "local_model_requests": 0,
+  "worker_status": "stopped",
+  "archive_path": "C:\\Users\\ianmy\\AppData\\Local\\Temp\\hive-v01-release-i8inu4zf",
+  "limitation": "Deterministic tool smoke test; real model evidence is recorded separately."
+}

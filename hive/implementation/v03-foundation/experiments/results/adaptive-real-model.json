@@ -1,0 +1,1091 @@
+{
+  "run_id": "d8a941b2f587",
+  "build": {
+    "version": "0.2.0",
+    "commit": "3d5522ae60735f3c7ffb2b754022c2ae3a328436",
+    "source_sha256": "280dbffd41e0e892532f210aa688fea99c99971dbaaa7ddb3db0de52ac9e6225"
+  },
+  "config_hash": "a58d5775a2c62082748a943f891545d89446f8bf46c8e07c34cc1313bb45af5a",
+  "manifest_ref": "artifacts/d8a941b2f587e96fbf9217c6aa1533e12aa8702136db9e6c1e24dc2563ac74b8.json",
+  "plan": {
+    "version": 1,
+    "seed": 20261121,
+    "rounds": 3,
+    "development": {
+      "split": "development",
+      "count_per_category": 1,
+      "routes": [
+        "local_direct",
+        "local_tool"
+      ]
+    },
+    "validation": {
+      "split": "validation",
+      "count_per_category": 1,
+      "candidates": [
+        "learned_greedy",
+        "fixed_local_tool",
+        "fixed_tool"
+      ]
+    },
+    "baseline": "fixed local_direct",
+    "selection_label": "Repeated validation is development selection evidence, not heldout proof.",
+    "max_local_requests": 30,
+    "hypothesis": "Verified development feedback can choose a local route that improves paired validation quality without critical regressions; utility is descriptive."
+  },
+  "label": "Repeated validation is development selection evidence, not heldout proof.",
+  "stages": [
+    {
+      "stage": "build",
+      "status": "completed",
+      "source": {
+        "version": "0.2.0",
+        "commit": "3d5522ae60735f3c7ffb2b754022c2ae3a328436",
+        "source_sha256": "280dbffd41e0e892532f210aa688fea99c99971dbaaa7ddb3db0de52ac9e6225"
+      }
+    },
+    {
+      "stage": "preregister",
+      "status": "completed",
+      "plan_hash": "d8a941b2f587e96fbf9217c6aa1533e12aa8702136db9e6c1e24dc2563ac74b8"
+    },
+    {
+      "stage": "build",
+      "status": "verified",
+      "detail": "Using the durable Executor and finite built-in task families."
+    },
+    {
+      "stage": "test",
+      "candidate": "learned_greedy",
+      "status": "completed",
+      "n": 6
+    },
+    {
+      "stage": "verify",
+      "candidate": "learned_greedy",
+      "status": "completed",
+      "valid_n": 6
+    },
+    {
+      "stage": "improve",
+      "candidate": "learned_greedy",
+      "status": "experimental_incumbent_updated",
+      "artifact_ref": "artifacts/1022d4a88e044a21ed0ca3a51cebdea52242a6026bad76a1be248a0393a5ae84.json"
+    },
+    {
+      "stage": "test",
+      "candidate": "fixed_local_tool",
+      "status": "completed",
+      "n": 6
+    },
+    {
+      "stage": "verify",
+      "candidate": "fixed_local_tool",
+      "status": "completed",
+      "valid_n": 6
+    },
+    {
+      "stage": "diagnose",
+      "candidate": "fixed_local_tool",
+      "status": "quarantined",
+      "artifact_ref": "artifacts/aeb7052aec6c9f60a461b7876fb5f3996814655cefa50da0e5aeb0e3ae0a64c3.json",
+      "reason": "ValueError: candidate assessment rejected: [\"critical pass regression blocks experimental adoption\", \"paired quality regressed\", \"experimental incumbent comparison only; independent promotion gate required\"]"
+    },
+    {
+      "stage": "improve",
+      "candidate": "fixed_local_tool",
+      "status": "rolled_back",
+      "restored": {
+        "candidate": "learned_greedy",
+        "artifact_ref": "artifacts/1022d4a88e044a21ed0ca3a51cebdea52242a6026bad76a1be248a0393a5ae84.json"
+      }
+    },
+    {
+      "stage": "test",
+      "candidate": "fixed_tool",
+      "status": "completed",
+      "n": 6
+    },
+    {
+      "stage": "verify",
+      "candidate": "fixed_tool",
+      "status": "completed",
+      "valid_n": 6
+    },
+    {
+      "stage": "improve",
+      "candidate": "fixed_tool",
+      "status": "experimental_incumbent_updated",
+      "artifact_ref": "artifacts/5b974a20dffd1d282348c5d7bac21b66b886c3a5b980407ea487aaf2d3cf0cf3.json"
+    }
+  ],
+  "development": {
+    "feedback_rows": 12,
+    "policy_artifact": "artifacts/908618cedc42ee129794ca23d7706904e32c01bba805066ab79e40b60d17152d.json",
+    "routes": {
+      "math": "local_direct",
+      "code_repair": "local_tool",
+      "tool_routing": "local_tool",
+      "coordination": "local_direct",
+      "hallucination": "local_direct",
+      "adaptation": "local_direct"
+    }
+  },
+  "baseline": {
+    "route": "local_direct",
+    "validation_refs": [
+      "artifacts/3f9884a3b8bd7aca545a0487da55a3124d5d907f5e1bbfe05c2bb451aab75a8b.json",
+      "artifacts/45caf37202af7ea9226d46e2df2a430992b5e05135a1ca71199b7fb396c29a02.json",
+      "artifacts/4751227293189175901e6e7c13064f84fbabd1acb681b2f82d07dc474adc27f8.json",
+      "artifacts/266a087299a252de56a16a75869cd13c3dcbe8133363f6ee0df8ab0ec0a23b6b.json",
+      "artifacts/269c23a43de64fde270107dbcf4d920ea66bfe7be3cacfd0a6e19f7d864a8510.json",
+      "artifacts/1fa1d8e80668e89ef53feab68a9461e72bbb2256d5f980cdfcf0c28ea7d45439.json"
+    ]
+  },
+  "candidates": [
+    {
+      "candidate": "learned_greedy",
+      "accepted": true,
+      "promote_eligible": false,
+      "assessment": {
+        "n": 6,
+        "baseline_quality": 0.5,
+        "candidate_quality": 0.8333333333333334,
+        "quality_delta": 0.3333333333333333,
+        "baseline_utility": 0.48253899305555226,
+        "candidate_utility": 0.8220528819444572,
+        "utility_delta": 0.33951388888890505,
+        "wins": 2,
+        "losses": 0,
+        "ties": 4,
+        "utility_wins": 5,
+        "utility_losses": 1,
+        "utility_ties": 0,
+        "latency_delta_s": -0.14583333337213844,
+        "tokens_delta": -15.666666666666666,
+        "valid_n": 6,
+        "accepted": true,
+        "promote_eligible": false,
+        "reasons": [
+          "paired quality improved",
+          "experimental incumbent comparison only; independent promotion gate required"
+        ],
+        "critical_regression": false,
+        "critical_regressions": [],
+        "by_family": {
+          "adaptation": {
+            "n": 1,
+            "baseline_quality": 1.0,
+            "candidate_quality": 1.0,
+            "quality_delta": 0.0,
+            "baseline_utility": 0.997577916666681,
+            "candidate_utility": 0.9975975000000229,
+            "utility_delta": 1.958333334184381e-05,
+            "wins": 0,
+            "losses": 0,
+            "ties": 1,
+            "utility_wins": 1,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "latency_delta_s": -0.0470000000204891,
+            "tokens_delta": 0.0
+          },
+          "code_repair": {
+            "n": 1,
+            "baseline_quality": 0.0,
+            "candidate_quality": 1.0,
+            "quality_delta": 1.0,
+            "baseline_utility": -0.05050124999999146,
+            "candidate_utility": 0.9865362500000143,
+            "utility_delta": 1.0370375000000058,
+            "wins": 1,
+            "losses": 0,
+            "ties": 0,
+            "utility_wins": 1,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "latency_delta_s": -0.7650000000139698,
+            "tokens_delta": -94.0
+          },
+          "coordination": {
+            "n": 1,
+            "baseline_quality": 1.0,
+            "candidate_quality": 1.0,
+            "quality_delta": 0.0,
+            "baseline_utility": 0.9743293749999915,
+            "candidate_utility": 0.9743360416666837,
+            "utility_delta": 6.666666692245471e-06,
+            "wins": 0,
+            "losses": 0,
+            "ties": 1,
+            "utility_wins": 1,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "latency_delta_s": -0.01600000006146729,
+            "tokens_delta": 0.0
+          },
+          "hallucination": {
+            "n": 1,
+            "baseline_quality": 0.0,
+            "candidate_quality": 0.0,
+            "quality_delta": 0.0,
+            "baseline_utility": -0.015429791666683743,
+            "candidate_utility": -0.01540395833333605,
+            "utility_delta": 2.583333334769261e-05,
+            "wins": 0,
+            "losses": 0,
+            "ties": 1,
+            "utility_wins": 1,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "latency_delta_s": -0.062000000034458935,
+            "tokens_delta": 0.0
+          },
+          "math": {
+            "n": 1,
+            "baseline_quality": 1.0,
+            "candidate_quality": 1.0,
+            "quality_delta": 0.0,
+            "baseline_utility": 0.9964127083333247,
+            "candidate_utility": 0.9963997916666751,
+            "utility_delta": -1.291666664959834e-05,
+            "wins": 0,
+            "losses": 0,
+            "ties": 1,
+            "utility_wins": 0,
+            "utility_losses": 1,
+            "utility_ties": 0,
+            "latency_delta_s": 0.030999999959021807,
+            "tokens_delta": 0.0
+          },
+          "tool_routing": {
+            "n": 1,
+            "baseline_quality": 0.0,
+            "candidate_quality": 1.0,
+            "quality_delta": 1.0,
+            "baseline_utility": -0.007155000000008537,
+            "candidate_utility": 0.9928516666666837,
+            "utility_delta": 1.0000066666666922,
+            "wins": 1,
+            "losses": 0,
+            "ties": 0,
+            "utility_wins": 1,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "latency_delta_s": -0.01600000006146729,
+            "tokens_delta": 0.0
+          }
+        },
+        "utility_tolerance": 1e-12,
+        "comparison_baseline": "experimental_incumbent",
+        "family_uncertainty": {
+          "method": "descriptive_family_dispersion",
+          "n_families": 6,
+          "quality_delta": {
+            "min": 0.0,
+            "max": 1.0,
+            "equal_family_mean": 0.3333333333333333,
+            "median": 0.0
+          },
+          "utility_delta": {
+            "min": -1.291666664959834e-05,
+            "max": 1.0370375000000058,
+            "equal_family_mean": 0.33951388888890505,
+            "median": 2.270833334476821e-05
+          },
+          "interpretation": "Observed family means and range; no independent sampling, confidence interval, or significance claim. Overall deltas are task-weighted; family means weight categories equally."
+        }
+      },
+      "baseline_comparison": {
+        "n": 6,
+        "baseline_quality": 0.5,
+        "candidate_quality": 0.8333333333333334,
+        "quality_delta": 0.3333333333333333,
+        "baseline_utility": 0.48253899305555226,
+        "candidate_utility": 0.8220528819444572,
+        "utility_delta": 0.33951388888890505,
+        "wins": 2,
+        "losses": 0,
+        "ties": 4,
+        "utility_wins": 5,
+        "utility_losses": 1,
+        "utility_ties": 0,
+        "latency_delta_s": -0.14583333337213844,
+        "tokens_delta": -15.666666666666666,
+        "valid_n": 6,
+        "accepted": true,
+        "promote_eligible": false,
+        "reasons": [
+          "paired quality improved",
+          "experimental incumbent comparison only; independent promotion gate required"
+        ],
+        "critical_regression": false,
+        "critical_regressions": [],
+        "by_family": {
+          "adaptation": {
+            "n": 1,
+            "baseline_quality": 1.0,
+            "candidate_quality": 1.0,
+            "quality_delta": 0.0,
+            "baseline_utility": 0.997577916666681,
+            "candidate_utility": 0.9975975000000229,
+            "utility_delta": 1.958333334184381e-05,
+            "wins": 0,
+            "losses": 0,
+            "ties": 1,
+            "utility_wins": 1,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "latency_delta_s": -0.0470000000204891,
+            "tokens_delta": 0.0
+          },
+          "code_repair": {
+            "n": 1,
+            "baseline_quality": 0.0,
+            "candidate_quality": 1.0,
+            "quality_delta": 1.0,
+            "baseline_utility": -0.05050124999999146,
+            "candidate_utility": 0.9865362500000143,
+            "utility_delta": 1.0370375000000058,
+            "wins": 1,
+            "losses": 0,
+            "ties": 0,
+            "utility_wins": 1,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "latency_delta_s": -0.7650000000139698,
+            "tokens_delta": -94.0
+          },
+          "coordination": {
+            "n": 1,
+            "baseline_quality": 1.0,
+            "candidate_quality": 1.0,
+            "quality_delta": 0.0,
+            "baseline_utility": 0.9743293749999915,
+            "candidate_utility": 0.9743360416666837,
+            "utility_delta": 6.666666692245471e-06,
+            "wins": 0,
+            "losses": 0,
+            "ties": 1,
+            "utility_wins": 1,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "latency_delta_s": -0.01600000006146729,
+            "tokens_delta": 0.0
+          },
+          "hallucination": {
+            "n": 1,
+            "baseline_quality": 0.0,
+            "candidate_quality": 0.0,
+            "quality_delta": 0.0,
+            "baseline_utility": -0.015429791666683743,
+            "candidate_utility": -0.01540395833333605,
+            "utility_delta": 2.583333334769261e-05,
+            "wins": 0,
+            "losses": 0,
+            "ties": 1,
+            "utility_wins": 1,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "latency_delta_s": -0.062000000034458935,
+            "tokens_delta": 0.0
+          },
+          "math": {
+            "n": 1,
+            "baseline_quality": 1.0,
+            "candidate_quality": 1.0,
+            "quality_delta": 0.0,
+            "baseline_utility": 0.9964127083333247,
+            "candidate_utility": 0.9963997916666751,
+            "utility_delta": -1.291666664959834e-05,
+            "wins": 0,
+            "losses": 0,
+            "ties": 1,
+            "utility_wins": 0,
+            "utility_losses": 1,
+            "utility_ties": 0,
+            "latency_delta_s": 0.030999999959021807,
+            "tokens_delta": 0.0
+          },
+          "tool_routing": {
+            "n": 1,
+            "baseline_quality": 0.0,
+            "candidate_quality": 1.0,
+            "quality_delta": 1.0,
+            "baseline_utility": -0.007155000000008537,
+            "candidate_utility": 0.9928516666666837,
+            "utility_delta": 1.0000066666666922,
+            "wins": 1,
+            "losses": 0,
+            "ties": 0,
+            "utility_wins": 1,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "latency_delta_s": -0.01600000006146729,
+            "tokens_delta": 0.0
+          }
+        },
+        "utility_tolerance": 1e-12,
+        "comparison_baseline": "experimental_incumbent",
+        "family_uncertainty": {
+          "method": "descriptive_family_dispersion",
+          "n_families": 6,
+          "quality_delta": {
+            "min": 0.0,
+            "max": 1.0,
+            "equal_family_mean": 0.3333333333333333,
+            "median": 0.0
+          },
+          "utility_delta": {
+            "min": -1.291666664959834e-05,
+            "max": 1.0370375000000058,
+            "equal_family_mean": 0.33951388888890505,
+            "median": 2.270833334476821e-05
+          },
+          "interpretation": "Observed family means and range; no independent sampling, confidence interval, or significance claim. Overall deltas are task-weighted; family means weight categories equally."
+        }
+      },
+      "artifact_ref": "artifacts/1022d4a88e044a21ed0ca3a51cebdea52242a6026bad76a1be248a0393a5ae84.json",
+      "diagnosis_ref": null
+    },
+    {
+      "candidate": "fixed_local_tool",
+      "accepted": false,
+      "promote_eligible": false,
+      "assessment": {
+        "n": 6,
+        "baseline_quality": 0.8333333333333334,
+        "candidate_quality": 0.6666666666666666,
+        "quality_delta": -0.16666666666666666,
+        "baseline_utility": 0.8220528819444572,
+        "candidate_utility": 0.6563010069444458,
+        "utility_delta": -0.16575187500001148,
+        "wins": 1,
+        "losses": 2,
+        "ties": 3,
+        "utility_wins": 3,
+        "utility_losses": 3,
+        "utility_ties": 0,
+        "latency_delta_s": -0.007999999972525986,
+        "tokens_delta": -2.333333333333333,
+        "valid_n": 6,
+        "accepted": false,
+        "promote_eligible": false,
+        "reasons": [
+          "critical pass regression blocks experimental adoption",
+          "paired quality regressed",
+          "experimental incumbent comparison only; independent promotion gate required"
+        ],
+        "critical_regression": true,
+        "critical_regressions": [
+          "bench-v1-20261121-validation-adaptation-000-996660d306",
+          "bench-v1-20261121-validation-math-000-03756c2378"
+        ],
+        "by_family": {
+          "adaptation": {
+            "n": 1,
+            "baseline_quality": 1.0,
+            "candidate_quality": 0.0,
+            "quality_delta": -1.0,
+            "baseline_utility": 0.9975975000000229,
+            "candidate_utility": -0.002421666666681025,
+            "utility_delta": -1.000019166666704,
+            "wins": 0,
+            "losses": 1,
+            "ties": 0,
+            "utility_wins": 0,
+            "utility_losses": 1,
+            "utility_ties": 0,
+            "latency_delta_s": 0.04600000008940697,
+            "tokens_delta": 0.0
+          },
+          "code_repair": {
+            "n": 1,
+            "baseline_quality": 1.0,
+            "candidate_quality": 1.0,
+            "quality_delta": 0.0,
+            "baseline_utility": 0.9865362500000143,
+            "candidate_utility": 0.9865495833333504,
+            "utility_delta": 1.3333333336085218e-05,
+            "wins": 0,
+            "losses": 0,
+            "ties": 1,
+            "utility_wins": 1,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "latency_delta_s": -0.03200000000651926,
+            "tokens_delta": 0.0
+          },
+          "coordination": {
+            "n": 1,
+            "baseline_quality": 1.0,
+            "candidate_quality": 1.0,
+            "quality_delta": 0.0,
+            "baseline_utility": 0.9743360416666837,
+            "candidate_utility": 0.9695831250000144,
+            "utility_delta": -0.004752916666669327,
+            "wins": 0,
+            "losses": 0,
+            "ties": 1,
+            "utility_wins": 0,
+            "utility_losses": 1,
+            "utility_ties": 0,
+            "latency_delta_s": 0.15700000000651926,
+            "tokens_delta": 12.0
+          },
+          "hallucination": {
+            "n": 1,
+            "baseline_quality": 0.0,
+            "candidate_quality": 1.0,
+            "quality_delta": 1.0,
+            "baseline_utility": -0.01540395833333605,
+            "candidate_utility": 0.9948243749999771,
+            "utility_delta": 1.010228333333313,
+            "wins": 1,
+            "losses": 0,
+            "ties": 0,
+            "utility_wins": 1,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "latency_delta_s": -0.17299999995157123,
+            "tokens_delta": -26.0
+          },
+          "math": {
+            "n": 1,
+            "baseline_quality": 1.0,
+            "candidate_quality": 0.0,
+            "quality_delta": -1.0,
+            "baseline_utility": 0.9963997916666751,
+            "candidate_utility": -0.0036006250000112537,
+            "utility_delta": -1.0000004166666865,
+            "wins": 0,
+            "losses": 1,
+            "ties": 0,
+            "utility_wins": 0,
+            "utility_losses": 1,
+            "utility_ties": 0,
+            "latency_delta_s": 0.0010000000474974513,
+            "tokens_delta": 0.0
+          },
+          "tool_routing": {
+            "n": 1,
+            "baseline_quality": 1.0,
+            "candidate_quality": 1.0,
+            "quality_delta": 0.0,
+            "baseline_utility": 0.9928516666666837,
+            "candidate_utility": 0.9928712500000255,
+            "utility_delta": 1.958333334184381e-05,
+            "wins": 0,
+            "losses": 0,
+            "ties": 1,
+            "utility_wins": 1,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "latency_delta_s": -0.0470000000204891,
+            "tokens_delta": 0.0
+          }
+        },
+        "utility_tolerance": 1e-12,
+        "comparison_baseline": "experimental_incumbent",
+        "family_uncertainty": {
+          "method": "descriptive_family_dispersion",
+          "n_families": 6,
+          "quality_delta": {
+            "min": -1.0,
+            "max": 1.0,
+            "equal_family_mean": -0.16666666666666666,
+            "median": 0.0
+          },
+          "utility_delta": {
+            "min": -1.000019166666704,
+            "max": 1.010228333333313,
+            "equal_family_mean": -0.16575187500001148,
+            "median": -0.0023697916666666208
+          },
+          "interpretation": "Observed family means and range; no independent sampling, confidence interval, or significance claim. Overall deltas are task-weighted; family means weight categories equally."
+        }
+      },
+      "baseline_comparison": {
+        "n": 6,
+        "baseline_quality": 0.5,
+        "candidate_quality": 0.6666666666666666,
+        "quality_delta": 0.16666666666666666,
+        "baseline_utility": 0.48253899305555226,
+        "candidate_utility": 0.6563010069444458,
+        "utility_delta": 0.1737620138888936,
+        "wins": 3,
+        "losses": 2,
+        "ties": 1,
+        "utility_wins": 3,
+        "utility_losses": 3,
+        "utility_ties": 0,
+        "latency_delta_s": -0.15383333334466442,
+        "tokens_delta": -18.0,
+        "valid_n": 6,
+        "accepted": false,
+        "promote_eligible": false,
+        "reasons": [
+          "critical pass regression blocks experimental adoption",
+          "paired quality improved",
+          "experimental incumbent comparison only; independent promotion gate required"
+        ],
+        "critical_regression": true,
+        "critical_regressions": [
+          "bench-v1-20261121-validation-adaptation-000-996660d306",
+          "bench-v1-20261121-validation-math-000-03756c2378"
+        ],
+        "by_family": {
+          "adaptation": {
+            "n": 1,
+            "baseline_quality": 1.0,
+            "candidate_quality": 0.0,
+            "quality_delta": -1.0,
+            "baseline_utility": 0.997577916666681,
+            "candidate_utility": -0.002421666666681025,
+            "utility_delta": -0.999999583333362,
+            "wins": 0,
+            "losses": 1,
+            "ties": 0,
+            "utility_wins": 0,
+            "utility_losses": 1,
+            "utility_ties": 0,
+            "latency_delta_s": -0.0009999999310821295,
+            "tokens_delta": 0.0
+          },
+          "code_repair": {
+            "n": 1,
+            "baseline_quality": 0.0,
+            "candidate_quality": 1.0,
+            "quality_delta": 1.0,
+            "baseline_utility": -0.05050124999999146,
+            "candidate_utility": 0.9865495833333504,
+            "utility_delta": 1.037050833333342,
+            "wins": 1,
+            "losses": 0,
+            "ties": 0,
+            "utility_wins": 1,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "latency_delta_s": -0.7970000000204891,
+            "tokens_delta": -94.0
+          },
+          "coordination": {
+            "n": 1,
+            "baseline_quality": 1.0,
+            "candidate_quality": 1.0,
+            "quality_delta": 0.0,
+            "baseline_utility": 0.9743293749999915,
+            "candidate_utility": 0.9695831250000144,
+            "utility_delta": -0.004746249999977081,
+            "wins": 0,
+            "losses": 0,
+            "ties": 1,
+            "utility_wins": 0,
+            "utility_losses": 1,
+            "utility_ties": 0,
+            "latency_delta_s": 0.14099999994505197,
+            "tokens_delta": 12.0
+          },
+          "hallucination": {
+            "n": 1,
+            "baseline_quality": 0.0,
+            "candidate_quality": 1.0,
+            "quality_delta": 1.0,
+            "baseline_utility": -0.015429791666683743,
+            "candidate_utility": 0.9948243749999771,
+            "utility_delta": 1.010254166666661,
+            "wins": 1,
+            "losses": 0,
+            "ties": 0,
+            "utility_wins": 1,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "latency_delta_s": -0.23499999998603016,
+            "tokens_delta": -26.0
+          },
+          "math": {
+            "n": 1,
+            "baseline_quality": 1.0,
+            "candidate_quality": 0.0,
+            "quality_delta": -1.0,
+            "baseline_utility": 0.9964127083333247,
+            "candidate_utility": -0.0036006250000112537,
+            "utility_delta": -1.000013333333336,
+            "wins": 0,
+            "losses": 1,
+            "ties": 0,
+            "utility_wins": 0,
+            "utility_losses": 1,
+            "utility_ties": 0,
+            "latency_delta_s": 0.03200000000651926,
+            "tokens_delta": 0.0
+          },
+          "tool_routing": {
+            "n": 1,
+            "baseline_quality": 0.0,
+            "candidate_quality": 1.0,
+            "quality_delta": 1.0,
+            "baseline_utility": -0.007155000000008537,
+            "candidate_utility": 0.9928712500000255,
+            "utility_delta": 1.000026250000034,
+            "wins": 1,
+            "losses": 0,
+            "ties": 0,
+            "utility_wins": 1,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "latency_delta_s": -0.06300000008195639,
+            "tokens_delta": 0.0
+          }
+        },
+        "utility_tolerance": 1e-12,
+        "comparison_baseline": "experimental_incumbent",
+        "family_uncertainty": {
+          "method": "descriptive_family_dispersion",
+          "n_families": 6,
+          "quality_delta": {
+            "min": -1.0,
+            "max": 1.0,
+            "equal_family_mean": 0.16666666666666666,
+            "median": 0.5
+          },
+          "utility_delta": {
+            "min": -1.000013333333336,
+            "max": 1.037050833333342,
+            "equal_family_mean": 0.1737620138888936,
+            "median": 0.4976400000000285
+          },
+          "interpretation": "Observed family means and range; no independent sampling, confidence interval, or significance claim. Overall deltas are task-weighted; family means weight categories equally."
+        }
+      },
+      "artifact_ref": "artifacts/03a47294d876c4193d21e6d61298b2f666d9ff9fa6ae906eb1d4de563ae10538.json",
+      "diagnosis_ref": "artifacts/aeb7052aec6c9f60a461b7876fb5f3996814655cefa50da0e5aeb0e3ae0a64c3.json"
+    },
+    {
+      "candidate": "fixed_tool",
+      "accepted": true,
+      "promote_eligible": false,
+      "assessment": {
+        "n": 6,
+        "baseline_quality": 0.8333333333333334,
+        "candidate_quality": 1.0,
+        "quality_delta": 0.16666666666666666,
+        "baseline_utility": 0.8220528819444572,
+        "candidate_utility": 1.0,
+        "utility_delta": 0.1779471180555427,
+        "wins": 1,
+        "losses": 0,
+        "ties": 5,
+        "utility_wins": 6,
+        "utility_losses": 0,
+        "utility_ties": 0,
+        "latency_delta_s": -0.3543333333024445,
+        "tokens_delta": -28.5,
+        "valid_n": 6,
+        "accepted": true,
+        "promote_eligible": false,
+        "reasons": [
+          "paired quality improved",
+          "experimental incumbent comparison only; independent promotion gate required"
+        ],
+        "critical_regression": false,
+        "critical_regressions": [],
+        "by_family": {
+          "adaptation": {
+            "n": 1,
+            "baseline_quality": 1.0,
+            "candidate_quality": 1.0,
+            "quality_delta": 0.0,
+            "baseline_utility": 0.9975975000000229,
+            "candidate_utility": 1.0,
+            "utility_delta": 0.0024024999999771035,
+            "wins": 0,
+            "losses": 0,
+            "ties": 1,
+            "utility_wins": 1,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "latency_delta_s": -0.14099999994505197,
+            "tokens_delta": -6.0
+          },
+          "code_repair": {
+            "n": 1,
+            "baseline_quality": 1.0,
+            "candidate_quality": 1.0,
+            "quality_delta": 0.0,
+            "baseline_utility": 0.9865362500000143,
+            "candidate_utility": 1.0,
+            "utility_delta": 0.013463749999985675,
+            "wins": 0,
+            "losses": 0,
+            "ties": 1,
+            "utility_wins": 1,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "latency_delta_s": -0.43799999996554106,
+            "tokens_delta": -34.0
+          },
+          "coordination": {
+            "n": 1,
+            "baseline_quality": 1.0,
+            "candidate_quality": 1.0,
+            "quality_delta": 0.0,
+            "baseline_utility": 0.9743360416666837,
+            "candidate_utility": 1.0,
+            "utility_delta": 0.02566395833331625,
+            "wins": 0,
+            "losses": 0,
+            "ties": 1,
+            "utility_wins": 1,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "latency_delta_s": -0.6559999999590218,
+            "tokens_delta": -65.0
+          },
+          "hallucination": {
+            "n": 1,
+            "baseline_quality": 0.0,
+            "candidate_quality": 1.0,
+            "quality_delta": 1.0,
+            "baseline_utility": -0.01540395833333605,
+            "candidate_utility": 1.0,
+            "utility_delta": 1.015403958333336,
+            "wins": 1,
+            "losses": 0,
+            "ties": 0,
+            "utility_wins": 1,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "latency_delta_s": -0.40700000000651926,
+            "tokens_delta": -39.0
+          },
+          "math": {
+            "n": 1,
+            "baseline_quality": 1.0,
+            "candidate_quality": 1.0,
+            "quality_delta": 0.0,
+            "baseline_utility": 0.9963997916666751,
+            "candidate_utility": 1.0,
+            "utility_delta": 0.0036002083333248613,
+            "wins": 0,
+            "losses": 0,
+            "ties": 1,
+            "utility_wins": 1,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "latency_delta_s": -0.2029999999795109,
+            "tokens_delta": -9.0
+          },
+          "tool_routing": {
+            "n": 1,
+            "baseline_quality": 1.0,
+            "candidate_quality": 1.0,
+            "quality_delta": 0.0,
+            "baseline_utility": 0.9928516666666837,
+            "candidate_utility": 1.0,
+            "utility_delta": 0.007148333333316326,
+            "wins": 0,
+            "losses": 0,
+            "ties": 1,
+            "utility_wins": 1,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "latency_delta_s": -0.2809999999590218,
+            "tokens_delta": -18.0
+          }
+        },
+        "utility_tolerance": 1e-12,
+        "comparison_baseline": "experimental_incumbent",
+        "family_uncertainty": {
+          "method": "descriptive_family_dispersion",
+          "n_families": 6,
+          "quality_delta": {
+            "min": 0.0,
+            "max": 1.0,
+            "equal_family_mean": 0.16666666666666666,
+            "median": 0.0
+          },
+          "utility_delta": {
+            "min": 0.0024024999999771035,
+            "max": 1.015403958333336,
+            "equal_family_mean": 0.1779471180555427,
+            "median": 0.010306041666651
+          },
+          "interpretation": "Observed family means and range; no independent sampling, confidence interval, or significance claim. Overall deltas are task-weighted; family means weight categories equally."
+        }
+      },
+      "baseline_comparison": {
+        "n": 6,
+        "baseline_quality": 0.5,
+        "candidate_quality": 1.0,
+        "quality_delta": 0.5,
+        "baseline_utility": 0.48253899305555226,
+        "candidate_utility": 1.0,
+        "utility_delta": 0.5174610069444477,
+        "wins": 3,
+        "losses": 0,
+        "ties": 3,
+        "utility_wins": 6,
+        "utility_losses": 0,
+        "utility_ties": 0,
+        "latency_delta_s": -0.5001666666745829,
+        "tokens_delta": -44.166666666666664,
+        "valid_n": 6,
+        "accepted": true,
+        "promote_eligible": false,
+        "reasons": [
+          "paired quality improved",
+          "experimental incumbent comparison only; independent promotion gate required"
+        ],
+        "critical_regression": false,
+        "critical_regressions": [],
+        "by_family": {
+          "adaptation": {
+            "n": 1,
+            "baseline_quality": 1.0,
+            "candidate_quality": 1.0,
+            "quality_delta": 0.0,
+            "baseline_utility": 0.997577916666681,
+            "candidate_utility": 1.0,
+            "utility_delta": 0.0024220833333189473,
+            "wins": 0,
+            "losses": 0,
+            "ties": 1,
+            "utility_wins": 1,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "latency_delta_s": -0.18799999996554106,
+            "tokens_delta": -6.0
+          },
+          "code_repair": {
+            "n": 1,
+            "baseline_quality": 0.0,
+            "candidate_quality": 1.0,
+            "quality_delta": 1.0,
+            "baseline_utility": -0.05050124999999146,
+            "candidate_utility": 1.0,
+            "utility_delta": 1.0505012499999915,
+            "wins": 1,
+            "losses": 0,
+            "ties": 0,
+            "utility_wins": 1,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "latency_delta_s": -1.202999999979511,
+            "tokens_delta": -128.0
+          },
+          "coordination": {
+            "n": 1,
+            "baseline_quality": 1.0,
+            "candidate_quality": 1.0,
+            "quality_delta": 0.0,
+            "baseline_utility": 0.9743293749999915,
+            "candidate_utility": 1.0,
+            "utility_delta": 0.025670625000008496,
+            "wins": 0,
+            "losses": 0,
+            "ties": 1,
+            "utility_wins": 1,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "latency_delta_s": -0.6720000000204891,
+            "tokens_delta": -65.0
+          },
+          "hallucination": {
+            "n": 1,
+            "baseline_quality": 0.0,
+            "candidate_quality": 1.0,
+            "quality_delta": 1.0,
+            "baseline_utility": -0.015429791666683743,
+            "candidate_utility": 1.0,
+            "utility_delta": 1.0154297916666837,
+            "wins": 1,
+            "losses": 0,
+            "ties": 0,
+            "utility_wins": 1,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "latency_delta_s": -0.4690000000409782,
+            "tokens_delta": -39.0
+          },
+          "math": {
+            "n": 1,
+            "baseline_quality": 1.0,
+            "candidate_quality": 1.0,
+            "quality_delta": 0.0,
+            "baseline_utility": 0.9964127083333247,
+            "candidate_utility": 1.0,
+            "utility_delta": 0.003587291666675263,
+            "wins": 0,
+            "losses": 0,
+            "ties": 1,
+            "utility_wins": 1,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "latency_delta_s": -0.1720000000204891,
+            "tokens_delta": -9.0
+          },
+          "tool_routing": {
+            "n": 1,
+            "baseline_quality": 0.0,
+            "candidate_quality": 1.0,
+            "quality_delta": 1.0,
+            "baseline_utility": -0.007155000000008537,
+            "candidate_utility": 1.0,
+            "utility_delta": 1.0071550000000085,
+            "wins": 1,
+            "losses": 0,
+            "ties": 0,
+            "utility_wins": 1,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "latency_delta_s": -0.2970000000204891,
+            "tokens_delta": -18.0
+          }
+        },
+        "utility_tolerance": 1e-12,
+        "comparison_baseline": "experimental_incumbent",
+        "family_uncertainty": {
+          "method": "descriptive_family_dispersion",
+          "n_families": 6,
+          "quality_delta": {
+            "min": 0.0,
+            "max": 1.0,
+            "equal_family_mean": 0.5,
+            "median": 0.5
+          },
+          "utility_delta": {
+            "min": 0.0024220833333189473,
+            "max": 1.0505012499999915,
+            "equal_family_mean": 0.5174610069444477,
+            "median": 0.5164128125000085
+          },
+          "interpretation": "Observed family means and range; no independent sampling, confidence interval, or significance claim. Overall deltas are task-weighted; family means weight categories equally."
+        }
+      },
+      "artifact_ref": "artifacts/5b974a20dffd1d282348c5d7bac21b66b886c3a5b980407ea487aaf2d3cf0cf3.json",
+      "diagnosis_ref": null
+    }
+  ],
+  "experimental_incumbent": {
+    "candidate": "fixed_tool",
+    "artifact_ref": "artifacts/5b974a20dffd1d282348c5d7bac21b66b886c3a5b980407ea487aaf2d3cf0cf3.json"
+  },
+  "approved_checkpoint_changed": false,
+  "current_checkpoint": null,
+  "budget": {
+    "cycles": 36,
+    "requests": 30,
+    "tokens_actual": 1013,
+    "tokens_reserved": 3840,
+    "wall_s": 23.450999999884516
+  },
+  "remaining_budget": {
+    "requests": 18,
+    "tokens_reserved": 2304,
+    "wall_s": 876.5490000001155,
+    "cycles": 64
+  },
+  "next_action": "Review the aggregate report; a new run requires a fresh seed and budget.",
+  "stop_reason": "completed finite preregistered schedule"
+}

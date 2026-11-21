@@ -1,0 +1,11 @@
+﻿{
+  "scope": "synthetic independent negative controls and existing recovery tests; no real inference or real holdout consumption",
+  "base_commit": "eeec51497038ec34454d867f55ebe0fcadfffddf",
+  "registry_sha256": "f648f0d7d5209af5becb3a298d86a275a97e1a85f40a37f1e79f38ed25efb9f3",
+  "controls_sha256": "62cf7c67693a26fb72d33fc33349e5023be8f987d5f9d538d52d38c60669c23a",
+  "command": "PYTHONPATH=src python -m pytest -q tests/integration/test_recovery.py tests/adversarial/test_adaptive_integrity.py tests/integration/test_campaign.py tests/adversarial/test_v03_evaluation_boundary.py",
+  "result": {"passed": 27, "failed": 0, "seconds": 49.49},
+  "initial_findings": ["Cross-split fixture relabel allowed", "Consumed holdout could be reused via a second manifest", "Same fixture could be relabelled with new IDs in a second manifest within the same split"],
+  "disposition": "Registry implementation changed during review; independent controls for all three now pass. An earlier concurrent-edit run quarantined a synthetic campaign due to changing source; stable rerun passed.",
+  "limits": ["Synthetic fixtures and disposable databases only; no generalization or live inference result.", "Logical boundary in a trusted process, not OS, filesystem, or untrusted Python isolation.", "Policy and evaluator/config identities are caller-provided; tests check changed identity strings, not that strings authenticate running code or config.", "Canonical public fixture hashes catch exact public duplicates, not semantically equivalent paraphrases or altered payloads; source provenance remains a trusted registration responsibility.", "Gold key filtering and private-field exclusion do not prove arbitrary public content is free of disguised answers.", "Crash control exits after the exposure call commits; it does not inject failure at every transaction instruction or establish power-loss durability."]
+}

@@ -1,5 +1,9 @@
 # Implementation Status
 
+## v0.3 foundation: fresh E0 completed, E1 draft
+
+The experimental source adds frozen benchmark manifests and durable one-use exposure. The newly approved E0 ran the exact published v0.2.1 code: 30 real calls, 36 verified outputs, no extra calls on replay. It exposed a stale status reason, now repaired and synthetically tested in v0.3. The foundation passes 217 tests (one skip) and both CLI journeys. No policy is deployed and broad learning remains unproven. [Inspect the checkpoint, all arms, source and next work](/hive/notes/V03/).
+
 ## Latest executed increment: adaptive controller v0.2
 
 **IMPLEMENTED / MEASURED; experimental checkpoints only.** The new controller

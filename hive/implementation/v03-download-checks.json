@@ -1,0 +1,8 @@
+{
+  "source_commit": "caf9ace1ab41d5909f60ee6c2ed6fd60cb7ba345",
+  "tracked_dirty": false,
+  "snapshot_files_verified": 126,
+  "boundary_tests": "........................................................................ [ 90%]\n........                                                                 [100%]\n80 passed in 2.32s",
+  "extracted_cli_review_passed": true,
+  "new_model_calls": 0
+}
