@@ -1,0 +1,257 @@
+{
+  "experiment_id": "caption-pilot-1",
+  "candidate_id": "probe-guard",
+  "control_config_id": "rules",
+  "task_split_versions": {
+    "version": "caption-fixtures-1",
+    "sha256": "1b5d9932a204b9ca0bdc172e699118ffad0506a949251f2abda2ae41b58b041a"
+  },
+  "metrics": {
+    "rules": {
+      "dev": {
+        "n": 48,
+        "source_groups": 8,
+        "accuracy": 1,
+        "cluster_bootstrap_95": [
+          1,
+          1
+        ],
+        "mean_wall_seconds": 0.0682333708270259,
+        "p95_wall_seconds": 0.0965921999886632,
+        "failures": 0,
+        "false_accept": 0,
+        "false_reject": 0,
+        "execution_errors": 0,
+        "by_family": {
+          "backward": 1,
+          "bom-crlf": 1,
+          "duplicate-id": 1,
+          "overlap": 1,
+          "past-end": 1,
+          "valid": 1
+        },
+        "warning": "Synthetic, correlated fixtures; few source clusters. Intervals do not establish real-world generalization."
+      },
+      "holdout": {
+        "n": 24,
+        "source_groups": 4,
+        "accuracy": 1,
+        "cluster_bootstrap_95": [
+          1,
+          1
+        ],
+        "mean_wall_seconds": 0.06351031668115563,
+        "p95_wall_seconds": 0.06482650001998991,
+        "failures": 0,
+        "false_accept": 0,
+        "false_reject": 0,
+        "execution_errors": 0,
+        "by_family": {
+          "backward": 1,
+          "bom-crlf": 1,
+          "duplicate-id": 1,
+          "overlap": 1,
+          "past-end": 1,
+          "valid": 1
+        },
+        "warning": "Synthetic, correlated fixtures; few source clusters. Intervals do not establish real-world generalization."
+      }
+    },
+    "probe": {
+      "dev": {
+        "n": 48,
+        "source_groups": 8,
+        "accuracy": 0.3333333333333333,
+        "cluster_bootstrap_95": [
+          0.3333333333333333,
+          0.3333333333333333
+        ],
+        "mean_wall_seconds": 0.09658197916481488,
+        "p95_wall_seconds": 0.12676509993616492,
+        "failures": 32,
+        "false_accept": 32,
+        "false_reject": 0,
+        "execution_errors": 0,
+        "by_family": {
+          "backward": 0,
+          "bom-crlf": 1,
+          "duplicate-id": 0,
+          "overlap": 0,
+          "past-end": 0,
+          "valid": 1
+        },
+        "warning": "Synthetic, correlated fixtures; few source clusters. Intervals do not establish real-world generalization."
+      },
+      "holdout": {
+        "n": 24,
+        "source_groups": 4,
+        "accuracy": 0.3333333333333333,
+        "cluster_bootstrap_95": [
+          0.3333333333333333,
+          0.3333333333333333
+        ],
+        "mean_wall_seconds": 0.10026915833198775,
+        "p95_wall_seconds": 0.1267301000189036,
+        "failures": 16,
+        "false_accept": 16,
+        "false_reject": 0,
+        "execution_errors": 0,
+        "by_family": {
+          "backward": 0,
+          "bom-crlf": 1,
+          "duplicate-id": 0,
+          "overlap": 0,
+          "past-end": 0,
+          "valid": 1
+        },
+        "warning": "Synthetic, correlated fixtures; few source clusters. Intervals do not establish real-world generalization."
+      }
+    },
+    "combined": {
+      "dev": {
+        "n": 48,
+        "source_groups": 8,
+        "accuracy": 1,
+        "cluster_bootstrap_95": [
+          1,
+          1
+        ],
+        "mean_wall_seconds": 0.09923063750223567,
+        "p95_wall_seconds": 0.13042949989903718,
+        "failures": 0,
+        "false_accept": 0,
+        "false_reject": 0,
+        "execution_errors": 0,
+        "by_family": {
+          "backward": 1,
+          "bom-crlf": 1,
+          "duplicate-id": 1,
+          "overlap": 1,
+          "past-end": 1,
+          "valid": 1
+        },
+        "warning": "Synthetic, correlated fixtures; few source clusters. Intervals do not establish real-world generalization."
+      },
+      "holdout": {
+        "n": 24,
+        "source_groups": 4,
+        "accuracy": 1,
+        "cluster_bootstrap_95": [
+          1,
+          1
+        ],
+        "mean_wall_seconds": 0.09614201249011482,
+        "p95_wall_seconds": 0.1051547999959439,
+        "failures": 0,
+        "false_accept": 0,
+        "false_reject": 0,
+        "execution_errors": 0,
+        "by_family": {
+          "backward": 1,
+          "bom-crlf": 1,
+          "duplicate-id": 1,
+          "overlap": 1,
+          "past-end": 1,
+          "valid": 1
+        },
+        "warning": "Synthetic, correlated fixtures; few source clusters. Intervals do not establish real-world generalization."
+      }
+    },
+    "probe-guard": {
+      "dev": {
+        "n": 48,
+        "source_groups": 8,
+        "accuracy": 1,
+        "cluster_bootstrap_95": [
+          1,
+          1
+        ],
+        "mean_wall_seconds": 0.07507084167688542,
+        "p95_wall_seconds": 0.09626740007661283,
+        "failures": 0,
+        "false_accept": 0,
+        "false_reject": 0,
+        "execution_errors": 0,
+        "by_family": {
+          "backward": 1,
+          "bom-crlf": 1,
+          "duplicate-id": 1,
+          "overlap": 1,
+          "past-end": 1,
+          "valid": 1
+        },
+        "warning": "Synthetic, correlated fixtures; few source clusters. Intervals do not establish real-world generalization."
+      },
+      "holdout": {
+        "n": 24,
+        "source_groups": 4,
+        "accuracy": 1,
+        "cluster_bootstrap_95": [
+          1,
+          1
+        ],
+        "mean_wall_seconds": 0.07334672916234315,
+        "p95_wall_seconds": 0.09500650002155453,
+        "failures": 0,
+        "false_accept": 0,
+        "false_reject": 0,
+        "execution_errors": 0,
+        "by_family": {
+          "backward": 1,
+          "bom-crlf": 1,
+          "duplicate-id": 1,
+          "overlap": 1,
+          "past-end": 1,
+          "valid": 1
+        },
+        "warning": "Synthetic, correlated fixtures; few source clusters. Intervals do not establish real-world generalization."
+      }
+    }
+  },
+  "seed": 20261120,
+  "result_artifacts": [
+    "events.jsonl",
+    "metadata.json",
+    "candidate.json",
+    "curated-dev.json",
+    "replay.json",
+    "boundary.json"
+  ],
+  "decision": "rejected",
+  "gate": {
+    "policy_version": "deciders-1",
+    "criteria_hash": "cef6d640bdc872af9c1035aa1cc5c429dc10f82a621cc1a38ebc45ec10b3bc9c",
+    "evidence": {
+      "quality_delta": 0,
+      "cost_reduction": -0.15487897077524915,
+      "regressions": 0,
+      "safety_passed": true,
+      "memory_passed": true,
+      "budgets_passed": true,
+      "reproducible": true,
+      "holdout_clean": true,
+      "rollback_tested": true
+    },
+    "gates": {
+      "benefit": false,
+      "retention": true,
+      "safety": true,
+      "memory": true,
+      "budgets": true,
+      "reproducibility": true,
+      "holdout_integrity": true,
+      "rollback": true
+    },
+    "eligible": false
+  },
+  "approval": null,
+  "deployed_version": null,
+  "candidate_hash": "a12fb0d0898299222bfd2064b231395813efc060138042c77cad6639e316dc43",
+  "rubric_hash": "cef6d640bdc872af9c1035aa1cc5c429dc10f82a621cc1a38ebc45ec10b3bc9c",
+  "interpretation": "A bounded procedure proposal, evaluated against the best simple development control. No compounding-learning claim.",
+  "learning_speed": {
+    "threshold": 0.95,
+    "gain": null,
+    "reason": "No successive training distributions or equal-budget trials-to-threshold study."
+  }
+}

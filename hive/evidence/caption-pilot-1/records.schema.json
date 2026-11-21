@@ -1,0 +1,254 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "HIVE empirical event records v1",
+  "oneOf": [
+    {
+      "type": "object",
+      "required": [
+        "kind",
+        "payload"
+      ],
+      "properties": {
+        "kind": {
+          "const": "TaskSpec"
+        },
+        "payload": {
+          "type": "object",
+          "required": [
+            "task_id",
+            "task_type",
+            "input_ref",
+            "success_criteria_version",
+            "permissions",
+            "resource_budget",
+            "split_id",
+            "created_at"
+          ]
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": [
+        "kind",
+        "payload"
+      ],
+      "properties": {
+        "kind": {
+          "const": "Capability"
+        },
+        "payload": {
+          "type": "object",
+          "required": [
+            "capability_id",
+            "kind",
+            "version",
+            "adapter",
+            "supported_tasks",
+            "constraints",
+            "health",
+            "provenance"
+          ]
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": [
+        "kind",
+        "payload"
+      ],
+      "properties": {
+        "kind": {
+          "const": "Config"
+        },
+        "payload": {
+          "type": "object",
+          "required": [
+            "config_id",
+            "component_versions",
+            "routing_policy_version",
+            "tool_graph",
+            "checker_policy_version",
+            "limits"
+          ]
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": [
+        "kind",
+        "payload"
+      ],
+      "properties": {
+        "kind": {
+          "const": "Episode"
+        },
+        "payload": {
+          "type": "object",
+          "required": [
+            "episode_id",
+            "task_id",
+            "config_id",
+            "input_hash",
+            "trace_refs",
+            "output_refs",
+            "timings",
+            "resources",
+            "status",
+            "errors"
+          ]
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": [
+        "kind",
+        "payload"
+      ],
+      "properties": {
+        "kind": {
+          "const": "Verification"
+        },
+        "payload": {
+          "type": "object",
+          "required": [
+            "episode_id",
+            "checker_id",
+            "checker_version",
+            "criteria_version",
+            "result",
+            "confidence_if_calibrated",
+            "evidence_refs",
+            "label_source"
+          ]
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": [
+        "kind",
+        "payload"
+      ],
+      "properties": {
+        "kind": {
+          "const": "FailurePattern"
+        },
+        "payload": {
+          "type": "object",
+          "required": [
+            "pattern_id",
+            "episode_refs",
+            "hypothesis",
+            "severity",
+            "provenance",
+            "status"
+          ]
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": [
+        "kind",
+        "payload"
+      ],
+      "properties": {
+        "kind": {
+          "const": "ChangeCandidate"
+        },
+        "payload": {
+          "type": "object",
+          "required": [
+            "candidate_id",
+            "parent_version",
+            "change_type",
+            "diff_or_artifact_ref",
+            "hypothesis",
+            "training_data_refs",
+            "scope"
+          ]
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": [
+        "kind",
+        "payload"
+      ],
+      "properties": {
+        "kind": {
+          "const": "Experiment"
+        },
+        "payload": {
+          "type": "object",
+          "required": [
+            "experiment_id",
+            "candidate_id",
+            "control_config_id",
+            "task_split_versions",
+            "metrics",
+            "seed",
+            "result_artifacts",
+            "decision"
+          ]
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": [
+        "kind",
+        "payload"
+      ],
+      "properties": {
+        "kind": {
+          "const": "Release"
+        },
+        "payload": {
+          "type": "object",
+          "required": [
+            "release_id",
+            "candidate_id",
+            "approval_ref",
+            "gate_results",
+            "deployed_version",
+            "rollback_ref",
+            "timestamp"
+          ]
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": [
+        "kind",
+        "payload"
+      ],
+      "properties": {
+        "kind": {
+          "const": "MemoryItem"
+        },
+        "payload": {
+          "type": "object",
+          "required": [
+            "memory_id",
+            "partition",
+            "content_ref",
+            "source_refs",
+            "confidence",
+            "validation_status",
+            "created_at",
+            "expires_at",
+            "supersedes",
+            "access_policy"
+          ]
+        }
+      }
+    }
+  ]
+}

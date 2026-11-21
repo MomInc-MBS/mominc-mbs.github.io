@@ -1,0 +1,9 @@
+{
+  "task_id": "dev-01-duplicate-id",
+  "config_id": "probe-guard",
+  "output": {
+    "valid": false,
+    "reason": "structure",
+    "tool_calls": 0
+  }
+}

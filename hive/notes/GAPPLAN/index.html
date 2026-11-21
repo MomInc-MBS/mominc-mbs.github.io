@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Architecture gaps and agent change plan · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#29143f"><link rel="canonical" href="https://mominc.online/hive/notes/GAPPLAN/">
+<meta property="og:title" content="Architecture gaps and agent change plan · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg?v=2" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=3"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=2"><link rel="stylesheet" href="/hive/assets/research.css?v=1">
+<script defer src="/hive/assets/hive.js?v=3"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg?v=2" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/STATUS/">Implementation</a><a href="/hive/notes/CODER/">Coder directions</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 297 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download original vault · 0.2</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=build">Local build</a><span>/</span><span>GAPPLAN</span></div>
+<div class="doc-meta"><span class="badge">Specified</span><span class="badge neutral">Partially implemented</span></div><div class="doc-tools"><button class="copy-link" data-title="Architecture gaps and agent change plan" data-id="GAPPLAN" data-series="HIVE architecture change plan (20 November 2026)">Copy reference</button><a href="/hive/updates/HIVE_Architecture_Gaps_and_Agent_Change_Plan.md">Markdown source</a><a href="/hive/graph/?focus=GAPPLAN">View connections</a><button class="print-page">Print</button></div>
+<article class="prose"><h1 id="hive-architecture-gap-audit-and-agent-change-plan">HIVE — Architecture Gap Audit and Agent Change Plan</h1>
+<p><strong>Document type:</strong> Implementation handoff / agent change specification<br />
+<strong>Prepared:</strong> 2026-11-20<br />
+<strong>Target:</strong> HIVE architecture, research vault, experiment system, learning infrastructure, and public HIVE documentation<br />
+<strong>Entry point:</strong> https://mominc.online/hive/<br />
+<strong>Status:</strong> Proposed changes — verify against the actual repository and local environment before editing.</p>
+<hr />
+<h2 id="0-instructions-to-the-implementing-agent">0. Instructions to the Implementing Agent</h2>
+<p>You are tasked with turning HIVE from a primarily research- and architecture-driven project into a <strong>measurable, incrementally self-improving modular AI system</strong>. Preserve useful existing work; do not perform an indiscriminate rewrite.</p>
+<p><strong>Your first actions:</strong></p>
+<ol>
+<li>Inspect the actual source repository, project structure, running services, available models/tools, local documentation vault, test suite, and deployed HIVE website. <strong>Do not assume public website pages reflect the full implementation.</strong></li>
+<li>Map this document's requirements to real modules and files. Where paths are unknown, discover them rather than inventing them.</li>
+<li>Identify what already exists, what is partially implemented, and what is missing. Produce a short <code>CURRENT_STATE.md</code> with evidence: file paths, tests, commands, and observed behavior.</li>
+<li>Propose the smallest safe implementation sequence that creates an <strong>end-to-end validated learning cycle</strong>. Execute within granted permissions; for destructive or production-impacting changes, request approval.</li>
+<li>Preserve existing research, links, alternative hypotheses, and experiment history. Prefer additive, reversible migrations with compatibility checks.</li>
+<li>Record all decisions, changes, test commands, benchmark artifacts, failures, and blockers in an agent change log. Do not report a feature as implemented until exercised by a reproducible test.</li>
+</ol>
+<p><strong>Critical constraints:</strong></p>
+<ul>
+<li>Do <strong>not</strong> claim that planned architecture is implemented, or that archived simulation results validate full-scale real-model operation.</li>
+<li>Do <strong>not</strong> autonomously deploy experimental neural weights, routing policies, changed permissions, or high-impact code changes into production.</li>
+<li>Do <strong>not</strong> train on hidden evaluation examples or allow the candidate's evaluator to rewrite success criteria.</li>
+<li>Do <strong>not</strong> optimize only for a single combined score. Enforce authorization, correctness, safety, and resource limits as independent gates.</li>
+<li>Do <strong>not</strong> delete research branches that disagree. Mark their evidence and status instead.</li>
+<li>Prioritize operating on the user's existing local software and hardware where verified available; avoid adding infrastructure merely for architectural elegance.</li>
+</ul>
+<hr />
+<h2 id="1-executive-decision">1. Executive Decision</h2>
+<h3 id="problem">Problem</h3>
+<p>HIVE has a strong body of research on specialist systems, protected memories, adaptive routing, verification, organizational alternatives, and sleep-inspired consolidation. Its key deficiency is <strong>the lack of a verified, integrated system that demonstrably improves future performance by learning from previous work</strong>.</p>
+<p>The site describes architecture and experiments, but documentation explicitly distinguishes plans from implementation. Historic small NumPy simulations and scheduling experiments are useful preliminary evidence, <strong>not</strong> substitutes for reproducible real-model benchmarks.</p>
+<h3 id="recommended-change">Recommended change</h3>
+<p>Make an <strong>Empirical Learning Engine</strong> the central development priority. It should collect episodes, evaluate outcomes, assign credit, propose limited changes, test them against unchanged baselines, and promote changes only through controlled gates.</p>
+<p><strong>Shift in development logic:</strong></p>
+<ul>
+<li><strong>Current emphasis:</strong> Research → Architecture → Build → Learning</li>
+<li><strong>Proposed emphasis:</strong> Measure → Build → Learn → Test → Adapt → Measure again</li>
+</ul>
+<p><strong>First milestone:</strong> A complete task → execution → independent evaluation → failure diagnosis → candidate improvement → held-out evaluation → promotion/rollback cycle, demonstrated on an actual local workflow.</p>
+<hr />
+<h2 id="2-what-to-preserve">2. What to Preserve</h2>
+<p>Do not replace the following simply because this plan modifies the priority order:</p>
+<ol>
+<li>Modular, specialized AI and deterministic software components.</li>
+<li>Independent verification and evidence-based conclusions.</li>
+<li>Explicit separation of research, source code, execution, and model/adapter artifacts.</li>
+<li>Multiple candidate organizational designs that can compete experimentally.</li>
+<li>Segmented memory, provenance, replay, and regression awareness.</li>
+<li>Human- or policy-controlled permissions, deployment, and high-consequence decisions.</li>
+<li>The existing research graph and historical reasoning, including disagreements and failed experiments.</li>
+<li>Reusable software adapters; a calculator, parser, database query, or media probe should be preferred over an LLM where it is more accurate and efficient.</li>
+</ol>
+<hr />
+<h2 id="3-priority-gap-register">3. Priority Gap Register</h2>
+<p>A <strong>gap</strong> below means no publicly demonstrated end-to-end mechanism or insufficiently specified behavior in the reviewed documentation. Verify the code before marking it absent.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Priority</th>
+<th>Gap</th>
+<th>Required agent change</th>
+<th>Proof of completion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>G01</td>
+<td>P0</td>
+<td>No proven end-to-end learning loop</td>
+<td>Create a bounded episode-to-improvement pipeline</td>
+<td>A failed example results in a candidate correction that improves held-out performance or is rejected with evidence</td>
+</tr>
+<tr>
+<td>G02</td>
+<td>P0</td>
+<td>Governing formulas uncalibrated</td>
+<td>Implement configurable, logged decision functions with measured inputs</td>
+<td>Reproduce routing decisions from stored evidence and configuration</td>
+</tr>
+<tr>
+<td>G03</td>
+<td>P0</td>
+<td>No unified real-model/tool benchmark record</td>
+<td>Build a benchmark runner and capability registry</td>
+<td>Results include task, configuration, accuracy, latency, resource use, and artifacts</td>
+</tr>
+<tr>
+<td>G04</td>
+<td>P0</td>
+<td>Compounding learning not demonstrated</td>
+<td>Benchmark learning efficiency across successive task distributions</td>
+<td>Learning curves include uncertainty and compare against unchanged controls</td>
+</tr>
+<tr>
+<td>G05</td>
+<td>P1</td>
+<td>Credit assignment not operationally validated</td>
+<td>Compare components through ablations/counterfactual tests</td>
+<td>Identified improvements persist when the purported contributor is used and disappear or diminish in a suitable control</td>
+</tr>
+<tr>
+<td>G06</td>
+<td>P1</td>
+<td>Adaptive organization not learned from results</td>
+<td>Begin fixed, then train a contextual router</td>
+<td>Router beats a static policy on held-out workload without breaking constraints</td>
+</tr>
+<tr>
+<td>G07</td>
+<td>P1</td>
+<td>Feedback-to-training pipeline not demonstrated</td>
+<td>Create an event store and curated dataset builder</td>
+<td>Provenance-aware validated examples are exportable and auditable</td>
+</tr>
+<tr>
+<td>G08</td>
+<td>P1</td>
+<td>Research graph confused with runtime capability graph</td>
+<td>Introduce a separate operational capability/dependency registry</td>
+<td>Each operational component exposes executable contract, health, restrictions, and evidence</td>
+</tr>
+<tr>
+<td>G09</td>
+<td>P1</td>
+<td>Hardware scheduling not empirically optimized</td>
+<td>Track actual load, VRAM/RAM use, startup cost, latency, and queueing</td>
+<td>Scheduler makes reproducible, budget-constrained decisions</td>
+</tr>
+<tr>
+<td>G10</td>
+<td>P1</td>
+<td>Memory correction/expiry lacks integrated proof</td>
+<td>Add provenance, invalidation, correction, isolated partitions, retrieval tests</td>
+<td>Contradictory or stale memories are flagged, do not silently overwrite truth, and can be rolled back</td>
+</tr>
+<tr>
+<td>G11</td>
+<td>P1</td>
+<td>Checker reliability not calibrated</td>
+<td>Track verifier false acceptance, false rejection, and verification cost</td>
+<td>Calibration curves and comparison against independent labels</td>
+</tr>
+<tr>
+<td>G12</td>
+<td>P2</td>
+<td>Broad research may not resolve build decisions</td>
+<td>Prioritize research by expected experimental impact</td>
+<td>Research queue links hypothesis → deciding experiment → decision record</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="explicit-unknowns">Explicit unknowns</h3>
+<ul>
+<li>The public site's stated research-page counts and other counters are documentation metadata, not implementation KPIs.</li>
+<li>Historical references to approximately 360 NumPy learning runs and 1,440 scheduling simulations are archival claims; inspect original artifacts before relying on them.</li>
+<li>The local repository, hardware configuration, model readiness, and available tests have <strong>not</strong> been independently inspected by this handoff. Inventory before choosing components or committing to performance targets.</li>
+</ul>
+<hr />
+<h2 id="4-target-architecture">4. Target Architecture</h2>
+<pre><code class="language-mermaid">flowchart TD
+    A[Goals, observations, tasks, constraints] --&gt; B[Eligibility &amp; adaptive decision engine]
+    B --&gt; C[AI specialists]
+    B --&gt; D[Deterministic software experts]
+    B --&gt; E[Bounded supervisors]
+    C --&gt; F[Evidence &amp; independent verification]
+    D --&gt; F
+    E --&gt; F
+    F --&gt; G[Episode and experience store]
+    G --&gt; H[Empirical learning engine]
+    H --&gt; I[Credit assignment &amp; failure analysis]
+    I --&gt; J[Candidate procedures, router policies, memories, adapters]
+    J --&gt; K[Isolated sandbox &amp; held-out evaluation]
+    K --&gt; L{Promotion gates passed?}
+    L -- No --&gt; M[Reject / diagnose / archive]
+    L -- Yes --&gt; N[Versioned release with rollback]
+    N --&gt; B
+    N --&gt; C
+    N --&gt; D
+    N --&gt; E
+</code></pre>
+<h3 id="architectural-boundaries">Architectural boundaries</h3>
+<ul>
+<li><strong>Task/goal layer:</strong> Defines inputs, success criteria, constraints, permissions, and budget.</li>
+<li><strong>Adaptive decision engine:</strong> Selects authorized configurations; may use a deterministic policy before a learned one.</li>
+<li><strong>Specialist execution:</strong> Invokes interchangeable models, adapters, tools, and monitors with observable contracts.</li>
+<li><strong>Independent verification:</strong> Uses rule-based checks, independent models where justified, ground-truth comparisons, or human judgments. A checker must not be assumed accurate merely because it is a second model.</li>
+<li><strong>Experience store:</strong> Captures complete evidence/provenance without mixing raw observations with approved reusable knowledge.</li>
+<li><strong>Learning engine:</strong> Proposes updates to procedures first, then routing/memory, then model weights when supported by evidence.</li>
+<li><strong>Promotion governor:</strong> Applies immutable approval and regression criteria; promotion is separate from proposal generation.</li>
+</ul>
+<p><strong>Separation-of-duties rule:</strong> An experimental agent cannot both modify its acceptance gates and approve deployment of its own changes.</p>
+<hr />
+<h2 id="5-five-governing-deciders-to-implement">5. Five Governing Deciders to Implement</h2>
+<p>Implement these as <strong>separate, composable policies</strong>. Record all inputs, assumptions, policy versions, scores, and rejection reasons. Avoid treating their initial mathematical forms as proven or universally optimal.</p>
+<h3 id="d1-eligibility-hard-gate">D1 — Eligibility (hard gate)</h3>
+<p>Construct the feasible action set:</p>
+<pre><code class="language-math">F(x) = \{a : \text{authorized}(a,x) \land \text{compatible}(a,x) \land \text{withinBudget}(a,x) \land \text{safe}(a,x)\}
+</code></pre>
+<p>This is <strong>not</strong> a weighted preference: an option violating a hard constraint must be ineligible regardless of estimated quality.</p>
+<h3 id="d2-task-conditioned-routing">D2 — Task-conditioned routing</h3>
+<pre><code class="language-math">a^* = \arg\max_{a\in F(x)} [\hat p(a\mid x)V(x) - \lambda_C C(a,x) - \lambda_T T(a,x) - \lambda_R R(a,x)]
+</code></pre>
+<p>Variables:</p>
+<ul>
+<li><code>x</code>: task context and constraints.</li>
+<li><code>a</code>: configuration (models + tools + workflow + checker depth).</li>
+<li><code>p_hat</code>: calibrated estimate of verified task success, conditional on context.</li>
+<li><code>V</code>: measured or defined value of success.</li>
+<li><code>C</code>: projected compute/resource cost.</li>
+<li><code>T</code>: projected latency.</li>
+<li><code>R</code>: measurable residual risk <strong>after mandatory safeguards</strong>.</li>
+<li><code>lambda_*</code>: task-context-specific trade-offs; determine through experiments, not arbitrary permanent constants.</li>
+</ul>
+<p>Initial policy: use constrained, transparent heuristics; record counterfactual alternatives. Train a contextual selector only after enough quality-controlled examples exist.</p>
+<h3 id="d3-verification-value">D3 — Verification value</h3>
+<p>Request another check only when its <strong>expected improvement in decision quality</strong> exceeds its additional cost, subject to compulsory checks.</p>
+<pre><code class="language-math">\operatorname{EVI}(v\mid x) = \mathbb E[U\mid\text{result of }v,x] - U(\text{current decision}\mid x) - C(v)
+</code></pre>
+<p>Keep mandatory verification regardless of calculated EVI. Compare whether extra checks improve outcomes or simply add latency/false alarms.</p>
+<h3 id="d4-learning-experiment-priority">D4 — Learning / experiment priority</h3>
+<pre><code class="language-math">\operatorname{EV}(e) = \frac{P(\text{valid improvement}\mid e)\cdot \mathbb E[\Delta Q_{\text{future}}\mid e] - \text{cost}(e) - \text{risk}(e)}{\text{scarce resource usage}(e)}
+</code></pre>
+<p>Treat this as a <strong>candidate ranking heuristic</strong>, not an objectively known quantity. Estimate uncertainty and prioritize experiments that could change an upcoming decision. Retain low-confidence competing hypotheses for testing.</p>
+<h3 id="d5-promotion-release-gate">D5 — Promotion / release gate</h3>
+<p>A candidate can advance only if all required conditions pass:</p>
+<ul>
+<li>Held-out quality improves enough to matter <strong>or</strong> achieves an independently specified cost reduction without meaningful quality loss.</li>
+<li>No unacceptable regression on safety, prior capabilities, memory integrity, or required tasks.</li>
+<li>Resource and latency budgets remain within limits.</li>
+<li>Evidence and artifacts are reproducible, including versions and seeds where possible.</li>
+<li>The approving policy/human has authority to promote this class of change.</li>
+<li>A rollback path is available and tested.</li>
+</ul>
+<p>Prefer confidence intervals, repeated trials, and practical effect sizes to a single pass/fail score. Track variance across tasks and seeds.</p>
+<h3 id="learning-speed-indicator">Learning-speed indicator</h3>
+<p>For a predefined fixed performance threshold:</p>
+<pre><code class="language-math">G_{\text{learn}} = 1 - \frac{N_{\text{HIVE}}}{N_{\text{baseline}}}
+</code></pre>
+<p><code>N</code> is the number of examples or trials needed to reach that threshold. A positive value indicates improved <strong>sample efficiency</strong>, <em>not</em> necessarily superior final capability. Separately measure total compute, wall time, generalization, retention, and catastrophic forgetting.</p>
+<hr />
+<h2 id="6-data-and-interface-requirements">6. Data and Interface Requirements</h2>
+<p>Do not introduce a major database solely because a graph seems useful. Use the simplest viable durable implementation; make the schema portable.</p>
+<h3 id="required-records">Required records</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Record</th>
+<th>Required fields</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TaskSpec</code></td>
+<td><code>task_id</code>, <code>task_type</code>, <code>input_ref</code>, <code>success_criteria_version</code>, <code>permissions</code>, <code>resource_budget</code>, <code>split_id</code>, <code>created_at</code></td>
+</tr>
+<tr>
+<td><code>Capability</code></td>
+<td><code>capability_id</code>, <code>kind</code>, <code>version</code>, <code>endpoint/adapter</code>, <code>supported_tasks</code>, <code>constraints</code>, <code>health</code>, <code>provenance</code></td>
+</tr>
+<tr>
+<td><code>Config</code></td>
+<td><code>config_id</code>, <code>component_versions</code>, <code>routing_policy_version</code>, <code>tool_graph</code>, <code>checker_policy_version</code>, <code>limits</code></td>
+</tr>
+<tr>
+<td><code>Episode</code></td>
+<td><code>episode_id</code>, <code>task_id</code>, <code>config_id</code>, <code>input_hash</code>, <code>trace_refs</code>, <code>output_refs</code>, <code>timings</code>, <code>resources</code>, <code>status</code>, <code>errors</code></td>
+</tr>
+<tr>
+<td><code>Verification</code></td>
+<td><code>episode_id</code>, <code>checker_id</code>, <code>checker_version</code>, <code>criteria_version</code>, <code>result</code>, <code>confidence_if_calibrated</code>, <code>evidence_refs</code>, <code>label_source</code></td>
+</tr>
+<tr>
+<td><code>FailurePattern</code></td>
+<td><code>pattern_id</code>, <code>episode_refs</code>, <code>hypothesis</code>, <code>severity</code>, <code>provenance</code>, <code>status</code></td>
+</tr>
+<tr>
+<td><code>ChangeCandidate</code></td>
+<td><code>candidate_id</code>, <code>parent_version</code>, <code>change_type</code>, <code>diff_or_artifact_ref</code>, <code>hypothesis</code>, <code>training_data_refs</code>, <code>scope</code></td>
+</tr>
+<tr>
+<td><code>Experiment</code></td>
+<td><code>experiment_id</code>, <code>candidate_id</code>, <code>control_config_id</code>, <code>task_split_versions</code>, <code>metrics</code>, <code>seed</code>, <code>result_artifacts</code>, <code>decision</code></td>
+</tr>
+<tr>
+<td><code>Release</code></td>
+<td><code>release_id</code>, <code>candidate_id</code>, <code>approval_ref</code>, <code>gate_results</code>, <code>deployed_version</code>, <code>rollback_ref</code>, <code>timestamp</code></td>
+</tr>
+<tr>
+<td><code>MemoryItem</code></td>
+<td><code>memory_id</code>, <code>partition</code>, <code>content_ref</code>, <code>source_refs</code>, <code>confidence</code>, <code>validation_status</code>, <code>created_at</code>, <code>expires_at</code>, <code>supersedes</code>, <code>access_policy</code></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="implementation-essentials">Implementation essentials</h3>
+<ul>
+<li>Every task execution produces an append-only, inspectable episode/event trace; sensitive payloads require appropriate redaction or protected storage.</li>
+<li>Keep <code>raw_observations</code>, <code>inferred_claims</code>, <code>validated_facts</code>, and <code>deployable_procedures</code> separate.</li>
+<li>Prevent train/test contamination using versioned splits, data lineage, and immutable holdouts.</li>
+<li>Version policy definitions and rubric definitions separately from specialist weights and procedures.</li>
+<li>Store component compatibility, resource requirements, dependencies, and health in the operational capability registry.</li>
+<li>Maintain cross-links to the existing research graph, but do not make research pages executable authorities.</li>
+<li>Add clean, replaceable adapters so services can be swapped without rewriting the controller.</li>
+</ul>
+<hr />
+<h2 id="7-change-the-build-order">7. Change the Build Order</h2>
+<h3 id="phase-0-reconnaissance-and-baseline-required">Phase 0 — Reconnaissance and baseline (required)</h3>
+<p><strong>Tasks:</strong></p>
+<ol>
+<li>Inventory actual repository/files, model availability, services, tests, runtime endpoints, GPU/CPU/RAM/VRAM, and current vault structure.</li>
+<li>Locate existing experiment artifacts; identify which can actually be rerun.</li>
+<li>Map existing functionality against G01–G12 and classify each <code>implemented / partial / planned / unsupported</code>.</li>
+<li>Select a first target workflow with deterministic checks and non-destructive outputs.</li>
+<li>Run a fixed baseline and save raw outcomes and reproducible commands.</li>
+</ol>
+<p><strong>Deliverables:</strong> <code>CURRENT_STATE.md</code>, <code>CAPABILITY_INVENTORY.md</code>, <code>BASELINE_RESULTS.md</code>, and machine-readable run artifacts.</p>
+<p><strong>Exit gate:</strong> At least one real workflow, one runnable baseline, and documented independent success criteria.</p>
+<h3 id="phase-1-minimum-empirical-organism-p0">Phase 1 — Minimum empirical organism (P0)</h3>
+<p><strong>Tasks:</strong></p>
+<ol>
+<li>Implement task specs, capability registration, execution traces, resource telemetry, and independent checkers.</li>
+<li>Create a simple constrained router with explicit tool/model compatibility and budget gates.</li>
+<li>Add an event store with provenance and repeatable test fixtures.</li>
+<li>Implement one complete deterministic/LLM-assisted workflow with graceful timeouts and failure recording.</li>
+<li>Add a replayable benchmark runner with control configurations.</li>
+</ol>
+<p><strong>Exit gate:</strong> Run the same task set across at least three configurations; produce comparable quality, cost, latency, and failure metrics without hand-entered results.</p>
+<h3 id="phase-2-first-verified-learning-cycle-p0">Phase 2 — First verified learning cycle (P0)</h3>
+<p><strong>Tasks:</strong></p>
+<ol>
+<li>Find a repeated failure in the task outcomes.</li>
+<li>Generate a <strong>bounded procedure-level change</strong> (for example, a tool invocation rule, validated template, recovery path, or checker addition).</li>
+<li>Evaluate the candidate on development tasks, then frozen held-out tasks.</li>
+<li>Compare against the unchanged control and detect regressions.</li>
+<li>Pass through explicit promotion approval and versioning; verify rollback.</li>
+<li>Measure whether similar future tasks require fewer corrections/trials.</li>
+</ol>
+<p><strong>Exit gate:</strong> The complete cycle is automated except for any defined approval boundary, and an accepted <em>or rejected</em> candidate has fully inspectable evidence. Accepted candidates must show meaningful held-out benefit. Rejection is a valid scientific outcome but not evidence of learning improvement.</p>
+<h3 id="phase-3-learn-organizational-choices-p1">Phase 3 — Learn organizational choices (P1)</h3>
+<p><strong>Tasks:</strong></p>
+<ol>
+<li>Evaluate static routing versus data-conditioned routing under identical resource limits.</li>
+<li>Compare one specialist, multiple independent specialists, and structured specialist/tool groups.</li>
+<li>Run ablations: remove one expert/checker/tool at a time and measure actual contribution.</li>
+<li>Add optional contextual bandit/learned router with exploration bounds and off-policy evaluation where appropriate.</li>
+<li>Train and test specialist-selection policies on genuinely different task conditions; guard against overfitting.</li>
+</ol>
+<p><strong>Exit gate:</strong> Learned organization yields reproducible held-out improvements over the best simple baseline, not merely over a deliberately weak comparator.</p>
+<h3 id="phase-4-specialist-and-memory-learning-p1p2">Phase 4 — Specialist and memory learning (P1/P2)</h3>
+<p><strong>Tasks:</strong></p>
+<ol>
+<li>Compare retrieval, reusable procedures, and adapter fine-tuning before modifying core model weights.</li>
+<li>Test isolated training, shared adapters, replay, distillation, pruning, and checkpoint swapping where technically feasible.</li>
+<li>Measure interference, forgetting, startup cost, and deployment overhead.</li>
+<li>Introduce sleep-inspired consolidation only as a testable job type (deduplication, memory replay, model update evaluation), not a biological metaphor without a mechanism.</li>
+<li>Keep all model updates inside immutable checkpoints with separated staging and production.</li>
+</ol>
+<p><strong>Exit gate:</strong> A justified learning method improves capability or efficiency while passing retention, provenance, privacy, and rollback tests.</p>
+<hr />
+<h2 id="8-first-experiment-video-production-workflow">8. First Experiment: Video Production Workflow</h2>
+<p>This is the <strong>recommended initial experiment</strong>, not a claim that all required software is currently working. Validate local readiness first.</p>
+<h3 id="candidate-tasks">Candidate tasks</h3>
+<ul>
+<li>Inspect media and extract reliable metadata.</li>
+<li>Validate captions/subtitle timing or formatting against reference checks.</li>
+<li>Propose edit segments and produce non-destructive cut lists/EDLs.</li>
+<li>Produce draft title/description options under defined constraints.</li>
+<li>Validate output formats and run a <strong>dry-run</strong> publishing queue (no autonomous posting).</li>
+</ul>
+<h3 id="pilot-design">Pilot design</h3>
+<ul>
+<li>Development set: <strong>40–60</strong> representative tasks.</li>
+<li>Frozen held-out set: <strong>20–30</strong> representative tasks.</li>
+<li>Initial configurations: <strong>3</strong> (deterministic tools alone; one model + the same tools; specialist-assisted combination).</li>
+<li>First learner update: <strong>one bounded reusable procedure</strong>.</li>
+<li>Include easy, difficult, and adversarial/edge-case tasks; stratify the held-out split by source and task type.</li>
+<li>Treat proposed sample sizes as a <em>pilot starting point</em>, not a statistically validated power calculation.</li>
+</ul>
+<h3 id="scorecard">Scorecard</h3>
+<p>Report at least:</p>
+<ol>
+<li>Verified success and error categories by task type.</li>
+<li>Quality of independent checker against ground truth or human reference labels.</li>
+<li>End-to-end latency and startup/load latency.</li>
+<li>VRAM/RAM/CPU utilization and resource-time cost.</li>
+<li>Model/tool calls, retries, and human interventions.</li>
+<li>Retention on previously solved tasks.</li>
+<li>Improvement on frozen held-out tasks after the correction.</li>
+<li>Confidence intervals or uncertainty estimates where justified.</li>
+<li>Transfer performance on a related but unseen task family when feasible.</li>
+</ol>
+<p><strong>Comparison rule:</strong> Keep task definitions, checker criteria, and budgets consistent across configurations; record where deterministic-only approaches are inapplicable rather than penalizing them unfairly.</p>
+<p><strong>Follow-on evaluation:</strong> After the pilot demonstrates a repeatable learning loop, test transfer to the live streaming supervisor and horror game workflows. Do not prematurely optimize all three at once.</p>
+<hr />
+<h2 id="9-website-vault-changes">9. Website / Vault Changes</h2>
+<p><strong>Goal:</strong> Make the public HIVE website distinguish <strong>research</strong>, <strong>specification</strong>, <strong>implementation</strong>, and <strong>experimental evidence</strong> at a glance.</p>
+<h3 id="add-or-expose-the-following-views">Add or expose the following views</h3>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>View</th>
+<th>Purpose</th>
+<th>Minimum content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Implementation Status</code></td>
+<td>Show what runs today</td>
+<td>Components, readiness, links to tests/artifacts, last verified date</td>
+</tr>
+<tr>
+<td><code>Experiment Registry</code></td>
+<td>Make studies reproducible</td>
+<td>Hypothesis, controls, task splits, metric definitions, results, artifacts, status</td>
+</tr>
+<tr>
+<td><code>Capability Registry</code></td>
+<td>Describe executable components</td>
+<td>Models, software adapters, supported tasks, resource profiles, health, versions</td>
+</tr>
+<tr>
+<td><code>Learning Progress</code></td>
+<td>Show whether HIVE compounds</td>
+<td>Baselines vs updated variants, sample efficiency, quality, cost, retention, uncertainty</td>
+</tr>
+<tr>
+<td><code>Decision Ledger</code></td>
+<td>Preserve competing designs and why choices were made</td>
+<td>Alternatives, evidence, decision, reviewer, confidence, reevaluation trigger</td>
+</tr>
+<tr>
+<td><code>Known Gaps</code></td>
+<td>Keep important unknowns visible</td>
+<td>Gap owner, experiment needed, status, dependencies, evidence</td>
+</tr>
+<tr>
+<td><code>Change / Release History</code></td>
+<td>Make improvement traceable</td>
+<td>Candidate, tested diff, gates, approvals, release, rollback</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="documentation-conventions">Documentation conventions</h3>
+<ul>
+<li>Add a status marker to research statements: <code>HYPOTHESIS</code>, <code>SPECIFIED</code>, <code>IMPLEMENTED</code>, <code>MEASURED</code>, <code>REPLICATED</code>, or <code>REJECTED</code> (a research claim may have multiple dimensions; keep definitions precise).</li>
+<li>Distinguish archival simulations from live-model benchmarks.</li>
+<li>Hyperlink hypothesis → proposed mechanism → code/tests → runs → results → decision.</li>
+<li>Preserve existing pages and outgoing links; avoid replacing long-form research with a dashboard.</li>
+<li>Do not publish credentials, private user content, local endpoints, proprietary files, or raw sensitive traces.</li>
+<li>Clearly label stale results and latest verified dates.</li>
+</ul>
+<h3 id="relevant-public-pages-to-cross-reference">Relevant public pages to cross-reference</h3>
+<ul>
+<li><a href="https://mominc.online/hive/" rel="noreferrer">HIVE home</a></li>
+<li><a href="https://mominc.online/hive/notes/FRAMEWORK/" rel="noreferrer">Framework</a></li>
+<li><a href="https://mominc.online/hive/notes/ROADMAP/" rel="noreferrer">Roadmap</a></li>
+<li><a href="https://mominc.online/hive/notes/ADAPTIVE/" rel="noreferrer">Adaptive Research</a></li>
+<li><a href="https://mominc.online/hive/notes/HISTORY/" rel="noreferrer">History / previous experiments</a></li>
+<li><a href="https://mominc.online/hive/notes/B04/" rel="noreferrer">Runtime contracts</a></li>
+<li><a href="https://mominc.online/hive/notes/B06/" rel="noreferrer">Benchmark plan</a></li>
+</ul>
+<p>Do not infer filesystem paths from URLs. Locate the actual source files during Phase 0.</p>
+<hr />
+<h2 id="10-tests-and-acceptance-criteria">10. Tests and Acceptance Criteria</h2>
+<h3 id="tests-to-implement">Tests to implement</h3>
+<ul>
+<li><strong>Routing eligibility:</strong> Unauthorized, incompatible, unavailable, or over-budget actions must never be selected.</li>
+<li><strong>Tool failure:</strong> Missing service, malformed output, timeout, and resource exhaustion trigger bounded recovery or explicit failure—not infinite retry loops.</li>
+<li><strong>Trace completeness:</strong> Each run is attributable to exact task and config versions, with verifiable output references.</li>
+<li><strong>Reproducibility:</strong> Same frozen task set and config can be rerun; nondeterminism and seed variation are explicitly represented.</li>
+<li><strong>Independent evaluation:</strong> The component being improved cannot control hidden test outcomes or modify frozen acceptance rubrics.</li>
+<li><strong>Contamination prevention:</strong> Training examples and test cases are versioned and separated; leakage checks are part of evaluation.</li>
+<li><strong>Regression:</strong> Prior tasks, tool compatibility, permissions, and budget adherence are evaluated before promotion.</li>
+<li><strong>Rollback:</strong> Previous known-good configuration can be restored after a simulated bad release.</li>
+<li><strong>Memory safety:</strong> Corrections/supersession are logged; contradictory claims are not silently merged; expired entries are not treated as current truth.</li>
+<li><strong>Scalability:</strong> Track concurrent requests and contention empirically before scaling from a handful of components to hundreds.</li>
+</ul>
+<h3 id="minimum-definition-of-done-for-first-release">Minimum Definition of Done for first release</h3>
+<ul>
+<li>[ ] Real local capability inventory checked and documented.</li>
+<li>[ ] At least one non-destructive task family executes end-to-end.</li>
+<li>[ ] Three baseline configurations can be benchmarked, or exclusions are technically justified.</li>
+<li>[ ] Structured episode, verifier, candidate, experiment, and release records exist.</li>
+<li>[ ] A candidate improvement can be generated from observed failure evidence.</li>
+<li>[ ] Held-out comparison and regression gates run without changing scoring rules.</li>
+<li>[ ] Candidate can be accepted or rejected with inspectable evidence.</li>
+<li>[ ] Versioning and rollback are proven in a test.</li>
+<li>[ ] At least one documented improvement in held-out performance exists before any <strong>compounding learning achieved</strong> claim is made.</li>
+<li>[ ] Public documentation accurately separates plans, partial builds, and demonstrated operation.</li>
+</ul>
+<hr />
+<h2 id="11-what-not-to-build-first">11. What <strong>Not</strong> to Build First</h2>
+<p>Unless specific experiments justify them, defer:</p>
+<ul>
+<li>Hundreds or thousands of active agents/models.</li>
+<li>A sophisticated learned master controller trained before quality data exists.</li>
+<li>A new graph database or bespoke inter-agent language as a prerequisite for baseline experiments.</li>
+<li>Unbounded autonomous weight rewrites or production hot-swapping.</li>
+<li>Infrastructure that cannot be tied to a measurable failure or bottleneck.</li>
+<li>Full real-time streaming/game automation before success on a reproducible non-destructive workload.</li>
+</ul>
+<p>Preserve these as research hypotheses and alternatives; do not delete or dismiss them without testing.</p>
+<hr />
+<h2 id="12-handoff-output-expected-from-the-implementing-agent">12. Handoff Output Expected from the Implementing Agent</h2>
+<p>Provide these in the repository or designated HIVE workspace, adapting names to existing conventions:</p>
+<pre><code class="language-text">CURRENT_STATE.md               # Grounded audit of repository and services
+CAPABILITY_INVENTORY.md         # Real model/tool availability and readiness
+GAP_IMPLEMENTATION_MAP.md       # G01-G12 mapped to files, owners, and statuses
+ARCHITECTURE_DECISIONS.md       # Choices and trade-offs, including rejected options
+EXPERIMENT_REGISTRY.*           # Machine-readable experiment manifests/results
+BASELINE_RESULTS.md             # First real benchmark with evidence links
+LEARNING_LOOP_REPORT.md         # First candidate, test, decision, and rollback proof
+CHANGELOG.md                    # Modified files and test commands
+</code></pre>
+<p>For every delivered change, report:</p>
+<ul>
+<li><strong>What changed</strong> (specific file paths and behavior).</li>
+<li><strong>What was already implemented</strong> and therefore left intact.</li>
+<li><strong>What was measured</strong> (metrics and raw artifacts).</li>
+<li><strong>What failed or remains unknown</strong> (do not fabricate results).</li>
+<li><strong>Which gates passed</strong> and any blocked releases.</li>
+<li><strong>Next smallest experiment</strong> that will reduce uncertainty.</li>
+</ul>
+<h3 id="final-instruction">Final instruction</h3>
+<p><strong>Optimize for evidence of compounding learning, not architectural complexity.</strong> The first proof of progress is that HIVE can use experience to improve its future work in a measured, reproducible, resource-aware way—without losing prior capabilities or silently promoting bad changes.</p>
+</article></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#0-instructions-to-the-implementing-agent">0. Instructions to the Implementing Agent</a><a class="toc-h2" href="#1-executive-decision">1. Executive Decision</a><a class="toc-h3" href="#problem">Problem</a><a class="toc-h3" href="#recommended-change">Recommended change</a><a class="toc-h2" href="#2-what-to-preserve">2. What to Preserve</a><a class="toc-h2" href="#3-priority-gap-register">3. Priority Gap Register</a><a class="toc-h3" href="#explicit-unknowns">Explicit unknowns</a><a class="toc-h2" href="#4-target-architecture">4. Target Architecture</a><a class="toc-h3" href="#architectural-boundaries">Architectural boundaries</a><a class="toc-h2" href="#5-five-governing-deciders-to-implement">5. Five Governing Deciders to Implement</a><a class="toc-h3" href="#d1-eligibility-hard-gate">D1 — Eligibility (hard gate)</a><a class="toc-h3" href="#d2-task-conditioned-routing">D2 — Task-conditioned routing</a><a class="toc-h3" href="#d3-verification-value">D3 — Verification value</a><a class="toc-h3" href="#d4-learning-experiment-priority">D4 — Learning / experiment priority</a><a class="toc-h3" href="#d5-promotion-release-gate">D5 — Promotion / release gate</a><a class="toc-h3" href="#learning-speed-indicator">Learning-speed indicator</a><a class="toc-h2" href="#6-data-and-interface-requirements">6. Data and Interface Requirements</a><a class="toc-h3" href="#required-records">Required records</a><a class="toc-h3" href="#implementation-essentials">Implementation essentials</a><a class="toc-h2" href="#7-change-the-build-order">7. Change the Build Order</a><a class="toc-h3" href="#phase-0-reconnaissance-and-baseline-required">Phase 0 — Reconnaissance and baseline (required)</a><a class="toc-h3" href="#phase-1-minimum-empirical-organism-p0">Phase 1 — Minimum empirical organism (P0)</a><a class="toc-h3" href="#phase-2-first-verified-learning-cycle-p0">Phase 2 — First verified learning cycle (P0)</a><a class="toc-h3" href="#phase-3-learn-organizational-choices-p1">Phase 3 — Learn organizational choices (P1)</a><a class="toc-h3" href="#phase-4-specialist-and-memory-learning-p1p2">Phase 4 — Specialist and memory learning (P1/P2)</a><a class="toc-h2" href="#8-first-experiment-video-production-workflow">8. First Experiment: Video Production Workflow</a><a class="toc-h3" href="#candidate-tasks">Candidate tasks</a><a class="toc-h3" href="#pilot-design">Pilot design</a><a class="toc-h3" href="#scorecard">Scorecard</a><a class="toc-h2" href="#9-website-vault-changes">9. Website / Vault Changes</a><a class="toc-h3" href="#add-or-expose-the-following-views">Add or expose the following views</a><a class="toc-h3" href="#documentation-conventions">Documentation conventions</a><a class="toc-h3" href="#relevant-public-pages-to-cross-reference">Relevant public pages to cross-reference</a><a class="toc-h2" href="#10-tests-and-acceptance-criteria">10. Tests and Acceptance Criteria</a><a class="toc-h3" href="#tests-to-implement">Tests to implement</a><a class="toc-h3" href="#minimum-definition-of-done-for-first-release">Minimum Definition of Done for first release</a><a class="toc-h2" href="#11-what-not-to-build-first">11. What **Not** to Build First</a><a class="toc-h2" href="#12-handoff-output-expected-from-the-implementing-agent">12. Handoff Output Expected from the Implementing Agent</a><a class="toc-h3" href="#final-instruction">Final instruction</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework 0.2 · Coder directions 0.4</span></a><span>Prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/updates/HIVE_Research_Update_Adaptive_Organization_and_Self_Learning_2026-11-20.md" download>Research update</a><a href="/hive/updates/HIVE_Coder_Information_Packet_2026-11-20.md" download>Coder packet · 0.4</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Original vault · 0.2</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

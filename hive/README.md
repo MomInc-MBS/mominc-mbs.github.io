@@ -23,8 +23,10 @@ five unavailable documents are explicitly listed as gaps. The addendum supplemen
 the 0.4 coder packet and preserves alternatives and earlier evidence.
 Twelve archived Markdown documents also have browser reading views. Other original
 formats remain available directly from the archive index. Evidence and
-implementation labels come from the source graph. Publication adds no runtime,
-training results, or experiment outcomes.
+implementation labels come from the source graph. The additive empirical pilot
+includes local deterministic tool measurements and a rejected procedure candidate.
+It does not establish production model operation, training results, or compounding
+learning. See `/hive/notes/STATUS/` for the current scope and remaining gaps.
 
 Rebuild from the preserved package using Python 3.11 or later:
 

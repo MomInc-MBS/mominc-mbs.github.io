@@ -1,0 +1,9 @@
+{
+  "task_id": "dev-00-overlap",
+  "config_id": "rules",
+  "output": {
+    "valid": false,
+    "reason": "timing",
+    "tool_calls": 0
+  }
+}

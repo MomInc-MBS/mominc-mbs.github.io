@@ -1,0 +1,3202 @@
+[
+  {
+    "episode_ref": "rules-dev-00-valid-first",
+    "input_hash": "67bedaf4740e8e3a2c7f41eecf98a80b4a6b54c9aa62939c1b57311a6fb6e89e",
+    "output_refs": [
+      "outputs/5a49ae3e700b9aa81963caa42cadd6b147ba1e4e6c995edcbb9cb0c4d1a35be0.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-00-bom-crlf-first",
+    "input_hash": "3c0af52a55eefa7b7756ed43bc054a6f22214392ec6267027e0ea55772c73a04",
+    "output_refs": [
+      "outputs/bb9a62bfddc1e081f93fe080bb0874c3baf174512226307787fe9b65189c8fa4.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-00-overlap-first",
+    "input_hash": "5fc69458410db64e6ef486d8cebf434a36424f201c4b1e37db9f8e1ea94dd82b",
+    "output_refs": [
+      "outputs/4394f4f1ec6b03ec4624f7ae9e80ba101e1e7a3fbc84e40f1e404bdef3b3ab7e.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-00-backward-first",
+    "input_hash": "ddca1bd0eadec7d2172fabbbd3160adbacbd399075ce6c97964c1068fd0725c7",
+    "output_refs": [
+      "outputs/b7703fe2e34b35a91bb6c43ad1c7c28786d8c570eae07a1fadaee5487c448d53.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-00-past-end-first",
+    "input_hash": "56c8db3ec720425c8bb029e3d27fd98edf2957ea71d0387eda6d7a9c85809120",
+    "output_refs": [
+      "outputs/020cbdb8ae7ace5530e6e06c6e243ac5b6850705264881b84a70273173013123.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-00-duplicate-id-first",
+    "input_hash": "5fe136c383aea792e23b038bf48abff911d812f5267fdd4e02120da3b5ff1365",
+    "output_refs": [
+      "outputs/93b61e579f335b315889b8d65285695e24bd1cf97ffc96355814e4eab90445a5.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-01-valid-first",
+    "input_hash": "712a754d761172fed837b2148c09a49c952acd11ea77c692cc6bb3f215acf126",
+    "output_refs": [
+      "outputs/093321c6bb0a89f75a6687ce5b6d5d3bbe5433790aa087ffd58a65b9d70bd718.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-01-bom-crlf-first",
+    "input_hash": "706c53324d43ce9759d29d29b644d95b3f4bdb2d259947f62aba21ed337dab35",
+    "output_refs": [
+      "outputs/907efc3b256df3229e3edfa9f330c4134c1a14d935183977c335c0188187b01b.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-01-overlap-first",
+    "input_hash": "5b5df06eb17edc72f7480214913db325e124fc603163ccb80b98c1bde4c56732",
+    "output_refs": [
+      "outputs/46fe09be8a5f71f018d4bf1820150b87f4e537d13123a38db18da4a7131141ba.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-01-backward-first",
+    "input_hash": "2de0d5b812607ace8d37bc46d50e5205f0d37c0fad96e7a2a553157473ab4123",
+    "output_refs": [
+      "outputs/938b7fa90b814dfe648625e32f3b41fe81b73509c633ec22bfcd03526a3eba60.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-01-past-end-first",
+    "input_hash": "8b56119c04694c4d7efceeee5f4efaae8d5865528504275499552c3a62faefef",
+    "output_refs": [
+      "outputs/c1e50d022370f8c44c729e3c97b3ab789b527ecda36a5b6700c6dfe283bfd74e.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-01-duplicate-id-first",
+    "input_hash": "dd71622e97c2d23a16a8da8f1716e23cd6fe053f0ef7658ab1403c67bb691e95",
+    "output_refs": [
+      "outputs/ac266da40a95ab08cf1fe5b41c0387ce52697b7d110d3346c57a93ca156260d5.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-02-valid-first",
+    "input_hash": "2f4ef4110cbd04600f35c2c1808900df263bc90f12ee1627a6b1033bcbb591b0",
+    "output_refs": [
+      "outputs/cef94bf66186782673e7a16325dd64d5bf6ca480d79c13210257f6d1dc06df63.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-02-bom-crlf-first",
+    "input_hash": "0d041a81c688393f6e19aa78bf99fc6a8489fd121efacbf8e91f9b8d6e355d7e",
+    "output_refs": [
+      "outputs/9a98734327dd3b94022b52d57fb62c4cadd9dc2c111343081eb3189d42b439b2.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-02-overlap-first",
+    "input_hash": "33e353aac4edf53bce97c47f29a65f7623af2a4b59268fcf44bf3363290ca12e",
+    "output_refs": [
+      "outputs/a6334037999ba690c137ee6d8d4aaf4410bcce56ea5f7e88f82edbc57f525b49.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-02-backward-first",
+    "input_hash": "fad0d077a341768bf03ff319cccd63813077ab38f37a4d426c3d1b3538a759e2",
+    "output_refs": [
+      "outputs/f1fb584b5648c55bdef160e8b8967c1a0c074c1e225d45362a03e65f73be2c56.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-02-past-end-first",
+    "input_hash": "da6b2a3946ca1a4c3667842d2f74645edda2ad488637121f077780c17ca9e73b",
+    "output_refs": [
+      "outputs/814ff917b700440a0fa4904f3a7fa25fd36a0daacae89edb3c50562933cb99a9.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-02-duplicate-id-first",
+    "input_hash": "70d9d816abe4b8b86b966acf590ec66782ca850618b54bf86d15882f30767eac",
+    "output_refs": [
+      "outputs/8b433401555683116ae2a2342b14c213eacd6610c99981122c049d63741662b8.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-03-valid-first",
+    "input_hash": "bf4e20adaeea2c3f5d0156ca49b0a64c3427a8e6d9a902c6627a69016d1c5db8",
+    "output_refs": [
+      "outputs/477108a160419579732ab7d13413174c3f9f439d8877a469b9dd2c2f708d8ce8.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-03-bom-crlf-first",
+    "input_hash": "3282bd42f7ed1120e4c0dc1f23b62f3a06461cb4ea2ff61d0c40dc674a885e59",
+    "output_refs": [
+      "outputs/90667f1dc096599bf4a061bfd7b88280c9301e27b76a445248f32efaaddff901.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-03-overlap-first",
+    "input_hash": "8e38c19963763180530528fb01ad3fb94667ee6246c09be0cf9c442fc2eab1e5",
+    "output_refs": [
+      "outputs/856a15fbbb17d4cd308ea5826f303ea88c6eef9e151fd7503c3e7df7ca7b4d30.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-03-backward-first",
+    "input_hash": "7e94576b733f8a7010aadd93cc25db95e1d248421b3b726a84026c7f16fc00bf",
+    "output_refs": [
+      "outputs/b254c69191b1f1d284b807abfaeb657214885255adc1155ed657068891c80b79.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-03-past-end-first",
+    "input_hash": "76e8515bd5d8e5f1f089742564931f6402f5ee6458179498f740fb54813354fc",
+    "output_refs": [
+      "outputs/2b8842a32e95905f59b2e46cd7d4397c2854c929a564d4eb91cfb53e7706ff7f.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-03-duplicate-id-first",
+    "input_hash": "b34f75a699eb8f022bf606002237c99fa1ce9c1b64389759caf9086f25be2d8a",
+    "output_refs": [
+      "outputs/7902c7bab0f6a08929a8414aeef234f696b241d413098e9da3a7432c717bd6f7.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-04-valid-first",
+    "input_hash": "24043292814525aa541efeca051a0698c396a07afc2ad41fc4facecd0d1ef140",
+    "output_refs": [
+      "outputs/dec94ae15e00d67e39a1e4a7e991c58e773c80fc5b7ff702827a76603ecefafe.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-04-bom-crlf-first",
+    "input_hash": "6a07380b4069a1c27c7d5e53c8541ca1e29faed22f1ce16de7b1dbe94ba0b44f",
+    "output_refs": [
+      "outputs/14b837c366d541e05a75305f2a60393791e595646c1a51294ae9abe033a80f3d.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-04-overlap-first",
+    "input_hash": "3e52ee61207006014475293b567569e41b4838d809a5b7b2daaef047e3e675c5",
+    "output_refs": [
+      "outputs/1d6e6627a4ccb9abd08be06b26f06f55fb6684096ca329a65d47228658a4a502.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-04-backward-first",
+    "input_hash": "e42781b3978ac5e396c02002ec8e3e9ddb7913e4d9220dfc78d7176f1d94bd99",
+    "output_refs": [
+      "outputs/cd3e9c2b992edf9cdedc6bb48936f6293167fa729a173672b36684893e3e9632.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-04-past-end-first",
+    "input_hash": "b3817fee9341c55ca0a5c96e0d89e2a876795e229588e00d602b78ba08f0310a",
+    "output_refs": [
+      "outputs/cb0314266a6c6d81c5bf600f46170e6e8026a8bf9d0881f41b269c3f40ed6820.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-04-duplicate-id-first",
+    "input_hash": "c77492ae217f546a927c9e1e4464d49cf3cfbcce7249365b9510235be168f604",
+    "output_refs": [
+      "outputs/ee259b9e69be493224f8d0e4600dcedec4cb320641af787c86d52bd79c528874.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-05-valid-first",
+    "input_hash": "71a7a08f98ccfa2abfa7292829576dae7b7867b166fb688c7592cf91413260aa",
+    "output_refs": [
+      "outputs/05b95aebc0ba01a92ff15c87fb76d9a84e79eabc873d73c374fc2c40051ace22.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-05-bom-crlf-first",
+    "input_hash": "e6efe549fcca808c3e37d088a930ec61090a0a3a0741f31f3890dacf2109daab",
+    "output_refs": [
+      "outputs/3ad827d0a5295cc7e8a10ded28be44331c92e5f8b3cbeb0b543841d6628909d5.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-05-overlap-first",
+    "input_hash": "92772f4cfd59880ee97e441bf1d0274a5fb664243e5013f2bfd290fc4a5ae2be",
+    "output_refs": [
+      "outputs/5dcc49e64572143ce084634ac0ed673f6df6382eebfd8248dc19f2cf598caff8.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-05-backward-first",
+    "input_hash": "a989698b02996affeb6e12defe49c1f5493069945910f0dd464965a1c7df6290",
+    "output_refs": [
+      "outputs/ed7de67f0ac96bd23ee2ce27f31a167e848978a1d6dc6d6c799a83e39e3967db.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-05-past-end-first",
+    "input_hash": "e6521cc80d30696a68c6f37d23ef0634a04ee2b9d7228bb2bca100f29f4516ca",
+    "output_refs": [
+      "outputs/ee24e06afbc8db079665d68c161c36dba294da3f359331b38e7c98b95658c3c5.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-05-duplicate-id-first",
+    "input_hash": "f71b6383fa7fdc3614285f65d23d45be309ecd71633a74616e965891f5324aed",
+    "output_refs": [
+      "outputs/050fff853d24d603bcdc31263f6156151c8bf7ddd37c1bd53c6ab3d9be529b9c.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-06-valid-first",
+    "input_hash": "0962778c7dd2f5be379520b763306611531cf23cea7340e277f1e16e83a5c60e",
+    "output_refs": [
+      "outputs/0e9cb56245e206724eaa58def66d08c0b9e098c639cd93cb7ec9756e8056902f.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-06-bom-crlf-first",
+    "input_hash": "5d89177119a19c669358bbc26cd123df6e17519300bf9423d546456937ea2693",
+    "output_refs": [
+      "outputs/c99758e9d265ac90c4e1ea0fe0371ac3bf76b8fa452c7b2c9ffa8163e83f8e12.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-06-overlap-first",
+    "input_hash": "e23cb9691aa574638d05b803824dc2c7bcaade944c7ae0009007f7051578fa5c",
+    "output_refs": [
+      "outputs/196fbd125a1da40f83ff33742e08c67c2e24bfa6ae11055718318f5a6b47762c.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-06-backward-first",
+    "input_hash": "ee88fb64190f564e7ec26961b6b0c2a390271dd029047aef86135508a427f664",
+    "output_refs": [
+      "outputs/119f7a6d236e47b8b8634d3ee297870c3acffed37c0dadc60c2ec91f9cc7afb3.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-06-past-end-first",
+    "input_hash": "4244ad568c49ebc387747e9e67425d85aa214c77d62d82aa37655b418ca05d8a",
+    "output_refs": [
+      "outputs/46d966a844f85cce7533815c955f7f5e6cdec4d27341f05430782b00c65a7a14.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-06-duplicate-id-first",
+    "input_hash": "d706639f231fcbc388dc5d8bfeed93b54931c23c2a2bf18d992f2eeeda636e32",
+    "output_refs": [
+      "outputs/841da8ce2d657d9fe1a331aac1ca46b2e8974f476b443f1a7424b44c82aa795a.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-07-valid-first",
+    "input_hash": "e2c89be25a64df98666bc36a7b72eca4489d5fbcf153183953c87d7566267d8b",
+    "output_refs": [
+      "outputs/b3113cf9beef0995e52539d83fb0336348b5a4a1d9de0794168a64b0dc366760.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-07-bom-crlf-first",
+    "input_hash": "6816b69ef011b3322632291f3c5d757344660047592bc601baf713082bc43f64",
+    "output_refs": [
+      "outputs/fca9cd6d6ade0bd8dfdc5d4e1e0486b2612d04c70408178370361a878250073a.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-07-overlap-first",
+    "input_hash": "3f284f7d3f5adbeab5378aaf3a9fcf5f61d8c0f43c31823d84399107141caf6f",
+    "output_refs": [
+      "outputs/d914426dc0369b91a626fd1b8361dba0d5387929505fa2019ef9b9bdaf9da191.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-07-backward-first",
+    "input_hash": "91f2389f9a79a3852315cd1eba097c512e59880578e3c3504fba988ccc366162",
+    "output_refs": [
+      "outputs/1fcfbaadd9f4a116c71ee6cc10a0e24c48847e50bc1b85f77c14b34db5f662c0.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-07-past-end-first",
+    "input_hash": "e6518648ba0d6c02c40fec1dbfad322175c0f491620d474e7e1e6a247d0ae1a9",
+    "output_refs": [
+      "outputs/2c079afd2d678e5019dce36940e7f0c3e6e6426b6131b95bbb868f8fe330a4e1.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-07-duplicate-id-first",
+    "input_hash": "52daeda73362ad0b82b350d5ceae21a6f675db0bb2a356c4ce9eaf54fee4d9dd",
+    "output_refs": [
+      "outputs/e2f2eaad6e7a500f892018e62ee23faf3a164ae823fc6cadd8cb91ffa851be7d.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "probe-dev-00-valid-first",
+    "input_hash": "67bedaf4740e8e3a2c7f41eecf98a80b4a6b54c9aa62939c1b57311a6fb6e89e",
+    "output_refs": [
+      "outputs/8caef3250832d97e41891783bf17ab5eec9bfde08519f85d0a71d4c3b7c45218.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5c2c675d5fec2ec759614d5eb9c91d6257b0f2b48356752a17ef37e3f5514ced"
+  },
+  {
+    "episode_ref": "probe-dev-00-bom-crlf-first",
+    "input_hash": "3c0af52a55eefa7b7756ed43bc054a6f22214392ec6267027e0ea55772c73a04",
+    "output_refs": [
+      "outputs/b303fb68b65564f59b7b8fb3b02e9780612923a638499ea755d3b8b373542aed.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5c2c675d5fec2ec759614d5eb9c91d6257b0f2b48356752a17ef37e3f5514ced"
+  },
+  {
+    "episode_ref": "probe-dev-01-valid-first",
+    "input_hash": "712a754d761172fed837b2148c09a49c952acd11ea77c692cc6bb3f215acf126",
+    "output_refs": [
+      "outputs/6c786e3759dda4daf6a07050d05b2b2e044d91f57e2225597897c8dceeb216a0.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5c2c675d5fec2ec759614d5eb9c91d6257b0f2b48356752a17ef37e3f5514ced"
+  },
+  {
+    "episode_ref": "probe-dev-01-bom-crlf-first",
+    "input_hash": "706c53324d43ce9759d29d29b644d95b3f4bdb2d259947f62aba21ed337dab35",
+    "output_refs": [
+      "outputs/0c35671d73dcd4426585ffa2b5c8d5b79ae3b70909aaf7778e63780a6a3c2b00.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5c2c675d5fec2ec759614d5eb9c91d6257b0f2b48356752a17ef37e3f5514ced"
+  },
+  {
+    "episode_ref": "probe-dev-02-valid-first",
+    "input_hash": "2f4ef4110cbd04600f35c2c1808900df263bc90f12ee1627a6b1033bcbb591b0",
+    "output_refs": [
+      "outputs/3c37e52cb73eaa6c05232f1e91f47ef889427cf69c57745082716c087295be5f.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5c2c675d5fec2ec759614d5eb9c91d6257b0f2b48356752a17ef37e3f5514ced"
+  },
+  {
+    "episode_ref": "probe-dev-02-bom-crlf-first",
+    "input_hash": "0d041a81c688393f6e19aa78bf99fc6a8489fd121efacbf8e91f9b8d6e355d7e",
+    "output_refs": [
+      "outputs/84d23d1a99d407505cee3f3b655ad6a26dbcc7117dbc024a0fa949c803e3774e.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5c2c675d5fec2ec759614d5eb9c91d6257b0f2b48356752a17ef37e3f5514ced"
+  },
+  {
+    "episode_ref": "probe-dev-03-valid-first",
+    "input_hash": "bf4e20adaeea2c3f5d0156ca49b0a64c3427a8e6d9a902c6627a69016d1c5db8",
+    "output_refs": [
+      "outputs/376e18468dda0946f6d68e73553ec11afcff8ec52405a88a900e49aeb4042269.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5c2c675d5fec2ec759614d5eb9c91d6257b0f2b48356752a17ef37e3f5514ced"
+  },
+  {
+    "episode_ref": "probe-dev-03-bom-crlf-first",
+    "input_hash": "3282bd42f7ed1120e4c0dc1f23b62f3a06461cb4ea2ff61d0c40dc674a885e59",
+    "output_refs": [
+      "outputs/b6b6a5e61a1528b293b71d2bcd13e60c2a6bb71d7f65f9d392c96ab6a01ad8e1.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5c2c675d5fec2ec759614d5eb9c91d6257b0f2b48356752a17ef37e3f5514ced"
+  },
+  {
+    "episode_ref": "probe-dev-04-valid-first",
+    "input_hash": "24043292814525aa541efeca051a0698c396a07afc2ad41fc4facecd0d1ef140",
+    "output_refs": [
+      "outputs/680d36d6c00de3ed8115ba7ce82793a992a33ef5b7424f5fb0dc4e70f6cc4167.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5c2c675d5fec2ec759614d5eb9c91d6257b0f2b48356752a17ef37e3f5514ced"
+  },
+  {
+    "episode_ref": "probe-dev-04-bom-crlf-first",
+    "input_hash": "6a07380b4069a1c27c7d5e53c8541ca1e29faed22f1ce16de7b1dbe94ba0b44f",
+    "output_refs": [
+      "outputs/39aba98427ab2c079f7103856f92bae397df110962e60493be6290cbad7821c9.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5c2c675d5fec2ec759614d5eb9c91d6257b0f2b48356752a17ef37e3f5514ced"
+  },
+  {
+    "episode_ref": "probe-dev-05-valid-first",
+    "input_hash": "71a7a08f98ccfa2abfa7292829576dae7b7867b166fb688c7592cf91413260aa",
+    "output_refs": [
+      "outputs/a1fa829d0483dee0988a7621c1f6477053f8f6aaa31c403e4a6dbb178f5879c8.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5c2c675d5fec2ec759614d5eb9c91d6257b0f2b48356752a17ef37e3f5514ced"
+  },
+  {
+    "episode_ref": "probe-dev-05-bom-crlf-first",
+    "input_hash": "e6efe549fcca808c3e37d088a930ec61090a0a3a0741f31f3890dacf2109daab",
+    "output_refs": [
+      "outputs/cf991f736a558785ab7b315ebd8780ddb89826c4c753660b983e8ce91190cdbd.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5c2c675d5fec2ec759614d5eb9c91d6257b0f2b48356752a17ef37e3f5514ced"
+  },
+  {
+    "episode_ref": "probe-dev-06-valid-first",
+    "input_hash": "0962778c7dd2f5be379520b763306611531cf23cea7340e277f1e16e83a5c60e",
+    "output_refs": [
+      "outputs/a3ab224769efee014ce51956edff83e4c8efd438f4db27a4b0df2d8bf8dded71.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5c2c675d5fec2ec759614d5eb9c91d6257b0f2b48356752a17ef37e3f5514ced"
+  },
+  {
+    "episode_ref": "probe-dev-06-bom-crlf-first",
+    "input_hash": "5d89177119a19c669358bbc26cd123df6e17519300bf9423d546456937ea2693",
+    "output_refs": [
+      "outputs/037142393e54fd9460997b6300e6406e848d44784ea5c4e0be95a6e0bb5e836b.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5c2c675d5fec2ec759614d5eb9c91d6257b0f2b48356752a17ef37e3f5514ced"
+  },
+  {
+    "episode_ref": "probe-dev-07-valid-first",
+    "input_hash": "e2c89be25a64df98666bc36a7b72eca4489d5fbcf153183953c87d7566267d8b",
+    "output_refs": [
+      "outputs/efd6f975039c8791554b9b296e82c70e326801f335bf62d327c367613903a686.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5c2c675d5fec2ec759614d5eb9c91d6257b0f2b48356752a17ef37e3f5514ced"
+  },
+  {
+    "episode_ref": "probe-dev-07-bom-crlf-first",
+    "input_hash": "6816b69ef011b3322632291f3c5d757344660047592bc601baf713082bc43f64",
+    "output_refs": [
+      "outputs/bce21a4a5218f258388a4992ca36e68c32c068fabd612b0e05c4c298648b7250.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5c2c675d5fec2ec759614d5eb9c91d6257b0f2b48356752a17ef37e3f5514ced"
+  },
+  {
+    "episode_ref": "combined-dev-00-valid-first",
+    "input_hash": "67bedaf4740e8e3a2c7f41eecf98a80b4a6b54c9aa62939c1b57311a6fb6e89e",
+    "output_refs": [
+      "outputs/85ff8a4d9ba98c5fde70aef536ff7d8c0ea192efe431e085662c10614df545a8.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-00-bom-crlf-first",
+    "input_hash": "3c0af52a55eefa7b7756ed43bc054a6f22214392ec6267027e0ea55772c73a04",
+    "output_refs": [
+      "outputs/5dd5f2c3b9b28ad4166e0c55930a1b0d6ce3bf99ef0002af17aa89ef2e9c6698.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-00-overlap-first",
+    "input_hash": "5fc69458410db64e6ef486d8cebf434a36424f201c4b1e37db9f8e1ea94dd82b",
+    "output_refs": [
+      "outputs/63b392909ae2060c5b8640e0fc8ba7cb4e9d92367f536e49256c766f0a4ddc83.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-00-backward-first",
+    "input_hash": "ddca1bd0eadec7d2172fabbbd3160adbacbd399075ce6c97964c1068fd0725c7",
+    "output_refs": [
+      "outputs/a0b481bc569079cf1fcf8fa8c79521160d0284ea848883aca1a7f0f13fbd6096.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-00-past-end-first",
+    "input_hash": "56c8db3ec720425c8bb029e3d27fd98edf2957ea71d0387eda6d7a9c85809120",
+    "output_refs": [
+      "outputs/3f8a6fa44ff37bfa29a561356bc9cdcbd6b31eb98a3f93445f936b02e51af5b3.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-00-duplicate-id-first",
+    "input_hash": "5fe136c383aea792e23b038bf48abff911d812f5267fdd4e02120da3b5ff1365",
+    "output_refs": [
+      "outputs/ef8ba99deb2add8c3cd8b51afd27dae9df84384ee84489b634a60de8d1cf19c9.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-01-valid-first",
+    "input_hash": "712a754d761172fed837b2148c09a49c952acd11ea77c692cc6bb3f215acf126",
+    "output_refs": [
+      "outputs/c8f324342e2cf3ab2356f3efe97ecca74b34f7901c4fc28cf474c42e03a5a437.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-01-bom-crlf-first",
+    "input_hash": "706c53324d43ce9759d29d29b644d95b3f4bdb2d259947f62aba21ed337dab35",
+    "output_refs": [
+      "outputs/7a62b26b23cff9180e0e104d292cfd94ae0b915b2304c425aec5069bd811e922.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-01-overlap-first",
+    "input_hash": "5b5df06eb17edc72f7480214913db325e124fc603163ccb80b98c1bde4c56732",
+    "output_refs": [
+      "outputs/2736d5ef5d3f20556e639fb2e572f4caea808557d9c317a5bbeeb5e91d7ce5f9.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-01-backward-first",
+    "input_hash": "2de0d5b812607ace8d37bc46d50e5205f0d37c0fad96e7a2a553157473ab4123",
+    "output_refs": [
+      "outputs/e27ffdfd5042a911346afd2771d0ab4d4f861b4ee713d6ecf88af639d1f20b7b.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-01-past-end-first",
+    "input_hash": "8b56119c04694c4d7efceeee5f4efaae8d5865528504275499552c3a62faefef",
+    "output_refs": [
+      "outputs/d331a03d36736c7f1668ef538425dae4a0822129ac3b50daf462e11cbad932db.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-01-duplicate-id-first",
+    "input_hash": "dd71622e97c2d23a16a8da8f1716e23cd6fe053f0ef7658ab1403c67bb691e95",
+    "output_refs": [
+      "outputs/2e7b45940a52178f43f8a4a827e2ef35c3c33d39700e68d0d75c1d8e0ba4236b.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-02-valid-first",
+    "input_hash": "2f4ef4110cbd04600f35c2c1808900df263bc90f12ee1627a6b1033bcbb591b0",
+    "output_refs": [
+      "outputs/2389079fca5d5c2f6877af9a3feb397816614ae2e247ba9573432aa6b4462300.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-02-bom-crlf-first",
+    "input_hash": "0d041a81c688393f6e19aa78bf99fc6a8489fd121efacbf8e91f9b8d6e355d7e",
+    "output_refs": [
+      "outputs/f19d519b45c7dfaae61446e8b4d4131087d0157c95b7107c96539e1382e3ef5d.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-02-overlap-first",
+    "input_hash": "33e353aac4edf53bce97c47f29a65f7623af2a4b59268fcf44bf3363290ca12e",
+    "output_refs": [
+      "outputs/616660d63c5f8ad7a62731fc8582b3e67bf789954df61d9d5f2751cdb78a10cb.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-02-backward-first",
+    "input_hash": "fad0d077a341768bf03ff319cccd63813077ab38f37a4d426c3d1b3538a759e2",
+    "output_refs": [
+      "outputs/dd5dcfb1c99eb98f0d56a4269b6b0caa088fe0e5b1dc4ee5d1c00b77f0c2e006.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-02-past-end-first",
+    "input_hash": "da6b2a3946ca1a4c3667842d2f74645edda2ad488637121f077780c17ca9e73b",
+    "output_refs": [
+      "outputs/bbd916f588a2c6e1408852abcf750bdf21d59d487aabc1cc80037a248a0f0144.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-02-duplicate-id-first",
+    "input_hash": "70d9d816abe4b8b86b966acf590ec66782ca850618b54bf86d15882f30767eac",
+    "output_refs": [
+      "outputs/eeff423a5b86ba4db2757fa17218496a062fc8732b473ad0a53519f1787036b2.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-03-valid-first",
+    "input_hash": "bf4e20adaeea2c3f5d0156ca49b0a64c3427a8e6d9a902c6627a69016d1c5db8",
+    "output_refs": [
+      "outputs/97808e3ff6d8fcedfa75b1a16fe0ab29951f1dd1fda1abf6520baf59450adc93.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-03-bom-crlf-first",
+    "input_hash": "3282bd42f7ed1120e4c0dc1f23b62f3a06461cb4ea2ff61d0c40dc674a885e59",
+    "output_refs": [
+      "outputs/12b9ffba0a899a1ac9478af470f1e71f6ea9fb816a5f9a2f55d0f6fc3135e775.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-03-overlap-first",
+    "input_hash": "8e38c19963763180530528fb01ad3fb94667ee6246c09be0cf9c442fc2eab1e5",
+    "output_refs": [
+      "outputs/d569d653cedaa45528063eda5b8013a67e241aa7317dbeeae6f9c69bc647d7ac.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-03-backward-first",
+    "input_hash": "7e94576b733f8a7010aadd93cc25db95e1d248421b3b726a84026c7f16fc00bf",
+    "output_refs": [
+      "outputs/78baa93ac7e38a5825a1b8511c1e93a8294afee542b9c7308200cdf3a840f23f.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-03-past-end-first",
+    "input_hash": "76e8515bd5d8e5f1f089742564931f6402f5ee6458179498f740fb54813354fc",
+    "output_refs": [
+      "outputs/a93d090a10d36425c83999e628c9609b6151c002340999bbefc4190137b00b88.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-03-duplicate-id-first",
+    "input_hash": "b34f75a699eb8f022bf606002237c99fa1ce9c1b64389759caf9086f25be2d8a",
+    "output_refs": [
+      "outputs/e101461fe1d3603ac2abb9229b74c168119939fdf019afbb1d458750db1cb7c2.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-04-valid-first",
+    "input_hash": "24043292814525aa541efeca051a0698c396a07afc2ad41fc4facecd0d1ef140",
+    "output_refs": [
+      "outputs/4ee9ba28e1c54743bc4b8ed414d0a9d256d252d8672e00d7d7d7d085e086c5ec.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-04-bom-crlf-first",
+    "input_hash": "6a07380b4069a1c27c7d5e53c8541ca1e29faed22f1ce16de7b1dbe94ba0b44f",
+    "output_refs": [
+      "outputs/16b00b7f278e96bcf2d10c1748ff171d4c743ed78b9be5fd978a3358bb83401a.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-04-overlap-first",
+    "input_hash": "3e52ee61207006014475293b567569e41b4838d809a5b7b2daaef047e3e675c5",
+    "output_refs": [
+      "outputs/b0035de18964fbe7605aa41031e2bc1df30edf3ea45e864975d837786cf71e44.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-04-backward-first",
+    "input_hash": "e42781b3978ac5e396c02002ec8e3e9ddb7913e4d9220dfc78d7176f1d94bd99",
+    "output_refs": [
+      "outputs/0aa44dc135ab7e99eaedf436fc8ccdab07dc8a379eed9890af04495a5e108474.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-04-past-end-first",
+    "input_hash": "b3817fee9341c55ca0a5c96e0d89e2a876795e229588e00d602b78ba08f0310a",
+    "output_refs": [
+      "outputs/bb155f4715a4cf0b1a91e66f079533e4db0690dba58f8694740e8f4cebe90d17.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-04-duplicate-id-first",
+    "input_hash": "c77492ae217f546a927c9e1e4464d49cf3cfbcce7249365b9510235be168f604",
+    "output_refs": [
+      "outputs/af15a6d396a6f6e97c1a7b11b18b32b6603172cd743df67a684b5603ae8f2f13.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-05-valid-first",
+    "input_hash": "71a7a08f98ccfa2abfa7292829576dae7b7867b166fb688c7592cf91413260aa",
+    "output_refs": [
+      "outputs/75a7b487e15e90833bb1a177fcf04a38b6acfcf2d4a49c5afb3b292a4d988003.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-05-bom-crlf-first",
+    "input_hash": "e6efe549fcca808c3e37d088a930ec61090a0a3a0741f31f3890dacf2109daab",
+    "output_refs": [
+      "outputs/133904e95f24db073c95801c4c96f85fc8492bc980e73cb1a33d3c779463557a.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-05-overlap-first",
+    "input_hash": "92772f4cfd59880ee97e441bf1d0274a5fb664243e5013f2bfd290fc4a5ae2be",
+    "output_refs": [
+      "outputs/e016b0fd49a568879825620ae9ccb4d3f17439f526043b9ebe07b3ca6d2f9db9.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-05-backward-first",
+    "input_hash": "a989698b02996affeb6e12defe49c1f5493069945910f0dd464965a1c7df6290",
+    "output_refs": [
+      "outputs/7a2f7536e3ffc69d5c450a5d41d79992b6622b87099bc7a9745a8fd2ded501b3.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-05-past-end-first",
+    "input_hash": "e6521cc80d30696a68c6f37d23ef0634a04ee2b9d7228bb2bca100f29f4516ca",
+    "output_refs": [
+      "outputs/92873b4c4ebd258b8502ca9e4f40a088664e68ec1e4fb88fd616abbed433b645.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-05-duplicate-id-first",
+    "input_hash": "f71b6383fa7fdc3614285f65d23d45be309ecd71633a74616e965891f5324aed",
+    "output_refs": [
+      "outputs/5e72b96a20b0ec4d95369265f1548019ec8d282414d77c6faba513ca25592ce2.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-06-valid-first",
+    "input_hash": "0962778c7dd2f5be379520b763306611531cf23cea7340e277f1e16e83a5c60e",
+    "output_refs": [
+      "outputs/5767324b13fcadb36da934eb452f25c6de66e9307c22199ca33ec5a7678e3594.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-06-bom-crlf-first",
+    "input_hash": "5d89177119a19c669358bbc26cd123df6e17519300bf9423d546456937ea2693",
+    "output_refs": [
+      "outputs/0e76a1b6e0e7089abb1cb99ef7c96dd4605dd55d55657e6d5e5023046a3f896f.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-06-overlap-first",
+    "input_hash": "e23cb9691aa574638d05b803824dc2c7bcaade944c7ae0009007f7051578fa5c",
+    "output_refs": [
+      "outputs/59e1114d7684a3032db844df50ef88a6ad9bacb94dce7646dd8bc1f4b6fc00d6.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-06-backward-first",
+    "input_hash": "ee88fb64190f564e7ec26961b6b0c2a390271dd029047aef86135508a427f664",
+    "output_refs": [
+      "outputs/79145543ee230ae09b5a2b0278ab8370da1f70a3386cba5acf53f65e919a80e9.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-06-past-end-first",
+    "input_hash": "4244ad568c49ebc387747e9e67425d85aa214c77d62d82aa37655b418ca05d8a",
+    "output_refs": [
+      "outputs/b18c29e94cafcbbd9fd4d9fdd3c07110889b108d82b52639f3bb6831c0124b7d.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-06-duplicate-id-first",
+    "input_hash": "d706639f231fcbc388dc5d8bfeed93b54931c23c2a2bf18d992f2eeeda636e32",
+    "output_refs": [
+      "outputs/2c44c4871e9ad6aa44bae6fd7fbdb324d8575829f882d2334773a60e94481c73.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-07-valid-first",
+    "input_hash": "e2c89be25a64df98666bc36a7b72eca4489d5fbcf153183953c87d7566267d8b",
+    "output_refs": [
+      "outputs/497c818baa462cfc5bcfd944cebcf34f01895dd9113d1f7ec600b74e695383c6.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-07-bom-crlf-first",
+    "input_hash": "6816b69ef011b3322632291f3c5d757344660047592bc601baf713082bc43f64",
+    "output_refs": [
+      "outputs/ab1bfce04cda00c264ca81c8b5df7ab8f2856322e155a74b7dc01e28af5d182d.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-07-overlap-first",
+    "input_hash": "3f284f7d3f5adbeab5378aaf3a9fcf5f61d8c0f43c31823d84399107141caf6f",
+    "output_refs": [
+      "outputs/e1b52eae34423dc8a14fabdb59d104d0dd6b1a1909228ac06cdf10ae237159e1.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-07-backward-first",
+    "input_hash": "91f2389f9a79a3852315cd1eba097c512e59880578e3c3504fba988ccc366162",
+    "output_refs": [
+      "outputs/4cbb60c6e084eb82bf54f811092a4f86dfc4e8762d11c64d1581b1078e61800a.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-07-past-end-first",
+    "input_hash": "e6518648ba0d6c02c40fec1dbfad322175c0f491620d474e7e1e6a247d0ae1a9",
+    "output_refs": [
+      "outputs/e32568bebcd54a57f1fe76c2bc96bcd94380d9b2d386432b4d76ebd4dbee3cc2.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-07-duplicate-id-first",
+    "input_hash": "52daeda73362ad0b82b350d5ceae21a6f675db0bb2a356c4ce9eaf54fee4d9dd",
+    "output_refs": [
+      "outputs/4edf854acb96d72cf0eb06cc790a2d4af100eee15e1f34934887ad04c73bf585.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "probe-guard-dev-00-valid-first",
+    "input_hash": "67bedaf4740e8e3a2c7f41eecf98a80b4a6b54c9aa62939c1b57311a6fb6e89e",
+    "output_refs": [
+      "outputs/804729e837fb3ddde760e2d4ddd172619470181cff53860cab57cbb353288111.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-00-bom-crlf-first",
+    "input_hash": "3c0af52a55eefa7b7756ed43bc054a6f22214392ec6267027e0ea55772c73a04",
+    "output_refs": [
+      "outputs/5e8be56dc20d3c044ca1daa157877c19ef143746e541365879676d6926971604.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-00-overlap-first",
+    "input_hash": "5fc69458410db64e6ef486d8cebf434a36424f201c4b1e37db9f8e1ea94dd82b",
+    "output_refs": [
+      "outputs/1c7aa491cba2ec460af6289225d3b00b82b4ba597c5b379e574fc59d361a60ec.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-00-backward-first",
+    "input_hash": "ddca1bd0eadec7d2172fabbbd3160adbacbd399075ce6c97964c1068fd0725c7",
+    "output_refs": [
+      "outputs/cdaa3fe1b0d277f9f511c6478b317a3bb0e7db2fbd035b3a4934c705bb5b03a1.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-00-past-end-first",
+    "input_hash": "56c8db3ec720425c8bb029e3d27fd98edf2957ea71d0387eda6d7a9c85809120",
+    "output_refs": [
+      "outputs/7fa82b65a959211161910463432b08d3bebc2aef939171841ff7da868896e6af.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-00-duplicate-id-first",
+    "input_hash": "5fe136c383aea792e23b038bf48abff911d812f5267fdd4e02120da3b5ff1365",
+    "output_refs": [
+      "outputs/9212a00d4e203af1107f6b2a8e59fb925c3d32186db1f2ba16e22bbfb2c9ae78.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-01-valid-first",
+    "input_hash": "712a754d761172fed837b2148c09a49c952acd11ea77c692cc6bb3f215acf126",
+    "output_refs": [
+      "outputs/ba936744ba6bde59b58a33e08eebbf3167063561b383ea3efe8f9a2192d24b2c.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-01-bom-crlf-first",
+    "input_hash": "706c53324d43ce9759d29d29b644d95b3f4bdb2d259947f62aba21ed337dab35",
+    "output_refs": [
+      "outputs/d9f0f8e0a11b4fa702c3f65a51c4fcb5878852f51f396ff5304deb3b54822bac.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-01-overlap-first",
+    "input_hash": "5b5df06eb17edc72f7480214913db325e124fc603163ccb80b98c1bde4c56732",
+    "output_refs": [
+      "outputs/987e915f138fd41774c21ee7859a3590900dc847d7ee1c387b12736c4f19a782.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-01-backward-first",
+    "input_hash": "2de0d5b812607ace8d37bc46d50e5205f0d37c0fad96e7a2a553157473ab4123",
+    "output_refs": [
+      "outputs/565d356ea33ea13e8a7b62550ef51b5e78a6259825b5dea62b147823a0ecc5ec.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-01-past-end-first",
+    "input_hash": "8b56119c04694c4d7efceeee5f4efaae8d5865528504275499552c3a62faefef",
+    "output_refs": [
+      "outputs/600732b739a341d7f9e046661fa5a7c454fec1e044b6ef445f49552be265a1b6.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-01-duplicate-id-first",
+    "input_hash": "dd71622e97c2d23a16a8da8f1716e23cd6fe053f0ef7658ab1403c67bb691e95",
+    "output_refs": [
+      "outputs/44dde2ac06f53802893a0315546bebf1575a276e5e795e876135b3e07aed492a.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-02-valid-first",
+    "input_hash": "2f4ef4110cbd04600f35c2c1808900df263bc90f12ee1627a6b1033bcbb591b0",
+    "output_refs": [
+      "outputs/8f213d2bedc28ec2823be5796bd3e55461a0b7590a3a178ffc6f261ecadf2483.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-02-bom-crlf-first",
+    "input_hash": "0d041a81c688393f6e19aa78bf99fc6a8489fd121efacbf8e91f9b8d6e355d7e",
+    "output_refs": [
+      "outputs/9e4d7c98f4a19c8b9d9eb8c5d085b6e1ba723191f341b347bae31e8ecfb9a01e.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-02-overlap-first",
+    "input_hash": "33e353aac4edf53bce97c47f29a65f7623af2a4b59268fcf44bf3363290ca12e",
+    "output_refs": [
+      "outputs/2bc731ceb27dd23e37ec3bbc646431296a83b5dbf5b460877b51e0e3db1ad868.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-02-backward-first",
+    "input_hash": "fad0d077a341768bf03ff319cccd63813077ab38f37a4d426c3d1b3538a759e2",
+    "output_refs": [
+      "outputs/4764f1ee6f635f0fb44afbf02cd11927f147510895a45036052082ec404e329e.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-02-past-end-first",
+    "input_hash": "da6b2a3946ca1a4c3667842d2f74645edda2ad488637121f077780c17ca9e73b",
+    "output_refs": [
+      "outputs/8e4f81c7d0fab89c3404aead778a608ea15db6febf84378c9e4e7a8942ea2c3c.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-02-duplicate-id-first",
+    "input_hash": "70d9d816abe4b8b86b966acf590ec66782ca850618b54bf86d15882f30767eac",
+    "output_refs": [
+      "outputs/65d1f58795dcfce8c33cf54f856ffe28074f09e1c57552b8f5be5b8a43e8b35f.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-03-valid-first",
+    "input_hash": "bf4e20adaeea2c3f5d0156ca49b0a64c3427a8e6d9a902c6627a69016d1c5db8",
+    "output_refs": [
+      "outputs/af9c90a9ce2ba282a4aa6c9e640c0493dccb351ac94a05daaeeb08f70d93122e.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-03-bom-crlf-first",
+    "input_hash": "3282bd42f7ed1120e4c0dc1f23b62f3a06461cb4ea2ff61d0c40dc674a885e59",
+    "output_refs": [
+      "outputs/dc0e4a280fbcad0ff060cce1534c8f74a2fee32adb352e8a4935ecf644e9a301.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-03-overlap-first",
+    "input_hash": "8e38c19963763180530528fb01ad3fb94667ee6246c09be0cf9c442fc2eab1e5",
+    "output_refs": [
+      "outputs/b7342222bd436b81cf27b6e827a031f05f714792f2096252628ad85acd7626ad.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-03-backward-first",
+    "input_hash": "7e94576b733f8a7010aadd93cc25db95e1d248421b3b726a84026c7f16fc00bf",
+    "output_refs": [
+      "outputs/e9965fda2dbcf46d196c350f6d6806699259b3e3f09572a836163b9246e64f5d.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-03-past-end-first",
+    "input_hash": "76e8515bd5d8e5f1f089742564931f6402f5ee6458179498f740fb54813354fc",
+    "output_refs": [
+      "outputs/97870ad8b04777365c0c9a69734e106c3fa136b68dec8d6a98420ea5055988b6.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-03-duplicate-id-first",
+    "input_hash": "b34f75a699eb8f022bf606002237c99fa1ce9c1b64389759caf9086f25be2d8a",
+    "output_refs": [
+      "outputs/1f9ca6ac7947bc3eba36643415f97b9183f2db6721131c105eeab4ddfad0acac.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-04-valid-first",
+    "input_hash": "24043292814525aa541efeca051a0698c396a07afc2ad41fc4facecd0d1ef140",
+    "output_refs": [
+      "outputs/74df20eb0cbf9d23406dc16ffe17278603e3bbf85b6ec0cb37c26a892b0ba7fa.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-04-bom-crlf-first",
+    "input_hash": "6a07380b4069a1c27c7d5e53c8541ca1e29faed22f1ce16de7b1dbe94ba0b44f",
+    "output_refs": [
+      "outputs/fded2da0571ddb88dc59bd058288dc84a5c092b470fb06df8f8dbce4e46fa5d0.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-04-overlap-first",
+    "input_hash": "3e52ee61207006014475293b567569e41b4838d809a5b7b2daaef047e3e675c5",
+    "output_refs": [
+      "outputs/ef0f1df72d732f4c0e9bcfcbb1f3faa68880d23f37afe43e5d47e48e9b121bb3.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-04-backward-first",
+    "input_hash": "e42781b3978ac5e396c02002ec8e3e9ddb7913e4d9220dfc78d7176f1d94bd99",
+    "output_refs": [
+      "outputs/470c44543a6cf2a8b6e118101fe35aeda9656e0124ac6c7f31e14f9bb78c2847.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-04-past-end-first",
+    "input_hash": "b3817fee9341c55ca0a5c96e0d89e2a876795e229588e00d602b78ba08f0310a",
+    "output_refs": [
+      "outputs/1bd98b06e67e080201c441134bbe45b379f15b51b47f940b21dd3ee926b4d4c3.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-04-duplicate-id-first",
+    "input_hash": "c77492ae217f546a927c9e1e4464d49cf3cfbcce7249365b9510235be168f604",
+    "output_refs": [
+      "outputs/fa789b8440c7e67bb8157c35823b5a9a57c7c03659c5120013a698dbbc0bfc3d.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-05-valid-first",
+    "input_hash": "71a7a08f98ccfa2abfa7292829576dae7b7867b166fb688c7592cf91413260aa",
+    "output_refs": [
+      "outputs/ccbf057bb984035d64feea1ab3ac4aaccbc026477a4638a3ee6b35f09ae4fbc3.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-05-bom-crlf-first",
+    "input_hash": "e6efe549fcca808c3e37d088a930ec61090a0a3a0741f31f3890dacf2109daab",
+    "output_refs": [
+      "outputs/c6d87f3b28a736c18f7d7a4e7f6eb1bf330b45ed08809f7ac00fabe21f78b7cb.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-05-overlap-first",
+    "input_hash": "92772f4cfd59880ee97e441bf1d0274a5fb664243e5013f2bfd290fc4a5ae2be",
+    "output_refs": [
+      "outputs/c2bf37f5d2c1cf493c1097bfc03263f863dffa31fe67767fb798bf543684cb37.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-05-backward-first",
+    "input_hash": "a989698b02996affeb6e12defe49c1f5493069945910f0dd464965a1c7df6290",
+    "output_refs": [
+      "outputs/18d29cce9a98e27b1929dba0541bbb76e47b28e71d4da9debafa4c2e77dd9896.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-05-past-end-first",
+    "input_hash": "e6521cc80d30696a68c6f37d23ef0634a04ee2b9d7228bb2bca100f29f4516ca",
+    "output_refs": [
+      "outputs/751c4e63d3a85c0f94a4f2adb6fccaf8dcd54dd5fd94c994e4beef3f9d222eb0.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-05-duplicate-id-first",
+    "input_hash": "f71b6383fa7fdc3614285f65d23d45be309ecd71633a74616e965891f5324aed",
+    "output_refs": [
+      "outputs/015f7d780143c127660ed0549c13016efa6bf9f71c2293aded7f3e7c7b65be7d.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-06-valid-first",
+    "input_hash": "0962778c7dd2f5be379520b763306611531cf23cea7340e277f1e16e83a5c60e",
+    "output_refs": [
+      "outputs/1889c4f27eacb7498454bc6f703021ce7507e2063b72db596835be8b22cae5fd.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-06-bom-crlf-first",
+    "input_hash": "5d89177119a19c669358bbc26cd123df6e17519300bf9423d546456937ea2693",
+    "output_refs": [
+      "outputs/e467aea90933585b081d43d63cd09d0c9786a93d3642abfebf22abb9ff74fb24.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-06-overlap-first",
+    "input_hash": "e23cb9691aa574638d05b803824dc2c7bcaade944c7ae0009007f7051578fa5c",
+    "output_refs": [
+      "outputs/503ebd288c737fd8541f48f4de940f8a675ad91dabb0eb977962570feba291da.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-06-backward-first",
+    "input_hash": "ee88fb64190f564e7ec26961b6b0c2a390271dd029047aef86135508a427f664",
+    "output_refs": [
+      "outputs/2da35571d7a723288afc17e01bd33f6c9fb791b5efe84cb86ee93a93812d332a.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-06-past-end-first",
+    "input_hash": "4244ad568c49ebc387747e9e67425d85aa214c77d62d82aa37655b418ca05d8a",
+    "output_refs": [
+      "outputs/b96d8e86bf309f4211c41ff1fb5cc908c456b884f455224642d4bfb4e16c01ad.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-06-duplicate-id-first",
+    "input_hash": "d706639f231fcbc388dc5d8bfeed93b54931c23c2a2bf18d992f2eeeda636e32",
+    "output_refs": [
+      "outputs/4afc5e84ebfe763aaae3cbba79b967ace3bdf598af4d9f3b4211a875f1160927.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-07-valid-first",
+    "input_hash": "e2c89be25a64df98666bc36a7b72eca4489d5fbcf153183953c87d7566267d8b",
+    "output_refs": [
+      "outputs/1efe84888875b2d917afc83af89c4c3f24ebe915edb501f54af3f7c563ec1d07.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-07-bom-crlf-first",
+    "input_hash": "6816b69ef011b3322632291f3c5d757344660047592bc601baf713082bc43f64",
+    "output_refs": [
+      "outputs/0c168d8a023405ef584e2be920b273b1e97ec959e561f688e3fc08082ed983eb.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-07-overlap-first",
+    "input_hash": "3f284f7d3f5adbeab5378aaf3a9fcf5f61d8c0f43c31823d84399107141caf6f",
+    "output_refs": [
+      "outputs/f4581ce169eb2745e29f9d4440caf65986c10992d30e060e3b186af56ce67a57.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-07-backward-first",
+    "input_hash": "91f2389f9a79a3852315cd1eba097c512e59880578e3c3504fba988ccc366162",
+    "output_refs": [
+      "outputs/2a8de275806ea97f825cc2b2e119ab64e14ecad8b431daed0488700acffe7ed6.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-07-past-end-first",
+    "input_hash": "e6518648ba0d6c02c40fec1dbfad322175c0f491620d474e7e1e6a247d0ae1a9",
+    "output_refs": [
+      "outputs/9672e0fd5eac3592697d7733c5e2f6e9ada9d0e7cb544064deeea3a691807fb0.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-07-duplicate-id-first",
+    "input_hash": "52daeda73362ad0b82b350d5ceae21a6f675db0bb2a356c4ce9eaf54fee4d9dd",
+    "output_refs": [
+      "outputs/07182be72945834416a639feaae9106e60b9230633ba04dc834bc0edb0b58665.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "rules-dev-00-valid-replay",
+    "input_hash": "67bedaf4740e8e3a2c7f41eecf98a80b4a6b54c9aa62939c1b57311a6fb6e89e",
+    "output_refs": [
+      "outputs/5a49ae3e700b9aa81963caa42cadd6b147ba1e4e6c995edcbb9cb0c4d1a35be0.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-00-bom-crlf-replay",
+    "input_hash": "3c0af52a55eefa7b7756ed43bc054a6f22214392ec6267027e0ea55772c73a04",
+    "output_refs": [
+      "outputs/bb9a62bfddc1e081f93fe080bb0874c3baf174512226307787fe9b65189c8fa4.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-00-overlap-replay",
+    "input_hash": "5fc69458410db64e6ef486d8cebf434a36424f201c4b1e37db9f8e1ea94dd82b",
+    "output_refs": [
+      "outputs/4394f4f1ec6b03ec4624f7ae9e80ba101e1e7a3fbc84e40f1e404bdef3b3ab7e.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-00-backward-replay",
+    "input_hash": "ddca1bd0eadec7d2172fabbbd3160adbacbd399075ce6c97964c1068fd0725c7",
+    "output_refs": [
+      "outputs/b7703fe2e34b35a91bb6c43ad1c7c28786d8c570eae07a1fadaee5487c448d53.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-00-past-end-replay",
+    "input_hash": "56c8db3ec720425c8bb029e3d27fd98edf2957ea71d0387eda6d7a9c85809120",
+    "output_refs": [
+      "outputs/020cbdb8ae7ace5530e6e06c6e243ac5b6850705264881b84a70273173013123.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-00-duplicate-id-replay",
+    "input_hash": "5fe136c383aea792e23b038bf48abff911d812f5267fdd4e02120da3b5ff1365",
+    "output_refs": [
+      "outputs/93b61e579f335b315889b8d65285695e24bd1cf97ffc96355814e4eab90445a5.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-01-valid-replay",
+    "input_hash": "712a754d761172fed837b2148c09a49c952acd11ea77c692cc6bb3f215acf126",
+    "output_refs": [
+      "outputs/093321c6bb0a89f75a6687ce5b6d5d3bbe5433790aa087ffd58a65b9d70bd718.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-01-bom-crlf-replay",
+    "input_hash": "706c53324d43ce9759d29d29b644d95b3f4bdb2d259947f62aba21ed337dab35",
+    "output_refs": [
+      "outputs/907efc3b256df3229e3edfa9f330c4134c1a14d935183977c335c0188187b01b.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-01-overlap-replay",
+    "input_hash": "5b5df06eb17edc72f7480214913db325e124fc603163ccb80b98c1bde4c56732",
+    "output_refs": [
+      "outputs/46fe09be8a5f71f018d4bf1820150b87f4e537d13123a38db18da4a7131141ba.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-01-backward-replay",
+    "input_hash": "2de0d5b812607ace8d37bc46d50e5205f0d37c0fad96e7a2a553157473ab4123",
+    "output_refs": [
+      "outputs/938b7fa90b814dfe648625e32f3b41fe81b73509c633ec22bfcd03526a3eba60.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-01-past-end-replay",
+    "input_hash": "8b56119c04694c4d7efceeee5f4efaae8d5865528504275499552c3a62faefef",
+    "output_refs": [
+      "outputs/c1e50d022370f8c44c729e3c97b3ab789b527ecda36a5b6700c6dfe283bfd74e.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-01-duplicate-id-replay",
+    "input_hash": "dd71622e97c2d23a16a8da8f1716e23cd6fe053f0ef7658ab1403c67bb691e95",
+    "output_refs": [
+      "outputs/ac266da40a95ab08cf1fe5b41c0387ce52697b7d110d3346c57a93ca156260d5.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-02-valid-replay",
+    "input_hash": "2f4ef4110cbd04600f35c2c1808900df263bc90f12ee1627a6b1033bcbb591b0",
+    "output_refs": [
+      "outputs/cef94bf66186782673e7a16325dd64d5bf6ca480d79c13210257f6d1dc06df63.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-02-bom-crlf-replay",
+    "input_hash": "0d041a81c688393f6e19aa78bf99fc6a8489fd121efacbf8e91f9b8d6e355d7e",
+    "output_refs": [
+      "outputs/9a98734327dd3b94022b52d57fb62c4cadd9dc2c111343081eb3189d42b439b2.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-02-overlap-replay",
+    "input_hash": "33e353aac4edf53bce97c47f29a65f7623af2a4b59268fcf44bf3363290ca12e",
+    "output_refs": [
+      "outputs/a6334037999ba690c137ee6d8d4aaf4410bcce56ea5f7e88f82edbc57f525b49.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-02-backward-replay",
+    "input_hash": "fad0d077a341768bf03ff319cccd63813077ab38f37a4d426c3d1b3538a759e2",
+    "output_refs": [
+      "outputs/f1fb584b5648c55bdef160e8b8967c1a0c074c1e225d45362a03e65f73be2c56.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-02-past-end-replay",
+    "input_hash": "da6b2a3946ca1a4c3667842d2f74645edda2ad488637121f077780c17ca9e73b",
+    "output_refs": [
+      "outputs/814ff917b700440a0fa4904f3a7fa25fd36a0daacae89edb3c50562933cb99a9.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-02-duplicate-id-replay",
+    "input_hash": "70d9d816abe4b8b86b966acf590ec66782ca850618b54bf86d15882f30767eac",
+    "output_refs": [
+      "outputs/8b433401555683116ae2a2342b14c213eacd6610c99981122c049d63741662b8.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-03-valid-replay",
+    "input_hash": "bf4e20adaeea2c3f5d0156ca49b0a64c3427a8e6d9a902c6627a69016d1c5db8",
+    "output_refs": [
+      "outputs/477108a160419579732ab7d13413174c3f9f439d8877a469b9dd2c2f708d8ce8.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-03-bom-crlf-replay",
+    "input_hash": "3282bd42f7ed1120e4c0dc1f23b62f3a06461cb4ea2ff61d0c40dc674a885e59",
+    "output_refs": [
+      "outputs/90667f1dc096599bf4a061bfd7b88280c9301e27b76a445248f32efaaddff901.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-03-overlap-replay",
+    "input_hash": "8e38c19963763180530528fb01ad3fb94667ee6246c09be0cf9c442fc2eab1e5",
+    "output_refs": [
+      "outputs/856a15fbbb17d4cd308ea5826f303ea88c6eef9e151fd7503c3e7df7ca7b4d30.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-03-backward-replay",
+    "input_hash": "7e94576b733f8a7010aadd93cc25db95e1d248421b3b726a84026c7f16fc00bf",
+    "output_refs": [
+      "outputs/b254c69191b1f1d284b807abfaeb657214885255adc1155ed657068891c80b79.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-03-past-end-replay",
+    "input_hash": "76e8515bd5d8e5f1f089742564931f6402f5ee6458179498f740fb54813354fc",
+    "output_refs": [
+      "outputs/2b8842a32e95905f59b2e46cd7d4397c2854c929a564d4eb91cfb53e7706ff7f.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-03-duplicate-id-replay",
+    "input_hash": "b34f75a699eb8f022bf606002237c99fa1ce9c1b64389759caf9086f25be2d8a",
+    "output_refs": [
+      "outputs/7902c7bab0f6a08929a8414aeef234f696b241d413098e9da3a7432c717bd6f7.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-04-valid-replay",
+    "input_hash": "24043292814525aa541efeca051a0698c396a07afc2ad41fc4facecd0d1ef140",
+    "output_refs": [
+      "outputs/dec94ae15e00d67e39a1e4a7e991c58e773c80fc5b7ff702827a76603ecefafe.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-04-bom-crlf-replay",
+    "input_hash": "6a07380b4069a1c27c7d5e53c8541ca1e29faed22f1ce16de7b1dbe94ba0b44f",
+    "output_refs": [
+      "outputs/14b837c366d541e05a75305f2a60393791e595646c1a51294ae9abe033a80f3d.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-04-overlap-replay",
+    "input_hash": "3e52ee61207006014475293b567569e41b4838d809a5b7b2daaef047e3e675c5",
+    "output_refs": [
+      "outputs/1d6e6627a4ccb9abd08be06b26f06f55fb6684096ca329a65d47228658a4a502.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-04-backward-replay",
+    "input_hash": "e42781b3978ac5e396c02002ec8e3e9ddb7913e4d9220dfc78d7176f1d94bd99",
+    "output_refs": [
+      "outputs/cd3e9c2b992edf9cdedc6bb48936f6293167fa729a173672b36684893e3e9632.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-04-past-end-replay",
+    "input_hash": "b3817fee9341c55ca0a5c96e0d89e2a876795e229588e00d602b78ba08f0310a",
+    "output_refs": [
+      "outputs/cb0314266a6c6d81c5bf600f46170e6e8026a8bf9d0881f41b269c3f40ed6820.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-04-duplicate-id-replay",
+    "input_hash": "c77492ae217f546a927c9e1e4464d49cf3cfbcce7249365b9510235be168f604",
+    "output_refs": [
+      "outputs/ee259b9e69be493224f8d0e4600dcedec4cb320641af787c86d52bd79c528874.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-05-valid-replay",
+    "input_hash": "71a7a08f98ccfa2abfa7292829576dae7b7867b166fb688c7592cf91413260aa",
+    "output_refs": [
+      "outputs/05b95aebc0ba01a92ff15c87fb76d9a84e79eabc873d73c374fc2c40051ace22.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-05-bom-crlf-replay",
+    "input_hash": "e6efe549fcca808c3e37d088a930ec61090a0a3a0741f31f3890dacf2109daab",
+    "output_refs": [
+      "outputs/3ad827d0a5295cc7e8a10ded28be44331c92e5f8b3cbeb0b543841d6628909d5.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-05-overlap-replay",
+    "input_hash": "92772f4cfd59880ee97e441bf1d0274a5fb664243e5013f2bfd290fc4a5ae2be",
+    "output_refs": [
+      "outputs/5dcc49e64572143ce084634ac0ed673f6df6382eebfd8248dc19f2cf598caff8.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-05-backward-replay",
+    "input_hash": "a989698b02996affeb6e12defe49c1f5493069945910f0dd464965a1c7df6290",
+    "output_refs": [
+      "outputs/ed7de67f0ac96bd23ee2ce27f31a167e848978a1d6dc6d6c799a83e39e3967db.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-05-past-end-replay",
+    "input_hash": "e6521cc80d30696a68c6f37d23ef0634a04ee2b9d7228bb2bca100f29f4516ca",
+    "output_refs": [
+      "outputs/ee24e06afbc8db079665d68c161c36dba294da3f359331b38e7c98b95658c3c5.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-05-duplicate-id-replay",
+    "input_hash": "f71b6383fa7fdc3614285f65d23d45be309ecd71633a74616e965891f5324aed",
+    "output_refs": [
+      "outputs/050fff853d24d603bcdc31263f6156151c8bf7ddd37c1bd53c6ab3d9be529b9c.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-06-valid-replay",
+    "input_hash": "0962778c7dd2f5be379520b763306611531cf23cea7340e277f1e16e83a5c60e",
+    "output_refs": [
+      "outputs/0e9cb56245e206724eaa58def66d08c0b9e098c639cd93cb7ec9756e8056902f.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-06-bom-crlf-replay",
+    "input_hash": "5d89177119a19c669358bbc26cd123df6e17519300bf9423d546456937ea2693",
+    "output_refs": [
+      "outputs/c99758e9d265ac90c4e1ea0fe0371ac3bf76b8fa452c7b2c9ffa8163e83f8e12.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-06-overlap-replay",
+    "input_hash": "e23cb9691aa574638d05b803824dc2c7bcaade944c7ae0009007f7051578fa5c",
+    "output_refs": [
+      "outputs/196fbd125a1da40f83ff33742e08c67c2e24bfa6ae11055718318f5a6b47762c.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-06-backward-replay",
+    "input_hash": "ee88fb64190f564e7ec26961b6b0c2a390271dd029047aef86135508a427f664",
+    "output_refs": [
+      "outputs/119f7a6d236e47b8b8634d3ee297870c3acffed37c0dadc60c2ec91f9cc7afb3.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-06-past-end-replay",
+    "input_hash": "4244ad568c49ebc387747e9e67425d85aa214c77d62d82aa37655b418ca05d8a",
+    "output_refs": [
+      "outputs/46d966a844f85cce7533815c955f7f5e6cdec4d27341f05430782b00c65a7a14.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-06-duplicate-id-replay",
+    "input_hash": "d706639f231fcbc388dc5d8bfeed93b54931c23c2a2bf18d992f2eeeda636e32",
+    "output_refs": [
+      "outputs/841da8ce2d657d9fe1a331aac1ca46b2e8974f476b443f1a7424b44c82aa795a.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-07-valid-replay",
+    "input_hash": "e2c89be25a64df98666bc36a7b72eca4489d5fbcf153183953c87d7566267d8b",
+    "output_refs": [
+      "outputs/b3113cf9beef0995e52539d83fb0336348b5a4a1d9de0794168a64b0dc366760.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-07-bom-crlf-replay",
+    "input_hash": "6816b69ef011b3322632291f3c5d757344660047592bc601baf713082bc43f64",
+    "output_refs": [
+      "outputs/fca9cd6d6ade0bd8dfdc5d4e1e0486b2612d04c70408178370361a878250073a.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-07-overlap-replay",
+    "input_hash": "3f284f7d3f5adbeab5378aaf3a9fcf5f61d8c0f43c31823d84399107141caf6f",
+    "output_refs": [
+      "outputs/d914426dc0369b91a626fd1b8361dba0d5387929505fa2019ef9b9bdaf9da191.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-07-backward-replay",
+    "input_hash": "91f2389f9a79a3852315cd1eba097c512e59880578e3c3504fba988ccc366162",
+    "output_refs": [
+      "outputs/1fcfbaadd9f4a116c71ee6cc10a0e24c48847e50bc1b85f77c14b34db5f662c0.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-07-past-end-replay",
+    "input_hash": "e6518648ba0d6c02c40fec1dbfad322175c0f491620d474e7e1e6a247d0ae1a9",
+    "output_refs": [
+      "outputs/2c079afd2d678e5019dce36940e7f0c3e6e6426b6131b95bbb868f8fe330a4e1.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "rules-dev-07-duplicate-id-replay",
+    "input_hash": "52daeda73362ad0b82b350d5ceae21a6f675db0bb2a356c4ce9eaf54fee4d9dd",
+    "output_refs": [
+      "outputs/e2f2eaad6e7a500f892018e62ee23faf3a164ae823fc6cadd8cb91ffa851be7d.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "0510941c265d3954b324258392a656719650563143c2a21521a99f97e8f481a8"
+  },
+  {
+    "episode_ref": "probe-dev-00-valid-replay",
+    "input_hash": "67bedaf4740e8e3a2c7f41eecf98a80b4a6b54c9aa62939c1b57311a6fb6e89e",
+    "output_refs": [
+      "outputs/8caef3250832d97e41891783bf17ab5eec9bfde08519f85d0a71d4c3b7c45218.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5c2c675d5fec2ec759614d5eb9c91d6257b0f2b48356752a17ef37e3f5514ced"
+  },
+  {
+    "episode_ref": "probe-dev-00-bom-crlf-replay",
+    "input_hash": "3c0af52a55eefa7b7756ed43bc054a6f22214392ec6267027e0ea55772c73a04",
+    "output_refs": [
+      "outputs/b303fb68b65564f59b7b8fb3b02e9780612923a638499ea755d3b8b373542aed.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5c2c675d5fec2ec759614d5eb9c91d6257b0f2b48356752a17ef37e3f5514ced"
+  },
+  {
+    "episode_ref": "probe-dev-01-valid-replay",
+    "input_hash": "712a754d761172fed837b2148c09a49c952acd11ea77c692cc6bb3f215acf126",
+    "output_refs": [
+      "outputs/6c786e3759dda4daf6a07050d05b2b2e044d91f57e2225597897c8dceeb216a0.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5c2c675d5fec2ec759614d5eb9c91d6257b0f2b48356752a17ef37e3f5514ced"
+  },
+  {
+    "episode_ref": "probe-dev-01-bom-crlf-replay",
+    "input_hash": "706c53324d43ce9759d29d29b644d95b3f4bdb2d259947f62aba21ed337dab35",
+    "output_refs": [
+      "outputs/0c35671d73dcd4426585ffa2b5c8d5b79ae3b70909aaf7778e63780a6a3c2b00.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5c2c675d5fec2ec759614d5eb9c91d6257b0f2b48356752a17ef37e3f5514ced"
+  },
+  {
+    "episode_ref": "probe-dev-02-valid-replay",
+    "input_hash": "2f4ef4110cbd04600f35c2c1808900df263bc90f12ee1627a6b1033bcbb591b0",
+    "output_refs": [
+      "outputs/3c37e52cb73eaa6c05232f1e91f47ef889427cf69c57745082716c087295be5f.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5c2c675d5fec2ec759614d5eb9c91d6257b0f2b48356752a17ef37e3f5514ced"
+  },
+  {
+    "episode_ref": "probe-dev-02-bom-crlf-replay",
+    "input_hash": "0d041a81c688393f6e19aa78bf99fc6a8489fd121efacbf8e91f9b8d6e355d7e",
+    "output_refs": [
+      "outputs/84d23d1a99d407505cee3f3b655ad6a26dbcc7117dbc024a0fa949c803e3774e.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5c2c675d5fec2ec759614d5eb9c91d6257b0f2b48356752a17ef37e3f5514ced"
+  },
+  {
+    "episode_ref": "probe-dev-03-valid-replay",
+    "input_hash": "bf4e20adaeea2c3f5d0156ca49b0a64c3427a8e6d9a902c6627a69016d1c5db8",
+    "output_refs": [
+      "outputs/376e18468dda0946f6d68e73553ec11afcff8ec52405a88a900e49aeb4042269.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5c2c675d5fec2ec759614d5eb9c91d6257b0f2b48356752a17ef37e3f5514ced"
+  },
+  {
+    "episode_ref": "probe-dev-03-bom-crlf-replay",
+    "input_hash": "3282bd42f7ed1120e4c0dc1f23b62f3a06461cb4ea2ff61d0c40dc674a885e59",
+    "output_refs": [
+      "outputs/b6b6a5e61a1528b293b71d2bcd13e60c2a6bb71d7f65f9d392c96ab6a01ad8e1.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5c2c675d5fec2ec759614d5eb9c91d6257b0f2b48356752a17ef37e3f5514ced"
+  },
+  {
+    "episode_ref": "probe-dev-04-valid-replay",
+    "input_hash": "24043292814525aa541efeca051a0698c396a07afc2ad41fc4facecd0d1ef140",
+    "output_refs": [
+      "outputs/680d36d6c00de3ed8115ba7ce82793a992a33ef5b7424f5fb0dc4e70f6cc4167.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5c2c675d5fec2ec759614d5eb9c91d6257b0f2b48356752a17ef37e3f5514ced"
+  },
+  {
+    "episode_ref": "probe-dev-04-bom-crlf-replay",
+    "input_hash": "6a07380b4069a1c27c7d5e53c8541ca1e29faed22f1ce16de7b1dbe94ba0b44f",
+    "output_refs": [
+      "outputs/39aba98427ab2c079f7103856f92bae397df110962e60493be6290cbad7821c9.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5c2c675d5fec2ec759614d5eb9c91d6257b0f2b48356752a17ef37e3f5514ced"
+  },
+  {
+    "episode_ref": "probe-dev-05-valid-replay",
+    "input_hash": "71a7a08f98ccfa2abfa7292829576dae7b7867b166fb688c7592cf91413260aa",
+    "output_refs": [
+      "outputs/a1fa829d0483dee0988a7621c1f6477053f8f6aaa31c403e4a6dbb178f5879c8.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5c2c675d5fec2ec759614d5eb9c91d6257b0f2b48356752a17ef37e3f5514ced"
+  },
+  {
+    "episode_ref": "probe-dev-05-bom-crlf-replay",
+    "input_hash": "e6efe549fcca808c3e37d088a930ec61090a0a3a0741f31f3890dacf2109daab",
+    "output_refs": [
+      "outputs/cf991f736a558785ab7b315ebd8780ddb89826c4c753660b983e8ce91190cdbd.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5c2c675d5fec2ec759614d5eb9c91d6257b0f2b48356752a17ef37e3f5514ced"
+  },
+  {
+    "episode_ref": "probe-dev-06-valid-replay",
+    "input_hash": "0962778c7dd2f5be379520b763306611531cf23cea7340e277f1e16e83a5c60e",
+    "output_refs": [
+      "outputs/a3ab224769efee014ce51956edff83e4c8efd438f4db27a4b0df2d8bf8dded71.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5c2c675d5fec2ec759614d5eb9c91d6257b0f2b48356752a17ef37e3f5514ced"
+  },
+  {
+    "episode_ref": "probe-dev-06-bom-crlf-replay",
+    "input_hash": "5d89177119a19c669358bbc26cd123df6e17519300bf9423d546456937ea2693",
+    "output_refs": [
+      "outputs/037142393e54fd9460997b6300e6406e848d44784ea5c4e0be95a6e0bb5e836b.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5c2c675d5fec2ec759614d5eb9c91d6257b0f2b48356752a17ef37e3f5514ced"
+  },
+  {
+    "episode_ref": "probe-dev-07-valid-replay",
+    "input_hash": "e2c89be25a64df98666bc36a7b72eca4489d5fbcf153183953c87d7566267d8b",
+    "output_refs": [
+      "outputs/efd6f975039c8791554b9b296e82c70e326801f335bf62d327c367613903a686.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5c2c675d5fec2ec759614d5eb9c91d6257b0f2b48356752a17ef37e3f5514ced"
+  },
+  {
+    "episode_ref": "probe-dev-07-bom-crlf-replay",
+    "input_hash": "6816b69ef011b3322632291f3c5d757344660047592bc601baf713082bc43f64",
+    "output_refs": [
+      "outputs/bce21a4a5218f258388a4992ca36e68c32c068fabd612b0e05c4c298648b7250.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5c2c675d5fec2ec759614d5eb9c91d6257b0f2b48356752a17ef37e3f5514ced"
+  },
+  {
+    "episode_ref": "combined-dev-00-valid-replay",
+    "input_hash": "67bedaf4740e8e3a2c7f41eecf98a80b4a6b54c9aa62939c1b57311a6fb6e89e",
+    "output_refs": [
+      "outputs/85ff8a4d9ba98c5fde70aef536ff7d8c0ea192efe431e085662c10614df545a8.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-00-bom-crlf-replay",
+    "input_hash": "3c0af52a55eefa7b7756ed43bc054a6f22214392ec6267027e0ea55772c73a04",
+    "output_refs": [
+      "outputs/5dd5f2c3b9b28ad4166e0c55930a1b0d6ce3bf99ef0002af17aa89ef2e9c6698.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-00-overlap-replay",
+    "input_hash": "5fc69458410db64e6ef486d8cebf434a36424f201c4b1e37db9f8e1ea94dd82b",
+    "output_refs": [
+      "outputs/63b392909ae2060c5b8640e0fc8ba7cb4e9d92367f536e49256c766f0a4ddc83.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-00-backward-replay",
+    "input_hash": "ddca1bd0eadec7d2172fabbbd3160adbacbd399075ce6c97964c1068fd0725c7",
+    "output_refs": [
+      "outputs/a0b481bc569079cf1fcf8fa8c79521160d0284ea848883aca1a7f0f13fbd6096.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-00-past-end-replay",
+    "input_hash": "56c8db3ec720425c8bb029e3d27fd98edf2957ea71d0387eda6d7a9c85809120",
+    "output_refs": [
+      "outputs/3f8a6fa44ff37bfa29a561356bc9cdcbd6b31eb98a3f93445f936b02e51af5b3.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-00-duplicate-id-replay",
+    "input_hash": "5fe136c383aea792e23b038bf48abff911d812f5267fdd4e02120da3b5ff1365",
+    "output_refs": [
+      "outputs/ef8ba99deb2add8c3cd8b51afd27dae9df84384ee84489b634a60de8d1cf19c9.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-01-valid-replay",
+    "input_hash": "712a754d761172fed837b2148c09a49c952acd11ea77c692cc6bb3f215acf126",
+    "output_refs": [
+      "outputs/c8f324342e2cf3ab2356f3efe97ecca74b34f7901c4fc28cf474c42e03a5a437.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-01-bom-crlf-replay",
+    "input_hash": "706c53324d43ce9759d29d29b644d95b3f4bdb2d259947f62aba21ed337dab35",
+    "output_refs": [
+      "outputs/7a62b26b23cff9180e0e104d292cfd94ae0b915b2304c425aec5069bd811e922.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-01-overlap-replay",
+    "input_hash": "5b5df06eb17edc72f7480214913db325e124fc603163ccb80b98c1bde4c56732",
+    "output_refs": [
+      "outputs/2736d5ef5d3f20556e639fb2e572f4caea808557d9c317a5bbeeb5e91d7ce5f9.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-01-backward-replay",
+    "input_hash": "2de0d5b812607ace8d37bc46d50e5205f0d37c0fad96e7a2a553157473ab4123",
+    "output_refs": [
+      "outputs/e27ffdfd5042a911346afd2771d0ab4d4f861b4ee713d6ecf88af639d1f20b7b.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-01-past-end-replay",
+    "input_hash": "8b56119c04694c4d7efceeee5f4efaae8d5865528504275499552c3a62faefef",
+    "output_refs": [
+      "outputs/d331a03d36736c7f1668ef538425dae4a0822129ac3b50daf462e11cbad932db.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-01-duplicate-id-replay",
+    "input_hash": "dd71622e97c2d23a16a8da8f1716e23cd6fe053f0ef7658ab1403c67bb691e95",
+    "output_refs": [
+      "outputs/2e7b45940a52178f43f8a4a827e2ef35c3c33d39700e68d0d75c1d8e0ba4236b.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-02-valid-replay",
+    "input_hash": "2f4ef4110cbd04600f35c2c1808900df263bc90f12ee1627a6b1033bcbb591b0",
+    "output_refs": [
+      "outputs/2389079fca5d5c2f6877af9a3feb397816614ae2e247ba9573432aa6b4462300.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-02-bom-crlf-replay",
+    "input_hash": "0d041a81c688393f6e19aa78bf99fc6a8489fd121efacbf8e91f9b8d6e355d7e",
+    "output_refs": [
+      "outputs/f19d519b45c7dfaae61446e8b4d4131087d0157c95b7107c96539e1382e3ef5d.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-02-overlap-replay",
+    "input_hash": "33e353aac4edf53bce97c47f29a65f7623af2a4b59268fcf44bf3363290ca12e",
+    "output_refs": [
+      "outputs/616660d63c5f8ad7a62731fc8582b3e67bf789954df61d9d5f2751cdb78a10cb.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-02-backward-replay",
+    "input_hash": "fad0d077a341768bf03ff319cccd63813077ab38f37a4d426c3d1b3538a759e2",
+    "output_refs": [
+      "outputs/dd5dcfb1c99eb98f0d56a4269b6b0caa088fe0e5b1dc4ee5d1c00b77f0c2e006.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-02-past-end-replay",
+    "input_hash": "da6b2a3946ca1a4c3667842d2f74645edda2ad488637121f077780c17ca9e73b",
+    "output_refs": [
+      "outputs/bbd916f588a2c6e1408852abcf750bdf21d59d487aabc1cc80037a248a0f0144.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-02-duplicate-id-replay",
+    "input_hash": "70d9d816abe4b8b86b966acf590ec66782ca850618b54bf86d15882f30767eac",
+    "output_refs": [
+      "outputs/eeff423a5b86ba4db2757fa17218496a062fc8732b473ad0a53519f1787036b2.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-03-valid-replay",
+    "input_hash": "bf4e20adaeea2c3f5d0156ca49b0a64c3427a8e6d9a902c6627a69016d1c5db8",
+    "output_refs": [
+      "outputs/97808e3ff6d8fcedfa75b1a16fe0ab29951f1dd1fda1abf6520baf59450adc93.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-03-bom-crlf-replay",
+    "input_hash": "3282bd42f7ed1120e4c0dc1f23b62f3a06461cb4ea2ff61d0c40dc674a885e59",
+    "output_refs": [
+      "outputs/12b9ffba0a899a1ac9478af470f1e71f6ea9fb816a5f9a2f55d0f6fc3135e775.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-03-overlap-replay",
+    "input_hash": "8e38c19963763180530528fb01ad3fb94667ee6246c09be0cf9c442fc2eab1e5",
+    "output_refs": [
+      "outputs/d569d653cedaa45528063eda5b8013a67e241aa7317dbeeae6f9c69bc647d7ac.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-03-backward-replay",
+    "input_hash": "7e94576b733f8a7010aadd93cc25db95e1d248421b3b726a84026c7f16fc00bf",
+    "output_refs": [
+      "outputs/78baa93ac7e38a5825a1b8511c1e93a8294afee542b9c7308200cdf3a840f23f.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-03-past-end-replay",
+    "input_hash": "76e8515bd5d8e5f1f089742564931f6402f5ee6458179498f740fb54813354fc",
+    "output_refs": [
+      "outputs/a93d090a10d36425c83999e628c9609b6151c002340999bbefc4190137b00b88.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-03-duplicate-id-replay",
+    "input_hash": "b34f75a699eb8f022bf606002237c99fa1ce9c1b64389759caf9086f25be2d8a",
+    "output_refs": [
+      "outputs/e101461fe1d3603ac2abb9229b74c168119939fdf019afbb1d458750db1cb7c2.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-04-valid-replay",
+    "input_hash": "24043292814525aa541efeca051a0698c396a07afc2ad41fc4facecd0d1ef140",
+    "output_refs": [
+      "outputs/4ee9ba28e1c54743bc4b8ed414d0a9d256d252d8672e00d7d7d7d085e086c5ec.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-04-bom-crlf-replay",
+    "input_hash": "6a07380b4069a1c27c7d5e53c8541ca1e29faed22f1ce16de7b1dbe94ba0b44f",
+    "output_refs": [
+      "outputs/16b00b7f278e96bcf2d10c1748ff171d4c743ed78b9be5fd978a3358bb83401a.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-04-overlap-replay",
+    "input_hash": "3e52ee61207006014475293b567569e41b4838d809a5b7b2daaef047e3e675c5",
+    "output_refs": [
+      "outputs/b0035de18964fbe7605aa41031e2bc1df30edf3ea45e864975d837786cf71e44.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-04-backward-replay",
+    "input_hash": "e42781b3978ac5e396c02002ec8e3e9ddb7913e4d9220dfc78d7176f1d94bd99",
+    "output_refs": [
+      "outputs/0aa44dc135ab7e99eaedf436fc8ccdab07dc8a379eed9890af04495a5e108474.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-04-past-end-replay",
+    "input_hash": "b3817fee9341c55ca0a5c96e0d89e2a876795e229588e00d602b78ba08f0310a",
+    "output_refs": [
+      "outputs/bb155f4715a4cf0b1a91e66f079533e4db0690dba58f8694740e8f4cebe90d17.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-04-duplicate-id-replay",
+    "input_hash": "c77492ae217f546a927c9e1e4464d49cf3cfbcce7249365b9510235be168f604",
+    "output_refs": [
+      "outputs/af15a6d396a6f6e97c1a7b11b18b32b6603172cd743df67a684b5603ae8f2f13.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-05-valid-replay",
+    "input_hash": "71a7a08f98ccfa2abfa7292829576dae7b7867b166fb688c7592cf91413260aa",
+    "output_refs": [
+      "outputs/75a7b487e15e90833bb1a177fcf04a38b6acfcf2d4a49c5afb3b292a4d988003.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-05-bom-crlf-replay",
+    "input_hash": "e6efe549fcca808c3e37d088a930ec61090a0a3a0741f31f3890dacf2109daab",
+    "output_refs": [
+      "outputs/133904e95f24db073c95801c4c96f85fc8492bc980e73cb1a33d3c779463557a.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-05-overlap-replay",
+    "input_hash": "92772f4cfd59880ee97e441bf1d0274a5fb664243e5013f2bfd290fc4a5ae2be",
+    "output_refs": [
+      "outputs/e016b0fd49a568879825620ae9ccb4d3f17439f526043b9ebe07b3ca6d2f9db9.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-05-backward-replay",
+    "input_hash": "a989698b02996affeb6e12defe49c1f5493069945910f0dd464965a1c7df6290",
+    "output_refs": [
+      "outputs/7a2f7536e3ffc69d5c450a5d41d79992b6622b87099bc7a9745a8fd2ded501b3.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-05-past-end-replay",
+    "input_hash": "e6521cc80d30696a68c6f37d23ef0634a04ee2b9d7228bb2bca100f29f4516ca",
+    "output_refs": [
+      "outputs/92873b4c4ebd258b8502ca9e4f40a088664e68ec1e4fb88fd616abbed433b645.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-05-duplicate-id-replay",
+    "input_hash": "f71b6383fa7fdc3614285f65d23d45be309ecd71633a74616e965891f5324aed",
+    "output_refs": [
+      "outputs/5e72b96a20b0ec4d95369265f1548019ec8d282414d77c6faba513ca25592ce2.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-06-valid-replay",
+    "input_hash": "0962778c7dd2f5be379520b763306611531cf23cea7340e277f1e16e83a5c60e",
+    "output_refs": [
+      "outputs/5767324b13fcadb36da934eb452f25c6de66e9307c22199ca33ec5a7678e3594.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-06-bom-crlf-replay",
+    "input_hash": "5d89177119a19c669358bbc26cd123df6e17519300bf9423d546456937ea2693",
+    "output_refs": [
+      "outputs/0e76a1b6e0e7089abb1cb99ef7c96dd4605dd55d55657e6d5e5023046a3f896f.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-06-overlap-replay",
+    "input_hash": "e23cb9691aa574638d05b803824dc2c7bcaade944c7ae0009007f7051578fa5c",
+    "output_refs": [
+      "outputs/59e1114d7684a3032db844df50ef88a6ad9bacb94dce7646dd8bc1f4b6fc00d6.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-06-backward-replay",
+    "input_hash": "ee88fb64190f564e7ec26961b6b0c2a390271dd029047aef86135508a427f664",
+    "output_refs": [
+      "outputs/79145543ee230ae09b5a2b0278ab8370da1f70a3386cba5acf53f65e919a80e9.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-06-past-end-replay",
+    "input_hash": "4244ad568c49ebc387747e9e67425d85aa214c77d62d82aa37655b418ca05d8a",
+    "output_refs": [
+      "outputs/b18c29e94cafcbbd9fd4d9fdd3c07110889b108d82b52639f3bb6831c0124b7d.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-06-duplicate-id-replay",
+    "input_hash": "d706639f231fcbc388dc5d8bfeed93b54931c23c2a2bf18d992f2eeeda636e32",
+    "output_refs": [
+      "outputs/2c44c4871e9ad6aa44bae6fd7fbdb324d8575829f882d2334773a60e94481c73.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-07-valid-replay",
+    "input_hash": "e2c89be25a64df98666bc36a7b72eca4489d5fbcf153183953c87d7566267d8b",
+    "output_refs": [
+      "outputs/497c818baa462cfc5bcfd944cebcf34f01895dd9113d1f7ec600b74e695383c6.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-07-bom-crlf-replay",
+    "input_hash": "6816b69ef011b3322632291f3c5d757344660047592bc601baf713082bc43f64",
+    "output_refs": [
+      "outputs/ab1bfce04cda00c264ca81c8b5df7ab8f2856322e155a74b7dc01e28af5d182d.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-07-overlap-replay",
+    "input_hash": "3f284f7d3f5adbeab5378aaf3a9fcf5f61d8c0f43c31823d84399107141caf6f",
+    "output_refs": [
+      "outputs/e1b52eae34423dc8a14fabdb59d104d0dd6b1a1909228ac06cdf10ae237159e1.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-07-backward-replay",
+    "input_hash": "91f2389f9a79a3852315cd1eba097c512e59880578e3c3504fba988ccc366162",
+    "output_refs": [
+      "outputs/4cbb60c6e084eb82bf54f811092a4f86dfc4e8762d11c64d1581b1078e61800a.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-07-past-end-replay",
+    "input_hash": "e6518648ba0d6c02c40fec1dbfad322175c0f491620d474e7e1e6a247d0ae1a9",
+    "output_refs": [
+      "outputs/e32568bebcd54a57f1fe76c2bc96bcd94380d9b2d386432b4d76ebd4dbee3cc2.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "combined-dev-07-duplicate-id-replay",
+    "input_hash": "52daeda73362ad0b82b350d5ceae21a6f675db0bb2a356c4ce9eaf54fee4d9dd",
+    "output_refs": [
+      "outputs/4edf854acb96d72cf0eb06cc790a2d4af100eee15e1f34934887ad04c73bf585.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "2f96338e01eea7051a6095aa37c4b952968eb640ab1faa385a554bb9edf78f3b"
+  },
+  {
+    "episode_ref": "probe-guard-dev-00-valid-replay",
+    "input_hash": "67bedaf4740e8e3a2c7f41eecf98a80b4a6b54c9aa62939c1b57311a6fb6e89e",
+    "output_refs": [
+      "outputs/804729e837fb3ddde760e2d4ddd172619470181cff53860cab57cbb353288111.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-00-bom-crlf-replay",
+    "input_hash": "3c0af52a55eefa7b7756ed43bc054a6f22214392ec6267027e0ea55772c73a04",
+    "output_refs": [
+      "outputs/5e8be56dc20d3c044ca1daa157877c19ef143746e541365879676d6926971604.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-00-overlap-replay",
+    "input_hash": "5fc69458410db64e6ef486d8cebf434a36424f201c4b1e37db9f8e1ea94dd82b",
+    "output_refs": [
+      "outputs/1c7aa491cba2ec460af6289225d3b00b82b4ba597c5b379e574fc59d361a60ec.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-00-backward-replay",
+    "input_hash": "ddca1bd0eadec7d2172fabbbd3160adbacbd399075ce6c97964c1068fd0725c7",
+    "output_refs": [
+      "outputs/cdaa3fe1b0d277f9f511c6478b317a3bb0e7db2fbd035b3a4934c705bb5b03a1.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-00-past-end-replay",
+    "input_hash": "56c8db3ec720425c8bb029e3d27fd98edf2957ea71d0387eda6d7a9c85809120",
+    "output_refs": [
+      "outputs/7fa82b65a959211161910463432b08d3bebc2aef939171841ff7da868896e6af.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-00-duplicate-id-replay",
+    "input_hash": "5fe136c383aea792e23b038bf48abff911d812f5267fdd4e02120da3b5ff1365",
+    "output_refs": [
+      "outputs/9212a00d4e203af1107f6b2a8e59fb925c3d32186db1f2ba16e22bbfb2c9ae78.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-01-valid-replay",
+    "input_hash": "712a754d761172fed837b2148c09a49c952acd11ea77c692cc6bb3f215acf126",
+    "output_refs": [
+      "outputs/ba936744ba6bde59b58a33e08eebbf3167063561b383ea3efe8f9a2192d24b2c.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-01-bom-crlf-replay",
+    "input_hash": "706c53324d43ce9759d29d29b644d95b3f4bdb2d259947f62aba21ed337dab35",
+    "output_refs": [
+      "outputs/d9f0f8e0a11b4fa702c3f65a51c4fcb5878852f51f396ff5304deb3b54822bac.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-01-overlap-replay",
+    "input_hash": "5b5df06eb17edc72f7480214913db325e124fc603163ccb80b98c1bde4c56732",
+    "output_refs": [
+      "outputs/987e915f138fd41774c21ee7859a3590900dc847d7ee1c387b12736c4f19a782.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-01-backward-replay",
+    "input_hash": "2de0d5b812607ace8d37bc46d50e5205f0d37c0fad96e7a2a553157473ab4123",
+    "output_refs": [
+      "outputs/565d356ea33ea13e8a7b62550ef51b5e78a6259825b5dea62b147823a0ecc5ec.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-01-past-end-replay",
+    "input_hash": "8b56119c04694c4d7efceeee5f4efaae8d5865528504275499552c3a62faefef",
+    "output_refs": [
+      "outputs/600732b739a341d7f9e046661fa5a7c454fec1e044b6ef445f49552be265a1b6.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-01-duplicate-id-replay",
+    "input_hash": "dd71622e97c2d23a16a8da8f1716e23cd6fe053f0ef7658ab1403c67bb691e95",
+    "output_refs": [
+      "outputs/44dde2ac06f53802893a0315546bebf1575a276e5e795e876135b3e07aed492a.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-02-valid-replay",
+    "input_hash": "2f4ef4110cbd04600f35c2c1808900df263bc90f12ee1627a6b1033bcbb591b0",
+    "output_refs": [
+      "outputs/8f213d2bedc28ec2823be5796bd3e55461a0b7590a3a178ffc6f261ecadf2483.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-02-bom-crlf-replay",
+    "input_hash": "0d041a81c688393f6e19aa78bf99fc6a8489fd121efacbf8e91f9b8d6e355d7e",
+    "output_refs": [
+      "outputs/9e4d7c98f4a19c8b9d9eb8c5d085b6e1ba723191f341b347bae31e8ecfb9a01e.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-02-overlap-replay",
+    "input_hash": "33e353aac4edf53bce97c47f29a65f7623af2a4b59268fcf44bf3363290ca12e",
+    "output_refs": [
+      "outputs/2bc731ceb27dd23e37ec3bbc646431296a83b5dbf5b460877b51e0e3db1ad868.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-02-backward-replay",
+    "input_hash": "fad0d077a341768bf03ff319cccd63813077ab38f37a4d426c3d1b3538a759e2",
+    "output_refs": [
+      "outputs/4764f1ee6f635f0fb44afbf02cd11927f147510895a45036052082ec404e329e.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-02-past-end-replay",
+    "input_hash": "da6b2a3946ca1a4c3667842d2f74645edda2ad488637121f077780c17ca9e73b",
+    "output_refs": [
+      "outputs/8e4f81c7d0fab89c3404aead778a608ea15db6febf84378c9e4e7a8942ea2c3c.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-02-duplicate-id-replay",
+    "input_hash": "70d9d816abe4b8b86b966acf590ec66782ca850618b54bf86d15882f30767eac",
+    "output_refs": [
+      "outputs/65d1f58795dcfce8c33cf54f856ffe28074f09e1c57552b8f5be5b8a43e8b35f.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-03-valid-replay",
+    "input_hash": "bf4e20adaeea2c3f5d0156ca49b0a64c3427a8e6d9a902c6627a69016d1c5db8",
+    "output_refs": [
+      "outputs/af9c90a9ce2ba282a4aa6c9e640c0493dccb351ac94a05daaeeb08f70d93122e.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-03-bom-crlf-replay",
+    "input_hash": "3282bd42f7ed1120e4c0dc1f23b62f3a06461cb4ea2ff61d0c40dc674a885e59",
+    "output_refs": [
+      "outputs/dc0e4a280fbcad0ff060cce1534c8f74a2fee32adb352e8a4935ecf644e9a301.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-03-overlap-replay",
+    "input_hash": "8e38c19963763180530528fb01ad3fb94667ee6246c09be0cf9c442fc2eab1e5",
+    "output_refs": [
+      "outputs/b7342222bd436b81cf27b6e827a031f05f714792f2096252628ad85acd7626ad.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-03-backward-replay",
+    "input_hash": "7e94576b733f8a7010aadd93cc25db95e1d248421b3b726a84026c7f16fc00bf",
+    "output_refs": [
+      "outputs/e9965fda2dbcf46d196c350f6d6806699259b3e3f09572a836163b9246e64f5d.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-03-past-end-replay",
+    "input_hash": "76e8515bd5d8e5f1f089742564931f6402f5ee6458179498f740fb54813354fc",
+    "output_refs": [
+      "outputs/97870ad8b04777365c0c9a69734e106c3fa136b68dec8d6a98420ea5055988b6.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-03-duplicate-id-replay",
+    "input_hash": "b34f75a699eb8f022bf606002237c99fa1ce9c1b64389759caf9086f25be2d8a",
+    "output_refs": [
+      "outputs/1f9ca6ac7947bc3eba36643415f97b9183f2db6721131c105eeab4ddfad0acac.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-04-valid-replay",
+    "input_hash": "24043292814525aa541efeca051a0698c396a07afc2ad41fc4facecd0d1ef140",
+    "output_refs": [
+      "outputs/74df20eb0cbf9d23406dc16ffe17278603e3bbf85b6ec0cb37c26a892b0ba7fa.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-04-bom-crlf-replay",
+    "input_hash": "6a07380b4069a1c27c7d5e53c8541ca1e29faed22f1ce16de7b1dbe94ba0b44f",
+    "output_refs": [
+      "outputs/fded2da0571ddb88dc59bd058288dc84a5c092b470fb06df8f8dbce4e46fa5d0.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-04-overlap-replay",
+    "input_hash": "3e52ee61207006014475293b567569e41b4838d809a5b7b2daaef047e3e675c5",
+    "output_refs": [
+      "outputs/ef0f1df72d732f4c0e9bcfcbb1f3faa68880d23f37afe43e5d47e48e9b121bb3.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-04-backward-replay",
+    "input_hash": "e42781b3978ac5e396c02002ec8e3e9ddb7913e4d9220dfc78d7176f1d94bd99",
+    "output_refs": [
+      "outputs/470c44543a6cf2a8b6e118101fe35aeda9656e0124ac6c7f31e14f9bb78c2847.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-04-past-end-replay",
+    "input_hash": "b3817fee9341c55ca0a5c96e0d89e2a876795e229588e00d602b78ba08f0310a",
+    "output_refs": [
+      "outputs/1bd98b06e67e080201c441134bbe45b379f15b51b47f940b21dd3ee926b4d4c3.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-04-duplicate-id-replay",
+    "input_hash": "c77492ae217f546a927c9e1e4464d49cf3cfbcce7249365b9510235be168f604",
+    "output_refs": [
+      "outputs/fa789b8440c7e67bb8157c35823b5a9a57c7c03659c5120013a698dbbc0bfc3d.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-05-valid-replay",
+    "input_hash": "71a7a08f98ccfa2abfa7292829576dae7b7867b166fb688c7592cf91413260aa",
+    "output_refs": [
+      "outputs/ccbf057bb984035d64feea1ab3ac4aaccbc026477a4638a3ee6b35f09ae4fbc3.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-05-bom-crlf-replay",
+    "input_hash": "e6efe549fcca808c3e37d088a930ec61090a0a3a0741f31f3890dacf2109daab",
+    "output_refs": [
+      "outputs/c6d87f3b28a736c18f7d7a4e7f6eb1bf330b45ed08809f7ac00fabe21f78b7cb.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-05-overlap-replay",
+    "input_hash": "92772f4cfd59880ee97e441bf1d0274a5fb664243e5013f2bfd290fc4a5ae2be",
+    "output_refs": [
+      "outputs/c2bf37f5d2c1cf493c1097bfc03263f863dffa31fe67767fb798bf543684cb37.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-05-backward-replay",
+    "input_hash": "a989698b02996affeb6e12defe49c1f5493069945910f0dd464965a1c7df6290",
+    "output_refs": [
+      "outputs/18d29cce9a98e27b1929dba0541bbb76e47b28e71d4da9debafa4c2e77dd9896.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-05-past-end-replay",
+    "input_hash": "e6521cc80d30696a68c6f37d23ef0634a04ee2b9d7228bb2bca100f29f4516ca",
+    "output_refs": [
+      "outputs/751c4e63d3a85c0f94a4f2adb6fccaf8dcd54dd5fd94c994e4beef3f9d222eb0.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-05-duplicate-id-replay",
+    "input_hash": "f71b6383fa7fdc3614285f65d23d45be309ecd71633a74616e965891f5324aed",
+    "output_refs": [
+      "outputs/015f7d780143c127660ed0549c13016efa6bf9f71c2293aded7f3e7c7b65be7d.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-06-valid-replay",
+    "input_hash": "0962778c7dd2f5be379520b763306611531cf23cea7340e277f1e16e83a5c60e",
+    "output_refs": [
+      "outputs/1889c4f27eacb7498454bc6f703021ce7507e2063b72db596835be8b22cae5fd.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-06-bom-crlf-replay",
+    "input_hash": "5d89177119a19c669358bbc26cd123df6e17519300bf9423d546456937ea2693",
+    "output_refs": [
+      "outputs/e467aea90933585b081d43d63cd09d0c9786a93d3642abfebf22abb9ff74fb24.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-06-overlap-replay",
+    "input_hash": "e23cb9691aa574638d05b803824dc2c7bcaade944c7ae0009007f7051578fa5c",
+    "output_refs": [
+      "outputs/503ebd288c737fd8541f48f4de940f8a675ad91dabb0eb977962570feba291da.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-06-backward-replay",
+    "input_hash": "ee88fb64190f564e7ec26961b6b0c2a390271dd029047aef86135508a427f664",
+    "output_refs": [
+      "outputs/2da35571d7a723288afc17e01bd33f6c9fb791b5efe84cb86ee93a93812d332a.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-06-past-end-replay",
+    "input_hash": "4244ad568c49ebc387747e9e67425d85aa214c77d62d82aa37655b418ca05d8a",
+    "output_refs": [
+      "outputs/b96d8e86bf309f4211c41ff1fb5cc908c456b884f455224642d4bfb4e16c01ad.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-06-duplicate-id-replay",
+    "input_hash": "d706639f231fcbc388dc5d8bfeed93b54931c23c2a2bf18d992f2eeeda636e32",
+    "output_refs": [
+      "outputs/4afc5e84ebfe763aaae3cbba79b967ace3bdf598af4d9f3b4211a875f1160927.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-07-valid-replay",
+    "input_hash": "e2c89be25a64df98666bc36a7b72eca4489d5fbcf153183953c87d7566267d8b",
+    "output_refs": [
+      "outputs/1efe84888875b2d917afc83af89c4c3f24ebe915edb501f54af3f7c563ec1d07.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-07-bom-crlf-replay",
+    "input_hash": "6816b69ef011b3322632291f3c5d757344660047592bc601baf713082bc43f64",
+    "output_refs": [
+      "outputs/0c168d8a023405ef584e2be920b273b1e97ec959e561f688e3fc08082ed983eb.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-07-overlap-replay",
+    "input_hash": "3f284f7d3f5adbeab5378aaf3a9fcf5f61d8c0f43c31823d84399107141caf6f",
+    "output_refs": [
+      "outputs/f4581ce169eb2745e29f9d4440caf65986c10992d30e060e3b186af56ce67a57.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-07-backward-replay",
+    "input_hash": "91f2389f9a79a3852315cd1eba097c512e59880578e3c3504fba988ccc366162",
+    "output_refs": [
+      "outputs/2a8de275806ea97f825cc2b2e119ab64e14ecad8b431daed0488700acffe7ed6.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-07-past-end-replay",
+    "input_hash": "e6518648ba0d6c02c40fec1dbfad322175c0f491620d474e7e1e6a247d0ae1a9",
+    "output_refs": [
+      "outputs/9672e0fd5eac3592697d7733c5e2f6e9ada9d0e7cb544064deeea3a691807fb0.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  },
+  {
+    "episode_ref": "probe-guard-dev-07-duplicate-id-replay",
+    "input_hash": "52daeda73362ad0b82b350d5ceae21a6f675db0bb2a356c4ce9eaf54fee4d9dd",
+    "output_refs": [
+      "outputs/07182be72945834416a639feaae9106e60b9230633ba04dc834bc0edb0b58665.json"
+    ],
+    "label_source": "fixture-construction-v1",
+    "partition": "validated_facts",
+    "config_hash": "5d8a966851f12d20702d348addee0898e8eaa8c8e7ca8a52596193b4be6a0dec"
+  }
+]

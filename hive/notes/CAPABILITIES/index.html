@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Capability Registry · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#29143f"><link rel="canonical" href="https://mominc.online/hive/notes/CAPABILITIES/">
+<meta property="og:title" content="Capability Registry · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg?v=2" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=3"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=2"><link rel="stylesheet" href="/hive/assets/research.css?v=1">
+<script defer src="/hive/assets/hive.js?v=3"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg?v=2" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/STATUS/">Implementation</a><a href="/hive/notes/CODER/">Coder directions</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 297 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download original vault · 0.2</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=build">Local build</a><span>/</span><span>CAPABILITIES</span></div>
+<div class="doc-meta"><span class="badge">Measured</span><span class="badge neutral">Implemented scoped pilot</span></div><div class="doc-tools"><button class="copy-link" data-title="Capability Registry" data-id="CAPABILITIES" data-series="HIVE empirical pilot (21 November 2026 UTC)">Copy reference</button><a href="/hive/implementation/CAPABILITY_INVENTORY.md">Markdown source</a><a href="/hive/graph/?focus=CAPABILITIES">View connections</a><button class="print-page">Print</button></div>
+<article class="prose"><h1 id="capability-registry">Capability Registry</h1>
+<p><strong>MEASURED local inventory; operational registry separate from the research graph.</strong></p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>Observed readiness</th>
+<th>Contract / limit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CPU</td>
+<td>AMD Ryzen 7 5800 8-Core Processor, 8 cores / 16 threads</td>
+<td>CPU pilot, concurrency 1</td>
+</tr>
+<tr>
+<td>System RAM</td>
+<td>63.9 GiB</td>
+<td>Worker peak working set measured on Windows; no hard process-tree memory sandbox</td>
+</tr>
+<tr>
+<td>GPU</td>
+<td>NVIDIA GeForce RTX 5070 Ti, 16303 MiB, 6358 MiB, 17 %</td>
+<td>Point-in-time shared studio load, not per-task attribution</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>Python 3.11.9</td>
+<td>Standard library engine</td>
+</tr>
+<tr>
+<td>ffprobe</td>
+<td>ffprobe version 9.0-full_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers</td>
+<td>Read-only SRT probe; 64 KiB input; 2-second tool timeout</td>
+</tr>
+<tr>
+<td>Node</td>
+<td>v24.19.0</td>
+<td>Existing site/test tooling only</td>
+</tr>
+<tr>
+<td>Ollama</td>
+<td>Service responded; one downloaded 9B Q4 model; no loaded models</td>
+<td>Model+tools arm excluded; inference, startup and model quality unmeasured</td>
+</tr>
+<tr>
+<td>LM Studio</td>
+<td>Model endpoint unavailable during audit</td>
+<td>Excluded; no service started or model swapped</td>
+</tr>
+<tr>
+<td>Laya</td>
+<td>Health endpoint unavailable</td>
+<td>Routing remains transparent heuristic; no learned selector claimed</td>
+</tr>
+<tr>
+<td>Studio Brain / Ruflo</td>
+<td>Context and routing calls responded</td>
+<td>Existing studio context only; not wired into pilot memory or model training</td>
+</tr>
+</tbody>
+</table></div>
+<p>The three baseline configurations are <code>rules</code>, <code>probe</code>, and <code>combined</code>. They are all deterministic software configurations. They satisfy a comparable three-configuration tool pilot; they do <strong>not</strong> stand in for the plan's proposed single-model and specialist-model arms. Candidate <code>probe-guard</code> validates semantics before conditionally invoking ffprobe.</p>
+<p><a href="/hive/evidence/caption-pilot-1/capabilities.json">Executable capability registry</a> records adapter/version, supported task, health, required permissions, dependencies, budgets and source hash. <a href="/hive/evidence/caption-pilot-1/inventory.json">Hardware/software observations</a> records the verification time. Local service addresses, process identities and private file paths are intentionally absent from the public artifacts.</p>
+<h2 id="archived-experiments">Archived experiments</h2>
+<p>The preserved <code>HIVE_Reproducible_Experiments.zip</code> contains 31 entries: learning, representation and scheduling simulation runners plus results/analyzers. Its pinned NumPy 2.3.5 / matplotlib 3.10.8 environment was not present (local NumPy 2.4.6; matplotlib absent). The archive reports Python 3.12.14; this run uses 3.11.9. It was inspected, not rerun or modified. Those are CPU simulations, not hardware scheduling or model-serving benchmarks.</p>
+<h2 id="resource-limits-and-unknowns">Resource limits and unknowns</h2>
+<p>Episodes record wall time, worker CPU time, worker peak RSS, tool calls, failures and retries. Wall time includes interpreter launch and tool startup. Separate model startup, per-tool process-tree CPU/RAM, VRAM per episode, queue wait and contention are unmeasured. A four-writer SQLite test establishes only small event-store concurrency, not agent/GPU scalability.</p>
+<p>Last verified: <strong>2026-11-21T04:27:34.3337389Z</strong>. Evidence is a local CPU/tool pilot on synthetic fixtures. No production HIVE runtime, trained weights, or compounding-learning result is claimed.</p>
+</article><section class="backlinks"><h2>Referenced by <span>1</span></h2><div><a href="/hive/notes/STATUS/"><span>STATUS</span>Implementation Status<small>related to</small></a></div></section></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#archived-experiments">Archived experiments</a><a class="toc-h2" href="#resource-limits-and-unknowns">Resource limits and unknowns</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework 0.2 · Coder directions 0.4</span></a><span>Prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/updates/HIVE_Research_Update_Adaptive_Organization_and_Self_Learning_2026-11-20.md" download>Research update</a><a href="/hive/updates/HIVE_Coder_Information_Packet_2026-11-20.md" download>Coder packet · 0.4</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Original vault · 0.2</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

@@ -1,0 +1,202 @@
+{
+  "rules": [
+    {
+      "source_group": "generated-source-00",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-01",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-02",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-03",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-04",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-05",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-06",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-07",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-08",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-09",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-10",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-11",
+      "accuracy": 1
+    }
+  ],
+  "probe": [
+    {
+      "source_group": "generated-source-00",
+      "accuracy": 0.3333333333333333
+    },
+    {
+      "source_group": "generated-source-01",
+      "accuracy": 0.3333333333333333
+    },
+    {
+      "source_group": "generated-source-02",
+      "accuracy": 0.3333333333333333
+    },
+    {
+      "source_group": "generated-source-03",
+      "accuracy": 0.3333333333333333
+    },
+    {
+      "source_group": "generated-source-04",
+      "accuracy": 0.3333333333333333
+    },
+    {
+      "source_group": "generated-source-05",
+      "accuracy": 0.3333333333333333
+    },
+    {
+      "source_group": "generated-source-06",
+      "accuracy": 0.3333333333333333
+    },
+    {
+      "source_group": "generated-source-07",
+      "accuracy": 0.3333333333333333
+    },
+    {
+      "source_group": "generated-source-08",
+      "accuracy": 0.3333333333333333
+    },
+    {
+      "source_group": "generated-source-09",
+      "accuracy": 0.3333333333333333
+    },
+    {
+      "source_group": "generated-source-10",
+      "accuracy": 0.3333333333333333
+    },
+    {
+      "source_group": "generated-source-11",
+      "accuracy": 0.3333333333333333
+    }
+  ],
+  "combined": [
+    {
+      "source_group": "generated-source-00",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-01",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-02",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-03",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-04",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-05",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-06",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-07",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-08",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-09",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-10",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-11",
+      "accuracy": 1
+    }
+  ],
+  "probe-guard": [
+    {
+      "source_group": "generated-source-00",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-01",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-02",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-03",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-04",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-05",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-06",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-07",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-08",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-09",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-10",
+      "accuracy": 1
+    },
+    {
+      "source_group": "generated-source-11",
+      "accuracy": 1
+    }
+  ]
+}

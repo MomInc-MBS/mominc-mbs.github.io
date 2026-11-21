@@ -19,3 +19,4 @@ tools/node_modules/
 # Local browser QA artifacts
 .qa/
 __pycache__/
+.hive-local/
