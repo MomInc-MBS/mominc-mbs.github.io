@@ -2,7 +2,7 @@
 
 ## 2026-11-20 local / 2026-11-21 UTC — empirical pilot
 
-**Implementation prepared; production release pending approval.** Base `60b1412`; scoped feature branch `feature/hive-empirical-engine-20261120`.
+**Website publication approved by Ian. Experimental candidate remains undeployed.** Base `60b1412`; release through [PR #46](https://github.com/MomInc-MBS/mominc-mbs.github.io/pull/46).
 
 - Added `tools/hive_engine/`: D1–D5 decisions, append-only trace store, capability contracts, caption adapters, frozen fixtures, independent checker, failure-derived proposal, curated export, replay, memory and local stage/rollback.
 - Added eight requested reports under `hive/implementation/`, seven navigable evidence views, the exact supplied change plan, and sanitized synthetic artifacts under `hive/evidence/caption-pilot-1/`.
@@ -22,13 +22,13 @@ python tools/check_hive.py
 python tools/gen_game_packs.py
 ```
 
-Runtime regression result: 13 tests, 0 failures, 0 errors. Evidence inspector: 576 episodes with attributable verifications and output hashes. The test-only release record and restored execution are in [test-results.json](/hive/evidence/caption-pilot-1/test-results.json). No real production release was created.
+Runtime regression result: 13 tests, 0 failures, 0 errors. Evidence inspector: 576 episodes with attributable verifications and output hashes. The test-only release record and restored execution are in [test-results.json](/hive/evidence/caption-pilot-1/test-results.json). No experimental runtime release was created.
 
 Website QA passed at 1440, 1024, 900, 390 and 320 CSS pixels: all seven evidence views, mobile navigation, search, graph, original diagrams/equations, and reading without JavaScript. There were no page errors or failed requests. These are browser/emulated-phone checks, not a physical-phone test. The vault validator reported zero errors; the static checker verified 313 HTML pages, over 22,800 local links and all 19 original archives. Required game-pack regeneration produced no asset-content changes. The first build refused a colliding `EXPERIMENTS` ID; the measured registry now uses additive `RUNS`, preserving the old experiment-design index.
 
 [Staged browser regression report](/hive/evidence/caption-pilot-1/website-checks.json)
 
-The supplied change plan explicitly requires approval for production-impacting changes and prohibits autonomous promotion of experimental policies/weights. Website publication is requested only after the staged diff and checks are reviewable. Local test approvals never authorize production.
+The supplied change plan explicitly requires approval for production-impacting changes and prohibits autonomous promotion of experimental policies/weights. Ian approved the tested static website update with “Publish the website update.” This authorizes publication of the documentation and evidence through PR #46; the rejected candidate, experimental policies, weights and permissions remain undeployed. Local test approvals never authorize production.
 
 
 Last verified: **2026-11-21T04:27:34.3337389Z**. Evidence is a local CPU/tool pilot on synthetic fixtures. No production HIVE runtime, trained weights, or compounding-learning result is claimed.
