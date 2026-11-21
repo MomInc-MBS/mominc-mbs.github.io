@@ -1,5 +1,18 @@
 # Learning Progress
 
+## Routing adaptation: autonomous local prototype v0.1
+
+Valid development feedback changed later routing in a separate real-model
+experiment. The learning-disabled ablation supports a within-suite routing
+contribution; the learned router ties greedy and loses to deterministic tools.
+The policy is **QUARANTINED**, with no production promotion or weight updates.
+Repeated gains across independent experiments remain unproven.
+
+[Read the learning experiment and reproduction checks](/hive/notes/PROTOTYPE/).
+Last verified for this update: **21 November 2026 UTC**.
+
+## Earlier caption-pilot learning report
+
 **The first cycle completed with a rejected proposal. Compounding learning has not been demonstrated.**
 
 1. The unchanged `probe` configuration produced repeated development false accepts.

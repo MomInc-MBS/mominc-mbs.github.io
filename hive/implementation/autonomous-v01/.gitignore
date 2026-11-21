@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+*.egg-info/
+.hive/
+experiments/private/
+.env
+.env.*
+!.env.example
+dist/
+coverage/
+node_modules/
+.e2e/

@@ -1,5 +1,19 @@
 # Experiment Registry
 
+## Autonomous v0.1 ? frozen routing from verified feedback
+
+**MEASURED; candidate QUARANTINED.** Campaign `7373f7796d0d` records 18 development,
+12 validation and 24 held-out tasks across six synthetic families: 108 real model
+calls and 162 observations. Fixed direct passed 12/24; greedy/UCB 23/24;
+deterministic tools 24/24. Shared-outcome replay, correlated families and the
+stronger tool baseline limit the result. All six later fresh-inference checks
+matched, with no policy updates. This is policy adaptation, not weight training.
+
+[Full methods, uncertainty, costs and evidence](/hive/notes/PROTOTYPE/).
+Last verified for this update: **21 November 2026 UTC**.
+
+## Earlier caption-pilot experiments
+
 ## caption-pilot-1 — mandatory validation before tool use
 
 **MEASURED / candidate REJECTED.** Hypothesis: syntax-level ffprobe acceptance is insufficient for timing/structure validation; a bounded procedure can reject invalid captions before a tool call.

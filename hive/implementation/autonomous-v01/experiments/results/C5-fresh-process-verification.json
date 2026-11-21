@@ -1,0 +1,6 @@
+{
+  "returncode": 0,
+  "scope": "fresh-process saved-output verification and policy restoration; no fresh model samples",
+  "stderr": "",
+  "stdout": "{\n  \"verified_artifacts\": 162,\n  \"policy_restored\": true\n}\n"
+}

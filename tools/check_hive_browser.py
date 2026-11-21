@@ -5,6 +5,7 @@ Requires the already installed Playwright test environment. No model/agent neede
 """
 import json
 import os
+import hashlib
 from pathlib import Path
 from playwright.sync_api import sync_playwright, expect
 
@@ -13,7 +14,8 @@ out=Path('.qa/hive-empirical');out.mkdir(parents=True,exist_ok=True)
 manifest=json.loads(Path('hive/build-manifest.json').read_text())
 errors,failed=[],[]
 views={'STATUS':'Implementation Status','RUNS':'Experiment Registry','CAPABILITIES':'Capability Registry',
-       'LEARNING':'Learning Progress','LEDGER':'Decision Ledger','GAPS':'Known Gaps','RELEASES':'Change / Release History'}
+       'LEARNING':'Learning Progress','LEDGER':'Decision Ledger','GAPS':'Known Gaps','RELEASES':'Change / Release History',
+       'PROTOTYPE':'Autonomous local prototype — v0.1'}
 
 with sync_playwright() as p:
     browser=p.chromium.launch(headless=True)
@@ -32,6 +34,27 @@ with sync_playwright() as p:
         expect(page.locator('.prose h1')).to_have_text(title)
         expect(page.locator('.prose')).to_contain_text('Last verified:')
         assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'),key
+    page.goto(base+'/hive/notes/PROTOTYPE/')
+    expect(page.locator('.prose')).to_contain_text('Learned candidate QUARANTINED')
+    expect(page.locator('.prose table')).to_contain_text('23/24')
+    page.screenshot(path=str(out/'prototype-desktop.png'))
+    publication=json.loads(Path('hive/implementation/autonomous-v01-publication.json').read_text())
+    download=ctx.request.get(base+'/hive/'+publication['download'])
+    assert download.status==200
+    assert hashlib.sha256(download.body()).hexdigest()==publication['download_sha256']
+    with page.expect_download() as pending:
+        page.get_by_role('link',name='Run instructions',exact=True).click()
+    instructions=Path(pending.value.path()).read_bytes()
+    assert hashlib.sha256(instructions).hexdigest()==publication['snapshot_files']['README.md']
+    # Chromium cancels document navigation when this exact request becomes a
+    # download. Exclude it only after the downloaded bytes match their manifest.
+    download_abort=base+'/hive/implementation/autonomous-v01/README.md net::ERR_ABORTED'
+    failed[:]=[failure for failure in failed if failure!=download_abort]
+    page.goto(base+'/hive/search/?q=autonomous%20local%20prototype')
+    expect(page.locator('#results a[href="/hive/notes/PROTOTYPE/"]')).to_have_count(1)
+    page.goto(base+'/hive/graph/?focus=PROTOTYPE')
+    expect(page.locator('#graph-selection h2')).to_have_text(views['PROTOTYPE'])
+    expect(page.locator('#graph-pages')).to_contain_text('STATUS')
     page.goto(base+'/hive/notes/LEARNING/')
     expect(page.locator('.prose')).to_contain_text('Compounding learning has not been demonstrated')
     expect(page.locator('.prose img')).to_have_count(1)
@@ -79,6 +102,8 @@ with sync_playwright() as p:
             page.goto(base+'/hive/notes/LEARNING/')
             page.locator('.prose img').scroll_into_view_if_needed()
             page.screenshot(path=str(out/'learning-mobile.png'))
+            page.goto(base+'/hive/notes/PROTOTYPE/')
+            page.screenshot(path=str(out/'prototype-mobile.png'))
     plain=browser.new_context(java_script_enabled=False)
     note=plain.new_page()
     for key in views:
@@ -89,6 +114,7 @@ assert not errors,errors
 assert not failed,failed
 report=dict(ok=True,base=base,views=list(views),widths=[1440,1024,900,390,320],physical_phone=False,
             no_javascript=True,search_graph=True,existing_diagrams=7,adaptive_diagram=True,adaptive_equations=2,
+            prototype_download_digest=True,prototype_search_graph=True,
             page_errors=errors,failed_requests=failed)
 (out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report,indent=2))

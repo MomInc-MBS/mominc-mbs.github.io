@@ -1,5 +1,18 @@
 # Capability Registry
 
+## Added capabilities: autonomous local prototype v0.1
+
+Real local-model adapters, development-only learned routing, durable job recovery,
+immutable artifacts and bounded automatic follow-up are implemented and exercised
+in the [separate prototype](/hive/notes/PROTOTYPE/). Its 52 tests include fail-closed
+verification, promotion controls and synthetic rollback. These capabilities do not
+turn the earlier caption pilot into a model experiment. Model-weight training and
+general compounding improvement remain unimplemented or unproven.
+
+Last verified for this update: **21 November 2026 UTC**.
+
+## Earlier caption-pilot inventory
+
 **MEASURED local inventory; operational registry separate from the research graph.**
 
 | Capability | Observed readiness | Contract / limit |

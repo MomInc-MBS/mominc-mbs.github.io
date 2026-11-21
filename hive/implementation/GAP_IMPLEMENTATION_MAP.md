@@ -1,5 +1,18 @@
 # Known Gaps
 
+## Updated gap scope: autonomous local prototype v0.1
+
+Real local inference and feedback-driven routing now have evidence in the
+[separate autonomous prototype](/hive/notes/PROTOTYPE/). The earlier caption-only
+inventory below remains historical to that pilot. Open gaps include independent
+new task families, strong-baseline superiority, memory/workflow/verifier ablations,
+OS-enforced compute limits, and stronger evaluator isolation. The learned policy
+remains quarantined. No general self-improvement or model-weight training is claimed.
+
+Last verified for this update: **21 November 2026 UTC**.
+
+## Earlier caption-pilot gap map
+
 Every gap remains owned by the HIVE implementation maintainer; promotion authority remains Ian/operator. **Partial means partial, not complete.**
 
 | Gap | Priority | Status | Files / evidence | Deciding experiment / dependency |
