@@ -1,0 +1,24 @@
+{
+  "python": "3.11.9",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "ffprobe": "ffprobe version 9.0-full_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers",
+  "manifest_hash": "1b5d9932a204b9ca0bdc172e699118ffad0506a949251f2abda2ae41b58b041a",
+  "policy_hash": "cef6d640bdc872af9c1035aa1cc5c429dc10f82a621cc1a38ebc45ec10b3bc9c",
+  "code_hashes": {
+    "captions.py": "bf5e035880030bbc448fd748e0607dc115352ff05777589ba8312dd379a35ad1",
+    "core.py": "25e99abad8c9236f5e789ca96c0fe5c2134ca1d81eac4c72343c0fc286794dba",
+    "fixtures.py": "70991ccdc3e29eeb8e7e7d79bc16203d2179549d56fe83327f64086d3521d1b3",
+    "pilot.py": "5c34c8fff3d782ddccd784576258ef99428f692e898a1035dc75788b3d137d61",
+    "test_engine.py": "f2e2a7971c0c77e53f0d6404db4427ef7acbaf7f32a06e8d0aacb90589c707fa",
+    "verify.py": "fa891e11e87b80d0a3e0cb1a90ca8759de5cdee57872b21ef7b9088eb368fc0c",
+    "__init__.py": "eddd71bf0087fb3d08bfeabe7efa61335a40cfcd2e5e4ad2008b660436bf1818"
+  },
+  "started_at": 1795235211.2230318,
+  "seed": 20261120,
+  "execution": "CPU; no model inference; max concurrency 1",
+  "exclusions": {
+    "model-plus-tools": "No already loaded local model; occupied GPU; inference not executed.",
+    "specialist-model-group": "No verified serving model group; not executed."
+  },
+  "telemetry_limits": "Worker CPU/peak RAM on Windows; grandchild ffprobe/GPU utilization and queue contention not attributed."
+}

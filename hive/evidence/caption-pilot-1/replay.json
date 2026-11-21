@@ -1,0 +1,114 @@
+{
+  "rules": {
+    "tasks": 72,
+    "matches": 72,
+    "metrics": {
+      "n": 72,
+      "source_groups": 12,
+      "accuracy": 1,
+      "cluster_bootstrap_95": [
+        1,
+        1
+      ],
+      "mean_wall_seconds": 0.05942616249699818,
+      "p95_wall_seconds": 0.06678049999754876,
+      "failures": 0,
+      "false_accept": 0,
+      "false_reject": 0,
+      "execution_errors": 0,
+      "by_family": {
+        "backward": 1,
+        "bom-crlf": 1,
+        "duplicate-id": 1,
+        "overlap": 1,
+        "past-end": 1,
+        "valid": 1
+      },
+      "warning": "Synthetic, correlated fixtures; few source clusters. Intervals do not establish real-world generalization."
+    }
+  },
+  "probe": {
+    "tasks": 72,
+    "matches": 72,
+    "metrics": {
+      "n": 72,
+      "source_groups": 12,
+      "accuracy": 0.3333333333333333,
+      "cluster_bootstrap_95": [
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "mean_wall_seconds": 0.09171760417423987,
+      "p95_wall_seconds": 0.12199759995564818,
+      "failures": 48,
+      "false_accept": 48,
+      "false_reject": 0,
+      "execution_errors": 0,
+      "by_family": {
+        "backward": 0,
+        "bom-crlf": 1,
+        "duplicate-id": 0,
+        "overlap": 0,
+        "past-end": 0,
+        "valid": 1
+      },
+      "warning": "Synthetic, correlated fixtures; few source clusters. Intervals do not establish real-world generalization."
+    }
+  },
+  "combined": {
+    "tasks": 72,
+    "matches": 72,
+    "metrics": {
+      "n": 72,
+      "source_groups": 12,
+      "accuracy": 1,
+      "cluster_bootstrap_95": [
+        1,
+        1
+      ],
+      "mean_wall_seconds": 0.09663299722888041,
+      "p95_wall_seconds": 0.1274159998865798,
+      "failures": 0,
+      "false_accept": 0,
+      "false_reject": 0,
+      "execution_errors": 0,
+      "by_family": {
+        "backward": 1,
+        "bom-crlf": 1,
+        "duplicate-id": 1,
+        "overlap": 1,
+        "past-end": 1,
+        "valid": 1
+      },
+      "warning": "Synthetic, correlated fixtures; few source clusters. Intervals do not establish real-world generalization."
+    }
+  },
+  "probe-guard": {
+    "tasks": 72,
+    "matches": 72,
+    "metrics": {
+      "n": 72,
+      "source_groups": 12,
+      "accuracy": 1,
+      "cluster_bootstrap_95": [
+        1,
+        1
+      ],
+      "mean_wall_seconds": 0.07480370278224452,
+      "p95_wall_seconds": 0.12363779998850077,
+      "failures": 0,
+      "false_accept": 0,
+      "false_reject": 0,
+      "execution_errors": 0,
+      "by_family": {
+        "backward": 1,
+        "bom-crlf": 1,
+        "duplicate-id": 1,
+        "overlap": 1,
+        "past-end": 1,
+        "valid": 1
+      },
+      "warning": "Synthetic, correlated fixtures; few source clusters. Intervals do not establish real-world generalization."
+    }
+  }
+}

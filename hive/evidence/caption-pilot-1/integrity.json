@@ -1,0 +1,21 @@
+{
+  "ok": true,
+  "counts": {
+    "Capability": 4,
+    "TaskSpec": 72,
+    "Config": 12,
+    "Episode": 576,
+    "Verification": 576,
+    "RoutingDecision": 1,
+    "VerificationDecision": 1,
+    "ExperimentPriority": 1,
+    "FailurePattern": 1,
+    "ChangeCandidate": 1,
+    "ReplayEvidence": 1,
+    "Experiment": 1,
+    "ReleaseDecision": 1
+  },
+  "chain_head": "692f8cef841474e6a00f8b30f1430cf168ca115ecd7d629fb9bc24552bc29f99",
+  "episodes": 576,
+  "verified": 576
+}

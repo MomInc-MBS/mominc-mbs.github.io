@@ -1,0 +1,52 @@
+{
+  "candidate_id": "probe-guard",
+  "parent_version": "probe",
+  "change_type": "procedure",
+  "diff_or_artifact_ref": "captions.execute:probe-guard",
+  "hypothesis": "Reject invalid timing/structure before ffprobe; reduce false acceptance and unnecessary tool calls.",
+  "training_data_refs": [
+    "probe-dev-00-overlap-first",
+    "probe-dev-00-backward-first",
+    "probe-dev-00-past-end-first",
+    "probe-dev-00-duplicate-id-first",
+    "probe-dev-01-overlap-first",
+    "probe-dev-01-backward-first",
+    "probe-dev-01-past-end-first",
+    "probe-dev-01-duplicate-id-first",
+    "probe-dev-02-overlap-first",
+    "probe-dev-02-backward-first",
+    "probe-dev-02-past-end-first",
+    "probe-dev-02-duplicate-id-first",
+    "probe-dev-03-overlap-first",
+    "probe-dev-03-backward-first",
+    "probe-dev-03-past-end-first",
+    "probe-dev-03-duplicate-id-first",
+    "probe-dev-04-overlap-first",
+    "probe-dev-04-backward-first",
+    "probe-dev-04-past-end-first",
+    "probe-dev-04-duplicate-id-first",
+    "probe-dev-05-overlap-first",
+    "probe-dev-05-backward-first",
+    "probe-dev-05-past-end-first",
+    "probe-dev-05-duplicate-id-first",
+    "probe-dev-06-overlap-first",
+    "probe-dev-06-backward-first",
+    "probe-dev-06-past-end-first",
+    "probe-dev-06-duplicate-id-first",
+    "probe-dev-07-overlap-first",
+    "probe-dev-07-backward-first",
+    "probe-dev-07-past-end-first",
+    "probe-dev-07-duplicate-id-first"
+  ],
+  "scope": "local-staging",
+  "procedure": {
+    "before": [
+      "ffprobe"
+    ],
+    "after": [
+      "rules",
+      "ffprobe-only-if-rules-pass"
+    ],
+    "allowed_code": "captions-1"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "task_id": "holdout-08-bom-crlf",
+  "config_id": "rules",
+  "output": {
+    "valid": true,
+    "cue_count": 2,
+    "tool_calls": 0
+  }
+}

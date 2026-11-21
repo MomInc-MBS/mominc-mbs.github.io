@@ -1,0 +1,9 @@
+{
+  "task_id": "holdout-11-valid",
+  "config_id": "combined",
+  "output": {
+    "valid": true,
+    "cue_count": 2,
+    "tool_calls": 1
+  }
+}

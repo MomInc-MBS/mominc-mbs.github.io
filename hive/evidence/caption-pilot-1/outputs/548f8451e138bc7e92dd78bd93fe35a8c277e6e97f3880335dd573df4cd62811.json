@@ -1,0 +1,9 @@
+{
+  "task_id": "dev-06-backward",
+  "config_id": "probe",
+  "output": {
+    "valid": true,
+    "packet_count": 1,
+    "tool_calls": 1
+  }
+}

@@ -68,6 +68,18 @@ def main():
         errors.append('Current coder directions are missing')
     if updates['latest_research_id'] not in ids:
         errors.append('Latest research update is missing')
+    for node_id in ('STATUS', 'RUNS', 'CAPABILITIES', 'LEARNING', 'LEDGER', 'GAPS', 'RELEASES', 'GAPPLAN'):
+        if node_id not in ids:
+            errors.append('Empirical evidence page missing: ' + node_id)
+    evidence = OUT / 'evidence/caption-pilot-1'
+    artifacts = json.loads((evidence / 'artifact-manifest.json').read_text(encoding='utf-8'))
+    for relative, checksum in artifacts.items():
+        path = (evidence / relative).resolve()
+        if not path.is_relative_to(evidence.resolve()) or not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != checksum:
+            errors.append('Pilot artifact digest mismatch: ' + relative)
+    experiment = json.loads((evidence / 'EXPERIMENT_REGISTRY.json').read_text(encoding='utf-8'))
+    if experiment['decision'] != 'rejected' or experiment['deployed_version'] is not None:
+        errors.append('This published pilot must retain its actual rejection and undeployed state')
     for n in graph['nodes']:
         if not (OUT / 'notes' / n['id'] / 'index.html').is_file():
             errors.append(f'Graph page missing: {n["id"]}')

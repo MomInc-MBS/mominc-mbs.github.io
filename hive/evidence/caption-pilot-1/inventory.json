@@ -1,0 +1,13 @@
+{
+  "verified_at_utc": "2026-11-21T04:27:34.3337389Z",
+  "cpu": {
+    "Name": "AMD Ryzen 7 5800 8-Core Processor              ",
+    "NumberOfCores": 8,
+    "NumberOfLogicalProcessors": 16
+  },
+  "ram_bytes": 68617617408,
+  "gpu": "NVIDIA GeForce RTX 5070 Ti, 16303 MiB, 6358 MiB, 17 %",
+  "python": "Python 3.11.9",
+  "node": "v24.19.0",
+  "ffprobe": "ffprobe version 9.0-full_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers"
+}

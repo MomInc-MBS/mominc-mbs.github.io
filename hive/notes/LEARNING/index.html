@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Learning Progress · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#29143f"><link rel="canonical" href="https://mominc.online/hive/notes/LEARNING/">
+<meta property="og:title" content="Learning Progress · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg?v=2" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=3"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=2"><link rel="stylesheet" href="/hive/assets/research.css?v=1">
+<script defer src="/hive/assets/hive.js?v=3"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg?v=2" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/STATUS/">Implementation</a><a href="/hive/notes/CODER/">Coder directions</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 297 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download original vault · 0.2</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=build">Local build</a><span>/</span><span>LEARNING</span></div>
+<div class="doc-meta"><span class="badge">Measured</span><span class="badge neutral">Implemented scoped pilot</span></div><div class="doc-tools"><button class="copy-link" data-title="Learning Progress" data-id="LEARNING" data-series="HIVE empirical pilot (21 November 2026 UTC)">Copy reference</button><a href="/hive/implementation/LEARNING_LOOP_REPORT.md">Markdown source</a><a href="/hive/graph/?focus=LEARNING">View connections</a><button class="print-page">Print</button></div>
+<article class="prose"><h1 id="learning-progress">Learning Progress</h1>
+<p><strong>The first cycle completed with a rejected proposal. Compounding learning has not been demonstrated.</strong></p>
+<ol>
+<li>The unchanged <code>probe</code> configuration produced repeated development false accepts.</li>
+<li>The proposer used those episode IDs to select a bounded procedure: check timing and structure before conditionally invoking ffprobe.</li>
+<li>Candidate source/configuration, rubric and fixture hashes were frozen for evaluation; the worker received one input path and a fixed configuration, never reference labels.</li>
+<li>The independent evaluator compared all configurations against unchanged reference labels. Existing correctly solved tasks had no observed regressions.</li>
+<li>The benefit gate rejected the candidate against the strongest simple control. Production remained unchanged.</li>
+<li>Separate test-only staging and rollback restored the prior configuration and executed it successfully. No production approval is implied by that test.</li>
+</ol>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Configuration</th>
+<th style="text-align:right">Development</th>
+<th style="text-align:right">Held-out</th>
+<th style="text-align:right">Mean held-out latency</th>
+<th style="text-align:right">False accepts / rejects</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rules</td>
+<td style="text-align:right">48/48</td>
+<td style="text-align:right">24/24</td>
+<td style="text-align:right">63.5 ms</td>
+<td style="text-align:right">0 / 0</td>
+</tr>
+<tr>
+<td>probe</td>
+<td style="text-align:right">16/48</td>
+<td style="text-align:right">8/24</td>
+<td style="text-align:right">100.3 ms</td>
+<td style="text-align:right">16 / 0</td>
+</tr>
+<tr>
+<td>combined</td>
+<td style="text-align:right">48/48</td>
+<td style="text-align:right">24/24</td>
+<td style="text-align:right">96.1 ms</td>
+<td style="text-align:right">0 / 0</td>
+</tr>
+<tr>
+<td>probe-guard</td>
+<td style="text-align:right">48/48</td>
+<td style="text-align:right">24/24</td>
+<td style="text-align:right">73.3 ms</td>
+<td style="text-align:right">0 / 0</td>
+</tr>
+</tbody>
+</table></div>
+<p>The candidate improves the insufficient probe-only workflow, but does not improve upon <code>rules</code>. Its correction is a useful procedure experiment, not evidence of increased best-system capability. The initial diagnostic run proposed an already-existing composition; review caught that duplication. The final bounded procedure has a distinct fail-fast execution order and tool-call counts. Both outcomes are retained; the final comparison uses the same exposed regression fixtures and cannot establish fresh generalization.</p>
+<h2 id="curves-retention-and-sample-efficiency">Curves, retention and sample efficiency</h2>
+<p><img src="/hive/evidence/caption-pilot-1/learning-curves.svg" alt="Accuracy by synthetic source group; not a sample-efficiency claim" loading="lazy" /></p>
+<p><a href="/hive/evidence/caption-pilot-1/learning-curves.json">Per-source curves</a> records accuracy for every source group. <a href="/hive/evidence/caption-pilot-1/replay.json">Repeated execution</a> checks deterministic output retention. Learning-speed indicator is <strong>not estimated</strong>: there has been no equal-budget, successive-distribution trials-to-threshold study. No neural training, forgetting study, transfer study or real-world performance claim is supported.</p>
+<h2 id="independent-gates">Independent gates</h2>
+<ul>
+<li>benefit: <strong>FAIL</strong></li>
+<li>retention: <strong>PASS</strong></li>
+<li>safety: <strong>PASS</strong></li>
+<li>memory: <strong>PASS</strong></li>
+<li>budgets: <strong>PASS</strong></li>
+<li>reproducibility: <strong>PASS</strong></li>
+<li>holdout integrity: <strong>PASS</strong></li>
+<li>rollback: <strong>PASS</strong></li>
+</ul>
+<p>Here, holdout integrity means frozen bytes, disjoint groups and development-only proposal lineage; it does not mean the fixture labels remain secret from a local operator. Safety and memory gates refer to the 13 recorded regression tests, not a security audit. These trusted-process checks are not a hostile-code sandbox.</p>
+<p><a href="/hive/evidence/caption-pilot-1/test-results.json">Test and rollback evidence</a> · <a href="/hive/evidence/caption-pilot-1/candidate.json">Candidate lineage</a> · <a href="/hive/evidence/caption-pilot-1/curated-dev.json">Validated development-only dataset</a></p>
+<p>Next smallest deciding experiment: freeze an independently labeled, source-disjoint set of real SRT/video tasks before designing the next candidate. Compare rule-only, retrieval/procedure and an already available model under the same budgets. A fresh holdout and real-task gain are prerequisites for any improvement claim.</p>
+<p>Last verified: <strong>2026-11-21T04:27:34.3337389Z</strong>. Evidence is a local CPU/tool pilot on synthetic fixtures. No production HIVE runtime, trained weights, or compounding-learning result is claimed.</p>
+</article><section class="backlinks"><h2>Referenced by <span>2</span></h2><div><a href="/hive/notes/RUNS/"><span>RUNS</span>Experiment Registry<small>informs</small></a><a href="/hive/notes/STATUS/"><span>STATUS</span>Implementation Status<small>related to</small></a></div></section></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#curves-retention-and-sample-efficiency">Curves, retention and sample efficiency</a><a class="toc-h2" href="#independent-gates">Independent gates</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework 0.2 · Coder directions 0.4</span></a><span>Prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/updates/HIVE_Research_Update_Adaptive_Organization_and_Self_Learning_2026-11-20.md" download>Research update</a><a href="/hive/updates/HIVE_Coder_Information_Packet_2026-11-20.md" download>Coder packet · 0.4</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Original vault · 0.2</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

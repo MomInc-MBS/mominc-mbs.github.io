@@ -45,7 +45,7 @@ LABELS = {
     'proposed_implementation': 'Proposed implementation',
     'research_synthesis_and_provisional_decision': 'Research synthesis · Provisional decision',
 }
-NAV = [('HOME', 'Start here'), ('ADAPTIVE', 'Latest research update'), ('CODER', 'Coder directions · 0.4'), ('FRAMEWORK', 'The framework'), ('MAP', 'Research map'),
+NAV = [('HOME', 'Start here'), ('STATUS', 'Implementation status'), ('ADAPTIVE', 'Latest research update'), ('CODER', 'Coder directions · 0.4'), ('FRAMEWORK', 'The framework'), ('MAP', 'Research map'),
        ('DECISIONS', 'Open decisions'), ('EVIDENCE', 'Evidence & disagreement'),
        ('HISTORY', 'Previous work'), ('ROADMAP', 'Build roadmap'), ('ARCHIVE', 'Original documents')]
 
@@ -219,7 +219,7 @@ def main():
 <script defer src="{BASE}assets/hive.js?v=3"></script>{extra}</head>
 <body class="{body_class}"><a class="skip" href="#main">Skip to content</a>
 <header class="masthead"><a class="brand" href="{BASE}" aria-label="HIVE home"><img src="{BASE}assets/hive.svg?v=2" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
-<nav class="topnav" aria-label="Primary"><a href="{url(nodes['FRAMEWORK'])}">Framework</a><a href="{BASE}explore/">Explore</a><a href="{BASE}graph/">Graph</a><a href="{url(current_coder)}">Coder directions</a><a href="{url(latest_research)}">Research update</a></nav>
+<nav class="topnav" aria-label="Primary"><a href="{url(nodes['FRAMEWORK'])}">Framework</a><a href="{BASE}explore/">Explore</a><a href="{BASE}graph/">Graph</a><a href="{BASE}notes/STATUS/">Implementation</a><a href="{url(current_coder)}">Coder directions</a></nav>
 <a class="search-trigger" href="{BASE}search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
 <button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
 <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden>{navlinks}<a href="{BASE}explore/">Browse all pages</a><a href="{BASE}graph/">Interactive graph</a></nav>
@@ -261,6 +261,8 @@ def main():
             notice += '<p class="update-notice"><strong>Current coder directions · Revision 0.4.</strong> The full supplied packet follows, including its evidence labels, unresolved choices, and source-recovery limits.</p>'
         if node['id'] in ('CODER', 'FRAMEWORK', 'ROADMAP', 'HOME', 'D02', 'D05', 'D07', 'D09', 'B07'):
             notice += f'<p class="research-notice"><strong>Latest research addendum.</strong> <a href="{url(latest_research)}">Adaptive organization and self-learning</a> adds provisional organizational direction, learning priorities, formula candidates, and proposed tests. Read it alongside this earlier material.</p>'
+        if node['id'] in ('CODER', 'FRAMEWORK', 'ROADMAP', 'HOME', 'ADAPTIVE', 'HISTORY', 'B04', 'B06'):
+            notice += f'<p class="update-notice"><strong>Measured implementation status.</strong> <a href="{BASE}notes/STATUS/">Inspect the local empirical pilot, evidence and remaining gaps</a>. Earlier research below is preserved; the pilot is scoped, and its candidate was rejected.</p>'
         if node['id'] == latest_research['id']:
             notice += '<p class="research-notice"><strong>Latest research update · 20 November 2026.</strong> This is a research synthesis and provisional design handoff. Proposed mechanisms and experiments are not implementation or benchmark evidence.</p>'
         citation_version = node.get('citation_label') or (f'HIVE coder directions {node["revision"]}' if node.get('revision') else 'HIVE framework 0.2')
@@ -281,6 +283,7 @@ def main():
     home = f'''<main id="main"><section class="hero"><div class="hero-copy"><div class="eyebrow light">MOM INC. / RESEARCH & SYSTEMS</div><p class="revision">Coder directions 0.4 <span>Framework 0.2</span></p><h1>Many specialists.<br>One evolving <em>HIVE.</em></h1><p class="hero-deck">A framework for systems that assemble specialists, learn from verified experience, and improve how they work together.</p><p class="hero-sub">Follow the ideas. Inspect the evidence. Keep the alternatives open.</p><div class="hero-actions"><a class="button primary" href="{url(current_coder)}">Read coder directions</a><a class="button ghost" href="{BASE}explore/">Explore the vault</a></div></div>
 <div class="hero-system" aria-label="Proposed HIVE learning loop"><div class="system-caption">THE PROPOSED LEARNING LOOP</div><div class="system-core"><img src="{BASE}assets/hive.svg?v=2" width="56" height="56" alt=""><strong>HIVE</strong><span>State · selection · resources</span></div><div class="system-stages"><span>Specialists & tools</span><b>+</b><span>Verification</span><b>+</b><span>Evidence & experience</span></div><div class="system-return"><span>Candidate learning</span><span>Retention tests</span><span>Version registry</span></div><div class="system-foot">A candidate is promoted only after its gates pass.</div></div></section>
 <div class="stats-strip"><div><strong>{len(nodes)}</strong><span>linked research pages</span></div><div><strong>{count['topic']}</strong><span>research topics</span></div><div><strong>{count['experiment']}</strong><span>experiment designs</span></div><div><strong>19</strong><span>preserved originals</span></div><a href="{BASE}graph/">Explore {len(graph['edges']):,} connections</a></div>
+<section class="home-section evidence-section implementation-update"><div><p class="eyebrow">IMPLEMENTATION / VERIFIED 21 NOV 2026 UTC</p><h2>Measure. Test.<br>Keep what earns its place.</h2><p>The first local empirical pilot now records tasks, proposes a bounded correction, checks it against a fixed control, and tests rollback. The candidate was rejected: it did not beat the strongest simple baseline.</p><a class="button dark" href="{BASE}notes/STATUS/">Inspect implementation status</a></div><div class="evidence-key"><div><span class="badge">MEASURED · CPU / software tools</span><p>48 development tasks. 24 held-out fixtures. Three baseline configurations. A full deterministic replay.</p><a href="{BASE}notes/RUNS/">Experiment registry</a> · <a href="{BASE}notes/LEARNING/">Learning progress</a></div><div><span class="badge neutral">RESEARCH REMAINS OPEN</span><p>Synthetic caption tests establish a bounded workflow. Real-model operation and compounding learning remain unproven.</p><a href="{BASE}notes/GAPS/">Known gaps</a> · <a href="{BASE}notes/CAPABILITIES/">Capability registry</a></div></div></section>
 <section class="latest-update"><div><p class="eyebrow">LATEST RESEARCH / 20 NOV 2026</p><h2>Adaptive organization and self-learning.</h2><p>Organization as a learnable component. Separate learning loops, a formula registry, and tests that preserve competing approaches.</p></div><a class="button dark" href="{url(latest_research)}">Read research update</a></section><section class="home-section"><div class="section-heading"><div><p class="eyebrow">FIND YOUR STARTING POINT</p><h2>A working record,<br>with the reasoning attached.</h2></div><p>This is a research and implementation specification. The vault preserves proposals, disagreements, prior results, and the tests that could change a decision.</p></div><div class="entry-grid">{card('ADAPTIVE', 'The latest research: adaptive organizational duality, self-learning priorities, formula candidates, and proposed experiments.')}{card('GOOGLE', 'What the sleep and continual-learning evidence changes—and what it does not establish.')}{card('DECISIONS', 'Compare live alternatives, tradeoffs, and the evidence needed to choose.')}{card('ROADMAP', 'Work packages, dependency order, and acceptance gates for the local build.')}</div></section>
 <section class="topic-section"><div><p class="eyebrow">TEN CONNECTED TOPICS</p><h2>Follow a question<br>through the research.</h2><p>Every path connects to decisions, experiments, earlier methods, and sources. A connection is context; it is not proof.</p><a class="text-link" href="{BASE}graph/">Open the research graph</a></div><div class="topic-list">{topic_list}</div></section>
 <section class="home-section evidence-section"><div><p class="eyebrow">KEEP THE RECORD HONEST</p><h2>Evidence has a history.</h2><p>Primary-source findings belong to their authors. Historical imports retain their original scope. Proposed experiments have no implied result.</p><a class="text-link" href="{url(nodes['EVIDENCE'])}">Read the evidence conventions</a></div><div class="evidence-key"><div><span class="badge">Primary source reviewed</span><p>Inspected source, with its limits intact.</p></div><div><span class="badge neutral">Design proposal</span><p>An implementation path still to test.</p></div><div><span class="badge historical">Historical import</span><p>Preserved prior work, not a fresh measurement.</p></div></div></section>
@@ -312,7 +315,7 @@ def main():
     write(OUT / 'graph/index.html', shell('Research graph', graph_content, BASE + 'graph/', extra='<script defer src="/hive/assets/graph.js?v=2"></script>'))
     llms = f'''# HIVE framework & research vault
 
-> Framework revision 0.2, coder directions revision 0.4, and the adaptive-organization research addendum supplied by Ian Myers on 2026-11-20. Research and implementation specification, not a claim of a running or trained HIVE system.
+> Framework revision 0.2, coder directions revision 0.4, adaptive research, and a scoped local empirical pilot. The public site is a static evidence reference. No production HIVE model service or compounding-learning result is claimed.
 
 Canonical home: {ORIGIN}/hive/
 Search: {ORIGIN}/hive/search/?q=your-query
@@ -324,6 +327,10 @@ Original package: {ORIGIN}/hive/downloads/HIVE_Framework_Research_Vault.zip
 
 ## Reading rules
 
+- Current implementation evidence is at /hive/notes/STATUS/. It links experiments, capabilities, learning progress, gaps, decisions and release history.
+- The exact architecture change plan is at /hive/notes/GAPPLAN/. Original research is preserved; scope and dates determine what is implemented.
+- The caption pilot uses real CPU software tools on synthetic fixtures. The procedure candidate was rejected against the best simple control; model arms are excluded, not simulated.
+- Same-machine replay is not independent scientific replication. Public artifacts contain synthetic inputs only, with no private traces or local service addresses.
 - Page IDs are stable; cite /hive/notes/ID/ and heading anchors.
 - Each HTML page includes full readable text without JavaScript.
 - Original source Markdown is under /hive/vault/ with preserved relative paths.
@@ -348,7 +355,7 @@ Original package: {ORIGIN}/hive/downloads/HIVE_Framework_Research_Vault.zip
     write(OUT / 'sitemap.xml', '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + '\n'.join(f'<url><loc>{ORIGIN}{p}</loc></url>' for p in all_pages) + '\n</urlset>\n')
     manifest = dict(framework_revision='0.2', coder_revision=current_coder['revision'], latest_research_id=latest_research['id'], updates=[{k: n[k] for k in ['id', 'path', 'revision', 'date', 'sha256'] if k in n} for n in updates['entries']], source_zip_sha256=hashlib.sha256(args.zip.read_bytes()).hexdigest(),
                     counts=dict(research_pages=len(nodes), graph_edges=len(graph['edges']), originals=19),
-                    scope='Published research reference. No live HIVE runtime or new learning measurements are implied.')
+                    scope='Static research reference plus scoped local CPU/tool pilot evidence. No production model runtime or compounding-learning claim.')
     write(OUT / 'build-manifest.json', json.dumps(manifest, indent=2) + '\n')
     print(f'Built {len(nodes)} research pages, {len(originals)} original reading views, search, graph, and downloads into {OUT}')
 

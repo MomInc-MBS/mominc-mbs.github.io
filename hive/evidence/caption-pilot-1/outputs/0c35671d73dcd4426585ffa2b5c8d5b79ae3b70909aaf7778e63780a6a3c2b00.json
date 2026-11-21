@@ -1,0 +1,9 @@
+{
+  "task_id": "dev-01-bom-crlf",
+  "config_id": "probe",
+  "output": {
+    "valid": true,
+    "packet_count": 2,
+    "tool_calls": 1
+  }
+}

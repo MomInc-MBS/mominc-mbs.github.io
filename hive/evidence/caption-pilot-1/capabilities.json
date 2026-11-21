@@ -1,0 +1,119 @@
+[
+  {
+    "adapter": "captions.execute",
+    "capability_id": "rules",
+    "constraints": {
+      "dependencies": [],
+      "max_bytes": 65536,
+      "max_media_seconds": 15
+    },
+    "health": "ready",
+    "kind": "procedure",
+    "permissions": [
+      "read-fixture"
+    ],
+    "provenance": {
+      "adapter_sha256": "bf5e035880030bbc448fd748e0607dc115352ff05777589ba8312dd379a35ad1"
+    },
+    "requirements": {
+      "concurrency": 1,
+      "input_bytes": 65536,
+      "wall_seconds": 3
+    },
+    "safe": true,
+    "supported_tasks": [
+      "caption-validation"
+    ],
+    "version": "captions-1"
+  },
+  {
+    "adapter": "captions.execute",
+    "capability_id": "probe",
+    "constraints": {
+      "dependencies": [
+        "ffprobe"
+      ],
+      "max_bytes": 65536,
+      "max_media_seconds": 15
+    },
+    "health": "ready",
+    "kind": "deterministic-tool",
+    "permissions": [
+      "read-fixture",
+      "run-ffprobe"
+    ],
+    "provenance": {
+      "adapter_sha256": "bf5e035880030bbc448fd748e0607dc115352ff05777589ba8312dd379a35ad1"
+    },
+    "requirements": {
+      "concurrency": 1,
+      "input_bytes": 65536,
+      "wall_seconds": 3
+    },
+    "safe": true,
+    "supported_tasks": [
+      "caption-validation"
+    ],
+    "version": "captions-1"
+  },
+  {
+    "adapter": "captions.execute",
+    "capability_id": "combined",
+    "constraints": {
+      "dependencies": [
+        "ffprobe"
+      ],
+      "max_bytes": 65536,
+      "max_media_seconds": 15
+    },
+    "health": "ready",
+    "kind": "deterministic-tool",
+    "permissions": [
+      "read-fixture",
+      "run-ffprobe"
+    ],
+    "provenance": {
+      "adapter_sha256": "bf5e035880030bbc448fd748e0607dc115352ff05777589ba8312dd379a35ad1"
+    },
+    "requirements": {
+      "concurrency": 1,
+      "input_bytes": 65536,
+      "wall_seconds": 3
+    },
+    "safe": true,
+    "supported_tasks": [
+      "caption-validation"
+    ],
+    "version": "captions-1"
+  },
+  {
+    "adapter": "captions.execute",
+    "capability_id": "probe-guard",
+    "constraints": {
+      "dependencies": [
+        "ffprobe"
+      ],
+      "max_bytes": 65536,
+      "max_media_seconds": 15
+    },
+    "health": "ready",
+    "kind": "deterministic-tool",
+    "permissions": [
+      "read-fixture",
+      "run-ffprobe"
+    ],
+    "provenance": {
+      "adapter_sha256": "bf5e035880030bbc448fd748e0607dc115352ff05777589ba8312dd379a35ad1"
+    },
+    "requirements": {
+      "concurrency": 1,
+      "input_bytes": 65536,
+      "wall_seconds": 3
+    },
+    "safe": true,
+    "supported_tasks": [
+      "caption-validation"
+    ],
+    "version": "captions-1"
+  }
+]

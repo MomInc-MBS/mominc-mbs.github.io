@@ -1,0 +1,28 @@
+{
+  "ok": true,
+  "base": "local-staging",
+  "views": [
+    "STATUS",
+    "RUNS",
+    "CAPABILITIES",
+    "LEARNING",
+    "LEDGER",
+    "GAPS",
+    "RELEASES"
+  ],
+  "widths": [
+    1440,
+    1024,
+    900,
+    390,
+    320
+  ],
+  "physical_phone": false,
+  "no_javascript": true,
+  "search_graph": true,
+  "existing_diagrams": 7,
+  "adaptive_diagram": true,
+  "adaptive_equations": 2,
+  "page_errors": [],
+  "failed_requests": []
+}

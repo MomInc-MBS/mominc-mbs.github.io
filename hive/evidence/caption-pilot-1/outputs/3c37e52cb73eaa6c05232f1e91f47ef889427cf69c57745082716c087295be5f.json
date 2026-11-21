@@ -1,0 +1,9 @@
+{
+  "task_id": "dev-02-valid",
+  "config_id": "probe",
+  "output": {
+    "valid": true,
+    "packet_count": 2,
+    "tool_calls": 1
+  }
+}

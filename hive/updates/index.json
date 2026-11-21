@@ -37,6 +37,159 @@
         "formula-registry",
         "promotion-governor"
       ]
+    },
+    {
+      "id": "STATUS",
+      "path": "implementation/CURRENT_STATE.md",
+      "title": "Implementation Status",
+      "type": "build",
+      "status": "measured",
+      "evidence_status": "measured",
+      "implementation_status": "implemented_scoped_pilot",
+      "date": "2026-11-21",
+      "citation_label": "HIVE empirical pilot (21 November 2026 UTC)",
+      "sha256": "f26130d581c9f071afea679b26724f9e8b7a1b79ff9b3e9274499fe52a48b4fd",
+      "tags": [
+        "hive",
+        "empirical-pilot",
+        "measured"
+      ]
+    },
+    {
+      "id": "CAPABILITIES",
+      "path": "implementation/CAPABILITY_INVENTORY.md",
+      "title": "Capability Registry",
+      "type": "build",
+      "status": "measured",
+      "evidence_status": "measured",
+      "implementation_status": "implemented_scoped_pilot",
+      "date": "2026-11-21",
+      "citation_label": "HIVE empirical pilot (21 November 2026 UTC)",
+      "sha256": "1cac617a9392b230fce31210d55ae4b314d2f753122c36808f28614dab9fa489",
+      "tags": [
+        "hive",
+        "empirical-pilot",
+        "measured"
+      ]
+    },
+    {
+      "id": "RUNS",
+      "path": "implementation/EXPERIMENT_REGISTRY.md",
+      "title": "Experiment Registry",
+      "type": "build",
+      "status": "measured",
+      "evidence_status": "measured",
+      "implementation_status": "implemented_scoped_pilot",
+      "date": "2026-11-21",
+      "citation_label": "HIVE empirical pilot (21 November 2026 UTC)",
+      "sha256": "a46afb44b4f6928bf1f2921daa5ac8aaa636cbe8b4b11d4d03a0630c97cbf93c",
+      "tags": [
+        "hive",
+        "empirical-pilot",
+        "measured"
+      ]
+    },
+    {
+      "id": "LEARNING",
+      "path": "implementation/LEARNING_LOOP_REPORT.md",
+      "title": "Learning Progress",
+      "type": "build",
+      "status": "measured",
+      "evidence_status": "measured",
+      "implementation_status": "implemented_scoped_pilot",
+      "date": "2026-11-21",
+      "citation_label": "HIVE empirical pilot (21 November 2026 UTC)",
+      "sha256": "702f427565fb105020a9809c4bfad1baa8e2ad62764a031244b8e78428a19cf4",
+      "tags": [
+        "hive",
+        "empirical-pilot",
+        "measured"
+      ]
+    },
+    {
+      "id": "GAPS",
+      "path": "implementation/GAP_IMPLEMENTATION_MAP.md",
+      "title": "Known Gaps",
+      "type": "build",
+      "status": "specified",
+      "evidence_status": "specified",
+      "implementation_status": "partial",
+      "date": "2026-11-21",
+      "citation_label": "HIVE empirical pilot (21 November 2026 UTC)",
+      "sha256": "de8105ebce835deee7cb41fbe5321cc92f3eceb8c57d2b75a5c07d6e64f4c6ed",
+      "tags": [
+        "hive",
+        "empirical-pilot",
+        "specified"
+      ]
+    },
+    {
+      "id": "LEDGER",
+      "path": "implementation/ARCHITECTURE_DECISIONS.md",
+      "title": "Decision Ledger",
+      "type": "build",
+      "status": "specified",
+      "evidence_status": "specified",
+      "implementation_status": "partial",
+      "date": "2026-11-21",
+      "citation_label": "HIVE empirical pilot (21 November 2026 UTC)",
+      "sha256": "ce3ed5e6178a7752b32716e5f6d4b0c8f2d44c4e81084a2d8ce11550c9d7bc6e",
+      "tags": [
+        "hive",
+        "empirical-pilot",
+        "specified"
+      ]
+    },
+    {
+      "id": "RELEASES",
+      "path": "implementation/CHANGELOG.md",
+      "title": "Change / Release History",
+      "type": "build",
+      "status": "measured",
+      "evidence_status": "measured",
+      "implementation_status": "implemented_scoped_pilot",
+      "date": "2026-11-21",
+      "citation_label": "HIVE empirical pilot (21 November 2026 UTC)",
+      "sha256": "3ae7b978ef9bd067706d9d56ffce74a0ea15fce56a30d466dbb199e214429a46",
+      "tags": [
+        "hive",
+        "empirical-pilot",
+        "measured"
+      ]
+    },
+    {
+      "id": "BASELINE",
+      "path": "implementation/BASELINE_RESULTS.md",
+      "title": "Baseline Results",
+      "type": "build",
+      "status": "measured",
+      "evidence_status": "measured",
+      "implementation_status": "implemented_scoped_pilot",
+      "date": "2026-11-21",
+      "citation_label": "HIVE empirical pilot (21 November 2026 UTC)",
+      "sha256": "3f851a36485c64e14433147581528254b39a9f3fb76376ba940263ddf0dc6319",
+      "tags": [
+        "hive",
+        "empirical-pilot",
+        "measured"
+      ]
+    },
+    {
+      "id": "GAPPLAN",
+      "path": "updates/HIVE_Architecture_Gaps_and_Agent_Change_Plan.md",
+      "title": "Architecture gaps and agent change plan",
+      "type": "build",
+      "status": "specified",
+      "evidence_status": "specified",
+      "implementation_status": "partially_implemented",
+      "date": "2026-11-20",
+      "citation_label": "HIVE architecture change plan (20 November 2026)",
+      "sha256": "09c079a5d136dc15186f8e7bf6b2b95c2ac99d90d6657810b7115345226bc1ad",
+      "tags": [
+        "hive",
+        "architecture",
+        "empirical-learning"
+      ]
     }
   ],
   "edges": [
@@ -199,8 +352,89 @@
       "source": "HOME",
       "target": "ADAPTIVE",
       "relation": "related_to"
+    },
+    {
+      "source": "STATUS",
+      "target": "CAPABILITIES",
+      "relation": "related_to"
+    },
+    {
+      "source": "STATUS",
+      "target": "RUNS",
+      "relation": "related_to"
+    },
+    {
+      "source": "STATUS",
+      "target": "LEARNING",
+      "relation": "related_to"
+    },
+    {
+      "source": "STATUS",
+      "target": "GAPS",
+      "relation": "related_to"
+    },
+    {
+      "source": "STATUS",
+      "target": "LEDGER",
+      "relation": "related_to"
+    },
+    {
+      "source": "STATUS",
+      "target": "RELEASES",
+      "relation": "related_to"
+    },
+    {
+      "source": "STATUS",
+      "target": "BASELINE",
+      "relation": "related_to"
+    },
+    {
+      "source": "STATUS",
+      "target": "FRAMEWORK",
+      "relation": "informs"
+    },
+    {
+      "source": "STATUS",
+      "target": "ROADMAP",
+      "relation": "informs"
+    },
+    {
+      "source": "STATUS",
+      "target": "ADAPTIVE",
+      "relation": "informs"
+    },
+    {
+      "source": "STATUS",
+      "target": "HISTORY",
+      "relation": "informs"
+    },
+    {
+      "source": "STATUS",
+      "target": "B04",
+      "relation": "informs"
+    },
+    {
+      "source": "STATUS",
+      "target": "B06",
+      "relation": "informs"
+    },
+    {
+      "source": "STATUS",
+      "target": "CODER",
+      "relation": "informs"
+    },
+    {
+      "source": "GAPPLAN",
+      "target": "STATUS",
+      "relation": "tested_by"
+    },
+    {
+      "source": "RUNS",
+      "target": "LEARNING",
+      "relation": "informs"
     }
   ],
   "scope": "The supplied coder packet remains revision 0.4. The adaptive-organization research handoff is a dated addendum with provisional decisions and untested proposals. Editorial links provide navigation; original source and evidence records are preserved.",
-  "latest_research_id": "ADAPTIVE"
+  "latest_research_id": "ADAPTIVE",
+  "implementation_status_id": "STATUS"
 }

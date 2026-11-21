@@ -16,3 +16,9 @@
 *.woff binary
 *.woff2 binary
 *.ico binary
+
+# Frozen experiment inputs and supplied handoffs are evidence, including BOM/CRLF.
+tools/hive_engine/data/inputs/*.srt -text whitespace=cr-at-eol
+hive/updates/*.md -text
+hive/implementation/*.md -text
+hive/evidence/** -text
