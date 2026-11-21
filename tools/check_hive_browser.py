@@ -42,14 +42,24 @@ with sync_playwright() as p:
     download=ctx.request.get(base+'/hive/'+publication['download'])
     assert download.status==200
     assert hashlib.sha256(download.body()).hexdigest()==publication['download_sha256']
-    with page.expect_download() as pending:
-        page.get_by_role('link',name='Run instructions',exact=True).click()
-    instructions=Path(pending.value.path()).read_bytes()
-    assert hashlib.sha256(instructions).hexdigest()==publication['snapshot_files']['README.md']
-    # Chromium cancels document navigation when this exact request becomes a
-    # download. Exclude it only after the downloaded bytes match their manifest.
-    download_abort=base+'/hive/implementation/autonomous-v01/README.md net::ERR_ABORTED'
-    failed[:]=[failure for failure in failed if failure!=download_abort]
+    instructions_url=base+'/hive/implementation/autonomous-v01/README.md'
+    instructions_response=ctx.request.get(instructions_url)
+    assert instructions_response.status==200
+    assert hashlib.sha256(instructions_response.body()).hexdigest()==publication['snapshot_files']['README.md']
+    # Markdown may render inline or download depending on the server's MIME
+    # headers. Verify the observed user action and exact content in either case.
+    instruction_downloads=[]
+    page.on('download',lambda download:instruction_downloads.append(download))
+    page.get_by_role('link',name='Run instructions',exact=True).click()
+    if instruction_downloads:
+        instructions=Path(instruction_downloads[0].path()).read_bytes()
+        assert hashlib.sha256(instructions).hexdigest()==publication['snapshot_files']['README.md']
+        # Exclude this navigation abort only after verifying downloaded bytes.
+        download_abort=instructions_url+' net::ERR_ABORTED'
+        failed[:]=[failure for failure in failed if failure!=download_abort]
+    else:
+        expect(page).to_have_url(instructions_url)
+        expect(page.locator('body')).to_contain_text('HIVE local prototype')
     page.goto(base+'/hive/search/?q=autonomous%20local%20prototype')
     expect(page.locator('#results a[href="/hive/notes/PROTOTYPE/"]')).to_have_count(1)
     page.goto(base+'/hive/graph/?focus=PROTOTYPE')

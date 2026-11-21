@@ -1,0 +1,33 @@
+{
+  "ok": true,
+  "base": "https://mominc.online",
+  "views": [
+    "STATUS",
+    "RUNS",
+    "CAPABILITIES",
+    "LEARNING",
+    "LEDGER",
+    "GAPS",
+    "RELEASES",
+    "PROTOTYPE"
+  ],
+  "widths": [
+    1440,
+    1024,
+    900,
+    390,
+    320
+  ],
+  "physical_phone": false,
+  "no_javascript": true,
+  "search_graph": true,
+  "existing_diagrams": 7,
+  "adaptive_diagram": true,
+  "adaptive_equations": 2,
+  "prototype_download_digest": true,
+  "prototype_search_graph": true,
+  "page_errors": [],
+  "failed_requests": [],
+  "checked_release_commit": "fd1d97a49b97e660b6c39a9c54332438ab171790",
+  "runner": "Tester Army e2e 0.21.1 executing existing Playwright browser suite"
+}
