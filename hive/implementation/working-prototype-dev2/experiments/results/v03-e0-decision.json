@@ -1,0 +1,40 @@
+{
+  "mission_id": "hive-v03-e0-20261121",
+  "decision": "COMPLETED_WITH_STATUS_OBSERVABILITY_DEFECT",
+  "operator_budget_approved": true,
+  "authorization_basis": "Ian explicitly approved this prepared E0 budget in chat on 2026-11-21",
+  "executed_runtime": "0.2.1",
+  "source_commit": "eeec51497038ec34454d867f55ebe0fcadfffddf",
+  "source_sha256": "2f1ad5f919ec8918a6d699ee0c4328438e5b203294e4048717c0134c9e9bc37f",
+  "report_sha256": "5b96b69b23b457220c21073fd48c8c060176dbbe92cb1c9047e72ff40d206498",
+  "runtime_reproduction": true,
+  "generalization_demonstrated": false,
+  "policy_deployed": false,
+  "budget": {
+    "cycles": 36,
+    "requests": 30,
+    "tokens_actual": 1008,
+    "tokens_reserved": 3840,
+    "wall_s": 23.124999999883585
+  },
+  "replay_new_requests": 0,
+  "observations": 36,
+  "artifacts_bytes": 463010,
+  "strongest_baseline": "fixed_tool",
+  "new_real_calls_remaining": 0,
+  "defect": {
+    "id": "HIVE-V03-007",
+    "what_failed": "Top-level status.stop_reason stayed kill switch after adaptive FINISHED and kill_switch false",
+    "reproduction": "STOP -> adaptive pause with zero calls -> resume -> complete adaptive -> status",
+    "suspected_cause": "Adaptive finalization updates campaign reason but leaves generic worker stop_reason stale",
+    "counterexample": "v03-e0-20261121 SQLite status; final campaign reason completed finite preregistered schedule",
+    "new_hypothesis": "Publish adaptive terminal reason in the shared status field under the existing worker lock",
+    "owner": "ASTRA",
+    "next_test": "Synthetic STOP/resume/completion status regression on v0.3; no additional real calls",
+    "required_budget": {
+      "local_requests": 0
+    },
+    "rollback_ref": "eeec51497038ec34454d867f55ebe0fcadfffddf"
+  },
+  "next_experiment": "Integrate candidate/evaluator boundary and independently source/calibrate the E1 diagnostic pilot; new inference budget required."
+}

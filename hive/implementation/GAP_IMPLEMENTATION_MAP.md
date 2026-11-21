@@ -1,5 +1,11 @@
 # Known Gaps
 
+## Video mission engineering alpha — 21 November 2026
+
+The video vertical slice is implemented and engineering-tested. Remaining gates include operator editorial acceptance, 12 unused tasks across video plus actual isolated code/test, the third retrieval family, independent source-level research and chronological transfer. Level A/B are not accepted.
+
+[Source, results, demo and limitations](/hive/notes/WORKING/).
+
 ## Latest executed increment: adaptive controller v0.2
 
 **IMPLEMENTED / MEASURED; experimental checkpoints only.** The new controller

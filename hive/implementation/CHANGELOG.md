@@ -1,5 +1,11 @@
 # Change / Release History
 
+## Video mission engineering alpha — 21 November 2026
+
+Published v0.3.0.dev2 engineering source, 235-test evidence, 3 CLI journeys, clean-ZIP smoke and the full working-prototype plan. A 28.32-second excerpt from a 39:13.75 studio stream completed two objective jobs (captions and clip proposals) using one local-model call and 17 generated tokens. Fresh-process replay and STOP/resume used zero additional calls. The source had prior editing exposure; editorial acceptance is pending and it does not count toward unused A2 tasks. Earlier packages and rejected/quarantined decisions remain preserved.
+
+[Source, results, demo and limitations](/hive/notes/WORKING/).
+
 ## Latest executed increment: adaptive controller v0.2
 
 **IMPLEMENTED / MEASURED; experimental checkpoints only.** The new controller

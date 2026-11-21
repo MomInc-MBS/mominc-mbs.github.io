@@ -1,5 +1,11 @@
 # Capability Registry
 
+## Video mission engineering alpha — 21 November 2026
+
+Added local MP4/MOV plus SRT intake, deterministic caption normalization, optional pinned local-model cue selection, independent source/time checks, durable development feedback and atomic output reconciliation. Creative quality, audio alignment and an arbitrary-code sandbox are not claimed.
+
+[Source, results, demo and limitations](/hive/notes/WORKING/).
+
 ## Latest executed increment: adaptive controller v0.2
 
 **IMPLEMENTED / MEASURED; experimental checkpoints only.** The new controller

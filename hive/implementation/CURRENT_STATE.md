@@ -1,5 +1,11 @@
 # Implementation Status
 
+## Video mission engineering alpha — 21 November 2026
+
+Latest source is **v0.3.0.dev2**, a bounded video mission engineering alpha: 235 tests passed, 2 Windows symlink skips, 3 CLI journeys and a verified clean-source package. A 28.32-second excerpt from a 39:13.75 studio stream completed two objective jobs (captions and clip proposals) using one local-model call and 17 generated tokens. Fresh-process replay and STOP/resume used zero additional calls. The source had prior editing exposure; editorial acceptance is pending and it does not count toward unused A2 tasks. Level A/B remain unaccepted; no policy is deployed.
+
+[Source, results, demo and limitations](/hive/notes/WORKING/).
+
 ## v0.3 foundation: fresh E0 completed, E1 draft
 
 The experimental source adds frozen benchmark manifests and durable one-use exposure. The newly approved E0 ran the exact published v0.2.1 code: 30 real calls, 36 verified outputs, no extra calls on replay. It exposed a stale status reason, now repaired and synthetically tested in v0.3. The foundation passes 217 tests (one skip) and both CLI journeys. No policy is deployed and broad learning remains unproven. [Inspect the checkpoint, all arms, source and next work](/hive/notes/V03/).

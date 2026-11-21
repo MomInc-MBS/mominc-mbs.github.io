@@ -1,5 +1,11 @@
 # Learning Progress
 
+## Video mission engineering alpha — 21 November 2026
+
+The video mission saves policy hashes around verifier-backed development feedback and identifies the next proposed route without claiming that route executed. Editorial usefulness and strong-baseline learning benefit remain unverified. No production policy promotion occurred.
+
+[Source, results, demo and limitations](/hive/notes/WORKING/).
+
 ## Latest executed increment: adaptive controller v0.2
 
 **IMPLEMENTED / MEASURED; experimental checkpoints only.** The new controller

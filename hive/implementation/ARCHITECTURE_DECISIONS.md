@@ -1,5 +1,11 @@
 # Decision Ledger
 
+## Video mission engineering alpha — 21 November 2026
+
+Reuse the existing Executor, Policy, verifier and Store for the first file mission. Freeze source/config/model identities; serialize mission effects; reconcile recorded hashes after process death. Keep structural success separate from editorial acceptance and experimental feedback separate from promotion.
+
+[Source, results, demo and limitations](/hive/notes/WORKING/).
+
 ## Latest executed increment: adaptive controller v0.2
 
 **IMPLEMENTED / MEASURED; experimental checkpoints only.** The new controller

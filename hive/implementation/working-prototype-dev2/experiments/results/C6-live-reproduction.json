@@ -1,0 +1,29 @@
+{
+  "cycle_id": "C6-live-reproduction",
+  "hypothesis": "Six predeclared critical cases, one per category, retain verified quality in a new process with frozen policy.",
+  "plan_ref": "artifacts/0a86c6a47f9e7d4317ad220ce733047c0aacc7f74b34a958353563fb25f00439.json",
+  "candidate_hash": "86bc7f47d10e52ac7ea70aeb92a8a66ced268f89d3f134c8d89802be9e0736f7",
+  "n": 6,
+  "matched_quality": 6,
+  "passed": 6,
+  "learning_unchanged": true,
+  "reproduced": true,
+  "evidence_refs": [
+    "artifacts/d0dc8f12f1c51bfc73d37174b9384bf19531ae05dd742b9a4931734b62d3670e.json",
+    "artifacts/fa73958d829d46fd7c981a67325102513a46ef0435d65c042c44e02e904fe8dc.json",
+    "artifacts/d8b81732441bf1c9d9f68d4431ea7987028b29d9cdeb4df16eaac090906cbc16.json",
+    "artifacts/c48c91def9aff230522f842f7f0017126b0ced0efde33d8bf159d87ca6833fb3.json",
+    "artifacts/f088126523b2a58880b25cd7a0a8a217d4adbe7e7423bbc6e40c3127c6b5c597.json",
+    "artifacts/edb0d02ad674baf02f977ba741850eecc4e7521e881c182b3f44d27765b56edb.json"
+  ],
+  "budget": {
+    "cycles": 168,
+    "requests": 114,
+    "tokens_actual": 3870,
+    "tokens_reserved": 14592,
+    "wall_s": 82.32300000102259
+  },
+  "decision": "QUARANTINE",
+  "limitation": "Six-case reproducibility diagnostic; does not replace independent family-level superiority evidence.",
+  "next_experiment": "Broader preregistered families with fresh holdout, after allocating a new bounded mission."
+}

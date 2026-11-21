@@ -1,5 +1,11 @@
 # Experiment Registry
 
+## Video mission engineering alpha — 21 November 2026
+
+The dev2 engineering run passes 235 tests and 3 CLI journeys. A 28.32-second excerpt from a 39:13.75 studio stream completed two objective jobs (captions and clip proposals) using one local-model call and 17 generated tokens. Fresh-process replay and STOP/resume used zero additional calls. The source had prior editing exposure; editorial acceptance is pending and it does not count toward unused A2 tasks. Its clean ZIP replay spends no model calls. WP0 separately spent one call/eight tokens on dev1. Historical experiments below keep their original attribution.
+
+[Source, results, demo and limitations](/hive/notes/WORKING/).
+
 ## Latest executed increment: adaptive controller v0.2
 
 **IMPLEMENTED / MEASURED; experimental checkpoints only.** The new controller

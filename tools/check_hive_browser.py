@@ -10,14 +10,15 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright, expect
 
 base=os.environ.get('HIVE_BASE','http://127.0.0.1:8877')
-out=Path('.qa/hive-empirical');out.mkdir(parents=True,exist_ok=True)
+out=Path(os.environ.get('HIVE_QA_DIR','.qa/hive-empirical'));out.mkdir(parents=True,exist_ok=True)
 manifest=json.loads(Path('hive/build-manifest.json').read_text())
 errors,failed=[],[]
 views={'STATUS':'Implementation Status','RUNS':'Experiment Registry','CAPABILITIES':'Capability Registry',
        'LEARNING':'Learning Progress','LEDGER':'Decision Ledger','GAPS':'Known Gaps','RELEASES':'Change / Release History',
        'PROTOTYPE':'Autonomous local prototype — v0.1',
        'CONTROLLER':'Adaptive verified controller — v0.2',
-       'V03':'HIVE v0.3 foundation — 21 November 2026'}
+       'V03':'HIVE v0.3 foundation — 21 November 2026',
+       'WORKING':'Video mission engineering alpha'}
 
 with sync_playwright() as p:
     browser=p.chromium.launch(headless=True)
@@ -26,16 +27,27 @@ with sync_playwright() as p:
     page.on('pageerror',lambda e:errors.append(str(e)))
     page.on('requestfailed',lambda r:failed.append(r.url+' '+str(r.failure)))
     assert page.goto(base+'/hive/').status==200
-    expect(page.locator('.implementation-update')).to_contain_text('candidate was rejected')
+    expect(page.locator('.implementation-update')).to_contain_text('235 tests passed')
     page.locator('.implementation-update').scroll_into_view_if_needed()
     page.screenshot(path=str(out/'home-desktop.png'))
-    page.get_by_role('link',name='Inspect implementation status',exact=True).click()
+    page.locator('.implementation-update').get_by_role('link',name='Implementation status',exact=True).click()
     expect(page.locator('.prose h1')).to_have_text('Implementation Status')
     for key,title in views.items():
         assert page.goto(base+'/hive/notes/'+key+'/').status==200
         expect(page.locator('.prose h1')).to_have_text(title)
-        expect(page.locator('.prose')).to_contain_text('Last verified:')
+        expect(page.locator('.prose')).to_contain_text('Level A is not accepted' if key=='WORKING' else 'Last verified:')
         assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'),key
+    page.goto(base+'/hive/notes/WORKING/')
+    expect(page.locator('.prose')).to_contain_text('17 generated tokens')
+    working_publication=json.loads(Path('hive/implementation/working-prototype-dev2-publication.json').read_text())
+    working_download=ctx.request.get(base+'/hive/'+working_publication['download'])
+    assert working_download.status==200
+    assert hashlib.sha256(working_download.body()).hexdigest()==working_publication['download_sha256']
+    page.screenshot(path=str(out/'working-desktop.png'))
+    page.goto(base+'/hive/search/?q=video%20mission%20engineering')
+    expect(page.locator('#results a[href="/hive/notes/WORKING/"]')).to_have_count(1)
+    page.goto(base+'/hive/graph/?focus=WORKING')
+    expect(page.locator('#graph-selection h2')).to_have_text(views['WORKING'])
     page.goto(base+'/hive/notes/CONTROLLER/')
     expect(page.locator('.prose')).to_contain_text('Repeated validation')
     adaptive_publication=json.loads(Path('hive/implementation/adaptive-v021-publication.json').read_text())
@@ -135,6 +147,8 @@ with sync_playwright() as p:
             page.screenshot(path=str(out/'prototype-mobile.png'))
             page.goto(base+'/hive/notes/V03/')
             page.screenshot(path=str(out/'v03-mobile.png'))
+            page.goto(base+'/hive/notes/WORKING/')
+            page.screenshot(path=str(out/'working-mobile.png'))
     plain=browser.new_context(java_script_enabled=False)
     note=plain.new_page()
     for key in views:
@@ -146,7 +160,7 @@ assert not failed,failed
 report=dict(ok=True,base=base,views=list(views),widths=[1440,1024,900,390,320],physical_phone=False,
             no_javascript=True,search_graph=True,existing_diagrams=7,adaptive_diagram=True,adaptive_equations=2,
             prototype_download_digest=True,prototype_search_graph=True,adaptive_download_digest=True,
-            v03_download_digest=True,v03_chart_loaded=True,
+            v03_download_digest=True,v03_chart_loaded=True,working_download_digest=True,working_search_graph=True,
             page_errors=errors,failed_requests=failed)
 (out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report,indent=2))

@@ -1,0 +1,39 @@
+{
+  "ok": true,
+  "base": "http://127.0.0.1:55704",
+  "views": [
+    "STATUS",
+    "RUNS",
+    "CAPABILITIES",
+    "LEARNING",
+    "LEDGER",
+    "GAPS",
+    "RELEASES",
+    "PROTOTYPE",
+    "CONTROLLER",
+    "V03",
+    "WORKING"
+  ],
+  "widths": [
+    1440,
+    1024,
+    900,
+    390,
+    320
+  ],
+  "physical_phone": false,
+  "no_javascript": true,
+  "search_graph": true,
+  "existing_diagrams": 7,
+  "adaptive_diagram": true,
+  "adaptive_equations": 2,
+  "prototype_download_digest": true,
+  "prototype_search_graph": true,
+  "adaptive_download_digest": true,
+  "v03_download_digest": true,
+  "v03_chart_loaded": true,
+  "working_download_digest": true,
+  "working_search_graph": true,
+  "page_errors": [],
+  "failed_requests": []
+}

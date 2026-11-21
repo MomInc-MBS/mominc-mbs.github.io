@@ -1,0 +1,40 @@
+{
+  "source_commit": "2347e6add52542ef5516f680ac77b06e10f08ba2",
+  "runtime_version": "0.3.0.dev2",
+  "runtime_source_sha256": "e8dc974bf4e71f44879bd0a5dfe4194f09d97cd29c9c19c77be11a6be0a6631c",
+  "tracked_dirty": false,
+  "status": "engineering_alpha",
+  "level_a": "not_accepted",
+  "level_b": "not_run",
+  "policy_deployed": false,
+  "download": "downloads/HIVE_Working_Prototype_dev2.zip",
+  "download_sha256": "7c312b15b598dcde87f548aa550d57c192ab9cac34635601a0fdb0c05ebadf96",
+  "snapshot_manifest": "implementation/working-prototype-dev2/SNAPSHOT_MANIFEST.json",
+  "snapshot_file_count": 154,
+  "tests": {
+    "passed": 235,
+    "failed": 0,
+    "skipped": 2,
+    "wall_s": 94.47,
+    "junit": "experiments/results/prototype-dev2-tests.xml",
+    "skip_reason": "Windows symbolic-link creation unavailable; junction tests passed"
+  },
+  "cli_journeys": {
+    "passed": 3,
+    "failed": 0,
+    "report": "experiments/results/prototype-root-final-e2e/report.json",
+    "media": "ffmpeg-generated synthetic MP4; no real footage"
+  },
+  "video_demo": {
+    "status": "objective_verified_editorial_pending",
+    "receipt": "experiments/results/prototype-real-video-demo.json",
+    "model_calls": 1,
+    "generated_tokens": 17,
+    "source_groups": 1,
+    "objective_jobs_verified": 2,
+    "unused_a2_tasks": 0,
+    "editorial_acceptances": 0,
+    "public_description": "A 28.32-second excerpt from a 39:13.75 studio stream completed two objective jobs (captions and clip proposals) using one local-model call and 17 generated tokens. Fresh-process replay and STOP/resume used zero additional calls. The source had prior editing exposure; editorial acceptance is pending and it does not count toward unused A2 tasks."
+  },
+  "release_smoke": "implementation/working-prototype-release-smoke.json"
+}
