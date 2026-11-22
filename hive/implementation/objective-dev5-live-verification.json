@@ -1,0 +1,61 @@
+{
+  "verified_at": "2026-11-22T05:00:32.863826+00:00",
+  "status": "passed",
+  "site_commit": "07d75668d5b3ed9692ded8954fb1ea8bb825fd85",
+  "url": "https://mominc.online/hive/notes/OBJECTIVE/",
+  "checks": [
+    {
+      "path": "hive/index.html",
+      "sha256": "62c61410b7bcb5b0773ba38cec614266fdf545606076cfc00f4d064f81f75c3f",
+      "bytes": 14003,
+      "matches_deployed_git_bytes": true
+    },
+    {
+      "path": "hive/notes/STATUS/index.html",
+      "sha256": "91c6c0a48e70bf6bff86ac28836b0b60848c0864429e120a2251658596634373",
+      "bytes": 17968,
+      "matches_deployed_git_bytes": true
+    },
+    {
+      "path": "hive/notes/RELEASES/index.html",
+      "sha256": "0cbb229c4485cd7b6adc06e4e7e744ea8d8b7954c68efdc272f7963b2d203200",
+      "bytes": 15239,
+      "matches_deployed_git_bytes": true
+    },
+    {
+      "path": "hive/notes/OBJECTIVE/index.html",
+      "sha256": "a896704274b7d53e7b63966082dc8b7227bef50f41c3c92cfcbb53b615ac55f7",
+      "bytes": 12291,
+      "matches_deployed_git_bytes": true
+    },
+    {
+      "path": "hive/CURRENT_RELEASE.json",
+      "sha256": "4f1a4d1c27a400efad0847c38e63989c0d2d0efbb74f58d2ff9ed4cb32a42fdf",
+      "bytes": 717,
+      "matches_deployed_git_bytes": true
+    },
+    {
+      "path": "hive/implementation/objective-dev5-publication.json",
+      "sha256": "6140b25bdb9ca406b56ddc1f6717d7ffefd8a765de79ca72b060a5a3c73c074b",
+      "bytes": 2226,
+      "matches_deployed_git_bytes": true
+    },
+    {
+      "path": "hive/downloads/HIVE_Objective_Testing_v0_3_0_dev5.zip",
+      "sha256": "b6f9050c3aff751d5660cda2d23e8703cf67299e07f654c71300cf920eeb8e00",
+      "bytes": 30242550,
+      "matches_deployed_git_bytes": true
+    }
+  ],
+  "frozen_dev4_live_zip_sha256": "c3cf3e4633391efeb6f8659821fc4bdb6b112fe6dc4f5ea31bc00b531f3102ce",
+  "new_dev5_live_zip_sha256": "b6f9050c3aff751d5660cda2d23e8703cf67299e07f654c71300cf920eeb8e00",
+  "canonical_baseline": "0.3.0.dev4",
+  "engineering_supplement": "0.3.0.dev5",
+  "runtime_source_sha256": "2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c",
+  "genuine_level_a_attempted": 0,
+  "genuine_level_a_accepted": 0,
+  "level_b": "UNTESTED",
+  "P2": "QUARANTINE",
+  "new_hive_model_calls": 0,
+  "verification_method": "HTTP download byte comparison to deployed Git commit and full archive SHA256, plus prepublication720-file extracted ZIP check; no visual/physical-device test claimed."
+}

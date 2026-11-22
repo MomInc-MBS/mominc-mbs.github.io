@@ -59,5 +59,9 @@
   "P2_decision": "QUARANTINE",
   "quality_gain": false,
   "baseline_publication": "implementation/readiness-dev4-publication.json",
-  "scope": "Synthetic objective development and engineering repair; no genuine acceptance or learning gain"
+  "scope": "Synthetic objective development and engineering repair; no genuine acceptance or learning gain",
+  "live_verification": "implementation/objective-dev5-live-verification.json",
+  "final_build_queue": "implementation/objective-dev5-final-queue.json",
+  "verified_site_commit": "07d75668d5b3ed9692ded8954fb1ea8bb825fd85",
+  "live_verified_at": "2026-11-22T05:00:32.863826+00:00"
 }

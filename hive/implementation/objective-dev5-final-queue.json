@@ -1,0 +1,333 @@
+{
+  "status": {
+    "items": [
+      {
+        "authorized": true,
+        "depends_on": [],
+        "history": [
+          "artifacts/ca01128f6d0119c478ee426b7800a8a872b0f31b2dcb6d9af61070d320bfab23.json",
+          "artifacts/bb642d912f9888a8facad1d504d418b1aa4683e316096a0b5218f027a2440ef3.json",
+          "artifacts/0601d1f134cc9b9e9bca6b33f2dde2e3b625075daa7dd3e0c344165476d11c31.json",
+          "artifacts/5db79e022eed648c62715652bffcd24321b1b8b622416ebb8ca95382328853ac.json"
+        ],
+        "hypothesis": "Frozen dev4 reproduces the published gates with absolute stores; the preserved parent-relative H11 counterexample requires a separate dev5 path repair.",
+        "id": "reproduce-dev4",
+        "next_command": "Run WP0 commands from the verified published ZIP.",
+        "owner": "Terra",
+        "status": "COMPLETED"
+      },
+      {
+        "authorized": true,
+        "depends_on": [],
+        "history": [
+          "artifacts/ee2884de32c2e139257f464b3d404f7743d8d90b389359459b129175f6807ea3.json"
+        ],
+        "hypothesis": "An honest twelve-position intake can be prepared without fabricating approved unused sources.",
+        "id": "level-a-intake",
+        "next_command": "Review docs/LEVEL_A_OPERATOR_INTAKE.md and non-executable intake template.",
+        "owner": "Astra",
+        "status": "COMPLETED"
+      },
+      {
+        "authorized": true,
+        "depends_on": [],
+        "history": [
+          "artifacts/b6dab831daf020068e8af2310cc6c6bfc1cb4d1a43a31dc7abbd242b79f5b333.json"
+        ],
+        "hypothesis": "A separately versioned policy protects eligible exact-tool tasks and preserves historical decisions.",
+        "id": "p2-development",
+        "next_command": "python -m pytest tests/unit/test_p2_exact_tool.py -q",
+        "owner": "Luna",
+        "status": "COMPLETED"
+      },
+      {
+        "authorized": true,
+        "depends_on": [
+          "p2-development"
+        ],
+        "history": [
+          "artifacts/428e7107441d2a787bd0ea014dbecc268327faf9f6a3df851f517a601babbe91.json"
+        ],
+        "hypothesis": "Independent counterexamples and full regression reject unsafe P2 routing while the default remains unchanged.",
+        "id": "p2-independent-review",
+        "next_command": "Review candidate diff; run focused P2 negatives and complete regression.",
+        "owner": "Terra",
+        "status": "COMPLETED"
+      },
+      {
+        "authorized": true,
+        "depends_on": [
+          "reproduce-dev4",
+          "level-a-intake",
+          "p2-independent-review"
+        ],
+        "history": [
+          "artifacts/609c3163240fae7628765ef6a5c1fba7fd81752e13bf18ebcee969ce8b9d44b3.json"
+        ],
+        "hypothesis": "One canonical live release pointer and separate quarantined supplement preserve dev4 provenance and honest gates.",
+        "id": "publish-verified-loop",
+        "next_command": "python tools/check_hive.py; verify live manifest and ZIP hashes.",
+        "owner": "Astra",
+        "status": "COMPLETED"
+      },
+      {
+        "authorized": true,
+        "depends_on": [
+          "publish-verified-loop"
+        ],
+        "history": [
+          "artifacts/f8f8ec57277e3160553affd127f2cb583fa0bbcb7cf540ce5cc68b0027afd1c9.json"
+        ],
+        "hypothesis": "Twelve approved unused independent tasks can pass frozen mechanical and editorial gates within a new finite allocation.",
+        "id": "fresh-level-a-execution",
+        "next_command": "BLOCKED: need approved sources, reviewers and new finite allocation; no inference dispatch.",
+        "owner": "Operator",
+        "status": "BLOCKED_DEPENDENCY"
+      }
+    ],
+    "manifest_ref": "artifacts/53f6a7c764c3a5fbfd0d3541bbfa55744493e0e256d0384aa9264e0824b4fafa.json",
+    "manifest_sha256": "53f6a7c764c3a5fbfd0d3541bbfa55744493e0e256d0384aa9264e0824b4fafa",
+    "next_item": null,
+    "mission_authority": false,
+    "note": "Engineering queue does not clear STOP, grant inference, reset budgets or approve policy."
+  },
+  "history": [
+    {
+      "item_id": "reproduce-dev4",
+      "ref": "artifacts/ca01128f6d0119c478ee426b7800a8a872b0f31b2dcb6d9af61070d320bfab23.json",
+      "event": {
+        "evidence": {
+          "measured_runtime": "e711d1c3e7eb4dbd23b95f3027f5d97627b1f6880a2c252e2cefea8c522e817b",
+          "receipt": {
+            "path": "experiments/results/next-loop-20261121/baseline/baseline-H11.log",
+            "sha256": "08374e35b851988f9a1aa718b30b24ce5ec3f033a8dc094e09db297bd3f7e616"
+          }
+        },
+        "failure_signature": "H11_PARENT_RELATIVE_STORE_OUTPUT_PATH",
+        "hypothesis": "The downloaded frozen dev4 package reproduces all offline and synthetic gates with exact hashes.",
+        "item_id": "reproduce-dev4",
+        "outcome": "failed"
+      }
+    },
+    {
+      "item_id": "reproduce-dev4",
+      "ref": "artifacts/bb642d912f9888a8facad1d504d418b1aa4683e316096a0b5218f027a2440ef3.json",
+      "event": {
+        "evidence": {
+          "measured_runtime": "e711d1c3e7eb4dbd23b95f3027f5d97627b1f6880a2c252e2cefea8c522e817b",
+          "receipt": {
+            "path": "experiments/results/next-loop-20261121/baseline/baseline-H11-replay.log",
+            "sha256": "6c58fe00adcbc2ea16e5304146a2194589a08108945811942d5f38fd89e0502b"
+          }
+        },
+        "failure_signature": "H11_PARENT_RELATIVE_STORE_OUTPUT_PATH",
+        "hypothesis": "The downloaded frozen dev4 package reproduces all offline and synthetic gates with exact hashes.",
+        "item_id": "reproduce-dev4",
+        "outcome": "failed"
+      }
+    },
+    {
+      "item_id": "reproduce-dev4",
+      "ref": "artifacts/0601d1f134cc9b9e9bca6b33f2dde2e3b625075daa7dd3e0c344165476d11c31.json",
+      "event": {
+        "diagnosis": "H11 parent-relative store kept dot-dot segments while named output validator resolved them; missing stage result then masked the cause. Not Docker timeout.",
+        "discriminating_test": "Preserve same immutable dev4 source and run H11 at fresh absolute store; run and fresh-process replay passed.",
+        "evidence": {
+          "path": "experiments/results/next-loop-20261121/baseline-verification.md",
+          "sha256": "f49ff20c57482228a15798edc8e1e08573ffccbbdcf70e866b60ca4df319c61d"
+        },
+        "item_id": "reproduce-dev4",
+        "reviewer": "Astra (independent of baseline executor Terra)"
+      }
+    },
+    {
+      "item_id": "reproduce-dev4",
+      "ref": "artifacts/5db79e022eed648c62715652bffcd24321b1b8b622416ebb8ca95382328853ac.json",
+      "event": {
+        "evidence": {
+          "pytest": {
+            "path": "experiments/results/next-loop-20261121/baseline-pytest.xml",
+            "sha256": "0d63ab966e6795f44805cb9c91b565cb128505b8fce6325a525fa78bad41e46f"
+          },
+          "report": {
+            "path": "experiments/results/next-loop-20261121/baseline-verification.md",
+            "sha256": "f49ff20c57482228a15798edc8e1e08573ffccbbdcf70e866b60ca4df319c61d"
+          },
+          "verdict": "Reproduction complete with named baseline counterexample; not an unqualified flawless gate pass."
+        },
+        "failure_signature": null,
+        "hypothesis": "Frozen dev4 reproduces the published gates with absolute stores; the preserved parent-relative H11 counterexample requires a separate dev5 path repair.",
+        "item_id": "reproduce-dev4",
+        "outcome": "passed"
+      }
+    },
+    {
+      "item_id": "level-a-intake",
+      "ref": "artifacts/ee2884de32c2e139257f464b3d404f7743d8d90b389359459b129175f6807ea3.json",
+      "event": {
+        "evidence": {
+          "plan": {
+            "path": "experiments/plans/readiness-level-a.json",
+            "sha256": "b99f66280841c7467be90b5450451b5060fc58c89e27eb50b9fc1b8064a945cf"
+          },
+          "scope_revision": "Ian switched prospective video/editorial tasks to exact structured data and Python. Twelve slots unfilled, zero genuine attempts, no approved sources or new inference.",
+          "sheet": {
+            "path": "docs/LEVEL_A_OPERATOR_INTAKE.md",
+            "sha256": "d4fa9f1493d05382a626df3cce66e7d4c5abb9dfcecb9f13c57ad2c017e92b7e"
+          }
+        },
+        "failure_signature": null,
+        "hypothesis": "An honest twelve-position intake can be prepared without fabricating approved unused sources.",
+        "item_id": "level-a-intake",
+        "outcome": "passed"
+      }
+    },
+    {
+      "item_id": "p2-development",
+      "ref": "artifacts/b6dab831daf020068e8af2310cc6c6bfc1cb4d1a43a31dc7abbd242b79f5b333.json",
+      "event": {
+        "evidence": {
+          "focused_review": {
+            "path": "experiments/results/next-loop-20261121/sol-p2-final-review.json",
+            "sha256": "94b83d9b1a8c32d02f58af03e02c6881708b737c339180537b8ed2c7aecd8f23"
+          },
+          "gain": false,
+          "quarantined": true,
+          "runtime_commit": "5719c4ace14a1c437bf8f935b8666773b0e37493",
+          "runtime_sha256": "2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c"
+        },
+        "failure_signature": null,
+        "hypothesis": "A separately versioned policy protects eligible exact-tool tasks and preserves historical decisions.",
+        "item_id": "p2-development",
+        "outcome": "passed"
+      }
+    },
+    {
+      "item_id": "p2-independent-review",
+      "ref": "artifacts/428e7107441d2a787bd0ea014dbecc268327faf9f6a3df851f517a601babbe91.json",
+      "event": {
+        "evidence": {
+          "comparison": {
+            "path": "comparison.json",
+            "sha256": "52fb4cb0fcd2e3601c6ab1f5cf890ae7d2164af17c5ad1953bec2ce2f7db4549"
+          },
+          "decision": "Mechanics verified; P2 QUARANTINED, no gain or promotion.",
+          "independent_P2": {
+            "path": "sol-p2-final-review.json",
+            "sha256": "94b83d9b1a8c32d02f58af03e02c6881708b737c339180537b8ed2c7aecd8f23"
+          },
+          "independent_objective": {
+            "path": "terra-objective-final-review.json",
+            "sha256": "5036db5a0ed44dff14f60dff5781b2feadde7dec1478d1a5d76dcaf22443a444"
+          },
+          "regression": {
+            "path": "candidate-final-tests.xml",
+            "sha256": "568ea6a681f36aeb763af9ec1fc1b77f39e8427859fc4970de035e8124e4c724"
+          }
+        },
+        "failure_signature": null,
+        "hypothesis": "Independent counterexamples and full regression reject unsafe P2 routing while the default remains unchanged.",
+        "item_id": "p2-independent-review",
+        "outcome": "passed"
+      }
+    },
+    {
+      "item_id": "publish-verified-loop",
+      "ref": "artifacts/609c3163240fae7628765ef6a5c1fba7fd81752e13bf18ebcee969ce8b9d44b3.json",
+      "event": {
+        "evidence": {
+          "baseline_zip_unchanged": true,
+          "dev5_zip_sha256": "b6f9050c3aff751d5660cda2d23e8703cf67299e07f654c71300cf920eeb8e00",
+          "live_receipt_public_path": "implementation/objective-dev5-live-verification.json",
+          "live_receipt_sha256": "f38f1e147d63d8162b1f466b7ffb9f35269b10c82bb899ec67c0f1cd3b8039ea",
+          "live_url": "https://mominc.online/hive/notes/OBJECTIVE/",
+          "site_commit": "07d75668d5b3ed9692ded8954fb1ea8bb825fd85"
+        },
+        "failure_signature": null,
+        "hypothesis": "One canonical live release pointer and separate quarantined supplement preserve dev4 provenance and honest gates.",
+        "item_id": "publish-verified-loop",
+        "outcome": "passed"
+      }
+    },
+    {
+      "item_id": "fresh-level-a-execution",
+      "ref": "artifacts/f8f8ec57277e3160553affd127f2cb583fa0bbcb7cf540ce5cc68b0027afd1c9.json",
+      "event": {
+        "evidence": {
+          "genuine_tasks": 0,
+          "model_calls": 0,
+          "new_inference_authorized": 0,
+          "next_action": "Freeze approved unused data/code corpus, independent references and finite allocation; optional development-only negative controls remain separate. No dispatch.",
+          "scope_revision": "Ian replaced video/editorial with exact data/Python. Historical queue wording does not reintroduce visual review.",
+          "source_inventory_approved": false
+        },
+        "failure_signature": null,
+        "hypothesis": "Twelve approved unused independent tasks can pass frozen mechanical and editorial gates within a new finite allocation.",
+        "item_id": "fresh-level-a-execution",
+        "outcome": "blocked"
+      }
+    }
+  ],
+  "mission_authority": false,
+  "live_verification": {
+    "verified_at": "2026-11-22T05:00:32.863826+00:00",
+    "status": "passed",
+    "site_commit": "07d75668d5b3ed9692ded8954fb1ea8bb825fd85",
+    "url": "https://mominc.online/hive/notes/OBJECTIVE/",
+    "checks": [
+      {
+        "path": "hive/index.html",
+        "sha256": "62c61410b7bcb5b0773ba38cec614266fdf545606076cfc00f4d064f81f75c3f",
+        "bytes": 14003,
+        "matches_deployed_git_bytes": true
+      },
+      {
+        "path": "hive/notes/STATUS/index.html",
+        "sha256": "91c6c0a48e70bf6bff86ac28836b0b60848c0864429e120a2251658596634373",
+        "bytes": 17968,
+        "matches_deployed_git_bytes": true
+      },
+      {
+        "path": "hive/notes/RELEASES/index.html",
+        "sha256": "0cbb229c4485cd7b6adc06e4e7e744ea8d8b7954c68efdc272f7963b2d203200",
+        "bytes": 15239,
+        "matches_deployed_git_bytes": true
+      },
+      {
+        "path": "hive/notes/OBJECTIVE/index.html",
+        "sha256": "a896704274b7d53e7b63966082dc8b7227bef50f41c3c92cfcbb53b615ac55f7",
+        "bytes": 12291,
+        "matches_deployed_git_bytes": true
+      },
+      {
+        "path": "hive/CURRENT_RELEASE.json",
+        "sha256": "4f1a4d1c27a400efad0847c38e63989c0d2d0efbb74f58d2ff9ed4cb32a42fdf",
+        "bytes": 717,
+        "matches_deployed_git_bytes": true
+      },
+      {
+        "path": "hive/implementation/objective-dev5-publication.json",
+        "sha256": "6140b25bdb9ca406b56ddc1f6717d7ffefd8a765de79ca72b060a5a3c73c074b",
+        "bytes": 2226,
+        "matches_deployed_git_bytes": true
+      },
+      {
+        "path": "hive/downloads/HIVE_Objective_Testing_v0_3_0_dev5.zip",
+        "sha256": "b6f9050c3aff751d5660cda2d23e8703cf67299e07f654c71300cf920eeb8e00",
+        "bytes": 30242550,
+        "matches_deployed_git_bytes": true
+      }
+    ],
+    "frozen_dev4_live_zip_sha256": "c3cf3e4633391efeb6f8659821fc4bdb6b112fe6dc4f5ea31bc00b531f3102ce",
+    "new_dev5_live_zip_sha256": "b6f9050c3aff751d5660cda2d23e8703cf67299e07f654c71300cf920eeb8e00",
+    "canonical_baseline": "0.3.0.dev4",
+    "engineering_supplement": "0.3.0.dev5",
+    "runtime_source_sha256": "2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c",
+    "genuine_level_a_attempted": 0,
+    "genuine_level_a_accepted": 0,
+    "level_b": "UNTESTED",
+    "P2": "QUARANTINE",
+    "new_hive_model_calls": 0,
+    "verification_method": "HTTP download byte comparison to deployed Git commit and full archive SHA256, plus prepublication720-file extracted ZIP check; no visual/physical-device test claimed."
+  }
+}
