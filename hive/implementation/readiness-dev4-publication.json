@@ -65,5 +65,9 @@
   "policy_deployed": false,
   "scope": "Engineering readiness and synthetic controls; fixed specialist/team dispatch tested with fake adapter, not new model performance.",
   "local_browser_check": "implementation/readiness-dev4-local-browser.json",
-  "tested_candidate_manifest": "implementation/readiness-dev4-tested-candidate-manifest.json"
+  "tested_candidate_manifest": "implementation/readiness-dev4-tested-candidate-manifest.json",
+  "live_browser_check": "implementation/readiness-dev4-live-browser.json",
+  "live_release_journey": "implementation/readiness-dev4-live-e2e.json",
+  "verified_site_commit": "45b3a583766ca6da808bb6f8bfda3797480c9e9e",
+  "live_verified_at": "2026-11-22T02:35:38.238737+00:00"
 }

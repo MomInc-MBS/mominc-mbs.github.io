@@ -1,0 +1,114 @@
+{
+  "schemaVersion": "report-1",
+  "run": {
+    "id": "01a2011a-48a4-709a-9425-c5870b74f2a0",
+    "specVersion": "0.1",
+    "runner": {
+      "name": "e2e",
+      "version": "0.21.1"
+    },
+    "status": "passed",
+    "exitCode": 0,
+    "startedAt": "2026-11-22T02:33:49.702Z",
+    "finishedAt": "2026-11-22T02:34:17.240Z",
+    "project": {
+      "id": "hive-readiness-live-release",
+      "configDigest": "ba16cfaef7e5c78ee25932c9089ddfd576a9589df4893c717f9d41eeeaf94be9"
+    },
+    "environment": {
+      "ci": false,
+      "trustNoticeShown": false,
+      "os": "win32 10.0.26200",
+      "arch": "x64",
+      "runtime": "node v24.19.0"
+    },
+    "vcs": {
+      "commit": "1e1bf945bd605fa511c7ceed9ecae303f77e1c56",
+      "branch": "build/working-prototype",
+      "dirty": false
+    },
+    "targets": [
+      {
+        "id": "release",
+        "index": 0,
+        "platform": "tools",
+        "environment": "test",
+        "engine": {
+          "name": "none",
+          "version": "unversioned",
+          "spiVersion": 1
+        },
+        "capabilities": [],
+        "artifactCapabilities": [],
+        "stateCapability": false
+      }
+    ],
+    "serialGroups": [],
+    "results": [
+      {
+        "id": "9080c810964bfde777378df5a3aa4d709100da51d999ad67b6ac399f6f29c776",
+        "testId": "readiness-live.e2e.ts::live%20HIVE%20readiness%2C%20responsive%20views%2C%20evidence%20downloads%20and%20prior%20releases",
+        "kind": "test",
+        "declarationIndex": 0,
+        "titlePath": [
+          "live HIVE readiness, responsive views, evidence downloads and prior releases"
+        ],
+        "file": "readiness-live.e2e.ts",
+        "source": {
+          "file": "readiness-live.e2e.ts",
+          "line": 4,
+          "column": 1
+        },
+        "targetId": "release",
+        "platform": "tools",
+        "agent": "default",
+        "repeat": 0,
+        "tags": [],
+        "selected": true,
+        "status": "passed",
+        "attempts": [
+          {
+            "id": "01a2011a-4ad3-7b94-afa6-b656dcd4b22c",
+            "index": 0,
+            "status": "passed",
+            "startedAt": "2026-11-22T02:33:50.035Z",
+            "durationMs": 27185,
+            "artifacts": [],
+            "secondaryErrors": [],
+            "cleanup": "complete",
+            "steps": []
+          }
+        ]
+      }
+    ],
+    "errors": [],
+    "summary": {
+      "discovered": 1,
+      "selected": 1,
+      "executed": 1,
+      "passed": 1,
+      "failed": 0,
+      "flaky": 0,
+      "skipped": 0
+    },
+    "limits": {
+      "maxAgentContextBytes": 16384,
+      "maxLedgerBytes": 8192,
+      "maxObservationBytes": 262144,
+      "maxEventsPerStep": 1000,
+      "maxModelTokensPerCall": 64000
+    },
+    "usage": {
+      "discoveredResults": 1,
+      "maxAgentContextBytes": 0,
+      "maxLedgerBytes": 0,
+      "maxObservationBytes": 0,
+      "artifactBytes": 0,
+      "downloads": 0,
+      "events": 0,
+      "modelTokens": 0,
+      "maxModelCallsInStep": 0,
+      "maxActionStepsInStep": 0
+    }
+  }
+}
