@@ -1,0 +1,44 @@
+{
+  "reviewer": "grok-4.7-build-fast",
+  "provider": "grok",
+  "executed_model_reported": null,
+  "task_id": "node:delegated-task:command%3Amcp%3A73e9940b-3a9f-4c76-b0d5-deb5aceb8e86%3Adelegate-task%3Ahive-v03-grok-boundary-20261121",
+  "link": "[HIVE v0.3 Grok boundary review](t3-thread://v2/50b34497-15f3-472e-bf5c-62b0014ba111/thread:delegated-task:command%3Amcp%3A73e9940b-3a9f-4c76-b0d5-deb5aceb8e86%3Adelegate-task%3Ahive-v03-grok-boundary-20261121)",
+  "review_scope": "Read-only source review and synthetic reproductions; inspected a09b303 plus in-progress edits, before c77710e. No inference.",
+  "raw_review": "Reviewed the dirty working tree on `D:\\Repos\\hive-ai`, branch `build/v0.3`. Merge-base with `eeec514` is still `eeec514`. HEAD is now `a09b303` (`Begin v0.3 with frozen benchmark exposure registry and bounded E0 plan`), with uncommitted edits in `src/hive/benchmark_registry.py`, `scripts/v03_e0.py`, and `tests/unit/test_benchmark_registry.py`. Synthetic reproductions only. No model call, no repo write, and this is not an E0 pass.\n\n## Still holding\n\nExact public payloads are rejected across splits and, in the uncommitted edit, inside one manifest. `  SOURCE-A  ` is rejected across splits. The same source id blocks `1` versus `1.0`. `casefold` already folds `\ufb01` to `fi`. Two racing identities produced one `fresh` and one `denied`. The `private` object stayed out of that candidate view. Offline pins match the constants: v0.2.1 source hash, zip hash, config hash, config-file hash, and verifier hash. With `GIT_CEILING_DIRECTORIES` set to `.hive/v03-base`, the snapshot directory has no git commit. The package version is `0.2.1`.\n\n## P1\n\n**1. Canonical JSON still splits one fixture into two.** [`benchmark_registry.py:68`](D:\\Repos\\hive-ai\\src\\hive\\benchmark_registry.py:68) hashes `json.dumps` output. These pairs get different hashes and both register when task, family, and source ids differ:\n\n- `{\"n\":1}` and `{\"n\":1.0}`\n- `{\"n\":0.0}` and `{\"n\":-0.0}`\n- `\"caf\u00e9\"` (U+00E9) and `\"cafe\\u0301\"`\n\nA second manifest with `n: 1.0` then `consume_once` returned `fresh` after the `n: 1` holdout was already consumed. Same source id still stops the number pair. The hole is a relabel plus a payload the hash treats as new. The new unit test only covers an exact duplicate payload.\n\n**2. Forbidden-key filter misses padded keys, and the candidate view returns them.** [`benchmark_registry.py:22`](D:\\Repos\\hive-ai\\src\\hive\\benchmark_registry.py:22) and [`benchmark_registry.py:61`](D:\\Repos\\hive-ai\\src\\hive\\benchmark_registry.py:61) compare `key.casefold()` to the exact set. These keys registered and `get_public_cases` included `SYNTHETIC_SECRET_FIELD`: `\"gold \"`, `\"g\\u200bold\"`, `\"label\\n\"`, `\"answer\\u00a0\"`.\n\n**3. The wrapper's own STOP preflight makes `PASS_RUNTIME_REPRODUCTION_ONLY` unreachable.** Preflight adaptive sets the store `stop_reason` to `kill switch` ([`adaptive.py:64`](D:\\Repos\\hive-ai\\.hive\\v03-base\\source\\src\\hive\\adaptive.py:64)). Resume only deletes `STOP` ([`cli.py:105`](D:\\Repos\\hive-ai\\.hive\\v03-base\\source\\src\\hive\\cli.py:105)). Finish updates the campaign reason to `completed finite preregistered schedule` and leaves the store key. The uncommitted check at [`v03_e0.py:145`](D:\\Repos\\hive-ai\\scripts\\v03_e0.py:145) then returns `COMPLETED_WITH_STATUS_OBSERVABILITY_DEFECT`. A synthetic CLI with that contract, and no model, produced that decision after a finished 30-request replay.\n\n**4. A paused store is not resumed while `STOP` remains.** [`v03_e0.py:127`](D:\\Repos\\hive-ai\\scripts\\v03_e0.py:127) calls `resume` only when `status.adaptive` is empty. If `resume` fails, or the process stops after the preflight campaign is written, the next `run()` sees the campaign, calls adaptive under `STOP`, and returns `STOP` with zero requests. Synthetic reproduction: first `resume` raised, second `run()` returned `STOP`, `resume` was not called again, requests stayed 0.\n\n## P2\n\n**Zero-width identifiers cross splits when the payload bytes differ.** `task-plain` versus `task-plain\\u200b`, and the same trick on family and source, registered together. The identical fixture hash still blocks a second consume of the same bytes.\n\n**A tuple hides `gold` on the way in.** `inspect` walks dicts and lists only. `{\"blob\": ({\"gold\": \"SYNTHETIC_TUPLE_GOLD\"},)}` registered. The next read raises `manifest corruption` because the stored JSON has a list. The secret remains in the sqlite body. The read API stays closed.\n\n**The PASS label does not enforce the caps.** A forged status of 999 requests and 99999 reserved tokens, with both stop-reason fields empty, still returned `PASS_RUNTIME_REPRODUCTION_ONLY`. The preflight result body is ignored. The status check only requires `kill_switch` and `requests == 0`. The pinned executor still increments requests before a local call and stops at the configured cap. This is a missing check in [`v03_e0.py:131`](D:\\Repos\\hive-ai\\scripts\\v03_e0.py:131), separate from that executor.\n\n**`prepare()` records a test result it did not run.** [`v03_e0.py:105`](D:\\Repos\\hive-ai\\scripts\\v03_e0.py:105) writes `passed: 136`, `skipped: 1`, `seconds: 80.17`, and `real_inference_calls: 0`. `run()` calls `prepare()` on every entry, so a later invocation rewrites that artifact.\n\n## Limits\n\nThe registry is a trusted-process API. Private labels are in the same sqlite file. One-use is one row per manifest and split in that file, for the whole split.\n\nE0 does not call `BenchmarkRegistry`. It runs the pinned v0.2.1 tree. For `code_repair`, `request_view` includes `fixture_outputs`, and those values equal `expected.fixture_results` ([`task_spec.py:31`](D:\\Repos\\hive-ai\\.hive\\v03-base\\source\\src\\hive\\task_spec.py:31), [`task_spec.py:75`](D:\\Repos\\hive-ai\\.hive\\v03-base\\source\\src\\hive\\task_spec.py:75)). The `expected` key itself is absent. Changing that would change the pinned runtime.\n\nThe planner arithmetic fits 30 local calls and 3840 reserved tokens: 12 development, 6 validation baseline, 12 learned or fixed-local, plus 6 `tool` routes that do not reserve. I did not execute that schedule. `prepare` without approval still calls loopback `/api/tags` through `doctor`. I did not call it. Any non-empty approval string is accepted. Deleting `.hive/v03-e0-20261121` is outside the wrapper and starts a new store budget.\n\nI did not run pytest. Approval is still required before any real inference.",
+  "disposition_status": "repaired_and_synthetic_verified",
+  "e0_authorization_note": "Reviewer stated approval pending from an earlier source snapshot. Ian subsequently approved the bounded E0; actual finished30call evidence is recorded separately.",
+  "policy_deployed": false,
+  "accepted_findings": [
+    "numeric and Unicode equivalent fixture ownership",
+    "padded or invisible answer-field keys",
+    "control and format characters in identifiers",
+    "tuple coercion and nonfinite JSON values",
+    "explicit recovery from interrupted STOP preflight",
+    "wrapper cap and completion-counter checks",
+    "preparation must not claim historical tests were freshly executed"
+  ],
+  "confirmed_existing_defect": "Pinned v0.2.1 stale stop_reason: qualified E0 decision preserved; v0.3 finalizer repair has synthetic evidence only.",
+  "implementation": "Wire SHA unchanged; additional normalized ownership, strict JSON, migration rebuilt transactionally. Explicit --resume-paused; budget/storage validation; separate preparation receipt. Parent strengthened legacy identity migration; completed-store spending and raw receipts preserved.",
+  "targeted_validation": {
+    "registry_and_independent_controls_passed": 33,
+    "wrapper_synthetic_passed": 47,
+    "new_model_calls": 0
+  },
+  "limits": [
+    "trusted process and SQLite owner",
+    "semantic paraphrases and gold hidden in values not detectable",
+    "approval string is not authentication",
+    "no hostile store-deletion protection",
+    "historical v0.2.1 code_repair requests expose fixture_outputs",
+    "final repairs were not re-reviewed by Grok",
+    "new registry not yet integrated with adaptive runner"
+  ],
+  "cached_e0_recheck": "Final wrapper replayed FINISHED pinned store with zero new calls and all prior receipt/plan/authorization bytes identical; v03-e0-wrapper-recheck.json.",
+  "storage_boundary": "Private labels remain in the same trusted SQLite manifest body. No OS or database access isolation is claimed.",
+  "final_full_suite": {
+    "passed": 217,
+    "skipped": 1,
+    "report": "v03-foundation-tests.xml"
+  }
+}

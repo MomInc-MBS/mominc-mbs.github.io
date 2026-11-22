@@ -20,6 +20,10 @@
     "engineering_supplement": {
       "note_id": "OBJECTIVE",
       "publication_manifest": "implementation/objective-dev5-publication.json"
+    },
+    "latest_verified": {
+      "note_id": "P2SAFETY",
+      "publication_manifest": "implementation/p2-dev6-publication.json"
     }
   },
   "updates": [
@@ -39,7 +43,7 @@
       "id": "STATUS",
       "path": "implementation/CURRENT_STATE.md",
       "date": "2026-11-21",
-      "sha256": "345edd9271918c81280978d9b7f06f7d3af9bc9cfec9f9140ed129b340c3cc02"
+      "sha256": "2414ef1b5475ce3673d77680f0df0320584f1493b2721bf018172c8eeda9a1cd"
     },
     {
       "id": "CAPABILITIES",
@@ -75,7 +79,7 @@
       "id": "RELEASES",
       "path": "implementation/CHANGELOG.md",
       "date": "2026-11-21",
-      "sha256": "42277fe6166e58dd7fcc11516be43e9a1a3dda6592999a809345515e1a2c0f6e"
+      "sha256": "8811edcf575022a132f39187c9033729bce39c06cff7c76e7fdc0f36aaa6ae96"
     },
     {
       "id": "BASELINE",
@@ -132,12 +136,18 @@
       "path": "updates/HIVE_Objective_Testing_2026-11-21.md",
       "date": "2026-11-21",
       "sha256": "c802f7fff9e9ea3ce2c335d98aada34f2d10223c37878297a9acd19a8d2ec463"
+    },
+    {
+      "id": "P2SAFETY",
+      "path": "updates/HIVE_P2_Safety_2026-11-21.md",
+      "date": "2026-11-21",
+      "sha256": "b1fc8faa7b8d231abda7c0507a3cc211cd8d760ab33d72923c7b230a4389b051"
     }
   ],
   "source_zip_sha256": "2b726d055a17a25495854890d8d0001cb791006273e0f8eb5515788b7e00c61a",
   "counts": {
-    "research_pages": 304,
-    "graph_edges": 2483,
+    "research_pages": 305,
+    "graph_edges": 2487,
     "originals": 19
   },
   "scope": "Static research reference plus executable local model/tool controller evidence. No production model runtime or compounding-learning claim."

@@ -1,0 +1,45 @@
+{
+  "kind": "synthetic engineering probe; no model calls",
+  "request": {
+    "image": {
+      "reference": "python:3.11-slim",
+      "digest": "sha256:07d4824036af339fa1b6ef769cc99d9c10a141769538b52b3b597c84f7a7b535"
+    },
+    "limits": {
+      "timeout_s": 2,
+      "memory_mb": 128,
+      "cpu_count": 1,
+      "pids": 32,
+      "output_bytes": 5000
+    },
+    "command": [
+      "python",
+      "-c",
+      "import time; time.sleep(60)"
+    ]
+  },
+  "state": "failed",
+  "receipt": {
+    "engine": "docker",
+    "server_version": "29.8.2",
+    "image_reference": "python:3.11-slim",
+    "image_digest": "sha256:07d4824036af339fa1b6ef769cc99d9c10a141769538b52b3b597c84f7a7b535",
+    "network": "none",
+    "read_only_root": true,
+    "source_mount": "read_only",
+    "capabilities": "drop_all",
+    "no_new_privileges": true,
+    "argv_sha256": "470afce14bf311de96f595cbaae77f8a503da2df8da26ec26e7cae42f41b81c2",
+    "exit_code": 1,
+    "timed_out_or_output_capped": true,
+    "timeout_cleanup": {
+      "attempted": true,
+      "verified_absent": true
+    },
+    "duration_s": 2.75,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout": "",
+    "stderr": ""
+  }
+}

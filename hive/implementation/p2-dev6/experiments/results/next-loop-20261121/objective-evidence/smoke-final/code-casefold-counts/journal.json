@@ -1,0 +1,186 @@
+{
+  "store": "smoke-final/code-casefold-counts",
+  "original_job_count": 1,
+  "jobs": [
+    {
+      "id": "ffad63c4261d4a388bf58bb917d694f4",
+      "spec": {
+        "allow_retry": false,
+        "learn_feedback": false,
+        "mission_id": "code-casefold-counts",
+        "operation_key": "f557413a4cc023e7e15c4e0c7d4a364671ce56881c24ae0f7e53e9c8589e0c4f",
+        "retry_count": 0,
+        "route": "tool",
+        "task": {
+          "allowed_tools": [
+            "isolated_code"
+          ],
+          "category": "code_mission",
+          "critical": false,
+          "evaluator": "code_mission_v1",
+          "expected": {},
+          "id": "code-code-casefold-counts-objective-candidate",
+          "input": {
+            "manifest": {
+              "allowlist": [
+                "app.py"
+              ],
+              "id": "code-casefold-counts",
+              "image": {
+                "digest": "sha256:07d4824036af339fa1b6ef769cc99d9c10a141769538b52b3b597c84f7a7b535",
+                "reference": "python:3.11-slim"
+              },
+              "limits": {
+                "cpu_count": 1,
+                "memory_mb": 128,
+                "output_bytes": 8192,
+                "pids": 32,
+                "timeout_s": 15
+              },
+              "mounts": "read_only_source_clean_copy",
+              "network": "none",
+              "patches": [
+                {
+                  "content": "def casefold_counts(words):\n    counts = {}\n    for word in words:\n        key = word.casefold()\n        counts[key] = counts.get(key, 0) + 1\n    return counts\n",
+                  "id": "objective-candidate",
+                  "path": "app.py",
+                  "sha256": "e330f4e2dd57528c384f4acdacd202f42b46f9609e105bced3afe33c6ef3d9c0"
+                }
+              ],
+              "repo": {
+                "path": "D:\\Repos\\hive-ai\\.hive\\objective-smoke-20261121-r2\\sources\\code-casefold-counts",
+                "revision": "52cfc07879644567deb6368b5a8dc6ff679fac04",
+                "source_sha256": "6b35d30d83e6bd5b6e1884181454f843028e15292b9eefd1ef74b61ab5fc4f25"
+              },
+              "schema_version": 1,
+              "verifier": {
+                "cases": [
+                  {
+                    "args": [
+                      []
+                    ],
+                    "expected": {},
+                    "id": "empty",
+                    "kwargs": {}
+                  },
+                  {
+                    "args": [
+                      [
+                        "Stra\u00dfe",
+                        "STRASSE",
+                        "\u96ea",
+                        "\u96ea"
+                      ]
+                    ],
+                    "expected": {
+                      "strasse": 2,
+                      "\u96ea": 2
+                    },
+                    "id": "casefold-unicode",
+                    "kwargs": {}
+                  },
+                  {
+                    "args": [
+                      [
+                        "A",
+                        "b",
+                        "a",
+                        "B",
+                        "a"
+                      ]
+                    ],
+                    "expected": {
+                      "a": 3,
+                      "b": 2
+                    },
+                    "id": "mixed-order",
+                    "kwargs": {}
+                  }
+                ],
+                "function": "casefold_counts",
+                "module": "app",
+                "path": "verifier.json",
+                "protocol": "json_function_v1",
+                "sha256": "074478b35f9ea9c58a6b2c4f2496449c8b290a44a9c275b3a7630e67c9c7f3a6"
+              },
+              "worker_files": [
+                "app.py"
+              ]
+            },
+            "operation_key": "f557413a4cc023e7e15c4e0c7d4a364671ce56881c24ae0f7e53e9c8589e0c4f",
+            "patch_id": "objective-candidate"
+          },
+          "permissions": {
+            "routes": [
+              "tool"
+            ],
+            "version": 1
+          },
+          "prompt": "Run the pinned isolated code function contract.",
+          "split": "development",
+          "tool_schemas": {
+            "isolated_code": {
+              "manifest_id": "string",
+              "patch_id": "string"
+            }
+          }
+        }
+      },
+      "state": "BLOCKED",
+      "owner": "worker-48428",
+      "generation": 1,
+      "pid": 48428,
+      "result": {
+        "evidence_ref": "artifacts/eed77f8d6155184ce6ca6fe8b8b2da5aa76fad56a2e646405d36a713f05b01c0.json",
+        "failure": null,
+        "passed": true,
+        "report_ref": "artifacts/edc212797089acf8ae895792f961c5107581a770485ce5d6dae5e7980013a82a.json",
+        "valid": true
+      }
+    }
+  ],
+  "events": [
+    {
+      "seq": 1,
+      "job_id": "ffad63c4261d4a388bf58bb917d694f4",
+      "state": "QUEUED",
+      "detail": null
+    },
+    {
+      "seq": 2,
+      "job_id": "ffad63c4261d4a388bf58bb917d694f4",
+      "state": "RUNNING",
+      "detail": {
+        "owner": "worker-48428"
+      }
+    },
+    {
+      "seq": 3,
+      "job_id": "ffad63c4261d4a388bf58bb917d694f4",
+      "state": "VERIFYING",
+      "detail": null
+    },
+    {
+      "seq": 4,
+      "job_id": "ffad63c4261d4a388bf58bb917d694f4",
+      "state": "REVIEWING",
+      "detail": {
+        "evidence_ref": "artifacts/eed77f8d6155184ce6ca6fe8b8b2da5aa76fad56a2e646405d36a713f05b01c0.json"
+      }
+    },
+    {
+      "seq": 5,
+      "job_id": "ffad63c4261d4a388bf58bb917d694f4",
+      "state": "BLOCKED",
+      "detail": null
+    }
+  ],
+  "mission_config_hash": "17abb5470e515dfd317ad443df1f4d5d87f5cd1cfd3db5c1ca08be80f6741b36",
+  "budget": {
+    "cycles": 1,
+    "requests": 0,
+    "tokens_actual": 0,
+    "tokens_reserved": 0,
+    "wall_s": 1.937000000034459
+  }
+}

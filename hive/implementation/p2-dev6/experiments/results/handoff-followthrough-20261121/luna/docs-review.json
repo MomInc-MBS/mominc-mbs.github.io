@@ -1,0 +1,25 @@
+{
+  "reviewer": "Luna (gpt-6-luna)",
+  "scope": "Read-only scope and status consistency review before publication",
+  "runtime_commit": "f3d7e556ea41076e1138761d72df06b5ce3e0f65",
+  "findings": [
+    {
+      "path": "docs/CURRENT_STATE.md",
+      "observation": "Still names dev5/P2 v3 as current while decision and P2_EXACT_TOOL describe dev6/v4.",
+      "required_resolution": "Update current state after Terra's final counts, retaining historical dev5 text."
+    }
+  ],
+  "confirmed": [
+    "Level A and B retain six structured-data plus six Python, zero genuine attempts or acceptances, Level B untested.",
+    "P2 docs and decision retain quarantine, no promotion and zero new HIVE inference.",
+    "The unpublished candidate is not yet falsely labeled latest_verified on the site."
+  ],
+  "tests_run": false,
+  "files_changed_by_reviewer": false,
+  "parent_resolution": "CURRENT_STATE.md updated from completed Terra counts; historical dev5 retained.",
+  "followup": {
+    "stale_dev5_resolved": true,
+    "finding": "Consolidated verdict link was premature while Grok still ran.",
+    "parent_resolution": "CURRENT_STATE now links completed terra-final/verdict.json; consolidated review will be committed only after materialization."
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "status": "passed",
+  "verified_at": "2026-11-22T06:29:51.476978+00:00",
+  "download_sha256": "659b6c9be7531307e5c9068bb2fd6e7bb34eab981f35b77bbf6c58b67c200ff0",
+  "source_commit": "0b3bfc391c8fc21555f451012757174933f1c479",
+  "payload_files": 876,
+  "runtime_source_sha256": "0d97faae0caae31f3918296dccaa21be5ba0ba7a1cec0c8ca5f880001d17320e",
+  "new_hive_model_calls": 0,
+  "checks": [
+    {
+      "command": [
+        "-m",
+        "hive",
+        "doctor",
+        "--offline"
+      ],
+      "returncode": 0,
+      "stdout": "{\n  \"runtime\": {\n    \"available\": null,\n    \"models\": [],\n    \"error\": \"offline: no endpoint request\"\n  },\n  \"running_runtime\": {\n    \"available\": null,\n    \"models\": [],\n    \"error\": \"offline: no endpoint request\"\n  },\n  \"python\": \"3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]\",\n  \"platform\": \"Windows-10-10.0.26200-SP0\",\n  \"build\": {\n    \"version\": \"0.3.0.dev6\",\n    \"commit\": \"unversioned\",\n    \"source_sha256\": \"0d97faae0caae31f3918296dccaa21be5ba0ba7a1cec0c8ca5f880001d17320e\"\n  },\n  \"config_hash\": \"928145c3151de1356b033764aa476a879803de291b9d13c17e7bf5a08082cc7a\",\n  \"verifier_hashes\": {\n    \"verifier.py\": \"1ee3853546b98d31337be7aeb5d5d0af5bb565ad34ca1ee361a84965f0886bce\",\n    \"code_verifier.py\": \"9865b125bf1927208f8d22478a9be2e4f2eb63664988240636b47e2f435aeb82\",\n    \"pressure_verifier.py\": \"0406d15005109e912caf6642955370f611e1ae2d14e7d9a0a718c17ce42c539c\"\n  },\n  \"budgets\": {\n    \"endpoint\": \"http://127.0.0.1:11434\",\n    \"model\": \"myr5-hold-local:latest\",\n    \"timeout_s\": 120,\n    \"max_tokens\": 128,\n    \"seed\": 42,\n    \"max_requests\": 120,\n    \"max_total_tokens\": 15360,\n    \"max_wall_s\": 2700,\n    \"max_storage_bytes\": 268435456,\n    \"max_cycles\": 240,\n    \"max_retries\": 2,\n    \"concurrency\": 1,\n    \"routes\": [\n      \"local_direct\",\n      \"local_tool\"\n    ],\n    \"allow_fixtures\": false\n  },\n  \"budget_is_authorization\": false,\n  \"permissions\": \"task manifest required; candidate output cannot grant actions\",\n  \"accounting\": {\n    \"present\": false,\n    \"budget\": null,\n    \"authorization\": \"not established\"\n  },\n  \"tools\": {\n    \"ffmpeg\": {\n      \"installed\": true\n    },\n    \"ffprobe\": {\n      \"installed\": true\n    },\n    \"docker\": {\n      \"installed\": true\n    },\n    \"podman\": {\n      \"installed\": false\n    }\n  },\n  \"sandbox\": {\n    \"status\": \"PRESENT_UNVERIFIED\",\n    \"enforcement_verified\": false\n  },\n  \"new_model_calls\": 0,\n  \"offline\": true,\n  \"cpu_gpu_usage\": \"unknown\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "scripts/replay_integration_export.py"
+      ],
+      "returncode": 0,
+      "stdout": "{\n  \"status\": \"passed\",\n  \"verified_jobs\": 11,\n  \"verified_artifacts\": 43,\n  \"candidate_reconstructed\": true,\n  \"candidate_decision\": \"REJECTED\",\n  \"new_model_calls\": 0,\n  \"historical_runtime_source_sha256\": \"c73866989d9c03253af8eb199b0c93509adbc50b92bcab7e0a29fde15db0d9d2\",\n  \"replayer_runtime_source_sha256\": \"0d97faae0caae31f3918296dccaa21be5ba0ba7a1cec0c8ca5f880001d17320e\",\n  \"scope\": \"offline artifact consistency and verifier replay; no fresh inference or private store\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "scripts/replay_readiness_exports.py"
+      ],
+      "returncode": 0,
+      "stdout": "{\n  \"status\": \"passed\",\n  \"verified_public_files\": 163,\n  \"fixture_scenarios\": 11,\n  \"fixture_observations\": 250,\n  \"operator_jobs\": 6,\n  \"new_model_calls\": 0,\n  \"research_status\": \"UNTESTED\",\n  \"current_runtime\": {\n    \"version\": \"0.3.0.dev6\",\n    \"commit\": \"unversioned\",\n    \"source_sha256\": \"0d97faae0caae31f3918296dccaa21be5ba0ba7a1cec0c8ca5f880001d17320e\"\n  },\n  \"scope\": \"offline exported bytes and objective-result replay; no fresh missions or private journal replay\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "scripts/replay_objective_exports.py"
+      ],
+      "returncode": 0,
+      "stdout": "{\n  \"status\": \"passed\",\n  \"original_jobs\": 42,\n  \"hashed_files\": 160,\n  \"attempt_reports\": {\n    \"smoke-attempt1\": {\n      \"passed\": false,\n      \"all_replayed_with_equal_budget\": false\n    },\n    \"smoke-final\": {\n      \"passed\": true,\n      \"all_replayed_with_equal_budget\": true\n    }\n  },\n  \"policy_receipts\": {\n    \"legacy\": 36,\n    \"3\": 6\n  },\n  \"runtime_source_hashes\": [\n    \"2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c\"\n  ],\n  \"new_model_calls\": 0,\n  \"scope\": \"artifact-level offline verifier and journal binding replay; no fresh execution, Store restart, or learning gain\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "scripts/replay_p2_exports.py",
+        "--input",
+        "experiments/results/handoff-followthrough-20261121/p2-evidence"
+      ],
+      "returncode": 0,
+      "stdout": "{\n  \"status\": \"passed\",\n  \"original_jobs\": 18,\n  \"hashed_files\": 64,\n  \"manifest_sha256\": \"73b84cc8c777de17db7f32ccb9511cbfda46224017a458d0bbf2bf35fd4f2478\",\n  \"policy_receipts\": {\n    \"legacy\": 12,\n    \"4\": 6\n  },\n  \"independently_verified_passes\": {\n    \"strongest_tool\": 6,\n    \"learning_disabled\": 6,\n    \"p2\": 6\n  },\n  \"new_model_calls\": 0,\n  \"scope\": \"offline saved-output/journal/contract/feedback replay; no fresh task execution or learning gain\",\n  \"limitations\": [\n    \"Only the eighteen successful known synthetic comparison jobs are supported.\",\n    \"Original database migration, interrupted/failed-state recovery and post-feedback crash recovery are not reproduced.\",\n    \"Comparison feedback is disabled; route-skill updates are unauthorized and rejected.\",\n    \"Manifest hashes prove internal integrity, not external authenticity or independent source freshness.\"\n  ]\n}\n",
+      "stderr": ""
+    }
+  ],
+  "scope": "Fresh published-ZIP extraction and offline evidence replay; full candidate regression is recorded separately."
+}

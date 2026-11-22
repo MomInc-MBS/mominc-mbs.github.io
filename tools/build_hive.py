@@ -121,6 +121,16 @@ def main():
                      f'<p><a href="{release_zip}" download>Download HIVE {esc(release["version"])}</a> · '
                      f'<a href="{BASE}{release["publication_manifest"]}">Frozen publication manifest</a>{supplement_link} · '
                      f'<a href="{url(latest_implementation)}">Read readiness evidence</a></p></section>')
+    if latest_pointer := release.get('latest_verified'):
+        latest = json.loads((OUT / latest_pointer['publication_manifest']).read_text(encoding='utf-8'))
+        release_block += (f'<section class="release-pointer"><h2>Latest verified engineering: {esc(latest["runtime_version"])}</h2>'
+                          f'<p><strong>{esc(latest["status"])}</strong> · Synthetic development evidence. '
+                          f'Level A remains not accepted; Level B untested; no policy promotion.</p>'
+                          f'<p>Runtime SHA-256: <code>{esc(latest["runtime_source_sha256"])}</code><br>'
+                          f'Download SHA-256: <code>{esc(latest["download_sha256"])}</code></p>'
+                          f'<p><a href="{url(nodes[latest_pointer["note_id"]])}">Read the latest verified result</a> · '
+                          f'<a href="{BASE}{latest["download"]}" download>Download {esc(latest["runtime_version"])}</a> · '
+                          f'<a href="{BASE}{latest_pointer["publication_manifest"]}">Publication manifest</a></p></section>')
     # Originals receive a reading view as well as their byte-identical download.
     originals = []
     for p in sorted((vault / '90_Archive/Originals').glob('*')):
@@ -323,13 +333,28 @@ def main():
                            f'No useful-learning gain or genuine task acceptance is claimed.</p></div></div></section>')
         home = home.replace('<section class="home-section evidence-section implementation-update">',
                             objective_intro + '<section class="home-section evidence-section implementation-update">', 1)
+    if latest_pointer:
+        latest_intro = (f'<section class="home-section evidence-section implementation-update">'
+                        f'<div><p class="eyebrow">LATEST VERIFIED ENGINEERING / {esc(latest["runtime_version"])}</p>'
+                        f'<h2>Exact tools.<br>Bounded feedback.</h2>'
+                        f'<p>The opt-in P2 candidate abstains when its required exact tool cannot run. '
+                        f'Its saved decisions and feedback are checked again on replay.</p>'
+                        f'<a class="button dark" href="{url(nodes[latest_pointer["note_id"]])}">Read safety checks and limits</a></div>'
+                        f'<div class="evidence-key"><div><span class="badge neutral">QUARANTINED CANDIDATE</span>'
+                        f'<p>The six-task output comparison tied the strongest tool. No learning gain, '
+                        f'genuine acceptance or policy promotion is claimed. The next acceptance scope '
+                        f'remains six structured-data tasks and six Python tasks.</p></div></div></section>')
+        home = home.replace('<section class="home-section evidence-section implementation-update">',
+                            latest_intro + '<section class="home-section evidence-section implementation-update">', 1)
     write(OUT / 'index.html', shell('Framework & research vault', home, BASE, body_class='home'))
 
     search_records = []
     for n in nodes.values():
         text = re.sub(r'\[([^]]+)\]\([^)]*\)', r'\1', n['body'])
         if n['id'] in ('STATUS', 'RELEASES'):
-            text += f' Current release {release["version"]}: {release["status"]}; Level A {release["level_a"]} ({release["level_a_attempted"]} attempted, {release["level_a_accepted"]} accepted); Level B {release["level_b"]}; candidate promotion false; runtime SHA-256 {release["runtime_source_sha256"]}; ZIP SHA-256 {release["download_sha256"]}.'
+            text += f' Frozen baseline {release["version"]}: {release["status"]}; Level A {release["level_a"]} ({release["level_a_attempted"]} attempted, {release["level_a_accepted"]} accepted); Level B {release["level_b"]}; candidate promotion false; runtime SHA-256 {release["runtime_source_sha256"]}; ZIP SHA-256 {release["download_sha256"]}.'
+            if latest_pointer:
+                text += f' Latest verified engineering {latest["runtime_version"]}: {latest["status"]}; synthetic development, P2 quarantined, no useful-learning gain. Runtime SHA-256 {latest["runtime_source_sha256"]}; ZIP SHA-256 {latest["download_sha256"]}.'
         text = re.sub(r'[`#*|>]', '', text)
         search_records.append({k: n[k] for k in ['id', 'title', 'type', 'evidence_status', 'implementation_status']} | dict(url=url(n), text=re.sub(r'\s+', ' ', text), tags=n['tags']))
     write(OUT / 'search-index.json', json.dumps(search_records, ensure_ascii=False, separators=(',', ':')))
@@ -364,6 +389,7 @@ Original package: {ORIGIN}/hive/downloads/HIVE_Framework_Research_Vault.zip
 
 ## Reading rules
 
+{('- Latest verified engineering: /hive/notes/' + latest_pointer['note_id'] + '/. Exact-tool abstention, isolated feedback and replay checks; objective-only acceptance scope. Synthetic development, zero new HIVE inference, no learning gain or promotion.') if latest_pointer else ''}
 - Current implementation evidence is at /hive/notes/STATUS/. It links experiments, capabilities, learning progress, gaps, decisions and release history.
 - Objective testing supplement: /hive/notes/OBJECTIVE/. Six Python and six data tasks, exact references and restart replay; public synthetic development, zero new HIVE model calls, P2 quarantined with no quality gain.
 - Frozen engineering baseline: /hive/notes/READINESS/. Shared video/isolated-code missions, H01–H11 synthetic smoke, independent validators and exact R1–R8 gate evidence. Zero new model calls. Read the gate verdict; fixture success is not fresh task acceptance or a sealed learning study. Genuine source inventories and new resource approvals remain required.

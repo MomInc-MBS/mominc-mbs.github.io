@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+*.egg-info/
+.hive/
+experiments/private/
+.env
+.env.*
+!.env.example
+dist/
+coverage/
+node_modules/
+.e2e/
+# Local review stores are retained on disk, outside public evidence exports.
+/experiments/results/handoff-followthrough-20261121/sol/probe-stores/
+/experiments/results/handoff-followthrough-20261121/sol/pytest-temp/

@@ -1,0 +1,692 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="14" skipped="2" tests="251" time="64.835" timestamp="2026-11-21T15:53:26.403609-08:00" hostname="DESKTOP-FHQTCBG"><testcase classname="tests.adversarial.test_adaptive_integrity" name="test_corrupted_saved_evidence_is_not_reused" time="0.195"><failure message="RuntimeError: Adaptive job 0f2263be2a0b48c594e48e5e033e5c63 finished without evidence">tmp_path = WindowsPath('C:/Users/ianmy/AppData/Local/Temp/pytest-of-ianmy/pytest-149/test_corrupted_saved_evidence_0')
+synthetic = []
+
+    def test_corrupted_saved_evidence_is_not_reused(tmp_path, synthetic):
+        config = dict(DEFAULT_CONFIG, model="synthetic")
+&gt;       report = run_adaptive(tmp_path, config, rounds=2)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\adversarial\test_adaptive_integrity.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\hive\adaptive.py:239: in run_adaptive
+    return _run_adaptive_locked(root, config, rounds=rounds, seed=seed, output_path=output_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\hive\adaptive.py:342: in _run_adaptive_locked
+    job_id, ref = _phase_entry(store, state, "development", task, route, executor, hypothesis)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+store = &lt;hive.storage.Store object at 0x000002B8DFE41090&gt;
+state = {'manifest_ref': 'artifacts/1f1f21de0af54b7e07ff74f3c0c9bb11b3c18beb9a20d3d22c5cfa70ba17b598.json', 'manifest_hash': '1f1f21de0af54b7e07ff74f3c0c9bb11b3c18beb9a20d3d22c5cfa70ba17b598', 'state': 'RUNNING', 'created': 1795305206.5769463, ...}
+phase = 'development'
+task = {'id': 'bench-v1-20261121-development-math-000-940882504a', 'category': 'math', 'split': 'development', 'prompt': 'Multiply 28 by 21. Return JSON {"answer": integer}.', ...}
+route = 'local_direct'
+executor = &lt;hive.orchestrator.Executor object at 0x000002B8DFE41010&gt;
+hypothesis = 'Verified development feedback can choose a local route that improves paired validation quality without critical regressions; utility is descriptive.'
+
+    def _phase_entry(store, state, phase, task, route, executor, hypothesis):
+        key = f"adaptive:{state['manifest_hash']}:{phase}:{task['id']}:{route}"
+        job_id = store.enqueue_once(key, {
+            "task": task, "route": route, "allow_retry": False, "retry_count": 0,
+            "learn_feedback": False,
+            "hypothesis": hypothesis,
+        })
+        job = store.get_job(job_id)
+        if job["result"] and job["result"].get("evidence_ref"):
+            ref = job["result"]["evidence_ref"]
+            return job_id, ref
+        barrier = executor.barrier(route)
+        if barrier:
+            store.set("stop_reason", barrier)
+            state.update(state="PAUSED", stop_reason=barrier, paused_phase=phase)
+            store.set(_CAMPAIGN_KEY, state)
+            raise _AdaptivePaused(barrier)
+        outcome = executor.run_one()
+        if outcome is None:
+            reason = store.get("stop_reason") or "executor stopped before scheduled job"
+            state.update(state="PAUSED", stop_reason=reason, paused_phase=phase)
+            store.set(_CAMPAIGN_KEY, state)
+            raise _AdaptivePaused(reason)
+        if outcome["id"] != job_id:
+            raise RuntimeError("Adaptive job order changed; refusing to attach unrelated evidence")
+        if not outcome.get("evidence_ref"):
+&gt;           raise RuntimeError(f"Adaptive job {job_id} finished without evidence")
+E           RuntimeError: Adaptive job 0f2263be2a0b48c594e48e5e033e5c63 finished without evidence
+
+src\hive\adaptive.py:77: RuntimeError</failure></testcase><testcase classname="tests.adversarial.test_adaptive_integrity" name="test_substituted_valid_artifact_for_wrong_task_is_rejected" time="0.201"><failure message="RuntimeError: Adaptive job 0ffb816225a64678afb2bdb784e2a959 finished without evidence">tmp_path = WindowsPath('C:/Users/ianmy/AppData/Local/Temp/pytest-of-ianmy/pytest-149/test_substituted_valid_artifac0')
+synthetic = []
+
+    def test_substituted_valid_artifact_for_wrong_task_is_rejected(tmp_path, synthetic):
+        config = dict(DEFAULT_CONFIG, model="synthetic")
+&gt;       run_adaptive(tmp_path, config, rounds=2)
+
+tests\adversarial\test_adaptive_integrity.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\hive\adaptive.py:239: in run_adaptive
+    return _run_adaptive_locked(root, config, rounds=rounds, seed=seed, output_path=output_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\hive\adaptive.py:342: in _run_adaptive_locked
+    job_id, ref = _phase_entry(store, state, "development", task, route, executor, hypothesis)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+store = &lt;hive.storage.Store object at 0x000002B8DD2F2E90&gt;
+state = {'manifest_ref': 'artifacts/7ccb2d60f012a727114432e53e2b507367cdd1fc6869aa62464c45ce8fb6c6b3.json', 'manifest_hash': '7ccb2d60f012a727114432e53e2b507367cdd1fc6869aa62464c45ce8fb6c6b3', 'state': 'RUNNING', 'created': 1795305206.8655446, ...}
+phase = 'development'
+task = {'id': 'bench-v1-20261121-development-math-000-940882504a', 'category': 'math', 'split': 'development', 'prompt': 'Multiply 28 by 21. Return JSON {"answer": integer}.', ...}
+route = 'local_direct'
+executor = &lt;hive.orchestrator.Executor object at 0x000002B8DFD39690&gt;
+hypothesis = 'Verified development feedback can choose a local route that improves paired validation quality without critical regressions; utility is descriptive.'
+
+    def _phase_entry(store, state, phase, task, route, executor, hypothesis):
+        key = f"adaptive:{state['manifest_hash']}:{phase}:{task['id']}:{route}"
+        job_id = store.enqueue_once(key, {
+            "task": task, "route": route, "allow_retry": False, "retry_count": 0,
+            "learn_feedback": False,
+            "hypothesis": hypothesis,
+        })
+        job = store.get_job(job_id)
+        if job["result"] and job["result"].get("evidence_ref"):
+            ref = job["result"]["evidence_ref"]
+            return job_id, ref
+        barrier = executor.barrier(route)
+        if barrier:
+            store.set("stop_reason", barrier)
+            state.update(state="PAUSED", stop_reason=barrier, paused_phase=phase)
+            store.set(_CAMPAIGN_KEY, state)
+            raise _AdaptivePaused(barrier)
+        outcome = executor.run_one()
+        if outcome is None:
+            reason = store.get("stop_reason") or "executor stopped before scheduled job"
+            state.update(state="PAUSED", stop_reason=reason, paused_phase=phase)
+            store.set(_CAMPAIGN_KEY, state)
+            raise _AdaptivePaused(reason)
+        if outcome["id"] != job_id:
+            raise RuntimeError("Adaptive job order changed; refusing to attach unrelated evidence")
+        if not outcome.get("evidence_ref"):
+&gt;           raise RuntimeError(f"Adaptive job {job_id} finished without evidence")
+E           RuntimeError: Adaptive job 0ffb816225a64678afb2bdb784e2a959 finished without evidence
+
+src\hive\adaptive.py:77: RuntimeError</failure></testcase><testcase classname="tests.adversarial.test_adaptive_integrity" name="test_valid_evidence_from_other_job_is_rejected" time="0.179"><failure message="RuntimeError: Adaptive job 7ea02323e39d482981a4b548e1b2b013 finished without evidence">tmp_path = WindowsPath('C:/Users/ianmy/AppData/Local/Temp/pytest-of-ianmy/pytest-149/test_valid_evidence_from_other0')
+synthetic = []
+
+    def test_valid_evidence_from_other_job_is_rejected(tmp_path, synthetic):
+        config = dict(DEFAULT_CONFIG, model="synthetic")
+&gt;       run_adaptive(tmp_path, config, rounds=2)
+
+tests\adversarial\test_adaptive_integrity.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\hive\adaptive.py:239: in run_adaptive
+    return _run_adaptive_locked(root, config, rounds=rounds, seed=seed, output_path=output_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\hive\adaptive.py:342: in _run_adaptive_locked
+    job_id, ref = _phase_entry(store, state, "development", task, route, executor, hypothesis)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+store = &lt;hive.storage.Store object at 0x000002B8DFE4BB10&gt;
+state = {'manifest_ref': 'artifacts/35e38c1f3ce0cb781ad4b04168c0f8ffa84561b02d032f16a298ea6a478f3ace.json', 'manifest_hash': '35e38c1f3ce0cb781ad4b04168c0f8ffa84561b02d032f16a298ea6a478f3ace', 'state': 'RUNNING', 'created': 1795305207.0930293, ...}
+phase = 'development'
+task = {'id': 'bench-v1-20261121-development-math-000-940882504a', 'category': 'math', 'split': 'development', 'prompt': 'Multiply 28 by 21. Return JSON {"answer": integer}.', ...}
+route = 'local_direct'
+executor = &lt;hive.orchestrator.Executor object at 0x000002B8DFE49CD0&gt;
+hypothesis = 'Verified development feedback can choose a local route that improves paired validation quality without critical regressions; utility is descriptive.'
+
+    def _phase_entry(store, state, phase, task, route, executor, hypothesis):
+        key = f"adaptive:{state['manifest_hash']}:{phase}:{task['id']}:{route}"
+        job_id = store.enqueue_once(key, {
+            "task": task, "route": route, "allow_retry": False, "retry_count": 0,
+            "learn_feedback": False,
+            "hypothesis": hypothesis,
+        })
+        job = store.get_job(job_id)
+        if job["result"] and job["result"].get("evidence_ref"):
+            ref = job["result"]["evidence_ref"]
+            return job_id, ref
+        barrier = executor.barrier(route)
+        if barrier:
+            store.set("stop_reason", barrier)
+            state.update(state="PAUSED", stop_reason=barrier, paused_phase=phase)
+            store.set(_CAMPAIGN_KEY, state)
+            raise _AdaptivePaused(barrier)
+        outcome = executor.run_one()
+        if outcome is None:
+            reason = store.get("stop_reason") or "executor stopped before scheduled job"
+            state.update(state="PAUSED", stop_reason=reason, paused_phase=phase)
+            store.set(_CAMPAIGN_KEY, state)
+            raise _AdaptivePaused(reason)
+        if outcome["id"] != job_id:
+            raise RuntimeError("Adaptive job order changed; refusing to attach unrelated evidence")
+        if not outcome.get("evidence_ref"):
+&gt;           raise RuntimeError(f"Adaptive job {job_id} finished without evidence")
+E           RuntimeError: Adaptive job 7ea02323e39d482981a4b548e1b2b013 finished without evidence
+
+src\hive\adaptive.py:77: RuntimeError</failure></testcase><testcase classname="tests.adversarial.test_adaptive_integrity" name="test_paused_resume_rejects_substituted_evidence[baseline]" time="0.173"><failure message="AssertionError: assert False&#10; +  where False = exists()&#10; +    where exists = (WindowsPath('C:/Users/ianmy/AppData/Local/Temp/pytest-of-ianmy/pytest-149/test_paused_resume_rejects_sub0') / 'STOP').exists">tmp_path = WindowsPath('C:/Users/ianmy/AppData/Local/Temp/pytest-of-ianmy/pytest-149/test_paused_resume_rejects_sub0')
+synthetic = []
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002B8DFF702D0&gt;
+phase = 'baseline'
+
+    @pytest.mark.parametrize("phase", ["baseline", "learned_greedy"])
+    def test_paused_resume_rejects_substituted_evidence(tmp_path, synthetic, monkeypatch, phase):
+        import hive.orchestrator as orchestrator
+        fake = orchestrator.execute
+        def stop_during_candidate(task, route, config):
+            result = fake(task, route, config)
+            if len(synthetic) == 20:
+                (tmp_path / "STOP").touch()
+            return result
+        monkeypatch.setattr(orchestrator, "execute", stop_during_candidate)
+        config = dict(DEFAULT_CONFIG, model="synthetic")
+        try:
+            run_adaptive(tmp_path, config, rounds=2)
+        except RuntimeError:
+            pass
+&gt;       assert (tmp_path / "STOP").exists()
+E       AssertionError: assert False
+E        +  where False = exists()
+E        +    where exists = (WindowsPath('C:/Users/ianmy/AppData/Local/Temp/pytest-of-ianmy/pytest-149/test_paused_resume_rejects_sub0') / 'STOP').exists
+
+tests\adversarial\test_adaptive_integrity.py:87: AssertionError</failure></testcase><testcase classname="tests.adversarial.test_adaptive_integrity" name="test_paused_resume_rejects_substituted_evidence[learned_greedy]" time="0.178"><failure message="AssertionError: assert False&#10; +  where False = exists()&#10; +    where exists = (WindowsPath('C:/Users/ianmy/AppData/Local/Temp/pytest-of-ianmy/pytest-149/test_paused_resume_rejects_sub1') / 'STOP').exists">tmp_path = WindowsPath('C:/Users/ianmy/AppData/Local/Temp/pytest-of-ianmy/pytest-149/test_paused_resume_rejects_sub1')
+synthetic = []
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002B8E0099110&gt;
+phase = 'learned_greedy'
+
+    @pytest.mark.parametrize("phase", ["baseline", "learned_greedy"])
+    def test_paused_resume_rejects_substituted_evidence(tmp_path, synthetic, monkeypatch, phase):
+        import hive.orchestrator as orchestrator
+        fake = orchestrator.execute
+        def stop_during_candidate(task, route, config):
+            result = fake(task, route, config)
+            if len(synthetic) == 20:
+                (tmp_path / "STOP").touch()
+            return result
+        monkeypatch.setattr(orchestrator, "execute", stop_during_candidate)
+        config = dict(DEFAULT_CONFIG, model="synthetic")
+        try:
+            run_adaptive(tmp_path, config, rounds=2)
+        except RuntimeError:
+            pass
+&gt;       assert (tmp_path / "STOP").exists()
+E       AssertionError: assert False
+E        +  where False = exists()
+E        +    where exists = (WindowsPath('C:/Users/ianmy/AppData/Local/Temp/pytest-of-ianmy/pytest-149/test_paused_resume_rejects_sub1') / 'STOP').exists
+
+tests\adversarial\test_adaptive_integrity.py:87: AssertionError</failure></testcase><testcase classname="tests.adversarial.test_adaptive_integrity" name="test_changed_source_rejected_before_any_new_calls" time="0.158"><failure message="RuntimeError: Adaptive job fc663287df8b4505b5bb743df23145cf finished without evidence">tmp_path = WindowsPath('C:/Users/ianmy/AppData/Local/Temp/pytest-of-ianmy/pytest-149/test_changed_source_rejected_b0')
+synthetic = []
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002B8E0092210&gt;
+
+    def test_changed_source_rejected_before_any_new_calls(tmp_path, synthetic, monkeypatch):
+        config = dict(DEFAULT_CONFIG, model="synthetic")
+&gt;       run_adaptive(tmp_path, config, rounds=2)
+
+tests\adversarial\test_adaptive_integrity.py:109: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\hive\adaptive.py:239: in run_adaptive
+    return _run_adaptive_locked(root, config, rounds=rounds, seed=seed, output_path=output_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\hive\adaptive.py:342: in _run_adaptive_locked
+    job_id, ref = _phase_entry(store, state, "development", task, route, executor, hypothesis)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+store = &lt;hive.storage.Store object at 0x000002B8E0093B10&gt;
+state = {'manifest_ref': 'artifacts/38d4ab0dfac50f7110e64c5c7fdc993ae8576e69d2222be9cb0165768692ac2f.json', 'manifest_hash': '38d4ab0dfac50f7110e64c5c7fdc993ae8576e69d2222be9cb0165768692ac2f', 'state': 'RUNNING', 'created': 1795305207.661739, ...}
+phase = 'development'
+task = {'id': 'bench-v1-20261121-development-math-000-940882504a', 'category': 'math', 'split': 'development', 'prompt': 'Multiply 28 by 21. Return JSON {"answer": integer}.', ...}
+route = 'local_direct'
+executor = &lt;hive.orchestrator.Executor object at 0x000002B8E0091190&gt;
+hypothesis = 'Verified development feedback can choose a local route that improves paired validation quality without critical regressions; utility is descriptive.'
+
+    def _phase_entry(store, state, phase, task, route, executor, hypothesis):
+        key = f"adaptive:{state['manifest_hash']}:{phase}:{task['id']}:{route}"
+        job_id = store.enqueue_once(key, {
+            "task": task, "route": route, "allow_retry": False, "retry_count": 0,
+            "learn_feedback": False,
+            "hypothesis": hypothesis,
+        })
+        job = store.get_job(job_id)
+        if job["result"] and job["result"].get("evidence_ref"):
+            ref = job["result"]["evidence_ref"]
+            return job_id, ref
+        barrier = executor.barrier(route)
+        if barrier:
+            store.set("stop_reason", barrier)
+            state.update(state="PAUSED", stop_reason=barrier, paused_phase=phase)
+            store.set(_CAMPAIGN_KEY, state)
+            raise _AdaptivePaused(barrier)
+        outcome = executor.run_one()
+        if outcome is None:
+            reason = store.get("stop_reason") or "executor stopped before scheduled job"
+            state.update(state="PAUSED", stop_reason=reason, paused_phase=phase)
+            store.set(_CAMPAIGN_KEY, state)
+            raise _AdaptivePaused(reason)
+        if outcome["id"] != job_id:
+            raise RuntimeError("Adaptive job order changed; refusing to attach unrelated evidence")
+        if not outcome.get("evidence_ref"):
+&gt;           raise RuntimeError(f"Adaptive job {job_id} finished without evidence")
+E           RuntimeError: Adaptive job fc663287df8b4505b5bb743df23145cf finished without evidence
+
+src\hive\adaptive.py:77: RuntimeError</failure></testcase><testcase classname="tests.adversarial.test_adaptive_integrity" name="test_model_digest_change_fails_before_next_dispatch_and_stays_failed[False]" time="0.205"><failure message="AssertionError: Regex pattern did not match.&#10;  Expected regex: re.compile('(?i)(model|digest|identity)', re.IGNORECASE)&#10;  Actual message: 'Adaptive job 703d3a6415e44b7386e2876c56fb4cae finished without evidence'">tmp_path = WindowsPath('C:/Users/ianmy/AppData/Local/Temp/pytest-of-ianmy/pytest-149/test_model_digest_change_fails0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002B8DFF526D0&gt;
+invalid_environment = False
+
+    @pytest.mark.parametrize("invalid_environment", [False, True])
+    def test_model_digest_change_fails_before_next_dispatch_and_stays_failed(tmp_path, monkeypatch, invalid_environment):
+        calls = []
+        def fake(task, route, config):
+            calls.append((task["id"], route))
+            result = execute(task, "tool", config)
+            result.update(model=config["model"], model_digest="synthetic-v1" if len(calls) == 1 else "synthetic-v2", backend="synthetic")
+            if len(calls) == 2 and invalid_environment:
+                result.update(error="synthetic environment failure", failure_category="ENVIRONMENT")
+            return result
+        monkeypatch.setattr("hive.orchestrator.execute", fake)
+        config = dict(DEFAULT_CONFIG, model="synthetic")
+&gt;       with pytest.raises((ValueError, RuntimeError), match="(?i)(model|digest|identity)"):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: re.compile('(?i)(model|digest|identity)', re.IGNORECASE)
+E         Actual message: 'Adaptive job 703d3a6415e44b7386e2876c56fb4cae finished without evidence'
+
+tests\adversarial\test_adaptive_integrity.py:131: AssertionError</failure></testcase><testcase classname="tests.adversarial.test_adaptive_integrity" name="test_model_digest_change_fails_before_next_dispatch_and_stays_failed[True]" time="0.200"><failure message="AssertionError: Regex pattern did not match.&#10;  Expected regex: re.compile('(?i)(model|digest|identity)', re.IGNORECASE)&#10;  Actual message: 'Adaptive job 15cca6634a6f49f78c455d6804e73bc5 finished without evidence'">tmp_path = WindowsPath('C:/Users/ianmy/AppData/Local/Temp/pytest-of-ianmy/pytest-149/test_model_digest_change_fails1')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002B8DFE3FD90&gt;
+invalid_environment = True
+
+    @pytest.mark.parametrize("invalid_environment", [False, True])
+    def test_model_digest_change_fails_before_next_dispatch_and_stays_failed(tmp_path, monkeypatch, invalid_environment):
+        calls = []
+        def fake(task, route, config):
+            calls.append((task["id"], route))
+            result = execute(task, "tool", config)
+            result.update(model=config["model"], model_digest="synthetic-v1" if len(calls) == 1 else "synthetic-v2", backend="synthetic")
+            if len(calls) == 2 and invalid_environment:
+                result.update(error="synthetic environment failure", failure_category="ENVIRONMENT")
+            return result
+        monkeypatch.setattr("hive.orchestrator.execute", fake)
+        config = dict(DEFAULT_CONFIG, model="synthetic")
+&gt;       with pytest.raises((ValueError, RuntimeError), match="(?i)(model|digest|identity)"):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: re.compile('(?i)(model|digest|identity)', re.IGNORECASE)
+E         Actual message: 'Adaptive job 15cca6634a6f49f78c455d6804e73bc5 finished without evidence'
+
+tests\adversarial\test_adaptive_integrity.py:131: AssertionError</failure></testcase><testcase classname="tests.adversarial.test_adaptive_integrity" name="test_rejected_candidate_does_not_prevent_next_scheduled_candidate" time="0.205"><failure message="RuntimeError: Adaptive job aba8a3c6845d4d61bcfebc7ff1936161 finished without evidence">tmp_path = WindowsPath('C:/Users/ianmy/AppData/Local/Temp/pytest-of-ianmy/pytest-149/test_rejected_candidate_does_n0')
+synthetic = []
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002B8DFF80450&gt;
+
+    def test_rejected_candidate_does_not_prevent_next_scheduled_candidate(tmp_path, synthetic, monkeypatch):
+        import hive.adaptive_metrics as metrics
+        original = metrics.assess_candidate
+        attempted = []
+        def assess(baseline, candidate):
+            attempted.append((baseline, candidate))
+            if len(attempted) == 1:
+                raise ValueError("synthetic failed assessment")
+            return original(baseline, candidate)
+        monkeypatch.setattr(metrics, "assess_candidate", assess)
+&gt;       report = run_adaptive(tmp_path, dict(DEFAULT_CONFIG, model="synthetic"), rounds=2)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\adversarial\test_adaptive_integrity.py:156: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\hive\adaptive.py:239: in run_adaptive
+    return _run_adaptive_locked(root, config, rounds=rounds, seed=seed, output_path=output_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\hive\adaptive.py:342: in _run_adaptive_locked
+    job_id, ref = _phase_entry(store, state, "development", task, route, executor, hypothesis)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+store = &lt;hive.storage.Store object at 0x000002B8DFF82AD0&gt;
+state = {'manifest_ref': 'artifacts/203ccd8194e3c26889c5cabf250950a82eefb559550ef4c7269102b1d9aff255.json', 'manifest_hash': '203ccd8194e3c26889c5cabf250950a82eefb559550ef4c7269102b1d9aff255', 'state': 'RUNNING', 'created': 1795305208.2623775, ...}
+phase = 'development'
+task = {'id': 'bench-v1-20261121-development-math-000-940882504a', 'category': 'math', 'split': 'development', 'prompt': 'Multiply 28 by 21. Return JSON {"answer": integer}.', ...}
+route = 'local_direct'
+executor = &lt;hive.orchestrator.Executor object at 0x000002B8DFF805D0&gt;
+hypothesis = 'Verified development feedback can choose a local route that improves paired validation quality without critical regressions; utility is descriptive.'
+
+    def _phase_entry(store, state, phase, task, route, executor, hypothesis):
+        key = f"adaptive:{state['manifest_hash']}:{phase}:{task['id']}:{route}"
+        job_id = store.enqueue_once(key, {
+            "task": task, "route": route, "allow_retry": False, "retry_count": 0,
+            "learn_feedback": False,
+            "hypothesis": hypothesis,
+        })
+        job = store.get_job(job_id)
+        if job["result"] and job["result"].get("evidence_ref"):
+            ref = job["result"]["evidence_ref"]
+            return job_id, ref
+        barrier = executor.barrier(route)
+        if barrier:
+            store.set("stop_reason", barrier)
+            state.update(state="PAUSED", stop_reason=barrier, paused_phase=phase)
+            store.set(_CAMPAIGN_KEY, state)
+            raise _AdaptivePaused(barrier)
+        outcome = executor.run_one()
+        if outcome is None:
+            reason = store.get("stop_reason") or "executor stopped before scheduled job"
+            state.update(state="PAUSED", stop_reason=reason, paused_phase=phase)
+            store.set(_CAMPAIGN_KEY, state)
+            raise _AdaptivePaused(reason)
+        if outcome["id"] != job_id:
+            raise RuntimeError("Adaptive job order changed; refusing to attach unrelated evidence")
+        if not outcome.get("evidence_ref"):
+&gt;           raise RuntimeError(f"Adaptive job {job_id} finished without evidence")
+E           RuntimeError: Adaptive job aba8a3c6845d4d61bcfebc7ff1936161 finished without evidence
+
+src\hive\adaptive.py:77: RuntimeError</failure></testcase><testcase classname="tests.adversarial.test_adaptive_integrity" name="test_candidate_assessed_before_next_and_compared_to_experimental_incumbent" time="0.171"><failure message="RuntimeError: Adaptive job 248cc50e3fde45689d035e1bc327f2f9 finished without evidence">tmp_path = WindowsPath('C:/Users/ianmy/AppData/Local/Temp/pytest-of-ianmy/pytest-149/test_candidate_assessed_before0')
+synthetic = []
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002B8E00934D0&gt;
+
+    def test_candidate_assessed_before_next_and_compared_to_experimental_incumbent(tmp_path, synthetic, monkeypatch):
+        import hive.adaptive_metrics as metrics
+        original = metrics.assess_candidate
+        assessed = []
+        def assess(baseline, candidate):
+            assessed.append((baseline, candidate, len(synthetic)))
+            result = original(baseline, candidate)
+            # Synthetic test forces an experimental acceptance to exercise the next comparison.
+            result["accepted"] = len(assessed) == 1
+            return result
+        monkeypatch.setattr(metrics, "assess_candidate", assess)
+&gt;       run_adaptive(tmp_path, dict(DEFAULT_CONFIG, model="synthetic"), rounds=2)
+
+tests\adversarial\test_adaptive_integrity.py:187: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\hive\adaptive.py:239: in run_adaptive
+    return _run_adaptive_locked(root, config, rounds=rounds, seed=seed, output_path=output_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\hive\adaptive.py:342: in _run_adaptive_locked
+    job_id, ref = _phase_entry(store, state, "development", task, route, executor, hypothesis)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+store = &lt;hive.storage.Store object at 0x000002B8DFE3EA90&gt;
+state = {'manifest_ref': 'artifacts/5e8473c8f98a3388add86639ceecee12015f09b5a3aec7dd8976daeb196d02ad.json', 'manifest_hash': '5e8473c8f98a3388add86639ceecee12015f09b5a3aec7dd8976daeb196d02ad', 'state': 'RUNNING', 'created': 1795305208.4918046, ...}
+phase = 'development'
+task = {'id': 'bench-v1-20261121-development-math-000-940882504a', 'category': 'math', 'split': 'development', 'prompt': 'Multiply 28 by 21. Return JSON {"answer": integer}.', ...}
+route = 'local_direct'
+executor = &lt;hive.orchestrator.Executor object at 0x000002B8DFE3E690&gt;
+hypothesis = 'Verified development feedback can choose a local route that improves paired validation quality without critical regressions; utility is descriptive.'
+
+    def _phase_entry(store, state, phase, task, route, executor, hypothesis):
+        key = f"adaptive:{state['manifest_hash']}:{phase}:{task['id']}:{route}"
+        job_id = store.enqueue_once(key, {
+            "task": task, "route": route, "allow_retry": False, "retry_count": 0,
+            "learn_feedback": False,
+            "hypothesis": hypothesis,
+        })
+        job = store.get_job(job_id)
+        if job["result"] and job["result"].get("evidence_ref"):
+            ref = job["result"]["evidence_ref"]
+            return job_id, ref
+        barrier = executor.barrier(route)
+        if barrier:
+            store.set("stop_reason", barrier)
+            state.update(state="PAUSED", stop_reason=barrier, paused_phase=phase)
+            store.set(_CAMPAIGN_KEY, state)
+            raise _AdaptivePaused(barrier)
+        outcome = executor.run_one()
+        if outcome is None:
+            reason = store.get("stop_reason") or "executor stopped before scheduled job"
+            state.update(state="PAUSED", stop_reason=reason, paused_phase=phase)
+            store.set(_CAMPAIGN_KEY, state)
+            raise _AdaptivePaused(reason)
+        if outcome["id"] != job_id:
+            raise RuntimeError("Adaptive job order changed; refusing to attach unrelated evidence")
+        if not outcome.get("evidence_ref"):
+&gt;           raise RuntimeError(f"Adaptive job {job_id} finished without evidence")
+E           RuntimeError: Adaptive job 248cc50e3fde45689d035e1bc327f2f9 finished without evidence
+
+src\hive\adaptive.py:77: RuntimeError</failure></testcase><testcase classname="tests.adversarial.test_adaptive_integrity" name="test_quality_tie_with_better_utility_does_not_accept" time="0.000" /><testcase classname="tests.adversarial.test_adaptive_integrity" name="test_crash_during_incumbent_update_rolls_back_and_resumes" time="0.175"><failure message="RuntimeError: Adaptive job 727b843c78ca4d12b484fb97fcda2e59 finished without evidence">tmp_path = WindowsPath('C:/Users/ianmy/AppData/Local/Temp/pytest-of-ianmy/pytest-149/test_crash_during_incumbent_up0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002B8E0097350&gt;
+
+    def test_crash_during_incumbent_update_rolls_back_and_resumes(tmp_path, monkeypatch):
+        """Synthetic first candidate improves; crash immediately after one KV write."""
+        calls = []
+        def fake(task, route, config):
+            calls.append((task["id"], route))
+            result = execute(task, "tool", config)
+            if route.startswith("local_"):
+                result.update(model=config["model"], model_digest="synthetic-v1", backend="synthetic")
+            if route == "local_direct":
+                result["output"] = "{}"
+            return result
+        monkeypatch.setattr("hive.orchestrator.execute", fake)
+        original_set = Store.set
+        class SimulatedDeath(BaseException):
+            pass
+        def crash_after_write(self, key, value):
+            original_set(self, key, value)
+            if key == "adaptive_incumbent_refs":
+                raise SimulatedDeath()
+        monkeypatch.setattr(Store, "set", crash_after_write)
+        config = dict(DEFAULT_CONFIG, model="synthetic")
+        with pytest.raises(SimulatedDeath):
+&gt;           run_adaptive(tmp_path, config, rounds=1)
+
+tests\adversarial\test_adaptive_integrity.py:225: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\hive\adaptive.py:239: in run_adaptive
+    return _run_adaptive_locked(root, config, rounds=rounds, seed=seed, output_path=output_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\hive\adaptive.py:342: in _run_adaptive_locked
+    job_id, ref = _phase_entry(store, state, "development", task, route, executor, hypothesis)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+store = &lt;hive.storage.Store object at 0x000002B8DFF19B10&gt;
+state = {'manifest_ref': 'artifacts/57857c190cbb1767312625ff0dc14717e6c76921ba575a7a9a48bd02cd3127e0.json', 'manifest_hash': '57857c190cbb1767312625ff0dc14717e6c76921ba575a7a9a48bd02cd3127e0', 'state': 'RUNNING', 'created': 1795305208.6920533, ...}
+phase = 'development'
+task = {'id': 'bench-v1-20261121-development-math-000-940882504a', 'category': 'math', 'split': 'development', 'prompt': 'Multiply 28 by 21. Return JSON {"answer": integer}.', ...}
+route = 'local_direct'
+executor = &lt;hive.orchestrator.Executor object at 0x000002B8DFF1B050&gt;
+hypothesis = 'Verified development feedback can choose a local route that improves paired validation quality without critical regressions; utility is descriptive.'
+
+    def _phase_entry(store, state, phase, task, route, executor, hypothesis):
+        key = f"adaptive:{state['manifest_hash']}:{phase}:{task['id']}:{route}"
+        job_id = store.enqueue_once(key, {
+            "task": task, "route": route, "allow_retry": False, "retry_count": 0,
+            "learn_feedback": False,
+            "hypothesis": hypothesis,
+        })
+        job = store.get_job(job_id)
+        if job["result"] and job["result"].get("evidence_ref"):
+            ref = job["result"]["evidence_ref"]
+            return job_id, ref
+        barrier = executor.barrier(route)
+        if barrier:
+            store.set("stop_reason", barrier)
+            state.update(state="PAUSED", stop_reason=barrier, paused_phase=phase)
+            store.set(_CAMPAIGN_KEY, state)
+            raise _AdaptivePaused(barrier)
+        outcome = executor.run_one()
+        if outcome is None:
+            reason = store.get("stop_reason") or "executor stopped before scheduled job"
+            state.update(state="PAUSED", stop_reason=reason, paused_phase=phase)
+            store.set(_CAMPAIGN_KEY, state)
+            raise _AdaptivePaused(reason)
+        if outcome["id"] != job_id:
+            raise RuntimeError("Adaptive job order changed; refusing to attach unrelated evidence")
+        if not outcome.get("evidence_ref"):
+&gt;           raise RuntimeError(f"Adaptive job {job_id} finished without evidence")
+E           RuntimeError: Adaptive job 727b843c78ca4d12b484fb97fcda2e59 finished without evidence
+
+src\hive\adaptive.py:77: RuntimeError</failure></testcase><testcase classname="tests.adversarial.test_adaptive_integrity" name="test_paused_after_assessment_rejects_replaced_job_evidence" time="0.205"><failure message="RuntimeError: Adaptive job 80c6c74c7ffd411db047bd76ddd2fff4 finished without evidence">tmp_path = WindowsPath('C:/Users/ianmy/AppData/Local/Temp/pytest-of-ianmy/pytest-149/test_paused_after_assessment_r0')
+synthetic = []
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002B8DFE49350&gt;
+
+    def test_paused_after_assessment_rejects_replaced_job_evidence(tmp_path, synthetic, monkeypatch):
+        original_set = Store.set
+        def stop_after_decision(self, key, value):
+            original_set(self, key, value)
+            if key == "adaptive_campaign" and value.get("candidate_results"):
+                (tmp_path / "STOP").touch()
+        monkeypatch.setattr(Store, "set", stop_after_decision)
+        config = dict(DEFAULT_CONFIG, model="synthetic")
+&gt;       paused = run_adaptive(tmp_path, config, rounds=2)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\adversarial\test_adaptive_integrity.py:243: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\hive\adaptive.py:239: in run_adaptive
+    return _run_adaptive_locked(root, config, rounds=rounds, seed=seed, output_path=output_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\hive\adaptive.py:342: in _run_adaptive_locked
+    job_id, ref = _phase_entry(store, state, "development", task, route, executor, hypothesis)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+store = &lt;hive.storage.Store object at 0x000002B8DFE48E90&gt;
+state = {'manifest_ref': 'artifacts/4d53235e4512e9e24874af7c38ddaecbaf010ad2fd3315ac3edcc7a824d14fe7.json', 'manifest_hash': '4d53235e4512e9e24874af7c38ddaecbaf010ad2fd3315ac3edcc7a824d14fe7', 'state': 'RUNNING', 'created': 1795305208.899168, ...}
+phase = 'development'
+task = {'id': 'bench-v1-20261121-development-math-000-940882504a', 'category': 'math', 'split': 'development', 'prompt': 'Multiply 28 by 21. Return JSON {"answer": integer}.', ...}
+route = 'local_direct'
+executor = &lt;hive.orchestrator.Executor object at 0x000002B8DFE48510&gt;
+hypothesis = 'Verified development feedback can choose a local route that improves paired validation quality without critical regressions; utility is descriptive.'
+
+    def _phase_entry(store, state, phase, task, route, executor, hypothesis):
+        key = f"adaptive:{state['manifest_hash']}:{phase}:{task['id']}:{route}"
+        job_id = store.enqueue_once(key, {
+            "task": task, "route": route, "allow_retry": False, "retry_count": 0,
+            "learn_feedback": False,
+            "hypothesis": hypothesis,
+        })
+        job = store.get_job(job_id)
+        if job["result"] and job["result"].get("evidence_ref"):
+            ref = job["result"]["evidence_ref"]
+            return job_id, ref
+        barrier = executor.barrier(route)
+        if barrier:
+            store.set("stop_reason", barrier)
+            state.update(state="PAUSED", stop_reason=barrier, paused_phase=phase)
+            store.set(_CAMPAIGN_KEY, state)
+            raise _AdaptivePaused(barrier)
+        outcome = executor.run_one()
+        if outcome is None:
+            reason = store.get("stop_reason") or "executor stopped before scheduled job"
+            state.update(state="PAUSED", stop_reason=reason, paused_phase=phase)
+            store.set(_CAMPAIGN_KEY, state)
+            raise _AdaptivePaused(reason)
+        if outcome["id"] != job_id:
+            raise RuntimeError("Adaptive job order changed; refusing to attach unrelated evidence")
+        if not outcome.get("evidence_ref"):
+&gt;           raise RuntimeError(f"Adaptive job {job_id} finished without evidence")
+E           RuntimeError: Adaptive job 80c6c74c7ffd411db047bd76ddd2fff4 finished without evidence
+
+src\hive\adaptive.py:77: RuntimeError</failure></testcase><testcase classname="tests.adversarial.test_grok_counterexamples" name="test_malformed_verifier_cannot_update_policy" time="0.251" /><testcase classname="tests.adversarial.test_grok_counterexamples" name="test_successor_is_idempotent_and_invalid_tasks_do_not_stall" time="0.254" /><testcase classname="tests.adversarial.test_grok_counterexamples" name="test_unowned_transition_and_string_approval_rejected" time="0.036" /><testcase classname="tests.adversarial.test_grok_counterexamples" name="test_review_identity_is_canonicalized" time="0.045" /><testcase classname="tests.adversarial.test_grok_counterexamples" name="test_implausible_resource_usage_is_not_learning_feedback" time="0.285" /><testcase classname="tests.adversarial.test_grok_counterexamples" name="test_unknown_split_rejected_before_dispatch" time="0.101" /><testcase classname="tests.adversarial.test_integration_acceptance" name="test_wrong_classification_and_extra_claims_are_rejected" time="0.001" /><testcase classname="tests.adversarial.test_integration_acceptance" name="test_tampered_source_size_cannot_match_stale_output" time="0.001" /><testcase classname="tests.adversarial.test_integration_acceptance" name="test_boolean_inventory_values_are_not_integers[count]" time="0.001" /><testcase classname="tests.adversarial.test_integration_acceptance" name="test_boolean_inventory_values_are_not_integers[bytes]" time="0.001" /><testcase classname="tests.adversarial.test_integration_acceptance" name="test_boolean_source_bytes_and_unknown_evaluator_fail_closed" time="0.000" /><testcase classname="tests.adversarial.test_integration_acceptance" name="test_inventory_extra_claim_is_rejected" time="0.000" /><testcase classname="tests.adversarial.test_v03_evaluation_boundary" name="test_synthetic_confidently_wrong_tool_result_is_rejected" time="0.001" /><testcase classname="tests.adversarial.test_v03_evaluation_boundary" name="test_synthetic_claimed_pass_cannot_override_wrong_answer" time="0.001" /><testcase classname="tests.adversarial.test_v03_evaluation_boundary" name="test_candidate_view_excludes_synthetic_gold" time="0.048" /><testcase classname="tests.adversarial.test_v03_evaluation_boundary" name="test_same_fixture_cannot_be_relabelled_between_splits" time="0.041" /><testcase classname="tests.adversarial.test_v03_evaluation_boundary" name="test_same_heldout_case_cannot_be_reused_via_new_manifest" time="0.048" /><testcase classname="tests.adversarial.test_v03_evaluation_boundary" name="test_synthetic_one_use_survives_process_exit_and_identity_mutation" time="0.211" /><testcase classname="tests.adversarial.test_v03_evaluation_boundary" name="test_relabelled_heldout_fixture_cannot_be_consumed_again" time="0.047" /><testcase classname="tests.adversarial.test_v03_evaluation_boundary" name="test_nested_gold_in_public_payload_is_rejected" time="0.041" /><testcase classname="tests.adversarial.test_v03_evaluation_boundary" name="test_source_case_and_whitespace_alias_cannot_cross_splits" time="0.042" /><testcase classname="tests.adversarial.test_v03_evaluation_boundary" name="test_changed_registered_manifest_or_evaluator_ref_is_rejected" time="0.046" /><testcase classname="tests.adversarial.test_v03_evaluation_boundary" name="test_numeric_and_unicode_equivalent_payloads_cannot_bypass_one_use" time="0.094" /><testcase classname="tests.adversarial.test_v03_evaluation_boundary" name="test_disguised_gold_field_names_are_rejected_after_valid_hash" time="0.201" /><testcase classname="tests.adversarial.test_v03_evaluation_boundary" name="test_invisible_source_identity_is_rejected" time="0.041" /><testcase classname="tests.adversarial.test_v03_evaluation_boundary" name="test_non_json_native_tuple_cannot_enter_public_or_private" time="0.081" /><testcase classname="tests.adversarial.test_verifier" name="test_wrong_claim_success_or_extra_answer_fields_never_pass" time="0.001" /><testcase classname="tests.adversarial.test_verifier" name="test_invalid_json_model_attempt_is_usable_but_runtime_failure_is_not" time="0.001" /><testcase classname="tests.adversarial.test_verifier" name="test_hallucination_requires_all_fields_and_penalizes_unsupported_claims" time="0.001" /><testcase classname="tests.adversarial.test_verifier" name="test_malformed_task_evidence_is_invalid" time="0.001" /><testcase classname="tests.adversarial.test_verifier" name="test_non_model_failures_are_not_policy_feedback" time="0.000" /><testcase classname="tests.adversarial.test_video_integrity" name="test_changed_source_and_corrupted_output_fail_closed" time="0.623" /><testcase classname="tests.adversarial.test_video_integrity" name="test_path_escape_and_symlink_rejected" time="0.020"><skipped type="pytest.skip" message="OS does not allow creating symlinks">D:\Repos\hive-ai\tests\adversarial\test_video_integrity.py:57: OS does not allow creating symlinks</skipped></testcase><testcase classname="tests.adversarial.test_video_integrity" name="test_stop_and_cycle_limit_prevent_output" time="0.850" /><testcase classname="tests.adversarial.test_video_integrity" name="test_post_write_before_receipt_reconciles_without_overwrite" time="0.051" /><testcase classname="tests.adversarial.test_video_integrity" name="test_stale_model_before_dispatch_blocks_calls" time="0.136" /><testcase classname="tests.adversarial.test_video_integrity" name="test_stop_blocks_recreation_of_missing_cached_output" time="0.514" /><testcase classname="tests.adversarial.test_video_integrity" name="test_unknown_existing_output_is_never_overwritten" time="0.039" /><testcase classname="tests.adversarial.test_video_integrity" name="test_output_junction_cannot_redirect_effects" time="0.059" /><testcase classname="tests.adversarial.test_video_integrity" name="test_input_junction_is_rejected_even_within_allowed_root" time="0.030" /><testcase classname="tests.adversarial.test_video_integrity" name="test_subprocess_death_after_claim_recovers_budget_and_feedback" time="1.128" /><testcase classname="tests.adversarial.test_video_integrity" name="test_subprocess_death_after_rename_reconciles_same_output" time="0.973" /><testcase classname="tests.adversarial.test_video_review_regressions" name="test_clip_verifier_rejects_negative_source_time" time="0.000" /><testcase classname="tests.adversarial.test_video_review_regressions" name="test_each_output_consumes_the_remaining_storage_capacity" time="0.051" /><testcase classname="tests.adversarial.test_video_review_regressions" name="test_store_junction_rejected_before_lock_or_database_write" time="0.027" /><testcase classname="tests.adversarial.test_video_review_regressions" name="test_allowed_input_root_junction_rejected_before_reading_media" time="0.032" /><testcase classname="tests.integration.test_adaptive" name="test_completed_run_restarts_without_more_execution" time="4.825" /><testcase classname="tests.integration.test_adaptive" name="test_completed_run_rejects_changed_plan[config]" time="4.810" /><testcase classname="tests.integration.test_adaptive" name="test_completed_run_rejects_changed_plan[seed]" time="4.827" /><testcase classname="tests.integration.test_adaptive" name="test_completed_run_rejects_changed_plan[rounds]" time="4.813" /><testcase classname="tests.integration.test_adaptive" name="test_stop_survives_restart_without_execution" time="0.229" /><testcase classname="tests.integration.test_adaptive" name="test_budget_exhaustion_survives_restart" time="0.580" /><testcase classname="tests.integration.test_adaptive" name="test_stop_resume_completion_replaces_stale_status_reason" time="3.878" /><testcase classname="tests.integration.test_adaptive" name="test_local_budget_pause_reason_survives_restart[limit0-model request budget exhausted]" time="0.379" /><testcase classname="tests.integration.test_adaptive" name="test_local_budget_pause_reason_survives_restart[limit1-generated-token reservation budget exhausted]" time="0.353" /><testcase classname="tests.integration.test_adaptive" name="test_default_schedule_is_executable" time="6.060" /><testcase classname="tests.integration.test_adaptive" name="test_process_death_resumes_completed_jobs_without_reexecution" time="4.957" /><testcase classname="tests.integration.test_campaign" name="test_full_synthetic_campaign_restores_and_is_idempotent" time="0.189"><failure message="KeyError: 'evidence_ref'">tmp_path = WindowsPath('C:/Users/ianmy/AppData/Local/Temp/pytest-of-ianmy/pytest-149/test_full_synthetic_campaign_r0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002B8DFE2EA90&gt;
+
+    def test_full_synthetic_campaign_restores_and_is_idempotent(tmp_path, monkeypatch):
+        """Harness verification, explicitly not real-model scientific evidence."""
+        monkeypatch.setattr("hive.lab.discover", lambda *_: {"available": True, "models": [{"id": "fixture", "digest": "fixture-v1"}]})
+        real_consume = consume_holdout
+        monkeypatch.setattr("hive.lab.consume_holdout", lambda tasks, ref, _: real_consume(tasks, ref, tmp_path / "ledger"))
+        def simulated(task, route, config):
+            result = execute(task, "tool", config)
+            if route.startswith("local_"):
+                result.update(model="fixture", model_digest="fixture-v1", backend="test-double")
+            return result
+        monkeypatch.setattr("hive.orchestrator.execute", simulated)
+        config = dict(DEFAULT_CONFIG, model="fixture")
+&gt;       first = run_campaign(tmp_path / "state", config)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_campaign.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+root = WindowsPath('C:/Users/ianmy/AppData/Local/Temp/pytest-of-ianmy/pytest-149/test_full_synthetic_campaign_r0/state')
+config = {'endpoint': 'http://127.0.0.1:11434', 'model': 'fixture', 'timeout_s': 120, 'max_tokens': 128, ...}
+output_path = None
+
+    def run_campaign(root, config, output_path=None):
+        executor = Executor(root, config)
+        store = executor.store
+        try:
+            with worker_lock(root):
+                previous = store.get("campaign")
+                if previous and previous["state"] == "FINISHED":
+                    return store.read_artifact(previous["report_ref"])
+                if not previous and any(j["state"] == "QUEUED" for j in store.jobs()):
+                    raise ValueError("Drain existing queue before starting a comparison")
+                manifest = store.read_artifact(previous["manifest_ref"]) if previous else {
+                    "version": 1, "created": time.time(), "build": code_version(), "config": config,
+                    "hypothesis": "Development feedback changes category routing and improves held-out quality versus fixed local_direct at equal per-call token limits.",
+                    "primary_candidate": "ucb", "primary_baseline": "fixed local_direct", "weights": DEFAULT_WEIGHTS,
+                    "splits": {"development": 3, "validation": 2, "holdout": 4},
+                    "routes": ["local_direct", "local_tool", "tool"],
+                    "stopping_rule": "One fixed campaign; no extension after seeing holdout; stop at budget or kill switch.",
+                    "promotion": "95% paired CI lower &gt; 0 plus all hard gates; six task families insufficient for general superiority.",
+                    "runtime": discover(config["endpoint"]),
+                }
+                expected_digest = next((m["digest"] for m in manifest["runtime"]["models"] if m["id"] == config["model"]), None)
+                if not expected_digest:
+                    raise ValueError("Configured local model is not available with a manifest digest")
+                if config_hash(manifest["config"]) != config_hash(config) or manifest["build"]["source_sha256"] != code_version()["source_sha256"]:
+                    raise ValueError("Campaign configuration/source changed; preserved evidence requires original version to resume")
+                manifest_ref = previous["manifest_ref"] if previous else store.put_artifact(manifest)
+                store.set("campaign", {"manifest_ref": manifest_ref, "state": "RUNNING"})
+                executor.recover()
+                summaries = {}
+                all_refs = []
+                frozen = store.get("frozen_candidate")
+                for split, count in manifest["splits"].items():
+                    if split != "development" and frozen is None:
+                        frozen = store.get("policy") or Policy(seed=config["seed"]).snapshot()
+                        store.set("frozen_candidate", frozen)
+                        store.set("frozen_candidate_hash", config_hash(frozen))
+                    if split == "holdout":
+                        prior = store.get("holdout_consumed")
+                        if prior and prior != {"manifest_ref": manifest_ref, "candidate_hash": config_hash(frozen)}:
+                            raise ValueError("Holdout already consumed by a different candidate")
+                        store.set("holdout_consumed", {"manifest_ref": manifest_ref, "candidate_hash": config_hash(frozen)})
+                    tasks = load_tasks(split, config["seed"], count)
+                    if split == "holdout":
+                        consume_holdout(tasks, manifest_ref, Path(__file__).resolve().parents[2] / ".hive" / "holdout-ledger")
+                    rng = random.Random(config["seed"] + {"development": 0, "validation": 1, "holdout": 2}[split])
+                    rng.shuffle(tasks)
+                    rows = []
+                    for task in tasks:
+                        row = {"task_id": task["id"], "category": task["category"], "critical": task["critical"], "routes": {}}
+                        routes = list(manifest["routes"])
+                        rng.shuffle(routes)
+                        for route in routes:
+                            job_id = store.enqueue_once("campaign:" + task["id"] + ":" + route,
+                                                        {"task": task, "route": route, "allow_retry": False,
+                                                         "retry_count": 0, "hypothesis": manifest["hypothesis"]})
+                            existing = store.get_job(job_id)
+                            if existing.get("result", {}) and existing["result"].get("evidence_ref"):
+                                outcome = {"id": job_id, "evidence_ref": existing["result"]["evidence_ref"]}
+                            else:
+                                outcome = executor.run_one()
+                            if outcome is None:
+                                store.set("campaign", {"manifest_ref": manifest_ref, "state": "BLOCKED", "reason": store.get("stop_reason")})
+                                return store.get("campaign")
+                            if outcome["id"] != job_id:
+                                raise RuntimeError("Comparison job order changed; quarantine campaign")
+&gt;                           evidence = store.read_artifact(outcome["evidence_ref"])
+                                                           ^^^^^^^^^^^^^^^^^^^^^^^
+E                           KeyError: 'evidence_ref'
+
+src\hive\lab.py:156: KeyError</failure></testcase><testcase classname="tests.integration.test_campaign" name="test_holdout_ledger_prevents_cross_campaign_reuse" time="0.106" /><testcase classname="tests.integration.test_governed_run" name="test_explicit_route_excluded_by_task_permissions_is_never_called" time="0.102" /><testcase classname="tests.integration.test_governed_run" name="test_exhausted_local_budget_leaves_tool_route_eligible" time="0.200" /><testcase classname="tests.integration.test_governed_run" name="test_malformed_task_is_rejected_before_any_reservation" time="0.102" /><testcase classname="tests.integration.test_governed_run" name="test_feedback_updates_candidate_without_changing_governing_p0" time="0.216" /><testcase classname="tests.integration.test_governed_run" name="test_retry_to_disallowed_route_is_blocked_before_enqueue" time="0.278" /><testcase classname="tests.integration.test_integration_mission" name="test_shared_missions_reject_tie_restore_and_replay_without_calls" time="1.812" /><testcase classname="tests.integration.test_integration_mission" name="test_valid_other_job_artifact_cannot_substitute_for_completed_evidence" time="1.883" /><testcase classname="tests.integration.test_integration_mission" name="test_stop_and_initialization_crash_preserve_budget_and_atomic_state" time="1.953" /><testcase classname="tests.integration.test_pipeline" name="test_false_completion_queues_repair_and_survives_new_executor" time="0.391" /><testcase classname="tests.integration.test_pipeline" name="test_real_cli_subprocess_restores_status" time="0.434" /><testcase classname="tests.integration.test_pipeline" name="test_budget_persists_and_configuration_cannot_reset_it" time="0.301"><failure message="AssertionError: assert None&#10; +  where None = &lt;built-in method get of dict object at 0x000002B8DFFD6F80&gt;('decision_ref')&#10; +    where &lt;built-in method get of dict object at 0x000002B8DFFD6F80&gt; = {'id': 'e03084d5d7fc47f2978fc62924303b64', 'route': 'local_direct', 'passed': False, 'evidence_ref': 'artifacts/d5be29138b75cc8ccae48651dd95478fa330fd9eaefc8c7450de06372feb1170.json', ...}.get">tmp_path = WindowsPath('C:/Users/ianmy/AppData/Local/Temp/pytest-of-ianmy/pytest-149/test_budget_persists_and_confi0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002B8DD305E50&gt;
+
+    def test_budget_persists_and_configuration_cannot_reset_it(tmp_path, monkeypatch):
+        from hive.experiment_runner import execute
+        calls = []
+        def fake(task, route, config):
+            calls.append(route)
+            return execute(task, "tool", config)
+        monkeypatch.setattr("hive.orchestrator.execute", fake)
+        config = cfg(max_requests=1)
+        ex = Executor(tmp_path, config)
+        task = load_tasks("development")[0]
+        ex.enqueue(task, "local_direct")
+        ex.enqueue(task, "local_direct")
+        outcomes = ex.loop()
+        assert len([row for row in outcomes if row.get("evidence_ref")]) == 1
+&gt;       assert outcomes[-1].get("decision_ref")  # Exhausted job has a recorded refusal; queue can continue.
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert None
+E        +  where None = &lt;built-in method get of dict object at 0x000002B8DFFD6F80&gt;('decision_ref')
+E        +    where &lt;built-in method get of dict object at 0x000002B8DFFD6F80&gt; = {'id': 'e03084d5d7fc47f2978fc62924303b64', 'route': 'local_direct', 'passed': False, 'evidence_ref': 'artifacts/d5be29138b75cc8ccae48651dd95478fa330fd9eaefc8c7450de06372feb1170.json', ...}.get
+
+tests\integration\test_pipeline.py:66: AssertionError</failure></testcase><testcase classname="tests.integration.test_pipeline" name="test_holdout_does_not_update_feedback_and_is_sealed" time="0.237" /><testcase classname="tests.integration.test_pipeline" name="test_approved_policy_drives_route_and_regression_rolls_back" time="0.243" /><testcase classname="tests.integration.test_pipeline" name="test_kill_switch_preserves_queue_and_worker_lock" time="0.059" /><testcase classname="tests.integration.test_recovery" name="test_dead_process_recovery_and_stale_generation" time="0.123" /><testcase classname="tests.integration.test_recovery" name="test_live_child_claim_is_not_recovered" time="0.126" /><testcase classname="tests.integration.test_video_local_adapter" name="test_verified_local_transport_changes_preference_and_replays_once" time="0.604" /><testcase classname="tests.integration.test_video_local_adapter" name="test_digest_changes_inside_adapter_before_transport" time="0.493" /><testcase classname="tests.integration.test_video_mission" name="test_parse_srt_reindexes_sorts_and_preserves_text" time="0.001" /><testcase classname="tests.integration.test_video_mission" name="test_video_mission_runs_and_replays_without_inference" time="0.287" /><testcase classname="tests.regression.test_review_gates" name="test_every_promotion_gate_is_required_and_cannot_be_outvoted" time="0.085" /><testcase classname="tests.regression.test_review_gates" name="test_utility_is_monotonic_in_quality_with_fixed_costs" time="0.000" /><testcase classname="tests.regression.test_review_gates" name="test_nonfinite_and_negative_budgets_rejected" time="0.005" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_quality_improvement_overrides_lower_utility_without_promoting" time="0.000" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_critical_regression_blocks_net_quality_improvement" time="0.000" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_utility_cannot_rescue_quality_regression" time="0.000" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_quality_ties_never_accept_utility_only_improvement[-1-False]" time="0.001" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_quality_ties_never_accept_utility_only_improvement[0-False]" time="0.000" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_quality_ties_never_accept_utility_only_improvement[5e-13-False]" time="0.000" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_quality_ties_never_accept_utility_only_improvement[1e-12-False]" time="0.000" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_quality_ties_never_accept_utility_only_improvement[2e-12-False]" time="0.001" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_quality_ties_never_accept_utility_only_improvement[1.0-False]" time="0.001" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_balanced_quality_changes_tie_even_when_different_tasks_pass" time="0.001" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_family_dispersion_exposes_heterogeneity_and_weighting" time="0.001" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_order_independent_deterministic_and_does_not_mutate_evidence" time="0.001" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_bad_batch_or_duplicate_ids_fail_closed[None]" time="0.001" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_bad_batch_or_duplicate_ids_fail_closed[rows1]" time="0.001" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_bad_batch_or_duplicate_ids_fail_closed[rows2]" time="0.001" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_bad_batch_or_duplicate_ids_fail_closed[rows3]" time="0.001" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_bad_batch_or_duplicate_ids_fail_closed[rows4]" time="0.000" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_malformed_and_unusable_metrics_fail_on_either_side[task_id-None]" time="0.001" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_malformed_and_unusable_metrics_fail_on_either_side[task_id- ]" time="0.001" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_malformed_and_unusable_metrics_fail_on_either_side[category-None]" time="0.001" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_malformed_and_unusable_metrics_fail_on_either_side[category-]" time="0.001" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_malformed_and_unusable_metrics_fail_on_either_side[valid-False]" time="0.001" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_malformed_and_unusable_metrics_fail_on_either_side[valid-1]" time="0.001" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_malformed_and_unusable_metrics_fail_on_either_side[passed-1]" time="0.000" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_malformed_and_unusable_metrics_fail_on_either_side[critical-0]" time="0.000" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_malformed_and_unusable_metrics_fail_on_either_side[utility-None]" time="0.001" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_malformed_and_unusable_metrics_fail_on_either_side[utility-True]" time="0.001" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_malformed_and_unusable_metrics_fail_on_either_side[utility-nan]" time="0.001" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_malformed_and_unusable_metrics_fail_on_either_side[utility-inf]" time="0.001" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_malformed_and_unusable_metrics_fail_on_either_side[utility--inf]" time="0.001" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_malformed_and_unusable_metrics_fail_on_either_side[latency_s--1]" time="0.001" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_malformed_and_unusable_metrics_fail_on_either_side[latency_s-nan]" time="0.001" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_malformed_and_unusable_metrics_fail_on_either_side[tokens--1]" time="0.001" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_malformed_and_unusable_metrics_fail_on_either_side[tokens-inf]" time="0.001" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_malformed_and_unusable_metrics_fail_on_either_side[tokens-8]" time="0.001" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_malformed_and_unusable_metrics_fail_on_either_side[tokens-True]" time="0.001" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_missing_required_field_fails_closed[task_id]" time="0.000" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_missing_required_field_fails_closed[category]" time="0.001" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_missing_required_field_fails_closed[valid]" time="0.000" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_missing_required_field_fails_closed[passed]" time="0.000" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_missing_required_field_fails_closed[critical]" time="0.000" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_missing_required_field_fails_closed[utility]" time="0.000" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_missing_required_field_fails_closed[latency_s]" time="0.001" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_missing_required_field_fails_closed[tokens]" time="0.001" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_unmatched_ids_categories_or_critical_attributes_fail[candidate0]" time="0.001" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_unmatched_ids_categories_or_critical_attributes_fail[candidate1]" time="0.000" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_unmatched_ids_categories_or_critical_attributes_fail[candidate2]" time="0.000" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_unmatched_ids_categories_or_critical_attributes_fail[candidate3]" time="0.000" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_finite_inputs_whose_difference_overflows_fail_closed" time="0.000" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_single_family_range_does_not_claim_population_uncertainty" time="0.001" /><testcase classname="tests.unit.test_adaptive_metrics" name="test_large_finite_family_deltas_produce_serializable_descriptive_summary" time="0.001" /><testcase classname="tests.unit.test_benchmark_registry" name="test_manifest_freezes_and_public_view_excludes_private" time="0.044" /><testcase classname="tests.unit.test_benchmark_registry" name="test_schema_and_public_answer_leakage_fail_closed[&lt;lambda&gt;0]" time="0.041" /><testcase classname="tests.unit.test_benchmark_registry" name="test_schema_and_public_answer_leakage_fail_closed[&lt;lambda&gt;1]" time="0.041" /><testcase classname="tests.unit.test_benchmark_registry" name="test_schema_and_public_answer_leakage_fail_closed[&lt;lambda&gt;2]" time="0.041" /><testcase classname="tests.unit.test_benchmark_registry" name="test_schema_and_public_answer_leakage_fail_closed[&lt;lambda&gt;3]" time="0.041" /><testcase classname="tests.unit.test_benchmark_registry" name="test_obfuscated_private_answer_keys_are_rejected[gold-space]" time="0.042" /><testcase classname="tests.unit.test_benchmark_registry" name="test_obfuscated_private_answer_keys_are_rejected[g\u200bold]" time="0.042" /><testcase classname="tests.unit.test_benchmark_registry" name="test_obfuscated_private_answer_keys_are_rejected[label\n]" time="0.042" /><testcase classname="tests.unit.test_benchmark_registry" name="test_obfuscated_private_answer_keys_are_rejected[answer\xa0]" time="0.042" /><testcase classname="tests.unit.test_benchmark_registry" name="test_semantically_equivalent_fixture_cannot_be_relabelled[1.0]" time="0.064" /><testcase classname="tests.unit.test_benchmark_registry" name="test_semantically_equivalent_fixture_cannot_be_relabelled[-0.0]" time="0.062" /><testcase classname="tests.unit.test_benchmark_registry" name="test_semantically_equivalent_fixture_cannot_be_relabelled[caf\xe9]" time="0.062" /><testcase classname="tests.unit.test_benchmark_registry" name="test_invisible_identifier_aliases_and_non_json_native_data_are_rejected" time="0.048" /><testcase classname="tests.unit.test_benchmark_registry" name="test_sources_and_task_aliases_cannot_cross_splits_or_manifests" time="0.045" /><testcase classname="tests.unit.test_benchmark_registry" name="test_holdout_consumption_is_atomic_resumable_and_persisted" time="0.062" /><testcase classname="tests.unit.test_benchmark_registry" name="test_same_payload_cannot_inflate_independent_source_count" time="0.042" /><testcase classname="tests.unit.test_benchmark_registry" name="test_concurrent_consumers_have_one_fresh_exposure" time="0.107" /><testcase classname="tests.unit.test_benchmark_registry" name="test_manifest_corruption_refuses_access" time="0.056" /><testcase classname="tests.unit.test_benchmark_registry" name="test_open_rebuilds_normalized_ownership_from_legacy_manifests" time="0.086" /><testcase classname="tests.unit.test_export_snapshot" name="test_export_includes_only_tracked_public_files_and_hashes_exact_bytes" time="0.772" /><testcase classname="tests.unit.test_export_snapshot" name="test_exports_are_byte_identical_despite_output_path_and_file_timestamps" time="0.800" /><testcase classname="tests.unit.test_export_snapshot" name="test_dirty_tracked_bytes_are_hashed_and_disclosed" time="0.655" /><testcase classname="tests.unit.test_export_snapshot" name="test_nonempty_destination_is_preserved" time="0.519" /><testcase classname="tests.unit.test_export_snapshot" name="test_existing_zip_is_preserved_and_destination_not_created" time="0.571" /><testcase classname="tests.unit.test_export_snapshot" name="test_zip_inside_destination_is_refused" time="0.630" /><testcase classname="tests.unit.test_export_snapshot" name="test_missing_tracked_file_fails_before_writing_outputs" time="0.582" /><testcase classname="tests.unit.test_export_snapshot" name="test_cli_exports_snapshot_and_reports_commit" time="0.778" /><testcase classname="tests.unit.test_export_snapshot" name="test_empty_existing_destination_is_allowed" time="0.838" /><testcase classname="tests.unit.test_export_snapshot" name="test_tracked_source_symlink_cannot_copy_an_external_secret" time="0.489"><skipped type="pytest.skip" message="creating symlinks is unavailable in this Windows session">D:\Repos\hive-ai\tests\unit\test_export_snapshot.py:176: creating symlinks is unavailable in this Windows session</skipped></testcase><testcase classname="tests.unit.test_export_snapshot" name="test_cli_refuses_nonempty_destination_with_clear_error" time="0.757" /><testcase classname="tests.unit.test_learning" name="test_feedback_changes_routing_and_is_category_scoped" time="0.001" /><testcase classname="tests.unit.test_learning" name="test_restart_deterministic[fixed]" time="0.001" /><testcase classname="tests.unit.test_learning" name="test_restart_deterministic[greedy]" time="0.001" /><testcase classname="tests.unit.test_learning" name="test_restart_deterministic[ucb]" time="0.001" /><testcase classname="tests.unit.test_learning" name="test_restart_deterministic[random]" time="0.001" /><testcase classname="tests.unit.test_learning" name="test_only_development_trains" time="0.001" /><testcase classname="tests.unit.test_learning" name="test_ucb_explores_and_metrics_are_seeded" time="0.062" /><testcase classname="tests.unit.test_learning" name="test_gate_hard_failures_override_positive_metric" time="0.530" /><testcase classname="tests.unit.test_learning" name="test_gate_uncertainty_and_malformed" time="0.261" /><testcase classname="tests.unit.test_objective_analysis" name="test_tied_correctness_utility_prefers_cheaper_and_excludes_dominated" time="0.000" /><testcase classname="tests.unit.test_objective_analysis" name="test_tradeoff_demonstrates_difference_without_gating" time="0.000" /><testcase classname="tests.unit.test_objective_analysis" name="test_invalid_never_wins_and_input_unchanged" time="0.000" /><testcase classname="tests.unit.test_objective_analysis" name="test_constraint_checks_each_observation_and_means" time="0.000" /><testcase classname="tests.unit.test_objective_analysis" name="test_deterministic_ties_and_bad_values" time="0.000" /><testcase classname="tests.unit.test_objective_analysis" name="test_prior_sensitivity_is_explicit_and_only_estimates" time="0.000" /><testcase classname="tests.unit.test_storage" name="test_artifacts_and_checkpoints" time="0.073" /><testcase classname="tests.unit.test_storage" name="test_claim_transition_and_stale_guard" time="0.052" /><testcase classname="tests.unit.test_storage" name="test_triage_is_finite_and_changes_strategy" time="0.001" /><testcase classname="tests.unit.test_subjects" name="test_splits_are_repeatable_distinct_and_answer_free_requests" time="0.004" /><testcase classname="tests.unit.test_subjects" name="test_local_requests_hide_answer_and_handle_mock_transport" time="0.001" /><testcase classname="tests.unit.test_subjects" name="test_ollama_adapter_payload_and_digest_resolution" time="0.000" /><testcase classname="tests.unit.test_subjects" name="test_loopback_and_tool_allowlist_enforced" time="0.001" /><testcase classname="tests.unit.test_subjects" name="test_all_six_allowlisted_local_tool_paths_execute_only_builtins" time="0.002" /><testcase classname="tests.unit.test_subjects" name="test_task_ids_and_instances_are_disjoint_across_seed_and_split" time="0.002" /><testcase classname="tests.unit.test_subjects" name="test_model_failures_are_usable_zero_quality_and_environment_is_invalid" time="0.001" /><testcase classname="tests.unit.test_subjects" name="test_request_is_exact_payload_and_runner_caps_tokens" time="0.001" /><testcase classname="tests.unit.test_subjects" name="test_baseline_backend_is_not_fixture" time="0.001" /><testcase classname="tests.unit.test_subjects" name="test_only_adaptation_holdout_has_labeled_difficulty_shift" time="0.001" /><testcase classname="tests.unit.test_v03_e0" name="test_missing_approval_never_invokes_prepare_or_inference[None]" time="0.001" /><testcase classname="tests.unit.test_v03_e0" name="test_missing_approval_never_invokes_prepare_or_inference[]" time="0.001" /><testcase classname="tests.unit.test_v03_e0" name="test_missing_approval_never_invokes_prepare_or_inference[  ]" time="0.001" /><testcase classname="tests.unit.test_v03_e0" name="test_missing_approval_never_invokes_prepare_or_inference[True]" time="0.001" /><testcase classname="tests.unit.test_v03_e0" name="test_finished_runtime_report_without_state_replays_without_new_calls" time="0.007" /><testcase classname="tests.unit.test_v03_e0" name="test_failed_preflight_resume_requires_explicit_retry" time="0.010" /><testcase classname="tests.unit.test_v03_e0" name="test_preexisting_operator_stop_without_campaign_is_preserved" time="0.006" /><testcase classname="tests.unit.test_v03_e0" name="test_explicit_resume_cannot_refill_budget" time="0.004" /><testcase classname="tests.unit.test_v03_e0" name="test_explicit_resume_must_actually_clear_stop" time="0.005" /><testcase classname="tests.unit.test_v03_e0" name="test_completed_cache_replay_preserves_stop_and_existing_receipt" time="0.008" /><testcase classname="tests.unit.test_v03_e0" name="test_forged_or_incomplete_completed_counters_never_dispatch_or_pass[requests-999]" time="0.006" /><testcase classname="tests.unit.test_v03_e0" name="test_forged_or_incomplete_completed_counters_never_dispatch_or_pass[requests-29]" time="0.006" /><testcase classname="tests.unit.test_v03_e0" name="test_forged_or_incomplete_completed_counters_never_dispatch_or_pass[tokens_reserved-999]" time="0.004" /><testcase classname="tests.unit.test_v03_e0" name="test_forged_or_incomplete_completed_counters_never_dispatch_or_pass[tokens_actual-3841]" time="0.004" /><testcase classname="tests.unit.test_v03_e0" name="test_forged_or_incomplete_completed_counters_never_dispatch_or_pass[tokens_actual--1]" time="0.005" /><testcase classname="tests.unit.test_v03_e0" name="test_forged_or_incomplete_completed_counters_never_dispatch_or_pass[tokens_actual-None]" time="0.006" /><testcase classname="tests.unit.test_v03_e0" name="test_forged_or_incomplete_completed_counters_never_dispatch_or_pass[wall_s-601]" time="0.006" /><testcase classname="tests.unit.test_v03_e0" name="test_forged_or_incomplete_completed_counters_never_dispatch_or_pass[wall_s-inf]" time="0.005" /><testcase classname="tests.unit.test_v03_e0" name="test_forged_or_incomplete_completed_counters_never_dispatch_or_pass[wall_s-nan]" time="0.005" /><testcase classname="tests.unit.test_v03_e0" name="test_forged_or_incomplete_completed_counters_never_dispatch_or_pass[cycles-35]" time="0.005" /><testcase classname="tests.unit.test_v03_e0" name="test_forged_or_incomplete_completed_counters_never_dispatch_or_pass[cycles-999]" time="0.005" /><testcase classname="tests.unit.test_v03_e0" name="test_forged_or_incomplete_completed_counters_never_dispatch_or_pass[requests-True]" time="0.005" /><testcase classname="tests.unit.test_v03_e0" name="test_forged_or_incomplete_completed_counters_never_dispatch_or_pass[cycles-36.0]" time="0.006" /><testcase classname="tests.unit.test_v03_e0" name="test_missing_completed_counter_fails_closed[requests]" time="0.005" /><testcase classname="tests.unit.test_v03_e0" name="test_missing_completed_counter_fails_closed[tokens_reserved]" time="0.005" /><testcase classname="tests.unit.test_v03_e0" name="test_missing_completed_counter_fails_closed[tokens_actual]" time="0.006" /><testcase classname="tests.unit.test_v03_e0" name="test_missing_completed_counter_fails_closed[wall_s]" time="0.005" /><testcase classname="tests.unit.test_v03_e0" name="test_missing_completed_counter_fails_closed[cycles]" time="0.005" /><testcase classname="tests.unit.test_v03_e0" name="test_changed_prepared_cap_cannot_start[max_requests]" time="0.005" /><testcase classname="tests.unit.test_v03_e0" name="test_changed_prepared_cap_cannot_start[max_total_tokens]" time="0.004" /><testcase classname="tests.unit.test_v03_e0" name="test_changed_prepared_cap_cannot_start[max_wall_s]" time="0.004" /><testcase classname="tests.unit.test_v03_e0" name="test_changed_prepared_cap_cannot_start[max_storage_bytes]" time="0.004" /><testcase classname="tests.unit.test_v03_e0" name="test_changed_prepared_cap_cannot_start[concurrency]" time="0.003" /><testcase classname="tests.unit.test_v03_e0" name="test_changed_prepared_cap_cannot_start[max_cycles]" time="0.004" /><testcase classname="tests.unit.test_v03_e0" name="test_changed_prepared_cap_cannot_start[max_retries]" time="0.003" /><testcase classname="tests.unit.test_v03_e0" name="test_changed_prepared_cap_cannot_start[max_tokens]" time="0.004" /><testcase classname="tests.unit.test_v03_e0" name="test_changed_prepared_cap_cannot_start[timeout_s]" time="0.003" /><testcase classname="tests.unit.test_v03_e0" name="test_stop_preflight_rejects_nonzero_work[tokens_reserved-128]" time="0.001" /><testcase classname="tests.unit.test_v03_e0" name="test_stop_preflight_rejects_nonzero_work[tokens_actual-1]" time="0.001" /><testcase classname="tests.unit.test_v03_e0" name="test_stop_preflight_rejects_nonzero_work[requests-1]" time="0.001" /><testcase classname="tests.unit.test_v03_e0" name="test_stop_preflight_rejects_nonzero_work[cycles-1]" time="0.001" /><testcase classname="tests.unit.test_v03_e0" name="test_stop_preflight_rejects_nonzero_work[wall_s-0.1]" time="0.001" /><testcase classname="tests.unit.test_v03_e0" name="test_stop_preflight_requires_paused_state_and_token_counters" time="0.001" /><testcase classname="tests.unit.test_v03_e0" name="test_store_artifact_limit_fails_before_cached_dispatch" time="0.005" /><testcase classname="tests.unit.test_v03_e0" name="test_report_budget_must_match_status" time="0.005" /><testcase classname="tests.unit.test_v03_e0" name="test_status_observability_defect_is_not_reported_as_clean_pass" time="0.007" /><testcase classname="tests.unit.test_v03_e0" name="test_prepare_preserves_historical_receipt_and_plan_without_test_claims" time="0.011" /></testsuite></testsuites>

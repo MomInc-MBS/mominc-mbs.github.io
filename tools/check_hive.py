@@ -48,8 +48,7 @@ def main():
         errors.append('Canonical release pointer acceptance/promotion status changed')
     if readiness.get('source_sha256') and readiness['source_sha256'] != release['runtime_source_sha256']:
         errors.append('Readiness runtime hash differs from canonical release pointer')
-    supplement = release.get('engineering_supplement')
-    if supplement:
+    for supplement in filter(None, (release.get('engineering_supplement'), release.get('latest_verified'))):
         supplement_ids = {n['id'] for n in json.loads((OUT / 'graph.json').read_text(encoding='utf-8')).get('nodes', [])}
         supplement_manifest = OUT / supplement.get('publication_manifest', '')
         if set(supplement) != {'note_id', 'publication_manifest'} or supplement.get('note_id') not in supplement_ids or not supplement_manifest.is_file():
@@ -72,6 +71,12 @@ def main():
                     raw = local.read_bytes()
                     if len(raw) != entry['bytes'] or hashlib.sha256(raw).hexdigest() != entry['sha256'] or archive.read(path) != raw:
                         errors.append('Engineering supplement payload mismatch: ' + path)
+            runtime_digest = hashlib.sha256()
+            for path in sorted(p for p in snapshot['files'] if p.startswith('src/hive/') and p.endswith('.py')):
+                runtime_digest.update(path.removeprefix('src/hive/').encode())
+                runtime_digest.update((snapshot_path.parent / path).read_bytes())
+            if runtime_digest.hexdigest() != extra['runtime_source_sha256']:
+                errors.append('Engineering supplement actual runtime bytes differ from measured identity')
     with zipfile.ZipFile(release_zip) as z:
         project = next((n for n in z.namelist() if n.endswith('/pyproject.toml') or n == 'pyproject.toml'), None)
         if not project or not re.search(r'^version\s*=\s*["\']' + re.escape(release['version']) + r'["\']', z.read(project).decode('utf-8', 'replace'), re.M):
@@ -108,6 +113,12 @@ def main():
         for expected in (release['version'], release['status'], release['runtime_source_sha256'], release['download_sha256'], '/hive/' + release['download']):
             if expected not in page_text:
                 errors.append(f'Generated release page drift: {page_path.relative_to(ROOT)} missing {expected}')
+        if latest_pointer := release.get('latest_verified'):
+            latest = json.loads((OUT / latest_pointer['publication_manifest']).read_text(encoding='utf-8'))
+            for expected in (latest['runtime_version'], latest['status'], latest['runtime_source_sha256'],
+                             latest['download_sha256'], '/hive/' + latest['download']):
+                if expected not in page_text:
+                    errors.append(f'Latest verified engineering drift: {page_path.relative_to(ROOT)} missing {expected}')
     build_manifest = json.loads((OUT / 'build-manifest.json').read_text(encoding='utf-8'))
     if build_manifest.get('current_release') != release or build_manifest.get('latest_implementation_id') != release['release_id']:
         errors.append('Generated build manifest differs from canonical release pointer')

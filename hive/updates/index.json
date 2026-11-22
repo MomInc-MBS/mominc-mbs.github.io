@@ -4,7 +4,7 @@
     {
       "id": "CODER",
       "path": "updates/HIVE_Coder_Information_Packet_2026-11-20.md",
-      "title": "Coder directions — revision 0.4",
+      "title": "Coder directions \u2014 revision 0.4",
       "type": "build",
       "status": "proposed",
       "evidence_status": "proposed_implementation",
@@ -48,7 +48,7 @@
       "implementation_status": "ready_for_pressure_tests",
       "date": "2026-11-21",
       "citation_label": "HIVE integration (21 November 2026 Las Vegas)",
-      "sha256": "345edd9271918c81280978d9b7f06f7d3af9bc9cfec9f9140ed129b340c3cc02",
+      "sha256": "2414ef1b5475ce3673d77680f0df0320584f1493b2721bf018172c8eeda9a1cd",
       "tags": [
         "hive",
         "empirical-pilot",
@@ -150,7 +150,7 @@
       "implementation_status": "implemented_scoped_pilot",
       "date": "2026-11-21",
       "citation_label": "HIVE empirical pilot (21 November 2026 UTC)",
-      "sha256": "42277fe6166e58dd7fcc11516be43e9a1a3dda6592999a809345515e1a2c0f6e",
+      "sha256": "8811edcf575022a132f39187c9033729bce39c06cff7c76e7fdc0f36aaa6ae96",
       "tags": [
         "hive",
         "empirical-pilot",
@@ -194,7 +194,7 @@
     {
       "id": "PROTOTYPE",
       "path": "implementation/AUTONOMOUS_V01.md",
-      "title": "Autonomous local prototype — v0.1",
+      "title": "Autonomous local prototype \u2014 v0.1",
       "type": "build",
       "status": "measured",
       "evidence_status": "measured",
@@ -213,7 +213,7 @@
     {
       "id": "CONTROLLER",
       "path": "implementation/ADAPTIVE_V02.md",
-      "title": "Adaptive verified controller — v0.2",
+      "title": "Adaptive verified controller \u2014 v0.2",
       "type": "build",
       "status": "measured",
       "evidence_status": "measured",
@@ -319,6 +319,24 @@
         "quarantined-policy",
         "measured"
       ]
+    },
+    {
+      "id": "P2SAFETY",
+      "path": "updates/HIVE_P2_Safety_2026-11-21.md",
+      "title": "P2 Safety and Objective Campaign - dev6",
+      "type": "build",
+      "status": "measured",
+      "evidence_status": "measured",
+      "implementation_status": "implemented_scoped_pilot",
+      "date": "2026-11-21",
+      "citation_label": "HIVE P2 safety follow-through (21 November 2026 Pacific)",
+      "tags": [
+        "hive",
+        "objective-testing",
+        "p2-safety",
+        "measured"
+      ],
+      "sha256": "b1fc8faa7b8d231abda7c0507a3cc211cd8d760ab33d72923c7b230a4389b051"
     }
   ],
   "edges": [
@@ -830,6 +848,26 @@
     {
       "source": "READINESS",
       "target": "OBJECTIVE",
+      "relation": "related_to"
+    },
+    {
+      "source": "HOME",
+      "target": "P2SAFETY",
+      "relation": "related_to"
+    },
+    {
+      "source": "STATUS",
+      "target": "P2SAFETY",
+      "relation": "related_to"
+    },
+    {
+      "source": "RELEASES",
+      "target": "P2SAFETY",
+      "relation": "related_to"
+    },
+    {
+      "source": "OBJECTIVE",
+      "target": "P2SAFETY",
       "relation": "related_to"
     }
   ],

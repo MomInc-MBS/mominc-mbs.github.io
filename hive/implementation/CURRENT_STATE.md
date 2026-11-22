@@ -1,7 +1,21 @@
 # Implementation Status
 
+<!-- p2-dev6:start -->
+## Latest verified engineering - v0.3.0.dev6
+
+**P2_SAFETY_VERIFIED_QUARANTINED.** 448 tests passed, 2 explained Windows symlink skips and zero failures; seven CLI journeys passed. The twelve public objective tasks passed exact checks and fresh-process unchanged-budget replay.
+P2 requires a permitted exact tool or abstention, binds feedback to recorded
+contracts/configuration, and remains quarantined after six matched ties with
+the strongest tool. Zero quality gain and zero new HIVE model calls.
+Level A: zero genuine attempts, zero accepted. Level B: UNTESTED. No promotion.
+
+The next campaign uses six structured-data tasks plus six Python tasks.
+[Current source, complete evidence and limitations](/hive/notes/P2SAFETY/).
+Historical records retain their original scope.
+<!-- p2-dev6:end -->
+
 <!-- readiness-dev4:start -->
-## Current engineering milestone — v0.3.0.dev4
+## Frozen engineering baseline — v0.3.0.dev4
 
 **READY_FOR_PRESSURE_TESTS**. Shared video/isolated code missions, eleven pressure fixtures, independent fault checks and clean-package evidence are published. 342 tests and 7 CLI journeys passed; 2 explained Windows symlink skips. Zero new model calls. Level A: 0 attempted, 0 accepted; Level B UNTESTED. No policy promotion.
 

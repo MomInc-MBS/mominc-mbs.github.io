@@ -1,0 +1,52 @@
+{
+  "date": "2026-11-22T06:30:00.532734+00:00",
+  "status": "P2_SAFETY_VERIFIED_QUARANTINED",
+  "source_commit": "0b3bfc391c8fc21555f451012757174933f1c479",
+  "tracked_dirty": false,
+  "runtime_version": "0.3.0.dev6",
+  "runtime_source_sha256": "0d97faae0caae31f3918296dccaa21be5ba0ba7a1cec0c8ca5f880001d17320e",
+  "measured_source_commit": "f3d7e556ea41076e1138761d72df06b5ce3e0f65",
+  "measured_runtime_source_sha256": "0d97faae0caae31f3918296dccaa21be5ba0ba7a1cec0c8ca5f880001d17320e",
+  "download": "downloads/HIVE_P2_Safety_v0_3_0_dev6.zip",
+  "download_sha256": "659b6c9be7531307e5c9068bb2fd6e7bb34eab981f35b77bbf6c58b67c200ff0",
+  "snapshot_manifest": "implementation/p2-dev6/SNAPSHOT_MANIFEST.json",
+  "snapshot_file_count": 876,
+  "evidence_manifest": "implementation/p2-dev6/experiments/results/handoff-followthrough-20261121/manifest.json",
+  "release_smoke": "implementation/p2-dev6-clean-zip-smoke.json",
+  "tests": {
+    "passed": 448,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 2,
+    "seconds": 1404.224,
+    "receipt": "terra-final/pytest.xml"
+  },
+  "cli_journeys": {
+    "discovered": 7,
+    "selected": 7,
+    "executed": 7,
+    "passed": 7,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "status": "passed",
+    "receipt": "terra-final/e2e/report.json",
+    "seconds": 209.023
+  },
+  "objective_smoke": {
+    "tasks": 12,
+    "exact_passed": 12,
+    "replay_passed": 12,
+    "receipt": "terra-final/objective-smoke.json",
+    "new_model_calls": 0
+  },
+  "new_real_model_calls": 0,
+  "level_a": "NOT_ACCEPTED;0 genuine attempted,0 accepted",
+  "level_b": "UNTESTED",
+  "policy_deployed": false,
+  "P2_decision": "QUARANTINE",
+  "quality_gain": false,
+  "baseline_publication": "implementation/readiness-dev4-publication.json",
+  "previous_supplement": "implementation/objective-dev5-publication.json",
+  "scope": "Public synthetic engineering; next acceptance uses six structured-data plus six Python; no genuine acceptance or learning gain"
+}
