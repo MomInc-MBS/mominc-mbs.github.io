@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "verified_jobs": 11,
+  "verified_artifacts": 43,
+  "candidate_reconstructed": true,
+  "candidate_decision": "REJECTED",
+  "new_model_calls": 0,
+  "historical_runtime_source_sha256": "c73866989d9c03253af8eb199b0c93509adbc50b92bcab7e0a29fde15db0d9d2",
+  "replayer_runtime_source_sha256": "e711d1c3e7eb4dbd23b95f3027f5d97627b1f6880a2c252e2cefea8c522e817b",
+  "scope": "offline artifact consistency and verifier replay; no fresh inference or private store"
+}

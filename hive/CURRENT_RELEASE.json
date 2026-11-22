@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "release_id": "READINESS",
+  "version": "0.3.0.dev4",
+  "status": "READY_FOR_PRESSURE_TESTS",
+  "publication_manifest": "implementation/readiness-dev4-publication.json",
+  "runtime_source_sha256": "e711d1c3e7eb4dbd23b95f3027f5d97627b1f6880a2c252e2cefea8c522e817b",
+  "download": "downloads/HIVE_Readiness_v0_3_0_dev4.zip",
+  "download_sha256": "c3cf3e4633391efeb6f8659821fc4bdb6b112fe6dc4f5ea31bc00b531f3102ce",
+  "level_a": "NOT_ACCEPTED",
+  "level_a_attempted": 0,
+  "level_a_accepted": 0,
+  "level_b": "UNTESTED",
+  "candidate_promotion": false,
+  "engineering_supplement": {
+    "note_id": "OBJECTIVE",
+    "publication_manifest": "implementation/objective-dev5-publication.json"
+  }
+}

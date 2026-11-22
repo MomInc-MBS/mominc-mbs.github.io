@@ -1,0 +1,13 @@
+# Experiment provenance hashes exact runtime bytes. Preserve this frozen source
+# snapshot across checkouts, regardless of the operator's core.autocrlf setting.
+src/hive/** -text whitespace=blank-at-eol,space-before-tab,cr-at-eol,-blank-at-eof
+# Public readiness receipts and their digest indexes must retain exact bytes.
+experiments/results/readiness-20261121/** -text whitespace=space-before-tab,cr-at-eol,-blank-at-eol,-blank-at-eof
+build/** -text whitespace=space-before-tab,cr-at-eol,-blank-at-eol,-blank-at-eof
+# Objective receipts, the supplied directive, and hashed inputs retain exact bytes.
+experiments/results/next-loop-20261121/** -text whitespace=space-before-tab,cr-at-eol,-blank-at-eol,-blank-at-eof
+experiments/plans/objective-smoke.json -text whitespace=cr-at-eol
+experiments/plans/readiness-level-a.json -text whitespace=cr-at-eol
+scripts/objective_smoke.py -text whitespace=cr-at-eol
+docs/LEVEL_A_OPERATOR_INTAKE.md -text whitespace=cr-at-eol
+docs/NEXT_BUILD_LEARNING_LOOP_DIRECTIVE.md -text whitespace=space-before-tab,cr-at-eol,-blank-at-eol,-blank-at-eof

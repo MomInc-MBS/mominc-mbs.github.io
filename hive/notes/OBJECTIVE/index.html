@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Objective testing and P2 repair - dev5 · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#29143f"><link rel="canonical" href="https://mominc.online/hive/notes/OBJECTIVE/">
+<meta property="og:title" content="Objective testing and P2 repair - dev5 · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg?v=2" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=3"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=3"><link rel="stylesheet" href="/hive/assets/research.css?v=1">
+<script defer src="/hive/assets/hive.js?v=3"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg?v=2" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/READINESS/">Implementation</a><a href="/hive/notes/CODER/">Coder directions</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/READINESS/" >v0.3.0.dev4 readiness</a><a href="/hive/notes/INTEGRATION/" >Historical dev3 integration</a><a href="/hive/notes/WORKING/" >Video mission alpha</a><a href="/hive/notes/V03/" >v0.3 foundation</a><a href="/hive/notes/CONTROLLER/" >Adaptive controller - v0.2</a><a href="/hive/notes/PROTOTYPE/" >Local prototype - v0.1</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/READINESS/" >v0.3.0.dev4 readiness</a><a href="/hive/notes/INTEGRATION/" >Historical dev3 integration</a><a href="/hive/notes/WORKING/" >Video mission alpha</a><a href="/hive/notes/V03/" >v0.3 foundation</a><a href="/hive/notes/CONTROLLER/" >Adaptive controller - v0.2</a><a href="/hive/notes/PROTOTYPE/" >Local prototype - v0.1</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 304 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download original vault · 0.2</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=build">Local build</a><span>/</span><span>OBJECTIVE</span></div>
+<div class="doc-meta"><span class="badge">Measured</span><span class="badge neutral">Objective pipeline verified p2 quarantined</span></div><div class="doc-tools"><button class="copy-link" data-title="Objective testing and P2 repair - dev5" data-id="OBJECTIVE" data-series="HIVE objective engineering checks (21 November 2026 Las Vegas)">Copy reference</button><a href="/hive/updates/HIVE_Objective_Testing_2026-11-21.md">Markdown source</a><a href="/hive/graph/?focus=OBJECTIVE">View connections</a><button class="print-page">Print</button></div>
+<article class="prose"><h1 id="objective-testing-and-p2-repair---dev5">Objective testing and P2 repair - dev5</h1>
+<p>The next HIVE tests use exact Python and structured-data answers, following Ian's request to switch away from visual judgments. This is a verified engineering supplement to the unchanged dev4 baseline.</p>
+<h2 id="what-ran">What ran</h2>
+<p>Six narrow Python function tasks ran in digest-pinned Docker. Six structured-data tasks computed exact counts and byte totals. The final run passed <strong>12 of 12 objective checks and 12 of 12 fresh-process replays</strong>, with unchanged budgets and zero new HIVE model calls. The code patches are fixed examples: this tests execution and verification, not autonomous code-solving ability.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Check</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Frozen dev5 runtime regression</td>
+<td>356 passed, 2 known Windows symlink skips</td>
+</tr>
+<tr>
+<td>Objective runner checks</td>
+<td>6 passed</td>
+</tr>
+<tr>
+<td>Tester Army CLI journeys</td>
+<td>7 passed</td>
+</tr>
+<tr>
+<td>Final objective tasks</td>
+<td>12 exact passes; 12 restart replays</td>
+</tr>
+<tr>
+<td>Public artifact replay</td>
+<td>42 jobs, 160 hashed files</td>
+</tr>
+<tr>
+<td>Matched P2 vs strongest tool</td>
+<td>Six ties, zero quality improvement</td>
+</tr>
+<tr>
+<td>Genuine Level A</td>
+<td>Not accepted; zero attempts</td>
+</tr>
+<tr>
+<td>Level B</td>
+<td>Untested</td>
+</tr>
+</tbody>
+</table></div>
+<p>Terra independently checked the Python case values, data totals, source snapshots, artifacts and budgets. Sol reviewed P2 provenance and historical policy compatibility. Review limits are recorded in their reports. No visual/editorial reviewer is needed for this prospective objective campaign.</p>
+<h2 id="failures-stay-in-the-record">Failures stay in the record</h2>
+<p>The first twelve-task run produced correct outputs but failed six data replay checks. The runner confused the authorized configuration with the shorter timeout HIVE correctly enforced. A runner-only repair validates both; a second bounded attempt passed. All 24 task executions remain recorded, alongside 18 comparison jobs. The source plan and expected answers were unchanged between attempts.</p>
+<p>The dev4 reproduction also found a parent-relative store-path failure in H11. Dev5 repairs it while preserving reparse-point checks and the failed receipts. Independent review caught a P2 version-marker downgrade bypass; replay now binds to recorded execution provenance. Original reviews, failures and corrections remain available.</p>
+<h2 id="policy-decision-and-next-gate">Policy decision and next gate</h2>
+<p><strong>P2 remains quarantined.</strong> Its exact-category route choices match existing v2. New attribution, verifier availability checks and replay binding improve inspectability; the matched comparison shows no quality gain. The default policy remains unchanged. Specialist/model-team arms require a new finite inference allocation and were not given substitute quality scores.</p>
+<p>These public synthetic examples are not six independent real repositories or fresh acceptance sources. Genuine acceptance still needs approved unused structured-data groups and Python snapshots, frozen independent expected outputs, and a bounded allocation. No policy promotion or sealed study is approved. Old inference allocations remain spent.</p>
+<h2 id="download-and-reproduce">Download and reproduce</h2>
+<ul>
+<li><a href="/hive/downloads/HIVE_Objective_Testing_v0_3_0_dev5.zip">Download objective-testing dev5 source and evidence</a></li>
+<li><a href="/hive/implementation/objective-dev5-publication.json">Publication identity and ZIP hash</a></li>
+<li><a href="/hive/implementation/objective-dev5-clean-zip-smoke.json">Clean extracted-ZIP verification</a></li>
+<li><a href="/hive/implementation/objective-dev5/docs/OBJECTIVE_TESTING.md">Run the objective checks</a></li>
+<li><a href="/hive/implementation/objective-dev5/docs/CURRENT_STATE.md">Measured state</a></li>
+<li><a href="/hive/implementation/objective-dev5/experiments/results/next-loop-20261121/decision.md">Comparison and decision</a></li>
+<li><a href="/hive/implementation/objective-dev5/experiments/results/next-loop-20261121/independent-verdict.json">Independent verdict</a></li>
+<li><a href="/hive/implementation/objective-dev5/experiments/results/next-loop-20261121/terra-objective-final-review.md">Terra's output review</a></li>
+<li><a href="/hive/implementation/objective-dev5/experiments/results/next-loop-20261121/sol-p2-final-review.md">Sol's P2 review</a></li>
+<li><a href="/hive/implementation/objective-dev5/experiments/results/next-loop-20261121/manifest.json">Complete evidence manifest</a></li>
+<li><a href="/hive/notes/READINESS/">Frozen dev4 baseline</a></li>
+</ul>
+<pre><code class="language-powershell">$env:PYTHONPATH = &quot;$PWD\src&quot;
+python scripts/replay_objective_exports.py
+# Git and pinned Docker image required; no model calls:
+python scripts/objective_smoke.py
+</code></pre>
+<p>Runtime: <code>0.3.0.dev5</code>, measured commit <code>5719c4ace14a1c437bf8f935b8666773b0e37493</code>. Runtime SHA-256: <code>2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c</code>. Packaging commit: <code>a1b8fb6ee9a856be90bf0573f5af208438395c2a</code>. ZIP SHA-256: <code>b6f9050c3aff751d5660cda2d23e8703cf67299e07f654c71300cf920eeb8e00</code>.</p>
+</article><section class="backlinks"><h2>Referenced by <span>4</span></h2><div><a href="/hive/notes/RELEASES/"><span>RELEASES</span>Change / Release History<small>related to</small></a><a href="/hive/notes/HOME/"><span>HOME</span>HIVE framework and research vault<small>related to</small></a><a href="/hive/notes/READINESS/"><span>READINESS</span>HIVE v0.3.0.dev4 readiness report<small>related to</small></a><a href="/hive/notes/STATUS/"><span>STATUS</span>Implementation Status<small>related to</small></a></div></section></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#what-ran">What ran</a><a class="toc-h2" href="#failures-stay-in-the-record">Failures stay in the record</a><a class="toc-h2" href="#policy-decision-and-next-gate">Policy decision and next gate</a><a class="toc-h2" href="#download-and-reproduce">Download and reproduce</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework 0.2 · Coder directions 0.4</span></a><span>Prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/updates/HIVE_Research_Update_Adaptive_Organization_and_Self_Learning_2026-11-20.md" download>Research update</a><a href="/hive/updates/HIVE_Coder_Information_Packet_2026-11-20.md" download>Coder packet · 0.4</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Original vault · 0.2</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

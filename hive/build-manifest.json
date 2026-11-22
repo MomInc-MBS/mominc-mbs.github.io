@@ -3,6 +3,25 @@
   "coder_revision": "0.4",
   "latest_research_id": "ADAPTIVE",
   "latest_implementation_id": "READINESS",
+  "current_release": {
+    "schema_version": 1,
+    "release_id": "READINESS",
+    "version": "0.3.0.dev4",
+    "status": "READY_FOR_PRESSURE_TESTS",
+    "publication_manifest": "implementation/readiness-dev4-publication.json",
+    "runtime_source_sha256": "e711d1c3e7eb4dbd23b95f3027f5d97627b1f6880a2c252e2cefea8c522e817b",
+    "download": "downloads/HIVE_Readiness_v0_3_0_dev4.zip",
+    "download_sha256": "c3cf3e4633391efeb6f8659821fc4bdb6b112fe6dc4f5ea31bc00b531f3102ce",
+    "level_a": "NOT_ACCEPTED",
+    "level_a_attempted": 0,
+    "level_a_accepted": 0,
+    "level_b": "UNTESTED",
+    "candidate_promotion": false,
+    "engineering_supplement": {
+      "note_id": "OBJECTIVE",
+      "publication_manifest": "implementation/objective-dev5-publication.json"
+    }
+  },
   "updates": [
     {
       "id": "CODER",
@@ -107,12 +126,18 @@
       "path": "updates/HIVE_Readiness_2026-11-21.md",
       "date": "2026-11-21",
       "sha256": "1a0e3309b4cc3cf4fe57b27d1b8de4ef4584974d1b1318cbedc81aeda34c6e60"
+    },
+    {
+      "id": "OBJECTIVE",
+      "path": "updates/HIVE_Objective_Testing_2026-11-21.md",
+      "date": "2026-11-21",
+      "sha256": "c802f7fff9e9ea3ce2c335d98aada34f2d10223c37878297a9acd19a8d2ec463"
     }
   ],
   "source_zip_sha256": "2b726d055a17a25495854890d8d0001cb791006273e0f8eb5515788b7e00c61a",
   "counts": {
-    "research_pages": 303,
-    "graph_edges": 2479,
+    "research_pages": 304,
+    "graph_edges": 2483,
     "originals": 19
   },
   "scope": "Static research reference plus executable local model/tool controller evidence. No production model runtime or compounding-learning claim."

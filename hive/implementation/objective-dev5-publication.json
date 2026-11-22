@@ -1,0 +1,63 @@
+{
+  "date": "2026-11-22T04:54:49.366599+00:00",
+  "status": "OBJECTIVE_PIPELINE_VERIFIED_P2_QUARANTINED",
+  "source_commit": "a1b8fb6ee9a856be90bf0573f5af208438395c2a",
+  "tracked_dirty": false,
+  "runtime_version": "0.3.0.dev5",
+  "runtime_source_sha256": "2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c",
+  "measured_source_commit": "5719c4ace14a1c437bf8f935b8666773b0e37493",
+  "measured_runtime_source_sha256": "2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c",
+  "download": "downloads/HIVE_Objective_Testing_v0_3_0_dev5.zip",
+  "download_sha256": "b6f9050c3aff751d5660cda2d23e8703cf67299e07f654c71300cf920eeb8e00",
+  "snapshot_manifest": "implementation/objective-dev5/SNAPSHOT_MANIFEST.json",
+  "snapshot_file_count": 720,
+  "evidence_manifest": "implementation/objective-dev5/experiments/results/next-loop-20261121/manifest.json",
+  "release_smoke": "implementation/objective-dev5-clean-zip-smoke.json",
+  "tests": {
+    "passed": 356,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 2,
+    "seconds": 650.816,
+    "receipt": "candidate-final-tests.xml"
+  },
+  "runner_tests": {
+    "passed": 6,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 12.354,
+    "receipt": "objective-runner-final-tests.xml"
+  },
+  "cli_journeys": {
+    "passed": 7,
+    "failed": 0,
+    "seconds": 114.667,
+    "receipt": "e2e/report.json"
+  },
+  "objective_attempts": {
+    "scheduled_total": 24,
+    "attempt1": {
+      "tasks": 12,
+      "exact_passed": 12,
+      "replay_passed": 6,
+      "gate": "FAILED",
+      "receipt": "objective-smoke-attempt1.json"
+    },
+    "attempt2": {
+      "tasks": 12,
+      "exact_passed": 12,
+      "replay_passed": 12,
+      "gate": "PASSED",
+      "receipt": "objective-smoke-final.json"
+    }
+  },
+  "new_real_model_calls": 0,
+  "level_a": "NOT_ACCEPTED;0 genuine attempted,0 accepted",
+  "level_b": "UNTESTED",
+  "policy_deployed": false,
+  "P2_decision": "QUARANTINE",
+  "quality_gain": false,
+  "baseline_publication": "implementation/readiness-dev4-publication.json",
+  "scope": "Synthetic objective development and engineering repair; no genuine acceptance or learning gain"
+}

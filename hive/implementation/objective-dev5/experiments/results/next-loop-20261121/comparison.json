@@ -1,0 +1,677 @@
+{
+  "arms": {
+    "learning_disabled": {
+      "costs": {
+        "cycles": 6,
+        "requests": 0,
+        "tokens_actual": 0,
+        "tokens_reserved": 0,
+        "wall_s": 1.3759999999310821
+      },
+      "feedback_enabled": false,
+      "policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+      "rows": [
+        {
+          "category": "structured_data",
+          "critical": false,
+          "latency_s": 0.0,
+          "passed": true,
+          "task_id": "data-one-row-minimum",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        },
+        {
+          "category": "structured_data",
+          "critical": false,
+          "latency_s": 0.0,
+          "passed": true,
+          "task_id": "data-maximum-byte-value",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        },
+        {
+          "category": "structured_data",
+          "critical": false,
+          "latency_s": 0.0,
+          "passed": true,
+          "task_id": "data-repeated-group",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        },
+        {
+          "category": "structured_data",
+          "critical": false,
+          "latency_s": 0.0,
+          "passed": true,
+          "task_id": "data-unicode-groups",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        },
+        {
+          "category": "structured_data",
+          "critical": false,
+          "latency_s": 0.0,
+          "passed": true,
+          "task_id": "data-interleaved-groups",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        },
+        {
+          "category": "structured_data",
+          "critical": false,
+          "latency_s": 0.0,
+          "passed": true,
+          "task_id": "data-row-count-boundary-256",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        }
+      ],
+      "scheduled": 6
+    },
+    "p2": {
+      "costs": {
+        "cycles": 6,
+        "requests": 0,
+        "tokens_actual": 0,
+        "tokens_reserved": 0,
+        "wall_s": 1.1699999999254942
+      },
+      "feedback_enabled": false,
+      "policy_hash": "00b7968c90858ea3c9cc3b8d0ef3ba16de579d8b5593fecfc8feebae8a04bbe9",
+      "rows": [
+        {
+          "category": "structured_data",
+          "critical": false,
+          "latency_s": 0.0,
+          "passed": true,
+          "task_id": "data-one-row-minimum",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        },
+        {
+          "category": "structured_data",
+          "critical": false,
+          "latency_s": 0.0,
+          "passed": true,
+          "task_id": "data-maximum-byte-value",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        },
+        {
+          "category": "structured_data",
+          "critical": false,
+          "latency_s": 0.0,
+          "passed": true,
+          "task_id": "data-repeated-group",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        },
+        {
+          "category": "structured_data",
+          "critical": false,
+          "latency_s": 0.0,
+          "passed": true,
+          "task_id": "data-unicode-groups",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        },
+        {
+          "category": "structured_data",
+          "critical": false,
+          "latency_s": 0.0,
+          "passed": true,
+          "task_id": "data-interleaved-groups",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        },
+        {
+          "category": "structured_data",
+          "critical": false,
+          "latency_s": 0.0,
+          "passed": true,
+          "task_id": "data-row-count-boundary-256",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        }
+      ],
+      "scheduled": 6
+    },
+    "strongest_tool": {
+      "costs": {
+        "cycles": 6,
+        "requests": 0,
+        "tokens_actual": 0,
+        "tokens_reserved": 0,
+        "wall_s": 1.2660000000614673
+      },
+      "feedback_enabled": false,
+      "policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+      "rows": [
+        {
+          "category": "structured_data",
+          "critical": false,
+          "latency_s": 0.0,
+          "passed": true,
+          "task_id": "data-one-row-minimum",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        },
+        {
+          "category": "structured_data",
+          "critical": false,
+          "latency_s": 0.0,
+          "passed": true,
+          "task_id": "data-maximum-byte-value",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        },
+        {
+          "category": "structured_data",
+          "critical": false,
+          "latency_s": 0.0,
+          "passed": true,
+          "task_id": "data-repeated-group",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        },
+        {
+          "category": "structured_data",
+          "critical": false,
+          "latency_s": 0.0,
+          "passed": true,
+          "task_id": "data-unicode-groups",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        },
+        {
+          "category": "structured_data",
+          "critical": false,
+          "latency_s": 0.0,
+          "passed": true,
+          "task_id": "data-interleaved-groups",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        },
+        {
+          "category": "structured_data",
+          "critical": false,
+          "latency_s": 0.0,
+          "passed": true,
+          "task_id": "data-row-count-boundary-256",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        }
+      ],
+      "scheduled": 6
+    }
+  },
+  "assessment": {
+    "accepted": false,
+    "baseline_quality": 1.0,
+    "baseline_utility": 1.0,
+    "by_family": {
+      "structured_data": {
+        "baseline_quality": 1.0,
+        "baseline_utility": 1.0,
+        "candidate_quality": 1.0,
+        "candidate_utility": 1.0,
+        "latency_delta_s": 0.0,
+        "losses": 0,
+        "n": 6,
+        "quality_delta": 0.0,
+        "ties": 6,
+        "tokens_delta": 0.0,
+        "utility_delta": 0.0,
+        "utility_losses": 0,
+        "utility_ties": 6,
+        "utility_wins": 0,
+        "wins": 0
+      }
+    },
+    "candidate_quality": 1.0,
+    "candidate_utility": 1.0,
+    "comparison_baseline": "experimental_incumbent",
+    "critical_regression": false,
+    "critical_regressions": [],
+    "family_uncertainty": {
+      "interpretation": "Observed family means and range; no independent sampling, confidence interval, or significance claim. Overall deltas are task-weighted; family means weight categories equally.",
+      "method": "descriptive_family_dispersion",
+      "n_families": 1,
+      "quality_delta": {
+        "equal_family_mean": 0.0,
+        "max": 0.0,
+        "median": 0.0,
+        "min": 0.0
+      },
+      "utility_delta": {
+        "equal_family_mean": 0.0,
+        "max": 0.0,
+        "median": 0.0,
+        "min": 0.0
+      }
+    },
+    "latency_delta_s": 0.0,
+    "losses": 0,
+    "n": 6,
+    "promote_eligible": false,
+    "quality_delta": 0.0,
+    "reasons": [
+      "quality tied; utility-only changes cannot establish improvement",
+      "experimental incumbent comparison only; independent promotion gate required"
+    ],
+    "ties": 6,
+    "tokens_delta": 0.0,
+    "utility_delta": 0.0,
+    "utility_losses": 0,
+    "utility_ties": 6,
+    "utility_tolerance": 1e-12,
+    "utility_wins": 0,
+    "valid_n": 6,
+    "wins": 0
+  },
+  "blocked_arms": {
+    "fixed_specialist": "No new inference allocation",
+    "fixed_two_component_team": "No new inference allocation; both components must be charged"
+  },
+  "config_hash": "4a9f9f94f19164ff3dda4cc8bf93afa128d5b1c336036d4a008ec9097f427259",
+  "decision": "QUARANTINE",
+  "input_plan_hash": "d17f3563018557f90f039596602bcc63069c96c164b27bcefdb53e153835678f",
+  "model_calls": 0,
+  "promotion_authorized": false,
+  "quality_gain": false,
+  "runtime": {
+    "commit": "5719c4ace14a1c437bf8f935b8666773b0e37493",
+    "source_sha256": "2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c",
+    "version": "0.3.0.dev5"
+  },
+  "scope": "Synthetic development tool-only comparison; no model/team quality measurement",
+  "source_groups": [
+    "synthetic-data-one-row-minimum",
+    "synthetic-data-maximum-byte-value",
+    "synthetic-data-repeated-group",
+    "synthetic-data-unicode-groups",
+    "synthetic-data-interleaved-groups",
+    "synthetic-data-row-count-boundary-256"
+  ],
+  "source_independence_established": false,
+  "trace": [
+    {
+      "arm": "strongest_tool",
+      "decision_ref": "artifacts/8ec3f647a458d90d83bfdc73b31775734a470e950f071175cda59e2990300fe5.json",
+      "evidence_ref": "artifacts/8d934996ddd77a3ff801bd7067b2dc32b555031cc5cdd933cc3aa6e76fa2854e.json",
+      "input_hash": "6c4b6291032966e6f58748ff6264bbe479edd95680aabcd56528412a6e929293",
+      "job_id": "15431b1d0e72440294623707881bc817",
+      "output_hash": "7936249fd4c2a981cb824d8b482a87bbfa68504caf2a58bf1bd7335adda5f89b",
+      "policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+      "route": "tool",
+      "source_group": "synthetic-data-one-row-minimum",
+      "task_hash": "366b9f21a33225a4beecba16f3d056e6d8d84c5f89b00c5d55b90c1e6ae3453f",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "strongest_tool",
+      "decision_ref": "artifacts/a2f540d876b941be2636ec7f966f9a89f9ac7d1dfa412eb49e1c8640b5f4a0e1.json",
+      "evidence_ref": "artifacts/1ee4f1e61edb488d8e0f3f73fafda26b32cf6189187bc0b712990569fdf663d4.json",
+      "input_hash": "124d53e603d3d0af8f56f225298acca76646d17945904101dfa021f74fa6fe52",
+      "job_id": "c0fbe4f6ea824759bf4ff9c877c43db9",
+      "output_hash": "850a5153bc7dbc606b51273127dc23b6f5c7951250c88ae04e0d7e6ca038afca",
+      "policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+      "route": "tool",
+      "source_group": "synthetic-data-maximum-byte-value",
+      "task_hash": "6db89d7bb452076879c9afafe55488303a8454e9e04b60ed67e992734ccb01f2",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "strongest_tool",
+      "decision_ref": "artifacts/67f3b3cced8ebf25a634dd3ea7e07e88be16afcf439342a5deaa6b7f7e400eae.json",
+      "evidence_ref": "artifacts/a0a9509e32b6b4fbe1b9468a41cc44d7f2f1e7f4f9617179ea5fa0b47c0c2c91.json",
+      "input_hash": "438e8e4db6ba3162feeb250443fb0c787d42f09723fbdbd4c0b0267268d8e4c8",
+      "job_id": "91b4b72a344b4f859c1ff6cb81183cdc",
+      "output_hash": "3483ef12c4874358cf0a817bedaa8f9a1e666cc1660bd78b90787c18c8c6ac47",
+      "policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+      "route": "tool",
+      "source_group": "synthetic-data-repeated-group",
+      "task_hash": "2c3e85f0dd2c554ca9bfef2a6c772f3e9ce17458aeff0fa242e169e8edb9761e",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "strongest_tool",
+      "decision_ref": "artifacts/315d191dbbaa72d9e4dbec788d93dcef57c1562a5931d17f04c6d1fa403ae8cb.json",
+      "evidence_ref": "artifacts/f9eb65356dd5c62c86edfd8d3b409f3638df56185e8c14da7e0dcfcc9a8db9a0.json",
+      "input_hash": "877e997f1e549298378b7fdd7f1f429bf6686cb801dd0c71ad4a6e87af3971b0",
+      "job_id": "27aab0a959624316a8b1ce6818799aaf",
+      "output_hash": "9010a45d726df5cfab076298fccde166b3df570deb0e3a45eb99ad7f83e485e7",
+      "policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+      "route": "tool",
+      "source_group": "synthetic-data-unicode-groups",
+      "task_hash": "267344641574d870f7a393184dc34dde05a267ae7d5c1dde3a977bfb08b7dc29",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "strongest_tool",
+      "decision_ref": "artifacts/3958a963ef558dc284ae8674baadd0f4e7b21c7c388d5bf863cb33e5856e9227.json",
+      "evidence_ref": "artifacts/93b430a7c3451371b0fc3d46500ba0664a449b53e64b31c52f3f1e3ff428205d.json",
+      "input_hash": "f55a16a2dd2df74b6e8829c5c2a975271e3cb0e82b7a686ae8eae64afd8c96ce",
+      "job_id": "75273876c2a146549520384b59484ad2",
+      "output_hash": "7cc42aaa71c1a3c484516243969b294363b2ecd0872f242e2201cf74bdf4db47",
+      "policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+      "route": "tool",
+      "source_group": "synthetic-data-interleaved-groups",
+      "task_hash": "559fbcce2560fb1d805fe92372166a51b74e9ddc4175a01bd2335857832a9fef",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "strongest_tool",
+      "decision_ref": "artifacts/9e887038077009ae6d8a32038a2be5324be17b62bf11eb289c7665f0a3ff45cc.json",
+      "evidence_ref": "artifacts/e3648ec9865436a8a7557cf5b514f3c4cfd238062b4d2c577d051e24bf17896c.json",
+      "input_hash": "cc1ad5d327759d5c810629c3cd2c3707f0a94b09d941d0689711ee5de006efa5",
+      "job_id": "dfc9c65822c34461a047e89d41d4841b",
+      "output_hash": "669d26cd403e23871bfc490eff64f4a6a180a8c1a4de0540eb3159db6cb365d1",
+      "policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+      "route": "tool",
+      "source_group": "synthetic-data-row-count-boundary-256",
+      "task_hash": "0f5674def31c4768abe95d8e0901ff34dcad56933a7e9868538cd6adc836b5be",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "learning_disabled",
+      "decision_ref": "artifacts/b1a1db6993a8ec23ae30165b058707a8e39fd821b8b67a6346160cf97eb758de.json",
+      "evidence_ref": "artifacts/201a5593cccc6da7a8011ad8c1a97f1cc038932323e65ffb574cc0db4ab11660.json",
+      "input_hash": "6c4b6291032966e6f58748ff6264bbe479edd95680aabcd56528412a6e929293",
+      "job_id": "fb1828ae13c949fda9cdd50777a89941",
+      "output_hash": "7936249fd4c2a981cb824d8b482a87bbfa68504caf2a58bf1bd7335adda5f89b",
+      "policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+      "route": "tool",
+      "source_group": "synthetic-data-one-row-minimum",
+      "task_hash": "366b9f21a33225a4beecba16f3d056e6d8d84c5f89b00c5d55b90c1e6ae3453f",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "learning_disabled",
+      "decision_ref": "artifacts/ee00c6c9a840a7639da4ee6c76b88a020890e504c5fb4b5297540712c7e5c5d7.json",
+      "evidence_ref": "artifacts/9104a48a85c2db6f813a00b023fc4f84034c014529ad73a622b70c2807bfabbf.json",
+      "input_hash": "124d53e603d3d0af8f56f225298acca76646d17945904101dfa021f74fa6fe52",
+      "job_id": "bea7b6ffae4e4552b119158baab6ef5e",
+      "output_hash": "850a5153bc7dbc606b51273127dc23b6f5c7951250c88ae04e0d7e6ca038afca",
+      "policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+      "route": "tool",
+      "source_group": "synthetic-data-maximum-byte-value",
+      "task_hash": "6db89d7bb452076879c9afafe55488303a8454e9e04b60ed67e992734ccb01f2",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "learning_disabled",
+      "decision_ref": "artifacts/91a43394dbef18fa35182062a981756740e0071509749428d517a2c2d3e57d38.json",
+      "evidence_ref": "artifacts/3840543ffab31976982a63125cd4992678959b9d56034a5c871c6b844531bae3.json",
+      "input_hash": "438e8e4db6ba3162feeb250443fb0c787d42f09723fbdbd4c0b0267268d8e4c8",
+      "job_id": "32ede6decb72423794e9b11fd80e9f8f",
+      "output_hash": "3483ef12c4874358cf0a817bedaa8f9a1e666cc1660bd78b90787c18c8c6ac47",
+      "policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+      "route": "tool",
+      "source_group": "synthetic-data-repeated-group",
+      "task_hash": "2c3e85f0dd2c554ca9bfef2a6c772f3e9ce17458aeff0fa242e169e8edb9761e",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "learning_disabled",
+      "decision_ref": "artifacts/25adc41cad7ac004e8b16622cbd56f906fca9c5a982c08c2db002ff97f857f77.json",
+      "evidence_ref": "artifacts/a89b498ded48599d45f39736b25b9bf1afc9c5f650b35e1c14aface4204d1bbf.json",
+      "input_hash": "877e997f1e549298378b7fdd7f1f429bf6686cb801dd0c71ad4a6e87af3971b0",
+      "job_id": "20b4fd100b3f4408af9ecdfac2a376ff",
+      "output_hash": "9010a45d726df5cfab076298fccde166b3df570deb0e3a45eb99ad7f83e485e7",
+      "policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+      "route": "tool",
+      "source_group": "synthetic-data-unicode-groups",
+      "task_hash": "267344641574d870f7a393184dc34dde05a267ae7d5c1dde3a977bfb08b7dc29",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "learning_disabled",
+      "decision_ref": "artifacts/d79316324b53cbdba4545d21dd1c058ec0ef110775107b1cfc3e32bb9092610f.json",
+      "evidence_ref": "artifacts/f7037bfba0796c0b84bf87e69334ed1dbbc02ccb4377b9afe8b97634ef835624.json",
+      "input_hash": "f55a16a2dd2df74b6e8829c5c2a975271e3cb0e82b7a686ae8eae64afd8c96ce",
+      "job_id": "0b1800400d4d47c9b139f310bf59c74f",
+      "output_hash": "7cc42aaa71c1a3c484516243969b294363b2ecd0872f242e2201cf74bdf4db47",
+      "policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+      "route": "tool",
+      "source_group": "synthetic-data-interleaved-groups",
+      "task_hash": "559fbcce2560fb1d805fe92372166a51b74e9ddc4175a01bd2335857832a9fef",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "learning_disabled",
+      "decision_ref": "artifacts/dd7d8faf8285de3e61e73d324a80ce58109fd2f71fba4cfc16d7aac7429148e4.json",
+      "evidence_ref": "artifacts/01cb1c8fadf1ed02c93965907860a91f596904b3a6819760444368d50e89ed2a.json",
+      "input_hash": "cc1ad5d327759d5c810629c3cd2c3707f0a94b09d941d0689711ee5de006efa5",
+      "job_id": "05f0b31e167949d78ea5ff1be892a6c5",
+      "output_hash": "669d26cd403e23871bfc490eff64f4a6a180a8c1a4de0540eb3159db6cb365d1",
+      "policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+      "route": "tool",
+      "source_group": "synthetic-data-row-count-boundary-256",
+      "task_hash": "0f5674def31c4768abe95d8e0901ff34dcad56933a7e9868538cd6adc836b5be",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "p2",
+      "decision_ref": "artifacts/c765991e855c8f29eb4f30b15d9420a4ec51e3e6046b8466081a957970b17358.json",
+      "evidence_ref": "artifacts/4ea98cb857c748ebd9558d5f200f411dd519ad14289ff22e98b069de46fe4e18.json",
+      "input_hash": "6c4b6291032966e6f58748ff6264bbe479edd95680aabcd56528412a6e929293",
+      "job_id": "804cf3d0ddc040adb052b8f9afc19d59",
+      "output_hash": "7936249fd4c2a981cb824d8b482a87bbfa68504caf2a58bf1bd7335adda5f89b",
+      "policy_hash": "00b7968c90858ea3c9cc3b8d0ef3ba16de579d8b5593fecfc8feebae8a04bbe9",
+      "route": "tool",
+      "source_group": "synthetic-data-one-row-minimum",
+      "task_hash": "366b9f21a33225a4beecba16f3d056e6d8d84c5f89b00c5d55b90c1e6ae3453f",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "p2",
+      "decision_ref": "artifacts/3a73733165527566b30ed377d7f192dba2a7cd50d69db5f9a52f38da453e8a13.json",
+      "evidence_ref": "artifacts/b4221d7748ad812e7ff438d8af229b14bd06f3041a608ea4f9143f38d77215a7.json",
+      "input_hash": "124d53e603d3d0af8f56f225298acca76646d17945904101dfa021f74fa6fe52",
+      "job_id": "4330a369f5b447c89bdfad539785bd0e",
+      "output_hash": "850a5153bc7dbc606b51273127dc23b6f5c7951250c88ae04e0d7e6ca038afca",
+      "policy_hash": "00b7968c90858ea3c9cc3b8d0ef3ba16de579d8b5593fecfc8feebae8a04bbe9",
+      "route": "tool",
+      "source_group": "synthetic-data-maximum-byte-value",
+      "task_hash": "6db89d7bb452076879c9afafe55488303a8454e9e04b60ed67e992734ccb01f2",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "p2",
+      "decision_ref": "artifacts/47dcbbcdf79b9810d16efbbaf74873d30b5f63b0d991fba474be9f6dc74da069.json",
+      "evidence_ref": "artifacts/8f4333f3f1a49cae629d1d2a111a6991fc6f5a934bd14d09f573c7cb4cf49ee0.json",
+      "input_hash": "438e8e4db6ba3162feeb250443fb0c787d42f09723fbdbd4c0b0267268d8e4c8",
+      "job_id": "cd3b20fccc9340d9807ac80b96c87717",
+      "output_hash": "3483ef12c4874358cf0a817bedaa8f9a1e666cc1660bd78b90787c18c8c6ac47",
+      "policy_hash": "00b7968c90858ea3c9cc3b8d0ef3ba16de579d8b5593fecfc8feebae8a04bbe9",
+      "route": "tool",
+      "source_group": "synthetic-data-repeated-group",
+      "task_hash": "2c3e85f0dd2c554ca9bfef2a6c772f3e9ce17458aeff0fa242e169e8edb9761e",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "p2",
+      "decision_ref": "artifacts/552373831cddefc6829fdcab985b76133255d18fac1959ad5e01624fb7e1d862.json",
+      "evidence_ref": "artifacts/7427be38c1d80945458a1f2b5274da04f65a4b4b01dc09801b906dcdd0fc992f.json",
+      "input_hash": "877e997f1e549298378b7fdd7f1f429bf6686cb801dd0c71ad4a6e87af3971b0",
+      "job_id": "ccef72e4192448f0a468a5f103e19372",
+      "output_hash": "9010a45d726df5cfab076298fccde166b3df570deb0e3a45eb99ad7f83e485e7",
+      "policy_hash": "00b7968c90858ea3c9cc3b8d0ef3ba16de579d8b5593fecfc8feebae8a04bbe9",
+      "route": "tool",
+      "source_group": "synthetic-data-unicode-groups",
+      "task_hash": "267344641574d870f7a393184dc34dde05a267ae7d5c1dde3a977bfb08b7dc29",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "p2",
+      "decision_ref": "artifacts/f9045f762968574b26949269d9d0fee881a168703c59cdaf5545cabfc5cbbd4c.json",
+      "evidence_ref": "artifacts/0140b1f30eef19520f19b022730c1af12ce593a3c6140e13fd23e4b1e6afc08f.json",
+      "input_hash": "f55a16a2dd2df74b6e8829c5c2a975271e3cb0e82b7a686ae8eae64afd8c96ce",
+      "job_id": "8eb47dbcc92a4db88b865ef58f42b1a3",
+      "output_hash": "7cc42aaa71c1a3c484516243969b294363b2ecd0872f242e2201cf74bdf4db47",
+      "policy_hash": "00b7968c90858ea3c9cc3b8d0ef3ba16de579d8b5593fecfc8feebae8a04bbe9",
+      "route": "tool",
+      "source_group": "synthetic-data-interleaved-groups",
+      "task_hash": "559fbcce2560fb1d805fe92372166a51b74e9ddc4175a01bd2335857832a9fef",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "p2",
+      "decision_ref": "artifacts/554a3d412df749add90a473d081ca23301cfd5364d86ffdbd6d3abe867163a15.json",
+      "evidence_ref": "artifacts/24579ae3354561f3b640684d7150be101824111e8830d3bd81d031fa227ba0a6.json",
+      "input_hash": "cc1ad5d327759d5c810629c3cd2c3707f0a94b09d941d0689711ee5de006efa5",
+      "job_id": "9b63ba682ffb4d8c89d4dd15ec9592e4",
+      "output_hash": "669d26cd403e23871bfc490eff64f4a6a180a8c1a4de0540eb3159db6cb365d1",
+      "policy_hash": "00b7968c90858ea3c9cc3b8d0ef3ba16de579d8b5593fecfc8feebae8a04bbe9",
+      "route": "tool",
+      "source_group": "synthetic-data-row-count-boundary-256",
+      "task_hash": "0f5674def31c4768abe95d8e0901ff34dcad56933a7e9868538cd6adc836b5be",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    }
+  ]
+}

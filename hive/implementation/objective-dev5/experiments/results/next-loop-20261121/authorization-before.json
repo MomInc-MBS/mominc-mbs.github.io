@@ -1,0 +1,67 @@
+{
+  "recorded_at": "2026-11-22T04:18:57.209658+00:00",
+  "new_model_calls_authorized": 0,
+  "promotion_authorized": false,
+  "source_inventory_approved": false,
+  "ledgers": {
+    "integration-20261121": {
+      "present": true,
+      "budget": {
+        "cycles": 11,
+        "requests": 6,
+        "tokens_actual": 147,
+        "tokens_reserved": 768,
+        "wall_s": 18.57799999997951
+      },
+      "stop_reason": "requested cycle limit reached",
+      "authorization": "ledger records consumption; it does not grant new spending"
+    },
+    "adaptive-v02-20261121": {
+      "present": true,
+      "budget": {
+        "cycles": 36,
+        "requests": 30,
+        "tokens_actual": 1013,
+        "tokens_reserved": 3840,
+        "wall_s": 23.450999999884516
+      },
+      "authorization": "ledger records consumption; it does not grant new spending"
+    },
+    "v03-e0-20261121": {
+      "present": true,
+      "budget": {
+        "cycles": 36,
+        "requests": 30,
+        "tokens_actual": 1008,
+        "tokens_reserved": 3840,
+        "wall_s": 23.124999999883585
+      },
+      "stop_reason": "kill switch",
+      "authorization": "ledger records consumption; it does not grant new spending"
+    },
+    "prototype-video": {
+      "present": true,
+      "budget": {
+        "cycles": 2,
+        "requests": 1,
+        "tokens_actual": 17,
+        "tokens_reserved": 128,
+        "wall_s": 7.641000000061467
+      },
+      "stop_reason": "requested cycle limit reached",
+      "authorization": "ledger records consumption; it does not grant new spending"
+    },
+    "prototype-wp0": {
+      "present": true,
+      "budget": {
+        "cycles": 1,
+        "requests": 1,
+        "tokens_actual": 8,
+        "tokens_reserved": 128,
+        "wall_s": 4.10999999998603
+      },
+      "stop_reason": "requested cycle limit reached",
+      "authorization": "ledger records consumption; it does not grant new spending"
+    }
+  }
+}

@@ -6,14 +6,15 @@ Canonical home: https://mominc.online/hive/
 Search: https://mominc.online/hive/search/?q=your-query
 Browse: https://mominc.online/hive/explore/
 Graph: https://mominc.online/hive/graph/
-Full-text machine index (303 pages): https://mominc.online/hive/search-index.json
+Full-text machine index (304 pages): https://mominc.online/hive/search-index.json
 Typed graph: https://mominc.online/hive/graph.json
 Original package: https://mominc.online/hive/downloads/HIVE_Framework_Research_Vault.zip
 
 ## Reading rules
 
 - Current implementation evidence is at /hive/notes/STATUS/. It links experiments, capabilities, learning progress, gaps, decisions and release history.
-- Current engineering build: /hive/notes/READINESS/. Shared video/isolated-code missions, H01–H11 synthetic smoke, independent validators and exact R1–R8 gate evidence. Zero new model calls. Read the gate verdict; fixture success is not fresh task acceptance or a sealed learning study. Genuine source inventories and new resource approvals remain required.
+- Objective testing supplement: /hive/notes/OBJECTIVE/. Six Python and six data tasks, exact references and restart replay; public synthetic development, zero new HIVE model calls, P2 quarantined with no quality gain.
+- Frozen engineering baseline: /hive/notes/READINESS/. Shared video/isolated-code missions, H01–H11 synthetic smoke, independent validators and exact R1–R8 gate evidence. Zero new model calls. Read the gate verdict; fixture success is not fresh task acceptance or a sealed learning study. Genuine source inventories and new resource approvals remain required.
 - Historical integration run: /hive/notes/INTEGRATION/. Eleven jobs ran; the deterministic inventory task and local directive-classification training task passed. The learned inventory candidate lost to fixed P0 on a critical task and was rejected; the later P0 task passed. All four comparative classification arms missed their labels. The run recorded six local calls, 147 generated tokens, and 768 reserved tokens. Independent Terra acceptance is recorded. No adaptive, Level A/Level B, or frontier-model gain is claimed.
 - Preserved video engineering alpha: /hive/notes/WORKING/. The historical v0.3.0.dev2 report records its original tests, CLI journeys, one real model call/17 generated tokens, and zero-call restart/STOP-resume. Previously edited input is excluded from unused A2 totals. Editorial acceptance, full Level A and Level B remain open. No policy is promoted.
 - Historical controller: /hive/notes/CONTROLLER/. Thirty real local-model calls: direct 3/6, learned router 5/6, rejected model-plus-tool regression 4/6, then tool-only 6/6. Persistent experimental decisions, rollback and continuation are verified. Reused selection validation is not an unused holdout. Source and public evidence are downloadable.

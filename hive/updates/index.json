@@ -301,6 +301,24 @@
         "v0.3.0.dev4",
         "engineering-evidence"
       ]
+    },
+    {
+      "id": "OBJECTIVE",
+      "path": "updates/HIVE_Objective_Testing_2026-11-21.md",
+      "title": "Objective testing and P2 repair - dev5",
+      "type": "build",
+      "status": "measured",
+      "evidence_status": "measured",
+      "implementation_status": "objective_pipeline_verified_p2_quarantined",
+      "date": "2026-11-21",
+      "citation_label": "HIVE objective engineering checks (21 November 2026 Las Vegas)",
+      "sha256": "c802f7fff9e9ea3ce2c335d98aada34f2d10223c37878297a9acd19a8d2ec463",
+      "tags": [
+        "hive",
+        "objective-testing",
+        "quarantined-policy",
+        "measured"
+      ]
     }
   ],
   "edges": [
@@ -792,6 +810,26 @@
     {
       "source": "INTEGRATION",
       "target": "READINESS",
+      "relation": "related_to"
+    },
+    {
+      "source": "HOME",
+      "target": "OBJECTIVE",
+      "relation": "related_to"
+    },
+    {
+      "source": "STATUS",
+      "target": "OBJECTIVE",
+      "relation": "related_to"
+    },
+    {
+      "source": "RELEASES",
+      "target": "OBJECTIVE",
+      "relation": "related_to"
+    },
+    {
+      "source": "READINESS",
+      "target": "OBJECTIVE",
       "relation": "related_to"
     }
   ],

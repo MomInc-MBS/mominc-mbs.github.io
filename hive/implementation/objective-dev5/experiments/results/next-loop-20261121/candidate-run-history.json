@@ -1,0 +1,23 @@
+{
+  "measured_runtime_commit": "5719c4ace14a1c437bf8f935b8666773b0e37493",
+  "measured_runtime_sha256": "2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c",
+  "attempts": [
+    {
+      "source_commit": "bff684396c39db82b90cbd93b0331ebecc8e4099",
+      "kind": "full_pytest",
+      "status": "ABORTED_BY_PARENT_BEFORE_SOURCE_REPAIR",
+      "reason": "Independent review demonstrated P2 marker downgrade bypass; stopped owned test process before patching. No result counted as pass.",
+      "local_log": ".hive/next-loop-candidate-tests.log"
+    },
+    {
+      "source_commit": "5719c4ace14a1c437bf8f935b8666773b0e37493",
+      "kind": "full_pytest",
+      "status": "PASSED",
+      "passed": 356,
+      "skipped": 2,
+      "failed": 0,
+      "seconds": 650.86,
+      "receipt": "candidate-final-tests.xml"
+    }
+  ]
+}

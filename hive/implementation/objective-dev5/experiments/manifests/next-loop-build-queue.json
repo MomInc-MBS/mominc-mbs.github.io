@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "authorization_ref": "docs/NEXT_BUILD_LEARNING_LOOP_DIRECTIVE.md section 5; existing AGENTS.md publication authority; zero new inference allocation",
+  "prior_queue_store": ".hive/readiness-build-controller",
+  "items": [
+    {
+      "id": "reproduce-dev4",
+      "owner": "Terra",
+      "authorized": true,
+      "hypothesis": "The downloaded frozen dev4 package reproduces all offline and synthetic gates with exact hashes.",
+      "next_command": "Run WP0 commands from the verified published ZIP.",
+      "depends_on": []
+    },
+    {
+      "id": "level-a-intake",
+      "owner": "Astra",
+      "authorized": true,
+      "hypothesis": "An honest twelve-position intake can be prepared without fabricating approved unused sources.",
+      "next_command": "Review docs/LEVEL_A_OPERATOR_INTAKE.md and non-executable intake template.",
+      "depends_on": []
+    },
+    {
+      "id": "p2-development",
+      "owner": "Luna",
+      "authorized": true,
+      "hypothesis": "A separately versioned policy protects eligible exact-tool tasks and preserves historical decisions.",
+      "next_command": "python -m pytest tests/unit/test_p2_exact_tool.py -q",
+      "depends_on": []
+    },
+    {
+      "id": "p2-independent-review",
+      "owner": "Terra",
+      "authorized": true,
+      "hypothesis": "Independent counterexamples and full regression reject unsafe P2 routing while the default remains unchanged.",
+      "next_command": "Review candidate diff; run focused P2 negatives and complete regression.",
+      "depends_on": [
+        "p2-development"
+      ]
+    },
+    {
+      "id": "publish-verified-loop",
+      "owner": "Astra",
+      "authorized": true,
+      "hypothesis": "One canonical live release pointer and separate quarantined supplement preserve dev4 provenance and honest gates.",
+      "next_command": "python tools/check_hive.py; verify live manifest and ZIP hashes.",
+      "depends_on": [
+        "reproduce-dev4",
+        "level-a-intake",
+        "p2-independent-review"
+      ]
+    },
+    {
+      "id": "fresh-level-a-execution",
+      "owner": "Operator",
+      "authorized": true,
+      "hypothesis": "Twelve approved unused independent tasks can pass frozen mechanical and editorial gates within a new finite allocation.",
+      "next_command": "BLOCKED: need approved sources, reviewers and new finite allocation; no inference dispatch.",
+      "depends_on": [
+        "publish-verified-loop"
+      ]
+    }
+  ]
+}

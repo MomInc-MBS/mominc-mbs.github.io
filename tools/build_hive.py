@@ -89,6 +89,7 @@ def main():
         meta, body = frontmatter((vault / node['path']).read_text(encoding='utf-8'))
         node.update(body=body, tags=meta.get('tags', []))
     updates = json.loads((OUT / 'updates/index.json').read_text(encoding='utf-8'))
+    release = json.loads((OUT / 'CURRENT_RELEASE.json').read_text(encoding='utf-8'))
     for entry in updates['entries']:
         source = OUT / entry['path']
         if hashlib.sha256(source.read_bytes()).hexdigest() != entry['sha256']:
@@ -105,7 +106,21 @@ def main():
         graph['edges'].append(dict(id=f'update_0_4_{i + 1:03}', **edge))
     current_coder = nodes[updates['current_coder_id']]
     latest_research = nodes[updates['latest_research_id']]
-    latest_implementation = nodes[updates.get('latest_implementation_id', 'WORKING')]
+    latest_implementation = nodes[release['release_id']]
+    release_zip = BASE + release['download']
+    supplement_link = ''
+    if supplement := release.get('engineering_supplement'):
+        supplement_link = (f' · <a href="{url(nodes[supplement["note_id"]])}">Engineering supplement</a>'
+                          f' · <a href="{BASE}{supplement["publication_manifest"]}">Supplement manifest</a>')
+    release_block = (f'<section class="release-pointer"><h2>Frozen engineering baseline: {esc(release["version"])}</h2>'
+                     f'<p><strong>{esc(release["status"])}</strong> · Level A {esc(release["level_a"])} '
+                     f'({release["level_a_attempted"]} attempted, {release["level_a_accepted"]} accepted) · '
+                     f'Level B {esc(release["level_b"])} · candidate promotion: no.</p>'
+                     f'<p>Runtime source SHA-256: <code>{esc(release["runtime_source_sha256"])}</code><br>'
+                     f'Download SHA-256: <code>{esc(release["download_sha256"])}</code></p>'
+                     f'<p><a href="{release_zip}" download>Download HIVE {esc(release["version"])}</a> · '
+                     f'<a href="{BASE}{release["publication_manifest"]}">Frozen publication manifest</a>{supplement_link} · '
+                     f'<a href="{url(latest_implementation)}">Read readiness evidence</a></p></section>')
     # Originals receive a reading view as well as their byte-identical download.
     originals = []
     for p in sorted((vault / '90_Archive/Originals').glob('*')):
@@ -238,7 +253,11 @@ def main():
         inbound[edge['target']].append(edge)
 
     for node in [*nodes.values(), *originals]:
+        if node['id'] in ('STATUS', 'RELEASES'):
+            node['body'] = re.sub(r'<!-- readiness-dev4:start -->.*?<!-- readiness-dev4:end -->', '', node['body'], flags=re.S)
         rendered, toc = render(node)
+        if node['id'] in ('STATUS', 'RELEASES'):
+            rendered = release_block + rendered
         related = [e for e in inbound[node['id']] if e['source'] != node['id']]
         # Show the stronger typed relationships before general related-to links.
         related.sort(key=lambda e: (e['relation'] == 'related_to', e['relation'], nodes[e['source']]['title']))
@@ -285,16 +304,32 @@ def main():
     home = f'''<main id="main"><section class="hero"><div class="hero-copy"><div class="eyebrow light">MOM INC. / RESEARCH & SYSTEMS</div><p class="revision">Coder directions 0.4 <span>Framework 0.2</span></p><h1>Many specialists.<br>One evolving <em>HIVE.</em></h1><p class="hero-deck">A framework for systems that assemble specialists, learn from verified experience, and improve how they work together.</p><p class="hero-sub">Follow the ideas. Inspect the evidence. Keep the alternatives open.</p><div class="hero-actions"><a class="button primary" href="{url(current_coder)}">Read coder directions</a><a class="button ghost" href="{BASE}explore/">Explore the vault</a></div></div>
 <div class="hero-system" aria-label="Proposed HIVE learning loop"><div class="system-caption">THE PROPOSED LEARNING LOOP</div><div class="system-core"><img src="{BASE}assets/hive.svg?v=2" width="56" height="56" alt=""><strong>HIVE</strong><span>State · selection · resources</span></div><div class="system-stages"><span>Specialists & tools</span><b>+</b><span>Verification</span><b>+</b><span>Evidence & experience</span></div><div class="system-return"><span>Candidate learning</span><span>Retention tests</span><span>Version registry</span></div><div class="system-foot">A candidate is promoted only after its gates pass.</div></div></section>
 <div class="stats-strip"><div><strong>{len(nodes)}</strong><span>linked research pages</span></div><div><strong>{count['topic']}</strong><span>research topics</span></div><div><strong>{count['experiment']}</strong><span>experiment designs</span></div><div><strong>19</strong><span>preserved originals</span></div><a href="{BASE}graph/">Explore {len(graph['edges']):,} connections</a></div>
-<section class="home-section evidence-section implementation-update"><div><p class="eyebrow">IMPLEMENTATION / v0.3.0.dev4 ENGINEERING</p><h2>Bounded missions.<br>Inspectable evidence.</h2><p>The shared controller runs video work and isolated Python code repairs. All eleven pressure scenarios have executable engineering fixtures, independent checks and replay. Inspect the exact readiness gates, failures and source identities before treating this as research readiness.</p><a class="button dark" href="{url(latest_implementation)}">Read the readiness report</a> <a class="text-link" href="{BASE}notes/STATUS/">Implementation status</a></div><div class="evidence-key"><div><span class="badge neutral">ENGINEERING EVIDENCE</span><p>Real Docker checks cover a pinned image, restricted mounts, STOP, timeout and host death. The operator CLI runs both task families and checks saved evidence on restart. This campaign used zero new model calls. The source ZIP includes commands, tests and measured receipts.</p><a href="{url(latest_implementation)}">Inspect gates and download source</a></div><div><span class="badge">RESEARCH UNTESTED</span><p>The fresh 12-task acceptance campaign still needs approved sources and independent decisions. Sealed beneficial-learning research needs its own resources and protocol. Fixture model/team arms are proxies. The historical inventory candidate failed and P0 was retained; no policy promotion or transferable gain is claimed.</p><a href="{BASE}notes/INTEGRATION/">Historical dev3 run</a> · <a href="{BASE}notes/WORKING/">Video alpha</a></div></div></section>
+<section class="home-section evidence-section implementation-update"><div><p class="eyebrow">IMPLEMENTATION / {esc(release['version'])} ENGINEERING</p><h2>Bounded missions.<br>Inspectable evidence.</h2><p>The shared controller runs video work and isolated Python code repairs. All eleven pressure scenarios have executable engineering fixtures, independent checks and replay. Inspect the exact readiness gates, failures and source identities before treating this as research readiness.</p><a class="button dark" href="{url(latest_implementation)}">Read the readiness report</a> <a class="text-link" href="{BASE}notes/STATUS/">Implementation status</a></div><div class="evidence-key"><div><span class="badge neutral">ENGINEERING EVIDENCE</span><p>Real Docker checks cover a pinned image, restricted mounts, STOP, timeout and host death. The operator CLI runs both task families and checks saved evidence on restart. This campaign used zero new model calls. The source ZIP includes commands, tests and measured receipts.</p><a href="{url(latest_implementation)}">Inspect gates and download source</a></div><div><span class="badge">RESEARCH UNTESTED</span><p>The fresh 12-task acceptance campaign still needs approved sources and independent decisions. Sealed beneficial-learning research needs its own resources and protocol. Fixture model/team arms are proxies. The historical inventory candidate failed and P0 was retained; no policy promotion or transferable gain is claimed.</p><a href="{BASE}notes/INTEGRATION/">Historical dev3 run</a> · <a href="{BASE}notes/WORKING/">Video alpha</a></div></div></section>
 <section class="latest-update"><div><p class="eyebrow">LATEST RESEARCH / 20 NOV 2026</p><h2>Adaptive organization and self-learning.</h2><p>Organization as a learnable component. Separate learning loops, a formula registry, and tests that preserve competing approaches.</p></div><a class="button dark" href="{url(latest_research)}">Read research update</a></section><section class="home-section"><div class="section-heading"><div><p class="eyebrow">FIND YOUR STARTING POINT</p><h2>A working record,<br>with the reasoning attached.</h2></div><p>This is a research and implementation specification. The vault preserves proposals, disagreements, prior results, and the tests that could change a decision.</p></div><div class="entry-grid">{card('READINESS', 'The dev4 shared mission runtime, eleven pressure smoke paths, exact readiness gates and reproducible evidence.')}{card('ADAPTIVE', 'The latest research: adaptive organizational duality, self-learning priorities, formula candidates, and proposed experiments.')}{card('DECISIONS', 'Compare live alternatives, tradeoffs, and the evidence needed to choose.')}{card('ROADMAP', 'Work packages, dependency order, and acceptance gates for the local build.')}</div></section>
 <section class="topic-section"><div><p class="eyebrow">TEN CONNECTED TOPICS</p><h2>Follow a question<br>through the research.</h2><p>Every path connects to decisions, experiments, earlier methods, and sources. A connection is context; it is not proof.</p><a class="text-link" href="{BASE}graph/">Open the research graph</a></div><div class="topic-list">{topic_list}</div></section>
 <section class="home-section evidence-section"><div><p class="eyebrow">KEEP THE RECORD HONEST</p><h2>Evidence has a history.</h2><p>Primary-source findings belong to their authors. Historical imports retain their original scope. Proposed experiments have no implied result.</p><a class="text-link" href="{url(nodes['EVIDENCE'])}">Read the evidence conventions</a></div><div class="evidence-key"><div><span class="badge">Primary source reviewed</span><p>Inspected source, with its limits intact.</p></div><div><span class="badge neutral">Design proposal</span><p>An implementation path still to test.</p></div><div><span class="badge historical">Historical import</span><p>Preserved prior work, not a fresh measurement.</p></div></div></section>
 <section class="download-band"><div><p class="eyebrow light">TAKE THE WHOLE RECORD</p><h2>Your vault. In your tools.</h2><p>All notes, schemas, the Canvas, graph exports, and original documents. The original Obsidian vault, coder directions, and research addendum, each preserved as supplied.</p></div><div class="download-actions"><a class="button primary" href="{source_url(latest_research)}" download>Download research update <small>Markdown · 20 November 2026</small></a><a class="button ghost" href="{source_url(current_coder)}" download>Download coder packet <small>Markdown · Revision 0.4</small></a><a class="button ghost" href="{BASE}downloads/HIVE_Framework_Research_Vault.zip" download>Download original vault <small>ZIP · Framework 0.2</small></a></div></section></main>'''
+    home = home.replace('</div></div></section>\n<section class="latest-update">', '</div></div>' + release_block + '</section>\n<section class="latest-update">', 1)
+    if supplement:
+        objective_intro = (f'<section class="home-section evidence-section implementation-update">'
+                           f'<div><p class="eyebrow">OBJECTIVE TESTING / ENGINEERING SUPPLEMENT</p>'
+                           f'<h2>Exact answers.<br>Checked after restart.</h2>'
+                           f'<p>Six Python function tasks and six data tasks passed exact checks and saved-result replay. '
+                           f'The new campaign needs no visual judgment.</p>'
+                           f'<a class="button dark" href="{url(nodes[supplement["note_id"]])}">Read objective test results</a></div>'
+                           f'<div class="evidence-key"><div><span class="badge neutral">SYNTHETIC DEVELOPMENT</span>'
+                           f'<p>The fixed examples verify the pipeline. Both attempts, including the first replay failure, '
+                           f'remain in the record. P2 tied the strongest tool and stays quarantined. '
+                           f'No useful-learning gain or genuine task acceptance is claimed.</p></div></div></section>')
+        home = home.replace('<section class="home-section evidence-section implementation-update">',
+                            objective_intro + '<section class="home-section evidence-section implementation-update">', 1)
     write(OUT / 'index.html', shell('Framework & research vault', home, BASE, body_class='home'))
 
     search_records = []
     for n in nodes.values():
         text = re.sub(r'\[([^]]+)\]\([^)]*\)', r'\1', n['body'])
+        if n['id'] in ('STATUS', 'RELEASES'):
+            text += f' Current release {release["version"]}: {release["status"]}; Level A {release["level_a"]} ({release["level_a_attempted"]} attempted, {release["level_a_accepted"]} accepted); Level B {release["level_b"]}; candidate promotion false; runtime SHA-256 {release["runtime_source_sha256"]}; ZIP SHA-256 {release["download_sha256"]}.'
         text = re.sub(r'[`#*|>]', '', text)
         search_records.append({k: n[k] for k in ['id', 'title', 'type', 'evidence_status', 'implementation_status']} | dict(url=url(n), text=re.sub(r'\s+', ' ', text), tags=n['tags']))
     write(OUT / 'search-index.json', json.dumps(search_records, ensure_ascii=False, separators=(',', ':')))
@@ -330,7 +365,8 @@ Original package: {ORIGIN}/hive/downloads/HIVE_Framework_Research_Vault.zip
 ## Reading rules
 
 - Current implementation evidence is at /hive/notes/STATUS/. It links experiments, capabilities, learning progress, gaps, decisions and release history.
-- Current engineering build: /hive/notes/READINESS/. Shared video/isolated-code missions, H01–H11 synthetic smoke, independent validators and exact R1–R8 gate evidence. Zero new model calls. Read the gate verdict; fixture success is not fresh task acceptance or a sealed learning study. Genuine source inventories and new resource approvals remain required.
+- Objective testing supplement: /hive/notes/OBJECTIVE/. Six Python and six data tasks, exact references and restart replay; public synthetic development, zero new HIVE model calls, P2 quarantined with no quality gain.
+- Frozen engineering baseline: /hive/notes/READINESS/. Shared video/isolated-code missions, H01–H11 synthetic smoke, independent validators and exact R1–R8 gate evidence. Zero new model calls. Read the gate verdict; fixture success is not fresh task acceptance or a sealed learning study. Genuine source inventories and new resource approvals remain required.
 - Historical integration run: /hive/notes/INTEGRATION/. Eleven jobs ran; the deterministic inventory task and local directive-classification training task passed. The learned inventory candidate lost to fixed P0 on a critical task and was rejected; the later P0 task passed. All four comparative classification arms missed their labels. The run recorded six local calls, 147 generated tokens, and 768 reserved tokens. Independent Terra acceptance is recorded. No adaptive, Level A/Level B, or frontier-model gain is claimed.
 - Preserved video engineering alpha: /hive/notes/WORKING/. The historical v0.3.0.dev2 report records its original tests, CLI journeys, one real model call/17 generated tokens, and zero-call restart/STOP-resume. Previously edited input is excluded from unused A2 totals. Editorial acceptance, full Level A and Level B remain open. No policy is promoted.
 - Historical controller: /hive/notes/CONTROLLER/. Thirty real local-model calls: direct 3/6, learned router 5/6, rejected model-plus-tool regression 4/6, then tool-only 6/6. Persistent experimental decisions, rollback and continuation are verified. Reused selection validation is not an unused holdout. Source and public evidence are downloadable.
@@ -360,7 +396,7 @@ Original package: {ORIGIN}/hive/downloads/HIVE_Framework_Research_Vault.zip
     write(OUT / 'llms.txt', llms)
     all_pages = [BASE, BASE + 'explore/', BASE + 'search/', BASE + 'graph/'] + [url(n) for n in [*nodes.values(), *originals]]
     write(OUT / 'sitemap.xml', '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + '\n'.join(f'<url><loc>{ORIGIN}{p}</loc></url>' for p in all_pages) + '\n</urlset>\n')
-    manifest = dict(framework_revision='0.2', coder_revision=current_coder['revision'], latest_research_id=latest_research['id'], latest_implementation_id=latest_implementation['id'], updates=[{k: n[k] for k in ['id', 'path', 'revision', 'date', 'sha256'] if k in n} for n in updates['entries']], source_zip_sha256=hashlib.sha256(args.zip.read_bytes()).hexdigest(),
+    manifest = dict(framework_revision='0.2', coder_revision=current_coder['revision'], latest_research_id=latest_research['id'], latest_implementation_id=latest_implementation['id'], current_release=release, updates=[{k: n[k] for k in ['id', 'path', 'revision', 'date', 'sha256'] if k in n} for n in updates['entries']], source_zip_sha256=hashlib.sha256(args.zip.read_bytes()).hexdigest(),
                     counts=dict(research_pages=len(nodes), graph_edges=len(graph['edges']), originals=19),
                     scope='Static research reference plus executable local model/tool controller evidence. No production model runtime or compounding-learning claim.')
     write(OUT / 'build-manifest.json', json.dumps(manifest, indent=2) + '\n')

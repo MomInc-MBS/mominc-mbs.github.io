@@ -1,0 +1,30 @@
+{
+  "decision": "QUARANTINE",
+  "engineering": "VERIFIED_WITH_PRESERVED_COUNTEREXAMPLES",
+  "independent_reviewers": {
+    "P2_provenance_and_legacy": "Sol",
+    "objective_outputs_sources_budgets_isolation": "Terra"
+  },
+  "reviews": [
+    {
+      "path": "sol-p2-final-review.json",
+      "sha256": "94b83d9b1a8c32d02f58af03e02c6881708b737c339180537b8ed2c7aecd8f23"
+    },
+    {
+      "path": "terra-objective-final-review.json",
+      "sha256": "5036db5a0ed44dff14f60dff5781b2feadde7dec1478d1a5d76dcaf22443a444"
+    }
+  ],
+  "final_objective_tasks": 12,
+  "final_exact_passes": 12,
+  "final_fresh_process_replays": 12,
+  "total_objective_development_attempts": 24,
+  "first_attempt_replay_failures": 6,
+  "genuine_level_a_attempted": 0,
+  "genuine_level_a_accepted": 0,
+  "level_b": "UNTESTED",
+  "quality_delta_vs_strongest_tool": 0,
+  "promotion_authorized": false,
+  "new_hive_model_requests": 0,
+  "limits": "Public synthetic fixtures and fixed patches, not autonomous code solving. Bounded receipt audit, not unrestricted DB rewrite protection or sealed study."
+}

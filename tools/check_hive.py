@@ -6,6 +6,7 @@ import hashlib
 import json
 import sys
 import zipfile
+import re
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'hive'
@@ -33,6 +34,48 @@ class Page(HTMLParser):
 def main():
     errors = []
     updates = json.loads((OUT / 'updates/index.json').read_text(encoding='utf-8'))
+    release = json.loads((OUT / 'CURRENT_RELEASE.json').read_text(encoding='utf-8'))
+    publication = json.loads((OUT / release['publication_manifest']).read_text(encoding='utf-8'))
+    readiness = json.loads((OUT / publication['readiness_report']).read_text(encoding='utf-8'))
+    release_zip = OUT / release['download']
+    if release['release_id'] != updates.get('latest_implementation_id') or release['version'] != publication['runtime_version']:
+        errors.append('Canonical release pointer ID/version differs from publication metadata')
+    if release['status'] != publication['status'] or release['runtime_source_sha256'] != publication['runtime_source_sha256'] or release['runtime_source_sha256'] != publication['measured_runtime_source_sha256']:
+        errors.append('Canonical release pointer status/runtime hash differs from publication manifest')
+    if release['download_sha256'] != publication['download_sha256'] or not release_zip.is_file() or hashlib.sha256(release_zip.read_bytes()).hexdigest() != release['download_sha256']:
+        errors.append('Canonical release pointer download hash mismatch')
+    if (release['level_a'], release['level_a_attempted'], release['level_a_accepted'], release['level_b'], release['candidate_promotion']) != ('NOT_ACCEPTED', 0, 0, 'UNTESTED', False):
+        errors.append('Canonical release pointer acceptance/promotion status changed')
+    if readiness.get('source_sha256') and readiness['source_sha256'] != release['runtime_source_sha256']:
+        errors.append('Readiness runtime hash differs from canonical release pointer')
+    supplement = release.get('engineering_supplement')
+    if supplement:
+        supplement_ids = {n['id'] for n in json.loads((OUT / 'graph.json').read_text(encoding='utf-8')).get('nodes', [])}
+        supplement_manifest = OUT / supplement.get('publication_manifest', '')
+        if set(supplement) != {'note_id', 'publication_manifest'} or supplement.get('note_id') not in supplement_ids or not supplement_manifest.is_file():
+            errors.append('Engineering supplement pointer must name a published note and manifest')
+        else:
+            extra = json.loads(supplement_manifest.read_text(encoding='utf-8'))
+            extra_zip = OUT / extra['download']
+            snapshot_path = OUT / extra['snapshot_manifest']
+            snapshot = json.loads(snapshot_path.read_text(encoding='utf-8'))
+            if (extra['runtime_source_sha256'] != extra['measured_runtime_source_sha256']
+                    or extra['source_commit'] != snapshot['source_commit'] or snapshot['tracked_dirty']
+                    or extra['snapshot_file_count'] != len(snapshot['files'])
+                    or hashlib.sha256(extra_zip.read_bytes()).hexdigest() != extra['download_sha256']):
+                errors.append('Engineering supplement publication identity mismatch')
+            if extra['policy_deployed'] or extra['quality_gain'] or extra['new_real_model_calls'] != 0:
+                errors.append('Objective supplement must retain its measured non-promotion scope')
+            with zipfile.ZipFile(extra_zip) as archive:
+                for path, entry in snapshot['files'].items():
+                    local = snapshot_path.parent / path
+                    raw = local.read_bytes()
+                    if len(raw) != entry['bytes'] or hashlib.sha256(raw).hexdigest() != entry['sha256'] or archive.read(path) != raw:
+                        errors.append('Engineering supplement payload mismatch: ' + path)
+    with zipfile.ZipFile(release_zip) as z:
+        project = next((n for n in z.namelist() if n.endswith('/pyproject.toml') or n == 'pyproject.toml'), None)
+        if not project or not re.search(r'^version\s*=\s*["\']' + re.escape(release['version']) + r'["\']', z.read(project).decode('utf-8', 'replace'), re.M):
+            errors.append('Packaged runtime version differs from canonical release pointer')
     expected_pages = 286 + len(updates['entries'])
     docs = {p: Page(p.read_text(encoding='utf-8')) for p in OUT.rglob('*.html')}
     checked = 0
@@ -60,6 +103,14 @@ def main():
     ids = {n['id'] for n in graph['nodes']}
     if ids != {n['id'] for n in index} or len(ids) != expected_pages:
         errors.append('Search and graph IDs differ or canonical pages are missing')
+    for page_path in (OUT / 'index.html', OUT / 'notes/STATUS/index.html', OUT / 'notes/RELEASES/index.html'):
+        page_text = page_path.read_text(encoding='utf-8')
+        for expected in (release['version'], release['status'], release['runtime_source_sha256'], release['download_sha256'], '/hive/' + release['download']):
+            if expected not in page_text:
+                errors.append(f'Generated release page drift: {page_path.relative_to(ROOT)} missing {expected}')
+    build_manifest = json.loads((OUT / 'build-manifest.json').read_text(encoding='utf-8'))
+    if build_manifest.get('current_release') != release or build_manifest.get('latest_implementation_id') != release['release_id']:
+        errors.append('Generated build manifest differs from canonical release pointer')
     for entry in updates['entries']:
         source = OUT / entry['path']
         if hashlib.sha256(source.read_bytes()).hexdigest() != entry['sha256']:

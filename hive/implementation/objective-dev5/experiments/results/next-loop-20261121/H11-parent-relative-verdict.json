@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "fresh_process_exact_report_equality": true,
+  "runtime": "2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c",
+  "mode": "fixture",
+  "research_status": "UNTESTED",
+  "report_sha256": "e1fd959d26642599eb2adc185d71e72f5207aa40f2745a005cb8b9c1d8413c73",
+  "replay_sha256": "e1fd959d26642599eb2adc185d71e72f5207aa40f2745a005cb8b9c1d8413c73",
+  "prior_invalid_attempt": "H11-invalid-parent-attempt.log",
+  "prior_invalid_attempt_reason": "The parent before dot-dot did not exist. Retained as a path precondition failure. Valid existing-cwd parent-relative traversal passed."
+}

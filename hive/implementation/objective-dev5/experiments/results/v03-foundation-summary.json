@@ -1,0 +1,23 @@
+{
+  "runtime_version": "0.3.0.dev1",
+  "base_release": "0.2.1",
+  "pytest": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "1",
+    "tests": "218",
+    "time": "84.337",
+    "timestamp": "2026-11-21T12:36:09.768389-08:00",
+    "hostname": "DESKTOP-FHQTCBG"
+  },
+  "passed": 217,
+  "test_report_sha256": "e195ebb1e6da987b672c30ec75bdb14b8b24137e7a4acb56971afa30dc280dd6",
+  "e2e_report": "experiments/results/v03-foundation-e2e/report.json",
+  "e0_executed_runtime": "0.2.1",
+  "new_real_model_calls": 30,
+  "holdout_consumed": false,
+  "decision": "EXPERIMENTAL_FOUNDATION_E0_COMPLETED_WITH_STATUS_DEFECT_E1_DRAFT",
+  "policy_deployed": false,
+  "next_test": "Independently source/calibrate E1 and integrate its zero-inference candidate/evaluator adapter; E0 request cap fully spent."
+}

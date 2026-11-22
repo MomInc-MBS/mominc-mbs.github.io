@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hive-local"
+version = "0.3.0.dev5"
+description = "Evidence-driven local adaptive experiment harness"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+hive = "hive.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

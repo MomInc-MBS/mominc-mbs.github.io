@@ -1,0 +1,138 @@
+{
+  "store": "smoke-final/data-interleaved-groups",
+  "original_job_count": 1,
+  "jobs": [
+    {
+      "id": "86e7cd9de9564b9c929e869f79c8136b",
+      "spec": {
+        "allow_retry": false,
+        "hypothesis": "Synthetic objective smoke",
+        "learn_feedback": false,
+        "retry_count": 0,
+        "route": "tool",
+        "task": {
+          "allowed_tools": [
+            "summarize_inventory"
+          ],
+          "category": "structured_data",
+          "critical": false,
+          "evaluator": "grouped_inventory_v1",
+          "expected": {
+            "groups": {
+              "a": {
+                "bytes": 6,
+                "count": 2
+              },
+              "z": {
+                "bytes": 4,
+                "count": 2
+              }
+            }
+          },
+          "id": "data-interleaved-groups",
+          "input": {
+            "allowed_tools": [
+              "summarize_inventory"
+            ],
+            "rows": [
+              {
+                "bytes": 1,
+                "group": "z",
+                "id": "x1"
+              },
+              {
+                "bytes": 2,
+                "group": "a",
+                "id": "x2"
+              },
+              {
+                "bytes": 3,
+                "group": "z",
+                "id": "x3"
+              },
+              {
+                "bytes": 4,
+                "group": "a",
+                "id": "x4"
+              }
+            ],
+            "tool_schemas": {
+              "summarize_inventory": {
+                "rows": "supplied rows"
+              }
+            }
+          },
+          "permissions": {
+            "routes": [
+              "tool"
+            ],
+            "version": 1
+          },
+          "prompt": "Compute exact inventory count and byte totals by supplied group.",
+          "split": "development",
+          "success_criteria": "Exact independent count and byte totals for every group.",
+          "tool_schemas": {
+            "summarize_inventory": {
+              "rows": "supplied rows"
+            }
+          }
+        }
+      },
+      "state": "BLOCKED",
+      "owner": "worker-48428",
+      "generation": 1,
+      "pid": 48428,
+      "result": {
+        "evidence_ref": "artifacts/9d98e568b8d2e868c51fd94fb58ddd6ba5a034fcf7443e3cbeeadc63369251c5.json",
+        "failure": null,
+        "passed": true,
+        "report_ref": "artifacts/c1174f089d879d86b20b783daa4ecb9680ad5e1292e5e7d7d1f4028f59db3fe1.json",
+        "valid": true
+      }
+    }
+  ],
+  "events": [
+    {
+      "seq": 1,
+      "job_id": "86e7cd9de9564b9c929e869f79c8136b",
+      "state": "QUEUED",
+      "detail": null
+    },
+    {
+      "seq": 2,
+      "job_id": "86e7cd9de9564b9c929e869f79c8136b",
+      "state": "RUNNING",
+      "detail": {
+        "owner": "worker-48428"
+      }
+    },
+    {
+      "seq": 3,
+      "job_id": "86e7cd9de9564b9c929e869f79c8136b",
+      "state": "VERIFYING",
+      "detail": null
+    },
+    {
+      "seq": 4,
+      "job_id": "86e7cd9de9564b9c929e869f79c8136b",
+      "state": "REVIEWING",
+      "detail": {
+        "evidence_ref": "artifacts/9d98e568b8d2e868c51fd94fb58ddd6ba5a034fcf7443e3cbeeadc63369251c5.json"
+      }
+    },
+    {
+      "seq": 5,
+      "job_id": "86e7cd9de9564b9c929e869f79c8136b",
+      "state": "BLOCKED",
+      "detail": null
+    }
+  ],
+  "mission_config_hash": "17abb5470e515dfd317ad443df1f4d5d87f5cd1cfd3db5c1ca08be80f6741b36",
+  "budget": {
+    "cycles": 1,
+    "requests": 0,
+    "tokens_actual": 0,
+    "tokens_reserved": 0,
+    "wall_s": 0.23499999998603016
+  }
+}

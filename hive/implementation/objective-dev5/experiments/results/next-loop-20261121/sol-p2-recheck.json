@@ -1,0 +1,9 @@
+{
+  "baseline_receipt_snapshot_comparisons_equal": 144,
+  "baseline": "1e1bf94",
+  "legacy_saved_output_replay": {
+    "1": "unchanged replay success after decision corruption (legacy contract)",
+    "2": "unchanged replay success after decision corruption (legacy contract)"
+  },
+  "p2_version_marker_removed_rebound_evidence_accepted": true
+}

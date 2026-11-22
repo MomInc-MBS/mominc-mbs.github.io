@@ -1,0 +1,49 @@
+{
+  "version": 2,
+  "status": "BLOCKED_INPUTS_AND_APPROVAL",
+  "authority": "Ian 2026-11-21: switch testing away from ocular/video tasks to objectively judged tasks; prior genuine-input, finite-allocation and non-promotion gates retained",
+  "required_tasks": 12,
+  "required_independent_code_snapshots": 6,
+  "minimum_independently_accepted": 10,
+  "tasks": [],
+  "source_inventory_approved": false,
+  "model_calls_authorized": 0,
+  "promotion_authorized": false,
+  "task_fields_required_before_exposure": [
+    "task_id",
+    "family",
+    "source_group",
+    "source_sha",
+    "input_sha",
+    "exposure_history",
+    "unused_source_attestation",
+    "split",
+    "allowed_routes",
+    "permissions",
+    "budget_id",
+    "config_sha",
+    "model_digest",
+    "policy_sha",
+    "verifier_sha",
+    "success_criteria",
+    "independent_reviewer"
+  ],
+  "denominator_rules": {
+    "synthetic_and_previously_exposed_development": "ineligible for genuine Level A acceptance; allowed in explicitly synthetic objective smoke",
+    "mechanical_gates": "R1-R8 and A1-A6 must also pass",
+    "blocked_failed_abstained_and_evaluator_pending": "retained separately; never accepted",
+    "same_source_resnapshots": "not independent source groups"
+  },
+  "next_action": "Run objective synthetic smoke now; freeze six genuine unused structured-data source groups and six independent Python snapshots before a new separately authorized genuine acceptance campaign.",
+  "operator_review_sheet": "docs/LEVEL_A_OPERATOR_INTAKE.md",
+  "non_executable_intake_template": "experiments/plans/readiness-level-a-intake.template.json",
+  "private_manifest_ref": null,
+  "aggregate_authorized_allocation": null,
+  "required_structured_data_source_groups": 6,
+  "prospective_task_families": [
+    "structured_data",
+    "code"
+  ],
+  "editorial_review_required": false,
+  "scope_revision": "Prospective only; archived dev4 video+code plans and receipts remain historical and unchanged."
+}

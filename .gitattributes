@@ -41,3 +41,8 @@ hive/implementation/working-prototype-dev2/docs/V03_BUILD_DIRECTIVE.md -text whi
 hive/implementation/integration-dev3/docs/INTEGRATION_DIRECTIVE.md -text whitespace=space-before-tab,cr-at-eol,-blank-at-eol,-blank-at-eof
 hive/implementation/integration-dev3/docs/WORKING_PROTOTYPE_BUILD_PLAN.md -text whitespace=space-before-tab,cr-at-eol,-blank-at-eol,-blank-at-eof
 hive/implementation/integration-dev3/docs/V03_BUILD_DIRECTIVE.md -text whitespace=space-before-tab,cr-at-eol,-blank-at-eol,-blank-at-eof
+
+# Objective supplement is an exact immutable source/evidence snapshot.
+hive/implementation/objective-dev5/** -text whitespace=space-before-tab,cr-at-eol,-blank-at-eol,-blank-at-eof
+hive/implementation/objective-dev5-*.json -text whitespace=cr-at-eol
+hive/updates/HIVE_Objective_Testing_2026-11-21.md -text whitespace=cr-at-eol
