@@ -161,12 +161,30 @@
       "path": "updates/HIVE_Integrated_Design_Map_2026-11-22.md",
       "date": "2026-11-22",
       "sha256": "42c7eddafc839da35ab70ca95670dd7335adf6c05d11845e433e46f44745819a"
+    },
+    {
+      "id": "DIRECTION",
+      "path": "updates/HIVE_Owner_Decisions_2026-11-22.md",
+      "date": "2026-11-22",
+      "sha256": "16fe23b361e7033cc1e8c722415959b1016081dc77010439ddafb52dc57fd89a"
+    },
+    {
+      "id": "KERNELS",
+      "path": "updates/HIVE_Execution_Kernel_Comparison_2026-11-22.md",
+      "date": "2026-11-22",
+      "sha256": "d138ea9677f95e1ffdaf3b5e60f81e5c825f85b903fb92586ae1eb9df35bcd37"
+    },
+    {
+      "id": "METABASE",
+      "path": "updates/HIVE_Base_For_Later_Self_Improvement_2026-11-22.md",
+      "date": "2026-11-22",
+      "sha256": "43c66c3137e3db648452dfb9ef2146bd58e6605d4a394c56ba7265eef40a9086"
     }
   ],
   "source_zip_sha256": "2b726d055a17a25495854890d8d0001cb791006273e0f8eb5515788b7e00c61a",
   "counts": {
-    "research_pages": 308,
-    "graph_edges": 2513,
+    "research_pages": 311,
+    "graph_edges": 2532,
     "originals": 19
   },
   "scope": "Static research reference plus executable local model/tool controller evidence. No production model runtime or compounding-learning claim."
