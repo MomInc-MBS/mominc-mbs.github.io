@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Haunt Room Mapper — Android APK</title>
-  <meta name="description" content="Download Haunt v6 for Android: video-to-3D room mapping and a phone tracking, GPS zone, and location cue test with your PC.">
+  <title>Haunt — Android house test</title>
+  <meta name="description" content="Download the native Haunt Android Phase 1 development build for house testing.">
   <link rel="canonical" href="https://mominc.online/download/haunt/">
   <style>
     :root {
@@ -32,14 +32,12 @@
     button, input, optgroup, select, textarea {
       font-family: inherit; font-size: 100%; line-height: inherit; color: inherit;
     }
-    /* Focus styles */
     a:focus, button:focus, input:focus {
       outline: 2px solid var(--accent);
       outline-offset: 2px;
     }
     .skip-link { position: absolute; left: -999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
     .skip-link:focus { left: 2rem; top: 2rem; width: auto; height: auto; overflow: visible; background: var(--card); padding: 0.5rem; z-index: 100; }
-    /* Semantic landmarks */
     header, main, footer { padding: 1.5rem 2rem; max-width: 100%; width: 100%; }
     header { text-align: center; margin-bottom: 2rem; }
     main { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
@@ -52,45 +50,54 @@
     footer { text-align: center; font-size: 0.75rem; color: var(--muted); margin-top: 2rem; }
     code { overflow-wrap: anywhere; }
     section { max-width: 42rem; }
-    section ul, section ol { padding-left: 1.25rem; }
+    section ul { padding-left: 1.25rem; }
     section li { margin-top: 0.5rem; }
   </style>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
-  <header><h1>Haunt Room Mapper</h1><p class="metadata">Native Android APK · video to 3D map</p></header>
+
+  <header>
+    <h1>Haunt — Android house test</h1>
+    <p class="metadata">Phase 1 development build · join / scan / PLAY / STOP</p>
+  </header>
+
   <main id="main">
     <div class="card">
-      <p>Record or choose a room video, build the map on your PC, then view and share the 3D file from the app.</p>
-      <a class="download-btn" href="./haunt-v6-location-test.apk" download="haunt-v6-location-test.apk">Download Haunt v6 APK (71.0 MiB)</a>
+      <p>Download the native Unity APK to participate in the Haunt AR house test.</p>
+
+      <a class="download-btn" href="./haunt-v7.apk" download="haunt-v7.apk">
+        Download haunt-v7.apk (68.2 MiB)
+      </a>
+
       <div class="metadata">
-        <p>Version: <code>v6 location test</code> | Size: 74,488,985 bytes</p>
+        <p>Version: <code>v7</code> | Size: 71,529,795 bytes (68.2 MiB)</p>
         <p>Package: <code>com.horror.party.test</code></p>
-        <p>SHA-256: <code>4a23f8d0d4a1d7487b72cb3ac4a83462d9cd62aa811e881daf7656c073351bab</code></p>
-        <p><a href="./release.json">Release details</a> | <a href="./haunt-v6-location-test.apk.sha256">SHA-256 checksum</a> | <a href="./THIRD-PARTY-NOTICES.txt">Open-source notices</a></p>
-        <p><a href="./haunt-v5.apk" download="haunt-v5.apk">Previous version: Haunt v5 APK</a></p>
+        <p>SHA-256: <code>a8370aed88ba794f71bd9873e4a6b1cc8361f0c43ff315127fdc8aad8d8dc89d</code></p>
+        <p><a href="./release.json">release metadata</a> | <a href="./haunt-v7.apk.sha256">SHA‑256 sidecar</a></p>
+        <p><a href="./haunt-v6-location-test.apk" download="haunt-v6-location-test.apk">Previous version: Haunt v6 APK</a></p>
       </div>
     </div>
-    <section><h2>Install and map your room</h2>
-      <ol>
-        <li>Download and install the APK on your Android phone. It updates Haunt v5 or v4.</li>
-        <li>Keep Room Mapper running on the PC and put the phone on the same Wi-Fi.</li>
-        <li>Scan the PC's room QR, or open your private phone link and tap <strong>Open in Haunt app</strong>.</li>
-        <li>Tap <strong>Record video</strong> or <strong>Pick video</strong>. Walk slowly and capture overlapping room views.</li>
-        <li>Tap <strong>Upload &amp; build map</strong>. When ready, view the map in the app and use <strong>Share 3D file</strong> to export it.</li>
-      </ol>
-      <p class="metadata">The PC reconstructs your recordings locally. Up to three videos per room, 512 MiB each. Geometry and measurements are estimates. Physical-phone room accuracy still needs verification.</p>
-    </section>
-    <section><h2>New in v6: location test</h2>
-      <p>Test live phone tracking, shared room markers, optional GPS zones, location cues, and ALL STOP with the updated PC Room Mapper.</p>
-      <ol>
-        <li>After building a room map, tap <strong>Track this phone in room</strong> in the app and allow camera access.</li>
-        <li>Look around and slowly move sideways so the PC can align the phone with the room map.</li>
-        <li>GPS starts off. Turn on <strong>GPS location</strong> and allow location access only if you want to test GPS-area cues.</li>
-        <li><strong>Stop tracking</strong> releases camera and GPS. <strong>ALL STOP</strong> ends the shared room session.</li>
-      </ol>
-      <p class="metadata">This is a development test build. Physical-phone alignment and camera orientation still need verification. Location cues currently display named events; full haunt integration is still pending.</p>
+
+    <section>
+      <h2>Install & setup</h2>
+      <ul>
+        <li>Android <strong>arm64</strong> ARCore‑capable phone</li>
+        <li>Allow camera access for AR scanning</li>
+        <li>Same Wi‑Fi network as the house host PC</li>
+        <li>Open the downloaded APK and allow install from this browser if Android prompts</li>
+        <li>In the app, enter the host PC’s LAN Host URL</li>
+        <li>Create or join a room and follow the on‑screen room/scan steps</li>
+        <li>Scan the five tags, finish setup, then enter PLAY; STOP ends play</li>
+      </ul>
+      <p class="metadata">Phase 1 development build for join/scan/PLAY/STOP.<br>
+      Minotaur phone gameplay and real house AR qualification remain pending.</p>
     </section>
   </main>
-  <footer><a href="/">MOM Inc home</a></footer>
-</body></html>
+
+  <footer>
+    <a href="/">MOM Inc home</a>
+    <p>Canonical URL: https://mominc.online/download/haunt/</p>
+  </footer>
+</body>
+</html>
