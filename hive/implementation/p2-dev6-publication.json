@@ -48,5 +48,9 @@
   "quality_gain": false,
   "baseline_publication": "implementation/readiness-dev4-publication.json",
   "previous_supplement": "implementation/objective-dev5-publication.json",
-  "scope": "Public synthetic engineering; next acceptance uses six structured-data plus six Python; no genuine acceptance or learning gain"
+  "scope": "Public synthetic engineering; next acceptance uses six structured-data plus six Python; no genuine acceptance or learning gain",
+  "live_verification": "implementation/p2-dev6-live-verification.json",
+  "final_build_queue": "implementation/p2-dev6-final-queue.json",
+  "verified_site_commit": "3a600af3ec3d65dd6838ec102ac175bfd1e21652",
+  "live_verified_at": "2026-11-22T06:34:03.190097+00:00"
 }

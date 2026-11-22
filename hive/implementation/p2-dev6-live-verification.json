@@ -1,0 +1,74 @@
+{
+  "status": "passed",
+  "base": "https://mominc.online/hive/",
+  "verified_at": "2026-11-22T06:34:03.190097+00:00",
+  "runtime_version": "0.3.0.dev6",
+  "runtime_source_sha256": "0d97faae0caae31f3918296dccaa21be5ba0ba7a1cec0c8ca5f880001d17320e",
+  "packaging_commit": "0b3bfc391c8fc21555f451012757174933f1c479",
+  "download": "downloads/HIVE_P2_Safety_v0_3_0_dev6.zip",
+  "download_sha256": "659b6c9be7531307e5c9068bb2fd6e7bb34eab981f35b77bbf6c58b67c200ff0",
+  "payload_files_verified": 876,
+  "unexplained_identity_differences": 0,
+  "new_model_calls": 0,
+  "requests": [
+    {
+      "path": "CURRENT_RELEASE.json",
+      "http_status": 200,
+      "bytes": 842,
+      "sha256": "5f8631b049d7b90d05830b59e67de20847b80aa35b0bfb7933c913d39a7e082f"
+    },
+    {
+      "path": "implementation/p2-dev6-publication.json",
+      "http_status": 200,
+      "bytes": 1978,
+      "sha256": "069d9af0a0cc4d97205961614be9d63ef55ae00d94b29f6595338e9f0363a3f7"
+    },
+    {
+      "path": "implementation/p2-dev6/SNAPSHOT_MANIFEST.json",
+      "http_status": 200,
+      "bytes": 184224,
+      "sha256": "9fcc823bacf84bc4c3a884248f9718872e3a7f18d695e6740cbf38fa315749af"
+    },
+    {
+      "path": "downloads/HIVE_P2_Safety_v0_3_0_dev6.zip",
+      "http_status": 200,
+      "bytes": 31776530,
+      "sha256": "659b6c9be7531307e5c9068bb2fd6e7bb34eab981f35b77bbf6c58b67c200ff0"
+    },
+    {
+      "path": "index.html",
+      "http_status": 200,
+      "bytes": 15437,
+      "sha256": "ea1966683b70c90998110c9fc6333176a351a829d5ae9bb133c8fa97a44e33e6"
+    },
+    {
+      "path": "notes/STATUS/index.html",
+      "http_status": 200,
+      "bytes": 19704,
+      "sha256": "654885930cd23b8570470a748bbcc2e267004d6aa7d6c1b199c3ad2e162eee44"
+    },
+    {
+      "path": "notes/RELEASES/index.html",
+      "http_status": 200,
+      "bytes": 16975,
+      "sha256": "de21bf28607097e1ae5a8181916d9933c1f6cf7d8a75b5687dc8a4cc1cd2a26b"
+    },
+    {
+      "path": "notes/P2SAFETY/index.html",
+      "http_status": 200,
+      "bytes": 12595,
+      "sha256": "0c457f8b7e9dbd1d92794a57e520021b15384ffe979fa4b12bf4e9ab81b2f2d8"
+    }
+  ],
+  "verified_site_commit": "3a600af3ec3d65dd6838ec102ac175bfd1e21652",
+  "site_validation": {
+    "html_pages": 330,
+    "local_links_checked": 27380,
+    "searchable_pages": 305,
+    "errors": []
+  },
+  "publication_tooling_notes": [
+    "Initial site commit refused because Git author identity was unset. Retried with command-scoped Hive AI Overseer identity matching existing site and runtime commits; no global config change."
+  ],
+  "earlier_live_attempts": []
+}
