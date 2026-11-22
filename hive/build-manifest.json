@@ -22,8 +22,8 @@
       "publication_manifest": "implementation/objective-dev5-publication.json"
     },
     "latest_verified": {
-      "note_id": "P2SAFETY",
-      "publication_manifest": "implementation/p2-dev6-publication.json"
+      "note_id": "OPERATIONAL",
+      "publication_manifest": "implementation/prototype-v04-publication.json"
     }
   },
   "updates": [
@@ -142,12 +142,19 @@
       "path": "updates/HIVE_P2_Safety_2026-11-21.md",
       "date": "2026-11-21",
       "sha256": "b1fc8faa7b8d231abda7c0507a3cc211cd8d760ab33d72923c7b230a4389b051"
+    },
+    {
+      "id": "OPERATIONAL",
+      "path": "updates/HIVE_Operational_Prototype_2026-11-22.md",
+      "revision": "0.4.0.dev1",
+      "date": "2026-11-22",
+      "sha256": "34be7663873f212c81028ea63c22d752a417287a0d873276b690709c01ef7068"
     }
   ],
   "source_zip_sha256": "2b726d055a17a25495854890d8d0001cb791006273e0f8eb5515788b7e00c61a",
   "counts": {
-    "research_pages": 305,
-    "graph_edges": 2487,
+    "research_pages": 306,
+    "graph_edges": 2491,
     "originals": 19
   },
   "scope": "Static research reference plus executable local model/tool controller evidence. No production model runtime or compounding-learning claim."

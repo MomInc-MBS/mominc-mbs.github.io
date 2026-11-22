@@ -17,7 +17,7 @@
     "publication_manifest": "implementation/objective-dev5-publication.json"
   },
   "latest_verified": {
-    "note_id": "P2SAFETY",
-    "publication_manifest": "implementation/p2-dev6-publication.json"
+    "note_id": "OPERATIONAL",
+    "publication_manifest": "implementation/prototype-v04-publication.json"
   }
 }

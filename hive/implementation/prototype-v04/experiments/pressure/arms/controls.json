@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "arms": [
+    "fixed_strongest_tool",
+    "fixed_specialist",
+    "fixed_team",
+    "learning_disabled",
+    "adaptive"
+  ],
+  "matching": "same source groups and declared per-arm budgets",
+  "specialist_team_status": "zero-inference deterministic proxies in fixture mode; real controls blocked pending approval"
+}

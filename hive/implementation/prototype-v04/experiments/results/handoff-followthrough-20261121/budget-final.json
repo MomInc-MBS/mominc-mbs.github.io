@@ -1,0 +1,27 @@
+{
+  "spent_ledgers": {
+    "integration-20261121": {
+      "budget": {
+        "cycles": 11,
+        "requests": 6,
+        "tokens_actual": 147,
+        "tokens_reserved": 768,
+        "wall_s": 18.57799999997951
+      },
+      "STOP_present": false
+    },
+    "adaptive-v02-20261121": {
+      "budget": {
+        "cycles": 36,
+        "requests": 30,
+        "tokens_actual": 1013,
+        "tokens_reserved": 3840,
+        "wall_s": 23.450999999884516
+      },
+      "STOP_present": false
+    }
+  },
+  "unchanged": true,
+  "new_authorized_hive_model_calls": 0,
+  "actual_new_hive_model_calls": 0
+}

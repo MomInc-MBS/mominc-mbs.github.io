@@ -1,0 +1,191 @@
+{
+  "source_revision": "0b3bfc391c8fc21555f451012757174933f1c479",
+  "source_provenance": [
+    {
+      "path": "src/hive/data_tasks.py",
+      "revision": "0b3bfc391c8fc21555f451012757174933f1c479",
+      "sha256": "be78a31b3501ea1cb6cb243f79ccedffebd4d3684270edc7e5c1ef2fdebd0aff",
+      "bytes": 3378
+    },
+    {
+      "path": "src/hive/governor.py",
+      "revision": "0b3bfc391c8fc21555f451012757174933f1c479",
+      "sha256": "9a54fc5ff6a208bda90b70eda1c6eb0942178a25a306ebb2feeae7f3a6396996",
+      "bytes": 12276
+    },
+    {
+      "path": "src/hive/storage.py",
+      "revision": "0b3bfc391c8fc21555f451012757174933f1c479",
+      "sha256": "939dff182de268fc1e0f9acf6f35a8c601afd5ba92b3fb67aa04181d8842fbb6",
+      "bytes": 9683
+    },
+    {
+      "path": "src/hive/mission.py",
+      "revision": "0b3bfc391c8fc21555f451012757174933f1c479",
+      "sha256": "ad8bc662c663e46187566d4c8c6e34be42baad80ae01880e580d2839885ad23e",
+      "bytes": 17388
+    },
+    {
+      "path": "src/hive/adapters/ollama.py",
+      "revision": "0b3bfc391c8fc21555f451012757174933f1c479",
+      "sha256": "5e8053812da8702254e2d706576256b0cb02c30773a4b128c305670f058dc9b4",
+      "bytes": 3965
+    },
+    {
+      "path": "src/hive/adapters/isolation.py",
+      "revision": "0b3bfc391c8fc21555f451012757174933f1c479",
+      "sha256": "2bc8f8f278a300431d7400ca58411cb7c5bd5c2bf5f488d8b70e42ac5516094b",
+      "bytes": 9109
+    },
+    {
+      "path": "README.md",
+      "revision": "0b3bfc391c8fc21555f451012757174933f1c479",
+      "sha256": "45ea0453739ab8355853628d5e2cf46a6e8dc440535253f3025ca68c8822bb1a",
+      "use": "exact excerpts with whitespace normalized; independently reviewed development labels",
+      "label_review": {
+        "status": "INDEPENDENT_REVIEWED",
+        "reviewer": "Terra baseline_verify",
+        "scope": "Exact source support and safeguard/prerequisite label consistency only",
+        "evidence": "Original six exact labels independently reviewed by Terra; extra RUN_HIVE excerpts independently confirmed by baseline_verify on 2026-11-21",
+        "acceptance_claim": false
+      }
+    },
+    {
+      "path": "docs/NEXT_WORK_ITEM.md",
+      "revision": "0b3bfc391c8fc21555f451012757174933f1c479",
+      "sha256": "6568ad804190764d69ee6dcc3438a48f9eccaf2cfe622996fa423929e065a06c",
+      "use": "exact excerpts with whitespace normalized; independently reviewed development labels",
+      "label_review": {
+        "status": "INDEPENDENT_REVIEWED",
+        "reviewer": "Terra baseline_verify",
+        "scope": "Exact source support and safeguard/prerequisite label consistency only",
+        "evidence": "Original six exact labels independently reviewed by Terra; extra RUN_HIVE excerpts independently confirmed by baseline_verify on 2026-11-21",
+        "acceptance_claim": false
+      }
+    },
+    {
+      "path": "docs/RUN_HIVE.md",
+      "revision": "0b3bfc391c8fc21555f451012757174933f1c479",
+      "sha256": "1ed86af6b0389e1d0bf073e509eedf2b3735bf9348395d8026200ef4b2d4f9f2",
+      "use": "exact excerpts with whitespace normalized; independently reviewed development labels",
+      "label_review": {
+        "status": "INDEPENDENT_REVIEWED",
+        "reviewer": "Terra baseline_verify",
+        "scope": "Exact source support and safeguard/prerequisite label consistency only",
+        "evidence": "Original six exact labels independently reviewed by Terra; extra RUN_HIVE excerpts independently confirmed by baseline_verify on 2026-11-21",
+        "acceptance_claim": false
+      }
+    },
+    {
+      "path": "docs/CURRENT_STATE.md",
+      "revision": "0b3bfc391c8fc21555f451012757174933f1c479",
+      "sha256": "720efa3b0ceaa88b7c0092b3adf1efc5af5e3bc7fd24196ecce4d1dcaa36b32f",
+      "use": "exact excerpts with whitespace normalized; independently reviewed development labels",
+      "label_review": {
+        "status": "INDEPENDENT_REVIEWED",
+        "reviewer": "Terra baseline_verify",
+        "scope": "Exact source support and safeguard/prerequisite label consistency only",
+        "evidence": "Original six exact labels independently reviewed by Terra; extra RUN_HIVE excerpts independently confirmed by baseline_verify on 2026-11-21",
+        "acceptance_claim": false
+      }
+    },
+    {
+      "path": "src/hive/data_tasks.py",
+      "revision": "0b3bfc391c8fc21555f451012757174933f1c479",
+      "sha256": "be78a31b3501ea1cb6cb243f79ccedffebd4d3684270edc7e5c1ef2fdebd0aff",
+      "bytes": 3378,
+      "inventory_learning_input": "development",
+      "operation": "exact public-file byte length"
+    },
+    {
+      "path": "src/hive/governor.py",
+      "revision": "0b3bfc391c8fc21555f451012757174933f1c479",
+      "sha256": "9a54fc5ff6a208bda90b70eda1c6eb0942178a25a306ebb2feeae7f3a6396996",
+      "bytes": 12276,
+      "inventory_learning_input": "development",
+      "operation": "exact public-file byte length"
+    },
+    {
+      "path": "src/hive/storage.py",
+      "revision": "0b3bfc391c8fc21555f451012757174933f1c479",
+      "sha256": "939dff182de268fc1e0f9acf6f35a8c601afd5ba92b3fb67aa04181d8842fbb6",
+      "bytes": 9683,
+      "inventory_learning_input": "comparison",
+      "operation": "exact public-file byte length"
+    },
+    {
+      "path": "src/hive/mission.py",
+      "revision": "0b3bfc391c8fc21555f451012757174933f1c479",
+      "sha256": "ad8bc662c663e46187566d4c8c6e34be42baad80ae01880e580d2839885ad23e",
+      "bytes": 17388,
+      "inventory_learning_input": "comparison",
+      "operation": "exact public-file byte length"
+    },
+    {
+      "path": "src/hive/adapters/ollama.py",
+      "revision": "0b3bfc391c8fc21555f451012757174933f1c479",
+      "sha256": "5e8053812da8702254e2d706576256b0cb02c30773a4b128c305670f058dc9b4",
+      "bytes": 3965,
+      "inventory_learning_input": "comparison-extra",
+      "operation": "exact public-file byte length"
+    },
+    {
+      "path": "src/hive/adapters/isolation.py",
+      "revision": "0b3bfc391c8fc21555f451012757174933f1c479",
+      "sha256": "2bc8f8f278a300431d7400ca58411cb7c5bd5c2bf5f488d8b70e42ac5516094b",
+      "bytes": 9109,
+      "inventory_learning_input": "comparison-extra",
+      "operation": "exact public-file byte length"
+    },
+    {
+      "path": "src/hive/diagnostics.py",
+      "revision": "0b3bfc391c8fc21555f451012757174933f1c479",
+      "sha256": "5c5e0c729c305753fad55a68e5b7eedbd65455c106c521bd0f757efabc5df108",
+      "bytes": 4281,
+      "inventory_learning_input": "subsequent",
+      "operation": "exact public-file byte length"
+    },
+    {
+      "path": "src/hive/code_verifier.py",
+      "revision": "0b3bfc391c8fc21555f451012757174933f1c479",
+      "sha256": "9865b125bf1927208f8d22478a9be2e4f2eb63664988240636b47e2f435aeb82",
+      "bytes": 19297,
+      "inventory_learning_input": "subsequent",
+      "operation": "exact public-file byte length"
+    }
+  ],
+  "exposed_to_model": false,
+  "new_model_calls": 0,
+  "classification_verifier_review": "INDEPENDENT_DEVELOPMENT_LABELS_REVIEWED",
+  "scope": "First-party derived operational inputs; not an unused independent acceptance corpus",
+  "inputs": "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\inputs",
+  "proposal": "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\operator-approval.proposed.json",
+  "classification_learning_plan": "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\classification-learning-plan.json",
+  "inventory_learning_plan": "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\inventory-learning-plan.json",
+  "classification_source_groups": [
+    "public-dev6-README.md",
+    "public-dev6-docs/NEXT_WORK_ITEM.md",
+    "public-dev6-docs/RUN_HIVE.md",
+    "public-dev6-docs/CURRENT_STATE.md"
+  ],
+  "classification_input_hashes": [
+    "a248aa8489a757e3066ec173db15d1d21d67a79a2011ab80addbd2342c62ce22",
+    "79eed180f6eed942475965848e32b3d4cb984549e608bbb82f9744daf41b86a2",
+    "78945f5afd834bcf841924dbfd64a46066d86cb5bad2950e42ed3f41b7ce1b81",
+    "f04622e94f379b2323a830e628f1762ddd4ba5885772ee98ecdaf2b6034015a5"
+  ],
+  "inventory_source_groups": [
+    "public-dev6-inventory-development",
+    "public-dev6-inventory-comparison",
+    "public-dev6-inventory-comparison-extra",
+    "public-dev6-inventory-subsequent"
+  ],
+  "inventory_input_hashes": [
+    "e6ddecb116db3005850dff6cf865f03df9ebfc6222b4d5439deb1546aef83bde",
+    "99caab93acefe0e9496406dd8f36c9bbbace050f98eb555addccd06fb58fb439",
+    "5aa3015e58d8b0b89929851f941840dc9c6023e5edf65df78af9768fac3fcb8d",
+    "90ab2013ba96dcc102b9d9cf6287c1b8899f1dc24774bbb819ef08a581e7d24b"
+  ],
+  "required_approval_task_count": 8,
+  "combined_source_reuse": "Model combined reuses reviewed development excerpts under its own explicitly fingerprinted ID; no fresh-source acceptance claim"
+}

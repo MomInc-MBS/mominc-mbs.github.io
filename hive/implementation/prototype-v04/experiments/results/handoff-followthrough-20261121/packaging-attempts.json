@@ -1,0 +1,11 @@
+{
+  "attempts": [
+    {
+      "operation": "finalize_receipts.py",
+      "status": "failed_before_receipt_writes",
+      "reason": "Terra doctor output is BOM-marked UTF-16; helper initially assumed UTF-8.",
+      "repair": "Parse original JSON bytes with automatic BOM detection, preserving the receipt unchanged.",
+      "new_hive_model_calls": 0
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "ok": true,
+  "vault": "D:\\site-work\\hive-v03-20261121\\hive\\vault",
+  "counts": {
+    "graph_nodes": 286,
+    "graph_edges": 2381,
+    "generated_markdown_nodes": 286,
+    "markdown_links_checked": 1811,
+    "external_links_ignored": 409,
+    "wikilinks_checked": 0,
+    "archive_files": 19,
+    "archive_bytes": 2553357,
+    "canvas_nodes": 20,
+    "canvas_edges": 17,
+    "reachable_nodes": 286,
+    "orphan_nodes": 0
+  },
+  "error_count": 0,
+  "errors": []
+}

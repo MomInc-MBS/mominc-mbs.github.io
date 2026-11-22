@@ -1,0 +1,86 @@
+{
+  "status": "PASS",
+  "browser": {
+    "ok": true,
+    "base": "http://127.0.0.1:8879",
+    "views": [
+      "STATUS",
+      "RUNS",
+      "CAPABILITIES",
+      "LEARNING",
+      "LEDGER",
+      "GAPS",
+      "RELEASES",
+      "PROTOTYPE",
+      "CONTROLLER",
+      "V03",
+      "INTEGRATION",
+      "READINESS",
+      "WORKING",
+      "OPERATIONAL"
+    ],
+    "widths": [
+      1440,
+      1024,
+      900,
+      390,
+      320
+    ],
+    "physical_phone": false,
+    "no_javascript": true,
+    "search_graph": true,
+    "existing_diagrams": 7,
+    "adaptive_diagram": true,
+    "adaptive_equations": 2,
+    "prototype_download_digest": true,
+    "prototype_search_graph": true,
+    "adaptive_download_digest": true,
+    "v03_download_digest": true,
+    "v03_chart_loaded": true,
+    "working_download_digest": true,
+    "working_search_graph": true,
+    "integration_download_digest": true,
+    "measured_source_download_digest": true,
+    "integration_search_graph": true,
+    "readiness_download_digest": true,
+    "readiness_search_graph": true,
+    "operational_download_digest": true,
+    "operational_search_graph": true,
+    "latest_desktop_mobile_navigation": true,
+    "page_errors": [],
+    "failed_requests": []
+  },
+  "static": {
+    "ok": true,
+    "html_pages": 333,
+    "local_links_checked": 28109,
+    "searchable_pages": 306,
+    "graph_edges": 2491,
+    "preserved_originals": 19,
+    "errors": []
+  },
+  "original_vault_and_zip_unchanged": true,
+  "attempts": [
+    {
+      "check": "static builder same-path source copy",
+      "result": "FAILED before publication",
+      "repair": "Restore only local builder-generated vault damage from clean Git baseline; skip same resolved source/destination copies. Original vault and ZIP now match Git exactly."
+    },
+    {
+      "check": "first browser harness",
+      "result": "FAILED in historical baseline locator",
+      "cause": "Harness expected v0.3.0.dev4, actual preserved label is 0.3.0.dev4. New release navigation, ZIP digest, screenshot, search and graph checks had passed.",
+      "repair": "Correct exact historical version text; retain all behavior assertions."
+    }
+  ],
+  "screenshots": {
+    "desktop": {
+      "path": "implementation/prototype-v04-site-desktop.png",
+      "sha256": "536d150095978d5a613096016de1275d09c2472f5f7517807e23a116ec0b9011"
+    },
+    "mobile": {
+      "path": "implementation/prototype-v04-site-mobile.png",
+      "sha256": "e4eac894c2a12ee624735b42705fcc5f9e6c7496e7998f443b2c08219cc15c56"
+    }
+  }
+}

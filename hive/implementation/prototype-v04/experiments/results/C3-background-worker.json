@@ -1,0 +1,23 @@
+{
+  "jobs": {
+    "BLOCKED": 1
+  },
+  "budget": {
+    "cycles": 1,
+    "requests": 0,
+    "tokens_actual": 0,
+    "tokens_reserved": 0,
+    "wall_s": 0.21899999992456287
+  },
+  "worker": {
+    "finished": 1795243097.9719648,
+    "pid": 40432,
+    "status": "stopped"
+  },
+  "stop_reason": "no eligible work",
+  "champion": null,
+  "campaign": null,
+  "next_research": null,
+  "kill_switch": false,
+  "policy_hash": "d3298261e477d72f3614e23cd5bcb600535465fbc82f4a11a7650c43e78148f3"
+}

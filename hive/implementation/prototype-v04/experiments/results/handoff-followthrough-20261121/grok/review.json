@@ -1,0 +1,59 @@
+{
+  "status": "reviewed",
+  "scope": "Bounded inline source-diff challenge; reviewer did not execute tests or inspect a checkout",
+  "requested_provider": "grok",
+  "requested_model": "grok-4.7-build-fast",
+  "executed_model_reported": null,
+  "runtime_commit": "f3d7e556ea41076e1138761d72df06b5ce3e0f65",
+  "runtime_source_sha256": "0d97faae0caae31f3918296dccaa21be5ba0ba7a1cec0c8ca5f880001d17320e",
+  "thread_link": "t3-thread://v2/50b34497-15f3-472e-bf5c-62b0014ba111/thread:delegated-task:command%3Amcp%3A47b92edb-2596-4f10-93db-ccd434ca3687%3Adelegate-task%3A6628e7b0-6a52-45b4-a053-5d61010d79f3",
+  "delivery_history": [
+    "Initial alternate-project delegation was rejected by project binding; no review completed.",
+    "Retry in parent D:/ project stalled on its first workspace command with no command output.",
+    "Same Grok provider restarted with the frozen diff inline and tools forbidden; substantive response captured.",
+    "Response text last updated 2026-11-22T06:18:59.836Z, but transport remained running for over ten further minutes. Its stalled turn was cancelled after preserving this response. No complete provider terminal sign-off is claimed."
+  ],
+  "response_observed_at": "2026-11-22T06:18:59.836Z",
+  "raw_response": "No blocker for P2 v4 exact tool-or-abstain, memory-off learning, invalid or non-development training, or candidate writes into the frozen governing policy.\n\nInline diff only, against frozen commit `f3d7e556ea41076e1138761d72df06b5ce3e0f65` and source SHA `0d97faae0caae31f3918296dccaa21be5ba0ba7a1cec0c8ca5f880001d17320e`. Tests were not in the diff and were not executed.\n\nChecked and holding: exact categories mark every non-`tool` route ineligible before `Policy.choose`; v4 `choose` returns `tool` or raises; explicit requests still go through that eligibility gate; `observe` returns before any write when `memory_enabled` is false; eligibility requires both governing and candidate memory flags; `OutcomeFeedbackV1` rejects invalid passes and non-development training; v4 `choose` ignores legacy `counts`; feedback saves `policy`, not the champion snapshot. The known STOP and cap recovery limit was not treated as a new defect. Route-skill history and cross-source transfer are not claimed; the partition hash includes source group, permissions, verifier hashes, route, and runtime hash.\n\n**Medium.** Per-route model identity is one shared pin, and the receipt pin is the last partitioned candidate. [orchestrator.py](/D:/Repos/hive-ai/src/hive/orchestrator.py) in `_decision`, the new candidate loop.\n\nEvidence: every `local_*` candidate is hashed with the same `self._candidate_model_identity`. The loop then assigns `identity`, and the receipt attaches `model_identity` only when that name is truthy. For `candidates = [\"local_direct\", \"tool\"]` on a non-exact v4 task, the `tool` iteration sets `identity = None`. A selected `local_direct` still gets a model-bound `partition_keys` entry, but the receipt omits `model_identity`. `observe` commits that key. [inspect_evidence](/D:/Repos/hive-ai/src/hive/orchestrator.py) recomputes with `decision.get(\"model_identity\")`, so `feedback_partition_key` raises `model route needs pinned identity`. Exact v4 skips non-tool candidates, so this does not select a model for an exact task. No later assignment to `identity` is in the diff.\n\nSmallest fix: record model identity per route, set `receipt[\"model_identity\"]` only from the selected route, and recompute `feedback_partition_key` and require a match before `observe`.\n\n**Low.** Writer and replay disagree on token charges. Feedback stores `actual_tokens` as `max(0, result.get(\"tokens\", 0))`. Replay expects `evidence[\"result\"][\"tokens\"]` and does not check `elapsed_s`. A missing or negative `tokens` value can commit candidate learning and then fail `P2 v4 feedback replay failed`. `elapsed_s` is not checked against `execution_timeout_s`.\n\nSmallest fix: one nonnegative integer charge helper, used by the writer, resume, and `inspect_evidence`.\n\n**Low.** One-time settlement is check-then-act. `_resume_verified_feedback` reads `execution_cost_settled:` before `BEGIN IMMEDIATE`, then adds `actual_tokens`. Two overlapping resumes can both pass the check and add twice.\n\nSmallest fix: re-read the flag inside the transaction and skip the add when it is set.\n\n**Low.** A v4 snapshot with no `memory_enabled` key loads as memory on. `Policy.__init__` uses `state.get(\"memory_enabled\", True)`.\n\nSmallest fix: require a bool on v4 state, and reject a missing key.\n\n**Low.** Legacy rollback drops the governing mode. The v4-candidate quarantine path constructs `Policy(seed=self.config[\"seed\"], version=selection_policy.version)`, whose default mode is `ucb`.\n\nSmallest fix: pass `mode=selection_policy.mode`.",
+  "dispositions": [
+    {
+      "finding": "Medium: last candidate's identity could suppress selected model receipt identity",
+      "disposition": "Not reproduced; omitted full-source context contradicts it",
+      "evidence": "orchestrator.py _decision resets identity = self._candidate_model_identity after the candidate loop; candidates also always start with tool. Three classification decision probes with reordered config routes preserved identity and independently recomputed the selected partition. One configured local model serves the local prompt routes; distinct per-route model providers are not claimed.",
+      "receipt": "parent-probes.json"
+    },
+    {
+      "finding": "Low: malformed tokens could train then fail replay",
+      "disposition": "Not reproduced; pre-feedback resource validation was omitted from the diff",
+      "evidence": "orchestrator.py validates integer bounded tokens and finite nonnegative latency before feedback; malformed results become invalid EVALUATION outcomes and are normalized. Missing, negative and noninteger token probes all rejected output and wrote no candidate partitions.",
+      "receipt": "parent-probes.json"
+    },
+    {
+      "finding": "Low: overlapping recovery could double-settle tokens",
+      "disposition": "No supported-path overlap found by independent Terra review",
+      "evidence": "Executor.loop holds worker_lock(root); Store.claim uses BEGIN IMMEDIATE and atomically transitions QUEUED to RUNNING with owner/generation. Recover requeues only dead owner PIDs. Calling private recovery directly or corrupting trusted store/PID state is outside this guarantee. The inner marker recheck remains potential defense-in-depth."
+    },
+    {
+      "finding": "Low: feedback elapsed_s is not checked against execution timeout",
+      "disposition": "Recorded diagnostic limitation; not an acceptance or deadline enforcement claim",
+      "evidence": "Elapsed includes dispatch, verification and artifact work and cannot be compared directly with the execution timeout. Actual budget wall accounting is separate. Its historical value is not independently reproduced by feedback replay."
+    },
+    {
+      "finding": "Low: missing memory_enabled in v4 state defaults True",
+      "disposition": "Confirmed hardening gap for manually incomplete trusted snapshots; no supported-path authorization bypass demonstrated",
+      "evidence": "Independent Sol constructor review: normal snapshot() includes the bool, memory-off round trips correctly, approved hashed artifacts cannot lose it without changing identity, and raw trusted-store mutation already allows changing the bool. Strict rejection of incomplete v4 snapshots is deferred; no claim of fail-closed handling for such malformed state."
+    },
+    {
+      "finding": "Low: legacy rollback creates UCB candidate instead of governing mode",
+      "disposition": "Intentional candidate/governing separation confirmed by Sol",
+      "evidence": "Fresh historical experimental candidates defaulted UCB independently of fixed governing policy. Stale v4 candidate is archived; selection still uses restored governing policy or approved checkpoint and no promotion occurs."
+    }
+  ],
+  "unresolved_blockers": [],
+  "retained_limitations": [
+    "Manually incomplete trusted v4 snapshots may default memory on; strict schema rejection remains a hardening opportunity.",
+    "Feedback elapsed_s is recorded diagnostic data, not independently reproduced proof of deadline or budget enforcement.",
+    "No provider-completed Grok sign-off or Grok-executed tests; actual limited response and parent/independent dispositions retained."
+  ],
+  "new_hive_model_calls": 0
+}

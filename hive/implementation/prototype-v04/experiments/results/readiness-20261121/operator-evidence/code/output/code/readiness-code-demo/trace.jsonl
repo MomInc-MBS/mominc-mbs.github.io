@@ -1,0 +1,5 @@
+{"detail": null, "event_index": 0, "job_id": "b16c1dd19e884daaa1df555d3a608280", "patch_id": "include-final-value", "state": "QUEUED"}
+{"detail": {"owner": "worker-948"}, "event_index": 1, "job_id": "b16c1dd19e884daaa1df555d3a608280", "patch_id": "include-final-value", "state": "RUNNING"}
+{"detail": null, "event_index": 2, "job_id": "b16c1dd19e884daaa1df555d3a608280", "patch_id": "include-final-value", "state": "VERIFYING"}
+{"detail": {"evidence_ref": "artifacts/be3b9922d0e1fdff75c52807c9b263e9947ecf36474c23054090bc3b22f200aa.json"}, "event_index": 3, "job_id": "b16c1dd19e884daaa1df555d3a608280", "patch_id": "include-final-value", "state": "REVIEWING"}
+{"detail": null, "event_index": 4, "job_id": "b16c1dd19e884daaa1df555d3a608280", "patch_id": "include-final-value", "state": "BLOCKED"}

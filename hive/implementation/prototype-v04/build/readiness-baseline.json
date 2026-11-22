@@ -1,0 +1,92 @@
+{
+  "recorded_at": "2026-11-22T01:05:05.810412+00:00",
+  "checkout": "D:/Repos/hive-ai",
+  "branch": "build/working-prototype",
+  "commit": "6a044bb7adb5f8a082a5d298148461031fd9b506",
+  "initial_dirty_files": [],
+  "frozen_archive": ".hive/readiness-baseline-6a044bb.zip",
+  "frozen_archive_sha256": "d523b99e054916117ba8d127d5f01342aa3e6a21f76884140d94bd0763914f74",
+  "runtime_source_sha256": "6ee9ae14b32ec6c9972bba693bb45395af5998516c4bc9de19dd5bbb5f550c99",
+  "config_sha256": {
+    "configs/adaptive.json": "0911e67a221f31c2986d6e1507cb6fe988b3951f81fbf8c5104d412a32e5f80a",
+    "configs/integration-20261121.json": "7204a62cbd26ef1352ea785cff69cddc288742222c0e1c242fa46f265e46f8d1",
+    "configs/local.json": "f6ff806848957087a376be9bb6826d9b00983b0b6b15e44168d17695d5f203c4",
+    "configs/prototype-mission.example.json": "8547f8f776446ed3d576044a65aa381fa0f6cf4763ba2dbc9f05ad58574f9106",
+    "configs/prototype-video.json": "5d0d7d02d3cea2e2425bc839c72aeaf6a7b5549c82f9bb1b3b3aafe0b05adf8d",
+    "configs/v03-e0.json": "6e4b598e074064e9504d2c3609b4967a77230037d9ee67c76da4c67d796ae526"
+  },
+  "verifier_sha256": "0d38519b36d8e33336ea3a9db3fca2c5cf66069c533a3ce51f93a145e6ccd7b9",
+  "model": {
+    "id": "myr5-hold-local:latest",
+    "digest": "a45646773d1ee8a6c1557c7de09a68e78a74f2990c4174a1408f65e777db150c",
+    "endpoint": "http://127.0.0.1:11434",
+    "available_at_audit": true,
+    "running_at_audit": []
+  },
+  "live_release": {
+    "url": "https://mominc.online/hive/",
+    "manifest_url": "https://mominc.online/hive/implementation/integration-dev3-publication.json",
+    "source_commit": "6a044bb7adb5f8a082a5d298148461031fd9b506",
+    "status": "INTEGRATED_PROTOTYPE_DEMONSTRATED",
+    "matches_checkout": true
+  },
+  "tests": {
+    "command": "python -m pytest -q --junitxml=experiments/results/readiness-20261121/baseline-frozen-tests.xml",
+    "scope": "unchanged Git archive, fresh process",
+    "passed": 252,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 2,
+    "seconds": 167.49,
+    "skip_reasons": [
+      "OS does not allow creating symlinks",
+      "creating symlinks is unavailable in this Windows session"
+    ],
+    "receipt": "experiments/results/readiness-20261121/baseline-frozen-tests.xml",
+    "sha256": "72f9eb61f93d89d2e3f087ab78270eb5a37a36c9d0025847c1ac182b1f113bf4"
+  },
+  "offline_replay": {
+    "command": "python scripts/replay_integration_export.py",
+    "verified_jobs": 11,
+    "verified_artifacts": 43,
+    "new_model_calls": 0
+  },
+  "approval": {
+    "engineering_and_zero_inference_tests": true,
+    "new_inference_budget": 0,
+    "prior_budget_ledgers": {
+      "integration-20261121": {
+        "cycles": 11,
+        "requests": 6,
+        "tokens_actual": 147,
+        "tokens_reserved": 768,
+        "wall_s": 18.57799999997951
+      },
+      "adaptive-v02-20261121": {
+        "cycles": 36,
+        "requests": 30,
+        "tokens_actual": 1013,
+        "tokens_reserved": 3840,
+        "wall_s": 23.450999999884516
+      }
+    },
+    "prior_E0_allocation": "spent;30calls",
+    "prior_integration_allocation": "spent;6calls",
+    "production_promotion": false,
+    "level_A_fresh_sources": "not supplied/approved",
+    "level_B": "UNTESTED; separately authorized preregistration required"
+  },
+  "sandbox_at_start": "Docker installed; daemon not running; BLOCKED_SANDBOX until enforcement verified",
+  "owners": {
+    "Luna": "code mission/isolation/shared mission controller",
+    "Sol": "pressure contracts/runner and exact-tool policy",
+    "Terra": "independent verifier/adversarial fault tests",
+    "Astra": "CLI/doctor/evidence/package/publication"
+  },
+  "routing": {
+    "ruflo": "weak generic coder; model route generic Opus",
+    "actual": "user-named gpt-6-luna,gpt-6.1-sol,gpt-6.1-terra",
+    "laya": "down/advisory fallback"
+  },
+  "research_attachments": "Supplied references; existing v0.3.0.dev3 functionality supersedes historical gaps. No Disney implementation or learning claim independently reproduced."
+}

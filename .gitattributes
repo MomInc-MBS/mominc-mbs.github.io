@@ -50,3 +50,7 @@ hive/updates/HIVE_Objective_Testing_2026-11-21.md -text whitespace=cr-at-eol
 # P2 safety supplement preserves exact frozen runtime and evidence bytes.
 hive/implementation/p2-dev6/** -text whitespace=space-before-tab,cr-at-eol,-blank-at-eol,-blank-at-eof
 hive/implementation/p2-dev6-*.json -text whitespace=cr-at-eol
+
+# Operational source and receipts preserve the exact measured bytes.
+hive/implementation/prototype-v04/** -text whitespace=space-before-tab,cr-at-eol,-blank-at-eol,-blank-at-eof
+hive/implementation/prototype-v04-*.json -text whitespace=cr-at-eol

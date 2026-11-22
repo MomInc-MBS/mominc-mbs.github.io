@@ -124,13 +124,16 @@ def main():
     if latest_pointer := release.get('latest_verified'):
         latest = json.loads((OUT / latest_pointer['publication_manifest']).read_text(encoding='utf-8'))
         release_block += (f'<section class="release-pointer"><h2>Latest verified engineering: {esc(latest["runtime_version"])}</h2>'
-                          f'<p><strong>{esc(latest["status"])}</strong> · Synthetic development evidence. '
+                          f'<p><strong>{esc(latest["status"])}</strong> · {esc(latest.get("evidence_scope", "Synthetic development evidence"))}. '
                           f'Level A remains not accepted; Level B untested; no policy promotion.</p>'
                           f'<p>Runtime SHA-256: <code>{esc(latest["runtime_source_sha256"])}</code><br>'
                           f'Download SHA-256: <code>{esc(latest["download_sha256"])}</code></p>'
                           f'<p><a href="{url(nodes[latest_pointer["note_id"]])}">Read the latest verified result</a> · '
                           f'<a href="{BASE}{latest["download"]}" download>Download {esc(latest["runtime_version"])}</a> · '
                           f'<a href="{BASE}{latest_pointer["publication_manifest"]}">Publication manifest</a></p></section>')
+    navigation = list(NAV)
+    if latest_pointer and latest_pointer['note_id'] not in {key for key, _ in navigation}:
+        navigation.insert(2, (latest_pointer['note_id'], f'Latest engineering · {latest["runtime_version"]}'))
     # Originals receive a reading view as well as their byte-identical download.
     originals = []
     for p in sorted((vault / '90_Archive/Originals').glob('*')):
@@ -235,7 +238,7 @@ def main():
         return '\n'.join(line.rstrip() for line in result.split('\n')), toc
 
     def shell(title, content, path, active='', description='', extra='', body_class=''):
-        navlinks = ''.join(f'<a href="{url(nodes[k])}" {"aria-current=page" if k == active else ""}>{esc(t)}</a>' for k, t in NAV if k in nodes)
+        navlinks = ''.join(f'<a href="{url(nodes[k])}" {"aria-current=page" if k == active else ""}>{esc(t)}</a>' for k, t in navigation if k in nodes)
         return f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{esc(title)} · HIVE</title><meta name="description" content="{esc(description or 'The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.')}">
@@ -245,7 +248,7 @@ def main():
 <script defer src="{BASE}assets/hive.js?v=3"></script>{extra}</head>
 <body class="{body_class}"><a class="skip" href="#main">Skip to content</a>
 <header class="masthead"><a class="brand" href="{BASE}" aria-label="HIVE home"><img src="{BASE}assets/hive.svg?v=2" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
-<nav class="topnav" aria-label="Primary"><a href="{url(nodes['FRAMEWORK'])}">Framework</a><a href="{BASE}explore/">Explore</a><a href="{BASE}graph/">Graph</a><a href="{url(latest_implementation)}">Implementation</a><a href="{url(current_coder)}">Coder directions</a></nav>
+<nav class="topnav" aria-label="Primary"><a href="{url(nodes['FRAMEWORK'])}">Framework</a><a href="{BASE}explore/">Explore</a><a href="{BASE}graph/">Graph</a><a href="{url(nodes[latest_pointer['note_id']]) if latest_pointer else url(latest_implementation)}">Implementation</a><a href="{url(current_coder)}">Coder directions</a></nav>
 <a class="search-trigger" href="{BASE}search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
 <button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
 <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden>{navlinks}<a href="{BASE}explore/">Browse all pages</a><a href="{BASE}graph/">Interactive graph</a></nav>
@@ -255,9 +258,11 @@ def main():
 
     OUT.mkdir(exist_ok=True)
     # Copy without transforming any source bytes, including the 19 originals.
-    shutil.copytree(vault, OUT / 'vault', dirs_exist_ok=True, ignore=shutil.ignore_patterns('.obsidian', '__pycache__'))
+    if vault != (OUT / 'vault').resolve():
+        shutil.copytree(vault, OUT / 'vault', dirs_exist_ok=True, ignore=shutil.ignore_patterns('.obsidian', '__pycache__'))
     (OUT / 'downloads').mkdir(exist_ok=True)
-    shutil.copyfile(args.zip, OUT / 'downloads/HIVE_Framework_Research_Vault.zip')
+    if args.zip.resolve() != (OUT / 'downloads/HIVE_Framework_Research_Vault.zip').resolve():
+        shutil.copyfile(args.zip, OUT / 'downloads/HIVE_Framework_Research_Vault.zip')
     inbound = defaultdict(list)
     for edge in graph['edges']:
         inbound[edge['target']].append(edge)
@@ -278,7 +283,7 @@ def main():
             seen_related.add(e['source'])
             items.append(f'<a href="{url(nodes[e["source"]])}"><span>{esc(e["source"])}</span>{esc(nodes[e["source"]]["title"])}<small>{esc(e["relation"].replace("_", " "))}</small></a>')
         backlinks = f'<section class="backlinks"><h2>Referenced by <span>{len(items)}</span></h2><div>{"".join(items)}</div></section>' if items else ''
-        navlinks = ''.join(f'<a href="{url(nodes[k])}" {"aria-current=page" if k == node["id"] else ""}>{esc(t)}</a>' for k, t in NAV if k in nodes)
+        navlinks = ''.join(f'<a href="{url(nodes[k])}" {"aria-current=page" if k == node["id"] else ""}>{esc(t)}</a>' for k, t in navigation if k in nodes)
         toc_html = ''.join(f'<a class="toc-{level}" href="#{esc(anchor)}">{esc(title)}</a>' for level, anchor, title in toc)
         status = f'<span class="badge">{esc(label(node["evidence_status"]))}</span>'
         impl = node.get('implementation_status', '')
@@ -336,14 +341,11 @@ def main():
     if latest_pointer:
         latest_intro = (f'<section class="home-section evidence-section implementation-update">'
                         f'<div><p class="eyebrow">LATEST VERIFIED ENGINEERING / {esc(latest["runtime_version"])}</p>'
-                        f'<h2>Exact tools.<br>Bounded feedback.</h2>'
-                        f'<p>The opt-in P2 candidate abstains when its required exact tool cannot run. '
-                        f'Its saved decisions and feedback are checked again on replay.</p>'
-                        f'<a class="button dark" href="{url(nodes[latest_pointer["note_id"]])}">Read safety checks and limits</a></div>'
+                        f'<h2>{esc(latest.get("headline", "Exact tools. Bounded feedback."))}</h2>'
+                        f'<p>{esc(latest.get("summary", "The opt-in P2 candidate abstains when its required exact tool cannot run. Its saved decisions and feedback are checked again on replay."))}</p>'
+                        f'<a class="button dark" href="{url(nodes[latest_pointer["note_id"]])}">Read results and limits</a></div>'
                         f'<div class="evidence-key"><div><span class="badge neutral">QUARANTINED CANDIDATE</span>'
-                        f'<p>The six-task output comparison tied the strongest tool. No learning gain, '
-                        f'genuine acceptance or policy promotion is claimed. The next acceptance scope '
-                        f'remains six structured-data tasks and six Python tasks.</p></div></div></section>')
+                        f'<p>{esc(latest.get("limitations", "The six-task output comparison tied the strongest tool. No learning gain, genuine acceptance or policy promotion is claimed. The next acceptance scope remains six structured-data tasks and six Python tasks."))}</p></div></div></section>')
         home = home.replace('<section class="home-section evidence-section implementation-update">',
                             latest_intro + '<section class="home-section evidence-section implementation-update">', 1)
     write(OUT / 'index.html', shell('Framework & research vault', home, BASE, body_class='home'))
@@ -354,7 +356,7 @@ def main():
         if n['id'] in ('STATUS', 'RELEASES'):
             text += f' Frozen baseline {release["version"]}: {release["status"]}; Level A {release["level_a"]} ({release["level_a_attempted"]} attempted, {release["level_a_accepted"]} accepted); Level B {release["level_b"]}; candidate promotion false; runtime SHA-256 {release["runtime_source_sha256"]}; ZIP SHA-256 {release["download_sha256"]}.'
             if latest_pointer:
-                text += f' Latest verified engineering {latest["runtime_version"]}: {latest["status"]}; synthetic development, P2 quarantined, no useful-learning gain. Runtime SHA-256 {latest["runtime_source_sha256"]}; ZIP SHA-256 {latest["download_sha256"]}.'
+                text += f' Latest verified engineering {latest["runtime_version"]}: {latest["status"]}; {latest.get("evidence_scope", "synthetic development")}, P2 quarantined, no useful-learning gain. Runtime SHA-256 {latest["runtime_source_sha256"]}; ZIP SHA-256 {latest["download_sha256"]}.'
         text = re.sub(r'[`#*|>]', '', text)
         search_records.append({k: n[k] for k in ['id', 'title', 'type', 'evidence_status', 'implementation_status']} | dict(url=url(n), text=re.sub(r'\s+', ' ', text), tags=n['tags']))
     write(OUT / 'search-index.json', json.dumps(search_records, ensure_ascii=False, separators=(',', ':')))
@@ -389,7 +391,7 @@ Original package: {ORIGIN}/hive/downloads/HIVE_Framework_Research_Vault.zip
 
 ## Reading rules
 
-{('- Latest verified engineering: /hive/notes/' + latest_pointer['note_id'] + '/. Exact-tool abstention, isolated feedback and replay checks; objective-only acceptance scope. Synthetic development, zero new HIVE inference, no learning gain or promotion.') if latest_pointer else ''}
+{('- Latest verified engineering: /hive/notes/' + latest_pointer['note_id'] + '/. ' + latest['runtime_version'] + ': ' + latest['status'] + '. ' + latest.get('evidence_scope', 'Synthetic development evidence') + '. P2 quarantined; no beneficial-learning gain or promotion. Read the current result and remaining gates.') if latest_pointer else ''}
 - Current implementation evidence is at /hive/notes/STATUS/. It links experiments, capabilities, learning progress, gaps, decisions and release history.
 - Objective testing supplement: /hive/notes/OBJECTIVE/. Six Python and six data tasks, exact references and restart replay; public synthetic development, zero new HIVE model calls, P2 quarantined with no quality gain.
 - Frozen engineering baseline: /hive/notes/READINESS/. Shared video/isolated-code missions, H01–H11 synthetic smoke, independent validators and exact R1–R8 gate evidence. Zero new model calls. Read the gate verdict; fixture success is not fresh task acceptance or a sealed learning study. Genuine source inventories and new resource approvals remain required.
@@ -418,7 +420,7 @@ Original package: {ORIGIN}/hive/downloads/HIVE_Framework_Research_Vault.zip
 
 ## Entry points
 
-''' + '\n'.join(f'- [{nodes[k]["title"]}]({ORIGIN}{url(nodes[k])})' for k, _ in NAV if k in nodes) + '\n'
+''' + '\n'.join(f'- [{nodes[k]["title"]}]({ORIGIN}{url(nodes[k])})' for k, _ in navigation if k in nodes) + '\n'
     write(OUT / 'llms.txt', llms)
     all_pages = [BASE, BASE + 'explore/', BASE + 'search/', BASE + 'graph/'] + [url(n) for n in [*nodes.values(), *originals]]
     write(OUT / 'sitemap.xml', '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + '\n'.join(f'<url><loc>{ORIGIN}{p}</loc></url>' for p in all_pages) + '\n</urlset>\n')

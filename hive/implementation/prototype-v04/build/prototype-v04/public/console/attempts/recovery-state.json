@@ -1,0 +1,36 @@
+{
+  "status": "FAIL_RECOVERY_STATE",
+  "runtime_sha256": "81cea878e5f17bb10a14dde77aab3fef6d8be370841294292e24a465b147724d",
+  "store": "same original tool-store-fixed; retained without forced state edits",
+  "kill_switch_exists": false,
+  "budget": {
+    "cycles": 9,
+    "requests": 0,
+    "tokens_actual": 0,
+    "tokens_reserved": 0,
+    "wall_s": 5.9230000000679865
+  },
+  "mission_state": "STOPPED",
+  "stage_states": {
+    "data": "VERIFIED",
+    "python": "VERIFIED",
+    "report": "VERIFIED",
+    "review": "VERIFIED"
+  },
+  "console_state": "STOPPED",
+  "learning_state": "REJECTED",
+  "new_requests": 0,
+  "new_cycles": 0,
+  "servers_closed": true,
+  "sequence": [
+    "Main engineering demo completed with combined COMPLETED, four VERIFIED stages and learning REJECTED at 9 cycles / 0 requests.",
+    "Browser submitted exact registered combined manifest for saved-evidence replay.",
+    "An interrupted harness attempt set STOP while cached replay was in progress.",
+    "Harness closed browser and server; existing store was retained.",
+    "Existing Console.control(resume) cleared STOP, then exact registered combined submission was awaited until its worker thread ended.",
+    "Replay returned STOPPED despite no STOP file and all four stored stage states VERIFIED; budget unchanged."
+  ],
+  "minimal_repro": "Complete a real four-stage tools-only DAG; begin same-manifest cached replay; set its store STOP while replay is active; wait for worker exit; call existing resume; replay same manifest again. Assert all cached stages remain VERIFIED but overall state remains STOPPED.",
+  "diagnosis": "Mission finalization preserves prior STOPPED state when terminal cached stages are replayed; resume clears STOP but no path resets overall mission state before finalization. Confirm in runtime before changing source.",
+  "mutations": "Only authorized console submit/STOP/resume actions; no direct SQLite writes, budget reset, policy promotion or runtime/source edits."
+}

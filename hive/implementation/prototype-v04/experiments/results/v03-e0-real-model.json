@@ -1,0 +1,1096 @@
+{
+  "approved_checkpoint_changed": false,
+  "baseline": {
+    "route": "local_direct",
+    "validation_refs": [
+      "artifacts/2998e547d14b0f2111b0efc6d07a56af08fb8c4aeb16b5bce1231fb9cd56bb42.json",
+      "artifacts/72902a8c8e3acd932ddfadb2d9ee7f3fd72904da543653326495c2a721254f18.json",
+      "artifacts/a1bc5bca1c76fc61ea246f10833a7e0a738ce8180a9dc8ed679127e8b3f9e4f1.json",
+      "artifacts/0c0ea76740dcf4ad8b05edb8fe3885d6ea9a45f62fd0a3aacadceadf0e33f8e1.json",
+      "artifacts/ab970b9e1eb836a07bb6bd71aa27eb5427021f7f1617be4ed038bc811c08433b.json",
+      "artifacts/a5a5e3f6a4225bc22ee91a6ee0080080111a6731bc2ea595722397dc86b1fe22.json"
+    ]
+  },
+  "budget": {
+    "cycles": 36,
+    "requests": 30,
+    "tokens_actual": 1008,
+    "tokens_reserved": 3840,
+    "wall_s": 23.124999999883585
+  },
+  "build": {
+    "commit": "unversioned",
+    "source_sha256": "2f1ad5f919ec8918a6d699ee0c4328438e5b203294e4048717c0134c9e9bc37f",
+    "version": "0.2.1"
+  },
+  "candidates": [
+    {
+      "accepted": true,
+      "artifact_ref": "artifacts/aee5a3ed25a0a96d6203f0ad6177b3ea944cc325dd9fad38e59e02ead07daed5.json",
+      "assessment": {
+        "accepted": true,
+        "baseline_quality": 0.5,
+        "baseline_utility": 0.48259659722221027,
+        "by_family": {
+          "adaptation": {
+            "baseline_quality": 1.0,
+            "baseline_utility": 0.9975716666666752,
+            "candidate_quality": 1.0,
+            "candidate_utility": 0.9975912500000171,
+            "latency_delta_s": -0.0470000000204891,
+            "losses": 0,
+            "n": 1,
+            "quality_delta": 0.0,
+            "ties": 1,
+            "tokens_delta": 0.0,
+            "utility_delta": 1.9583333341954834e-05,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "utility_wins": 1,
+            "wins": 0
+          },
+          "code_repair": {
+            "baseline_quality": 0.0,
+            "baseline_utility": -0.05050125000003997,
+            "candidate_quality": 1.0,
+            "candidate_utility": 0.9865300000000086,
+            "latency_delta_s": -0.7500000001164153,
+            "losses": 0,
+            "n": 1,
+            "quality_delta": 1.0,
+            "ties": 0,
+            "tokens_delta": -94.0,
+            "utility_delta": 1.0370312500000485,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "utility_wins": 1,
+            "wins": 1
+          },
+          "coordination": {
+            "baseline_quality": 1.0,
+            "baseline_utility": 0.9743164583332934,
+            "candidate_quality": 1.0,
+            "candidate_utility": 0.9743293749999915,
+            "latency_delta_s": -0.03100000007543713,
+            "losses": 0,
+            "n": 1,
+            "quality_delta": 0.0,
+            "ties": 1,
+            "tokens_delta": 0.0,
+            "utility_delta": 1.2916666698115087e-05,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "utility_wins": 1,
+            "wins": 0
+          },
+          "hallucination": {
+            "baseline_quality": 0.0,
+            "baseline_utility": -0.015436041666641056,
+            "candidate_quality": 0.0,
+            "candidate_utility": -0.015423124999991464,
+            "latency_delta_s": -0.030999999959021807,
+            "losses": 0,
+            "n": 1,
+            "quality_delta": 0.0,
+            "ties": 1,
+            "tokens_delta": 0.0,
+            "utility_delta": 1.2916666649591402e-05,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "utility_wins": 1,
+            "wins": 0
+          },
+          "math": {
+            "baseline_quality": 1.0,
+            "baseline_utility": 0.9967904166666751,
+            "candidate_quality": 1.0,
+            "candidate_utility": 0.9968033333333247,
+            "latency_delta_s": -0.030999999959021807,
+            "losses": 0,
+            "n": 1,
+            "quality_delta": 0.0,
+            "ties": 1,
+            "tokens_delta": 0.0,
+            "utility_delta": 1.291666664959834e-05,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "utility_wins": 1,
+            "wins": 0
+          },
+          "tool_routing": {
+            "baseline_quality": 0.0,
+            "baseline_utility": -0.007161666666700815,
+            "candidate_quality": 1.0,
+            "candidate_utility": 0.9928383333332992,
+            "latency_delta_s": 0.0,
+            "losses": 0,
+            "n": 1,
+            "quality_delta": 1.0,
+            "ties": 0,
+            "tokens_delta": 0.0,
+            "utility_delta": 1.0,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "utility_wins": 1,
+            "wins": 1
+          }
+        },
+        "candidate_quality": 0.8333333333333334,
+        "candidate_utility": 0.822111527777775,
+        "comparison_baseline": "experimental_incumbent",
+        "critical_regression": false,
+        "critical_regressions": [],
+        "family_uncertainty": {
+          "interpretation": "Observed family means and range; no independent sampling, confidence interval, or significance claim. Overall deltas are task-weighted; family means weight categories equally.",
+          "method": "descriptive_family_dispersion",
+          "n_families": 6,
+          "quality_delta": {
+            "equal_family_mean": 0.3333333333333333,
+            "max": 1.0,
+            "median": 0.0,
+            "min": 0.0
+          },
+          "utility_delta": {
+            "equal_family_mean": 0.33951493055556464,
+            "max": 1.0370312500000485,
+            "median": 1.625000002003496e-05,
+            "min": 1.2916666649591402e-05
+          }
+        },
+        "latency_delta_s": -0.1483333333550642,
+        "losses": 0,
+        "n": 6,
+        "promote_eligible": false,
+        "quality_delta": 0.3333333333333333,
+        "reasons": [
+          "paired quality improved",
+          "experimental incumbent comparison only; independent promotion gate required"
+        ],
+        "ties": 4,
+        "tokens_delta": -15.666666666666666,
+        "utility_delta": 0.33951493055556464,
+        "utility_losses": 0,
+        "utility_ties": 0,
+        "utility_tolerance": 1e-12,
+        "utility_wins": 6,
+        "valid_n": 6,
+        "wins": 2
+      },
+      "baseline_comparison": {
+        "accepted": true,
+        "baseline_quality": 0.5,
+        "baseline_utility": 0.48259659722221027,
+        "by_family": {
+          "adaptation": {
+            "baseline_quality": 1.0,
+            "baseline_utility": 0.9975716666666752,
+            "candidate_quality": 1.0,
+            "candidate_utility": 0.9975912500000171,
+            "latency_delta_s": -0.0470000000204891,
+            "losses": 0,
+            "n": 1,
+            "quality_delta": 0.0,
+            "ties": 1,
+            "tokens_delta": 0.0,
+            "utility_delta": 1.9583333341954834e-05,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "utility_wins": 1,
+            "wins": 0
+          },
+          "code_repair": {
+            "baseline_quality": 0.0,
+            "baseline_utility": -0.05050125000003997,
+            "candidate_quality": 1.0,
+            "candidate_utility": 0.9865300000000086,
+            "latency_delta_s": -0.7500000001164153,
+            "losses": 0,
+            "n": 1,
+            "quality_delta": 1.0,
+            "ties": 0,
+            "tokens_delta": -94.0,
+            "utility_delta": 1.0370312500000485,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "utility_wins": 1,
+            "wins": 1
+          },
+          "coordination": {
+            "baseline_quality": 1.0,
+            "baseline_utility": 0.9743164583332934,
+            "candidate_quality": 1.0,
+            "candidate_utility": 0.9743293749999915,
+            "latency_delta_s": -0.03100000007543713,
+            "losses": 0,
+            "n": 1,
+            "quality_delta": 0.0,
+            "ties": 1,
+            "tokens_delta": 0.0,
+            "utility_delta": 1.2916666698115087e-05,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "utility_wins": 1,
+            "wins": 0
+          },
+          "hallucination": {
+            "baseline_quality": 0.0,
+            "baseline_utility": -0.015436041666641056,
+            "candidate_quality": 0.0,
+            "candidate_utility": -0.015423124999991464,
+            "latency_delta_s": -0.030999999959021807,
+            "losses": 0,
+            "n": 1,
+            "quality_delta": 0.0,
+            "ties": 1,
+            "tokens_delta": 0.0,
+            "utility_delta": 1.2916666649591402e-05,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "utility_wins": 1,
+            "wins": 0
+          },
+          "math": {
+            "baseline_quality": 1.0,
+            "baseline_utility": 0.9967904166666751,
+            "candidate_quality": 1.0,
+            "candidate_utility": 0.9968033333333247,
+            "latency_delta_s": -0.030999999959021807,
+            "losses": 0,
+            "n": 1,
+            "quality_delta": 0.0,
+            "ties": 1,
+            "tokens_delta": 0.0,
+            "utility_delta": 1.291666664959834e-05,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "utility_wins": 1,
+            "wins": 0
+          },
+          "tool_routing": {
+            "baseline_quality": 0.0,
+            "baseline_utility": -0.007161666666700815,
+            "candidate_quality": 1.0,
+            "candidate_utility": 0.9928383333332992,
+            "latency_delta_s": 0.0,
+            "losses": 0,
+            "n": 1,
+            "quality_delta": 1.0,
+            "ties": 0,
+            "tokens_delta": 0.0,
+            "utility_delta": 1.0,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "utility_wins": 1,
+            "wins": 1
+          }
+        },
+        "candidate_quality": 0.8333333333333334,
+        "candidate_utility": 0.822111527777775,
+        "comparison_baseline": "experimental_incumbent",
+        "critical_regression": false,
+        "critical_regressions": [],
+        "family_uncertainty": {
+          "interpretation": "Observed family means and range; no independent sampling, confidence interval, or significance claim. Overall deltas are task-weighted; family means weight categories equally.",
+          "method": "descriptive_family_dispersion",
+          "n_families": 6,
+          "quality_delta": {
+            "equal_family_mean": 0.3333333333333333,
+            "max": 1.0,
+            "median": 0.0,
+            "min": 0.0
+          },
+          "utility_delta": {
+            "equal_family_mean": 0.33951493055556464,
+            "max": 1.0370312500000485,
+            "median": 1.625000002003496e-05,
+            "min": 1.2916666649591402e-05
+          }
+        },
+        "latency_delta_s": -0.1483333333550642,
+        "losses": 0,
+        "n": 6,
+        "promote_eligible": false,
+        "quality_delta": 0.3333333333333333,
+        "reasons": [
+          "paired quality improved",
+          "experimental incumbent comparison only; independent promotion gate required"
+        ],
+        "ties": 4,
+        "tokens_delta": -15.666666666666666,
+        "utility_delta": 0.33951493055556464,
+        "utility_losses": 0,
+        "utility_ties": 0,
+        "utility_tolerance": 1e-12,
+        "utility_wins": 6,
+        "valid_n": 6,
+        "wins": 2
+      },
+      "candidate": "learned_greedy",
+      "diagnosis_ref": null,
+      "promote_eligible": false
+    },
+    {
+      "accepted": false,
+      "artifact_ref": "artifacts/9ff60326592a4e575ae3ac96c7f48df9103e3bece6f9a6cb2597a00c411054fc.json",
+      "assessment": {
+        "accepted": false,
+        "baseline_quality": 0.8333333333333334,
+        "baseline_utility": 0.822111527777775,
+        "by_family": {
+          "adaptation": {
+            "baseline_quality": 1.0,
+            "baseline_utility": 0.9975912500000171,
+            "candidate_quality": 0.0,
+            "candidate_utility": -0.002428750000011254,
+            "latency_delta_s": 0.04800000006798655,
+            "losses": 1,
+            "n": 1,
+            "quality_delta": -1.0,
+            "ties": 0,
+            "tokens_delta": 0.0,
+            "utility_delta": -1.0000200000000283,
+            "utility_losses": 1,
+            "utility_ties": 0,
+            "utility_wins": 0,
+            "wins": 0
+          },
+          "code_repair": {
+            "baseline_quality": 1.0,
+            "baseline_utility": 0.9865300000000086,
+            "candidate_quality": 1.0,
+            "candidate_utility": 0.9865558333333077,
+            "latency_delta_s": -0.06199999991804361,
+            "losses": 0,
+            "n": 1,
+            "quality_delta": 0.0,
+            "ties": 1,
+            "tokens_delta": 0.0,
+            "utility_delta": 2.583333329908566e-05,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "utility_wins": 1,
+            "wins": 0
+          },
+          "coordination": {
+            "baseline_quality": 1.0,
+            "baseline_utility": 0.9743293749999915,
+            "candidate_quality": 1.0,
+            "candidate_utility": 0.9695831250000144,
+            "latency_delta_s": 0.14099999994505197,
+            "losses": 0,
+            "n": 1,
+            "quality_delta": 0.0,
+            "ties": 1,
+            "tokens_delta": 12.0,
+            "utility_delta": -0.004746249999977081,
+            "utility_losses": 1,
+            "utility_ties": 0,
+            "utility_wins": 0,
+            "wins": 0
+          },
+          "hallucination": {
+            "baseline_quality": 0.0,
+            "baseline_utility": -0.015423124999991464,
+            "candidate_quality": 1.0,
+            "candidate_utility": 0.9948047916666837,
+            "latency_delta_s": -0.1720000000204891,
+            "losses": 0,
+            "n": 1,
+            "quality_delta": 1.0,
+            "ties": 0,
+            "tokens_delta": -26.0,
+            "utility_delta": 1.0102279166666752,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "utility_wins": 1,
+            "wins": 1
+          },
+          "math": {
+            "baseline_quality": 1.0,
+            "baseline_utility": 0.9968033333333247,
+            "candidate_quality": 0.0,
+            "candidate_utility": -0.003215833333330617,
+            "latency_delta_s": 0.045999999972991645,
+            "losses": 1,
+            "n": 1,
+            "quality_delta": -1.0,
+            "ties": 0,
+            "tokens_delta": 0.0,
+            "utility_delta": -1.0000191666666554,
+            "utility_losses": 1,
+            "utility_ties": 0,
+            "utility_wins": 0,
+            "wins": 0
+          },
+          "tool_routing": {
+            "baseline_quality": 1.0,
+            "baseline_utility": 0.9928383333332992,
+            "candidate_quality": 1.0,
+            "candidate_utility": 0.9928516666666837,
+            "latency_delta_s": -0.03200000012293458,
+            "losses": 0,
+            "n": 1,
+            "quality_delta": 0.0,
+            "ties": 1,
+            "tokens_delta": 0.0,
+            "utility_delta": 1.3333333384490942e-05,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "utility_wins": 1,
+            "wins": 0
+          }
+        },
+        "candidate_quality": 0.6666666666666666,
+        "candidate_utility": 0.6563584722222245,
+        "comparison_baseline": "experimental_incumbent",
+        "critical_regression": true,
+        "critical_regressions": [
+          "bench-v1-20261122-validation-adaptation-000-375afbda60",
+          "bench-v1-20261122-validation-math-000-d7b96cf3ef"
+        ],
+        "family_uncertainty": {
+          "interpretation": "Observed family means and range; no independent sampling, confidence interval, or significance claim. Overall deltas are task-weighted; family means weight categories equally.",
+          "method": "descriptive_family_dispersion",
+          "n_families": 6,
+          "quality_delta": {
+            "equal_family_mean": -0.16666666666666666,
+            "max": 1.0,
+            "median": 0.0,
+            "min": -1.0
+          },
+          "utility_delta": {
+            "equal_family_mean": -0.16575305555555037,
+            "max": 1.0102279166666752,
+            "median": -0.002366458333296295,
+            "min": -1.0000200000000283
+          }
+        },
+        "latency_delta_s": -0.005166666679239519,
+        "losses": 2,
+        "n": 6,
+        "promote_eligible": false,
+        "quality_delta": -0.16666666666666666,
+        "reasons": [
+          "critical pass regression blocks experimental adoption",
+          "paired quality regressed",
+          "experimental incumbent comparison only; independent promotion gate required"
+        ],
+        "ties": 3,
+        "tokens_delta": -2.333333333333333,
+        "utility_delta": -0.16575305555555037,
+        "utility_losses": 3,
+        "utility_ties": 0,
+        "utility_tolerance": 1e-12,
+        "utility_wins": 3,
+        "valid_n": 6,
+        "wins": 1
+      },
+      "baseline_comparison": {
+        "accepted": false,
+        "baseline_quality": 0.5,
+        "baseline_utility": 0.48259659722221027,
+        "by_family": {
+          "adaptation": {
+            "baseline_quality": 1.0,
+            "baseline_utility": 0.9975716666666752,
+            "candidate_quality": 0.0,
+            "candidate_utility": -0.002428750000011254,
+            "latency_delta_s": 0.0010000000474974513,
+            "losses": 1,
+            "n": 1,
+            "quality_delta": -1.0,
+            "ties": 0,
+            "tokens_delta": 0.0,
+            "utility_delta": -1.0000004166666865,
+            "utility_losses": 1,
+            "utility_ties": 0,
+            "utility_wins": 0,
+            "wins": 0
+          },
+          "code_repair": {
+            "baseline_quality": 0.0,
+            "baseline_utility": -0.05050125000003997,
+            "candidate_quality": 1.0,
+            "candidate_utility": 0.9865558333333077,
+            "latency_delta_s": -0.8120000000344589,
+            "losses": 0,
+            "n": 1,
+            "quality_delta": 1.0,
+            "ties": 0,
+            "tokens_delta": -94.0,
+            "utility_delta": 1.0370570833333477,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "utility_wins": 1,
+            "wins": 1
+          },
+          "coordination": {
+            "baseline_quality": 1.0,
+            "baseline_utility": 0.9743164583332934,
+            "candidate_quality": 1.0,
+            "candidate_utility": 0.9695831250000144,
+            "latency_delta_s": 0.10999999986961484,
+            "losses": 0,
+            "n": 1,
+            "quality_delta": 0.0,
+            "ties": 1,
+            "tokens_delta": 12.0,
+            "utility_delta": -0.004733333333278966,
+            "utility_losses": 1,
+            "utility_ties": 0,
+            "utility_wins": 0,
+            "wins": 0
+          },
+          "hallucination": {
+            "baseline_quality": 0.0,
+            "baseline_utility": -0.015436041666641056,
+            "candidate_quality": 1.0,
+            "candidate_utility": 0.9948047916666837,
+            "latency_delta_s": -0.2029999999795109,
+            "losses": 0,
+            "n": 1,
+            "quality_delta": 1.0,
+            "ties": 0,
+            "tokens_delta": -26.0,
+            "utility_delta": 1.0102408333333248,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "utility_wins": 1,
+            "wins": 1
+          },
+          "math": {
+            "baseline_quality": 1.0,
+            "baseline_utility": 0.9967904166666751,
+            "candidate_quality": 0.0,
+            "candidate_utility": -0.003215833333330617,
+            "latency_delta_s": 0.015000000013969839,
+            "losses": 1,
+            "n": 1,
+            "quality_delta": -1.0,
+            "ties": 0,
+            "tokens_delta": 0.0,
+            "utility_delta": -1.0000062500000058,
+            "utility_losses": 1,
+            "utility_ties": 0,
+            "utility_wins": 0,
+            "wins": 0
+          },
+          "tool_routing": {
+            "baseline_quality": 0.0,
+            "baseline_utility": -0.007161666666700815,
+            "candidate_quality": 1.0,
+            "candidate_utility": 0.9928516666666837,
+            "latency_delta_s": -0.03200000012293458,
+            "losses": 0,
+            "n": 1,
+            "quality_delta": 1.0,
+            "ties": 0,
+            "tokens_delta": 0.0,
+            "utility_delta": 1.0000133333333845,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "utility_wins": 1,
+            "wins": 1
+          }
+        },
+        "candidate_quality": 0.6666666666666666,
+        "candidate_utility": 0.6563584722222245,
+        "comparison_baseline": "experimental_incumbent",
+        "critical_regression": true,
+        "critical_regressions": [
+          "bench-v1-20261122-validation-adaptation-000-375afbda60",
+          "bench-v1-20261122-validation-math-000-d7b96cf3ef"
+        ],
+        "family_uncertainty": {
+          "interpretation": "Observed family means and range; no independent sampling, confidence interval, or significance claim. Overall deltas are task-weighted; family means weight categories equally.",
+          "method": "descriptive_family_dispersion",
+          "n_families": 6,
+          "quality_delta": {
+            "equal_family_mean": 0.16666666666666666,
+            "max": 1.0,
+            "median": 0.5,
+            "min": -1.0
+          },
+          "utility_delta": {
+            "equal_family_mean": 0.1737618750000143,
+            "max": 1.0370570833333477,
+            "median": 0.49764000000005276,
+            "min": -1.0000062500000058
+          }
+        },
+        "latency_delta_s": -0.15350000003430372,
+        "losses": 2,
+        "n": 6,
+        "promote_eligible": false,
+        "quality_delta": 0.16666666666666666,
+        "reasons": [
+          "critical pass regression blocks experimental adoption",
+          "paired quality improved",
+          "experimental incumbent comparison only; independent promotion gate required"
+        ],
+        "ties": 1,
+        "tokens_delta": -18.0,
+        "utility_delta": 0.1737618750000143,
+        "utility_losses": 3,
+        "utility_ties": 0,
+        "utility_tolerance": 1e-12,
+        "utility_wins": 3,
+        "valid_n": 6,
+        "wins": 3
+      },
+      "candidate": "fixed_local_tool",
+      "diagnosis_ref": "artifacts/ff30335a5871f13b29b1293780052ddf1f6ef1098213b775db0f03355fb13adf.json",
+      "promote_eligible": false
+    },
+    {
+      "accepted": true,
+      "artifact_ref": "artifacts/d9de421cfc77585f95f313f533fe5cdac7b7d08d75f6a2e1d862d899eb44f638.json",
+      "assessment": {
+        "accepted": true,
+        "baseline_quality": 0.8333333333333334,
+        "baseline_utility": 0.822111527777775,
+        "by_family": {
+          "adaptation": {
+            "baseline_quality": 1.0,
+            "baseline_utility": 0.9975912500000171,
+            "candidate_quality": 1.0,
+            "candidate_utility": 1.0,
+            "latency_delta_s": -0.1559999999590218,
+            "losses": 0,
+            "n": 1,
+            "quality_delta": 0.0,
+            "ties": 1,
+            "tokens_delta": -6.0,
+            "utility_delta": 0.002408749999982862,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "utility_wins": 1,
+            "wins": 0
+          },
+          "code_repair": {
+            "baseline_quality": 1.0,
+            "baseline_utility": 0.9865300000000086,
+            "candidate_quality": 1.0,
+            "candidate_utility": 1.0,
+            "latency_delta_s": -0.4529999999795109,
+            "losses": 0,
+            "n": 1,
+            "quality_delta": 0.0,
+            "ties": 1,
+            "tokens_delta": -34.0,
+            "utility_delta": 0.013469999999991433,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "utility_wins": 1,
+            "wins": 0
+          },
+          "coordination": {
+            "baseline_quality": 1.0,
+            "baseline_utility": 0.9743293749999915,
+            "candidate_quality": 1.0,
+            "candidate_utility": 1.0,
+            "latency_delta_s": -0.6720000000204891,
+            "losses": 0,
+            "n": 1,
+            "quality_delta": 0.0,
+            "ties": 1,
+            "tokens_delta": -65.0,
+            "utility_delta": 0.025670625000008496,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "utility_wins": 1,
+            "wins": 0
+          },
+          "hallucination": {
+            "baseline_quality": 0.0,
+            "baseline_utility": -0.015423124999991464,
+            "candidate_quality": 1.0,
+            "candidate_utility": 1.0,
+            "latency_delta_s": -0.4529999999795109,
+            "losses": 0,
+            "n": 1,
+            "quality_delta": 1.0,
+            "ties": 0,
+            "tokens_delta": -39.0,
+            "utility_delta": 1.0154231249999914,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "utility_wins": 1,
+            "wins": 1
+          },
+          "math": {
+            "baseline_quality": 1.0,
+            "baseline_utility": 0.9968033333333247,
+            "candidate_quality": 1.0,
+            "candidate_utility": 1.0,
+            "latency_delta_s": -0.1720000000204891,
+            "losses": 0,
+            "n": 1,
+            "quality_delta": 0.0,
+            "ties": 1,
+            "tokens_delta": -8.0,
+            "utility_delta": 0.003196666666675285,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "utility_wins": 1,
+            "wins": 0
+          },
+          "tool_routing": {
+            "baseline_quality": 1.0,
+            "baseline_utility": 0.9928383333332992,
+            "candidate_quality": 1.0,
+            "candidate_utility": 1.0,
+            "latency_delta_s": -0.3130000000819564,
+            "losses": 0,
+            "n": 1,
+            "quality_delta": 0.0,
+            "ties": 1,
+            "tokens_delta": -18.0,
+            "utility_delta": 0.007161666666700817,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "utility_wins": 1,
+            "wins": 0
+          }
+        },
+        "candidate_quality": 1.0,
+        "candidate_utility": 1.0,
+        "comparison_baseline": "experimental_incumbent",
+        "critical_regression": false,
+        "critical_regressions": [],
+        "family_uncertainty": {
+          "interpretation": "Observed family means and range; no independent sampling, confidence interval, or significance claim. Overall deltas are task-weighted; family means weight categories equally.",
+          "method": "descriptive_family_dispersion",
+          "n_families": 6,
+          "quality_delta": {
+            "equal_family_mean": 0.16666666666666666,
+            "max": 1.0,
+            "median": 0.0,
+            "min": 0.0
+          },
+          "utility_delta": {
+            "equal_family_mean": 0.17788847222222506,
+            "max": 1.0154231249999914,
+            "median": 0.010315833333346125,
+            "min": 0.002408749999982862
+          }
+        },
+        "latency_delta_s": -0.36983333334016305,
+        "losses": 0,
+        "n": 6,
+        "promote_eligible": false,
+        "quality_delta": 0.16666666666666666,
+        "reasons": [
+          "paired quality improved",
+          "experimental incumbent comparison only; independent promotion gate required"
+        ],
+        "ties": 5,
+        "tokens_delta": -28.333333333333336,
+        "utility_delta": 0.17788847222222506,
+        "utility_losses": 0,
+        "utility_ties": 0,
+        "utility_tolerance": 1e-12,
+        "utility_wins": 6,
+        "valid_n": 6,
+        "wins": 1
+      },
+      "baseline_comparison": {
+        "accepted": true,
+        "baseline_quality": 0.5,
+        "baseline_utility": 0.48259659722221027,
+        "by_family": {
+          "adaptation": {
+            "baseline_quality": 1.0,
+            "baseline_utility": 0.9975716666666752,
+            "candidate_quality": 1.0,
+            "candidate_utility": 1.0,
+            "latency_delta_s": -0.2029999999795109,
+            "losses": 0,
+            "n": 1,
+            "quality_delta": 0.0,
+            "ties": 1,
+            "tokens_delta": -6.0,
+            "utility_delta": 0.002428333333324817,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "utility_wins": 1,
+            "wins": 0
+          },
+          "code_repair": {
+            "baseline_quality": 0.0,
+            "baseline_utility": -0.05050125000003997,
+            "candidate_quality": 1.0,
+            "candidate_utility": 1.0,
+            "latency_delta_s": -1.2030000000959262,
+            "losses": 0,
+            "n": 1,
+            "quality_delta": 1.0,
+            "ties": 0,
+            "tokens_delta": -128.0,
+            "utility_delta": 1.05050125000004,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "utility_wins": 1,
+            "wins": 1
+          },
+          "coordination": {
+            "baseline_quality": 1.0,
+            "baseline_utility": 0.9743164583332934,
+            "candidate_quality": 1.0,
+            "candidate_utility": 1.0,
+            "latency_delta_s": -0.7030000000959262,
+            "losses": 0,
+            "n": 1,
+            "quality_delta": 0.0,
+            "ties": 1,
+            "tokens_delta": -65.0,
+            "utility_delta": 0.02568354166670661,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "utility_wins": 1,
+            "wins": 0
+          },
+          "hallucination": {
+            "baseline_quality": 0.0,
+            "baseline_utility": -0.015436041666641056,
+            "candidate_quality": 1.0,
+            "candidate_utility": 1.0,
+            "latency_delta_s": -0.4839999999385327,
+            "losses": 0,
+            "n": 1,
+            "quality_delta": 1.0,
+            "ties": 0,
+            "tokens_delta": -39.0,
+            "utility_delta": 1.015436041666641,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "utility_wins": 1,
+            "wins": 1
+          },
+          "math": {
+            "baseline_quality": 1.0,
+            "baseline_utility": 0.9967904166666751,
+            "candidate_quality": 1.0,
+            "candidate_utility": 1.0,
+            "latency_delta_s": -0.2029999999795109,
+            "losses": 0,
+            "n": 1,
+            "quality_delta": 0.0,
+            "ties": 1,
+            "tokens_delta": -8.0,
+            "utility_delta": 0.0032095833333248835,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "utility_wins": 1,
+            "wins": 0
+          },
+          "tool_routing": {
+            "baseline_quality": 0.0,
+            "baseline_utility": -0.007161666666700815,
+            "candidate_quality": 1.0,
+            "candidate_utility": 1.0,
+            "latency_delta_s": -0.3130000000819564,
+            "losses": 0,
+            "n": 1,
+            "quality_delta": 1.0,
+            "ties": 0,
+            "tokens_delta": -18.0,
+            "utility_delta": 1.0071616666667007,
+            "utility_losses": 0,
+            "utility_ties": 0,
+            "utility_wins": 1,
+            "wins": 1
+          }
+        },
+        "candidate_quality": 1.0,
+        "candidate_utility": 1.0,
+        "comparison_baseline": "experimental_incumbent",
+        "critical_regression": false,
+        "critical_regressions": [],
+        "family_uncertainty": {
+          "interpretation": "Observed family means and range; no independent sampling, confidence interval, or significance claim. Overall deltas are task-weighted; family means weight categories equally.",
+          "method": "descriptive_family_dispersion",
+          "n_families": 6,
+          "quality_delta": {
+            "equal_family_mean": 0.5,
+            "max": 1.0,
+            "median": 0.5,
+            "min": 0.0
+          },
+          "utility_delta": {
+            "equal_family_mean": 0.5174034027777896,
+            "max": 1.05050125000004,
+            "median": 0.5164226041667037,
+            "min": 0.002428333333324817
+          }
+        },
+        "latency_delta_s": -0.5181666666952273,
+        "losses": 0,
+        "n": 6,
+        "promote_eligible": false,
+        "quality_delta": 0.5,
+        "reasons": [
+          "paired quality improved",
+          "experimental incumbent comparison only; independent promotion gate required"
+        ],
+        "ties": 3,
+        "tokens_delta": -44.0,
+        "utility_delta": 0.5174034027777896,
+        "utility_losses": 0,
+        "utility_ties": 0,
+        "utility_tolerance": 1e-12,
+        "utility_wins": 6,
+        "valid_n": 6,
+        "wins": 3
+      },
+      "candidate": "fixed_tool",
+      "diagnosis_ref": null,
+      "promote_eligible": false
+    }
+  ],
+  "config_hash": "cca5daf08b55afdc33060edfff145db667d06591a33699f2d948030edd72f15c",
+  "current_checkpoint": null,
+  "development": {
+    "feedback_rows": 12,
+    "policy_artifact": "artifacts/42bebf2415de705c63ca3f852701dc425885e98a4501cec69ecac4d2f421a7ac.json",
+    "routes": {
+      "adaptation": "local_direct",
+      "code_repair": "local_tool",
+      "coordination": "local_direct",
+      "hallucination": "local_direct",
+      "math": "local_direct",
+      "tool_routing": "local_tool"
+    }
+  },
+  "experimental_incumbent": {
+    "artifact_ref": "artifacts/d9de421cfc77585f95f313f533fe5cdac7b7d08d75f6a2e1d862d899eb44f638.json",
+    "candidate": "fixed_tool"
+  },
+  "label": "Repeated validation is development selection evidence, not heldout proof.",
+  "manifest_ref": "artifacts/6e14d5b5c6f6e678c1904de9ee8f94992caf088840be799e77609e82109e379b.json",
+  "next_action": "Review the aggregate report; a new run requires a fresh seed and budget.",
+  "plan": {
+    "baseline": "fixed local_direct",
+    "development": {
+      "count_per_category": 1,
+      "routes": [
+        "local_direct",
+        "local_tool"
+      ],
+      "split": "development"
+    },
+    "hypothesis": "Verified development feedback can choose a local route that improves paired validation quality without critical regressions; utility is descriptive.",
+    "max_local_requests": 30,
+    "rounds": 3,
+    "seed": 20261122,
+    "selection_label": "Repeated validation is development selection evidence, not heldout proof.",
+    "validation": {
+      "candidates": [
+        "learned_greedy",
+        "fixed_local_tool",
+        "fixed_tool"
+      ],
+      "count_per_category": 1,
+      "split": "validation"
+    },
+    "version": 1
+  },
+  "remaining_budget": {
+    "cycles": 14,
+    "requests": 0,
+    "tokens_reserved": 0,
+    "wall_s": 576.8750000001164
+  },
+  "run_id": "6e14d5b5c6f6",
+  "stages": [
+    {
+      "source": {
+        "commit": "unversioned",
+        "source_sha256": "2f1ad5f919ec8918a6d699ee0c4328438e5b203294e4048717c0134c9e9bc37f",
+        "version": "0.2.1"
+      },
+      "stage": "build",
+      "status": "completed"
+    },
+    {
+      "plan_hash": "6e14d5b5c6f6e678c1904de9ee8f94992caf088840be799e77609e82109e379b",
+      "stage": "preregister",
+      "status": "completed"
+    },
+    {
+      "detail": "Using the durable Executor and finite built-in task families.",
+      "stage": "build",
+      "status": "verified"
+    },
+    {
+      "detail": "Using the durable Executor and finite built-in task families.",
+      "stage": "build",
+      "status": "verified"
+    },
+    {
+      "candidate": "learned_greedy",
+      "n": 6,
+      "stage": "test",
+      "status": "completed"
+    },
+    {
+      "candidate": "learned_greedy",
+      "stage": "verify",
+      "status": "completed",
+      "valid_n": 6
+    },
+    {
+      "artifact_ref": "artifacts/aee5a3ed25a0a96d6203f0ad6177b3ea944cc325dd9fad38e59e02ead07daed5.json",
+      "candidate": "learned_greedy",
+      "stage": "improve",
+      "status": "experimental_incumbent_updated"
+    },
+    {
+      "candidate": "fixed_local_tool",
+      "n": 6,
+      "stage": "test",
+      "status": "completed"
+    },
+    {
+      "candidate": "fixed_local_tool",
+      "stage": "verify",
+      "status": "completed",
+      "valid_n": 6
+    },
+    {
+      "artifact_ref": "artifacts/ff30335a5871f13b29b1293780052ddf1f6ef1098213b775db0f03355fb13adf.json",
+      "candidate": "fixed_local_tool",
+      "reason": "ValueError: candidate assessment rejected: [\"critical pass regression blocks experimental adoption\", \"paired quality regressed\", \"experimental incumbent comparison only; independent promotion gate required\"]",
+      "stage": "diagnose",
+      "status": "quarantined"
+    },
+    {
+      "candidate": "fixed_local_tool",
+      "restored": {
+        "artifact_ref": "artifacts/aee5a3ed25a0a96d6203f0ad6177b3ea944cc325dd9fad38e59e02ead07daed5.json",
+        "candidate": "learned_greedy"
+      },
+      "stage": "improve",
+      "status": "rolled_back"
+    },
+    {
+      "candidate": "fixed_tool",
+      "n": 6,
+      "stage": "test",
+      "status": "completed"
+    },
+    {
+      "candidate": "fixed_tool",
+      "stage": "verify",
+      "status": "completed",
+      "valid_n": 6
+    },
+    {
+      "artifact_ref": "artifacts/d9de421cfc77585f95f313f533fe5cdac7b7d08d75f6a2e1d862d899eb44f638.json",
+      "candidate": "fixed_tool",
+      "stage": "improve",
+      "status": "experimental_incumbent_updated"
+    }
+  ],
+  "stop_reason": "completed finite preregistered schedule"
+}

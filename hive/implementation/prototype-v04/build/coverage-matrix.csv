@@ -1,0 +1,22 @@
+gate,passed,status,scope,receipt
+R1,True,INTEGRATION_TESTED,Actual source/model/config/verifier health and permission/budget distinction; no inference authorization.,experiments/results/readiness-20261121/doctor-final.json
+R2,True,INTEGRATION_TESTED,One Store and budget for actual Docker code plus video; separate and combined CLI replay; editorial pending.,experiments/results/readiness-20261121/operator-demo.json;experiments/results/readiness-20261121/operator-commands.json
+R3,True,INTEGRATION_TESTED,Historical real feedback changed a distinct later executed development route; failed candidate rejected. Independent reconstruction/reload plus synthetic executed restore; no gain claim.,experiments/results/readiness-20261121/terra-r3-historical-reconstruction.json;experiments/results/readiness-20261121/final-tests.xml
+R4,True,INTEGRATION_TESTED,"Both-family fault matrix, immutable replay, bounded Docker worker controls and safe stops; code learning disabled.",experiments/results/readiness-20261121/terra-r4-matrix.md;experiments/results/readiness-20261121/final-tests.xml;experiments/results/readiness-20261121/terra-docker-controls.json;experiments/results/readiness-20261121/terra-docker-timeout.json
+R5,True,INTEGRATION_TESTED,"All eleven finite synthetic scenarios, independent positive/negative checks, named mechanisms and public CLI replay; research untested.",experiments/results/readiness-20261121/pressure-summary.json;experiments/results/readiness-20261121/cli-commands.json;experiments/results/readiness-20261121/final-tests.xml
+R6,True,INTEGRATION_TESTED,"Five actual development control configurations over tool/local routes, matched caps/grouping and fixed team arbitration; tested using fake specialist, not model performance.",experiments/results/readiness-20261121/final-tests.xml;experiments/results/readiness-20261121/terra-final-verdict.md
+R7,True,INTEGRATION_TESTED,Registry/exposure controls plus protected code-worker files; no sealed decisive study or external evaluator host claimed.,experiments/results/readiness-20261121/final-tests.xml;experiments/results/readiness-20261121/terra-final-verdict.md
+R8,True,INTEGRATION_TESTED,Clean exported source and offline evidence replay with no private SQLite stores or unintended calls.,experiments/results/readiness-20261121/clean-package-candidate.json
+H01,True,INTEGRATION_TESTED,"25 positive, 25 negative controls; fixture only",experiments/results/readiness-20261121/H01.json
+H02,True,INTEGRATION_TESTED,"10 positive, 10 negative controls; fixture only",experiments/results/readiness-20261121/H02.json
+H03,True,INTEGRATION_TESTED,"10 positive, 10 negative controls; fixture only",experiments/results/readiness-20261121/H03.json
+H04,True,INTEGRATION_TESTED,"5 positive, 5 negative controls; fixture only",experiments/results/readiness-20261121/H04.json
+H05,True,INTEGRATION_TESTED,"5 positive, 5 negative controls; fixture only",experiments/results/readiness-20261121/H05.json
+H06,True,INTEGRATION_TESTED,"5 positive, 5 negative controls; fixture only",experiments/results/readiness-20261121/H06.json
+H07,True,INTEGRATION_TESTED,"5 positive, 5 negative controls; fixture only",experiments/results/readiness-20261121/H07.json
+H08,True,INTEGRATION_TESTED,"20 positive, 20 negative controls; fixture only",experiments/results/readiness-20261121/H08.json
+H09,True,INTEGRATION_TESTED,"10 positive, 10 negative controls; fixture only",experiments/results/readiness-20261121/H09.json
+H10,True,INTEGRATION_TESTED,"5 positive, 5 negative controls; fixture only",experiments/results/readiness-20261121/H10.json
+H11,True,INTEGRATION_TESTED,"25 positive, 25 negative controls; fixture only",experiments/results/readiness-20261121/H11.json
+A,False,NOT_ACCEPTED,0/12 attempted;0 accepted;fresh approved sources missing,experiments/plans/readiness-level-a.json
+B,False,UNTESTED,No separately approved sealed research study,experiments/plans/readiness-level-b.json

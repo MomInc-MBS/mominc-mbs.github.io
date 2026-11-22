@@ -1,0 +1,106 @@
+{
+  "date": "2026-11-21",
+  "measured_runtime": {
+    "commit": "b66efb0ba074bf8c6f6a8c0f0bc4761aa3e65739",
+    "source_sha256": "e711d1c3e7eb4dbd23b95f3027f5d97627b1f6880a2c252e2cefea8c522e817b"
+  },
+  "status": "NOT_READY",
+  "gates": {
+    "R1": {
+      "passed": true,
+      "status": "INTEGRATION_TESTED",
+      "evidence": [
+        "experiments/results/readiness-20261121/doctor-final.json",
+        "experiments/results/readiness-20261121/final-tests.xml"
+      ],
+      "scope": "Accurate source, endpoint, verifier, permissions and budget health."
+    },
+    "R2": {
+      "passed": true,
+      "status": "INTEGRATION_TESTED",
+      "evidence": [
+        "experiments/results/readiness-20261121/operator-demo.json",
+        "experiments/results/readiness-20261121/final-tests.xml"
+      ],
+      "scope": "Shared Store real Docker code and video demo; editorial pending."
+    },
+    "R3": {
+      "passed": true,
+      "status": "INTEGRATION_TESTED",
+      "evidence": [
+        "experiments/results/readiness-20261121/terra-r3-historical-reconstruction.json",
+        "experiments/results/readiness-20261121/historical-replay-final.json",
+        "experiments/results/readiness-20261121/final-tests.xml"
+      ],
+      "scope": "Historical executed candidate route, independent feedback reconstruction and synthetic restore."
+    },
+    "R4": {
+      "passed": true,
+      "status": "INTEGRATION_TESTED",
+      "evidence": [
+        "experiments/results/readiness-20261121/terra-r4-matrix.md",
+        "experiments/results/readiness-20261121/terra-docker-controls.json",
+        "experiments/results/readiness-20261121/terra-docker-timeout.json",
+        "experiments/results/readiness-20261121/final-tests.xml"
+      ],
+      "scope": "Both-family applicable fault tests; code learning disabled."
+    },
+    "R5": {
+      "passed": true,
+      "status": "INTEGRATION_TESTED",
+      "evidence": [
+        "experiments/results/readiness-20261121/pressure-summary.json",
+        "experiments/results/readiness-20261121/cli-commands.json",
+        "experiments/results/readiness-20261121/final-tests.xml"
+      ],
+      "scope": "H01-H11 executable synthetic smoke with independent checks; no research result."
+    },
+    "R6": {
+      "passed": true,
+      "status": "INTEGRATION_TESTED",
+      "evidence": [
+        "experiments/results/readiness-20261121/cli-commands.json",
+        "experiments/results/readiness-20261121/final-tests.xml"
+      ],
+      "scope": "Five paired development arms and team arbitration tested with fake specialist; no model performance claim."
+    },
+    "R7": {
+      "passed": true,
+      "status": "INTEGRATION_TESTED",
+      "evidence": [
+        "experiments/results/readiness-20261121/terra-r4-matrix.md",
+        "experiments/results/readiness-20261121/final-tests.xml"
+      ],
+      "scope": "Registry/exposure boundaries and curated worker extraction; no decisive sealed study."
+    },
+    "R8": {
+      "passed": false,
+      "status": "PENDING",
+      "evidence": [
+        "experiments/results/readiness-20261121/clean-package-candidate.json"
+      ],
+      "scope": "Clean package replay and fresh fixtures with no private store or unintended calls."
+    }
+  },
+  "limitations": [
+    "R8 clean package verification pending.",
+    "Fixture controls are engineering evidence, not Level A or beneficial learning.",
+    "Two Windows symlink tests skipped; junction tests passed."
+  ],
+  "tests": {
+    "passed": 342,
+    "skipped": 2,
+    "failures": 0,
+    "errors": 0,
+    "receipt": "experiments/results/readiness-20261121/final-tests.xml",
+    "cli_commands": 38,
+    "cli_nonzero": 0,
+    "e2e": {
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0,
+      "receipt": "experiments/results/readiness-20261121/e2e/report.json",
+      "initial_attempt": "experiments/results/readiness-20261121/e2e-attempt-buffer-limit"
+    }
+  }
+}

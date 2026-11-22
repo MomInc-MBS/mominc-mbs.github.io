@@ -20,7 +20,8 @@ views={'STATUS':'Implementation Status','RUNS':'Experiment Registry','CAPABILITI
        'V03':'HIVE v0.3 foundation — 21 November 2026',
        'INTEGRATION':'HIVE v0.3.0.dev3 integration report',
        'READINESS':'HIVE v0.3.0.dev4 readiness report',
-       'WORKING':'Video mission engineering alpha'}
+       'WORKING':'Video mission engineering alpha',
+       'OPERATIONAL':'HIVE operational workflow \u2014 0.4.0.dev1'}
 
 with sync_playwright() as p:
     browser=p.chromium.launch(headless=True)
@@ -29,13 +30,29 @@ with sync_playwright() as p:
     page.on('pageerror',lambda e:errors.append(str(e)))
     page.on('requestfailed',lambda r:failed.append(r.url+' '+str(r.failure)))
     assert page.goto(base+'/hive/').status==200
-    expect(page.locator('.implementation-update')).to_contain_text('v0.3.0.dev4 ENGINEERING')
-    expect(page.locator('.implementation-update')).to_contain_text('zero new model calls')
-    expect(page.locator('.implementation-update')).to_contain_text('RESEARCH UNTESTED')
-    expect(page.locator('.implementation-update')).to_contain_text('historical inventory candidate failed')
-    page.locator('.implementation-update').scroll_into_view_if_needed()
+    latest = page.locator('.implementation-update').filter(has_text='LATEST VERIFIED ENGINEERING / 0.4.0.dev1')
+    expect(latest).to_contain_text('READY_FOR_LIVE_DEMO')
+    page.locator('.topnav').get_by_role('link', name='Implementation', exact=True).click()
+    expect(page.locator('.prose h1')).to_have_text(views['OPERATIONAL'])
+    publication_v04=json.loads(Path('hive/implementation/prototype-v04-publication.json').read_text())
+    downloaded_v04=ctx.request.get(base+'/hive/'+publication_v04['download'])
+    assert downloaded_v04.status==200
+    assert hashlib.sha256(downloaded_v04.body()).hexdigest()==publication_v04['download_sha256']
+    expect(page.locator('.prose')).to_contain_text('zero new HIVE model calls')
+    assert page.locator('.prose img').evaluate('(el)=>el.complete && el.naturalWidth>0')
+    page.screenshot(path=str(out/'operational-desktop.png'))
+    page.goto(base+'/hive/search/?q=0.4.0.dev1')
+    expect(page.locator('#results a[href="/hive/notes/OPERATIONAL/"]')).to_have_count(1)
+    page.goto(base+'/hive/graph/?focus=OPERATIONAL')
+    expect(page.locator('#graph-selection h2')).to_have_text('Operational Workflow \u2014 0.4.0.dev1')
+    page.goto(base+'/hive/')
+    expect(page.locator('.implementation-update').filter(has_text='0.3.0.dev4 ENGINEERING')).to_contain_text('0.3.0.dev4 ENGINEERING')
+    expect(page.locator('.implementation-update').filter(has_text='0.3.0.dev4 ENGINEERING')).to_contain_text('zero new model calls')
+    expect(page.locator('.implementation-update').filter(has_text='0.3.0.dev4 ENGINEERING')).to_contain_text('RESEARCH UNTESTED')
+    expect(page.locator('.implementation-update').filter(has_text='0.3.0.dev4 ENGINEERING')).to_contain_text('historical inventory candidate failed')
+    page.locator('.implementation-update').filter(has_text='0.3.0.dev4 ENGINEERING').scroll_into_view_if_needed()
     page.screenshot(path=str(out/'home-desktop.png'))
-    page.locator('.implementation-update').get_by_role('link',name='Read the readiness report',exact=True).click()
+    page.locator('.implementation-update').filter(has_text='0.3.0.dev4 ENGINEERING').get_by_role('link',name='Read the readiness report',exact=True).click()
     expect(page.locator('.prose h1')).to_have_text(views['READINESS'])
     readiness_publication=json.loads(Path('hive/implementation/readiness-dev4-publication.json').read_text())
     expect(page.locator('.prose')).to_contain_text(readiness_publication['status'])
@@ -48,12 +65,12 @@ with sync_playwright() as p:
     page.goto(base+'/hive/graph/?focus=READINESS')
     expect(page.locator('#graph-selection h2')).to_have_text(views['READINESS'])
     page.goto(base+'/hive/')
-    page.locator('.implementation-update').get_by_role('link',name='Implementation status',exact=True).click()
+    page.locator('.implementation-update').filter(has_text='0.3.0.dev4 ENGINEERING').get_by_role('link',name='Implementation status',exact=True).click()
     expect(page.locator('.prose h1')).to_have_text('Implementation Status')
     for key,title in views.items():
         assert page.goto(base+'/hive/notes/'+key+'/').status==200
         expect(page.locator('.prose h1')).to_have_text(title)
-        expect(page.locator('.prose')).to_contain_text('Level A is not accepted' if key=='WORKING' else 'Last verified:')
+        expect(page.locator('.prose')).to_contain_text('READY_FOR_LIVE_DEMO' if key=='OPERATIONAL' else ('Level A is not accepted' if key=='WORKING' else 'Last verified:'))
         assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'),key
     page.goto(base+'/hive/notes/INTEGRATION/')
     expect(page.locator('.prose')).to_contain_text('Independent Terra acceptance is recorded')
@@ -179,6 +196,11 @@ with sync_playwright() as p:
         if width==390:
             page.goto(base+'/hive/')
             page.get_by_role('button',name='Open navigation',exact=True).click()
+            page.locator('#mobile-nav').get_by_role('link',name='Latest engineering \u00b7 0.4.0.dev1',exact=True).click()
+            expect(page.locator('.prose h1')).to_have_text(views['OPERATIONAL'])
+            page.screenshot(path=str(out/'operational-mobile.png'))
+            page.goto(base+'/hive/')
+            page.get_by_role('button',name='Open navigation',exact=True).click()
             page.locator('#mobile-nav').get_by_role('link',name='Implementation status',exact=True).click()
             expect(page.locator('.prose h1')).to_have_text('Implementation Status')
             page.screenshot(path=str(out/'status-mobile.png'))
@@ -210,6 +232,7 @@ report=dict(ok=True,base=base,views=list(views),widths=[1440,1024,900,390,320],p
             v03_download_digest=True,v03_chart_loaded=True,working_download_digest=True,working_search_graph=True,
             integration_download_digest=True,measured_source_download_digest=True,integration_search_graph=True,
             readiness_download_digest=True,readiness_search_graph=True,
+            operational_download_digest=True,operational_search_graph=True,latest_desktop_mobile_navigation=True,
             page_errors=errors,failed_requests=failed)
 (out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report,indent=2))

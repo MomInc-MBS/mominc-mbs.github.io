@@ -1,0 +1,24 @@
+{
+  "focused_pytest": "19 passed in 7.48s",
+  "versions": {
+    "1": {
+      "normal_replay": true,
+      "verifying_detail": null,
+      "legacy_replay_contract_unchanged": true
+    },
+    "2": {
+      "normal_replay": true,
+      "verifying_detail": null,
+      "legacy_replay_contract_unchanged": true
+    },
+    "3": {
+      "normal_replay": true,
+      "verifying_detail": {
+        "decision_ref": "artifacts/dee2cf155cd08055b8dc059d1d6b2cb1d39cd924a0cadca2c52347321761cff0.json",
+        "policy_version": 3
+      },
+      "downgrade_rejected": true
+    }
+  },
+  "historical_comparisons": 144
+}

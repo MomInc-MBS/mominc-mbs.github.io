@@ -1,0 +1,60 @@
+{
+  "verified": true,
+  "fresh_process": true,
+  "new_model_calls": 0,
+  "report_ref": "artifacts/8432a05b45bd08ea5b3acaf007b7f80b7eb7043975ab42038ad51b3aba2ccb1e.json",
+  "run_id": "d8a941b2f587",
+  "build": {
+    "commit": "3d5522ae60735f3c7ffb2b754022c2ae3a328436",
+    "source_sha256": "280dbffd41e0e892532f210aa688fea99c99971dbaaa7ddb3db0de52ac9e6225",
+    "version": "0.2.0"
+  },
+  "model": {
+    "model": "myr5-hold-local:latest",
+    "model_digest": "a45646773d1ee8a6c1557c7de09a68e78a74f2990c4174a1408f65e777db150c"
+  },
+  "evidence_jobs": 36,
+  "budget": {
+    "cycles": 36,
+    "requests": 30,
+    "tokens_actual": 1013,
+    "tokens_reserved": 3840,
+    "wall_s": 23.450999999884516
+  },
+  "outcomes": {
+    "baseline": {
+      "n": 6,
+      "valid": 6,
+      "passed": 3,
+      "tokens": 265,
+      "latency_s": 3.0010000000474975
+    },
+    "learned_greedy": {
+      "n": 6,
+      "valid": 6,
+      "passed": 5,
+      "tokens": 171,
+      "latency_s": 2.125999999814667
+    },
+    "fixed_local_tool": {
+      "n": 6,
+      "valid": 6,
+      "passed": 4,
+      "tokens": 157,
+      "latency_s": 2.077999999979511
+    },
+    "fixed_tool": {
+      "n": 6,
+      "valid": 6,
+      "passed": 6,
+      "tokens": 0,
+      "latency_s": 0.0
+    }
+  },
+  "experimental_incumbent": {
+    "artifact_ref": "artifacts/5b974a20dffd1d282348c5d7bac21b66b886c3a5b980407ea487aaf2d3cf0cf3.json",
+    "candidate": "fixed_tool"
+  },
+  "current_checkpoint": null,
+  "limitation": "Six synthetic families; repeated selection validation, no unused holdout or generalization claim."
+}
