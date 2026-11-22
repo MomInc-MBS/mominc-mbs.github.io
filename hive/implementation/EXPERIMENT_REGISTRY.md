@@ -1,5 +1,13 @@
 # Experiment Registry
 
+<!-- readiness-dev4:start -->
+## Current engineering milestone — v0.3.0.dev4
+
+**READY_FOR_PRESSURE_TESTS**. Shared video/isolated code missions, eleven pressure fixtures, independent fault checks and clean-package evidence are published. 342 tests and 7 CLI journeys passed; 2 explained Windows symlink skips. Zero new model calls. Level A: 0 attempted, 0 accepted; Level B UNTESTED. No policy promotion.
+
+Last verified: **21 November 2026 Las Vegas / 22 November UTC**. [Current readiness, source and all evidence](/hive/notes/READINESS/). Historical records below retain their original scope.
+<!-- readiness-dev4:end -->
+
 ## Integrated development mission — v0.3.0.dev3
 
 Eleven actual jobs: tool inventory and real local classification training passed; the feedback-derived candidate failed inventory comparison against three tool controls; every classification comparison arm disagreed on one frozen label. P1 was rejected, then the subsequent P0 tool task passed. Six local calls, 147 generated tokens, 768 reserved and 18.578 active seconds. This is separate development evidence, not an unused holdout. Last verified: **21 November 2026 Las Vegas / 22 November UTC**. [Complete run, failures and receipts](/hive/notes/INTEGRATION/).

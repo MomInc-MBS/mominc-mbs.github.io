@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "status": "BLOCKED_INPUTS_AND_APPROVAL",
+  "authority": "docs/TEST_READINESS_DIRECTIVE.md WP-F; not an inference allocation",
+  "required_tasks": 12,
+  "required_video_source_groups": 6,
+  "required_independent_code_snapshots": 6,
+  "minimum_independently_accepted": 10,
+  "tasks": [],
+  "source_inventory_approved": false,
+  "model_calls_authorized": 0,
+  "promotion_authorized": false,
+  "task_fields_required_before_exposure": [
+    "task_id", "family", "source_group", "source_sha", "input_sha",
+    "exposure_history", "unused_source_attestation", "split", "allowed_routes",
+    "permissions", "budget_id", "config_sha", "model_digest", "policy_sha",
+    "verifier_sha", "success_criteria", "independent_reviewer", "editorial_required"
+  ],
+  "denominator_rules": {
+    "blocked_failed_abstained_and_editorial_pending": "retained separately; never accepted",
+    "same_stream_recuts": "not independent source groups",
+    "synthetic_and_previously_exposed_development": "ineligible",
+    "mechanical_gates": "R1-R8 and A1-A6 must also pass"
+  },
+  "next_action": "Freeze six approved unused video sources and six independent code snapshots with objective criteria, reviewers and a new aggregate bounded allocation."
+}

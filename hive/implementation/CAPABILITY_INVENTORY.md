@@ -1,5 +1,13 @@
 # Capability Registry
 
+<!-- readiness-dev4:start -->
+## Current engineering milestone — v0.3.0.dev4
+
+**READY_FOR_PRESSURE_TESTS**. Shared video/isolated code missions, eleven pressure fixtures, independent fault checks and clean-package evidence are published. 342 tests and 7 CLI journeys passed; 2 explained Windows symlink skips. Zero new model calls. Level A: 0 attempted, 0 accepted; Level B UNTESTED. No policy promotion.
+
+Last verified: **21 November 2026 Las Vegas / 22 November UTC**. [Current readiness, source and all evidence](/hive/notes/READINESS/). Historical records below retain their original scope.
+<!-- readiness-dev4:end -->
+
 ## Shared governed integration — v0.3.0.dev3
 
 Versioned scoped tasks, eligibility-first route decisions, pinned model identity, shared tool/model execution, independently checked outputs, attributable feedback, frozen comparison controls, experimental restore and fresh-process replay are now exercised together. Terra accepted the bounded integrated demonstration. Current adapters cover finite built-in tools and loopback Ollama; arbitrary isolated code execution and remote frontier-model adapters are not implemented. Last verified: **21 November 2026 Las Vegas / 22 November UTC**. [Architecture and evidence](/hive/notes/INTEGRATION/).

@@ -1,0 +1,85 @@
+{
+  "label": "independent replay of historical development evidence; no new inference",
+  "artifacts_hashed": 43,
+  "feedback": [
+    {
+      "job": "41a32267c97441c4ac7ab1ff4fedf443",
+      "task": "inventory-train",
+      "route": "tool",
+      "passed": true,
+      "evidence_ref": "artifacts/98a1f62c0ba2c462da475f0d229ec4fccef9b31d992635d70bfc038e0ab4c61d.json"
+    },
+    {
+      "job": "d83191e078d64ce38ee5383403adc975",
+      "task": "directive-train",
+      "route": "local_direct",
+      "passed": true,
+      "evidence_ref": "artifacts/d63600b67a50395764ec24139c945cc4635bb03dee11cf7e2f2cd8456f0fce9c.json"
+    }
+  ],
+  "parent_reloaded": {
+    "hash": "4c52bbf808ac17c7873ecb0cc44f979d3e968ee23ff4ad6344bd2d186fac78a8",
+    "choice": "tool"
+  },
+  "candidate_reloaded": {
+    "hash": "3048d1ad59d20d043d13a8924326a5b87b19e07e095e6e3e6101591e10bacd1d",
+    "choice": "local_direct"
+  },
+  "candidate_snapshot": "artifacts/1355b600843a8e07a36aaf91ce10f2f5f1c3cd33dcfde07b92b579f9c0430b02.json",
+  "parent_snapshot": "artifacts/284243d04afec25ffa804c7953141252f7dab5e8e8bae41a7954453ce052eb47.json",
+  "comparisons": [
+    {
+      "control": "incumbent",
+      "job": "56570c568e6345aa91d8f47bc7aef425",
+      "policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+      "route": "tool",
+      "passed": true,
+      "evidence_ref": "artifacts/c98451921421db4a21f0dd37194a334ed4da8c7d95f3330c59b7151e88a375f3.json"
+    },
+    {
+      "control": "candidate",
+      "job": "6ff81d53354441a2b7c5f34def75182a",
+      "policy_hash": "3048d1ad59d20d043d13a8924326a5b87b19e07e095e6e3e6101591e10bacd1d",
+      "route": "local_direct",
+      "passed": false,
+      "evidence_ref": "artifacts/09712f102f53faba52282acb9d8b1c0a54f533e9a917e79e4057239c38bf27bb.json"
+    },
+    {
+      "control": "strongest_fixed",
+      "job": "eb11e36919d54fe88f0b6efcb727969e",
+      "policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+      "route": "tool",
+      "passed": true,
+      "evidence_ref": "artifacts/447bb2f6eec68b2c245d6335caf2b56cc6e5e65a325aa7afadfef02a5ca929a2.json"
+    },
+    {
+      "control": "learning_disabled",
+      "job": "467847a413344d058b700ff2ef8fe5cc",
+      "policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+      "route": "tool",
+      "passed": true,
+      "evidence_ref": "artifacts/fa05ea82f800510f062d729d2f60b35af7e60db203f14756f9ba28f104129418.json"
+    }
+  ],
+  "parent_restored_reloaded": {
+    "hash": "4c52bbf808ac17c7873ecb0cc44f979d3e968ee23ff4ad6344bd2d186fac78a8",
+    "choice": "tool"
+  },
+  "historical_budget": {
+    "cycles": 11,
+    "requests": 6,
+    "tokens_actual": 147,
+    "tokens_reserved": 768,
+    "wall_s": 18.57799999997951
+  },
+  "new_model_calls": 0,
+  "scope": "experimental candidate comparison; production promotion absent; no new route execution on restart; synthetic test separately executes after restore",
+  "distinct_input_identity": {
+    "training_task": "inventory-train",
+    "training_input_sha256": "6bee2d98b2d9d89ba52c3076d52b7feda2b1c632ec36deb422f5b2ff85c89a4e",
+    "later_task": "inventory-compare",
+    "later_input_sha256": "928e5e69de4a483869bd1475c59e939ec71c145cd591c8a444280fcfb6bc05c8",
+    "same_source_commit": "2347e6add52542ef5516f680ac77b06e10f08ba2",
+    "source_disjoint": false
+  }
+}

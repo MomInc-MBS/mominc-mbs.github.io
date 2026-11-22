@@ -1,0 +1,69 @@
+{
+  "date": "2026-11-22T02:26:42.604633+00:00",
+  "status": "READY_FOR_PRESSURE_TESTS",
+  "source_commit": "1e1bf945bd605fa511c7ceed9ecae303f77e1c56",
+  "runtime_version": "0.3.0.dev4",
+  "runtime_source_sha256": "e711d1c3e7eb4dbd23b95f3027f5d97627b1f6880a2c252e2cefea8c522e817b",
+  "tracked_dirty": false,
+  "measured_source_commit": "b66efb0ba074bf8c6f6a8c0f0bc4761aa3e65739",
+  "measured_runtime_source_sha256": "e711d1c3e7eb4dbd23b95f3027f5d97627b1f6880a2c252e2cefea8c522e817b",
+  "download": "downloads/HIVE_Readiness_v0_3_0_dev4.zip",
+  "download_sha256": "c3cf3e4633391efeb6f8659821fc4bdb6b112fe6dc4f5ea31bc00b531f3102ce",
+  "snapshot_manifest": "implementation/readiness-dev4/SNAPSHOT_MANIFEST.json",
+  "snapshot_file_count": 487,
+  "readiness_report": "implementation/readiness-dev4/build/readiness-report.json",
+  "release_smoke": "implementation/readiness-dev4-clean-zip-smoke.json",
+  "tests": {
+    "passed": 342,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 2,
+    "seconds": 730.331,
+    "by_suite": {
+      "adversarial": {
+        "passed": 117,
+        "skipped": 1
+      },
+      "integration": {
+        "passed": 48
+      },
+      "regression": {
+        "passed": 3
+      },
+      "unit": {
+        "passed": 174,
+        "skipped": 1
+      }
+    },
+    "skip_reasons": [
+      {
+        "test": "tests.adversarial.test_video_integrity::test_path_escape_and_symlink_rejected",
+        "reason": "OS does not allow creating symlinks"
+      },
+      {
+        "test": "tests.unit.test_export_snapshot::test_tracked_source_symlink_cannot_copy_an_external_secret",
+        "reason": "creating symlinks is unavailable in this Windows session"
+      }
+    ],
+    "receipt": "experiments/results/readiness-20261121/final-tests.xml",
+    "command": "python -m pytest -q --junitxml=experiments/results/readiness-20261121/final-tests.xml"
+  },
+  "cli_journeys": {
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 116.681,
+    "receipt": "experiments/results/readiness-20261121/e2e/report.json",
+    "runner": "Tester Army e2e 0.21.1",
+    "command": "npx e2e run --output experiments/results/readiness-20261121/e2e --no-cache",
+    "physical_phone": false,
+    "harness_correction": "experiments/results/readiness-20261121/e2e-harness-correction.json"
+  },
+  "new_real_model_calls": 0,
+  "level_a": "NOT_ACCEPTED;0 attempted,0 accepted",
+  "level_b": "UNTESTED",
+  "policy_deployed": false,
+  "scope": "Engineering readiness and synthetic controls; fixed specialist/team dispatch tested with fake adapter, not new model performance.",
+  "local_browser_check": "implementation/readiness-dev4-local-browser.json",
+  "tested_candidate_manifest": "implementation/readiness-dev4-tested-candidate-manifest.json"
+}

@@ -1,0 +1,100 @@
+{
+  "mission_id": "hive-prototype-wp0-smoke-20261121",
+  "status": "wp0_and_real_video_smoke_executed",
+  "purpose": "Fresh current-source WP0 local-model and genuine video vertical-slice smoke; not Level A acceptance or adaptation evidence",
+  "repository": "D:\\Repos\\hive-ai",
+  "branch": "build/working-prototype",
+  "starting_base": "caf9ace",
+  "runtime_source_sha256": "e8dc974bf4e71f44879bd0a5dfe4194f09d97cd29c9c19c77be11a6be0a6631c",
+  "config_sha256": "2e6e86d79ce31823a3261494abcc334ac3afadac6f67d4b170b6deedf3fa1e48",
+  "verifier_sha256": "63499321b49c73d2a0af46b1d884880bffa20feee0ab92022869e7e763b2fc0a",
+  "selected_input_manifest": ".hive/prototype-video-input/input-manifest.json",
+  "model": "myr5-hold-local:latest",
+  "model_digest": "a45646773d1ee8a6c1557c7de09a68e78a74f2990c4174a1408f65e777db150c",
+  "config": {
+    "endpoint": "http://127.0.0.1:11434",
+    "model": "myr5-hold-local:latest",
+    "max_requests": 4,
+    "max_tokens": 128,
+    "max_total_tokens": 512,
+    "max_wall_s": 180,
+    "max_storage_bytes": 67108864,
+    "concurrency": 1,
+    "max_retries": 0
+  },
+  "authorization": "Current working-prototype build instruction authorizes the small fresh WP0 smoke; selected genuine input/file scope must be recorded before access; Ian then said: Any long form stream will do",
+  "aggregate_scope": "Exactly two fixed stores with disjoint allocations; total max4 calls/512 reserved tokens/180 active seconds; no transfer or refill",
+  "preconditions": [
+    "Each allocation freezes its exact runtime/config/verifier hashes before execution; video null identities prohibit that allocation",
+    "Video allocation requires operator-selected approved genuine input, source group, file hashes, split and success criteria; WP0 uses pinned diagnostic input",
+    "Current regression and independent integrity checks pass",
+    "Verify pinned model identity and global single-inference availability"
+  ],
+  "steps": [
+    "Record doctor, source/model identity and zero initial spending",
+    "Normalize approved captions through deterministic tool and independently verify output",
+    "Run only needed bounded local cue-selection requests; no automatic retries",
+    "Independently verify cue provenance, timestamp bounds, evidence and artifact hashes",
+    "Record editorial quality as pending unless actually reviewed by operator",
+    "Restart and replay saved evidence with zero new requests; reconcile status and costs"
+  ],
+  "stop_conditions": [
+    "operator STOP",
+    "any exhausted cap",
+    "source/model/config/input identity drift",
+    "verifier or evidence integrity failure",
+    "unexpected side effect or unapproved file access"
+  ],
+  "permissions": {
+    "production_promotion": false,
+    "private_holdout_access": false,
+    "model_shell_execution": false,
+    "automatic_budget_refill": false,
+    "operator_selected_inputs_only": true
+  },
+  "decision_rule": "PASS WP0 smoke only when current-source evidence and fresh-process replay agree within caps; otherwise fail/abstain/blocked with exact next action",
+  "required_receipt": [
+    "frozen_source_config_verifier_and_input_hashes",
+    "model_digest",
+    "attempted_verified_failed_abstained_blocked_counts",
+    "route_policy_split_source_group",
+    "actual_calls_input_output_and_reserved_tokens_active_seconds_storage_bytes",
+    "artifact_and_event_log_hashes",
+    "structural_verification_and_editorial_review_separate",
+    "fresh_process_zero_call_replay",
+    "limitations_and_next_work_item"
+  ],
+  "limitations": [
+    "At most four requests; no significance or adaptive advantage claim",
+    "Does not satisfy the 12-task two-type A2 gate",
+    "Application caps are not OS CPU/GPU quotas",
+    "No previous inference result certifies this changed source",
+    "Pinned caf9ace WP0 inference does not certify subsequently changed video runtime"
+  ],
+  "allocations": [
+    {
+      "mission": "WP0 pinned published archive",
+      "store": ".hive/prototype-wp0",
+      "source_commit": "caf9ace",
+      "max_requests": 1,
+      "max_total_tokens": 128,
+      "max_wall_s": 60,
+      "input_scope": "pinned archive documented diagnostic task; no footage access",
+      "runtime_source_sha256": "024e33a80265718014a42d2a8d4609663ed74f327a36043b18285810d67c2731",
+      "status": "completed_budget_spent",
+      "receipt": "experiments/results/prototype-wp0-smoke.json"
+    },
+    {
+      "mission": "changed-source genuine video smoke",
+      "store": ".hive/prototype-video",
+      "runtime_source_sha256": "e8dc974bf4e71f44879bd0a5dfe4194f09d97cd29c9c19c77be11a6be0a6631c",
+      "selected_input_manifest": ".hive/prototype-video-input/input-manifest.json",
+      "max_requests": 3,
+      "max_total_tokens": 384,
+      "max_wall_s": 120,
+      "input_scope": "Nov03-2044 stream first seven cues, 28.32-second excerpt, hashes frozen before inference",
+      "status": "completed_objective_editorial_pending",
+      "receipt": "experiments/results/prototype-real-video-demo.json"
+    }
+  ]
+}

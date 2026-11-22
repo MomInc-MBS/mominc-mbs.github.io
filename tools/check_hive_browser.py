@@ -19,6 +19,7 @@ views={'STATUS':'Implementation Status','RUNS':'Experiment Registry','CAPABILITI
        'CONTROLLER':'Adaptive verified controller — v0.2',
        'V03':'HIVE v0.3 foundation — 21 November 2026',
        'INTEGRATION':'HIVE v0.3.0.dev3 integration report',
+       'READINESS':'HIVE v0.3.0.dev4 readiness report',
        'WORKING':'Video mission engineering alpha'}
 
 with sync_playwright() as p:
@@ -28,15 +29,24 @@ with sync_playwright() as p:
     page.on('pageerror',lambda e:errors.append(str(e)))
     page.on('requestfailed',lambda r:failed.append(r.url+' '+str(r.failure)))
     assert page.goto(base+'/hive/').status==200
-    expect(page.locator('.implementation-update')).to_contain_text('v0.3.0.dev3 RUN RECORDED')
-    expect(page.locator('.implementation-update')).to_contain_text('252 tests passed')
-    expect(page.locator('.implementation-update')).to_contain_text('CANDIDATE REJECTED')
-    expect(page.locator('.implementation-update')).to_contain_text('Independent Terra acceptance is recorded')
+    expect(page.locator('.implementation-update')).to_contain_text('v0.3.0.dev4 ENGINEERING')
+    expect(page.locator('.implementation-update')).to_contain_text('zero new model calls')
+    expect(page.locator('.implementation-update')).to_contain_text('RESEARCH UNTESTED')
+    expect(page.locator('.implementation-update')).to_contain_text('historical inventory candidate failed')
     page.locator('.implementation-update').scroll_into_view_if_needed()
     page.screenshot(path=str(out/'home-desktop.png'))
-    page.locator('.implementation-update').get_by_role('link',name='Read integration status',exact=True).click()
-    expect(page.locator('.prose h1')).to_have_text(views['INTEGRATION'])
-    expect(page.locator('.prose')).to_contain_text('INTEGRATED_PROTOTYPE_DEMONSTRATED')
+    page.locator('.implementation-update').get_by_role('link',name='Read the readiness report',exact=True).click()
+    expect(page.locator('.prose h1')).to_have_text(views['READINESS'])
+    readiness_publication=json.loads(Path('hive/implementation/readiness-dev4-publication.json').read_text())
+    expect(page.locator('.prose')).to_contain_text(readiness_publication['status'])
+    readiness_download=ctx.request.get(base+'/hive/'+readiness_publication['download'])
+    assert readiness_download.status==200
+    assert hashlib.sha256(readiness_download.body()).hexdigest()==readiness_publication['download_sha256']
+    page.screenshot(path=str(out/'readiness-desktop.png'))
+    page.goto(base+'/hive/search/?q=v0.3.0.dev4')
+    expect(page.locator('#results a[href="/hive/notes/READINESS/"]')).to_have_count(1)
+    page.goto(base+'/hive/graph/?focus=READINESS')
+    expect(page.locator('#graph-selection h2')).to_have_text(views['READINESS'])
     page.goto(base+'/hive/')
     page.locator('.implementation-update').get_by_role('link',name='Implementation status',exact=True).click()
     expect(page.locator('.prose h1')).to_have_text('Implementation Status')
@@ -181,6 +191,8 @@ with sync_playwright() as p:
             page.screenshot(path=str(out/'v03-mobile.png'))
             page.goto(base+'/hive/notes/WORKING/')
             page.screenshot(path=str(out/'working-mobile.png'))
+            page.goto(base+'/hive/notes/READINESS/')
+            page.screenshot(path=str(out/'readiness-mobile.png'))
             page.goto(base+'/hive/notes/INTEGRATION/')
             page.locator('.rendered-diagram').scroll_into_view_if_needed()
             page.screenshot(path=str(out/'integration-diagram-mobile.png'))
@@ -197,6 +209,7 @@ report=dict(ok=True,base=base,views=list(views),widths=[1440,1024,900,390,320],p
             prototype_download_digest=True,prototype_search_graph=True,adaptive_download_digest=True,
             v03_download_digest=True,v03_chart_loaded=True,working_download_digest=True,working_search_graph=True,
             integration_download_digest=True,measured_source_download_digest=True,integration_search_graph=True,
+            readiness_download_digest=True,readiness_search_graph=True,
             page_errors=errors,failed_requests=failed)
 (out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report,indent=2))

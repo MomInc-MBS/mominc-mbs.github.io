@@ -1,0 +1,33 @@
+{
+  "scope": "Interrupted engineering validation, not a passing final receipt",
+  "attempts": [
+    {
+      "source_commit": "2483004cf3206d63b847b976a46e0c0312dca352",
+      "fixture_receipts": "attempt-2483004",
+      "status": "11 fixture commands and replay passed; source subsequently repaired",
+      "remaining_findings": [
+        "code_mission incorrectly added to finite benchmark categories",
+        "operator synthetic source byte mismatch on Windows"
+      ]
+    },
+    {
+      "source_commit": "7d73437a7a097a3c8a89dd5f6de00ed7a597baca",
+      "status": "Full check and CLI capture interrupted after code_mission verifier whitelist omission was found",
+      "fix": "fe5f27bbd720672be8d6ea865bb52705ef1d2ea6 explicitly enables adapter without altering benchmark categories"
+    },
+    {
+      "source_commit": "fe5f27bbd720672be8d6ea865bb52705ef1d2ea6",
+      "status": "Operator video/code demo passed; broader runs interrupted for independent wrong-job replay counterexample and missing H01/H02/R6 infrastructure",
+      "independent_findings": "terra-independent-verdict.md",
+      "corrections": "Expected job/task binding, named output rehashing, real arm dispatch wiring, challenger sibling repair and transfer/retention fixture measurements"
+    },
+    {
+      "source_commit": "9e76ce7043fd6c5731243a3c2cee49e1f5934004",
+      "status": "Single-family operator missions passed; combined code-to-video replay changed the nested stage budget from1to3 despite unchanged global accounting. Full suite had not started. CLI capture stopped before source correction.",
+      "correction": "Keep completed stage receipts stable, reverify exact underlying evidence, and distinguish stage completion accounting from live shared budget.",
+      "regression": "Full stage equality across combined DAG restart plus corrupt cached stage rejection"
+    }
+  ],
+  "new_model_calls": 0,
+  "interpretation": "Interrupted runs are not counted as final test passes. Source changes during crash/restart checks invalidate those checks; final source is frozen before measurement."
+}

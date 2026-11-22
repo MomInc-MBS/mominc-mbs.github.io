@@ -1,0 +1,6 @@
+# Experiment provenance hashes exact runtime bytes. Preserve this frozen source
+# snapshot across checkouts, regardless of the operator's core.autocrlf setting.
+src/hive/** -text whitespace=blank-at-eol,space-before-tab,cr-at-eol,-blank-at-eof
+# Public readiness receipts and their digest indexes must retain exact bytes.
+experiments/results/readiness-20261121/** -text whitespace=space-before-tab,cr-at-eol,-blank-at-eol,-blank-at-eof
+build/** -text whitespace=space-before-tab,cr-at-eol,-blank-at-eol,-blank-at-eof

@@ -1,0 +1,497 @@
+"""Durable, bounded local executor. Model outputs have no execution authority."""
+from __future__ import annotations
+
+import contextlib
+import hashlib
+import json
+import math
+import os
+import signal
+import subprocess
+import sys
+import tempfile
+import time
+from pathlib import Path
+
+from . import __version__
+from .checkpoint_manager import Checkpoints
+from .experiment_runner import execute
+from .failure_triage import triage
+from .governor import decide as govern, route_scope_reason, task_routes, validate_task
+from .learning_policy import Policy
+from .metric_engine import utility
+from . import model_registry
+from .storage import Store
+from .verifier import verify
+
+
+DEFAULT_CONFIG = {
+    "endpoint": "http://127.0.0.1:11434", "model": "myr5-hold-local:latest",
+    "timeout_s": 120, "max_tokens": 128, "seed": 42,
+    "max_requests": 120, "max_total_tokens": 15360, "max_wall_s": 2700,
+    "max_storage_bytes": 268435456, "max_cycles": 240,
+    "max_retries": 2, "concurrency": 1,
+    "routes": ["local_direct", "local_tool"], "allow_fixtures": False,
+}
+
+
+def config_hash(value):
+    normalized = dict(value) if isinstance(value, dict) else value
+    if isinstance(normalized, dict):
+        for key in ("adapter", "isolation_adapter"):
+            if normalized.get(key) is not None:
+                adapter = normalized[key]
+                normalized[key] = {"test_adapter": f"{type(adapter).__module__}.{type(adapter).__qualname__}"}
+    return hashlib.sha256(json.dumps(normalized, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()).hexdigest()
+
+
+def config_record(value):
+    normalized = dict(value)
+    for key in ("adapter", "isolation_adapter"):
+        if normalized.get(key) is not None:
+            adapter = normalized.pop(key)
+            normalized["test_" + key] = f"{type(adapter).__module__}.{type(adapter).__qualname__}"
+    return normalized
+
+
+def load_config(path=None):
+    config = dict(DEFAULT_CONFIG)
+    if path:
+        supplied = json.loads(Path(path).read_text(encoding="utf-8-sig"))
+        unknown = set(supplied) - set(config)
+        if unknown:
+            raise ValueError(f"Unknown config fields: {sorted(unknown)}")
+        config.update(supplied)
+    for key in ("timeout_s", "max_tokens", "max_requests", "max_total_tokens", "max_wall_s", "max_storage_bytes", "max_cycles"):
+        v = config[key]
+        if isinstance(v, bool) or not isinstance(v, (int, float)) or not math.isfinite(v) or v <= 0:
+            raise ValueError(f"{key} must be finite and positive")
+    for key in ("max_tokens", "max_requests", "max_total_tokens", "max_storage_bytes", "max_cycles", "max_retries"):
+        if type(config[key]) is not int:
+            raise ValueError(f"{key} must be an integer")
+    if config["concurrency"] != 1 or not 0 <= config["max_retries"] <= 2:
+        raise ValueError("v0.1 supports one worker and at most two retries")
+    if not isinstance(config["allow_fixtures"], bool):
+        raise ValueError("allow_fixtures must be boolean")
+    if config["allow_fixtures"]:
+        raise ValueError("Fixture adapters are test-only and forbidden in mission config")
+    if not config["routes"] or any(r not in {"local_direct", "local_tool", "tool"} for r in config["routes"]):
+        raise ValueError("Invalid production routes")
+    return config
+
+
+def code_version():
+    repo = Path(__file__).resolve().parents[2]
+    try:
+        git_root = subprocess.check_output(["git", "rev-parse", "--show-toplevel"], cwd=repo,
+                                           text=True, stderr=subprocess.DEVNULL).strip()
+        if Path(git_root).resolve() != repo:
+            raise ValueError("Extracted snapshot is not its parent Git repository")
+        commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=repo, text=True, stderr=subprocess.DEVNULL).strip()
+    except (OSError, subprocess.CalledProcessError, ValueError):
+        commit = "unversioned"
+    digest = hashlib.sha256()
+    for path in sorted(Path(__file__).parent.rglob("*.py")):
+        digest.update(path.relative_to(Path(__file__).parent).as_posix().encode())
+        digest.update(path.read_bytes())
+    return {"version": __version__, "commit": commit, "source_sha256": digest.hexdigest()}
+
+
+@contextlib.contextmanager
+def worker_lock(root):
+    """OS advisory lock is released by the kernel on process death."""
+    root = Path(root)
+    root.mkdir(parents=True, exist_ok=True)
+    with os.fdopen(os.open(root / "worker.lock", os.O_RDWR | os.O_CREAT), "r+b") as handle:
+        if os.fstat(handle.fileno()).st_size == 0:
+            handle.write(b"0")
+            handle.flush()
+        handle.seek(0)
+        try:
+            if os.name == "nt":
+                import msvcrt
+                msvcrt.locking(handle.fileno(), msvcrt.LK_NBLCK, 1)
+            else:
+                import fcntl
+                fcntl.flock(handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except OSError as exc:
+            raise RuntimeError("Another HIVE executor owns this store") from exc
+        try:
+            yield
+        finally:
+            handle.seek(0)
+            if os.name == "nt":
+                msvcrt.locking(handle.fileno(), msvcrt.LK_UNLCK, 1)
+            else:
+                fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
+
+
+class Executor:
+    def __init__(self, root, config=None):
+        self.root = Path(root)
+        self.store = Store(self.root)
+        self.config = dict(DEFAULT_CONFIG if config is None else config)
+        self.owner = f"worker-{os.getpid()}"
+        self.stopping = False
+
+    def close(self):
+        self.store.close()
+
+    def recover(self):
+        return self.store.recover()
+
+    def _budget(self):
+        return self.store.get("budget", {"requests": 0, "tokens_reserved": 0, "tokens_actual": 0, "wall_s": 0.0, "cycles": 0})
+
+    def barrier(self, route=None):
+        if self.stopping or (self.root / "STOP").exists():
+            return "kill switch"
+        b = self._budget()
+        if b["wall_s"] >= self.config["max_wall_s"]:
+            return "mission wall-time budget exhausted"
+        if b["cycles"] >= self.config["max_cycles"]:
+            return "mission cycle budget exhausted"
+        if sum(p.stat().st_size for p in self.root.rglob("*") if p.is_file()) >= self.config["max_storage_bytes"]:
+            return "artifact storage budget exhausted"
+        if route and route.startswith("local_"):
+            if b["requests"] >= self.config["max_requests"]:
+                return "model request budget exhausted"
+            if b["tokens_reserved"] + self.config["max_tokens"] > self.config["max_total_tokens"]:
+                return "generated-token reservation budget exhausted"
+        return None
+
+    def enqueue(self, task, route=None, hypothesis="Verify task with independent evidence", retry_count=0):
+        return self.store.enqueue({"task": task, "route": route, "hypothesis": hypothesis, "retry_count": retry_count})
+
+    def _route_checks(self, task, candidates, *, include_identity=True):
+        checks = {}
+        permitted = task_routes(task, self.config.get("allow_fixtures", False))
+        for route in dict.fromkeys(candidates):
+            if route not in permitted:
+                checks[route] = "excluded by task permissions"
+                continue
+            reason = self.barrier(route)
+            if reason:
+                checks[route] = reason
+                continue
+            reason = route_scope_reason(task, route, self.config.get("allow_fixtures", False))
+            if reason:
+                checks[route] = reason
+                continue
+            if route.startswith("local_") and include_identity:
+                adapter = self.config.get("adapter")
+                if adapter is not None:
+                    if not self.config.get("allow_fixtures", False):
+                        checks[route] = "injected adapter is permitted only with allow_fixtures=True"
+                        continue
+                    identity = {"model": self.config["model"],
+                                "digest": f"test-adapter:{type(adapter).__module__}.{type(adapter).__qualname__}",
+                                "kind": "explicit-test-adapter"}
+                elif self.config.get("_expected_model_digest"):
+                    # Internal callers such as resumable video missions discover
+                    # and recheck the manifest immediately before this dispatch.
+                    identity = {"model": self.config["model"],
+                                "digest": self.config["_expected_model_digest"],
+                                "kind": "ollama-manifest"}
+                else:
+                    runtime = model_registry.discover(self.config["endpoint"])
+                    matches = [m for m in runtime.get("models", []) if m.get("id") == self.config["model"] and m.get("digest")]
+                    if not runtime.get("available") or not matches:
+                        checks[route] = "configured local model is unavailable or has no manifest digest"
+                        continue
+                    identity = {"model": self.config["model"], "digest": matches[0]["digest"],
+                                "kind": "ollama-manifest"}
+                pinned = self.store.get("mission_model_identity")
+                expected = self.config.get("_expected_model_digest")
+                if expected and identity["digest"] != expected:
+                    checks[route] = "local model digest differs from configured pin"
+                elif pinned is not None and pinned != identity:
+                    checks[route] = "local model identity differs from mission pin"
+                else:
+                    # Selected identity is persisted before the first reservation.
+                    self._candidate_model_identity = identity
+        return checks
+
+    def _decision(self, task, requested_route, policy):
+        candidates = list(dict.fromkeys(["tool", *self.config.get("routes", [])]))
+        if requested_route is not None and requested_route not in candidates:
+            candidates.append(requested_route)
+        self._candidate_model_identity = None
+        route_checks = self._route_checks(task, candidates) if validate_task(task) is None else {}
+        identity = self._candidate_model_identity
+        policy_hash = config_hash(policy.snapshot())
+        decision = govern(task, candidates=candidates, requested_route=requested_route,
+                          policy=policy, policy_hash=policy_hash,
+                          source_hash=code_version()["source_sha256"],
+                          config_hash=config_hash(self.config), task_hash=config_hash(task),
+                          route_checks=route_checks,
+                          allow_fixtures=self.config.get("allow_fixtures", False),
+                          max_tokens=self.config.get("max_tokens", 128))
+        if decision["selected"] and decision["selected"].startswith("local_") and identity:
+            decision["receipt"]["model_identity"] = identity
+        return decision
+
+    def _report(self, job, bundle, decision, failure=None):
+        # Public reports contain no holdout prompts, answers or individual failures.
+        task = job["spec"]["task"]
+        private = task["split"] == "holdout"
+        report = {
+            "cycle_id": job["id"], "build": bundle["build"], "config_hash": bundle["config_hash"],
+            "hypothesis": "sealed predeclared holdout evaluation" if private else job["spec"].get("hypothesis", "task verification"),
+            "change": f"route={bundle['route']}", "models_tools": bundle["result"].get("model"),
+            "test_suite": {"split": task["split"], "size": 1, "seed": self.config["seed"]},
+            "baseline": None, "candidate": None if private else bundle["verification"],
+            "difference_uncertainty": "Single task; no superiority claim.",
+            "verification": "sealed holdout evidence" if private else bundle["evidence_ref"],
+            "failure_classification": "sealed" if private else (failure or {}).get("failure_category"),
+            "decision": decision, "rollback_checkpoint": self.store.get("current_checkpoint"),
+            "next_experiment": "Use only aggregate promotion decision; do not tune from holdout" if private else (failure or {}).get("next_test_that_discriminates_hypotheses", "Compare frozen policy on unseen tasks"),
+            "resource_use": self._budget(),
+        }
+        ref = self.store.put_artifact(report)
+        reports = self.root / "reports"
+        reports.mkdir(exist_ok=True)
+        (reports / f"{job['id']}.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
+        return ref
+
+    def run_one(self, job_id=None):
+        # Runtime-only plumbing (sandbox adapter, store root, cancellation path)
+        # is not a budget/config change between code and video stages.
+        budget_config = {key: value for key, value in self.config.items()
+                         if not key.startswith("_") and key != "isolation_adapter"}
+        budget_config_hash = config_hash(budget_config)
+        configured = self.store.get("mission_config_hash")
+        if configured is not None and configured != budget_config_hash:
+            raise ValueError("Mission configuration is immutable; existing budgets cannot be reset by changing config")
+        if configured is None:
+            self.store.set("mission_config_hash", budget_config_hash)
+        barrier = self.barrier()
+        if barrier:
+            self.store.set("stop_reason", barrier)
+            return None
+        job = self.store.claim(self.owner, job_id=job_id)
+        if job is None:
+            self.store.set("stop_reason", "no eligible work")
+            return None
+        spec = job["spec"]
+        task = spec.get("task")
+        candidate_policy = Policy(state=self.store.get("policy"), seed=self.config["seed"])
+        champion = Checkpoints(self.store).current()
+        if champion:
+            selection_policy = Policy(state=champion["policy"])
+        else:
+            selection_policy = Policy(state=self.store.get("governing_policy"), seed=self.config["seed"]) if self.store.get("governing_policy") else Policy(mode="fixed", seed=self.config["seed"])
+            self.store.set("governing_policy", selection_policy.snapshot())
+        requested_route = spec.get("route")
+        decision = self._decision(task, requested_route, selection_policy)
+        receipt_ref = self.store.put_artifact(decision["receipt"])
+        if decision["error"]:
+            reason = decision["error"]
+            transient_budget_reasons = ("mission wall-time budget exhausted", "mission cycle budget exhausted",
+                                        "artifact storage budget exhausted", "model request budget exhausted",
+                                        "generated-token reservation budget exhausted")
+            requested = spec.get("route")
+            selected_row = next((row for row in decision["receipt"].get("alternatives", [])
+                                 if row.get("route") == requested), None)
+            route_reasons = selected_row.get("reasons", []) if selected_row else []
+            if requested is not None and route_reasons and all(any(tag in item for tag in transient_budget_reasons) for item in route_reasons):
+                self.store.transition(job["id"], "RETRY_READY", {"reason": "; ".join(route_reasons),
+                                                                  "decision_ref": receipt_ref}, self.owner, job["generation"])
+                self.store.set("stop_reason", "; ".join(route_reasons))
+                return None
+            self.store.finish(job["id"], "BLOCKED", {"failure_category": "GOVERNANCE", "reason": reason,
+                                                        "decision_ref": receipt_ref}, self.owner, job["generation"])
+            self.store.set("stop_reason", reason)
+            return {"id": job["id"], "passed": False, "failure": reason, "decision_ref": receipt_ref}
+        route = decision["selected"]
+        if route.startswith("local_"):
+            identity = getattr(self, "_candidate_model_identity", None)
+            if identity is None:
+                # The eligibility check pinned identity; fail closed if it was lost.
+                self.store.finish(job["id"], "BLOCKED", {"failure_category": "GOVERNANCE", "reason": "missing pinned model identity",
+                                                            "decision_ref": receipt_ref}, self.owner, job["generation"])
+                return {"id": job["id"], "passed": False, "failure": "missing pinned model identity", "decision_ref": receipt_ref}
+            self.store.set("mission_model_identity", identity)
+        start = time.monotonic()
+        b = self._budget()
+        # Reserve before dispatch. Interrupted calls still count against the mission.
+        if route.startswith("local_"):
+            b["requests"] += 1
+            b["tokens_reserved"] += self.config["max_tokens"]
+        b["cycles"] += 1
+        self.store.set("budget", b)
+        run_config = dict(self.config)
+        if route.startswith("local_"):
+            identity = self.store.get("mission_model_identity")
+            if identity["kind"] == "ollama-manifest":
+                run_config["_expected_model_digest"] = identity["digest"]
+        remaining_wall = self.config["max_wall_s"] - b["wall_s"]
+        run_config["timeout_s"] = min(run_config["timeout_s"], remaining_wall)
+        if task.get("category") == "code_mission":
+            run_config["timeout_s"] = min(run_config["timeout_s"], task["input"]["manifest"]["limits"]["timeout_s"])
+        self.store.set("inflight", {"job": job["id"], "reserved_wall_s": run_config["timeout_s"]})
+        try:
+            if route.startswith("local_"):
+                # One GPU inference across HIVE stores, not merely one per queue.
+                with worker_lock(Path(tempfile.gettempdir()) / "hive-local-inference"):
+                    result = execute(task, route, run_config)
+            else:
+                result = execute(task, route, run_config)
+        except Exception as exc:
+            result = {"output": "", "latency_s": time.monotonic() - start, "tokens": 0,
+                      "model": run_config["model"], "request": {}, "error": f"{type(exc).__name__}: {exc}",
+                      "failure_category": "IMPLEMENTATION"}
+        if route.startswith("local_"):
+            identity = self.store.get("mission_model_identity")
+            actual = {"model": result.get("model"), "digest": result.get("model_digest")}
+            if identity["kind"] == "ollama-manifest":
+                matches = actual == {"model": identity["model"], "digest": identity["digest"]}
+            else:
+                pinned = self.store.get("mission_test_result_identity")
+                matches = actual["model"] == identity["model"] and isinstance(actual["digest"], str) and bool(actual["digest"])
+                if matches and pinned is not None:
+                    matches = pinned == actual
+                elif matches:
+                    self.store.set("mission_test_result_identity", actual)
+            if not matches:
+                result.update(output="", error="ENVIRONMENT: local model result identity did not match its mission pin",
+                              failure_category="ENVIRONMENT", tokens=0)
+        self.store.transition(job["id"], "VERIFYING", owner=self.owner, generation=job["generation"])
+        try:
+            verification = verify(task, result)
+            if (not isinstance(verification, dict) or type(verification.get("valid")) is not bool
+                or type(verification.get("passed")) is not bool
+                or type(verification.get("quality")) is not int or verification["quality"] not in (0, 1)
+                or type(verification.get("unsupported")) is not int or verification["unsupported"] not in (0, 1)
+                or verification["quality"] != int(verification["passed"])
+                or (verification["passed"] and not verification["valid"])):
+                raise ValueError("Malformed verifier verdict rejected")
+            if (type(result.get("tokens")) is not int or not 0 <= result["tokens"] <= self.config["max_tokens"]
+                or not isinstance(result.get("latency_s"), (int, float)) or not math.isfinite(result["latency_s"])
+                or result["latency_s"] < 0):
+                raise ValueError("Malformed or over-budget resource evidence rejected")
+        except Exception as exc:
+            verification = {"valid": False, "passed": False, "quality": 0, "unsupported": 1,
+                            "reason": f"Verifier exception: {type(exc).__name__}: {exc}", "evaluator": "failed"}
+            result["failure_category"] = "EVALUATION"
+            result["tokens"] = min(self.config["max_tokens"], max(0, result.get("tokens", 0))) if type(result.get("tokens")) is int else 0
+            result["latency_s"] = time.monotonic() - start
+        score = utility(verification["quality"], verification["unsupported"], result.get("latency_s", 0), result.get("tokens", 0))
+        bundle = {"job_id": job["id"], "task": task, "route": route, "config": config_record(run_config),
+                  "config_hash": config_hash(run_config), "result": result, "verification": verification,
+                  "utility": score, "build": code_version(), "decision_ref": receipt_ref,
+                  "decision": decision["receipt"]}
+        ref = self.store.put_artifact(bundle)
+        bundle["evidence_ref"] = ref
+        self.store.transition(job["id"], "REVIEWING", {"evidence_ref": ref}, self.owner, job["generation"])
+        # Verified outcome does not itself promote a policy.
+        if task["split"] == "development" and verification["valid"] and spec.get("learn_feedback", True):
+            # Atomic idempotent feedback prevents a crash replay counting twice.
+            self.store.db.execute("BEGIN IMMEDIATE")
+            try:
+                if not self.store.get("feedback:" + job["id"]):
+                    if route.startswith("local_"):
+                        environment = {"model": result.get("model"), "digest": result.get("model_digest"), "endpoint": self.config["endpoint"]}
+                        previous_environment = self.store.get("learning_environment")
+                        if previous_environment is not None and previous_environment != environment:
+                            self.store.set("stale_policy", candidate_policy.snapshot())
+                            candidate_policy = Policy(seed=self.config["seed"])
+                        self.store.set("learning_environment", environment)
+                    candidate_policy.observe(task["category"], route, verification["quality"], score, valid=True, split="development")
+                    self.store.set("policy", candidate_policy.snapshot())
+                    self.store.set("feedback:" + job["id"], ref)
+                self.store.db.execute("COMMIT")
+            except BaseException:
+                self.store.db.execute("ROLLBACK")
+                raise
+        b = self._budget()
+        b["tokens_actual"] += max(0, result.get("tokens", 0))
+        b["wall_s"] += time.monotonic() - start
+        self.store.db.execute("BEGIN IMMEDIATE")
+        try:
+            self.store.set("budget", b)
+            self.store.set("inflight", None)
+            self.store.db.execute("COMMIT")
+        except BaseException:
+            self.store.db.execute("ROLLBACK")
+            raise
+        failure = None
+        if not verification["passed"]:
+            category = result.get("failure_category") or ("MODEL" if verification["valid"] else "EVALUATION")
+            if task.get("category") == "code_mission" and category == "STOP":
+                # Operator cancellation is terminal for this dispatch and must
+                # never enter generic failure triage/retry synthesis.
+                failure = {"classification": "STOP", "reason": "isolated execution stopped by operator",
+                           "artifact_refs": [ref], "next_spec": None}
+            else:
+                failure = triage(job, category, verification["reason"], [ref])
+            # Holdout diagnostics are never sent into candidate generation or retries.
+            next_spec = failure.get("next_spec") if task["split"] == "development" else None
+            if next_spec and spec.get("allow_retry", True) and spec.get("retry_count", 0) < self.config["max_retries"]:
+                next_spec = dict(next_spec)
+                next_spec.update(task=task, retry_count=spec.get("retry_count", 0) + 1)
+                next_spec["route"] = "tool" if route != "tool" else "local_tool"
+                retry_decision = self._decision(task, next_spec["route"], selection_policy)
+                if retry_decision["error"]:
+                    failure["retry_blocked"] = retry_decision["error"]
+                    failure["retry_decision_ref"] = self.store.put_artifact(retry_decision["receipt"])
+                    next_spec = None
+            if next_spec and spec.get("allow_retry", True) and spec.get("retry_count", 0) < self.config["max_retries"]:
+                next_spec["hypothesis"] = failure.get("next_test_that_discriminates_hypotheses", "Compare independent tool route")
+                failure["next_job_id"] = self.store.enqueue_once("retry:" + job["id"], next_spec)
+            failure["artifact_ref"] = self.store.put_artifact(failure)
+        report_ref = self._report(job, bundle, "REJECT" if not verification["passed"] else "QUARANTINE", failure)
+        result_record = {"evidence_ref": ref, "report_ref": report_ref,
+                         "passed": verification["passed"], "valid": verification["valid"], "failure": failure}
+        if champion and not spec.get("route") and task.get("critical") and verification["valid"] and not verification["passed"]:
+            previous_checkpoint = self.store.get("previous_checkpoint")
+            if previous_checkpoint:
+                Checkpoints(self.store).rollback(previous_checkpoint)
+                result_record["automatic_rollback"] = previous_checkpoint
+        # The job was reviewed; successful individual observations stay experimental.
+        terminal = "BLOCKED" if verification["passed"] else "REJECTED"
+        if task.get("category") == "code_mission" and result.get("failure_category") == "SANDBOX":
+            terminal = "BLOCKED"
+        elif task.get("category") == "code_mission" and result.get("failure_category") == "STOP":
+            terminal = "RETRY_READY"
+        self.store.finish(job["id"], terminal, result_record, self.owner, job["generation"])
+        return {"id": job["id"], "route": route, "passed": verification["passed"], "evidence_ref": ref, "failure": failure}
+
+    def loop(self, limit=None):
+        results = []
+        with worker_lock(self.root):
+            recovered = self.recover()
+            self.store.set("worker", {"pid": os.getpid(), "started": time.time(), "status": "running"})
+            previous = {}
+            if __import__("threading").current_thread() is __import__("threading").main_thread():
+                for sig in (signal.SIGINT, signal.SIGTERM):
+                    previous[sig] = signal.signal(sig, lambda *_: setattr(self, "stopping", True))
+            try:
+                for _ in range(limit or self.config["max_cycles"]):
+                    result = self.run_one()
+                    if result is None:
+                        break
+                    results.append(result)
+                else:
+                    self.store.set("stop_reason", "requested cycle limit reached")
+            finally:
+                self.store.set("worker", {"pid": os.getpid(), "status": "stopped", "finished": time.time()})
+                for sig, handler in previous.items():
+                    signal.signal(sig, handler)
+        return results
+
+
+def inspect_evidence(store, job_id, allow_holdout=False):
+    job = store.get_job(job_id)
+    result = job.get("result") or {}
+    ref = result.get("evidence_ref")
+    if not ref:
+        raise ValueError("Job has no completed evidence")
+    evidence = store.read_artifact(ref)
+    if evidence["task"]["split"] == "holdout" and not allow_holdout:
+        return {"id": job_id, "sealed": True, "message": "Holdout details excluded from development review"}
+    # Rerun deterministic verifier against the immutable output before showing it.
+    checked = verify(evidence["task"], evidence["result"])
+    if checked != evidence["verification"]:
+        raise ValueError("Recorded evaluator evidence does not reproduce")
+    return evidence

@@ -1,5 +1,13 @@
 # Known Gaps
 
+<!-- readiness-dev4:start -->
+## Current engineering milestone — v0.3.0.dev4
+
+**READY_FOR_PRESSURE_TESTS**. Shared video/isolated code missions, eleven pressure fixtures, independent fault checks and clean-package evidence are published. 342 tests and 7 CLI journeys passed; 2 explained Windows symlink skips. Zero new model calls. Level A: 0 attempted, 0 accepted; Level B UNTESTED. No policy promotion.
+
+Last verified: **21 November 2026 Las Vegas / 22 November UTC**. [Current readiness, source and all evidence](/hive/notes/READINESS/). Historical records below retain their original scope.
+<!-- readiness-dev4:end -->
+
 ## After the integrated demonstration — v0.3.0.dev3
 
 The shared task-to-feedback flow now runs and its rejected-candidate path is independently accepted. The next hypothesis protects exact-tool capabilities during candidate exploration; the next family gap is actual isolated repository/test execution. The model/label disagreement on d5 requires prospective ambiguity handling, not relabeling this failure. Useful gain, production promotion/rollback, editorial video acceptance, unused Level A tasks and Level B remain open. Last verified: **21 November 2026 Las Vegas / 22 November UTC**. [Falsifiable next steps and scope](/hive/notes/INTEGRATION/).

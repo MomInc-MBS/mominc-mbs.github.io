@@ -2,7 +2,7 @@
   "framework_revision": "0.2",
   "coder_revision": "0.4",
   "latest_research_id": "ADAPTIVE",
-  "latest_implementation_id": "INTEGRATION",
+  "latest_implementation_id": "READINESS",
   "updates": [
     {
       "id": "CODER",
@@ -20,43 +20,43 @@
       "id": "STATUS",
       "path": "implementation/CURRENT_STATE.md",
       "date": "2026-11-21",
-      "sha256": "828812e40c34252e41bbffb112f08625829e7ed0d83d4de1c76be1677388c2be"
+      "sha256": "345edd9271918c81280978d9b7f06f7d3af9bc9cfec9f9140ed129b340c3cc02"
     },
     {
       "id": "CAPABILITIES",
       "path": "implementation/CAPABILITY_INVENTORY.md",
       "date": "2026-11-21",
-      "sha256": "c94706d2cbb2eeb99e122a556777974e8ee8d20608204bcec10236336900e812"
+      "sha256": "2f8190b5e42a82ccbf27b8d47fa38d9a7ae93a98b8f44e04337c1d9623bf087b"
     },
     {
       "id": "RUNS",
       "path": "implementation/EXPERIMENT_REGISTRY.md",
       "date": "2026-11-21",
-      "sha256": "5c7174c36f67b2e9356bd04332db442b4243ad73c5be30ef59940fae816e59f4"
+      "sha256": "cdea30d35259723614d705fdb7df01ff0d249f8fb2520aa4cde76f3fd25bf559"
     },
     {
       "id": "LEARNING",
       "path": "implementation/LEARNING_LOOP_REPORT.md",
       "date": "2026-11-21",
-      "sha256": "ccb84f35307a2bc92212e1050e82a0510030b8f4b661eaa64cd990183626be74"
+      "sha256": "53bb4962fa854f8f775ae9d418fd68e035703fb6bc6ae0132ff66e03744fbaac"
     },
     {
       "id": "GAPS",
       "path": "implementation/GAP_IMPLEMENTATION_MAP.md",
       "date": "2026-11-21",
-      "sha256": "f0086127810020c91aedfc98db03d4512bcafedc31745a98c9e3cea646e1d9df"
+      "sha256": "57dcae2b73cd2ed0db50399db603da18c3d1b638020e8158333d3174b0604bae"
     },
     {
       "id": "LEDGER",
       "path": "implementation/ARCHITECTURE_DECISIONS.md",
       "date": "2026-11-21",
-      "sha256": "1d37b6bd7352521a60e9e8f9ac47df83005f88d0cd7b12993497f06708dfad98"
+      "sha256": "0fdab79faf6334e45d95ef92fc6da22102b1752e7f9599bbfd5d3b397f61b146"
     },
     {
       "id": "RELEASES",
       "path": "implementation/CHANGELOG.md",
       "date": "2026-11-21",
-      "sha256": "9c15d7ad244c80e0431d0fa0e284fa52294ff387ab26c02a68bf09c0a9560ae6"
+      "sha256": "42277fe6166e58dd7fcc11516be43e9a1a3dda6592999a809345515e1a2c0f6e"
     },
     {
       "id": "BASELINE",
@@ -101,12 +101,18 @@
       "revision": "0.3.0.dev3",
       "date": "2026-11-21",
       "sha256": "6feec6f2aace334c29970adc4922d9de98b09b480256fbad20cf02e480b4f98d"
+    },
+    {
+      "id": "READINESS",
+      "path": "updates/HIVE_Readiness_2026-11-21.md",
+      "date": "2026-11-21",
+      "sha256": "1a0e3309b4cc3cf4fe57b27d1b8de4ef4584974d1b1318cbedc81aeda34c6e60"
     }
   ],
   "source_zip_sha256": "2b726d055a17a25495854890d8d0001cb791006273e0f8eb5515788b7e00c61a",
   "counts": {
-    "research_pages": 302,
-    "graph_edges": 2470,
+    "research_pages": 303,
+    "graph_edges": 2479,
     "originals": 19
   },
   "scope": "Static research reference plus executable local model/tool controller evidence. No production model runtime or compounding-learning claim."

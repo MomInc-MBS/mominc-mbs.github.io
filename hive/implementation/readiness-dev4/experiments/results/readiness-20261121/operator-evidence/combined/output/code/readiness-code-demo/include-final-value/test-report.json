@@ -1,0 +1,51 @@
+{
+  "job_id": "0d15ef8a1fcc475489f6f4f61382f619",
+  "operation_key": "4cf130ca68022272d12105966e60a66faf2f1a1ab4afbf11c71350bb16fb02f6",
+  "patch_id": "include-final-value",
+  "receipt": {
+    "argv_sha256": "c98da6349a248ef554df0bb6c8b0d0a74ea5edb81641f991088cd6a760625b66",
+    "capabilities": "drop_all",
+    "container_name": "hive-code-b770c423245a42bb9a476ea4b2e97ff4",
+    "duration_s": 0.656,
+    "engine": "docker",
+    "exit_code": 0,
+    "image_digest": "sha256:07d4824036af339fa1b6ef769cc99d9c10a141769538b52b3b597c84f7a7b535",
+    "image_reference": "python:3.11-slim",
+    "in_container_watchdog": "coreutils-timeout-KILL",
+    "network": "none",
+    "no_new_privileges": true,
+    "operation_key": "4cf130ca68022272d12105966e60a66faf2f1a1ab4afbf11c71350bb16fb02f6",
+    "patch_sha256": "3251dbf18617cd67c47707cb9bd1611dbac212ff0ee9814a75b8ce1f34b85aad",
+    "read_only_root": true,
+    "server_version": "29.8.2",
+    "source_mount": "read_only",
+    "source_sha256": "c8c3f858a2cc92b4308218ca1aa78a4b815172dd11025bd1d810e3f343b28bc5",
+    "stderr": "",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout": "{\"results\":[{\"id\":\"empty\",\"value\":0},{\"id\":\"positive\",\"value\":6},{\"id\":\"negative\",\"value\":-4},{\"id\":\"single\",\"value\":9}]}",
+    "stdout_sha256": "e4547434d2b410fc479d920072b14be07c6c3934afa3a9bd1782fee0259ca7c2",
+    "stopped": false,
+    "suite_sha256": "2ecaa1149cb1704e986ea5af5bf64d23d54446febc3805ccb396e1fc01a0a234",
+    "timed_out_or_output_capped": false,
+    "timeout_cleanup": {
+      "attempted": false,
+      "verified_absent": true
+    },
+    "verifier_sha256": "3964e5eccf92a225f628592b2afe48f79933bf025314f81499dcb008d513a217"
+  },
+  "source_sha256": "c8c3f858a2cc92b4308218ca1aa78a4b815172dd11025bd1d810e3f343b28bc5",
+  "suite_sha256": "2ecaa1149cb1704e986ea5af5bf64d23d54446febc3805ccb396e1fc01a0a234",
+  "synthetic": false,
+  "verification": {
+    "cases_checked": 4,
+    "evaluator": "json-function-v1",
+    "passed": true,
+    "quality": 1,
+    "reason": "objective_cases_passed",
+    "suite_sha256": "2ecaa1149cb1704e986ea5af5bf64d23d54446febc3805ccb396e1fc01a0a234",
+    "synthetic": false,
+    "unsupported": 0,
+    "valid": true
+  },
+  "verifier_sha256": "3964e5eccf92a225f628592b2afe48f79933bf025314f81499dcb008d513a217"
+}

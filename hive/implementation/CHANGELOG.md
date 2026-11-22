@@ -1,5 +1,13 @@
 # Change / Release History
 
+<!-- readiness-dev4:start -->
+## Current engineering milestone — v0.3.0.dev4
+
+**READY_FOR_PRESSURE_TESTS**. Shared video/isolated code missions, eleven pressure fixtures, independent fault checks and clean-package evidence are published. 342 tests and 7 CLI journeys passed; 2 explained Windows symlink skips. Zero new model calls. Level A: 0 attempted, 0 accepted; Level B UNTESTED. No policy promotion.
+
+Last verified: **21 November 2026 Las Vegas / 22 November UTC**. [Current readiness, source and all evidence](/hive/notes/READINESS/). Historical records below retain their original scope.
+<!-- readiness-dev4:end -->
+
 ## Integrated prototype — v0.3.0.dev3
 
 Connected the shared governed tool/model flow, candidate isolation, comparison, subsequent task and recovery. Published the real six-call/147-token run including the rejected inventory regression, independent Terra acceptance, 252 passing tests (two Windows skips), four CLI journeys and 16 original independent recovery checks. A later atomic interrupted-time accounting repair passed three additional independent regressions; the exact measured source is archived separately. Source, raw development evidence, failed build attempts and unchanged acceptance gates remain inspectable. Last verified: **21 November 2026 Las Vegas / 22 November UTC**. [Source and complete evidence](/hive/notes/INTEGRATION/).

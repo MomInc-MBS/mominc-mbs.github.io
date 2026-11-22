@@ -45,10 +45,10 @@
       "type": "build",
       "status": "measured",
       "evidence_status": "measured",
-      "implementation_status": "integrated_prototype_demonstrated",
+      "implementation_status": "ready_for_pressure_tests",
       "date": "2026-11-21",
       "citation_label": "HIVE integration (21 November 2026 Las Vegas)",
-      "sha256": "828812e40c34252e41bbffb112f08625829e7ed0d83d4de1c76be1677388c2be",
+      "sha256": "345edd9271918c81280978d9b7f06f7d3af9bc9cfec9f9140ed129b340c3cc02",
       "tags": [
         "hive",
         "empirical-pilot",
@@ -65,7 +65,7 @@
       "implementation_status": "implemented_scoped_pilot",
       "date": "2026-11-21",
       "citation_label": "HIVE empirical pilot (21 November 2026 UTC)",
-      "sha256": "c94706d2cbb2eeb99e122a556777974e8ee8d20608204bcec10236336900e812",
+      "sha256": "2f8190b5e42a82ccbf27b8d47fa38d9a7ae93a98b8f44e04337c1d9623bf087b",
       "tags": [
         "hive",
         "empirical-pilot",
@@ -82,7 +82,7 @@
       "implementation_status": "implemented_scoped_pilot",
       "date": "2026-11-21",
       "citation_label": "HIVE empirical pilot (21 November 2026 UTC)",
-      "sha256": "5c7174c36f67b2e9356bd04332db442b4243ad73c5be30ef59940fae816e59f4",
+      "sha256": "cdea30d35259723614d705fdb7df01ff0d249f8fb2520aa4cde76f3fd25bf559",
       "tags": [
         "hive",
         "empirical-pilot",
@@ -99,7 +99,7 @@
       "implementation_status": "implemented_scoped_pilot",
       "date": "2026-11-21",
       "citation_label": "HIVE empirical pilot (21 November 2026 UTC)",
-      "sha256": "ccb84f35307a2bc92212e1050e82a0510030b8f4b661eaa64cd990183626be74",
+      "sha256": "53bb4962fa854f8f775ae9d418fd68e035703fb6bc6ae0132ff66e03744fbaac",
       "tags": [
         "hive",
         "empirical-pilot",
@@ -116,7 +116,7 @@
       "implementation_status": "partial",
       "date": "2026-11-21",
       "citation_label": "HIVE empirical pilot (21 November 2026 UTC)",
-      "sha256": "f0086127810020c91aedfc98db03d4512bcafedc31745a98c9e3cea646e1d9df",
+      "sha256": "57dcae2b73cd2ed0db50399db603da18c3d1b638020e8158333d3174b0604bae",
       "tags": [
         "hive",
         "empirical-pilot",
@@ -133,7 +133,7 @@
       "implementation_status": "partial",
       "date": "2026-11-21",
       "citation_label": "HIVE empirical pilot (21 November 2026 UTC)",
-      "sha256": "1d37b6bd7352521a60e9e8f9ac47df83005f88d0cd7b12993497f06708dfad98",
+      "sha256": "0fdab79faf6334e45d95ef92fc6da22102b1752e7f9599bbfd5d3b397f61b146",
       "tags": [
         "hive",
         "empirical-pilot",
@@ -150,7 +150,7 @@
       "implementation_status": "implemented_scoped_pilot",
       "date": "2026-11-21",
       "citation_label": "HIVE empirical pilot (21 November 2026 UTC)",
-      "sha256": "9c15d7ad244c80e0431d0fa0e284fa52294ff387ab26c02a68bf09c0a9560ae6",
+      "sha256": "42277fe6166e58dd7fcc11516be43e9a1a3dda6592999a809345515e1a2c0f6e",
       "tags": [
         "hive",
         "empirical-pilot",
@@ -282,6 +282,24 @@
         "integration",
         "governor",
         "dev3"
+      ]
+    },
+    {
+      "id": "READINESS",
+      "path": "updates/HIVE_Readiness_2026-11-21.md",
+      "title": "HIVE v0.3.0.dev4 readiness report",
+      "type": "build",
+      "status": "measured",
+      "evidence_status": "measured",
+      "implementation_status": "ready_for_pressure_tests",
+      "date": "2026-11-21",
+      "citation_label": "HIVE readiness (21 November 2026 Las Vegas)",
+      "sha256": "1a0e3309b4cc3cf4fe57b27d1b8de4ef4584974d1b1318cbedc81aeda34c6e60",
+      "tags": [
+        "hive",
+        "readiness",
+        "v0.3.0.dev4",
+        "engineering-evidence"
       ]
     }
   ],
@@ -730,10 +748,55 @@
       "source": "WORKING",
       "target": "INTEGRATION",
       "relation": "related_to"
+    },
+    {
+      "source": "HOME",
+      "target": "READINESS",
+      "relation": "related_to"
+    },
+    {
+      "source": "STATUS",
+      "target": "READINESS",
+      "relation": "related_to"
+    },
+    {
+      "source": "RUNS",
+      "target": "READINESS",
+      "relation": "related_to"
+    },
+    {
+      "source": "CAPABILITIES",
+      "target": "READINESS",
+      "relation": "related_to"
+    },
+    {
+      "source": "LEARNING",
+      "target": "READINESS",
+      "relation": "related_to"
+    },
+    {
+      "source": "LEDGER",
+      "target": "READINESS",
+      "relation": "related_to"
+    },
+    {
+      "source": "GAPS",
+      "target": "READINESS",
+      "relation": "related_to"
+    },
+    {
+      "source": "RELEASES",
+      "target": "READINESS",
+      "relation": "related_to"
+    },
+    {
+      "source": "INTEGRATION",
+      "target": "READINESS",
+      "relation": "related_to"
     }
   ],
   "scope": "The supplied coder packet remains revision 0.4. The adaptive-organization research handoff is a dated addendum with provisional decisions and untested proposals. Editorial links provide navigation; original source and evidence records are preserved.",
   "latest_research_id": "ADAPTIVE",
   "implementation_status_id": "STATUS",
-  "latest_implementation_id": "INTEGRATION"
+  "latest_implementation_id": "READINESS"
 }

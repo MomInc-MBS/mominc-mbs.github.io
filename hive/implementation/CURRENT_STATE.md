@@ -1,5 +1,13 @@
 # Implementation Status
 
+<!-- readiness-dev4:start -->
+## Current engineering milestone — v0.3.0.dev4
+
+**READY_FOR_PRESSURE_TESTS**. Shared video/isolated code missions, eleven pressure fixtures, independent fault checks and clean-package evidence are published. 342 tests and 7 CLI journeys passed; 2 explained Windows symlink skips. Zero new model calls. Level A: 0 attempted, 0 accepted; Level B UNTESTED. No policy promotion.
+
+Last verified: **21 November 2026 Las Vegas / 22 November UTC**. [Current readiness, source and all evidence](/hive/notes/READINESS/). Historical records below retain their original scope.
+<!-- readiness-dev4:end -->
+
 ## Integrated prototype demonstrated — 21 November 2026 Las Vegas
 
 **v0.3.0.dev3: INTEGRATED_PROTOTYPE_DEMONSTRATED; adaptation unvalidated.** Both real demonstration missions passed through one shared controller. Verified feedback produced a candidate that failed exact inventory addition where the tool succeeded; HIVE rejected it and the subsequent P0 tool task passed. Eleven jobs used six local calls and 147 generated tokens. Two fresh-process replays and experimental policy restores spent zero further calls. Terra independently accepted this bounded flow after replay and fault checks. Latest hardened-source suite: 252 passed, two Windows symlink skips; four CLI journeys; 16 focused independent checks. The six-call run retains its original source; a later interrupted-time accounting repair passed three independent regressions without further inference.

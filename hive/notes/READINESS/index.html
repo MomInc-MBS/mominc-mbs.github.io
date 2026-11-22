@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HIVE v0.3.0.dev4 readiness report · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#29143f"><link rel="canonical" href="https://mominc.online/hive/notes/READINESS/">
+<meta property="og:title" content="HIVE v0.3.0.dev4 readiness report · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg?v=2" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=3"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=3"><link rel="stylesheet" href="/hive/assets/research.css?v=1">
+<script defer src="/hive/assets/hive.js?v=3"></script></head>
+<body class="integration-page"><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg?v=2" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/READINESS/">Implementation</a><a href="/hive/notes/CODER/">Coder directions</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/READINESS/" aria-current=page>v0.3.0.dev4 readiness</a><a href="/hive/notes/INTEGRATION/" >Historical dev3 integration</a><a href="/hive/notes/WORKING/" >Video mission alpha</a><a href="/hive/notes/V03/" >v0.3 foundation</a><a href="/hive/notes/CONTROLLER/" >Adaptive controller - v0.2</a><a href="/hive/notes/PROTOTYPE/" >Local prototype - v0.1</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/READINESS/" aria-current=page>v0.3.0.dev4 readiness</a><a href="/hive/notes/INTEGRATION/" >Historical dev3 integration</a><a href="/hive/notes/WORKING/" >Video mission alpha</a><a href="/hive/notes/V03/" >v0.3 foundation</a><a href="/hive/notes/CONTROLLER/" >Adaptive controller - v0.2</a><a href="/hive/notes/PROTOTYPE/" >Local prototype - v0.1</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 303 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download original vault · 0.2</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=build">Local build</a><span>/</span><span>READINESS</span></div>
+<div class="doc-meta"><span class="badge">Measured</span><span class="badge neutral">Ready for pressure tests</span></div><div class="doc-tools"><button class="copy-link" data-title="HIVE v0.3.0.dev4 readiness report" data-id="READINESS" data-series="HIVE readiness (21 November 2026 Las Vegas)">Copy reference</button><a href="/hive/updates/HIVE_Readiness_2026-11-21.md">Markdown source</a><a href="/hive/graph/?focus=READINESS">View connections</a><button class="print-page">Print</button></div>
+<article class="prose"><h1 id="hive-v030dev4-readiness-report">HIVE v0.3.0.dev4 readiness report</h1>
+<p><strong>READY_FOR_PRESSURE_TESTS.</strong> The shared controller runs video and isolated Python code missions, all eleven pressure fixtures execute, and saved evidence is independently checked. This campaign made <strong>zero new model calls</strong>. Level A is <strong>not accepted: 0 fresh tasks attempted, 0 accepted</strong>. Level B is <strong>UNTESTED</strong>; no policy or weights are promoted.</p>
+<p>Last verified: <strong>21 November 2026 Las Vegas / 22 November UTC</strong>. <a href="/hive/implementation/readiness-dev4/build/readiness-report.json">Machine-readable readiness report</a>, <a href="/hive/implementation/readiness-dev4/build/coverage-matrix.csv">coverage matrix</a>, <a href="/hive/implementation/readiness-dev4/build/evidence-index.json">evidence index</a>, <a href="/hive/implementation/readiness-dev4/experiments/results/readiness-20261121/terra-final-verdict.md">independent assessment</a>.</p>
+<h2 id="what-runs">What runs</h2>
+<p>The public mission CLI accepts a bounded dependency graph. A real digest-pinned Docker worker executes the narrow Python function protocol; video captions and clip plans use the same Executor, Store and budget. The operator demo runs each family and a combined code-to-video graph, then replays each in fresh processes with unchanged counters and original source bytes.</p>
+<p>The code worker receives a curated read-only source copy. Expected answers and verifier files stay on the host. Network, root writes, privileges, memory, CPU, process count, time and output are bounded. Independent tests cover fake success, secret/verifier access, junctions, STOP, budget exhaustion, host death, interruption, wrong-job evidence and changed outputs. These are concrete controls for the pinned environment, not proof against every container vulnerability.</p>
+<p>H01–H11 have finite generators, positive and deliberate negative controls, persisted artifacts, replay and scenario observations. H01 transfer/retention and H02 repair/sibling results are synthetic smoke measurements. The real development comparison adapter wires fixed tool, fixed specialist, a fixed two-component team, learning-off and adaptive arms with matched caps and source grouping. Its new model dispatch tests use a fake adapter. The team's fixed rule checks both verified outputs and falls back or abstains on disagreement; it is not evidence of an optimal team.</p>
+<h2 id="readiness-gates">Readiness gates</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Gate</th>
+<th>Status</th>
+<th>Evidence scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R1</td>
+<td>INTEGRATION_TESTED</td>
+<td>Actual source/model/config/verifier health and permission/budget distinction; no inference authorization.</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>INTEGRATION_TESTED</td>
+<td>One Store and budget for actual Docker code plus video; separate and combined CLI replay; editorial pending.</td>
+</tr>
+<tr>
+<td>R3</td>
+<td>INTEGRATION_TESTED</td>
+<td>Historical real feedback changed a distinct later executed development route; failed candidate rejected. Independent reconstruction/reload plus synthetic executed restore; no gain claim.</td>
+</tr>
+<tr>
+<td>R4</td>
+<td>INTEGRATION_TESTED</td>
+<td>Both-family fault matrix, immutable replay, bounded Docker worker controls and safe stops; code learning disabled.</td>
+</tr>
+<tr>
+<td>R5</td>
+<td>INTEGRATION_TESTED</td>
+<td>All eleven finite synthetic scenarios, independent positive/negative checks, named mechanisms and public CLI replay; research untested.</td>
+</tr>
+<tr>
+<td>R6</td>
+<td>INTEGRATION_TESTED</td>
+<td>Five actual development control configurations over tool/local routes, matched caps/grouping and fixed team arbitration; tested using fake specialist, not model performance.</td>
+</tr>
+<tr>
+<td>R7</td>
+<td>INTEGRATION_TESTED</td>
+<td>Registry/exposure controls plus protected code-worker files; no sealed decisive study or external evaluator host claimed.</td>
+</tr>
+<tr>
+<td>R8</td>
+<td>INTEGRATION_TESTED</td>
+<td>Clean exported source and offline evidence replay with no private SQLite stores or unintended calls.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="checked-source-and-receipts">Checked source and receipts</h2>
+<ul>
+<li>Frozen runtime checks: <strong>342 passed, 2 skipped, 0 failed</strong>. The explained skips concern Windows symbolic-link creation; real junction tests execute.</li>
+<li>Tester Army: <strong>7 CLI journeys passed</strong>, including isolated code/video and all eleven pressure commands. No physical phone test is claimed.</li>
+<li>Baseline archive: 252 passed, 2 explained skips. Historical replay still checks 11 jobs and 43 artifacts with zero inference.</li>
+<li><a href="/hive/implementation/readiness-dev4/experiments/results/readiness-20261121/final-tests.xml">Full test receipt</a>, <a href="/hive/implementation/readiness-dev4/experiments/results/readiness-20261121/e2e/report.json">CLI journey report</a>, <a href="/hive/implementation/readiness-dev4/experiments/results/readiness-20261121/operator-demo.json">operator demo</a>, <a href="/hive/implementation/readiness-dev4/experiments/results/readiness-20261121/terra-r4-matrix.md">fault matrix</a>, <a href="/hive/implementation/readiness-dev4/docs/READINESS_FAILURE_REGISTER.md">failure register</a>, <a href="/hive/implementation/readiness-dev4-clean-zip-smoke.json">clean ZIP checks</a>.</li>
+</ul>
+<p>Measured source commit: <code>b66efb0ba074bf8c6f6a8c0f0bc4761aa3e65739</code>. Runtime SHA-256: <code>e711d1c3e7eb4dbd23b95f3027f5d97627b1f6880a2c252e2cefea8c522e817b</code>. The packaged commit is <code>1e1bf945bd605fa511c7ceed9ecae303f77e1c56</code>; subsequent packaging changes contain documentation, receipts, a bounded CLI-test capture buffer and an offline replay helper correction with the same runtime bytes. <a href="/hive/implementation/readiness-dev4/SNAPSHOT_MANIFEST.json">Snapshot manifest</a>, <a href="/hive/implementation/readiness-dev4-publication.json">publication manifest</a>.</p>
+<h2 id="run-the-package">Run the package</h2>
+<p><a href="/hive/downloads/HIVE_Readiness_v0_3_0_dev4.zip">Download HIVE v0.3.0.dev4</a> · <a href="/hive/implementation/readiness-dev4/docs/RUN_HIVE.md">Operator commands</a> · <a href="/hive/implementation/readiness-dev4/README.md">README</a></p>
+<p>ZIP SHA-256: <code>c3cf3e4633391efeb6f8659821fc4bdb6b112fe6dc4f5ea31bc00b531f3102ce</code>.</p>
+<pre><code class="language-powershell">$env:PYTHONPATH = &quot;$PWD\src&quot;
+python -m hive doctor --offline
+python scripts/replay_integration_export.py
+python scripts/replay_readiness_exports.py
+python scripts/readiness_demo.py --work .hive/operator-demo
+</code></pre>
+<p>The demo needs Git, FFmpeg/ffprobe and the pinned Docker Linux image described in the runbook. Evidence replay performs no dispatch or inference. Source snapshots exclude private SQLite stores, actual approvals, credentials and sealed research answers.</p>
+<h2 id="what-the-evidence-does-not-establish">What the evidence does not establish</h2>
+<p>Historical verified feedback changed a later executed development route, but that candidate returned the wrong inventory total and was rejected. Independent reconstruction, restart and parent restoration support the routing mechanism; they do not show beneficial transfer. The historical six-call and 30-call allocations remain spent.</p>
+<p>Level A needs <strong>six independent, unused approved video sources and six independent code snapshots</strong>, scoped resources and independent acceptance decisions, including editorial review where appropriate. At least 10 of 12 genuine attempts must be accepted and all mechanical gates must pass. The generated demo and previously exposed work do not count. The code protocol currently supports narrow Python function tasks; other languages need a reviewed adapter.</p>
+<p>Level B requires its own authorized preregistration, source-disjoint sealed tasks, strongest applicable fixed controls, learning-off comparison, retention waves, uncertainty and critical-regression checks. No transferable improvement, frontier-model benefit or Disney/AWS replication is claimed. <a href="/hive/implementation/readiness-dev4/docs/NEXT_WORK_ITEM.md">Exact next action</a>, <a href="/hive/implementation/readiness-dev4/experiments/plans/readiness-level-a.json">Level A inventory</a>, <a href="/hive/implementation/readiness-dev4/experiments/plans/readiness-level-b.json">Level B inventory</a>.</p>
+<p><a href="/hive/notes/INTEGRATION/">Historical dev3 integration</a> and every earlier download retain their original evidence and limitations.</p>
+</article><section class="backlinks"><h2>Referenced by <span>9</span></h2><div><a href="/hive/notes/CAPABILITIES/"><span>CAPABILITIES</span>Capability Registry<small>related to</small></a><a href="/hive/notes/RELEASES/"><span>RELEASES</span>Change / Release History<small>related to</small></a><a href="/hive/notes/LEDGER/"><span>LEDGER</span>Decision Ledger<small>related to</small></a><a href="/hive/notes/RUNS/"><span>RUNS</span>Experiment Registry<small>related to</small></a><a href="/hive/notes/HOME/"><span>HOME</span>HIVE framework and research vault<small>related to</small></a><a href="/hive/notes/INTEGRATION/"><span>INTEGRATION</span>HIVE v0.3.0.dev3 integration report<small>related to</small></a><a href="/hive/notes/STATUS/"><span>STATUS</span>Implementation Status<small>related to</small></a><a href="/hive/notes/GAPS/"><span>GAPS</span>Known Gaps<small>related to</small></a><a href="/hive/notes/LEARNING/"><span>LEARNING</span>Learning Progress<small>related to</small></a></div></section></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#what-runs">What runs</a><a class="toc-h2" href="#readiness-gates">Readiness gates</a><a class="toc-h2" href="#checked-source-and-receipts">Checked source and receipts</a><a class="toc-h2" href="#run-the-package">Run the package</a><a class="toc-h2" href="#what-the-evidence-does-not-establish">What the evidence does not establish</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework 0.2 · Coder directions 0.4</span></a><span>Prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/updates/HIVE_Research_Update_Adaptive_Organization_and_Self_Learning_2026-11-20.md" download>Research update</a><a href="/hive/updates/HIVE_Coder_Information_Packet_2026-11-20.md" download>Coder packet · 0.4</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Original vault · 0.2</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

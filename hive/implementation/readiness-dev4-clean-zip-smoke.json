@@ -1,0 +1,153 @@
+{
+  "status": "passed",
+  "recorded_at": "2026-11-22T02:26:15.769356+00:00",
+  "zip_sha256": "c3cf3e4633391efeb6f8659821fc4bdb6b112fe6dc4f5ea31bc00b531f3102ce",
+  "zip_bytes": 28008769,
+  "source_sha256": "e711d1c3e7eb4dbd23b95f3027f5d97627b1f6880a2c252e2cefea8c522e817b",
+  "package_commit": "1e1bf945bd605fa511c7ceed9ecae303f77e1c56",
+  "package_tracked_dirty": false,
+  "snapshot_files_verified": 487,
+  "private_stores_excluded": true,
+  "new_model_calls": 0,
+  "fresh_missions": false,
+  "commands": [
+    {
+      "command": [
+        "python",
+        "-m",
+        "hive",
+        "doctor",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "seconds": 0.484,
+      "stderr": "",
+      "response": {
+        "runtime": {
+          "available": null,
+          "models": [],
+          "error": "offline: no endpoint request"
+        },
+        "running_runtime": {
+          "available": null,
+          "models": [],
+          "error": "offline: no endpoint request"
+        },
+        "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+        "platform": "Windows-10-10.0.26200-SP0",
+        "build": {
+          "version": "0.3.0.dev4",
+          "commit": "unversioned",
+          "source_sha256": "e711d1c3e7eb4dbd23b95f3027f5d97627b1f6880a2c252e2cefea8c522e817b"
+        },
+        "config_hash": "928145c3151de1356b033764aa476a879803de291b9d13c17e7bf5a08082cc7a",
+        "verifier_hashes": {
+          "verifier.py": "1ee3853546b98d31337be7aeb5d5d0af5bb565ad34ca1ee361a84965f0886bce",
+          "code_verifier.py": "9865b125bf1927208f8d22478a9be2e4f2eb63664988240636b47e2f435aeb82",
+          "pressure_verifier.py": "0406d15005109e912caf6642955370f611e1ae2d14e7d9a0a718c17ce42c539c"
+        },
+        "budgets": {
+          "endpoint": "http://127.0.0.1:11434",
+          "model": "myr5-hold-local:latest",
+          "timeout_s": 120,
+          "max_tokens": 128,
+          "seed": 42,
+          "max_requests": 120,
+          "max_total_tokens": 15360,
+          "max_wall_s": 2700,
+          "max_storage_bytes": 268435456,
+          "max_cycles": 240,
+          "max_retries": 2,
+          "concurrency": 1,
+          "routes": [
+            "local_direct",
+            "local_tool"
+          ],
+          "allow_fixtures": false
+        },
+        "budget_is_authorization": false,
+        "permissions": "task manifest required; candidate output cannot grant actions",
+        "accounting": {
+          "present": false,
+          "budget": null,
+          "authorization": "not established"
+        },
+        "tools": {
+          "ffmpeg": {
+            "installed": true
+          },
+          "ffprobe": {
+            "installed": true
+          },
+          "docker": {
+            "installed": true
+          },
+          "podman": {
+            "installed": false
+          }
+        },
+        "sandbox": {
+          "status": "PRESENT_UNVERIFIED",
+          "enforcement_verified": false
+        },
+        "new_model_calls": 0,
+        "offline": true,
+        "cpu_gpu_usage": "unknown"
+      }
+    },
+    {
+      "command": [
+        "python",
+        "scripts/replay_integration_export.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.204,
+      "stderr": "",
+      "response": {
+        "status": "passed",
+        "verified_jobs": 11,
+        "verified_artifacts": 43,
+        "candidate_reconstructed": true,
+        "candidate_decision": "REJECTED",
+        "new_model_calls": 0,
+        "historical_runtime_source_sha256": "c73866989d9c03253af8eb199b0c93509adbc50b92bcab7e0a29fde15db0d9d2",
+        "replayer_runtime_source_sha256": "e711d1c3e7eb4dbd23b95f3027f5d97627b1f6880a2c252e2cefea8c522e817b",
+        "scope": "offline artifact consistency and verifier replay; no fresh inference or private store"
+      }
+    },
+    {
+      "command": [
+        "python",
+        "scripts/replay_readiness_exports.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.625,
+      "stderr": "",
+      "response": {
+        "status": "passed",
+        "verified_public_files": 163,
+        "fixture_scenarios": 11,
+        "fixture_observations": 250,
+        "operator_jobs": 6,
+        "new_model_calls": 0,
+        "research_status": "UNTESTED",
+        "current_runtime": {
+          "version": "0.3.0.dev4",
+          "commit": "unversioned",
+          "source_sha256": "e711d1c3e7eb4dbd23b95f3027f5d97627b1f6880a2c252e2cefea8c522e817b"
+        },
+        "scope": "offline exported bytes and objective-result replay; no fresh missions or private journal replay"
+      }
+    }
+  ],
+  "scope": "Fresh extraction, payload digests and public offline evidence replay",
+  "candidate_equivalence": {
+    "tested_candidate_commit": "db4ccd1027aeeb442a824940c83efc558b0877b0",
+    "tested_candidate_zip_sha256": "b147d165563a9d765c7ff9243daacffae53985cfec86ecc55cff062492417ca3",
+    "tested_candidate_manifest": "implementation/readiness-dev4-tested-candidate-manifest.json",
+    "matched_payload_files": 137,
+    "matched_payload_index_sha256": "ad53e21ca973b54913049bd5800cc27522f1d8815a2a92281a83732ca2b13274",
+    "runtime_scripts_tests_configs_fixtures_unchanged": true,
+    "changes": "Documentation, exact-byte attributes and final independent receipts only since clean candidate."
+  }
+}

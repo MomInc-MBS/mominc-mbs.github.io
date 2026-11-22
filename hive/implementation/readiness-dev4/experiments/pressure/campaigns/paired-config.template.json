@@ -1,0 +1,19 @@
+{
+  "endpoint": "http://127.0.0.1:11434",
+  "model": "REQUIRED-pinned-local-model",
+  "timeout_s": 30,
+  "max_tokens": 128,
+  "seed": 42,
+  "max_requests": 8,
+  "max_total_tokens": 1024,
+  "max_wall_s": 360,
+  "max_storage_bytes": 134217728,
+  "max_cycles": 12,
+  "max_retries": 0,
+  "concurrency": 1,
+  "routes": [
+    "tool",
+    "local_direct"
+  ],
+  "allow_fixtures": false
+}
