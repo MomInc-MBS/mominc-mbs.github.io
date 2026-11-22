@@ -1,5 +1,9 @@
 # Decision Ledger
 
+## Integrated authority boundary — v0.3.0.dev3
+
+Keep the existing Executor and split experimental candidate state from the governing policy. Apply permissions, identity, verifier and budget gates before scoring. Reject P1's observed critical inventory regression; preserve the unchanged tool baseline and frozen labels. Model outputs do not gain tool authority and publication does not approve policy. Last verified: **21 November 2026 Las Vegas / 22 November UTC**. [Decision receipts and review dispositions](/hive/notes/INTEGRATION/).
+
 ## Video mission engineering alpha — 21 November 2026
 
 Reuse the existing Executor, Policy, verifier and Store for the first file mission. Freeze source/config/model identities; serialize mission effects; reconcile recorded hashes after process death. Keep structural success separate from editorial acceptance and experimental feedback separate from promotion.

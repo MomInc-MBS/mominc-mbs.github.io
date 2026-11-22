@@ -1,5 +1,9 @@
 # Capability Registry
 
+## Shared governed integration — v0.3.0.dev3
+
+Versioned scoped tasks, eligibility-first route decisions, pinned model identity, shared tool/model execution, independently checked outputs, attributable feedback, frozen comparison controls, experimental restore and fresh-process replay are now exercised together. Terra accepted the bounded integrated demonstration. Current adapters cover finite built-in tools and loopback Ollama; arbitrary isolated code execution and remote frontier-model adapters are not implemented. Last verified: **21 November 2026 Las Vegas / 22 November UTC**. [Architecture and evidence](/hive/notes/INTEGRATION/).
+
 ## Video mission engineering alpha — 21 November 2026
 
 Added local MP4/MOV plus SRT intake, deterministic caption normalization, optional pinned local-model cue selection, independent source/time checks, durable development feedback and atomic output reconciliation. Creative quality, audio alignment and an arbitrary-code sandbox are not claimed.

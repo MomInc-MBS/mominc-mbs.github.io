@@ -1,5 +1,9 @@
 # Experiment Registry
 
+## Integrated development mission — v0.3.0.dev3
+
+Eleven actual jobs: tool inventory and real local classification training passed; the feedback-derived candidate failed inventory comparison against three tool controls; every classification comparison arm disagreed on one frozen label. P1 was rejected, then the subsequent P0 tool task passed. Six local calls, 147 generated tokens, 768 reserved and 18.578 active seconds. This is separate development evidence, not an unused holdout. Last verified: **21 November 2026 Las Vegas / 22 November UTC**. [Complete run, failures and receipts](/hive/notes/INTEGRATION/).
+
 ## Video mission engineering alpha — 21 November 2026
 
 The dev2 engineering run passes 235 tests and 3 CLI journeys. A 28.32-second excerpt from a 39:13.75 studio stream completed two objective jobs (captions and clip proposals) using one local-model call and 17 generated tokens. Fresh-process replay and STOP/resume used zero additional calls. The source had prior editing exposure; editorial acceptance is pending and it does not count toward unused A2 tasks. Its clean ZIP replay spends no model calls. WP0 separately spent one call/eight tokens on dev1. Historical experiments below keep their original attribution.

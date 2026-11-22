@@ -1,5 +1,9 @@
 # Known Gaps
 
+## After the integrated demonstration — v0.3.0.dev3
+
+The shared task-to-feedback flow now runs and its rejected-candidate path is independently accepted. The next hypothesis protects exact-tool capabilities during candidate exploration; the next family gap is actual isolated repository/test execution. The model/label disagreement on d5 requires prospective ambiguity handling, not relabeling this failure. Useful gain, production promotion/rollback, editorial video acceptance, unused Level A tasks and Level B remain open. Last verified: **21 November 2026 Las Vegas / 22 November UTC**. [Falsifiable next steps and scope](/hive/notes/INTEGRATION/).
+
 ## Video mission engineering alpha — 21 November 2026
 
 The video vertical slice is implemented and engineering-tested. Remaining gates include operator editorial acceptance, 12 unused tasks across video plus actual isolated code/test, the third retrieval family, independent source-level research and chronological transfer. Level A/B are not accepted.

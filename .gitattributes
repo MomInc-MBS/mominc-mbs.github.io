@@ -28,7 +28,14 @@ hive/implementation/adaptive-v02/** -text whitespace=blank-at-eol,space-before-t
 hive/implementation/adaptive-v021/** -text whitespace=blank-at-eol,space-before-tab,cr-at-eol,-blank-at-eof
 hive/implementation/v03-foundation/** -text whitespace=blank-at-eol,space-before-tab,cr-at-eol,-blank-at-eof
 hive/implementation/working-prototype-dev2/** -text whitespace=blank-at-eol,space-before-tab,cr-at-eol,-blank-at-eof
+hive/implementation/integration-dev3/** -text whitespace=blank-at-eol,space-before-tab,cr-at-eol,-blank-at-eof
+hive/implementation/integration-dev3-*.json -text whitespace=cr-at-eol
+# Preserve original test output, including failure excerpts and their whitespace.
+hive/implementation/integration-dev3/experiments/results/** -text whitespace=space-before-tab,cr-at-eol,-blank-at-eol,-blank-at-eof
 # Preserve authored Markdown hard breaks in Ian's exact supplied directive.
 hive/implementation/v03-foundation/docs/V03_BUILD_DIRECTIVE.md -text whitespace=space-before-tab,cr-at-eol,-blank-at-eol,-blank-at-eof
 hive/implementation/working-prototype-dev2/docs/WORKING_PROTOTYPE_BUILD_PLAN.md -text whitespace=space-before-tab,cr-at-eol,-blank-at-eol,-blank-at-eof
 hive/implementation/working-prototype-dev2/docs/V03_BUILD_DIRECTIVE.md -text whitespace=space-before-tab,cr-at-eol,-blank-at-eol,-blank-at-eof
+hive/implementation/integration-dev3/docs/INTEGRATION_DIRECTIVE.md -text whitespace=space-before-tab,cr-at-eol,-blank-at-eol,-blank-at-eof
+hive/implementation/integration-dev3/docs/WORKING_PROTOTYPE_BUILD_PLAN.md -text whitespace=space-before-tab,cr-at-eol,-blank-at-eol,-blank-at-eof
+hive/implementation/integration-dev3/docs/V03_BUILD_DIRECTIVE.md -text whitespace=space-before-tab,cr-at-eol,-blank-at-eol,-blank-at-eof

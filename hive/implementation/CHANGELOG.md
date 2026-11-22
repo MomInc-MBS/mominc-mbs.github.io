@@ -1,5 +1,9 @@
 # Change / Release History
 
+## Integrated prototype — v0.3.0.dev3
+
+Connected the shared governed tool/model flow, candidate isolation, comparison, subsequent task and recovery. Published the real six-call/147-token run including the rejected inventory regression, independent Terra acceptance, 252 passing tests (two Windows skips), four CLI journeys and 16 original independent recovery checks. A later atomic interrupted-time accounting repair passed three additional independent regressions; the exact measured source is archived separately. Source, raw development evidence, failed build attempts and unchanged acceptance gates remain inspectable. Last verified: **21 November 2026 Las Vegas / 22 November UTC**. [Source and complete evidence](/hive/notes/INTEGRATION/).
+
 ## Video mission engineering alpha — 21 November 2026
 
 Published v0.3.0.dev2 engineering source, 235-test evidence, 3 CLI journeys, clean-ZIP smoke and the full working-prototype plan. A 28.32-second excerpt from a 39:13.75 studio stream completed two objective jobs (captions and clip proposals) using one local-model call and 17 generated tokens. Fresh-process replay and STOP/resume used zero additional calls. The source had prior editing exposure; editorial acceptance is pending and it does not count toward unused A2 tasks. Earlier packages and rejected/quarantined decisions remain preserved.

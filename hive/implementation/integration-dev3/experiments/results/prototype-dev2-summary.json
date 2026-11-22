@@ -1,0 +1,80 @@
+{
+  "version": "0.3.0.dev2",
+  "date": "2026-11-21T21:43:05.290096+00:00",
+  "base_commit": "caf9ace1ab41d5909f60ee6c2ed6fd60cb7ba345",
+  "runtime_source_sha256": "e8dc974bf4e71f44879bd0a5dfe4194f09d97cd29c9c19c77be11a6be0a6631c",
+  "status": "engineering_alpha",
+  "level_a": "not_accepted",
+  "level_b": "inconclusive_not_run",
+  "policy_deployed": false,
+  "tests": {
+    "passed": 235,
+    "failed": 0,
+    "skipped": 2,
+    "wall_s": 94.47,
+    "junit": "experiments/results/prototype-dev2-tests.xml",
+    "skip_reason": "Windows symbolic-link creation unavailable; junction tests passed"
+  },
+  "cli_journeys": {
+    "passed": 3,
+    "failed": 0,
+    "report": "experiments/results/prototype-root-final-e2e/report.json",
+    "media": "ffmpeg-generated synthetic MP4; no real footage"
+  },
+  "new_real_local_inference": {
+    "baseline_wp0": 1,
+    "video_mission": 1,
+    "generated_tokens": 25,
+    "input_tokens": null,
+    "receipt": "experiments/results/prototype-wp0-smoke.json",
+    "source_version": "mixed; baseline dev1, video dev2; see separate receipts",
+    "token_attribution": {
+      "baseline_wp0": 8,
+      "video_mission": 17
+    },
+    "video_receipt": "experiments/results/prototype-real-video-demo.json",
+    "source_sha256_attribution": {
+      "baseline_wp0": "024e33a80265718014a42d2a8d4609663ed74f327a36043b18285810d67c2731",
+      "video_mission": "e8dc974bf4e71f44879bd0a5dfe4194f09d97cd29c9c19c77be11a6be0a6631c"
+    }
+  },
+  "remaining_video_allocation": {
+    "store": ".hive/prototype-video",
+    "calls": 2,
+    "reserved_generated_tokens": 256,
+    "active_seconds": 112.35899999993853,
+    "state": "same frozen mission only; no transfer/refill or additional input authorized by this receipt"
+  },
+  "genuine_acceptance_tasks": {
+    "attempted": 0,
+    "verified": 0,
+    "failed": 0,
+    "abstained": 0,
+    "blocked": "unused multi-family inventory and editorial acceptance pending; reused stream demo excluded"
+  },
+  "independent_review": {
+    "terra": "10 adversarial passed, 1 symlink skipped; synthetic CLI passed",
+    "grok": "pending",
+    "nemotron": "not_requested_for_this_engineering_increment; statistical study not run"
+  },
+  "limitations": [
+    "Structural clip validity is separate from editorial approval.",
+    "The next proposed route is recorded but not falsely counted as an executed later task.",
+    "No new isolated repository-repair workflow or transfer study has run.",
+    "Input tokens are unavailable from the existing adapter.",
+    "Real demo uses one short excerpt from previously edited footage; audio alignment and editorial usefulness remain unaccepted."
+  ],
+  "next_work_item": "docs/NEXT_WORK_ITEM.md",
+  "video_demo": {
+    "status": "objective_verified_editorial_pending",
+    "receipt": "experiments/results/prototype-real-video-demo.json",
+    "model_calls": 1,
+    "generated_tokens": 17,
+    "source_groups": 1,
+    "objective_jobs_verified": 2,
+    "unused_a2_tasks": 0,
+    "editorial_acceptances": 0,
+    "public_description": "A 28.32-second excerpt from a 39:13.75 studio stream completed two objective jobs (captions and clip proposals) using one local-model call and 17 generated tokens. Fresh-process replay and STOP/resume used zero additional calls. The source had prior editing exposure; editorial acceptance is pending and it does not count toward unused A2 tasks."
+  },
+  "clean_candidate_smoke": "experiments/results/prototype-clean-release-smoke.json"
+}

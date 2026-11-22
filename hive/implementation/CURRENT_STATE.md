@@ -1,8 +1,14 @@
 # Implementation Status
 
+## Integrated prototype demonstrated — 21 November 2026 Las Vegas
+
+**v0.3.0.dev3: INTEGRATED_PROTOTYPE_DEMONSTRATED; adaptation unvalidated.** Both real demonstration missions passed through one shared controller. Verified feedback produced a candidate that failed exact inventory addition where the tool succeeded; HIVE rejected it and the subsequent P0 tool task passed. Eleven jobs used six local calls and 147 generated tokens. Two fresh-process replays and experimental policy restores spent zero further calls. Terra independently accepted this bounded flow after replay and fault checks. Latest hardened-source suite: 252 passed, two Windows symlink skips; four CLI journeys; 16 focused independent checks. The six-call run retains its original source; a later interrupted-time accounting repair passed three independent regressions without further inference.
+
+Last verified: **21 November 2026 Las Vegas / 22 November UTC**. Production-policy rollback, useful adaptive gain, Level A/B and frontier-model benefit remain unproven. [Source, architecture, runbook, all outcomes and independent evidence](/hive/notes/INTEGRATION/). Historical releases below keep their original scope.
+
 ## Video mission engineering alpha — 21 November 2026
 
-Latest source is **v0.3.0.dev2**, a bounded video mission engineering alpha: 235 tests passed, 2 Windows symlink skips, 3 CLI journeys and a verified clean-source package. A 28.32-second excerpt from a 39:13.75 studio stream completed two objective jobs (captions and clip proposals) using one local-model call and 17 generated tokens. Fresh-process replay and STOP/resume used zero additional calls. The source had prior editing exposure; editorial acceptance is pending and it does not count toward unused A2 tasks. Level A/B remain unaccepted; no policy is deployed.
+Historical source **v0.3.0.dev2** is a bounded video mission engineering alpha: 235 tests passed, 2 Windows symlink skips, 3 CLI journeys and a verified clean-source package. A 28.32-second excerpt from a 39:13.75 studio stream completed two objective jobs (captions and clip proposals) using one local-model call and 17 generated tokens. Fresh-process replay and STOP/resume used zero additional calls. The source had prior editing exposure; editorial acceptance is pending and it does not count toward unused A2 tasks. Level A/B remain unaccepted; no policy is deployed.
 
 [Source, results, demo and limitations](/hive/notes/WORKING/).
 

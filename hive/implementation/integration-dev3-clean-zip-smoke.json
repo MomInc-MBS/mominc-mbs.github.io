@@ -1,0 +1,63 @@
+{
+  "date": "2026-11-22T00:28:42.751305+00:00",
+  "status": "passed",
+  "scope": "deterministic video and integration CLI on extracted ZIP; release QA, not new acceptance or inference",
+  "snapshot_source_commit": "6a044bb7adb5f8a082a5d298148461031fd9b506",
+  "zip_sha256": "b6ce91b1c3829821a4da7695260a4109dfe1214e5aaf6f79779c4f8dd571b33d",
+  "verified_manifest_files": 267,
+  "runtime": {
+    "version": "0.3.0.dev3",
+    "commit": "unversioned",
+    "source_sha256": "6ee9ae14b32ec6c9972bba693bb45395af5998516c4bc9de19dd5bbb5f550c99"
+  },
+  "checks": [
+    "all exported file hashes",
+    "fresh-process CLI execution and replay",
+    "STOP blocks completed output replay",
+    "resume keeps output bytes and mtimes",
+    "job identity stable",
+    "zero model requests",
+    "budget unchanged on replay",
+    "integrated mission and rejected candidate",
+    "experimental rollback leaves governing policy unchanged"
+  ],
+  "model_requests": 0,
+  "genuine_tasks": 0,
+  "resource_use": {
+    "model_requests": 0,
+    "generated_tokens": 0,
+    "input_tokens": null,
+    "input_token_measurement": "unavailable from configured adapter",
+    "clip_generated_tokens": 0
+  },
+  "budget": {
+    "cycles": 2,
+    "requests": 0,
+    "tokens_actual": 0,
+    "tokens_reserved": 0,
+    "wall_s": 0.10999999998603016
+  },
+  "integration_budget": {
+    "cycles": 6,
+    "requests": 0,
+    "tokens_actual": 0,
+    "tokens_reserved": 0,
+    "wall_s": 0.2809999998426065
+  },
+  "integration_candidate_decision": "REJECTED",
+  "historical_artifact_replay": {
+    "status": "passed",
+    "verified_jobs": 11,
+    "verified_artifacts": 43,
+    "candidate_reconstructed": true,
+    "candidate_decision": "REJECTED",
+    "new_model_calls": 0,
+    "historical_runtime_source_sha256": "c73866989d9c03253af8eb199b0c93509adbc50b92bcab7e0a29fde15db0d9d2",
+    "replayer_runtime_source_sha256": "6ee9ae14b32ec6c9972bba693bb45395af5998516c4bc9de19dd5bbb5f550c99",
+    "scope": "offline artifact consistency and verifier replay; no fresh inference or private store"
+  },
+  "outputs": {
+    "captions.srt": "5f125496e79e88869ba377cf2bdd03ca2d93927f5b2e9e7a1011efa3a1f55192",
+    "clips.json": "bc5e8a2a1f55be0449dfcc5e45e345a091fce6da5bf84947c03475eef449c558"
+  }
+}

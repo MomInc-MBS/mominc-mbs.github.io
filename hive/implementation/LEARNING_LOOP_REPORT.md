@@ -1,5 +1,9 @@
 # Learning Progress
 
+## Actual candidate change and rejection — v0.3.0.dev3
+
+Two verified training observations produced P1. It actually selected a different inventory route on separate development input, returned 42,073 instead of 41,907 bytes, and was rejected. The unchanged P0 tool then passed a subsequent task. This distinguishes an executed learning loop from useful learning: **adaptation is not validated**. Experimental state restored and reloaded; no production policy changed. Last verified: **21 November 2026 Las Vegas / 22 November UTC**. [All controls, failures and independent decision](/hive/notes/INTEGRATION/).
+
 ## Video mission engineering alpha — 21 November 2026
 
 The video mission saves policy hashes around verifier-backed development feedback and identifies the next proposed route without claiming that route executed. Editorial usefulness and strong-baseline learning benefit remain unverified. No production policy promotion occurred.

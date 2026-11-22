@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HIVE v0.3.0.dev3 integration report · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#29143f"><link rel="canonical" href="https://mominc.online/hive/notes/INTEGRATION/">
+<meta property="og:title" content="HIVE v0.3.0.dev3 integration report · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg?v=2" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=3"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=3"><link rel="stylesheet" href="/hive/assets/research.css?v=1">
+<script defer src="/hive/assets/hive.js?v=3"></script></head>
+<body class="integration-page"><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg?v=2" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/INTEGRATION/">Implementation</a><a href="/hive/notes/CODER/">Coder directions</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/INTEGRATION/" aria-current=page>v0.3.0.dev3 integration</a><a href="/hive/notes/WORKING/" >Video mission alpha</a><a href="/hive/notes/V03/" >v0.3 foundation</a><a href="/hive/notes/CONTROLLER/" >Adaptive controller - v0.2</a><a href="/hive/notes/PROTOTYPE/" >Local prototype - v0.1</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/INTEGRATION/" aria-current=page>v0.3.0.dev3 integration</a><a href="/hive/notes/WORKING/" >Video mission alpha</a><a href="/hive/notes/V03/" >v0.3 foundation</a><a href="/hive/notes/CONTROLLER/" >Adaptive controller - v0.2</a><a href="/hive/notes/PROTOTYPE/" >Local prototype - v0.1</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 302 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download original vault · 0.2</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=build">Local build</a><span>/</span><span>INTEGRATION</span></div>
+<div class="doc-meta"><span class="badge">Measured</span><span class="badge neutral">Integrated prototype demonstrated</span></div><div class="doc-tools"><button class="copy-link" data-title="HIVE v0.3.0.dev3 integration report" data-id="INTEGRATION" data-series="HIVE v0.3.0.dev3 integrated demonstration (21 November 2026 Las Vegas)">Copy reference</button><a href="/hive/implementation/INTEGRATION.md">Markdown source</a><a href="/hive/graph/?focus=INTEGRATION">View connections</a><button class="print-page">Print</button></div>
+<article class="prose"><h1 id="hive-v030dev3-integration-report">HIVE v0.3.0.dev3 integration report</h1>
+<p><strong>INTEGRATED_PROTOTYPE_DEMONSTRATED — adaptation not yet validated.</strong> One executable now connects task intake, governed tool/model execution, independent verification, persisted feedback, candidate comparison and recovery. Both genuine demonstration missions passed. The candidate then lost a critical comparison and was rejected; the next task retained the correct tool policy.</p>
+<p>Last verified: <strong>21 November 2026 Las Vegas / 22 November UTC</strong>. Independent Terra acceptance is recorded for this bounded development workflow. Level A and Level B remain unaccepted. The public site distributes source and evidence; it is not a hosted model service.</p>
+<p><a href="/hive/downloads/HIVE_Integration_v0_3_0_dev3.zip">Download runnable source</a> · <a href="/hive/implementation/integration-dev3/docs/HIVE_RUNBOOK.md">Runbook</a> · <a href="/hive/implementation/integration-dev3/docs/INTEGRATION_MAP.md">Architecture map</a> · <a href="/hive/implementation/integration-dev3-publication.json">Publication hashes</a></p>
+<p>The latest source includes a separately verified crash-accounting repair.
+The <a href="/hive/downloads/HIVE_Integration_Run_Source_28239ab.zip">exact source of the six-call run</a>
+is archived separately. Historical results retain their original source identity.</p>
+<h2 id="one-shared-execution-path">One shared execution path</h2>
+<pre><code class="language-mermaid">flowchart TD
+  T[Scoped task] --&gt; G[Governor and fixed P0]
+  G --&gt; E[Shared Executor]
+  E --&gt; W[Tool or pinned local model]
+  W --&gt; A[Artifacts and events]
+  A --&gt; V[Independent verifier]
+  V --&gt; F[Attributable development feedback]
+  F --&gt; C[Frozen candidate P1]
+  C --&gt; X[Separate comparison against controls]
+  X --&gt; R[Reject losing candidate]
+  R --&gt; N[Next task retains P0]
+</code></pre>
+<p>The governor excludes prohibited, unavailable, unverifiable and over-budget
+routes before ranking them. Model text has no shell or filesystem authority.
+The candidate is separate from the governing policy; feedback cannot approve
+itself. Every executed route has source, task, configuration, model and policy
+identities attached to immutable evidence. The existing Executor, Store,
+verifier and Policy remain the shared implementation.</p>
+<p>These boundaries do not depend on model size. The real adapter demonstrated here
+is Ollama. A frontier-model adapter and evidence that HIVE improves a powerful
+model are future work, not established capabilities.</p>
+<h2 id="what-actually-ran">What actually ran</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Actual result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mission A</td>
+<td>Tool grouped real repository-source rows: core 61,800 bytes and nested 4,720 bytes. Independent reduction passed.</td>
+</tr>
+<tr>
+<td>Mission B</td>
+<td>Pinned local model classified three actual directive excerpts. All three independently frozen development labels matched.</td>
+</tr>
+<tr>
+<td>Separate inventory comparison</td>
+<td>P1 selected the local model and returned 42,073 bytes; the correct total was 41,907. Incumbent, strongest applicable fixed and learning-disabled controls used the tool and passed.</td>
+</tr>
+<tr>
+<td>Separate classification comparison</td>
+<td>All four arms returned <code>limits</code> for d5 where the independent label was <code>routing</code>; the other three labels matched. The failed verdicts and original labels are preserved.</td>
+</tr>
+<tr>
+<td>Decision</td>
+<td><strong>REJECTED</strong>. Critical inventory regression; paired quality delta -0.5 on two development tasks against each control. No promotion.</td>
+</tr>
+<tr>
+<td>Subsequent task</td>
+<td>Governing P0 still chose the tool and correctly returned 71,415 bytes for new rows.</td>
+</tr>
+</tbody>
+</table></div>
+<p>The run made <strong>6 local requests</strong>, produced <strong>147 generated tokens</strong>, had
+<strong>768 reserved generated tokens</strong>, and used <strong>18.578 active seconds / 11 cycles</strong>.
+Ceilings were six requests, 768 tokens, 180 active seconds, 24 cycles and 64 MiB,
+with zero retries and one local inference globally. This allocation is spent.
+Prompt-token accounting is not exposed by the current adapter.</p>
+<p>Model: <code>myr5-hold-local:latest</code>, Ollama manifest
+<code>a45646773d1ee8a6c1557c7de09a68e78a74f2990c4174a1408f65e777db150c</code>.
+Frozen runtime commit: <code>28239aba838fa7f6b2d04719ec75d629d1b14308</code>.
+Runtime SHA256: <code>c73866989d9c03253af8eb199b0c93509adbc50b92bcab7e0a29fde15db0d9d2</code>.</p>
+<h2 id="reproduction-and-independent-checks">Reproduction and independent checks</h2>
+<p><strong>252 tests passed</strong> on the latest hardened source, with two known Windows
+symlink skips; <strong>four Tester Army CLI journeys passed</strong> in 12.09 seconds.
+The original measured source had 249 passing tests and four passing journeys.
+Terra independently replayed all eleven saved verdicts,
+checked the 24 source-file byte counts and eight original directive excerpts,
+reconstructed P1 from its two feedback records, and recomputed the comparisons.
+Sixteen focused recovery tests passed. Substituted evidence and a corrupted
+candidate were refused without dispatch or budget changes.</p>
+<p>Two fresh-process replays, STOP/resume, and restoration of the initial and current
+experimental policy snapshots spent zero additional model calls. The governing
+P0 stayed unchanged. Production-policy rollback was not exercised; recovery
+claims apply to the tested finite read-only flow, not arbitrary future external
+side effects.</p>
+<p>Sol subsequently found that explicit resume could requeue an interrupted job
+before charging its reserved execution time. The latest source settles the
+time debit, clears the reservation and requeues atomically; three independent
+regressions and the full suite passed. The completed real run was unaffected.
+Latest runtime SHA256:
+<code>6ee9ae14b32ec6c9972bba693bb45395af5998516c4bc9de19dd5bbb5f550c99</code>.
+Latest source commit: <code>6a044bb7adb5f8a082a5d298148461031fd9b506</code>.
+No further real model calls were made on this later source.</p>
+<p>From the downloaded source, run <code>python scripts/replay_integration_export.py</code>
+to verify all eleven historical jobs and 43 hashed artifacts without a model
+endpoint or private database. It prints the measured and current source
+identities. A new model execution requires a separate resource allocation;
+the recorded six-call allocation is spent.</p>
+<ul>
+<li><a href="/hive/implementation/integration-dev3/experiments/results/integration-smoke/20261121-run/report.json">Actual run report</a></li>
+<li><a href="/hive/implementation/integration-dev3/experiments/results/adaptation-demo/20261121-terra/review.md">Independent Terra acceptance and checklist</a></li>
+<li><a href="/hive/implementation/integration-dev3/experiments/results/adaptation-demo/20261121-terra/verification.json">Independent machine-verifiable results</a></li>
+<li><a href="/hive/implementation/integration-dev3/experiments/results/adaptation-demo/20261121-complete-receipts/verification.json">Restart, restore and complete exported artifact hashes</a></li>
+<li><a href="/hive/implementation/integration-dev3/experiments/results/integration-smoke/20261121-start/integration-tests-final.xml">Latest full regression receipt</a></li>
+<li><a href="/hive/implementation/integration-dev3/experiments/results/integration-cli-e2e-final/report.json">Latest CLI journey report</a></li>
+<li><a href="/hive/implementation/integration-dev3/experiments/results/integration-smoke/20261121-hardening/verification.json">Hardening, source refusal and frozen-source replay</a></li>
+<li><a href="/hive/implementation/integration-dev3-clean-zip-smoke.json">Clean source ZIP verification</a></li>
+<li><a href="/hive/implementation/integration-dev3/docs/INTEGRATION_REVIEW.md">Review findings and dispositions</a></li>
+</ul>
+<p>The original execution report remains <code>FRAMEWORK_WIRED</code> with acceptance pending
+at its recording time. The later independent decision is separate; historical
+receipts are never rewritten to acquire a later approval. The source package
+includes public evidence and development inputs, while private SQLite stores,
+private evaluator data and sealed holdout labels are excluded.</p>
+<h2 id="what-this-establishes">What this establishes</h2>
+<p>This is an executed integration with a valid rejected candidate. It does not
+establish useful adaptive gain, model-weight learning, general intelligence,
+or superiority over strong AI. The small development comparison has overlapping
+control routes and repeated classification inputs; it is not an unused holdout
+or a statistical estimate of general performance. Frozen-label agreement is
+narrower than universal semantic correctness.</p>
+<p>The next hypothesis protects exact-tool capabilities from wasteful candidate
+exploration. The next task-family gap is actual isolated repository/test work.
+A future frontier study must compare the same strong model under equal budgets
+against its strongest simple tool baseline and learning-disabled HIVE, counting
+independently accepted outcomes and full overhead. <a href="/hive/implementation/integration-dev3/docs/NEXT_WORK_ITEM.md">Next work and falsifiable gates</a>.</p>
+<p>Historical video results remain at <a href="/hive/notes/WORKING/">Video mission engineering alpha</a>.
+Editorial video acceptance, unused multi-family Level A tasks and Level B
+adaptive benefit remain open. <a href="/hive/notes/STATUS/">Implementation status</a> ·
+<a href="/hive/notes/GAPS/">Known gaps</a>.</p>
+</article><section class="backlinks"><h2>Referenced by <span>10</span></h2><div><a href="/hive/notes/STATUS/"><span>STATUS</span>Implementation Status<small>informs</small></a><a href="/hive/notes/V03/"><span>V03</span>v0.3 foundation and next experiment<small>informs</small></a><a href="/hive/notes/CAPABILITIES/"><span>CAPABILITIES</span>Capability Registry<small>related to</small></a><a href="/hive/notes/RELEASES/"><span>RELEASES</span>Change / Release History<small>related to</small></a><a href="/hive/notes/LEDGER/"><span>LEDGER</span>Decision Ledger<small>related to</small></a><a href="/hive/notes/RUNS/"><span>RUNS</span>Experiment Registry<small>related to</small></a><a href="/hive/notes/HOME/"><span>HOME</span>HIVE framework and research vault<small>related to</small></a><a href="/hive/notes/GAPS/"><span>GAPS</span>Known Gaps<small>related to</small></a><a href="/hive/notes/LEARNING/"><span>LEARNING</span>Learning Progress<small>related to</small></a><a href="/hive/notes/WORKING/"><span>WORKING</span>Video mission engineering alpha<small>related to</small></a></div></section></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#one-shared-execution-path">One shared execution path</a><a class="toc-h2" href="#what-actually-ran">What actually ran</a><a class="toc-h2" href="#reproduction-and-independent-checks">Reproduction and independent checks</a><a class="toc-h2" href="#what-this-establishes">What this establishes</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework 0.2 · Coder directions 0.4</span></a><span>Prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/updates/HIVE_Research_Update_Adaptive_Organization_and_Self_Learning_2026-11-20.md" download>Research update</a><a href="/hive/updates/HIVE_Coder_Information_Packet_2026-11-20.md" download>Coder packet · 0.4</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Original vault · 0.2</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

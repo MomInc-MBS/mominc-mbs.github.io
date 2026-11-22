@@ -1,0 +1,23 @@
+{
+  "scope": "Recheck final wrapper against already FINISHED pinned v0.2.1 E0 only",
+  "decision": "COMPLETED_WITH_STATUS_OBSERVABILITY_DEFECT",
+  "budget": {
+    "cycles": 36,
+    "requests": 30,
+    "tokens_actual": 1008,
+    "tokens_reserved": 3840,
+    "wall_s": 23.124999999883585
+  },
+  "new_model_calls": 0,
+  "historical_receipts_and_plan_byte_identical": true,
+  "preserved_sha256": {
+    "v03-e0.json": "585ede18de3e45cf6a1e7f5a2fa516b8f9f69a2cf3da1c8c2443affc15ae131c",
+    "v03-base-verification.json": "3d3af5a3fffb49736ce13bb816e8fde6d83290a5524c58e4e4e5ef448111e5ee",
+    "v03-e0-real-model.json": "b98aef754ec8aed654de3609593dbe7f43feeeb4d3fb0da7bc03df5efc752cf0",
+    "v03-e0-stop.json": "7846b3cc30288857aecb7e94e523a6ccbaf3acafc1376e048185f993e31b5210",
+    "v03-e0-verification.json": "45e506e2251c17674f23d6934f2bcd38c464b7c2e58ebd1c66c7d27d6b7a6c33",
+    "operator-authorization.json": "d1b20e86a55c336040e901e2e015a72ebfb287805ba65c39d6abb5d67172bd06"
+  },
+  "store_bytes": 463010,
+  "policy_deployed": false
+}

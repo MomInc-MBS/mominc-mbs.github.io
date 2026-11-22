@@ -1,0 +1,76 @@
+{
+  "date": "2026-11-22T00:29:13.130560+00:00",
+  "source_commit": "6a044bb7adb5f8a082a5d298148461031fd9b506",
+  "runtime_version": "0.3.0.dev3",
+  "runtime_source_sha256": "6ee9ae14b32ec6c9972bba693bb45395af5998516c4bc9de19dd5bbb5f550c99",
+  "tracked_dirty": false,
+  "status": "INTEGRATED_PROTOTYPE_DEMONSTRATED",
+  "acceptance_scope": "Terra accepted the measured finite development flow and rejected-candidate path; later recovery repair independently reviewed by Sol and tested without additional real inference",
+  "adaptation": "not_validated",
+  "level_a": "not_accepted",
+  "level_b": "not_accepted",
+  "policy_deployed": false,
+  "download": "downloads/HIVE_Integration_v0_3_0_dev3.zip",
+  "download_sha256": "b6ce91b1c3829821a4da7695260a4109dfe1214e5aaf6f79779c4f8dd571b33d",
+  "snapshot_manifest": "implementation/integration-dev3/SNAPSHOT_MANIFEST.json",
+  "snapshot_file_count": 267,
+  "measured_source_commit": "28239aba838fa7f6b2d04719ec75d629d1b14308",
+  "measured_runtime_source_sha256": "c73866989d9c03253af8eb199b0c93509adbc50b92bcab7e0a29fde15db0d9d2",
+  "measured_source_download": "downloads/HIVE_Integration_Run_Source_28239ab.zip",
+  "measured_source_download_sha256": "8044ce6f422eb8624b7b11cac82c3ca3e85d9b581883b583d204270c01a8a107",
+  "tests": {
+    "passed": 252,
+    "failed": 0,
+    "skipped": 2,
+    "wall_s": 151.39,
+    "junit": "experiments/results/integration-smoke/20261121-start/integration-tests-final.xml",
+    "skip_reason": "Windows symbolic-link creation unavailable"
+  },
+  "cli_journeys": {
+    "passed": 4,
+    "failed": 0,
+    "wall_s": 12.09,
+    "report": "experiments/results/integration-cli-e2e-final/report.json",
+    "new_real_model_calls": 0
+  },
+  "independent_checks": {
+    "terra_focused_tests": 16,
+    "terra_receipt": "experiments/results/adaptation-demo/20261121-terra/verification.json",
+    "sol_post_fix_regressions": 3,
+    "sol_review": "docs/reviews/integration-sol-final-20261121.md",
+    "grok": "incomplete; cancellation requested after no substantive output; scoped Sol review substituted",
+    "nemotron": "completed limited critique; findings and dispositions in docs/INTEGRATION_REVIEW.md"
+  },
+  "real_mission": {
+    "jobs": 11,
+    "functional_missions_passed": true,
+    "candidate_decision": "REJECTED",
+    "budget": {
+      "cycles": 11,
+      "requests": 6,
+      "tokens_actual": 147,
+      "tokens_reserved": 768,
+      "wall_s": 18.57799999997951
+    },
+    "allocation_spent": true,
+    "report": "experiments/results/integration-smoke/20261121-run/report.json",
+    "report_sha256": "96547679b27fca4bc2d5fcde57c863e9172d7330104f91338daf71653c6442d9"
+  },
+  "hardening_receipt": "implementation/integration-dev3/experiments/results/integration-smoke/20261121-hardening/verification.json",
+  "release_smoke": "implementation/integration-dev3-clean-zip-smoke.json",
+  "release_smoke_sha256": "c947873643604e18a806cf82ee4a2441e76191f94de1d457b95d828278f783ae",
+  "offline_replay_command": "python scripts/replay_integration_export.py",
+  "offline_replay": {
+    "status": "passed",
+    "verified_jobs": 11,
+    "verified_artifacts": 43,
+    "candidate_reconstructed": true,
+    "candidate_decision": "REJECTED",
+    "new_model_calls": 0,
+    "historical_runtime_source_sha256": "c73866989d9c03253af8eb199b0c93509adbc50b92bcab7e0a29fde15db0d9d2",
+    "replayer_runtime_source_sha256": "6ee9ae14b32ec6c9972bba693bb45395af5998516c4bc9de19dd5bbb5f550c99",
+    "scope": "offline artifact consistency and verifier replay; no fresh inference or private store"
+  },
+  "browser_check": "implementation/integration-dev3-browser-check.json",
+  "browser_check_sha256": "11f6e2fa48ac83d86b0a0d05fe5a72da9f18e01dd72c7c707283cb2f06b77f61"
+}
