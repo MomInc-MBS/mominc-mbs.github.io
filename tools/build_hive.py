@@ -43,9 +43,10 @@ LABELS = {
     'scoped_claim_with_links': 'Scoped claim with links', 'artifact_checks': 'Artifact checks',
     'not_implemented': 'Not implemented', 'generated': 'Generated',
     'proposed_implementation': 'Proposed implementation',
+    'external_research_synthesis_not_reproduced': 'External research synthesis · Not reproduced',
     'research_synthesis_and_provisional_decision': 'Research synthesis · Provisional decision',
 }
-NAV = [('HOME', 'Start here'), ('STATUS', 'Implementation status'), ('READINESS', 'v0.3.0.dev4 readiness'), ('INTEGRATION', 'Historical dev3 integration'), ('WORKING', 'Video mission alpha'), ('V03', 'v0.3 foundation'), ('CONTROLLER', 'Adaptive controller - v0.2'), ('PROTOTYPE', 'Local prototype - v0.1'), ('ADAPTIVE', 'Latest research update'), ('CODER', 'Coder directions · 0.4'), ('FRAMEWORK', 'The framework'), ('MAP', 'Research map'),
+NAV = [('HOME', 'Start here'), ('STATUS', 'Implementation status'), ('READINESS', 'v0.3.0.dev4 readiness'), ('INTEGRATION', 'Historical dev3 integration'), ('WORKING', 'Video mission alpha'), ('V03', 'v0.3 foundation'), ('CONTROLLER', 'Adaptive controller - v0.2'), ('PROTOTYPE', 'Local prototype - v0.1'), ('ADAPTIVE', 'Latest research update'), ('LANDSCAPE', 'External landscape · 22 Nov'), ('WHOLE', 'Integrated design map'), ('CODER', 'Coder directions · 0.4'), ('FRAMEWORK', 'The framework'), ('MAP', 'Research map'),
        ('DECISIONS', 'Open decisions'), ('EVIDENCE', 'Evidence & disagreement'),
        ('HISTORY', 'Previous work'), ('ROADMAP', 'Build roadmap'), ('ARCHIVE', 'Original documents')]
 
@@ -409,6 +410,8 @@ Original package: {ORIGIN}/hive/downloads/HIVE_Framework_Research_Vault.zip
 - The supplied packet is at /hive/updates/HIVE_Coder_Information_Packet_2026-11-20.md.
 - HANDOFF and ROADMAP preserve framework 0.2 context; the newer coder packet takes precedence for current directions.
 - The latest research addendum is /hive/notes/ADAPTIVE/: adaptive organizational duality, six learning layers, formula registry, promotion governor, and eight proposed experiments. Read it alongside CODER.
+- External landscape: /hive/notes/LANDSCAPE/ records similar external systems found on 22 November 2026. External results were read, not reproduced; vendor claims are marked.
+- Integrated design map: /hive/notes/WHOLE/ places those external parts into the HIVE design with adopt/adapt/study/decline stances and a proposed build order. It is a proposal; it approves no policy, weights or inference spending.
 - The addendum is a synthesis with provisional decisions; do not report it as measured implementation evidence.
 - Source documents named but not supplied are explicitly listed under the addendum source-gaps section.
 - Current graph update links are editorial navigation and retain their relation types.

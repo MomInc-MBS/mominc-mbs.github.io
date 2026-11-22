@@ -149,12 +149,24 @@
       "revision": "0.4.0.dev1",
       "date": "2026-11-22",
       "sha256": "34be7663873f212c81028ea63c22d752a417287a0d873276b690709c01ef7068"
+    },
+    {
+      "id": "LANDSCAPE",
+      "path": "updates/HIVE_Research_Update_External_Landscape_2026-11-22.md",
+      "date": "2026-11-22",
+      "sha256": "39cad31377d65e6844c6a1aa29a0a546be2d90da3edf347811f2f412367a423b"
+    },
+    {
+      "id": "WHOLE",
+      "path": "updates/HIVE_Integrated_Design_Map_2026-11-22.md",
+      "date": "2026-11-22",
+      "sha256": "42c7eddafc839da35ab70ca95670dd7335adf6c05d11845e433e46f44745819a"
     }
   ],
   "source_zip_sha256": "2b726d055a17a25495854890d8d0001cb791006273e0f8eb5515788b7e00c61a",
   "counts": {
-    "research_pages": 306,
-    "graph_edges": 2491,
+    "research_pages": 308,
+    "graph_edges": 2513,
     "originals": 19
   },
   "scope": "Static research reference plus executable local model/tool controller evidence. No production model runtime or compounding-learning claim."
