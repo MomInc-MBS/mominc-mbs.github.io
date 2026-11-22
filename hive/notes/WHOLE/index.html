@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Integrated design map · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#29143f"><link rel="canonical" href="https://mominc.online/hive/notes/WHOLE/">
+<meta property="og:title" content="Integrated design map · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg?v=2" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=3"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=3"><link rel="stylesheet" href="/hive/assets/research.css?v=1">
+<script defer src="/hive/assets/hive.js?v=3"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg?v=2" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/OPERATIONAL/">Implementation</a><a href="/hive/notes/CODER/">Coder directions</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/OPERATIONAL/" >Latest engineering · 0.4.0.dev1</a><a href="/hive/notes/READINESS/" >v0.3.0.dev4 readiness</a><a href="/hive/notes/INTEGRATION/" >Historical dev3 integration</a><a href="/hive/notes/WORKING/" >Video mission alpha</a><a href="/hive/notes/V03/" >v0.3 foundation</a><a href="/hive/notes/CONTROLLER/" >Adaptive controller - v0.2</a><a href="/hive/notes/PROTOTYPE/" >Local prototype - v0.1</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/LANDSCAPE/" >External landscape · 22 Nov</a><a href="/hive/notes/WHOLE/" aria-current=page>Integrated design map</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/OPERATIONAL/" >Latest engineering · 0.4.0.dev1</a><a href="/hive/notes/READINESS/" >v0.3.0.dev4 readiness</a><a href="/hive/notes/INTEGRATION/" >Historical dev3 integration</a><a href="/hive/notes/WORKING/" >Video mission alpha</a><a href="/hive/notes/V03/" >v0.3 foundation</a><a href="/hive/notes/CONTROLLER/" >Adaptive controller - v0.2</a><a href="/hive/notes/PROTOTYPE/" >Local prototype - v0.1</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/LANDSCAPE/" >External landscape · 22 Nov</a><a href="/hive/notes/WHOLE/" aria-current=page>Integrated design map</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 308 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download original vault · 0.2</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=framework">Framework</a><span>/</span><span>WHOLE</span></div>
+<div class="doc-meta"><span class="badge">Design proposal</span><span class="badge neutral">Not implemented</span></div><div class="doc-tools"><button class="copy-link" data-title="Integrated design map" data-id="WHOLE" data-series="HIVE integrated design map (22 November 2026)">Copy reference</button><a href="/hive/updates/HIVE_Integrated_Design_Map_2026-11-22.md">Markdown source</a><a href="/hive/graph/?focus=WHOLE">View connections</a><button class="print-page">Print</button></div>
+<article class="prose"><h1 id="hive-integrated-design-map">HIVE — Integrated Design Map</h1>
+<p><strong>Purpose:</strong> Place each external part from <a href="/hive/notes/LANDSCAPE/">the external landscape update</a> into the HIVE design as one whole. This is a <strong>design proposal</strong>. Nothing here is implemented or measured. It does not change coder directions 0.4, approve any experimental policy or weights, or authorize new model calls. Existing alternatives and open decisions stay open.</p>
+<p>Sources of the HIVE side: <a href="/hive/notes/FRAMEWORK/">the framework</a>, <a href="/hive/notes/ADAPTIVE/">the adaptive addendum</a>, <a href="/hive/notes/GAPPLAN/">the gap and change plan</a>, <a href="/hive/notes/GAPS/">known gaps</a> and <a href="/hive/notes/STATUS/">implementation status</a>.</p>
+<h2 id="1-the-whole-in-one-picture">1. The whole in one picture</h2>
+<p>HIVE already has two loops. The external parts fit into the slow loop and around the gate. The fast loop needs little from outside.</p>
+<pre><code class="language-mermaid">flowchart TD
+    A[Task and constraints] --&gt; B[Selector and budgets]
+    B --&gt; C[Specialists and tools]
+    C --&gt; D[Independent verification]
+    D --&gt; E[Result and evidence]
+    E --&gt; F[Event log]
+    F --&gt; G[Failure routing]
+    G --&gt; H[Candidate generator]
+    H --&gt; I[Static checks and sandbox]
+    I --&gt; J[Development evaluation]
+    J --&gt; K[Private held-out evaluation]
+    K --&gt; L{No regression and gain?}
+    L --&gt;|No| M[Reject and publish]
+    L --&gt;|Yes| N[Versioned release with rollback]
+    N --&gt; B
+    N --&gt; O[Compounding check on new tasks]
+    O --&gt; F
+</code></pre>
+<p>Where the external parts sit:</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Box</th>
+<th>HIVE name</th>
+<th>External part</th>
+<th>Stance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Event log</td>
+<td>Evidence service, restart replay</td>
+<td>Regimes / ActiveGraph event sourcing</td>
+<td>Study, compare</td>
+</tr>
+<tr>
+<td>Failure routing</td>
+<td>Credit assignment</td>
+<td>Regimes failure-to-seam taxonomy</td>
+<td>Adapt</td>
+</tr>
+<tr>
+<td>Candidate generator</td>
+<td>Learning workbench</td>
+<td>GEPA, ACE-style edits, skill extraction</td>
+<td>Adopt behind the gate</td>
+</tr>
+<tr>
+<td>Static checks, sandbox, development, held-out</td>
+<td>Decider D5</td>
+<td>Regimes four-stage gate</td>
+<td>Already aligned; compare</td>
+</tr>
+<tr>
+<td>Private held-out evaluation</td>
+<td>Evaluator isolation</td>
+<td>MELD private evaluators, HIVE-AI seeded variants</td>
+<td>Adapt</td>
+</tr>
+<tr>
+<td>No regression and gain</td>
+<td>Promotion governor</td>
+<td>RELAI-VCL no-regression constraint</td>
+<td>Adopt as a rule</td>
+</tr>
+<tr>
+<td>Versioned release</td>
+<td>Release registry</td>
+<td>Git for non-parameter layers (Letta)</td>
+<td>Adopt</td>
+</tr>
+<tr>
+<td>Compounding check</td>
+<td>Gap G04, EXP-05</td>
+<td>Two-phase protocol</td>
+<td>Adopt as an experiment</td>
+</tr>
+<tr>
+<td>Selector and budgets</td>
+<td>Deciders D1, D2</td>
+<td>Nothing new needed</td>
+<td>Keep</td>
+</tr>
+<tr>
+<td>Specialists and tools</td>
+<td>Execution kernel</td>
+<td>Aden Hive, Ruflo</td>
+<td>Study only</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="2-stance-on-each-external-part">2. Stance on each external part</h2>
+<p>Four stances: <strong>adopt</strong> (use as is), <strong>adapt</strong> (take the idea, build to HIVE contracts), <strong>study</strong> (compare before deciding), <strong>decline</strong> (does not fit now).</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Stance</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Two-phase compounding protocol</td>
+<td>Adopt</td>
+<td>Closes G04 with a published design. Small. Needs no new architecture.</td>
+</tr>
+<tr>
+<td>No-regression rule inside candidate search</td>
+<td>Adopt</td>
+<td>The only method that compounded in that study. Matches D5.</td>
+</tr>
+<tr>
+<td>Git-versioned L1/L2/L3/L5/L6 artifacts</td>
+<td>Adopt</td>
+<td>Diff, rollback and audit for text-shaped changes at no build cost.</td>
+</tr>
+<tr>
+<td>GEPA as candidate source</td>
+<td>Adopt behind the gate</td>
+<td>Removes hand-built candidate code. Overfits when unguarded.</td>
+</tr>
+<tr>
+<td>Regimes gate order and event shape</td>
+<td>Study, then adapt</td>
+<td>Nearest reference implementation of the governor.</td>
+</tr>
+<tr>
+<td>Failure-to-seam routing</td>
+<td>Adapt</td>
+<td>Tells the workbench which layer a failure belongs to.</td>
+</tr>
+<tr>
+<td>Private evaluators outside the workspace</td>
+<td>Adapt</td>
+<td>Addresses the open evaluator-isolation gap.</td>
+</tr>
+<tr>
+<td>Seeded held-out variants</td>
+<td>Adapt</td>
+<td>Cheap protection against memorized fixtures.</td>
+</tr>
+<tr>
+<td>Open skill file format for L2</td>
+<td>Adapt</td>
+<td>Makes HIVE procedures readable by other harnesses and theirs by HIVE.</td>
+</tr>
+<tr>
+<td>ACE incremental edits</td>
+<td>Adapt</td>
+<td>Guards against context collapse in L1 and L2.</td>
+</tr>
+<tr>
+<td>Sleep-time consolidation (Letta)</td>
+<td>Study</td>
+<td>One more arm for EXP-06 and <a href="/hive/notes/D03/">D03</a>; not a replacement for the existing sleep research paths.</td>
+</tr>
+<tr>
+<td>Topology search (AFlow, ADAS, MaAS)</td>
+<td>Study</td>
+<td>Baselines for EXP-01 and L5. Use as comparison arms first.</td>
+</tr>
+<tr>
+<td>Agent Lightning trace capture</td>
+<td>Study</td>
+<td>Useful once an L4 experiment is justified.</td>
+</tr>
+<tr>
+<td>Doc-to-LoRA, Text-to-LoRA</td>
+<td>Study, later</td>
+<td>Cheapest L4 route, but only after a non-parameter promotion succeeds.</td>
+</tr>
+<tr>
+<td>Aden Hive as kernel</td>
+<td>Study</td>
+<td>Overlaps the least novel part of HIVE. Compare on one mission before any commitment.</td>
+</tr>
+<tr>
+<td>Ruflo learning features</td>
+<td>Study with caution</td>
+<td>Reported stubs; verify each feature before relying on it.</td>
+</tr>
+<tr>
+<td>DGM, Hyperagents (self-editing meta level)</td>
+<td>Decline for now</td>
+<td>Conflicts with the separation-of-duties rule unless the gate stays outside the editable surface. Keep as a research path under <a href="/hive/notes/D09/">D09</a>.</td>
+</tr>
+<tr>
+<td>Hermes ungated skill edits</td>
+<td>Decline</td>
+<td>No test between an edit and its use. Take the format, not the policy.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="3-by-learning-layer">3. By learning layer</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Current HIVE state</th>
+<th>Part to bring in</th>
+<th>Gate before promotion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L1 memory</td>
+<td>Local memory contracts with provenance, expiry, correction, rollback tests</td>
+<td>Incremental edits (ACE); idle-time consolidation as a test arm</td>
+<td>Retention and stale-error checks; EXP-04, EXP-06</td>
+</tr>
+<tr>
+<td>L2 procedures</td>
+<td>One failure-to-procedure cycle exercised; candidate rejected</td>
+<td>Skill file format; GEPA or skill extraction as source</td>
+<td>D5; held-out tasks; no regression on prior procedures</td>
+</tr>
+<tr>
+<td>L3 routing</td>
+<td>Static router; learned router quarantined (P2)</td>
+<td>No-regression search; failure-to-seam routing</td>
+<td>Unused holdout, not reused validation</td>
+</tr>
+<tr>
+<td>L4 parameters</td>
+<td>No checkpoint</td>
+<td>Trace capture; hypernetwork adapters</td>
+<td>Only after an L2 or L3 promotion; separate approval for training</td>
+</tr>
+<tr>
+<td>L5 topology</td>
+<td>Proposed</td>
+<td>Topology-search methods as comparison arms</td>
+<td>EXP-01, EXP-07 with matched budgets</td>
+</tr>
+<tr>
+<td>L6 communication</td>
+<td>Four channels specified</td>
+<td>Nothing external found that matches</td>
+<td>EXP-04</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="4-by-decider">4. By decider</h2>
+<ul>
+<li><strong>D1 eligibility:</strong> unchanged.</li>
+<li><strong>D2 routing:</strong> unchanged. External routers are already in the catalog.</li>
+<li><strong>D3 verification value:</strong> add seeded variants as a cheap verifier-robustness check.</li>
+<li><strong>D4 learning priority:</strong> failure-to-seam routing gives D4 a layer to assign each failure to.</li>
+<li><strong>D5 promotion:</strong> add an explicit no-regression condition evaluated during candidate search, not only at the end; add a compounding check after promotion. Both are proposals.</li>
+</ul>
+<h2 id="5-by-experiment-and-decision">5. By experiment and decision</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>HIVE item</th>
+<th>External input</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EXP-05 compounding future learning</td>
+<td>Two-phase protocol and its four reported arms</td>
+<td>Gives a ready design and reference numbers under a different setting</td>
+</tr>
+<tr>
+<td>EXP-01 organization without weight changes</td>
+<td>AFlow, ADAS, MaAS as arms</td>
+<td>Stronger baselines than a static orchestration</td>
+</tr>
+<tr>
+<td>EXP-06 rehearsal and consolidation</td>
+<td>Idle-time consolidation; context-collapse control</td>
+<td>One more arm; one more failure measure</td>
+</tr>
+<tr>
+<td>Gap G04</td>
+<td>Same as EXP-05</td>
+<td>Moves from planned to specified</td>
+</tr>
+<tr>
+<td>Gap: evaluator isolation</td>
+<td>MELD, HIVE-AI</td>
+<td>Concrete patterns to test</td>
+</tr>
+<tr>
+<td><a href="/hive/notes/D02/">D02</a> where learning persists</td>
+<td>Token-space-first argument (Letta); harness-then-weights (SIA)</td>
+<td>Two external positions to record; neither settles it</td>
+</tr>
+<tr>
+<td><a href="/hive/notes/D09/">D09</a> how far self-improvement may reach</td>
+<td>Hyperagents</td>
+<td>An example of the far end; keep the gate outside</td>
+</tr>
+<tr>
+<td><a href="/hive/notes/D11/">D11</a> what constitutes verification</td>
+<td>Regimes four-stage gate</td>
+<td>A comparable definition</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="6-proposed-build-order">6. Proposed build order</h2>
+<p>Ordered by return for effort. Each step has an acceptance condition. None is approved by this page.</p>
+<ol>
+<li><strong>Compounding experiment on the existing harness.</strong> Two task phases, a transfer score before re-optimizing, a final score, and a lifelong average, with an unchanged control. <em>Accept when:</em> the protocol runs end to end with frozen task sets and the result, positive or negative, is published.</li>
+<li><strong>No-regression condition in the candidate loop.</strong> <em>Accept when:</em> a candidate that improves the new slice and regresses a prior one is rejected by a test.</li>
+<li><strong>Regimes comparison note.</strong> Read its code and record where the HIVE event log and gate differ. <em>Accept when:</em> a decision record states borrow, keep or merge for each difference.</li>
+<li><strong>Git registry for non-parameter artifacts.</strong> <em>Accept when:</em> a promoted or rejected L2 or L3 artifact has a commit, a diff and a tested rollback.</li>
+<li><strong>Evaluator moved outside the candidate workspace, with seeded variants.</strong> <em>Accept when:</em> a candidate process cannot read labels or evaluator state, shown by a failing access test.</li>
+<li><strong>External candidate generator behind the gate.</strong> <em>Accept when:</em> generated candidates pass through the same D5 path as hand-built ones and at least one is rejected for overfitting.</li>
+<li><strong>Skill file format for L2.</strong> <em>Accept when:</em> one existing HIVE procedure round-trips through the format.</li>
+<li><strong>Topology arms for EXP-01.</strong> <em>Accept when:</em> at least one searched topology and one static baseline run under matched budgets.</li>
+<li><strong>First L4 experiment.</strong> Only after a non-parameter promotion. Needs separate approval.</li>
+</ol>
+<p>Steps 1 to 5 need no new external dependency beyond reading one repository.</p>
+<h2 id="7-invariants-this-map-keeps">7. Invariants this map keeps</h2>
+<ul>
+<li>An experimental agent cannot modify its own acceptance gates or approve its own changes.</li>
+<li>Private evaluator stores and per-case holdout labels and results stay out of public exports.</li>
+<li>Rejected candidates and failures are published with their scope.</li>
+<li>Proposal, implementation, execution, measurement and interpretation stay separate.</li>
+<li>The 100, 1,000 and 10,000 logical-expert paths and all competing organizations stay open.</li>
+<li>Nothing here authorizes model calls, training or promotion.</li>
+</ul>
+<h2 id="8-open-questions">8. Open questions</h2>
+<ul>
+<li>Does the HIVE event log already carry what Regimes relies on for deterministic replay, or is a cache of model responses missing?</li>
+<li>Which public benchmark, if any, should HIVE report on so results can be compared? Local models may be too weak for Terminal-Bench 2.0 as published.</li>
+<li>Is the kernel comparison (current kernel, Ruflo adapter, Aden Hive) worth a mission, given the kernel is not where HIVE differs?</li>
+<li>Naming: keep HIVE with a qualifier, or change it.</li>
+</ul>
+<h2 id="9-inputs-not-included">9. Inputs not included</h2>
+<p>Earlier HIVE research that exists only in chat and was not supplied as a file is not part of this map. Supply it and it can be merged under the existing merge rules.</p>
+</article><section class="backlinks"><h2>Referenced by <span>2</span></h2><div><a href="/hive/notes/LANDSCAPE/"><span>LANDSCAPE</span>External landscape of similar systems<small>informs</small></a><a href="/hive/notes/HOME/"><span>HOME</span>HIVE framework and research vault<small>related to</small></a></div></section></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#1-the-whole-in-one-picture">1. The whole in one picture</a><a class="toc-h2" href="#2-stance-on-each-external-part">2. Stance on each external part</a><a class="toc-h2" href="#3-by-learning-layer">3. By learning layer</a><a class="toc-h2" href="#4-by-decider">4. By decider</a><a class="toc-h2" href="#5-by-experiment-and-decision">5. By experiment and decision</a><a class="toc-h2" href="#6-proposed-build-order">6. Proposed build order</a><a class="toc-h2" href="#7-invariants-this-map-keeps">7. Invariants this map keeps</a><a class="toc-h2" href="#8-open-questions">8. Open questions</a><a class="toc-h2" href="#9-inputs-not-included">9. Inputs not included</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework 0.2 · Coder directions 0.4</span></a><span>Prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/updates/HIVE_Research_Update_Adaptive_Organization_and_Self_Learning_2026-11-20.md" download>Research update</a><a href="/hive/updates/HIVE_Coder_Information_Packet_2026-11-20.md" download>Coder packet · 0.4</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Original vault · 0.2</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

@@ -356,6 +356,46 @@
         "measured"
       ],
       "sha256": "34be7663873f212c81028ea63c22d752a417287a0d873276b690709c01ef7068"
+    },
+    {
+      "id": "LANDSCAPE",
+      "source_id": "HIVE-RESEARCH-UPDATE-2026-11-22-EXTERNAL-LANDSCAPE",
+      "path": "updates/HIVE_Research_Update_External_Landscape_2026-11-22.md",
+      "title": "External landscape of similar systems",
+      "type": "framework",
+      "status": "provisional",
+      "evidence_status": "external_research_synthesis_not_reproduced",
+      "implementation_status": "not_implemented",
+      "date": "2026-11-22",
+      "citation_label": "HIVE external landscape (22 November 2026)",
+      "sha256": "39cad31377d65e6844c6a1aa29a0a546be2d90da3edf347811f2f412367a423b",
+      "tags": [
+        "hive",
+        "hive/research-update",
+        "external-landscape",
+        "harness-self-improvement",
+        "promotion-governor",
+        "compounding-learning"
+      ]
+    },
+    {
+      "id": "WHOLE",
+      "source_id": "HIVE-DESIGN-MAP-2026-11-22-INTEGRATED",
+      "path": "updates/HIVE_Integrated_Design_Map_2026-11-22.md",
+      "title": "Integrated design map",
+      "type": "framework",
+      "status": "proposed",
+      "evidence_status": "design_proposal",
+      "implementation_status": "not_implemented",
+      "date": "2026-11-22",
+      "citation_label": "HIVE integrated design map (22 November 2026)",
+      "sha256": "42c7eddafc839da35ab70ca95670dd7335adf6c05d11845e433e46f44745819a",
+      "tags": [
+        "hive",
+        "hive/design-map",
+        "integrated-design",
+        "build-order"
+      ]
     }
   ],
   "edges": [
@@ -907,6 +947,116 @@
     {
       "source": "P2SAFETY",
       "target": "OPERATIONAL",
+      "relation": "related_to"
+    },
+    {
+      "source": "LANDSCAPE",
+      "target": "WHOLE",
+      "relation": "informs"
+    },
+    {
+      "source": "LANDSCAPE",
+      "target": "CATALOG",
+      "relation": "related_to"
+    },
+    {
+      "source": "LANDSCAPE",
+      "target": "GAPS",
+      "relation": "informs"
+    },
+    {
+      "source": "LANDSCAPE",
+      "target": "ADAPTIVE",
+      "relation": "related_to"
+    },
+    {
+      "source": "LANDSCAPE",
+      "target": "FRAMEWORK",
+      "relation": "informs"
+    },
+    {
+      "source": "LANDSCAPE",
+      "target": "D09",
+      "relation": "related_to"
+    },
+    {
+      "source": "LANDSCAPE",
+      "target": "P34",
+      "relation": "related_to"
+    },
+    {
+      "source": "LANDSCAPE",
+      "target": "P26",
+      "relation": "related_to"
+    },
+    {
+      "source": "WHOLE",
+      "target": "FRAMEWORK",
+      "relation": "informs"
+    },
+    {
+      "source": "WHOLE",
+      "target": "ADAPTIVE",
+      "relation": "derived_from"
+    },
+    {
+      "source": "WHOLE",
+      "target": "GAPPLAN",
+      "relation": "derived_from"
+    },
+    {
+      "source": "WHOLE",
+      "target": "GAPS",
+      "relation": "informs"
+    },
+    {
+      "source": "WHOLE",
+      "target": "ROADMAP",
+      "relation": "informs"
+    },
+    {
+      "source": "WHOLE",
+      "target": "CODER",
+      "relation": "related_to"
+    },
+    {
+      "source": "WHOLE",
+      "target": "D02",
+      "relation": "related_to"
+    },
+    {
+      "source": "WHOLE",
+      "target": "D03",
+      "relation": "related_to"
+    },
+    {
+      "source": "WHOLE",
+      "target": "D09",
+      "relation": "related_to"
+    },
+    {
+      "source": "WHOLE",
+      "target": "D11",
+      "relation": "related_to"
+    },
+    {
+      "source": "WHOLE",
+      "target": "STATUS",
+      "relation": "related_to"
+    },
+    {
+      "source": "HOME",
+      "target": "LANDSCAPE",
+      "relation": "related_to"
+    },
+    {
+      "source": "HOME",
+      "target": "WHOLE",
+      "relation": "related_to"
+    },
+    {
+      "source": "CATALOG",
+      "target": "LANDSCAPE",
       "relation": "related_to"
     }
   ],
