@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Status - HAUNT</title><style>body{background:#111;color:#ddd;font:16px/1.5 system-ui,sans-serif;margin:0;padding:0 16px 40px;max-width:52rem}a{color:#7cb7ff}nav a{margin-right:12px;white-space:nowrap}code,pre{background:#1c1c1c;border-radius:4px}code{padding:0 3px}pre{padding:10px;overflow:auto}.t{overflow:auto}table{border-collapse:collapse}td,th{border:1px solid #444;padding:4px 8px;text-align:left}.meta{color:#999;font-size:14px}.preview{background:#7a2a00;color:#fff;padding:6px 10px;font-weight:bold}</style></head><body>
+<header><p class="meta">HAUNT &middot; rev 640a44a &middot; generated 2026-11-23T22:57:43Z &middot; Tests: passed</p><nav><a href="../index.html">HAUNT engineering inspection</a><a href="../status/index.html">Status</a><a href="../architecture/index.html">Architecture</a><a href="../mechanics/index.html">Mechanics</a><a href="../roadmap/index.html">Roadmap</a><a href="../source/index.html">Source access</a><a href="../tests/index.html">Tests</a><a href="../changelog/index.html">Changelog</a><a href="../ai/index.html">AI</a><a href="../llms.txt">llms.txt</a><a href="../manifest.json">manifest.json</a></nav></header>
+<main>
+<h1>Status</h1>
+<p>The live test results for this revision are on the <a href="../tests/">Tests</a> page. This page describes the state of the work; it does not repeat test counts.</p>
+<h2>Current focus</h2>
+<p>One haunt playable end to end: <strong>the Minotaur haunt</strong>, from lobby to finale, win or lose, with reset. The owner chose this over continuing the full-roster batches (22 Nov 2026).</p>
+<h2>Built</h2>
+<ul><li>Minotaur monster brain v1: seeded, deterministic, replayable.</li><li>Full Minotaur haunt loop: lobby, three rounds with breathers, finale, win/lose, reset.</li><li>Rejoin after a dropped phone, a disconnect grace period before a lose, phone-sized controls.</li><li>Content runtime with rooms, items, professions and finales, used by the haunt.</li></ul>
+<h2>Not yet done</h2>
+<ul><li>Not yet played on real phones. All location input so far is simulated or emulated.</li><li>Some round actions are still simulated (a round-two strike button; calves and support creatures do not yet attack).</li><li>The win/lose overlay has not been exercised in a browser test.</li><li>Several design numbers are still open defaults awaiting the owner (down time, deliveries per round, breather length, disconnect grace).</li></ul>
+<h2>Blockers</h2>
+<ul><li>Real-phone playtest needs the owner on the local network.</li><li>About 280 item IDs have no effect text in the design masters and wait for the owner or source author.</li></ul>
+<h2>Gates</h2>
+<ul><li>No system is marked fully verified on a physical device yet.</li><li>The local preview is not a public release.</li></ul>
+</main></body></html>

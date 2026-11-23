@@ -1,0 +1,245 @@
+{
+  "artifacts": [
+    {
+      "bytes": 2277,
+      "estimated_tokens": 569,
+      "id": "packet:ARCHITECTURE",
+      "media_type": "text/markdown",
+      "path": "ai/ARCHITECTURE.md",
+      "sha256": "656907749a81c7420f342d14cade56587ee5fea6d5e9d3bb44cbaa80fa3bb980",
+      "visibility": "public"
+    },
+    {
+      "bytes": 829,
+      "estimated_tokens": 208,
+      "id": "status:CURRENT_BUILD",
+      "media_type": "text/markdown",
+      "path": "ai/CURRENT_BUILD.md",
+      "sha256": "fdf25db82e3c4da387165bcf5412c820c1b2c2296ce7ae397330d1eec9697d87",
+      "visibility": "public"
+    },
+    {
+      "bytes": 1030,
+      "estimated_tokens": 258,
+      "id": "index",
+      "media_type": "text/markdown",
+      "path": "ai/INDEX.md",
+      "sha256": "3fa6b0449570817736ee08364ee8c272cbb3c01b0de4c5bea9484eeb5dc552fb",
+      "visibility": "public"
+    },
+    {
+      "bytes": 999,
+      "estimated_tokens": 250,
+      "id": "status:KNOWN_ISSUES",
+      "media_type": "text/markdown",
+      "path": "ai/KNOWN_ISSUES.md",
+      "sha256": "17490a302fd44b34bfb93a1ad6345115fe9ed4890675d7b79d8ea8b96d3ec834",
+      "visibility": "public"
+    },
+    {
+      "bytes": 762,
+      "estimated_tokens": 190,
+      "id": "status:NEXT_WORK_ITEM",
+      "media_type": "text/markdown",
+      "path": "ai/NEXT_WORK_ITEM.md",
+      "sha256": "71fdadd4809527641a5caa91a0dc673466282dbd38ecec5de25e3a4ceac2be05",
+      "visibility": "public"
+    },
+    {
+      "bytes": 365,
+      "estimated_tokens": 92,
+      "id": "data:SOURCE_MANIFEST",
+      "media_type": "application/json",
+      "path": "ai/SOURCE_MANIFEST.json",
+      "sha256": "bd43ec7adeb62f006f49144f19e4708b37a8278b12c48332e2aef6a7ce4711a2",
+      "visibility": "public"
+    },
+    {
+      "bytes": 1080,
+      "estimated_tokens": 270,
+      "id": "data:TEST_RESULTS",
+      "media_type": "application/json",
+      "path": "ai/TEST_RESULTS.json",
+      "sha256": "8350f77cc061c76a3e01d078bb02ad204bfe93a1b7dc3dae6f8e9e19140d3132",
+      "visibility": "public"
+    },
+    {
+      "budget_tokens": 207,
+      "bytes": 2444,
+      "estimated_tokens": 611,
+      "id": "page:ai",
+      "media_type": "text/html",
+      "path": "ai/index.html",
+      "sha256": "205fbe18e798f5ca97e96760d4b7d4fb9ee7c2c2aed99aea328c50ef59bd4dfb",
+      "visibility": "public"
+    },
+    {
+      "bytes": 1087,
+      "estimated_tokens": 272,
+      "id": "system:build-ops",
+      "media_type": "text/markdown",
+      "path": "ai/systems/build-ops.md",
+      "sha256": "3b5b774eb053dc7f7c3665c026808502714f4beab676b8ff7bbe841a7f205190",
+      "visibility": "public"
+    },
+    {
+      "bytes": 1220,
+      "estimated_tokens": 305,
+      "id": "system:content-runtime",
+      "media_type": "text/markdown",
+      "path": "ai/systems/content-runtime.md",
+      "sha256": "cd41bbd20dde3755ffe711f6ee800c9732f6d841f401f69ab4619cdb0d4ffcb2",
+      "visibility": "public"
+    },
+    {
+      "bytes": 1433,
+      "estimated_tokens": 358,
+      "id": "system:haunt-runtime",
+      "media_type": "text/markdown",
+      "path": "ai/systems/haunt-runtime.md",
+      "sha256": "7386f604d4a90f34fccc57e572245826763314bcb3f1dc2d46f3a532668705d6",
+      "visibility": "public"
+    },
+    {
+      "bytes": 911,
+      "estimated_tokens": 228,
+      "id": "system:haunts-finales",
+      "media_type": "text/markdown",
+      "path": "ai/systems/haunts-finales.md",
+      "sha256": "0856845e9f4a250105a1642474b7eddedb44891f3fa04b3b45c61b898fb08155",
+      "visibility": "public"
+    },
+    {
+      "bytes": 885,
+      "estimated_tokens": 222,
+      "id": "system:items-effects",
+      "media_type": "text/markdown",
+      "path": "ai/systems/items-effects.md",
+      "sha256": "a0da6b7356cb3fd6a0e494825f7a0229b69fb6d96b97ff09259ea3d83a7ace86",
+      "visibility": "public"
+    },
+    {
+      "bytes": 846,
+      "estimated_tokens": 212,
+      "id": "system:phone-host",
+      "media_type": "text/markdown",
+      "path": "ai/systems/phone-host.md",
+      "sha256": "7b316af63c067968f5cb0bd67a0b4c1530e790a931f9d81071c81571a1a37769",
+      "visibility": "public"
+    },
+    {
+      "bytes": 1121,
+      "estimated_tokens": 281,
+      "id": "system:professions",
+      "media_type": "text/markdown",
+      "path": "ai/systems/professions.md",
+      "sha256": "33965a2d38adb8e99bbfc4fcddf3633ea23ee31f0428968f4657c8556eb0e799",
+      "visibility": "public"
+    },
+    {
+      "budget_tokens": 510,
+      "bytes": 3830,
+      "estimated_tokens": 957,
+      "id": "page:architecture",
+      "media_type": "text/html",
+      "path": "architecture/index.html",
+      "sha256": "cabe28f0df9897227c1fd09e60b73befd9173734ef5f82b6c55d7c22a1e2f92b",
+      "visibility": "public"
+    },
+    {
+      "budget_tokens": 618,
+      "bytes": 4265,
+      "estimated_tokens": 1067,
+      "id": "page:changelog",
+      "media_type": "text/html",
+      "path": "changelog/index.html",
+      "sha256": "f15421ebe8006e66f7f1d87f022366ef642d3242f6e23483352e2113667b3052",
+      "visibility": "public"
+    },
+    {
+      "budget_tokens": 350,
+      "bytes": 2990,
+      "estimated_tokens": 743,
+      "id": "page:home",
+      "media_type": "text/html",
+      "path": "index.html",
+      "sha256": "3140c42b5ba062962afc7915d20c5c224cf4203c62b5282fdd5ba17ca43e816d",
+      "visibility": "public"
+    },
+    {
+      "bytes": 1596,
+      "estimated_tokens": 399,
+      "id": "llms",
+      "media_type": "text/plain",
+      "path": "llms.txt",
+      "sha256": "8c7764fd3b4d4ee82921447dc1202c6a43fd51394e81b9aed987dd1df89a2dcd",
+      "visibility": "public"
+    },
+    {
+      "budget_tokens": 347,
+      "bytes": 2993,
+      "estimated_tokens": 749,
+      "id": "page:mechanics",
+      "media_type": "text/html",
+      "path": "mechanics/index.html",
+      "sha256": "1df96222fed112073b0e5da10e72132bbc12f8ecdcee64f6605e663054785227",
+      "visibility": "public"
+    },
+    {
+      "budget_tokens": 244,
+      "bytes": 2455,
+      "estimated_tokens": 613,
+      "id": "page:roadmap",
+      "media_type": "text/html",
+      "path": "roadmap/index.html",
+      "sha256": "56c2e90872621f5f9aa52f3bd91f0872d3605d7bcee7f76046a7931129d7a649",
+      "visibility": "public"
+    },
+    {
+      "budget_tokens": 171,
+      "bytes": 2084,
+      "estimated_tokens": 521,
+      "id": "page:source",
+      "media_type": "text/html",
+      "path": "source/index.html",
+      "sha256": "6549f070b20198fec94b7ee5aad08cc9ba7b82e3122a451fdf076d87b85d4294",
+      "visibility": "public"
+    },
+    {
+      "budget_tokens": 355,
+      "bytes": 2912,
+      "estimated_tokens": 728,
+      "id": "page:status",
+      "media_type": "text/html",
+      "path": "status/index.html",
+      "sha256": "711053ba8c75f5c39c1042fa8a0d4f262ad4d5987fa7855d06f8e1b078746d7f",
+      "visibility": "public"
+    },
+    {
+      "budget_tokens": 116,
+      "bytes": 1987,
+      "estimated_tokens": 497,
+      "id": "page:tests",
+      "media_type": "text/html",
+      "path": "tests/index.html",
+      "sha256": "519efcd349b428a2e50fd5ae9e687aa6e2cb0e4063e590acbbc39f0746e83734",
+      "visibility": "public"
+    }
+  ],
+  "budgets": {
+    "index": 800,
+    "initial_retrieval": 6000,
+    "page": 2500,
+    "status": 1200,
+    "system": 2000,
+    "task_retrieval": 12000
+  },
+  "build_status": "passed",
+  "generated_at": "2026-11-23T22:57:43Z",
+  "preview": false,
+  "project_id": "haunt",
+  "repo_dirty_paths_count": 327,
+  "schema_version": "1.0.0",
+  "source_revision": "640a44a996f3adac6ffb4c6f016978d2d16b0968",
+  "visibility": "public"
+}

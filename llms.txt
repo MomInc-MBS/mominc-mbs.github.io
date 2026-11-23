@@ -33,6 +33,10 @@ The television lives at https://mominc.online/tv/ . A channel is a query on that
 - [Current HIVE coder directions, revision 0.4](https://mominc.online/hive/notes/CODER/): the complete three-conversation coder packet covering philosophy and mythology, 25 comparison projects, fictional hive minds, architecture, contracts, build sequence, acceptance scenarios, open decisions, and source-recovery limits. These directions take precedence over the earlier 0.2 handoff. The supplied Markdown is downloadable separately; the original vault ZIP remains unchanged.
 - [HIVE agent reference](https://mominc.online/hive/llms.txt): stable page IDs, source Markdown paths, search index, graph exports, and citation rules.
 
+## HAUNT engineering inspection
+
+- [HAUNT inspection portal](https://mominc.online/haunt/): generated build status, architecture, mechanics, revision-linked test results, roadmap and changelog for the AR party horror game. Source stays private. Agents start at [haunt/llms.txt](https://mominc.online/haunt/llms.txt) or [haunt/ai/INDEX.md](https://mominc.online/haunt/ai/INDEX.md); inventory with digests at [haunt/manifest.json](https://mominc.online/haunt/manifest.json).
+
 ## About
 
 - [The television](https://mominc.online/tv/): the set itself, tuned to no one until you pick a channel.
