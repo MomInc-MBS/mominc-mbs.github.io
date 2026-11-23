@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>First live local-model demo · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#29143f"><link rel="canonical" href="https://mominc.online/hive/notes/LIVEDEMO/">
+<meta property="og:title" content="First live local-model demo · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg?v=2" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=3"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=3"><link rel="stylesheet" href="/hive/assets/research.css?v=1">
+<script defer src="/hive/assets/hive.js?v=3"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg?v=2" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/OPERATIONAL/">Implementation</a><a href="/hive/notes/CODER/">Coder directions</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/OPERATIONAL/" >Latest engineering · 0.4.0.dev1</a><a href="/hive/notes/READINESS/" >v0.3.0.dev4 readiness</a><a href="/hive/notes/INTEGRATION/" >Historical dev3 integration</a><a href="/hive/notes/WORKING/" >Video mission alpha</a><a href="/hive/notes/V03/" >v0.3 foundation</a><a href="/hive/notes/CONTROLLER/" >Adaptive controller - v0.2</a><a href="/hive/notes/PROTOTYPE/" >Local prototype - v0.1</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/LANDSCAPE/" >External landscape · 22 Nov</a><a href="/hive/notes/WHOLE/" >Integrated design map</a><a href="/hive/notes/DIRECTION/" >Owner decisions · 22 Nov</a><a href="/hive/notes/KERNELS/" >Kernel comparison</a><a href="/hive/notes/METABASE/" >Base for later self-improvement</a><a href="/hive/notes/LIVEDEMO/" aria-current=page>Live local-model demo · 22 Nov</a><a href="/hive/notes/UNIFIED/" >Unified integration · 22 Nov</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/OPERATIONAL/" >Latest engineering · 0.4.0.dev1</a><a href="/hive/notes/READINESS/" >v0.3.0.dev4 readiness</a><a href="/hive/notes/INTEGRATION/" >Historical dev3 integration</a><a href="/hive/notes/WORKING/" >Video mission alpha</a><a href="/hive/notes/V03/" >v0.3 foundation</a><a href="/hive/notes/CONTROLLER/" >Adaptive controller - v0.2</a><a href="/hive/notes/PROTOTYPE/" >Local prototype - v0.1</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/LANDSCAPE/" >External landscape · 22 Nov</a><a href="/hive/notes/WHOLE/" >Integrated design map</a><a href="/hive/notes/DIRECTION/" >Owner decisions · 22 Nov</a><a href="/hive/notes/KERNELS/" >Kernel comparison</a><a href="/hive/notes/METABASE/" >Base for later self-improvement</a><a href="/hive/notes/LIVEDEMO/" aria-current=page>Live local-model demo · 22 Nov</a><a href="/hive/notes/UNIFIED/" >Unified integration · 22 Nov</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 313 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download original vault · 0.2</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=framework">Framework</a><span>/</span><span>LIVEDEMO</span></div>
+<div class="doc-meta"><span class="badge">Measured engineering result</span><span class="badge neutral">Implemented</span></div><div class="doc-tools"><button class="copy-link" data-title="First live local-model demo" data-id="LIVEDEMO" data-series="HIVE first live local-model demo (22 November 2026)">Copy reference</button><a href="/hive/updates/HIVE_Live_Local_Demo_2026-11-22.md">Markdown source</a><a href="/hive/graph/?focus=LIVEDEMO">View connections</a><button class="print-page">Print</button></div>
+<article class="prose"><h1 id="hive-v04-first-live-local-model-demo-22-november-2026">HIVE v0.4 — first live local-model demo, 22 November 2026</h1>
+<p><strong>Result: O5 PASS. Candidate REJECTED. P0 unchanged. Replay made zero model calls.</strong> 5 of the 24 approved requests were used (73 of 3,072 tokens, 7 cycles).</p>
+<p>This is the first run of the v0.4 prototype with real local-model inference. It followed the owner's chat approval of the small finite allocation proposed on <a href="/hive/notes/OPERATIONAL/">the operational prototype page</a>: 24 requests, 128 generated tokens each, 3,072 tokens in total, one worker, one pinned local classification model.</p>
+<h2 id="what-ran">What ran</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Doctor</td>
+<td>Exit 0; model and Docker healthy</td>
+</tr>
+<tr>
+<td>Development data mission</td>
+<td>VERIFIED</td>
+</tr>
+<tr>
+<td>Python label mission (Docker)</td>
+<td>COMPLETED; patch VERIFIED</td>
+</tr>
+<tr>
+<td>Model-backed combined mission</td>
+<td>COMPLETED; data, Python, review and report stages all VERIFIED</td>
+</tr>
+<tr>
+<td>Classification learning comparison</td>
+<td><strong>REJECTED</strong>: the candidate was identical to P0, quality tied, and it did not beat the fixed team. P0 unchanged</td>
+</tr>
+<tr>
+<td>Subsequent distinct task</td>
+<td><strong>FAILED</strong> <code>check_failed</code>: the model output was shape-valid but wrong, and the independent verifier caught it</td>
+</tr>
+<tr>
+<td>STOP / resume</td>
+<td>Exit 0</td>
+</tr>
+<tr>
+<td>Fresh-process replay of all four</td>
+<td>Identical statuses; counters unchanged</td>
+</tr>
+</tbody>
+</table></div>
+<p>Store totals after the run: <strong>5 requests, 73 tokens, 7 cycles</strong>. Before and after replay the totals were identical (5 / 73 / 7), so replay spent nothing.</p>
+<h2 id="gate-reading">Gate reading</h2>
+<ul>
+<li><strong>O5 now PASS</strong>: a new authorized local dispatch with receipts. O1–O10 engineering gates all have evidence.</li>
+<li>The release label is not yet relabeled OPERATIONAL_PROTOTYPE_DEMONSTRATED. Independent review of this run is still pending.</li>
+<li>The failed subsequent task is kept as a result. It shows the independent verifier doing its job on a plausible but wrong model answer.</li>
+</ul>
+<h2 id="what-this-does-not-show">What this does not show</h2>
+<ul>
+<li><strong>No beneficial learning (R1).</strong> The candidate tied P0 and was rejected.</li>
+<li><strong>Level A not accepted (R2).</strong> It still needs six unused data sources and six unused Python snapshots, with at least 10 of 12 accepted.</li>
+<li><strong>Level B untested.</strong> It needs at least 24 source-disjoint held-out tasks.</li>
+<li><strong>No promotion.</strong> P0 remains the governing policy and P2 stays quarantined.</li>
+<li>The run used first-party development inputs, not an untouched research corpus.</li>
+</ul>
+<h2 id="owner-decisions-recorded-the-same-day">Owner decisions recorded the same day</h2>
+<ul>
+<li>Local-model calls: approved, limited to the small proposal above.</li>
+<li>Compare external regimes, then take pieces; keep HIVE's own kernel. See <a href="/hive/notes/DIRECTION/">the decision record</a>.</li>
+<li>Compounding budget &quot;max&quot; is read as the full approved allocation per phase. Anything beyond it needs a new approval file.</li>
+<li>Public benchmark: yes; the choice is delegated to the overseer and must be attemptable by the local model.</li>
+<li>Name: no answer, so it stays HIVE.</li>
+</ul>
+<h2 id="next-actions">Next actions</h2>
+<ol>
+<li>Independent review of this run, then decide on the release relabel.</li>
+<li>Level A needs 12 unused, approved sources from the owner.</li>
+<li>See <a href="/hive/notes/UNIFIED/">the unified integration campaign</a> for what was built afterwards, with zero further model calls.</li>
+</ol>
+<p>Source revision: <code>f5fbb1a</code> of the HIVE repository. Private evaluator stores and per-case holdout labels and results are not published.</p>
+</article><section class="backlinks"><h2>Referenced by <span>1</span></h2><div><a href="/hive/notes/UNIFIED/"><span>UNIFIED</span>Unified integration campaign<small>derived from</small></a></div></section></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#what-ran">What ran</a><a class="toc-h2" href="#gate-reading">Gate reading</a><a class="toc-h2" href="#what-this-does-not-show">What this does not show</a><a class="toc-h2" href="#owner-decisions-recorded-the-same-day">Owner decisions recorded the same day</a><a class="toc-h2" href="#next-actions">Next actions</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework 0.2 · Coder directions 0.4</span></a><span>Prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/updates/HIVE_Research_Update_Adaptive_Organization_and_Self_Learning_2026-11-20.md" download>Research update</a><a href="/hive/updates/HIVE_Coder_Information_Packet_2026-11-20.md" download>Coder packet · 0.4</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Original vault · 0.2</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

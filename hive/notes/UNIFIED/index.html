@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unified integration campaign · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#29143f"><link rel="canonical" href="https://mominc.online/hive/notes/UNIFIED/">
+<meta property="og:title" content="Unified integration campaign · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg?v=2" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=3"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=3"><link rel="stylesheet" href="/hive/assets/research.css?v=1">
+<script defer src="/hive/assets/hive.js?v=3"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg?v=2" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/OPERATIONAL/">Implementation</a><a href="/hive/notes/CODER/">Coder directions</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/OPERATIONAL/" >Latest engineering · 0.4.0.dev1</a><a href="/hive/notes/READINESS/" >v0.3.0.dev4 readiness</a><a href="/hive/notes/INTEGRATION/" >Historical dev3 integration</a><a href="/hive/notes/WORKING/" >Video mission alpha</a><a href="/hive/notes/V03/" >v0.3 foundation</a><a href="/hive/notes/CONTROLLER/" >Adaptive controller - v0.2</a><a href="/hive/notes/PROTOTYPE/" >Local prototype - v0.1</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/LANDSCAPE/" >External landscape · 22 Nov</a><a href="/hive/notes/WHOLE/" >Integrated design map</a><a href="/hive/notes/DIRECTION/" >Owner decisions · 22 Nov</a><a href="/hive/notes/KERNELS/" >Kernel comparison</a><a href="/hive/notes/METABASE/" >Base for later self-improvement</a><a href="/hive/notes/LIVEDEMO/" >Live local-model demo · 22 Nov</a><a href="/hive/notes/UNIFIED/" aria-current=page>Unified integration · 22 Nov</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/OPERATIONAL/" >Latest engineering · 0.4.0.dev1</a><a href="/hive/notes/READINESS/" >v0.3.0.dev4 readiness</a><a href="/hive/notes/INTEGRATION/" >Historical dev3 integration</a><a href="/hive/notes/WORKING/" >Video mission alpha</a><a href="/hive/notes/V03/" >v0.3 foundation</a><a href="/hive/notes/CONTROLLER/" >Adaptive controller - v0.2</a><a href="/hive/notes/PROTOTYPE/" >Local prototype - v0.1</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/LANDSCAPE/" >External landscape · 22 Nov</a><a href="/hive/notes/WHOLE/" >Integrated design map</a><a href="/hive/notes/DIRECTION/" >Owner decisions · 22 Nov</a><a href="/hive/notes/KERNELS/" >Kernel comparison</a><a href="/hive/notes/METABASE/" >Base for later self-improvement</a><a href="/hive/notes/LIVEDEMO/" >Live local-model demo · 22 Nov</a><a href="/hive/notes/UNIFIED/" aria-current=page>Unified integration · 22 Nov</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 313 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download original vault · 0.2</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=framework">Framework</a><span>/</span><span>UNIFIED</span></div>
+<div class="doc-meta"><span class="badge">Measured engineering result</span><span class="badge neutral">Implemented</span></div><div class="doc-tools"><button class="copy-link" data-title="Unified integration campaign" data-id="UNIFIED" data-series="HIVE unified integration campaign (22 November 2026)">Copy reference</button><a href="/hive/updates/HIVE_Unified_Integration_2026-11-22.md">Markdown source</a><a href="/hive/graph/?focus=UNIFIED">View connections</a><button class="print-page">Print</button></div>
+<article class="prose"><h1 id="hive-unified-integration-22-november-2026">HIVE unified integration — 22 November 2026</h1>
+<p><strong>Status: ENGINEERING_INTEGRATION (INTEGRATION_TESTED).</strong> Full suite <strong>689 passed, 3 skipped, 0 failed</strong> at <code>25f19b2</code>. <strong>Zero model calls</strong> and $0 of HIVE runtime spend. No Level A acceptance, no learning claim, P2 still quarantined.</p>
+<p>Baseline was <code>59d9b5e</code>, the <a href="/hive/notes/LIVEDEMO/">live-demo record</a>. Version is still 0.4.0.dev1; dev4 and dev6 artifacts are untouched, and P0 governs.</p>
+<h2 id="what-was-built">What was built</h2>
+<p>One HIVE-native architecture: <code>Store</code>, <code>Executor</code> and <code>ContextPolicy</code> stay canonical, and new modules extend them. No second coordinator, daemon or database was added.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Module</th>
+<th>Role</th>
+<th>State</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dispatch gate</td>
+<td>Runs the fail-closed context preflight before every real Ollama request and appends to the usage ledger after it. Replay and tool routes are never gated</td>
+<td>Wired, integration-tested (<code>32afa0e</code>)</td>
+</tr>
+<tr>
+<td>Usage ledger</td>
+<td>Hash-chained record of requests and tokens; unknown model raises</td>
+<td>Wired via the dispatch gate (<code>7de5957</code>)</td>
+</tr>
+<tr>
+<td>Run states</td>
+<td>Durable job transitions and effect receipts in the existing Store SQLite</td>
+<td>Wired into the Executor (<code>25f19b2</code>)</td>
+</tr>
+<tr>
+<td>Role registry</td>
+<td>Role deny checks; the builder role holds model dispatch</td>
+<td>Checked in the dispatch gate (<code>25f19b2</code>)</td>
+</tr>
+<tr>
+<td>Checkpoint promote</td>
+<td>Requires a passing review-gate verdict; rollback only to a previously promoted checkpoint</td>
+<td>Gate in place; <strong>no production code promotes</strong> (tests assert it)</td>
+</tr>
+<tr>
+<td>Decision gateway</td>
+<td>Typed decisions, including MODEL_ROUTE</td>
+<td>Reachable from the CLI only; <strong>not on the dispatch path</strong></td>
+</tr>
+<tr>
+<td>repo_intel</td>
+<td>Selective remote git tree/fetch with blob-hash verification, https only</td>
+<td>Standalone, unit-tested</td>
+</tr>
+<tr>
+<td>OODA controller</td>
+<td>Bounded experiments with a hash-chained step log; wall-clock limit enforced</td>
+<td>Unit-tested; <strong>no production driver</strong></td>
+</tr>
+<tr>
+<td>RunAnywhere and Obscura adapters</td>
+<td>Optional adapters</td>
+<td><strong>OFF</strong>; both refuse to run even when enabled</td>
+</tr>
+</tbody>
+</table></div>
+<p>Campaign commits, in order: <code>fac5586</code>, <code>7de5957</code>, <code>e3bc72b</code>, <code>caa0ebe</code>, <code>6e67d49</code>, <code>b5a025c</code>, <code>21c3e96</code>, <code>32afa0e</code>, <code>a6952cf</code>, <code>25f19b2</code>. A passing unit test does not mean a gate protects a run: modules marked standalone, CLI-only or no-driver above are not on any live path.</p>
+<h2 id="tests">Tests</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Point</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Earlier reported</td>
+<td>488 passed, 3 skipped</td>
+</tr>
+<tr>
+<td><code>32afa0e</code> (conductor-run)</td>
+<td>661 passed, 3 skipped, 0 failed</td>
+</tr>
+<tr>
+<td><code>25f19b2</code> (worker-run, 36:52)</td>
+<td><strong>689 passed, 3 skipped, 0 failed</strong>; the 86 focused final-wave tests were re-run by the conductor and pass</td>
+</tr>
+</tbody>
+</table></div>
+<p>A short temporary directory is needed on Windows, because long test paths hit MAX_PATH.</p>
+<h2 id="evidence">Evidence</h2>
+<ul>
+<li>Preflight blocks with zero usage recorded.</li>
+<li>Role deny, path traversal, repo-transport and binary/oversize guards are in place.</li>
+<li>Hash-chain tamper detection covers the ledger, run events and OODA steps.</li>
+<li>Rollback is allowed only to a previously promoted checkpoint.</li>
+<li>The conductor reviewed every patch before commit and fixed: wrong repositories in the sources lock, a ledger chain race, a repo_intel remote-transport and <code>-C</code> bug, an OODA missing-verifier hole, a request-cap key bug, and a wrong store path in the audit.</li>
+<li>Upstream decisions: all nine upstream projects are pattern-only and no code was imported. One is GPL-3.0, so no code may be copied. Two projects have license NOASSERTION and one has no SPDX license; each needs a written license review before anything moves in.</li>
+</ul>
+<h2 id="limitations">Limitations</h2>
+<ul>
+<li><strong>Level A: NOT ACCEPTED.</strong> It needs six unused data sources and six unused Python snapshots, with at least 10 of 12 accepted. Not attempted here.</li>
+<li><strong>Level B: UNTESTED.</strong> It needs at least 24 source-disjoint holdouts.</li>
+<li><strong>Learning is unproven.</strong> The only comparison (the live demo) tied and was rejected.</li>
+<li><strong>P2 is quarantined.</strong> P0 is the governing policy; no production path promotes.</li>
+<li>The cross-process ledger lock is missing: the ledger uses an in-process lock only, so two processes could fork the chain.</li>
+<li>Worker-agent token spend was not measured. The usage ledger governs HIVE runtime only.</li>
+<li>The context A/B comparison was not run in this campaign.</li>
+<li>Grok was removed mid-campaign because it stalls on larger context. Fable was not used.</li>
+</ul>
+<h2 id="next-actions">Next actions</h2>
+<ol>
+<li>Wire the decision gateway MODEL_ROUTE at dispatch as an explicit, reviewed route change.</li>
+<li>Add a cross-process file lock to the usage ledger.</li>
+<li>Add an OODA driver for one bounded experiment, using repo_intel as its first real use.</li>
+<li>Record written license reviews for the NOASSERTION and no-SPDX upstreams.</li>
+<li>Level A needs the owner to supply 12 unused, approved sources.</li>
+</ol>
+<p>Source revision: <code>f5fbb1a</code> of the HIVE repository (code <code>25f19b2</code>). Publication grants no runtime authority and does not promote a quarantined policy or expand any budget. Private evaluator stores and per-case holdout labels and results are not published.</p>
+</article><section class="backlinks"><h2>Referenced by <span>1</span></h2><div><a href="/hive/notes/HOME/"><span>HOME</span>HIVE framework and research vault<small>related to</small></a></div></section></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#what-was-built">What was built</a><a class="toc-h2" href="#tests">Tests</a><a class="toc-h2" href="#evidence">Evidence</a><a class="toc-h2" href="#limitations">Limitations</a><a class="toc-h2" href="#next-actions">Next actions</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework 0.2 · Coder directions 0.4</span></a><span>Prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/updates/HIVE_Research_Update_Adaptive_Organization_and_Self_Learning_2026-11-20.md" download>Research update</a><a href="/hive/updates/HIVE_Coder_Information_Packet_2026-11-20.md" download>Coder packet · 0.4</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Original vault · 0.2</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

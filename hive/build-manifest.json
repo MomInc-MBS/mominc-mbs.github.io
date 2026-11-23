@@ -179,12 +179,24 @@
       "path": "updates/HIVE_Base_For_Later_Self_Improvement_2026-11-22.md",
       "date": "2026-11-22",
       "sha256": "43c66c3137e3db648452dfb9ef2146bd58e6605d4a394c56ba7265eef40a9086"
+    },
+    {
+      "id": "LIVEDEMO",
+      "path": "updates/HIVE_Live_Local_Demo_2026-11-22.md",
+      "date": "2026-11-22",
+      "sha256": "f35bd41ae0a899fa5e0fd615f48c8a8a13b7cf9842b18ac68e5e15e9a60dda38"
+    },
+    {
+      "id": "UNIFIED",
+      "path": "updates/HIVE_Unified_Integration_2026-11-22.md",
+      "date": "2026-11-22",
+      "sha256": "55321f73714a0cc5569f7d0f22c89548f0baee3caea54c3415c9d0b886b86785"
     }
   ],
   "source_zip_sha256": "2b726d055a17a25495854890d8d0001cb791006273e0f8eb5515788b7e00c61a",
   "counts": {
-    "research_pages": 311,
-    "graph_edges": 2532,
+    "research_pages": 313,
+    "graph_edges": 2537,
     "originals": 19
   },
   "scope": "Static research reference plus executable local model/tool controller evidence. No production model runtime or compounding-learning claim."
