@@ -48,7 +48,7 @@ LABELS = {
     'source_inspection_not_executed': 'Source inspection · Not executed',
     'research_synthesis_and_provisional_decision': 'Research synthesis · Provisional decision',
 }
-NAV = [('HOME', 'Start here'), ('STATUS', 'Implementation status'), ('READINESS', 'v0.3.0.dev4 readiness'), ('INTEGRATION', 'Historical dev3 integration'), ('WORKING', 'Video mission alpha'), ('V03', 'v0.3 foundation'), ('CONTROLLER', 'Adaptive controller - v0.2'), ('PROTOTYPE', 'Local prototype - v0.1'), ('ADAPTIVE', 'Latest research update'), ('LANDSCAPE', 'External landscape · 22 Nov'), ('WHOLE', 'Integrated design map'), ('DIRECTION', 'Owner decisions · 22 Nov'), ('KERNELS', 'Kernel comparison'), ('METABASE', 'Base for later self-improvement'), ('CODER', 'Coder directions · 0.4'), ('FRAMEWORK', 'The framework'), ('MAP', 'Research map'),
+NAV = [('HOME', 'Start here'), ('STATUS', 'Implementation status'), ('READINESS', 'v0.3.0.dev4 readiness'), ('INTEGRATION', 'Historical dev3 integration'), ('WORKING', 'Video mission alpha'), ('V03', 'v0.3 foundation'), ('CONTROLLER', 'Adaptive controller - v0.2'), ('PROTOTYPE', 'Local prototype - v0.1'), ('ADAPTIVE', 'Latest research update'), ('LANDSCAPE', 'External landscape · 22 Nov'), ('WHOLE', 'Integrated design map'), ('DIRECTION', 'Owner decisions · 22 Nov'), ('KERNELS', 'Kernel comparison'), ('METABASE', 'Base for later self-improvement'), ('LIVEDEMO', 'Live local-model demo · 22 Nov'), ('UNIFIED', 'Unified integration · 22 Nov'), ('CODER', 'Coder directions · 0.4'), ('FRAMEWORK', 'The framework'), ('MAP', 'Research map'),
        ('DECISIONS', 'Open decisions'), ('EVIDENCE', 'Evidence & disagreement'),
        ('HISTORY', 'Previous work'), ('ROADMAP', 'Build roadmap'), ('ARCHIVE', 'Original documents')]
 
@@ -417,6 +417,8 @@ Original package: {ORIGIN}/hive/downloads/HIVE_Framework_Research_Vault.zip
 - Owner decisions: /hive/notes/DIRECTION/ records Ian Myers' decisions of 22 November 2026. Where it differs from a proposal on WHOLE, it governs. It grants no runtime authority; live inference still needs the separate local operator approval.
 - Kernel comparison: /hive/notes/KERNELS/ compares the HIVE kernel, Aden Hive and Ruflo by source inspection. Nothing was executed; it is not a measured comparison.
 - Base for later self-improvement: /hive/notes/METABASE/ proposes groundwork only. It does not open D09 or permit self-editing of gates.
+- Live local-model demo: /hive/notes/LIVEDEMO/ records the first real local inference run (5 of 24 requests, O5 PASS, candidate rejected, P0 unchanged, replay zero calls).
+- Unified integration: /hive/notes/UNIFIED/ records the 689-test integration campaign with zero model calls; Level A not accepted, Level B untested, learning unproven, P2 quarantined.
 - The addendum is a synthesis with provisional decisions; do not report it as measured implementation evidence.
 - Source documents named but not supplied are explicitly listed under the addendum source-gaps section.
 - Current graph update links are editorial navigation and retain their relation types.

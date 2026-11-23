@@ -6,7 +6,7 @@ Canonical home: https://mominc.online/hive/
 Search: https://mominc.online/hive/search/?q=your-query
 Browse: https://mominc.online/hive/explore/
 Graph: https://mominc.online/hive/graph/
-Full-text machine index (311 pages): https://mominc.online/hive/search-index.json
+Full-text machine index (313 pages): https://mominc.online/hive/search-index.json
 Typed graph: https://mominc.online/hive/graph.json
 Original package: https://mominc.online/hive/downloads/HIVE_Framework_Research_Vault.zip
 
@@ -35,6 +35,8 @@ Original package: https://mominc.online/hive/downloads/HIVE_Framework_Research_V
 - Owner decisions: /hive/notes/DIRECTION/ records Ian Myers' decisions of 22 November 2026. Where it differs from a proposal on WHOLE, it governs. It grants no runtime authority; live inference still needs the separate local operator approval.
 - Kernel comparison: /hive/notes/KERNELS/ compares the HIVE kernel, Aden Hive and Ruflo by source inspection. Nothing was executed; it is not a measured comparison.
 - Base for later self-improvement: /hive/notes/METABASE/ proposes groundwork only. It does not open D09 or permit self-editing of gates.
+- Live local-model demo: /hive/notes/LIVEDEMO/ records the first real local inference run (5 of 24 requests, O5 PASS, candidate rejected, P0 unchanged, replay zero calls).
+- Unified integration: /hive/notes/UNIFIED/ records the 689-test integration campaign with zero model calls; Level A not accepted, Level B untested, learning unproven, P2 quarantined.
 - The addendum is a synthesis with provisional decisions; do not report it as measured implementation evidence.
 - Source documents named but not supplied are explicitly listed under the addendum source-gaps section.
 - Current graph update links are editorial navigation and retain their relation types.
@@ -61,6 +63,8 @@ Original package: https://mominc.online/hive/downloads/HIVE_Framework_Research_V
 - [Owner decisions — 22 November 2026](https://mominc.online/hive/notes/DIRECTION/)
 - [Execution kernel comparison](https://mominc.online/hive/notes/KERNELS/)
 - [Base for later self-improvement](https://mominc.online/hive/notes/METABASE/)
+- [First live local-model demo](https://mominc.online/hive/notes/LIVEDEMO/)
+- [Unified integration campaign](https://mominc.online/hive/notes/UNIFIED/)
 - [Coder directions — revision 0.4](https://mominc.online/hive/notes/CODER/)
 - [The proposed HIVE framework](https://mominc.online/hive/notes/FRAMEWORK/)
 - [Topic-first research map](https://mominc.online/hive/notes/MAP/)

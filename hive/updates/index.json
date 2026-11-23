@@ -449,6 +449,42 @@
         "self-improvement",
         "mutability"
       ]
+    },
+    {
+      "id": "LIVEDEMO",
+      "source_id": "HIVE-LIVE-DEMO-2026-11-22",
+      "path": "updates/HIVE_Live_Local_Demo_2026-11-22.md",
+      "title": "First live local-model demo",
+      "type": "framework",
+      "status": "measured",
+      "evidence_status": "measured_engineering_result",
+      "implementation_status": "implemented",
+      "date": "2026-11-22",
+      "citation_label": "HIVE first live local-model demo (22 November 2026)",
+      "sha256": "f35bd41ae0a899fa5e0fd615f48c8a8a13b7cf9842b18ac68e5e15e9a60dda38",
+      "tags": [
+        "hive",
+        "live-demo",
+        "evidence"
+      ]
+    },
+    {
+      "id": "UNIFIED",
+      "source_id": "HIVE-UNIFIED-INTEGRATION-2026-11-22",
+      "path": "updates/HIVE_Unified_Integration_2026-11-22.md",
+      "title": "Unified integration campaign",
+      "type": "framework",
+      "status": "measured",
+      "evidence_status": "measured_engineering_result",
+      "implementation_status": "implemented",
+      "date": "2026-11-22",
+      "citation_label": "HIVE unified integration campaign (22 November 2026)",
+      "sha256": "55321f73714a0cc5569f7d0f22c89548f0baee3caea54c3415c9d0b886b86785",
+      "tags": [
+        "hive",
+        "integration",
+        "evidence"
+      ]
     }
   ],
   "edges": [
@@ -1205,6 +1241,31 @@
     {
       "source": "WHOLE",
       "target": "DIRECTION",
+      "relation": "related_to"
+    },
+    {
+      "source": "LIVEDEMO",
+      "target": "OPERATIONAL",
+      "relation": "derived_from"
+    },
+    {
+      "source": "LIVEDEMO",
+      "target": "DIRECTION",
+      "relation": "related_to"
+    },
+    {
+      "source": "UNIFIED",
+      "target": "LIVEDEMO",
+      "relation": "derived_from"
+    },
+    {
+      "source": "UNIFIED",
+      "target": "OPERATIONAL",
+      "relation": "related_to"
+    },
+    {
+      "source": "HOME",
+      "target": "UNIFIED",
       "relation": "related_to"
     }
   ],
