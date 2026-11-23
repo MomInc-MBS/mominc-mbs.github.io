@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Execution kernel comparison · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#29143f"><link rel="canonical" href="https://mominc.online/hive/notes/KERNELS/">
+<meta property="og:title" content="Execution kernel comparison · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg?v=2" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=3"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=3"><link rel="stylesheet" href="/hive/assets/research.css?v=1">
+<script defer src="/hive/assets/hive.js?v=3"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg?v=2" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/OPERATIONAL/">Implementation</a><a href="/hive/notes/CODER/">Coder directions</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/OPERATIONAL/" >Latest engineering · 0.4.0.dev1</a><a href="/hive/notes/READINESS/" >v0.3.0.dev4 readiness</a><a href="/hive/notes/INTEGRATION/" >Historical dev3 integration</a><a href="/hive/notes/WORKING/" >Video mission alpha</a><a href="/hive/notes/V03/" >v0.3 foundation</a><a href="/hive/notes/CONTROLLER/" >Adaptive controller - v0.2</a><a href="/hive/notes/PROTOTYPE/" >Local prototype - v0.1</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/LANDSCAPE/" >External landscape · 22 Nov</a><a href="/hive/notes/WHOLE/" >Integrated design map</a><a href="/hive/notes/DIRECTION/" >Owner decisions · 22 Nov</a><a href="/hive/notes/KERNELS/" aria-current=page>Kernel comparison</a><a href="/hive/notes/METABASE/" >Base for later self-improvement</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/OPERATIONAL/" >Latest engineering · 0.4.0.dev1</a><a href="/hive/notes/READINESS/" >v0.3.0.dev4 readiness</a><a href="/hive/notes/INTEGRATION/" >Historical dev3 integration</a><a href="/hive/notes/WORKING/" >Video mission alpha</a><a href="/hive/notes/V03/" >v0.3 foundation</a><a href="/hive/notes/CONTROLLER/" >Adaptive controller - v0.2</a><a href="/hive/notes/PROTOTYPE/" >Local prototype - v0.1</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/LANDSCAPE/" >External landscape · 22 Nov</a><a href="/hive/notes/WHOLE/" >Integrated design map</a><a href="/hive/notes/DIRECTION/" >Owner decisions · 22 Nov</a><a href="/hive/notes/KERNELS/" aria-current=page>Kernel comparison</a><a href="/hive/notes/METABASE/" >Base for later self-improvement</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 311 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download original vault · 0.2</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=framework">Framework</a><span>/</span><span>KERNELS</span></div>
+<div class="doc-meta"><span class="badge">Source inspection · Not executed</span><span class="badge neutral">Not implemented</span></div><div class="doc-tools"><button class="copy-link" data-title="Execution kernel comparison" data-id="KERNELS" data-series="HIVE kernel comparison (22 November 2026)">Copy reference</button><a href="/hive/updates/HIVE_Execution_Kernel_Comparison_2026-11-22.md">Markdown source</a><a href="/hive/graph/?focus=KERNELS">View connections</a><button class="print-page">Print</button></div>
+<article class="prose"><h1 id="hive-execution-kernel-comparison">HIVE — Execution kernel comparison</h1>
+<p><strong>Purpose:</strong> Compare, in detail, the three candidates for the part of HIVE that starts work, tracks it, recovers it and enforces limits. Requested by <a href="/hive/notes/DIRECTION/">owner decision 10</a>.</p>
+<p><strong>Method and limits:</strong> Source and documentation were read on 22 November 2026. <strong>Nothing was installed or run.</strong> No mission was executed on any of the three, so there are no speed, quality or cost measurements here. Versions read: the HIVE 0.4.0.dev1 published source ZIP; Aden Hive at its 17 November 2026 commit (package version 1.0.15); Ruflo at its 22 November 2026 commit (package <code>claude-flow</code> 3.80.1). Ruflo was surveyed, not read in depth.</p>
+<h2 id="1-what-each-one-is">1. What each one is</h2>
+<p><strong>HIVE kernel.</strong> A small Python service with no runtime dependencies. A SQLite store holds jobs and content-addressed artifacts. One executor claims a job, checks it against pre-declared routes and budgets, runs it, has a deterministic verifier measure the result, and records evidence. It does not run code written by a model. Its purpose is to make every result checkable.</p>
+<p><strong>Aden Hive.</strong> An agent runtime built on one primitive, the agent loop. A long-lived &quot;queen&quot; agent does the first unit of work herself, saves the method as a skill, then starts worker clones in parallel. Workers write rows to a shared SQLite &quot;tracker&quot; table, and the queen checks progress with SQL. Its purpose is to get many similar units of real work done reliably.</p>
+<p><strong>Ruflo.</strong> A Node and Rust orchestration layer built around Claude Code and Codex as the execution host, with swarm modes, a router and memory features. Its purpose is to coordinate many coding-assistant agents.</p>
+<h2 id="2-side-by-side">2. Side by side</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>HIVE kernel 0.4.0.dev1</th>
+<th>Aden Hive 1.0.15</th>
+<th>Ruflo 3.80.1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Language and runtime</td>
+<td>Python, standard library only</td>
+<td>Python 3.11+, Node 20+ for the dashboard</td>
+<td>Node 20+, TypeScript, Rust crates</td>
+</tr>
+<tr>
+<td>Size</td>
+<td>About 13,600 lines of Python including scripts</td>
+<td>About 125,000 lines of Python in <code>core</code>, excluding tests</td>
+<td>Large; not counted</td>
+</tr>
+<tr>
+<td>Dependencies</td>
+<td>None</td>
+<td>pydantic, anthropic, litellm, mcp, fastmcp, croniter, psutil, more for tools</td>
+<td>Many; tied to Claude Code or Codex</td>
+</tr>
+<tr>
+<td>License</td>
+<td>Yours</td>
+<td>Apache 2.0</td>
+<td>MIT</td>
+</tr>
+<tr>
+<td>Unit of execution</td>
+<td>A job on a pre-declared route (tool, model call, or fixed workflow)</td>
+<td>An agent loop that chooses its own tool calls</td>
+<td>An agent session in the host assistant</td>
+</tr>
+<tr>
+<td>Who decides the next step</td>
+<td>The governor, from a finite list of feasible routes</td>
+<td>The model, turn by turn</td>
+<td>The model and swarm coordinator</td>
+</tr>
+<tr>
+<td>Parallel work</td>
+<td>One worker at a time, enforced by a lock</td>
+<td>Worker clones, four at a time by default, others queued</td>
+<td>Swarm topologies</td>
+</tr>
+<tr>
+<td>Shared state</td>
+<td>Job table plus immutable artifacts</td>
+<td>Tracker table the queen defines; workers upsert one row per unit</td>
+<td>Shared memory store</td>
+</tr>
+<tr>
+<td>Crash recovery</td>
+<td>Leases with owner and generation; <code>recover()</code>; restart replay checked with unchanged budget</td>
+<td>Every agent saves state to disk and resumes; &quot;what's left&quot; is a fresh tracker query</td>
+<td>Not verified</td>
+</tr>
+<tr>
+<td>Batch runs</td>
+<td>Not present</td>
+<td>Playbooks with retry, backoff, rate-limited lanes and a dead-letter list</td>
+<td>Not verified</td>
+</tr>
+<tr>
+<td>Budgets</td>
+<td>Finite request, token, time and memory ceilings; operator approval file needed for live inference</td>
+<td>Hard limits on turns and tool calls per worker; no limit in dollars</td>
+<td>Not verified</td>
+</tr>
+<tr>
+<td>Isolation of risky work</td>
+<td>Docker adapter for code; model-written code is not executed</td>
+<td>Built-in tools, including shell, run inside the Hive process; no Docker image</td>
+<td>Not verified</td>
+</tr>
+<tr>
+<td>Models</td>
+<td>Local Ollama on loopback only</td>
+<td>Any LiteLLM provider, including Ollama</td>
+<td>Hosted assistants first</td>
+</tr>
+<tr>
+<td>Tools and integrations</td>
+<td>A few deterministic tools</td>
+<td>Shell, files, search, PDF, scraping, browser bridge, any MCP server</td>
+<td>MCP tools; a third-party review reports a share are stubs</td>
+</tr>
+<tr>
+<td>Scheduling</td>
+<td>None</td>
+<td>Cron, interval and webhook triggers</td>
+<td>Not verified</td>
+</tr>
+<tr>
+<td>Human in the loop</td>
+<td>STOP and resume in a local console; approvals by file</td>
+<td>Colony approval, inbox, Telegram and Slack escalation</td>
+<td>Not verified</td>
+</tr>
+<tr>
+<td>Independent verification</td>
+<td>Deterministic verifier separate from the runner; reviewer must differ from author</td>
+<td>The queen checks worker rows; an optional judge can ask for a retry</td>
+<td>Not verified</td>
+</tr>
+<tr>
+<td>Held-out promotion gate</td>
+<td>Yes. Fail-closed; nine required evidence flags; at least 24 matched held-out tasks with a positive confidence bound</td>
+<td>None found</td>
+<td>None found</td>
+</tr>
+<tr>
+<td>Learning across sessions</td>
+<td>Finite route selector updated from development feedback only; candidates quarantined until gated</td>
+<td>Memory notes, learned skills, playbooks. Its documentation states there is no graph and no cross-generation code rewriting</td>
+<td>Claimed router and pattern learning</td>
+</tr>
+<tr>
+<td>Skill format</td>
+<td>Own records</td>
+<td>Open Agent Skills format</td>
+<td>Own formats</td>
+</tr>
+<tr>
+<td>Evidence and audit</td>
+<td>Hashes, provenance, publication manifests, rejected candidates kept</td>
+<td>Tracker rows and session files</td>
+<td>Not verified</td>
+</tr>
+<tr>
+<td>Users and upkeep</td>
+<td>You</td>
+<td>Active company and community</td>
+<td>Active</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="3-what-differs-in-kind">3. What differs in kind</h2>
+<ol>
+<li><strong>Who is trusted.</strong> HIVE trusts a verifier and a gate, and treats the model as a part that must prove its output. Aden trusts the queen to check her workers. That is the difference between a measured system and a managed one.</li>
+<li><strong>What the model may do.</strong> In HIVE the model picks from routes someone declared. In Aden the model writes its own next step, including shell commands, inside the same process. HIVE's rule against executing model-written code and Aden's in-process shell are not compatible without a sandbox around Aden.</li>
+<li><strong>What &quot;improves&quot; means.</strong> Aden says its mechanisms make a colony more reliable on problems it has already met, not more capable in general, and it retired graph evolution in version 1. HIVE's claim is exactly the one Aden stepped back from: improvement that is tested and compounds.</li>
+<li><strong>Scale of work.</strong> Aden is built for dozens of similar units in parallel with resume. HIVE runs one job at a time.</li>
+</ol>
+<h2 id="4-what-hives-kernel-lacks-that-aden-has">4. What HIVE's kernel lacks that Aden has</h2>
+<p>Ranked by usefulness to HIVE.</p>
+<ol>
+<li><strong>A tracker table as the source of truth for a batch</strong>, so &quot;what is left&quot; is a query and re-running resumes.</li>
+<li><strong>Bounded parallel workers</strong> with a queue.</li>
+<li><strong>Playbooks</strong>: a deterministic runner over rows with retry, backoff and dead-letter.</li>
+<li><strong>Pilot first, then fan out</strong>: do one unit, record the method, then repeat it.</li>
+<li><strong>The open skill file format</strong> (already <a href="/hive/notes/DIRECTION/">owner decision 13</a>).</li>
+<li><strong>Escalation to a person through a messaging channel</strong> when a run stalls.</li>
+<li><strong>Triggers</strong> for scheduled runs.</li>
+<li><strong>A model gateway</strong> covering many providers.</li>
+</ol>
+<h2 id="5-what-aden-lacks-that-hives-kernel-has">5. What Aden lacks that HIVE's kernel has</h2>
+<ol>
+<li>A held-out promotion gate and a release registry with rollback for learned artifacts.</li>
+<li>Separation of evaluator answers from the worker.</li>
+<li>Differentiated specialists and deterministic experts. Its workers are clones.</li>
+<li>Finite, operator-approved inference budgets.</li>
+<li>Isolation for code execution.</li>
+<li>A zero-dependency core that can be read in a day.</li>
+</ol>
+<h2 id="6-options">6. Options</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Option</th>
+<th>What changes</th>
+<th>Gain</th>
+<th>Cost and risk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A. Keep the HIVE kernel; port patterns 1 to 4 from section 4</td>
+<td>A tracker table, a worker pool and a playbook runner added to the existing store and executor</td>
+<td>Parallel batch work without giving up the gate, budgets or isolation</td>
+<td>You build and test it. A few hundred lines each, by estimate.</td>
+</tr>
+<tr>
+<td>B. Run Aden Hive as one route behind the HIVE kernel</td>
+<td>HIVE treats a colony as a specialist: it hands over a bounded task, then verifies the output independently</td>
+<td>Aden's tools, browser and parallelism at once</td>
+<td>A large dependency; its shell tools need a container around them; its internal steps are not HIVE evidence</td>
+</tr>
+<tr>
+<td>C. Replace the HIVE kernel with Aden Hive</td>
+<td>HIVE's gate, evidence and approval rebuilt on top of Aden</td>
+<td>Community upkeep of the runtime</td>
+<td>Loses the property that every step is declared and checked; biggest rework; ties HIVE to another project's direction, which already changed once</td>
+</tr>
+<tr>
+<td>D. Ruflo as the base</td>
+<td>—</td>
+<td>—</td>
+<td>Wrong fit: Node-based, built around hosted coding assistants, with reported stubs. Keep only as the optional adapter already named in the framework</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="7-assessment">7. Assessment</h2>
+<p><strong>[SYNTHESIS]</strong> Option A fits the design best. The kernel is where HIVE's guarantees live, and neither alternative has them. Option B is worth one trial later as a way to borrow tools, with Aden inside a container and treated as an unverified specialist. Option C gives up what makes HIVE different. Option D is not recommended.</p>
+<p>This is a reading of source, not a measurement. The mission comparison in <a href="/hive/notes/DIRECTION/">owner decision 10</a> is still unrun and would need its own approved budget.</p>
+<h2 id="8-open">8. Open</h2>
+<ul>
+<li>Whether a single-writer SQLite store holds up under a worker pool, or needs a queue in front.</li>
+<li>Whether parallel local-model calls help at all on one GPU, where requests are served one at a time.</li>
+<li>Whether Aden Hive's agent loop can be driven with a fixed tool allowlist tight enough to meet HIVE's boundary rules.</li>
+</ul>
+</article><section class="backlinks"><h2>Referenced by <span>1</span></h2><div><a href="/hive/notes/DIRECTION/"><span>DIRECTION</span>Owner decisions — 22 November 2026<small>related to</small></a></div></section></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#1-what-each-one-is">1. What each one is</a><a class="toc-h2" href="#2-side-by-side">2. Side by side</a><a class="toc-h2" href="#3-what-differs-in-kind">3. What differs in kind</a><a class="toc-h2" href="#4-what-hives-kernel-lacks-that-aden-has">4. What HIVE&#x27;s kernel lacks that Aden has</a><a class="toc-h2" href="#5-what-aden-lacks-that-hives-kernel-has">5. What Aden lacks that HIVE&#x27;s kernel has</a><a class="toc-h2" href="#6-options">6. Options</a><a class="toc-h2" href="#7-assessment">7. Assessment</a><a class="toc-h2" href="#8-open">8. Open</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework 0.2 · Coder directions 0.4</span></a><span>Prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/updates/HIVE_Research_Update_Adaptive_Organization_and_Self_Learning_2026-11-20.md" download>Research update</a><a href="/hive/updates/HIVE_Coder_Information_Packet_2026-11-20.md" download>Coder packet · 0.4</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Original vault · 0.2</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

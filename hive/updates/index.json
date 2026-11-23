@@ -396,6 +396,59 @@
         "integrated-design",
         "build-order"
       ]
+    },
+    {
+      "id": "DIRECTION",
+      "source_id": "HIVE-OWNER-DECISIONS-2026-11-22",
+      "path": "updates/HIVE_Owner_Decisions_2026-11-22.md",
+      "title": "Owner decisions \u2014 22 November 2026",
+      "type": "framework",
+      "status": "decided",
+      "evidence_status": "owner_decision_record",
+      "implementation_status": "not_implemented",
+      "date": "2026-11-22",
+      "citation_label": "HIVE owner decisions (22 November 2026)",
+      "sha256": "16fe23b361e7033cc1e8c722415959b1016081dc77010439ddafb52dc57fd89a",
+      "tags": [
+        "hive",
+        "owner-decisions"
+      ]
+    },
+    {
+      "id": "KERNELS",
+      "source_id": "HIVE-KERNEL-COMPARISON-2026-11-22",
+      "path": "updates/HIVE_Execution_Kernel_Comparison_2026-11-22.md",
+      "title": "Execution kernel comparison",
+      "type": "framework",
+      "status": "provisional",
+      "evidence_status": "source_inspection_not_executed",
+      "implementation_status": "not_implemented",
+      "date": "2026-11-22",
+      "citation_label": "HIVE kernel comparison (22 November 2026)",
+      "sha256": "d138ea9677f95e1ffdaf3b5e60f81e5c825f85b903fb92586ae1eb9df35bcd37",
+      "tags": [
+        "hive",
+        "execution-kernel",
+        "external-landscape"
+      ]
+    },
+    {
+      "id": "METABASE",
+      "source_id": "HIVE-METABASE-2026-11-22",
+      "path": "updates/HIVE_Base_For_Later_Self_Improvement_2026-11-22.md",
+      "title": "Base for later self-improvement",
+      "type": "framework",
+      "status": "proposed",
+      "evidence_status": "design_proposal",
+      "implementation_status": "not_implemented",
+      "date": "2026-11-22",
+      "citation_label": "HIVE base for later self-improvement (22 November 2026)",
+      "sha256": "43c66c3137e3db648452dfb9ef2146bd58e6605d4a394c56ba7265eef40a9086",
+      "tags": [
+        "hive",
+        "self-improvement",
+        "mutability"
+      ]
     }
   ],
   "edges": [
@@ -1057,6 +1110,101 @@
     {
       "source": "CATALOG",
       "target": "LANDSCAPE",
+      "relation": "related_to"
+    },
+    {
+      "source": "DIRECTION",
+      "target": "WHOLE",
+      "relation": "informs"
+    },
+    {
+      "source": "DIRECTION",
+      "target": "KERNELS",
+      "relation": "related_to"
+    },
+    {
+      "source": "DIRECTION",
+      "target": "METABASE",
+      "relation": "related_to"
+    },
+    {
+      "source": "DIRECTION",
+      "target": "GAPS",
+      "relation": "informs"
+    },
+    {
+      "source": "DIRECTION",
+      "target": "ROADMAP",
+      "relation": "informs"
+    },
+    {
+      "source": "DIRECTION",
+      "target": "CODER",
+      "relation": "informs"
+    },
+    {
+      "source": "DIRECTION",
+      "target": "D02",
+      "relation": "related_to"
+    },
+    {
+      "source": "DIRECTION",
+      "target": "D09",
+      "relation": "related_to"
+    },
+    {
+      "source": "DIRECTION",
+      "target": "STATUS",
+      "relation": "related_to"
+    },
+    {
+      "source": "KERNELS",
+      "target": "LANDSCAPE",
+      "relation": "derived_from"
+    },
+    {
+      "source": "KERNELS",
+      "target": "FRAMEWORK",
+      "relation": "informs"
+    },
+    {
+      "source": "KERNELS",
+      "target": "D05",
+      "relation": "related_to"
+    },
+    {
+      "source": "KERNELS",
+      "target": "WHOLE",
+      "relation": "informs"
+    },
+    {
+      "source": "METABASE",
+      "target": "D09",
+      "relation": "informs"
+    },
+    {
+      "source": "METABASE",
+      "target": "LANDSCAPE",
+      "relation": "derived_from"
+    },
+    {
+      "source": "METABASE",
+      "target": "WHOLE",
+      "relation": "related_to"
+    },
+    {
+      "source": "METABASE",
+      "target": "P34",
+      "relation": "related_to"
+    },
+    {
+      "source": "HOME",
+      "target": "DIRECTION",
+      "relation": "related_to"
+    },
+    {
+      "source": "WHOLE",
+      "target": "DIRECTION",
       "relation": "related_to"
     }
   ],
