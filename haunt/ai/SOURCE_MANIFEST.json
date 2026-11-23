@@ -1,0 +1,15 @@
+{
+  "note": "Repository has no approved private remote. Reviewers request bounded file exports from the owner.",
+  "project_id": "haunt",
+  "schema_version": "1.0.0",
+  "source_access": "not_configured",
+  "systems": [
+    "build-ops",
+    "content-runtime",
+    "haunt-runtime",
+    "haunts-finales",
+    "items-effects",
+    "phone-host",
+    "professions"
+  ]
+}

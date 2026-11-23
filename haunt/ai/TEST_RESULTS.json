@@ -1,0 +1,44 @@
+{
+  "build_status": "passed",
+  "project_id": "haunt",
+  "schema_version": "1.0.0",
+  "source_revision": "640a44a996f3adac6ffb4c6f016978d2d16b0968",
+  "suites": [
+    {
+      "counts": {
+        "cancelled": 0,
+        "fail": 0,
+        "pass": 92,
+        "skipped": 0,
+        "tests": 92,
+        "todo": 0
+      },
+      "finished_at": "2026-11-23T22:57:09Z",
+      "inherited": true,
+      "outcome": "passed",
+      "revision": "78e0aab0a54d725b49cce671cce2194ac7964e29",
+      "started_at": "2026-11-23T22:56:52Z",
+      "status": "passed",
+      "suite_id": "minotaur-core",
+      "tree_dirty": false
+    },
+    {
+      "counts": {
+        "cancelled": 0,
+        "fail": 0,
+        "pass": 928,
+        "skipped": 0,
+        "tests": 928,
+        "todo": 0
+      },
+      "finished_at": "2026-11-23T22:57:43Z",
+      "inherited": true,
+      "outcome": "passed",
+      "revision": "78e0aab0a54d725b49cce671cce2194ac7964e29",
+      "started_at": "2026-11-23T22:57:09Z",
+      "status": "passed",
+      "suite_id": "content-runtime",
+      "tree_dirty": false
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+# HAUNT
+
+> Engineering inspection portal. Revision 640a44a, generated 2026-11-23T22:57:43Z, tests passed.
+
+## Pages
+
+- [HAUNT engineering inspection](https://mominc.online/haunt/index.html)
+- [Status](https://mominc.online/haunt/status/index.html)
+- [Architecture](https://mominc.online/haunt/architecture/index.html)
+- [Mechanics](https://mominc.online/haunt/mechanics/index.html)
+- [Roadmap](https://mominc.online/haunt/roadmap/index.html)
+- [Source access](https://mominc.online/haunt/source/index.html)
+- [Tests](https://mominc.online/haunt/tests/index.html)
+- [Changelog](https://mominc.online/haunt/changelog/index.html)
+
+## AI packets
+
+- [INDEX](https://mominc.online/haunt/ai/INDEX.md)
+- [CURRENT_BUILD](https://mominc.online/haunt/ai/CURRENT_BUILD.md)
+- [ARCHITECTURE](https://mominc.online/haunt/ai/ARCHITECTURE.md)
+- [KNOWN_ISSUES](https://mominc.online/haunt/ai/KNOWN_ISSUES.md)
+- [NEXT_WORK_ITEM](https://mominc.online/haunt/ai/NEXT_WORK_ITEM.md)
+- [haunt-runtime](https://mominc.online/haunt/ai/systems/haunt-runtime.md)
+- [content-runtime](https://mominc.online/haunt/ai/systems/content-runtime.md)
+- [professions](https://mominc.online/haunt/ai/systems/professions.md)
+- [items-effects](https://mominc.online/haunt/ai/systems/items-effects.md)
+- [haunts-finales](https://mominc.online/haunt/ai/systems/haunts-finales.md)
+- [phone-host](https://mominc.online/haunt/ai/systems/phone-host.md)
+- [build-ops](https://mominc.online/haunt/ai/systems/build-ops.md)
+- [TEST_RESULTS](https://mominc.online/haunt/ai/TEST_RESULTS.json)
+- [manifest](https://mominc.online/haunt/manifest.json)
