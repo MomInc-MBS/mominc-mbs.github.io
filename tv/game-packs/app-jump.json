@@ -24,8 +24,8 @@
     },
     {
       "url": "/apps/jump/index.html",
-      "revision": "6bf2c3773d0918dbce4776ecad397bd050ec8048",
-      "bytes": 2592
+      "revision": "c725892a000af911aa814b2f79d35cad6be0ee46",
+      "bytes": 2359
     },
     {
       "url": "/apps/jump/manifest.webmanifest",
@@ -34,8 +34,8 @@
     },
     {
       "url": "/apps/jump/run.mjs",
-      "revision": "579a522a55b9de15c97435909eb7f86ace3b633f",
-      "bytes": 2703
+      "revision": "ceb79de03ee1f142a99837db93a55ef7755b3b1f",
+      "bytes": 2372
     },
     {
       "url": "/apps/jump/style.css",
@@ -59,8 +59,8 @@
     },
     {
       "url": "/arcade/pyramid-jump/game.mjs",
-      "revision": "64206b63d2011099c0384e6dcefd14ef7b0c9d42",
-      "bytes": 31603
+      "revision": "93bd4928b0e3dffb2fedd9bf2e9a971752855832",
+      "bytes": 31505
     },
     {
       "url": "/arcade/pyramid-jump/logic.mjs",
@@ -88,6 +88,11 @@
       "bytes": 317
     },
     {
+      "url": "/arcade/pyramid-jump/tilt.mjs",
+      "revision": "2452cb7eb29a5cfabd6204b121fb5726bc1ec9d1",
+      "bytes": 1693
+    },
+    {
       "url": "/tv/assets/mom-inc-mark.png",
       "revision": "8d147b7f846cbff544be141ffd72642d0ef8fdb6",
       "bytes": 181293
@@ -104,5 +109,5 @@
     }
   ],
   "fontStyles": [],
-  "version": "9756ede2e0b5ade613ad"
+  "version": "4bcb8f86e948ee85719a"
 }

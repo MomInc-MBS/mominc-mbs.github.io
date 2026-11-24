@@ -3,6 +3,7 @@
 import {startGame} from '/arcade/pyramid-jump/game.mjs';
 import {rasterizePaper, releasePaper} from '/arcade/pyramid-jump/paper.mjs';
 import {currentRound, finishRound} from '/arcade/pyramid-jump/rounds.mjs';
+import {subscribeTilt, tiltReady} from '/arcade/pyramid-jump/tilt.mjs';
 
 const BEST_KEY = 'myr5-pyramid-jump-best-v1'; // the vendored game saves its best here (apps.json bestKey)
 const el = (tag, cls, text) => Object.assign(document.createElement(tag), {className: cls || '', textContent: text || ''});
@@ -11,14 +12,7 @@ export function mountJump(host, options = {}) {
   const root = el('div', 'jump-root');
   host.append(root);
   let game = null, paper = null, disposed = false, token = 0, unsubTilt = null;
-  const tiltOn = () => { try { return !!options.tiltKey && localStorage.getItem(options.tiltKey) === '1'; } catch { return false; } };
-  // Tilt only when the player enabled it in Settings (that gesture also requested iOS permission).
-  const subscribeMotion = cb => {
-    if (!tiltOn() || !('DeviceOrientationEvent' in window)) return null;
-    const on = e => { if (e.gamma != null) cb({steerX: e.gamma / 60}); };
-    addEventListener('deviceorientation', on);
-    return unsubTilt = () => removeEventListener('deviceorientation', on);
-  };
+  const subscribeMotion = cb => (unsubTilt = subscribeTilt(cb)); // leaning + arrow keys only, no touch steering
   const stop = () => {
     game?.dispose(); game = null; unsubTilt = null;
     const done = paper; paper = null;
@@ -30,6 +24,7 @@ export function mountJump(host, options = {}) {
     const mine = ++token;
     const {batch} = currentRound(localStorage);
     const raster = await rasterizePaper(batch);
+    await tiltReady(root);
     if (disposed || mine !== token) { releasePaper(raster); return; }
     paper = raster;
     game = startGame(root, {paperImg: paper, startLevel: 1, seed: Date.now(), subscribeMotion, onEnd, onExit: () => document.getElementById('back')?.click()});

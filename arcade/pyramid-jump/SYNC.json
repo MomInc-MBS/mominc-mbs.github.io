@@ -27,6 +27,8 @@
     "P5 death hands over to the host when onEnd is given",
     "P6 win hands over to the host when onEnd is given",
     "P7 draw the pre-rendered paper Coach (exact batch look) instead of the roster path",
-    "P8 close the paper branch"
+    "P8 close the paper branch",
+    "P9 MOM site: steer by arrow keys and leaning only (Ian 24 Nov), no touch/mouse halves",
+    "P10 label matches the controls"
   ]
 }
