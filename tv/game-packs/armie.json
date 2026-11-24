@@ -4,23 +4,33 @@
   "assets": [
     {
       "url": "/apps/apps.json",
-      "revision": "5d955b8879f66cd8224be93b3469ef6fa5f46865",
-      "bytes": 7078
+      "revision": "144c9ff2e340f58c70066c8e0b3e3b73f86caa1f",
+      "bytes": 8181
     },
     {
-      "url": "/apps/fuel/icon-192.png",
-      "revision": "975c9ee2dd21061e9edb59f3b74698eaba3f9199",
-      "bytes": 23936
+      "url": "/apps/corgi/app.css",
+      "revision": "c7851284bd3e1a53810cf5c0e0b0c136f15bab85",
+      "bytes": 3730
     },
     {
-      "url": "/apps/fuel/icon-512.png",
-      "revision": "5e3672b64deeacbcdaddbc3af43a543208925920",
-      "bytes": 128293
+      "url": "/apps/corgi/app.mjs",
+      "revision": "4afbbe2d2684000fc7c1f36ade70de177d388142",
+      "bytes": 6247
     },
     {
-      "url": "/apps/fuel/icon-maskable-512.png",
-      "revision": "1f9e42f694d9b30a242b235814e20509b45eecb9",
-      "bytes": 76066
+      "url": "/apps/corgi/icon-192.png",
+      "revision": "565ebeaea2cf2498d1c16a5020c6304a5e4174af",
+      "bytes": 26534
+    },
+    {
+      "url": "/apps/corgi/icon-512.png",
+      "revision": "6a654da417352b8a30b921baa991d09d1bff0dbf",
+      "bytes": 136407
+    },
+    {
+      "url": "/apps/corgi/icon-maskable-512.png",
+      "revision": "eb83be78afeee83b894eb771f28544fe8ed110a4",
+      "bytes": 84996
     },
     {
       "url": "/apps/hand/hand.css",
@@ -938,6 +948,26 @@
       "bytes": 32076949
     },
     {
+      "url": "/tv/channels/corgi-dream.mjs",
+      "revision": "a32de050c7d9bd38011c7b416cae75adf0c02f67",
+      "bytes": 1403
+    },
+    {
+      "url": "/tv/channels/corgi-endless.mjs",
+      "revision": "fa13d97ba80389aba826a781c8bc5d6778e31968",
+      "bytes": 24008
+    },
+    {
+      "url": "/tv/channels/corgi-hearts.mjs",
+      "revision": "d5f65e89899995ebb8ed28a45b5121116e45b5e9",
+      "bytes": 5555
+    },
+    {
+      "url": "/tv/channels/corgi.js",
+      "revision": "cbfff99be5e209d56a4b833cdff4078f37e621e9",
+      "bytes": 224779
+    },
+    {
       "url": "/tv/channels/girlfriend-roster.js",
       "revision": "f50ec7c314a55af6918913a319299ed26b04c34a",
       "bytes": 277447
@@ -964,8 +994,8 @@
     },
     {
       "url": "/tv/game-loader.js",
-      "revision": "83ada908cd91235d9eec34456b7b77e3a978e8f2",
-      "bytes": 14576
+      "revision": "e298504431b41fd38fb09f4d0cb2d501cfd9704f",
+      "bytes": 14615
     },
     {
       "url": "/tv/identity.css",
@@ -1101,5 +1131,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "be0171d50e688c3fe7d0"
+  "version": "ca6a193105400747bda3"
 }

@@ -49,13 +49,13 @@
     },
     {
       "url": "/apps/shell.css",
-      "revision": "328f97d9b63692ebb72982408bdde602df67ed41",
-      "bytes": 2217
+      "revision": "c3cfb0d58fe1d885ff3ac3f9a48dcd6b3917cb27",
+      "bytes": 2294
     },
     {
       "url": "/apps/shell.mjs",
-      "revision": "929c180451f6a51711ab70a3085cbb38df2f9d6d",
-      "bytes": 4918
+      "revision": "181f95f1b44f8e16f0967428e7bf229824689878",
+      "bytes": 5394
     },
     {
       "url": "/handborne/assets/GLTFExporter-Bjf-hL3X.js",
@@ -159,10 +159,10 @@
     },
     {
       "url": "/tv/game-loader.js",
-      "revision": "83ada908cd91235d9eec34456b7b77e3a978e8f2",
-      "bytes": 14576
+      "revision": "e298504431b41fd38fb09f4d0cb2d501cfd9704f",
+      "bytes": 14615
     }
   ],
   "fontStyles": [],
-  "version": "8622bdd73b72d3193cf9"
+  "version": "29ad793bcfcf0ef972be"
 }
