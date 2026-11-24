@@ -1,0 +1,32 @@
+{
+  "id": "/apps/fuel/",
+  "name": "Nitro Fuel",
+  "short_name": "Nitro Fuel",
+  "description": "Endless tub flying. Keep the Fuel tub afloat, beat your best.",
+  "start_url": "/apps/fuel/",
+  "scope": "/apps/fuel/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1c0a3d",
+  "theme_color": "#5b17c9",
+  "icons": [
+    {
+      "src": "/apps/fuel/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/apps/fuel/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/apps/fuel/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

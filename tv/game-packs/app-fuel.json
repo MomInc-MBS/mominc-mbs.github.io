@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "game": "app-fuel",
+  "assets": [
+    {
+      "url": "/apps/fuel/icon-192.png",
+      "revision": "975c9ee2dd21061e9edb59f3b74698eaba3f9199",
+      "bytes": 23936
+    },
+    {
+      "url": "/apps/fuel/icon-512.png",
+      "revision": "5e3672b64deeacbcdaddbc3af43a543208925920",
+      "bytes": 128293
+    },
+    {
+      "url": "/apps/fuel/icon-maskable-512.png",
+      "revision": "1f9e42f694d9b30a242b235814e20509b45eecb9",
+      "bytes": 76066
+    },
+    {
+      "url": "/apps/fuel/index.html",
+      "revision": "ca7d4393aa28d562cdd8bfb94712aebc562d1bc9",
+      "bytes": 2402
+    },
+    {
+      "url": "/apps/fuel/manifest.webmanifest",
+      "revision": "c466b4727acf706aa295a8baf4cec9e15fe2ecf9",
+      "bytes": 753
+    },
+    {
+      "url": "/apps/install.mjs",
+      "revision": "6462b3ca09309ad980044fd6aa42b2a023dcedca",
+      "bytes": 2023
+    },
+    {
+      "url": "/apps/shell.css",
+      "revision": "4d6ac4b77dae532f7e1374fc7880068a48c7f11b",
+      "bytes": 2058
+    },
+    {
+      "url": "/apps/shell.mjs",
+      "revision": "539bca54ad2ed9e2081ae47f603b924a12c7ae64",
+      "bytes": 1775
+    },
+    {
+      "url": "/arcade/tub-flight/engine.mjs",
+      "revision": "90578aee66e3de30239bd103d290eef6d742bde2",
+      "bytes": 1393
+    },
+    {
+      "url": "/arcade/tub-flight/game.mjs",
+      "revision": "125247632e1ccbc51bdfaaacc2a1961a934ab381",
+      "bytes": 6385
+    },
+    {
+      "url": "/arcade/tub-flight/style.css",
+      "revision": "0023d992ae373669a4034fa0a3365b21f29abba8",
+      "bytes": 1350
+    },
+    {
+      "url": "/tv/assets/mom-inc-mark.png",
+      "revision": "8d147b7f846cbff544be141ffd72642d0ef8fdb6",
+      "bytes": 181293
+    },
+    {
+      "url": "/tv/game-loader.js",
+      "revision": "0a646a6f27937d71f6bd4c8add66e2b4d98a1d74",
+      "bytes": 14235
+    }
+  ],
+  "fontStyles": [],
+  "version": "3cea9e10d1efc3c4b8a5"
+}

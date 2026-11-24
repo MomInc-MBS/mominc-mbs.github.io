@@ -16,9 +16,13 @@ import subprocess
 ROOT = Path(__file__).resolve().parents[1]
 EXT = {'.html', '.js', '.mjs', '.css', '.json', '.png', '.jpg', '.jpeg', '.webp',
        '.svg', '.gif', '.mp4', '.webm', '.mp3', '.wav', '.glb', '.obj', '.mtl',
-       '.ttf', '.woff', '.woff2'}
-TEXT = {'.html', '.js', '.mjs', '.css', '.json', '.mtl'}
+       '.ttf', '.woff', '.woff2', '.webmanifest'}
+TEXT = {'.html', '.js', '.mjs', '.css', '.json', '.mtl', '.webmanifest'}
 SLUGS = ['mominc', 'girlfriend', 'lilboyfriend', 'corgi', 'djscratch', 'fuel', 'goon', 'war-room', 'armie', 'handborne', 'misinformation']
+# Installable apps (apps/apps.json): one lean pack per ready PWA, named app-<id>.
+APPS = {a['pack']: a for a in json.loads((ROOT / 'apps/apps.json').read_text(encoding='utf-8'))['apps']
+        if a['type'] == 'pwa' and a['status'] == 'ready'}
+SLUGS += sorted(APPS)
 
 
 def google_font_styles(source):
@@ -79,7 +83,7 @@ def build(refresh=False):
     # Include the locally bundled shader engine before its first commit, so a
     # literal lazy import is followed by the dependency scan just like other JS.
     # Only this vendor subtree is overlaid; unrelated vendor assets stay in HEAD.
-    for base in ['tv', 'games', 'play', 'gala', 'handborne', 'arcade', 'vendor/shaders']:
+    for base in ['tv', 'games', 'play', 'gala', 'handborne', 'arcade', 'apps', 'vendor/shaders']:
         for f in (ROOT / base).rglob('*'):
             if f.is_file() and f.suffix in EXT and 'game-packs' not in f.parts:
                 path = f.relative_to(ROOT).as_posix()
@@ -122,7 +126,10 @@ def build(refresh=False):
             selected = {a['url'].lstrip('/') for a in previous[slug]['assets'] if usable(a['url'].lstrip('/'))}
             write(slug, selected, previous[slug]['fontStyles'])
             continue
-        selected = set(shared)
+        # App packs stay lean: their own files, shared shell, loader, then the literal-reference scan.
+        selected = set() if slug in APPS else set(shared)
+        if slug in APPS:
+            selected |= under(f"apps/{APPS[slug]['id']}/") | {'apps/install.mjs', 'apps/shell.css', 'apps/shell.mjs', 'tv/game-loader.js'}
         selected |= {p for p in files if p in {f'tv/channels/{slug}.html', f'tv/channels/{slug}.js',
                                               f'games/{slug}/index.html', f'play/{slug}/index.html', f'tv/assets/marks/{slug}.png'}}
         if slug in {'djscratch', 'fuel', 'corgi', 'lilboyfriend', 'armie', 'goon', 'war-room'}:
@@ -186,6 +193,8 @@ def build(refresh=False):
             # shader engine/arcade, or the locked horror edition. They fetch from the network if reached.
             selected = {p for p in selected if not re.search(
                 r'^(arcade/|vendor/shaders/|shader-)|drgf-paper|brushed-aluminum|corgi-badge|helping-hand-badge|-horror|myr5-sticker|website-bezel', p)}
+        if slug in APPS:
+            selected.discard('tv/assets/helping-hand-badge.png')  # only Helping Hand's loader uses it
         write(slug, selected, fonts)
 
 

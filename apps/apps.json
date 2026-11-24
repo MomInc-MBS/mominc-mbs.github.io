@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "apps": [
+    {
+      "id": "fuel",
+      "type": "pwa",
+      "name": "Nitro Fuel",
+      "shortName": "Nitro Fuel",
+      "description": "Endless tub flying. Keep the Fuel tub afloat, beat your best.",
+      "status": "ready",
+      "mode": "module",
+      "src": "/arcade/tub-flight/game.mjs",
+      "mount": "mountTubFlight",
+      "options": {"endless": true, "title": "NITRO FUEL"},
+      "style": "/arcade/tub-flight/style.css",
+      "bestKey": "nitro-fuel-best-v1",
+      "theme": "#5b17c9",
+      "orientation": "portrait",
+      "icons": ["icon-192.png", "icon-512.png", "icon-maskable-512.png"],
+      "settings": ["reset-best"],
+      "pack": "app-fuel",
+      "browserPlay": true
+    }
+  ]
+}
