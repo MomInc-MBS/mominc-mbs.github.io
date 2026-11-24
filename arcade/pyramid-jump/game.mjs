@@ -14,7 +14,7 @@ const POSTER=['#e5d4a2','#e0c3ea','#f2c6a0','#bfdcc6','#f0e08a'],QUILT=['#c8587a
 export function startGame(root,{recipe=null,meals=null,subscribeMotion=null,onExit=()=>{},seed=Date.now(),startLevel=0,auto=false,paperImg=null,onEnd=null}={}){
  const shell=gameShellPhase('pyramid-jump',root);
  const canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');canvas.style.cssText='position:absolute;inset:0;width:100%;height:100%;touch-action:none;display:block';
- canvas.setAttribute('role','img');canvas.setAttribute('aria-label','Pyramid Jump. Tilt or touch the left and right sides to steer.');
+ canvas.setAttribute('role','img');canvas.setAttribute('aria-label','Pyramid Jump. Lean your phone or use the left and right arrow keys to steer.');
  const over=document.createElement('div');over.style.cssText='position:absolute;inset:0;display:none;place-content:center;gap:12px;text-align:center;background:#0009;color:#fff4dc;font:800 18px/1.4 system-ui,sans-serif;letter-spacing:.05em;white-space:pre-line';
  const btn=(t,f)=>{const b=document.createElement('button');b.type='button';b.textContent=t;b.style.cssText='min-height:44px;padding:0 18px;border:2px solid #fff9;border-radius:999px;background:#1d1428;color:#fff4dc;font:700 14px system-ui,sans-serif;pointer-events:auto';b.onclick=f;return b;};
  const msg=document.createElement('div'),row=document.createElement('div');row.style.cssText='display:flex;flex-wrap:wrap;gap:10px;justify-content:center';
@@ -38,7 +38,7 @@ export function startGame(root,{recipe=null,meals=null,subscribeMotion=null,onEx
  const key=down=>e=>{const k=e.key;if(k==='ArrowLeft'||k==='a')dir=down?-1:dir<0?0:dir;else if(k==='ArrowRight'||k==='d')dir=down?1:dir>0?0:dir;};
  const kd=key(true),ku=key(false);addEventListener('keydown',kd);addEventListener('keyup',ku);
  const pd=e=>{if(e.target!==canvas)return;const r=canvas.getBoundingClientRect();dir=e.clientX<r.left+r.width/2?-1:1;},pu=()=>{dir=0;};
- canvas.addEventListener('pointerdown',pd);addEventListener('pointerup',pu);addEventListener('pointercancel',pu);
+ 
  const px=it=>it.type==='moving'?Math.max(0,Math.min(W-PLAT_W,it.x+Math.sin(t*1.6+it.phase)*it.dx)):it.x;
  const solid=it=>!it.blink||Math.sin(t*6.28/it.blink+it.phase)>-.3; // origami / star platforms fold away on a timer
  function die(why){if(dead)return;dead=true;const s=Math.floor(maxY/10);if(s>best){best=s;try{localStorage.setItem(BEST_KEY,String(best));}catch{/* ignore */}}

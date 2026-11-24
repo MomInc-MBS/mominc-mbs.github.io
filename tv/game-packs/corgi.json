@@ -4,8 +4,8 @@
   "assets": [
     {
       "url": "/apps/apps.json",
-      "revision": "4b5b77598601ae9fdf0dd7b4a4477a9f25b2028b",
-      "bytes": 7113
+      "revision": "7d2839b0bc165042d16029c510d8176de6f52176",
+      "bytes": 7072
     },
     {
       "url": "/apps/fuel/icon-192.png",
@@ -29,8 +29,8 @@
     },
     {
       "url": "/apps/jump/run.mjs",
-      "revision": "579a522a55b9de15c97435909eb7f86ace3b633f",
-      "bytes": 2703
+      "revision": "ceb79de03ee1f142a99837db93a55ef7755b3b1f",
+      "bytes": 2372
     },
     {
       "url": "/apps/jump/style.css",
@@ -44,8 +44,8 @@
     },
     {
       "url": "/arcade/pyramid-jump/game.mjs",
-      "revision": "64206b63d2011099c0384e6dcefd14ef7b0c9d42",
-      "bytes": 31603
+      "revision": "93bd4928b0e3dffb2fedd9bf2e9a971752855832",
+      "bytes": 31505
     },
     {
       "url": "/arcade/pyramid-jump/logic.mjs",
@@ -71,6 +71,11 @@
       "url": "/arcade/pyramid-jump/site-shims.mjs",
       "revision": "99eb348e4a952f5b905823ba36fc0f87fac7c4c7",
       "bytes": 317
+    },
+    {
+      "url": "/arcade/pyramid-jump/tilt.mjs",
+      "revision": "2452cb7eb29a5cfabd6204b121fb5726bc1ec9d1",
+      "bytes": 1693
     },
     {
       "url": "/arcade/tub-flight/engine.mjs",
@@ -557,5 +562,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "9d33f17cae1ab880073c"
+  "version": "0e4ce8e28064997b845b"
 }

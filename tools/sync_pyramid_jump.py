@@ -37,6 +37,9 @@ PATCHES = [
     ('P7 draw the pre-rendered paper Coach (exact batch look) instead of the roster path', ME_START,
      "if(paperImg){ctx.shadowColor=flat?'transparent':'#49334b88';ctx.shadowOffsetX=3*scale;ctx.shadowOffsetY=3*scale;ctx.drawImage(paperImg,0,0,200,240);ctx.shadowColor='transparent';}else{" + ME_START),
     ('P8 close the paper branch', ME_END, ME_END + "}"),
+    ('P9 MOM site: steer by arrow keys and leaning only (Ian 24 Nov), no touch/mouse halves',
+     "canvas.addEventListener('pointerdown',pd);addEventListener('pointerup',pu);addEventListener('pointercancel',pu);", ""),
+    ('P10 label matches the controls', "Tilt or touch the left and right sides to steer.", "Lean your phone or use the left and right arrow keys to steer."),
 ]
 
 

@@ -4,8 +4,8 @@
   "assets": [
     {
       "url": "/apps/apps.json",
-      "revision": "4b5b77598601ae9fdf0dd7b4a4477a9f25b2028b",
-      "bytes": 7113
+      "revision": "7d2839b0bc165042d16029c510d8176de6f52176",
+      "bytes": 7072
     },
     {
       "url": "/apps/fuel/icon-192.png",
@@ -29,8 +29,8 @@
     },
     {
       "url": "/apps/jump/run.mjs",
-      "revision": "579a522a55b9de15c97435909eb7f86ace3b633f",
-      "bytes": 2703
+      "revision": "ceb79de03ee1f142a99837db93a55ef7755b3b1f",
+      "bytes": 2372
     },
     {
       "url": "/apps/jump/style.css",
@@ -583,5 +583,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap",
     "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
   ],
-  "version": "b01bccd29b1ba2731a94"
+  "version": "7d1bc8a35850d4a0ca40"
 }

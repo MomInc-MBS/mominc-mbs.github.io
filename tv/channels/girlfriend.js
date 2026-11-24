@@ -257,6 +257,8 @@ function dressGoggles(dg) {
   body.innerHTML = '<h2>KNOWLEDGE IS POWER</h2><p class="sub">THE GOGGLES · HINTS &amp; SOLUTIONS</p>' +
     '<p>Your goggles work on every page. If you wait five seconds, an orange border shows your next move. Finish a page and the next one lights up.</p><p>Pick a page for a hint. Open its solution for the steps.</p>' + pages +
     '<details><summary>Scan old coach beliefs</summary>' + CORRECTIONS.map(r => '<details><summary>' + r.belief + '</summary><p>FOUND: ' + r.belief + '</p><p>FIX: ' + r.correction + '</p></details>').join('') + '</details>' +
+    '<p style="margin:18px 0 6px;font-weight:800">UNLOCKED WITH YOUR GOGGLES: COACH JUMP</p><p>Every round a new paper Coach climbs the pyramid. Lean your phone or use the arrow keys.</p>' +
+    '<p><a href="/apps/jump/" style="display:inline-block;min-height:44px;line-height:44px;padding:0 20px;border:3px solid #1d1428;border-radius:999px;background:#c8ff4d;color:#1d1428;font-weight:800;text-decoration:none">DOWNLOAD COACH JUMP</a></p>' +
     '<p class="foot">I can show you the way. You still have to walk it.</p>';
 }
 
@@ -352,12 +354,14 @@ export default {
       busy=true;dock.inert=true;props.inert=true;render();
       say.textContent='Loading the jump round.';
       try{
-        const [{startGame},{rasterizePaper,releasePaper}]=await Promise.all([import('../../arcade/pyramid-jump/game.mjs'),import('../../arcade/pyramid-jump/paper.mjs')]);
+        const [{startGame},{rasterizePaper,releasePaper},{subscribeTilt,tiltReady}]=await Promise.all([import('../../arcade/pyramid-jump/game.mjs'),import('../../arcade/pyramid-jump/paper.mjs'),import('../../arcade/pyramid-jump/tilt.mjs')]);
         const paper=await rasterizePaper(batch);
         if(jump!==mine){releasePaper(paper);return;}
         const host=document.createElement('div');
         host.className='dg-jump';host.style.cssText='position:absolute;inset:0;z-index:60;background:#171329;overflow:hidden';
         stage.appendChild(host);
+        await tiltReady(host);
+        if(jump!==mine){host.remove();releasePaper(paper);return;}
         let game=null;
         const free=()=>setTimeout(()=>releasePaper(paper),0); // after the dying frame finishes drawing
         const end=()=>{
@@ -367,7 +371,7 @@ export default {
           resetFactory();say.textContent='Make a new coach.';tubeButtons[0].focus();
         };
         mine.dispose=()=>{if(jump===mine)jump=null;game?.dispose();game=null;host.remove();free();};
-        game=startGame(host,{paperImg:paper,startLevel:1,seed:Date.now(),onEnd:end,onExit:end});
+        game=startGame(host,{paperImg:paper,startLevel:1,seed:Date.now(),subscribeMotion:subscribeTilt,onEnd:end,onExit:end}); // arrow keys + leaning only
       }catch(e){
         if(jump===mine){jump=null;busy=false;dock.inert=false;props.inert=false;render();say.textContent='The jump round could not open. Pack again.';}
       }
