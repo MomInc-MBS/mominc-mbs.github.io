@@ -4,7 +4,7 @@
   "assets": [
     {
       "url": "/games/lilboyfriend/index.html",
-      "revision": "f58beb824736d55977f0ebb7942b2f3e0ced8073",
+      "revision": "b55f576b234b24a4a47e1a52a2a2be18cf82e508",
       "bytes": 9157
     },
     {
@@ -473,5 +473,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap",
     "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
   ],
-  "version": "579c5f355dd9534b15b3"
+  "version": "c0b872fa83cfec7e7a72"
 }
