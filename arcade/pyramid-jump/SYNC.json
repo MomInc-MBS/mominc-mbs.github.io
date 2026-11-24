@@ -1,0 +1,32 @@
+{
+  "origin": "MYR5 Coach repo (local worktree D:/myr5-work/coach-run-hud-1029)",
+  "commit": "16618a6109a6aefb48bf3fae1441f436c431d279",
+  "files": {
+    "game.mjs": {
+      "from": "arcade/pyramid-jump/game.mjs",
+      "blob": "7c5c7d42b9bb1f238ebd686c4cb816a92330e848"
+    },
+    "logic.mjs": {
+      "from": "arcade/pyramid-jump/logic.mjs",
+      "blob": "9ee74e5fe0cf5803f3ffae25d06d433695d490b0"
+    },
+    "data.mjs": {
+      "from": "arcade/pyramid-jump/data.mjs",
+      "blob": "3beae11feda27cbfda874f34581133826b667d65"
+    },
+    "shell-phase.mjs": {
+      "from": "arcade/shell-phase.mjs",
+      "blob": "ffd98ebbb47f498faeb7a67731364c4f3a05c5e9"
+    }
+  },
+  "patches": [
+    "P1 shell-phase import",
+    "P2 performance import",
+    "P3 quest import",
+    "P4 options: paperImg (not `paper`: game.mjs already has a paper() function) + onEnd callback",
+    "P5 death hands over to the host when onEnd is given",
+    "P6 win hands over to the host when onEnd is given",
+    "P7 draw the pre-rendered paper Coach (exact batch look) instead of the roster path",
+    "P8 close the paper branch"
+  ]
+}

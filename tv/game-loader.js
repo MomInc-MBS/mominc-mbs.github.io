@@ -6,7 +6,7 @@
   const names = {mominc: 'MOM INC', girlfriend: 'Dr. Girlfriend', lilboyfriend: 'Lil Boyfriend',
     corgi: 'Cortisol Corgi', djscratch: 'DJ Scratch', fuel: 'Fuel', goon: 'The Goon Gala',
     'war-room': 'The War Room', armie: 'Coach Armie', handborne: 'Helping Hand',
-    misinformation: "MOM's Misinformation Machine", 'app-fuel': 'Nitro Fuel'};
+    misinformation: "MOM's Misinformation Machine", 'app-fuel': 'Nitro Fuel', 'app-jump': 'Coach Jump'};
   const path = location.pathname;
   // Opt-in: <html data-loader="bar"> keeps the page usable and shows a slim bottom bar instead of a cover.
   const barMode = document.documentElement.dataset.loader === 'bar';

@@ -1,0 +1,32 @@
+{
+  "id": "/apps/jump/",
+  "name": "Coach Jump",
+  "short_name": "Coach Jump",
+  "description": "Jump a random paper Coach up the pyramid. A new Coach every round.",
+  "start_url": "/apps/jump/",
+  "scope": "/apps/jump/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1c0a3d",
+  "theme_color": "#5b17c9",
+  "icons": [
+    {
+      "src": "/apps/jump/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/apps/jump/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/apps/jump/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

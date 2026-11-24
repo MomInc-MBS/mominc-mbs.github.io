@@ -20,6 +20,26 @@
       "settings": ["reset-best"],
       "pack": "app-fuel",
       "browserPlay": true
+    },
+    {
+      "id": "jump",
+      "type": "pwa",
+      "name": "Coach Jump",
+      "shortName": "Coach Jump",
+      "description": "Jump a random paper Coach up the pyramid. A new Coach every round.",
+      "status": "ready",
+      "mode": "module",
+      "src": "/apps/jump/run.mjs",
+      "mount": "mountJump",
+      "options": {"tiltKey": "mbs-app-jump-tilt-v1"},
+      "style": "/apps/jump/style.css",
+      "bestKey": "myr5-pyramid-jump-best-v1",
+      "theme": "#5b17c9",
+      "orientation": "portrait",
+      "icons": ["icon-192.png", "icon-512.png", "icon-maskable-512.png"],
+      "settings": ["reset-best", "tilt"],
+      "pack": "app-jump",
+      "browserPlay": true
     }
   ]
 }
