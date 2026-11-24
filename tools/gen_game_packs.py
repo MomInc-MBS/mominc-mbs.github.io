@@ -181,6 +181,11 @@ def build(refresh=False):
                         selected.add(candidate)
                         queue.append(candidate)
                         break
+        if slug == 'lilboyfriend':
+            # The museum (play/lilboyfriend) never loads other games' art, the TV shell's
+            # shader engine/arcade, or the locked horror edition. They fetch from the network if reached.
+            selected = {p for p in selected if not re.search(
+                r'^(arcade/|vendor/shaders/|shader-)|drgf-paper|brushed-aluminum|corgi-badge|helping-hand-badge|-horror|myr5-sticker|website-bezel', p)}
         write(slug, selected, fonts)
 
 
