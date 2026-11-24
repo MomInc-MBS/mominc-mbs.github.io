@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "game": "app-hand-model-22",
+  "assets": [
+    {
+      "url": "/handborne/models/family-22.glb",
+      "revision": "c2b19cba118c728db7aa31aedc7f94cfc0e9f94b",
+      "bytes": 3701016
+    }
+  ],
+  "fontStyles": [],
+  "version": "8135dccd815926891145"
+}

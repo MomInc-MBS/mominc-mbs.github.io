@@ -69,6 +69,161 @@
       "href": "/download/lilboyfriend/little-boyfriend-live-0.9.0.apk",
       "sha256": "/download/lilboyfriend/little-boyfriend-live-0.9.0.apk.sha256",
       "landing": "/games/lilboyfriend/"
+    },
+    {
+      "id": "hand",
+      "type": "pwa",
+      "name": "Hand Customizer",
+      "shortName": "Hand",
+      "description": "Build your own Helping Hand and export it. Extra models download when you choose them.",
+      "status": "ready",
+      "mode": "editor",
+      "src": "/handborne/assets/hand-entry-CXtHIiHD.js",
+      "style": "/handborne/assets/hand-entry-BUSUnr2n.css",
+      "appStyle": "/apps/hand/hand.css",
+      "theme": "#6427a5",
+      "orientation": "portrait",
+      "icons": [
+        "icon-192.png",
+        "icon-512.png",
+        "icon-maskable-512.png"
+      ],
+      "settings": [
+        "reset-hand",
+        "extra-models"
+      ],
+      "pack": "app-hand",
+      "browserPlay": true,
+      "packFiles": [
+        "handborne/models/family-00.glb",
+        "handborne/models/family-03.glb",
+        "handborne/models/family-05.glb",
+        "handborne/models/family-12.glb",
+        "handborne/models/family-14.glb",
+        "handborne/models/family-17.glb",
+        "handborne/models/family-18.glb"
+      ],
+      "resetKeys": [
+        "handborne-recipe-v4",
+        "handborne-recipe-v3",
+        "handborne-recipe-v2",
+        "handborne-recipe-v1"
+      ],
+      "optionalPacks": [
+        {
+          "pack": "app-hand-model-01",
+          "label": "Verdant",
+          "files": [
+            "handborne/models/family-01.glb"
+          ]
+        },
+        {
+          "pack": "app-hand-model-02",
+          "label": "Mycelial",
+          "files": [
+            "handborne/models/family-02.glb"
+          ]
+        },
+        {
+          "pack": "app-hand-model-04",
+          "label": "Reptilian",
+          "files": [
+            "handborne/models/family-04.glb"
+          ]
+        },
+        {
+          "pack": "app-hand-model-06",
+          "label": "Coral",
+          "files": [
+            "handborne/models/family-06.glb"
+          ]
+        },
+        {
+          "pack": "app-hand-model-07",
+          "label": "Skeletal",
+          "files": [
+            "handborne/models/family-07.glb"
+          ]
+        },
+        {
+          "pack": "app-hand-model-08",
+          "label": "Spectral",
+          "files": [
+            "handborne/models/family-08.glb"
+          ]
+        },
+        {
+          "pack": "app-hand-model-09",
+          "label": "Infernal",
+          "files": [
+            "handborne/models/family-09.glb"
+          ]
+        },
+        {
+          "pack": "app-hand-model-10",
+          "label": "Celestial",
+          "files": [
+            "handborne/models/family-10.glb"
+          ]
+        },
+        {
+          "pack": "app-hand-model-11",
+          "label": "Voidborn",
+          "files": [
+            "handborne/models/family-11.glb"
+          ]
+        },
+        {
+          "pack": "app-hand-model-13",
+          "label": "Stone Golem",
+          "files": [
+            "handborne/models/family-13.glb"
+          ]
+        },
+        {
+          "pack": "app-hand-model-15",
+          "label": "Magma",
+          "files": [
+            "handborne/models/family-15.glb"
+          ]
+        },
+        {
+          "pack": "app-hand-model-16",
+          "label": "Glacial",
+          "files": [
+            "handborne/models/family-16.glb"
+          ]
+        },
+        {
+          "pack": "app-hand-model-19",
+          "label": "Neon Synth",
+          "files": [
+            "handborne/models/family-19.glb"
+          ]
+        },
+        {
+          "pack": "app-hand-model-20",
+          "label": "Fluffy",
+          "files": [
+            "handborne/models/family-20.glb"
+          ]
+        },
+        {
+          "pack": "app-hand-model-21",
+          "label": "Jelly",
+          "files": [
+            "handborne/models/family-21.glb"
+          ],
+          "note": "Also used by some surface finishes."
+        },
+        {
+          "pack": "app-hand-model-22",
+          "label": "Baby",
+          "files": [
+            "handborne/models/family-22.glb"
+          ]
+        }
+      ]
     }
   ]
 }

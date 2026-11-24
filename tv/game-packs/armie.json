@@ -4,8 +4,8 @@
   "assets": [
     {
       "url": "/apps/apps.json",
-      "revision": "66ac899e6a04aee60ba41f03fee09e2d6ef5a863",
-      "bytes": 2569
+      "revision": "645aa952137b0061842a1426ced288ae4092d850",
+      "bytes": 6552
     },
     {
       "url": "/apps/fuel/icon-192.png",
@@ -21,6 +21,11 @@
       "url": "/apps/fuel/icon-maskable-512.png",
       "revision": "1f9e42f694d9b30a242b235814e20509b45eecb9",
       "bytes": 76066
+    },
+    {
+      "url": "/apps/hand/hand.css",
+      "revision": "37e5c50457010373c3ea9c850864c76fb39266c0",
+      "bytes": 936
     },
     {
       "url": "/apps/jump/run.mjs",
@@ -111,6 +116,66 @@
       "url": "/games/armie/index.html",
       "revision": "722a37d02737a833ea7f0c0ca6989d90701bb9c3",
       "bytes": 1619
+    },
+    {
+      "url": "/handborne/assets/GLTFExporter-Bjf-hL3X.js",
+      "revision": "36f4faaa00c45cbf048a89ad06afd7693803c33c",
+      "bytes": 34602
+    },
+    {
+      "url": "/handborne/assets/OBJExporter-BW87md1x.js",
+      "revision": "780f7cd89ff2b394aadff1027661e3e59daff4e2",
+      "bytes": 2045
+    },
+    {
+      "url": "/handborne/assets/fflate.module-BTK1vOXE.js",
+      "revision": "b3f9430f7b5bc46ef98deea18cd6536a87fd37f0",
+      "bytes": 8775
+    },
+    {
+      "url": "/handborne/assets/hand-entry-BUSUnr2n.css",
+      "revision": "e18c3134e5c490ef795a0a138667186e6e1138aa",
+      "bytes": 214458
+    },
+    {
+      "url": "/handborne/assets/hand-entry-CXtHIiHD.js",
+      "revision": "c5526cbc6600b708f49b9f6a87d98cf9ccf18de1",
+      "bytes": 1071121
+    },
+    {
+      "url": "/handborne/fonts/anton.ttf",
+      "revision": "c5cbbbc3cb5a4d95d801d6b416441b725029967e",
+      "bytes": 130324
+    },
+    {
+      "url": "/handborne/fonts/barlow-400.ttf",
+      "revision": "f6be9dfeee6a2acc9f964f6f95aa7964a354bffc",
+      "bytes": 80968
+    },
+    {
+      "url": "/handborne/fonts/barlow-500.ttf",
+      "revision": "d0b4616c27230b89b7f140006e8d36df7c8b67f4",
+      "bytes": 81448
+    },
+    {
+      "url": "/handborne/fonts/barlow-600.ttf",
+      "revision": "a7a1fa958ac0a35a7ace3c03bbe935363d35e05c",
+      "bytes": 86636
+    },
+    {
+      "url": "/handborne/fonts/barlow-700.ttf",
+      "revision": "7710411b1308d53acbf3bfa2cc6efb8e103667cc",
+      "bytes": 87120
+    },
+    {
+      "url": "/handborne/fonts/bowlby.ttf",
+      "revision": "1523c7eda92c8073ca2c3aa049a4912931a59e73",
+      "bytes": 54152
+    },
+    {
+      "url": "/handborne/fonts/vt323.ttf",
+      "revision": "ff94200610f6ccbe1597a2da940e435289e8ebfe",
+      "bytes": 147320
     },
     {
       "url": "/handborne/models/family-20.glb",
@@ -894,8 +959,8 @@
     },
     {
       "url": "/tv/game-loader.js",
-      "revision": "2af4a7a7209380505cd66742eb61a19731cf18b6",
-      "bytes": 14545
+      "revision": "83ada908cd91235d9eec34456b7b77e3a978e8f2",
+      "bytes": 14576
     },
     {
       "url": "/tv/identity.css",
@@ -1031,5 +1096,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "1b4e9506663406e4011f"
+  "version": "98a8c05e6ddf08008ab7"
 }
