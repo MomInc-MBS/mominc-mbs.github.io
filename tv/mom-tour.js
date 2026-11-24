@@ -161,7 +161,7 @@
   const d = document;
   const reduced = () => !!matchMedia?.('(prefers-reduced-motion:reduce)').matches;
   if (params.get('tour') === 'off') store.update(r => { r.off = true; });
-  if (params.get('tour') === 'on') store.update(r => { r.off = false; });
+  if (params.get('tour') === 'on') store.update(r => { r.off = false; r.quietUntil = 0; });
 
   const STEPS = [
     {id: 'mominc', ch: 'mominc', url: '/tv/?ch=mominc', order: 'WATCH THE WHOLE RESCUE FILM. NO SKIPPING. MOM CAN TELL.', target: () => find('#miRescueVideo')},
@@ -275,8 +275,8 @@
     A.replaceChildren(); B.classList.remove('mt-top');
     let rect = target ? target.getBoundingClientRect() : null;
     if (rect && (rect.width * rect.height > vw * vh * 0.35 || rect.bottom < 0 || rect.top > vh || rect.right < 0 || rect.left > vw)) rect = null;
-    if (!rect) rect = B.querySelector('.mt-go').hidden ? null : B.querySelector('.mt-go').getBoundingClientRect();   // point at the GO button
-    if (!rect) return;
+    const real = !!rect;
+    if (!rect) rect = B.querySelector('.mt-go').hidden ? B.getBoundingClientRect() : B.querySelector('.mt-go').getBoundingClientRect();   // no usable target: point at the GO button, else at MOM's own bubble
     const cx = Math.max(24, Math.min(vw - 24, rect.left + rect.width / 2)), above = rect.top > 150, size = 40 + level() * 6;
     for (let i = 0; i < count; i++) {
       const c = el('i', 'mt-chev ' + (above ? 'down' : 'up'));
@@ -285,7 +285,7 @@
     }
     const b = B.getBoundingClientRect();    // never cover the target with the bubble
     const hit = rect.bottom > b.top - 4 && rect.top < b.bottom + 4 && rect.right > b.left && rect.left < b.right;
-    if (hit && target) B.classList.add('mt-top');
+    if (hit && real) B.classList.add('mt-top');
   }
 
   /* ---- reward celebration ---- */
