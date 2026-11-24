@@ -4,8 +4,8 @@
   "assets": [
     {
       "url": "/apps/apps.json",
-      "revision": "98b7b878b485a9fa3eb0f4d74427138408a4034d",
-      "bytes": 7079
+      "revision": "4b5b77598601ae9fdf0dd7b4a4477a9f25b2028b",
+      "bytes": 7113
     },
     {
       "url": "/apps/fuel/icon-192.png",
@@ -717,5 +717,5 @@
     "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "95501baa5750e344686f"
+  "version": "c45020fd347a0b41a973"
 }

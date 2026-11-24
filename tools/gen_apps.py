@@ -168,7 +168,7 @@ def apk_records():
     catalogue = json.loads((ROOT / 'apps/apps.json').read_text(encoding='utf-8'))
     out = []
     for a in catalogue['apps']:
-        if a['type'] != 'apk' or a['status'] != 'ready':
+        if a['type'] != 'apk' or a['status'] != 'ready' or 'apk' not in a:  # LB record predates this (href only)
             continue
         apk = ROOT / a['apk']
         sha_file = ROOT / (a['apk'] + '.sha256')

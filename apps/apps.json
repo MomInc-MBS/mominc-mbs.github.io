@@ -236,6 +236,7 @@
       "build": "QA debug build (debug-signed)",
       "package": "com.mominc.alarm2048",
       "apk": "download/alarm/mom-alarm-2048-0.1.0.apk",
+      "href": "/download/alarm/",
       "card": "games/goon/index.html",
       "minAndroid": "10"
     }
