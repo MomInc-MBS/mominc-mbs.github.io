@@ -4,8 +4,8 @@
   "assets": [
     {
       "url": "/apps/apps.json",
-      "revision": "645aa952137b0061842a1426ced288ae4092d850",
-      "bytes": 6552
+      "revision": "4b5b77598601ae9fdf0dd7b4a4477a9f25b2028b",
+      "bytes": 7113
     },
     {
       "url": "/apps/fuel/icon-192.png",
@@ -204,8 +204,8 @@
     },
     {
       "url": "/games/goon/index.html",
-      "revision": "05c2fb7b274c29a69e11bc1893d2f4e56b9bf63a",
-      "bytes": 6230
+      "revision": "7fb4cc015ff87d192e6d783ae2e3b9c7b140770d",
+      "bytes": 7063
     },
     {
       "url": "/handborne/assets/GLTFExporter-Bjf-hL3X.js",
@@ -672,5 +672,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "9e4a31ad672557b2ab20"
+  "version": "c3a32d5c580b2f6ff050"
 }

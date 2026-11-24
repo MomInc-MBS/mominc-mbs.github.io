@@ -116,6 +116,96 @@ def manifest(a):
             'start_url': scope, 'scope': scope, 'display': 'standalone', 'orientation': a['orientation'],
             'background_color': '#1c0a3d', 'theme_color': a['theme'], 'icons': icons}
 
+APK_PAGE = """<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>{name} · Android download · MOM Inc</title>
+<meta name="description" content="{description}">
+<link rel="canonical" href="https://mominc.online/download/{id}/">
+<style>
+:root{{--bg:#2a0a44;--ink:#ffd36e;--accent:#e04b6a;--card:#3b1a5e}}
+*{{box-sizing:border-box}}body{{margin:0;background:radial-gradient(120% 80% at 50% 0,#5a2a9a,#2a0a44 60%);color:#f5e9ff;font:16px/1.5 system-ui,sans-serif;min-height:100vh}}
+main{{max-width:34rem;margin:0 auto;padding:24px 16px 48px}}
+h1{{color:var(--ink);font-size:1.9rem;line-height:1.15;margin:.2em 0}}
+.card{{background:var(--card);border:3px solid var(--ink);border-radius:10px;padding:16px 18px;margin:20px 0;box-shadow:5px 6px 0 #0006}}
+.dl{{display:block;margin-top:12px;padding:14px;border-radius:8px;background:var(--accent);color:#fff;text-align:center;font-weight:700;text-decoration:none;min-height:44px}}
+code{{overflow-wrap:anywhere;font-size:.8rem}}small,.meta{{color:#d6c2ee}}a{{color:var(--ink)}}
+li{{margin:.4em 0}}
+</style>
+</head>
+<body>
+<main>
+<p><a href="/games/goon/">&larr; Goon</a></p>
+<h1>{name}</h1>
+<p>{description}</p>
+<div class="card">
+<a class="dl" href="/{apk}" download>Download {file} ({size})</a>
+<p class="meta">Version {version} &middot; {build} &middot; Android {minAndroid}+ &middot; package <code>{package}</code></p>
+<p class="meta">SHA-256: <code>{sha}</code> (<a href="/{apk}.sha256">.sha256</a>)</p>
+</div>
+<h2>How it works</h2>
+<ul>
+<li><strong>Start</strong> is free play on the 2048 board. It never touches your alarm.</li>
+<li><strong>Set alarm</strong> picks one daily time, in your phone's own time zone. That is the only setting.</li>
+<li>At that time the app posts local notifications about every 30 seconds (Android may delay or group them) until you merge a genuine 2048 tile. Tapping one opens the board. Losing deals a fresh board for the same alarm.</li>
+<li>It asks for notification access and, on some Android versions, permission for exact alarms. Without them it tells you it is not armed.</li>
+<li>No account, no internet permission, nothing leaves the phone. Force Stop or uninstall switches it off, because Android says so.</li>
+</ul>
+<p><small>Install: open the downloaded file and allow installs from this source when Android asks. This is a development build signed with a debug key, so it cannot update a future release build.</small></p>
+</main>
+</body>
+</html>
+"""
+
+CARD_A, CARD_B = '<!-- apk-card:{id} -->', '<!-- /apk-card:{id} -->'
+CARD = """<style>.apk-card.app-{id}{{display:block;max-width:420px;margin:28px auto 8px;padding:16px 18px;border:3px solid var(--ink);border-radius:10px;background:#fff9e6;color:#2a0a44;text-align:center;text-decoration:none;box-shadow:5px 6px 0 #3c355233}}.apk-card.app-{id} strong{{display:block;font:700 18px/1.3 system-ui,sans-serif}}.apk-card.app-{id} span{{display:block;margin-top:4px;font:14px/1.4 system-ui,sans-serif}}.apk-card.app-{id} em{{display:inline-block;margin-top:10px;padding:10px 22px;border-radius:6px;background:var(--accent);color:#fff;font:700 16px system-ui,sans-serif;font-style:normal}}</style>
+<a class="apk-card app-{id}" href="/download/{id}/"><strong>{name} (Android)</strong><span>Version {version} &middot; {size} &middot; APK</span><em>Download</em></a>"""
+
+
+def apk_records():
+    catalogue = json.loads((ROOT / 'apps/apps.json').read_text(encoding='utf-8'))
+    out = []
+    for a in catalogue['apps']:
+        if a['type'] != 'apk' or a['status'] != 'ready' or 'apk' not in a:  # LB record predates this (href only)
+            continue
+        apk = ROOT / a['apk']
+        sha_file = ROOT / (a['apk'] + '.sha256')
+        if not apk.is_file() or not sha_file.is_file():
+            raise SystemExit(f"{a['id']}: missing apk or .sha256")
+        import hashlib
+        digest = hashlib.sha256(apk.read_bytes()).hexdigest()
+        if sha_file.read_text(encoding='utf-8').split()[0] != digest:
+            raise SystemExit(f"{a['id']}: .sha256 does not match the apk bytes")
+        size = apk.stat().st_size
+        out.append(dict(a, sha=digest, file=apk.name, size=f'{size / 1048576:.1f} MB'))
+    return out
+
+
+def write_apk(a):
+    page = APK_PAGE.format(**{k: (escape(v) if isinstance(v, str) and k != 'apk' else v) for k, v in a.items()})
+    out = ROOT / 'download' / a['id'] / 'index.html'
+    out.write_text(page, encoding='utf-8', newline=chr(10))
+    print(f"{a['id']}: wrote download/{a['id']}/index.html")
+    # Card on the host page: a marked block, replaced in place so a second run changes nothing.
+    host = ROOT / a['card']
+    text = host.read_bytes().decode('utf-8')
+    nl = chr(13) + chr(10) if chr(13) + chr(10) in text else chr(10)
+    block = CARD_A.format(**a) + nl + CARD.format(**{k: escape(v) if isinstance(v, str) else v for k, v in a.items()}).replace(chr(10), nl) + nl + CARD_B.format(**a)
+    start, end = CARD_A.format(**a), CARD_B.format(**a)
+    if start in text:
+        i, j = text.index(start), text.index(end) + len(end)
+        text = text[:i] + block + text[j:]
+    else:
+        anchor = '<footer class="foot">'
+        if anchor not in text:
+            raise SystemExit(f"{a['card']}: no footer to place the card before")
+        text = text.replace(anchor, block + nl + nl + '  ' + anchor, 1)
+    host.write_bytes(text.encode('utf-8'))
+    print(f"{a['id']}: card in {a['card']}")
+
+
 
 def main():
     apps = load()
@@ -151,6 +241,8 @@ def main():
         (out / 'index.html').write_text(page, encoding='utf-8', newline='\n')
         (out / 'manifest.webmanifest').write_text(json.dumps(manifest(a), indent=2) + '\n', encoding='utf-8', newline='\n')
         print(f"{a['id']}: wrote apps/{a['id']}/index.html + manifest.webmanifest")
+    for a in apk_records():
+        write_apk(a)
 
 
 if __name__ == '__main__':
