@@ -62,6 +62,7 @@
 
 import { PAPER_HEARTS, restoreDream, losePaperHeart, restartDream, canOpenBackDoor, breakRoomPose } from "./corgi-dream.mjs";
 import { createPaperHearts, schoolCortisol, heartbeatBpm } from "./corgi-hearts.mjs";
+import * as EL from "./corgi-endless.mjs";
 
 const THREE_URL = "/tv/assets/armie-intro/vendor/three.module.js";
 
@@ -92,7 +93,9 @@ export default {
     // dataset attribute is written after this script runs; falls back to the dataset/class the shim also sets.
     // Read off the context rather than window, which is the same object and the same value the shell sees -
     // and deliberately NOT ctx.mode, whose own default would swallow the documentElement fallback below.
-    const MODE = ((((ctx.mbs && ctx.mbs.mode) || document.documentElement.dataset.mode ||
+    // Endless is selected ONLY by the installed-app host handing in ctx.endless; no query string or story mode can reach it.
+    const ENDLESS = !!(ctx && ctx.endless);
+    const MODE = ENDLESS ? "live" : ((((ctx.mbs && ctx.mbs.mode) || document.documentElement.dataset.mode ||
         (document.documentElement.classList.contains("mbs-live") ? "live" : "public")) === "live") ? "live" : "public");
     cc.dataset.mode = MODE;
     // the office is watched by CCTV, not worn on a GoPro -- reuses the existing REC corner instead of adding a
@@ -125,6 +128,7 @@ export default {
       level: Math.max(0, Math.min(MODE === "public" ? 1 : 2, s.level | 0))
     });
     const save = () => {
+      if (ENDLESS) { persistRun(); return; }
       try {
         const blob = { public: null, live: null };
         try { const prior = JSON.parse(localStorage.getItem(STORE_KEY) || "null");
@@ -134,6 +138,7 @@ export default {
       } catch {}
     };
     (function loadState() {
+      if (ENDLESS) return;
       try {
         const raw = localStorage.getItem(STORE_KEY) || localStorage.getItem("mbs-corgi-school-v2");
         if (raw) {
@@ -280,7 +285,19 @@ export default {
             lesson: "What matters is the kind of task, not the name of the job. A repeat task in a safe-sounding job is still a repeat task. Look at what your day is really made of." }
         ] }
     ];
-    const LEVELS = MODE === "public" ? [LEVELS_PUBLIC[0], {...LEVELS_LIVE[0], doorLabel:"THE BACK OF THE SCHOOL", crazy:1, pages:LEVELS_PUBLIC[0].pages.map((p,i)=>({...p,door:LEVELS_LIVE[0].pages[i].door}))}] : LEVELS_LIVE;
+    // Endless uses `corgi-endless-v1`, never the story's clamped found[]/level schema. The one synthetic level
+    // below only carries per-section article text; geometry comes from corgi-endless.mjs.
+    const ARTICLES = [...LEVELS_LIVE.flatMap(l => l.pages), ...LEVELS_PUBLIC[0].pages];
+    const ENDLESS_LEVEL = { name: "ENDLESS", doorLabel: "THE NEXT SECTION", furniture: "desk", handAuthored: true, crazy: 1, pages: ARTICLES.slice(0, 3) };
+    const newSeed = () => { try { return crypto.getRandomValues(new Uint32Array(1))[0]; } catch { return (Date.now() ^ (Math.random() * 4294967296)) >>> 0; } };
+    let store = null, run = null, ES = null, overlayOpen = false, protectUntil = 0;
+    if (ENDLESS) {
+      store = EL.loadStore(localStorage); run = store.run;
+      if (!run) { run = EL.newRun(newSeed()); store.best.section = Math.max(store.best.section, 1); }
+      store.run = run; EL.saveStore(localStorage, store);
+    }
+    const persistRun = () => { if (!store) return; store.run = run; EL.saveStore(localStorage, store); };
+    const LEVELS = ENDLESS ? [ENDLESS_LEVEL] : MODE === "public" ? [LEVELS_PUBLIC[0], {...LEVELS_LIVE[0], doorLabel:"THE BACK OF THE SCHOOL", crazy:1, pages:LEVELS_PUBLIC[0].pages.map((p,i)=>({...p,door:LEVELS_LIVE[0].pages[i].door}))}] : LEVELS_LIVE;
     if (MODE === 'public' && (state.lives === 0 || state.dreamPhase === 'done')) {
       state.level = 0; state.found[0] = [true, true, true];
     }
@@ -571,19 +588,20 @@ export default {
         arrange();
       });
     }
-    repaintAll(); paintLeaf4();
+    if (!ENDLESS) { repaintAll(); paintLeaf4(); }   // endless has no book: its papers and perks use their own newspaper panels
 
     // ---------------------------------------------------------------- view switching
     const huntStage = byId("ccHuntStage"), bookStage = byId("ccBookStage");
     const deskStage = byId("ccDeskStage");
     const readBtn = byId("ccReadBtn"), backHunt = byId("ccBackHunt");
+    if (ENDLESS) readBtn.hidden = true;
     // C035: ONE active-hunt state, asked by everything that is allowed to run while the hall is up. It was
     // four separate reads of this same attribute -- the ambient haunt scheduler, the keydown, the timecode --
     // and the frame loop, the one that matters most, was not one of them. Its only guard was unmount, so with
     // the newspaper up the world kept walking, kept draining stamina, kept burning the flashlight and kept
     // letting the suited figure close the distance. Only the KEYBOARD was muted, and only for keys pressed
     // after the book went up: a key already held stayed held.
-    const hunting = () => cc.dataset.view === "hunt";
+    const hunting = () => cc.dataset.view === "hunt" && !overlayOpen;
     function showHunt() { cc.dataset.view = "hunt"; huntStage.hidden = false; bookStage.hidden = true; deskStage.hidden = true; announce("Back in the hallway."); }
     function showBook() { cc.dataset.view = "book"; huntStage.hidden = true; bookStage.hidden = false; deskStage.hidden = true; renderBook(); }
     function showDesk() { cc.dataset.view = "desk"; huntStage.hidden = true; bookStage.hidden = true; deskStage.hidden = false; announce("At the big boss's desk. It wants a code."); }
@@ -759,7 +777,7 @@ export default {
     let musicAudio=null,musicBeat=0,alarmAt=-10;
     function musicTone(hz,duration,level,type='sine'){if(!musicAudio)return;const t=musicAudio.currentTime,o=musicAudio.createOscillator(),g=musicAudio.createGain();o.type=type;o.frequency.value=hz;g.gain.setValueAtTime(level,t);g.gain.exponentialRampToValueAtTime(.0001,t+duration);o.connect(g).connect(musicAudio.destination);o.start();o.stop(t+duration);o.onended=()=>{o.disconnect();g.disconnect();};}
     function alarmSound(){if(!musicAudio||musicAudio.currentTime-alarmAt<3)return;alarmAt=musicAudio.currentTime;const o=musicAudio.createOscillator(),g=musicAudio.createGain(),t=musicAudio.currentTime;o.type='triangle';o.frequency.setValueAtTime(440,t);o.frequency.linearRampToValueAtTime(880,t+.6);o.frequency.linearRampToValueAtTime(440,t+1.2);g.gain.setValueAtTime(.05,t);g.gain.exponentialRampToValueAtTime(.0001,t+1.4);o.connect(g).connect(musicAudio.destination);o.start();o.stop(t+1.4);o.onended=()=>{o.disconnect();g.disconnect();};}
-    function startMusic(){if(musicAudio)return;try{musicAudio=ctx.audio(new AudioContext());musicAudio.resume();}catch{return;}ctx.interval(()=>{if(!LEVELS[state.level].handAuthored){const notes=[261.63,329.63,392,493.88,440,349.23,293.66,392];musicTone(notes[musicBeat%8],.65,.018);if(musicBeat%4===0)musicTone(notes[musicBeat%8]/2,1.5,.012,'triangle');musicBeat++;}},450);}
+    function startMusic(){if(musicAudio)return;if(ENDLESS&&!store.settings.sound)return;try{musicAudio=ctx.audio(new AudioContext());musicAudio.resume();}catch{return;}ctx.interval(()=>{if(!LEVELS[state.level].handAuthored){const notes=[261.63,329.63,392,493.88,440,349.23,293.66,392];musicTone(notes[musicBeat%8],.65,.018);if(musicBeat%4===0)musicTone(notes[musicBeat%8]/2,1.5,.012,'triangle');musicBeat++;}},450);}
     ctx.on(viewport,'pointerdown',startMusic,{once:true});ctx.on(viewport,'keydown',startMusic,{once:true});
     // ---------------------------------------------------------------- 2026-10-03 dark-school sound, all synthesised
     // from musicAudio (the one context startMusic creates on the first gesture; ctx.audio closes it on unmount, so
@@ -1374,10 +1392,10 @@ export default {
           }
           const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
         }
-        function addSchoolPosters(doorX, crazyLvl) {
+        function addSchoolPosters(doorX, crazyLvl, inset = 1.34) {
           const kinds = ["apple", "ai", "formula"], count = crazyLvl * 4;
           for (let i = 0; i < count; i++) {
-            const px = 4 + (i / count) * (doorX - 8), pz = i % 2 ? 1.34 : -1.34, ry = i % 2 ? Math.PI : 0;
+            const px = 4 + (i / count) * (doorX - 8), pz = i % 2 ? inset : -inset, ry = i % 2 ? Math.PI : 0;
             const mesh = new THREE.Mesh(new THREE.PlaneGeometry(0.9, 0.9),
               new THREE.MeshStandardMaterial({ map: posterTexture(kinds[i % 3], crazyLvl), roughness: 1, metalness: 0, side: THREE.DoubleSide }));
             mesh.position.set(px, 1.5, pz); mesh.rotation.y = ry; levelGroup.add(mesh);
@@ -1448,15 +1466,17 @@ export default {
             else{const desk=buildDesk('','');g.add(desk);item(g,new THREE.SphereGeometry(.075,12,12),mat(0xbb2935),-.2,.66,0);item(g,new THREE.CylinderGeometry(.008,.008,.055,6),wood,-.2,.75,0);item(g,new THREE.BoxGeometry(.35,.008,.045),mat(0xe5be58),.12,.59,.12);}
           });
           // Additional work surfaces make the report desk one among several.
-          a.anchors.filter((p,i)=>i%3===0&&Math.hypot(p[0]-a.pagePos[0],p[1]-a.pagePos[2])>2.5).slice(1,3).forEach(p=>{const d=school?buildDesk('',''):buildCubicle('','');d.position.set(p[0]-.4,0,p[1]-.35);d.userData.prop='desk';levelGroup.add(d);collideRects.push({x0:d.position.x-.46,x1:d.position.x+.46,z0:d.position.z-.34,z1:d.position.z+.34});});
+          if(!a.noSolid)a.anchors.filter((p,i)=>i%3===0&&Math.hypot(p[0]-a.pagePos[0],p[1]-a.pagePos[2])>2.5).slice(1,3).forEach(p=>{const d=school?buildDesk('',''):buildCubicle('','');d.position.set(p[0]-.4,0,p[1]-.35);d.userData.prop='desk';levelGroup.add(d);collideRects.push({x0:d.position.x-.46,x1:d.position.x+.46,z0:d.position.z-.34,z1:d.position.z+.34});});
         }
         function buildLevel(idx) {
-          cc.dataset.school=String(LEVELS[idx].handAuthored === true);
-          flashBtn.hidden=!LEVELS[idx].handAuthored;setFlash(false);battery=100;doorSeen=false;
+          if (ENDLESS) prepareSection();
+          cc.dataset.school=String(ENDLESS ? ES.dark : LEVELS[idx].handAuthored === true);
+          flashBtn.hidden=ENDLESS ? !ES.dark : !LEVELS[idx].handAuthored;setFlash(false);battery=100;doorSeen=false;
           disposeLevel(); collectingLevel = true;
           scene.remove(levelGroup); levelGroup = new THREE.Group(); scene.add(levelGroup);
           collideRects.length = 0; pageObjs = []; finalPages = null; monster = null; trophyGlass = null; doorOpen = false; transitioning = false;
           ghost.active = false; ghost.seen = false; creep.active = false; caught = false;
+          if (ENDLESS) { dangerRing = null; trail = null; visionDots = []; chPath = null; chase.speed = EL.chaserSpeed(run.section); }
           resetChase(); doorLeaf = null; doorOpening = false; doorPlaque = null;
           monsterWasVisible = false; monsterVisibleAt = 0; staticIntensity = 0; liveVal = 0;
           if (ambientTimer) clearTimeout(ambientTimer);
@@ -1466,7 +1486,7 @@ export default {
           // client's own words) -- public mode's hemisphere and corridor lights run noticeably hotter than the
           // school's. `crazy` (live only, 0-2) nudges the corridor lights toward an off colour as the levels get
           // stranger, on top of the wall-art/monster-tempo escalation below.
-          const bright = MODE === "public" && idx === 0;renderer.setClearColor(bright?0xcfe6f2:0x010102,1);
+          const bright = ENDLESS ? !ES.dark : MODE === "public" && idx === 0;renderer.setClearColor(bright?0xcfe6f2:0x010102,1);
           const crazy = LEVELS[idx].crazy || 0;
           const floor = new THREE.Mesh(new THREE.PlaneGeometry(110, 50), floorMat.clone());
           floor.material.map = floor.material.map.clone(); floor.material.map.repeat.set(36, 16);
@@ -1474,9 +1494,10 @@ export default {
           const ceil = new THREE.Mesh(new THREE.PlaneGeometry(110, 50), bright ? ceilMat.clone() : ceilMat);
           if (bright) ceil.material.color.set(0xffffff);
           ceil.rotation.x = Math.PI / 2; ceil.position.set(20, 2.6, 0); levelGroup.add(ceil);
-          levelGroup.add(new THREE.HemisphereLight(bright ? 0xffffff : 0xfff6da, bright ? 0xe4ecf4 : 0xbcd7ea, bright ? 1.75 : 0.003));
+          levelGroup.add(new THREE.HemisphereLight(bright ? 0xffffff : 0xfff6da, bright ? 0xe4ecf4 : 0xbcd7ea, bright ? 1.75 : (ENDLESS ? 0.34 : 0.003)));
 
-          const useHandAuthored = !!LEVELS[idx].handAuthored;
+          const useHandAuthored = !!LEVELS[idx].handAuthored && !ENDLESS;
+          if (ENDLESS) buildEndlessWorld(idx, bright); else {
           DOOR_X = useHandAuthored ? level0MainCorridor() : genMainCorridor();
           const corridorLight = bright ? 0xffffff : (crazy >= 2 ? 0xd9b8ff : crazy >= 1 ? 0xe8d0ff : 0xfff3d0);
           // A zero-intensity light still occupies a Three.js lighting slot. The dark
@@ -1544,6 +1565,7 @@ export default {
             if (!useHandAuthored) { g = new THREE.PointLight(0xffd36e, 0.13, 1); g.position.copy(pos); levelGroup.add(g); }
             return { sprite: s, light: g, base: pos.y };
           });
+          }
           lobbyIndex();
         }
         // buildLevel(idx) closes here -- the monster/haunt machinery just below is shared, reusable game
@@ -1694,6 +1716,7 @@ export default {
           monster.visible = false; ghost.active = false; creep.active = false;
           if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
           liveVal = 0; staticIntensity = 0; paintMeter();
+          if (ENDLESS) { endlessCapture(); return; }   // a heart, never the story's death branch
           if (MODE === 'public' && losePaperHeart(state)) {
             save(); paintHearts(); stopInput();
             const exhausted = state.lives === 0;
@@ -1795,6 +1818,7 @@ export default {
             light.position.set(end - 1.6, 1.7, 0); levelGroup.add(light);
           }
           player.x = 1.0; player.z = 0; player.yaw = -Math.PI / 2; player.pitch = 0;
+          if (ENDLESS) protect();
           // 2026-10-03: in the dark school this opener is the monster's ONLY introduction now (no ambient haunts follow
           // it), so if the dog is still on the wake screen when it fires it waits, rather than being skipped as before.
           (function () { const dx = DOOR_X, builtLevel = levelGroup, dark = !!LEVELS[idx].handAuthored; const opener = () => {
@@ -1854,9 +1878,11 @@ export default {
           const cdx = player.x - mp.x, cdz = player.z - mp.z, cd = Math.hypot(cdx, cdz) || 1;
           if (cd < 0.45) return;
           const step = c.speed * dt, x0 = mp.x, z0 = mp.z;
+          let sx = cdx, sz = cdz, sd = cd;   // steering vector: the dog himself, or (endless) the next waypoint on a validated route
+          if (ENDLESS) { const w = chaseTarget(mp); sx = w[0] - mp.x; sz = w[1] - mp.z; sd = Math.hypot(sx, sz) || 1; }
           // same per-axis slide as the player: each axis tested against the frame-START position, never chained
-          const nx = x0 + cdx / cd * step; if (!monsterBlocked(nx, z0)) mp.x = nx;
-          const nz = z0 + cdz / cd * step; if (!monsterBlocked(x0, nz)) mp.z = nz;
+          const nx = x0 + sx / sd * step; if (!monsterBlocked(nx, z0)) mp.x = nx;
+          const nz = z0 + sz / sd * step; if (!monsterBlocked(x0, nz)) mp.z = nz;
           const moved = Math.hypot(mp.x - x0, mp.z - z0);
           const want = moved > 1e-5 ? Math.atan2(mp.x - x0, mp.z - z0) : Math.atan2(cdx, cdz);
           let dy = want - c.yaw; dy = Math.atan2(Math.sin(dy), Math.cos(dy));
@@ -1995,6 +2021,197 @@ export default {
           if (useBtn.hidden === show) useBtn.hidden = !show;
           if (show && useBtn.textContent !== lobbyTarget.label) useBtn.textContent = lobbyTarget.label;
         }
+        // ======================================================================================================
+        // ENDLESS (installed app only). Everything below is inert unless the app host passed ctx.endless; the
+        // public/live story never reaches it. Pure rules live in corgi-endless.mjs (EL).
+        // ======================================================================================================
+        const DARK_PAL = [0x6b3a8a, 0x1c6b5a, 0x8a5a1c, 0xb0203a, 0x203ab0], BRIGHT_PAL = [0xd8dde6, 0xdfe6df, 0xe9e3c8, 0xe3d8e6, 0xd9e6e8];
+        let fx = EL.perkEffects(null), visionDots = [], trail = null, dangerRing = null, chPath = null, chAt = 0, chIdx = 1;
+        let scentAt = 0, earsAt = 0, lastVibe = 0, wallRects = [];
+        const applyFx = () => { fx = EL.perkEffects(run.slots); };
+        const protect = () => { protectUntil = performance.now() + EL.BASE_GRACE_MS + fx.graceMs; };   // spawn, respawn, stand-down: finite, never renewed per frame
+        function prepareSection() {
+          ES = EL.genEndlessSection(run.seed, run.section, run.genVersion);
+          wallRects = [...ES.corridorWalls, ...ES.areas.flatMap(a => a.walls), ES.door].map(([cx, cz, w, d]) => ({ x0: cx - w / 2, x1: cx + w / 2, z0: cz - d / 2, z1: cz + d / 2 }));
+          LEVELS[0].pages = [0, 1, 2].map(k => ARTICLES[((run.section - 1) * 3 + k) % ARTICLES.length]);
+          state.found[0] = ES.objectives.map(o => run.collected.includes(o.objectiveId));
+          state.level = 0; applyFx(); chPath = null;
+        }
+        // one wall-only line of sight: x-ray outlines never count as sight, and pickups cannot reach through walls
+        const sightClear = (x, z) => { for (const w of wallRects) if (EL.segHitsRect(player.x, player.z, x, z, w)) return false; return true; };
+        function chaseTarget(mp) {
+          const now = performance.now();
+          if (!chPath || now - chAt > 300) { chPath = EL.routePath(ES, mp.x, mp.z, player.x, player.z) || [[mp.x, mp.z], [player.x, player.z]]; chAt = now; chIdx = 1; }
+          while (chIdx < chPath.length - 1 && Math.hypot(chPath[chIdx][0] - mp.x, chPath[chIdx][1] - mp.z) < 0.35) chIdx++;
+          return chPath[chIdx];
+        }
+        function ringTexture(hex) {
+          const c = document.createElement("canvas"); c.width = c.height = 64; const x = c.getContext("2d");
+          x.strokeStyle = hex; x.lineWidth = 6; x.beginPath(); x.arc(32, 32, 24, 0, 7); x.stroke();
+          x.globalAlpha = .35; x.fillStyle = hex; x.beginPath(); x.arc(32, 32, 24, 0, 7); x.fill();
+          const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+        }
+        function xraySprite(hex, size) {
+          const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: ringTexture(hex), transparent: true, depthTest: false, depthWrite: false }));
+          s.scale.set(size, size, 1); s.renderOrder = 998; s.visible = false; levelGroup.add(s); return s;
+        }
+        function paperSprite(headline, i) {
+          const c = document.createElement("canvas"); c.width = 256; c.height = 160; const x = c.getContext("2d");
+          x.fillStyle = ["#f0d67d", "#eea0ba", "#93d5be"][i]; x.fillRect(0, 0, 256, 160); x.strokeStyle = "#241a0e"; x.lineWidth = 4; x.strokeRect(4, 4, 248, 152);
+          x.fillStyle = "#241a0e"; x.font = "bold 20px Georgia"; x.textAlign = "center";
+          let line = "", y = 55; headline.split(" ").forEach(w => { const t = line + w + " "; if (x.measureText(t).width > 220 && line) { x.fillText(line, 128, y); line = w + " "; y += 24; } else line = t; }); x.fillText(line, 128, y);
+          const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
+          const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true })); s.name = "office-page"; s.scale.set(.42, .26, 1); return s;
+        }
+        function buildEndlessWorld(idx, bright) {
+          const dark = ES.dark, pal = dark ? DARK_PAL : BRIGHT_PAL, lamp = (x, z, c, i, r) => { const l = new THREE.PointLight(c, i, r); l.position.set(x, 2.3, z); levelGroup.add(l); };
+          DOOR_X = ES.corridorLength;
+          ES.corridorWalls.forEach(w => wallBox(...w));
+          for (let lx = 4; lx <= DOOR_X - 3; lx += 10) lamp(lx, 0, bright ? 0xffffff : 0xcab6ee, bright ? 0.7 : 0.55, bright ? 9 : 7);   // few lights: phones pay per point light
+          if (dark) addSchoolPosters(DOOR_X, 1, 1.19);
+          AREAS = ES.areas.map((a, i) => ({ ...a, mat: areaMat(pal[(i + (ES.decorSeed & 7)) % pal.length]), furniture: dark ? "desk" : "cubicle", noSolid: true }));
+          AREAS.forEach(a => { a.walls.forEach(w => wallBox(w[0], w[1], w[2], w[3], a.mat)); const [lx, lz] = a.lights[2]; lamp(lx, lz, 0xfff3d0, dark ? 0.5 : 0.3, 8); });
+          AREAS.forEach(a => dressArea(a, dark));
+          const pages = LEVELS[idx].pages;
+          DESKS = ES.objectives.map((o, i) => {
+            const d = buildFurniture(dark ? "desk" : "cubicle", pages[i].deskLabel, pages[i].deskDate);
+            d.position.set(o.pagePos[0], 0, o.pagePos[2]); d.rotation.y = o.deskYaw; levelGroup.add(d);
+            collideRects.push({ ...ES.areas[o.areaId].deskRect }); return d;
+          });
+          MAIN_ANCHORS = ES.mainAnchors;
+          PAGE_POS = ES.objectives.map(o => new THREE.Vector3(o.pagePos[0], 0.60, o.pagePos[2]));
+          AREA_DOOR_X = AREAS.map(a => a.anchors[0][0]);
+          pageObjs = PAGE_POS.map((pos, i) => {
+            if (state.found[0][i]) return null;
+            const s = paperSprite(pages[i].title, i); s.position.copy(pos); levelGroup.add(s);
+            return { sprite: s, light: null, base: pos.y };
+          });
+          visionDots = PAGE_POS.map(() => xraySprite("#c9ff59", .8));
+          const pts = new THREE.BufferGeometry(); pts.setAttribute("position", new THREE.BufferAttribute(new Float32Array(3 * 42), 3)); pts.setDrawRange(0, 0);
+          trail = new THREE.Points(pts, new THREE.PointsMaterial({ color: 0xc9ff59, size: 0.1, depthWrite: false })); trail.frustumCulled = false; trail.visible = false; levelGroup.add(trail);
+        }
+        function updateTrail() {
+          const got = state.found[0].map((f, i) => f ? i : -1).filter(i => i >= 0), best = EL.nearestPaper(ES, player.x, player.z, got);
+          if (!best) { trail.visible = false; return; }
+          const path = EL.trimPath(best.path, fx.scentLen), a = trail.geometry.attributes.position; let n = 0, carry = 0;
+          for (let i = 1; i < path.length && n < 41; i++) {
+            const dx = path[i][0] - path[i - 1][0], dz = path[i][1] - path[i - 1][1], len = Math.hypot(dx, dz);
+            for (let u = carry; u < len && n < 41; u += 0.5, carry = u - len) a.setXYZ(n++, path[i - 1][0] + dx * u / len, 0.05, path[i - 1][1] + dz * u / len);
+          }
+          a.needsUpdate = true; trail.geometry.setDrawRange(0, n); trail.visible = n > 0;
+        }
+        function endlessTick(now, mDist) {
+          visionDots.forEach((g, i) => { const po = pageObjs[i]; g.visible = !!po && fx.visionRange > 0 && deskRead.phase === "idle" && Math.hypot(PAGE_POS[i].x - player.x, PAGE_POS[i].z - player.z) <= fx.visionRange; if (g.visible) g.position.set(PAGE_POS[i].x, 0.7, PAGE_POS[i].z); });
+          if (!dangerRing && monster) dangerRing = xraySprite("#ff3b6b", 1.5);
+          if (dangerRing) { dangerRing.visible = fx.dangerRange > 0 && monster.visible && mDist <= fx.dangerRange; dangerRing.position.set(monster.position.x, 0.9, monster.position.z); }
+          const hot = fx.hackleRange > 0 && monster.visible && mDist <= fx.hackleRange;
+          if (cc.dataset.hackles !== (hot ? "1" : "")) cc.dataset.hackles = hot ? "1" : "";
+          if (hot && !REDUCED && navigator.vibrate && now - lastVibe > 1500) { lastVibe = now; try { navigator.vibrate(40); } catch { /* not allowed */ } }
+          if (fx.earsRange > 0 && monster.visible && mDist <= 6 + fx.earsRange && now - earsAt > 500 + mDist * 70) { earsAt = now; musicTone(96, 0.2, Math.min(0.12, 0.03 * fx.earsGain), "triangle"); }
+          if (fx.scentLen > 0) { if (now - scentAt > 250) { scentAt = now; updateTrail(); } } else if (trail) trail.visible = false;
+        }
+
+        // ---- run flow: collect -> persisted offer -> pick -> (milestone) -> stand down. Every step writes the store first.
+        const endHud = document.createElement("div"); endHud.className = "ce-hud"; endHud.setAttribute("aria-live", "off");
+        if (ENDLESS) viewport.append(endHud);
+        let overlayEl = null;
+        function paintEndHud() {
+          if (!ENDLESS) return;
+          const max = fx.maxHearts, got = state.found[0].filter(Boolean).length;
+          byId("ccTally").textContent = "SECTION " + run.section + " · PAPERS " + got + "/3";
+          const chips = run.slots.map(s => s ? EL.perkById(s.id).name + " " + s.rank + "/5" : "empty slot");
+          endHud.textContent = ""; const row = (cls, text) => { const e = document.createElement("span"); e.className = cls; e.textContent = text; endHud.append(e); };
+          row("ce-hearts", "♥".repeat(Math.max(0, run.hearts)) + "♡".repeat(Math.max(0, max - run.hearts)));
+          chips.forEach(t => row("ce-chip", t));
+          bankedVal = Math.max(bankedVal, 4 + got * 20); paintMeter();
+        }
+        function closeOverlay() { overlayEl?.remove(); overlayEl = null; overlayOpen = false; }
+        function overlay(label) {
+          closeOverlay(); stopInput(); overlayOpen = true;
+          const el = document.createElement("section"); el.className = "ce-ov"; el.setAttribute("role", "dialog"); el.setAttribute("aria-modal", "true"); el.setAttribute("aria-label", label);
+          ctx.on(el, "pointerdown", e => e.stopPropagation()); ctx.on(el, "keydown", e => e.stopPropagation());
+          viewport.append(el); overlayEl = el; return el;
+        }
+        const node = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e; };
+        const btn = (cls, onClick, ...kids) => { const b = node("button", cls); b.type = "button"; b.append(...kids); ctx.on(b, "click", onClick); return b; };
+        function paperPage(head) { const a = node("article", "ce-paper"); a.append(node("header", "", "THE NAUSEOUS TIMES · SECTION " + run.section), node("h2", "", head)); return a; }
+        function afterFlow() { closeOverlay(); if (deskRead.phase === "held") standDown(); protect(); }
+        function openOffer() {
+          const o = run.pendingOffer; if (!o) return;
+          const art = ARTICLES[o.article % ARTICLES.length], el = overlay("Paper found, pick a perk"), pg = paperPage(art.title);
+          const cards = node("div", "ce-cards");
+          o.choices.forEach((c, i) => {
+            const p = EL.perkById(c.perk), cur = run.slots.find(s => s && s.id === c.perk), to = (cur ? cur.rank : 0) + 1;
+            cards.append(btn("ce-card", () => (c.kind === "new" && run.slots.every(Boolean)) ? openReplace(i) : commitPick(i), node("b", "", p.name),
+              node("i", "", c.kind === "upgrade" ? "RANK " + cur.rank + " → " + to : "NEW · RANK 1"), node("span", "", p.line(to))));
+          });
+          pg.append(node("p", "ce-stat", art.stat), node("small", "ce-src", art.src), node("h3", "", "PICK A PERK"), cards,
+            btn("ce-keep", () => { run = EL.keepBuild(run); persistRun(); afterFlow(); }, "Keep my build"));
+          el.append(pg); cards.querySelector("button")?.focus();
+        }
+        function openReplace(i) {
+          const c = run.pendingOffer.choices[i], el = overlay("Replace which perk"), pg = paperPage("REPLACE WHICH?");
+          const row = node("div", "ce-cards");
+          run.slots.forEach((s, k) => row.append(btn("ce-card", () => commitPick(i, k), node("b", "", "Drop " + EL.perkById(s.id).name), node("i", "", "RANK " + s.rank + " is lost"), node("span", "", "Take " + EL.perkById(c.perk).name + " at rank 1"))));
+          pg.append(row, btn("ce-keep", openOffer, "Back")); el.append(pg); row.querySelector("button")?.focus();
+        }
+        function commitPick(i, slot) {
+          const r = EL.pickOffer(run, i, slot, store); if (r.error) { announce(r.error); return; }
+          run = r.run; store.best = r.best; persistRun(); applyFx(); paintEndHud();
+          if (run.pendingMilestone) openMilestone(); else afterFlow();
+        }
+        function openMilestone() {
+          const full = run.pendingMilestone === "full", el = overlay(full ? "Full clear" : "Milestone"), pg = paperPage(full ? "FULL CLEAR" : "FIRST RANK 5");
+          pg.append(node("p", "ce-stat", full ? "Both equipped perks are at rank 5. Nothing is left to prove, and the hall keeps going." : "A perk reached rank 5. The run keeps going, and so does he."),
+            btn("ce-keep ce-go", () => { run = { ...run, pendingMilestone: null }; persistRun(); afterFlow(); }, "Continue")); el.append(pg); pg.querySelector("button")?.focus();
+        }
+        function openOver() {
+          const el = overlay("Run over"), pg = paperPage("THE RUN IS OVER");
+          pg.append(node("p", "ce-stat", "You reached section " + run.section + ". Your best is section " + store.best.section + ". Perks and hearts go with the run; your bests stay."),
+            btn("ce-keep ce-go", () => { run = EL.newRun(newSeed()); persistRun(); closeOverlay(); endlessRebuild(); }, "New run")); el.append(pg); pg.querySelector("button")?.focus();
+        }
+        function endlessCollect(i) {
+          const o = ES.objectives[i]; if (run.collected.includes(o.objectiveId)) return;
+          const before = run;
+          run = { ...run, collected: [...run.collected, o.objectiveId], papers: run.papers + 1, offerIdx: run.offerIdx + 1 };
+          run.pendingOffer = EL.makeOffer(before, o.objectiveId, (run.section - 1) * 3 + i);
+          state.found[0][i] = true; persistRun(); paintEndHud(); openOffer();       // paper + offer land in one write, before anything is shown
+        }
+        function endlessCapture() {
+          run = EL.loseHeart(run); persistRun(); paintEndHud(); stopInput();
+          if (run.status === "over") { cc.dataset.caught = "true"; openOver(); return; }
+          announce("Caught. " + run.hearts + " heart" + (run.hearts === 1 ? "" : "s") + " left. The papers you took stay taken.");
+          ctx.timeout(() => {
+            const r = EL.chooseRecovery(ES, monster.position.x, monster.position.z);
+            player.x = r[0]; player.z = r[1]; player.yaw = -Math.PI / 2; player.pitch = 0;
+            caught = false; monster.visible = false; monsterWasVisible = false; chPath = null; respawnChaser(performance.now()); protect();
+          }, 700);
+        }
+        function endlessExit() {
+          transitioning = true;
+          const r = EL.nextSection(run, store); run = r.run; store.best = r.best; persistRun();   // exactly one increment per accepted exit
+          ctx.timeout(() => { endlessRebuild(); announce("Section " + run.section + "."); }, 250);
+        }
+        function endlessRebuild() {
+          delete cc.dataset.caught; buildLevel(0); buildLevelTail(0);
+          camera.position.set(player.x, EYE_H, player.z); camera.rotation.set(0, player.yaw, 0, "YXZ");
+          deskRead.phase = "idle"; cc.removeAttribute("data-reading"); pawsEl.classList.remove("up"); stopInput(); stamina = 100; paintEndHud(); protect();
+        }
+        function endlessResume() {
+          paintEndHud();
+          if (run.status === "over") { cc.dataset.caught = "true"; openOver(); } else if (run.pendingOffer) openOffer(); else if (run.pendingMilestone) openMilestone();
+        }
+        function endlessApi() {   // dev hook on window.__corgi.endless, like the other probes; the ordinary UI has no way to grant perks
+          return {
+            get run() { return run; }, get layout() { return ES; }, get fx() { return fx; },
+            grant(id, rank, slot = 0) { const s = run.slots.slice(); s[slot] = { id, rank }; const nm = EL.perkEffects(s).maxHearts; run = { ...run, slots: s, hearts: Math.min(run.hearts + Math.max(0, nm - fx.maxHearts), nm) }; applyFx(); persistRun(); paintEndHud(); },
+            setSection(n) { run = { ...run, section: n, collected: [] }; persistRun(); endlessRebuild(); },
+            info() { const r = renderer.info; return { geometries: r.memory.geometries, textures: r.memory.textures, programs: r.programs ? r.programs.length : 0, calls: r.render.calls, lights: levelGroup.children.filter(o => o.isLight).length, children: levelGroup.children.length }; },
+            teleport(x, z) { player.x = x; player.z = z; }, protectUntil: () => protectUntil,
+            collectNow(i) { startDeskRead(i); }, openOffer, capture: () => endlessCapture()
+          };
+        }
+
         // ---- Round 2, section 2: the reading beat. Approach a desk, the page comes off it, the camera rises
         // to standing-on-hind-legs height while two paws come into frame -- then the book opens to the page just
         // found. deskRead is the one state machine for it; data-reading (set on the <article>) is what the kill
@@ -2010,7 +2227,7 @@ export default {
           deskRead.faceYaw = Math.atan2(player.x - PAGE_POS[i].x, player.z - PAGE_POS[i].z);
           cc.setAttribute("data-reading", "1");
         }
-        function finishRise() { deskRead.phase = "held"; pawsEl.classList.add("up"); collect(deskRead.i); showBook(); goTo(deskRead.i + 1); }
+        function finishRise() { deskRead.phase = "held"; pawsEl.classList.add("up"); if (ENDLESS) { endlessCollect(deskRead.i); return; } collect(deskRead.i); showBook(); goTo(deskRead.i + 1); }
         function standDown() {
           if (deskRead.phase !== "held") return false;
           deskRead.phase = "standing"; deskRead.t0 = performance.now();
@@ -2027,6 +2244,7 @@ export default {
         // it closes over THIS mount's player and level state, and left behind it would answer questions about,
         // and let a driver move, a school that is no longer in the document.
         window.__corgi = { player, deskRead, get desks() { return DESKS.length; }, get level() { return state.level; }, get doorLabel() { return LEVELS[state.level].doorLabel; }, get transition(){return roomCut?.stage||null;}, get battery(){return battery;}, get lives(){return state.lives;}, get dreamPhase(){return state.dreamPhase;}, get doorX(){return DOOR_X;}, get doorOpen(){return doorOpen;}, get pages(){return PAGE_POS.map(p=>({x:p.x,z:p.z}));}, get finalPages(){return finalPages?.position.clone()||null;}, get monster(){return monster;}, get door(){return doorLeaf;}, get chase(){return {active:chase.active,speed:chase.speed,stuckFor:chase.stuckFor};}, get camera(){return roomCut?.camera||camera;} };
+        if (ENDLESS) window.__corgi.endless = endlessApi();
         // 0901 corner-trap fix. Root cause, found live by logging position + blocked() every frame while
         // scripting a diagonal hold into three different corners: the old test expanded each wall's AABB by R
         // on both axes independently, and the per-axis slide below tests each axis's candidate against the
@@ -2076,7 +2294,8 @@ export default {
         function lookStart(x, y) { dragging = true; lastX = x; lastY = y; }
         function lookMove(x, y) {
           if (!dragging) return;
-          player.yaw -= (x - lastX) * 0.0055; player.pitch = Math.max(-0.6, Math.min(0.6, player.pitch - (y - lastY) * 0.0045));
+          const LOOK = ENDLESS ? store.settings.look : 1;
+          player.yaw -= (x - lastX) * 0.0055 * LOOK; player.pitch = Math.max(-0.6, Math.min(0.6, player.pitch - (y - lastY) * 0.0045 * LOOK));
           lastX = x; lastY = y;
         }
         ctx.on(viewport, "pointerdown", e => { if (caught || transitioning || e.target === joy || joy.contains(e.target) || e.target === flashBtn || e.target === readBtn) return; lookStart(e.clientX, e.clientY); try { viewport.setPointerCapture(e.pointerId); } catch {} });
@@ -2111,7 +2330,7 @@ export default {
         ctx.on(window, "keydown", e => { if (!hunting() || caught) return;
           if (roomCut) { if (e.key.toLowerCase() === 'f' && roomCut.stage === 'wake') leaveCut(); return; }
           keys[e.key.toLowerCase()] = true;
-          if (e.key.toLowerCase() === "f") {if(roomCut?.stage==='wake')leaveCut();else setFlash(!flashOn);} if (e.key.toLowerCase() === "r") showBook(); if (e.key.toLowerCase() === "e") lobbyUse(); });
+          if (e.key.toLowerCase() === "f") {if(roomCut?.stage==='wake')leaveCut();else setFlash(!flashOn);} if (e.key.toLowerCase() === "r" && !ENDLESS) showBook(); if (e.key.toLowerCase() === "e") lobbyUse(); });
         ctx.on(window, "keyup", e => keys[e.key.toLowerCase()] = false);
 
         function resize() {
@@ -2299,6 +2518,7 @@ export default {
             if (!useBtn.hidden) useBtn.hidden = true;
             if (ghost.active) ghost.t0 += dt * 1000;
             if (monster.visible) monsterVisibleAt += dt * 1000;
+            if (ENDLESS && protectUntil > now) protectUntil += dt * 1000;   // a pause neither spends nor refills protection
             ctx.frame(frame);
             return;
           }
@@ -2310,13 +2530,13 @@ export default {
           mx += joyVec.x; mz += joyVec.y;
           const mlen = Math.hypot(mx, mz);
           const wantSprint = (keys.shift || sprintHeld) && stamina > 2 && mlen > 0.05;
-          if (wantSprint) stamina = Math.max(0, stamina - dt * 26); else stamina = Math.min(100, stamina + dt * 15);
+          if (wantSprint) stamina = Math.max(0, stamina - dt * 26 * (ENDLESS ? fx.drainMul : 1)); else stamina = Math.min(100, stamina + dt * 15 * (ENDLESS ? fx.regainMul : 1));
           stamFill.style.setProperty("--stam", stamina.toFixed(0));
           if (mlen > 0.05 && deskRead.phase === "idle") {   // Round 2: movement ignored while rising, held or standing down
             mx /= Math.max(mlen, 1); mz /= Math.max(mlen, 1);
             const fx = -Math.sin(player.yaw), fz = -Math.cos(player.yaw);
             const rx = Math.cos(player.yaw), rz = -Math.sin(player.yaw);
-            const curSpeed = SPEED * (wantSprint ? 1.7 : 1);
+            const curSpeed = SPEED * (ENDLESS ? fx.speedMul : 1) * (wantSprint ? 1.7 : 1);   // chaser speed never reads this
             const dx = (fx * -mz + rx * mx) * curSpeed * dt, dz = (fz * -mz + rz * mx) * curSpeed * dt;
             // both axes tested against the frame-START position, never chained -- chaining (testing z against
             // the just-updated x) let a room's back corner freeze both axes solid while diagonal was held, since
@@ -2331,7 +2551,7 @@ export default {
 
           let camY = EYE_H + (mlen > 0.05 && !REDUCED ? Math.abs(Math.sin(now / 130)) * 0.02 : 0), camPitch = player.pitch, camYaw = player.yaw;
           if (deskRead.phase === "rising" || deskRead.phase === "standing") {
-            const rising = deskRead.phase === "rising", dur = rising ? RISE_MS : STAND_MS;
+            const rising = deskRead.phase === "rising", dur = (rising ? RISE_MS : STAND_MS) * (ENDLESS ? fx.readTime : 1);
             const p = Math.min(1, (now - deskRead.t0) / dur), e = 1 - Math.pow(1 - p, 3);
             const y0 = rising ? EYE_H : 0.95, y1 = rising ? 0.95 : EYE_H;
             const pitch0 = rising ? 0 : 0.44, pitch1 = rising ? 0.44 : 0;
@@ -2353,13 +2573,14 @@ export default {
           // an instant silent counter tick. Pickup itself stays proximity-based (a walked-to pickup, not a
           // button press) but now fires a brief zoom/flash jolt, the classic paper-grab beat.
           let anyPrompt = false;
+          const pickR = ENDLESS ? 0.9 * fx.readReach : 0.9;
           pageObjs.forEach((po, i) => {
             if (!po) return;
             if(!LEVELS[state.level].handAuthored)po.sprite.position.y = po.base + Math.sin(now / 500 + i) * 0.015;   // stirring on the desk, not levitating
             const ddx = po.sprite.position.x - player.x, ddz = po.sprite.position.z - player.z;
             const d = Math.hypot(ddx, ddz);
             const facing = d > 0.05 && (lookFx * ddx / d + lookFz * ddz / d) > 0.3;
-            if (d < 0.9 && deskRead.phase === "idle") {
+            if (d < pickR && deskRead.phase === "idle" && (!ENDLESS || sightClear(po.sprite.position.x, po.sprite.position.z))) {
               po.sprite.removeFromParent(); po.light?.removeFromParent(); pageObjs[i] = null;
               viewport.classList.remove("cc-jolt"); void viewport.offsetWidth; viewport.classList.add("cc-jolt");
               startDeskRead(i);   // Round 2: the rise begins here; collect() and the haunt fire later (finishRise/standDown)
@@ -2421,6 +2642,7 @@ export default {
             doorLeaf.rotation.y = -1.9 * (1 - Math.pow(1 - p, 3));
             if (p >= 1) doorOpening = false;
           }
+          if (ENDLESS && doorOpen && !transitioning && player.x > DOOR_X - 0.4) endlessExit();
           if (doorOpen && !transitioning && state.level < LEVELS.length - 1 && player.x > DOOR_X - 0.4) {
             transitioning = true;
             // 0905: public's door doesn't lead to a fourth level (LEVELS_PUBLIC has exactly one entry) -- it
@@ -2444,6 +2666,7 @@ export default {
             monsterOnscreen = monsterVec.z < 1 && Math.abs(monsterVec.x) < 1.05 && Math.abs(monsterVec.y) < 1.05;
             monsterCentered = monsterOnscreen && Math.abs(monsterVec.x) < 0.22 && Math.abs(monsterVec.y) < 0.3;
             monsterDist = Math.hypot(monster.position.x - player.x, monster.position.z - player.z);
+            if (ENDLESS && monsterOnscreen && !sightClear(monster.position.x, monster.position.z)) monsterOnscreen = monsterCentered = false;   // real sight only; outlines are not sight
             if (ghost.active) {
               if (monsterCentered) { ghost.t0 += dt * 1000; }   // watched dead-on: freeze the slide's progress
               else {
@@ -2482,7 +2705,7 @@ export default {
             // touch-range kill: visible at least 600ms (no spawn-kills), close enough -- he can take you from
             // behind, whether or not you're facing him. Static-maxout kill is the other path, below. LIVE ONLY --
             // "the suited figure does NOT kill you" in public mode is the one behaviour difference the mode makes.
-            if (LEVELS[state.level].handAuthored && !caught && !cc.hasAttribute("data-reading") && (now - monsterVisibleAt) >= 600 && monsterDist < 1.1) doCapture();
+            if (LEVELS[state.level].handAuthored && !caught && !cc.hasAttribute("data-reading") && (now - monsterVisibleAt) >= 600 && (!ENDLESS || now >= protectUntil) && monsterDist < (ENDLESS ? fx.catchRange : 1.1)) doCapture();
           }
           monsterWasVisible = monster.visible;
 
@@ -2532,9 +2755,10 @@ export default {
             // static-maxout: the other kill path (both live, Ian's ruling). Shares the one capture routine
             // with the touch-range path above -- doCapture() never touches state.found, never calls save(),
             // never re-fires MBS.form/unlock/wave. LIVE ONLY, same as the touch-range path above.
-            if (MODE === "live" && !caught && !cc.hasAttribute("data-reading") && staticIntensity >= 0.99) doCapture();
+            if (MODE === "live" && !ENDLESS && !caught && !cc.hasAttribute("data-reading") && staticIntensity >= 0.99) doCapture();
           }
 
+          if (ENDLESS) endlessTick(now, monsterDist);
           renderer.render(scene, camera);
           ctx.frame(frame);
         }
@@ -2551,6 +2775,7 @@ export default {
         }, 400);
         buildLevel(state.level); buildLevelTail(state.level);
         if (MODE === 'public' && state.dreamPhase === 'ending') startDreamEnding();
+        if (ENDLESS) endlessResume();
         ctx.frame(frame);
       }).catch(err => {
         if (session !== mine) return;

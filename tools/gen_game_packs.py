@@ -204,6 +204,7 @@ def build(refresh=False):
                 r'^(arcade/|vendor/shaders/|shader-)|drgf-paper|brushed-aluminum|corgi-badge|helping-hand-badge|-horror|myr5-sticker|website-bezel', p)}
         if slug in APPS:
             selected.discard('tv/assets/helping-hand-badge.png')  # only Helping Hand's loader uses it
+        selected -= set(APPS.get(slug, {}).get('packSkip', []))  # story-only art an app never shows
         write(slug, selected, fonts)
 
 

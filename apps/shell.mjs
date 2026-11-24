@@ -1,8 +1,13 @@
 // Shared app shell runtime: opening menu, settings, full-screen game, offline status.
-import {setupInstall} from '/apps/install.mjs';
+import {setupInstall, isStandalone} from '/apps/install.mjs';
 const $ = id => document.getElementById(id);
 // The game loader runs this module once the app's offline pack is verified; config sits in #app-config.
 function boot(cfg) {
+  const ui = $('app-ui');   // download-only apps keep their play UI inert until a standalone launch
+  if (ui) {
+    if (!isStandalone()) { setupInstall({button: $('gate-install'), status: $('gate-status'), list: $('gate-steps'), iosHelp: $('gate-ios'), name: cfg.name}); return; }
+    $('gate')?.remove(); document.body.prepend(ui.content);
+  }
   const menu = $('menu'), settings = $('settings'), stage = $('stage'), host = $('host'), offline = $('offline');
   let game = null, loaded = null, sheet = null, refreshModels = null;
   const editor = cfg.mode === 'editor';  // Hand Customizer: the page's own editor, not a mounted game
@@ -27,7 +32,7 @@ function boot(cfg) {
         host.replaceChildren(frame); game = {dispose() { frame.src = 'about:blank'; }};
         return;
       }
-      game = (await import(cfg.src))[cfg.mount](host, cfg.options);
+      game = await (await import(cfg.src))[cfg.mount](host, cfg.options);
       host.querySelector('canvas')?.focus();
     } catch { host.textContent = 'The game could not open. Go back and try again.'; }
   };
@@ -67,6 +72,7 @@ function boot(cfg) {
   }
   setupInstall({button: $('install'), status: $('install-status'), list: $('install-steps'), iosHelp: $('ios-help'), name: cfg.name});
   if (editor && $('models')) import(cfg.models).then(m => { refreshModels = m.renderModels($('models'), cfg.optional); });
+  if (cfg.settingsModule) import(cfg.settingsModule).then(m => m.setupSettings?.({root: settings, refresh}));
   refresh(); show(menu);
 }
 boot(JSON.parse($('app-config').textContent));

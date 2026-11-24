@@ -239,6 +239,31 @@
       "href": "/download/alarm/",
       "card": "games/goon/index.html",
       "minAndroid": "10"
+    },
+    {
+      "id": "corgi",
+      "type": "pwa",
+      "name": "Cortisol Corgi Endless",
+      "shortName": "Corgi Endless",
+      "description": "An endless school hall. Three papers a section, ten perks, two slots, one patient villain.",
+      "status": "ready",
+      "mode": "module",
+      "src": "/apps/corgi/app.mjs",
+      "mount": "mountCorgi",
+      "options": {"endless": true},
+      "style": "/apps/corgi/app.css",
+      "bestKey": "corgi-endless-best-v1",
+      "bestLabel": "Best section",
+      "settingsModule": "/apps/corgi/app.mjs",
+      "finite": "/play/corgi/",
+      "theme": "#4a2a7a",
+      "orientation": "any",
+      "icons": ["icon-192.png", "icon-512.png", "icon-maskable-512.png"],
+      "settings": ["sound", "look", "reset-run", "wall"],
+      "pack": "app-corgi",
+      "packFiles": ["tv/channels/corgi.html"],
+      "packSkip": ["tv/assets/cortisol-corgi-badge.png", "tv/assets/corgi-preview.webm", "tv/assets/corgi-game-still.png", "tv/assets/school-drawing-1.png", "tv/assets/school-drawing-2.png", "tv/assets/school-drawing-3.png"],
+      "browserPlay": false
     }
   ]
 }

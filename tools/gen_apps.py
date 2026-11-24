@@ -28,7 +28,13 @@ PAGE = """<!doctype html>
 <link rel="stylesheet" href="/apps/shell.css">
 {style_link}{app_style}</head>
 <body>
-<main id="menu">
+{gate}{ui}<script type="application/json" id="app-config">{config}</script>
+<script type="application/mbs-script" data-mbs-type="module" data-mbs-src="/apps/shell.mjs"></script>
+</body>
+</html>
+"""
+
+UI = """<main id="menu">
 <img class="mark" src="{icon192}" alt="" width="170" height="170">
 <h1>{name}</h1>
 <p class="tag">{description}</p>
@@ -48,10 +54,22 @@ PAGE = """<!doctype html>
 <button id="close-settings" class="alt" type="button">Back</button>
 </main>
 <section id="stage" hidden aria-label="{name}"><button id="back" class="alt" type="button">← Menu</button>{host}</section>
-<script type="application/json" id="app-config">{config}</script>
-<script type="application/mbs-script" data-mbs-type="module" data-mbs-src="/apps/shell.mjs"></script>
-</body>
-</html>
+"""
+
+GATE = """<main id="gate">
+<img class="mark" src="{icon192}" alt="" width="170" height="170">
+<h1>{name}</h1>
+<p class="tag">{description}</p>
+<p class="tag">This one is played from your home screen. Add it, then open it from there.</p>
+<section class="panel">
+<p><strong>How to add it</strong></p>
+<button id="gate-install" type="button">Install app</button>
+<p id="gate-status" role="status"></p>
+<ol id="gate-steps"><li>iPhone: open this page in Safari, tap Share, then Add to Home Screen.</li><li>Android: open the ⋮ menu in Chrome, then tap Install app.</li></ol>
+<p id="gate-ios" hidden>On iPhone use Safari. Home Screen apps keep their own saved run and offline files.</p>
+</section>
+<a class="btn" href="{finite}">Play the finite story in your browser</a>
+</main>
 """
 
 RESET = """<section class="panel">
@@ -225,19 +243,29 @@ def main():
             cfg = {'name': a['name'], 'src': a['src'], 'mode': 'iframe'}
         else:
             cfg = {'name': a['name'], 'src': a['src'], 'mount': a['mount'], 'options': a['options'], 'bestKey': a['bestKey']}
+            if a.get('settingsModule'):
+                cfg['settingsModule'] = a['settingsModule']
         config = json.dumps(cfg, sort_keys=True).replace('</', '<\/')
         panels = (RESET if 'reset-best' in a['settings'] else '') + (RESET_HAND if 'reset-hand' in a['settings'] else '') \
             + (MODELS if 'extra-models' in a['settings'] else '')
+        icon = f"/apps/{a['id']}/{a['icons'][0]}"
+        ui = UI.format(name=escape(a['name']), description=escape(a['description']), icon192=icon,
+                       best_line='' if editor or frame else f'<p class="tag">{escape(a.get("bestLabel", "Best"))}: <strong id="best">0</strong></p>\n',
+                       note_line=f'<p class="tag note">{escape(a["note"])}</p>\n' if a.get('note') else '',
+                       reset_panel=panels, tilt_panel=TILT if 'tilt' in a['settings'] else '',
+                       saved='saved hand' if editor else 'saved best',
+                       host='<div id="host"><div id="root"></div></div>' if editor else '<div id="host"></div>')
+        gate = ''
+        if a.get('browserPlay') is False:
+            # Download-only: a plain browser sees install steps and the finite story link; the play UI sits in an inert template
+            # that the shell instantiates only for a standalone launch (display-mode is presentation, not security).
+            gate = GATE.format(icon192=icon, name=escape(a['name']), description=escape(a['description']), finite=a['finite'])
+            ui = '<template id="app-ui">\n' + ui + '</template>\n'
         page = PAGE.format(pack=a['pack'], name=escape(a['name']), short=escape(a['shortName']), theme=a['theme'],
-                           description=escape(a['description']), icon192=f"/apps/{a['id']}/{a['icons'][0]}",
+                           description=escape(a['description']), icon192=icon,
                            style_link=f'<link rel="stylesheet" href="{a["style"]}">\n' if a.get('style') and not editor else '',
                            app_style=f'<link rel="stylesheet" href="{a["appStyle"]}">\n' if a.get('appStyle') else '',
-                           best_line='' if editor or frame else '<p class="tag">Best: <strong id="best">0</strong></p>\n',
-                           note_line=f'<p class="tag note">{escape(a["note"])}</p>\n' if a.get('note') else '',
-                           config=config, reset_panel=panels,
-                           tilt_panel=TILT if 'tilt' in a['settings'] else '',
-                           saved='saved hand' if editor else 'saved best',
-                           host='<div id="host"><div id="root"></div></div>' if editor else '<div id="host"></div>')
+                           gate=gate, ui=ui, config=config)
         (out / 'index.html').write_text(page, encoding='utf-8', newline='\n')
         (out / 'manifest.webmanifest').write_text(json.dumps(manifest(a), indent=2) + '\n', encoding='utf-8', newline='\n')
         print(f"{a['id']}: wrote apps/{a['id']}/index.html + manifest.webmanifest")
