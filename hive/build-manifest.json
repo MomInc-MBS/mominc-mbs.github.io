@@ -209,12 +209,18 @@
       "path": "updates/HIVE_M1_Accepted_2026-11-24.md",
       "date": "2026-11-24",
       "sha256": "eaeaf6310146772535fcfffcba1148b1c46b741afb168e0b146f89ba798cbc78"
+    },
+    {
+      "id": "M2",
+      "path": "updates/HIVE_M2_Accepted_2026-11-24.md",
+      "date": "2026-11-24",
+      "sha256": "748bf66f6bb0ef1a7537efc1ebe0f55e477a39dd6883334db2ab7e64407c915a"
     }
   ],
   "source_zip_sha256": "2b726d055a17a25495854890d8d0001cb791006273e0f8eb5515788b7e00c61a",
   "counts": {
-    "research_pages": 316,
-    "graph_edges": 2543,
+    "research_pages": 317,
+    "graph_edges": 2545,
     "originals": 19
   },
   "scope": "Static research reference plus executable local model/tool controller evidence. No production model runtime or compounding-learning claim."
