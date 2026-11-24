@@ -349,8 +349,8 @@
     },
     {
       "url": "/tv/game-loader.js",
-      "revision": "5efa25a86b13e2bb9eea1b2a9499fbc151122d49",
-      "bytes": 14209
+      "revision": "0a646a6f27937d71f6bd4c8add66e2b4d98a1d74",
+      "bytes": 14235
     },
     {
       "url": "/tv/identity.css",
@@ -473,5 +473,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap",
     "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
   ],
-  "version": "d70d4fe11e1c765794cb"
+  "version": "fc0f6895213af81365cc"
 }

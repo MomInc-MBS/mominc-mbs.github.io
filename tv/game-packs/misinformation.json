@@ -4,13 +4,13 @@
   "assets": [
     {
       "url": "/arcade/tub-flight/engine.mjs",
-      "revision": "da233e85cd6b89c54803a36b22a4fc9aeddf032f",
-      "bytes": 1350
+      "revision": "90578aee66e3de30239bd103d290eef6d742bde2",
+      "bytes": 1393
     },
     {
       "url": "/arcade/tub-flight/game.mjs",
-      "revision": "753356891d69ba5a3022772d559a4d173c51e44a",
-      "bytes": 5715
+      "revision": "125247632e1ccbc51bdfaaacc2a1961a934ab381",
+      "bytes": 6385
     },
     {
       "url": "/arcade/tub-flight/style.css",
@@ -444,8 +444,8 @@
     },
     {
       "url": "/tv/game-loader.js",
-      "revision": "5efa25a86b13e2bb9eea1b2a9499fbc151122d49",
-      "bytes": 14209
+      "revision": "0a646a6f27937d71f6bd4c8add66e2b4d98a1d74",
+      "bytes": 14235
     },
     {
       "url": "/tv/identity.css",
@@ -572,5 +572,5 @@
     "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "8145d493d6d801cb5b6c"
+  "version": "b7d22c58ccb4b698cd2d"
 }

@@ -3,6 +3,8 @@
 'use strict';
 const FILES = 'mbs-game-files-v1', INDEX = 'mbs-game-index-v1', FONTS = 'mbs-game-fonts-v1';
 const ORIGIN = self.location.origin;
+// Installable app packs (apps/apps.json). The pack list is still fetched and validated per id.
+const APP_PACK = /^app-[a-z0-9-]+$/;
 const GAMES = new Set(['mominc', 'girlfriend', 'lilboyfriend', 'corgi', 'djscratch', 'fuel', 'goon', 'war-room', 'armie', 'handborne', 'misinformation']);
 const jobs = new Map();
 let routesPromise;
@@ -133,7 +135,7 @@ async function prepare(game, notify) {
 }
 
 self.addEventListener('message', event => {
-  if (event.data?.type !== 'PREPARE_GAME' || !GAMES.has(event.data.game) || !event.ports?.[0]) return;
+  if (event.data?.type !== 'PREPARE_GAME' || !(GAMES.has(event.data.game) || APP_PACK.test(event.data.game)) || !event.ports?.[0]) return;
   const {game} = event.data, port = event.ports[0];
   let job = jobs.get(game);
   if (!job) {
