@@ -497,7 +497,25 @@
       "implementation_status": "implemented",
       "date": "2026-11-23",
       "citation_label": "HIVE v0.4.x autonomous experiment checkpoint (23 November 2026)",
-      "sha256": "2a2b5087aa838dedf06f1bc5ae2e8d90b4b22f9d98666a9e8c912681b026282d",
+      "sha256": "dabf1a32b8b2a7601ef870504ab8a5970d2296464792c8f27a501f9c70806774",
+      "tags": [
+        "hive",
+        "checkpoint",
+        "evidence"
+      ]
+    },
+    {
+      "id": "ISOLATION",
+      "source_id": "HIVE-ISOLATION-LINEAGE-2026-11-23",
+      "path": "updates/HIVE_Isolation_Lineage_2026-11-23.md",
+      "title": "Evaluator isolation and lineage start",
+      "type": "framework",
+      "status": "measured",
+      "evidence_status": "measured_engineering_result",
+      "implementation_status": "implemented",
+      "date": "2026-11-23",
+      "citation_label": "HIVE evaluator isolation and lineage start (23 November 2026)",
+      "sha256": "84c26d38e9253a1b3bd2de2845062b343d1effe6fe9d4c86fd0f314abd76e263",
       "tags": [
         "hive",
         "checkpoint",
@@ -1294,6 +1312,16 @@
     {
       "source": "HOME",
       "target": "V04X",
+      "relation": "related_to"
+    },
+    {
+      "source": "ISOLATION",
+      "target": "V04X",
+      "relation": "derived_from"
+    },
+    {
+      "source": "HOME",
+      "target": "ISOLATION",
       "relation": "related_to"
     }
   ],
