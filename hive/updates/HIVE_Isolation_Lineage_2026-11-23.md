@@ -13,7 +13,7 @@ priority: high
 
 This follows the [autonomous experiment checkpoint](/hive/notes/V04X/), which named FR-2 evaluator isolation as the next task. Two quarantine items are now lifted and a lineage store has been started. The runtime made **0 model calls**.
 
-Full suite: PENDING
+Full suite at `6127776`: 856 passed, 3 skipped, 0 failed (34 min).
 
 ## FR-2 lifted: candidates run in a separate process
 

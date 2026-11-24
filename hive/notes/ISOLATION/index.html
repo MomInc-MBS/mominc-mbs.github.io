@@ -16,7 +16,7 @@
 <div class="doc-meta"><span class="badge">Measured engineering result</span><span class="badge neutral">Implemented</span></div><div class="doc-tools"><button class="copy-link" data-title="Evaluator isolation and lineage start" data-id="ISOLATION" data-series="HIVE evaluator isolation and lineage start (23 November 2026)">Copy reference</button><a href="/hive/updates/HIVE_Isolation_Lineage_2026-11-23.md">Markdown source</a><a href="/hive/graph/?focus=ISOLATION">View connections</a><button class="print-page">Print</button></div>
 <article class="prose"><h1 id="hive-evaluator-isolation-and-lineage-start-23-november-2026">HIVE evaluator isolation and lineage start — 23 November 2026</h1>
 <p>This follows the <a href="/hive/notes/V04X/">autonomous experiment checkpoint</a>, which named FR-2 evaluator isolation as the next task. Two quarantine items are now lifted and a lineage store has been started. The runtime made <strong>0 model calls</strong>.</p>
-<p>Full suite: PENDING</p>
+<p>Full suite at <code>6127776</code>: 856 passed, 3 skipped, 0 failed (34 min).</p>
 <h2 id="fr-2-lifted-candidates-run-in-a-separate-process">FR-2 lifted: candidates run in a separate process</h2>
 <p>Candidates now run in a separate process, and the whole process tree is killed on timeout or at the end of the run. Scoring stays in the parent. The reviewer's scorer-rewrite probe, which earlier made a candidate report a perfect score, now scores honestly. The experiment decision and the result hash are unchanged from before the change.</p>
 <h2 id="fr-8-lifted-generated-and-code-candidates-need-a-container">FR-8 lifted: generated and code candidates need a container</h2>
