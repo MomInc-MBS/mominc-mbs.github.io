@@ -203,12 +203,18 @@
       "path": "updates/HIVE_Isolation_Lineage_2026-11-23.md",
       "date": "2026-11-23",
       "sha256": "84c26d38e9253a1b3bd2de2845062b343d1effe6fe9d4c86fd0f314abd76e263"
+    },
+    {
+      "id": "M1",
+      "path": "updates/HIVE_M1_Accepted_2026-11-24.md",
+      "date": "2026-11-24",
+      "sha256": "eaeaf6310146772535fcfffcba1148b1c46b741afb168e0b146f89ba798cbc78"
     }
   ],
   "source_zip_sha256": "2b726d055a17a25495854890d8d0001cb791006273e0f8eb5515788b7e00c61a",
   "counts": {
-    "research_pages": 315,
-    "graph_edges": 2541,
+    "research_pages": 316,
+    "graph_edges": 2543,
     "originals": 19
   },
   "scope": "Static research reference plus executable local model/tool controller evidence. No production model runtime or compounding-learning claim."

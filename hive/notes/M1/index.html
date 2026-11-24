@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M1 accepted: first verified evolutionary benefit · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#29143f"><link rel="canonical" href="https://mominc.online/hive/notes/M1/">
+<meta property="og:title" content="M1 accepted: first verified evolutionary benefit · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg?v=2" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=3"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=3"><link rel="stylesheet" href="/hive/assets/research.css?v=1">
+<script defer src="/hive/assets/hive.js?v=3"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg?v=2" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/OPERATIONAL/">Implementation</a><a href="/hive/notes/CODER/">Coder directions</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/OPERATIONAL/" >Latest engineering · 0.4.0.dev1</a><a href="/hive/notes/READINESS/" >v0.3.0.dev4 readiness</a><a href="/hive/notes/INTEGRATION/" >Historical dev3 integration</a><a href="/hive/notes/WORKING/" >Video mission alpha</a><a href="/hive/notes/V03/" >v0.3 foundation</a><a href="/hive/notes/CONTROLLER/" >Adaptive controller - v0.2</a><a href="/hive/notes/PROTOTYPE/" >Local prototype - v0.1</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/LANDSCAPE/" >External landscape · 22 Nov</a><a href="/hive/notes/WHOLE/" >Integrated design map</a><a href="/hive/notes/DIRECTION/" >Owner decisions · 22 Nov</a><a href="/hive/notes/KERNELS/" >Kernel comparison</a><a href="/hive/notes/METABASE/" >Base for later self-improvement</a><a href="/hive/notes/LIVEDEMO/" >Live local-model demo · 22 Nov</a><a href="/hive/notes/UNIFIED/" >Unified integration · 22 Nov</a><a href="/hive/notes/V04X/" >Autonomous experiment checkpoint · 23 Nov</a><a href="/hive/notes/ISOLATION/" >Evaluator isolation + lineage · 23 Nov</a><a href="/hive/notes/M1/" aria-current=page>M1 accepted · 24 Nov</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/OPERATIONAL/" >Latest engineering · 0.4.0.dev1</a><a href="/hive/notes/READINESS/" >v0.3.0.dev4 readiness</a><a href="/hive/notes/INTEGRATION/" >Historical dev3 integration</a><a href="/hive/notes/WORKING/" >Video mission alpha</a><a href="/hive/notes/V03/" >v0.3 foundation</a><a href="/hive/notes/CONTROLLER/" >Adaptive controller - v0.2</a><a href="/hive/notes/PROTOTYPE/" >Local prototype - v0.1</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/LANDSCAPE/" >External landscape · 22 Nov</a><a href="/hive/notes/WHOLE/" >Integrated design map</a><a href="/hive/notes/DIRECTION/" >Owner decisions · 22 Nov</a><a href="/hive/notes/KERNELS/" >Kernel comparison</a><a href="/hive/notes/METABASE/" >Base for later self-improvement</a><a href="/hive/notes/LIVEDEMO/" >Live local-model demo · 22 Nov</a><a href="/hive/notes/UNIFIED/" >Unified integration · 22 Nov</a><a href="/hive/notes/V04X/" >Autonomous experiment checkpoint · 23 Nov</a><a href="/hive/notes/ISOLATION/" >Evaluator isolation + lineage · 23 Nov</a><a href="/hive/notes/M1/" aria-current=page>M1 accepted · 24 Nov</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 316 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download original vault · 0.2</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=framework">Framework</a><span>/</span><span>M1</span></div>
+<div class="doc-meta"><span class="badge">Measured engineering result</span><span class="badge neutral">Implemented</span></div><div class="doc-tools"><button class="copy-link" data-title="M1 accepted: first verified evolutionary benefit" data-id="M1" data-series="HIVE M1 accepted: first verified evolutionary benefit (24 November 2026)">Copy reference</button><a href="/hive/updates/HIVE_M1_Accepted_2026-11-24.md">Markdown source</a><a href="/hive/graph/?focus=M1">View connections</a><button class="print-page">Print</button></div>
+<article class="prose"><h1 id="m1-accepted-first-verified-evolutionary-benefit-24-november-2026">M1 accepted: first verified evolutionary benefit — 24 November 2026</h1>
+<p>This follows the <a href="/hive/notes/ISOLATION/">evaluator isolation note</a>. M1 is the first milestone where a registered workflow beat the existing one on held-out data. The result is <strong>verified on synthetic data</strong>. It is a narrow result, and the limits are listed below.</p>
+<p>The runtime made <strong>0 model calls</strong> and 0 network calls.</p>
+<h2 id="what-m1-tested">What M1 tested</h2>
+<ul>
+<li><strong>Protocol:</strong> <code>m1-row-reconcile-v1</code>, frozen at <code>af4b8d6</code>. Protocol file sha256 <code>6517f2e6…</code>.</li>
+<li><strong>Question:</strong> can deterministic, type-directed search find a workflow that handles bad rows in synthetic inventory files, when the existing workflow cannot?</li>
+<li><strong>Search:</strong> a pinned set of thin views (<code>identity</code>, <code>parse_whole</code>, <code>split_rows</code>, <code>aggregate</code>) plus a generic <code>each</code> combinator.</li>
+<li><strong>Nominee:</strong> <code>[split_rows, each(parse_whole), aggregate]</code>. It was locked before the held-out set was opened.</li>
+<li><strong>Incumbent:</strong> <code>W_strict</code> = <code>[parse_whole, aggregate]</code>.</li>
+</ul>
+<h2 id="results">Results</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Check</th>
+<th style="text-align:right">Nominee</th>
+<th style="text-align:right">Control</th>
+<th>Test</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Held-out final set (F-final, 60 cases)</td>
+<td style="text-align:right">60/60</td>
+<td style="text-align:right">12/60</td>
+<td>exact McNemar, p = 3.6e-15</td>
+</tr>
+<tr>
+<td>Reuse after restart in a new process (F-reuse, 20 cases)</td>
+<td style="text-align:right">20/20</td>
+<td style="text-align:right">4/20</td>
+<td>exact McNemar, p = 1.5e-5</td>
+</tr>
+<tr>
+<td>Random search (20 draws)</td>
+<td style="text-align:right">none type-check</td>
+<td style="text-align:right"></td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<p>The incumbent passed only the 12 clean files. The margin mostly confirms the clean and defective mix, plus the nominee's exact correctness on defective files.</p>
+<h2 id="lifecycle-checks">Lifecycle checks</h2>
+<ul>
+<li>After a restart, the selection resolved to the nominee from stored state.</li>
+<li>Rollback to <code>W_strict</code> worked, and three post-rollback cases matched the control.</li>
+<li>Selecting a rejected variant, forged or stale receipts, and invalid proposals were all refused.</li>
+<li>The independent oracle rejected all five wrong-output fixtures.</li>
+</ul>
+<h2 id="regression-gate">Regression gate</h2>
+<p>Full suite: 900 passed, 3 skipped, 1 failed. The one failure was a test-isolation fault: a test read a process-wide Docker counter that an earlier test had already raised. It was not an M1 behaviour fault. The test was fixed and a targeted rerun passed 45. The full suite was not rerun.</p>
+<h2 id="versions-and-cost">Versions and cost</h2>
+<ul>
+<li>Runtime commit: <code>755aa6f</code>.</li>
+<li>Follow-up fix <code>5c901a9</code>: policy pins now hash line-ending-normalized bytes, so a fresh Windows checkout no longer fails the stale-pin check.</li>
+<li>M1 cost: about $9.42 against a $24 cap. Cumulative: about $64 of the $120 ceiling.</li>
+<li>Runtime: 11 container runs, $0.</li>
+</ul>
+<h2 id="limitations">Limitations</h2>
+<ul>
+<li><strong>Synthetic data only.</strong> No real-world data was used.</li>
+<li><strong>Tiny search space.</strong> Only 3 workflows type-check, out of 584 lists. This is disclosed. No claim is made about search skill.</li>
+<li><strong>The designers already knew the solution.</strong> <code>each</code> and the error channel were declared preparation, not discovery.</li>
+<li><strong>Arm 2 is hardcoded</strong> to <code>W_strict</code> rather than reached through a skill-off path. The result is the same.</li>
+<li><strong>An unkeyed store writer can forge records</strong> (SQ-1). M1 ran as a trusted-local experiment.</li>
+<li><strong>The private holdout is owned by the same OS user</strong> as the runtime. It is a gitignored folder, not a separate trust boundary.</li>
+<li><strong>Open findings are unchanged from M0.</strong></li>
+<li>No claim is made about generality, and none is made about intelligence.</li>
+</ul>
+<h2 id="next">Next</h2>
+<p>Freeze the M2 protocol for a fixed-weight local-model campaign (gpt-oss-20b) with two distinct effects. The campaign itself waits for a separate inference go.</p>
+<p>Publication grants no runtime authority, promotes no policy and expands no budget. Private evaluator material and per-case held-out labels and results are not published.</p>
+</article><section class="backlinks"><h2>Referenced by <span>1</span></h2><div><a href="/hive/notes/HOME/"><span>HOME</span>HIVE framework and research vault<small>related to</small></a></div></section></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#what-m1-tested">What M1 tested</a><a class="toc-h2" href="#results">Results</a><a class="toc-h2" href="#lifecycle-checks">Lifecycle checks</a><a class="toc-h2" href="#regression-gate">Regression gate</a><a class="toc-h2" href="#versions-and-cost">Versions and cost</a><a class="toc-h2" href="#limitations">Limitations</a><a class="toc-h2" href="#next">Next</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework 0.2 · Coder directions 0.4</span></a><span>Prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/updates/HIVE_Research_Update_Adaptive_Organization_and_Self_Learning_2026-11-20.md" download>Research update</a><a href="/hive/updates/HIVE_Coder_Information_Packet_2026-11-20.md" download>Coder packet · 0.4</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Original vault · 0.2</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>
