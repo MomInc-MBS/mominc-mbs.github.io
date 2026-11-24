@@ -213,7 +213,7 @@
   function busy() {
     if (holds > 0) return true;
     const p = location.pathname;
-    if (/^\/(?:play|gala|arcade)\//.test(p) || p.startsWith('/tv/games/')) return true;
+    if (/^\/(?:play|gala|arcade|handborne)\//.test(p) || p.startsWith('/tv/games/')) return true;
     try { if (root.MBS?.inGame?.()) return true; } catch {}
     if (d.documentElement.hasAttribute('data-game-loading') || d.fullscreenElement) return true;
     if (d.querySelector('.retro-sponsor, [data-sponsor]:not([hidden])')) return true;

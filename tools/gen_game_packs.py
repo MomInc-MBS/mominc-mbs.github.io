@@ -151,7 +151,7 @@ def build(refresh=False):
             selected |= {'tv/assets/armie-intro/myr5/index.html', 'tv/assets/armie-intro/myr5/animation/index.html'}
             selected |= {p for p in under('handborne/models/') if re.search(r'family-(20|21|22)\.glb$', p)}
         if slug == 'handborne':
-            selected |= {'handborne/index.html', 'handborne/decisions.js', 'handborne/companion.mjs', 'tv/assets/helping-hand-badge.png'}
+            selected |= {'handborne/index.html', 'handborne/decisions.js', 'handborne/buynow.js', 'handborne/companion.mjs', 'tv/assets/helping-hand-badge.png'}
             selected |= under('handborne/models/') | under('handborne/previews/') | under('handborne/fonts/')
         if slug == 'goon':
             selected |= {p for p in under('gala/') if not any(x in p for x in ['war-room', 'terminal', 'hologram'])}

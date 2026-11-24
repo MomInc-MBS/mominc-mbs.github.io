@@ -113,6 +113,11 @@
       "bytes": 1071121
     },
     {
+      "url": "/handborne/buynow.js",
+      "revision": "07fcbc72273e0e7fd8d238774996a76d67a45be9",
+      "bytes": 13383
+    },
+    {
       "url": "/handborne/companion.mjs",
       "revision": "b229a16353514cf4f59f15f02ddb6f936952cf64",
       "bytes": 708269
@@ -159,8 +164,8 @@
     },
     {
       "url": "/handborne/index.html",
-      "revision": "65542dc89c84a44e81d3574599a56378923c0eaf",
-      "bytes": 1400
+      "revision": "d3c5f61f1ec129af3881edd8fc38a32f64f8f21e",
+      "bytes": 1530
     },
     {
       "url": "/handborne/invitation.css",
@@ -679,8 +684,8 @@
     },
     {
       "url": "/tv/mom-tour.js",
-      "revision": "71e536747a0c59c67e47532730caa3e170a7149b",
-      "bytes": 25434
+      "revision": "bb969b763f29e662abfc0b17555d6f7137124446",
+      "bytes": 25444
     },
     {
       "url": "/tv/mount.js",
@@ -771,5 +776,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "029f873e2042e04ade5e"
+  "version": "ec50f0696cd6584bd61e"
 }
