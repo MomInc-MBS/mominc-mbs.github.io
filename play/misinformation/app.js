@@ -11,6 +11,8 @@ import {createFeedback} from './feedback.js';
 import {failureExample} from './learning.js';
 import {openTransmission,namingClock,suggestCorrection} from './question-flow.js';
 const $=s=>document.querySelector(s);
+// Inside the installed app the wordmark must not navigate out to the website's TV.
+if(new URLSearchParams(location.search).get('app')==='1')$('.wordmark')?.removeAttribute('href');
 const fmt=n=>Math.round(n).toLocaleString('en-US');
 const rewardName=(subject,tier)=>subject?.rewardKind==='discovery'?'Discovery credit':TIERS[tier];
 const safe=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

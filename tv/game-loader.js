@@ -6,7 +6,7 @@
   const names = {mominc: 'MOM INC', girlfriend: 'Dr. Girlfriend', lilboyfriend: 'Lil Boyfriend',
     corgi: 'Cortisol Corgi', djscratch: 'DJ Scratch', fuel: 'Fuel', goon: 'The Goon Gala',
     'war-room': 'The War Room', armie: 'Coach Armie', handborne: 'Helping Hand',
-    misinformation: "MOM's Misinformation Machine", 'app-fuel': 'Nitro Fuel', 'app-jump': 'Coach Jump'};
+    misinformation: "MOM's Misinformation Machine", 'app-fuel': 'Nitro Fuel', 'app-jump': 'Coach Jump', 'app-misinformation': 'Misinformation Machine'};
   const path = location.pathname;
   // Opt-in: <html data-loader="bar"> keeps the page usable and shows a slim bottom bar instead of a cover.
   const barMode = document.documentElement.dataset.loader === 'bar';
@@ -28,6 +28,8 @@
   }
   let selected = pageGame();
   if (selected === 'sag') selected = 'mominc';
+  // A game page opened inside its installed app (?app=1) verifies the lean app pack, not the website's full pack.
+  if (names['app-' + selected] && new URLSearchParams(location.search).get('app') === '1') selected = 'app-' + selected;
   let overlay, label, meter, note, retry, finishRequested = false, finished = false, workerPromise;
   const pending = new Map();
   const domReady = document.readyState === 'loading'

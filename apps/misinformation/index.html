@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" data-game="app-misinformation" data-loader="bar">
+<head>
+<script src="/tv/game-loader.js?v=1"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Misinformation Machine · MOM Inc</title>
+<meta name="theme-color" content="#5b17c9">
+<meta name="description" content="Escape MOM Inc. Name rare answers, read the evidence, outfly her saucer.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Misinfo Machine">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="/apps/misinformation/icon-192.png">
+<link rel="apple-touch-icon" href="/apps/misinformation/icon-192.png">
+<link rel="stylesheet" href="/apps/shell.css">
+</head>
+<body>
+<main id="menu">
+<img class="mark" src="/apps/misinformation/icon-192.png" alt="" width="170" height="170">
+<h1>Misinformation Machine</h1>
+<p class="tag">Escape MOM Inc. Name rare answers, read the evidence, outfly her saucer.</p>
+<p class="tag note">Unlisted answers are judged by MOM&#x27;s hosted answer desk and need internet. Built-in answers work offline.</p>
+<button id="start" type="button">Start</button>
+<button id="open-settings" class="alt" type="button">Settings</button>
+<p id="offline" role="status">Saving for offline play…</p>
+</main>
+<main id="settings" hidden>
+<h2>Settings</h2>
+<section class="panel">
+<p><strong>Install</strong></p>
+<button id="install" type="button">Install app</button>
+<p id="install-status" role="status"></p>
+<ol id="install-steps"></ol>
+<p id="ios-help" hidden>On iPhone use Safari. Home Screen apps keep their own saved best and offline files.</p>
+</section>
+<button id="close-settings" class="alt" type="button">Back</button>
+</main>
+<section id="stage" hidden aria-label="Misinformation Machine"><button id="back" class="alt" type="button">← Menu</button><div id="host"></div></section>
+<script type="application/json" id="app-config">{"mode": "iframe", "name": "Misinformation Machine", "src": "/play/misinformation/?app=1"}</script>
+<script type="application/mbs-script" data-mbs-type="module" data-mbs-src="/apps/shell.mjs"></script>
+</body>
+</html>

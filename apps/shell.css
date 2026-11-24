@@ -19,3 +19,5 @@ button:focus-visible{outline:4px solid #fff;outline-offset:2px}
 #stage #back{position:fixed;left:max(10px,env(safe-area-inset-left));top:max(10px,env(safe-area-inset-top));min-height:44px;font-size:15px;padding:8px 14px;z-index:6}
 #host{width:100%}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}button:active{transform:none}}
+#host iframe{display:block;width:100%;height:calc(100dvh - 76px - env(safe-area-inset-top));border:0;background:#101b22}
+.tag.note{font-size:14px;opacity:.85}

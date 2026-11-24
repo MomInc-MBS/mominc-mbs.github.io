@@ -26,15 +26,13 @@ PAGE = """<!doctype html>
 <link rel="icon" href="{icon192}">
 <link rel="apple-touch-icon" href="{icon192}">
 <link rel="stylesheet" href="/apps/shell.css">
-<link rel="stylesheet" href="{style}">
-</head>
+{style_link}</head>
 <body>
 <main id="menu">
 <img class="mark" src="{icon192}" alt="" width="170" height="170">
 <h1>{name}</h1>
 <p class="tag">{description}</p>
-<p class="tag">Best: <strong id="best">0</strong></p>
-<button id="start" type="button">Start</button>
+{best_line}{note_line}<button id="start" type="button">Start</button>
 <button id="open-settings" class="alt" type="button">Settings</button>
 <p id="offline" role="status">Saving for offline play…</p>
 </main>
@@ -81,7 +79,10 @@ def load():
     for a in apps:
         if not re.fullmatch(r'[a-z0-9-]+', a['id']) or a['pack'] != 'app-' + a['id']:
             raise SystemExit(f"bad id/pack for {a['id']}")
-        needed = [a['src'].lstrip('/'), a['style'].lstrip('/')] + [f"apps/{a['id']}/{i}" for i in a['icons']]
+        entry = a['src'].split('?')[0].lstrip('/')
+        if entry.endswith('/'):
+            entry += 'index.html'   # iframe apps reuse an existing page
+        needed = [entry] + ([a['style'].lstrip('/')] if a.get('style') else []) + [f"apps/{a['id']}/{i}" for i in a['icons']]
         for path in needed:
             if not (ROOT / path).is_file():
                 raise SystemExit(f"{a['id']}: missing required asset {path}")
@@ -104,11 +105,16 @@ def main():
         raise SystemExit('duplicate app scope')
     for a in apps:
         out = ROOT / 'apps' / a['id']
-        config = json.dumps({'name': a['name'], 'src': a['src'], 'mount': a['mount'], 'options': a['options'], 'bestKey': a['bestKey']},
-                            sort_keys=True).replace('</', '<\/')
+        frame = a.get('mode') == 'iframe'
+        cfg = ({'name': a['name'], 'src': a['src'], 'mode': 'iframe'} if frame else
+               {'name': a['name'], 'src': a['src'], 'mount': a['mount'], 'options': a['options'], 'bestKey': a['bestKey']})
+        config = json.dumps(cfg, sort_keys=True).replace('</', '<\/')
+        style_link = f'<link rel="stylesheet" href="{a["style"]}">\n' if a.get('style') else ''
+        best_line = '' if frame else '<p class="tag">Best: <strong id="best">0</strong></p>\n'
+        note_line = f'<p class="tag note">{escape(a["note"])}</p>\n' if a.get('note') else ''
         page = PAGE.format(pack=a['pack'], name=escape(a['name']), short=escape(a['shortName']), theme=a['theme'],
                            description=escape(a['description']), icon192=f"/apps/{a['id']}/{a['icons'][0]}",
-                           style=a['style'], config=config,
+                           style_link=style_link, best_line=best_line, note_line=note_line, config=config,
                            reset_panel=RESET if 'reset-best' in a['settings'] else '',
                            tilt_panel=TILT if 'tilt' in a['settings'] else '')
         (out / 'index.html').write_text(page, encoding='utf-8', newline='\n')

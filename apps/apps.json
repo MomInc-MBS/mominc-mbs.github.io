@@ -40,6 +40,35 @@
       "settings": ["reset-best", "tilt"],
       "pack": "app-jump",
       "browserPlay": true
+    },
+    {
+      "id": "misinformation",
+      "type": "pwa",
+      "name": "Misinformation Machine",
+      "shortName": "Misinfo Machine",
+      "description": "Escape MOM Inc. Name rare answers, read the evidence, outfly her saucer.",
+      "status": "ready",
+      "mode": "iframe",
+      "src": "/play/misinformation/?app=1",
+      "include": ["play/misinformation/"],
+      "theme": "#5b17c9",
+      "orientation": "portrait",
+      "icons": ["icon-192.png", "icon-512.png", "icon-maskable-512.png"],
+      "settings": [],
+      "note": "Unlisted answers are judged by MOM's hosted answer desk and need internet. Built-in answers work offline.",
+      "pack": "app-misinformation",
+      "browserPlay": true
+    },
+    {
+      "id": "lilboyfriend",
+      "type": "apk",
+      "name": "Little Boyfriend LIVE camera",
+      "shortName": "Little Boyfriend",
+      "description": "The Little Boyfriend camera for Android, version 0.9.0.",
+      "status": "ready",
+      "href": "/download/lilboyfriend/little-boyfriend-live-0.9.0.apk",
+      "sha256": "/download/lilboyfriend/little-boyfriend-live-0.9.0.apk.sha256",
+      "landing": "/games/lilboyfriend/"
     }
   ]
 }

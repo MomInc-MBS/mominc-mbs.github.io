@@ -114,7 +114,7 @@
  }
  function clear(){if(target){target.classList.remove('mbs-idle-glow');target.removeAttribute('data-idle-guided');target=null;}}
  function show(){
-  timer=0;if(stopped||document.hidden||document.documentElement.hasAttribute('data-game-loading')||!earned()){clear();for(const doc of docs.keys()){const link=doc.querySelector('[data-idle-next-page]');if(link)link.hidden=true;}return;}
+  timer=0;if(stopped||document.hidden||window.MOM_TOUR||document.documentElement.hasAttribute('data-game-loading')||!earned()){clear();for(const doc of docs.keys()){const link=doc.querySelector('[data-idle-next-page]');if(link)link.hidden=true;}return;}
   let candidate=pageAction(document);
   if(!candidate)for(const doc of docs.keys())if(doc!==document){candidate=pageAction(doc);if(candidate)break;}
   if(candidate===target)return;clear();
