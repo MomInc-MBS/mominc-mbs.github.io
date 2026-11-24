@@ -39,8 +39,8 @@
     },
     {
       "url": "/apps/shell.mjs",
-      "revision": "3edf843d78428fa67b00f0006e6653c402bbd117",
-      "bytes": 4849
+      "revision": "929c180451f6a51711ab70a3085cbb38df2f9d6d",
+      "bytes": 4918
     },
     {
       "url": "/play/misinformation/app.js",
@@ -276,5 +276,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap"
   ],
-  "version": "2d2bebdd3d305b56cc07"
+  "version": "1b7e57c1af7865c59799"
 }

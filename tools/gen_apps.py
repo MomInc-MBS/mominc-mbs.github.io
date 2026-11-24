@@ -130,23 +130,20 @@ def main():
             # Optional model packs: sizes shown before the user chooses to download.
             models = [{'pack': o['pack'], 'label': o['label'], 'mb': round(sum((ROOT / f).stat().st_size for f in o['files']) / 1048576, 1),
                        **({'note': o['note']} if o.get('note') else {})} for o in a['optionalPacks']]
-            cfg = {'name': a['name'], 'src': a['src'], 'style': a['style'], 'mode': 'editor', 'models': f"/apps/{a['id']}/models.mjs", 'optional': models, 'resetKeys': a['resetKeys']}
+            cfg = {'name': a['name'], 'src': a['src'], 'style': a['style'], 'mode': 'editor', 'before': f"/apps/{a['id']}/export-fix.mjs", 'models': f"/apps/{a['id']}/models.mjs", 'optional': models, 'resetKeys': a['resetKeys']}
         elif frame:
             cfg = {'name': a['name'], 'src': a['src'], 'mode': 'iframe'}
         else:
             cfg = {'name': a['name'], 'src': a['src'], 'mount': a['mount'], 'options': a['options'], 'bestKey': a['bestKey']}
         config = json.dumps(cfg, sort_keys=True).replace('</', '<\/')
-        panels = (RESET if 'reset-best' in a['settings'] else '') + (RESET_HAND if 'reset-hand' in a['settings'] else '')             + (MODELS if 'extra-models' in a['settings'] else '')
+        panels = (RESET if 'reset-best' in a['settings'] else '') + (RESET_HAND if 'reset-hand' in a['settings'] else '') \
+            + (MODELS if 'extra-models' in a['settings'] else '')
         page = PAGE.format(pack=a['pack'], name=escape(a['name']), short=escape(a['shortName']), theme=a['theme'],
                            description=escape(a['description']), icon192=f"/apps/{a['id']}/{a['icons'][0]}",
-                           style_link=f'<link rel="stylesheet" href="{a["style"]}">
-' if a.get('style') and not editor else '',
-                           app_style=f'<link rel="stylesheet" href="{a["appStyle"]}">
-' if a.get('appStyle') else '',
-                           best_line='' if editor or frame else '<p class="tag">Best: <strong id="best">0</strong></p>
-',
-                           note_line=f'<p class="tag note">{escape(a["note"])}</p>
-' if a.get('note') else '',
+                           style_link=f'<link rel="stylesheet" href="{a["style"]}">\n' if a.get('style') and not editor else '',
+                           app_style=f'<link rel="stylesheet" href="{a["appStyle"]}">\n' if a.get('appStyle') else '',
+                           best_line='' if editor or frame else '<p class="tag">Best: <strong id="best">0</strong></p>\n',
+                           note_line=f'<p class="tag note">{escape(a["note"])}</p>\n' if a.get('note') else '',
                            config=config, reset_panel=panels,
                            tilt_panel=TILT if 'tilt' in a['settings'] else '',
                            saved='saved hand' if editor else 'saved best',

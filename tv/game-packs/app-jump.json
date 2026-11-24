@@ -49,8 +49,8 @@
     },
     {
       "url": "/apps/shell.mjs",
-      "revision": "3edf843d78428fa67b00f0006e6653c402bbd117",
-      "bytes": 4849
+      "revision": "929c180451f6a51711ab70a3085cbb38df2f9d6d",
+      "bytes": 4918
     },
     {
       "url": "/arcade/pyramid-jump/data.mjs",
@@ -104,5 +104,5 @@
     }
   ],
   "fontStyles": [],
-  "version": "ba8ace9db1a6b960112a"
+  "version": "9756ede2e0b5ade613ad"
 }

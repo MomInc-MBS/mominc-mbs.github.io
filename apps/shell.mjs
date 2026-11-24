@@ -16,7 +16,7 @@ function boot(cfg) {
       // The editor styles are only active while it is on screen, so they never restyle this menu.
       if (!sheet) sheet = document.head.appendChild(Object.assign(document.createElement('link'), {rel: 'stylesheet', href: cfg.style}));
       sheet.disabled = false;
-      try { await (loaded ||= import(cfg.src)); }
+      try { await (loaded ||= (async () => { if (cfg.before) await import(cfg.before); await import(cfg.src); })()); }
       catch { loaded = null; host.append(Object.assign(document.createElement('p'), {textContent: 'The editor could not open. Go back and try again.'})); }
       return;
     }

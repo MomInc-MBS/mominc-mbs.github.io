@@ -3,6 +3,11 @@
   "game": "app-hand",
   "assets": [
     {
+      "url": "/apps/hand/export-fix.mjs",
+      "revision": "34f36475804ad58ed9ceab27f6dbaa5d960d2376",
+      "bytes": 1052
+    },
+    {
       "url": "/apps/hand/hand.css",
       "revision": "37e5c50457010373c3ea9c850864c76fb39266c0",
       "bytes": 936
@@ -24,8 +29,8 @@
     },
     {
       "url": "/apps/hand/index.html",
-      "revision": "ae59803a9a5b04fb2f601f2c8e739d9fa66fc854",
-      "bytes": 3742
+      "revision": "c66e9a927904bb6c1f5539facd24d4c384baa391",
+      "bytes": 3781
     },
     {
       "url": "/apps/hand/manifest.webmanifest",
@@ -49,8 +54,8 @@
     },
     {
       "url": "/apps/shell.mjs",
-      "revision": "3edf843d78428fa67b00f0006e6653c402bbd117",
-      "bytes": 4849
+      "revision": "929c180451f6a51711ab70a3085cbb38df2f9d6d",
+      "bytes": 4918
     },
     {
       "url": "/handborne/assets/GLTFExporter-Bjf-hL3X.js",
@@ -159,5 +164,5 @@
     }
   ],
   "fontStyles": [],
-  "version": "8d5a54740c8eca83f9c7"
+  "version": "8622bdd73b72d3193cf9"
 }
