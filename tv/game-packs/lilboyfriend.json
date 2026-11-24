@@ -3,24 +3,9 @@
   "game": "lilboyfriend",
   "assets": [
     {
-      "url": "/arcade/tub-flight/engine.mjs",
-      "revision": "da233e85cd6b89c54803a36b22a4fc9aeddf032f",
-      "bytes": 1350
-    },
-    {
-      "url": "/arcade/tub-flight/game.mjs",
-      "revision": "753356891d69ba5a3022772d559a4d173c51e44a",
-      "bytes": 5715
-    },
-    {
-      "url": "/arcade/tub-flight/style.css",
-      "revision": "0023d992ae373669a4034fa0a3365b21f29abba8",
-      "bytes": 1350
-    },
-    {
       "url": "/games/lilboyfriend/index.html",
-      "revision": "923411f0cb249b311674b129952b90ad8b7cb306",
-      "bytes": 8336
+      "revision": "f58beb824736d55977f0ebb7942b2f3e0ced8073",
+      "bytes": 9157
     },
     {
       "url": "/play/lilboyfriend/assets/actors/hand-mesh.js",
@@ -173,36 +158,6 @@
       "bytes": 48352
     },
     {
-      "url": "/shader-aurora.mjs",
-      "revision": "d65276c4284e8c0e3320d0ad3b7e7adbc11eded2",
-      "bytes": 2197
-    },
-    {
-      "url": "/shader-effects.css",
-      "revision": "edf196028343774a278d34c382aae40d14cd463b",
-      "bytes": 1438
-    },
-    {
-      "url": "/shader-effects.mjs",
-      "revision": "2793d189efef1c09f4d65771938dd0cee939e24b",
-      "bytes": 7149
-    },
-    {
-      "url": "/shader-entry.mjs",
-      "revision": "d750bedcf1408826055b06c62df2ed9029934fab",
-      "bytes": 303
-    },
-    {
-      "url": "/shader-hologram.mjs",
-      "revision": "e4449d7addd42a1d567154930fbf0f4d1178b085",
-      "bytes": 2996
-    },
-    {
-      "url": "/shader-sparkle.mjs",
-      "revision": "1aaa6bbcdc2628ab3d24bc10cfd2635caffdc832",
-      "bytes": 3220
-    },
-    {
       "url": "/tv/assets/armie-intro/coach-3d.mjs",
       "revision": "b3631fabfbb18c8f5c19bee5bd664d7c5b5ec339",
       "bytes": 10999
@@ -253,44 +208,9 @@
       "bytes": 603113
     },
     {
-      "url": "/tv/assets/armie-intro/website-bezel.png",
-      "revision": "86b15c925e65669c1aca1d5d0efc3062ef85a7d1",
-      "bytes": 315531
-    },
-    {
-      "url": "/tv/assets/brushed-aluminum.png",
-      "revision": "97e0339b9b4126fedb12ed68c94f8ab1e13bdd4b",
-      "bytes": 2759321
-    },
-    {
-      "url": "/tv/assets/container-horror-v2.png",
-      "revision": "a3d157dc23f18515ad1bb2df197497ca93760076",
-      "bytes": 2192703
-    },
-    {
-      "url": "/tv/assets/cortisol-corgi-badge.png",
-      "revision": "a313dc96f0a09c13a246cca96ad5a014db90f770",
-      "bytes": 2221007
-    },
-    {
-      "url": "/tv/assets/drgf-paper-character.svg",
-      "revision": "386b1d7bc2cd8a7bf7cd29d096da1243c6c8002d",
-      "bytes": 3592730
-    },
-    {
-      "url": "/tv/assets/helping-hand-badge.png",
-      "revision": "794bb64c7f54548cd087b4f03e2b60c5f84fb824",
-      "bytes": 1967225
-    },
-    {
       "url": "/tv/assets/lilbf-car-cozy.jpg",
       "revision": "bed5afc8f7fb88b48580975b0fabf3c9071ddf3e",
       "bytes": 184325
-    },
-    {
-      "url": "/tv/assets/lilbf-car-horror.jpg",
-      "revision": "c4b6ba9c1ca417900e7a56f9a649352bac074631",
-      "bytes": 178228
     },
     {
       "url": "/tv/assets/lilbf-masonjar-cozy.jpg",
@@ -298,19 +218,9 @@
       "bytes": 115613
     },
     {
-      "url": "/tv/assets/lilbf-masonjar-horror.jpg",
-      "revision": "2be794b4b14e4f8826ce7ff0755fc7e602b36e14",
-      "bytes": 122229
-    },
-    {
       "url": "/tv/assets/lilbf-shoebox-cozy.jpg",
       "revision": "c176c9ea6581c4cdd53ce4c58eef37d21d5f9bf1",
       "bytes": 169967
-    },
-    {
-      "url": "/tv/assets/lilbf-shoebox-horror.jpg",
-      "revision": "66e51b7d171642dbc81ad6937a6979153af6e845",
-      "bytes": 155909
     },
     {
       "url": "/tv/assets/lilbf-storage-cozy.jpg",
@@ -321,11 +231,6 @@
       "url": "/tv/assets/lilbf-teepee-cozy.jpg",
       "revision": "42e565eda4801a316823bd8725fbcaa48028bc91",
       "bytes": 74797
-    },
-    {
-      "url": "/tv/assets/lilbf-teepee-horror.jpg",
-      "revision": "aae90554ace3a2b7cca9cdaf86869eec8cc51f4b",
-      "bytes": 105460
     },
     {
       "url": "/tv/assets/lilbf-van-cozy.jpg",
@@ -351,16 +256,6 @@
       "url": "/tv/assets/mom-inc-mark.png",
       "revision": "8d147b7f846cbff544be141ffd72642d0ef8fdb6",
       "bytes": 181293
-    },
-    {
-      "url": "/tv/assets/myr5-sticker-2.png",
-      "revision": "677d64cfc2f48346887c556f83c8751064ec8a7d",
-      "bytes": 163970
-    },
-    {
-      "url": "/tv/assets/van-horror-v2.png",
-      "revision": "96a8d783d4eb87c84125a1116155cf089cfa6654",
-      "bytes": 2160052
     },
     {
       "url": "/tv/atmosphere.css",
@@ -454,8 +349,8 @@
     },
     {
       "url": "/tv/game-loader.js",
-      "revision": "506d9c3d0b049f08600542fc23a07e29bcca5982",
-      "bytes": 12752
+      "revision": "5efa25a86b13e2bb9eea1b2a9499fbc151122d49",
+      "bytes": 14209
     },
     {
       "url": "/tv/identity.css",
@@ -571,11 +466,6 @@
       "url": "/tv/tv.js",
       "revision": "b74dd8b9e442229e8d48b75fa36595e1469e5452",
       "bytes": 35316
-    },
-    {
-      "url": "/vendor/shaders/runtime.mjs",
-      "revision": "b96316bcaabf6d1ce902c3ef45ac3712d6cacd7f",
-      "bytes": 2579959
     }
   ],
   "fontStyles": [
@@ -583,5 +473,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap",
     "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
   ],
-  "version": "90aa6eb0a9f543a790a2"
+  "version": "579c5f355dd9534b15b3"
 }

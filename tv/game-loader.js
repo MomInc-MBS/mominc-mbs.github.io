@@ -8,6 +8,8 @@
     'war-room': 'The War Room', armie: 'Coach Armie', handborne: 'Helping Hand',
     misinformation: "MOM's Misinformation Machine"};
   const path = location.pathname;
+  // Opt-in: <html data-loader="bar"> keeps the page usable and shows a slim bottom bar instead of a cover.
+  const barMode = document.documentElement.dataset.loader === 'bar';
   const tvPage = /^\/tv\/(?:index\.html)?$/.test(path);
   const channelName = new URLSearchParams(location.search).get('ch') || 'mominc';
   // MOM INC is the network homepage, not a standalone game. Mount its content
@@ -41,10 +43,10 @@
   const hostReady = tvPage ? domReady : bodyReady;
   function cover(game) {
     selected = game;
-    document.documentElement.setAttribute('data-game-loading', '');
+    if (!barMode) document.documentElement.setAttribute('data-game-loading', '');
     if (!document.getElementById('mbs-game-loading-style')) {
       const style = document.createElement('style'); style.id = 'mbs-game-loading-style';
-      style.textContent = (tvPage
+      const full = (tvPage
         ? `html[data-game-loading] #screen{overflow:hidden!important}
         #mbs-game-loading{position:absolute;inset:0;z-index:50}
         #mbs-game-loading img{height:min(200px,26vh)!important}`
@@ -61,11 +63,23 @@
         #mbs-game-loading button{min-height:48px;padding:10px 28px;border:2px solid #fff3c4;border-radius:6px;background:#f4c94e;color:#171329;font:700 16px system-ui,sans-serif;cursor:pointer}
         #mbs-game-loading button[hidden]{display:none}
         #mbs-game-loading button:focus-visible{outline:3px solid white;outline-offset:4px}`;
+      const bar = `#mbs-game-loading{position:fixed;left:0;right:0;bottom:0;z-index:2147483000;
+          box-sizing:border-box;padding:8px 12px calc(8px + env(safe-area-inset-bottom));background:#171329f2;color:#fff9e6;
+          font:13px/1.3 system-ui,sans-serif;border-top:2px solid #f4c94e}
+        body:has(#mbs-game-loading){padding-bottom:calc(72px + env(safe-area-inset-bottom))}
+        #mbs-game-loading .download-card{display:flex;align-items:center;flex-wrap:wrap;gap:4px 10px}
+        #mbs-game-loading h1{flex:1 0 100%;font:700 13px/1.2 system-ui,sans-serif;margin:0;color:inherit}
+        #mbs-game-loading progress{flex:1 1 80px;accent-color:#f4c94e;height:10px;margin:0}
+        #mbs-game-loading p{flex:2 1 140px;margin:0;font:12px/1.3 system-ui,sans-serif;color:inherit}
+        #mbs-game-loading button{min-height:36px;padding:4px 14px;border:2px solid #fff3c4;border-radius:6px;background:#f4c94e;color:#171329;font:700 13px system-ui,sans-serif;cursor:pointer}
+        #mbs-game-loading img{display:none}
+        #mbs-game-loading button[hidden]{display:none}`;
+      style.textContent = barMode ? bar : full;
       document.head.append(style);
     }
     if (!overlay) {
       overlay = document.createElement('div'); overlay.id = 'mbs-game-loading';
-      overlay.setAttribute('role', 'dialog'); overlay.setAttribute('aria-modal', 'true');
+      overlay.setAttribute('role', barMode ? 'region' : 'dialog'); if (!barMode) overlay.setAttribute('aria-modal', 'true');
       overlay.setAttribute('aria-labelledby', 'mbs-game-loading-title');
       overlay.innerHTML = '<div class="download-card"><img alt=""><h1 id="mbs-game-loading-title"></h1><progress aria-label="Game download" max="100"></progress><p role="status" aria-live="polite"></p><button type="button" hidden>Try again</button></div>';
       [label, meter, note, retry] = ['h1', 'progress', 'p', 'button'].map(s => overlay.querySelector(s));
@@ -74,7 +88,7 @@
       : ['armie', 'corgi', 'djscratch', 'girlfriend', 'lilboyfriend'].includes(game)
         ? '/tv/assets/marks/' + game + '.png' : '/tv/assets/mom-inc-mark.png';
     overlay.querySelector('img').src = logo;
-    label.textContent = 'Loading ' + names[game];
+    label.textContent = (barMode ? 'Saving ' : 'Loading ') + names[game] + (barMode ? ' for offline play' : '');
     note.textContent = 'Getting this game ready…';
     hostReady.then(() => {
       if (finished || overlay.isConnected) return;
@@ -163,7 +177,7 @@
     finished = true;
     document.documentElement.removeAttribute('data-game-loading');
     overlay?.remove();
-    window.MBS_RT?.resume('download');
+    if (!barMode) window.MBS_RT?.resume('download');
     window.dispatchEvent(new Event('mbs-game-ready'));
   }
 
@@ -207,12 +221,12 @@
   // Capture input without making the game subtree inert/display:none: legacy
   // canvases and iframe games measure themselves while they mount behind the logo.
   // The television's own cabinet controls (dial, power, keys) stay usable while the glass loads.
-  for (const event of ['pointerdown', 'click', 'keydown']) document.addEventListener(event, e => {
+  if (!barMode) for (const event of ['pointerdown', 'click', 'keydown']) document.addEventListener(event, e => {
     if (finished || overlay?.contains(e.target) || (tvPage && e.target?.closest?.('.panel, .off3d'))) return;
     e.preventDefault(); e.stopImmediatePropagation();
   }, true);
   domReady.then(async () => {
-    window.MBS_RT?.pause('download');
+    if (!barMode) window.MBS_RT?.pause('download');
     await api.ready;
     try {
       await runScripts();
