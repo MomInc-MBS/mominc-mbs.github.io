@@ -1,0 +1,966 @@
+{
+  "schemaVersion": 1,
+  "contentVersion": "mom-public-education-20-gates-2026-11-24-v1",
+  "reviewStatus": "Sourced content handoff. Ready for implementation and editorial integration; not installed in a game build.",
+  "date": "2026-11-24",
+  "defaults": {
+    "gateCount": 20,
+    "pointsToReachEachGate": 100,
+    "openEndedTierPoints": [
+      10,
+      15,
+      30,
+      60,
+      85,
+      100
+    ],
+    "gatePassAwardsProgress": true,
+    "scoreOverflowBypassesGate": false,
+    "quizTimer": false,
+    "wrongQuizAnswer": "Show useful correction; remain on this gate and allow retry; no added damage during reading or gate selection.",
+    "quizOpensWhenStagePointsAtLeast": 100,
+    "correctQuizAnswerClearsCurrentGateImmediately": true,
+    "quizUsesRarityScoring": false,
+    "overallVictoryRequiresCompletedGateIds": 20,
+    "typedMissSkipOrTimeout": "Zero points; retry without course failure",
+    "chaseCanIndependentlyEraseProgress": false,
+    "legacyClassificationHullLossInCurriculum": false,
+    "stageOverflowCarriesToNextStage": false,
+    "completedGateReplayAwardsProgressAgain": false
+  },
+  "editorialRules": [
+    "Present the factual explanation in a neutral evidence panel. Put MOM's manipulative reassurance in a separate character-caption panel.",
+    "Satire targets MOM, bureaucracy, and the player's compliance; do not use victims or protected groups as joke distractors.",
+    "Use specific governments, regimes, agencies, or forces rather than blaming entire national or ethnic populations.",
+    "Every historical gate has exactly one accepted answer ID; source text is paraphrased and less than 200 words per source.",
+    "No live model may rewrite verified gate facts or select the answer key at runtime.",
+    "Use locally bundled questions, accepted IDs, explanations, and source metadata offline; opening an external source requires a connection.",
+    "Any future unsupported conspiracy belongs in an explicitly unverified-claim lesson, not in a documented-fact gate."
+  ],
+  "gates": [
+    {
+      "id": "gate-01-holocaust",
+      "number": 1,
+      "topic": "The Holocaust",
+      "question": "Which regime, with its allies and collaborators, murdered six million Jewish people in the Holocaust?",
+      "choices": [
+        {
+          "id": "a",
+          "label": "Nazi Germany"
+        },
+        {
+          "id": "b",
+          "label": "The Lunar Stationery Committee"
+        },
+        {
+          "id": "c",
+          "label": "An unattended photocopier"
+        },
+        {
+          "id": "d",
+          "label": "The Kingdom of Spare Staplers"
+        }
+      ],
+      "acceptedAnswerIds": [
+        "a"
+      ],
+      "evidenceStatus": "documented",
+      "factualExplanation": "The Nazi German regime and its allies and collaborators murdered six million Jewish people in the Holocaust. This was a systematic, state-sponsored genocide; responsibility belongs to the perpetrators and institutions involved, not to all Germans across history.",
+      "sources": [
+        {
+          "title": "How Many People did the Nazis Murder? — United States Holocaust Memorial Museum",
+          "url": "https://encyclopedia.ushmm.org/content/en/article/documenting-numbers-of-victims-of-the-holocaust-and-nazi-persecution",
+          "checkedDate": "2026-11-24"
+        }
+      ],
+      "momLine": "Mother would never treat you like that. Why are you still running, darling?",
+      "momLineLabel": "MOM's sales pitch — fictional character dialogue",
+      "contentNotes": {
+        "realHistory": true,
+        "nonGraphic": true,
+        "distractorsAreFictionalAbsurdities": true
+      }
+    },
+    {
+      "id": "gate-02-armenian-genocide",
+      "number": 2,
+      "topic": "The Armenian genocide",
+      "question": "Which authorities carried out the Armenian genocide during the First World War?",
+      "choices": [
+        {
+          "id": "a",
+          "label": "The Ministry of Missing Socks"
+        },
+        {
+          "id": "b",
+          "label": "Ottoman authorities"
+        },
+        {
+          "id": "c",
+          "label": "An inflatable filing cabinet"
+        },
+        {
+          "id": "d",
+          "label": "The Moon's catering department"
+        }
+      ],
+      "acceptedAnswerIds": [
+        "b"
+      ],
+      "evidenceStatus": "documented",
+      "factualExplanation": "Ottoman authorities arrested Armenian leaders in Constantinople in April 1915 and deported them to Asia Minor. The arrests mark the commemorated beginning of the Armenian genocide, which unfolded in the context of the First World War.",
+      "sources": [
+        {
+          "title": "The Armenian Genocide — United States Holocaust Memorial Museum",
+          "url": "https://encyclopedia.ushmm.org/content/en/timeline-event/holocaust/before-1933/the-armenian-genocide",
+          "checkedDate": "2026-11-24"
+        }
+      ],
+      "momLine": "Mother would never do that to you. Come back; your place is still here.",
+      "momLineLabel": "MOM's sales pitch — fictional character dialogue",
+      "contentNotes": {
+        "realHistory": true,
+        "nonGraphic": true,
+        "distractorsAreFictionalAbsurdities": true
+      }
+    },
+    {
+      "id": "gate-03-rwanda",
+      "number": 3,
+      "topic": "The 1994 genocide against the Tutsi",
+      "question": "Who directed the 1994 genocide against the Tutsi in Rwanda?",
+      "choices": [
+        {
+          "id": "a",
+          "label": "A council of office lamps"
+        },
+        {
+          "id": "b",
+          "label": "The Emergency Biscuit Board"
+        },
+        {
+          "id": "c",
+          "label": "Extremist leaders of Rwanda's Hutu majority"
+        },
+        {
+          "id": "d",
+          "label": "An unlicensed moon printer"
+        }
+      ],
+      "acceptedAnswerIds": [
+        "c"
+      ],
+      "evidenceStatus": "documented",
+      "factualExplanation": "From April to July 1994, extremist Hutu leaders directed a genocide against Rwanda's Tutsi minority. People who opposed the extremists were also targeted. The responsible leaders, forces, and participants must not be confused with all Hutu people.",
+      "sources": [
+        {
+          "title": "The Rwanda Genocide — United States Holocaust Memorial Museum",
+          "url": "https://encyclopedia.ushmm.org/content/en/article/the-rwanda-genocide",
+          "checkedDate": "2026-11-24"
+        }
+      ],
+      "momLine": "Mother would never do that to you. You can stop running now.",
+      "momLineLabel": "MOM's sales pitch — fictional character dialogue",
+      "contentNotes": {
+        "realHistory": true,
+        "nonGraphic": true,
+        "distractorsAreFictionalAbsurdities": true
+      }
+    },
+    {
+      "id": "gate-04-srebrenica",
+      "number": 4,
+      "topic": "The Srebrenica genocide",
+      "question": "Which forces captured Srebrenica in July 1995 and committed the genocide there?",
+      "choices": [
+        {
+          "id": "a",
+          "label": "The Floating Desk Brigade"
+        },
+        {
+          "id": "b",
+          "label": "A committee of broken staplers"
+        },
+        {
+          "id": "c",
+          "label": "The Galactic Lunch Roster"
+        },
+        {
+          "id": "d",
+          "label": "Bosnian Serb forces led by Ratko Mladić"
+        }
+      ],
+      "acceptedAnswerIds": [
+        "d"
+      ],
+      "evidenceStatus": "documented",
+      "factualExplanation": "Bosnian Serb forces captured Srebrenica in July 1995. The ICTY and the International Court of Justice concluded that the crimes committed there constituted genocide; Bosnian Muslim men and boys were killed, and women, children, and elderly people were forcibly transferred.",
+      "sources": [
+        {
+          "title": "About the 1995 Genocide in Srebrenica — United Nations",
+          "url": "https://www.un.org/en/observances/srebrenica-genocide-commemoration-day/about",
+          "checkedDate": "2026-11-24"
+        },
+        {
+          "title": "ICTY convicts Ratko Mladic for genocide, war crimes and crimes against humanity — ICTY",
+          "url": "https://www.icty.org/en/press/icty-convicts-ratko-mladi%C4%87-for-genocide-war-crimes-and-crimes-against-humanity",
+          "checkedDate": "2026-11-24"
+        }
+      ],
+      "momLine": "Mother would never treat you that way. Why run from someone who cares?",
+      "momLineLabel": "MOM's sales pitch — fictional character dialogue",
+      "contentNotes": {
+        "realHistory": true,
+        "nonGraphic": true,
+        "distractorsAreFictionalAbsurdities": true
+      }
+    },
+    {
+      "id": "gate-05-khmer-rouge",
+      "number": 5,
+      "topic": "Khmer Rouge rule in Cambodia",
+      "question": "Which movement ruled Democratic Kampuchea and committed mass atrocities from 1975 to 1979?",
+      "choices": [
+        {
+          "id": "a",
+          "label": "The Khmer Rouge"
+        },
+        {
+          "id": "b",
+          "label": "The Department of Decorative Paperclips"
+        },
+        {
+          "id": "c",
+          "label": "A self-important coffee machine"
+        },
+        {
+          "id": "d",
+          "label": "The Lunar Carpet Committee"
+        }
+      ],
+      "acceptedAnswerIds": [
+        "a"
+      ],
+      "evidenceStatus": "documented",
+      "factualExplanation": "The Khmer Rouge ruled Cambodia under the name Democratic Kampuchea. The Extraordinary Chambers in the Courts of Cambodia investigated crimes committed between April 1975 and January 1979, including genocide and other mass atrocities. More than a million people were killed or died under the regime.",
+      "sources": [
+        {
+          "title": "The Extraordinary Chambers in the Courts of Cambodia — official overview",
+          "url": "https://www.eccc.gov.kh/Default.aspx",
+          "checkedDate": "2026-11-24"
+        }
+      ],
+      "momLine": "Mother would never do that to you. Come back to your assigned comfort.",
+      "momLineLabel": "MOM's sales pitch — fictional character dialogue",
+      "contentNotes": {
+        "realHistory": true,
+        "nonGraphic": true,
+        "distractorsAreFictionalAbsurdities": true
+      }
+    },
+    {
+      "id": "gate-06-cherokee-removal",
+      "number": 6,
+      "topic": "Cherokee removal and the Trail of Tears",
+      "question": "Which government forcibly removed more than 16,000 Cherokee people from their homelands in 1838?",
+      "choices": [
+        {
+          "id": "a",
+          "label": "The Municipal Cloud Office"
+        },
+        {
+          "id": "b",
+          "label": "The United States government"
+        },
+        {
+          "id": "c",
+          "label": "A board of decorative cushions"
+        },
+        {
+          "id": "d",
+          "label": "The Department of Imaginary Elevators"
+        }
+      ],
+      "acceptedAnswerIds": [
+        "b"
+      ],
+      "evidenceStatus": "documented",
+      "factualExplanation": "In 1838, the United States government forcibly removed more than 16,000 Cherokee people from their homelands and sent them to Indian Territory, in what is now Oklahoma. Hundreds died during the journey, and thousands more died from the consequences of relocation. This history is commemorated by the Trail of Tears National Historic Trail.",
+      "sources": [
+        {
+          "title": "Trail of Tears National Historic Trail — US National Park Service",
+          "url": "https://www.nps.gov/places/trail-of-tears-national-historic-trail.htm",
+          "checkedDate": "2026-11-24"
+        }
+      ],
+      "momLine": "Mother would never make you leave your home. So why are you leaving hers?",
+      "momLineLabel": "MOM's sales pitch — fictional character dialogue",
+      "contentNotes": {
+        "realHistory": true,
+        "nonGraphic": true,
+        "distractorsAreFictionalAbsurdities": true
+      }
+    },
+    {
+      "id": "gate-07-japanese-american-incarceration",
+      "number": 7,
+      "topic": "Japanese American incarceration",
+      "question": "Which government detained more than 120,000 people of Japanese descent from the US West Coast during the Second World War?",
+      "choices": [
+        {
+          "id": "a",
+          "label": "The Ministry of Confused Calendars"
+        },
+        {
+          "id": "b",
+          "label": "A moon-based sandwich kiosk"
+        },
+        {
+          "id": "c",
+          "label": "The United States government"
+        },
+        {
+          "id": "d",
+          "label": "An unplugged desk fan"
+        }
+      ],
+      "acceptedAnswerIds": [
+        "c"
+      ],
+      "evidenceStatus": "documented",
+      "factualExplanation": "The United States detained more than 120,000 people of Japanese descent from the West Coast in camps during the Second World War. Federal agencies organized the removal and incarceration. The National Archives preserves records of these policies and the operation of the camps.",
+      "sources": [
+        {
+          "title": "World War II Japanese American Incarceration: Mass Removal and Incarceration — National Archives",
+          "url": "https://www.archives.gov/research/aapi/ww2/incarceration",
+          "checkedDate": "2026-11-24"
+        }
+      ],
+      "momLine": "Mother would never treat you like that. Come back voluntarily, sweetheart.",
+      "momLineLabel": "MOM's sales pitch — fictional character dialogue",
+      "contentNotes": {
+        "realHistory": true,
+        "nonGraphic": true,
+        "distractorsAreFictionalAbsurdities": true
+      }
+    },
+    {
+      "id": "gate-08-tuskegee",
+      "number": 8,
+      "topic": "The untreated syphilis study at Tuskegee",
+      "question": "What did US Public Health Service researchers withhold in the Tuskegee study, even after it became readily available?",
+      "choices": [
+        {
+          "id": "a",
+          "label": "Reserved parking for photocopiers"
+        },
+        {
+          "id": "b",
+          "label": "An office plant's promotion"
+        },
+        {
+          "id": "c",
+          "label": "A ceremonial stapler"
+        },
+        {
+          "id": "d",
+          "label": "Treatment for syphilis"
+        }
+      ],
+      "acceptedAnswerIds": [
+        "d"
+      ],
+      "evidenceStatus": "documented",
+      "factualExplanation": "The US Public Health Service study at Tuskegee ran from 1932 to 1972. Researchers did not obtain informed consent and did not offer treatment even after it became readily available. This was a study of untreated disease; do not describe it as researchers deliberately infecting the men.",
+      "sources": [
+        {
+          "title": "About The Untreated Syphilis Study at Tuskegee — CDC",
+          "url": "https://www.cdc.gov/tuskegee/about/",
+          "checkedDate": "2026-11-24"
+        }
+      ],
+      "momLine": "Mother would never do that to you. Let her look after you; stop running.",
+      "momLineLabel": "MOM's sales pitch — fictional character dialogue",
+      "contentNotes": {
+        "realHistory": true,
+        "nonGraphic": true,
+        "distractorsAreFictionalAbsurdities": true
+      },
+      "historicalScope": "Withholding treatment and informed consent; do not conflate with deliberate infection in Guatemala."
+    },
+    {
+      "id": "gate-09-guatemala-std-experiments",
+      "number": 9,
+      "topic": "US-led experiments in Guatemala",
+      "question": "What did US Public Health Service-led studies in Guatemala intentionally expose vulnerable people to in 1946–1948?",
+      "choices": [
+        {
+          "id": "a",
+          "label": "Sexually transmitted infections"
+        },
+        {
+          "id": "b",
+          "label": "Extra meetings about extra meetings"
+        },
+        {
+          "id": "c",
+          "label": "A presentation made entirely of clip art"
+        },
+        {
+          "id": "d",
+          "label": "A talking office carpet"
+        }
+      ],
+      "acceptedAnswerIds": [
+        "a"
+      ],
+      "evidenceStatus": "documented",
+      "factualExplanation": "US Public Health Service-led studies in Guatemala intentionally exposed and infected vulnerable people with sexually transmitted infections. A US Presidential Commission investigated the experiments and found gross ethical violations. These experiments were separate from the Tuskegee study.",
+      "sources": [
+        {
+          "title": "Ethically Impossible: STD Research in Guatemala from 1946 to 1948 — Presidential Commission for the Study of Bioethical Issues",
+          "url": "https://www.govinfo.gov/content/pkg/GOVPUB-PR-PURL-gpo15717/pdf/GOVPUB-PR-PURL-gpo15717.pdf",
+          "checkedDate": "2026-11-24",
+          "locator": "Report pages 1–6 (PDF pages 12–17), especially executive summary on intentional exposure and ethical violations."
+        }
+      ],
+      "momLine": "Mother would never treat you like a test subject. Come back to her perfectly normal program.",
+      "momLineLabel": "MOM's sales pitch — fictional character dialogue",
+      "contentNotes": {
+        "realHistory": true,
+        "nonGraphic": true,
+        "distractorsAreFictionalAbsurdities": true
+      }
+    },
+    {
+      "id": "gate-10-mkultra",
+      "number": 10,
+      "topic": "The CIA's MKULTRA program",
+      "question": "Which US agency financed MKULTRA, including drug experiments on people who did not know they were test subjects?",
+      "choices": [
+        {
+          "id": "a",
+          "label": "The Committee for Straightening Bananas"
+        },
+        {
+          "id": "b",
+          "label": "The Central Intelligence Agency (CIA)"
+        },
+        {
+          "id": "c",
+          "label": "A haunted stapler repair shop"
+        },
+        {
+          "id": "d",
+          "label": "The Lunar Office Picnic Team"
+        }
+      ],
+      "acceptedAnswerIds": [
+        "b"
+      ],
+      "evidenceStatus": "documented",
+      "factualExplanation": "The CIA financed MKULTRA, a program involving research intended to influence human behavior. Some subprojects secretly administered drugs such as LSD to unwitting human subjects. The documented abuse does not establish the success of fictional, all-powerful mind-control technology.",
+      "sources": [
+        {
+          "title": "CIA v. Sims, 471 U.S. 159 — US Supreme Court opinion, official US Reports",
+          "url": "https://www.govinfo.gov/content/pkg/USREPORTS-471/pdf/USREPORTS-471-159.pdf",
+          "checkedDate": "2026-11-24",
+          "locator": "471 U.S. 159, at 162–163 and footnote 2 (PDF pages 3–4)."
+        }
+      ],
+      "momLine": "Mother would never tamper with your mind. She only wants your complete attention.",
+      "momLineLabel": "MOM's sales pitch — fictional character dialogue",
+      "contentNotes": {
+        "realHistory": true,
+        "nonGraphic": true,
+        "distractorsAreFictionalAbsurdities": true
+      },
+      "historicalScope": "Documented experimental abuse; no claim that reliable fictional mind-control technology resulted."
+    },
+    {
+      "id": "gate-11-cointelpro",
+      "number": 11,
+      "topic": "The FBI's COINTELPRO operations",
+      "question": "Which agency ran COINTELPRO operations that included disrupting and discrediting domestic groups?",
+      "choices": [
+        {
+          "id": "a",
+          "label": "The Bureau of Animated Paperclips"
+        },
+        {
+          "id": "b",
+          "label": "The Office Chair Synchronization League"
+        },
+        {
+          "id": "c",
+          "label": "The Federal Bureau of Investigation (FBI)"
+        },
+        {
+          "id": "d",
+          "label": "A retired aquarium pump"
+        }
+      ],
+      "acceptedAnswerIds": [
+        "c"
+      ],
+      "evidenceStatus": "documented",
+      "factualExplanation": "The FBI's COINTELPRO operations included infiltrating groups, provoking internal conflict, and trying to discredit their activities. The FBI acknowledges that some actions occurred with little or no evidence of unlawful activity and that the program was criticized for violating First Amendment rights.",
+      "sources": [
+        {
+          "title": "And Justice for All, 1954–1971 — Federal Bureau of Investigation",
+          "url": "https://www.fbi.gov/history/history-of-the-fbi/and-justice-for-all",
+          "checkedDate": "2026-11-24"
+        }
+      ],
+      "momLine": "Mother would never do that to you. Your freedom to return is still available.",
+      "momLineLabel": "MOM's sales pitch — fictional character dialogue",
+      "contentNotes": {
+        "realHistory": true,
+        "nonGraphic": true,
+        "distractorsAreFictionalAbsurdities": true
+      }
+    },
+    {
+      "id": "gate-12-northwoods",
+      "number": 12,
+      "topic": "The documented Operation Northwoods proposal",
+      "question": "What does the declassified 1962 Operation Northwoods memorandum document?",
+      "choices": [
+        {
+          "id": "a",
+          "label": "A toaster's successful election as head of the Moon"
+        },
+        {
+          "id": "b",
+          "label": "A compulsory office balloon inspection"
+        },
+        {
+          "id": "c",
+          "label": "An actual invasion conducted by office furniture"
+        },
+        {
+          "id": "d",
+          "label": "A US Joint Chiefs proposal to manufacture pretexts for military intervention in Cuba"
+        }
+      ],
+      "acceptedAnswerIds": [
+        "d"
+      ],
+      "evidenceStatus": "documented-proposal",
+      "factualExplanation": "The 1962 Joint Chiefs memorandum proposed manufactured pretexts for US military intervention in Cuba. The document establishes that a proposal existed; it is not evidence that the proposed attacks occurred. Keep documented proposals distinct from completed operations.",
+      "sources": [
+        {
+          "title": "Joint Chiefs memorandum: Justification for US Military Intervention in Cuba, 13 March 1962 — original declassified document hosted by the National Security Archive",
+          "url": "https://nsarchive.gwu.edu/CMC-60/joint-chiefs-pretexts-to-invade-Cuba-1962",
+          "checkedDate": "2026-11-24",
+          "locator": "Original memorandum, 13 March 1962; accompanying archive description identifies it as a proposal."
+        }
+      ],
+      "momLine": "Mother would never manufacture a reason to keep you. Now, about your departure paperwork...",
+      "momLineLabel": "MOM's sales pitch — fictional character dialogue",
+      "contentNotes": {
+        "realHistory": true,
+        "nonGraphic": true,
+        "distractorsAreFictionalAbsurdities": true
+      },
+      "historicalScope": "Documented proposal. Do not present proposed attacks as events that occurred."
+    },
+    {
+      "id": "gate-13-apartheid",
+      "number": 13,
+      "topic": "Apartheid in South Africa",
+      "question": "What was apartheid in South Africa?",
+      "choices": [
+        {
+          "id": "a",
+          "label": "A system of legalized racial discrimination and segregation"
+        },
+        {
+          "id": "b",
+          "label": "A printer subscription with free toner"
+        },
+        {
+          "id": "c",
+          "label": "A dance invented by filing cabinets"
+        },
+        {
+          "id": "d",
+          "label": "An office rule requiring purple socks"
+        }
+      ],
+      "acceptedAnswerIds": [
+        "a"
+      ],
+      "evidenceStatus": "documented",
+      "factualExplanation": "Apartheid was South Africa's system of legalized racial discrimination and segregation. The United Nations opposed the system and supported international action against it. The term describes an institutional system of oppression, not a harmless difference in personal preference.",
+      "sources": [
+        {
+          "title": "The United Nations in South Africa — the UN and the struggle against apartheid",
+          "url": "https://southafrica.un.org/en/about/about-the-un",
+          "checkedDate": "2026-11-24"
+        }
+      ],
+      "momLine": "Mother would never treat you that way. There is one place for everyone here: with her.",
+      "momLineLabel": "MOM's sales pitch — fictional character dialogue",
+      "contentNotes": {
+        "realHistory": true,
+        "nonGraphic": true,
+        "distractorsAreFictionalAbsurdities": true
+      }
+    },
+    {
+      "id": "gate-14-canadian-residential-schools",
+      "number": 14,
+      "topic": "Canada's residential school system",
+      "question": "What was a central purpose of Canada's residential school system for Indigenous children?",
+      "choices": [
+        {
+          "id": "a",
+          "label": "Teaching office chairs to tap dance"
+        },
+        {
+          "id": "b",
+          "label": "Forced assimilation through separation from families, cultures, and languages"
+        },
+        {
+          "id": "c",
+          "label": "Certifying clouds as meeting rooms"
+        },
+        {
+          "id": "d",
+          "label": "Preparing printers for space travel"
+        }
+      ],
+      "acceptedAnswerIds": [
+        "b"
+      ],
+      "evidenceStatus": "documented",
+      "factualExplanation": "Canada's government-sponsored residential schools separated Indigenous children from their families and suppressed their cultures and languages. Children experienced abuse and neglect, and thousands died. The Truth and Reconciliation Commission described the system as cultural genocide.",
+      "sources": [
+        {
+          "title": "The Residential School System — Parks Canada",
+          "url": "https://www.canada.ca/en/parks-canada/news/2020/09/the-residential-school-system.html",
+          "checkedDate": "2026-11-24"
+        }
+      ],
+      "momLine": "Mother would never take your world away. So why are you trying to leave hers?",
+      "momLineLabel": "MOM's sales pitch — fictional character dialogue",
+      "contentNotes": {
+        "realHistory": true,
+        "nonGraphic": true,
+        "distractorsAreFictionalAbsurdities": true
+      }
+    },
+    {
+      "id": "gate-15-stolen-generations",
+      "number": 15,
+      "topic": "Australia's Stolen Generations",
+      "question": "What does the term Stolen Generations refer to in Australian history?",
+      "choices": [
+        {
+          "id": "a",
+          "label": "Missing generations of photocopier models"
+        },
+        {
+          "id": "b",
+          "label": "The office's annual pen shortage"
+        },
+        {
+          "id": "c",
+          "label": "Aboriginal and Torres Strait Islander children forcibly removed from their families"
+        },
+        {
+          "id": "d",
+          "label": "The Moon losing its employee handbook"
+        }
+      ],
+      "acceptedAnswerIds": [
+        "c"
+      ],
+      "evidenceStatus": "documented",
+      "factualExplanation": "Bringing Them Home was the report of Australia's national inquiry into the separation of Aboriginal and Torres Strait Islander children from their families. It documented the laws, policies, and practices behind forced removal and made recommendations for healing and reconciliation.",
+      "sources": [
+        {
+          "title": "Bringing Them Home — Australian Human Rights Commission",
+          "url": "https://humanrights.gov.au/bringing-them-home/index.html",
+          "checkedDate": "2026-11-24"
+        }
+      ],
+      "momLine": "Mother would never do that to you. There is no need to keep running.",
+      "momLineLabel": "MOM's sales pitch — fictional character dialogue",
+      "contentNotes": {
+        "realHistory": true,
+        "nonGraphic": true,
+        "distractorsAreFictionalAbsurdities": true
+      }
+    },
+    {
+      "id": "gate-16-mau-mau-detention",
+      "number": 16,
+      "topic": "Abuses in colonial Kenya",
+      "question": "Whose colonial administration did the UK government acknowledge had subjected Kenyans to torture and ill treatment during the Emergency?",
+      "choices": [
+        {
+          "id": "a",
+          "label": "The Executive Office of Umbrellas"
+        },
+        {
+          "id": "b",
+          "label": "A committee of paperweights"
+        },
+        {
+          "id": "c",
+          "label": "The Interplanetary Watercooler Federation"
+        },
+        {
+          "id": "d",
+          "label": "The British colonial administration"
+        }
+      ],
+      "acceptedAnswerIds": [
+        "d"
+      ],
+      "evidenceStatus": "documented",
+      "factualExplanation": "In 2013, the UK government acknowledged that Kenyans had suffered torture and other ill treatment under the colonial administration during the Emergency. It expressed regret and announced a settlement concerning claims arising from the period 1952–1963.",
+      "sources": [
+        {
+          "title": "Statement to Parliament on settlement of Mau Mau claims, 6 June 2013 — UK Foreign and Commonwealth Office",
+          "url": "https://www.gov.uk/government/news/statement-to-parliament-on-settlement-of-mau-mau-claims",
+          "checkedDate": "2026-11-24"
+        }
+      ],
+      "momLine": "Mother would never treat you like that. Her door is open; yours can stop moving.",
+      "momLineLabel": "MOM's sales pitch — fictional character dialogue",
+      "contentNotes": {
+        "realHistory": true,
+        "nonGraphic": true,
+        "distractorsAreFictionalAbsurdities": true
+      }
+    },
+    {
+      "id": "gate-17-argentina-disappearances",
+      "number": 17,
+      "topic": "Enforced disappearances in Argentina",
+      "question": "Which abuse did the Inter-American Commission document in Argentina under military rule?",
+      "choices": [
+        {
+          "id": "a",
+          "label": "People detained by state agents and then forcibly disappeared"
+        },
+        {
+          "id": "b",
+          "label": "A shortage of novelty staplers"
+        },
+        {
+          "id": "c",
+          "label": "A paperclip refusing a promotion"
+        },
+        {
+          "id": "d",
+          "label": "The Moon misfiling a lunch order"
+        }
+      ],
+      "acceptedAnswerIds": [
+        "a"
+      ],
+      "evidenceStatus": "documented",
+      "factualExplanation": "The Inter-American Commission on Human Rights documented thousands of detainees who had disappeared in Argentina. Its 1980 report also identified killings, arbitrary detention, systematic torture, and failures of judicial protection. These were abuses by state authorities and their agents.",
+      "sources": [
+        {
+          "title": "Report on the Situation of Human Rights in Argentina: Conclusions and Recommendations, 1980 — IACHR",
+          "url": "https://cidh.oas.org/countryrep/Argentina80eng/conclusions.htm",
+          "checkedDate": "2026-11-24"
+        }
+      ],
+      "momLine": "Mother would never make you disappear. She prefers you exactly where she can see you.",
+      "momLineLabel": "MOM's sales pitch — fictional character dialogue",
+      "contentNotes": {
+        "realHistory": true,
+        "nonGraphic": true,
+        "distractorsAreFictionalAbsurdities": true
+      }
+    },
+    {
+      "id": "gate-18-chile-dictatorship",
+      "number": 18,
+      "topic": "State repression under Pinochet",
+      "question": "Under whose dictatorship did Chilean state security agencies persecute, torture, execute, and disappear people?",
+      "choices": [
+        {
+          "id": "a",
+          "label": "The Dictatorship of Slightly Crooked Frames"
+        },
+        {
+          "id": "b",
+          "label": "Augusto Pinochet's dictatorship"
+        },
+        {
+          "id": "c",
+          "label": "A self-appointed meeting room"
+        },
+        {
+          "id": "d",
+          "label": "The International Cushion Directorate"
+        }
+      ],
+      "acceptedAnswerIds": [
+        "b"
+      ],
+      "evidenceStatus": "documented",
+      "factualExplanation": "Under the dictatorship led by Augusto Pinochet, Chilean security agencies persecuted people through detention, torture, executions, and enforced disappearance. Chile's truth commissions documented these abuses. The Museum of Memory and Human Rights preserves this history and the experiences of victims.",
+      "sources": [
+        {
+          "title": "Fundamentos — Museo de la Memoria y los Derechos Humanos, Chile",
+          "url": "https://mmdh.cl/museo/fundamentos",
+          "checkedDate": "2026-11-24"
+        }
+      ],
+      "momLine": "Mother would never treat you that way. Come back before she has to ask twice.",
+      "momLineLabel": "MOM's sales pitch — fictional character dialogue",
+      "contentNotes": {
+        "realHistory": true,
+        "nonGraphic": true,
+        "distractorsAreFictionalAbsurdities": true
+      }
+    },
+    {
+      "id": "gate-19-katyn",
+      "number": 19,
+      "topic": "The Katyn massacre",
+      "question": "Which Soviet agency was responsible for the 1940 executions known collectively as the Katyn massacre?",
+      "choices": [
+        {
+          "id": "a",
+          "label": "The National Committee for Desk Tidiness"
+        },
+        {
+          "id": "b",
+          "label": "A rogue kettle with a clipboard"
+        },
+        {
+          "id": "c",
+          "label": "The NKVD, the Soviet secret police"
+        },
+        {
+          "id": "d",
+          "label": "The Bureau of Suspicious Envelopes"
+        }
+      ],
+      "acceptedAnswerIds": [
+        "c"
+      ],
+      "evidenceStatus": "documented",
+      "factualExplanation": "Soviet authorities imprisoned Polish military officers, police, and members of the intelligentsia after occupying eastern Poland. The killings known collectively as the Katyn massacre occurred in 1940. The US congressional Madden Committee concluded that the NKVD was responsible.",
+      "sources": [
+        {
+          "title": "Records Relating to the Katyn Forest Massacre — US National Archives",
+          "url": "https://www.archives.gov/research/foreign-policy/katyn-massacre",
+          "checkedDate": "2026-11-24"
+        }
+      ],
+      "momLine": "Mother would never do that to you. Now come back and let her handle the records.",
+      "momLineLabel": "MOM's sales pitch — fictional character dialogue",
+      "contentNotes": {
+        "realHistory": true,
+        "nonGraphic": true,
+        "distractorsAreFictionalAbsurdities": true
+      }
+    },
+    {
+      "id": "gate-20-east-timor-1999",
+      "number": 20,
+      "topic": "Violence in East Timor in 1999",
+      "question": "What did the UN inquiry find about the Indonesian army's role in militia violence in East Timor in 1999?",
+      "choices": [
+        {
+          "id": "a",
+          "label": "The army had been replaced entirely by office plants"
+        },
+        {
+          "id": "b",
+          "label": "All reports concerned a malfunctioning fax machine"
+        },
+        {
+          "id": "c",
+          "label": "The Moon had misplaced its parking permit"
+        },
+        {
+          "id": "d",
+          "label": "Army units backed militias, and personnel also participated in intimidation and terror"
+        }
+      ],
+      "acceptedAnswerIds": [
+        "d"
+      ],
+      "evidenceStatus": "documented",
+      "factualExplanation": "The UN International Commission of Inquiry found serious human rights violations around East Timor's 1999 vote. It documented militia violence, support from Indonesian army units, and direct involvement by some army personnel. The findings concern responsible institutions and individuals, not Indonesian people as a whole.",
+      "sources": [
+        {
+          "title": "United Nations Yearbook 1999: findings of the International Commission of Inquiry on East Timor",
+          "url": "https://digitallibrary.un.org/record/460783/files/671236-EN.pdf",
+          "checkedDate": "2026-11-24"
+        },
+        {
+          "title": "Report of the International Commission of Inquiry on East Timor, A/54/726–S/2000/59, 31 January 2000 — official record",
+          "url": "https://digitallibrary.un.org/record/406625",
+          "checkedDate": "2026-11-24"
+        },
+        {
+          "title": "Original UN report A/54/726–S/2000/59, paragraphs 135–140 — Legal Tools archive copy",
+          "url": "https://www.legal-tools.org/doc/f7e999/pdf/",
+          "checkedDate": "2026-11-24"
+        }
+      ],
+      "momLine": "Mother would never treat you like that. Your next choice can be coming home.",
+      "momLineLabel": "MOM's sales pitch — fictional character dialogue",
+      "contentNotes": {
+        "realHistory": true,
+        "nonGraphic": true,
+        "distractorsAreFictionalAbsurdities": true
+      }
+    }
+  ],
+  "optionalEquivalentAnswerGag": {
+    "id": "optional-mom-consent-gag",
+    "countsTowardTwentyHistoricalGates": false,
+    "question": "Would you like another compulsory meeting?",
+    "choices": [
+      {
+        "id": "no-lower",
+        "label": "no",
+        "accessibleLabel": "No, lowercase"
+      },
+      {
+        "id": "no-upper",
+        "label": "NO",
+        "accessibleLabel": "No, uppercase"
+      },
+      {
+        "id": "no-zero",
+        "label": "N0",
+        "accessibleLabel": "No, with the letter O shown as zero"
+      },
+      {
+        "id": "no-math",
+        "label": "ℕ0",
+        "accessibleLabel": "No, with a mathematical N and zero"
+      }
+    ],
+    "acceptedAnswerIds": [
+      "no-lower",
+      "no-upper",
+      "no-zero",
+      "no-math"
+    ],
+    "explanation": "All four responses intentionally mean no. This is a harmless joke interlude, not a history fact or a replacement gate.",
+    "questionType": "harmless-fictional-interlude"
+  },
+  "integrationNotes": [
+    "One ruleset and content version for public browser and installed PWA.",
+    "Gate pass is committed on the accepted answer; explanation and Continue are presentation states.",
+    "Ordinary open-ended prompts are a separate curated bank built through the existing content generator.",
+    "Preserve total score independently of the current stage threshold.",
+    "Sources and factual explanations are bundled; online links are optional further reading.",
+    "Dates and institutional responsibility are part of the factual content; MOM commentary remains fictional."
+  ]
+}

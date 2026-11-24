@@ -2,7 +2,7 @@
   "id": "/apps/misinformation/",
   "name": "Misinformation Machine",
   "short_name": "Misinfo Machine",
-  "description": "Escape MOM Inc. Name rare answers, read the evidence, outfly her saucer.",
+  "description": "MOM's Public Education Program: name easy things, clear 20 sourced history quizzes, outfly her saucer.",
   "start_url": "/apps/misinformation/",
   "scope": "/apps/misinformation/",
   "display": "standalone",

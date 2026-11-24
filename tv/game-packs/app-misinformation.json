@@ -24,13 +24,13 @@
     },
     {
       "url": "/apps/misinformation/index.html",
-      "revision": "04651fe93793f86a1c020db51527a98de065654b",
-      "bytes": 2270
+      "revision": "31cbeb8e6a5fbea6cf0a4052bd43966f9b6cd28b",
+      "bytes": 2311
     },
     {
       "url": "/apps/misinformation/manifest.webmanifest",
-      "revision": "5950104b02075de4d8797042e8314fd581103405",
-      "bytes": 841
+      "revision": "0dbb931c36a56ff9db179a5479607d1ca7a1db79",
+      "bytes": 871
     },
     {
       "url": "/apps/shell.css",
@@ -44,8 +44,8 @@
     },
     {
       "url": "/play/misinformation/app.js",
-      "revision": "07510fc4c7a3e0e3fa7a9ad6db8e96ae1474806a",
-      "bytes": 29782
+      "revision": "4a3cb4ab04d1df94afef0deb89ca07bd74bf253c",
+      "bytes": 17361
     },
     {
       "url": "/play/misinformation/assets/journey/01-office.svg",
@@ -183,6 +183,16 @@
       "bytes": 1468
     },
     {
+      "url": "/play/misinformation/education-content.js",
+      "revision": "d0994d60a1089ca3747ec63c6dd63d847c1c22f0",
+      "bytes": 52451
+    },
+    {
+      "url": "/play/misinformation/education.js",
+      "revision": "6b541e9e1fe0278e1fe28f469db7361efc03f0dc",
+      "bytes": 6152
+    },
+    {
       "url": "/play/misinformation/engine.js",
       "revision": "f7ad9cb52ee428889b18fbd828e37022dceb5b76",
       "bytes": 8995
@@ -204,8 +214,8 @@
     },
     {
       "url": "/play/misinformation/index.html",
-      "revision": "c2ff4161faba191a6e0a3265e867fc3a02232dc5",
-      "bytes": 7979
+      "revision": "fa3caafe21d877dfdea0ca9f34cf08c76ba3b0ce",
+      "bytes": 7310
     },
     {
       "url": "/play/misinformation/journey.css",
@@ -276,5 +286,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap"
   ],
-  "version": "1b7e57c1af7865c59799"
+  "version": "0be75bfb12c3adf909fd"
 }

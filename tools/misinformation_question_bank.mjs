@@ -271,3 +271,5 @@ export const legacyBands = {
  'power-and-records':2, 'earth-claims':3, 'alien-appearances':3,
  'impossible-machines':4
 };
+
+export {simplePrompts} from './misinformation_education_prompts.mjs';

@@ -46,7 +46,7 @@
       "type": "pwa",
       "name": "Misinformation Machine",
       "shortName": "Misinfo Machine",
-      "description": "Escape MOM Inc. Name rare answers, read the evidence, outfly her saucer.",
+      "description": "MOM's Public Education Program: name easy things, clear 20 sourced history quizzes, outfly her saucer.",
       "status": "ready",
       "mode": "iframe",
       "src": "/play/misinformation/?app=1",
@@ -55,7 +55,7 @@
       "orientation": "portrait",
       "icons": ["icon-192.png", "icon-512.png", "icon-maskable-512.png"],
       "settings": [],
-      "note": "Unlisted answers are judged by MOM's hosted answer desk and need internet. Built-in answers work offline.",
+      "note": "All 20 quizzes, explanations and known answers work offline. Sources open online.",
       "pack": "app-misinformation",
       "browserPlay": true
     },
