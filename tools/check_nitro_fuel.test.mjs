@@ -65,3 +65,11 @@ test('gen_apps is idempotent', () => {
   const sha = () => execFileSync('git', ['hash-object', 'apps/fuel/index.html', 'apps/fuel/manifest.webmanifest'], {encoding: 'utf8'});
   const before = sha(); execFileSync('python', ['tools/gen_apps.py']); assert.equal(sha(), before);
 });
+
+test('endless ramp: speed steps up every 10 pipes, capped; finite trial never ramps', () => {
+  const g = new TubFlight(seeded(3), {target: Infinity, ramp: true});
+  for (const [score, k] of [[0, 1], [9, 1], [10, 1.12], [25, 1.24], [999, 2.2]]) { g.score = score; assert.equal(+g.speed().toFixed(2), k); }
+  const f = new TubFlight(seeded(3)); f.score = 50; assert.equal(f.speed(), 1);
+  const ramped = new TubFlight(seeded(7), {target: Infinity, ramp: true}); fly(ramped, 90);
+  assert.ok(ramped.score >= 10, `pilot reached ${ramped.score}`);
+});

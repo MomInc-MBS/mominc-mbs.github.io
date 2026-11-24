@@ -44,13 +44,13 @@
     },
     {
       "url": "/arcade/tub-flight/engine.mjs",
-      "revision": "90578aee66e3de30239bd103d290eef6d742bde2",
-      "bytes": 1393
+      "revision": "65cfbbc9be67b73a1ee5b52bec5105302c939a37",
+      "bytes": 1623
     },
     {
       "url": "/arcade/tub-flight/game.mjs",
-      "revision": "125247632e1ccbc51bdfaaacc2a1961a934ab381",
-      "bytes": 6385
+      "revision": "c640080363495b76d3fad0d9fb83e8bf42b524bd",
+      "bytes": 8504
     },
     {
       "url": "/arcade/tub-flight/style.css",
@@ -69,5 +69,5 @@
     }
   ],
   "fontStyles": [],
-  "version": "3cea9e10d1efc3c4b8a5"
+  "version": "bd2bde7a5a017025539f"
 }
