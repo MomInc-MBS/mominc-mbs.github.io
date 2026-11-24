@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en" data-game="app-hand" data-loader="bar">
+<head>
+<script src="/tv/game-loader.js?v=1"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Hand Customizer · MOM Inc</title>
+<meta name="theme-color" content="#6427a5">
+<meta name="description" content="Build your own Helping Hand and export it. Extra models download when you choose them.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Hand">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="/apps/hand/icon-192.png">
+<link rel="apple-touch-icon" href="/apps/hand/icon-192.png">
+<link rel="stylesheet" href="/apps/shell.css">
+<link rel="stylesheet" href="/apps/hand/hand.css">
+</head>
+<body>
+<main id="menu">
+<img class="mark" src="/apps/hand/icon-192.png" alt="" width="170" height="170">
+<h1>Hand Customizer</h1>
+<p class="tag">Build your own Helping Hand and export it. Extra models download when you choose them.</p>
+<button id="start" type="button">Start</button>
+<button id="open-settings" class="alt" type="button">Settings</button>
+<p id="offline" role="status">Saving for offline play…</p>
+</main>
+<main id="settings" hidden>
+<h2>Settings</h2>
+<section class="panel">
+<p><strong>Your hand</strong></p>
+<button id="reset" class="alt" type="button">Reset hand</button>
+<p id="reset-note" role="status"></p>
+</section>
+<section class="panel">
+<p><strong>Extra models</strong></p>
+<p>Extra models download when you choose them.</p>
+<ul id="models"></ul>
+</section>
+<section class="panel">
+<p><strong>Install</strong></p>
+<button id="install" type="button">Install app</button>
+<p id="install-status" role="status"></p>
+<ol id="install-steps"></ol>
+<p id="ios-help" hidden>On iPhone use Safari. Home Screen apps keep their own saved hand and offline files.</p>
+</section>
+<button id="close-settings" class="alt" type="button">Back</button>
+</main>
+<section id="stage" hidden aria-label="Hand Customizer"><button id="back" class="alt" type="button">← Menu</button><div id="host"><div id="root"></div></div></section>
+<script type="application/json" id="app-config">{"before": "/apps/hand/export-fix.mjs", "mode": "editor", "models": "/apps/hand/models.mjs", "name": "Hand Customizer", "optional": [{"label": "Verdant", "mb": 4.0, "pack": "app-hand-model-01"}, {"label": "Mycelial", "mb": 4.1, "pack": "app-hand-model-02"}, {"label": "Reptilian", "mb": 3.8, "pack": "app-hand-model-04"}, {"label": "Coral", "mb": 4.1, "pack": "app-hand-model-06"}, {"label": "Skeletal", "mb": 0.6, "pack": "app-hand-model-07"}, {"label": "Spectral", "mb": 3.7, "pack": "app-hand-model-08"}, {"label": "Infernal", "mb": 3.7, "pack": "app-hand-model-09"}, {"label": "Celestial", "mb": 4.0, "pack": "app-hand-model-10"}, {"label": "Voidborn", "mb": 3.6, "pack": "app-hand-model-11"}, {"label": "Stone Golem", "mb": 0.4, "pack": "app-hand-model-13"}, {"label": "Magma", "mb": 3.8, "pack": "app-hand-model-15"}, {"label": "Glacial", "mb": 3.8, "pack": "app-hand-model-16"}, {"label": "Neon Synth", "mb": 3.9, "pack": "app-hand-model-19"}, {"label": "Fluffy", "mb": 24.9, "pack": "app-hand-model-20"}, {"label": "Jelly", "mb": 3.9, "note": "Also used by some surface finishes.", "pack": "app-hand-model-21"}, {"label": "Baby", "mb": 3.5, "pack": "app-hand-model-22"}], "resetKeys": ["handborne-recipe-v4", "handborne-recipe-v3", "handborne-recipe-v2", "handborne-recipe-v1"], "src": "/handborne/assets/hand-entry-CXtHIiHD.js", "style": "/handborne/assets/hand-entry-BUSUnr2n.css"}</script>
+<script type="application/mbs-script" data-mbs-type="module" data-mbs-src="/apps/shell.mjs"></script>
+</body>
+</html>

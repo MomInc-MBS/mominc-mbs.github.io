@@ -1,0 +1,32 @@
+{
+  "id": "/apps/hand/",
+  "name": "Hand Customizer",
+  "short_name": "Hand",
+  "description": "Build your own Helping Hand and export it. Extra models download when you choose them.",
+  "start_url": "/apps/hand/",
+  "scope": "/apps/hand/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1c0a3d",
+  "theme_color": "#6427a5",
+  "icons": [
+    {
+      "src": "/apps/hand/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/apps/hand/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/apps/hand/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

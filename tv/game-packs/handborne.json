@@ -4,8 +4,8 @@
   "assets": [
     {
       "url": "/apps/apps.json",
-      "revision": "66ac899e6a04aee60ba41f03fee09e2d6ef5a863",
-      "bytes": 2569
+      "revision": "645aa952137b0061842a1426ced288ae4092d850",
+      "bytes": 6552
     },
     {
       "url": "/apps/fuel/icon-192.png",
@@ -21,6 +21,11 @@
       "url": "/apps/fuel/icon-maskable-512.png",
       "revision": "1f9e42f694d9b30a242b235814e20509b45eecb9",
       "bytes": 76066
+    },
+    {
+      "url": "/apps/hand/hand.css",
+      "revision": "37e5c50457010373c3ea9c850864c76fb39266c0",
+      "bytes": 936
     },
     {
       "url": "/apps/jump/run.mjs",
@@ -629,8 +634,8 @@
     },
     {
       "url": "/tv/game-loader.js",
-      "revision": "2af4a7a7209380505cd66742eb61a19731cf18b6",
-      "bytes": 14545
+      "revision": "83ada908cd91235d9eec34456b7b77e3a978e8f2",
+      "bytes": 14576
     },
     {
       "url": "/tv/identity.css",
@@ -766,5 +771,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "644318f14eb22199eb56"
+  "version": "f94b5287c444e18e8d1c"
 }

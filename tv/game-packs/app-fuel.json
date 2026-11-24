@@ -39,8 +39,8 @@
     },
     {
       "url": "/apps/shell.mjs",
-      "revision": "b6b83b9a903ff54d2fd6fb0f7afd27766fb682bd",
-      "bytes": 3716
+      "revision": "929c180451f6a51711ab70a3085cbb38df2f9d6d",
+      "bytes": 4918
     },
     {
       "url": "/arcade/tub-flight/engine.mjs",
@@ -64,10 +64,10 @@
     },
     {
       "url": "/tv/game-loader.js",
-      "revision": "2af4a7a7209380505cd66742eb61a19731cf18b6",
-      "bytes": 14545
+      "revision": "83ada908cd91235d9eec34456b7b77e3a978e8f2",
+      "bytes": 14576
     }
   ],
   "fontStyles": [],
-  "version": "84ad2e48a6cb986ff00b"
+  "version": "7a416b5c366f2a1df4b3"
 }

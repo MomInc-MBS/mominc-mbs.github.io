@@ -1,0 +1,168 @@
+{
+  "schema": 1,
+  "game": "app-hand",
+  "assets": [
+    {
+      "url": "/apps/hand/export-fix.mjs",
+      "revision": "34f36475804ad58ed9ceab27f6dbaa5d960d2376",
+      "bytes": 1052
+    },
+    {
+      "url": "/apps/hand/hand.css",
+      "revision": "37e5c50457010373c3ea9c850864c76fb39266c0",
+      "bytes": 936
+    },
+    {
+      "url": "/apps/hand/icon-192.png",
+      "revision": "1063f7942f947eb7ad6b231acbb0f506d96a8a4b",
+      "bytes": 42733
+    },
+    {
+      "url": "/apps/hand/icon-512.png",
+      "revision": "bee3a31699aca116cff6492c484f850002a8e877",
+      "bytes": 232472
+    },
+    {
+      "url": "/apps/hand/icon-maskable-512.png",
+      "revision": "14aa56e28303904199f19b3fede8cfdd203afb3e",
+      "bytes": 126348
+    },
+    {
+      "url": "/apps/hand/index.html",
+      "revision": "c66e9a927904bb6c1f5539facd24d4c384baa391",
+      "bytes": 3781
+    },
+    {
+      "url": "/apps/hand/manifest.webmanifest",
+      "revision": "b6d87d70c5273b227fec493185728cd09beb531c",
+      "bytes": 777
+    },
+    {
+      "url": "/apps/hand/models.mjs",
+      "revision": "ce2b1ffaa25ae39e07d3401c91a0ef4632a6c3ec",
+      "bytes": 3052
+    },
+    {
+      "url": "/apps/install.mjs",
+      "revision": "6462b3ca09309ad980044fd6aa42b2a023dcedca",
+      "bytes": 2023
+    },
+    {
+      "url": "/apps/shell.css",
+      "revision": "328f97d9b63692ebb72982408bdde602df67ed41",
+      "bytes": 2217
+    },
+    {
+      "url": "/apps/shell.mjs",
+      "revision": "929c180451f6a51711ab70a3085cbb38df2f9d6d",
+      "bytes": 4918
+    },
+    {
+      "url": "/handborne/assets/GLTFExporter-Bjf-hL3X.js",
+      "revision": "36f4faaa00c45cbf048a89ad06afd7693803c33c",
+      "bytes": 34602
+    },
+    {
+      "url": "/handborne/assets/OBJExporter-BW87md1x.js",
+      "revision": "780f7cd89ff2b394aadff1027661e3e59daff4e2",
+      "bytes": 2045
+    },
+    {
+      "url": "/handborne/assets/fflate.module-BTK1vOXE.js",
+      "revision": "b3f9430f7b5bc46ef98deea18cd6536a87fd37f0",
+      "bytes": 8775
+    },
+    {
+      "url": "/handborne/assets/hand-entry-BUSUnr2n.css",
+      "revision": "e18c3134e5c490ef795a0a138667186e6e1138aa",
+      "bytes": 214458
+    },
+    {
+      "url": "/handborne/assets/hand-entry-CXtHIiHD.js",
+      "revision": "c5526cbc6600b708f49b9f6a87d98cf9ccf18de1",
+      "bytes": 1071121
+    },
+    {
+      "url": "/handborne/fonts/anton.ttf",
+      "revision": "c5cbbbc3cb5a4d95d801d6b416441b725029967e",
+      "bytes": 130324
+    },
+    {
+      "url": "/handborne/fonts/barlow-400.ttf",
+      "revision": "f6be9dfeee6a2acc9f964f6f95aa7964a354bffc",
+      "bytes": 80968
+    },
+    {
+      "url": "/handborne/fonts/barlow-500.ttf",
+      "revision": "d0b4616c27230b89b7f140006e8d36df7c8b67f4",
+      "bytes": 81448
+    },
+    {
+      "url": "/handborne/fonts/barlow-600.ttf",
+      "revision": "a7a1fa958ac0a35a7ace3c03bbe935363d35e05c",
+      "bytes": 86636
+    },
+    {
+      "url": "/handborne/fonts/barlow-700.ttf",
+      "revision": "7710411b1308d53acbf3bfa2cc6efb8e103667cc",
+      "bytes": 87120
+    },
+    {
+      "url": "/handborne/fonts/bowlby.ttf",
+      "revision": "1523c7eda92c8073ca2c3aa049a4912931a59e73",
+      "bytes": 54152
+    },
+    {
+      "url": "/handborne/fonts/vt323.ttf",
+      "revision": "ff94200610f6ccbe1597a2da940e435289e8ebfe",
+      "bytes": 147320
+    },
+    {
+      "url": "/handborne/models/family-00.glb",
+      "revision": "44630a09f833567cffed0c9ebaaebf7ae36742b0",
+      "bytes": 3829052
+    },
+    {
+      "url": "/handborne/models/family-03.glb",
+      "revision": "26abff692cf8484f9b197f4734075d6727d09b76",
+      "bytes": 4005964
+    },
+    {
+      "url": "/handborne/models/family-05.glb",
+      "revision": "ad5da876290f5c27f2ca2e56b7e3e33265d8c961",
+      "bytes": 3911456
+    },
+    {
+      "url": "/handborne/models/family-12.glb",
+      "revision": "46c662aa7b218553f08a748c241dd23c4b93bb80",
+      "bytes": 4693036
+    },
+    {
+      "url": "/handborne/models/family-14.glb",
+      "revision": "60a66b87f89a9927bf6f21668b1546f6b4802f1e",
+      "bytes": 4009960
+    },
+    {
+      "url": "/handborne/models/family-17.glb",
+      "revision": "c79ccaab9eee1a075d908b81e3e0d5e276e898f6",
+      "bytes": 4184140
+    },
+    {
+      "url": "/handborne/models/family-18.glb",
+      "revision": "7b8e515b6a3240bcbf3b9eb433e900a0b369d2e1",
+      "bytes": 679220
+    },
+    {
+      "url": "/tv/assets/mom-inc-mark.png",
+      "revision": "8d147b7f846cbff544be141ffd72642d0ef8fdb6",
+      "bytes": 181293
+    },
+    {
+      "url": "/tv/game-loader.js",
+      "revision": "83ada908cd91235d9eec34456b7b77e3a978e8f2",
+      "bytes": 14576
+    }
+  ],
+  "fontStyles": [],
+  "version": "8622bdd73b72d3193cf9"
+}

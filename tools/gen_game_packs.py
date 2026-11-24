@@ -23,6 +23,9 @@ SLUGS = ['mominc', 'girlfriend', 'lilboyfriend', 'corgi', 'djscratch', 'fuel', '
 APPS = {a['pack']: a for a in json.loads((ROOT / 'apps/apps.json').read_text(encoding='utf-8'))['apps']
         if a['type'] == 'pwa' and a['status'] == 'ready'}
 SLUGS += sorted(APPS)
+# Optional on-demand packs of an app (e.g. Hand models): exactly their listed files, nothing scanned in.
+OPTIONAL = {o['pack']: o for a in APPS.values() for o in a.get('optionalPacks', [])}
+SLUGS += sorted(OPTIONAL)
 
 
 def google_font_styles(source):
@@ -126,12 +129,16 @@ def build(refresh=False):
             selected = {a['url'].lstrip('/') for a in previous[slug]['assets'] if usable(a['url'].lstrip('/'))}
             write(slug, selected, previous[slug]['fontStyles'])
             continue
+        if slug in OPTIONAL:
+            write(slug, set(OPTIONAL[slug]['files']), set())
+            continue
         # App packs stay lean: their own files, shared shell, loader, then the literal-reference scan.
         selected = set() if slug in APPS else set(shared)
         if slug in APPS:
             for prefix in APPS[slug].get('include', []):   # an iframe app's reused page
                 selected |= under(prefix)
             selected |= under(f"apps/{APPS[slug]['id']}/") | {'apps/install.mjs', 'apps/shell.css', 'apps/shell.mjs', 'tv/game-loader.js'}
+            selected |= {p for p in APPS[slug].get('packFiles', []) if p in files}
         selected |= {p for p in files if p in {f'tv/channels/{slug}.html', f'tv/channels/{slug}.js',
                                               f'games/{slug}/index.html', f'play/{slug}/index.html', f'tv/assets/marks/{slug}.png'}}
         if slug in {'djscratch', 'fuel', 'corgi', 'lilboyfriend', 'armie', 'goon', 'war-room'}:
