@@ -314,8 +314,8 @@
     },
     {
       "url": "/tv/channels/lilboyfriend.html",
-      "revision": "3ebfcae59f9a550c01fd7bdb4de06adfc6d538e8",
-      "bytes": 78327
+      "revision": "0309285bb66dac3ae72f0dbb183e763678e3c40e",
+      "bytes": 79056
     },
     {
       "url": "/tv/channels/lilboyfriend.js",
@@ -473,5 +473,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap",
     "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
   ],
-  "version": "c0b872fa83cfec7e7a72"
+  "version": "d70d4fe11e1c765794cb"
 }
