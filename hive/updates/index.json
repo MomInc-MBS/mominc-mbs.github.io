@@ -521,6 +521,24 @@
         "checkpoint",
         "evidence"
       ]
+    },
+    {
+      "id": "M1",
+      "source_id": "HIVE-M1-ACCEPTED-2026-11-24",
+      "path": "updates/HIVE_M1_Accepted_2026-11-24.md",
+      "title": "M1 accepted: first verified evolutionary benefit",
+      "type": "framework",
+      "status": "measured",
+      "evidence_status": "measured_engineering_result",
+      "implementation_status": "implemented",
+      "date": "2026-11-24",
+      "citation_label": "HIVE M1 accepted: first verified evolutionary benefit (24 November 2026)",
+      "sha256": "eaeaf6310146772535fcfffcba1148b1c46b741afb168e0b146f89ba798cbc78",
+      "tags": [
+        "hive",
+        "checkpoint",
+        "evidence"
+      ]
     }
   ],
   "edges": [
@@ -1322,6 +1340,16 @@
     {
       "source": "HOME",
       "target": "ISOLATION",
+      "relation": "related_to"
+    },
+    {
+      "source": "M1",
+      "target": "ISOLATION",
+      "relation": "derived_from"
+    },
+    {
+      "source": "HOME",
+      "target": "M1",
       "relation": "related_to"
     }
   ],
