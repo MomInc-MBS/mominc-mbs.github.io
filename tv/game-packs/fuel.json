@@ -229,8 +229,8 @@
     },
     {
       "url": "/tv/channels/fuel.html",
-      "revision": "e187c0b96bf7136cbbe29a56e50ec5c413610d70",
-      "bytes": 57346
+      "revision": "3341983ff410c91cf9e1e9bb229013364ae5dc37",
+      "bytes": 57774
     },
     {
       "url": "/tv/channels/fuel.js",
@@ -388,5 +388,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "b9b77769b068815370fe"
+  "version": "a1a795a0ba8a66eab323"
 }
