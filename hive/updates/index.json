@@ -485,6 +485,24 @@
         "integration",
         "evidence"
       ]
+    },
+    {
+      "id": "V04X",
+      "source_id": "HIVE-V04X-CHECKPOINT-2026-11-23",
+      "path": "updates/HIVE_V04X_Checkpoint_2026-11-23.md",
+      "title": "Autonomous experiment checkpoint",
+      "type": "framework",
+      "status": "measured",
+      "evidence_status": "measured_engineering_result",
+      "implementation_status": "implemented",
+      "date": "2026-11-23",
+      "citation_label": "HIVE v0.4.x autonomous experiment checkpoint (23 November 2026)",
+      "sha256": "2a2b5087aa838dedf06f1bc5ae2e8d90b4b22f9d98666a9e8c912681b026282d",
+      "tags": [
+        "hive",
+        "checkpoint",
+        "evidence"
+      ]
     }
   ],
   "edges": [
@@ -1266,6 +1284,16 @@
     {
       "source": "HOME",
       "target": "UNIFIED",
+      "relation": "related_to"
+    },
+    {
+      "source": "V04X",
+      "target": "UNIFIED",
+      "relation": "derived_from"
+    },
+    {
+      "source": "HOME",
+      "target": "V04X",
       "relation": "related_to"
     }
   ],

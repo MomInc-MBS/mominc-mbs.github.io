@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Autonomous experiment checkpoint · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#29143f"><link rel="canonical" href="https://mominc.online/hive/notes/V04X/">
+<meta property="og:title" content="Autonomous experiment checkpoint · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg?v=2" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=3"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=3"><link rel="stylesheet" href="/hive/assets/research.css?v=1">
+<script defer src="/hive/assets/hive.js?v=3"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg?v=2" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/OPERATIONAL/">Implementation</a><a href="/hive/notes/CODER/">Coder directions</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/OPERATIONAL/" >Latest engineering · 0.4.0.dev1</a><a href="/hive/notes/READINESS/" >v0.3.0.dev4 readiness</a><a href="/hive/notes/INTEGRATION/" >Historical dev3 integration</a><a href="/hive/notes/WORKING/" >Video mission alpha</a><a href="/hive/notes/V03/" >v0.3 foundation</a><a href="/hive/notes/CONTROLLER/" >Adaptive controller - v0.2</a><a href="/hive/notes/PROTOTYPE/" >Local prototype - v0.1</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/LANDSCAPE/" >External landscape · 22 Nov</a><a href="/hive/notes/WHOLE/" >Integrated design map</a><a href="/hive/notes/DIRECTION/" >Owner decisions · 22 Nov</a><a href="/hive/notes/KERNELS/" >Kernel comparison</a><a href="/hive/notes/METABASE/" >Base for later self-improvement</a><a href="/hive/notes/LIVEDEMO/" >Live local-model demo · 22 Nov</a><a href="/hive/notes/UNIFIED/" >Unified integration · 22 Nov</a><a href="/hive/notes/V04X/" aria-current=page>Autonomous experiment checkpoint · 23 Nov</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/OPERATIONAL/" >Latest engineering · 0.4.0.dev1</a><a href="/hive/notes/READINESS/" >v0.3.0.dev4 readiness</a><a href="/hive/notes/INTEGRATION/" >Historical dev3 integration</a><a href="/hive/notes/WORKING/" >Video mission alpha</a><a href="/hive/notes/V03/" >v0.3 foundation</a><a href="/hive/notes/CONTROLLER/" >Adaptive controller - v0.2</a><a href="/hive/notes/PROTOTYPE/" >Local prototype - v0.1</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/LANDSCAPE/" >External landscape · 22 Nov</a><a href="/hive/notes/WHOLE/" >Integrated design map</a><a href="/hive/notes/DIRECTION/" >Owner decisions · 22 Nov</a><a href="/hive/notes/KERNELS/" >Kernel comparison</a><a href="/hive/notes/METABASE/" >Base for later self-improvement</a><a href="/hive/notes/LIVEDEMO/" >Live local-model demo · 22 Nov</a><a href="/hive/notes/UNIFIED/" >Unified integration · 22 Nov</a><a href="/hive/notes/V04X/" aria-current=page>Autonomous experiment checkpoint · 23 Nov</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 314 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download original vault · 0.2</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=framework">Framework</a><span>/</span><span>V04X</span></div>
+<div class="doc-meta"><span class="badge">Measured engineering result</span><span class="badge neutral">Implemented</span></div><div class="doc-tools"><button class="copy-link" data-title="Autonomous experiment checkpoint" data-id="V04X" data-series="HIVE v0.4.x autonomous experiment checkpoint (23 November 2026)">Copy reference</button><a href="/hive/updates/HIVE_V04X_Checkpoint_2026-11-23.md">Markdown source</a><a href="/hive/graph/?focus=V04X">View connections</a><button class="print-page">Print</button></div>
+<article class="prose"><h1 id="hive-v04x-autonomous-experiment-checkpoint-23-november-2026">HIVE v0.4.x autonomous experiment checkpoint — 23 November 2026</h1>
+<p><strong>Label: <code>ENGINEERING_AUTONOMOUS_EXPERIMENT_DEMONSTRATED</code>.</strong> Acceptance gates A1 to A9 are recorded as passing, with independent review of the new experiment and one test flake disclosed. Last code commit <code>89a1118</code>; checkpoint commit <code>2e23f05</code>. The runtime made <strong>zero model calls</strong> and spent $0 on inference.</p>
+<p>This builds on the <a href="/hive/notes/UNIFIED/">unified integration campaign</a> (689 tests at <code>25f19b2</code>) and the <a href="/hive/notes/LIVEDEMO/">live local-model demo</a>.</p>
+<h2 id="what-this-label-means">What this label means</h2>
+<p>A tool-only experiment loop ran end to end on a real pinned public source: it proposed a candidate, evaluated it against baselines, and recorded an honest decision. It survived STOP, restart and replay with no duplicate effects, and the log is hash-linked. This is an engineering result about the loop. It is not evidence that the system learns.</p>
+<p><strong>Not earned:</strong> <code>BENEFICIAL_LEARNING_DEMONSTRATED</code>, <code>LEVEL_A_ACCEPTED</code>, <code>LEVEL_B_ACCEPTED</code>.</p>
+<h2 id="tests">Tests</h2>
+<p>On <code>89a1118</code> the full suite gave <strong>821 passed, 3 skipped, 1 failed</strong> in about 53 minutes. The one failure is a code-isolation test that hit a 20 second subprocess timeout while the machine was under full-suite load. The file passed 27 of 27 three times in a row when run alone, so it is recorded as a <strong>load-sensitive flake, not fixed</strong>. The 3 skips pre-date this campaign.</p>
+<h2 id="the-experiment-result-a-negative-one">The experiment result: a negative one</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Arm</th>
+<th>Held-out passes (n=7)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Candidate (lowercase forbidden article)</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Strongest deterministic baseline (preregistered rule)</td>
+<td>5</td>
+</tr>
+<tr>
+<td>P0 (incumbent, unchanged)</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Learning-disabled control</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Fixed-specialist route</td>
+<td>N/A: no approved model route</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Decision: <code>REJECT_NO_GAIN</code>.</strong> The candidate ties the strongest baseline, stays quarantined, and nothing was promoted. It ties because a plain regex tool makes the same repair. The result is kept as a negative result.</p>
+<p>Limits: the held-out items are engineered variants of the candidate's own source, so the gate reports that the held-out set was not unused for learning, and n=7 supports no population claim. The run used 0 model calls and 4 network requests to allowlisted pinned GitHub sources.</p>
+<h2 id="quarantine-summary">Quarantine summary</h2>
+<p>Open items are tracked with a compensating control and a lift condition each. In one line apiece:</p>
+<ul>
+<li><strong>FR-2, evaluator isolation: open, and the next task.</strong> Candidates still run in the evaluator's process, so a generated or learned candidate could in principle alter its own score. This must be fixed before any generated, learned or code candidate is run.</li>
+<li><strong>FR-3:</strong> the held-out items are not independent of the candidate's source.</li>
+<li><strong>FR-5, FR-6, FR-7: quarantined.</strong> Low-severity review findings, each with a compensating control.</li>
+</ul>
+<h2 id="level-a">Level A</h2>
+<p>The owner approved <strong>Option A only (tool-only, no model calls)</strong> for the Level A source set. <strong>It has not been run.</strong> Before it can run, the three JSON/YAML sources need verifiers, and the six Python snapshots need adapters and private oracles; the three CSV sources already pass their profile check. Level A will use a separate store and must never share candidates or partitions with the evolutionary campaign. Level B is untested.</p>
+<h2 id="what-is-next">What is next</h2>
+<ol>
+<li><strong>FR-2 evaluator isolation:</strong> run candidates in a separate subprocess and score in the parent, then lift FR-2.</li>
+<li><strong>Lineage design:</strong> a one-page design mapped onto the existing store and artifacts, before any code.</li>
+<li><strong>Sensory and embodied research branch (queued, software only):</strong> a shared episode format with deterministic replay, built with a mock device whose actions are disabled. No hardware, motion or model calls, and no training until the replay foundation and experiment evidence exist.</li>
+</ol>
+<h2 id="cost">Cost</h2>
+<p>HIVE runtime: 0 model requests, $0. Agent engineering for the campaign was about $40 at list price, estimated from local transcripts; the actual provider charge is unknown.</p>
+<p>Source revision: HIVE repository checkpoint <code>2e23f05</code> (code <code>89a1118</code>). Publication grants no runtime authority, promotes no policy and expands no budget. Private evaluator stores and per-case held-out labels and results are not published.</p>
+</article><section class="backlinks"><h2>Referenced by <span>1</span></h2><div><a href="/hive/notes/HOME/"><span>HOME</span>HIVE framework and research vault<small>related to</small></a></div></section></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#what-this-label-means">What this label means</a><a class="toc-h2" href="#tests">Tests</a><a class="toc-h2" href="#the-experiment-result-a-negative-one">The experiment result: a negative one</a><a class="toc-h2" href="#quarantine-summary">Quarantine summary</a><a class="toc-h2" href="#level-a">Level A</a><a class="toc-h2" href="#what-is-next">What is next</a><a class="toc-h2" href="#cost">Cost</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework 0.2 · Coder directions 0.4</span></a><span>Prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/updates/HIVE_Research_Update_Adaptive_Organization_and_Self_Learning_2026-11-20.md" download>Research update</a><a href="/hive/updates/HIVE_Coder_Information_Packet_2026-11-20.md" download>Coder packet · 0.4</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Original vault · 0.2</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>
