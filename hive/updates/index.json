@@ -539,6 +539,24 @@
         "checkpoint",
         "evidence"
       ]
+    },
+    {
+      "id": "M2",
+      "source_id": "HIVE-M2-ACCEPTED-2026-11-24",
+      "path": "updates/HIVE_M2_Accepted_2026-11-24.md",
+      "title": "M2 accepted: a local model found two new effects",
+      "type": "framework",
+      "status": "measured",
+      "evidence_status": "measured_engineering_result",
+      "implementation_status": "implemented",
+      "date": "2026-11-24",
+      "citation_label": "HIVE M2 accepted: a local model found two new effects (24 November 2026)",
+      "sha256": "748bf66f6bb0ef1a7537efc1ebe0f55e477a39dd6883334db2ab7e64407c915a",
+      "tags": [
+        "hive",
+        "checkpoint",
+        "evidence"
+      ]
     }
   ],
   "edges": [
@@ -1350,6 +1368,16 @@
     {
       "source": "HOME",
       "target": "M1",
+      "relation": "related_to"
+    },
+    {
+      "source": "M2",
+      "target": "M1",
+      "relation": "derived_from"
+    },
+    {
+      "source": "HOME",
+      "target": "M2",
       "relation": "related_to"
     }
   ],
