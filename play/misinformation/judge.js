@@ -44,7 +44,10 @@ export function subjectsWithJudgments(subjects,verified=[],questionId){
  for(const entry of verified)if(entry.questionId===questionId)cards.set(entry.subject.id,entry.subject);
  return [...cards.values()];
 }
+export const OFFLINE_MESSAGE='This answer needs MOM’s hosted answer desk, which needs internet. Your answer time is preserved; reconnect and retry, or try a built-in answer.';
 export async function judgeAnswer(answer,questionId,{signal,fetcher=fetch}={}){
+ // Fail at once while offline: no spinner, no invented judgment.
+ if(globalThis.navigator?.onLine===false)throw new Error(OFFLINE_MESSAGE);
  const controller=new AbortController();
  const abort=()=>controller.abort();signal?.addEventListener('abort',abort,{once:true});
  const timer=setTimeout(abort,JUDGE_TIMEOUT_MS);
@@ -54,5 +57,8 @@ export async function judgeAnswer(answer,questionId,{signal,fetcher=fetch}={}){
   const result=await response.json(),clean=cleanJudgment(result,questionId);
   if(result.accepted&&!clean)throw new Error('The answer desk returned an incomplete evidence card. Try another answer.');
   return {entry:clean,reason:typeof result.reason==='string'?result.reason.slice(0,300):'Could not establish a clear match to this prompt. Try a more specific name.'};
+ }catch(error){
+  if(error?.name==='TypeError')throw new Error(OFFLINE_MESSAGE);   // fetch rejected before any response: no network
+  throw error;
  }finally{clearTimeout(timer);signal?.removeEventListener('abort',abort);}
 }

@@ -1,6 +1,7 @@
 /* Original 16 × 16 pixel artwork, drawn as 48px native cursors. No cursor library. */
 (()=>{'use strict';
  if(!document.querySelector('script[data-idle-guide-loader]')){const guide=document.createElement('script');guide.src='/tv/idle-guide.js?v=resistance1';guide.dataset.idleGuideLoader='';document.head.append(guide);}
+ if(!document.querySelector('script[data-mom-tour-loader]')){const tour=document.createElement('script');tour.src='/tv/mom-tour.js?v=1';tour.dataset.momTourLoader='';document.head.append(tour);}
  if(document.documentElement.dataset.retroPointer)return;
  const themes={
   mominc:{ink:'#211725',paper:'#fff4ce',accent:'#e2b65f',shade:'#907746',badge:'011110/122221/124421/122221/011110/001100'},

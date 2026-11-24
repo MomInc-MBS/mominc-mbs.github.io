@@ -1,6 +1,16 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {cleanJudgment,cleanSavedJudgments,questionWithJudgments,subjectsWithJudgments,judgeAnswer} from '../../play/misinformation/judge.js';
+import {cleanJudgment,cleanSavedJudgments,questionWithJudgments,subjectsWithJudgments,judgeAnswer,OFFLINE_MESSAGE} from '../../play/misinformation/judge.js';
+test('offline: the hosted judge fails at once with an online-required message and never calls the network',async()=>{
+ const was=Object.getOwnPropertyDescriptor(globalThis,'navigator');
+ Object.defineProperty(globalThis,'navigator',{value:{onLine:false},configurable:true});
+ let called=false;
+ try{await assert.rejects(judgeAnswer('x','q',{fetcher:()=>{called=true;}}),{message:OFFLINE_MESSAGE});}
+ finally{if(was)Object.defineProperty(globalThis,'navigator',was);else delete globalThis.navigator;}
+ assert.equal(called,false);
+ // A fetch that rejects before any response (dead network while "online") gets the same honest message.
+ await assert.rejects(judgeAnswer('x','q',{fetcher:()=>Promise.reject(new TypeError('Failed to fetch'))}),{message:OFFLINE_MESSAGE});
+});
 const subject={id:'online-event',name:'A sourced event',statement:'The source describes a documented event.',explanation:'A source-backed description, not proof of unrelated allegations.',source:'https://en.wikipedia.org/wiki/Example',publisher:'Wikipedia',category:'Historical event',classification:'event',aliases:['Event'],topics:['history']};
 const response={accepted:true,subject,tier:0};
 test('evidence-backed online answers extend only their reviewed prompt and survive a save',()=>{

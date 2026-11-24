@@ -444,6 +444,7 @@
   function clearEvents() { const s = read(); s.events = []; write(s); }
 
   const STORY_CLOCK_KEY = 'mbs-story-started-at-v1', STORY_MS = 60 * 60 * 1000;
+  // mom-tour-v1 (earned download rewards) is deliberately NOT listed below: a story reset never revokes a reward.
   const STORY_KEYS = ['mbs-unlock','mbs-unlock-at','mbs-forms',BACKUP_KEY,
     'mbs-hand-ad-shown-v1','mbs-hand-decisions-v1','mbs-armie-hall-v2',
     'mbs-lilbf-museum','mbs-lilbf-museum-v2','mbs-lilbf-taught-v1',

@@ -3,6 +3,71 @@
   "game": "goon",
   "assets": [
     {
+      "url": "/apps/apps.json",
+      "revision": "66ac899e6a04aee60ba41f03fee09e2d6ef5a863",
+      "bytes": 2569
+    },
+    {
+      "url": "/apps/fuel/icon-192.png",
+      "revision": "975c9ee2dd21061e9edb59f3b74698eaba3f9199",
+      "bytes": 23936
+    },
+    {
+      "url": "/apps/fuel/icon-512.png",
+      "revision": "5e3672b64deeacbcdaddbc3af43a543208925920",
+      "bytes": 128293
+    },
+    {
+      "url": "/apps/fuel/icon-maskable-512.png",
+      "revision": "1f9e42f694d9b30a242b235814e20509b45eecb9",
+      "bytes": 76066
+    },
+    {
+      "url": "/apps/jump/run.mjs",
+      "revision": "579a522a55b9de15c97435909eb7f86ace3b633f",
+      "bytes": 2703
+    },
+    {
+      "url": "/apps/jump/style.css",
+      "revision": "79eaa47e0b6ed3e1bdc6e794c28f5b0d79667e51",
+      "bytes": 443
+    },
+    {
+      "url": "/arcade/pyramid-jump/data.mjs",
+      "revision": "3beae11feda27cbfda874f34581133826b667d65",
+      "bytes": 82115
+    },
+    {
+      "url": "/arcade/pyramid-jump/game.mjs",
+      "revision": "64206b63d2011099c0384e6dcefd14ef7b0c9d42",
+      "bytes": 31603
+    },
+    {
+      "url": "/arcade/pyramid-jump/logic.mjs",
+      "revision": "9ee74e5fe0cf5803f3ffae25d06d433695d490b0",
+      "bytes": 6822
+    },
+    {
+      "url": "/arcade/pyramid-jump/paper.mjs",
+      "revision": "01b1ead604c542a51f6fd05f4edf77b3e5b584bc",
+      "bytes": 1034
+    },
+    {
+      "url": "/arcade/pyramid-jump/rounds.mjs",
+      "revision": "c476eb7afd766dd13cdb9bfe67e975282effa9f0",
+      "bytes": 1554
+    },
+    {
+      "url": "/arcade/pyramid-jump/shell-phase.mjs",
+      "revision": "ffd98ebbb47f498faeb7a67731364c4f3a05c5e9",
+      "bytes": 1437
+    },
+    {
+      "url": "/arcade/pyramid-jump/site-shims.mjs",
+      "revision": "99eb348e4a952f5b905823ba36fc0f87fac7c4c7",
+      "bytes": 317
+    },
+    {
       "url": "/arcade/tub-flight/engine.mjs",
       "revision": "65cfbbc9be67b73a1ee5b52bec5105302c939a37",
       "bytes": 1623
@@ -368,6 +433,11 @@
       "bytes": 13515
     },
     {
+      "url": "/tv/channels/girlfriend-roster.js",
+      "revision": "f50ec7c314a55af6918913a319299ed26b04c34a",
+      "bytes": 277447
+    },
+    {
       "url": "/tv/channels/goon.html",
       "revision": "15de2e004e5730a95db942d181cdac8228e75191",
       "bytes": 22610
@@ -394,8 +464,8 @@
     },
     {
       "url": "/tv/game-loader.js",
-      "revision": "f26546cce8fc13f422d64392878a228d1cf48b96",
-      "bytes": 14261
+      "revision": "2af4a7a7209380505cd66742eb61a19731cf18b6",
+      "bytes": 14545
     },
     {
       "url": "/tv/games/goon/assets/index-gala-classic.js",
@@ -419,8 +489,8 @@
     },
     {
       "url": "/tv/idle-guide.js",
-      "revision": "1cd0fd892ce0c0be2227cb7c4b7187b04d60dc21",
-      "bytes": 11670
+      "revision": "6c902006313c4ea35f3ea06017fc3b07d5d4a804",
+      "bytes": 11687
     },
     {
       "url": "/tv/index.html",
@@ -446,6 +516,16 @@
       "url": "/tv/mbs-shim.js",
       "revision": "42598e53b40f3672d207f4184d27d844e0dcf601",
       "bytes": 13773
+    },
+    {
+      "url": "/tv/mom-tour.css",
+      "revision": "b90dca95f9e52661f78989e99750e1efff4cf9f9",
+      "bytes": 4436
+    },
+    {
+      "url": "/tv/mom-tour.js",
+      "revision": "5533dfd209fa83143d8df7cd38309511db83ee96",
+      "bytes": 25351
     },
     {
       "url": "/tv/mount.js",
@@ -494,8 +574,8 @@
     },
     {
       "url": "/tv/retro-pointer.js",
-      "revision": "a1d7bd4a61a2cd570cfd28747aafe0629d0bc35f",
-      "bytes": 9764
+      "revision": "a2a474bcf22be11141498d6f8292d54a768011e8",
+      "bytes": 9959
     },
     {
       "url": "/tv/run-progress.js",
@@ -509,8 +589,8 @@
     },
     {
       "url": "/tv/state.js",
-      "revision": "a5a34b6f152fb2e7681dd5301ae696a984c7bb7a",
-      "bytes": 27376
+      "revision": "d9e7f260dad1f5fe27ecd5469f1d20ef8539c230",
+      "bytes": 27491
     },
     {
       "url": "/tv/touch-controls.js",
@@ -537,5 +617,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "6ac0518a7e6fb68e3dbf"
+  "version": "49685c7a8d2f657bedfb"
 }

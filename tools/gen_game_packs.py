@@ -129,6 +129,8 @@ def build(refresh=False):
         # App packs stay lean: their own files, shared shell, loader, then the literal-reference scan.
         selected = set() if slug in APPS else set(shared)
         if slug in APPS:
+            for prefix in APPS[slug].get('include', []):   # an iframe app's reused page
+                selected |= under(prefix)
             selected |= under(f"apps/{APPS[slug]['id']}/") | {'apps/install.mjs', 'apps/shell.css', 'apps/shell.mjs', 'tv/game-loader.js'}
         selected |= {p for p in files if p in {f'tv/channels/{slug}.html', f'tv/channels/{slug}.js',
                                               f'games/{slug}/index.html', f'play/{slug}/index.html', f'tv/assets/marks/{slug}.png'}}

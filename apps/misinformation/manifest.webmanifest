@@ -1,0 +1,32 @@
+{
+  "id": "/apps/misinformation/",
+  "name": "Misinformation Machine",
+  "short_name": "Misinfo Machine",
+  "description": "Escape MOM Inc. Name rare answers, read the evidence, outfly her saucer.",
+  "start_url": "/apps/misinformation/",
+  "scope": "/apps/misinformation/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1c0a3d",
+  "theme_color": "#5b17c9",
+  "icons": [
+    {
+      "src": "/apps/misinformation/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/apps/misinformation/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/apps/misinformation/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
