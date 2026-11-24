@@ -1440,7 +1440,7 @@ export default {
           const mat=c=>new THREE.MeshStandardMaterial({color:c,roughness:.8});const metal=mat(0x555967),green=mat(0x42794b),cream=mat(0xe5dec8),wood=mat(0x8d633e);
           function item(group,geo,m,x,y,z){const o=new THREE.Mesh(geo,m);o.position.set(x,y,z);o.castShadow=true;group.add(o);return o;}
           a.anchors.filter((p,i)=>i%2===1&&Math.hypot(p[0]-a.pagePos[0],p[1]-a.pagePos[2])>1.8).slice(0,5).forEach((p,i)=>{
-            const g=new THREE.Group();g.name=school?'school-props':'office-props';g.position.set(p[0]+.4,0,p[1]+.3);levelGroup.add(g);
+            const g=new THREE.Group();g.name=school?'school-props':'office-props';g.userData.prop=school?null:['plant','coffee','cups'][i%3];g.position.set(p[0]+.4,0,p[1]+.3);levelGroup.add(g);
             if(!school&&i%3===0){item(g,new THREE.CylinderGeometry(.17,.12,.3,12),mat(0xa86e4a),0,.15,0);for(let j=0;j<6;j++){const leaf=item(g,new THREE.SphereGeometry(.12,8,8),green,Math.sin(j)*.13,.38+j*.065,Math.cos(j)*.1);leaf.scale.set(.6,1.8,.6);}}
             else if(!school){item(g,new THREE.BoxGeometry(.65,.62,.38),wood,0,.31,0);if(i%3===1){item(g,new THREE.BoxGeometry(.24,.3,.22),metal,0,.79,0);item(g,new THREE.CylinderGeometry(.095,.095,.19,16),new THREE.MeshStandardMaterial({color:0x9dcbd8,transparent:true,opacity:.65,roughness:.2}),.2,.74,0);item(g,new THREE.TorusGeometry(.075,.012,6,12),cream,.30,.76,0);}else{item(g,new THREE.CylinderGeometry(.11,.09,.24,16),mat(0x3b241a),0,.77,0);for(let j=0;j<3;j++)item(g,new THREE.CylinderGeometry(.045,.035,.09,12),cream,-.22+j*.18,.67,.10);}}
             else if(i%3===0){const bag=item(g,new THREE.BoxGeometry(.3,.42,.18),mat(0xb85272),0,.23,0);item(g,new THREE.TorusGeometry(.08,.025,6,12),metal,0,.49,0);item(g,new THREE.BoxGeometry(.22,.17,.04),mat(0xe1aa59),0,.2,.11);}
@@ -1448,7 +1448,7 @@ export default {
             else{const desk=buildDesk('','');g.add(desk);item(g,new THREE.SphereGeometry(.075,12,12),mat(0xbb2935),-.2,.66,0);item(g,new THREE.CylinderGeometry(.008,.008,.055,6),wood,-.2,.75,0);item(g,new THREE.BoxGeometry(.35,.008,.045),mat(0xe5be58),.12,.59,.12);}
           });
           // Additional work surfaces make the report desk one among several.
-          a.anchors.filter((p,i)=>i%3===0&&Math.hypot(p[0]-a.pagePos[0],p[1]-a.pagePos[2])>2.5).slice(1,3).forEach(p=>{const d=school?buildDesk('',''):buildCubicle('','');d.position.set(p[0]-.4,0,p[1]-.35);levelGroup.add(d);collideRects.push({x0:d.position.x-.46,x1:d.position.x+.46,z0:d.position.z-.34,z1:d.position.z+.34});});
+          a.anchors.filter((p,i)=>i%3===0&&Math.hypot(p[0]-a.pagePos[0],p[1]-a.pagePos[2])>2.5).slice(1,3).forEach(p=>{const d=school?buildDesk('',''):buildCubicle('','');d.position.set(p[0]-.4,0,p[1]-.35);d.userData.prop='desk';levelGroup.add(d);collideRects.push({x0:d.position.x-.46,x1:d.position.x+.46,z0:d.position.z-.34,z1:d.position.z+.34});});
         }
         function buildLevel(idx) {
           cc.dataset.school=String(LEVELS[idx].handAuthored === true);
@@ -1544,6 +1544,7 @@ export default {
             if (!useHandAuthored) { g = new THREE.PointLight(0xffd36e, 0.13, 1); g.position.copy(pos); levelGroup.add(g); }
             return { sprite: s, light: g, base: pos.y };
           });
+          lobbyIndex();
         }
         // buildLevel(idx) closes here -- the monster/haunt machinery just below is shared, reusable game
         // mechanics (unchanged from the pre-0903 build), not per-level construction, so it stays OUTSIDE
@@ -1906,6 +1907,94 @@ export default {
           monster.position.set(best[0], 0, best[1]); monster.visible = true; monsterWasVisible = false; startChase(now);
         }
 
+        // ---- LOBBY (opening public office only): optional, repeatable, cosmetic actions beside the three real reports.
+        // No new stamina/speed rules, no fourth report, and nothing here is created per activation: one button, one
+        // toast, one cup, one stamp decal per desk. Listeners go through ctx so unmount releases them.
+        const lobbySheet = document.createElement("style");
+        lobbySheet.textContent = ".cc-use{position:absolute;right:8px;bottom:80px;z-index:8;min-height:44px;min-width:76px;padding:6px 8px;font:700 11px 'Anton',sans-serif;letter-spacing:.04em;background:#c9ff59;color:#1a1200;border:2px solid #241a0e;box-shadow:2px 2px 0 #241a0e;cursor:pointer}.cc-use:focus-visible{outline:3px solid #c0135a;outline-offset:2px}" +
+          ".cc-lobby-line{position:absolute;left:50%;bottom:38%;transform:translateX(-50%);z-index:9;max-width:84%;padding:8px 12px;text-align:center;font:700 14px/1.3 Georgia,serif;color:#241a0e;background:#e7dcc2;border:2px solid #241a0e;box-shadow:3px 3px 0 #000;pointer-events:none;opacity:0;transition:opacity .2s}.cc-lobby-line.show{opacity:1}" +
+          ".cc-lobby-fx{position:absolute;left:50%;top:44%;z-index:9;transform:translate(-50%,-50%);pointer-events:none;opacity:0;font:900 64px/1 Georgia,serif}.cc-lobby-fx.cup{font-size:84px}.cc-lobby-fx.stamp{color:#b3122f;border:6px solid #b3122f;padding:2px 14px;font-size:34px;letter-spacing:.08em;background:#fff6dccc}" +
+          "";
+        cc.prepend(lobbySheet);
+        const useBtn = document.createElement("button"); useBtn.type = "button"; useBtn.className = "cc-use"; useBtn.hidden = true; viewport.append(useBtn);
+        const lobbyLine = document.createElement("div"); lobbyLine.className = "cc-lobby-line"; lobbyLine.setAttribute("aria-hidden", "true"); viewport.append(lobbyLine);
+        const lobbyFx = document.createElement("div"); lobbyFx.className = "cc-lobby-fx"; lobbyFx.setAttribute("aria-hidden", "true"); viewport.append(lobbyFx);
+        const lobbyDecals = new Map();
+        let lobbyCoffee = [], lobbyDesks = [], lobbyTarget = null, lobbyBusy = 0, lobbyLineTimer = 0;
+        function lobbyIndex() {   // rebuilt with the level: the props and desks of THIS scene, no more
+          lobbyDecals.clear();
+          lobbyCoffee = levelGroup.children.filter(g => g.userData.prop === "coffee");
+          lobbyDesks = [...levelGroup.children.filter(g => g.userData.prop === "desk"), ...DESKS.map((d, i) => Object.assign(d, { userData: { ...d.userData, prop: "report-desk", idx: i } }))];
+        }
+        function lobbySay(text) {
+          lobbyLine.textContent = text; lobbyLine.classList.add("show"); announce(text);
+          if (lobbyLineTimer) clearTimeout(lobbyLineTimer);
+          lobbyLineTimer = ctx.timeout(() => { lobbyLine.classList.remove("show"); lobbyLineTimer = 0; }, 2600);
+        }
+        function lobbyFlash(cls, text) {   // Web Animations restart cleanly on repeat; reduced motion gets a plain fade
+          lobbyFx.className = "cc-lobby-fx " + cls; lobbyFx.textContent = text;
+          lobbyFx.getAnimations().forEach(a => a.cancel());
+          const at = (o, y, sc) => ({ opacity: o, transform: "translate(-50%," + y + "%) scale(" + sc + ") rotate(-8deg)" });
+          lobbyFx.animate(REDUCED ? [{ opacity: 1 }, { opacity: 1, offset: .8 }, { opacity: 0 }] : [at(0, -30, 1.6), { ...at(1, -50, 1), offset: .15 }, { ...at(1, -50, 1), offset: .75 }, at(0, -70, 1)], { duration: 1100, fill: "none" });
+        }
+        function lobbyBlocked(ax, az, bx, bz, skip) {   // same wall rule as pickups: a prop behind a wall cannot be used
+          for (const w of collideRects) {
+            if (skip && bx >= w.x0 - .05 && bx <= w.x1 + .05 && bz >= w.z0 - .05 && bz <= w.z1 + .05) continue;
+            let t0 = 0, t1 = 1; const dx = bx - ax, dz = bz - az; let hit = true;
+            for (const [p, d, lo, hi] of [[ax, dx, w.x0, w.x1], [az, dz, w.z0, w.z1]]) {
+              if (Math.abs(d) < 1e-9) { if (p < lo || p > hi) { hit = false; break; } continue; }
+              let a = (lo - p) / d, b = (hi - p) / d; if (a > b) [a, b] = [b, a]; t0 = Math.max(t0, a); t1 = Math.min(t1, b); if (t0 > t1) { hit = false; break; }
+            }
+            if (hit) return true;
+          }
+          return false;
+        }
+        function lobbyPick(lookFx, lookFz) {
+          if (!(MODE === "public" && state.level === 0 && deskRead.phase === "idle" && !roomCut && !caught && !transitioning && hunting())) return null;
+          let best = null;
+          const consider = (kind, x, z, reach, label, obj) => {
+            const dx = x - player.x, dz = z - player.z, d = Math.hypot(dx, dz);
+            if (d > reach || d < 0.05 || (lookFx * dx + lookFz * dz) / d < 0.25 || lobbyBlocked(player.x, player.z, x, z, true)) return;
+            if (!best || d < best.d) best = { kind, x, z, d, label, obj };
+          };
+          lobbyCoffee.forEach(g => consider("coffee", g.position.x, g.position.z, 1.7, "SIP COFFEE", g));
+          lobbyDesks.forEach(g => { if (g.userData.prop === "report-desk" && pageObjs[g.userData.idx]) return; consider("stamp", g.position.x, g.position.z, 1.5, "STAMP FILE", g); });
+          if (monster && monster.visible) consider("boss", monster.position.x, monster.position.z, 3.2, "SAY HI", monster);
+          return best;
+        }
+        function lobbyUse() {
+          const now = performance.now(), t = lobbyTarget;
+          if (!t || now < lobbyBusy) return;
+          lobbyBusy = now + 1200;   // one activation per press; holding or double-tapping cannot stack
+          startMusic();
+          if (t.kind === "coffee") {
+            lobbyFlash("cup go", "☕"); lobbySay("Productivity tastes wonderful.");
+            if (musicAudio) { musicTone(520, .09, .05); ctx.timeout(() => musicTone(390, .12, .04), 160); ctx.timeout(() => musicTone(330, .16, .035), 340); }
+          } else if (t.kind === "stamp") {
+            let mark = lobbyDecals.get(t.obj);
+            if (!mark) {
+              const c = document.createElement("canvas"); c.width = 128; c.height = 64; const x = c.getContext("2d");
+              x.strokeStyle = "#b3122f"; x.lineWidth = 5; x.strokeRect(4, 4, 120, 56); x.fillStyle = "#b3122f"; x.font = "900 20px Georgia"; x.textAlign = "center"; x.fillText("APPROVED", 64, 40);
+              const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
+              mark = new THREE.Mesh(new THREE.PlaneGeometry(.32, .16), new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthWrite: false }));
+              mark.rotation.x = -Math.PI / 2; mark.position.set(t.obj.position.x, .64, t.obj.position.z); levelGroup.add(mark); lobbyDecals.set(t.obj, mark);
+            }
+            mark.rotation.z = (rnd() - .5) * .5;   // the same decal re-inked: repeats add no objects
+            lobbyFlash("stamp go", "APPROVED"); lobbySay("Filed.");
+            if (musicAudio) { musicTone(80, .14, .09, "square"); noiseBurst(musicAudio.currentTime, .07, "lowpass", 900, .7, .12, musicAudio.destination); }
+          } else {
+            lobbySay("We love a little initiative. Back to work.");
+            if (musicAudio) musicTone(330, .18, .03, "triangle");
+          }
+        }
+        ctx.on(useBtn, "pointerdown", e => e.stopPropagation());
+        ctx.on(useBtn, "click", lobbyUse);
+        function lobbyTick(lookFx, lookFz) {
+          lobbyTarget = lobbyPick(lookFx, lookFz);
+          const show = !!lobbyTarget;
+          if (useBtn.hidden === show) useBtn.hidden = !show;
+          if (show && useBtn.textContent !== lobbyTarget.label) useBtn.textContent = lobbyTarget.label;
+        }
         // ---- Round 2, section 2: the reading beat. Approach a desk, the page comes off it, the camera rises
         // to standing-on-hind-legs height while two paws come into frame -- then the book opens to the page just
         // found. deskRead is the one state machine for it; data-reading (set on the <article>) is what the kill
@@ -2022,7 +2111,7 @@ export default {
         ctx.on(window, "keydown", e => { if (!hunting() || caught) return;
           if (roomCut) { if (e.key.toLowerCase() === 'f' && roomCut.stage === 'wake') leaveCut(); return; }
           keys[e.key.toLowerCase()] = true;
-          if (e.key.toLowerCase() === "f") {if(roomCut?.stage==='wake')leaveCut();else setFlash(!flashOn);} if (e.key.toLowerCase() === "r") showBook(); });
+          if (e.key.toLowerCase() === "f") {if(roomCut?.stage==='wake')leaveCut();else setFlash(!flashOn);} if (e.key.toLowerCase() === "r") showBook(); if (e.key.toLowerCase() === "e") lobbyUse(); });
         ctx.on(window, "keyup", e => keys[e.key.toLowerCase()] = false);
 
         function resize() {
@@ -2207,6 +2296,7 @@ export default {
           // monsterVisibleAt is the 600ms no-spawn-kill grace, which reading the paper must not burn through.
           // This is the same freeze the watched-dead-on branch below already performs on ghost.t0.
           if (!hunting() || caught) {
+            if (!useBtn.hidden) useBtn.hidden = true;
             if (ghost.active) ghost.t0 += dt * 1000;
             if (monster.visible) monsterVisibleAt += dt * 1000;
             ctx.frame(frame);
@@ -2402,6 +2492,7 @@ export default {
             if (!talkLine || now - talkPickedAt > 4500) { const lines = LEVELS[state.level].handAuthored ? SCHOOL_LINES : DEADLINE_LINES; talkLine = lines[Math.floor(rnd() * lines.length)]; talkPickedAt = now; }
             anyPrompt = true; promptEl.textContent = talkLine; promptEl.classList.add("show");
           }
+          lobbyTick(lookFx, lookFz);   // optional office actions; hidden whenever the hall is paused
           if (!anyPrompt) promptEl.classList.remove("show");
 
           // static proximity effect: ramps faster watched dead-on than seen at the edge, decays once he's
