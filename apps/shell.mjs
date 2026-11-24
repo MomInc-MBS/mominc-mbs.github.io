@@ -24,6 +24,29 @@ function boot(cfg) {
     try { localStorage.removeItem(cfg.bestKey); } catch {}
     refresh(); $('reset-note').textContent = 'Best score reset.';
   };
+  // Tilt steering: shown only on touch devices that expose orientation; turned on only after a real reading arrives.
+  const tilt = $('tilt'), tiltKey = cfg.options?.tiltKey;
+  if (tilt && tiltKey && matchMedia('(pointer: coarse)').matches && 'DeviceOrientationEvent' in window) {
+    $('tilt-panel').hidden = false;
+    const on = () => { try { return localStorage.getItem(tiltKey) === '1'; } catch { return false; } };
+    const note = text => { $('tilt-note').textContent = text; };
+    const paint = () => { tilt.textContent = 'Tilt steering: ' + (on() ? 'on' : 'off'); };
+    const save = v => { try { v ? localStorage.setItem(tiltKey, '1') : localStorage.removeItem(tiltKey); } catch {} paint(); };
+    tilt.onclick = async () => {
+      if (on()) { save(false); note(''); return; }
+      try {
+        if (typeof DeviceOrientationEvent.requestPermission === 'function' && await DeviceOrientationEvent.requestPermission() !== 'granted') { note('Tilt permission was not granted.'); return; }
+      } catch { note('Tilt permission could not be requested.'); return; }
+      const ok = await new Promise(resolve => {
+        const h = e => { if (e.gamma != null) done(true); };
+        const done = v => { removeEventListener('deviceorientation', h); clearTimeout(timer); resolve(v); };
+        const timer = setTimeout(() => done(false), 1500);
+        addEventListener('deviceorientation', h);
+      });
+      if (ok) { save(true); note('Tilt steering on. Touch still works.'); } else note('This device sent no tilt readings.');
+    };
+    paint();
+  }
   setupInstall({button: $('install'), status: $('install-status'), list: $('install-steps'), iosHelp: $('ios-help'), name: cfg.name});
   refresh(); show(menu);
 }

@@ -2,6 +2,10 @@
    Research tubes and mode-aware goggles feed independently randomized paper prototypes.
    All listeners and delayed paper transitions belong to ctx. */
 import { PAPER_SHAPES, PAPER_PALETTES, createPaperBatch, renderPaperCoach } from './girlfriend-roster.js';
+import { isOriginalOrder, branchFor } from '../../arcade/pyramid-jump/rounds.mjs';
+
+// The one jumping round (ordinary Coaches only). Module scope so unmount() can dispose it.
+let jump = null;
 
 const TUBES = [
   { who: "Sentience juice",     topic: "Robotics and autonomous hands", cite: "Piazza et al. 2019, Ann Rev Control",     col: 0xc46a2f, variant: "darkstone" },
@@ -291,7 +295,7 @@ export default {
     const mould=action('Mould',()=>{
       if(busy||L.phase!=='mould')return;
       labEffect('mould');batch=createPaperBatch();
-      batch.special=L.order.length===TUBES.length&&L.order.every((index,position)=>index===position);
+      batch.special=isOriginalOrder(L.order,TUBES.length);
       if(batch.special){batch.shapeId='myr5';batch.paletteId=0;batch.eyes=1;batch.version='5.00';}
       stage.dataset.special=batch.special?'original':'prototype';
       const shape=PAPER_SHAPES.find(s=>s.id===batch.shapeId), palette=PAPER_PALETTES.find(p=>p.id===batch.paletteId);
@@ -306,6 +310,7 @@ export default {
     });
     const pack=action('Pack',()=>{
       if(busy||L.phase!=='pack')return;
+      if(branchFor(batch)==='jump'){startJump();return;}
       labEffect('pack');const box=get('dgPaperBox');box.classList.add('is-open');
       transition('packing',1500,()=>{
         L.to('grab');transition('shipping',1800,()=>{
@@ -331,11 +336,42 @@ export default {
     });
     const another=action('Make another coach',()=>{
       if(busy||!['grab','goggles'].includes(L.phase))return;
-      closeGoggles();L.reset();batch=null;unit.innerHTML='';
+      closeGoggles();resetFactory();tubeButtons[0].focus();
+    });
+    function resetFactory(){
+      L.reset();batch=null;unit.innerHTML='';
       delete stage.dataset.special;delete stage.dataset.pose;
       get('dgPaperBox').classList.remove('is-open','is-packed','is-sealed');
-      get('dgBatchRecord').innerHTML='';get('dgUnitRecord').innerHTML='';render();tubeButtons[0].focus();
-    });
+      get('dgBatchRecord').innerHTML='';get('dgUnitRecord').innerHTML='';render();
+    }
+    // One jumping round inside #dgStage with this exact Coach. Death or Exit disposes it and the factory
+    // returns to its first tube. Goggles and rewards are never touched here.
+    async function startJump(){
+      if(jump)return;
+      const mine=jump={dispose(){}};
+      busy=true;dock.inert=true;props.inert=true;render();
+      say.textContent='Loading the jump round.';
+      try{
+        const [{startGame},{rasterizePaper,releasePaper}]=await Promise.all([import('../../arcade/pyramid-jump/game.mjs'),import('../../arcade/pyramid-jump/paper.mjs')]);
+        const paper=await rasterizePaper(batch);
+        if(jump!==mine){releasePaper(paper);return;}
+        const host=document.createElement('div');
+        host.className='dg-jump';host.style.cssText='position:absolute;inset:0;z-index:60;background:#171329;overflow:hidden';
+        stage.appendChild(host);
+        let game=null;
+        const free=()=>setTimeout(()=>releasePaper(paper),0); // after the dying frame finishes drawing
+        const end=()=>{
+          if(jump!==mine)return;
+          jump=null;game?.dispose();game=null;host.remove();free();
+          busy=false;dock.inert=false;props.inert=false;
+          resetFactory();say.textContent='Make a new coach.';tubeButtons[0].focus();
+        };
+        mine.dispose=()=>{if(jump===mine)jump=null;game?.dispose();game=null;host.remove();free();};
+        game=startGame(host,{paperImg:paper,startLevel:1,seed:Date.now(),onEnd:end,onExit:end});
+      }catch(e){
+        if(jump===mine){jump=null;busy=false;dock.inert=false;props.inert=false;render();say.textContent='The jump round could not open. Pack again.';}
+      }
+    }
     function awardGoggles(){
       if(!batch?.special||L.phase!=='goggles')return;
       const reward=JSON.stringify({version:1,acquiredAt:Date.now(),recipe:L.order.slice()});
@@ -386,7 +422,7 @@ export default {
     }
     render();
 
-    window.__dg={paper:true,flat:false,get phase(){return L.phase;},get poured(){return L.poured;},get order(){return L.order.slice();},get lastVariant(){return L.variant();},get batch(){return batch?structuredClone(batch):null;},get rosterCount(){return PAPER_SHAPES.length;}};
+    window.__dg={paper:true,flat:false,get phase(){return L.phase;},get poured(){return L.poured;},get order(){return L.order.slice();},get lastVariant(){return L.variant();},get batch(){return batch?structuredClone(batch):null;},get rosterCount(){return PAPER_SHAPES.length;},get jumping(){return !!jump;}};
   },
-  unmount(){try{delete window.__dg;}catch{window.__dg=undefined;}}
+  unmount(){const j=jump;jump=null;j?.dispose();try{delete window.__dg;}catch{window.__dg=undefined;}}
 };

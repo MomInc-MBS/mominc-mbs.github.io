@@ -40,7 +40,7 @@ PAGE = """<!doctype html>
 </main>
 <main id="settings" hidden>
 <h2>Settings</h2>
-{reset_panel}<section class="panel">
+{reset_panel}{tilt_panel}<section class="panel">
 <p><strong>Install</strong></p>
 <button id="install" type="button">Install app</button>
 <p id="install-status" role="status"></p>
@@ -60,6 +60,14 @@ RESET = """<section class="panel">
 <p><strong>Best score</strong></p>
 <button id="reset" class="alt" type="button">Reset best</button>
 <p id="reset-note" role="status"></p>
+</section>
+"""
+
+
+TILT = """<section class="panel" id="tilt-panel" hidden>
+<p><strong>Steering</strong></p>
+<button id="tilt" class="alt" type="button">Tilt steering: off</button>
+<p id="tilt-note" role="status"></p>
 </section>
 """
 
@@ -101,7 +109,8 @@ def main():
         page = PAGE.format(pack=a['pack'], name=escape(a['name']), short=escape(a['shortName']), theme=a['theme'],
                            description=escape(a['description']), icon192=f"/apps/{a['id']}/{a['icons'][0]}",
                            style=a['style'], config=config,
-                           reset_panel=RESET if 'reset-best' in a['settings'] else '')
+                           reset_panel=RESET if 'reset-best' in a['settings'] else '',
+                           tilt_panel=TILT if 'tilt' in a['settings'] else '')
         (out / 'index.html').write_text(page, encoding='utf-8', newline='\n')
         (out / 'manifest.webmanifest').write_text(json.dumps(manifest(a), indent=2) + '\n', encoding='utf-8', newline='\n')
         print(f"{a['id']}: wrote apps/{a['id']}/index.html + manifest.webmanifest")

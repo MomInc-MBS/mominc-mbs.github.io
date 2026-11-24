@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" data-game="app-jump" data-loader="bar">
+<head>
+<script src="/tv/game-loader.js?v=1"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Coach Jump · MOM Inc</title>
+<meta name="theme-color" content="#5b17c9">
+<meta name="description" content="Jump a random paper Coach up the pyramid. A new Coach every round.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Coach Jump">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="/apps/jump/icon-192.png">
+<link rel="apple-touch-icon" href="/apps/jump/icon-192.png">
+<link rel="stylesheet" href="/apps/shell.css">
+<link rel="stylesheet" href="/apps/jump/style.css">
+</head>
+<body>
+<main id="menu">
+<img class="mark" src="/apps/jump/icon-192.png" alt="" width="170" height="170">
+<h1>Coach Jump</h1>
+<p class="tag">Jump a random paper Coach up the pyramid. A new Coach every round.</p>
+<p class="tag">Best: <strong id="best">0</strong></p>
+<button id="start" type="button">Start</button>
+<button id="open-settings" class="alt" type="button">Settings</button>
+<p id="offline" role="status">Saving for offline play…</p>
+</main>
+<main id="settings" hidden>
+<h2>Settings</h2>
+<section class="panel">
+<p><strong>Best score</strong></p>
+<button id="reset" class="alt" type="button">Reset best</button>
+<p id="reset-note" role="status"></p>
+</section>
+<section class="panel" id="tilt-panel" hidden>
+<p><strong>Steering</strong></p>
+<button id="tilt" class="alt" type="button">Tilt steering: off</button>
+<p id="tilt-note" role="status"></p>
+</section>
+<section class="panel">
+<p><strong>Install</strong></p>
+<button id="install" type="button">Install app</button>
+<p id="install-status" role="status"></p>
+<ol id="install-steps"></ol>
+<p id="ios-help" hidden>On iPhone use Safari. Home Screen apps keep their own saved best and offline files.</p>
+</section>
+<button id="close-settings" class="alt" type="button">Back</button>
+</main>
+<section id="stage" hidden aria-label="Coach Jump"><button id="back" class="alt" type="button">← Menu</button><div id="host"></div></section>
+<script type="application/json" id="app-config">{"bestKey": "myr5-pyramid-jump-best-v1", "mount": "mountJump", "name": "Coach Jump", "options": {"tiltKey": "mbs-app-jump-tilt-v1"}, "src": "/apps/jump/run.mjs"}</script>
+<script type="application/mbs-script" data-mbs-type="module" data-mbs-src="/apps/shell.mjs"></script>
+</body>
+</html>

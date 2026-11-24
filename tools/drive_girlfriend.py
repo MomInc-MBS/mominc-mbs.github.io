@@ -22,12 +22,12 @@ with sync_playwright() as pw:
     assert not any('three' in url or 'jsdelivr' in url for url in requests)
     assert p.evaluate('window.__gpu')==0
     assert p.locator('#dgStage canvas').count()==0
-    p.get_by_role('button',name='Pour DJ Scratch research',exact=True).click()
-    p.get_by_role('button',name='Sag Sniffer',exact=True).press('Enter')
+    p.get_by_role('button',name='Pour Sentience juice research',exact=True).click()
+    p.get_by_role('button',name='Mother’s love',exact=True).press('Enter')
     p.reload()
     expect(p.locator('#dgProgress')).to_have_text('0 / 6')
     assert p.evaluate('window.__dg.order')==[]
-    for name in ['DJ Scratch','Sag Sniffer','Cortisol Corgi','Lil Boyfriend','Coach Armie','MBS Fuel']:
+    for name in ['Sentience juice','Mother’s love','Dog loyalty','Small juice','Womanly wit','MBS Fuel']:
         p.get_by_role('button',name=name,exact=True).click()
     expect(p.get_by_role('button',name='Mould',exact=True)).to_be_enabled()
     p.get_by_role('button',name='Mould',exact=True).click()
@@ -36,7 +36,7 @@ with sync_playwright() as pw:
     expect(p.locator('#dgPaperUnit')).to_be_visible()
     p.get_by_role('button',name='Pack',exact=True).click()
     p.get_by_role('button',name='Take goggles',exact=True).click()
-    expect(p.locator('#dgVisBody')).to_contain_text('TRANSMISSION LOCKED')
+    expect(p.locator('#dgVisBody')).to_contain_text('KNOWLEDGE IS POWER')
     p.locator('#dgVisX').press('Escape')
     expect(p.locator('#dgVis')).to_be_hidden()
     p.set_viewport_size({'width':390,'height':844})
@@ -51,11 +51,23 @@ with sync_playwright() as pw:
         assert doctor['y']<stage['y'], 'Character stays cropped above shoulders'
     p.reload()
     expect(p.locator('#dgProgress')).to_have_text('0 / 6')
+    # Ordinary (non-original) Coach: Pack starts one on-page jumping round; Exit/death returns to the first tube.
+    for name in ['Mother’s love','Sentience juice','Dog loyalty','Small juice','Womanly wit','MBS Fuel']:
+        p.get_by_role('button',name=name,exact=True).click()
+    p.get_by_role('button',name='Mould',exact=True).click()
+    assert p.evaluate('window.__dg.batch.special')==False
+    p.get_by_role('button',name='Pack',exact=True).click()
+    expect(p.locator('#dgStage .dg-jump canvas')).to_have_count(1)
+    assert p.evaluate('window.__dg.jumping')
+    p.get_by_role('button',name='Exit to the pyramid').click()
+    expect(p.locator('#dgStage canvas')).to_have_count(0)
+    assert p.evaluate('window.__dg.poured')==0 and p.evaluate('window.__dg.phase')=='pour' and not p.evaluate('window.__dg.jumping')
+    expect(p.locator('#dgNudge')).to_have_text('Make a new coach.')
     p.goto(base+'/tv/?ch=girlfriend')
     p.wait_for_function('()=>window.__dg?.paper')
     p.evaluate('()=>window.MBS_CH.unmount()')
     assert p.evaluate('typeof window.__dg')=='undefined'
     assert not errors, errors
-    print('PASS: paper props and keyboard input; fresh-instance reset and all phases; locked goggles; rotation; five viewport sizes; no GPU or three.js; unmount')
+    print('PASS: ordinary-coach jump round and exit; paper props and keyboard input; fresh-instance reset and all phases; locked goggles; rotation; five viewport sizes; no GPU or three.js; unmount')
     b.close()
 server.shutdown()
