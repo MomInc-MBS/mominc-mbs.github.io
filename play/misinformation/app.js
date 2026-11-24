@@ -54,7 +54,7 @@ function hud(){
  const gate=course?Math.min(GATES,course.cleared.length+(['prompt','quiz'].includes(course.phase)?1:0)):0;
  const distance=course?distanceOf(course):0;
  $('#distance').innerHTML=`${fmt(distance)}<small> km</small>`;$('#score').textContent=fmt(course?.total??0);
- $('#hull').closest('div').hidden=true;                              // no hull in the curriculum
+ $('#hull').closest('div').hidden=true;$('.hud').style.gridTemplateColumns='1fr 1fr';                              // no hull in the curriculum
  $('#progress').style.width=`${distance/STATION*100}%`;
  $('.progress-track').setAttribute('aria-valuenow',String(distance));
  const level=Math.min(19,Math.floor(distance/5000)),view={distance,hits:0,phase:course?.phase==='victory'?'escaped':'answer',rounds:course?.promptCount??0,score:course?.total??0,history:[]};
@@ -102,7 +102,7 @@ function render({focus=false}={}){
  }
  if(phase==='lesson'){
   const g=gateOf(course,content);
-  html=`<div class="screen-label"><span>GATE ${course.stage+1} CLEARED</span><span>${safe(g.evidenceStatus.toUpperCase())}</span></div><h2>${safe(g.topic)}</h2><section class="statement" aria-label="Sourced explanation"><p>${safe(g.factualExplanation)}</p></section><p>${sourceLinks(g)}</p><p style="font-size:10px">Sources checked ${safe(g.sources[0].checkedDate)}. Opening a source needs a connection; this explanation is saved for offline use.</p><button class="primary" data-action="commentary">MOM'S COMMENTARY <span>→</span></button>`;
+  html=`<div class="screen-label"><span>GATE ${course.stage+1} CLEARED</span><span>${safe(g.evidenceStatus.toUpperCase())}</span></div><h2>${safe(g.topic)}</h2><section class="statement" aria-label="Sourced explanation"><p>${safe(g.factualExplanation)}</p></section><p>${sourceLinks(g)}</p><p style="font-size:10px">Checked ${safe(g.sources[0].checkedDate)}. Saved offline; links need internet.</p><button class="primary" data-action="commentary">MOM'S COMMENTARY <span>→</span></button>`;
  }
  if(phase==='commentary'){
   const g=gateOf(course,content),last=course.stage===GATES-1;

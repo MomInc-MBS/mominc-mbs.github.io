@@ -44,8 +44,8 @@
     },
     {
       "url": "/play/misinformation/app.js",
-      "revision": "4c050b8780b260a5f2787d39bbc7a4adbfe73508",
-      "bytes": 17367
+      "revision": "4a3cb4ab04d1df94afef0deb89ca07bd74bf253c",
+      "bytes": 17361
     },
     {
       "url": "/play/misinformation/assets/journey/01-office.svg",
@@ -286,5 +286,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap"
   ],
-  "version": "a192f22e9ed824f693fc"
+  "version": "0be75bfb12c3adf909fd"
 }
