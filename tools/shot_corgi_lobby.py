@@ -44,6 +44,8 @@ with sync_playwright() as p:
     pg.evaluate('() => { const p = window.__corgi.player; p.x = 14; p.z = 0; p.yaw = -Math.PI / 2; }')
     for _ in range(80):
         pg.wait_for_timeout(250); pg.screenshot(path=f'{out}/4-boss.png')   # keyboard path (E): same action as the button
+        if pg.locator('.cc-use').is_visible() and 'SAY HI' in pg.locator('.cc-use').inner_text():
+            pg.keyboard.press('e'); pg.wait_for_timeout(250); pg.screenshot(path=f'{out}/4-boss.png'); break
     ok = 'initiative' in pg.locator('.cc-lobby-line').inner_text()
     check('boss line', ok)
     # newspapers unchanged: three reports, reading still works, no duplicate button/objects after repeats
