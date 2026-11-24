@@ -55,7 +55,7 @@ The owner approved **Option A only (tool-only, no model calls)** for the Level A
 
 1. **FR-2 evaluator isolation:** run candidates in a separate subprocess and score in the parent, then lift FR-2.
 2. **Lineage design:** a one-page design mapped onto the existing store and artifacts, before any code.
-3. **Sensory and embodied research branch (queued, software only):** a shared episode format with deterministic replay, built with a mock device whose actions are disabled. No hardware, motion or model calls, and no training until the replay foundation and experiment evidence exist.
+3. **Sensory and embodied research branch (reference only):** the owner set those research plans as reference only until the core structure is proven (P4). A small replay foundation exists but is parked. No hardware, motion, model calls or training.
 
 ## Cost
 
