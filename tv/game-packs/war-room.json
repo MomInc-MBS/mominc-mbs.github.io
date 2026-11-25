@@ -644,13 +644,13 @@
     },
     {
       "url": "/tv/mom-tour.css",
-      "revision": "b90dca95f9e52661f78989e99750e1efff4cf9f9",
-      "bytes": 4436
+      "revision": "52412bdbeca7cde5e5f1ff2ee92e0cfe5b613082",
+      "bytes": 5102
     },
     {
       "url": "/tv/mom-tour.js",
-      "revision": "bb969b763f29e662abfc0b17555d6f7137124446",
-      "bytes": 25444
+      "revision": "8b804658e69a23405992e0ca1525e16897950c5b",
+      "bytes": 26470
     },
     {
       "url": "/tv/mount.js",
@@ -699,7 +699,7 @@
     },
     {
       "url": "/tv/retro-pointer.js",
-      "revision": "a2a474bcf22be11141498d6f8292d54a768011e8",
+      "revision": "8e26c6e567f0debe9c95ee105b752e508c3753f1",
       "bytes": 9959
     },
     {
@@ -741,5 +741,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "0f7161e81fa41d1846e6"
+  "version": "7e351402a5827e4b11f5"
 }

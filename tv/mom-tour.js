@@ -210,8 +210,10 @@
   /* ---- focus: gameplay, cutscenes, reveals and offers keep it; rewards wait ---- */
   let holds = 0;
   const hold = () => { holds++; let once = false; return () => { if (!once) { once = true; holds--; } }; };
+  const tvGlass = () => d.querySelector('#tv .glass');
+  const tvOff = () => { const t = d.getElementById('tv'); return !!t && t.dataset.state !== 'on'; };   // off or warming: MOM waits for power
   function busy() {
-    if (holds > 0) return true;
+    if (holds > 0 || tvOff()) return true;
     const p = location.pathname;
     if (/^\/(?:play|gala|arcade|handborne)\//.test(p) || p.startsWith('/tv/games/')) return true;
     try { if (root.MBS?.inGame?.()) return true; } catch {}
@@ -273,19 +275,27 @@
   function place(target, count) {
     const vw = innerWidth, vh = innerHeight, A = ui.arrows, B = ui.bubble;
     A.replaceChildren(); B.classList.remove('mt-top');
+    // On the TV, MOM lives inside the glass (never over the dial or POWER); elsewhere, the viewport.
+    const g = tvGlass(), gr = g && g.getBoundingClientRect();
+    const f = gr && gr.width > 160 && gr.height > 160 ? {l: Math.max(0, gr.left), t: Math.max(0, gr.top), r: Math.min(vw, gr.right), b: Math.min(vh, gr.bottom)} : null;
+    const box = f || {l: 0, t: 0, r: vw, b: vh};
+    B.classList.toggle('mt-framed', !!f);
+    const frameAt = top => { if (f) B.style.cssText = 'left:' + (f.l + 6) + 'px;right:' + (vw - f.r + 6) + 'px;max-width:none;' + (top ? 'top:' + (f.t + 18) + 'px;bottom:auto' : 'top:auto;bottom:' + (vh - f.b + 6) + 'px'); else B.style.cssText = ''; };
+    frameAt(false);
     let rect = target ? target.getBoundingClientRect() : null;
-    if (rect && (rect.width * rect.height > vw * vh * 0.35 || rect.bottom < 0 || rect.top > vh || rect.right < 0 || rect.left > vw)) rect = null;
+    if (rect && (rect.width * rect.height > vw * vh * 0.35 || rect.bottom < box.t || rect.top > box.b || rect.right < box.l || rect.left > box.r)) rect = null;
     const real = !!rect;
     if (!rect) rect = B.querySelector('.mt-go').hidden ? B.getBoundingClientRect() : B.querySelector('.mt-go').getBoundingClientRect();   // no usable target: point at the GO button, else at MOM's own bubble
-    const cx = Math.max(24, Math.min(vw - 24, rect.left + rect.width / 2)), above = rect.top > 150, size = 40 + level() * 6;
-    for (let i = 0; i < count; i++) {
-      const c = el('i', 'mt-chev ' + (above ? 'down' : 'up'));
-      c.style.cssText = 'width:' + size + 'px;height:' + size + 'px;left:' + (cx - size / 2 + (i % 2 ? 1 : -1) * (i >> 1) * (size + 6)) + 'px;top:' + (above ? Math.max(4, rect.top - (i % 2 + 1) * (size - 4) - 6) : Math.min(vh - size - 4, rect.bottom + (i % 2) * (size - 4) + 6)) + 'px';
-      c.style.animationDelay = (i * 90) + 'ms'; A.append(c);
-    }
     const b = B.getBoundingClientRect();    // never cover the target with the bubble
     const hit = rect.bottom > b.top - 4 && rect.top < b.bottom + 4 && rect.right > b.left && rect.left < b.right;
-    if (hit && real) B.classList.add('mt-top');
+    if (hit && real) { B.classList.add('mt-top'); frameAt(true); }
+    const cx = Math.max(box.l + 24, Math.min(box.r - 24, rect.left + rect.width / 2)), above = rect.top > box.t + 150, size = 40 + level() * 6;
+    for (let i = 0; i < count; i++) {
+      const c = el('i', 'mt-chev ' + (above ? 'down' : 'up'));
+      const x = Math.max(box.l, Math.min(box.r - size, cx - size / 2 + (i % 2 ? 1 : -1) * (i >> 1) * (size + 6)));
+      c.style.cssText = 'width:' + size + 'px;height:' + size + 'px;left:' + x + 'px;top:' + (above ? Math.max(box.t + 4, rect.top - (i % 2 + 1) * (size - 4) - 6) : Math.min(box.b - size - 4, rect.bottom + (i % 2) * (size - 4) + 6)) + 'px';
+      c.style.animationDelay = (i * 90) + 'ms'; A.append(c);
+    }
   }
 
   /* ---- reward celebration ---- */
@@ -362,7 +372,7 @@
   function pause() { clearInterval(poll); poll = 0; }
   function start() {
     visit();
-    const link = d.createElement('link'); link.rel = 'stylesheet'; link.href = '/tv/mom-tour.css?v=1'; d.head.append(link);
+    const link = d.createElement('link'); link.rel = 'stylesheet'; link.href = '/tv/mom-tour.css?v=2'; d.head.append(link);
     for (const t of ['pointerdown', 'keydown', 'touchstart', 'wheel', 'scroll']) d.addEventListener(t, () => { lastActive = Date.now(); }, {capture: true, passive: true});
     for (const t of ['scroll', 'resize']) addEventListener(t, () => { if (ui && !ui.root.hidden) render(); }, {passive: true, capture: true});
     visualViewport?.addEventListener('resize', () => render()); visualViewport?.addEventListener('scroll', () => render());
