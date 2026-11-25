@@ -199,3 +199,36 @@ self.addEventListener('fetch', event => {
     return request.headers.has('range') ? ranged(response, request.headers.get('range')) : response;
   })());
 });
+
+/* ADHD alarm reminders (appId "adhd", scope /apps/alarm/). Web Push is shown immediately; nothing here caches files or touches other apps.
+   A tap only opens the app at the occurrence's CURRENT state: the page decides what it is, a notice can never complete or restart anything. */
+const ADHD_SCOPE = '/apps/alarm/';
+const adhdReport = (p, event) => {
+  const r = p?.receipt;
+  if (!r || typeof r.url !== 'string' || !r.url.startsWith('https://') || typeof r.token !== 'string') return Promise.resolve();
+  return fetch(r.url, {method: 'POST', keepalive: true, headers: {'content-type': 'application/json'}, body: JSON.stringify({attemptId: p.attemptId, event, token: r.token})}).catch(() => {});
+};
+self.addEventListener('push', event => {
+  let p = null;
+  try { p = event.data && event.data.json(); } catch (_) {}
+  if (!p || p.appId !== 'adhd' || typeof p.occurrenceId !== 'string' || typeof p.tag !== 'string' || typeof p.url !== 'string' || !p.url.startsWith(ADHD_SCOPE)) return;
+  event.waitUntil((async () => {
+    await self.registration.showNotification(String(p.title || 'ADHD').slice(0, 60), {body: String(p.body || '').slice(0, 200), tag: p.tag, renotify: true,
+      icon: ADHD_SCOPE + 'icon-192.png', data: {appId: 'adhd', occurrenceId: p.occurrenceId, attemptId: p.attemptId, url: p.url, receipt: p.receipt}});
+    await adhdReport(p, 'received');
+  })());
+});
+self.addEventListener('notificationclick', event => {
+  const d = event.notification.data;
+  if (!d || d.appId !== 'adhd') return;
+  event.notification.close();
+  const target = new URL(typeof d.url === 'string' ? d.url : ADHD_SCOPE, ORIGIN);
+  if (target.origin !== ORIGIN || !target.pathname.startsWith(ADHD_SCOPE)) return;
+  event.waitUntil((async () => {
+    const windows = await self.clients.matchAll({type: 'window', includeUncontrolled: true});
+    const open = windows.find(c => new URL(c.url).pathname.startsWith(ADHD_SCOPE));
+    if (open) { open.postMessage({type: 'ADHD_OPEN', occurrenceId: d.occurrenceId}); await open.focus(); }
+    else await self.clients.openWindow(target.href);
+    await adhdReport(d, 'opened');
+  })());
+});

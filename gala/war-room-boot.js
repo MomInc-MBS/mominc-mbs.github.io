@@ -4,7 +4,7 @@
  window.GalaWarRoomAccess.enter(async()=>{
   await window.MBS_LOAD?.ready;
   if(document.documentElement.dataset.warRoomEntry==='shell'){await script('/tv/mount.js');return;}
-  const files=['workout-tracks.js?v=training1','progress.js?v=training1','weapons.js?v=training1','avatar.js?v=performance1','performer.js?v=training1','guest.js?v=training1','crowd.js?v=1','gramophone.js?v=1','ammo.js?v=resistance1','war-room.js?v=separate1'];
+  const files=['workout-tracks.js?v=training1','progress.js?v=training1','weapons.js?v=training1','avatar.js?v=performance1','performer.js?v=training1','guest.js?v=training1','crowd.js?v=1','gramophone.js?v=2','ammo.js?v=resistance1','war-room.js?v=separate1'];
   await Promise.all(files.map(file=>script('/gala/'+file)));
   await import('/gala/weapon-station.mjs?v=training1');
   await import('/tv/games/goon/assets/index-W2w8AfON.js?v=resistance1');

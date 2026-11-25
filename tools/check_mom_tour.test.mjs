@@ -112,7 +112,10 @@ test('predicates: each receipt, and the ambiguous ones stay out', () => {
   assert.deepEqual(run({done: ['lilboyfriend', 'corgi']}), ['corgi', 'lilboyfriend']);
   // goon: character creation (and the completePage('goon') network-flow recovers from it) must NOT unlock the alarm
   assert.deepEqual(run({done: ['goon'], ls: {'mbs-gala-character-created-v1': '123'}}), []);
-  assert.deepEqual(run({ls: {'mbs-gala-completed-v1': String(Date.now())}}), ['alarm']);
+  assert.deepEqual(run({ls: {'mbs-gala-completed-v1': String(Date.now())}}), ['alarm']);   // old genuine-win receipt still unlocks
+  assert.deepEqual(run({ls: {'goon-result-menu-reached-v2': JSON.stringify({at: 9, result: 'NO_LEGAL_MOVES'})}}), ['alarm']);  // loss menu unlocks
+  assert.deepEqual(run({ls: {'goon-result-menu-reached-v2': JSON.stringify({at: 9, result: 'WIN_2048'})}}), ['alarm']);
+  assert.deepEqual(run({ls: {'goon-result-menu-reached-v2': 'junk'}}), []);                // no valid receipt, no unlock
 });
 
 test('hand: DJ banked early waits for the four prerequisites and the offer', () => {

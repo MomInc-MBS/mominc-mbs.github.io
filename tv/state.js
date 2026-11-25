@@ -451,7 +451,7 @@
     'mbs-corgi-school','mbs-corgi-school-v2','mbs-corgi-school-v3',
     'mbs-off3d-locked','mbs-note-read','mbs-armie-hall-result',
     'mbs-hand-profile-v1','mbs-dj-identity-v1','mbs-gala-run-v1',
-    'mbs-gala-character-created-v1','mbs-gala-completed-v1',
+    'mbs-gala-character-created-v1','mbs-gala-completed-v1','goon-result-menu-reached-v2',
     'mbs-goggles-v1','mbs-dg-line',COACH_KEY,COACH_BACKUP];
   const VISIT_KEYS = ['mbs-on','mbs-game','mbs-hotwired','mbs-offer-shut',SESSION_KEY];
   let storyStartedAt = 0, storyTimer;

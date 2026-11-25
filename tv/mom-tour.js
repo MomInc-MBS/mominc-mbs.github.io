@@ -121,9 +121,12 @@
     }
     return false;
   }
-  // mbs-gala-completed-v1 is written only by the Gala win branch (showEndingCard(true)). The character-created key
+  // mbs-gala-completed-v1 stays the genuine-win receipt, written only by the Gala win branch (showEndingCard(true)). The character-created key
   // and a generic completePage('goon') are NOT evidence: network-flow recovers goon completion from character creation.
-  const galaWin = env => int(Number(env.ls('mbs-gala-completed-v1')));
+  // goon-result-menu-reached-v2 ({at,result}) is written when the ending menu opens on a win OR on no legal moves; it unlocks the
+  // download. An old win receipt keeps working. A loss never writes mbs-gala-completed-v1.
+  const menuReached = env => { try { return int(JSON.parse(env.ls('goon-result-menu-reached-v2'))?.at); } catch { return false; } };
+  const galaWin = env => int(Number(env.ls('mbs-gala-completed-v1'))) || menuReached(env);
   // missions: step id -> predicate; rewards: app id -> predicate over the same env + record
   const MISSIONS = {
     fuel: env => fuelReceipt(env),
@@ -205,7 +208,7 @@
     if (rec.type === 'pwa' && rec.browserPlay !== false) return {href: '/apps/' + app + '/', label: 'OPEN ' + rec.name.toUpperCase()};
     return rec.type === 'pwa' ? {href: '/apps/' + app + '/', label: 'INSTALL ' + rec.name.toUpperCase()} : null;
   }
-  const NAMES = {misinformation: 'Misinformation Machine', fuel: 'Nitro Fuel', jump: 'Coach Jump', lilboyfriend: 'Little Boyfriend Camera', alarm: '2048 Alarm', corgi: 'Cortisol Corgi Endless', hand: 'Hand Customizer'};
+  const NAMES = {misinformation: 'Misinformation Machine', fuel: 'Nitro Fuel', jump: 'Coach Jump', lilboyfriend: 'Little Boyfriend Camera', alarm: 'ADHD', corgi: 'Cortisol Corgi Endless', hand: 'Hand Customizer'};
 
   /* ---- focus: gameplay, cutscenes, reveals and offers keep it; rewards wait ---- */
   let holds = 0;

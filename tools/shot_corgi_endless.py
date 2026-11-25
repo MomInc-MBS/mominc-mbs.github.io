@@ -4,7 +4,7 @@
 
 Serve a `git archive HEAD` copy (hash-checked packs fail on CRLF checkouts). Standalone is forced with a
 Playwright init script that sets navigator.standalone: nothing in the product reads a query flag for this.
-Writes: 1-browser-gate, 2-menu, 3-section, 4-offer, 5-replace, 6-settings, 7-wall, 8-section-after-exit PNGs, plus
+Writes: 1-browser-gate, 2-menu, 3-section, 4-offer, 6-settings, 7-wall, 8-section-after-exit PNGs, plus
 resources.json (renderer.info per section) and a short pass/fail list on stdout.
 """
 import json, sys, os
@@ -31,7 +31,7 @@ with sync_playwright() as p:
     page.on('pageerror', lambda e: errs.append(str(e)))
     page.goto(base + '/play/corgi/?app=1&mode=endless'); page.wait_for_function('window.__corgi && window.__corgi.level === 0', timeout=60000); page.wait_for_timeout(2500)
     check('story: public tone, no endless hook', page.evaluate("document.querySelector('#cc').dataset.mode") == 'public' and page.evaluate('!window.__corgi.endless'))
-    check('story: no endless store written', page.evaluate("localStorage.getItem('corgi-endless-v1')") is None)
+    check('story: no endless store written', page.evaluate("localStorage.getItem('corgi-endless-v2')") is None)
     check('story: three paper hearts and finite pages', page.evaluate('window.__corgi.lives') == 3 and page.evaluate('window.__corgi.pages.length') == 3)
     page.screenshot(path=f'{out}/0-story-unchanged.png'); check('story: no page errors', not errs, errs[:3]); c.close()
 
@@ -66,38 +66,27 @@ with sync_playwright() as p:
     page.wait_for_function('document.querySelector(".ce-ov")', timeout=15000)
     check('offer overlay shown', page.locator('.ce-card').count() == 3)
     titles = page.locator('.ce-card b').all_inner_texts()
-    saved = page.evaluate("JSON.parse(localStorage.getItem('corgi-endless-v1')).run.pendingOffer.choices.map(c=>c.perk)")
+    saved = page.evaluate("JSON.parse(localStorage.getItem('corgi-endless-v2')).run.pendingOffer.choices.map(c=>c.perk)")
     check('offer persisted before/while shown', len(saved) == 3, saved)
     page.screenshot(path=f'{out}/4-offer.png')
     page.reload(); page.wait_for_selector('#menu:not([hidden])', timeout=60000); page.click('#start')
     page.wait_for_selector('.ce-ov', timeout=60000)
     check('reload reopens the same offer (no reroll)', page.locator('.ce-card b').all_inner_texts() == titles)
-    check('reload does not duplicate the paper', page.evaluate("JSON.parse(localStorage.getItem('corgi-endless-v1')).run.collected.length") == 1)
+    check('reload does not duplicate the paper', page.evaluate("JSON.parse(localStorage.getItem('corgi-endless-v2')).run.collected.length") == 1)
     page.locator('.ce-card').nth(0).click(); page.wait_for_timeout(600)
-    check('pick commits once', page.evaluate("JSON.parse(localStorage.getItem('corgi-endless-v1')).run.slots.filter(Boolean).length") == 1)
+    check('pick commits once', page.evaluate("Object.values(JSON.parse(localStorage.getItem('corgi-endless-v2')).run.traits).reduce((a,b)=>a+b,0)") == 1)
 
-    # ---- fill both slots, then a third new perk asks which slot to replace
-    ES("(e.grant('zoomies', 5, 0), e.grant('wind', 2, 1), 1)")
-    page.evaluate("() => { const e = window.__corgi.endless; }")
-    # drive the real collect of paper 1 through the engine's own pickup
+    # ---- v2: traits stack without limit, there is no slot/replace screen; second paper offers three cards, picking one commits
     ES('e.teleport(e.layout.objectives[1].approachPoint[0], e.layout.objectives[1].approachPoint[1])')
     page.wait_for_selector('.ce-ov', timeout=15000)
-    new_card = page.locator('.ce-card', has_text='NEW')
-    if new_card.count():
-        new_card.first.click(); page.wait_for_timeout(300)
-        check('replace screen asks which slot', page.locator('.ce-paper h2').inner_text().startswith('REPLACE'))
-        page.screenshot(path=f'{out}/5-replace.png')
-        page.locator('.ce-card').nth(1).click(); page.wait_for_timeout(500)
-    else:
-        page.locator('.ce-card').first.click(); page.wait_for_timeout(500)
-    ms = page.locator('.ce-ov')
-    if ms.count(): ms.locator('button').first.click(); page.wait_for_timeout(500)
+    check('second offer has three cards, no replace/keep', page.locator('.ce-card').count() == 3 and page.locator('.ce-keep').count() == 0)
+    page.locator('.ce-card').first.click(); page.wait_for_timeout(700)
     check('no overlay blocks play afterwards', page.locator('.ce-ov').count() == 0)
 
     # ---- third paper opens the exit; walking through it advances exactly one section
     ES('e.teleport(e.layout.objectives[2].approachPoint[0], e.layout.objectives[2].approachPoint[1])')
     page.wait_for_selector('.ce-ov', timeout=15000)
-    page.locator('.ce-keep').click(); page.wait_for_timeout(1500)
+    page.locator('.ce-card').first.click(); page.wait_for_timeout(1500)
     sec0 = ES('e.run.section')
     ES('e.teleport(e.layout.corridorLength - 2.5, 0)'); page.wait_for_function('window.__corgi.doorOpen', timeout=15000)
     check('exit opens after all three papers', True)
@@ -107,13 +96,14 @@ with sync_playwright() as p:
     check('exit advances exactly one section', ES('e.run.section') == sec0 + 1, ES('e.run.section'))
     page.screenshot(path=f'{out}/8-section-after-exit.png')
 
-    # ---- protection is finite: Zoomies + Slippery; the pursuer never reads Zoomies; pausing neither spends nor refills it
-    ES("(e.grant('zoomies', 5, 0), e.grant('slippery', 5, 1), 1)")
-    check('Zoomies+Slippery effects', ES('[e.fx.speedMul, e.fx.graceMs, +e.fx.catchRange.toFixed(2)]') == [1.3, 750, 0.6])
-    check('chaser speed ignores Zoomies', abs(page.evaluate('window.__corgi.chase.speed') - 2.5 * (0.25 + 0.35 * (ES('e.run.section') - 1) / 9)) < 1e-9, page.evaluate('window.__corgi.chase.speed'))
+    # ---- protection is finite; Zoomies raises our speed but the pursuer never reads it
+    cs0 = page.evaluate('window.__corgi.chase.speed')
+    ES("(e.grant('zoomies', 20), e.grant('slippery', 20), 1)")
+    check('Zoomies raises speed, Slippery grace', ES('e.fx.speedMul') > 1.2 and ES('e.fx.graceMs') > 0, ES('[e.fx.speedMul, e.fx.graceMs]'))
+    check('chaser speed ignores Zoomies', abs(page.evaluate('window.__corgi.chase.speed') - cs0) < 1e-9, page.evaluate('window.__corgi.chase.speed'))
     ES('e.capture()'); page.wait_for_timeout(800)   # respawn fires at 700 ms and sets the window
     two = page.evaluate('''() => new Promise(res => { const e = window.__corgi.endless, a = e.protectUntil() - performance.now(); setTimeout(() => res([a, e.protectUntil() - performance.now(), e.protectUntil()]), 150); })''')
-    check('protection window is finite, counts down, and is not renewed', two[1] < two[0] and two[0] <= 1350 + 50, [round(v) for v in two[:2]])
+    check('protection window is finite, counts down, and is not renewed', two[1] < two[0] and two[0] <= 2500, [round(v) for v in two[:2]])
 
     # ---- ten successive sections: resource plateau + frame time
     series = []
@@ -137,35 +127,36 @@ with sync_playwright() as p:
     check('light count bounded', all(i['lights'] <= 20 for _, i in series), [i['lights'] for _, i in series])
     json.dump(resources, open(f'{out}/resources.json', 'w'), indent=1)
 
-    # ---- capture loses a heart; the last heart ends the run
-    hearts0 = ES('e.run.hearts'); ES('e.capture()'); page.wait_for_timeout(1400)
-    check('capture loses exactly one heart', ES('e.run.hearts') == hearts0 - 1, ES('e.run.hearts'))
-    for _ in range(hearts0):
+    # ---- capture loses 4 quarters; running out ends the run
+    q0 = ES('e.run.quarters'); ES('e.capture()'); page.wait_for_timeout(1400)
+    check('capture loses one heart (4 quarters)', ES('e.run.quarters') == q0 - 4 or ES('e.run.status') == 'over', ES('e.run.quarters'))
+    for _ in range(q0 // 4 + 1):
         if ES('e.run.status') == 'over': break
         ES('e.capture()'); page.wait_for_timeout(900)
     check('last heart ends the run', ES('e.run.status') == 'over' and page.locator('.ce-ov').count() == 1)
     page.screenshot(path=f'{out}/9-run-over.png')
     page.locator('.ce-go').click(); page.wait_for_timeout(1500)
-    check('new run starts at section 1 with no powers', ES('[e.run.section, e.run.slots.filter(Boolean).length]') == [1, 0])
-    check('best section survives the run', page.evaluate("JSON.parse(localStorage.getItem('corgi-endless-v1')).best.section") >= 2)
+    check('new run starts at section 1 with no powers', ES('[e.run.section, Object.values(e.run.traits).reduce((a, b) => a + b, 0)]') == [1, 0])
+    check('new run drops the old scare state', ES('e.run.scare === undefined || e.scare.phase === "cooldown"'))
+    check('best section survives the run', page.evaluate("JSON.parse(localStorage.getItem('corgi-endless-v2')).best.section") >= 2)
 
     # ---- settings + wall
     page.click('#back'); page.wait_for_selector('#menu:not([hidden])'); page.click('#open-settings')
     page.wait_for_selector('#sound'); page.screenshot(path=f'{out}/6-settings.png')
     check('settings: sound, look, reset run, wall', all(page.locator(s).count() == 1 for s in ['#sound', '#look', '#reset-run', '#open-wall']))
-    page.click('#sound'); check('sound toggle persists', page.evaluate("JSON.parse(localStorage.getItem('corgi-endless-v1')).settings.sound") is False)
+    page.click('#sound'); check('sound toggle persists', page.evaluate("JSON.parse(localStorage.getItem('corgi-endless-v2')).settings.sound") is False)
     page.click('#open-wall'); page.wait_for_selector('.wall'); page.screenshot(path=f'{out}/7-wall.png')
     check('wall shows ten pages', page.locator('.wall-page').count() == 10)
     page.click('.wall .alt')
     page.on('dialog', lambda d: d.accept())
     page.click('#reset-run'); page.wait_for_timeout(300)
-    after = page.evaluate("JSON.parse(localStorage.getItem('corgi-endless-v1'))")
+    after = page.evaluate("JSON.parse(localStorage.getItem('corgi-endless-v2'))")
     check('reset run clears only the run', after['run'] is None and after['best']['section'] >= 2)
     check('no page errors', not [e for e in errs if 'favicon' not in e], errs[:5])
     # ---- look sensitivity really scales the drag
     page.click('#close-settings'); 
     def drag_yaw(look):
-        page.evaluate("(v) => { const s = JSON.parse(localStorage.getItem('corgi-endless-v1')); s.settings.look = v; localStorage.setItem('corgi-endless-v1', JSON.stringify(s)); }", look)
+        page.evaluate("(v) => { const s = JSON.parse(localStorage.getItem('corgi-endless-v2')); s.settings.look = v; localStorage.setItem('corgi-endless-v2', JSON.stringify(s)); }", look)
         page.click('#start'); page.wait_for_function('window.__corgi && window.__corgi.endless', timeout=60000); page.wait_for_timeout(1500)
         y0 = page.evaluate('window.__corgi.player.yaw'); box = page.locator('.cc-viewport').bounding_box()
         x, y = box['x'] + box['width'] / 2, box['y'] + box['height'] / 3

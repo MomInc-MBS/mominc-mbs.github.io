@@ -1,0 +1,20 @@
+# ADHD push sender. NOT DEPLOYED. Replace the placeholders, then follow README.md.
+name = "adhd-push"
+main = "src/worker.mjs"
+compatibility_date = "2026-11-01"
+
+[triggers]
+crons = ["* * * * *"]            # every minute; Workers cron cannot go finer, so 30 s stages land within ~60 s
+
+[[d1_databases]]
+binding = "DB"
+database_name = "adhd-push"
+database_id = "51950c24-101e-4167-ac0e-ef646cf67de0"
+migrations_dir = "migrations"
+
+[vars]
+ALLOW_ORIGIN = "https://mominc.online"        # browser origin allowed to call the API (CORS)
+PUBLIC_ORIGIN = "https://adhd-push.mominc-coach.workers.dev"  # this Worker's public URL; goes into notices so the service worker can report receipt
+VAPID_PUBLIC = "BNwwu75XzTtKY1p_XcvIsHHh-8cXv-h92pVm5yhJpWBrH0yCvEsFkDUh27WnovD9jgeXB4XuZgnKRFkcMkPM65A"       # from scripts/gen-vapid.mjs (public half is not secret)
+VAPID_SUBJECT = "https://mominc.online"
+# VAPID_PRIVATE_KEY is a SECRET: `wrangler secret put VAPID_PRIVATE_KEY`. Never commit it.

@@ -168,12 +168,14 @@ li{{margin:.4em 0}}
 <h2>How it works</h2>
 <ul>
 <li><strong>Start</strong> is free play on the 2048 board. It never touches your alarm.</li>
-<li><strong>Set alarm</strong> picks one daily time, in your phone's own time zone. That is the only setting.</li>
-<li>At that time the app posts local notifications about every 30 seconds (Android may delay or group them) until you merge a genuine 2048 tile. Tapping one opens the board. Losing deals a fresh board for the same alarm.</li>
-<li>It asks for notification access and, on some Android versions, permission for exact alarms. Without them it tells you it is not armed.</li>
+<li><strong>Set alarm</strong>: pick a time, an optional task (like "Eat breakfast") and one of four intense sounds. Tap &#9654; to hear one first. Nothing is armed until you confirm <strong>Arm this alarm</strong>, and every change asks again.</li>
+<li>At that time the phone rings with your sound on the alarm channel until you merge a genuine 2048 tile. With a task you also tap <strong>Task done</strong>. Losing deals a fresh board for the same alarm.</li>
+<li>Opt in to follow-ups and they escalate at 30 s, 90 s, 3 min and 5 min: &ldquo;Still waiting for your check-off.&rdquo; Swiping a notice away never counts as done.</li>
+<li><strong>Stop alarm</strong> always works. It ends today's alarm as not done; tomorrow's stays set.</li>
+<li>It asks for notification access and, on some Android versions, exact alarms and full-screen alarms. Without them it tells you it is not armed.</li>
 <li>No account, no internet permission, nothing leaves the phone. Force Stop or uninstall switches it off, because Android says so.</li>
 </ul>
-<p><small>Install: open the downloaded file and allow installs from this source when Android asks. This is a development build signed with a debug key, so it cannot update a future release build.</small></p>
+<p><small>Install: open the downloaded file and allow installs from this source when Android asks. Already have 0.1.0? This installs over it and keeps your alarm time; open Set alarm once to pick a sound. This is a development build signed with a debug key, so it cannot update a future release build.</small></p>
 </main>
 </body>
 </html>
