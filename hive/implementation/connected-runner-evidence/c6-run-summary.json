@@ -1,0 +1,314 @@
+{
+ "steps": {
+  "1_submit_goal_discovery": "PASS",
+  "2_contract_plan_gap": "PASS",
+  "3_experiment_runs": "PASS",
+  "4_signed_admission": "PASS",
+  "5_resubmit_original_verified": "PASS",
+  "6_restart_console": "PASS",
+  "7_new_pair_without_discovery": "PASS",
+  "8_retained_capability_exec": "PASS",
+  "9a_stop_set_clear_resubmit": "PASS",
+  "9b_crash_recovery": "PASS",
+  "9c_rollback_one_version_unavailable": "PASS",
+  "9d_revoke_unresolved_no_execution": "PASS",
+  "9e_budget_exhaustion": "PASS"
+ },
+ "all_pass": true,
+ "details": {
+  "inputs": {
+   "pair1": {
+    "source": "D:\\MOM Rig\\social-ops\\skills",
+    "added": [
+     "c6a_dir/c6a_new_b.json",
+     "c6a_new_a.json"
+    ],
+    "removed": [
+     "_common.py",
+     "account-health/health.py"
+    ],
+    "changed": [
+     "caption-burn/SKILL.md",
+     "caption-burn/burn.py"
+    ],
+    "before_rows": 50
+   },
+   "pair2": {
+    "source": "D:\\MOM Rig\\social-ops\\contracts",
+    "added": [
+     "c6b_dir/c6b_new_b.json",
+     "c6b_new_a.json"
+    ],
+    "removed": [
+     "decision-receipt.schema.json",
+     "execution-receipt.schema.json"
+    ],
+    "changed": [
+     "job-card.example.json",
+     "job.schema.json"
+    ],
+    "before_rows": 60
+   },
+   "pair1_before_sha256": "f176de465f47c332968db90634f28b79b75d281f5cead166d21b40a742445d63",
+   "pair1_after_sha256": "b408f33379d5e761a00b3c9f5eaa6c93d3f84c51c2a6d868c8f311a72eb4abf4"
+  },
+  "1_submit_goal_discovery": {
+   "http": 202,
+   "goal_id": "g-dc4d2d8d1228ca73a0c1",
+   "state": "DISCOVERY_QUEUED",
+   "experiment_id": "d-a8123eda9f76ea90b38c"
+  },
+  "2_contract_plan_gap": {
+   "missing_step": {
+    "arity": 2,
+    "in": "canonical_rows",
+    "ordered": true,
+    "out": "inventory_diff"
+   },
+   "partial_plan": [
+    "convert",
+    "convert"
+   ],
+   "gap_ref": "operator/gap/da10bca59e1272bb",
+   "contract_ref": "artifacts/182a1872ebf81e5f0d53351770ae8c194f6cc7b83b371d7d7b54953bf933f115.json"
+  },
+  "3_experiment_runs": {
+   "state": "CANDIDATE_PASSED",
+   "dispatch_mode": {
+    "mode": "shadow",
+    "canary_limit": 1
+   },
+   "wall_s": 33.5,
+   "run_out": {
+    "baselines": {
+     "unchanged_hive": {
+      "pass_count": 0,
+      "n": 24,
+      "basis": "planner returned 0 steps for the gap"
+     },
+     "scripted": {
+      "pass_count": 24,
+      "n": 24,
+      "verdict": "PASS",
+      "receipt_sha256": "984acd4ababa274a9ad370b7c09c42588967e4a52c83c053256cae2338338cb8",
+      "candidate_sha256": "56d2cbe4e4e1884b4ec091d359a76d971ff3ff7dcd44f056fad7d68a2881cda1",
+      "receipt_path": "receipt-scripted_baseline-56d2cbe4e4e1.json",
+      "label": "hand-written"
+     }
+    },
+    "calls": [
+     {
+      "n": 1,
+      "status": "ok",
+      "in_tokens": 1339,
+      "out_tokens": 350,
+      "estimated": false,
+      "has_code": true
+     }
+    ],
+    "exp_id": "d-a8123eda9f76ea90b38c",
+    "feedback": "it passed all dev cases but failed 0 of 24 hidden acceptance cases (details withheld)",
+    "frozen": {
+     "acceptance": {
+      "n": 24,
+      "note": "hash only; cases and answers stay in .hive/c3-private",
+      "set_sha256": "6232b9a9a30fe5c6f6f7277f1886aaaa4222d597cc609d3a869b83ba26c5ec4a"
+     },
+     "admission_criteria": [
+      "static check clean",
+      "perfect on the 6 public dev cases",
+      "independent evaluator PASS on every acceptance case (pass_count == n)",
+      "receipt hashes re-checked against this frozen protocol",
+      "within budget",
+      "registration/execution is NOT part of C3 (admission gate C4)"
+     ],
+     "attempt": 1,
+     "baselines": {
+      "matched_budget_m2_views_search": "not expressible: no M2 view produces inventory_diff (views: identity, parse_whole, split_rows, aggregate, to_json, each); not run",
+      "scripted": {
+       "label": "hand-written, evaluated like a candidate",
+       "path": "evaluator/c3/baseline_script.py",
+       "sha256": "56d2cbe4e4e1884b4ec091d359a76d971ff3ff7dcd44f056fad7d68a2881cda1"
+      },
+      "unchanged_hive": "no capability for the gap: expected 0/n (measured by the planner refusing)"
+     },
+     "behaviour_spec": "Compare a BEFORE and an AFTER inventory. Input env: {\"files\":[{\"format\":\"json\",\"text\":BEFORE},{\"format\":\"json\",\"text\":AFTER}]} where each text is convert's canonical output: a JSON array of {\"id\",\"group\",\"bytes\"} rows, ids unique within a file, row order arbitrary. Output: ONE JSON text {\"added\":[rows only in AFTER],\"removed\":[rows only in BEFORE],\"changed\":[{\"id\",\"before\":{\"group\",\"bytes\"},\"after\":{\"group\",\"bytes\"}} for ids in both whose group or bytes differ],\"unchanged\":<count of ids in both with equal group and bytes>}. Rows are {\"bytes\",\"group\",\"id\"}. Every list is sorted by id (Python string order, code points). Serialise with json.dumps(obj, sort_keys=True, separators=(\",\",\":\")) (ensure_ascii default).",
+     "budget": {
+      "calls": 6,
+      "container_runs": 12,
+      "in_tokens": 36000,
+      "max_tokens_per_call": 2000,
+      "out_tokens": 6000,
+      "proposals": 3,
+      "wall_s": 900
+     },
+     "dev_set_sha256": "3c3d854071707ee7160512929f53549e7d703a29df80460c428f2e5615189008",
+     "evaluator": {
+      "path": "evaluator/c3/evaluate.py",
+      "pin": "32c9371a1819c4840cc03c727f3d8a14b29373b6c55de55e2f9ac8b3057c5f96"
+     },
+     "gap": {
+      "key": "operator/gap/da10bca59e1272bb",
+      "partial_plan": [
+       {
+        "expected_output": "canonical_rows",
+        "inputs": [
+         "input:0"
+        ],
+        "op": "convert",
+        "step_id": "s1"
+       },
+       {
+        "expected_output": "canonical_rows",
+        "inputs": [
+         "input:1"
+        ],
+        "op": "convert",
+        "step_id": "s2"
+       }
+      ],
+      "signature": {
+       "arity": 2,
+       "in": "canonical_rows",
+       "ordered": true,
+       "out": "inventory_diff"
+      }
+     },
+     "io_envelope": {
+      "candidate": "def run(env: dict) -> str",
+      "input": "env {\"files\":[{\"format\":\"json\",\"text\":BEFORE},{\"format\":\"json\",\"text\":AFTER}]} (input:0 = before, input:1 = after)"
+     },
+     "output_canonical_form": "json.dumps(obj, sort_keys=True, separators=(',', ':'))",
+     "proposer": {
+      "approval": "build/c-series/c3_inference_approval.json",
+      "model": "openai/gpt-oss-20b",
+      "sampling": "temperature 0.2, max_tokens 2000, Reasoning: low"
+     },
+     "schema": "hive-c3-frozen-v1"
+    },
+    "frozen_sha": "a8123eda9f76ea90b38ce3d5749d9c599894f4b5579c64c0cdd62b6bbc8959ce",
+    "gap_key": "operator/gap/da10bca59e1272bb",
+    "ledger": {
+     "calls": 1,
+     "container_runs": 3,
+     "estimated_tokens": false,
+     "in_tokens": 1339,
+     "out_tokens": 350,
+     "proposals": 1,
+     "wall_s": 31.07799999997951
+    }
+   },
+   "usage": null,
+   "budget": null,
+   "lms_load_rc": 0
+  },
+  "4_signed_admission": {
+   "admission": {
+    "cap_id": "inventory-diff",
+    "version": 1,
+    "statement_sha": "55029ecb193caee74551f5cad573aac90765c280796bb489870ae5d1b4ed7658",
+    "event_ref": "artifacts/73e0ca34d43bf88dd4d3670668e91125bb176cbe48243170dcbfe2acf20bff3f.json",
+    "rerun_receipt_sha256": "81130ef3e3b3de1e57ed3aca9a94c65cd6a6c645cea3c8f70dd02636928d9340"
+   }
+  },
+  "vram_mib": {
+   "before": 3174,
+   "after_load": 15120,
+   "peak": 15169,
+   "after_unload": 3272
+  },
+  "5_resubmit_original_verified": {
+   "state": "VERIFIED",
+   "plan": [
+    "convert(input:0)",
+    "convert(input:1)",
+    "inventory-diff(step:s1,step:s2)"
+   ],
+   "steps": [
+    [
+     "convert",
+     "retained_capability_reuse",
+     "PASS"
+    ],
+    [
+     "convert",
+     "retained_capability_reuse",
+     "PASS"
+    ],
+    [
+     "inventory-diff",
+     "retained_capability_execution",
+     "PASS"
+    ]
+   ],
+   "download_sha_ok": true,
+   "diff_counts": {
+    "added": 2,
+    "changed": 2,
+    "removed": 2
+   },
+   "usage": {
+    "container_runs": 3,
+    "model_calls": 0,
+    "proposal_calls": 0
+   }
+  },
+  "6_restart_console": {
+   "note": "killed process tree, relaunched on same store"
+  },
+  "7_new_pair_without_discovery": {
+   "state": "VERIFIED",
+   "plan": [
+    "convert(input:0)",
+    "convert(input:1)",
+    "inventory-diff(step:s1,step:s2)"
+   ],
+   "inputs": "D:\\MOM Rig\\social-ops\\contracts"
+  },
+  "8_retained_capability_exec": {
+   "last_step_mode": "retained_capability_execution",
+   "model_calls": 0,
+   "proposal_calls": 0,
+   "experiments_before": 1,
+   "experiments_after": 1,
+   "container_runs_delta": 3,
+   "download_sha_ok": true,
+   "independent_check": "diff ids == known edits (added/removed/changed) and unchanged count"
+  },
+  "9a_stop_set_clear_resubmit": {
+   "stop_state": "STOPPED",
+   "after_clear": "VERIFIED"
+  },
+  "9b_crash_recovery": {
+   "seen_running": "RUNNING",
+   "after_restart": "INTERRUPTED",
+   "resubmit": "VERIFIED"
+  },
+  "9c_rollback_one_version_unavailable": {
+   "exit": 2,
+   "stderr": "{\"ok\": false, \"reason\": \"inventory-diff: no earlier admitted, unrevoked version to roll back to (only: [1])\"}",
+   "stdout": "",
+   "two_version_working_rollback": "tests (C4 two-version fixture); not exercised live"
+  },
+  "9d_revoke_unresolved_no_execution": {
+   "exit": 0,
+   "state": "UNRESOLVED",
+   "plan": [],
+   "container_runs_delta": 0,
+   "excluded": [
+    {
+     "op": "inventory-diff",
+     "reason": "inventory-diff: no eligible version (all admitted versions revoked)"
+    }
+   ]
+  },
+  "9e_budget_exhaustion": {
+   "label": "fresh scratch store, 0-call budget, model loaded",
+   "exp_id": "d-437562e43a6543aef714",
+   "state": "BUDGET_EXHAUSTED",
+   "usage": null,
+   "run_exit": 0
+  },
+  "wall_s_total": 147.2
+ }
+}

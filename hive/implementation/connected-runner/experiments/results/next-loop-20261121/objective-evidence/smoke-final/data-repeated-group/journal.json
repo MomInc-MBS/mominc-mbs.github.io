@@ -1,0 +1,133 @@
+{
+  "store": "smoke-final/data-repeated-group",
+  "original_job_count": 1,
+  "jobs": [
+    {
+      "id": "eb4aeb1f236e472bba27b34bfc3304d4",
+      "spec": {
+        "allow_retry": false,
+        "hypothesis": "Synthetic objective smoke",
+        "learn_feedback": false,
+        "retry_count": 0,
+        "route": "tool",
+        "task": {
+          "allowed_tools": [
+            "summarize_inventory"
+          ],
+          "category": "structured_data",
+          "critical": false,
+          "evaluator": "grouped_inventory_v1",
+          "expected": {
+            "groups": {
+              "other": {
+                "bytes": 2,
+                "count": 1
+              },
+              "same": {
+                "bytes": 11,
+                "count": 2
+              }
+            }
+          },
+          "id": "data-repeated-group",
+          "input": {
+            "allowed_tools": [
+              "summarize_inventory"
+            ],
+            "rows": [
+              {
+                "bytes": 4,
+                "group": "same",
+                "id": "a"
+              },
+              {
+                "bytes": 7,
+                "group": "same",
+                "id": "b"
+              },
+              {
+                "bytes": 2,
+                "group": "other",
+                "id": "c"
+              }
+            ],
+            "tool_schemas": {
+              "summarize_inventory": {
+                "rows": "supplied rows"
+              }
+            }
+          },
+          "permissions": {
+            "routes": [
+              "tool"
+            ],
+            "version": 1
+          },
+          "prompt": "Compute exact inventory count and byte totals by supplied group.",
+          "split": "development",
+          "success_criteria": "Exact independent count and byte totals for every group.",
+          "tool_schemas": {
+            "summarize_inventory": {
+              "rows": "supplied rows"
+            }
+          }
+        }
+      },
+      "state": "BLOCKED",
+      "owner": "worker-48428",
+      "generation": 1,
+      "pid": 48428,
+      "result": {
+        "evidence_ref": "artifacts/34a5a4c0f0325a05cbe6dba755fc9ec6279ce54df7a4ca5bb7b8773c521d430b.json",
+        "failure": null,
+        "passed": true,
+        "report_ref": "artifacts/6c979e33c939a685d7e6e9dbb895c8ad3d0700ce42c53774688c3ba69e484d81.json",
+        "valid": true
+      }
+    }
+  ],
+  "events": [
+    {
+      "seq": 1,
+      "job_id": "eb4aeb1f236e472bba27b34bfc3304d4",
+      "state": "QUEUED",
+      "detail": null
+    },
+    {
+      "seq": 2,
+      "job_id": "eb4aeb1f236e472bba27b34bfc3304d4",
+      "state": "RUNNING",
+      "detail": {
+        "owner": "worker-48428"
+      }
+    },
+    {
+      "seq": 3,
+      "job_id": "eb4aeb1f236e472bba27b34bfc3304d4",
+      "state": "VERIFYING",
+      "detail": null
+    },
+    {
+      "seq": 4,
+      "job_id": "eb4aeb1f236e472bba27b34bfc3304d4",
+      "state": "REVIEWING",
+      "detail": {
+        "evidence_ref": "artifacts/34a5a4c0f0325a05cbe6dba755fc9ec6279ce54df7a4ca5bb7b8773c521d430b.json"
+      }
+    },
+    {
+      "seq": 5,
+      "job_id": "eb4aeb1f236e472bba27b34bfc3304d4",
+      "state": "BLOCKED",
+      "detail": null
+    }
+  ],
+  "mission_config_hash": "17abb5470e515dfd317ad443df1f4d5d87f5cd1cfd3db5c1ca08be80f6741b36",
+  "budget": {
+    "cycles": 1,
+    "requests": 0,
+    "tokens_actual": 0,
+    "tokens_reserved": 0,
+    "wall_s": 0.20400000002700835
+  }
+}

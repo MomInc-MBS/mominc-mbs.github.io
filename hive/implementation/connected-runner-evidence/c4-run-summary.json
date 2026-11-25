@@ -1,0 +1,161 @@
+{
+ "checks": {
+  "10_corrupt_statement_refused": true,
+  "11_revoke_unresolved_no_execution": true,
+  "12_no_new_experiment_opened": true,
+  "13_zero_model_calls_total": true,
+  "14_c3_run_and_evaluator_untouched": true,
+  "1_init_key_outside_repo": true,
+  "2_admit_with_rerun": true,
+  "3_api_plan_has_no_gap": true,
+  "4_api_verified_new_inputs": true,
+  "5_diff_download_sha_matches": true,
+  "6_diff_matches_known_edits": true,
+  "7_zero_model_calls_api": true,
+  "8_cli_verified_new_inputs": true,
+  "9_same_goal_replay_labelled": true
+ },
+ "all_pass": true,
+ "details": {
+  "authority": {
+   "fingerprint": "SHA256:Yk7d2kF/AEKCd7Fi+CZJa0XxBOnkOZ10aX8khS9gkVc",
+   "signers": "D:\\Repos\\hive-ai\\configs\\admission_signers",
+   "key_location": "%USERPROFILE%\\.hive-admission"
+  },
+  "admission": {
+   "cap_id": "inventory-diff",
+   "version": 1,
+   "statement_sha": "5883be35261b9cfecab389f1d4d3dd9939a4e29a871a604a551ffb10691c89e6",
+   "event_ref": "artifacts/7ef7a0e6746d2bb4fe09857bbe2fdfea7b14c4d373b7e6099e92a094e093254c.json",
+   "rerun_receipt_sha256": "b0b92cc3a2ace2a364a4db1f84fc2591be43d3b4d577b64c774cecf5f574da34"
+  },
+  "inputs": {
+   "source": "D:/MOM Rig/mom-station/agents",
+   "edits": {
+    "added": [
+     "c4_extra/c4_new_c.json",
+     "c4_new_b.json",
+     "personas/c4_new_a.json"
+    ],
+    "removed": [
+     "personas/accounts/publisher_account_blogger.json",
+     "personas/accounts/publisher_account_bluesky.json"
+    ],
+    "changed": [
+     "personas/accounts/publisher_account_elitefitness.json",
+     "personas/accounts/publisher_account_facebook.json"
+    ],
+    "before_rows": 61
+   },
+   "before_sha256": "75d7a34e00a7378a0ea6aa2be017e33ce0b431edac688436c5e4984eb0be58ea",
+   "after_sha256": "582699235cbdd395349d8ab98a4c9d6319a17aa31742b9a21c0403041cf83538"
+  },
+  "api_goal": {
+   "state": "VERIFIED",
+   "plan": [
+    "convert(input:0)",
+    "convert(input:1)",
+    "inventory-diff(step:s1,step:s2)"
+   ],
+   "steps": [
+    [
+     "convert",
+     "VERIFIED",
+     "retained_capability_reuse",
+     "PASS",
+     null
+    ],
+    [
+     "convert",
+     "VERIFIED",
+     "retained_capability_reuse",
+     "PASS",
+     null
+    ],
+    [
+     "inventory-diff",
+     "VERIFIED",
+     "retained_capability_execution",
+     "PASS",
+     {
+      "cap_id": "inventory-diff",
+      "statement_sha": "5883be35261b9cfecab389f1d4d3dd9939a4e29a871a604a551ffb10691c89e6",
+      "version": 1
+     }
+    ]
+   ],
+   "download_sha_ok": true,
+   "diff_counts": {
+    "added": 3,
+    "changed": 2,
+    "removed": 2,
+    "unchanged": 57
+   },
+   "usage": {
+    "container_runs": 3,
+    "model_calls": 0,
+    "proposal_calls": 0
+   }
+  },
+  "cli_goal": {
+   "exit": 0,
+   "state": "VERIFIED",
+   "plan": [
+    "convert",
+    "convert",
+    "inventory-diff"
+   ],
+   "usage": {
+    "container_runs": 2,
+    "model_calls": 0,
+    "proposal_calls": 0
+   },
+   "mode": "retained_capability_execution"
+  },
+  "replay": {
+   "state": "VERIFIED",
+   "mode": "saved_result_replay",
+   "step_mode": "saved_result_replay",
+   "container_runs_delta": 0
+  },
+  "corrupt_copy": {
+   "state": "UNRESOLVED",
+   "reason": "no typed plan from the eligible capabilities",
+   "excluded": [
+    {
+     "op": "inventory-diff",
+     "reason": "refused: event 0: statement artifact missing or altered"
+    }
+   ],
+   "container_runs": null
+  },
+  "revoke": {
+   "cap_id": "inventory-diff",
+   "type": "revoke",
+   "event_ref": "artifacts/80d36ef12189ee0020f64f998ea3f0551201ea17cb0e6042c3d5b463851a8110.json",
+   "version": 1,
+   "reason": "c4 demo revoke"
+  },
+  "after_revoke": {
+   "state": "UNRESOLVED",
+   "reason": "no typed plan from the eligible capabilities",
+   "plan": [],
+   "excluded": [
+    {
+     "op": "inventory-diff",
+     "reason": "inventory-diff: no eligible version (all admitted versions revoked)"
+    }
+   ],
+   "experiments_before": 1,
+   "experiments_after": 1
+  },
+  "counters_final": {
+   "container_runs": 5,
+   "executions": 5,
+   "model_calls": 0,
+   "proposal_calls": 0,
+   "refusals": 0,
+   "replays": 4
+  }
+ }
+}

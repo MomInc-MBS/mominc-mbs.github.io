@@ -1,0 +1,19 @@
+{
+  "status": "BLOCKED",
+  "required": [
+    "unused source groups",
+    "sealed evaluator",
+    "source/config/model/verifier/policy hashes",
+    "approved aggregate budget ID",
+    "permissions",
+    "verified isolation",
+    "reviewer",
+    "rollback SHA",
+    "practical margin",
+    "adverse event rules",
+    "analysis plan",
+    "24 matched holdouts for Level B",
+    "chronological waves"
+  ],
+  "research_status": "UNTESTED"
+}

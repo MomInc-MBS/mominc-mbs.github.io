@@ -1,0 +1,12 @@
+{
+ "schema": "hive-model-dispatch-v1",
+ "classes": {"c3-proposal": {"mode": "shadow", "canary_limit": 1}},
+ "qualified": {
+  "openai/gpt-oss-20b": {
+   "measured": true,
+   "context": 32768,
+   "evidence": ["M2 report: build/m2 (gpt-oss-20b measured on the M2 evaluator)", "C3 run receipts: build/c-series/c3-run/summary.json, experiment-record.json"]
+  }
+ },
+ "fallback": "P0"
+}

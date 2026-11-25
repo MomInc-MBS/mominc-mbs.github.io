@@ -1,0 +1,54 @@
+{
+  "date": "2026-11-22T00:27:02.445624+00:00",
+  "status": "passed",
+  "latest_runtime_source_sha256": "6ee9ae14b32ec6c9972bba693bb45395af5998516c4bc9de19dd5bbb5f550c99",
+  "measured_runtime_source_sha256": "c73866989d9c03253af8eb199b0c93509adbc50b92bcab7e0a29fde15db0d9d2",
+  "measured_source_commit": "28239aba838fa7f6b2d04719ec75d629d1b14308",
+  "tests": {
+    "passed": 252,
+    "skipped": 2,
+    "cli_journeys_passed": 4
+  },
+  "source_change_refusal": {
+    "exit_code": 2,
+    "message": "{\"error\": \"ValueError: Frozen integration identity changed; no spending or budget reset permitted\"}\n"
+  },
+  "frozen_source_replay": {
+    "replayed": true,
+    "additional_model_calls": 0
+  },
+  "offline_artifact_replay": {
+    "status": "passed",
+    "verified_jobs": 11,
+    "verified_artifacts": 43,
+    "candidate_reconstructed": true,
+    "candidate_decision": "REJECTED",
+    "new_model_calls": 0,
+    "historical_runtime_source_sha256": "c73866989d9c03253af8eb199b0c93509adbc50b92bcab7e0a29fde15db0d9d2",
+    "replayer_runtime_source_sha256": "6ee9ae14b32ec6c9972bba693bb45395af5998516c4bc9de19dd5bbb5f550c99",
+    "scope": "offline artifact consistency and verifier replay; no fresh inference or private store"
+  },
+  "budget_before": {
+    "cycles": 11,
+    "requests": 6,
+    "tokens_actual": 147,
+    "tokens_reserved": 768,
+    "wall_s": 18.57799999997951
+  },
+  "budget_after": {
+    "cycles": 11,
+    "requests": 6,
+    "tokens_actual": 147,
+    "tokens_reserved": 768,
+    "wall_s": 18.57799999997951
+  },
+  "new_real_model_calls": 0,
+  "receipts": {
+    "experiments/results/integration-smoke/20261121-start/integration-tests-final.xml": "2448c2fc896fddbedc40b81a4d7754a588292d0f20e61273dd0b2edb913980e6",
+    "experiments/results/integration-cli-e2e-final/report.json": "105d79348b96dbf9288532623364beecce1ab58651f79bb0bec7960b3f7861b8",
+    "docs/reviews/integration-sol-final-20261121.md": "79c7f697313d847280cfdef51765af112f9c5b331ea2d9396d28c96a240daffa",
+    "experiments/results/integration-smoke/20261121-run/report.json": "96547679b27fca4bc2d5fcde57c863e9172d7330104f91338daf71653c6442d9",
+    "experiments/results/adaptation-demo/20261121-terra/verification.json": "8e2f41520d8d5626cdf76fca65463fd8deface1d398138aacfb2bb98a753719e",
+    "experiments/results/adaptation-demo/20261121-complete-receipts/verification.json": "fe9733213b8a2ef13dbab92a15445a3387e33aed60bbca21a13c51b7c4832a68"
+  }
+}

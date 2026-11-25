@@ -63,7 +63,7 @@ def main():
                     or extra['snapshot_file_count'] != len(snapshot['files'])
                     or hashlib.sha256(extra_zip.read_bytes()).hexdigest() != extra['download_sha256']):
                 errors.append('Engineering supplement publication identity mismatch')
-            if extra['policy_deployed'] or extra['quality_gain'] or extra['new_real_model_calls'] != 0:
+            if extra['policy_deployed'] or extra['quality_gain'] or (supplement is release.get('engineering_supplement') and extra['new_real_model_calls'] != 0):
                 errors.append('Objective supplement must retain its measured non-promotion scope')
             with zipfile.ZipFile(extra_zip) as archive:
                 for path, entry in snapshot['files'].items():

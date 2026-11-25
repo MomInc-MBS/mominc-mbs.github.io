@@ -1,0 +1,24 @@
+{
+ "schema": "hive-capability-types-v1",
+ "note": "Type signatures for typed planning. Not a pin and not policy: eligibility still comes from operator_policy.json via resolve().",
+ "max_steps": 6,
+ "default_budget": {"max_steps": 6, "container_runs": 6, "wall_s": 600},
+ "types": {
+  "folder": {"description": "A directory under the allowed root (snapshotted by an adapter before use).", "subtype_of": null},
+  "inventory_file": {"description": ".csv/.json file with columns id,group,bytes (the operator CONTRACT).", "subtype_of": null},
+  "canonical_rows": {"description": "JSON array of {id,group,bytes} rows sorted by key (convert output).", "subtype_of": "inventory_file"},
+  "group_summary": {"description": "Per-group count and bytes over accepted inventory files, plus the quarantine list (merged.json).", "subtype_of": null},
+  "inventory_diff": {"description": "Rows added, removed and changed between two inventories. No registered capability produces it (the C3 gap).", "subtype_of": null,
+   "behaviour_spec": "Compare a BEFORE and an AFTER inventory. Input env: {\"files\":[{\"format\":\"json\",\"text\":BEFORE},{\"format\":\"json\",\"text\":AFTER}]} where each text is convert's canonical output: a JSON array of {\"id\",\"group\",\"bytes\"} rows, ids unique within a file, row order arbitrary. Output: ONE JSON text {\"added\":[rows only in AFTER],\"removed\":[rows only in BEFORE],\"changed\":[{\"id\",\"before\":{\"group\",\"bytes\"},\"after\":{\"group\",\"bytes\"}} for ids in both whose group or bytes differ],\"unchanged\":<count of ids in both with equal group and bytes>}. Rows are {\"bytes\",\"group\",\"id\"}. Every list is sorted by id (Python string order, code points). Serialise with json.dumps(obj, sort_keys=True, separators=(\",\",\":\")) (ensure_ascii default)."}
+ },
+ "deliverables": ["canonical_rows", "group_summary", "inventory_diff"],
+ "capabilities": {
+  "convert": {"kind": "registry", "in": "inventory_file", "arity": [1, 1], "out": "canonical_rows",
+              "verifier": "evaluator/m2/oracle.py (independent oracle, separate process)"},
+  "merge": {"kind": "registry", "in": "inventory_file", "arity": [2, 20], "out": "group_summary",
+            "verifier": "evaluator/m2/oracle.py (independent oracle, separate process)"},
+  "snapshot": {"kind": "builtin_adapter", "adapter": "inventory-snapshot-v1", "in": "folder", "arity": [1, 1], "out": "inventory_file",
+               "label": "engineering adapter (operator_runtime.snapshot_dir), not a learned capability",
+               "verifier": "type check: intake_check + structured_verifier.parse_source in INVENTORY_SCHEMA"}
+ }
+}

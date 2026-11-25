@@ -1,0 +1,324 @@
+{
+  "schemaVersion": "report-1",
+  "run": {
+    "id": "01a201e5-cdc7-7c86-be1f-17e81d1662f3",
+    "specVersion": "0.1",
+    "runner": {
+      "name": "e2e",
+      "version": "0.21.1"
+    },
+    "status": "passed",
+    "exitCode": 0,
+    "startedAt": "2026-11-22T06:16:07.681Z",
+    "finishedAt": "2026-11-22T06:19:36.704Z",
+    "project": {
+      "id": "hive-local",
+      "configDigest": "48d3cf02481507b7d460880e730c2f9a3c298110ec437aeb1d15605bad2d093a"
+    },
+    "environment": {
+      "ci": false,
+      "trustNoticeShown": false,
+      "os": "win32 10.0.26200",
+      "arch": "x64",
+      "runtime": "node v24.19.0"
+    },
+    "vcs": {
+      "commit": "f3d7e556ea41076e1138761d72df06b5ce3e0f65",
+      "branch": "build/working-prototype",
+      "dirty": true
+    },
+    "targets": [
+      {
+        "id": "cli",
+        "index": 0,
+        "platform": "tools",
+        "environment": "test",
+        "engine": {
+          "name": "none",
+          "version": "unversioned",
+          "spiVersion": 1
+        },
+        "capabilities": [],
+        "artifactCapabilities": [],
+        "stateCapability": false
+      }
+    ],
+    "serialGroups": [],
+    "results": [
+      {
+        "id": "7411f548b1290086181bccd7b7a06a6dc4ebefbe27db10dca010f3ce96c4b39a",
+        "testId": "tests/e2e/adaptive.e2e.ts::adaptive%20CLI%20resumes%20after%20STOP%20and%20retains%20completed%20evidence%20without%20new%20work%20%28synthetic%29",
+        "kind": "test",
+        "declarationIndex": 0,
+        "titlePath": [
+          "adaptive CLI resumes after STOP and retains completed evidence without new work (synthetic)"
+        ],
+        "file": "tests/e2e/adaptive.e2e.ts",
+        "source": {
+          "file": "tests/e2e/adaptive.e2e.ts",
+          "line": 29,
+          "column": 1
+        },
+        "targetId": "cli",
+        "platform": "tools",
+        "agent": "default",
+        "repeat": 0,
+        "tags": [],
+        "selected": true,
+        "status": "passed",
+        "attempts": [
+          {
+            "id": "01a201e5-cffb-7377-b02c-71370ae2005b",
+            "index": 0,
+            "status": "passed",
+            "startedAt": "2026-11-22T06:16:07.931Z",
+            "durationMs": 19179,
+            "artifacts": [],
+            "secondaryErrors": [],
+            "cleanup": "complete",
+            "steps": []
+          }
+        ]
+      },
+      {
+        "id": "4c90e4b0262f56e1d8bb470f710a86204826db27cae42b8fdf373af7eb643f4b",
+        "testId": "tests/e2e/cli.e2e.ts::CLI%20queues%2C%20stops%2C%20resumes%2C%20verifies%20and%20restores%20a%20task",
+        "kind": "test",
+        "declarationIndex": 0,
+        "titlePath": [
+          "CLI queues, stops, resumes, verifies and restores a task"
+        ],
+        "file": "tests/e2e/cli.e2e.ts",
+        "source": {
+          "file": "tests/e2e/cli.e2e.ts",
+          "line": 13,
+          "column": 1
+        },
+        "targetId": "cli",
+        "platform": "tools",
+        "agent": "default",
+        "repeat": 0,
+        "tags": [],
+        "selected": true,
+        "status": "passed",
+        "attempts": [
+          {
+            "id": "01a201e6-1af2-76a3-8da4-20e1ff59cc40",
+            "index": 0,
+            "status": "passed",
+            "startedAt": "2026-11-22T06:16:27.122Z",
+            "durationMs": 2195,
+            "artifacts": [],
+            "secondaryErrors": [],
+            "cleanup": "complete",
+            "steps": []
+          }
+        ]
+      },
+      {
+        "id": "0e3ddd369f3707b0548ed9e3cd13cc7cd803c1d8d152a088b3758f7b9ec79ead",
+        "testId": "tests/e2e/integration.e2e.ts::integrated%20tool%20CLI%20preserves%20candidate%20rejection%2C%20STOP%2C%20restart%20and%20experimental%20rollback",
+        "kind": "test",
+        "declarationIndex": 0,
+        "titlePath": [
+          "integrated tool CLI preserves candidate rejection, STOP, restart and experimental rollback"
+        ],
+        "file": "tests/e2e/integration.e2e.ts",
+        "source": {
+          "file": "tests/e2e/integration.e2e.ts",
+          "line": 14,
+          "column": 1
+        },
+        "targetId": "cli",
+        "platform": "tools",
+        "agent": "default",
+        "repeat": 0,
+        "tags": [],
+        "selected": true,
+        "status": "passed",
+        "attempts": [
+          {
+            "id": "01a201e6-238b-74aa-bd24-a5aacfe31339",
+            "index": 0,
+            "status": "passed",
+            "startedAt": "2026-11-22T06:16:29.323Z",
+            "durationMs": 5053,
+            "artifacts": [],
+            "secondaryErrors": [],
+            "cleanup": "complete",
+            "steps": []
+          }
+        ]
+      },
+      {
+        "id": "51f89edf140ec0a3eb052d6fa6b655b9682f7e35b68445ae2999c741336ad2f8",
+        "testId": "tests/e2e/mission.e2e.ts::public%20mission%20CLI%20runs%20real%20isolated%20code%20and%20video%20in%20one%20DAG%20then%20replays",
+        "kind": "test",
+        "declarationIndex": 0,
+        "titlePath": [
+          "public mission CLI runs real isolated code and video in one DAG then replays"
+        ],
+        "file": "tests/e2e/mission.e2e.ts",
+        "source": {
+          "file": "tests/e2e/mission.e2e.ts",
+          "line": 7,
+          "column": 1
+        },
+        "targetId": "cli",
+        "platform": "tools",
+        "agent": "default",
+        "repeat": 0,
+        "tags": [],
+        "selected": true,
+        "status": "passed",
+        "attempts": [
+          {
+            "id": "01a201e6-374b-752a-bd30-7da8c9372454",
+            "index": 0,
+            "status": "passed",
+            "startedAt": "2026-11-22T06:16:34.379Z",
+            "durationMs": 16709,
+            "artifacts": [],
+            "secondaryErrors": [],
+            "cleanup": "complete",
+            "steps": []
+          }
+        ]
+      },
+      {
+        "id": "bc1eeeb4811e5d36d7bcea40ff0e9e519824d17b658bff505e998a4c9e522bab",
+        "testId": "tests/e2e/pressure.e2e.ts::all%20eleven%20pressure%20commands%20run%2C%20restart%2C%20compare%20and%20keep%20research%20untested",
+        "kind": "test",
+        "declarationIndex": 0,
+        "titlePath": [
+          "all eleven pressure commands run, restart, compare and keep research untested"
+        ],
+        "file": "tests/e2e/pressure.e2e.ts",
+        "source": {
+          "file": "tests/e2e/pressure.e2e.ts",
+          "line": 15,
+          "column": 1
+        },
+        "targetId": "cli",
+        "platform": "tools",
+        "agent": "default",
+        "repeat": 0,
+        "tags": [],
+        "selected": true,
+        "status": "passed",
+        "attempts": [
+          {
+            "id": "01a201e6-7894-7b51-85fb-6c401afb51d2",
+            "index": 0,
+            "status": "passed",
+            "startedAt": "2026-11-22T06:16:51.092Z",
+            "durationMs": 162950,
+            "artifacts": [],
+            "secondaryErrors": [],
+            "cleanup": "complete",
+            "steps": []
+          }
+        ]
+      },
+      {
+        "id": "128f86cd53488e4964f034d8e72470e869eb0d531bf919424fdf076aa7c64470",
+        "testId": "tests/e2e/pressure.e2e.ts::doctor%20distinguishes%20caps%20from%20authorization%20and%20real%20pressure%20requires%20approval",
+        "kind": "test",
+        "declarationIndex": 1,
+        "titlePath": [
+          "doctor distinguishes caps from authorization and real pressure requires approval"
+        ],
+        "file": "tests/e2e/pressure.e2e.ts",
+        "source": {
+          "file": "tests/e2e/pressure.e2e.ts",
+          "line": 37,
+          "column": 1
+        },
+        "targetId": "cli",
+        "platform": "tools",
+        "agent": "default",
+        "repeat": 0,
+        "tags": [],
+        "selected": true,
+        "status": "passed",
+        "attempts": [
+          {
+            "id": "01a201e8-f51b-7e3e-9cb0-e377e2d47aba",
+            "index": 0,
+            "status": "passed",
+            "startedAt": "2026-11-22T06:19:34.043Z",
+            "durationMs": 573,
+            "artifacts": [],
+            "secondaryErrors": [],
+            "cleanup": "complete",
+            "steps": []
+          }
+        ]
+      },
+      {
+        "id": "ec779bf4fe602f105135d90334cd760396d7d45b1233a6f2dcc1aeb89c317de7",
+        "testId": "tests/e2e/video.e2e.ts::synthetic%20video%20mission%20replays%20in%20a%20fresh%20process%20without%20duplicate%20output",
+        "kind": "test",
+        "declarationIndex": 0,
+        "titlePath": [
+          "synthetic video mission replays in a fresh process without duplicate output"
+        ],
+        "file": "tests/e2e/video.e2e.ts",
+        "source": {
+          "file": "tests/e2e/video.e2e.ts",
+          "line": 10,
+          "column": 1
+        },
+        "targetId": "cli",
+        "platform": "tools",
+        "agent": "default",
+        "repeat": 0,
+        "tags": [],
+        "selected": true,
+        "status": "passed",
+        "attempts": [
+          {
+            "id": "01a201e8-f75c-7849-8696-c1604c970cb0",
+            "index": 0,
+            "status": "passed",
+            "startedAt": "2026-11-22T06:19:34.620Z",
+            "durationMs": 2072,
+            "artifacts": [],
+            "secondaryErrors": [],
+            "cleanup": "complete",
+            "steps": []
+          }
+        ]
+      }
+    ],
+    "errors": [],
+    "summary": {
+      "discovered": 7,
+      "selected": 7,
+      "executed": 7,
+      "passed": 7,
+      "failed": 0,
+      "flaky": 0,
+      "skipped": 0
+    },
+    "limits": {
+      "maxAgentContextBytes": 16384,
+      "maxLedgerBytes": 8192,
+      "maxObservationBytes": 262144,
+      "maxEventsPerStep": 1000,
+      "maxModelTokensPerCall": 64000
+    },
+    "usage": {
+      "discoveredResults": 7,
+      "maxAgentContextBytes": 0,
+      "maxLedgerBytes": 0,
+      "maxObservationBytes": 0,
+      "artifactBytes": 0,
+      "downloads": 0,
+      "events": 0,
+      "modelTokens": 0,
+      "maxModelCallsInStep": 0,
+      "maxActionStepsInStep": 0
+    }
+  }
+}

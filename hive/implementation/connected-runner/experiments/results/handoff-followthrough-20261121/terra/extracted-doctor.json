@@ -1,0 +1,72 @@
+﻿{
+  "runtime": {
+    "available": null,
+    "models": [],
+    "error": "offline: no endpoint request"
+  },
+  "running_runtime": {
+    "available": null,
+    "models": [],
+    "error": "offline: no endpoint request"
+  },
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "build": {
+    "version": "0.3.0.dev5",
+    "commit": "unversioned",
+    "source_sha256": "2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c"
+  },
+  "config_hash": "928145c3151de1356b033764aa476a879803de291b9d13c17e7bf5a08082cc7a",
+  "verifier_hashes": {
+    "verifier.py": "1ee3853546b98d31337be7aeb5d5d0af5bb565ad34ca1ee361a84965f0886bce",
+    "code_verifier.py": "9865b125bf1927208f8d22478a9be2e4f2eb63664988240636b47e2f435aeb82",
+    "pressure_verifier.py": "0406d15005109e912caf6642955370f611e1ae2d14e7d9a0a718c17ce42c539c"
+  },
+  "budgets": {
+    "endpoint": "http://127.0.0.1:11434",
+    "model": "myr5-hold-local:latest",
+    "timeout_s": 120,
+    "max_tokens": 128,
+    "seed": 42,
+    "max_requests": 120,
+    "max_total_tokens": 15360,
+    "max_wall_s": 2700,
+    "max_storage_bytes": 268435456,
+    "max_cycles": 240,
+    "max_retries": 2,
+    "concurrency": 1,
+    "routes": [
+      "local_direct",
+      "local_tool"
+    ],
+    "allow_fixtures": false
+  },
+  "budget_is_authorization": false,
+  "permissions": "task manifest required; candidate output cannot grant actions",
+  "accounting": {
+    "present": false,
+    "budget": null,
+    "authorization": "not established"
+  },
+  "tools": {
+    "ffmpeg": {
+      "installed": true
+    },
+    "ffprobe": {
+      "installed": true
+    },
+    "docker": {
+      "installed": true
+    },
+    "podman": {
+      "installed": false
+    }
+  },
+  "sandbox": {
+    "status": "PRESENT_UNVERIFIED",
+    "enforcement_verified": false
+  },
+  "new_model_calls": 0,
+  "offline": true,
+  "cpu_gpu_usage": "unknown"
+}

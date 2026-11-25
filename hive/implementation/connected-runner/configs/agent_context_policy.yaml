@@ -1,0 +1,89 @@
+policy_version: 1
+mode: enforce
+
+context:
+  target_fill_ratio: 0.50
+  checkpoint_trigger_ratio: 0.65
+  hard_dispatch_ratio: 0.80
+  preserve_output_and_tool_reserve: true
+  max_uncompressed_tool_result_tokens: 2000
+  retrieval_top_k: 6
+  max_task_packet_tokens: 6000
+  min_relevance_threshold: 0.30
+  protect_system_policy_from_compaction: true
+  max_nested_dispatch_depth: 3
+
+budget:
+  default_task_usd: 1.00
+  default_run_usd: 10.00
+  default_daily_usd: 25.00
+  verification_reserve_ratio: 0.20
+  retry_limit_per_failure: 2
+  require_approval_for_budget_increase: true
+  count_cached_read_usd: true
+  count_tool_and_external_costs: true
+  cumulative_across_nested_agents: true
+  emergency_stop_on_exhaustion: true
+  dry_run: false
+
+memory:
+  verified_writes_only: true
+  append_only_audit: true
+  keep_raw_evidence_by_reference: true
+  require_provenance: true
+  ttl_for_unverified_scratch_seconds: 86400
+  checkpoint_format_version: 1
+
+routing:
+  prefer_lower_cost_qualified_agent: true
+  require_reason_for_frontier_escalation: true
+  allow_local_models_when_verified_available: true
+  require_reason_for_non_local_model: true
+
+telemetry:
+  redact_secrets_and_personal_data: true
+  provider_usage_is_authoritative_when_available: true
+  flag_estimated_usage: true
+  cost_per_verified_improvement: true
+
+models:
+  ollama-myr5-hold-local:
+    provider: ollama
+    endpoint: http://127.0.0.1:11434
+    context_window_tokens: 8192
+    output_reserve_tokens: 512
+    input_price_per_1k_tokens: 0.000
+    output_price_per_1k_tokens: 0.000
+    cached_input_price_per_1k_tokens: 0.000
+    rate_limit_requests_per_minute: 60
+    default_available: true
+    verified: true
+
+  local-tool:
+    provider: deterministic
+    context_window_tokens: 0
+    output_reserve_tokens: 0
+    input_price_per_1k_tokens: 0.000
+    output_price_per_1k_tokens: 0.000
+    rate_limit_requests_per_minute: 1000
+    default_available: true
+    verified: true
+
+feature_flags:
+  context_governance_enabled: true
+  preflight_gate_required: true
+  selective_context_required: true
+  verified_memory_required: true
+  ci_enforcement_enabled: true
+
+pricing:
+  ollama-myr5-hold-local:
+    fresh_input: 0.0
+    cached_read: 0.0
+    cache_write: 0.0
+    output: 0.0
+  local-tool:
+    fresh_input: 0.0
+    cached_read: 0.0
+    cache_write: 0.0
+    output: 0.0

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="e2e" tests="4" failures="0" errors="0" skipped="0" time="17.733">
+  <testsuite name="tests/e2e/adaptive.e2e.ts" tests="1" failures="0" errors="0" skipped="0" time="7.656">
+    <testcase name="adaptive CLI resumes after STOP and retains completed evidence without new work (synthetic) [cli]" classname="tests/e2e/adaptive.e2e.ts" time="7.656"/>
+  </testsuite>
+  <testsuite name="tests/e2e/cli.e2e.ts" tests="1" failures="0" errors="0" skipped="0" time="1.483">
+    <testcase name="CLI queues, stops, resumes, verifies and restores a task [cli]" classname="tests/e2e/cli.e2e.ts" time="1.483"/>
+  </testsuite>
+  <testsuite name="tests/e2e/integration.e2e.ts" tests="1" failures="0" errors="0" skipped="0" time="2.489">
+    <testcase name="integrated tool CLI preserves candidate rejection, STOP, restart and experimental rollback [cli]" classname="tests/e2e/integration.e2e.ts" time="2.489"/>
+  </testsuite>
+  <testsuite name="tests/e2e/video.e2e.ts" tests="1" failures="0" errors="0" skipped="0" time="6.105">
+    <testcase name="synthetic video mission replays in a fresh process without duplicate output [cli]" classname="tests/e2e/video.e2e.ts" time="6.105"/>
+  </testsuite>
+</testsuites>

@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "test_id": "H03",
+  "mode": "real",
+  "protocol": "paired-development-v1",
+  "campaign_manifest_path": "REQUIRED absolute path to independently approved development campaign JSON",
+  "config_path": "REQUIRED absolute path to finite paired config JSON",
+  "approval_path": "REQUIRED operator-owned allocation JSON",
+  "hashes": {
+    "source_sha256": "REQUIRED current exact source digest",
+    "campaign_sha256": "REQUIRED file bytes digest",
+    "config_sha256": "REQUIRED file bytes digest",
+    "verifier_sha256": "REQUIRED verifier.py bytes digest"
+  },
+  "budget_id": "REQUIRED fresh explicit aggregate allocation",
+  "budget": {
+    "max_requests": 8,
+    "max_total_tokens": 1024,
+    "max_cycles": 12,
+    "max_wall_s": 360,
+    "max_storage_bytes": 134217728
+  },
+  "reviewer": "REQUIRED independent reviewer",
+  "rollback_sha": "REQUIRED frozen parent snapshot",
+  "analysis_plan": "Development mechanism only. Separately preregister sealed research; this cannot claim Hxx hypothesis success.",
+  "permissions": {
+    "routes": [
+      "tool",
+      "local_direct"
+    ]
+  },
+  "model_digest": "REQUIRED exact discovered model digest"
+}

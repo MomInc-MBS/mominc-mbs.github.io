@@ -1,0 +1,18 @@
+{
+  "endpoint": "http://127.0.0.1:11434",
+  "model": "myr5-hold-local:latest",
+  "timeout_s": 120,
+  "max_tokens": 0,
+  "seed": 42,
+  "max_requests": 0,
+  "max_total_tokens": 0,
+  "max_wall_s": 60,
+  "max_storage_bytes": 16777216,
+  "max_cycles": 1,
+  "max_retries": 0,
+  "concurrency": 1,
+  "routes": [
+    "tool"
+  ],
+  "allow_fixtures": false
+}

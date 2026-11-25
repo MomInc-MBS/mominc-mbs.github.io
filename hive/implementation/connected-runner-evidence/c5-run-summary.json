@@ -1,0 +1,96 @@
+{
+ "gate": "C5",
+ "mode": "active",
+ "class": "c3-proposal",
+ "real_calls_total": 2,
+ "note_extra_call": "First failure attempt listed the model in /v1/models (LM Studio lists unloaded models) so a 2nd real call ran and JIT-loaded the model (loaded ctx 8192). Fixed: readiness now also checks /api/v0 state; the rerun made zero calls.",
+ "frozen_budget_lowered": {
+  "calls": 2,
+  "container_runs": 4,
+  "in_tokens": 36000,
+  "max_tokens_per_call": 2000,
+  "out_tokens": 6000,
+  "proposals": 1,
+  "wall_s": 900
+ },
+ "success_run": {
+  "exp_id": "d-b2769ad497fdfd734980",
+  "state": "CANDIDATE_PASSED",
+  "ledger": {
+   "calls": 1,
+   "container_runs": 3,
+   "estimated_tokens": false,
+   "in_tokens": 1339,
+   "out_tokens": 350,
+   "proposals": 1,
+   "wall_s": 228.56200000015087
+  },
+  "dispatches": [
+   {
+    "ts": "2026-11-25T08:08:13Z",
+    "cost_usd": 0.0,
+    "class": "c3-proposal",
+    "requested_model": "local/unmeasured-model",
+    "routed_model": "openai/gpt-oss-20b",
+    "executed_model": "openai/gpt-oss-20b",
+    "mode": "active",
+    "reason_codes": [
+     "REQUESTED_UNQUALIFIED"
+    ],
+    "switch_executed": true,
+    "call_id": "d-b2769ad497fdfd734980:1",
+    "reported_model": "openai/gpt-oss-20b",
+    "latency_s": 9.861,
+    "tokens_in": 1339,
+    "tokens_out": 350,
+    "error": null,
+    "called": true
+   }
+  ],
+  "wall_s": 229.4
+ },
+ "success_vram_mib": {
+  "before_load": 7776,
+  "after_load": 15197,
+  "after_unload": 3110
+ },
+ "failure_run": {
+  "exp_id": "d-9e41eac5b64bc7e28b88",
+  "state": "MODEL_UNAVAILABLE",
+  "reason": "fallback P0: MODEL_NOT_LOADED: Invalidated: openai/gpt-oss-20b is listed but not loaded",
+  "ledger": {
+   "calls": 0,
+   "container_runs": 1,
+   "estimated_tokens": false,
+   "in_tokens": 0,
+   "out_tokens": 0,
+   "proposals": 0,
+   "wall_s": 16.485000000102445
+  },
+  "dispatches": [
+   {
+    "ts": "2026-11-25T08:09:46Z",
+    "cost_usd": 0.0,
+    "class": "c3-proposal",
+    "requested_model": "local/unmeasured-model",
+    "routed_model": "openai/gpt-oss-20b",
+    "executed_model": "openai/gpt-oss-20b",
+    "mode": "active",
+    "reason_codes": [
+     "REQUESTED_UNQUALIFIED"
+    ],
+    "switch_executed": true,
+    "call_id": "d-9e41eac5b64bc7e28b88:1",
+    "reported_model": null,
+    "latency_s": null,
+    "tokens_in": null,
+    "tokens_out": null,
+    "error": "MODEL_NOT_LOADED: Invalidated: openai/gpt-oss-20b is listed but not loaded",
+    "called": false
+   }
+  ]
+ },
+ "failure_how": "model unloaded (lms unload --all); endpoint lists it, /api/v0 says not-loaded -> fallback P0, 0 calls, container_runs 1 = scripted baseline only, nothing promoted",
+ "final": "lms unload --all done; no models loaded; VRAM 3201 MiB",
+ "stores": "D:/tmp/c5-run/{ok,fail}/store"
+}

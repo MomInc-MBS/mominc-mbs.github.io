@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "authorization_ref": "Ian's HIVE New Build Path attachment and confirmation to retain objective-only acceptance; standing AGENTS.md engineering publication; zero new inference authority",
+  "items": [
+    {"id":"reconcile","owner":"Astra","authorized":true,"hypothesis":"Published dev4 and dev5 source, ZIP and runtime identities reconcile with zero unexplained differences.","next_command":"python experiments/results/handoff-followthrough-20261121/reconcile_release.py","depends_on":[]},
+    {"id":"p2-safety","owner":"Luna/Sol","authorized":true,"hypothesis":"An opt-in exact-tool-or-abstain rule prevents model substitution while feedback remains partitioned and quarantined.","next_command":"python scripts/p2_abstention_comparison.py --help","depends_on":["reconcile"]},
+    {"id":"independent-checks","owner":"Terra/Grok","authorized":true,"hypothesis":"Independent probes, clean-package regressions and replay identify false acceptance, receipt rebinding and rollback failures.","next_command":"python -m pytest -q","depends_on":["p2-safety"]},
+    {"id":"matched-output","owner":"Astra","authorized":true,"hypothesis":"The candidate matches the strongest exact tool on the same six public development inputs; a tie cannot pass the quality-gain gate.","next_command":"python scripts/p2_tool_comparison.py --policy-version 4 --help","depends_on":["independent-checks"]},
+    {"id":"objective-smoke","owner":"Terra","authorized":true,"hypothesis":"Six synthetic Docker Python tasks and six structured-data tasks retain exact verification and unchanged-budget fresh-process replay.","next_command":"python scripts/objective_smoke.py --work .hive/handoff-objective-smoke","depends_on":["matched-output"]},
+    {"id":"acceptance-intake","owner":"Astra","authorized":true,"hypothesis":"Genuine acceptance remains blocked until six approved unused structured-data groups and six independent Python snapshots have protected evaluators and source-specific caps.","next_command":"Review docs/LEVEL_A_ACCEPTANCE.md and experiments/plans/readiness-level-a.json; no source acquisition or execution is authorized by this queue.","depends_on":["reconcile"]},
+    {"id":"learning-study","owner":"Sol/Terra","authorized":true,"hypothesis":"A separate at-least-24-task two-wave source-disjoint study needs frozen criteria and explicit approval before any exposure.","next_command":"Review docs/LEVEL_B_LEARNING_STUDY.md; do not execute study tasks.","depends_on":["reconcile"]},
+    {"id":"publish-evidence","owner":"Astra","authorized":true,"hypothesis":"The current HIVE main branch can publish a checksum-verified engineering supplement while preserving frozen dev4/dev5 and all failures.","next_command":"python tools/check_hive.py","depends_on":["objective-smoke"]}
+  ]
+}

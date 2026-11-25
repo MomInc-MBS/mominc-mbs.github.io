@@ -1,0 +1,146 @@
+{
+  "reviewer": "Terra/gpt-6.1-terra",
+  "build": {
+    "version": "0.3.0.dev3",
+    "commit": "28239aba838fa7f6b2d04719ec75d629d1b14308",
+    "source_sha256": "c73866989d9c03253af8eb199b0c93509adbc50b92bcab7e0a29fde15db0d9d2"
+  },
+  "budget": {
+    "cycles": 11,
+    "requests": 6,
+    "tokens_actual": 147,
+    "tokens_reserved": 768,
+    "wall_s": 18.57799999997951
+  },
+  "jobs": [
+    {
+      "job": "41a32267c97441c4ac7ab1ff4fedf443",
+      "task": "inventory-train",
+      "stage": "integration/training",
+      "route": "tool",
+      "pass": true,
+      "evidence": "artifacts/98a1f62c0ba2c462da475f0d229ec4fccef9b31d992635d70bfc038e0ab4c61d.json",
+      "input_hash": "6bee2d98b2d9d89ba52c3076d52b7feda2b1c632ec36deb422f5b2ff85c89a4e",
+      "output_hash": "d14077ad8153e718f3fa36dec2a1eb8bbaa8abea08922bfbbaad7331665f74f1",
+      "tokens": 0
+    },
+    {
+      "job": "d83191e078d64ce38ee5383403adc975",
+      "task": "directive-train",
+      "stage": "integration/training",
+      "route": "local_direct",
+      "pass": true,
+      "evidence": "artifacts/d63600b67a50395764ec24139c945cc4635bb03dee11cf7e2f2cd8456f0fce9c.json",
+      "input_hash": "7880808b94f7566224628f62d97f4073f63762d3482cf7a5ec496c443ee67f8f",
+      "output_hash": "1f1c5894cf28cc40d951ad64cf8145259a30895a98472b0e5a3211a2d2088c20",
+      "tokens": 21
+    },
+    {
+      "job": "56570c568e6345aa91d8f47bc7aef425",
+      "task": "inventory-compare",
+      "stage": "integration/comparison/incumbent",
+      "route": "tool",
+      "pass": true,
+      "evidence": "artifacts/c98451921421db4a21f0dd37194a334ed4da8c7d95f3330c59b7151e88a375f3.json",
+      "input_hash": "928e5e69de4a483869bd1475c59e939ec71c145cd591c8a444280fcfb6bc05c8",
+      "output_hash": "b7ed41de74cff9ad093feebf3fe60bbe540c9ef6eb14dc06fc2a95f38c8a449c",
+      "tokens": 0
+    },
+    {
+      "job": "6ff81d53354441a2b7c5f34def75182a",
+      "task": "inventory-compare",
+      "stage": "integration/comparison/candidate",
+      "route": "local_direct",
+      "pass": false,
+      "evidence": "artifacts/09712f102f53faba52282acb9d8b1c0a54f533e9a917e79e4057239c38bf27bb.json",
+      "input_hash": "928e5e69de4a483869bd1475c59e939ec71c145cd591c8a444280fcfb6bc05c8",
+      "output_hash": "f5387ed5d9d5889720771eee538550eda7f968d8e3b289099046399a57357ed4",
+      "tokens": 18
+    },
+    {
+      "job": "eb11e36919d54fe88f0b6efcb727969e",
+      "task": "inventory-compare",
+      "stage": "integration/comparison/strongest_fixed",
+      "route": "tool",
+      "pass": true,
+      "evidence": "artifacts/447bb2f6eec68b2c245d6335caf2b56cc6e5e65a325aa7afadfef02a5ca929a2.json",
+      "input_hash": "928e5e69de4a483869bd1475c59e939ec71c145cd591c8a444280fcfb6bc05c8",
+      "output_hash": "b7ed41de74cff9ad093feebf3fe60bbe540c9ef6eb14dc06fc2a95f38c8a449c",
+      "tokens": 0
+    },
+    {
+      "job": "467847a413344d058b700ff2ef8fe5cc",
+      "task": "inventory-compare",
+      "stage": "integration/comparison/learning_disabled",
+      "route": "tool",
+      "pass": true,
+      "evidence": "artifacts/fa05ea82f800510f062d729d2f60b35af7e60db203f14756f9ba28f104129418.json",
+      "input_hash": "928e5e69de4a483869bd1475c59e939ec71c145cd591c8a444280fcfb6bc05c8",
+      "output_hash": "b7ed41de74cff9ad093feebf3fe60bbe540c9ef6eb14dc06fc2a95f38c8a449c",
+      "tokens": 0
+    },
+    {
+      "job": "8e5f7252a38445b3868f1a1cc3b9e437",
+      "task": "directive-compare",
+      "stage": "integration/comparison/incumbent",
+      "route": "local_direct",
+      "pass": false,
+      "evidence": "artifacts/7d65047a7686677dd7e29f11dec6db3754eaddaaaadefe99f1aab43158caffe7.json",
+      "input_hash": "36e52236fc8a83f8e78cd2bb9797eeb54fd7ead5235b7d6dd4b1e2a4c2fe40fe",
+      "output_hash": "18a506363f50b98dce360f4bfe094ec78df4027f9646a8b9c0020863cd359eb3",
+      "tokens": 27
+    },
+    {
+      "job": "fce0abd9488749beb07035e296350f4d",
+      "task": "directive-compare",
+      "stage": "integration/comparison/candidate",
+      "route": "local_direct",
+      "pass": false,
+      "evidence": "artifacts/3d99982d01a530d89fdf17ac303523e405e7bd21e0a524ce701bce3b897625fb.json",
+      "input_hash": "36e52236fc8a83f8e78cd2bb9797eeb54fd7ead5235b7d6dd4b1e2a4c2fe40fe",
+      "output_hash": "18a506363f50b98dce360f4bfe094ec78df4027f9646a8b9c0020863cd359eb3",
+      "tokens": 27
+    },
+    {
+      "job": "c965b0c320404be0bdc05d18757e6d80",
+      "task": "directive-compare",
+      "stage": "integration/comparison/strongest_fixed",
+      "route": "local_direct",
+      "pass": false,
+      "evidence": "artifacts/c16793dd5c1c92674c087ad35600259b93db37400dc11d1525d8770f3851ac91.json",
+      "input_hash": "36e52236fc8a83f8e78cd2bb9797eeb54fd7ead5235b7d6dd4b1e2a4c2fe40fe",
+      "output_hash": "18a506363f50b98dce360f4bfe094ec78df4027f9646a8b9c0020863cd359eb3",
+      "tokens": 27
+    },
+    {
+      "job": "7c7d36e956ac4ef1992f1d60200adc87",
+      "task": "directive-compare",
+      "stage": "integration/comparison/learning_disabled",
+      "route": "local_direct",
+      "pass": false,
+      "evidence": "artifacts/e94301627742814669c177bdca8cb73b47691c62305d9105b66158a3c05f99fe.json",
+      "input_hash": "36e52236fc8a83f8e78cd2bb9797eeb54fd7ead5235b7d6dd4b1e2a4c2fe40fe",
+      "output_hash": "18a506363f50b98dce360f4bfe094ec78df4027f9646a8b9c0020863cd359eb3",
+      "tokens": 27
+    },
+    {
+      "job": "94795e3d1b2a414984d0a1799d23ee11",
+      "task": "inventory-subsequent",
+      "stage": "integration/subsequent",
+      "route": "tool",
+      "pass": true,
+      "evidence": "artifacts/a32af1d71b715c707de421e8e7a5f1b935d9c7b25167e09464b6c7ebc9e2e067.json",
+      "input_hash": "ab33c5d75752d51052866fc8ea9568828f0f73c8368d77de5b58a9d89b8cea59",
+      "output_hash": "7680af897a692c35ccf9a5f72640c1278758e8a1509e407da0c64ac59a9cdf65",
+      "tokens": 0
+    }
+  ],
+  "source_provenance": "matched 24 git blobs and 8 directive excerpts",
+  "candidate_reconstructed": true,
+  "comparison_quality_delta": -0.5,
+  "offline_replay": true,
+  "dispatch_allowed": false,
+  "evidence_substitution_refusal": "Completed job evidence reference changed",
+  "corrupt_candidate_refusal": "artifact digest mismatch",
+  "budget_unchanged_after_faults": true
+}

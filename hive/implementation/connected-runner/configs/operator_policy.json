@@ -1,0 +1,32 @@
+{
+ "schema": "hive-operator-policy-v1",
+ "allowed_scopes": ["trusted_local_experiment"],
+ "operations": {
+  "convert": {
+   "effect": "R",
+   "capability": "row-convert-v1",
+   "label": "Convert a file to canonical JSON (whole-file rejection)",
+   "accepted": {"genome": "5ac1c9374e276bfc20f63038cde83cbdf13e82cd76544e528a5e0064eee2df52",
+                "receipt_sha": "3de59fa17153de50f4d36b0237ab36f9e32205d7a2e4d9fdbec323c4cff0fcfc"}
+  },
+  "merge": {
+   "effect": "C",
+   "capability": "batch-merge-v1",
+   "label": "Merge a batch with whole-file quarantine",
+   "accepted": {"genome": "a06169a55d9aa85b9fd64f8cc50481572eeb9eab168881e0b16855f41c453617",
+                "receipt_sha": "6f83b101f43def5f6e4584926efd75f8d43714a5dd3af1af49691c81ede43556"}
+  }
+ },
+ "baseline_genome": "214bf17e956c4d1bfb31d78b1900e593d0e57ceef53144fc7a3fd0b3f33081c7",
+ "batch_files": [2, 20],
+ "max_total_bytes": 2097152,
+ "container_timeout_s": 120,
+ "evaluator": {"path": "evaluator/m2/oracle.py", "pin": "0c580b0eb1f541cf0ab99daac869c589503aa18fff84e32c2372cff09c377c7c"},
+ "evidence": {
+  "runtime_commit": "1799c58c95ae669a03c867a1566ba651a44f826c",
+  "protocol_commit": "d4b71d2",
+  "report": "docs/M2_REPORT.md",
+  "publication": "https://mominc.online/hive/notes/M2/",
+  "evidence_store": "build/m2/store"
+ }
+}

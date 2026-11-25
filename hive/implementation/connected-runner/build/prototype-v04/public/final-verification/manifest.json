@@ -1,0 +1,93 @@
+{
+  "scope": "Independent frozen runtime zero-inference regression; public synthetic objective smoke",
+  "frozen_commit": "dc8cc2d9b421d680d1052ba4f510027ac5a391ad",
+  "runtime_version": "0.4.0.dev1",
+  "runtime_sha256": "ef4eb92509af5d5330e90632d178b3cdadc3c11e62f308f58f808be6be625055",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "run_directory": "frozen git archive, Git ceiling set to archive parent",
+  "commands": [
+    "python -u -m pytest -q -r s --junitxml=<final-verification>/pytest.xml",
+    "npx --no-install e2e run --workers 1 --retries 0 --output final-e2e",
+    "python -u scripts/objective_smoke.py --work <fresh-final-objective-store>",
+    "python -u scripts/objective_smoke.py --work <fresh-final-objective-store> --replay",
+    "python -u scripts/objective_smoke.py --work <fresh-final-objective-store> --replay-data",
+    "python -m hive doctor --offline"
+  ],
+  "pytest": {
+    "passed": 488,
+    "failed": 0,
+    "skipped": 3,
+    "seconds": 547.11,
+    "skip_reasons": [
+      "OS does not allow symlinks",
+      "Windows developer privileges required for symlinks",
+      "Windows session cannot create symlinks"
+    ]
+  },
+  "e2e": {
+    "runner": {
+      "name": "e2e",
+      "version": "0.21.1"
+    },
+    "summary": {
+      "discovered": 7,
+      "selected": 7,
+      "executed": 7,
+      "passed": 7,
+      "failed": 0,
+      "flaky": 0,
+      "skipped": 0
+    },
+    "serial_workers": 1,
+    "retries": 0,
+    "seconds": 98.2
+  },
+  "objective": {
+    "tasks": 12,
+    "verified": 12,
+    "equal_budget_fresh_replay": 12,
+    "actual_model_requests": 0,
+    "separate_replays": {
+      "replay.json": {
+        "records": 12,
+        "errors": 0
+      },
+      "replay-data.json": {
+        "records": 6,
+        "errors": 0
+      }
+    },
+    "docker_image": "python@sha256:07d4824036af339fa1b6ef769cc99d9c10a141769538b52b3b597c84f7a7b535",
+    "docker_daemon": "29.8.2"
+  },
+  "acceptance_manifest_sha256": {
+    "experiments/plans/readiness-level-a.json": "c935f179c356f3cd61c9d271e100fc85b7b56deb1a9ecdccae323827351b9644",
+    "experiments/plans/readiness-level-a-intake.template.json": "58b8f322daf8f1cc105acbd38a46d8b944c562e97352f4526212c67b121170af",
+    "docs/LEVEL_A_ACCEPTANCE.md": "8554fd117084cfaa8f6d29ceb88daeea17beea62e12a171f0657a92b37dbc390"
+  },
+  "limitations": [
+    "Synthetic development pipeline checks do not establish Level A acceptance, generalization, model quality or useful learning.",
+    "No model inference, budget reset, new weights or policy promotion during verification.",
+    "CPU and GPU overhead unmeasured."
+  ],
+  "receipt_sha256": {
+    "doctor-offline.json": "3996c69bf0ad63c5b6cf63be1073184452848155faf11cb8dffff518b61dda88",
+    "doctor-offline.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "e2e-report.json": "7d477f9bb803a93872745a6308937bf636b0241f8e532a662441e5365c190d71",
+    "e2e.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "e2e.log": "b7ffcde62682391b7c3bfb030f9b035033fa2778fc1c9cac763166756408c277",
+    "objective-report.json": "113884d0c398abebd5e3b531c12496d938b960447fd8f1e30b4ec7cf5b0bb136",
+    "objective.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "objective.log": "c8a5c3cca194bb233065950d658979f20b153046f227b7b2e5a1a425c44158fe",
+    "pytest.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "pytest.log": "8735da88f2c2d286df357d622fd1f77cf7433574b6791fbb4d0372ae863c0382",
+    "pytest.xml": "1c932033af3b504d36f365ca12142027ab81c9021ae8a47021c6d3922171da7d",
+    "replay-data.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "replay-data.json": "1e87717e5fa0b83bd2d46018d5bc5f7bc6edf27cae68f5a507e71e50563d77cc",
+    "replay-data.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "replay.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "replay.json": "31b563e1df3f4a5ea20ff98521e08040f237471faf672ae34c21b7560a6b9c2c",
+    "replay.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "run.ps1": "0a0794f1e3187618b44bc492034f381a3b9d0306118d6815288a6f097edf3f5d"
+  }
+}

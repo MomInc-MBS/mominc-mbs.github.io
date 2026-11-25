@@ -1,0 +1,67 @@
+{
+ "baselines": {
+  "scripted": {
+   "candidate_sha256": "56d2cbe4e4e1884b4ec091d359a76d971ff3ff7dcd44f056fad7d68a2881cda1",
+   "label": "hand-written",
+   "n": 24,
+   "pass_count": 24,
+   "receipt_path": "receipt-scripted_baseline-56d2cbe4e4e1.json",
+   "receipt_sha256": "c8b433ae493b7854b79efc687321c39a32522d08d0caa41240a832f1155ac73f",
+   "verdict": "PASS"
+  },
+  "unchanged_hive": {
+   "basis": "planner returned 0 steps for the gap",
+   "n": 24,
+   "pass_count": 0
+  }
+ },
+ "candidate_sha256": "e5765a1ccff734d51620e7acce3ba7a9277e329131812f0adaf7eba00e99e88c",
+ "evaluator_receipt": {
+  "n": 24,
+  "pass_count": 24,
+  "path": "store/discovery/d-563f4dc928c28acb7944/receipt-candidate-e5765a1ccff7.json",
+  "receipt_sha256": "92c1bdf869076bfc76b0a686a0e501de11a3c4e98735db3a248be312f5a186d7"
+ },
+ "exhaustion_evidence": "stub tests only (tests/test_discovery.py): not run for real, to avoid spending the real budget",
+ "experiment_id": "d-563f4dc928c28acb7944",
+ "gap_key": "operator/gap/da10bca59e1272bb",
+ "goal_id": "g-62ace80a3b35b06d8cf9",
+ "goal_state": "DISCOVERY_QUEUED",
+ "inputs": "read-only copy of D:/MOM Rig/assets (5 subfolders, 114 files); AFTER = 3 added, 3 removed, 2 resized; snapshots via hive operator snapshot-dir (before.csv, after.csv in build/c-series/c3-inputs)",
+ "load": "lms load openai/gpt-oss-20b --context-length 32768 --gpu max (full GPU worked on the first try; no partial offload needed)",
+ "missing_step": {
+  "arity": 2,
+  "in": "canonical_rows",
+  "ordered": true,
+  "out": "inventory_diff"
+ },
+ "note": "candidate only ties the hand-written baseline (24/24 vs 24/24): mechanism evidence, NOT a learning advantage. Not registered, not executed in goals (C4).",
+ "partial_plan": [
+  "convert(input:0)",
+  "convert(input:1)"
+ ],
+ "terminal_state": "CANDIDATE_PASSED",
+ "usage": {
+  "container_runs": 3,
+  "experiment_wall_s": 38.5,
+  "input_tokens": 1339,
+  "model_call_latency_s": [
+   13.613
+  ],
+  "model_calls": 1,
+  "output_tokens": 350,
+  "proposals": 1,
+  "tokens_estimated": false,
+  "weight_check_ok": [
+   true
+  ]
+ },
+ "vram_mib": {
+  "after_load": 15200,
+  "after_unload": 3238,
+  "before_load": 3541,
+  "peak_sampled": 15277,
+  "samples": 21,
+  "total": 16303
+ }
+}

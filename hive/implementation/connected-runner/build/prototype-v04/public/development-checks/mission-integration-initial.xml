@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="35" time="103.061" timestamp="2026-11-21T23:26:29.935387-08:00" hostname="DESKTOP-FHQTCBG"><testcase classname="tests.integration.test_shared_mission" name="test_shared_dag_both_families_and_replay" time="3.360"><failure message="hive.mission.MissionManifestError: mission id is already bound to changed manifest/config; use a fresh store">tmp_path = WindowsPath('C:/Users/ianmy/AppData/Local/Temp/pytest-of-ianmy/pytest-312/test_shared_dag_both_families_0')
+pinned_repo = {'schema_version': 1, 'id': 'adversarial-fixture', 'repo': {'path': 'C:\\Users\\ianmy\\AppData\\Local\\Temp\\pytest-of...4e7f29b975bdd59c800df7bb2f52043157e79f709a032872037b33fcb', 'protocol': 'json_function_v1', 'module': 'app', ...}, ...}
+
+    def test_shared_dag_both_families_and_replay(tmp_path, pinned_repo):
+        path=dag(tmp_path,pinned_repo);root=tmp_path/'store'
+        with patch('hive.video_mission._probe',return_value=3.0):
+            first=run_mission_manifest(path,root,isolation=FixtureIsolation())
+            assert first['status']=='COMPLETED'
+            assert first['stages']['code']['state']=='SYNTHETIC_ONLY'
+            assert first['stages']['video']['state']=='OBJECTIVE_VERIFIED_REVIEW_PENDING'
+&gt;           second=run_mission_manifest(path,root,isolation=FixtureIsolation())
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_shared_mission.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+manifest_path = WindowsPath('C:/Users/ianmy/AppData/Local/Temp/pytest-of-ianmy/pytest-312/test_shared_dag_both_families_0/dag.json')
+store_path = WindowsPath('C:/Users/ianmy/AppData/Local/Temp/pytest-of-ianmy/pytest-312/test_shared_dag_both_families_0/store')
+config_path = None
+isolation = &lt;hive.adapters.isolation.FixtureIsolation object at 0x00000297A3A36010&gt;
+executor_config = None
+
+    def run_mission_manifest(manifest_path, store_path, config_path=None, *, isolation=None, executor_config=None) -&gt; dict:
+        """Execute a persisted video/code DAG using one shared HIVE store.
+    
+        Stage calls remain owned by their existing mission engines. This controller
+        persists prerequisites, attempts, cancellation, output references, and replay
+        state without introducing a second job ledger.
+        """
+        if isinstance(manifest_path, dict):
+            manifest_file, raw = Path.cwd() / "mission.json", manifest_path
+        else:
+            _reject_reparse(Path(manifest_path))
+            manifest_file = Path(manifest_path).resolve(strict=True)
+            raw = json.loads(manifest_file.read_text(encoding="utf-8-sig"))
+        normalized = _normalize(raw, manifest_file)
+        if config_path and executor_config is not None:
+            raise MissionManifestError("supply only one executor configuration")
+        config = dict(executor_config) if executor_config is not None else load_config(config_path) if config_path else None
+        if normalized["require_real_verification"] and config is None:
+            from .prototype_approval import tool_config
+            config = tool_config()
+        root = Path(store_path).absolute()
+        _reject_reparse(root)
+        root = root.resolve()
+        root.mkdir(parents=True, exist_ok=True)
+        store = Store(root)
+        key = "mission_dag:" + normalized["id"]
+        config_identity = config_hash(config) if config is not None else "video-default-tool"
+        identity = hashlib.sha256(json.dumps({"manifest": normalized, "config": config_identity,
+                                             "runtime": code_version()},
+                                             sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()).hexdigest()
+        try:
+            previous = store.get(key)
+            if previous and previous.get("identity") != identity:
+&gt;               raise MissionManifestError("mission id is already bound to changed manifest/config; use a fresh store")
+E               hive.mission.MissionManifestError: mission id is already bound to changed manifest/config; use a fresh store
+
+src\hive\mission.py:267: MissionManifestError</failure></testcase><testcase classname="tests.integration.test_shared_mission" name="test_failed_dependency_blocks_video" time="3.301" /><testcase classname="tests.integration.test_shared_mission" name="test_shared_barrier_blocks_dispatch[STOP-STOPPED]" time="0.694" /><testcase classname="tests.integration.test_shared_mission" name="test_shared_barrier_blocks_dispatch[independent-dag.CANCEL-CANCELLED]" time="0.667" /><testcase classname="tests.integration.test_shared_mission" name="test_dag_running_stage_recovers_without_extra_dispatch" time="4.437" /><testcase classname="tests.integration.test_shared_mission" name="test_dag_replay_rejects_corrupt_video_output" time="4.087" /><testcase classname="tests.integration.test_shared_mission" name="test_dag_replay_rejects_corrupt_code_output" time="3.681" /><testcase classname="tests.integration.test_shared_mission" name="test_dag_replay_rejects_changed_cached_stage_receipt" time="3.733" /><testcase classname="tests.adversarial.test_code_isolation" name="test_missing_daemon_blocks_before_any_candidate_execution" time="0.002" /><testcase classname="tests.adversarial.test_code_isolation" name="test_fixture_never_executes_command" time="0.001" /><testcase classname="tests.adversarial.test_code_isolation" name="test_rejects_traversal_secret_and_verifier_patch" time="1.424" /><testcase classname="tests.adversarial.test_code_isolation" name="test_real_docker_candidate_cannot_forge_success[def double(x): return x * 2\n-True]" time="2.325" /><testcase classname="tests.adversarial.test_code_isolation" name="test_real_docker_candidate_cannot_forge_success[import os\nos._exit(0)\n-False]" time="2.031" /><testcase classname="tests.adversarial.test_code_isolation" name="test_real_docker_candidate_cannot_forge_success[print(&quot;tests passed&quot;)\ndef double(x): return 999\n-False]" time="2.101" /><testcase classname="tests.adversarial.test_code_isolation" name="test_real_docker_candidate_cannot_forge_success[import os\ndef double(x): return 4 if os.path.exists(&quot;/work/secrets/key.txt&quot;) else -1\n-False]" time="2.087" /><testcase classname="tests.adversarial.test_code_isolation" name="test_real_docker_candidate_cannot_forge_success[def double(x): return {&quot;passed&quot;: True, &quot;reward&quot;: 999}\n-False]" time="2.100" /><testcase classname="tests.adversarial.test_code_isolation" name="test_extracted_worker_excludes_evaluator_and_secrets" time="0.693" /><testcase classname="tests.adversarial.test_code_isolation" name="test_real_code_mission_replays_without_extra_budget" time="5.254" /><testcase classname="tests.adversarial.test_code_isolation" name="test_mission_store_junction_is_rejected" time="0.600" /><testcase classname="tests.adversarial.test_code_isolation" name="test_code_crash_evidence_commit_recovers_without_fake_completion[before-73]" time="8.122" /><testcase classname="tests.adversarial.test_code_isolation" name="test_code_crash_evidence_commit_recovers_without_fake_completion[after-74]" time="7.653" /><testcase classname="tests.adversarial.test_code_isolation" name="test_code_stop_inflight_kills_worker_and_does_not_fake_success" time="5.541" /><testcase classname="tests.adversarial.test_code_isolation" name="test_code_stop_before_dispatch_survives_restart" time="2.637" /><testcase classname="tests.adversarial.test_code_isolation" name="test_real_mission_rejects_false_success_and_evaluator_leak[import os\nos._exit(0)\n]" time="4.286" /><testcase classname="tests.adversarial.test_code_isolation" name="test_real_mission_rejects_false_success_and_evaluator_leak[print(&quot;tests passed&quot;)\ndef double(x): return 999\n]" time="3.963" /><testcase classname="tests.adversarial.test_code_isolation" name="test_real_mission_rejects_false_success_and_evaluator_leak[import os\ndef double(x): return 4 if os.path.exists(&quot;/work/verifier.json&quot;) or os.path.exists(&quot;/work/secrets/key.txt&quot;) else -1\n]" time="3.782" /><testcase classname="tests.adversarial.test_code_isolation" name="test_docker_worker_dies_after_host_process_is_killed" time="5.546" /><testcase classname="tests.adversarial.test_code_isolation" name="test_code_replay_rejects_other_mission_job" time="4.102" /><testcase classname="tests.adversarial.test_code_isolation" name="test_code_replay_rejects_changed_job_spec" time="3.082" /><testcase classname="tests.adversarial.test_code_isolation" name="test_code_replay_rejects_corrupt_named_output[verdict]" time="2.543" /><testcase classname="tests.adversarial.test_code_isolation" name="test_code_replay_rejects_corrupt_named_output[trace]" time="2.536" /><testcase classname="tests.adversarial.test_code_isolation" name="test_code_replay_rejects_corrupt_named_output[escape]" time="2.316" /><testcase classname="tests.adversarial.test_code_isolation" name="test_code_cycle_exhaustion_survives_restart_without_refill" time="3.116" /><testcase classname="tests.adversarial.test_code_isolation" name="test_code_repo_gitlink_mount_rejected" time="0.652" /><testcase classname="tests.adversarial.test_code_isolation" name="test_code_repo_junction_ancestor_rejected" time="0.408" /></testsuite></testsuites>

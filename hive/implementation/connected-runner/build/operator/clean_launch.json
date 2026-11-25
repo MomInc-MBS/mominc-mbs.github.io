@@ -1,0 +1,45 @@
+{
+ "package": "HIVE_Operator_Prototype_f65d950.zip (fresh Expand-Archive)",
+ "launch": "scripts\\hive-operator.cmd D:\\tmp\\hive-op-inputs 8799",
+ "readiness": {
+  "runtime_commit": "HEAD",
+  "executor": {
+   "ready": true,
+   "backend": "docker",
+   "image": "python:3.11-slim@sha256:07d4824036af"
+  },
+  "evaluator": {
+   "ready": true,
+   "path": "evaluator/m2/oracle.py",
+   "pin": "0c580b0eb1f541cf0ab99daac869c589503aa18fff84e32c2372cff09c377c7c"
+  },
+  "model": {
+   "required": false,
+   "note": "retained deterministic workflows run with 0 model calls; no model is loaded"
+  },
+  "stop": false,
+  "resources": {
+   "disk_free_gb": 24.1
+  }
+ },
+ "convert": {
+  "state": "VERIFIED",
+  "verdict": "PASS",
+  "summary": "Converted 14 rows to canonical JSON",
+  "reason": null
+ },
+ "merge": {
+  "state": "VERIFIED",
+  "verdict": "PASS",
+  "summary": "Merged 2 of 2 files; quarantined 0",
+  "reason": null
+ },
+ "counters": {
+  "container_runs": 3,
+  "executions": 3,
+  "model_calls": 0,
+  "proposal_calls": 0,
+  "refusals": 0,
+  "replays": 0
+ }
+}

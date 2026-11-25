@@ -1,0 +1,86 @@
+{
+  "work_package": "WP0",
+  "scope": "synthetic arithmetic runtime smoke; not real-workload acceptance",
+  "build": {
+    "version": "0.3.0.dev1",
+    "commit": "caf9ace1ab41d5909f60ee6c2ed6fd60cb7ba345",
+    "source_sha256": "024e33a80265718014a42d2a8d4609663ed74f327a36043b18285810d67c2731"
+  },
+  "baseline_commit": "caf9ace1ab41d5909f60ee6c2ed6fd60cb7ba345",
+  "model_digest": "a45646773d1ee8a6c1557c7de09a68e78a74f2990c4174a1408f65e777db150c",
+  "config_hash": "a7eabd4e25cd8b2b3bc30f878645ec87e5dc1759316dde2be8421222d9b35eec",
+  "config": {
+    "endpoint": "http://127.0.0.1:11434",
+    "model": "myr5-hold-local:latest",
+    "timeout_s": 60,
+    "max_tokens": 128,
+    "seed": 42,
+    "max_requests": 1,
+    "max_total_tokens": 128,
+    "max_wall_s": 60,
+    "max_storage_bytes": 67108864,
+    "max_cycles": 4,
+    "max_retries": 0,
+    "concurrency": 1,
+    "routes": [
+      "local_direct"
+    ],
+    "allow_fixtures": false
+  },
+  "store": ".hive/prototype-wp0",
+  "job_id": "eb1057f4e7174f3b8f5aeb9276c00ada",
+  "verification": {
+    "evaluator": "hive-evaluator-v1",
+    "passed": true,
+    "quality": 1,
+    "reason": "passed",
+    "unsupported": 0,
+    "valid": true
+  },
+  "evidence_ref": "artifacts/0f891cfa6527c7a02f7367987c5fd9dc6e3ea9dce2e69013b85fbd231eb2b024.json",
+  "result": {
+    "backend": "ollama",
+    "error": null,
+    "failure_category": null,
+    "latency_s": 3.922000000020489,
+    "model": "myr5-hold-local:latest",
+    "model_digest": "a45646773d1ee8a6c1557c7de09a68e78a74f2990c4174a1408f65e777db150c",
+    "output": "{\"answer\":728}",
+    "raw_model_output": "{\"answer\":728}",
+    "request": {
+      "format": "json",
+      "messages": [
+        {
+          "content": "Return exactly one JSON object matching the requested schema. Do not use markdown.",
+          "role": "system"
+        },
+        {
+          "content": "{\"category\":\"math\",\"prompt\":\"Multiply 26 by 28. Return JSON {\\\"answer\\\": integer}.\",\"input\":{\"a\":26,\"allowed_tools\":[\"multiply\"],\"b\":28,\"tool_schemas\":{\"multiply\":{\"a\":\"integer\",\"b\":\"integer\"}}},\"allowed_tools\":[\"multiply\"],\"tool_schemas\":{\"multiply\":{\"a\":\"integer\",\"b\":\"integer\"}}}",
+          "role": "user"
+        }
+      ],
+      "model": "myr5-hold-local:latest",
+      "options": {
+        "num_ctx": 2048,
+        "num_predict": 128,
+        "seed": 42,
+        "temperature": 0
+      },
+      "stream": false,
+      "think": false
+    },
+    "tokens": 8
+  },
+  "budget": {
+    "cycles": 1,
+    "requests": 1,
+    "tokens_actual": 8,
+    "tokens_reserved": 128,
+    "wall_s": 4.10999999998603
+  },
+  "stop_prevented_calls": true,
+  "fresh_process_reverified": true,
+  "replay_new_calls": 0,
+  "decision": "pass",
+  "policy_deployed": false
+}

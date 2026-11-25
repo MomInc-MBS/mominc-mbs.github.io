@@ -1,0 +1,68 @@
+[
+  {
+    "test_id": "H01",
+    "name": "Moving Frontier",
+    "fixture_available": true,
+    "research_status": "UNTESTED"
+  },
+  {
+    "test_id": "H02",
+    "name": "Adversarial Challenger",
+    "fixture_available": true,
+    "research_status": "UNTESTED"
+  },
+  {
+    "test_id": "H03",
+    "name": "Evolution Tournament",
+    "fixture_available": true,
+    "research_status": "UNTESTED"
+  },
+  {
+    "test_id": "H04",
+    "name": "Amputation",
+    "fixture_available": true,
+    "research_status": "UNTESTED"
+  },
+  {
+    "test_id": "H05",
+    "name": "Contaminated Knowledge",
+    "fixture_available": true,
+    "research_status": "UNTESTED"
+  },
+  {
+    "test_id": "H06",
+    "name": "Resource Famine",
+    "fixture_available": true,
+    "research_status": "UNTESTED"
+  },
+  {
+    "test_id": "H07",
+    "name": "Split Brain",
+    "fixture_available": true,
+    "research_status": "UNTESTED"
+  },
+  {
+    "test_id": "H08",
+    "name": "Forgetting Cycle",
+    "fixture_available": true,
+    "research_status": "UNTESTED"
+  },
+  {
+    "test_id": "H09",
+    "name": "Novel Recombination",
+    "fixture_available": true,
+    "research_status": "UNTESTED"
+  },
+  {
+    "test_id": "H10",
+    "name": "False Reward Trap",
+    "fixture_available": true,
+    "research_status": "UNTESTED"
+  },
+  {
+    "test_id": "H11",
+    "name": "Real-Work Gauntlet",
+    "fixture_available": true,
+    "research_status": "UNTESTED"
+  }
+]

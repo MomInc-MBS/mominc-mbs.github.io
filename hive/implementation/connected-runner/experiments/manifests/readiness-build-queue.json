@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "authorization_ref": "docs/TEST_READINESS_DIRECTIVE.md; existing AGENTS.md publication authority; zero new inference allocation",
+  "items": [
+    {"id":"audit","owner":"Astra","authorized":true,"hypothesis":"The actual dev3 checkout and spent ledgers can be reproduced without inference.","next_command":"python scripts/replay_integration_export.py","depends_on":[]},
+    {"id":"implementation","owner":"Luna/Sol","authorized":true,"hypothesis":"Existing Executor and Store can support isolated code/video missions and eleven deterministic pressure paths.","next_command":"python -m pytest -q","depends_on":["audit"]},
+    {"id":"independent-verification","owner":"Terra","authorized":true,"hypothesis":"Objective negatives, interruption and replay reject false completion on the frozen source.","next_command":"python -m pytest tests/adversarial tests/integration -q","depends_on":["implementation"]},
+    {"id":"operator-demo","owner":"Astra","authorized":true,"hypothesis":"One public CLI runs and replays both families with no model calls or original-source changes.","next_command":"python scripts/readiness_demo.py --work .hive/operator-demo","depends_on":["independent-verification"]},
+    {"id":"clean-package","owner":"Astra","authorized":true,"hypothesis":"The public allowlisted package reproduces fixture and historical evidence with no private stores.","next_command":"python scripts/export_snapshot.py --destination .hive/release-source --zip .hive/release-source.zip","depends_on":["operator-demo"]},
+    {"id":"fresh-acceptance-inputs","owner":"Astra","authorized":true,"hypothesis":"Six independent video sources and six independent code snapshots can be inventoried only after operator source scopes and resources are supplied.","next_command":"Inspect experiments/plans/readiness-level-a.json; no inference or source acquisition is authorized by this queue.","depends_on":["audit"]},
+    {"id":"publish-evidence","owner":"Astra","authorized":true,"hypothesis":"The existing HIVE release path can publish an honest engineering milestone with verified downloads and preserved history.","next_command":"python tools/check_hive.py","depends_on":["clean-package"]}
+  ]
+}

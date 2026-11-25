@@ -1,0 +1,754 @@
+[
+  {
+    "arguments": [
+      "mission",
+      "run",
+      "--manifest",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\video-mission.json",
+      "--config",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\tool-config.json"
+    ],
+    "store": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\video-store",
+    "exit_code": 0,
+    "stdout_sha256": "c2b9b12396654f2b81c558b1d2dd2af59b52be5a6ac626b5f80d317bd6f7d282",
+    "stderr": "",
+    "result": {
+      "mission_id": "video-demo",
+      "status": "COMPLETED",
+      "stages": {
+        "caption-and-clip": {
+          "attempts": 1,
+          "finish_event_ref": "artifacts/add007f3125f3dd7a6c5f04b5d98c874bb461c85024236032c4bed03d60009d9.json",
+          "finished": 1795313001.7952573,
+          "result": {
+            "captions": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\video-store\\output\\captions.srt",
+            "clips": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\video-store\\output\\clips.json",
+            "editorial_status": "needs_operator_review",
+            "jobs": [
+              "9bed36f2976f418ab3ec67c0c795e880",
+              "9840ffc7dee5438285d9da1d69aca50d"
+            ],
+            "learning": {
+              "clip_route_used": "tool",
+              "evidence_status": "experimental",
+              "next_proposed_route": "tool",
+              "next_proposed_route_executed": false,
+              "policy_after_sha256": "6482cfb3555de1eeba8c179a1e32e1d9a5b4ecba5dfb4d9fe3e36e8dad369f63",
+              "policy_before_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+              "source_split": "development"
+            },
+            "mission": "8834c0e78406554f931b39af",
+            "resource_use": {
+              "clip_generated_tokens": 0,
+              "generated_tokens": 0,
+              "input_token_measurement": "unavailable from configured adapter",
+              "input_tokens": null,
+              "model_requests": 0
+            },
+            "source": {
+              "config_hash": "56543de0dc6516e26a305f3bf5a24b61c6d83b7cdb9b2ec8839afafe044640ec",
+              "media_sha256": "52097f1fe72b54314b10fcdc974f4233803c67849dee60e6154a73b2401cf21c",
+              "media_size": 1440,
+              "model_digest": null,
+              "runtime": {
+                "commit": "b66efb0ba074bf8c6f6a8c0f0bc4761aa3e65739",
+                "source_sha256": "e711d1c3e7eb4dbd23b95f3027f5d97627b1f6880a2c252e2cefea8c522e817b",
+                "version": "0.3.0.dev4"
+              },
+              "srt_sha256": "fb59648514663cd336a02da7cfe00564906575fa06f97fbfe26b5f0ca1c7f2cc",
+              "srt_size": 113
+            },
+            "status": "objective_verified"
+          },
+          "started": 1795313000.235064,
+          "state": "OBJECTIVE_VERIFIED_REVIEW_PENDING"
+        }
+      },
+      "manifest_ref": "artifacts/5b136ad9b70365b601afef51fed1c0f4b34d16c7a459dc883fe06af9b9b86b4e.json",
+      "event_refs": [
+        "artifacts/6ad3c487b526719b67686788ba91312b7852fc3ccbecb4716452fd79bab6e670.json",
+        "artifacts/480977ecd9dab6ce4309b839716f807e3ff9892ba588b4284fd58c06e83eb4d2.json",
+        "artifacts/add007f3125f3dd7a6c5f04b5d98c874bb461c85024236032c4bed03d60009d9.json"
+      ],
+      "budget": {
+        "cycles": 2,
+        "requests": 0,
+        "tokens_actual": 0,
+        "tokens_reserved": 0,
+        "wall_s": 0.3910000000614673
+      }
+    }
+  },
+  {
+    "arguments": [
+      "mission",
+      "run",
+      "--manifest",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\video-mission.json",
+      "--config",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\tool-config.json"
+    ],
+    "store": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\video-store",
+    "exit_code": 0,
+    "stdout_sha256": "d4102419c78a9343b157719d744806b7766ecd9fc34562dd4f8d20d573f785d5",
+    "stderr": "",
+    "result": {
+      "mission_id": "video-demo",
+      "status": "COMPLETED",
+      "stages": {
+        "caption-and-clip": {
+          "attempts": 1,
+          "finish_event_ref": "artifacts/add007f3125f3dd7a6c5f04b5d98c874bb461c85024236032c4bed03d60009d9.json",
+          "finished": 1795313001.7952573,
+          "result": {
+            "captions": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\video-store\\output\\captions.srt",
+            "clips": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\video-store\\output\\clips.json",
+            "editorial_status": "needs_operator_review",
+            "jobs": [
+              "9bed36f2976f418ab3ec67c0c795e880",
+              "9840ffc7dee5438285d9da1d69aca50d"
+            ],
+            "learning": {
+              "clip_route_used": "tool",
+              "evidence_status": "experimental",
+              "next_proposed_route": "tool",
+              "next_proposed_route_executed": false,
+              "policy_after_sha256": "6482cfb3555de1eeba8c179a1e32e1d9a5b4ecba5dfb4d9fe3e36e8dad369f63",
+              "policy_before_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+              "source_split": "development"
+            },
+            "mission": "8834c0e78406554f931b39af",
+            "resource_use": {
+              "clip_generated_tokens": 0,
+              "generated_tokens": 0,
+              "input_token_measurement": "unavailable from configured adapter",
+              "input_tokens": null,
+              "model_requests": 0
+            },
+            "source": {
+              "config_hash": "56543de0dc6516e26a305f3bf5a24b61c6d83b7cdb9b2ec8839afafe044640ec",
+              "media_sha256": "52097f1fe72b54314b10fcdc974f4233803c67849dee60e6154a73b2401cf21c",
+              "media_size": 1440,
+              "model_digest": null,
+              "runtime": {
+                "commit": "b66efb0ba074bf8c6f6a8c0f0bc4761aa3e65739",
+                "source_sha256": "e711d1c3e7eb4dbd23b95f3027f5d97627b1f6880a2c252e2cefea8c522e817b",
+                "version": "0.3.0.dev4"
+              },
+              "srt_sha256": "fb59648514663cd336a02da7cfe00564906575fa06f97fbfe26b5f0ca1c7f2cc",
+              "srt_size": 113
+            },
+            "status": "objective_verified"
+          },
+          "started": 1795313000.235064,
+          "state": "OBJECTIVE_VERIFIED_REVIEW_PENDING"
+        }
+      },
+      "manifest_ref": "artifacts/5b136ad9b70365b601afef51fed1c0f4b34d16c7a459dc883fe06af9b9b86b4e.json",
+      "event_refs": [
+        "artifacts/6ad3c487b526719b67686788ba91312b7852fc3ccbecb4716452fd79bab6e670.json",
+        "artifacts/480977ecd9dab6ce4309b839716f807e3ff9892ba588b4284fd58c06e83eb4d2.json",
+        "artifacts/add007f3125f3dd7a6c5f04b5d98c874bb461c85024236032c4bed03d60009d9.json",
+        "artifacts/2bd6e33648a6cca45014c4d82ec0a7e4319cffb72ff1d341acb11eac7576fe1d.json"
+      ],
+      "budget": {
+        "cycles": 2,
+        "requests": 0,
+        "tokens_actual": 0,
+        "tokens_reserved": 0,
+        "wall_s": 0.3910000000614673
+      }
+    }
+  },
+  {
+    "arguments": [
+      "status"
+    ],
+    "store": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\video-store",
+    "exit_code": 0,
+    "stdout_sha256": "727e460c0cf1c543982c55e543be7a199862640fab1042a740ce61b93c89f2fd",
+    "stderr": "",
+    "result": {
+      "jobs": {
+        "BLOCKED": 2
+      },
+      "budget": {
+        "cycles": 2,
+        "requests": 0,
+        "tokens_actual": 0,
+        "tokens_reserved": 0,
+        "wall_s": 0.3910000000614673
+      },
+      "worker": {
+        "finished": 1795313001.6194127,
+        "pid": 35764,
+        "status": "stopped"
+      },
+      "stop_reason": "requested cycle limit reached",
+      "champion": null,
+      "campaign": null,
+      "next_research": null,
+      "adaptive": null,
+      "kill_switch": false,
+      "policy_hash": "6482cfb3555de1eeba8c179a1e32e1d9a5b4ecba5dfb4d9fe3e36e8dad369f63"
+    }
+  },
+  {
+    "arguments": [
+      "mission",
+      "run",
+      "--manifest",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\code-mission.json",
+      "--config",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\tool-config.json"
+    ],
+    "store": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\code-store",
+    "exit_code": 0,
+    "stdout_sha256": "fbd44981639d773b9c95a467a83c6aa2cf16129e705bf46bf35f1d86e124f47c",
+    "stderr": "",
+    "result": {
+      "mission_id": "code-demo",
+      "status": "COMPLETED",
+      "stages": {
+        "repair": {
+          "attempts": 1,
+          "finish_event_ref": "artifacts/65e81b04c03200b93bd12cd0ce1991568f5631a86005e51c57972c7427647fa6.json",
+          "finished": 1795313007.154786,
+          "result": {
+            "budget": {
+              "cycles": 1,
+              "requests": 0,
+              "tokens_actual": 0,
+              "tokens_reserved": 0,
+              "wall_s": 1.640999999945052
+            },
+            "event_refs": [
+              "artifacts/91038c69d6c6bf96d1d3c37b412de00437614440de41d43c55cc1443157b5b63.json",
+              "artifacts/3e8930eadeb223ac420f4e760fee62e2f2457279c17f4b0ef5f3d23583f9c616.json"
+            ],
+            "manifest_ref": "artifacts/cfa9acd186923c8e755ce518654585d011bfb85575ad6eb7f44829d4a9cf6cad.json",
+            "mission_id": "readiness-code-demo",
+            "named_output_hashes": {
+              "include-final-value": {
+                "patch.diff": "d77f0889b334ece246eb9ae8e7c6ad785c0bb404e7b04fd5abe052c032d5dad9",
+                "test-report.json": "8541998d505e76c0722d2f52f1fe3432419045e2e8fddb94cad8b240c47bd982",
+                "verdict.json": "7c01552ad56ce4983ece5533abeacb59bde51766e5804a2dc8a84805b89b6146"
+              },
+              "trace.jsonl": "1d80c83357409bf5d63d8bf580e26175002f4dfb358c17545b540d0792e323fa"
+            },
+            "named_outputs": {
+              "include-final-value": {
+                "patch.diff": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\code-store\\output\\code\\readiness-code-demo\\include-final-value\\patch.diff",
+                "test-report.json": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\code-store\\output\\code\\readiness-code-demo\\include-final-value\\test-report.json",
+                "verdict.json": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\code-store\\output\\code\\readiness-code-demo\\include-final-value\\verdict.json"
+              },
+              "trace.jsonl": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\code-store\\output\\code\\readiness-code-demo\\trace.jsonl"
+            },
+            "patches": {
+              "include-final-value": {
+                "evidence_ref": "artifacts/be3b9922d0e1fdff75c52807c9b263e9947ecf36474c23054090bc3b22f200aa.json",
+                "job_id": "b16c1dd19e884daaa1df555d3a608280",
+                "operation_key": "4cf130ca68022272d12105966e60a66faf2f1a1ab4afbf11c71350bb16fb02f6",
+                "patch_sha256": "3251dbf18617cd67c47707cb9bd1611dbac212ff0ee9814a75b8ce1f34b85aad",
+                "state": "VERIFIED",
+                "verification": {
+                  "cases_checked": 4,
+                  "evaluator": "json-function-v1",
+                  "passed": true,
+                  "quality": 1,
+                  "reason": "objective_cases_passed",
+                  "suite_sha256": "2ecaa1149cb1704e986ea5af5bf64d23d54446febc3805ccb396e1fc01a0a234",
+                  "synthetic": false,
+                  "unsupported": 0,
+                  "valid": true
+                }
+              }
+            },
+            "runtime": {
+              "commit": "b66efb0ba074bf8c6f6a8c0f0bc4761aa3e65739",
+              "source_sha256": "e711d1c3e7eb4dbd23b95f3027f5d97627b1f6880a2c252e2cefea8c522e817b",
+              "version": "0.3.0.dev4"
+            },
+            "source_sha256": "c8c3f858a2cc92b4308218ca1aa78a4b815172dd11025bd1d810e3f343b28bc5",
+            "status": "VERIFIED",
+            "synthetic": false
+          },
+          "started": 1795313003.1693263,
+          "state": "VERIFIED"
+        }
+      },
+      "manifest_ref": "artifacts/90b53e7314383e22ff291fe385960c70cef694110d9bb60de0b5628c1b062717.json",
+      "event_refs": [
+        "artifacts/a0cb9028dc563eab9297a6940ccd22c899c432ccba328ab46f23def88318d1d3.json",
+        "artifacts/1932947c02d6aaefee9aa4bf28d0287f00861903adecb3a6a2555555c9e93558.json",
+        "artifacts/65e81b04c03200b93bd12cd0ce1991568f5631a86005e51c57972c7427647fa6.json"
+      ],
+      "budget": {
+        "cycles": 1,
+        "requests": 0,
+        "tokens_actual": 0,
+        "tokens_reserved": 0,
+        "wall_s": 1.640999999945052
+      }
+    }
+  },
+  {
+    "arguments": [
+      "mission",
+      "run",
+      "--manifest",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\code-mission.json",
+      "--config",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\tool-config.json"
+    ],
+    "store": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\code-store",
+    "exit_code": 0,
+    "stdout_sha256": "402742d12a43b1f3d88232e79f9197fec38084d982e289dc2e6906be4f49a01d",
+    "stderr": "",
+    "result": {
+      "mission_id": "code-demo",
+      "status": "COMPLETED",
+      "stages": {
+        "repair": {
+          "attempts": 1,
+          "finish_event_ref": "artifacts/65e81b04c03200b93bd12cd0ce1991568f5631a86005e51c57972c7427647fa6.json",
+          "finished": 1795313007.154786,
+          "result": {
+            "budget": {
+              "cycles": 1,
+              "requests": 0,
+              "tokens_actual": 0,
+              "tokens_reserved": 0,
+              "wall_s": 1.640999999945052
+            },
+            "event_refs": [
+              "artifacts/91038c69d6c6bf96d1d3c37b412de00437614440de41d43c55cc1443157b5b63.json",
+              "artifacts/3e8930eadeb223ac420f4e760fee62e2f2457279c17f4b0ef5f3d23583f9c616.json"
+            ],
+            "manifest_ref": "artifacts/cfa9acd186923c8e755ce518654585d011bfb85575ad6eb7f44829d4a9cf6cad.json",
+            "mission_id": "readiness-code-demo",
+            "named_output_hashes": {
+              "include-final-value": {
+                "patch.diff": "d77f0889b334ece246eb9ae8e7c6ad785c0bb404e7b04fd5abe052c032d5dad9",
+                "test-report.json": "8541998d505e76c0722d2f52f1fe3432419045e2e8fddb94cad8b240c47bd982",
+                "verdict.json": "7c01552ad56ce4983ece5533abeacb59bde51766e5804a2dc8a84805b89b6146"
+              },
+              "trace.jsonl": "1d80c83357409bf5d63d8bf580e26175002f4dfb358c17545b540d0792e323fa"
+            },
+            "named_outputs": {
+              "include-final-value": {
+                "patch.diff": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\code-store\\output\\code\\readiness-code-demo\\include-final-value\\patch.diff",
+                "test-report.json": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\code-store\\output\\code\\readiness-code-demo\\include-final-value\\test-report.json",
+                "verdict.json": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\code-store\\output\\code\\readiness-code-demo\\include-final-value\\verdict.json"
+              },
+              "trace.jsonl": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\code-store\\output\\code\\readiness-code-demo\\trace.jsonl"
+            },
+            "patches": {
+              "include-final-value": {
+                "evidence_ref": "artifacts/be3b9922d0e1fdff75c52807c9b263e9947ecf36474c23054090bc3b22f200aa.json",
+                "job_id": "b16c1dd19e884daaa1df555d3a608280",
+                "operation_key": "4cf130ca68022272d12105966e60a66faf2f1a1ab4afbf11c71350bb16fb02f6",
+                "patch_sha256": "3251dbf18617cd67c47707cb9bd1611dbac212ff0ee9814a75b8ce1f34b85aad",
+                "state": "VERIFIED",
+                "verification": {
+                  "cases_checked": 4,
+                  "evaluator": "json-function-v1",
+                  "passed": true,
+                  "quality": 1,
+                  "reason": "objective_cases_passed",
+                  "suite_sha256": "2ecaa1149cb1704e986ea5af5bf64d23d54446febc3805ccb396e1fc01a0a234",
+                  "synthetic": false,
+                  "unsupported": 0,
+                  "valid": true
+                }
+              }
+            },
+            "runtime": {
+              "commit": "b66efb0ba074bf8c6f6a8c0f0bc4761aa3e65739",
+              "source_sha256": "e711d1c3e7eb4dbd23b95f3027f5d97627b1f6880a2c252e2cefea8c522e817b",
+              "version": "0.3.0.dev4"
+            },
+            "source_sha256": "c8c3f858a2cc92b4308218ca1aa78a4b815172dd11025bd1d810e3f343b28bc5",
+            "status": "VERIFIED",
+            "synthetic": false
+          },
+          "started": 1795313003.1693263,
+          "state": "VERIFIED"
+        }
+      },
+      "manifest_ref": "artifacts/90b53e7314383e22ff291fe385960c70cef694110d9bb60de0b5628c1b062717.json",
+      "event_refs": [
+        "artifacts/a0cb9028dc563eab9297a6940ccd22c899c432ccba328ab46f23def88318d1d3.json",
+        "artifacts/1932947c02d6aaefee9aa4bf28d0287f00861903adecb3a6a2555555c9e93558.json",
+        "artifacts/65e81b04c03200b93bd12cd0ce1991568f5631a86005e51c57972c7427647fa6.json",
+        "artifacts/2bd6e33648a6cca45014c4d82ec0a7e4319cffb72ff1d341acb11eac7576fe1d.json"
+      ],
+      "budget": {
+        "cycles": 1,
+        "requests": 0,
+        "tokens_actual": 0,
+        "tokens_reserved": 0,
+        "wall_s": 1.640999999945052
+      }
+    }
+  },
+  {
+    "arguments": [
+      "status"
+    ],
+    "store": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\code-store",
+    "exit_code": 0,
+    "stdout_sha256": "558535086bd5709213c972e0291483cba9c3eb6c0df9702000aef87bb43a52dc",
+    "stderr": "",
+    "result": {
+      "jobs": {
+        "BLOCKED": 1
+      },
+      "budget": {
+        "cycles": 1,
+        "requests": 0,
+        "tokens_actual": 0,
+        "tokens_reserved": 0,
+        "wall_s": 1.640999999945052
+      },
+      "worker": null,
+      "stop_reason": null,
+      "champion": null,
+      "campaign": null,
+      "next_research": null,
+      "adaptive": null,
+      "kill_switch": false,
+      "policy_hash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    }
+  },
+  {
+    "arguments": [
+      "mission",
+      "run",
+      "--manifest",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\combined-mission.json",
+      "--config",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\tool-config.json"
+    ],
+    "store": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\combined-store",
+    "exit_code": 0,
+    "stdout_sha256": "afcfa4a02e2ec9a5dc732d1ae8bdce6c9f6aff305daa66428ebaba836bccb08c",
+    "stderr": "",
+    "result": {
+      "mission_id": "combined-demo",
+      "status": "COMPLETED",
+      "stages": {
+        "caption-and-clip": {
+          "attempts": 1,
+          "finish_event_ref": "artifacts/a7f92fcf738fefa50d64fb4f8e48ce78d24ddc6dbebe79810eee92ba9d1c851c.json",
+          "finished": 1795313014.9581435,
+          "result": {
+            "captions": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\combined-store\\output\\captions.srt",
+            "clips": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\combined-store\\output\\clips.json",
+            "editorial_status": "needs_operator_review",
+            "jobs": [
+              "bfdc8bf7aae2429eaa3348ff5547b632",
+              "5eb474cfac8841eb9340592ab4214a56"
+            ],
+            "learning": {
+              "clip_route_used": "tool",
+              "evidence_status": "experimental",
+              "next_proposed_route": "tool",
+              "next_proposed_route_executed": false,
+              "policy_after_sha256": "6482cfb3555de1eeba8c179a1e32e1d9a5b4ecba5dfb4d9fe3e36e8dad369f63",
+              "policy_before_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+              "source_split": "development"
+            },
+            "mission": "8834c0e78406554f931b39af",
+            "resource_use": {
+              "clip_generated_tokens": 0,
+              "generated_tokens": 0,
+              "input_token_measurement": "unavailable from configured adapter",
+              "input_tokens": null,
+              "model_requests": 0
+            },
+            "source": {
+              "config_hash": "56543de0dc6516e26a305f3bf5a24b61c6d83b7cdb9b2ec8839afafe044640ec",
+              "media_sha256": "52097f1fe72b54314b10fcdc974f4233803c67849dee60e6154a73b2401cf21c",
+              "media_size": 1440,
+              "model_digest": null,
+              "runtime": {
+                "commit": "b66efb0ba074bf8c6f6a8c0f0bc4761aa3e65739",
+                "source_sha256": "e711d1c3e7eb4dbd23b95f3027f5d97627b1f6880a2c252e2cefea8c522e817b",
+                "version": "0.3.0.dev4"
+              },
+              "srt_sha256": "fb59648514663cd336a02da7cfe00564906575fa06f97fbfe26b5f0ca1c7f2cc",
+              "srt_size": 113
+            },
+            "status": "objective_verified"
+          },
+          "started": 1795313013.2968216,
+          "state": "OBJECTIVE_VERIFIED_REVIEW_PENDING"
+        },
+        "repair": {
+          "attempts": 1,
+          "finish_event_ref": "artifacts/60efff69616aebdd0de71590286c9f7f33d373d59a48a180aae666cbaf9537e4.json",
+          "finished": 1795313013.2103112,
+          "result": {
+            "budget": {
+              "cycles": 1,
+              "requests": 0,
+              "tokens_actual": 0,
+              "tokens_reserved": 0,
+              "wall_s": 1.75
+            },
+            "event_refs": [
+              "artifacts/f8618f45519ada1e0fb52e9606bee81afd3e3dd4286c71b4afe91684a3106fff.json",
+              "artifacts/ed4935516d0d3716efebfa797d18b7883d176b5c7609cc05934f3155e8b5d944.json"
+            ],
+            "manifest_ref": "artifacts/cfa9acd186923c8e755ce518654585d011bfb85575ad6eb7f44829d4a9cf6cad.json",
+            "mission_id": "readiness-code-demo",
+            "named_output_hashes": {
+              "include-final-value": {
+                "patch.diff": "d77f0889b334ece246eb9ae8e7c6ad785c0bb404e7b04fd5abe052c032d5dad9",
+                "test-report.json": "914e2f5c4c90dd8a2fd12dfd582394b8c958ab7afd7138899ccba5d162220267",
+                "verdict.json": "fc684a88935af1a7b7663fd8d0c5f0908bf06a2ae4a038bb7e0e65c94da57235"
+              },
+              "trace.jsonl": "a6af79609b8147d2dbc8ecc27a52005045a09ccbe263c176088e69f10687c220"
+            },
+            "named_outputs": {
+              "include-final-value": {
+                "patch.diff": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\combined-store\\output\\code\\readiness-code-demo\\include-final-value\\patch.diff",
+                "test-report.json": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\combined-store\\output\\code\\readiness-code-demo\\include-final-value\\test-report.json",
+                "verdict.json": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\combined-store\\output\\code\\readiness-code-demo\\include-final-value\\verdict.json"
+              },
+              "trace.jsonl": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\combined-store\\output\\code\\readiness-code-demo\\trace.jsonl"
+            },
+            "patches": {
+              "include-final-value": {
+                "evidence_ref": "artifacts/ce761a5eee465f226758363e179061af269e572aaad2ce65f789efdcbd9cbe1f.json",
+                "job_id": "0d15ef8a1fcc475489f6f4f61382f619",
+                "operation_key": "4cf130ca68022272d12105966e60a66faf2f1a1ab4afbf11c71350bb16fb02f6",
+                "patch_sha256": "3251dbf18617cd67c47707cb9bd1611dbac212ff0ee9814a75b8ce1f34b85aad",
+                "state": "VERIFIED",
+                "verification": {
+                  "cases_checked": 4,
+                  "evaluator": "json-function-v1",
+                  "passed": true,
+                  "quality": 1,
+                  "reason": "objective_cases_passed",
+                  "suite_sha256": "2ecaa1149cb1704e986ea5af5bf64d23d54446febc3805ccb396e1fc01a0a234",
+                  "synthetic": false,
+                  "unsupported": 0,
+                  "valid": true
+                }
+              }
+            },
+            "runtime": {
+              "commit": "b66efb0ba074bf8c6f6a8c0f0bc4761aa3e65739",
+              "source_sha256": "e711d1c3e7eb4dbd23b95f3027f5d97627b1f6880a2c252e2cefea8c522e817b",
+              "version": "0.3.0.dev4"
+            },
+            "source_sha256": "c8c3f858a2cc92b4308218ca1aa78a4b815172dd11025bd1d810e3f343b28bc5",
+            "status": "VERIFIED",
+            "synthetic": false
+          },
+          "started": 1795313009.0182848,
+          "state": "VERIFIED"
+        }
+      },
+      "manifest_ref": "artifacts/ee4aebbf1fd3342486abc12229d89aaa88b82b459a019f77dcdaff9970372515.json",
+      "event_refs": [
+        "artifacts/9e4039e39f15a1a2cbd61d0624302afac4ab16f865e38c72f0763ab8f544d00a.json",
+        "artifacts/1932947c02d6aaefee9aa4bf28d0287f00861903adecb3a6a2555555c9e93558.json",
+        "artifacts/60efff69616aebdd0de71590286c9f7f33d373d59a48a180aae666cbaf9537e4.json",
+        "artifacts/480977ecd9dab6ce4309b839716f807e3ff9892ba588b4284fd58c06e83eb4d2.json",
+        "artifacts/a7f92fcf738fefa50d64fb4f8e48ce78d24ddc6dbebe79810eee92ba9d1c851c.json"
+      ],
+      "budget": {
+        "cycles": 3,
+        "requests": 0,
+        "tokens_actual": 0,
+        "tokens_reserved": 0,
+        "wall_s": 2.140999999945052
+      }
+    }
+  },
+  {
+    "arguments": [
+      "mission",
+      "run",
+      "--manifest",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\combined-mission.json",
+      "--config",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\tool-config.json"
+    ],
+    "store": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\combined-store",
+    "exit_code": 0,
+    "stdout_sha256": "b8a1d903f642832be4f58ec215122b751fa67b55d5ae7131d705ca95e894a2c7",
+    "stderr": "",
+    "result": {
+      "mission_id": "combined-demo",
+      "status": "COMPLETED",
+      "stages": {
+        "caption-and-clip": {
+          "attempts": 1,
+          "finish_event_ref": "artifacts/a7f92fcf738fefa50d64fb4f8e48ce78d24ddc6dbebe79810eee92ba9d1c851c.json",
+          "finished": 1795313014.9581435,
+          "result": {
+            "captions": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\combined-store\\output\\captions.srt",
+            "clips": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\combined-store\\output\\clips.json",
+            "editorial_status": "needs_operator_review",
+            "jobs": [
+              "bfdc8bf7aae2429eaa3348ff5547b632",
+              "5eb474cfac8841eb9340592ab4214a56"
+            ],
+            "learning": {
+              "clip_route_used": "tool",
+              "evidence_status": "experimental",
+              "next_proposed_route": "tool",
+              "next_proposed_route_executed": false,
+              "policy_after_sha256": "6482cfb3555de1eeba8c179a1e32e1d9a5b4ecba5dfb4d9fe3e36e8dad369f63",
+              "policy_before_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+              "source_split": "development"
+            },
+            "mission": "8834c0e78406554f931b39af",
+            "resource_use": {
+              "clip_generated_tokens": 0,
+              "generated_tokens": 0,
+              "input_token_measurement": "unavailable from configured adapter",
+              "input_tokens": null,
+              "model_requests": 0
+            },
+            "source": {
+              "config_hash": "56543de0dc6516e26a305f3bf5a24b61c6d83b7cdb9b2ec8839afafe044640ec",
+              "media_sha256": "52097f1fe72b54314b10fcdc974f4233803c67849dee60e6154a73b2401cf21c",
+              "media_size": 1440,
+              "model_digest": null,
+              "runtime": {
+                "commit": "b66efb0ba074bf8c6f6a8c0f0bc4761aa3e65739",
+                "source_sha256": "e711d1c3e7eb4dbd23b95f3027f5d97627b1f6880a2c252e2cefea8c522e817b",
+                "version": "0.3.0.dev4"
+              },
+              "srt_sha256": "fb59648514663cd336a02da7cfe00564906575fa06f97fbfe26b5f0ca1c7f2cc",
+              "srt_size": 113
+            },
+            "status": "objective_verified"
+          },
+          "started": 1795313013.2968216,
+          "state": "OBJECTIVE_VERIFIED_REVIEW_PENDING"
+        },
+        "repair": {
+          "attempts": 1,
+          "finish_event_ref": "artifacts/60efff69616aebdd0de71590286c9f7f33d373d59a48a180aae666cbaf9537e4.json",
+          "finished": 1795313013.2103112,
+          "result": {
+            "budget": {
+              "cycles": 1,
+              "requests": 0,
+              "tokens_actual": 0,
+              "tokens_reserved": 0,
+              "wall_s": 1.75
+            },
+            "event_refs": [
+              "artifacts/f8618f45519ada1e0fb52e9606bee81afd3e3dd4286c71b4afe91684a3106fff.json",
+              "artifacts/ed4935516d0d3716efebfa797d18b7883d176b5c7609cc05934f3155e8b5d944.json"
+            ],
+            "manifest_ref": "artifacts/cfa9acd186923c8e755ce518654585d011bfb85575ad6eb7f44829d4a9cf6cad.json",
+            "mission_id": "readiness-code-demo",
+            "named_output_hashes": {
+              "include-final-value": {
+                "patch.diff": "d77f0889b334ece246eb9ae8e7c6ad785c0bb404e7b04fd5abe052c032d5dad9",
+                "test-report.json": "914e2f5c4c90dd8a2fd12dfd582394b8c958ab7afd7138899ccba5d162220267",
+                "verdict.json": "fc684a88935af1a7b7663fd8d0c5f0908bf06a2ae4a038bb7e0e65c94da57235"
+              },
+              "trace.jsonl": "a6af79609b8147d2dbc8ecc27a52005045a09ccbe263c176088e69f10687c220"
+            },
+            "named_outputs": {
+              "include-final-value": {
+                "patch.diff": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\combined-store\\output\\code\\readiness-code-demo\\include-final-value\\patch.diff",
+                "test-report.json": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\combined-store\\output\\code\\readiness-code-demo\\include-final-value\\test-report.json",
+                "verdict.json": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\combined-store\\output\\code\\readiness-code-demo\\include-final-value\\verdict.json"
+              },
+              "trace.jsonl": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\combined-store\\output\\code\\readiness-code-demo\\trace.jsonl"
+            },
+            "patches": {
+              "include-final-value": {
+                "evidence_ref": "artifacts/ce761a5eee465f226758363e179061af269e572aaad2ce65f789efdcbd9cbe1f.json",
+                "job_id": "0d15ef8a1fcc475489f6f4f61382f619",
+                "operation_key": "4cf130ca68022272d12105966e60a66faf2f1a1ab4afbf11c71350bb16fb02f6",
+                "patch_sha256": "3251dbf18617cd67c47707cb9bd1611dbac212ff0ee9814a75b8ce1f34b85aad",
+                "state": "VERIFIED",
+                "verification": {
+                  "cases_checked": 4,
+                  "evaluator": "json-function-v1",
+                  "passed": true,
+                  "quality": 1,
+                  "reason": "objective_cases_passed",
+                  "suite_sha256": "2ecaa1149cb1704e986ea5af5bf64d23d54446febc3805ccb396e1fc01a0a234",
+                  "synthetic": false,
+                  "unsupported": 0,
+                  "valid": true
+                }
+              }
+            },
+            "runtime": {
+              "commit": "b66efb0ba074bf8c6f6a8c0f0bc4761aa3e65739",
+              "source_sha256": "e711d1c3e7eb4dbd23b95f3027f5d97627b1f6880a2c252e2cefea8c522e817b",
+              "version": "0.3.0.dev4"
+            },
+            "source_sha256": "c8c3f858a2cc92b4308218ca1aa78a4b815172dd11025bd1d810e3f343b28bc5",
+            "status": "VERIFIED",
+            "synthetic": false
+          },
+          "started": 1795313009.0182848,
+          "state": "VERIFIED"
+        }
+      },
+      "manifest_ref": "artifacts/ee4aebbf1fd3342486abc12229d89aaa88b82b459a019f77dcdaff9970372515.json",
+      "event_refs": [
+        "artifacts/9e4039e39f15a1a2cbd61d0624302afac4ab16f865e38c72f0763ab8f544d00a.json",
+        "artifacts/1932947c02d6aaefee9aa4bf28d0287f00861903adecb3a6a2555555c9e93558.json",
+        "artifacts/60efff69616aebdd0de71590286c9f7f33d373d59a48a180aae666cbaf9537e4.json",
+        "artifacts/480977ecd9dab6ce4309b839716f807e3ff9892ba588b4284fd58c06e83eb4d2.json",
+        "artifacts/a7f92fcf738fefa50d64fb4f8e48ce78d24ddc6dbebe79810eee92ba9d1c851c.json",
+        "artifacts/2bd6e33648a6cca45014c4d82ec0a7e4319cffb72ff1d341acb11eac7576fe1d.json"
+      ],
+      "budget": {
+        "cycles": 3,
+        "requests": 0,
+        "tokens_actual": 0,
+        "tokens_reserved": 0,
+        "wall_s": 2.140999999945052
+      }
+    }
+  },
+  {
+    "arguments": [
+      "status"
+    ],
+    "store": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\combined-store",
+    "exit_code": 0,
+    "stdout_sha256": "e3e24100477136f01e3979477eb8e2857914b632eba243868a81002b0f28e553",
+    "stderr": "",
+    "result": {
+      "jobs": {
+        "BLOCKED": 3
+      },
+      "budget": {
+        "cycles": 3,
+        "requests": 0,
+        "tokens_actual": 0,
+        "tokens_reserved": 0,
+        "wall_s": 2.140999999945052
+      },
+      "worker": {
+        "finished": 1795313014.725866,
+        "pid": 54228,
+        "status": "stopped"
+      },
+      "stop_reason": "requested cycle limit reached",
+      "champion": null,
+      "campaign": null,
+      "next_research": null,
+      "adaptive": null,
+      "kill_switch": false,
+      "policy_hash": "6482cfb3555de1eeba8c179a1e32e1d9a5b4ecba5dfb4d9fe3e36e8dad369f63"
+    }
+  }
+]

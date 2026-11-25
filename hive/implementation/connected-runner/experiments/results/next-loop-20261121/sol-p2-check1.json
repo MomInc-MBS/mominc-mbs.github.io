@@ -1,0 +1,23 @@
+{
+  "v2_v3_selection_identical": true,
+  "missing_verifier": {
+    "dispatches": [
+      "tool"
+    ],
+    "cycles": 1,
+    "tool_eligible": true,
+    "verification": {
+      "evaluator": "failed",
+      "passed": false,
+      "quality": 0,
+      "reason": "Verifier exception: RuntimeError: verifier unavailable",
+      "unsupported": 1,
+      "valid": false
+    },
+    "route_source": "p2_exact_tool_preference"
+  },
+  "replay_decision_tamper": {
+    "direct_receipt_read": "ValueError",
+    "inspect_evidence_accepted": true
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "approved": false,
+  "pressure_manifest_sha256": "REQUIRED digest of exact real manifest",
+  "budget_id": "REQUIRED matching budget ID",
+  "operator": "REQUIRED local trusted operator assertion",
+  "budget": "REQUIRED exact approved limits; no inferred spending authorization"
+}

@@ -575,6 +575,24 @@
         "operator",
         "evidence"
       ]
+    },
+    {
+      "id": "CONNECTED",
+      "source_id": "HIVE-CONNECTED-RUNNER-2026-11-25",
+      "path": "updates/HIVE_Connected_Runner_2026-11-25.md",
+      "title": "Connected Goal Runner: goal to discovery to admission to reuse",
+      "type": "framework",
+      "status": "measured",
+      "evidence_status": "measured_engineering_result",
+      "implementation_status": "implemented",
+      "date": "2026-11-25",
+      "citation_label": "HIVE Connected Goal Runner (25 November 2026)",
+      "sha256": "59fcd933b275b5416d1722c02e308df1c5a173d5510a8e60b181a9aad899bd3f",
+      "tags": [
+        "hive",
+        "connected-runner",
+        "evidence"
+      ]
     }
   ],
   "edges": [
@@ -1411,6 +1429,16 @@
     {
       "source": "STATUS",
       "target": "OPERATOR",
+      "relation": "related_to"
+    },
+    {
+      "source": "STATUS",
+      "target": "CONNECTED",
+      "relation": "related_to"
+    },
+    {
+      "source": "OPERATOR",
+      "target": "CONNECTED",
       "relation": "related_to"
     }
   ],

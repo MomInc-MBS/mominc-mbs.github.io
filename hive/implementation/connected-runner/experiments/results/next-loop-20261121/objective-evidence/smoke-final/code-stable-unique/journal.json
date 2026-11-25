@@ -1,0 +1,188 @@
+{
+  "store": "smoke-final/code-stable-unique",
+  "original_job_count": 1,
+  "jobs": [
+    {
+      "id": "754e31c970794f51a014151b4dbab071",
+      "spec": {
+        "allow_retry": false,
+        "learn_feedback": false,
+        "mission_id": "code-stable-unique",
+        "operation_key": "aeb7bb582314c1c8d8098e311b865b6cce48a8fdea8f7722b2dc1b8134f44b19",
+        "retry_count": 0,
+        "route": "tool",
+        "task": {
+          "allowed_tools": [
+            "isolated_code"
+          ],
+          "category": "code_mission",
+          "critical": false,
+          "evaluator": "code_mission_v1",
+          "expected": {},
+          "id": "code-code-stable-unique-objective-candidate",
+          "input": {
+            "manifest": {
+              "allowlist": [
+                "app.py"
+              ],
+              "id": "code-stable-unique",
+              "image": {
+                "digest": "sha256:07d4824036af339fa1b6ef769cc99d9c10a141769538b52b3b597c84f7a7b535",
+                "reference": "python:3.11-slim"
+              },
+              "limits": {
+                "cpu_count": 1,
+                "memory_mb": 128,
+                "output_bytes": 8192,
+                "pids": 32,
+                "timeout_s": 15
+              },
+              "mounts": "read_only_source_clean_copy",
+              "network": "none",
+              "patches": [
+                {
+                  "content": "def stable_unique(values):\n    return list(dict.fromkeys(values))\n",
+                  "id": "objective-candidate",
+                  "path": "app.py",
+                  "sha256": "cef592b737dd6936bd424537eb3ca8ba95a2836ba9a9175148a99323b7140096"
+                }
+              ],
+              "repo": {
+                "path": "D:\\Repos\\hive-ai\\.hive\\objective-smoke-20261121-r2\\sources\\code-stable-unique",
+                "revision": "18029b806bde477423008fc34b0432c452995e4d",
+                "source_sha256": "e52e4a844decdd8f3746b4003afaae3fe81f0df2c303369495df2f2197e368de"
+              },
+              "schema_version": 1,
+              "verifier": {
+                "cases": [
+                  {
+                    "args": [
+                      []
+                    ],
+                    "expected": [],
+                    "id": "empty",
+                    "kwargs": {}
+                  },
+                  {
+                    "args": [
+                      [
+                        3,
+                        1,
+                        3,
+                        2,
+                        1
+                      ]
+                    ],
+                    "expected": [
+                      3,
+                      1,
+                      2
+                    ],
+                    "id": "duplicates-order",
+                    "kwargs": {}
+                  },
+                  {
+                    "args": [
+                      [
+                        "\u96ea",
+                        "\u732b",
+                        "\u96ea",
+                        "\u00e9"
+                      ]
+                    ],
+                    "expected": [
+                      "\u96ea",
+                      "\u732b",
+                      "\u00e9"
+                    ],
+                    "id": "unicode-order",
+                    "kwargs": {}
+                  }
+                ],
+                "function": "stable_unique",
+                "module": "app",
+                "path": "verifier.json",
+                "protocol": "json_function_v1",
+                "sha256": "eb80cd727685ed315f86cb77684e40571ccaa710cb2c3f84588b6c98a36b50c3"
+              },
+              "worker_files": [
+                "app.py"
+              ]
+            },
+            "operation_key": "aeb7bb582314c1c8d8098e311b865b6cce48a8fdea8f7722b2dc1b8134f44b19",
+            "patch_id": "objective-candidate"
+          },
+          "permissions": {
+            "routes": [
+              "tool"
+            ],
+            "version": 1
+          },
+          "prompt": "Run the pinned isolated code function contract.",
+          "split": "development",
+          "tool_schemas": {
+            "isolated_code": {
+              "manifest_id": "string",
+              "patch_id": "string"
+            }
+          }
+        }
+      },
+      "state": "BLOCKED",
+      "owner": "worker-48428",
+      "generation": 1,
+      "pid": 48428,
+      "result": {
+        "evidence_ref": "artifacts/c816cbdc8a5a0941da95d24d279ff6d7c275c8fa3489b0a4eb4a736507b6aceb.json",
+        "failure": null,
+        "passed": true,
+        "report_ref": "artifacts/9e937c344949b416b495b4b743c3f64e2a17bfad9549f94e21e97139abb4c53d.json",
+        "valid": true
+      }
+    }
+  ],
+  "events": [
+    {
+      "seq": 1,
+      "job_id": "754e31c970794f51a014151b4dbab071",
+      "state": "QUEUED",
+      "detail": null
+    },
+    {
+      "seq": 2,
+      "job_id": "754e31c970794f51a014151b4dbab071",
+      "state": "RUNNING",
+      "detail": {
+        "owner": "worker-48428"
+      }
+    },
+    {
+      "seq": 3,
+      "job_id": "754e31c970794f51a014151b4dbab071",
+      "state": "VERIFYING",
+      "detail": null
+    },
+    {
+      "seq": 4,
+      "job_id": "754e31c970794f51a014151b4dbab071",
+      "state": "REVIEWING",
+      "detail": {
+        "evidence_ref": "artifacts/c816cbdc8a5a0941da95d24d279ff6d7c275c8fa3489b0a4eb4a736507b6aceb.json"
+      }
+    },
+    {
+      "seq": 5,
+      "job_id": "754e31c970794f51a014151b4dbab071",
+      "state": "BLOCKED",
+      "detail": null
+    }
+  ],
+  "mission_config_hash": "17abb5470e515dfd317ad443df1f4d5d87f5cd1cfd3db5c1ca08be80f6741b36",
+  "budget": {
+    "cycles": 1,
+    "requests": 0,
+    "tokens_actual": 0,
+    "tokens_reserved": 0,
+    "wall_s": 1.6559999999590218
+  }
+}

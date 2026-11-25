@@ -1,0 +1,137 @@
+{
+  "scope": "Local raw fixture receipts, retained; full logs omitted from public package for size. H11 relative-path failures published separately.",
+  "logs": [
+    {
+      "command_log": "baseline-H01.log",
+      "bytes": 2162706,
+      "sha256": "2da9513ad495faadc6e963d26021aff6145cb1fcedc9c86be6ae8c3d7a3e0710",
+      "local_receipt": ".hive/next-loop-baseline-20261121/baseline-H01.log"
+    },
+    {
+      "command_log": "baseline-H01-replay.log",
+      "bytes": 2162706,
+      "sha256": "2da9513ad495faadc6e963d26021aff6145cb1fcedc9c86be6ae8c3d7a3e0710",
+      "local_receipt": ".hive/next-loop-baseline-20261121/baseline-H01-replay.log"
+    },
+    {
+      "command_log": "baseline-H02.log",
+      "bytes": 983034,
+      "sha256": "bd569848dc098b1fd2e0abdab88662b61b06e0797492bf71b1c8faccd96b94f7",
+      "local_receipt": ".hive/next-loop-baseline-20261121/baseline-H02.log"
+    },
+    {
+      "command_log": "baseline-H02-replay.log",
+      "bytes": 983034,
+      "sha256": "bd569848dc098b1fd2e0abdab88662b61b06e0797492bf71b1c8faccd96b94f7",
+      "local_receipt": ".hive/next-loop-baseline-20261121/baseline-H02-replay.log"
+    },
+    {
+      "command_log": "baseline-H03.log",
+      "bytes": 751728,
+      "sha256": "0182397e47c87bf3b502c2f3949e505cdfc16828233088686a11808005a3e6f7",
+      "local_receipt": ".hive/next-loop-baseline-20261121/baseline-H03.log"
+    },
+    {
+      "command_log": "baseline-H03-replay.log",
+      "bytes": 751728,
+      "sha256": "0182397e47c87bf3b502c2f3949e505cdfc16828233088686a11808005a3e6f7",
+      "local_receipt": ".hive/next-loop-baseline-20261121/baseline-H03-replay.log"
+    },
+    {
+      "command_log": "baseline-H04.log",
+      "bytes": 393776,
+      "sha256": "51bb81d1ad427e8dda34eb29d70b7bc13c0b129389e6d69da62d62409d2fce56",
+      "local_receipt": ".hive/next-loop-baseline-20261121/baseline-H04.log"
+    },
+    {
+      "command_log": "baseline-H04-replay.log",
+      "bytes": 393776,
+      "sha256": "51bb81d1ad427e8dda34eb29d70b7bc13c0b129389e6d69da62d62409d2fce56",
+      "local_receipt": ".hive/next-loop-baseline-20261121/baseline-H04-replay.log"
+    },
+    {
+      "command_log": "baseline-H05.log",
+      "bytes": 587066,
+      "sha256": "3c12e7adfc59dc060773afb1ec1c41edd1eefeb15700f94d316c1391e80a1431",
+      "local_receipt": ".hive/next-loop-baseline-20261121/baseline-H05.log"
+    },
+    {
+      "command_log": "baseline-H05-replay.log",
+      "bytes": 587066,
+      "sha256": "3c12e7adfc59dc060773afb1ec1c41edd1eefeb15700f94d316c1391e80a1431",
+      "local_receipt": ".hive/next-loop-baseline-20261121/baseline-H05-replay.log"
+    },
+    {
+      "command_log": "baseline-H06.log",
+      "bytes": 372482,
+      "sha256": "c95e3458f1182068f406431ecfe7a10f719b8777b3df77de185d03e0e5bf9605",
+      "local_receipt": ".hive/next-loop-baseline-20261121/baseline-H06.log"
+    },
+    {
+      "command_log": "baseline-H06-replay.log",
+      "bytes": 372482,
+      "sha256": "c95e3458f1182068f406431ecfe7a10f719b8777b3df77de185d03e0e5bf9605",
+      "local_receipt": ".hive/next-loop-baseline-20261121/baseline-H06-replay.log"
+    },
+    {
+      "command_log": "baseline-H07.log",
+      "bytes": 380320,
+      "sha256": "c60757ad3d26e89d7dd11583b9b13b0c9a87bd8e3d0e2f8bcf04f05ad0a8991a",
+      "local_receipt": ".hive/next-loop-baseline-20261121/baseline-H07.log"
+    },
+    {
+      "command_log": "baseline-H07-replay.log",
+      "bytes": 380320,
+      "sha256": "c60757ad3d26e89d7dd11583b9b13b0c9a87bd8e3d0e2f8bcf04f05ad0a8991a",
+      "local_receipt": ".hive/next-loop-baseline-20261121/baseline-H07-replay.log"
+    },
+    {
+      "command_log": "baseline-H08.log",
+      "bytes": 1375894,
+      "sha256": "78631f10fb71e20b01b66e21933f247b3f4ca7c2c86031b2139d3f969b5062f1",
+      "local_receipt": ".hive/next-loop-baseline-20261121/baseline-H08.log"
+    },
+    {
+      "command_log": "baseline-H08-replay.log",
+      "bytes": 1375894,
+      "sha256": "78631f10fb71e20b01b66e21933f247b3f4ca7c2c86031b2139d3f969b5062f1",
+      "local_receipt": ".hive/next-loop-baseline-20261121/baseline-H08-replay.log"
+    },
+    {
+      "command_log": "baseline-H09.log",
+      "bytes": 427614,
+      "sha256": "4704007765592abe3a6b1c27ca5ede89e8656cc260cba81ac91f5376ca506326",
+      "local_receipt": ".hive/next-loop-baseline-20261121/baseline-H09.log"
+    },
+    {
+      "command_log": "baseline-H09-replay.log",
+      "bytes": 427614,
+      "sha256": "4704007765592abe3a6b1c27ca5ede89e8656cc260cba81ac91f5376ca506326",
+      "local_receipt": ".hive/next-loop-baseline-20261121/baseline-H09-replay.log"
+    },
+    {
+      "command_log": "baseline-H10.log",
+      "bytes": 432526,
+      "sha256": "6e54ebfa8dafcb023cf40d7deccdbb37ea91c353969911f8a15f68455eec35ba",
+      "local_receipt": ".hive/next-loop-baseline-20261121/baseline-H10.log"
+    },
+    {
+      "command_log": "baseline-H10-replay.log",
+      "bytes": 432526,
+      "sha256": "6e54ebfa8dafcb023cf40d7deccdbb37ea91c353969911f8a15f68455eec35ba",
+      "local_receipt": ".hive/next-loop-baseline-20261121/baseline-H10-replay.log"
+    },
+    {
+      "command_log": "baseline-H11-absolute.log",
+      "bytes": 614728,
+      "sha256": "247c6bbdc02201167d8fc94c4d89988c689a99b663303e35fdf9f4735db472df",
+      "local_receipt": ".hive/next-loop-baseline-20261121/baseline-H11-absolute.log"
+    },
+    {
+      "command_log": "baseline-H11-absolute-replay.log",
+      "bytes": 614728,
+      "sha256": "247c6bbdc02201167d8fc94c4d89988c689a99b663303e35fdf9f4735db472df",
+      "local_receipt": ".hive/next-loop-baseline-20261121/baseline-H11-absolute-replay.log"
+    }
+  ]
+}

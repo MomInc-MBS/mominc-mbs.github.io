@@ -1,0 +1,39 @@
+Task: propose a step list (a workflow) that turns one input file into the required output, using only the steps in the symbol table.
+
+Symbol table (name: input type -> output type, behaviour)
+- identity: Source -> Source. Returns its input unchanged.
+- parse_whole: Source -> List[Row]. Reads a whole file into its rows, in order. If any row is defective, it fails for the whole file with the message of the first defective row.
+- split_rows: Source -> List[Source]. Cuts a file into one file per data row, in order.
+- aggregate: List[Row] -> Report. Counts the rows and sums the bytes per group.
+- to_json: List[Row] -> Source. Returns the rows, in input order, as a JSON file: keys sorted, no whitespace, only ASCII characters (non-ASCII written as \uXXXX escapes).
+- each(P): written exactly as, for example, each(identity), for any P above. It applies P to every element of a list; a failure of P on an element is recorded with that element's 0-based position and the failure message, and that element is skipped. If P returns a list, the lists are concatenated. each(P) takes List[<input type of P>] and returns List[<output type of P>], except that a list-valued output is not wrapped again.
+Types: Source is a file {format, bytes}; Row is {id, group, bytes}; Report is a JSON object.
+
+Grammar
+- A workflow is a list of 1 to 3 steps, run in order.
+- Each step is one symbol from the table: a plain name, or each(name). No nesting, no parameters, no loops, no conditionals.
+- The output type of each step must equal the input type of the next step.
+- The first step's input type is the input type below, and the last step's output type must be the target type below.
+- A workflow identical to an earlier proposal in this session is refused.
+
+Input type: Source
+Target type: Source
+
+Input. One source file: format is csv or json, plus its bytes. UTF-8, no BOM; CSV has the exact header id,group,bytes and three fields per row; JSON is an array with no duplicate keys or non-finite numbers; 1 to 60 rows (at least 2 if defective); no duplicate ids. Each defective row has one of the five defects listed below; when several apply, the earliest listed wins. Every JSON file, valid or invalid, in every partition is non-canonical: its bytes differ from json.dumps(<its own array>, sort_keys=True, separators=(",",":"), ensure_ascii=True) (extra whitespace, unsorted keys or literal non-ASCII characters).
+
+Output. Canonical JSON (sorted keys, separators `,` `:`, `ensure_ascii=True`). Valid file: {"converted":T,"quarantined":[]}, where T is the UTF-8 text of json.dumps(rows, sort_keys=True, separators=(",",":"), ensure_ascii=True), rows are the file's data rows in input order as {"bytes":int,"group":str,"id":str} (CSV bytes as an integer), and the format is JSON whatever the input format. Invalid file (any defect): {"error":"source_rejected"}; the reason is not part of the output. The pass unit is one source file: the output must equal the expected output byte for byte.
+
+The five row defects, in precedence order (message in quotes)
+1. The JSON row is not an object, or its key set is not exactly {id, group, bytes}: "source row does not match the pinned schema"
+2. id is not a string, is empty, or is longer than 128 characters: "row IDs must be unique nonempty strings of at most 128 characters"
+3. group is not a string, is empty, or is longer than 128 characters: "inventory groups must be nonempty strings of at most 128 characters"
+4. A CSV bytes value does not match 0|[1-9][0-9]{0,9}: "bytes must be a canonical nonnegative decimal integer"
+5. bytes is not of exact type int in [0, 10^9]. This covers JSON floats, booleans, strings and out-of-range values, and canonical CSV values above 10^9: "bytes must be an integer between 0 and 1,000,000,000"
+
+Examples (input file, then expected output)
+<<EXAMPLES>>
+
+Earlier proposals in this session, oldest first (none on the first round):
+<<HISTORY>>
+
+<<CONTRACT>>

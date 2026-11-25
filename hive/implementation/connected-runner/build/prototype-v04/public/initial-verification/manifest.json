@@ -1,0 +1,83 @@
+{
+  "scope": "Independent frozen runtime zero-inference regression; public synthetic objective smoke",
+  "frozen_commit": "117e983e0ca3650c5cc70b9b2b46ce52f00d1215",
+  "runtime_version": "0.4.0.dev1",
+  "runtime_sha256": "a93b09ac05be182e6e47f69ded88b8aead0d85f0a32376fd14ba2654f4900041",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "run_directory": "frozen git archive, Git ceiling set to archive parent",
+  "commands": [
+    "python -u -m pytest -q -r s --junitxml=<final-verification>/pytest.xml",
+    "npx --no-install e2e run --workers 1 --retries 0 --output final-e2e",
+    "python -u scripts/objective_smoke.py --work <fresh-final-objective-store>",
+    "python -u scripts/objective_smoke.py --work <fresh-final-objective-store> --replay",
+    "python -u scripts/objective_smoke.py --work <fresh-final-objective-store> --replay-data",
+    "python -m hive doctor --offline"
+  ],
+  "pytest": {
+    "passed": 483,
+    "failed": 0,
+    "skipped": 3,
+    "seconds": 556.73,
+    "skip_reasons": [
+      "OS does not allow symlinks",
+      "Windows developer privileges required for symlinks",
+      "Windows session cannot create symlinks"
+    ]
+  },
+  "e2e": {
+    "runner": {
+      "name": "e2e",
+      "version": "0.21.1"
+    },
+    "summary": {
+      "discovered": 7,
+      "selected": 7,
+      "executed": 7,
+      "passed": 7,
+      "failed": 0,
+      "flaky": 0,
+      "skipped": 0
+    },
+    "serial_workers": 1,
+    "retries": 0,
+    "seconds": 88.53
+  },
+  "objective": {
+    "tasks": 12,
+    "verified": 12,
+    "equal_budget_fresh_replay": 12,
+    "actual_model_requests": 0,
+    "docker_image": "python@sha256:07d4824036af339fa1b6ef769cc99d9c10a141769538b52b3b597c84f7a7b535",
+    "docker_daemon": "29.8.2"
+  },
+  "acceptance_manifest_sha256": {
+    "experiments/plans/readiness-level-a.json": "c935f179c356f3cd61c9d271e100fc85b7b56deb1a9ecdccae323827351b9644",
+    "experiments/plans/readiness-level-a-intake.template.json": "58b8f322daf8f1cc105acbd38a46d8b944c562e97352f4526212c67b121170af",
+    "docs/LEVEL_A_ACCEPTANCE.md": "8554fd117084cfaa8f6d29ceb88daeea17beea62e12a171f0657a92b37dbc390"
+  },
+  "limitations": [
+    "Synthetic development pipeline checks do not establish Level A acceptance, generalization, model quality or useful learning.",
+    "No model inference, budget reset, new weights or policy promotion during verification.",
+    "CPU and GPU overhead unmeasured."
+  ],
+  "receipt_sha256": {
+    "doctor-offline.json": "c8949883d5e29896b2d87024af8690c67c751f6ebffd60e3ba09bcd279dc964a",
+    "doctor-offline.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "e2e-report.json": "67ecda6e063c49785863c575f23a465eaaf2d2d2f3e295bd40d235f2c0ffea3d",
+    "e2e.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "e2e.log": "ce4a61d913bd1b955f4f24b68d8c862c38f30dc04d1660a8f3ad8d0d649d0cb9",
+    "objective-report.json": "0e31cf3129cce075e36dd70f57fe5bd1a0da323a846dfa9b313274ea4342a444",
+    "objective.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "objective.log": "82f775ca6fe152146766ba68d19facabd283fdc5b9b7de2afa7f1ed812c53834",
+    "pytest.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "pytest.log": "521bf9ec7c2553ff58d2cec2e5fc5175a694d8cac064722603f15a3293e2829a",
+    "pytest.xml": "9264cf4157a35fedf78bfb6342ca152d95cc8951395219cd55000cd141592997",
+    "replay-data.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "replay-data.json": "85fb368cce2321a5667f941a61c1b7459b8873442df06818b7104e06d3de34ae",
+    "replay-data.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "replay.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "replay.json": "fa59cf18cd92e7fe502372446ecac40b1f0ff14f03e30ab5bcc3b06c1a326ed2",
+    "replay.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "run.ps1": "7f8a4db0f19ec9e955e5843a6d092dfc5e1d2680e2ed1d287474c014fd910f44"
+  }
+}

@@ -1,0 +1,117 @@
+{
+ "checks": {
+  "1_convert_goal": true,
+  "2_merge_goal": true,
+  "3_folders_compose_merge": true,
+  "4_revoked_refused_then_reselect": true,
+  "5_inventory_diff_gap": true,
+  "6_restart_same_goal_replays": true,
+  "7_old_explicit_op_works": true,
+  "model_calls_zero": true
+ },
+ "all_pass": true,
+ "journeys": {
+  "convert": {
+   "state": "VERIFIED",
+   "plan": [
+    "convert(input:0)"
+   ],
+   "steps": [
+    [
+     "convert",
+     "VERIFIED",
+     "retained_capability_reuse",
+     "PASS"
+    ]
+   ],
+   "download_sha_ok": true,
+   "rows": 69
+  },
+  "merge": {
+   "state": "VERIFIED",
+   "plan": [
+    "merge(input:0,input:1,input:2)"
+   ],
+   "download_sha_ok": true,
+   "groups": 8
+  },
+  "composition": {
+   "state": "VERIFIED",
+   "plan": [
+    "snapshot(input:0)",
+    "snapshot(input:1)",
+    "merge(step:s1,step:s2)"
+   ],
+   "steps": [
+    [
+     "snapshot",
+     "VERIFIED",
+     "builtin_adapter",
+     "PASS"
+    ],
+    [
+     "snapshot",
+     "VERIFIED",
+     "builtin_adapter",
+     "PASS"
+    ],
+    [
+     "merge",
+     "VERIFIED",
+     "retained_capability_reuse",
+     "PASS"
+    ]
+   ],
+   "download_sha_ok": true,
+   "counts": 10
+  },
+  "explicit_op": {
+   "http": 202,
+   "state": "VERIFIED"
+  },
+  "restart_replay": {
+   "goals_persisted": true,
+   "state": "VERIFIED",
+   "mode": "saved_result_replay",
+   "replayed_steps": 1,
+   "container_runs_delta": 0
+  },
+  "revoke_http": 200,
+  "revoked_then_reselect": {
+   "merge_state": "UNRESOLVED",
+   "merge_reason": "no typed plan from the eligible capabilities",
+   "container_runs_delta": 0,
+   "excluded": [
+    {
+     "op": "merge",
+     "reason": "selected version a06169a55d9a is revoked"
+    }
+   ],
+   "convert_after_rollback": "UNRESOLVED",
+   "convert_after_reselect": "VERIFIED"
+  },
+  "diff": {
+   "state": "UNRESOLVED",
+   "reason": "no typed plan from the eligible capabilities",
+   "gap_ref": "operator/gap/a36d70e72601b115"
+  },
+  "counters": {
+   "start": {
+    "executions": 0,
+    "container_runs": 0,
+    "model_calls": 0,
+    "proposal_calls": 0,
+    "replays": 0,
+    "refusals": 0
+   },
+   "final": {
+    "container_runs": 5,
+    "executions": 5,
+    "model_calls": 0,
+    "proposal_calls": 0,
+    "refusals": 0,
+    "replays": 1
+   }
+  }
+ }
+}

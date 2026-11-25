@@ -1,0 +1,86 @@
+{
+  "run_id": "6e14d5b5c6f6",
+  "build": {
+    "version": "0.2.1",
+    "commit": "unversioned",
+    "source_sha256": "2f1ad5f919ec8918a6d699ee0c4328438e5b203294e4048717c0134c9e9bc37f"
+  },
+  "config_hash": "cca5daf08b55afdc33060edfff145db667d06591a33699f2d948030edd72f15c",
+  "manifest_ref": "artifacts/6e14d5b5c6f6e678c1904de9ee8f94992caf088840be799e77609e82109e379b.json",
+  "plan": {
+    "version": 1,
+    "seed": 20261122,
+    "rounds": 3,
+    "development": {
+      "split": "development",
+      "count_per_category": 1,
+      "routes": [
+        "local_direct",
+        "local_tool"
+      ]
+    },
+    "validation": {
+      "split": "validation",
+      "count_per_category": 1,
+      "candidates": [
+        "learned_greedy",
+        "fixed_local_tool",
+        "fixed_tool"
+      ]
+    },
+    "baseline": "fixed local_direct",
+    "selection_label": "Repeated validation is development selection evidence, not heldout proof.",
+    "max_local_requests": 30,
+    "hypothesis": "Verified development feedback can choose a local route that improves paired validation quality without critical regressions; utility is descriptive."
+  },
+  "label": "Repeated validation is development selection evidence, not heldout proof.",
+  "state": "PAUSED",
+  "stages": [
+    {
+      "source": {
+        "commit": "unversioned",
+        "source_sha256": "2f1ad5f919ec8918a6d699ee0c4328438e5b203294e4048717c0134c9e9bc37f",
+        "version": "0.2.1"
+      },
+      "stage": "build",
+      "status": "completed"
+    },
+    {
+      "plan_hash": "6e14d5b5c6f6e678c1904de9ee8f94992caf088840be799e77609e82109e379b",
+      "stage": "preregister",
+      "status": "completed"
+    },
+    {
+      "detail": "Using the durable Executor and finite built-in task families.",
+      "stage": "build",
+      "status": "verified"
+    }
+  ],
+  "development": {
+    "feedback_rows": 0,
+    "policy_artifact": null
+  },
+  "baseline": {
+    "route": "local_direct",
+    "validation_refs": []
+  },
+  "candidates": [],
+  "experimental_incumbent": null,
+  "approved_checkpoint_changed": false,
+  "current_checkpoint": null,
+  "budget": {
+    "requests": 0,
+    "tokens_reserved": 0,
+    "tokens_actual": 0,
+    "wall_s": 0.0,
+    "cycles": 0
+  },
+  "remaining_budget": {
+    "requests": 30,
+    "tokens_reserved": 3840,
+    "wall_s": 600.0,
+    "cycles": 50
+  },
+  "next_action": "Resume the same adaptive command with the unchanged source and config when ready.",
+  "stop_reason": "kill switch"
+}
