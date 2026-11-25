@@ -238,7 +238,23 @@
       "apk": "download/alarm/mom-alarm-2048-0.1.0.apk",
       "href": "/download/alarm/",
       "card": "games/goon/index.html",
-      "minAndroid": "10"
+      "minAndroid": "10",
+      "web": {
+        "description": "Free-play 2048 on the Coach Reminders mini-computer, in your browser. Daily alarms need the Android app.",
+        "mode": "module",
+        "src": "/apps/alarm/app.mjs",
+        "mount": "mountAlarm",
+        "options": {},
+        "style": "/apps/alarm/app.css",
+        "bestKey": "mom-alarm-2048-web-best-v1",
+        "bestLabel": "Best score",
+        "theme": "#2a0a44",
+        "orientation": "portrait",
+        "icons": ["icon-192.png", "icon-512.png", "icon-maskable-512.png"],
+        "settings": ["reset-best"],
+        "pack": "app-alarm",
+        "browserPlay": true
+      }
     },
     {
       "id": "corgi",

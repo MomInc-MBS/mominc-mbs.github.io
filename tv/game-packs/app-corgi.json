@@ -94,13 +94,13 @@
     },
     {
       "url": "/tv/channels/corgi.js",
-      "revision": "cbfff99be5e209d56a4b833cdff4078f37e621e9",
-      "bytes": 224779
+      "revision": "ca73641acacbcb9a7226d066b57491eaaa874478",
+      "bytes": 225325
     },
     {
       "url": "/tv/game-loader.js",
-      "revision": "e298504431b41fd38fb09f4d0cb2d501cfd9704f",
-      "bytes": 14615
+      "revision": "38711f0b66657306cad822ac49270fc5df3e9a56",
+      "bytes": 14646
     },
     {
       "url": "/tv/tv.css",
@@ -109,5 +109,5 @@
     }
   ],
   "fontStyles": [],
-  "version": "2c4599b55c912b667f01"
+  "version": "059603ede25a4d6c1537"
 }

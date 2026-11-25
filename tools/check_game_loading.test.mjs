@@ -365,7 +365,7 @@ test('recovery scripts bypass stale installed packs but remain available offline
 });
 
 test('all generated packs match every current website asset', () => {
-  const committed = new Map(execFileSync('git', ['ls-tree', '-r', '-l', 'HEAD'], {cwd: root, encoding: 'utf8'})
+  const committed = new Map(execFileSync('git', ['ls-tree', '-r', '-l', 'HEAD'], {cwd: root, encoding: 'utf8', maxBuffer: 1 << 28})
     .trim().split('\n').map(line => {
       const [info, path] = line.split('\t');
       const [, kind, revision, bytes] = info.split(/\s+/);
