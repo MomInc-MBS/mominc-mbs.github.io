@@ -4,13 +4,13 @@
   "assets": [
     {
       "url": "/apps/alarm/app.css",
-      "revision": "c69ed7ecbdd9207d979c0552157a972984a41cd4",
-      "bytes": 2708
+      "revision": "ba16ae1b5b6a7289f94420a2a8893c0d457899f1",
+      "bytes": 5371
     },
     {
       "url": "/apps/alarm/app.mjs",
-      "revision": "85f1d0f9e4e8d8537f816046c2ea71b7007dbdf8",
-      "bytes": 4085
+      "revision": "61ab156e06750fa456e22f0e4b873a0b3b49804c",
+      "bytes": 21698
     },
     {
       "url": "/apps/alarm/board.js",
@@ -19,8 +19,8 @@
     },
     {
       "url": "/apps/alarm/computer.js",
-      "revision": "61456c9f8a50c3a8ae8790445a1fd3ea65327401",
-      "bytes": 9914
+      "revision": "ee4cb382c28d8f0394bb37ddd105f50a77504728",
+      "bytes": 9924
     },
     {
       "url": "/apps/alarm/icon-192.png",
@@ -43,6 +43,21 @@
       "bytes": 9885132
     },
     {
+      "url": "/apps/alarm/push.js",
+      "revision": "08ec7d4e6661746688fcac757116db5586cc654a",
+      "bytes": 6422
+    },
+    {
+      "url": "/apps/alarm/remind.js",
+      "revision": "93eeb138448e920cef1a27f49882180300ee67da",
+      "bytes": 11959
+    },
+    {
+      "url": "/apps/alarm/stages.js",
+      "revision": "17cff2180459a4cb3e8d3e95e76eb11031fd55f8",
+      "bytes": 1823
+    },
+    {
       "url": "/apps/alarm/vendor/loaders/GLTFLoader.js",
       "revision": "4d194ffb11265ed629f59f69dff6e13c457e101a",
       "bytes": 110046
@@ -59,8 +74,8 @@
     },
     {
       "url": "/apps/apps.json",
-      "revision": "5fc4897cd479ca791ef97b2aa3ed69311bb588f5",
-      "bytes": 8846
+      "revision": "db06b6ce6958331967a92045fd2354fd9a4234f4",
+      "bytes": 8810
     },
     {
       "url": "/apps/corgi/app.css",
@@ -189,18 +204,18 @@
     },
     {
       "url": "/gala/gramophone.css",
-      "revision": "090ebcb3453213325888280fe9a500552e5d99ae",
-      "bytes": 1813
+      "revision": "b58f8d7c63b125ed1bfdc6485f111a0698984e86",
+      "bytes": 1044
     },
     {
       "url": "/gala/gramophone.js",
-      "revision": "1e310610e5af5330d74345983fe07a2b1b0fa961",
-      "bytes": 4104
+      "revision": "3359454f2024e70fdc453fb4d58550714d6000fd",
+      "bytes": 3848
     },
     {
       "url": "/gala/guest.css",
-      "revision": "f528d896a001f52dacfaa5f64226e94681e16b75",
-      "bytes": 1752
+      "revision": "08845d57c3bac6ebba52e5e15e245f6f6fa1a363",
+      "bytes": 1593
     },
     {
       "url": "/gala/guest.js",
@@ -244,7 +259,7 @@
     },
     {
       "url": "/gala/war-room-boot.js",
-      "revision": "3ae73874fed16eec1151c50e482ef2965301c417",
+      "revision": "4afc982ebd30ca7c865a21a13b94ddf35d480c08",
       "bytes": 1404
     },
     {
@@ -604,8 +619,8 @@
     },
     {
       "url": "/tv/channels/goon.html",
-      "revision": "9c7d00959b43dcd5ba22813de81712e3c2d0ac57",
-      "bytes": 22709
+      "revision": "15de2e004e5730a95db942d181cdac8228e75191",
+      "bytes": 22610
     },
     {
       "url": "/tv/dj-booth.css",
@@ -629,13 +644,13 @@
     },
     {
       "url": "/tv/game-loader.js",
-      "revision": "030fdfcb33be366788c78d3dfb482d31b0e7c5aa",
-      "bytes": 14636
+      "revision": "38711f0b66657306cad822ac49270fc5df3e9a56",
+      "bytes": 14646
     },
     {
       "url": "/tv/games/goon/assets/index-W2w8AfON.js",
-      "revision": "e7c6181ffe16264f6fbfa9a212ef261a44ef77d3",
-      "bytes": 2043141
+      "revision": "3579964f06e7f1502dd87c83a16b99be3467f600",
+      "bytes": 2042488
     },
     {
       "url": "/tv/games/goon/assets/index-vg_3atLR.css",
@@ -644,8 +659,8 @@
     },
     {
       "url": "/tv/games/goon/war-room.html",
-      "revision": "9ac131a0a2fa3b42999b69db9e42040ebcc9e2ea",
-      "bytes": 1430
+      "revision": "9b754d290d606cfe6d9c3162cdfb123f8fcbcd7a",
+      "bytes": 1434
     },
     {
       "url": "/tv/identity.css",
@@ -689,8 +704,8 @@
     },
     {
       "url": "/tv/mom-tour.js",
-      "revision": "7c52fac654450cbed7d465b078c81e589680a890",
-      "bytes": 26868
+      "revision": "8b804658e69a23405992e0ca1525e16897950c5b",
+      "bytes": 26470
     },
     {
       "url": "/tv/mount.js",
@@ -754,8 +769,8 @@
     },
     {
       "url": "/tv/state.js",
-      "revision": "7f3144a96df88641bfcdb0e034c31b2c89adcbee",
-      "bytes": 27521
+      "revision": "d9e7f260dad1f5fe27ecd5469f1d20ef8539c230",
+      "bytes": 27491
     },
     {
       "url": "/tv/touch-controls.js",
@@ -781,5 +796,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "4311da8f0ed88ed5c7b0"
+  "version": "9526f5546d8b9b3b82b9"
 }

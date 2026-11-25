@@ -1,0 +1,20 @@
+# ADHD push sender. NOT DEPLOYED. Replace the placeholders, then follow README.md.
+name = "adhd-push"
+main = "src/worker.mjs"
+compatibility_date = "2026-11-01"
+
+[triggers]
+crons = ["* * * * *"]            # every minute; Workers cron cannot go finer, so 30 s stages land within ~60 s
+
+[[d1_databases]]
+binding = "DB"
+database_name = "adhd-push"
+database_id = "REPLACE-WITH-D1-DATABASE-ID"
+migrations_dir = "migrations"
+
+[vars]
+ALLOW_ORIGIN = "https://mominc.online"        # browser origin allowed to call the API (CORS)
+PUBLIC_ORIGIN = "https://REPLACE.workers.dev"  # this Worker's public URL; goes into notices so the service worker can report receipt
+VAPID_PUBLIC = "REPLACE-WITH-PUBLIC-KEY"       # from scripts/gen-vapid.mjs (public half is not secret)
+VAPID_SUBJECT = "mailto:REPLACE@example.com"
+# VAPID_PRIVATE_KEY is a SECRET: `wrangler secret put VAPID_PRIVATE_KEY`. Never commit it.

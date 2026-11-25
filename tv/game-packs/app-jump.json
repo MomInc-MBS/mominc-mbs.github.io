@@ -49,8 +49,8 @@
     },
     {
       "url": "/apps/shell.mjs",
-      "revision": "181f95f1b44f8e16f0967428e7bf229824689878",
-      "bytes": 5394
+      "revision": "cb9640fbd4cd94350d4b63c7d7f7978c5d539c58",
+      "bytes": 5633
     },
     {
       "url": "/arcade/pyramid-jump/data.mjs",
@@ -104,10 +104,10 @@
     },
     {
       "url": "/tv/game-loader.js",
-      "revision": "030fdfcb33be366788c78d3dfb482d31b0e7c5aa",
-      "bytes": 14636
+      "revision": "38711f0b66657306cad822ac49270fc5df3e9a56",
+      "bytes": 14646
     }
   ],
   "fontStyles": [],
-  "version": "d4446880ef684bf333c6"
+  "version": "b68ddcbc1166203b3f5f"
 }
