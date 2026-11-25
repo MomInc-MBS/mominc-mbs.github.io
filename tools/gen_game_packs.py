@@ -20,7 +20,7 @@ EXT = {'.html', '.js', '.mjs', '.css', '.json', '.png', '.jpg', '.jpeg', '.webp'
 TEXT = {'.html', '.js', '.mjs', '.css', '.json', '.mtl', '.webmanifest'}
 SLUGS = ['mominc', 'girlfriend', 'lilboyfriend', 'corgi', 'djscratch', 'fuel', 'goon', 'war-room', 'armie', 'handborne', 'misinformation']
 # Installable apps (apps/apps.json): one lean pack per ready PWA, named app-<id>.
-APPS = {a['pack']: a for a in json.loads((ROOT / 'apps/apps.json').read_text(encoding='utf-8'))['apps']
+APPS = {a['pack']: a for a in ({**a, **a['web'], 'type': 'pwa'} if 'web' in a else a for a in json.loads((ROOT / 'apps/apps.json').read_text(encoding='utf-8'))['apps'])  # 'web' = PWA half of an apk record
         if a['type'] == 'pwa' and a['status'] == 'ready'}
 SLUGS += sorted(APPS)
 # Optional on-demand packs of an app (e.g. Hand models): exactly their listed files, nothing scanned in.

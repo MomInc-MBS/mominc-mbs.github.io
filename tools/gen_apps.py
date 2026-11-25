@@ -104,7 +104,9 @@ MODELS = """<section class="panel">
 
 def load():
     catalogue = json.loads((ROOT / 'apps/apps.json').read_text(encoding='utf-8'))
-    apps = [a for a in catalogue['apps'] if a['type'] == 'pwa' and a['status'] == 'ready']
+    # An app that also has an APK keeps its apk record and carries its web app under "web".
+    apps = [{**a, **a['web'], 'type': 'pwa'} if 'web' in a else a for a in catalogue['apps']]
+    apps = [a for a in apps if a['type'] == 'pwa' and a['status'] == 'ready']
     ids = [a['id'] for a in catalogue['apps']]
     if len(set(ids)) != len(ids):
         raise SystemExit('duplicate app id in apps.json')
