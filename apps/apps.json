@@ -228,8 +228,8 @@
     {
       "id": "alarm",
       "type": "apk",
-      "name": "MOM 2048 Alarm",
-      "shortName": "2048 Alarm",
+      "name": "ADHD — Alarm for the Distracted, Hungry & Disorganized",
+      "shortName": "ADHD",
       "description": "A daily alarm that keeps sending notifications until you merge a real 2048 tile, inside the Coach Reminders mini-computer.",
       "status": "ready",
       "version": "0.1.0",

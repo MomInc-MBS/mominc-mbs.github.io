@@ -1,4 +1,4 @@
-// Mini-computer stage for the MOM 2048 Alarm app.
+// Mini-computer stage for the ADHD app.
 // SOURCE (verbatim copies, marked below): D:/myr5-work/coach-run-hud-1029 @ 16618a6109a6aefb48bf3fae1441f436c431d279
 //   modules/rooms/reminders-computer.mjs  (Coach Reminders mini-computer; asset pod/rooms/console.glb, 9885132 bytes)
 // Reused unchanged: SCREEN/MODEL_* constants, screenProjection, prepareCabinet, makeCords, releaseObject and the camera/screen

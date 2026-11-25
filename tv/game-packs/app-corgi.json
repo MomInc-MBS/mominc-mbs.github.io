@@ -99,8 +99,8 @@
     },
     {
       "url": "/tv/game-loader.js",
-      "revision": "38711f0b66657306cad822ac49270fc5df3e9a56",
-      "bytes": 14646
+      "revision": "030fdfcb33be366788c78d3dfb482d31b0e7c5aa",
+      "bytes": 14636
     },
     {
       "url": "/tv/tv.css",
@@ -109,5 +109,5 @@
     }
   ],
   "fontStyles": [],
-  "version": "059603ede25a4d6c1537"
+  "version": "98d7fd04a1596ef087b7"
 }

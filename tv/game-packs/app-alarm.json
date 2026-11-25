@@ -4,13 +4,13 @@
   "assets": [
     {
       "url": "/apps/alarm/app.css",
-      "revision": "d533178597080c4cfa92d0df4e3d97816119b822",
-      "bytes": 2668
+      "revision": "c69ed7ecbdd9207d979c0552157a972984a41cd4",
+      "bytes": 2708
     },
     {
       "url": "/apps/alarm/app.mjs",
-      "revision": "b865bddaa59672ceb9bc395f4599a3fb40907a7e",
-      "bytes": 4035
+      "revision": "85f1d0f9e4e8d8537f816046c2ea71b7007dbdf8",
+      "bytes": 4085
     },
     {
       "url": "/apps/alarm/board.js",
@@ -19,8 +19,8 @@
     },
     {
       "url": "/apps/alarm/computer.js",
-      "revision": "ee4cb382c28d8f0394bb37ddd105f50a77504728",
-      "bytes": 9924
+      "revision": "61456c9f8a50c3a8ae8790445a1fd3ea65327401",
+      "bytes": 9914
     },
     {
       "url": "/apps/alarm/icon-192.png",
@@ -39,13 +39,13 @@
     },
     {
       "url": "/apps/alarm/index.html",
-      "revision": "a4cd1e78ea84271d29259e345fb43aaae0838d10",
-      "bytes": 2463
+      "revision": "f02e7d373093fd255dd3dce9d3f67570ebd4ad47",
+      "bytes": 2640
     },
     {
       "url": "/apps/alarm/manifest.webmanifest",
-      "revision": "b7da99ca86fc670608355e128e9cb312a2886e80",
-      "bytes": 806
+      "revision": "7a7b33bf114bf1366cc6716ce9df8a8fa8c88ecf",
+      "bytes": 845
     },
     {
       "url": "/apps/alarm/model/console.glb",
@@ -89,10 +89,10 @@
     },
     {
       "url": "/tv/game-loader.js",
-      "revision": "38711f0b66657306cad822ac49270fc5df3e9a56",
-      "bytes": 14646
+      "revision": "030fdfcb33be366788c78d3dfb482d31b0e7c5aa",
+      "bytes": 14636
     }
   ],
   "fontStyles": [],
-  "version": "279e39664c0497f3ad46"
+  "version": "cedb8ce56d5f8aa1573a"
 }

@@ -3,11 +3,11 @@ const KEY='mominc-gramophone-v1',POSITION='mominc-gramophone-position-v1',audio=
 let preference={enabled:true,volume:.35},playing=false,pending=false,restoreAt=0,generation=0;
 try{const saved=JSON.parse(localStorage.getItem(KEY));if(saved){preference.enabled=saved.enabled!==false;if(Number.isFinite(saved.volume))preference.volume=Math.max(0,Math.min(1,saved.volume));}restoreAt=Number(sessionStorage.getItem(POSITION))||0;}catch{}
 audio.volume=preference.volume;
-const style=document.createElement('link');style.rel='stylesheet';style.href='/gala/gramophone.css?v=1';document.head.append(style);
+const style=document.createElement('link');style.rel='stylesheet';style.href='/gala/gramophone.css?v=2';document.head.append(style);
 const panel=document.createElement('div');panel.className='gala-gramophone';panel.setAttribute('aria-label','Gramophone music');
 panel.innerHTML='<button type="button" class="gramophone-toggle" aria-pressed="false">♫ Play gramophone</button><label class="gramophone-volume">Volume<input type="range" min="0" max="100" step="5" aria-label="Music volume"></label><a class="gramophone-credit" href="/gala/music.html" target="_blank" rel="noopener">Satie · recording credits</a>';
 const button=panel.querySelector('button'),volume=panel.querySelector('input');volume.value=String(preference.volume*100);
-const slot=document.querySelector('[data-gramophone-slot]');if(slot){slot.append(panel);panel.classList.add('is-inline');}else document.body.append(panel);
+const slot=document.querySelector('[data-gramophone-slot]');if(slot){slot.append(panel);panel.classList.add('is-inline');}else{const d=document.createElement('details'),m=document.createElement('summary');d.className='gramophone-chip';m.textContent='♫';m.setAttribute('aria-label','Gramophone music');d.append(m,...panel.childNodes);panel.append(d);panel.classList.add('is-chip');document.body.append(panel);}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(preference));}catch{}}
 function remember(){if(Number.isFinite(audio.currentTime))try{sessionStorage.setItem(POSITION,String(audio.currentTime));}catch{}}
 function paint(){button.textContent=pending?'♫ Starting…':playing?'♫ Mute gramophone':'♫ Play gramophone';button.setAttribute('aria-pressed',String(playing));}

@@ -148,8 +148,10 @@ test('all twelve 3D ammo models fit their cells and have distinct geometry',asyn
   if(tier<=12)signatures.add(JSON.stringify(object.children.map(m=>[m.geometry.type,m.geometry.parameters,m.material.color.getHex()])));
  }assert.equal(signatures.size,12);
 });
-test('a Gala win and the scam screen offer the 2048 download',()=>{
+test('both Goon endings and the scam screen offer the ADHD download',()=>{
  for(const f of ['index-gala-classic.js','index-W2w8AfON.js']){const b=read('tv/games/goon/assets/'+f);
-  assert.match(b,/\["\/apps\/alarm\/","PLAY 2048[^\]]*\],\["\/download\/alarm\/"/);assert.match(b,/a\.target="_top"/);assert.match(b,/m&&d\.append\(document\.createElement\("br"\),galaDownload2048\(\)\)/);
-  assert.match(b,/getItem\("mbs-gala-completed-v1"\)[^;]*galaDownload2048\(\)/);}
+  assert.match(b,/\["\/apps\/alarm\/","OPEN ADHD[^\]]*\],\["\/download\/alarm\/","DOWNLOAD ADHD/);assert.match(b,/a\.target="_top"/);
+  assert.match(b,/[,;]d\.append\(document\.createElement\("br"\),galaDownload2048\(\)\)/);assert.doesNotMatch(b,/m&&d\.append\(document\.createElement\("br"\),galaDownload2048/);   // both endings show it
+  assert.match(b,/getItem\("mbs-gala-completed-v1"\)\|\|localStorage\.getItem\("goon-result-menu-reached-v2"\)[^;]*galaDownload2048\(\)/);
+  assert.match(b,/"NO_LEGAL_MOVES"/);assert.match(b,/if\(y\)\{window\.MBS_RUN\?\.checkpoint\("goon"\);/);}
 });
