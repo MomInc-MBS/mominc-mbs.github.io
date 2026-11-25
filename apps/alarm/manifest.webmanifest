@@ -2,7 +2,7 @@
   "id": "/apps/alarm/",
   "name": "ADHD \u2014 Alarm for the Distracted, Hungry & Disorganized",
   "short_name": "ADHD",
-  "description": "Free-play 2048 on the Coach Reminders mini-computer, in your browser. Daily alarms need the Android app.",
+  "description": "2048 on the Coach Reminders mini-computer, plus reminders: a horn alarm while the app is open, and push reminders once installed to your Home Screen. Locked-phone horns need the Android app.",
   "start_url": "/apps/alarm/",
   "scope": "/apps/alarm/",
   "display": "standalone",

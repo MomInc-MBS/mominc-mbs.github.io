@@ -1,5 +1,5 @@
 // ADHD web push client: capability card + install/subscribe/sync against backend/adhd-push. NOT connected until ADHD_PUSH_ORIGIN is set.
-export const ADHD_PUSH_ORIGIN = '';        // e.g. 'https://adhd-push.<account>.workers.dev' after Ian deploys backend/adhd-push. Empty = reminders server not connected.
+export const ADHD_PUSH_ORIGIN = 'https://adhd-push.mominc-coach.workers.dev';        // e.g. 'https://adhd-push.<account>.workers.dev' after Ian deploys backend/adhd-push. Empty = reminders server not connected.
 
 const NOTES = [
   'ADHD on the web is a reminder, not an offline wake-up alarm: it needs a connection and the phone\'s own notification settings (Focus, Silent) still apply.',
