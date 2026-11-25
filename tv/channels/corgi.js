@@ -288,6 +288,8 @@ export default {
     // Endless uses `corgi-endless-v1`, never the story's clamped found[]/level schema. The one synthetic level
     // below only carries per-section article text; geometry comes from corgi-endless.mjs.
     const ARTICLES = [...LEVELS_LIVE.flatMap(l => l.pages), ...LEVELS_PUBLIC[0].pages];
+    // Endless lighting (plan A1 initial values). Darken the LIGHTS, never the image: no black overlay, so the flashlight and UI stay full strength. One knob set to tune on the phone.
+    const EN_LIGHT = { hemi: 0.10, mainI: 0.20, mainR: 3.5, areaI: 0.20, areaR: 4.0 };
     const ENDLESS_LEVEL = { name: "ENDLESS", doorLabel: "THE NEXT SECTION", furniture: "desk", handAuthored: true, crazy: 1, pages: ARTICLES.slice(0, 3) };
     const newSeed = () => { try { return crypto.getRandomValues(new Uint32Array(1))[0]; } catch { return (Date.now() ^ (Math.random() * 4294967296)) >>> 0; } };
     let store = null, run = null, ES = null, overlayOpen = false, protectUntil = 0;
@@ -1498,7 +1500,7 @@ export default {
           const ceil = new THREE.Mesh(new THREE.PlaneGeometry(110, 50), bright ? ceilMat.clone() : ceilMat);
           if (bright) ceil.material.color.set(0xffffff);
           ceil.rotation.x = Math.PI / 2; ceil.position.set(20, 2.6, 0); levelGroup.add(ceil);
-          levelGroup.add(new THREE.HemisphereLight(bright ? 0xffffff : 0xfff6da, bright ? 0xe4ecf4 : 0xbcd7ea, bright ? 1.75 : (ENDLESS ? 0.34 : 0.003)));
+          levelGroup.add(new THREE.HemisphereLight(bright ? 0xffffff : 0xfff6da, bright ? 0xe4ecf4 : 0xbcd7ea, bright ? 1.75 : (ENDLESS ? EN_LIGHT.hemi : 0.003)));
 
           const useHandAuthored = !!LEVELS[idx].handAuthored && !ENDLESS;
           if (ENDLESS) buildEndlessWorld(idx, bright); else {
@@ -1799,7 +1801,7 @@ export default {
             collideRects.push({ x0: DOOR_X - 0.15, x1: DOOR_X + 0.15, z0: -0.5, z1: 0.5 });
             doorRectIdx = collideRects.length - 1;
           } else {
-          doorMesh = wallBox(DOOR_X, 0, 0.3, 2.6, new THREE.MeshStandardMaterial({ map: signTexture("LOCKED", LEVELS[idx].doorLabel || "END OF THE LINE"), roughness: 0.7, metalness: 0.15 }));
+          doorMesh = wallBox(DOOR_X, 0, 0.3, ENDLESS ? ES.door[3] : 2.6, new THREE.MeshStandardMaterial({ map: signTexture("LOCKED", LEVELS[idx].doorLabel || "END OF THE LINE"), roughness: 0.7, metalness: 0.15 }));
           doorRectIdx = collideRects.length - 1;
           }
           doorSeen = false;
@@ -1849,7 +1851,7 @@ export default {
         // keeps ghost/creep/haunt untouched: the suited boss talks instead of killing.
         const CHASE_SPEED = SPEED * 0.25;
         const chase = { active: false, speed: CHASE_SPEED, stuckFor: 0, winT: 0, winMoved: 0, phase: 0, sniffing: false, sniffT0: 0, sniffDur: 0,
-          nextSniffAt: 0, yaw: 0, hy: 0, hp: 0.3, dip: 0, px: 0, pz: 0, sway: 0 };
+          nextSniffAt: 0, yaw: 0, hy: 0, hp: 0.3, dip: 0, px: 0, pz: 0, sway: 0, contact: false };
         function resetChase() { Object.assign(chase, { active: false, stuckFor: 0, winT: 0, winMoved: 0, phase: 0, sniffing: false, nextSniffAt: 0, hy: 0, hp: 0.3, dip: 0, sway: 0 }); }
         function startChase(now) { chase.active = true; chase.stuckFor = 0; chase.winT = 0; chase.winMoved = 0; chase.sniffing = false; chase.yaw = Math.atan2(player.x - monster.position.x, player.z - monster.position.z); chase.nextSniffAt = now + 2500 + rnd() * 2500; chase.px = monster.position.x; chase.pz = monster.position.z; }
         // his own, smaller circle than the dog's R; the office box does not apply in the school
@@ -1882,11 +1884,12 @@ export default {
           const cdx = player.x - mp.x, cdz = player.z - mp.z, cd = Math.hypot(cdx, cdz) || 1;
           if (cd < 0.45) return;
           const step = c.speed * dt, x0 = mp.x, z0 = mp.z;
-          let sx = cdx, sz = cdz, sd = cd;   // steering vector: the dog himself, or (endless) the next waypoint on a validated route
-          if (ENDLESS) { const w = chaseTarget(mp); sx = w[0] - mp.x; sz = w[1] - mp.z; sd = Math.hypot(sx, sz) || 1; }
+          if (ENDLESS) endlessMove(mp, step);
+          else {
           // same per-axis slide as the player: each axis tested against the frame-START position, never chained
-          const nx = x0 + sx / sd * step; if (!monsterBlocked(nx, z0)) mp.x = nx;
-          const nz = z0 + sz / sd * step; if (!monsterBlocked(x0, nz)) mp.z = nz;
+          const nx = x0 + cdx / cd * step; if (!monsterBlocked(nx, z0)) mp.x = nx;
+          const nz = z0 + cdz / cd * step; if (!monsterBlocked(x0, nz)) mp.z = nz;
+          }
           const moved = Math.hypot(mp.x - x0, mp.z - z0);
           const want = moved > 1e-5 ? Math.atan2(mp.x - x0, mp.z - z0) : Math.atan2(cdx, cdz);
           let dy = want - c.yaw; dy = Math.atan2(Math.sin(dy), Math.cos(dy));
@@ -2032,7 +2035,7 @@ export default {
         const DARK_PAL = [0x6b3a8a, 0x1c6b5a, 0x8a5a1c, 0xb0203a, 0x203ab0], BRIGHT_PAL = [0xd8dde6, 0xdfe6df, 0xe9e3c8, 0xe3d8e6, 0xd9e6e8];
         let fx = EL.perkEffects(null), visionDots = [], trail = null, dangerRing = null, chPath = null, chAt = 0, chIdx = 1;
         let scentAt = 0, earsAt = 0, lastVibe = 0, wallRects = [];
-        const applyFx = () => { fx = EL.perkEffects(run.slots); };
+        const applyFx = () => { fx = EL.perkEffects(run.traits); cc.dataset.catchRange = fx.catchRange.toFixed(2); };   // data-catch-range: the live hitbox, readable by probes
         const protect = () => { protectUntil = performance.now() + EL.BASE_GRACE_MS + fx.graceMs; };   // spawn, respawn, stand-down: finite, never renewed per frame
         function prepareSection() {
           ES = EL.genEndlessSection(run.seed, run.section, run.genVersion);
@@ -2043,10 +2046,31 @@ export default {
         }
         // one wall-only line of sight: x-ray outlines never count as sight, and pickups cannot reach through walls
         const sightClear = (x, z) => { for (const w of wallRects) if (EL.segHitsRect(player.x, player.z, x, z, w)) return false; return true; };
+        // Endless pursuer: advance along the validated route in swept chunks. Each chunk is clamped to the distance left to the next waypoint
+        // (a corner is never overshot) and is taken whole only if the capsule sweep is clear; otherwise 0.15 substeps with a per-axis slide.
+        // Speed is never capped: a faster boss just takes more chunks this frame (bounded by the route length). Contact is tested per chunk, with a clear line.
+        const segPointDist = (ax, az, bx, bz, px, pz) => { const dx = bx - ax, dz = bz - az, l2 = dx * dx + dz * dz, t = l2 > 0 ? Math.max(0, Math.min(1, ((px - ax) * dx + (pz - az) * dz) / l2)) : 0; return Math.hypot(ax + dx * t - px, az + dz * t - pz); };
+        function endlessMove(mp, budget) {
+          chase.contact = false;
+          for (let guard = 0; budget > 1e-9 && guard < 600; guard++) {
+            if (Math.hypot(player.x - mp.x, player.z - mp.z) < 0.45) break;
+            const w = chaseTarget(mp), dx = w[0] - mp.x, dz = w[1] - mp.z, d = Math.hypot(dx, dz);
+            if (d < 1e-6) { if (chIdx < chPath.length - 1) { chIdx++; continue; } break; }
+            const last = chIdx >= chPath.length - 1;
+            let len = Math.min(budget, last ? Math.max(0, d - 0.45) : d); if (len <= 1e-9) break;
+            let nx = mp.x + dx / d * len, nz = mp.z + dz / d * len;
+            if (!EL.clearSeg(ES.collisionRects, mp.x, mp.z, nx, nz, 0.32)) {
+              len = Math.min(len, 0.15); nx = mp.x + dx / d * len; nz = mp.z + dz / d * len;
+              if (monsterBlocked(nx, nz)) { if (!monsterBlocked(nx, mp.z)) nz = mp.z; else if (!monsterBlocked(mp.x, nz)) nx = mp.x; else break; }
+            }
+            const px = mp.x, pz = mp.z; mp.x = nx; mp.z = nz; budget -= Math.max(len, 1e-6);
+            if (segPointDist(px, pz, nx, nz, player.x, player.z) < fx.catchRange && sightClear(nx, nz)) chase.contact = true;
+          }
+        }
         function chaseTarget(mp) {
           const now = performance.now();
           if (!chPath || now - chAt > 300) { chPath = EL.routePath(ES, mp.x, mp.z, player.x, player.z) || [[mp.x, mp.z], [player.x, player.z]]; chAt = now; chIdx = 1; }
-          while (chIdx < chPath.length - 1 && Math.hypot(chPath[chIdx][0] - mp.x, chPath[chIdx][1] - mp.z) < 0.35) chIdx++;
+          while (chIdx < chPath.length - 1 && Math.hypot(chPath[chIdx][0] - mp.x, chPath[chIdx][1] - mp.z) < 0.03) chIdx++;
           return chPath[chIdx];
         }
         function ringTexture(hex) {
@@ -2071,12 +2095,13 @@ export default {
           const dark = ES.dark, pal = dark ? DARK_PAL : BRIGHT_PAL, lamp = (x, z, c, i, r) => { const l = new THREE.PointLight(c, i, r); l.position.set(x, 2.3, z); levelGroup.add(l); };
           DOOR_X = ES.corridorLength;
           ES.corridorWalls.forEach(w => wallBox(...w));
-          for (let lx = 4; lx <= DOOR_X - 3; lx += 10) lamp(lx, 0, bright ? 0xffffff : 0xcab6ee, bright ? 0.7 : 0.55, bright ? 9 : 7);   // few lights: phones pay per point light
-          if (dark) addSchoolPosters(DOOR_X, 1, 1.19);
+          for (let lx = 4; lx <= DOOR_X - 3; lx += 10) lamp(lx, 0, bright ? 0xffffff : 0xcab6ee, bright ? 0.7 : EN_LIGHT.mainI, bright ? 9 : EN_LIGHT.mainR);   // few lights: phones pay per point light
+          if (dark) addSchoolPosters(DOOR_X, 1, EL.hallClear(ES.layoutVersion) / 2 - 0.01);   // flush on the inner wall face, 1.2 in v1 and 1.5 in v2
           AREAS = ES.areas.map((a, i) => ({ ...a, mat: areaMat(pal[(i + (ES.decorSeed & 7)) % pal.length]), furniture: dark ? "desk" : "cubicle", noSolid: true }));
-          AREAS.forEach(a => { a.walls.forEach(w => wallBox(w[0], w[1], w[2], w[3], a.mat)); const [lx, lz] = a.lights[2]; lamp(lx, lz, 0xfff3d0, dark ? 0.5 : 0.3, 8); });
-          AREAS.forEach(a => dressArea(a, dark));
+          AREAS.forEach(a => { a.walls.forEach(w => wallBox(w[0], w[1], w[2], w[3], a.mat)); const [lx, lz] = a.lights[2]; lamp(lx, lz, 0xfff3d0, dark ? EN_LIGHT.areaI : 0.3, dark ? EN_LIGHT.areaR : 8); });
+          if (ES.decor) buildDecor(ES.decor); else AREAS.forEach(a => dressArea(a, dark));   // v2: pieces come from the validated layout (outside the walking lane); a saved v1 section keeps its old props
           const pages = LEVELS[idx].pages;
+          if (dark) ES.objectives.forEach(o => { const l = new THREE.PointLight(0xc4b79b, 0.48, 1.8, 2); l.name = "school-desk-pool"; l.position.set(o.pagePos[0], 1.45, o.pagePos[2]); l.userData.deskLamp = true; levelGroup.add(l); });   // a small local pool at each paper desk
           DESKS = ES.objectives.map((o, i) => {
             const d = buildFurniture(dark ? "desk" : "cubicle", pages[i].deskLabel, pages[i].deskDate);
             d.position.set(o.pagePos[0], 0, o.pagePos[2]); d.rotation.y = o.deskYaw; levelGroup.add(d);
@@ -2091,18 +2116,37 @@ export default {
             return { sprite: s, light: null, base: pos.y };
           });
           visionDots = PAGE_POS.map(() => xraySprite("#c9ff59", .8));
-          const pts = new THREE.BufferGeometry(); pts.setAttribute("position", new THREE.BufferAttribute(new Float32Array(3 * 42), 3)); pts.setDrawRange(0, 0);
+          const pts = new THREE.BufferGeometry(); pts.setAttribute("position", new THREE.BufferAttribute(new Float32Array(3 * TRAIL_MAX), 3)); pts.setDrawRange(0, 0);
           trail = new THREE.Points(pts, new THREE.PointsMaterial({ color: 0xc9ff59, size: 0.1, depthWrite: false })); trail.frustumCulled = false; trail.visible = false; levelGroup.add(trail);
         }
+        const TRAIL_MAX = 128;
+        // dots every 0.5 units, stretched to total/(TRAIL_MAX-1) when the revealed route is longer than the buffer; every dot lies ON the route polyline, so no shortcut crosses a wall
         function updateTrail() {
           const got = state.found[0].map((f, i) => f ? i : -1).filter(i => i >= 0), best = EL.nearestPaper(ES, player.x, player.z, got);
           if (!best) { trail.visible = false; return; }
-          const path = EL.trimPath(best.path, fx.scentLen), a = trail.geometry.attributes.position; let n = 0, carry = 0;
-          for (let i = 1; i < path.length && n < 41; i++) {
-            const dx = path[i][0] - path[i - 1][0], dz = path[i][1] - path[i - 1][1], len = Math.hypot(dx, dz);
-            for (let u = carry; u < len && n < 41; u += 0.5, carry = u - len) a.setXYZ(n++, path[i - 1][0] + dx * u / len, 0.05, path[i - 1][1] + dz * u / len);
+          const path = EL.trimPath(best.path, fx.scentLen), a = trail.geometry.attributes.position, total = EL.pathLength(path), sp = Math.max(0.5, total / (TRAIL_MAX - 1));
+          let n = 0, next = 0, acc = 0;
+          for (let i = 1; i < path.length && n < TRAIL_MAX; i++) {
+            const dx = path[i][0] - path[i - 1][0], dz = path[i][1] - path[i - 1][1], len = Math.hypot(dx, dz); if (len < 1e-9) continue;
+            for (; next <= acc + len + 1e-9 && n < TRAIL_MAX; next += sp) { const u = (next - acc) / len; a.setXYZ(n++, path[i - 1][0] + dx * u, 0.05, path[i - 1][1] + dz * u); }
+            acc += len;
           }
           a.needsUpdate = true; trail.geometry.setDrawRange(0, n); trail.visible = n > 0;
+        }
+        function buildDecor(list) {
+          const m = c => new THREE.MeshStandardMaterial({ color: c, roughness: 0.85 }), M = { locker: m(0x3d5a6b), cabinet: m(0x6b6f78), chair: m(0x8d633e), bin: m(0x4a4f58), bag: m(0xb85272), papers: m(0xe5dec8), ball: m(0xde782c), trim: m(0x23262c) };
+          const box = (g, w, h, dd, mt, x, y, z) => { const o = new THREE.Mesh(new THREE.BoxGeometry(w, h, dd), mt); o.position.set(x, y, z); g.add(o); return o; };
+          for (const d of list) {
+            const g = new THREE.Group(); g.name = "decor-" + d.kind; g.position.set(d.x, 0, d.z); g.rotation.y = d.yaw; levelGroup.add(g);   // local +z faces away from the wall
+            if (d.solid) collideRects.push({ ...d.rect });
+            if (d.kind === "locker") { box(g, d.w, 1.9, d.d, M.locker, 0, 0.95, 0); box(g, 0.025, 1.5, 0.02, M.trim, 0, 0.95, d.d / 2 + 0.005); box(g, d.w * 0.6, 0.05, 0.02, M.trim, 0, 1.6, d.d / 2 + 0.005); }
+            else if (d.kind === "cabinet") { box(g, d.w, 1.25, d.d, M.cabinet, 0, 0.625, 0); for (const y of [0.35, 0.75, 1.1]) box(g, d.w * 0.8, 0.03, 0.02, M.trim, 0, y, d.d / 2 + 0.005); }
+            else if (d.kind === "chair") { box(g, d.w * 0.9, 0.06, d.d * 0.9, M.chair, 0, 0.45, 0); box(g, d.w * 0.9, 0.5, 0.05, M.chair, 0, 0.72, -d.d * 0.4); for (const [x, z] of [[-1, -1], [1, -1], [-1, 1], [1, 1]]) box(g, 0.04, 0.45, 0.04, M.trim, x * d.w * 0.4, 0.225, z * d.d * 0.4); }
+            else if (d.kind === "bin") { const o = new THREE.Mesh(new THREE.CylinderGeometry(d.w * 0.5, d.w * 0.42, 0.5, 14), M.bin); o.position.y = 0.25; g.add(o); }
+            else if (d.kind === "bag") { box(g, d.w, 0.4, d.d, M.bag, 0, 0.2, 0); box(g, d.w * 0.7, 0.14, 0.02, M.papers, 0, 0.18, d.d / 2 + 0.005); }
+            else if (d.kind === "papers") { for (let k = 0; k < 3; k++) { const o = box(g, d.w * 0.7, 0.012, d.d * 0.7, M.papers, (k - 1) * 0.08, 0.008 + k * 0.012, (k - 1) * 0.05); o.rotation.y = (k - 1) * 0.5; } }
+            else { const o = new THREE.Mesh(new THREE.SphereGeometry(0.16, 14, 10), M.ball); o.position.y = 0.16; g.add(o); }
+          }
         }
         function endlessTick(now, mDist) {
           visionDots.forEach((g, i) => { const po = pageObjs[i]; g.visible = !!po && fx.visionRange > 0 && deskRead.phase === "idle" && Math.hypot(PAGE_POS[i].x - player.x, PAGE_POS[i].z - player.z) <= fx.visionRange; if (g.visible) g.position.set(PAGE_POS[i].x, 0.7, PAGE_POS[i].z); });
@@ -2119,14 +2163,23 @@ export default {
         const endHud = document.createElement("div"); endHud.className = "ce-hud"; endHud.setAttribute("aria-live", "off");
         if (ENDLESS) viewport.append(endHud);
         let overlayEl = null;
+        const heartText = q => String(+(q / 4).toFixed(2));
+        const svgNode = markup => { const t = document.createElement("template"); t.innerHTML = markup; return t.content.firstChild; };
+        const traitIcon = id => svgNode(EL.traitIcon(id));
+        // bounded: at most six heart icons (each four quarters), plus the exact number
+        const heartIcon = (frac, i) => { const id = "ceh" + i, p = Math.round(frac * 100);
+          return svgNode(`<svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><defs><linearGradient id="${id}"><stop offset="${p}%" stop-color="#ff5a7a"/><stop offset="${p}%" stop-color="#3a1620"/></linearGradient></defs><path d="M12 21s-8-5.2-8-11.2A4.6 4.6 0 0 1 12 7a4.6 4.6 0 0 1 8 2.8C20 15.8 12 21 12 21z" fill="url(#${id})" stroke="#ff5a7a" stroke-width="1.6" stroke-linejoin="round"/></svg>`); };
         function paintEndHud() {
           if (!ENDLESS) return;
-          const max = fx.maxHearts, got = state.found[0].filter(Boolean).length;
+          const got = state.found[0].filter(Boolean).length, q = run.quarters, maxQ = fx.maxQuarters;
           byId("ccTally").textContent = "SECTION " + run.section + " · PAPERS " + got + "/3";
-          const chips = run.slots.map(s => s ? EL.perkById(s.id).name + " " + s.rank + "/5" : "empty slot");
-          endHud.textContent = ""; const row = (cls, text) => { const e = document.createElement("span"); e.className = cls; e.textContent = text; endHud.append(e); };
-          row("ce-hearts", "♥".repeat(Math.max(0, run.hearts)) + "♡".repeat(Math.max(0, max - run.hearts)));
-          chips.forEach(t => row("ce-chip", t));
+          endHud.textContent = "";
+          const mk = (cls, text) => { const e = document.createElement("span"); e.className = cls; if (text !== undefined) e.textContent = text; endHud.append(e); return e; };
+          const hr = mk("ce-hearts"); hr.setAttribute("role", "img"); hr.setAttribute("aria-label", heartText(q) + " of " + heartText(maxQ) + " hearts");
+          const icons = Math.min(6, Math.ceil(maxQ / 4)), filled = Math.round(q / maxQ * icons * 4);
+          for (let i = 0; i < icons; i++) hr.append(heartIcon(Math.max(0, Math.min(4, filled - i * 4)) / 4, i));
+          const num = document.createElement("b"); num.className = "ce-num"; num.textContent = heartText(q); hr.append(num);
+          for (const id of EL.TRAIT_IDS) { const n = run.traits[id]; if (n > 0) { const c = mk("ce-chip"); c.title = EL.perkById(id).name; const t = document.createElement("span"); t.textContent = "×" + n; c.append(traitIcon(id), t); } }
           bankedVal = Math.max(bankedVal, 4 + got * 20); paintMeter();
         }
         function closeOverlay() { overlayEl?.remove(); overlayEl = null; overlayOpen = false; }
@@ -2142,36 +2195,25 @@ export default {
         function afterFlow() { closeOverlay(); if (deskRead.phase === "held") standDown(); protect(); }
         function openOffer() {
           const o = run.pendingOffer; if (!o) return;
-          const art = ARTICLES[o.article % ARTICLES.length], el = overlay("Paper found, pick a perk"), pg = paperPage(art.title);
+          const art = ARTICLES[o.article % ARTICLES.length], el = overlay("Paper found, pick a trait"), pg = paperPage(art.title);
           const cards = node("div", "ce-cards");
           o.choices.forEach((c, i) => {
-            const p = EL.perkById(c.perk), cur = run.slots.find(s => s && s.id === c.perk), to = (cur ? cur.rank : 0) + 1;
-            cards.append(btn("ce-card", () => (c.kind === "new" && run.slots.every(Boolean)) ? openReplace(i) : commitPick(i), node("b", "", p.name),
-              node("i", "", c.kind === "upgrade" ? "RANK " + cur.rank + " → " + to : "NEW · RANK 1"), node("span", "", p.line(to))));
+            const p = EL.perkById(c.perk), n = run.traits[c.perk] || 0, head = node("b", "", p.name); head.prepend(traitIcon(c.perk));
+            cards.append(btn("ce-card", () => commitPick(i), head, node("i", "", n ? "×" + n + " → ×" + (n + 1) : "NEW · ×1"), node("span", "", EL.nextLine(c.perk, n))));
           });
-          pg.append(node("p", "ce-stat", art.stat), node("small", "ce-src", art.src), node("h3", "", "PICK A PERK"), cards,
-            btn("ce-keep", () => { run = EL.keepBuild(run); persistRun(); afterFlow(); }, "Keep my build"));
+          pg.append(node("p", "ce-stat", art.stat), node("small", "ce-src", art.src), node("h3", "", "PICK A TRAIT"), cards);
           el.append(pg); cards.querySelector("button")?.focus();
         }
-        function openReplace(i) {
-          const c = run.pendingOffer.choices[i], el = overlay("Replace which perk"), pg = paperPage("REPLACE WHICH?");
-          const row = node("div", "ce-cards");
-          run.slots.forEach((s, k) => row.append(btn("ce-card", () => commitPick(i, k), node("b", "", "Drop " + EL.perkById(s.id).name), node("i", "", "RANK " + s.rank + " is lost"), node("span", "", "Take " + EL.perkById(c.perk).name + " at rank 1"))));
-          pg.append(row, btn("ce-keep", openOffer, "Back")); el.append(pg); row.querySelector("button")?.focus();
-        }
-        function commitPick(i, slot) {
-          const r = EL.pickOffer(run, i, slot, store); if (r.error) { announce(r.error); return; }
+        function commitPick(i) {
+          const r = EL.pickOffer(run, i, store);
+          if (r.error) { if (r.error === "stack limit") announce("That trait cannot stack any further."); return; }   // a second tap or a replayed offer is simply refused
           run = r.run; store.best = r.best; persistRun(); applyFx(); paintEndHud();
-          if (run.pendingMilestone) openMilestone(); else afterFlow();
-        }
-        function openMilestone() {
-          const full = run.pendingMilestone === "full", el = overlay(full ? "Full clear" : "Milestone"), pg = paperPage(full ? "FULL CLEAR" : "FIRST RANK 5");
-          pg.append(node("p", "ce-stat", full ? "Both equipped perks are at rank 5. Nothing is left to prove, and the hall keeps going." : "A perk reached rank 5. The run keeps going, and so does he."),
-            btn("ce-keep ce-go", () => { run = { ...run, pendingMilestone: null }; persistRun(); afterFlow(); }, "Continue")); el.append(pg); pg.querySelector("button")?.focus();
+          if (r.allTen) announce("All ten traits found. The hall keeps going.");
+          afterFlow();
         }
         function openOver() {
           const el = overlay("Run over"), pg = paperPage("THE RUN IS OVER");
-          pg.append(node("p", "ce-stat", "You reached section " + run.section + ". Your best is section " + store.best.section + ". Perks and hearts go with the run; your bests stay."),
+          pg.append(node("p", "ce-stat", "You reached section " + run.section + ". Your best is section " + store.best.section + ". Traits and hearts go with the run; your bests stay."),
             btn("ce-keep ce-go", () => { run = EL.newRun(newSeed()); persistRun(); closeOverlay(); endlessRebuild(); }, "New run")); el.append(pg); pg.querySelector("button")?.focus();
         }
         function endlessCollect(i) {
@@ -2182,9 +2224,9 @@ export default {
           state.found[0][i] = true; persistRun(); paintEndHud(); openOffer();       // paper + offer land in one write, before anything is shown
         }
         function endlessCapture() {
-          run = EL.loseHeart(run); persistRun(); paintEndHud(); stopInput();
+          run = EL.capture(run); persistRun(); paintEndHud(); stopInput();
           if (run.status === "over") { cc.dataset.caught = "true"; openOver(); return; }
-          announce("Caught. " + run.hearts + " heart" + (run.hearts === 1 ? "" : "s") + " left. The papers you took stay taken.");
+          announce("Caught. " + heartText(run.quarters) + " hearts left. The papers you took stay taken.");
           ctx.timeout(() => {
             const r = EL.chooseRecovery(ES, monster.position.x, monster.position.z);
             player.x = r[0]; player.z = r[1]; player.yaw = -Math.PI / 2; player.pitch = 0;
@@ -2203,16 +2245,17 @@ export default {
         }
         function endlessResume() {
           paintEndHud();
-          if (run.status === "over") { cc.dataset.caught = "true"; openOver(); } else if (run.pendingOffer) openOffer(); else if (run.pendingMilestone) openMilestone();
+          if (run.status === "over") { cc.dataset.caught = "true"; openOver(); } else if (run.pendingOffer) openOffer();
         }
         function endlessApi() {   // dev hook on window.__corgi.endless, like the other probes; the ordinary UI has no way to grant perks
           return {
-            get run() { return run; }, get layout() { return ES; }, get fx() { return fx; },
-            grant(id, rank, slot = 0) { const s = run.slots.slice(); s[slot] = { id, rank }; const nm = EL.perkEffects(s).maxHearts; run = { ...run, slots: s, hearts: Math.min(run.hearts + Math.max(0, nm - fx.maxHearts), nm) }; applyFx(); persistRun(); paintEndHud(); },
+            get run() { return run; }, get layout() { return ES; }, get fx() { return fx; }, get catchRange() { return fx.catchRange; }, get chaseSpeed() { return chase.speed; },
+            grant(id, n) { const tr = { ...run.traits, [id]: n }, nm = EL.perkEffects(tr).maxQuarters; run = { ...run, traits: tr, quarters: Math.min(run.quarters + Math.max(0, nm - fx.maxQuarters), nm) }; applyFx(); persistRun(); paintEndHud(); },
             setSection(n) { run = { ...run, section: n, collected: [] }; persistRun(); endlessRebuild(); },
             info() { const r = renderer.info; return { geometries: r.memory.geometries, textures: r.memory.textures, programs: r.programs ? r.programs.length : 0, calls: r.render.calls, lights: levelGroup.children.filter(o => o.isLight).length, children: levelGroup.children.length }; },
             teleport(x, z) { player.x = x; player.z = z; }, protectUntil: () => protectUntil,
-            collectNow(i) { startDeskRead(i); }, openOffer, capture: () => endlessCapture()
+            collectNow(i) { startDeskRead(i); }, openOffer, capture: () => endlessCapture(),
+            chaseFrom(x, z) { monster.position.set(x, 0, z); monster.visible = true; chPath = null; startChase(performance.now()); }   // probe: seat the pursuer and start the hunt
           };
         }
 
@@ -2709,7 +2752,7 @@ export default {
             // touch-range kill: visible at least 600ms (no spawn-kills), close enough -- he can take you from
             // behind, whether or not you're facing him. Static-maxout kill is the other path, below. LIVE ONLY --
             // "the suited figure does NOT kill you" in public mode is the one behaviour difference the mode makes.
-            if (LEVELS[state.level].handAuthored && !caught && !cc.hasAttribute("data-reading") && (now - monsterVisibleAt) >= 600 && (!ENDLESS || now >= protectUntil) && monsterDist < (ENDLESS ? fx.catchRange : 1.1)) doCapture();
+            if (LEVELS[state.level].handAuthored && !caught && !cc.hasAttribute("data-reading") && (now - monsterVisibleAt) >= 600 && (!ENDLESS || now >= protectUntil) && (ENDLESS ? (monsterDist < fx.catchRange || chase.contact) && sightClear(monster.position.x, monster.position.z) : monsterDist < 1.1)) doCapture();   // Endless: an unobstructed line, never through a wall or corner
           }
           monsterWasVisible = monster.visible;
 
