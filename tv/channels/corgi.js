@@ -2254,7 +2254,8 @@ export default {
             setSection(n) { run = { ...run, section: n, collected: [] }; persistRun(); endlessRebuild(); },
             info() { const r = renderer.info; return { geometries: r.memory.geometries, textures: r.memory.textures, programs: r.programs ? r.programs.length : 0, calls: r.render.calls, lights: levelGroup.children.filter(o => o.isLight).length, children: levelGroup.children.length }; },
             teleport(x, z) { player.x = x; player.z = z; }, protectUntil: () => protectUntil,
-            collectNow(i) { startDeskRead(i); }, openOffer, capture: () => endlessCapture()
+            collectNow(i) { startDeskRead(i); }, openOffer, capture: () => endlessCapture(),
+            chaseFrom(x, z) { monster.position.set(x, 0, z); monster.visible = true; chPath = null; startChase(performance.now()); }   // probe: seat the pursuer and start the hunt
           };
         }
 
