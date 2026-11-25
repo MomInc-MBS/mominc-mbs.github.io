@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en" data-gala-room="classic">
-  <head><script src="/tv/game-loader.js?v=1"></script>
+  <head><script src="/tv/game-loader.js?v=1"></script><script>/* Phones can drop the Gala's WebGL context (white screen). If it is not restored in 2 s, reload once per 30 s. */(()=>{let t=0;document.addEventListener("webglcontextlost",()=>{clearTimeout(t);t=setTimeout(()=>{try{const k="gala-gl-reload",n=Date.now();if(n-(+sessionStorage.getItem(k)||0)<3e4)return;sessionStorage.setItem(k,n);}catch{}location.reload();},2000);},true);document.addEventListener("webglcontextrestored",()=>clearTimeout(t),true);})();</script>
 <script src="/tv/retro-pointer.js" defer></script><script src="/tv/mbs-channels.js"></script><script src="/tv/state.js?mbs-rev=visit-hour-2"></script><script src="/tv/dj-identity.js"></script>
     <meta charset="UTF-8" />
     <link rel="icon" href="data:," />
