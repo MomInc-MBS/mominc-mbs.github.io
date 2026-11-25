@@ -65,7 +65,7 @@
     const script = document.createElement('script');
     script.src = '/hive/assets/vendor/mermaid.min.js';
     script.onload = async () => {
-      mermaid.initialize({startOnLoad:false,securityLevel:'strict',theme:'base',fontFamily:'ui-sans-serif, system-ui, sans-serif',themeVariables:{primaryColor:'#f1e8fa',primaryTextColor:'#352148',primaryBorderColor:'#a77cc4',lineColor:'#9066a9',secondaryColor:'#fff1c9',tertiaryColor:'#faf6ff',fontSize:'16px'},flowchart:{htmlLabels:false,useMaxWidth:true},state:{useMaxWidth:true}});
+      mermaid.initialize({startOnLoad:false,securityLevel:'strict',theme:'base',fontFamily:'"JetBrains Mono", ui-monospace, monospace',themeVariables:{darkMode:true,background:'#0b0704',primaryColor:'#140a04',primaryTextColor:'#ffdcbc',primaryBorderColor:'#ff5f0f',lineColor:'#ff7a2e',secondaryColor:'#1c0d04',secondaryTextColor:'#ffdcbc',tertiaryColor:'#0b0704',tertiaryTextColor:'#ffdcbc',textColor:'#ffdcbc',edgeLabelBackground:'#0b0704',clusterBkg:'#0b0704',clusterBorder:'#5c2808',fontSize:'16px'},flowchart:{htmlLabels:false,useMaxWidth:true},state:{useMaxWidth:true}});
       for (let i=0; i<diagrams.length; i++) {
         const code = diagrams[i], pre = code.parentElement;
         const figure = document.createElement('figure'); figure.className='rendered-diagram';
