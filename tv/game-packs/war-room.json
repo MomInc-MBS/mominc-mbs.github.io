@@ -634,8 +634,8 @@
     },
     {
       "url": "/tv/games/goon/assets/index-W2w8AfON.js",
-      "revision": "5ab4410cd9fe6a205689f162b659f71a5b63927e",
-      "bytes": 2043131
+      "revision": "e7c6181ffe16264f6fbfa9a212ef261a44ef77d3",
+      "bytes": 2043141
     },
     {
       "url": "/tv/games/goon/assets/index-vg_3atLR.css",
@@ -781,5 +781,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "e41be40eae1795f7d617"
+  "version": "6c53b3f141d37eed25ac"
 }
