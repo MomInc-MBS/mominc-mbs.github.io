@@ -1,0 +1,721 @@
+{
+ "schemaVersion": 1,
+ "look": {
+  "schema": 2,
+  "default": "Strong Miniature",
+  "params": [
+   {
+    "key": "focusY",
+    "label": "Focus Y",
+    "min": 0,
+    "max": 1,
+    "neutral": null,
+    "since": 1,
+    "def": 0
+   },
+   {
+    "key": "focusWidth",
+    "label": "Band width",
+    "min": 0.05,
+    "max": 1,
+    "neutral": null,
+    "since": 1,
+    "def": 0
+   },
+   {
+    "key": "feather",
+    "label": "Feather",
+    "min": 0.02,
+    "max": 0.5,
+    "neutral": null,
+    "since": 1,
+    "def": 0
+   },
+   {
+    "key": "top",
+    "label": "Top blur",
+    "min": 0,
+    "max": 1,
+    "neutral": 0,
+    "since": 1,
+    "def": 0
+   },
+   {
+    "key": "bottom",
+    "label": "Bottom blur",
+    "min": 0,
+    "max": 1,
+    "neutral": 0,
+    "since": 1,
+    "def": 0
+   },
+   {
+    "key": "radius",
+    "label": "Blur radius px",
+    "min": 0,
+    "max": 100,
+    "neutral": 0,
+    "since": 1,
+    "def": 0
+   },
+   {
+    "key": "angle",
+    "label": "Angle °",
+    "min": -90,
+    "max": 90,
+    "neutral": null,
+    "since": 1,
+    "def": 0
+   },
+   {
+    "key": "saturation",
+    "label": "Saturation",
+    "min": 0.5,
+    "max": 1.6,
+    "neutral": 1,
+    "since": 1,
+    "def": 1
+   },
+   {
+    "key": "contrast",
+    "label": "Contrast",
+    "min": 0.7,
+    "max": 1.4,
+    "neutral": 1,
+    "since": 1,
+    "def": 1
+   },
+   {
+    "key": "gamma",
+    "label": "Gamma",
+    "min": 0.7,
+    "max": 1.4,
+    "neutral": 1,
+    "since": 1,
+    "def": 1
+   },
+   {
+    "key": "exposure",
+    "label": "Exposure EV",
+    "min": -2,
+    "max": 2,
+    "neutral": 0,
+    "since": 1,
+    "def": 0
+   },
+   {
+    "key": "sharpness",
+    "label": "Sharpness",
+    "min": 0,
+    "max": 0.3,
+    "neutral": 0,
+    "since": 1,
+    "def": 0
+   },
+   {
+    "key": "cadence",
+    "label": "Motion cadence, unique fps (0=Natural)",
+    "min": 0,
+    "max": 30,
+    "neutral": null,
+    "since": 1,
+    "def": 0
+   },
+   {
+    "key": "temperature",
+    "label": "Warmth (− cooler, + warmer)",
+    "min": -1,
+    "max": 1,
+    "neutral": 0,
+    "since": 2,
+    "def": 0
+   },
+   {
+    "key": "tint",
+    "label": "Tint (− green, + magenta)",
+    "min": -1,
+    "max": 1,
+    "neutral": 0,
+    "since": 2,
+    "def": 0
+   },
+   {
+    "key": "vibrance",
+    "label": "Vibrance",
+    "min": 0,
+    "max": 1,
+    "neutral": 0,
+    "since": 2,
+    "def": 0
+   },
+   {
+    "key": "rolloff",
+    "label": "Highlight roll-off",
+    "min": 0,
+    "max": 1,
+    "neutral": 0,
+    "since": 2,
+    "def": 0
+   },
+   {
+    "key": "grain",
+    "label": "Film grain (>1 = heavy)",
+    "min": 0,
+    "max": 3,
+    "neutral": 0,
+    "since": 2,
+    "def": 0
+   },
+   {
+    "key": "grainSize",
+    "label": "Grain size px",
+    "min": 1,
+    "max": 8,
+    "neutral": null,
+    "since": 2,
+    "def": 1.5
+   },
+   {
+    "key": "speed",
+    "label": "Saved speed ×",
+    "min": 1,
+    "max": 2,
+    "neutral": null,
+    "since": 2,
+    "def": 1
+   }
+  ],
+  "presets": {
+   "Strong Miniature": {
+    "focusY": 0.8,
+    "focusWidth": 0.4,
+    "feather": 0.38,
+    "top": 0.75,
+    "bottom": 0.85,
+    "radius": 41.3,
+    "angle": -0.36,
+    "saturation": 1.12,
+    "contrast": 1.12,
+    "gamma": 1,
+    "exposure": 0.1,
+    "sharpness": 0.18,
+    "cadence": 10,
+    "temperature": -0.12,
+    "tint": -0.09,
+    "vibrance": 0.52,
+    "rolloff": 0.44,
+    "grain": 1.75,
+    "grainSize": 4,
+    "speed": 1.5
+   },
+   "Strong Miniature — Reference": {
+    "focusY": 0.8,
+    "focusWidth": 0.4,
+    "feather": 0.38,
+    "top": 0.75,
+    "bottom": 0.85,
+    "radius": 41.3,
+    "angle": -0.36,
+    "saturation": 1.12,
+    "contrast": 1.12,
+    "gamma": 1,
+    "exposure": 0.1,
+    "sharpness": 0.18,
+    "cadence": 10,
+    "temperature": -0.12,
+    "tint": -0.09,
+    "vibrance": 0.52,
+    "rolloff": 0.44,
+    "grain": 1,
+    "grainSize": 4,
+    "speed": 1.5
+   },
+   "Stronger miniature": {
+    "focusY": 0.5,
+    "focusWidth": 0.36,
+    "feather": 0.25,
+    "top": 0.85,
+    "bottom": 0.95,
+    "radius": 56,
+    "angle": 0,
+    "saturation": 1.12,
+    "contrast": 1.12,
+    "gamma": 1,
+    "exposure": 0.1,
+    "sharpness": 0.08,
+    "cadence": 10,
+    "temperature": -0.3,
+    "tint": 0.05,
+    "vibrance": 0.45,
+    "rolloff": 0.35,
+    "grain": 0.35,
+    "grainSize": 1.5,
+    "speed": 1.5
+   },
+   "Classic": {
+    "focusY": 0.5,
+    "focusWidth": 0.4,
+    "feather": 0.25,
+    "top": 0.75,
+    "bottom": 0.85,
+    "radius": 48,
+    "angle": 0,
+    "saturation": 1.25,
+    "contrast": 1.15,
+    "gamma": 1,
+    "exposure": 0,
+    "sharpness": 0.1,
+    "cadence": 15,
+    "temperature": 0,
+    "tint": 0,
+    "vibrance": 0,
+    "rolloff": 0,
+    "grain": 0,
+    "grainSize": 1.5,
+    "speed": 1
+   },
+   "Subtle": {
+    "focusY": 0.5,
+    "focusWidth": 0.55,
+    "feather": 0.22,
+    "top": 0.45,
+    "bottom": 0.55,
+    "radius": 24,
+    "angle": 0,
+    "saturation": 1.12,
+    "contrast": 1.08,
+    "gamma": 1,
+    "exposure": 0,
+    "sharpness": 0.06,
+    "cadence": 20,
+    "temperature": 0,
+    "tint": 0,
+    "vibrance": 0,
+    "rolloff": 0,
+    "grain": 0,
+    "grainSize": 1.5,
+    "speed": 1
+   },
+   "Extreme": {
+    "focusY": 0.52,
+    "focusWidth": 0.22,
+    "feather": 0.25,
+    "top": 0.95,
+    "bottom": 1,
+    "radius": 80,
+    "angle": 0,
+    "saturation": 1.4,
+    "contrast": 1.2,
+    "gamma": 1,
+    "exposure": 0,
+    "sharpness": 0.12,
+    "cadence": 10,
+    "temperature": 0,
+    "tint": 0,
+    "vibrance": 0,
+    "rolloff": 0,
+    "grain": 0,
+    "grainSize": 1.5,
+    "speed": 1
+   },
+   "Ocular natural": {
+    "focusY": 0.5,
+    "focusWidth": 0.65,
+    "feather": 0.25,
+    "top": 0.2,
+    "bottom": 0.3,
+    "radius": 18,
+    "angle": 0,
+    "saturation": 1.03,
+    "contrast": 1.04,
+    "gamma": 1,
+    "exposure": 0,
+    "sharpness": 0.03,
+    "cadence": 0,
+    "temperature": 0,
+    "tint": 0,
+    "vibrance": 0,
+    "rolloff": 0,
+    "grain": 0,
+    "grainSize": 1.5,
+    "speed": 1
+   }
+  },
+  "speeds": [
+   1,
+   1.25,
+   1.5,
+   2
+  ],
+  "grainAmp": 0.012
+ },
+ "tempo": {
+  "modes": {
+   "Natural": 0,
+   "Light 20": 20,
+   "LB 15": 15,
+   "Clay 12": 12,
+   "Extreme 10": 10,
+   "Exp 8": 8,
+   "Extreme 8 Live": 8
+  },
+  "live": "Extreme 8 Live",
+  "cadence": {
+   "HALF_TICK_MS": 16.666666666666668,
+   "LIVE": "Extreme 8 Live"
+  },
+  "model": {
+   "targetDelay": 0.15,
+   "maxDelay": 0.45,
+   "holdSec": 0.25,
+   "speed": 1.5,
+   "safety": 0.05,
+   "minSpacing": 1,
+   "maxAge": 0.575,
+   "MIN_HOLD": 0.125
+  },
+  "onset": {
+   "need": 3,
+   "quiet": 0.2,
+   "floorHi": 0.012
+  },
+  "frameDiff": {
+   "CENTRE_WEIGHT": 0.08
+  }
+ },
+ "depth": {
+  "params": {
+   "rimStart": 1.1,
+   "camStart": 1.45,
+   "camDelayMs": 100,
+   "camDurMs": 850,
+   "wallDepth": 0.07,
+   "edgeBlurPx": 18,
+   "edgeFall": 0.1,
+   "contact": 0.5,
+   "contactFall": 0.045,
+   "vignette": 0.4,
+   "vignetteFall": 0.2,
+   "rimDefocusPx": 6
+  },
+  "ranges": {
+   "rimStart": [
+    1,
+    1.25
+   ],
+   "camStart": [
+    1,
+    1.8
+   ],
+   "camDelayMs": [
+    0,
+    300
+   ],
+   "camDurMs": [
+    300,
+    1600
+   ],
+   "wallDepth": [
+    0,
+    0.15
+   ],
+   "edgeBlurPx": [
+    0,
+    48
+   ],
+   "contact": [
+    0,
+    0.85
+   ],
+   "vignette": [
+    0,
+    0.75
+   ],
+   "rimDefocusPx": [
+    0,
+    24
+   ]
+  },
+  "layers": {
+   "rim": {
+    "end": 1,
+    "delayMs": 0,
+    "durMs": 480
+   },
+   "wall": {
+    "minStart": 1.16,
+    "rimPlus": 0.06,
+    "end": 1,
+    "delayMs": 30,
+    "durMs": 570
+   },
+   "cam": {
+    "end": 1
+   },
+   "blur": {
+    "end": 0,
+    "delayMs": 180,
+    "durMs": 750
+   }
+  }
+ },
+ "frameTune": {
+  "defaults": {
+   "outerBlur": 0.75,
+   "edgeBlur": 0.2,
+   "hue": 0,
+   "sat": 1,
+   "light": 0,
+   "tint": 1,
+   "move": 1
+  },
+  "ranges": {
+   "outerBlur": [
+    0,
+    1
+   ],
+   "edgeBlur": [
+    0,
+    1
+   ],
+   "hue": [
+    -180,
+    180
+   ],
+   "sat": [
+    0,
+    2
+   ],
+   "light": [
+    -0.5,
+    0.5
+   ],
+   "tint": [
+    0,
+    1
+   ],
+   "move": [
+    0,
+    1.5
+   ]
+  }
+ },
+ "material": {
+  "palettes": {
+   "dollhouse": [
+    0,
+    2864552,
+    10120150,
+    5086182,
+    15909424,
+    14170682
+   ],
+   "birdhouse": [
+    0,
+    5913122,
+    13142588,
+    4160074,
+    3100549,
+    12103324
+   ],
+   "mason_jar": [
+    0,
+    4091840,
+    5218394,
+    15120698,
+    9067712,
+    4868682
+   ],
+   "cardboard_box": [
+    0,
+    12597547,
+    3108800,
+    15253536,
+    3054165,
+    2763306
+   ]
+  }
+ },
+ "framePalette": {
+  "defaultMetal": "#4D3D4F",
+  "defaultStrip": "#B026FF",
+  "hueSteps": [
+   0,
+   3,
+   6,
+   9,
+   12,
+   15,
+   18,
+   21
+  ],
+  "metal": {
+   "hueDeg": 15,
+   "s": 0.65,
+   "l": 0.4
+  },
+  "strip": {
+   "hueDeg": 15,
+   "s": 0.65,
+   "l": 0.6
+  },
+  "shades": [
+   0.38,
+   0.25,
+   0.45,
+   0.1
+  ],
+  "stripSeq": [
+   0.6,
+   0.55
+  ]
+ },
+ "constants": {
+  "depthMath": {
+   "BLUR_START_PX": 34,
+   "PARALLAX_CAP": 0.03,
+   "RESP_RIM": 1,
+   "RESP_WALL": 0.6,
+   "RESP_CAM": 0.2,
+   "PARALLAX_TAU": 0.1,
+   "SDF_RANGE": 0.2
+  },
+  "frameMath": {
+   "OVERSCAN": 1.04,
+   "SIGN_X": 1,
+   "SIGN_Y": -1,
+   "RESERVE_USE": 0.99
+  },
+  "glass": {
+   "GLASS_K": 0.1,
+   "PARALLAX": 0.05,
+   "PARALLAX_TAU": 0.08,
+   "STEP": 2,
+   "SW": 24,
+   "SH": 42,
+   "RW": 288,
+   "RH": 512
+  },
+  "miniature": {
+   "STEP": 2,
+   "RING_BUDGET_BYTES": 134217728,
+   "LUMA_W": 32
+  },
+  "pose": {
+   "GYRO_THR": 0.2,
+   "safeDeg": 15,
+   "limitDeg": 25
+  },
+  "reveal": {
+   "finalScale": 0.6,
+   "revealMs": 8000
+  }
+ },
+ "frames": [
+  {
+   "id": "dollhouse",
+   "w": 941,
+   "h": 1372,
+   "aperture": {
+    "cx": 0.4915,
+    "cy": 0.54155,
+    "rx": 0.39798,
+    "ry": 0.38703
+   },
+   "neutral": {
+    "u0": 0.1057,
+    "u1": 0.8943
+   },
+   "reserveX": 0.1057
+  },
+  {
+   "id": "birdhouse",
+   "w": 941,
+   "h": 1418,
+   "aperture": {
+    "cx": 0.48937,
+    "cy": 0.50141,
+    "rx": 0.35866,
+    "ry": 0.33709
+   },
+   "neutral": {
+    "u0": 0.09248,
+    "u1": 0.90752
+   },
+   "reserveX": 0.09248
+  },
+  {
+   "id": "mason_jar",
+   "w": 941,
+   "h": 1378,
+   "aperture": {
+    "cx": 0.49734,
+    "cy": 0.54608,
+    "rx": 0.48778,
+    "ry": 0.37845
+   },
+   "neutral": {
+    "u0": 0.10398,
+    "u1": 0.89602
+   },
+   "reserveX": 0.10398
+  },
+  {
+   "id": "cardboard_box",
+   "w": 941,
+   "h": 1338,
+   "aperture": {
+    "cx": 0.5,
+    "cy": 0.55568,
+    "rx": 0.43199,
+    "ry": 0.3068
+   },
+   "neutral": {
+    "u0": 0.11547,
+    "u1": 0.88453
+   },
+   "reserveX": 0.11547
+  }
+ ],
+ "web": {
+  "quality": {
+   "start": "high",
+   "sampleEvery": 45,
+   "settleMs": 3000,
+   "slowDtMs": 22,
+   "slowGpuMs": 20,
+   "downAfterMs": 1500,
+   "upGpuMs": 9,
+   "upSamples": 5,
+   "upAfterMs": 8000,
+   "tiers": [
+    {
+     "name": "high",
+     "w": 720,
+     "h": 1280,
+     "fpsCap": 60
+    },
+    {
+     "name": "balanced",
+     "w": 540,
+     "h": 960,
+     "fpsCap": 60
+    },
+    {
+     "name": "low",
+     "w": 360,
+     "h": 640,
+     "fpsCap": 30
+    }
+   ]
+  },
+  "tempo": {
+   "ringBudgetBytes": 100663296
+  },
+  "testPattern": {
+   "sweepPeriodS": 4,
+   "sweepStart": 0.72,
+   "sweepEnd": 0.95
+  }
+ }
+}

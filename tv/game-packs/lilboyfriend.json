@@ -49,8 +49,8 @@
     },
     {
       "url": "/games/lilboyfriend/index.html",
-      "revision": "b55f576b234b24a4a47e1a52a2a2be18cf82e508",
-      "bytes": 9157
+      "revision": "ca8a3e74fbbffadabad0f8906ad09bbd84719f2f",
+      "bytes": 9400
     },
     {
       "url": "/handborne/assets/GLTFExporter-Bjf-hL3X.js",
@@ -613,5 +613,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap",
     "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
   ],
-  "version": "5ec13e5a77236c6d7928"
+  "version": "c867bced6da760ba9941"
 }

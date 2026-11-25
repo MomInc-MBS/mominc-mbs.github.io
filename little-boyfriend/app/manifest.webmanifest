@@ -1,0 +1,18 @@
+{
+  "id": "/little-boyfriend/app/",
+  "name": "Little Boyfriend",
+  "short_name": "Little Boyfriend",
+  "description": "Miniature tilt-shift camera in a Coach frame. Everything stays on your phone.",
+  "start_url": "/little-boyfriend/app/",
+  "scope": "/little-boyfriend/app/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0e0a12",
+  "theme_color": "#4d3d4f",
+  "categories": ["photo", "entertainment"],
+  "icons": [
+    {"src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}

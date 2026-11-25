@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Little Boyfriend</title>
+<meta name="description" content="Little Boyfriend: miniature tilt-shift camera in a Coach frame. Everything stays on your phone.">
+<meta name="theme-color" content="#4d3d4f">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Little Boyfriend">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon-180.png">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div id="app">
+  <div id="coach">
+    <div id="metal"></div>
+    <div id="win">
+      <canvas id="out" width="540" height="960"></canvas>
+      <div id="testcard" hidden></div>
+      <div id="winfx"></div>
+    </div>
+    <div id="chs"><i class="ch t"></i><i class="ch r"></i><i class="ch b"></i><i class="ch l"></i></div>
+    <div id="bolts"></div>
+    <nav id="rail" aria-label="Camera actions">
+      <button id="b-frame" class="rb" aria-label="Frame colour"><span class="ic"><svg viewBox="0 0 24 24"><circle id="sw" cx="12" cy="12" r="10" stroke-width="2"/></svg></span><span class="lb">Frame</span></button>
+      <button id="b-strip" class="rb" aria-label="Light strip"><span class="ic"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="4" rx="2"/><rect x="2" y="10" width="20" height="4" rx="2"/><rect x="2" y="17" width="20" height="4" rx="2"/><line id="strip-off" x1="2" y1="22" x2="22" y2="2" stroke-width="2" stroke-linecap="round"/></svg></span><span class="lb">Strip</span></button>
+      <button id="b-photo" class="rb" aria-label="Take photo"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke-width="3"/><circle cx="12" cy="12" r="5"/></svg></span><span class="lb">Photo</span></button>
+      <button id="b-rec" class="rb" aria-label="Start recording"><span class="ic"><svg viewBox="0 0 24 24"><circle id="rec-dot" cx="12" cy="12" r="10"/><rect id="rec-sq" x="3" y="3" width="18" height="18" rx="3" hidden/></svg></span><span class="lb">Record</span></button>
+      <button id="b-gal" class="rb" aria-label="Gallery"><span class="ic"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="9" height="9" rx="2"/><rect x="13" y="2" width="9" height="9" rx="2"/><rect x="2" y="13" width="9" height="9" rx="2"/><rect x="13" y="13" width="9" height="9" rx="2"/></svg></span><span class="lb">Gallery</span></button>
+    </nav>
+    <button id="b-gear" class="rb gear" aria-label="Settings"><svg viewBox="0 0 24 24"><g id="cog"></g><circle cx="12" cy="12" r="7.4" fill="none" stroke-width="4"/></svg></button>
+  </div>
+
+  <div id="msg" hidden role="alert"><p id="msg-text"></p><div><button id="msg-retry" class="btn">Retry camera</button> <a class="lnk apk" href="/games/lilboyfriend/">Android? Get the APK</a></div></div>
+  <div id="flash"></div>
+  <div id="toast" role="status"></div>
+  <div id="update" hidden><button class="btn" id="update-btn">New version ready — tap to reload</button></div>
+
+  <section id="sheet" hidden aria-label="Settings">
+    <div id="tabbar"><button class="btn" id="sheet-close" aria-label="Close settings">✕ Close</button><div id="tabs"></div></div>
+    <div id="panel"></div>
+    <div id="sheetfoot"><button class="lnk" id="install-link">Install app</button><a class="lnk apk" href="/games/lilboyfriend/">Android? Get the APK</a></div>
+  </section>
+  <div id="install" hidden><div class="card"><p id="install-text"></p><button class="btn" id="install-go" hidden>Install</button> <button class="btn" id="install-x">Close</button></div></div>
+  <div id="overlay" hidden></div>
+</div>
+<noscript><p style="color:#fff;padding:16px">Little Boyfriend needs JavaScript. <a href="/games/lilboyfriend/" style="color:#e6d2da">Android? Get the APK</a></p></noscript>
+<script type="module" src="app.mjs"></script>
+</body>
+</html>

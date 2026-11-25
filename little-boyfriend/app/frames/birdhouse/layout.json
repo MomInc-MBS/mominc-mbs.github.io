@@ -1,0 +1,21 @@
+{
+ "id": "birdhouse",
+ "srcFile": "7328.png",
+ "srcW": 941,
+ "srcH": 1671,
+ "cropBottom": 1418,
+ "w": 941,
+ "h": 1418,
+ "aperture": {
+  "cx": 0.48937,
+  "cy": 0.50141,
+  "rx": 0.35866,
+  "ry": 0.33709
+ },
+ "neutral": {
+  "u0": 0.09248,
+  "u1": 0.90752
+ },
+ "reserveX": 0.09248,
+ "notes": "straight alpha, aperture alpha 0; blur sigma=15.1px premultiplied; vertical reserve=(1-1/1.04)/2; mask R=sharp material, G=blurred"
+}

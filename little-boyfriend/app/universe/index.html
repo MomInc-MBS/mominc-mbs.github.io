@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' blob:; media-src 'self' blob:; connect-src 'self'">
+<title>Memory Universe</title>
+<link rel="stylesheet" href="universe.css">
+</head>
+<body>
+<section class="mu-shell" id="shell">
+  <div class="mu-viewport" id="viewport" tabindex="0" role="region" aria-label="Your memories, oldest at the top, newest at the bottom. Press and hold to fly."><div class="mu-route" id="route"></div></div>
+  <canvas class="mu-scene" id="scene" aria-hidden="true"></canvas>
+  <header class="mu-hud">
+    <button type="button" id="back" aria-label="Back to camera">&#x2715;</button>
+    <div class="mu-album"><b id="album">Memories</b><small id="count"></small></div>
+    <button type="button" id="oldest" aria-label="Jump to the oldest memory">Oldest</button>
+    <button type="button" id="home" aria-label="Jump to the newest memory">Home</button>
+  </header>
+  <div class="mu-empty" id="empty" hidden><p>No memories yet &mdash; take a photo or video first</p><button type="button" id="emptyBack">Back to camera</button></div>
+</section>
+<script type="module" src="universe.mjs"></script>
+</body>
+</html>

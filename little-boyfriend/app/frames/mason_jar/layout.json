@@ -1,0 +1,21 @@
+{
+ "id": "mason_jar",
+ "srcFile": "7332.png",
+ "srcW": 941,
+ "srcH": 1672,
+ "cropBottom": 1378,
+ "w": 941,
+ "h": 1378,
+ "aperture": {
+  "cx": 0.49734,
+  "cy": 0.54608,
+  "rx": 0.48778,
+  "ry": 0.37845
+ },
+ "neutral": {
+  "u0": 0.10398,
+  "u1": 0.89602
+ },
+ "reserveX": 0.10398,
+ "notes": "straight alpha, aperture alpha 0; blur sigma=15.1px premultiplied; vertical reserve=(1-1/1.04)/2; mask R=sharp material, G=blurred"
+}
