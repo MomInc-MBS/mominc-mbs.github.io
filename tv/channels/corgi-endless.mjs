@@ -4,7 +4,7 @@
 // parameterised in depth/width/side/mirror. Decoration randomness is NOT drawn here (see decorSeed).
 
 export const GEN_VERSION = 1;
-export const STORE_KEY = 'corgi-endless-v1';
+export const STORE_KEY = 'corgi-endless-v2';   // the v1 key (STORE_KEY_V1) is read for migration and never overwritten
 export const BASE_SPEED = 2.5;      // = corgi.js SPEED, the immutable dog walking speed
 export const ACTOR_R = 0.34;        // clearance used for routes: dog .28, chaser .32, plus margin
 export const CORRIDOR_HALF = 1.35;  // wall centre line (inner face 1.2)
@@ -115,7 +115,7 @@ function assemble(runSeed, section, version, specs, rng) {
     layoutVersion: version, runSeed, section, sectionSeed: sectionSeed(runSeed, section), bounds: { x0: -0.8, x1: L + 0.2, z0: -10, z1: 10 }, corridorLength: L,
     mirrored: specs[0].s < 0, areaCount: areas.length, areas, corridorWalls: corridor, doorRect: rectOf(door), door, collisionRects: [...all, ...desks],
     entry: playerSpawn, exit: [L, 0], doorSockets: [[L - 0.6, 0]], playerSpawn, playerYaw: -Math.PI / 2, chaserSpawn, recoveryPoints, mainAnchors,
-    objectives, anchors: mainAnchors, nav: { nodes, edges }, decorSeed: mixSeed(sectionSeed(runSeed, section), 0xDEC0), dark: section % 2 === 0
+    objectives, anchors: mainAnchors, nav: { nodes, edges }, decorSeed: mixSeed(sectionSeed(runSeed, section), 0xDEC0), dark: true
   };
 }
 
@@ -239,94 +239,139 @@ export function genEndlessSection(runSeed, section, version = GEN_VERSION) {
 // the known-good template (three areas, original depths); validated by the test sweep
 export const fallbackSection = (runSeed, section = 1, version = GEN_VERSION) => assemble(runSeed, section, version, FALLBACK, mulberry32(sectionSeed(runSeed, section)));
 
-// ---------- chaser: 25% of base walking speed at section 1 up to a 60% cap at section 10
-export const chaserSpeed = section => BASE_SPEED * (0.25 + 0.35 * Math.min(1, Math.max(0, (section - 1) / 9)));
+// ---------- chaser: one formula from immutable bases. Zoomies never enters it.
+export const chaserSpeed = section => 0.625 * 1.30 * Math.pow(1.03, count(section) < 1 ? 0 : count(section) - 1);
 
-// ---------- perks: ten, two equip slots, ranks 1..5. Effects are a pure function of the slots (never accumulated).
-export const MAX_RANK = 5;
+// ---------- counts: finite safe non-negative integers only. No `|0` (it wraps at 2^31), no clamping a bad value into a good one.
+export const MAX_STACK = Math.floor(Number.MAX_SAFE_INTEGER / 8);
+export const count = v => (typeof v === 'number' && Number.isSafeInteger(v) && v > 0 && v <= MAX_STACK) ? v : 0;
+
+// ---------- traits: ten, unlimited stacks, all active at once. Effects are a pure function of the counts (never accumulated).
+export const BASE_QUARTERS = 12, CAPTURE_QUARTERS = 4, BASE_CATCH = 0.88, BASE_GRACE_MS = 600;
+const f1 = x => +x.toFixed(1), f2 = x => +x.toFixed(2);
 export const PERKS = [
-  { id: 'heart', name: 'Extra Heart', line: L => `+${L} maximum heart${L > 1 ? 's' : ''}` },
-  { id: 'zoomies', name: 'Zoomies', line: L => `+${6 * L}% walking speed` },
-  { id: 'wind', name: 'Second Wind', line: L => `${12 * L}% slower drain, ${12 * L}% faster regain` },
-  { id: 'vision', name: 'Paper Vision', line: L => `outline papers through walls within ${6 * L} units` },
-  { id: 'scent', name: 'Scent Trail', line: L => `show ${4 * L} units of path to the nearest paper` },
-  { id: 'danger', name: 'Stranger Danger', line: L => `outline the pursuer through walls within ${5 * L} units` },
-  { id: 'ears', name: 'Big Ears', line: L => `warning range +${2 * L} units, louder cue` },
-  { id: 'hackles', name: 'Hackles', line: L => `warn when he is within ${4 + 2 * L} units` },
-  { id: 'slippery', name: 'Slippery', line: L => `+${150 * L} ms grace, catch range ${(1.1 - 0.1 * L).toFixed(1)}` },
-  { id: 'quick', name: 'Quick Read', line: L => `reach +${15 * L}%, faster pickup` }
+  { id: 'heart', name: 'Extra Heart', line: n => `${(BASE_QUARTERS + n) / 4} hearts max` },
+  { id: 'zoomies', name: 'Zoomies', line: n => `+${f1(1.5 * n)}% walking speed` },
+  { id: 'wind', name: 'Second Wind', line: n => `${f1(100 * (1 - (0.20 + 0.80 / (1 + 0.04 * n))))}% slower drain, ${3 * n}% faster regain` },
+  { id: 'vision', name: 'Paper Vision', line: n => `papers outlined through walls within ${f1(1.5 * n)} units` },
+  { id: 'scent', name: 'Scent Trail', line: n => `${n} unit${n === 1 ? '' : 's'} of path to the nearest paper` },
+  { id: 'danger', name: 'Stranger Danger', line: n => `pursuer outlined within ${f2(1.25 * n)} units` },
+  { id: 'ears', name: 'Big Ears', line: n => `warning range +${f1(0.5 * n)} units, cue x${f2(1 + n / (n + 19))}` },
+  { id: 'hackles', name: 'Hackles', line: n => n ? `warns when he is within ${f1(4 + 0.5 * n)} units` : 'off' },
+  { id: 'slippery', name: 'Slippery', line: n => `+${Math.round(1500 * n / (n + 39))} ms grace, catch range ${f2(BASE_CATCH * (0.80 + 0.20 / (1 + 0.10 * n)))}` },
+  { id: 'quick', name: 'Quick Read', line: n => `reach +${f1(3.75 * n)}%, pickup ${f2(0.50 + 0.50 / (1 + 0.05 * n))}x time` }
 ];
+export const TRAIT_IDS = PERKS.map(p => p.id);
 export const perkById = id => PERKS.find(p => p.id === id);
-export const BASE_HEARTS = 3, BASE_CATCH = 1.1, BASE_GRACE_MS = 600;
-export function perkEffects(slots) {
-  const rank = id => { const s = (slots || []).find(x => x && x.id === id); return s ? Math.min(MAX_RANK, Math.max(0, s.rank | 0)) : 0; };
-  const L = id => rank(id);
+export const emptyTraits = () => Object.fromEntries(TRAIT_IDS.map(id => [id, 0]));
+export const cleanTraits = t => { const out = emptyTraits(); if (t && typeof t === 'object') for (const id of TRAIT_IDS) out[id] = count(t[id]); return out; };
+// the next real improvement for a card (owned n -> n+1), not the total
+export const nextLine = (id, n) => { const p = perkById(id); return n > 0 ? `${p.line(n)}  →  ${p.line(n + 1)}` : p.line(1); };
+
+export function perkEffects(traits) {
+  const T = cleanTraits(traits), n = id => T[id];
   return {
-    maxHearts: BASE_HEARTS + L('heart'), speedMul: 1 + 0.06 * L('zoomies'), drainMul: 1 - 0.12 * L('wind'), regainMul: 1 + 0.12 * L('wind'),
-    visionRange: 6 * L('vision'), scentLen: 4 * L('scent'), dangerRange: 5 * L('danger'),
-    earsRange: 2 * L('ears'), earsGain: Math.min(2, 1 + 0.2 * L('ears')), hackleRange: L('hackles') ? 4 + 2 * L('hackles') : 0,
-    graceMs: 150 * L('slippery'), catchRange: BASE_CATCH - 0.1 * L('slippery'), readReach: 1 + 0.15 * L('quick'), readTime: Math.max(0.5, 1 - 0.1 * L('quick'))
+    maxQuarters: BASE_QUARTERS + n('heart'), maxHearts: (BASE_QUARTERS + n('heart')) / 4,
+    speedMul: 1 + 0.015 * n('zoomies'),
+    drainMul: 0.20 + 0.80 / (1 + 0.04 * n('wind')), regainMul: 1 + 0.03 * n('wind'),
+    visionRange: 1.5 * n('vision'), scentLen: 1.0 * n('scent'), dangerRange: 1.25 * n('danger'),
+    earsRange: 0.5 * n('ears'), earsGain: 1 + n('ears') / (n('ears') + 19),
+    hackleRange: n('hackles') ? 4 + 0.5 * n('hackles') : 0,
+    graceMs: 1500 * n('slippery') / (n('slippery') + 39), catchRange: BASE_CATCH * (0.80 + 0.20 / (1 + 0.10 * n('slippery'))),
+    readReach: 1 + 0.0375 * n('quick'), readTime: 0.50 + 0.50 / (1 + 0.05 * n('quick'))
   };
 }
 
 // ---------- run state + offers. A run is a plain object; every function returns a new one.
-export const emptyStore = () => ({ v: 1, best: { section: 0, perks: {} }, run: null, settings: { sound: true, look: 1 } });
+export const STORE_V = 2, STORE_KEY_V1 = 'corgi-endless-v1';
+export const emptyStore = () => ({ v: STORE_V, best: { section: 0, traits: emptyTraits() }, run: null, settings: { sound: true, look: 1 }, legacy: null });
+// genVersion = layout generator of the CURRENT section; nextGenVersion = what the next section (and a new run) uses.
 export function newRun(seed) {
-  return { v: 1, seed: seed >>> 0, genVersion: GEN_VERSION, section: 1, status: 'active', hearts: BASE_HEARTS, slots: [null, null],
-    collected: [], papers: 0, offerIdx: 0, pendingOffer: null, pendingMilestone: null, ms: { first: false, full: false } };
+  return { v: STORE_V, seed: seed >>> 0, genVersion: GEN_VERSION, nextGenVersion: GEN_VERSION, section: 1, status: 'active', quarters: BASE_QUARTERS, traits: emptyTraits(),
+    collected: [], papers: 0, offerIdx: 0, pendingOffer: null, picked: [] };
 }
+export const maxQuarters = run => perkEffects(run.traits).maxQuarters;
+const discovered = (run, id) => count(run.traits && run.traits[id]) > 0;
+// three distinct traits, deterministic from (seed, offerIdx); while any trait is undiscovered one offered slot is an undiscovered one
 export function makeOffer(run, objectiveId, article = 0) {
-  const rng = mulberry32(mixSeed(run.seed, 0x0FFE12 + run.offerIdx * 7919));
-  const pool = PERKS.flatMap(p => { const eq = run.slots.find(s => s && s.id === p.id); return eq ? (eq.rank < MAX_RANK ? [{ perk: p.id, kind: 'upgrade' }] : []) : [{ perk: p.id, kind: 'new' }]; });
+  const rng = mulberry32(mixSeed(run.seed, 0x0FFE12 + run.offerIdx * 7919)), pool = TRAIT_IDS.slice();
   for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; }
-  return { objectiveId, article, choices: pool.slice(0, 3) };
+  const fresh = pool.find(id => !discovered(run, id)), picks = pool.filter(id => id !== fresh).slice(0, fresh ? 2 : 3);
+  if (fresh) picks.splice(Math.floor(rng() * (picks.length + 1)), 0, fresh);
+  return { objectiveId, article, choices: picks.map(perk => ({ perk, kind: discovered(run, perk) ? 'stack' : 'new' })) };
 }
-// choice index, plus which slot (0|1) to overwrite when a new perk arrives with both slots full
-export function pickOffer(run, index, replaceSlot, store) {
+// choose one offered trait: records the objective/offer id and exactly one stack in ONE returned run, so a replay or reload cannot add a second
+export function pickOffer(run, index, store) {
   const offer = run.pendingOffer, c = offer && offer.choices[index];
-  if (!c) return { error: 'no such choice' };
-  const slots = run.slots.map(s => s && { ...s }), eq = slots.findIndex(s => s && s.id === c.perk);
-  if (c.kind === 'upgrade') { if (eq < 0 || slots[eq].rank >= MAX_RANK) return { error: 'cannot upgrade' }; slots[eq].rank += 1; }
-  else {
-    if (eq >= 0) return { error: 'already equipped' };
-    let at = slots.findIndex(s => !s);
-    if (at < 0) { if (replaceSlot !== 0 && replaceSlot !== 1) return { error: 'choose a slot to replace' }; at = replaceSlot; }
-    slots[at] = { id: c.perk, rank: 1 };
-  }
-  return commit(run, slots, store);
+  if (!c || !TRAIT_IDS.includes(c.perk)) return { error: 'no such choice' };
+  if ((run.picked || []).includes(offer.objectiveId)) return { error: 'already picked' };
+  const owned = count(run.traits[c.perk]); if (owned + 1 > MAX_STACK) return { error: 'stack limit' };
+  const before = cleanTraits(run.traits), traits = { ...before, [c.perk]: owned + 1 }, max = perkEffects(traits).maxQuarters;
+  const quarters = Math.min(max, run.quarters + (c.perk === 'heart' ? 1 : 0));        // +1 quarter only on a committed new Heart stack
+  const best = store ? { ...store.best, traits: cleanTraits(store.best.traits) } : null;
+  if (best) best.traits[c.perk] = Math.max(best.traits[c.perk], traits[c.perk]);
+  const allTen = TRAIT_IDS.every(id => traits[id] > 0) && !TRAIT_IDS.every(id => before[id] > 0);   // true once, on the pick that completes the set
+  return { run: { ...run, traits, quarters, pendingOffer: null, picked: [...(run.picked || []), offer.objectiveId] }, best, allTen };
 }
-export function keepBuild(run) { return { ...run, pendingOffer: null }; }
-function commit(run, slots, store) {
-  const oldMax = perkEffects(run.slots).maxHearts, newMax = perkEffects(slots).maxHearts;
-  let hearts = run.hearts + Math.max(0, newMax - oldMax); hearts = Math.min(hearts, newMax);        // reward only on commit; replacement clamps
-  const ms = { ...run.ms }; let pendingMilestone = null;
-  const maxed = slots.filter(s => s && s.rank === MAX_RANK).length;
-  if (maxed >= 1 && !ms.first) { ms.first = true; pendingMilestone = 'first'; }
-  if (maxed >= 2 && !ms.full) { ms.full = true; pendingMilestone = 'full'; }
-  const best = store ? { ...store.best, perks: { ...store.best.perks } } : null;
-  if (best) for (const s of slots) if (s) best.perks[s.id] = Math.max(best.perks[s.id] || 0, s.rank);
-  return { run: { ...run, slots, hearts, ms, pendingOffer: null, pendingMilestone }, best };
+// capture: four quarter-hearts; at zero the run ends and run powers clear (bests live in the store)
+export function capture(run) {
+  const quarters = Math.max(0, run.quarters - CAPTURE_QUARTERS);
+  return quarters > 0 ? { ...run, quarters } : { ...run, quarters: 0, status: 'over', traits: emptyTraits(), pendingOffer: null };
 }
-// capture: lose one heart; the last one ends the run and clears run powers (bests live in the store)
-export function loseHeart(run) {
-  const hearts = run.hearts - 1;
-  return hearts > 0 ? { ...run, hearts } : { ...run, hearts: 0, status: 'over', slots: [null, null], pendingOffer: null, pendingMilestone: null };
-}
-// accepted exit transition: exactly one new section
+// accepted exit transition: exactly one new section; the generator queued for the next section becomes current
 export function nextSection(run, store) {
   const section = run.section + 1;
-  return { run: { ...run, section, collected: [] }, best: store ? { ...store.best, section: Math.max(store.best.section, section) } : null };
+  return { run: { ...run, section, collected: [], picked: [], genVersion: run.nextGenVersion || GEN_VERSION, nextGenVersion: GEN_VERSION }, best: store ? { ...store.best, section: Math.max(count(store.best.section), section) } : null };
 }
 
-// ---------- storage (tolerant of absence and garbage)
+// ---------- storage (tolerant of absence and garbage) + v1 -> v2 migration
+// v1 run: {hearts, slots:[{id,rank}|null x2], pendingOffer:{choices:[{perk,kind}]}, pendingMilestone, ms}; v1 best: {section, perks:{id:rank}}.
+// Each old rank becomes four stacks (old additive investments were four times the new ones). Health becomes quarters, clamped to the computed max, no bonus heal.
+const RANK_TO_STACKS = 4;
+const cleanSettings = s => ({ sound: !s || s.sound !== false, look: Math.min(2, Math.max(0.5, Number(s && s.look) || 1)) });
+const cleanOffer = (po, run) => {
+  if (!po || typeof po.objectiveId !== 'string' || !Array.isArray(po.choices)) return null;
+  const ids = [...new Set(po.choices.map(c => c && c.perk).filter(id => TRAIT_IDS.includes(id)))].slice(0, 3);
+  for (const c of makeOffer(run, po.objectiveId).choices) if (ids.length < 3 && !ids.includes(c.perk)) ids.push(c.perk);   // an old offer with fewer than three usable items is topped up
+  return { objectiveId: po.objectiveId, article: count(po.article), choices: ids.map(perk => ({ perk, kind: discovered(run, perk) ? 'stack' : 'new' })) };
+};
+export function migrateV1(raw) {
+  const out = emptyStore(); out.legacy = raw;                                  // the whole v1 record is kept under `legacy`
+  const b = raw.best || {};
+  out.best.section = count(b.section);
+  for (const id of TRAIT_IDS) out.best.traits[id] = Math.min(MAX_STACK, count(b.perks && b.perks[id]) * RANK_TO_STACKS);
+  out.settings = cleanSettings(raw.settings);
+  const r = raw.run;
+  if (r && r.v === 1 && Number.isSafeInteger(r.seed)) {
+    const traits = emptyTraits();
+    for (const s of Array.isArray(r.slots) ? r.slots : []) if (s && TRAIT_IDS.includes(s.id)) traits[s.id] = Math.min(5, count(s.rank)) * RANK_TO_STACKS;
+    const max = perkEffects(traits).maxQuarters, over = r.status === 'over';
+    const run = { v: STORE_V, seed: r.seed >>> 0, genVersion: r.genVersion === 1 ? 1 : GEN_VERSION, nextGenVersion: GEN_VERSION, section: Math.max(1, count(r.section)), status: over ? 'over' : 'active',
+      quarters: over ? 0 : Math.min(max, Math.max(1, count(r.hearts) * CAPTURE_QUARTERS)), traits, collected: Array.isArray(r.collected) ? r.collected.slice(0, 64) : [],
+      papers: count(r.papers), offerIdx: count(r.offerIdx), pendingOffer: null, picked: [] };
+    if (!over) run.pendingOffer = cleanOffer(r.pendingOffer, run);             // pendingMilestone / ms (rank-5, full-clear) are dropped: they commit nothing and duplicate no paper
+    out.run = run;
+  }
+  return out;
+}
+function cleanRun(r) {
+  if (!r || r.v !== STORE_V || !Number.isSafeInteger(r.seed)) return null;
+  const traits = cleanTraits(r.traits), max = perkEffects(traits).maxQuarters, over = r.status === 'over';
+  const run = { v: STORE_V, seed: r.seed >>> 0, genVersion: r.genVersion === 1 ? 1 : GEN_VERSION, nextGenVersion: GEN_VERSION, section: Math.max(1, count(r.section)), status: over ? 'over' : 'active',
+    quarters: over ? 0 : Math.min(max, Math.max(1, count(r.quarters))), traits, collected: Array.isArray(r.collected) ? r.collected.slice(0, 64) : [], papers: count(r.papers), offerIdx: count(r.offerIdx),
+    pendingOffer: null, picked: Array.isArray(r.picked) ? r.picked.filter(x => typeof x === 'string').slice(0, 8) : [] };
+  if (!over) run.pendingOffer = cleanOffer(r.pendingOffer, run);
+  return run;
+}
+// v2 first; otherwise a v1 record is migrated (the v1 key is never overwritten, so a rollback still finds its save)
 export function loadStore(storage) {
   try {
-    const raw = JSON.parse(storage.getItem(STORE_KEY) || 'null'); const base = emptyStore();
-    if (!raw || raw.v !== 1) return base;
-    return { v: 1, best: { section: raw.best?.section | 0, perks: { ...(raw.best?.perks || {}) } }, run: raw.run && raw.run.v === 1 ? raw.run : null,
-      settings: { sound: raw.settings?.sound !== false, look: Math.min(2, Math.max(0.5, Number(raw.settings?.look) || 1)) } };
+    const raw2 = JSON.parse(storage.getItem(STORE_KEY) || 'null');
+    if (raw2 && raw2.v === STORE_V) return { v: STORE_V, best: { section: count(raw2.best && raw2.best.section), traits: cleanTraits(raw2.best && raw2.best.traits) }, run: cleanRun(raw2.run), settings: cleanSettings(raw2.settings), legacy: raw2.legacy || null };
+    const raw1 = JSON.parse(storage.getItem(STORE_KEY_V1) || 'null');
+    return raw1 && raw1.v === 1 ? migrateV1(raw1) : emptyStore();
   } catch { return emptyStore(); }
 }
 export function saveStore(storage, store) {
-  try { storage.setItem(STORE_KEY, JSON.stringify(store)); storage.setItem('corgi-endless-best-v1', String(store.best.section | 0)); } catch { /* storage may be blocked */ }
+  try { storage.setItem(STORE_KEY, JSON.stringify(store)); storage.setItem('corgi-endless-best-v1', String(count(store.best.section))); } catch { /* storage may be blocked */ }
 }

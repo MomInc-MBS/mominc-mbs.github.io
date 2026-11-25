@@ -2,8 +2,6 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as E from '../tv/channels/corgi-endless.mjs';
 
-const ALL = E.PERKS.map(p => p.id);
-const slotsOf = (...s) => s.map(x => x && { id: x[0], rank: x[1] });
 
 test('1000-seed sweep: 3/4/5 areas, both mirrors, later sections, valid, bounded, reproducible', () => {
   const areas = new Set(), sides = new Set(); let fallbacks = 0, maxAttempts = 0, mirroredAreas = 0, bothSides = 0;
@@ -68,110 +66,151 @@ test('fair respawn: the pursuer is re-seated far (by route) from every recovery 
   }
 });
 
-test('chaser speed: 25% of base at section 1, 60% cap at section 10, flat after, and never touched by Zoomies', () => {
-  assert.equal(E.chaserSpeed(1), E.BASE_SPEED * 0.25);
-  assert.ok(Math.abs(E.chaserSpeed(10) - E.BASE_SPEED * 0.6) < 1e-12);
-  assert.equal(E.chaserSpeed(11), E.chaserSpeed(10)); assert.equal(E.chaserSpeed(500), E.chaserSpeed(10));
-  for (let s = 2; s <= 10; s++) assert.ok(E.chaserSpeed(s) > E.chaserSpeed(s - 1));
-  const fast = E.perkEffects(slotsOf(['zoomies', 5], null));
-  assert.equal(fast.speedMul, 1.3); assert.equal(E.chaserSpeed(1), E.BASE_SPEED * 0.25);   // pursuer reads BASE_SPEED, not speedMul
+test('chaser speed: one formula, exact table, never touched by Zoomies', () => {
+  const want = { 1: 0.8125, 2: 0.836875, 10: 1.060128, 20: 1.424724, 50: 3.458178, 100: 15.160329 };
+  for (const [s, v] of Object.entries(want)) assert.ok(Math.abs(E.chaserSpeed(+s) - v) < 5e-7, `section ${s}: ${E.chaserSpeed(+s)}`);
+  for (let s = 2; s <= 120; s++) assert.ok(Math.abs(E.chaserSpeed(s) / E.chaserSpeed(s - 1) - 1.03) < 1e-12);   // exactly 3% per section, no old cap or ramp underneath
+  assert.equal(E.perkEffects({ zoomies: 100 }).speedMul, 2.5); assert.equal(E.chaserSpeed(1), 0.625 * 1.3);
 });
 
-test('perk effects at ranks 1 and 5, from immutable bases, never compounding', () => {
-  const at = (id, rank) => E.perkEffects(slotsOf([id, rank], null));
-  const base = E.perkEffects(slotsOf(null, null));
-  assert.deepEqual([base.maxHearts, base.speedMul, base.drainMul, base.regainMul, base.catchRange, base.readReach, base.readTime], [3, 1, 1, 1, 1.1, 1, 1]);
-  assert.deepEqual([at('heart', 1).maxHearts, at('heart', 5).maxHearts], [4, 8]);
-  assert.deepEqual([at('zoomies', 1).speedMul, at('zoomies', 5).speedMul], [1.06, 1.3]);
-  assert.deepEqual([at('wind', 1).drainMul, at('wind', 1).regainMul], [0.88, 1.12]);
-  assert.ok(at('wind', 5).drainMul > 0 && Math.abs(at('wind', 5).drainMul - 0.4) < 1e-12 && Math.abs(at('wind', 5).regainMul - 1.6) < 1e-12);
-  assert.deepEqual([at('vision', 1).visionRange, at('vision', 5).visionRange], [6, 30]);
-  assert.deepEqual([at('scent', 1).scentLen, at('scent', 5).scentLen], [4, 20]);
-  assert.deepEqual([at('danger', 1).dangerRange, at('danger', 5).dangerRange], [5, 25]);
-  assert.deepEqual([at('ears', 1).earsRange, at('ears', 5).earsRange], [2, 10]); assert.ok(at('ears', 5).earsGain <= 2 && at('ears', 1).earsGain > 1);
-  assert.deepEqual([at('hackles', 1).hackleRange, at('hackles', 5).hackleRange], [6, 14]);
-  assert.deepEqual([at('slippery', 1).graceMs, at('slippery', 5).graceMs], [150, 750]);
-  assert.deepEqual([+at('slippery', 1).catchRange.toFixed(2), +at('slippery', 5).catchRange.toFixed(2)], [1.0, 0.6]);
-  assert.deepEqual([at('quick', 1).readReach, +at('quick', 5).readReach.toFixed(2)], [1.15, 1.75]);
-  assert.deepEqual([+at('quick', 1).readTime.toFixed(2), at('quick', 5).readTime], [0.9, 0.5]);
-  const slots = slotsOf(['zoomies', 5], ['slippery', 5]), first = E.perkEffects(slots);
-  for (let i = 0; i < 100; i++) assert.deepEqual(E.perkEffects(slots), first);            // pure: reload or reopen can never stack
-  assert.equal(first.speedMul, 1.3); assert.equal(first.graceMs, 750);                       // Zoomies + Slippery
-  assert.ok(ALL.length === 10 && new Set(ALL).size === 10);
-});
-
-test('offers: persisted shape, deterministic, three distinct valid choices, no maxed upgrades', () => {
-  let run = E.newRun(777);
-  for (let n = 0; n < 40; n++) {
-    const a = E.makeOffer(run, 'x', 0), b = E.makeOffer(run, 'x', 0);
-    assert.deepEqual(a, b);                                                              // reopening/reload cannot reroll
-    assert.equal(a.choices.length, 3); assert.equal(new Set(a.choices.map(c => c.perk)).size, 3);
-    for (const c of a.choices) {
-      const eq = run.slots.find(s => s && s.id === c.perk);
-      assert.equal(c.kind, eq ? 'upgrade' : 'new'); if (eq) assert.ok(eq.rank < E.MAX_RANK);
-    }
-    run = { ...run, offerIdx: run.offerIdx + 1, slots: slotsOf(['heart', n % 6 === 5 ? 5 : 1 + (n % 5)], ['zoomies', 5]) };
+test('catch distance starts at 0.88 and Slippery shrinks it by the plan formula, staying positive', () => {
+  assert.equal(E.BASE_CATCH, 0.88); assert.equal(E.perkEffects(null).catchRange, 0.88);
+  for (const n of [1, 6, 20, 100, 1e6]) {
+    const c = E.perkEffects({ slippery: n }).catchRange;
+    assert.ok(Math.abs(c - 0.88 * (0.8 + 0.2 / (1 + 0.1 * n))) < 1e-12); assert.ok(c > 0.88 * 0.8 && c < 0.88);
   }
+});
+
+test('every section is dark; no brightness alternation', () => {
+  for (let s = 1; s <= 12; s++) assert.equal(E.genEndlessSection(99, s).dark, true);
+});
+
+test('trait effects from stack counts: 0 is the base, 6/20/100 are finite, positive where required, bounded where required', () => {
+  const base = E.perkEffects(null);
+  assert.deepEqual([base.maxQuarters, base.speedMul, base.drainMul, base.regainMul, base.catchRange, base.readReach, base.readTime, base.hackleRange, base.graceMs, base.earsGain], [12, 1, 1, 1, 0.88, 1, 1, 0, 0, 1]);
+  const one = id => E.perkEffects({ [id]: 1 });
+  assert.equal(one('heart').maxQuarters, 13); assert.ok(Math.abs(one('zoomies').speedMul - 1.015) < 1e-12);
+  assert.ok(Math.abs(one('vision').visionRange - 1.5) < 1e-12 && one('scent').scentLen === 1 && Math.abs(one('danger').dangerRange - 1.25) < 1e-12);
+  assert.ok(Math.abs(one('hackles').hackleRange - 4.5) < 1e-12 && Math.abs(one('ears').earsRange - 0.5) < 1e-12);
+  assert.ok(Math.abs(one('quick').readReach - 1.0375) < 1e-12);
+  for (const n of [6, 20, 100]) for (const id of E.TRAIT_IDS) {
+    const e = E.perkEffects({ [id]: n });
+    for (const [k, v] of Object.entries(e)) assert.ok(Number.isFinite(v) && v >= 0, `${id}x${n} ${k}=${v}`);
+    assert.ok(e.drainMul > 0.2 && e.earsGain < 2 && e.graceMs < 1500 && e.readTime >= 0.5 && e.catchRange > 0.7, `${id}x${n} bounds`);
+  }
+  assert.ok(Math.abs(E.perkEffects({ wind: 100 }).drainMul - (0.2 + 0.8 / 5)) < 1e-12);
+  const all = Object.fromEntries(E.TRAIT_IDS.map(id => [id, 20])), a = E.perkEffects(all);
+  for (let i = 0; i < 50; i++) assert.deepEqual(E.perkEffects(all), a);                  // pure: reload or reopen can never stack
+  assert.ok(a.speedMul > 1.29 && a.maxQuarters === 32 && E.TRAIT_IDS.length === 10);     // all ten active at once
+  for (const id of E.TRAIT_IDS) { const t = E.nextLine(id, 100); assert.ok(t.length < 140 && !/NaN|undefined|\/5/.test(t), t); assert.ok(E.nextLine(id, 0).length > 3); }
+});
+
+test('count parsing rejects non-finite and unsafe values instead of coercing them', () => {
+  for (const bad of [NaN, Infinity, -Infinity, -1, 1.5, 2 ** 53, 1e300, '5', null, undefined, {}, [], true]) assert.equal(E.count(bad), 0, String(bad));
+  assert.equal(E.count(7), 7); assert.equal(E.count(2 ** 40), 2 ** 40); assert.equal(E.count(2 ** 31), 2 ** 31);   // no 32-bit wrap
+  assert.equal(E.perkEffects({ heart: NaN, zoomies: '9', wind: 1e300, scent: -4 }).maxQuarters, 12);
+  assert.deepEqual(E.cleanTraits({ heart: 3, bogus: 9, quick: 1.2 }), { ...E.emptyTraits(), heart: 3 });
+});
+
+test('offers: three distinct traits, deterministic, an undiscovered one while any remain, any trait offerable forever', () => {
+  let run = E.newRun(777);
+  for (let n = 0; n < 60; n++) {
+    const a = E.makeOffer(run, 'x', 0), b = E.makeOffer(run, 'x', 0);
+    assert.deepEqual(a, b);                                                               // reopening/reload cannot reroll
+    assert.equal(a.choices.length, 3); assert.equal(new Set(a.choices.map(c => c.perk)).size, 3);
+    if (E.TRAIT_IDS.some(id => !run.traits[id])) assert.ok(a.choices.some(c => !run.traits[c.perk]), 'must offer an undiscovered trait');
+    for (const c of a.choices) assert.equal(c.kind, run.traits[c.perk] ? 'stack' : 'new');
+    run = { ...E.pickOffer({ ...run, pendingOffer: a }, n % 3).run, offerIdx: run.offerIdx + 1, picked: [] };
+  }
+  assert.ok(E.TRAIT_IDS.every(id => run.traits[id] > 0), 'ten traits discovered within 60 offers');
+  const seen = new Set(), maxed = { ...E.newRun(4), traits: Object.fromEntries(E.TRAIT_IDS.map(id => [id, 50])) };
+  for (let i = 0; i < 80; i++) for (const c of E.makeOffer({ ...maxed, offerIdx: i }, 'x').choices) seen.add(c.perk);
+  assert.equal(seen.size, 10);                                                            // heavily stacked traits stay offerable
   assert.notDeepEqual(E.makeOffer(E.newRun(1), 'x', 0).choices, E.makeOffer({ ...E.newRun(1), offerIdx: 1 }, 'x', 0).choices);
 });
 
-test('picks: slots, replacement, Extra Heart on commit only, milestones once, keep-build, death, next section', () => {
+test('picks: one stack per committed pick, duplicate commit refused, Heart heals one quarter once, all-ten fires once', () => {
   const store = E.emptyStore();
-  let run = { ...E.newRun(5), pendingOffer: { objectiveId: 'o', article: 0, choices: [{ perk: 'heart', kind: 'new' }, { perk: 'zoomies', kind: 'new' }, { perk: 'quick', kind: 'new' }] } };
-  assert.equal(run.hearts, 3);
-  let r = E.pickOffer(run, 0, undefined, store); run = r.run;                              // Extra Heart rank 1 -> +1 heart, once
-  assert.deepEqual([run.hearts, run.slots[0].rank, run.pendingOffer], [4, 1, null]);
-  assert.equal(E.perkEffects(run.slots).maxHearts, 4);
-  const offer = (...c) => ({ ...run, pendingOffer: { objectiveId: 'o2', article: 0, choices: c } });
-  run = offer({ perk: 'zoomies', kind: 'new' }); run = E.pickOffer(run, 0, undefined, r.best && store).run;
-  assert.equal(run.slots[1].id, 'zoomies');
-  run = offer({ perk: 'quick', kind: 'new' });                                              // both slots full: must choose a slot
-  assert.ok(E.pickOffer(run, 0, undefined, store).error);
-  assert.ok(E.pickOffer(offer({ perk: 'heart', kind: 'new' }), 0, 0, store).error, 'cannot take an equipped perk as new');
-  const rep = E.pickOffer(run, 0, 0, store).run;                                            // replace Extra Heart: max falls, hearts clamp
-  assert.deepEqual([rep.slots[0].id, rep.slots[0].rank, rep.hearts], ['quick', 1, 3]);
-  // ranks to 5 (heart is gone; use zoomies/quick): first rank-5 milestone once, then full clear once
-  let g = { ...E.newRun(9), slots: slotsOf(['zoomies', 4], ['quick', 4]), hearts: 3 }, seen = [];
-  for (const [id, kind] of [['zoomies', 'upgrade'], ['quick', 'upgrade'], ['scent', 'new']]) {   // third: replace slot 0, flags stay once-only
-    g = { ...g, pendingOffer: { objectiveId: 'p', article: 0, choices: [{ perk: id, kind }] } };
-    const out = E.pickOffer(g, 0, 0, store); g = out.run; seen.push(g.pendingMilestone);
-    if (g.pendingMilestone) g = { ...g, pendingMilestone: null };
-  }
-  assert.deepEqual(seen, ['first', 'full', null]);
-  assert.ok(E.pickOffer({ ...E.newRun(1), slots: slotsOf(['zoomies', 5], null), pendingOffer: { objectiveId: 'p', article: 0, choices: [{ perk: 'zoomies', kind: 'upgrade' }] } }, 0, undefined, store).error, 'a maxed perk cannot be upgraded');
-  assert.equal(E.keepBuild({ ...g, pendingOffer: { choices: [] } }).pendingOffer, null);
-  // bests persist as the max ever equipped
-  const out = E.pickOffer({ ...E.newRun(2), pendingOffer: { objectiveId: 'p', article: 0, choices: [{ perk: 'scent', kind: 'new' }] } }, 0, undefined, { ...store, best: { section: 0, perks: { scent: 3 } } });
-  assert.equal(out.best.perks.scent, 3);
-  // capture: one heart each, the last ends the run and clears powers
-  let d = { ...E.newRun(3), hearts: 2, slots: slotsOf(['zoomies', 3], null) };
-  d = E.loseHeart(d); assert.deepEqual([d.hearts, d.status], [1, 'active']);
-  d = E.loseHeart(d); assert.deepEqual([d.hearts, d.status, d.slots], [0, 'over', [null, null]]);
-  // exit: exactly one section per call, collected resets, best section tracks the maximum
-  const n = E.nextSection({ ...E.newRun(3), collected: ['a', 'b', 'c'] }, store);
-  assert.deepEqual([n.run.section, n.run.collected, n.best.section], [2, [], 2]);
-  assert.equal(E.nextSection(n.run, { ...store, best: { section: 9, perks: {} } }).best.section, 9);
+  const run = { ...E.newRun(5), pendingOffer: { objectiveId: 'o1', article: 0, choices: [{ perk: 'heart', kind: 'new' }, { perk: 'zoomies', kind: 'new' }, { perk: 'quick', kind: 'new' }] }, quarters: 8 };
+  const r = E.pickOffer(run, 0, store);
+  assert.deepEqual([r.run.quarters, r.run.traits.heart, r.run.pendingOffer, r.run.picked, r.best.traits.heart], [9, 1, null, ['o1'], 1]);
+  // replay of the same objective/offer (reload, double tap, restored pending offer) cannot add a second stack or heal again
+  assert.equal(E.pickOffer({ ...r.run, pendingOffer: run.pendingOffer }, 0, store).error, 'already picked');
+  assert.equal(E.pickOffer(r.run, 0, store).error, 'no such choice');
+  assert.equal(E.pickOffer(run, 9, store).error, 'no such choice');
+  assert.equal(E.pickOffer({ ...run, pendingOffer: { objectiveId: 'o', choices: [{ perk: 'nope' }] } }, 0, store).error, 'no such choice');
+  assert.equal(E.pickOffer({ ...run, quarters: 12 }, 0, store).run.quarters, 13);        // heals only into the new maximum
+  assert.equal(E.pickOffer({ ...run, quarters: 8 }, 1, store).run.quarters, 8);          // a non-heart pick never heals
+  // stacks grow with no ceiling; bests track the maximum ever
+  const g = E.pickOffer({ ...E.newRun(9), traits: { ...E.emptyTraits(), zoomies: 99 }, pendingOffer: { objectiveId: 'z', choices: [{ perk: 'zoomies', kind: 'stack' }] } }, 0, { ...store, best: { section: 0, traits: { ...E.emptyTraits(), zoomies: 120 } } });
+  assert.deepEqual([g.run.traits.zoomies, g.best.traits.zoomies, g.allTen], [100, 120, false]);
+  // the tenth distinct trait reports allTen exactly once and never ends the run
+  const t = { ...E.newRun(1), traits: Object.fromEntries(E.TRAIT_IDS.map((id, i) => [id, i < 9 ? 1 : 0])) };
+  const ten = E.pickOffer({ ...t, pendingOffer: { objectiveId: 'a', choices: [{ perk: 'quick', kind: 'new' }] } }, 0, store);
+  assert.deepEqual([ten.allTen, ten.run.status], [true, 'active']);
+  assert.equal(E.pickOffer({ ...ten.run, picked: [], pendingOffer: { objectiveId: 'b', choices: [{ perk: 'quick', kind: 'stack' }] } }, 0, store).allTen, false);
+  // capture: four quarters each; the last ends the run and clears powers
+  let d = { ...E.newRun(3), quarters: 9, traits: { ...E.emptyTraits(), zoomies: 3 } };
+  d = E.capture(d); assert.deepEqual([d.quarters, d.status], [5, 'active']);
+  d = E.capture(d); assert.deepEqual([d.quarters, d.status], [1, 'active']);
+  d = E.capture(d); assert.deepEqual([d.quarters, d.status, d.traits], [0, 'over', E.emptyTraits()]);
+  // exit: exactly one section per call; the queued layout generator becomes current; picks reset; best section is a maximum
+  const n = E.nextSection({ ...E.newRun(3), genVersion: 1, nextGenVersion: 2, collected: ['a', 'b', 'c'], picked: ['a'] }, store);
+  assert.deepEqual([n.run.section, n.run.collected, n.run.picked, n.run.genVersion, n.best.section], [2, [], [], 2, 2]);
+  assert.equal(E.nextSection(n.run, { ...store, best: { section: 9, traits: {} } }).best.section, 9);
 });
 
-test('section seeds: literal (runSeed + section - 1) >>> 0, and the three streams are independent', () => {
-  assert.equal(E.sectionSeed(4294967295, 3), 1);
-  const a = E.genEndlessSection(50, 4), b = E.genEndlessSection(50, 4);
-  assert.equal(a.decorSeed, b.decorSeed);
-  assert.notEqual(E.genEndlessSection(50, 5).decorSeed, a.decorSeed);
-  assert.equal(E.makeOffer(E.newRun(50), 'x', 0).choices.length, 3);                       // offers never consume the layout stream
-  assert.equal(JSON.stringify(E.genEndlessSection(50, 4)), JSON.stringify(a));
+// a real v1 store: the exact shape the shipped corgi-endless.mjs wrote (two slots, integer hearts, ranks, milestones, a pending offer with upgrade/new kinds)
+const V1_STORE = { v: 1, best: { section: 7, perks: { heart: 3, zoomies: 5, scent: 2 } },
+  run: { v: 1, seed: 1234567, genVersion: 1, section: 5, status: 'active', hearts: 5, slots: [{ id: 'heart', rank: 2 }, { id: 'zoomies', rank: 5 }], collected: [0, 2], papers: 14, offerIdx: 14,
+    pendingOffer: { objectiveId: '1234567:5:2', article: 14, choices: [{ perk: 'heart', kind: 'upgrade' }, { perk: 'quick', kind: 'new' }, { perk: 'scent', kind: 'new' }] },
+    pendingMilestone: 'full', ms: { first: true, full: true } },
+  settings: { sound: false, look: 1.4 } };
+test('migration v1 -> v2: ranks become four stacks, health to quarters with no bonus, legacy kept, v1 key untouched, runs once', () => {
+  const mem = new Map([[E.STORE_KEY_V1, JSON.stringify(V1_STORE)]]), st = { getItem: k => mem.get(k) ?? null, setItem: (k, v) => mem.set(k, String(v)) };
+  const s = E.loadStore(st), r = s.run;
+  assert.equal(s.v, 2); assert.deepEqual(s.legacy, V1_STORE);
+  assert.deepEqual([r.traits.heart, r.traits.zoomies, r.traits.scent, r.traits.quick], [8, 20, 0, 0]);
+  assert.equal(r.quarters, 20); assert.equal(E.maxQuarters(r), 20);                        // 5 hearts = 20 quarters; max 12 + 8 = 20: unchanged, no bonus
+  assert.deepEqual([r.seed, r.section, r.collected, r.papers, r.offerIdx, r.status], [1234567, 5, [0, 2], 14, 14, 'active']);
+  assert.deepEqual([r.genVersion, r.nextGenVersion], [1, E.GEN_VERSION]);                   // the saved section finishes on its own layout version
+  assert.deepEqual([s.best.section, s.best.traits.heart, s.best.traits.zoomies, s.best.traits.scent], [7, 12, 20, 8]);
+  assert.deepEqual([s.settings.sound, s.settings.look], [false, 1.4]);
+  assert.equal(r.pendingOffer.objectiveId, '1234567:5:2'); assert.deepEqual(r.pendingOffer.choices.map(c => c.perk), ['heart', 'quick', 'scent']);   // same offered traits
+  assert.deepEqual(r.pendingOffer.choices.map(c => c.kind), ['stack', 'new', 'new']);
+  assert.ok(!('pendingMilestone' in r) && !('slots' in r) && !('ms' in r) && !('hearts' in r)); assert.deepEqual(r.picked, []);
+  assert.equal(mem.get(E.STORE_KEY_V1), JSON.stringify(V1_STORE));                          // never overwritten
+  E.saveStore(st, s);                                                                       // once saved as v2 it loads as v2: no re-migration, no second x4
+  const again = E.loadStore(st); assert.deepEqual(again.run.traits, r.traits); assert.deepEqual(again.legacy, V1_STORE); assert.equal(again.run.quarters, 20);
+  assert.deepEqual(E.loadStore(st).run, again.run);
+  // damaged hearts are preserved, over-max is clamped; nothing heals
+  assert.equal(E.migrateV1({ ...V1_STORE, run: { ...V1_STORE.run, hearts: 2 } }).run.quarters, 8);
+  assert.equal(E.migrateV1({ ...V1_STORE, run: { ...V1_STORE.run, hearts: 99 } }).run.quarters, 20);
+  const dead = E.migrateV1({ ...V1_STORE, run: { ...V1_STORE.run, status: 'over', hearts: 0, slots: [null, null], pendingOffer: null } }).run;
+  assert.deepEqual([dead.status, dead.quarters, dead.pendingOffer], ['over', 0, null]);
+  // a half-broken pending offer is topped up to three distinct valid traits
+  const odd = E.migrateV1({ ...V1_STORE, run: { ...V1_STORE.run, pendingOffer: { objectiveId: 'q', article: 1, choices: [{ perk: 'ears' }, { perk: 'ears' }, { perk: 'junk' }] } } }).run.pendingOffer;
+  assert.equal(odd.choices.length, 3); assert.equal(new Set(odd.choices.map(c => c.perk)).size, 3); assert.equal(odd.choices[0].perk, 'ears'); assert.ok(odd.choices.every(c => E.TRAIT_IDS.includes(c.perk)));
+  // the migrated pending offer is a normal transaction: one stack, objective id recorded, replay refused
+  const pick = E.pickOffer(r, 1, s); assert.equal(pick.run.traits.quick, 1); assert.deepEqual(pick.run.picked, ['1234567:5:2']);
+  assert.equal(E.pickOffer({ ...pick.run, pendingOffer: r.pendingOffer }, 1, s).error, 'already picked');
+  assert.equal(E.loadStore({ getItem: k => k === E.STORE_KEY_V1 ? JSON.stringify({ v: 1, best: { section: NaN, perks: { heart: 1e300 } }, run: { v: 1, seed: 'x' } }) : null }).run, null);   // garbage v1 run
 });
 
-test('storage: tolerant of absence and garbage, mirrors best section for the menu', () => {
+test('storage: tolerant of absence and garbage, v2 round trip, mirrors best section for the menu', () => {
   const mem = new Map(), st = { getItem: k => mem.get(k) ?? null, setItem: (k, v) => mem.set(k, String(v)) };
   assert.deepEqual(E.loadStore(st), E.emptyStore());
   mem.set(E.STORE_KEY, '{nope'); assert.deepEqual(E.loadStore(st), E.emptyStore());
-  const s = E.emptyStore(); s.best.section = 7; s.run = E.newRun(42); s.settings.look = 9;
+  const s = E.emptyStore(); s.best.section = 7; s.run = E.newRun(42); s.run.traits.heart = 3; s.run.quarters = 99; s.settings.look = 9;
   E.saveStore(st, s);
   const back = E.loadStore(st);
   assert.equal(back.best.section, 7); assert.equal(back.run.seed, 42); assert.equal(back.settings.look, 2);   // look clamps
+  assert.deepEqual([back.run.traits.heart, back.run.quarters], [3, 15]);                                        // quarters clamp to the computed max
   assert.equal(mem.get('corgi-endless-best-v1'), '7');
-  assert.notEqual(E.STORE_KEY, 'mbs-corgi-school-v3');
+  mem.set(E.STORE_KEY, JSON.stringify({ v: 2, best: { section: 2 ** 40, traits: { heart: 2 ** 60, quick: 4 } }, run: { v: 2, seed: 5, traits: { zoomies: NaN, scent: 3 }, quarters: -5, section: 1.5 } }));
+  const odd = E.loadStore(st); assert.equal(odd.best.section, 2 ** 40);
+  assert.deepEqual([odd.best.traits.heart, odd.best.traits.quick, odd.run.traits.scent, odd.run.quarters, odd.run.section], [0, 4, 3, 1, 1]);
+  assert.notEqual(E.STORE_KEY, 'mbs-corgi-school-v3'); assert.notEqual(E.STORE_KEY, E.STORE_KEY_V1);
 });
 
 test('sight and reach stop at walls: a segment through a wall is blocked, one beside it is not', () => {
