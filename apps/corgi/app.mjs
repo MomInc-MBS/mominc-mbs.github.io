@@ -1,7 +1,7 @@
 // Installed-app host for Cortisol Corgi Endless. It mounts the SAME engine as the story (tv/channels/corgi.js)
 // and selects endless by handing it ctx.endless: no query string, story mode or URL can reach that branch.
 // No story shim, receipts, redirects or hourly reset are loaded here; the engine gets no `mbs` object at all.
-import {loadStore, saveStore, PERKS, MAX_RANK} from '/tv/channels/corgi-endless.mjs';
+import {loadStore, saveStore, PERKS, traitIcon, nextLine} from '/tv/channels/corgi-endless.mjs';
 
 // Same disposable registry the TV runtime hands a channel (tv/channel-runtime.js makeContext), minus the TV.
 function makeContext(root, endless) {
@@ -42,18 +42,17 @@ const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls)
 const panel = (title, ...kids) => { const s = el('section', 'panel'); s.append(el('p')); s.firstChild.append(el('strong', '', title)); s.append(...kids); return s; };
 
 export function openWall() {
-  const store = loadStore(localStorage), equipped = Object.fromEntries((store.run?.slots || []).filter(Boolean).map(s => [s.id, s.rank]));
+  const store = loadStore(localStorage), now = store.run?.traits || {};
   const wall = el('section', 'wall'); wall.setAttribute('role', 'dialog'); wall.setAttribute('aria-modal', 'true'); wall.setAttribute('aria-label', 'The wall');
   const sheet = el('article', 'wall-sheet');
-  sheet.append(el('header', '', 'THE NAUSEOUS TIMES · THE WALL'), el('h2', '', 'TEN PERK PAGES'),
-    el('p', 'wall-sub', 'Best section: ' + store.best.section + (store.run ? ' · this run: section ' + store.run.section : '')));
+  sheet.append(el('header', '', 'THE NAUSEOUS TIMES · THE WALL'), el('h2', '', 'TEN TRAITS'),
+    el('p', 'wall-sub', 'Best section: ' + store.best.section + (store.run ? ' · this run: section ' + store.run.section : '') + '. Traits stack without limit.'));
   const grid = el('div', 'wall-grid');
   for (const p of PERKS) {
-    const best = store.best.perks[p.id] || 0, page = el('div', 'wall-page'), pips = el('span', 'wall-pips');
-    pips.textContent = '●'.repeat(best) + '○'.repeat(MAX_RANK - best);
-    pips.setAttribute('aria-label', 'Best rank ' + best + ' of ' + MAX_RANK);
-    page.append(el('b', '', p.name), pips, el('i', '', best ? 'Best rank ' + best : 'Not found yet'), el('small', '', p.line(Math.max(1, best))));
-    if (equipped[p.id]) page.append(el('em', '', 'Equipped now: rank ' + equipped[p.id]));
+    const best = store.best.traits[p.id] || 0, cur = now[p.id] || 0, page = el('div', 'wall-page'), head = el('b', '', p.name);
+    const icon = document.createElement('template'); icon.innerHTML = traitIcon(p.id); head.prepend(icon.content.firstChild);
+    const counts = el('span', 'wall-counts', cur ? '×' + cur + ' now · best ×' + best : best ? 'best ×' + best : 'Not found yet');
+    page.append(head, counts, el('small', '', nextLine(p.id, cur)));
     grid.append(page);
   }
   const close = el('button', 'alt', 'Close'); close.type = 'button'; close.onclick = () => wall.remove();
@@ -70,7 +69,7 @@ export function setupSettings({root, refresh}) {
   look.oninput = () => { write(s => { s.settings.look = Number(look.value); }); lookOut.textContent = Number(look.value).toFixed(1) + 'x'; };
   const note = el('p'); note.id = 'reset-run-note'; note.setAttribute('role', 'status');
   const reset = el('button', 'alt', 'Reset run'); reset.type = 'button'; reset.id = 'reset-run';
-  reset.onclick = () => { if (!confirm('Reset this run? Your best section and perk ranks stay.')) return; write(s => { s.run = null; }); note.textContent = 'Run reset. A new one starts when you press Start.'; refresh?.(); };
+  reset.onclick = () => { if (!confirm('Reset this run? Your best section and best trait counts stay.')) return; write(s => { s.run = null; }); note.textContent = 'Run reset. A new one starts when you press Start.'; refresh?.(); };
   const wall = el('button', 'alt', 'Open the wall'); wall.type = 'button'; wall.id = 'open-wall'; wall.onclick = openWall;
   const anchor = root.querySelector('.panel');
   const panels = [panel('Sound', sound), panel('Look sensitivity', look, lookOut), panel('Run', reset, note), panel('The wall', wall)];

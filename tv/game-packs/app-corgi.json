@@ -4,13 +4,13 @@
   "assets": [
     {
       "url": "/apps/corgi/app.css",
-      "revision": "c7851284bd3e1a53810cf5c0e0b0c136f15bab85",
-      "bytes": 3730
+      "revision": "5a9056d191745781b75a6aa9bde7e2c96d870972",
+      "bytes": 3906
     },
     {
       "url": "/apps/corgi/app.mjs",
-      "revision": "4afbbe2d2684000fc7c1f36ade70de177d388142",
-      "bytes": 6247
+      "revision": "6f2fc05cbc32660fe7e6842deb545ebc6dca5471",
+      "bytes": 6186
     },
     {
       "url": "/apps/corgi/icon-192.png",
@@ -29,13 +29,13 @@
     },
     {
       "url": "/apps/corgi/index.html",
-      "revision": "f54933d38ff805c47abc0bb23cece80c2a579946",
-      "bytes": 3261
+      "revision": "d067f4ae3405c19a87b9a1e880333a1e7a5b4077",
+      "bytes": 3507
     },
     {
       "url": "/apps/corgi/manifest.webmanifest",
-      "revision": "6f9e4fa9342592b6122609ff0f8a7272356dca26",
-      "bytes": 798
+      "revision": "e6651b98c5c41ec80037d81ae4aaa2e511b5f6ba",
+      "bytes": 880
     },
     {
       "url": "/apps/install.mjs",
@@ -49,8 +49,8 @@
     },
     {
       "url": "/apps/shell.mjs",
-      "revision": "cb9640fbd4cd94350d4b63c7d7f7978c5d539c58",
-      "bytes": 5633
+      "revision": "181f95f1b44f8e16f0967428e7bf229824689878",
+      "bytes": 5394
     },
     {
       "url": "/tv/assets/armie-intro/vendor/three.core.js",
@@ -68,6 +68,21 @@
       "bytes": 181293
     },
     {
+      "url": "/tv/assets/school-drawing-1-scare.webp",
+      "revision": "e1dcc77977cd70baf663c4b7b6ce3f61ce58df59",
+      "bytes": 198118
+    },
+    {
+      "url": "/tv/assets/school-drawing-2-scare.webp",
+      "revision": "79802bc523f6655b0f2d1f388c9e47bdc525bbab",
+      "bytes": 184730
+    },
+    {
+      "url": "/tv/assets/school-drawing-3-scare.webp",
+      "revision": "dc9e7f43c737ac9e91f21f7cc4179d436c40ac65",
+      "bytes": 217586
+    },
+    {
       "url": "/tv/channel-runtime.js",
       "revision": "3bff45f8943e11197725b65f7da0a4bfe1025958",
       "bytes": 13515
@@ -79,13 +94,18 @@
     },
     {
       "url": "/tv/channels/corgi-endless.mjs",
-      "revision": "fa13d97ba80389aba826a781c8bc5d6778e31968",
-      "bytes": 24008
+      "revision": "9692794e0dd4a430bd067fabfd1ab94b6264cafd",
+      "bytes": 44113
     },
     {
       "url": "/tv/channels/corgi-hearts.mjs",
       "revision": "d5f65e89899995ebb8ed28a45b5121116e45b5e9",
       "bytes": 5555
+    },
+    {
+      "url": "/tv/channels/corgi-scare.mjs",
+      "revision": "3bfae4eaa53190850f1c521f74fe2d0e92ed4ed1",
+      "bytes": 16358
     },
     {
       "url": "/tv/channels/corgi.html",
@@ -94,8 +114,8 @@
     },
     {
       "url": "/tv/channels/corgi.js",
-      "revision": "ca73641acacbcb9a7226d066b57491eaaa874478",
-      "bytes": 225325
+      "revision": "714a20e1330506b20c4bdcd02866a1e28c32d68a",
+      "bytes": 233550
     },
     {
       "url": "/tv/game-loader.js",
@@ -109,5 +129,5 @@
     }
   ],
   "fontStyles": [],
-  "version": "caeed86a8fa1bccb91fe"
+  "version": "fdc12981b9be80adbc9e"
 }

@@ -261,7 +261,7 @@
       "type": "pwa",
       "name": "Cortisol Corgi Endless",
       "shortName": "Corgi Endless",
-      "description": "An endless school hall. Three papers a section, ten perks, two slots, one patient villain.",
+      "description": "An endless school hall. Three papers a section, ten traits that stack without limit, dark halls that need your flashlight, and the original drawings jumping out at corners.",
       "status": "ready",
       "mode": "module",
       "src": "/apps/corgi/app.mjs",
@@ -277,7 +277,7 @@
       "icons": ["icon-192.png", "icon-512.png", "icon-maskable-512.png"],
       "settings": ["sound", "look", "reset-run", "wall"],
       "pack": "app-corgi",
-      "packFiles": ["tv/channels/corgi.html"],
+      "packFiles": ["tv/channels/corgi.html", "tv/channels/corgi-scare.mjs", "tv/assets/school-drawing-1-scare.webp", "tv/assets/school-drawing-2-scare.webp", "tv/assets/school-drawing-3-scare.webp"],
       "packSkip": ["tv/assets/cortisol-corgi-badge.png", "tv/assets/corgi-preview.webm", "tv/assets/corgi-game-still.png", "tv/assets/school-drawing-1.png", "tv/assets/school-drawing-2.png", "tv/assets/school-drawing-3.png"],
       "browserPlay": false
     }
