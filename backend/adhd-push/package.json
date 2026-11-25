@@ -1,0 +1,1 @@
+{"name": "adhd-push", "private": true, "type": "module", "description": "ADHD web push sender (Cloudflare Worker + D1 + Cron). No dependencies."}

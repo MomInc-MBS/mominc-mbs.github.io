@@ -74,5 +74,8 @@ function boot(cfg) {
   if (editor && $('models')) import(cfg.models).then(m => { refreshModels = m.renderModels($('models'), cfg.optional); });
   if (cfg.settingsModule) import(cfg.settingsModule).then(m => m.setupSettings?.({root: settings, refresh}));
   refresh(); show(menu);
+  // Opt-in (apps.json web.options.autostart = query name): a notification tap lands inside the app, not on the menu.
+  const auto = cfg.options?.autostart;
+  if (auto && new URLSearchParams(location.search).has(auto)) $('start').click();
 }
 boot(JSON.parse($('app-config').textContent));
