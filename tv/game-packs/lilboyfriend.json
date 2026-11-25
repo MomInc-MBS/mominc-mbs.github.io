@@ -49,7 +49,7 @@
     },
     {
       "url": "/games/lilboyfriend/index.html",
-      "revision": "ca8a3e74fbbffadabad0f8906ad09bbd84719f2f",
+      "revision": "53a6ac856b132b82aa7102c3147f974b7788e451",
       "bytes": 9400
     },
     {
@@ -444,7 +444,7 @@
     },
     {
       "url": "/tv/channels/lilboyfriend.html",
-      "revision": "eef1bbab70648e0a03697a80936ad7400793b211",
+      "revision": "d70dafd7ae985b8798912f4215d8ed09b38344fb",
       "bytes": 79307
     },
     {
@@ -613,5 +613,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap",
     "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
   ],
-  "version": "3b68b01c3eca3d416dfa"
+  "version": "a0f6a292dfa19a30e2ae"
 }
