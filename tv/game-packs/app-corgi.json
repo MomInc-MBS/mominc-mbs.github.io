@@ -4,13 +4,13 @@
   "assets": [
     {
       "url": "/apps/corgi/app.css",
-      "revision": "c7851284bd3e1a53810cf5c0e0b0c136f15bab85",
-      "bytes": 3730
+      "revision": "5a9056d191745781b75a6aa9bde7e2c96d870972",
+      "bytes": 3906
     },
     {
       "url": "/apps/corgi/app.mjs",
-      "revision": "4afbbe2d2684000fc7c1f36ade70de177d388142",
-      "bytes": 6247
+      "revision": "6f2fc05cbc32660fe7e6842deb545ebc6dca5471",
+      "bytes": 6186
     },
     {
       "url": "/apps/corgi/icon-192.png",
@@ -29,13 +29,13 @@
     },
     {
       "url": "/apps/corgi/index.html",
-      "revision": "f54933d38ff805c47abc0bb23cece80c2a579946",
-      "bytes": 3261
+      "revision": "66dc3cb7ee75cfeef6cacd4c3a5d2645ca23ffec",
+      "bytes": 3258
     },
     {
       "url": "/apps/corgi/manifest.webmanifest",
-      "revision": "6f9e4fa9342592b6122609ff0f8a7272356dca26",
-      "bytes": 798
+      "revision": "93688e74020eda786a209d062093fbb572d7ff83",
+      "bytes": 797
     },
     {
       "url": "/apps/install.mjs",
@@ -79,8 +79,8 @@
     },
     {
       "url": "/tv/channels/corgi-endless.mjs",
-      "revision": "fa13d97ba80389aba826a781c8bc5d6778e31968",
-      "bytes": 24008
+      "revision": "1b35c1244e042bd42566388814e0471c2f1ed3df",
+      "bytes": 43847
     },
     {
       "url": "/tv/channels/corgi-hearts.mjs",
@@ -94,8 +94,8 @@
     },
     {
       "url": "/tv/channels/corgi.js",
-      "revision": "ca73641acacbcb9a7226d066b57491eaaa874478",
-      "bytes": 225325
+      "revision": "40db9069059c8c30000edd4206cc9ca139c80d44",
+      "bytes": 230547
     },
     {
       "url": "/tv/game-loader.js",
@@ -109,5 +109,5 @@
     }
   ],
   "fontStyles": [],
-  "version": "059603ede25a4d6c1537"
+  "version": "0170a1791596173f31e3"
 }

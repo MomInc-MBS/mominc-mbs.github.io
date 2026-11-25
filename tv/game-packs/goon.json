@@ -64,13 +64,13 @@
     },
     {
       "url": "/apps/corgi/app.css",
-      "revision": "c7851284bd3e1a53810cf5c0e0b0c136f15bab85",
-      "bytes": 3730
+      "revision": "5a9056d191745781b75a6aa9bde7e2c96d870972",
+      "bytes": 3906
     },
     {
       "url": "/apps/corgi/app.mjs",
-      "revision": "4afbbe2d2684000fc7c1f36ade70de177d388142",
-      "bytes": 6247
+      "revision": "6f2fc05cbc32660fe7e6842deb545ebc6dca5471",
+      "bytes": 6186
     },
     {
       "url": "/apps/hand/hand.css",
@@ -549,8 +549,8 @@
     },
     {
       "url": "/tv/channels/corgi-endless.mjs",
-      "revision": "fa13d97ba80389aba826a781c8bc5d6778e31968",
-      "bytes": 24008
+      "revision": "1b35c1244e042bd42566388814e0471c2f1ed3df",
+      "bytes": 43847
     },
     {
       "url": "/tv/channels/corgi-hearts.mjs",
@@ -559,8 +559,8 @@
     },
     {
       "url": "/tv/channels/corgi.js",
-      "revision": "ca73641acacbcb9a7226d066b57491eaaa874478",
-      "bytes": 225325
+      "revision": "40db9069059c8c30000edd4206cc9ca139c80d44",
+      "bytes": 230547
     },
     {
       "url": "/tv/channels/girlfriend-roster.js",
@@ -747,5 +747,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "0ad68185db69dffac7da"
+  "version": "571a7648fd790b875425"
 }
