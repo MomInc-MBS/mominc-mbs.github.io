@@ -604,8 +604,8 @@
     },
     {
       "url": "/tv/channels/goon.html",
-      "revision": "00b34aed8e066147661b31104cfa78c768aca71f",
-      "bytes": 22625
+      "revision": "9c7d00959b43dcd5ba22813de81712e3c2d0ac57",
+      "bytes": 22709
     },
     {
       "url": "/tv/dj-booth.css",
@@ -781,5 +781,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "6c53b3f141d37eed25ac"
+  "version": "4311da8f0ed88ed5c7b0"
 }

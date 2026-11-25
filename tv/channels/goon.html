@@ -107,7 +107,7 @@
       text-decoration:none; border-radius:20px; padding:8px 14px; outline:2px dashed rgba(255,255,255,.7); outline-offset:-4px; box-shadow:2px 3px 0 rgba(0,0,0,.3); transition:transform 120ms}
   .gn .social:hover{transform:translate(-1px,-1px)}
 
-  .gn .signoff{text-align:center; margin:20px 0 0; font-family:"Zilla Slab",serif; font-weight:700; font-size:clamp(15px,4.4vw,20px); line-height:1.45; color:var(--gold)}
+  .gn .signoff{text-align:center; margin:20px 0 0; padding-bottom:64px; /* clears the 44px MOM bug pinned bottom-right of the glass */ font-family:"Zilla Slab",serif; font-weight:700; font-size:clamp(15px,4.4vw,20px); line-height:1.45; color:var(--gold)}
   .gn .stamp{display:block; width:fit-content; margin:10px auto 0; border:2px solid var(--gold); color:var(--gold); font-family:"Anton",sans-serif; letter-spacing:.12em; padding:3px 10px; border-radius:6px; transform:rotate(-2deg); font-size:12px}
 
   @media (min-width:640px){ .gn .tiers{grid-template-columns:1fr 1fr 1fr} }
