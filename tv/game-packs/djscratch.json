@@ -409,8 +409,8 @@
     },
     {
       "url": "/tv/channels/corgi.js",
-      "revision": "cbfff99be5e209d56a4b833cdff4078f37e621e9",
-      "bytes": 224779
+      "revision": "2d180324bcca8206797acdad24ad1475c54938a8",
+      "bytes": 224852
     },
     {
       "url": "/tv/channels/djscratch.html",
@@ -587,5 +587,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "5e8e78dee106a736bdd8"
+  "version": "09aad3fab09318354568"
 }

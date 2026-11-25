@@ -148,3 +148,9 @@ test('all twelve 3D ammo models fit their cells and have distinct geometry',asyn
   if(tier<=12)signatures.add(JSON.stringify(object.children.map(m=>[m.geometry.type,m.geometry.parameters,m.material.color.getHex()])));
  }assert.equal(signatures.size,12);
 });
+test('Gala spark bursts are removed (phones lost WebGL to piled-up sprites) and a win offers the 2048 download',()=>{
+ for(const f of ['index-gala-classic.js','index-W2w8AfON.js']){const b=read('tv/games/goon/assets/'+f);
+  assert.doesNotMatch(b,/this\.sparks\.push/);assert.match(b,/h>=1&&this\.tray\.remove\(e\)/);
+  assert.match(b,/a\.href="\/download\/alarm\/";a\.target="_top"/);assert.match(b,/m&&d\.append\(document\.createElement\("br"\),galaDownload2048\(\)\)/);
+  assert.match(b,/getItem\("mbs-gala-completed-v1"\)[^;]*galaDownload2048\(\)/);}
+});

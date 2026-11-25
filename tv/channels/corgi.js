@@ -2534,10 +2534,10 @@ export default {
           stamFill.style.setProperty("--stam", stamina.toFixed(0));
           if (mlen > 0.05 && deskRead.phase === "idle") {   // Round 2: movement ignored while rising, held or standing down
             mx /= Math.max(mlen, 1); mz /= Math.max(mlen, 1);
-            const fx = -Math.sin(player.yaw), fz = -Math.cos(player.yaw);
+            const fwdX = -Math.sin(player.yaw), fwdZ = -Math.cos(player.yaw);   // not fx: that name is the Endless perk table read just below
             const rx = Math.cos(player.yaw), rz = -Math.sin(player.yaw);
             const curSpeed = SPEED * (ENDLESS ? fx.speedMul : 1) * (wantSprint ? 1.7 : 1);   // chaser speed never reads this
-            const dx = (fx * -mz + rx * mx) * curSpeed * dt, dz = (fz * -mz + rz * mx) * curSpeed * dt;
+            const dx = (fwdX * -mz + rx * mx) * curSpeed * dt, dz = (fwdZ * -mz + rz * mx) * curSpeed * dt;
             // both axes tested against the frame-START position, never chained -- chaining (testing z against
             // the just-updated x) let a room's back corner freeze both axes solid while diagonal was held, since
             // a rejected move never updates position, so the next frame re-asked the identical stuck question

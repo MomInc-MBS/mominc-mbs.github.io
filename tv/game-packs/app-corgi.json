@@ -94,8 +94,8 @@
     },
     {
       "url": "/tv/channels/corgi.js",
-      "revision": "cbfff99be5e209d56a4b833cdff4078f37e621e9",
-      "bytes": 224779
+      "revision": "2d180324bcca8206797acdad24ad1475c54938a8",
+      "bytes": 224852
     },
     {
       "url": "/tv/game-loader.js",
@@ -109,5 +109,5 @@
     }
   ],
   "fontStyles": [],
-  "version": "2c4599b55c912b667f01"
+  "version": "b6194c3792813fa8aecc"
 }
