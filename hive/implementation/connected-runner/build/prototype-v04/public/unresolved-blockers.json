@@ -1,0 +1,22 @@
+{
+  "status": "READY_FOR_LIVE_DEMO",
+  "blockers": [
+    {
+      "id": "LIVE_AUTHORIZATION",
+      "requires": "Ian approval of the exact prepared finite local-model allocation",
+      "scope": "24 requests total;128 tokens/request;3072 total;one global request;1800s;64MiB;100 cycles",
+      "source": "Corrected handoff WP5: budget is proposed, not already authorized; zero-call dev6 requires separate real authorization",
+      "pending_work": [
+        "authorized classification",
+        "model-backed combined mission",
+        "live candidate comparison and subsequent distinct task",
+        "fresh-process real-model receipt replay"
+      ]
+    },
+    {
+      "id": "ACCEPTANCE_RESEARCH",
+      "separate_campaign": true,
+      "requires": "six unused data sources and six unused Python snapshots plus independent decisions and finite approval; Level B separate >=24 holdout study"
+    }
+  ]
+}

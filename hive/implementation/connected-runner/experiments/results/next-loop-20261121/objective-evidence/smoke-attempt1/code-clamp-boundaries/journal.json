@@ -1,0 +1,195 @@
+{
+  "store": "smoke-attempt1/code-clamp-boundaries",
+  "original_job_count": 1,
+  "jobs": [
+    {
+      "id": "027c6abac861471bb65ceff2041b4656",
+      "spec": {
+        "allow_retry": false,
+        "learn_feedback": false,
+        "mission_id": "code-clamp-boundaries",
+        "operation_key": "2e6a947e9b0edd40a30718cb258ecfc521f8cb27d8d742a9aea67620a04c8c0d",
+        "retry_count": 0,
+        "route": "tool",
+        "task": {
+          "allowed_tools": [
+            "isolated_code"
+          ],
+          "category": "code_mission",
+          "critical": false,
+          "evaluator": "code_mission_v1",
+          "expected": {},
+          "id": "code-code-clamp-boundaries-objective-candidate",
+          "input": {
+            "manifest": {
+              "allowlist": [
+                "app.py"
+              ],
+              "id": "code-clamp-boundaries",
+              "image": {
+                "digest": "sha256:07d4824036af339fa1b6ef769cc99d9c10a141769538b52b3b597c84f7a7b535",
+                "reference": "python:3.11-slim"
+              },
+              "limits": {
+                "cpu_count": 1,
+                "memory_mb": 128,
+                "output_bytes": 8192,
+                "pids": 32,
+                "timeout_s": 15
+              },
+              "mounts": "read_only_source_clean_copy",
+              "network": "none",
+              "patches": [
+                {
+                  "content": "def clamp(value, low, high):\n    return min(max(value, low), high)\n",
+                  "id": "objective-candidate",
+                  "path": "app.py",
+                  "sha256": "04849c138beb1802b4bac6e677968ed524537c0d43e16e6eb1ef02eb622ad095"
+                }
+              ],
+              "repo": {
+                "path": "D:\\Repos\\hive-ai\\.hive\\objective-smoke-20261121\\sources\\code-clamp-boundaries",
+                "revision": "c121a39c4b8ef61cf148c5bd87bf6546aaa8aef2",
+                "source_sha256": "36223a63b4095bbccbfea86b558980ed6f9990bb7e03ecef75749901bcf6bcd4"
+              },
+              "schema_version": 1,
+              "verifier": {
+                "cases": [
+                  {
+                    "args": [
+                      -2,
+                      0,
+                      10
+                    ],
+                    "expected": 0,
+                    "id": "below",
+                    "kwargs": {}
+                  },
+                  {
+                    "args": [
+                      0,
+                      0,
+                      10
+                    ],
+                    "expected": 0,
+                    "id": "lower-bound",
+                    "kwargs": {}
+                  },
+                  {
+                    "args": [
+                      7,
+                      0,
+                      10
+                    ],
+                    "expected": 7,
+                    "id": "inside",
+                    "kwargs": {}
+                  },
+                  {
+                    "args": [
+                      10,
+                      0,
+                      10
+                    ],
+                    "expected": 10,
+                    "id": "upper-bound",
+                    "kwargs": {}
+                  },
+                  {
+                    "args": [
+                      13,
+                      0,
+                      10
+                    ],
+                    "expected": 10,
+                    "id": "above",
+                    "kwargs": {}
+                  }
+                ],
+                "function": "clamp",
+                "module": "app",
+                "path": "verifier.json",
+                "protocol": "json_function_v1",
+                "sha256": "51b2add6035d7515b1070ff6c3ac5edc4038a5d79a775d909dbc7565df270b9b"
+              },
+              "worker_files": [
+                "app.py"
+              ]
+            },
+            "operation_key": "2e6a947e9b0edd40a30718cb258ecfc521f8cb27d8d742a9aea67620a04c8c0d",
+            "patch_id": "objective-candidate"
+          },
+          "permissions": {
+            "routes": [
+              "tool"
+            ],
+            "version": 1
+          },
+          "prompt": "Run the pinned isolated code function contract.",
+          "split": "development",
+          "tool_schemas": {
+            "isolated_code": {
+              "manifest_id": "string",
+              "patch_id": "string"
+            }
+          }
+        }
+      },
+      "state": "BLOCKED",
+      "owner": "worker-49696",
+      "generation": 1,
+      "pid": 49696,
+      "result": {
+        "evidence_ref": "artifacts/43030334d04250fb88e2198d25153d2f1c2b57eec490c538c0c2fde4042bf221.json",
+        "failure": null,
+        "passed": true,
+        "report_ref": "artifacts/ab3f8ac4ffb1c9117fa10e2e8c19489f7860b9922f025a2332e776ca60987285.json",
+        "valid": true
+      }
+    }
+  ],
+  "events": [
+    {
+      "seq": 1,
+      "job_id": "027c6abac861471bb65ceff2041b4656",
+      "state": "QUEUED",
+      "detail": null
+    },
+    {
+      "seq": 2,
+      "job_id": "027c6abac861471bb65ceff2041b4656",
+      "state": "RUNNING",
+      "detail": {
+        "owner": "worker-49696"
+      }
+    },
+    {
+      "seq": 3,
+      "job_id": "027c6abac861471bb65ceff2041b4656",
+      "state": "VERIFYING",
+      "detail": null
+    },
+    {
+      "seq": 4,
+      "job_id": "027c6abac861471bb65ceff2041b4656",
+      "state": "REVIEWING",
+      "detail": {
+        "evidence_ref": "artifacts/43030334d04250fb88e2198d25153d2f1c2b57eec490c538c0c2fde4042bf221.json"
+      }
+    },
+    {
+      "seq": 5,
+      "job_id": "027c6abac861471bb65ceff2041b4656",
+      "state": "BLOCKED",
+      "detail": null
+    }
+  ],
+  "mission_config_hash": "17abb5470e515dfd317ad443df1f4d5d87f5cd1cfd3db5c1ca08be80f6741b36",
+  "budget": {
+    "cycles": 1,
+    "requests": 0,
+    "tokens_actual": 0,
+    "tokens_reserved": 0,
+    "wall_s": 1.577999999979511
+  }
+}

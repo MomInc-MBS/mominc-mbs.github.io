@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-22T08:31:52.896949+00:00",
+  "version": "0.4.0.dev1",
+  "status": "READY_FOR_LIVE_DEMO",
+  "measured_source_commit": "dc8cc2d9b421d680d1052ba4f510027ac5a391ad",
+  "runtime_source_sha256": "ef4eb92509af5d5330e90632d178b3cdadc3c11e62f308f58f808be6be625055",
+  "runtime_identity_commit": "unversioned (frozen archive)",
+  "baseline": "baseline/baseline.json",
+  "tests": {
+    "tests": 491,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 3,
+    "passed": 488,
+    "seconds": 546.96
+  },
+  "cli_journeys": {
+    "passed": 7,
+    "retries": 0,
+    "workers": 1,
+    "receipt": "final-verification/e2e-report.json"
+  },
+  "objective_smoke": {
+    "verified": 12,
+    "fresh_process_replay": 12,
+    "scope": "synthetic engineering",
+    "receipt": "final-verification/objective-report.json"
+  },
+  "real_source_engineering": {
+    "data": "VERIFIED",
+    "python": "COMPLETED",
+    "python-labels": "COMPLETED",
+    "combined": "COMPLETED",
+    "learning": "REJECTED"
+  },
+  "combined_stages": {
+    "data": "VERIFIED",
+    "python": "VERIFIED",
+    "report": "VERIFIED",
+    "review": "VERIFIED"
+  },
+  "new_real_model_calls": 0,
+  "policy_deployed": false,
+  "P2_decision": "QUARANTINED",
+  "quality_gain": false,
+  "level_a": "NOT_ACCEPTED",
+  "level_b": "UNTESTED",
+  "gates": {
+    "O1_runtime": "PASS: authenticated local UI/CLI and read-only model/Docker health",
+    "O2_data": "PASS_EXACT_TOOL: real first-party source inventory independently checked; live classification pending",
+    "O3_python": "PASS: pinned Docker transformations with independent host cases",
+    "O4_composition": "PASS: verified real-source data, Python, review and report in one allocation",
+    "O5_model": "BLOCKED: separate finite operator approval not provided; zero new HIVE model calls",
+    "O6_evidence": "PASS_ENGINEERING: tool/source/procedure, verifier, outputs and budget identities checked; new live model/prompt receipt pending",
+    "O7_adaptation": "PASS_ENGINEERING: frozen real-source exact-tool candidate tied and was rejected; live schema recovery pending",
+    "O8_subsequent": "PASS_ENGINEERING: distinct real-source subsequent tool task verified under retained P0 behavior",
+    "O9_recovery": "PASS: fresh-process replay, STOP/resume, reservation reconciliation and approved-only rollback checks",
+    "O10_operator": "PASS: actual Chromium desktop/mobile console journey; not a physical-phone test",
+    "R1_beneficial_learning": "UNPROVEN; no promotion",
+    "R2_level_a": "NOT_ACCEPTED: 0 genuine acceptance attempts, 0 accepted"
+  },
+  "approval_proposal": "operator-approval.proposed.json",
+  "proposal_sha256": "c80687ee74a9300800bb0a2b8196cf8970a55781cf027ec0d36b11a68a01864a"
+}

@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "note": "Frozen allowlist for the v0.4.x pinned-source experiment driver. Exact https URL + exact full commit SHAs + exact paths only.",
+  "sources": [
+    {
+      "source_id": "datasets-country-list",
+      "url": "https://github.com/datasets/country-list",
+      "license": "ODC-PDDL-1.0 covers only the maintainers' selection/arrangement; terms of the ISO 3166-1 codes and country names are unclear (upstream datapackage.yml). Read-only observation of one 4 KB file; no redistribution.",
+      "commits": [
+        "0c1a9b92ab08d49c2e5151e83184357e3cdd5e9a",
+        "02b3e31c3eeb355933ae351d1e7c7cdd0e0e9b84"
+      ],
+      "paths": [
+        "data.csv"
+      ],
+      "max_blob_bytes": 65536,
+      "max_files": 64
+    }
+  ]
+}

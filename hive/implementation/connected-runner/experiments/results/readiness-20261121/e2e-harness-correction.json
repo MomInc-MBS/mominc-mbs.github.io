@@ -1,0 +1,17 @@
+{
+  "measured_runtime_commit": "b66efb0ba074bf8c6f6a8c0f0bc4761aa3e65739",
+  "source_sha256": "e711d1c3e7eb4dbd23b95f3027f5d97627b1f6880a2c252e2cefea8c522e817b",
+  "changed_test_file": "tests/e2e/pressure.e2e.ts",
+  "sha256": "6640f31b0e3d8589f1ec66ea2cd2bff1adaa055c5be185f5a183b01c94909b7c",
+  "change": "Node execFileSync capture buffer 1 MiB default -> bounded 32 MiB",
+  "runtime_changed": false,
+  "assertions_changed": false,
+  "timeouts_changed": false,
+  "first_attempt": "experiments/results/readiness-20261121/e2e-attempt-buffer-limit/report.json",
+  "independent_review": "Terra inspected harness-only correction; all assertions/timeouts preserved",
+  "packaging_note": "The corrected test file is uncommitted during final journey execution and included in the later package commit. Runtime source identity remains frozen.",
+  "observed_stdout_bytes": {
+    "H01.json": 1081364,
+    "pressure-summary.json": 2051064
+  }
+}

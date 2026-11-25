@@ -1,0 +1,304 @@
+{
+  "mission_id": "prototype-combined",
+  "status": "COMPLETED",
+  "stages": {
+    "data": {
+      "attempts": 1,
+      "finish_event_ref": "artifacts/b3f0260c12d7a9515b52c4d9c0a4bfecb9ea2dcfeb4ad7ea665c7ff29dee0c80.json",
+      "finished": 1795334811.1652448,
+      "result": {
+        "budget": {
+          "cycles": 4,
+          "requests": 0,
+          "tokens_actual": 0,
+          "tokens_reserved": 0,
+          "wall_s": 3.5170000001089647
+        },
+        "failure_reason": null,
+        "field_verdicts": {
+          "groups": {
+            "adapters": {
+              "bytes": true,
+              "count": true
+            },
+            "controller": {
+              "bytes": true,
+              "count": true
+            }
+          },
+          "source_schema": true
+        },
+        "identity": {
+          "config_hash": "d6487009de4a9256b7464bfad626a705788b8714755c17366708c76e6b3f8aac",
+          "evidence_ref": "artifacts/a8295ef7440bbc37466ee4ed4066b99b107fba219abcb383a0873dfaf2e700e4.json",
+          "input_sha256": "612bb47d80d62ed0cb559ef51e970a7260b974d5615d0ee4ed33133a51a4370a",
+          "mission_id": "prototype-combined-data",
+          "mission_identity": "3fc9cbda34c138f8b8868e32a55b206245535bd2a4d9741c69ad0eef47fdf551",
+          "model": null,
+          "model_digest": null,
+          "oracle_sha256": null,
+          "policy_sha256": "9cc33d516e53c725ffd2b1c28b422fe56ab48df8aa85adc6de3b793fa8bbddb3",
+          "prompt_sha256": "e31235aab6f1976067c8c77b830f8bf0422792266bad926cd96a9186f99eec6c",
+          "runtime": {
+            "commit": "unversioned",
+            "source_sha256": "81cea878e5f17bb10a14dde77aab3fef6d8be370841294292e24a465b147724d",
+            "version": "0.4.0.dev1"
+          },
+          "source_group": "public-dev6-source-inventory",
+          "source_sha256": "612bb47d80d62ed0cb559ef51e970a7260b974d5615d0ee4ed33133a51a4370a",
+          "task_hash": "fae430b7761450531078b3afcc1f0eec0d672fff1d21eede06544d117e305bf0",
+          "verifier_sha256": "f9770abc7199e5f183f2a72117bc5f400fd6b4db8cb034e22e1eac9301817494"
+        },
+        "job_ids": [
+          "ef36556e8fa64a50b38fce36e86d528a"
+        ],
+        "machine_verdict": {
+          "evaluator": "hive-evaluator-v1",
+          "evidence_ref": "artifacts/a8295ef7440bbc37466ee4ed4066b99b107fba219abcb383a0873dfaf2e700e4.json",
+          "passed": true,
+          "reason": "passed",
+          "valid": true
+        },
+        "named_output_hashes": {
+          "data.json": "83a405ae979c43c915380724036d23debdb68d25958a40b1d42cb836685349f3",
+          "source": "612bb47d80d62ed0cb559ef51e970a7260b974d5615d0ee4ed33133a51a4370a",
+          "trace.jsonl": "3d6c7aa9af8bc644efb62849efed6adbf5b81d3e731dc8d72192b432105e8d86",
+          "verdict.json": "0ca54303e6605c5b80dffc99ec619d979a777ebb683bc304f80f96e29d20eec6"
+        },
+        "named_outputs": {
+          "data.json": "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-fixed\\output\\structured\\prototype-combined-data\\data.json",
+          "source": "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-fixed\\output\\structured\\prototype-combined-data\\source.csv",
+          "trace.jsonl": "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-fixed\\output\\structured\\prototype-combined-data\\trace.jsonl",
+          "verdict.json": "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-fixed\\output\\structured\\prototype-combined-data\\verdict.json"
+        },
+        "reviewer_state": "deterministic_exact_verified",
+        "schema_verdict": {
+          "reason": "shape_valid",
+          "shape_valid": true,
+          "valid_json_object": true
+        },
+        "status": "VERIFIED",
+        "synthetic": false
+      },
+      "started": 1795334810.3046255,
+      "state": "VERIFIED"
+    },
+    "python": {
+      "attempts": 1,
+      "finish_event_ref": "artifacts/53c9ecc37cddac2be481b0c7f3e2a5e89534460343d72a0f307da3dce22ac722.json",
+      "finished": 1795334814.883667,
+      "result": {
+        "budget": {
+          "cycles": 5,
+          "requests": 0,
+          "tokens_actual": 0,
+          "tokens_reserved": 0,
+          "wall_s": 5.127000000094995
+        },
+        "event_refs": [
+          "artifacts/42e75f80ff2c9f6e42c0edf38a4afb308ad8c2e070d0cdaf6f211ab93aa59c98.json",
+          "artifacts/206c8cdd2f358072de90517bb646fa98abafb770eb52d1f430cd5af0d41945ab.json"
+        ],
+        "manifest_ref": "artifacts/6e544373c84ff9128d9bd9337d035c7637a0fbfb61ecf3600f31ad1a8a2ce7fe.json",
+        "mission_id": "prototype-combined-python",
+        "named_output_hashes": {
+          "tabular-output": {
+            "patch.diff": "f558440a3cd172109a990e30b790d31092728f6084fe71ada9193d341fa73cd7",
+            "test-report.json": "fcffe3bca8b4c31a13e8a81ea2e44d10d77d064fd3720722a0f0a422c7fa9589",
+            "verdict.json": "4b06715883c8d25860e399033615a8f544cb4fcbce39f5ada067cd32fd70bf56"
+          },
+          "trace.jsonl": "9d72ee7037e3603f510026c4f5b688d3216a9adc2f6a3b21cefb4e8430c3daa5"
+        },
+        "named_outputs": {
+          "tabular-output": {
+            "patch.diff": "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-fixed\\output\\code\\prototype-combined-python\\tabular-output\\patch.diff",
+            "test-report.json": "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-fixed\\output\\code\\prototype-combined-python\\tabular-output\\test-report.json",
+            "verdict.json": "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-fixed\\output\\code\\prototype-combined-python\\tabular-output\\verdict.json"
+          },
+          "trace.jsonl": "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-fixed\\output\\code\\prototype-combined-python\\trace.jsonl"
+        },
+        "patches": {
+          "tabular-output": {
+            "evidence_ref": "artifacts/60c9beac2a7f37ad8cd5bfdd8a8b5aafbb41df5f38d03bd85a79e0f41d059ed2.json",
+            "job_id": "5db26c467fb24e74847145b402ed383a",
+            "operation_key": "808269a68412f4783d0d638165346938ad237e27b5c0e9ea19672689c031c90d",
+            "patch_sha256": "f2d5d350d5d5d1ec9a516de5319f30dda714eca670ff490683bddb09753263c1",
+            "state": "VERIFIED",
+            "verification": {
+              "cases_checked": 2,
+              "evaluator": "json-function-v1",
+              "passed": true,
+              "quality": 1,
+              "reason": "objective_cases_passed",
+              "suite_sha256": "119cfba4da1e7cdfbc357e01b8fbe1419e81acbd4ba154702e7000bdccc73bbd",
+              "synthetic": false,
+              "unsupported": 0,
+              "valid": true
+            }
+          }
+        },
+        "runtime": {
+          "commit": "unversioned",
+          "source_sha256": "81cea878e5f17bb10a14dde77aab3fef6d8be370841294292e24a465b147724d",
+          "version": "0.4.0.dev1"
+        },
+        "source_sha256": "fbe44ced80f6bbd93d078893416ffd74c2e54f34a23fee0b52e79e1dea080104",
+        "status": "VERIFIED",
+        "synthetic": false,
+        "upstream_binding": {
+          "argument": 0,
+          "artifact": "data.json",
+          "case_id": "source-rows",
+          "pointer": "/rows",
+          "sha256": "83a405ae979c43c915380724036d23debdb68d25958a40b1d42cb836685349f3",
+          "source_identity": {
+            "config_hash": "d6487009de4a9256b7464bfad626a705788b8714755c17366708c76e6b3f8aac",
+            "evidence_ref": "artifacts/a8295ef7440bbc37466ee4ed4066b99b107fba219abcb383a0873dfaf2e700e4.json",
+            "input_sha256": "612bb47d80d62ed0cb559ef51e970a7260b974d5615d0ee4ed33133a51a4370a",
+            "mission_id": "prototype-combined-data",
+            "mission_identity": "3fc9cbda34c138f8b8868e32a55b206245535bd2a4d9741c69ad0eef47fdf551",
+            "model": null,
+            "model_digest": null,
+            "oracle_sha256": null,
+            "policy_sha256": "9cc33d516e53c725ffd2b1c28b422fe56ab48df8aa85adc6de3b793fa8bbddb3",
+            "prompt_sha256": "e31235aab6f1976067c8c77b830f8bf0422792266bad926cd96a9186f99eec6c",
+            "runtime": {
+              "commit": "unversioned",
+              "source_sha256": "81cea878e5f17bb10a14dde77aab3fef6d8be370841294292e24a465b147724d",
+              "version": "0.4.0.dev1"
+            },
+            "source_group": "public-dev6-source-inventory",
+            "source_sha256": "612bb47d80d62ed0cb559ef51e970a7260b974d5615d0ee4ed33133a51a4370a",
+            "task_hash": "fae430b7761450531078b3afcc1f0eec0d672fff1d21eede06544d117e305bf0",
+            "verifier_sha256": "f9770abc7199e5f183f2a72117bc5f400fd6b4db8cb034e22e1eac9301817494"
+          },
+          "stage": "data"
+        }
+      },
+      "started": 1795334811.2486775,
+      "state": "VERIFIED"
+    },
+    "report": {
+      "attempts": 1,
+      "finish_event_ref": "artifacts/a95b67b5c6de0e24ed7835e724228d4d13c8e0a43c71186a3ef18d71bf0a9b5e.json",
+      "finished": 1795334815.507298,
+      "result": {
+        "P2": "QUARANTINED",
+        "beneficial_learning": "UNPROVEN",
+        "dependencies": [
+          "review"
+        ],
+        "evidence_ref": "artifacts/b9d8ecac3c04cf43c9c66d27019e2858ca3a54e07fba46e65097916d9f313a98.json",
+        "independent_verdicts": [
+          {
+            "job_id": "ef36556e8fa64a50b38fce36e86d528a",
+            "stage": "data",
+            "verification": {
+              "evaluator": "hive-evaluator-v1",
+              "passed": true,
+              "quality": 1,
+              "reason": "passed",
+              "unsupported": 0,
+              "valid": true
+            }
+          },
+          {
+            "job_id": "5db26c467fb24e74847145b402ed383a",
+            "stage": "python",
+            "verification": {
+              "cases_checked": 2,
+              "evaluator": "json-function-v1",
+              "passed": true,
+              "quality": 1,
+              "reason": "objective_cases_passed",
+              "suite_sha256": "119cfba4da1e7cdfbc357e01b8fbe1419e81acbd4ba154702e7000bdccc73bbd",
+              "synthetic": false,
+              "unsupported": 0,
+              "valid": true
+            }
+          }
+        ],
+        "kind": "report",
+        "level_a": "NOT_ACCEPTED",
+        "named_output_hashes": {
+          "report.json": "116da21571373ec10480ff0b4fce797d3f34c1e6e84f755bcf85ce9e6b1c8f17"
+        },
+        "named_outputs": {
+          "report.json": "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-fixed\\output\\missions\\prototype-combined\\report.json"
+        },
+        "policy": "P0",
+        "status": "VERIFIED"
+      },
+      "started": 1795334815.345618,
+      "state": "VERIFIED"
+    },
+    "review": {
+      "attempts": 1,
+      "finish_event_ref": "artifacts/70f8db3ff9cf9f1cf415d461577e74104d409a85de9379fc8e3f59075d1cd7ca.json",
+      "finished": 1795334815.2495027,
+      "result": {
+        "P2": "QUARANTINED",
+        "beneficial_learning": "UNPROVEN",
+        "dependencies": [
+          "data",
+          "python"
+        ],
+        "evidence_ref": "artifacts/9507ed09659880fa2720a9c619a1bbcb412491b0dd5327640d6a773cfc3069ae.json",
+        "independent_verdicts": [
+          {
+            "job_id": "ef36556e8fa64a50b38fce36e86d528a",
+            "stage": "data",
+            "verification": {
+              "evaluator": "hive-evaluator-v1",
+              "passed": true,
+              "quality": 1,
+              "reason": "passed",
+              "unsupported": 0,
+              "valid": true
+            }
+          },
+          {
+            "job_id": "5db26c467fb24e74847145b402ed383a",
+            "stage": "python",
+            "verification": {
+              "cases_checked": 2,
+              "evaluator": "json-function-v1",
+              "passed": true,
+              "quality": 1,
+              "reason": "objective_cases_passed",
+              "suite_sha256": "119cfba4da1e7cdfbc357e01b8fbe1419e81acbd4ba154702e7000bdccc73bbd",
+              "synthetic": false,
+              "unsupported": 0,
+              "valid": true
+            }
+          }
+        ],
+        "kind": "review",
+        "level_a": "NOT_ACCEPTED",
+        "policy": "P0",
+        "status": "VERIFIED"
+      },
+      "started": 1795334814.9813926,
+      "state": "VERIFIED"
+    }
+  },
+  "manifest_ref": "artifacts/8097a0d5e76c6c05a62ba553c34834a7a40766dfbec9466a31567e3e1f8e4c1d.json",
+  "event_refs": [
+    "artifacts/9e1a2eda0b3df3e136580a69aad53f2a4d16d51d381745dd13f62f5978fe4177.json",
+    "artifacts/a4b29aab3e8af6edc21b99792e3697964874822fee76a1368e3933424817139b.json",
+    "artifacts/b3f0260c12d7a9515b52c4d9c0a4bfecb9ea2dcfeb4ad7ea665c7ff29dee0c80.json",
+    "artifacts/e7694009dbd82e9c9d052a72cf220aa520ada8afe04e0ef2f8c911034fd5c6cd.json",
+    "artifacts/53c9ecc37cddac2be481b0c7f3e2a5e89534460343d72a0f307da3dce22ac722.json",
+    "artifacts/9bdab8a3eb9e8402504eb55e855728f3dcceebf4acaa52839961f698f8841d41.json",
+    "artifacts/70f8db3ff9cf9f1cf415d461577e74104d409a85de9379fc8e3f59075d1cd7ca.json",
+    "artifacts/f1256d95d44f61c420794d4efa4a19ef686ac36c14a9cc080665fe80391cbdc3.json",
+    "artifacts/a95b67b5c6de0e24ed7835e724228d4d13c8e0a43c71186a3ef18d71bf0a9b5e.json"
+  ],
+  "budget": {
+    "cycles": 5,
+    "requests": 0,
+    "tokens_actual": 0,
+    "tokens_reserved": 0,
+    "wall_s": 5.127000000094995
+  }
+}

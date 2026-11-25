@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "reviewer": "Terra/gpt-6.1-terra",
+  "input_sha256": "82476d0c6018c70c471a72341353fd950d643f928209799f4880b320263aa97c",
+  "labels": {"d1": "routing", "d2": "evidence", "d3": "recovery", "d4": "limits", "d5": "routing", "d6": "evidence", "d7": "recovery", "d8": "evidence"},
+  "rationale": {
+    "d1": "Ambiguous: priors and fallbacks govern route choice, while transparent logs also fit evidence. Routing is the best single primary label; do not treat disagreement as an unambiguous error.",
+    "d2": "Requires the model's identity and trace as evidence of an actual specialist task.",
+    "d3": "Fresh-process reload and policy rollback are recovery operations.",
+    "d4": "Places explicit limits on execution authority, resource use, modifications, and promotion.",
+    "d5": "Hard eligibility constrains route selection before utility ranking.",
+    "d6": "Requires versioned, inspectable receipts for decisions and failures.",
+    "d7": "STOP/resume, failure recovery, and prevention of duplicate side effects define recovery.",
+    "d8": "Requires actual outputs and a structured evidence trail."
+  },
+  "scope": "Independent development labels; no holdout or broad usefulness claim"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "hive-local-cli-e2e",
+  "private": true,
+  "type": "module",
+  "scripts": {"test:e2e": "e2e run"},
+  "devDependencies": {"e2e": "0.21.1"}
+}

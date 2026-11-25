@@ -1,0 +1,16 @@
+﻿{
+    "protocol":  "p2-exact-tool-deterministic-check-v1",
+    "mode":  "development-fixtures-only",
+    "inference_calls":  0,
+    "tests":  [
+                  "tests/unit/test_p2_exact_tool.py",
+                  "tests/unit/test_pressure_contracts.py::test_exact_tool_rule_versioned"
+              ],
+    "command":  "PYTHONPATH=src python -m pytest -q tests/unit/test_p2_exact_tool.py tests/unit/test_pressure_contracts.py::test_exact_tool_rule_versioned",
+    "outcome":  "5 passed",
+    "claims":  [
+                   "routing and verifier rejection mechanics only",
+                   "no quality gain or learning claim",
+                   "P2 remains opt-in and quarantined"
+               ]
+}

@@ -1,0 +1,455 @@
+{
+  "scope": "synthetic operator jobs; original private journals excluded",
+  "jobs": [
+    {
+      "store": "video",
+      "job_id": "9bed36f2976f418ab3ec67c0c795e880",
+      "spec": {
+        "allow_retry": false,
+        "learn_feedback": true,
+        "retry_count": 0,
+        "route": "tool",
+        "task": {
+          "allowed_tools": [
+            "normalize_srt"
+          ],
+          "category": "video_captions",
+          "critical": false,
+          "evaluator": "video_captions_v1",
+          "expected": {
+            "srt": "1\n00:00:00,000 --> 00:00:01,000\nFirst synthetic cue\n\n2\n00:00:01,100 --> 00:00:02,000\nSecond synthetic cue\n"
+          },
+          "id": "video-8834c0e78406554f931b39af-captions",
+          "input": {
+            "source_srt": "1\r\n00:00:00,000 --> 00:00:01,000\r\nFirst synthetic cue\r\n\r\n2\r\n00:00:01,100 --> 00:00:02,000\r\nSecond synthetic cue\r\n"
+          },
+          "prompt": "Normalize the supplied subtitle cues, preserving text exactly.",
+          "split": "development",
+          "success_criteria": "Exact normalized SRT match",
+          "tool_schemas": {
+            "normalize_srt": {
+              "srt": "string"
+            }
+          }
+        }
+      },
+      "result": {
+        "evidence_ref": "artifacts/eb2cd4f878911f11e6bd0f60662067f3c9b46657504036f157f0971228ee504d.json",
+        "failure": null,
+        "passed": true,
+        "report_ref": "artifacts/c9ebc570a73e7b3d9edc4168b89507c7ae4d86865d2287fedae6d903d43b4b1c.json",
+        "valid": true
+      },
+      "route": "tool",
+      "artifact": "video/artifacts/eb2cd4f878911f11e6bd0f60662067f3c9b46657504036f157f0971228ee504d.json"
+    },
+    {
+      "store": "video",
+      "job_id": "9840ffc7dee5438285d9da1d69aca50d",
+      "spec": {
+        "allow_retry": false,
+        "learn_feedback": true,
+        "retry_count": 0,
+        "route": "tool",
+        "task": {
+          "allowed_tools": [],
+          "category": "video_clips",
+          "critical": false,
+          "evaluator": "video_clips_v1",
+          "expected": {},
+          "id": "video-8834c0e78406554f931b39af-clips",
+          "input": {
+            "cues": [
+              {
+                "end_ms": 1000,
+                "id": "c0001",
+                "start_ms": 0,
+                "text": "First synthetic cue"
+              },
+              {
+                "end_ms": 2000,
+                "id": "c0002",
+                "start_ms": 1100,
+                "text": "Second synthetic cue"
+              }
+            ],
+            "duration_ms": 3000
+          },
+          "prompt": "Choose exactly two distinct subtitle cue IDs that make promising clip suggestions. Use only IDs below. Return JSON {\"cue_ids\":[\"id\",\"id\"]}.",
+          "split": "development",
+          "success_criteria": "Two source-backed cue IDs with valid timestamps",
+          "tool_schemas": {}
+        }
+      },
+      "result": {
+        "evidence_ref": "artifacts/a9378439bc578f2c5868629e011ec6e4237cc51626225d2dc23cacea1d327692.json",
+        "failure": null,
+        "passed": true,
+        "report_ref": "artifacts/156c84fc55cd9560b88fa38bf4d6a353ed16999329aa975edddffa8ef155c2bd.json",
+        "valid": true
+      },
+      "route": "tool",
+      "artifact": "video/artifacts/a9378439bc578f2c5868629e011ec6e4237cc51626225d2dc23cacea1d327692.json"
+    },
+    {
+      "store": "code",
+      "job_id": "b16c1dd19e884daaa1df555d3a608280",
+      "spec": {
+        "allow_retry": false,
+        "learn_feedback": false,
+        "mission_id": "readiness-code-demo",
+        "operation_key": "4cf130ca68022272d12105966e60a66faf2f1a1ab4afbf11c71350bb16fb02f6",
+        "retry_count": 0,
+        "route": "tool",
+        "task": {
+          "allowed_tools": [
+            "isolated_code"
+          ],
+          "category": "code_mission",
+          "critical": false,
+          "evaluator": "code_mission_v1",
+          "expected": {},
+          "id": "code-readiness-code-demo-include-final-value",
+          "input": {
+            "manifest": {
+              "allowlist": [
+                "app.py"
+              ],
+              "id": "readiness-code-demo",
+              "image": {
+                "digest": "sha256:07d4824036af339fa1b6ef769cc99d9c10a141769538b52b3b597c84f7a7b535",
+                "reference": "python:3.11-slim"
+              },
+              "limits": {
+                "cpu_count": 1,
+                "memory_mb": 128,
+                "output_bytes": 8192,
+                "pids": 32,
+                "timeout_s": 15
+              },
+              "mounts": "read_only_source_clean_copy",
+              "network": "none",
+              "patches": [
+                {
+                  "content": "def total(values):\n    return sum(values)\n",
+                  "id": "include-final-value",
+                  "path": "app.py",
+                  "sha256": "3251dbf18617cd67c47707cb9bd1611dbac212ff0ee9814a75b8ce1f34b85aad"
+                }
+              ],
+              "repo": {
+                "path": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\code-source",
+                "revision": "246ffcd3542a7df7f8ed6b36930d95c500bc4161",
+                "source_sha256": "c8c3f858a2cc92b4308218ca1aa78a4b815172dd11025bd1d810e3f343b28bc5"
+              },
+              "schema_version": 1,
+              "verifier": {
+                "cases": [
+                  {
+                    "args": [
+                      []
+                    ],
+                    "expected": 0,
+                    "id": "empty",
+                    "kwargs": {}
+                  },
+                  {
+                    "args": [
+                      [
+                        1,
+                        2,
+                        3
+                      ]
+                    ],
+                    "expected": 6,
+                    "id": "positive",
+                    "kwargs": {}
+                  },
+                  {
+                    "args": [
+                      [
+                        -3,
+                        -1
+                      ]
+                    ],
+                    "expected": -4,
+                    "id": "negative",
+                    "kwargs": {}
+                  },
+                  {
+                    "args": [
+                      [
+                        9
+                      ]
+                    ],
+                    "expected": 9,
+                    "id": "single",
+                    "kwargs": {}
+                  }
+                ],
+                "function": "total",
+                "module": "app",
+                "path": "verifier.json",
+                "protocol": "json_function_v1",
+                "sha256": "3964e5eccf92a225f628592b2afe48f79933bf025314f81499dcb008d513a217"
+              },
+              "worker_files": [
+                "app.py"
+              ]
+            },
+            "operation_key": "4cf130ca68022272d12105966e60a66faf2f1a1ab4afbf11c71350bb16fb02f6",
+            "patch_id": "include-final-value"
+          },
+          "permissions": {
+            "routes": [
+              "tool"
+            ],
+            "version": 1
+          },
+          "prompt": "Run the pinned isolated code function contract.",
+          "split": "development",
+          "tool_schemas": {
+            "isolated_code": {
+              "manifest_id": "string",
+              "patch_id": "string"
+            }
+          }
+        }
+      },
+      "result": {
+        "evidence_ref": "artifacts/be3b9922d0e1fdff75c52807c9b263e9947ecf36474c23054090bc3b22f200aa.json",
+        "failure": null,
+        "passed": true,
+        "report_ref": "artifacts/87527d31b3dfccc09d7c1d37102adb1fb0da10b6e3a7b56bdf51d93f85b00b74.json",
+        "valid": true
+      },
+      "route": "tool",
+      "artifact": "code/artifacts/be3b9922d0e1fdff75c52807c9b263e9947ecf36474c23054090bc3b22f200aa.json"
+    },
+    {
+      "store": "combined",
+      "job_id": "0d15ef8a1fcc475489f6f4f61382f619",
+      "spec": {
+        "allow_retry": false,
+        "learn_feedback": false,
+        "mission_id": "readiness-code-demo",
+        "operation_key": "4cf130ca68022272d12105966e60a66faf2f1a1ab4afbf11c71350bb16fb02f6",
+        "retry_count": 0,
+        "route": "tool",
+        "task": {
+          "allowed_tools": [
+            "isolated_code"
+          ],
+          "category": "code_mission",
+          "critical": false,
+          "evaluator": "code_mission_v1",
+          "expected": {},
+          "id": "code-readiness-code-demo-include-final-value",
+          "input": {
+            "manifest": {
+              "allowlist": [
+                "app.py"
+              ],
+              "id": "readiness-code-demo",
+              "image": {
+                "digest": "sha256:07d4824036af339fa1b6ef769cc99d9c10a141769538b52b3b597c84f7a7b535",
+                "reference": "python:3.11-slim"
+              },
+              "limits": {
+                "cpu_count": 1,
+                "memory_mb": 128,
+                "output_bytes": 8192,
+                "pids": 32,
+                "timeout_s": 15
+              },
+              "mounts": "read_only_source_clean_copy",
+              "network": "none",
+              "patches": [
+                {
+                  "content": "def total(values):\n    return sum(values)\n",
+                  "id": "include-final-value",
+                  "path": "app.py",
+                  "sha256": "3251dbf18617cd67c47707cb9bd1611dbac212ff0ee9814a75b8ce1f34b85aad"
+                }
+              ],
+              "repo": {
+                "path": "D:\\Repos\\hive-ai\\.hive\\readiness-demo-final-5\\code-source",
+                "revision": "246ffcd3542a7df7f8ed6b36930d95c500bc4161",
+                "source_sha256": "c8c3f858a2cc92b4308218ca1aa78a4b815172dd11025bd1d810e3f343b28bc5"
+              },
+              "schema_version": 1,
+              "verifier": {
+                "cases": [
+                  {
+                    "args": [
+                      []
+                    ],
+                    "expected": 0,
+                    "id": "empty",
+                    "kwargs": {}
+                  },
+                  {
+                    "args": [
+                      [
+                        1,
+                        2,
+                        3
+                      ]
+                    ],
+                    "expected": 6,
+                    "id": "positive",
+                    "kwargs": {}
+                  },
+                  {
+                    "args": [
+                      [
+                        -3,
+                        -1
+                      ]
+                    ],
+                    "expected": -4,
+                    "id": "negative",
+                    "kwargs": {}
+                  },
+                  {
+                    "args": [
+                      [
+                        9
+                      ]
+                    ],
+                    "expected": 9,
+                    "id": "single",
+                    "kwargs": {}
+                  }
+                ],
+                "function": "total",
+                "module": "app",
+                "path": "verifier.json",
+                "protocol": "json_function_v1",
+                "sha256": "3964e5eccf92a225f628592b2afe48f79933bf025314f81499dcb008d513a217"
+              },
+              "worker_files": [
+                "app.py"
+              ]
+            },
+            "operation_key": "4cf130ca68022272d12105966e60a66faf2f1a1ab4afbf11c71350bb16fb02f6",
+            "patch_id": "include-final-value"
+          },
+          "permissions": {
+            "routes": [
+              "tool"
+            ],
+            "version": 1
+          },
+          "prompt": "Run the pinned isolated code function contract.",
+          "split": "development",
+          "tool_schemas": {
+            "isolated_code": {
+              "manifest_id": "string",
+              "patch_id": "string"
+            }
+          }
+        }
+      },
+      "result": {
+        "evidence_ref": "artifacts/ce761a5eee465f226758363e179061af269e572aaad2ce65f789efdcbd9cbe1f.json",
+        "failure": null,
+        "passed": true,
+        "report_ref": "artifacts/e1fa94783a6397dedec2a4221e578fe652f8a07d54cbe5a1cdfd494cda38bc11.json",
+        "valid": true
+      },
+      "route": "tool",
+      "artifact": "combined/artifacts/ce761a5eee465f226758363e179061af269e572aaad2ce65f789efdcbd9cbe1f.json"
+    },
+    {
+      "store": "combined",
+      "job_id": "bfdc8bf7aae2429eaa3348ff5547b632",
+      "spec": {
+        "allow_retry": false,
+        "learn_feedback": true,
+        "retry_count": 0,
+        "route": "tool",
+        "task": {
+          "allowed_tools": [
+            "normalize_srt"
+          ],
+          "category": "video_captions",
+          "critical": false,
+          "evaluator": "video_captions_v1",
+          "expected": {
+            "srt": "1\n00:00:00,000 --> 00:00:01,000\nFirst synthetic cue\n\n2\n00:00:01,100 --> 00:00:02,000\nSecond synthetic cue\n"
+          },
+          "id": "video-8834c0e78406554f931b39af-captions",
+          "input": {
+            "source_srt": "1\r\n00:00:00,000 --> 00:00:01,000\r\nFirst synthetic cue\r\n\r\n2\r\n00:00:01,100 --> 00:00:02,000\r\nSecond synthetic cue\r\n"
+          },
+          "prompt": "Normalize the supplied subtitle cues, preserving text exactly.",
+          "split": "development",
+          "success_criteria": "Exact normalized SRT match",
+          "tool_schemas": {
+            "normalize_srt": {
+              "srt": "string"
+            }
+          }
+        }
+      },
+      "result": {
+        "evidence_ref": "artifacts/0139b707ff9ab6ab0c4f36414ebc9c1d225d642e78eb617ec74a4bbc56b84479.json",
+        "failure": null,
+        "passed": true,
+        "report_ref": "artifacts/1c79fb9417e113ea94cbe3306692abeaebacb0f30c5e77d3821005d5ef9031e9.json",
+        "valid": true
+      },
+      "route": "tool",
+      "artifact": "combined/artifacts/0139b707ff9ab6ab0c4f36414ebc9c1d225d642e78eb617ec74a4bbc56b84479.json"
+    },
+    {
+      "store": "combined",
+      "job_id": "5eb474cfac8841eb9340592ab4214a56",
+      "spec": {
+        "allow_retry": false,
+        "learn_feedback": true,
+        "retry_count": 0,
+        "route": "tool",
+        "task": {
+          "allowed_tools": [],
+          "category": "video_clips",
+          "critical": false,
+          "evaluator": "video_clips_v1",
+          "expected": {},
+          "id": "video-8834c0e78406554f931b39af-clips",
+          "input": {
+            "cues": [
+              {
+                "end_ms": 1000,
+                "id": "c0001",
+                "start_ms": 0,
+                "text": "First synthetic cue"
+              },
+              {
+                "end_ms": 2000,
+                "id": "c0002",
+                "start_ms": 1100,
+                "text": "Second synthetic cue"
+              }
+            ],
+            "duration_ms": 3000
+          },
+          "prompt": "Choose exactly two distinct subtitle cue IDs that make promising clip suggestions. Use only IDs below. Return JSON {\"cue_ids\":[\"id\",\"id\"]}.",
+          "split": "development",
+          "success_criteria": "Two source-backed cue IDs with valid timestamps",
+          "tool_schemas": {}
+        }
+      },
+      "result": {
+        "evidence_ref": "artifacts/e3d8dc6faaee4f21deafaec49a5275d1a015c5afd8ab71ea9e441a854b6a8245.json",
+        "failure": null,
+        "passed": true,
+        "report_ref": "artifacts/365605390689cdcbe6d1f634def84307c5fd71eeb0640347a75606b91f761a2e.json",
+        "valid": true
+      },
+      "route": "tool",
+      "artifact": "combined/artifacts/e3d8dc6faaee4f21deafaec49a5275d1a015c5afd8ab71ea9e441a854b6a8245.json"
+    }
+  ]
+}

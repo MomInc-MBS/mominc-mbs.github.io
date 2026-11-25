@@ -1,0 +1,105 @@
+{
+  "build": {
+    "commit": "2e14c0e33d70ccb7f436dc84275151e7568913d6",
+    "source_sha256": "f648953404edbc8f93f9f2fe09ac1364adba67cbd44afaef87ed7a548a1125fc",
+    "version": "0.1.0"
+  },
+  "config": {
+    "allow_fixtures": false,
+    "concurrency": 1,
+    "endpoint": "http://127.0.0.1:11434",
+    "max_cycles": 240,
+    "max_requests": 120,
+    "max_retries": 2,
+    "max_storage_bytes": 268435456,
+    "max_tokens": 128,
+    "max_total_tokens": 15360,
+    "max_wall_s": 2700,
+    "model": "myr5-hold-local:latest",
+    "routes": [
+      "local_direct",
+      "local_tool"
+    ],
+    "seed": 42,
+    "timeout_s": 120
+  },
+  "config_hash": "928145c3151de1356b033764aa476a879803de291b9d13c17e7bf5a08082cc7a",
+  "job_id": "7406ac47100c4c04934b86cd261e4ceb",
+  "result": {
+    "backend": "ollama",
+    "error": null,
+    "failure_category": null,
+    "latency_s": 0.31299999996554106,
+    "model": "myr5-hold-local:latest",
+    "model_digest": "a45646773d1ee8a6c1557c7de09a68e78a74f2990c4174a1408f65e777db150c",
+    "output": "{\"answer\":728}",
+    "raw_model_output": "{\"answer\":728}",
+    "request": {
+      "format": "json",
+      "messages": [
+        {
+          "content": "Return exactly one JSON object matching the requested schema. Do not use markdown.",
+          "role": "system"
+        },
+        {
+          "content": "{\"category\":\"math\",\"prompt\":\"Multiply 26 by 28. Return JSON {\\\"answer\\\": integer}.\",\"input\":{\"a\":26,\"allowed_tools\":[\"multiply\"],\"b\":28,\"tool_schemas\":{\"multiply\":{\"a\":\"integer\",\"b\":\"integer\"}}},\"allowed_tools\":[\"multiply\"],\"tool_schemas\":{\"multiply\":{\"a\":\"integer\",\"b\":\"integer\"}}}",
+          "role": "user"
+        }
+      ],
+      "model": "myr5-hold-local:latest",
+      "options": {
+        "num_ctx": 2048,
+        "num_predict": 128,
+        "seed": 42,
+        "temperature": 0
+      },
+      "stream": false,
+      "think": false
+    },
+    "tokens": 8
+  },
+  "route": "local_direct",
+  "task": {
+    "allowed_tools": [
+      "multiply"
+    ],
+    "category": "math",
+    "critical": true,
+    "evaluator": "math_exact",
+    "expected": {
+      "answer": 728
+    },
+    "id": "bench-v1-42-development-math-000-ca49e65a9a",
+    "input": {
+      "a": 26,
+      "allowed_tools": [
+        "multiply"
+      ],
+      "b": 28,
+      "tool_schemas": {
+        "multiply": {
+          "a": "integer",
+          "b": "integer"
+        }
+      }
+    },
+    "prompt": "Multiply 26 by 28. Return JSON {\"answer\": integer}.",
+    "split": "development",
+    "success_criteria": "Return the exact integer product; deterministic verifier must agree; evidence and resource use must be stored.",
+    "tool_schemas": {
+      "multiply": {
+        "a": "integer",
+        "b": "integer"
+      }
+    }
+  },
+  "utility": 0.9967445833333477,
+  "verification": {
+    "evaluator": "hive-evaluator-v1",
+    "passed": true,
+    "quality": 1,
+    "reason": "passed",
+    "unsupported": 0,
+    "valid": true
+  }
+}

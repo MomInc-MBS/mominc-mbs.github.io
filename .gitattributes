@@ -58,3 +58,6 @@ hive/implementation/prototype-v04-*.json -text whitespace=cr-at-eol
 # Operator Prototype source export is bound to its snapshot manifest, including EOLs.
 hive/implementation/operator-prototype/** -text whitespace=space-before-tab,cr-at-eol,-blank-at-eol,-blank-at-eof
 hive/implementation/operator-prototype-*.json -text whitespace=cr-at-eol
+hive/implementation/connected-runner/** -text whitespace=space-before-tab,cr-at-eol,-blank-at-eol,-blank-at-eof
+hive/implementation/connected-runner-evidence/** -text whitespace=cr-at-eol
+hive/implementation/connected-runner-*.json -text whitespace=cr-at-eol

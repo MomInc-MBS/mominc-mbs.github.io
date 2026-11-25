@@ -1,0 +1,131 @@
+{
+  "status": "PASS",
+  "frozen_runtime_sha256": "ef4eb92509af5d5330e90632d178b3cdadc3c11e62f308f58f808be6be625055",
+  "frozen_commit": "dc8cc2d9b421d680d1052ba4f510027ac5a391ad",
+  "runtime": {
+    "version": "0.4.0.dev1",
+    "commit": "unversioned",
+    "source_sha256": "ef4eb92509af5d5330e90632d178b3cdadc3c11e62f308f58f808be6be625055"
+  },
+  "before": {
+    "budget": {
+      "cycles": 9,
+      "requests": 0,
+      "tokens_actual": 0,
+      "tokens_reserved": 0,
+      "wall_s": 6.046000000089407
+    },
+    "job_count": 9,
+    "learning_status": "REJECTED",
+    "combined_state": "COMPLETED",
+    "stages": {
+      "data": "VERIFIED",
+      "python": "VERIFIED",
+      "report": "VERIFIED",
+      "review": "VERIFIED"
+    }
+  },
+  "after_browser": {
+    "budget": {
+      "cycles": 9,
+      "requests": 0,
+      "tokens_actual": 0,
+      "tokens_reserved": 0,
+      "wall_s": 6.046000000089407
+    },
+    "job_count": 9,
+    "learning_status": "REJECTED",
+    "combined_state": "COMPLETED",
+    "stages": {
+      "data": "VERIFIED",
+      "python": "VERIFIED",
+      "report": "VERIFIED",
+      "review": "VERIFIED"
+    }
+  },
+  "after_server_restart": {
+    "budget": {
+      "cycles": 9,
+      "requests": 0,
+      "tokens_actual": 0,
+      "tokens_reserved": 0,
+      "wall_s": 6.046000000089407
+    },
+    "job_count": 9,
+    "learning_status": "REJECTED",
+    "combined_state": "COMPLETED",
+    "stages": {
+      "data": "VERIFIED",
+      "python": "VERIFIED",
+      "report": "VERIFIED",
+      "review": "VERIFIED"
+    }
+  },
+  "budget_jobs_stages_learning_unchanged": true,
+  "page_errors": [],
+  "mobile_horizontal_overflow": false,
+  "registered_combined_states": {
+    "data": "VERIFIED",
+    "python": "VERIFIED",
+    "report": "VERIFIED",
+    "review": "VERIFIED"
+  },
+  "cached_replay_interruption": {
+    "active_observed_before_stop": true,
+    "mission_state_after_stop": "STOPPED",
+    "stop_file_observed": true,
+    "budget_unchanged": true
+  },
+  "learning_status": "REJECTED",
+  "independent_health": {
+    "measured_at": "2026-11-22T08:17:13.189784+00:00",
+    "new_model_calls": 0,
+    "runtime_available": true,
+    "model": {
+      "id": "myr5-hold-local:latest",
+      "available": true,
+      "digest": "a45646773d1ee8a6c1557c7de09a68e78a74f2990c4174a1408f65e777db150c",
+      "approved_digest": null,
+      "matches_approved_digest": null,
+      "loaded": false
+    },
+    "docker": {
+      "status": "PRESENT_UNVERIFIED",
+      "daemon_available": true,
+      "server_version": "29.8.2",
+      "os": "linux",
+      "enforcement_verified": false
+    },
+    "registered_pinned_images": [
+      {
+        "reference": "python:3.11-slim",
+        "digest": "sha256:07d4824036af339fa1b6ef769cc99d9c10a141769538b52b3b597c84f7a7b535",
+        "available": true
+      }
+    ],
+    "note": "Read-only measurement. Availability grants no execution authority; isolation enforcement requires a task receipt."
+  },
+  "browser_engine": {
+    "name": "Chromium",
+    "version": "153.0.8010.12",
+    "automation": "Playwright",
+    "automation_version": "1.63.0"
+  },
+  "artifact_download_hash_matches_receipt": true,
+  "new_model_calls": 0,
+  "new_cycles": 0,
+  "scope": "Actual tools-only frozen-runtime browser replay; no model inference or acceptance claim",
+  "screenshots": [
+    "console-desktop.png",
+    "console-mobile.png"
+  ],
+  "attempt_refs": [
+    "attempts/harness-interruptions.json",
+    "attempts/recovery-state.json",
+    "attempts/recovery-resume-guard.json"
+  ],
+  "browser_reports": [
+    "primary-browser.json",
+    "restart-browser.json"
+  ]
+}

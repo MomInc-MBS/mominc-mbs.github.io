@@ -17,7 +17,7 @@
     "publication_manifest": "implementation/objective-dev5-publication.json"
   },
   "latest_verified": {
-    "note_id": "OPERATOR",
-    "publication_manifest": "implementation/operator-prototype-publication.json"
+    "note_id": "CONNECTED",
+    "publication_manifest": "implementation/connected-runner-publication.json"
   }
 }

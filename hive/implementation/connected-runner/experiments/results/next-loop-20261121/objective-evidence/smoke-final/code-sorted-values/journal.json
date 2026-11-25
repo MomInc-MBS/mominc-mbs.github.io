@@ -1,0 +1,189 @@
+{
+  "store": "smoke-final/code-sorted-values",
+  "original_job_count": 1,
+  "jobs": [
+    {
+      "id": "239d880087c74226a751489a756d629b",
+      "spec": {
+        "allow_retry": false,
+        "learn_feedback": false,
+        "mission_id": "code-sorted-values",
+        "operation_key": "6362e96b88d91d2a0e4fd1021729f0ededf81bb5c9c6f68b9f77ece73921d3ff",
+        "retry_count": 0,
+        "route": "tool",
+        "task": {
+          "allowed_tools": [
+            "isolated_code"
+          ],
+          "category": "code_mission",
+          "critical": false,
+          "evaluator": "code_mission_v1",
+          "expected": {},
+          "id": "code-code-sorted-values-objective-candidate",
+          "input": {
+            "manifest": {
+              "allowlist": [
+                "app.py"
+              ],
+              "id": "code-sorted-values",
+              "image": {
+                "digest": "sha256:07d4824036af339fa1b6ef769cc99d9c10a141769538b52b3b597c84f7a7b535",
+                "reference": "python:3.11-slim"
+              },
+              "limits": {
+                "cpu_count": 1,
+                "memory_mb": 128,
+                "output_bytes": 8192,
+                "pids": 32,
+                "timeout_s": 15
+              },
+              "mounts": "read_only_source_clean_copy",
+              "network": "none",
+              "patches": [
+                {
+                  "content": "def sorted_values(values):\n    return sorted(values)\n",
+                  "id": "objective-candidate",
+                  "path": "app.py",
+                  "sha256": "1f5c9c86782512a785bed2ef138219b43e2da02ccaf7c6940149ad5b04eff528"
+                }
+              ],
+              "repo": {
+                "path": "D:\\Repos\\hive-ai\\.hive\\objective-smoke-20261121-r2\\sources\\code-sorted-values",
+                "revision": "3853d4380fe9b70bc16bc863279c951d9285430f",
+                "source_sha256": "c7735077c0fddcf883f4a5307b3ffc7a02b209115bfc788c75290cea1ad09ef3"
+              },
+              "schema_version": 1,
+              "verifier": {
+                "cases": [
+                  {
+                    "args": [
+                      []
+                    ],
+                    "expected": [],
+                    "id": "empty",
+                    "kwargs": {}
+                  },
+                  {
+                    "args": [
+                      [
+                        3,
+                        1,
+                        3,
+                        2
+                      ]
+                    ],
+                    "expected": [
+                      1,
+                      2,
+                      3,
+                      3
+                    ],
+                    "id": "duplicates",
+                    "kwargs": {}
+                  },
+                  {
+                    "args": [
+                      [
+                        0,
+                        -1,
+                        2147483648,
+                        -2147483649
+                      ]
+                    ],
+                    "expected": [
+                      -2147483649,
+                      -1,
+                      0,
+                      2147483648
+                    ],
+                    "id": "negative-boundaries",
+                    "kwargs": {}
+                  }
+                ],
+                "function": "sorted_values",
+                "module": "app",
+                "path": "verifier.json",
+                "protocol": "json_function_v1",
+                "sha256": "63fbdca8f197a962ace25bcc1c51908688165251e810dfedb301dc228094f705"
+              },
+              "worker_files": [
+                "app.py"
+              ]
+            },
+            "operation_key": "6362e96b88d91d2a0e4fd1021729f0ededf81bb5c9c6f68b9f77ece73921d3ff",
+            "patch_id": "objective-candidate"
+          },
+          "permissions": {
+            "routes": [
+              "tool"
+            ],
+            "version": 1
+          },
+          "prompt": "Run the pinned isolated code function contract.",
+          "split": "development",
+          "tool_schemas": {
+            "isolated_code": {
+              "manifest_id": "string",
+              "patch_id": "string"
+            }
+          }
+        }
+      },
+      "state": "BLOCKED",
+      "owner": "worker-48428",
+      "generation": 1,
+      "pid": 48428,
+      "result": {
+        "evidence_ref": "artifacts/67ab311c0decd64914d1546a5cf432258d59868eebff2bb95175cd51307db84d.json",
+        "failure": null,
+        "passed": true,
+        "report_ref": "artifacts/feb27733a5ff591602bbdffba80b3f81536c434b998e12734ba32e774eb8373d.json",
+        "valid": true
+      }
+    }
+  ],
+  "events": [
+    {
+      "seq": 1,
+      "job_id": "239d880087c74226a751489a756d629b",
+      "state": "QUEUED",
+      "detail": null
+    },
+    {
+      "seq": 2,
+      "job_id": "239d880087c74226a751489a756d629b",
+      "state": "RUNNING",
+      "detail": {
+        "owner": "worker-48428"
+      }
+    },
+    {
+      "seq": 3,
+      "job_id": "239d880087c74226a751489a756d629b",
+      "state": "VERIFYING",
+      "detail": null
+    },
+    {
+      "seq": 4,
+      "job_id": "239d880087c74226a751489a756d629b",
+      "state": "REVIEWING",
+      "detail": {
+        "evidence_ref": "artifacts/67ab311c0decd64914d1546a5cf432258d59868eebff2bb95175cd51307db84d.json"
+      }
+    },
+    {
+      "seq": 5,
+      "job_id": "239d880087c74226a751489a756d629b",
+      "state": "BLOCKED",
+      "detail": null
+    }
+  ],
+  "mission_config_hash": "17abb5470e515dfd317ad443df1f4d5d87f5cd1cfd3db5c1ca08be80f6741b36",
+  "budget": {
+    "cycles": 1,
+    "requests": 0,
+    "tokens_actual": 0,
+    "tokens_reserved": 0,
+    "wall_s": 1.6400000000139698
+  }
+}

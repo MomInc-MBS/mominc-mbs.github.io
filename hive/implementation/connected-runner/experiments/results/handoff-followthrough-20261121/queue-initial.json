@@ -1,0 +1,103 @@
+﻿{
+  "items": [
+    {
+      "authorized": true,
+      "depends_on": [],
+      "history": [],
+      "hypothesis": "Published dev4 and dev5 source, ZIP and runtime identities reconcile with zero unexplained differences.",
+      "id": "reconcile",
+      "next_command": "python experiments/results/handoff-followthrough-20261121/reconcile_release.py",
+      "owner": "Astra",
+      "status": "PENDING"
+    },
+    {
+      "authorized": true,
+      "depends_on": [
+        "reconcile"
+      ],
+      "history": [],
+      "hypothesis": "An opt-in exact-tool-or-abstain rule prevents model substitution while feedback remains partitioned and quarantined.",
+      "id": "p2-safety",
+      "next_command": "python scripts/p2_abstention_comparison.py --help",
+      "owner": "Luna/Sol",
+      "status": "PENDING"
+    },
+    {
+      "authorized": true,
+      "depends_on": [
+        "p2-safety"
+      ],
+      "history": [],
+      "hypothesis": "Independent probes, clean-package regressions and replay identify false acceptance, receipt rebinding and rollback failures.",
+      "id": "independent-checks",
+      "next_command": "python -m pytest -q",
+      "owner": "Terra/Grok",
+      "status": "PENDING"
+    },
+    {
+      "authorized": true,
+      "depends_on": [
+        "independent-checks"
+      ],
+      "history": [],
+      "hypothesis": "The candidate matches the strongest exact tool on the same six public development inputs; a tie cannot pass the quality-gain gate.",
+      "id": "matched-output",
+      "next_command": "python scripts/p2_tool_comparison.py --policy-version 4 --help",
+      "owner": "Astra",
+      "status": "PENDING"
+    },
+    {
+      "authorized": true,
+      "depends_on": [
+        "matched-output"
+      ],
+      "history": [],
+      "hypothesis": "Six synthetic Docker Python tasks and six structured-data tasks retain exact verification and unchanged-budget fresh-process replay.",
+      "id": "objective-smoke",
+      "next_command": "python scripts/objective_smoke.py --work .hive/handoff-objective-smoke",
+      "owner": "Terra",
+      "status": "PENDING"
+    },
+    {
+      "authorized": true,
+      "depends_on": [
+        "reconcile"
+      ],
+      "history": [],
+      "hypothesis": "Genuine acceptance remains blocked until six approved unused structured-data groups and six independent Python snapshots have protected evaluators and source-specific caps.",
+      "id": "acceptance-intake",
+      "next_command": "Review docs/LEVEL_A_ACCEPTANCE.md and experiments/plans/readiness-level-a.json; no source acquisition or execution is authorized by this queue.",
+      "owner": "Astra",
+      "status": "PENDING"
+    },
+    {
+      "authorized": true,
+      "depends_on": [
+        "reconcile"
+      ],
+      "history": [],
+      "hypothesis": "A separate at-least-24-task two-wave source-disjoint study needs frozen criteria and explicit approval before any exposure.",
+      "id": "learning-study",
+      "next_command": "Review docs/LEVEL_B_LEARNING_STUDY.md; do not execute study tasks.",
+      "owner": "Sol/Terra",
+      "status": "PENDING"
+    },
+    {
+      "authorized": true,
+      "depends_on": [
+        "objective-smoke"
+      ],
+      "history": [],
+      "hypothesis": "The current HIVE main branch can publish a checksum-verified engineering supplement while preserving frozen dev4/dev5 and all failures.",
+      "id": "publish-evidence",
+      "next_command": "python tools/check_hive.py",
+      "owner": "Astra",
+      "status": "PENDING"
+    }
+  ],
+  "manifest_ref": "artifacts/d862a6cd94936268439d7b0016ece1f5b224978503b73a256f441c761c073fbd.json",
+  "manifest_sha256": "d862a6cd94936268439d7b0016ece1f5b224978503b73a256f441c761c073fbd",
+  "next_item": "reconcile",
+  "mission_authority": false,
+  "note": "Engineering queue does not clear STOP, grant inference, reset budgets or approve policy."
+}

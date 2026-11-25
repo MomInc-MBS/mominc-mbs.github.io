@@ -1,0 +1,16 @@
+{
+  "status": "EXPECTED_RESUME_GUARD_OBSERVED",
+  "runtime_sha256": "ef4eb92509af5d5330e90632d178b3cdadc3c11e62f308f58f808be6be625055",
+  "action": "STOP during active cached replay followed by resume before quiescence was safely refused with HTTP400",
+  "harness_issue": "Browser wait did not establish current worker quiescence; replacing with explicit bounded status polling.",
+  "observed_budget": {
+    "cycles": 9,
+    "requests": 0,
+    "tokens_actual": 0,
+    "tokens_reserved": 0,
+    "wall_s": 6.046000000089407
+  },
+  "new_model_calls": 0,
+  "new_cycles": 0,
+  "servers_closed": true
+}

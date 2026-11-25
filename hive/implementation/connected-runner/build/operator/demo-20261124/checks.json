@@ -1,0 +1,11 @@
+{
+ "fresh_conversion": true,
+ "mixed_batch": true,
+ "unsupported": true,
+ "stop_resume": true,
+ "crash_recovery": true,
+ "restart_distinct_input": true,
+ "saved_result_replay": true,
+ "revoke_blocks_replay": true,
+ "rollback": true
+}

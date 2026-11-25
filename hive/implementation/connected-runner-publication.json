@@ -1,0 +1,52 @@
+{
+  "date": "2026-11-25",
+  "status": "CONNECTED_LEARNING_MECHANISM_DEMONSTRATED_TRUSTED_LOCAL",
+  "runtime_version": "connected-goal-runner 033089b",
+  "evidence_scope": "Real MOM production folder inventories through the console; independent evaluator 24/24 on private cases; one local gpt-oss-20b proposal; ties a scripted baseline",
+  "source_commit": "033089b5147c02b9256ad25aa61a51f31ed4ca3c",
+  "tracked_dirty": false,
+  "evaluated_commit": "033089b5147c02b9256ad25aa61a51f31ed4ca3c",
+  "checkpoint_commit": "edb2a24",
+  "runtime_source_sha256": "5eccb2667eff9cf0be35381608618473243fc8359b24b741591cbbcf6c96bbed",
+  "runtime_source_sha256_meaning": "sha256 over src/hive/*.py (relative path + bytes, sorted), same convention as earlier publications",
+  "measured_runtime_source_sha256": "5eccb2667eff9cf0be35381608618473243fc8359b24b741591cbbcf6c96bbed",
+  "download": "downloads/HIVE_Connected_Runner_033089b.zip",
+  "download_sha256": "4dcc31a5fc91706d4e9a4183c6168b0cbca063dfb6e43069204ae0aa5ebd69ee",
+  "download_bytes": 34783864,
+  "snapshot_file_count": 1179,
+  "snapshot_manifest": "implementation/connected-runner/SNAPSHOT_MANIFEST.json",
+  "snapshot_manifest_sha256": "c314f2225ddc7ab82a396e6a18d81046cf30d389bf5aed7d94c3cdb1a283a6ad",
+  "supported_environment": "Windows 11, Python 3.11+, Docker Desktop with the pinned python:3.11-slim image; LM Studio with openai/gpt-oss-20b only for discovery",
+  "launch": "scripts\\hive-operator.cmd <inputs folder> [port]",
+  "regression_gate": "1114 passed, 3 skipped, 0 failed on 033089b (1h10m, Docker up); clean launch of the extracted package OK",
+  "acceptance": {
+    "checkpoint": "implementation/connected-runner-evidence/BUILD_CHECKPOINT_C.md",
+    "c12": "implementation/connected-runner-evidence/c12-demo-summary.json",
+    "c3": "implementation/connected-runner-evidence/c3-run-summary.json",
+    "c4": "implementation/connected-runner-evidence/c4-run-summary.json",
+    "c5": "implementation/connected-runner-evidence/c5-run-summary.json",
+    "c6": "implementation/connected-runner-evidence/c6-run-summary.json"
+  },
+  "baselines": {
+    "unchanged_hive": "0/24",
+    "scripted_diff": "24/24",
+    "candidate": "24/24",
+    "matched_budget_m2_views": "not expressible"
+  },
+  "excluded": "admission private key, private evaluator cases, evidence and operator stores, session tokens",
+  "policy_deployed": false,
+  "quality_gain": false,
+  "new_real_model_calls": 4,
+  "new_real_model_calls_meaning": "local LM Studio gpt-oss-20b only, $0: C3 1, C5 2, C6 1",
+  "production_approved": false,
+  "spending_ceiling": {
+    "hard_ceiling_usd": 120,
+    "final": true,
+    "decided": "2026-11-25",
+    "note": "Owner: $120 is the spending limit for the rest of the HIVE project; not to be raised"
+  },
+  "headline": "Type a goal. HIVE finds the missing step, checks it, admits it and reuses it.",
+  "summary": "One connected run of the learning loop on one Windows PC: goal -> contract -> typed plan -> gap -> one local-model proposal -> independent evaluator 24/24 -> signed admission -> reuse on unused real inputs after restart with zero model calls. The step ties a simple scripted baseline: mechanism, not advantage.",
+  "badge": "TRUSTED LOCAL · NOT PRODUCTION",
+  "limitations": "One workload, one model; ties the scripted baseline; admission trust = one Windows user; rollback proven by test fixture only; not Level A, Level B or neural learning."
+}

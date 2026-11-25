@@ -1,0 +1,134 @@
+{
+  "scope": "Independent zero-inference dev6 reproduction; synthetic engineering checks only",
+  "repository": "D:/Repos/hive-ai",
+  "branch_at_freeze": "build/working-prototype",
+  "head_at_freeze": "0b3bfc391c8fc21555f451012757174933f1c479",
+  "runtime_commit": "f3d7e556ea41076e1138761d72df06b5ce3e0f65",
+  "runtime_source_sha256": "0d97faae0caae31f3918296dccaa21be5ba0ba7a1cec0c8ca5f880001d17320e",
+  "archive_sha256": "2751e40f2f12273290cadad3abb2914d10a97ccb3ea6904cbd4f253f9ca68113",
+  "source": "Frozen git archive of runtime_commit, verified by runtime_source_sha256; archive retained locally",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "model_discovery": {
+    "endpoint": "http://127.0.0.1:11434",
+    "available": true,
+    "models": [
+      {
+        "id": "myr5-hold-local:latest",
+        "digest": "a45646773d1ee8a6c1557c7de09a68e78a74f2990c4174a1408f65e777db150c",
+        "available": true
+      }
+    ],
+    "error": null
+  },
+  "docker": {
+    "daemon": "29.8.2",
+    "image": "python@sha256:07d4824036af339fa1b6ef769cc99d9c10a141769538b52b3b597c84f7a7b535"
+  },
+  "acceptance_manifest_sha256": {
+    "experiments/plans/readiness-level-a.json": "c935f179c356f3cd61c9d271e100fc85b7b56deb1a9ecdccae323827351b9644",
+    "experiments/plans/readiness-level-a-intake.template.json": "58b8f322daf8f1cc105acbd38a46d8b944c562e97352f4526212c67b121170af",
+    "docs/LEVEL_A_ACCEPTANCE.md": "23fa6a2e40db5053f05df59caf5b43d99107402a5a1188d7a1e0a958a5beb627"
+  },
+  "checks": [
+    {
+      "command": "python -m hive doctor --offline",
+      "exit": 0,
+      "log": "baseline-doctor-offline.log"
+    },
+    {
+      "command": "python -m hive doctor",
+      "exit": 0,
+      "log": "baseline-doctor-online.log",
+      "scope": "health and model discovery, no generate"
+    },
+    {
+      "command": "python -m pytest -q -r s --junitxml=../baseline-pytest.xml",
+      "status": "interrupted at 80%",
+      "log": "baseline-pytest.log",
+      "reason": "nested archive inherited parent Git metadata; restarted isolated"
+    },
+    {
+      "command": "python -u -m pytest -q -r s --junitxml=../baseline-pytest-isolated.xml",
+      "exit": 0,
+      "passed": 448,
+      "skipped": 2,
+      "skip_reasons": [
+        "OS cannot create symlink",
+        "Windows session cannot create symlink"
+      ],
+      "seconds": 539.67,
+      "log": "baseline-pytest-isolated.log",
+      "junit": "baseline-pytest-isolated.xml"
+    },
+    {
+      "command": "npx --no-install e2e run --workers 1 --retries 0 --output baseline-run/e2e",
+      "exit": 0,
+      "passed": 7,
+      "overlapped_pytest": true,
+      "report": "baseline-run/e2e-overlap-report.json",
+      "log": "baseline-e2e.log"
+    },
+    {
+      "command": "npx --no-install e2e run --workers 1 --retries 0 --output baseline-run/e2e-serial",
+      "exit": 0,
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 94.85,
+      "overlapped_pytest": false,
+      "report": "baseline-run/e2e-serial-report.json",
+      "log": "baseline-e2e-serial.log",
+      "runner": {
+        "name": "e2e",
+        "version": "0.21.1"
+      }
+    },
+    {
+      "command": "python -u scripts/objective_smoke.py --work D:/Repos/hive-ai/.hive/prototype-v04-baseline-objective",
+      "exit": 0,
+      "verified": 12,
+      "equal_budget_fresh_process_replays": 12,
+      "requests": 0,
+      "report": "baseline-run/objective-report.json",
+      "log": "baseline-objective.log"
+    },
+    {
+      "command": "python -u scripts/objective_smoke.py --work D:/Repos/hive-ai/.hive/prototype-v04-baseline-objective --replay",
+      "exit": 0,
+      "errors": 0,
+      "stdout": "baseline-replay-code.json",
+      "stderr": "baseline-replay-code.stderr"
+    },
+    {
+      "command": "python -u scripts/objective_smoke.py --work D:/Repos/hive-ai/.hive/prototype-v04-baseline-objective --replay-data",
+      "exit": 0,
+      "errors": 0,
+      "stdout": "baseline-replay-data.json",
+      "stderr": "baseline-replay-data.stderr"
+    }
+  ],
+  "environment": "PYTHONPATH=<archive>/src; GIT_CEILING_DIRECTORIES=<archive parent> for isolated checks; e2e v0.21.1 via D:/Repos/myr5-e2e/node_modules junction",
+  "limits": [
+    "Synthetic development fixtures; no Level A acceptance, generalization, policy gain or model quality claim.",
+    "No new inference, weights, budget reset, or policy promotion.",
+    "CPU/GPU overhead unmeasured."
+  ],
+  "evidence_sha256": {
+    "baseline-doctor-offline.log": "07232b18d94d1ceacce7ac41e015b98df21111d1a083495544e71102fbc4ab5d",
+    "baseline-doctor-online.log": "0a729d1bad64f6b995e1663752f8210eabafadcf563dafb8f49556e0e089fc06",
+    "baseline-pytest.log": "0ba641d7c482b4678badbde771d22ca831488e3dfa7f3b471c181a103f5c1a6d",
+    "baseline-pytest-isolated.log": "91ac6521e530b932ce77567d1e2edd71274dda8540ef3cee3ebf972ddb1899fc",
+    "baseline-pytest-isolated.xml": "edddc9278ce0709500aa1765db2c35cd437e0aa6009eb78a7bbff4431f75bda4",
+    "baseline-e2e.log": "04e3b8bd7b257e0133bdb950f314d6731d31351d4547ffa1bffb030be39344e5",
+    "baseline-e2e-serial.log": "e78a0f50245cca21b1a65774a4c4270e872a2184b322e3b51bf578dbbdf8d3e6",
+    "baseline-objective.log": "b50c15185cfdab6820e40d6b80278c6d238b43837a586cebf52ecdd7f9d5d5c4",
+    "baseline-replay-code.json": "971984db9b5c654313568db4fcf3a8e47c80f27e791b9bfe5133e778e64011a1",
+    "baseline-replay-code.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "baseline-replay-data.json": "ec03aa3b8659d283762747a397402976b1273c286eba9df18e4261d23f8c89de",
+    "baseline-replay-data.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "baseline-run/e2e-overlap-report.json": "68e511bb8ddbd3495580fad6b4473628b7d7a34cbe504dd686c18e04964ff45a",
+    "baseline-run/e2e-serial-report.json": "f6b731ff426e9147264e49828990b0826b040013380845aa2e463e94f7a81cb8",
+    "baseline-run/objective-report.json": "0c06380726b119e2e8a66f79fdf0d7a6e2e1a73edef3d22c26531020c197de48"
+  },
+  "evidence_root": "."
+}

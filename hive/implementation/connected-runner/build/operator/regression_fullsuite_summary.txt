@@ -1,0 +1,5 @@
+﻿Full regression gate on evaluated revision f65d950ae3fd7dca3dbdbff9252b3567d083af87 (Windows 11, Python 3.11.9, Docker Desktop):
+1042 passed, 3 skipped, 0 failed in 5350 s (pytest -q, detached process, host under load).
+After the gate, one readiness-display change (package commit read from SNAPSHOT_MANIFEST.json instead of git) was made;
+focused re-run: tests/test_operator_runtime.py + tests/test_console.py 39 passed, 1 skipped.
+Clean launch: fresh extraction of the f65d950 package, scripts\hive-operator.cmd -> convert VERIFIED/PASS, merge VERIFIED/PASS, 0 model calls (clean_launch.json).

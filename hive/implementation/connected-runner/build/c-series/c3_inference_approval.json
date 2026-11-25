@@ -1,0 +1,14 @@
+{
+  "schema": "hive-m2-operator-approval-v1",
+  "approver": "Ian (project owner)",
+  "approved_at": "2026-11-24",
+  "protocol_path": "docs/M2_PROTOCOL.md",
+  "protocol_blob_sha256": "9767b209264d7e871aa46ded4a2413b53d7be3c5c2f3f5aea25fcdf300ea1cf0",
+  "protocol_commit": "d4b71d2fb070786245d71666365c270bf8b651d7",
+  "model_id": "openai/gpt-oss-20b",
+  "model_file_sha256": "65d06d31a3977d553cb3af137b5c26b5f1e9297a6aaa29ae7caa98788cde53ab",
+  "endpoint": "http://localhost:1234/v1",
+  "caps": {"model_calls": 6, "proposals": 3, "container_runs": 12, "input_tokens": 36000, "output_tokens": 6000, "wall_minutes": 15},
+  "statement": "HIVE build prompt 24 Nov 2026 section 6 defaults, owner-approved build",
+  "context": "C3 capability-gap discovery only: one experiment, local LM Studio openai/gpt-oss-20b, frozen budget above (cumulative per experiment and in a global ledger). Authority label as given by the conductor; no remote or paid model."
+}

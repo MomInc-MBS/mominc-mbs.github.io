@@ -1,0 +1,40 @@
+# Scoped role registry (PiBot pattern, pattern only). Loaded by hive.roles.RoleRegistry.
+# Fail-closed: anything not listed here is denied. Globs are relative to the task
+# workspace; `**` crosses directories, `*` does not. Absolute paths only match
+# absolute globs (none are granted here).
+version: 1
+# Paths reviewers/verifiers may never write, even if a glob below would allow it.
+candidate_globs:
+  - candidates/**
+  - build/candidates/**
+roles:
+  builder:
+    allowed_tools: [read_file, list_files, write_file, edit_file, run_tests, model_dispatch]
+    allowed_path_globs: ["src/**", "tests/**", "configs/**", "candidates/**"]
+    may_spawn_children: false
+    max_input_tokens: 24000
+    max_output_tokens: 8000
+  reviewer:
+    allowed_tools: [read_file, list_files, write_file]
+    allowed_path_globs: ["src/**", "tests/**", "configs/**", "candidates/**", "reports/**"]
+    may_spawn_children: false
+    max_input_tokens: 24000
+    max_output_tokens: 4000
+  research:
+    allowed_tools: [read_file, list_files, web_fetch, write_file]
+    allowed_path_globs: ["docs/**", "research/**", "reports/**"]
+    may_spawn_children: false
+    max_input_tokens: 32000
+    max_output_tokens: 6000
+  diagnostic:
+    allowed_tools: [read_file, list_files, read_logs, run_tests]
+    allowed_path_globs: ["src/**", "tests/**", "logs/**", "candidates/**"]
+    may_spawn_children: false
+    max_input_tokens: 16000
+    max_output_tokens: 3000
+  verifier:
+    allowed_tools: [read_file, list_files, run_tests, write_file]
+    allowed_path_globs: ["src/**", "tests/**", "candidates/**", "reports/**"]
+    may_spawn_children: false
+    max_input_tokens: 24000
+    max_output_tokens: 3000
