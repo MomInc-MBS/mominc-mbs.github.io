@@ -288,6 +288,8 @@ export default {
     // Endless uses `corgi-endless-v1`, never the story's clamped found[]/level schema. The one synthetic level
     // below only carries per-section article text; geometry comes from corgi-endless.mjs.
     const ARTICLES = [...LEVELS_LIVE.flatMap(l => l.pages), ...LEVELS_PUBLIC[0].pages];
+    // Endless lighting (plan A1 initial values). Darken the LIGHTS, never the image: no black overlay, so the flashlight and UI stay full strength. One knob set to tune on the phone.
+    const EN_LIGHT = { hemi: 0.10, mainI: 0.20, mainR: 3.5, areaI: 0.20, areaR: 4.0 };
     const ENDLESS_LEVEL = { name: "ENDLESS", doorLabel: "THE NEXT SECTION", furniture: "desk", handAuthored: true, crazy: 1, pages: ARTICLES.slice(0, 3) };
     const newSeed = () => { try { return crypto.getRandomValues(new Uint32Array(1))[0]; } catch { return (Date.now() ^ (Math.random() * 4294967296)) >>> 0; } };
     let store = null, run = null, ES = null, overlayOpen = false, protectUntil = 0;
@@ -1498,7 +1500,7 @@ export default {
           const ceil = new THREE.Mesh(new THREE.PlaneGeometry(110, 50), bright ? ceilMat.clone() : ceilMat);
           if (bright) ceil.material.color.set(0xffffff);
           ceil.rotation.x = Math.PI / 2; ceil.position.set(20, 2.6, 0); levelGroup.add(ceil);
-          levelGroup.add(new THREE.HemisphereLight(bright ? 0xffffff : 0xfff6da, bright ? 0xe4ecf4 : 0xbcd7ea, bright ? 1.75 : (ENDLESS ? 0.10 : 0.003)));
+          levelGroup.add(new THREE.HemisphereLight(bright ? 0xffffff : 0xfff6da, bright ? 0xe4ecf4 : 0xbcd7ea, bright ? 1.75 : (ENDLESS ? EN_LIGHT.hemi : 0.003)));
 
           const useHandAuthored = !!LEVELS[idx].handAuthored && !ENDLESS;
           if (ENDLESS) buildEndlessWorld(idx, bright); else {
@@ -2093,10 +2095,10 @@ export default {
           const dark = ES.dark, pal = dark ? DARK_PAL : BRIGHT_PAL, lamp = (x, z, c, i, r) => { const l = new THREE.PointLight(c, i, r); l.position.set(x, 2.3, z); levelGroup.add(l); };
           DOOR_X = ES.corridorLength;
           ES.corridorWalls.forEach(w => wallBox(...w));
-          for (let lx = 4; lx <= DOOR_X - 3; lx += 10) lamp(lx, 0, bright ? 0xffffff : 0xcab6ee, bright ? 0.7 : 0.20, bright ? 9 : 3.5);   // few lights: phones pay per point light
+          for (let lx = 4; lx <= DOOR_X - 3; lx += 10) lamp(lx, 0, bright ? 0xffffff : 0xcab6ee, bright ? 0.7 : EN_LIGHT.mainI, bright ? 9 : EN_LIGHT.mainR);   // few lights: phones pay per point light
           if (dark) addSchoolPosters(DOOR_X, 1, EL.hallClear(ES.layoutVersion) / 2 - 0.01);   // flush on the inner wall face, 1.2 in v1 and 1.5 in v2
           AREAS = ES.areas.map((a, i) => ({ ...a, mat: areaMat(pal[(i + (ES.decorSeed & 7)) % pal.length]), furniture: dark ? "desk" : "cubicle", noSolid: true }));
-          AREAS.forEach(a => { a.walls.forEach(w => wallBox(w[0], w[1], w[2], w[3], a.mat)); const [lx, lz] = a.lights[2]; lamp(lx, lz, 0xfff3d0, dark ? 0.20 : 0.3, dark ? 4.0 : 8); });
+          AREAS.forEach(a => { a.walls.forEach(w => wallBox(w[0], w[1], w[2], w[3], a.mat)); const [lx, lz] = a.lights[2]; lamp(lx, lz, 0xfff3d0, dark ? EN_LIGHT.areaI : 0.3, dark ? EN_LIGHT.areaR : 8); });
           if (ES.decor) buildDecor(ES.decor); else AREAS.forEach(a => dressArea(a, dark));   // v2: pieces come from the validated layout (outside the walking lane); a saved v1 section keeps its old props
           const pages = LEVELS[idx].pages;
           if (dark) ES.objectives.forEach(o => { const l = new THREE.PointLight(0xc4b79b, 0.48, 1.8, 2); l.name = "school-desk-pool"; l.position.set(o.pagePos[0], 1.45, o.pagePos[2]); l.userData.deskLamp = true; levelGroup.add(l); });   // a small local pool at each paper desk
