@@ -41,7 +41,12 @@
     "m2_site_pr": 69
   },
   "excluded": "private evaluator data, gen_private.py, evidence stores, operator stores, session tokens",
-  "website_publication": "set after merge",
+  "website_publication": {
+    "pr": 81,
+    "merge_commit": "d6e1471ebf87403d1b84146ead82079d236b0531",
+    "merged_at": "2026-11-25T00:59:41Z",
+    "live_verified": "CURRENT_STATUS.json, build-manifest pointers, llms.txt opening, home + STATUS panels, OPERATOR page 200, ZIP sha256 and 4 snapshot files byte-matched on https://mominc.online/hive/"
+  },
   "measured_runtime_source_sha256": "0b8135569b9e5d7e614d19cf03d3d32a97dc485fc6afa752efbb86a4edd12663",
   "snapshot_manifest_sha256": "aa74ad81226a67d376aa61fcfb6dc9d0fc2dc5daec3e3e974da5ee8487178aa0",
   "policy_deployed": false,
