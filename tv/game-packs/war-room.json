@@ -3,9 +3,64 @@
   "game": "war-room",
   "assets": [
     {
+      "url": "/apps/alarm/app.css",
+      "revision": "d533178597080c4cfa92d0df4e3d97816119b822",
+      "bytes": 2668
+    },
+    {
+      "url": "/apps/alarm/app.mjs",
+      "revision": "b865bddaa59672ceb9bc395f4599a3fb40907a7e",
+      "bytes": 4035
+    },
+    {
+      "url": "/apps/alarm/board.js",
+      "revision": "5cc490b3caebf24a889a35eab9b69fe335b53ce8",
+      "bytes": 4375
+    },
+    {
+      "url": "/apps/alarm/computer.js",
+      "revision": "ee4cb382c28d8f0394bb37ddd105f50a77504728",
+      "bytes": 9924
+    },
+    {
+      "url": "/apps/alarm/icon-192.png",
+      "revision": "4c9f2547f31f865e679434f227226694526a2584",
+      "bytes": 3887
+    },
+    {
+      "url": "/apps/alarm/icon-512.png",
+      "revision": "283eaa88dbb54ce40025a8bc220ba477e69c8022",
+      "bytes": 11391
+    },
+    {
+      "url": "/apps/alarm/icon-maskable-512.png",
+      "revision": "dc7c9bdc0041a0823b68e4754d709601b16af24f",
+      "bytes": 8464
+    },
+    {
+      "url": "/apps/alarm/model/console.glb",
+      "revision": "a5a38424cf947289ec4aeb165173449d53d70a0a",
+      "bytes": 9885132
+    },
+    {
+      "url": "/apps/alarm/vendor/loaders/GLTFLoader.js",
+      "revision": "4d194ffb11265ed629f59f69dff6e13c457e101a",
+      "bytes": 110046
+    },
+    {
+      "url": "/apps/alarm/vendor/three.module.min.js",
+      "revision": "424ef1c8e5dd8ce1ca89c8004954b17485aef269",
+      "bytes": 687458
+    },
+    {
+      "url": "/apps/alarm/vendor/utils/BufferGeometryUtils.js",
+      "revision": "60f90c92686de023b9790edf98c71be3e93624b3",
+      "bytes": 31785
+    },
+    {
       "url": "/apps/apps.json",
-      "revision": "144c9ff2e340f58c70066c8e0b3e3b73f86caa1f",
-      "bytes": 8181
+      "revision": "db06b6ce6958331967a92045fd2354fd9a4234f4",
+      "bytes": 8810
     },
     {
       "url": "/apps/corgi/app.css",
@@ -16,21 +71,6 @@
       "url": "/apps/corgi/app.mjs",
       "revision": "4afbbe2d2684000fc7c1f36ade70de177d388142",
       "bytes": 6247
-    },
-    {
-      "url": "/apps/corgi/icon-192.png",
-      "revision": "565ebeaea2cf2498d1c16a5020c6304a5e4174af",
-      "bytes": 26534
-    },
-    {
-      "url": "/apps/corgi/icon-512.png",
-      "revision": "6a654da417352b8a30b921baa991d09d1bff0dbf",
-      "bytes": 136407
-    },
-    {
-      "url": "/apps/corgi/icon-maskable-512.png",
-      "revision": "eb83be78afeee83b894eb771f28544fe8ed110a4",
-      "bytes": 84996
     },
     {
       "url": "/apps/hand/hand.css",
@@ -589,8 +629,8 @@
     },
     {
       "url": "/tv/game-loader.js",
-      "revision": "e298504431b41fd38fb09f4d0cb2d501cfd9704f",
-      "bytes": 14615
+      "revision": "38711f0b66657306cad822ac49270fc5df3e9a56",
+      "bytes": 14646
     },
     {
       "url": "/tv/games/goon/assets/index-W2w8AfON.js",
@@ -741,5 +781,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "7e351402a5827e4b11f5"
+  "version": "516333fe7e56dbe27da9"
 }

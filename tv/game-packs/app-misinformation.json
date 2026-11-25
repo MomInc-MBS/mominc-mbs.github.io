@@ -279,12 +279,12 @@
     },
     {
       "url": "/tv/game-loader.js",
-      "revision": "e298504431b41fd38fb09f4d0cb2d501cfd9704f",
-      "bytes": 14615
+      "revision": "38711f0b66657306cad822ac49270fc5df3e9a56",
+      "bytes": 14646
     }
   ],
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap"
   ],
-  "version": "a79c0cbc3a5b93c1e61d"
+  "version": "fca0f1dd4f409e3c753c"
 }

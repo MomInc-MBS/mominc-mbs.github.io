@@ -1,0 +1,98 @@
+{
+  "schema": 1,
+  "game": "app-alarm",
+  "assets": [
+    {
+      "url": "/apps/alarm/app.css",
+      "revision": "d533178597080c4cfa92d0df4e3d97816119b822",
+      "bytes": 2668
+    },
+    {
+      "url": "/apps/alarm/app.mjs",
+      "revision": "b865bddaa59672ceb9bc395f4599a3fb40907a7e",
+      "bytes": 4035
+    },
+    {
+      "url": "/apps/alarm/board.js",
+      "revision": "5cc490b3caebf24a889a35eab9b69fe335b53ce8",
+      "bytes": 4375
+    },
+    {
+      "url": "/apps/alarm/computer.js",
+      "revision": "ee4cb382c28d8f0394bb37ddd105f50a77504728",
+      "bytes": 9924
+    },
+    {
+      "url": "/apps/alarm/icon-192.png",
+      "revision": "4c9f2547f31f865e679434f227226694526a2584",
+      "bytes": 3887
+    },
+    {
+      "url": "/apps/alarm/icon-512.png",
+      "revision": "283eaa88dbb54ce40025a8bc220ba477e69c8022",
+      "bytes": 11391
+    },
+    {
+      "url": "/apps/alarm/icon-maskable-512.png",
+      "revision": "dc7c9bdc0041a0823b68e4754d709601b16af24f",
+      "bytes": 8464
+    },
+    {
+      "url": "/apps/alarm/index.html",
+      "revision": "a4cd1e78ea84271d29259e345fb43aaae0838d10",
+      "bytes": 2463
+    },
+    {
+      "url": "/apps/alarm/manifest.webmanifest",
+      "revision": "b7da99ca86fc670608355e128e9cb312a2886e80",
+      "bytes": 806
+    },
+    {
+      "url": "/apps/alarm/model/console.glb",
+      "revision": "a5a38424cf947289ec4aeb165173449d53d70a0a",
+      "bytes": 9885132
+    },
+    {
+      "url": "/apps/alarm/vendor/loaders/GLTFLoader.js",
+      "revision": "4d194ffb11265ed629f59f69dff6e13c457e101a",
+      "bytes": 110046
+    },
+    {
+      "url": "/apps/alarm/vendor/three.module.min.js",
+      "revision": "424ef1c8e5dd8ce1ca89c8004954b17485aef269",
+      "bytes": 687458
+    },
+    {
+      "url": "/apps/alarm/vendor/utils/BufferGeometryUtils.js",
+      "revision": "60f90c92686de023b9790edf98c71be3e93624b3",
+      "bytes": 31785
+    },
+    {
+      "url": "/apps/install.mjs",
+      "revision": "6462b3ca09309ad980044fd6aa42b2a023dcedca",
+      "bytes": 2023
+    },
+    {
+      "url": "/apps/shell.css",
+      "revision": "c3cfb0d58fe1d885ff3ac3f9a48dcd6b3917cb27",
+      "bytes": 2294
+    },
+    {
+      "url": "/apps/shell.mjs",
+      "revision": "181f95f1b44f8e16f0967428e7bf229824689878",
+      "bytes": 5394
+    },
+    {
+      "url": "/tv/assets/mom-inc-mark.png",
+      "revision": "8d147b7f846cbff544be141ffd72642d0ef8fdb6",
+      "bytes": 181293
+    },
+    {
+      "url": "/tv/game-loader.js",
+      "revision": "38711f0b66657306cad822ac49270fc5df3e9a56",
+      "bytes": 14646
+    }
+  ],
+  "fontStyles": [],
+  "version": "279e39664c0497f3ad46"
+}

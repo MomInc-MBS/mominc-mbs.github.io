@@ -1,0 +1,32 @@
+{
+  "id": "/apps/alarm/",
+  "name": "MOM 2048 Alarm",
+  "short_name": "2048 Alarm",
+  "description": "Free-play 2048 on the Coach Reminders mini-computer, in your browser. Daily alarms need the Android app.",
+  "start_url": "/apps/alarm/",
+  "scope": "/apps/alarm/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1c0a3d",
+  "theme_color": "#2a0a44",
+  "icons": [
+    {
+      "src": "/apps/alarm/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/apps/alarm/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/apps/alarm/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
