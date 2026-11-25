@@ -1,0 +1,468 @@
+{
+  "version": 1,
+  "id": "objective-smoke-synthetic-20261121",
+  "scope": "SYNTHETIC development objective pipeline smoke; not genuine Level A, independent source groups, or a learning-gain study",
+  "model_calls_authorized": 0,
+  "resource_caps": {
+    "requests": 0,
+    "tokens": 0,
+    "cycles_per_task": 1,
+    "wall_seconds_per_task": 60,
+    "storage_bytes_per_task": 16777216
+  },
+  "code_tasks": [
+    {
+      "id": "code-total-boundaries",
+      "function": "total",
+      "buggy": "def total(values):\n    return sum(values[:-1])\n",
+      "candidate": "def total(values):\n    return sum(values)\n",
+      "cases": [
+        {
+          "id": "empty",
+          "args": [
+            []
+          ],
+          "kwargs": {},
+          "expected": 0
+        },
+        {
+          "id": "one",
+          "args": [
+            [
+              7
+            ]
+          ],
+          "kwargs": {},
+          "expected": 7
+        },
+        {
+          "id": "negative",
+          "args": [
+            [
+              -9,
+              2,
+              -4
+            ]
+          ],
+          "kwargs": {},
+          "expected": -11
+        },
+        {
+          "id": "large-integers",
+          "args": [
+            [
+              9007199254740993,
+              100000000000000000000,
+              -3
+            ]
+          ],
+          "kwargs": {},
+          "expected": 100009007199254740990
+        }
+      ]
+    },
+    {
+      "id": "code-stable-unique",
+      "function": "stable_unique",
+      "buggy": "def stable_unique(values):\n    return sorted(set(values))\n",
+      "candidate": "def stable_unique(values):\n    return list(dict.fromkeys(values))\n",
+      "cases": [
+        {
+          "id": "empty",
+          "args": [
+            []
+          ],
+          "kwargs": {},
+          "expected": []
+        },
+        {
+          "id": "duplicates-order",
+          "args": [
+            [
+              3,
+              1,
+              3,
+              2,
+              1
+            ]
+          ],
+          "kwargs": {},
+          "expected": [
+            3,
+            1,
+            2
+          ]
+        },
+        {
+          "id": "unicode-order",
+          "args": [
+            [
+              "雪",
+              "猫",
+              "雪",
+              "é"
+            ]
+          ],
+          "kwargs": {},
+          "expected": [
+            "雪",
+            "猫",
+            "é"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "code-clamp-boundaries",
+      "function": "clamp",
+      "buggy": "def clamp(value, low, high):\n    return max(value, low)\n",
+      "candidate": "def clamp(value, low, high):\n    return min(max(value, low), high)\n",
+      "cases": [
+        {
+          "id": "below",
+          "args": [
+            -2,
+            0,
+            10
+          ],
+          "kwargs": {},
+          "expected": 0
+        },
+        {
+          "id": "lower-bound",
+          "args": [
+            0,
+            0,
+            10
+          ],
+          "kwargs": {},
+          "expected": 0
+        },
+        {
+          "id": "inside",
+          "args": [
+            7,
+            0,
+            10
+          ],
+          "kwargs": {},
+          "expected": 7
+        },
+        {
+          "id": "upper-bound",
+          "args": [
+            10,
+            0,
+            10
+          ],
+          "kwargs": {},
+          "expected": 10
+        },
+        {
+          "id": "above",
+          "args": [
+            13,
+            0,
+            10
+          ],
+          "kwargs": {},
+          "expected": 10
+        }
+      ]
+    },
+    {
+      "id": "code-sorted-values",
+      "function": "sorted_values",
+      "buggy": "def sorted_values(values):\n    return values\n",
+      "candidate": "def sorted_values(values):\n    return sorted(values)\n",
+      "cases": [
+        {
+          "id": "empty",
+          "args": [
+            []
+          ],
+          "kwargs": {},
+          "expected": []
+        },
+        {
+          "id": "duplicates",
+          "args": [
+            [
+              3,
+              1,
+              3,
+              2
+            ]
+          ],
+          "kwargs": {},
+          "expected": [
+            1,
+            2,
+            3,
+            3
+          ]
+        },
+        {
+          "id": "negative-boundaries",
+          "args": [
+            [
+              0,
+              -1,
+              2147483648,
+              -2147483649
+            ]
+          ],
+          "kwargs": {},
+          "expected": [
+            -2147483649,
+            -1,
+            0,
+            2147483648
+          ]
+        }
+      ]
+    },
+    {
+      "id": "code-casefold-counts",
+      "function": "casefold_counts",
+      "buggy": "def casefold_counts(words):\n    return {word: words.count(word) for word in set(words)}\n",
+      "candidate": "def casefold_counts(words):\n    counts = {}\n    for word in words:\n        key = word.casefold()\n        counts[key] = counts.get(key, 0) + 1\n    return counts\n",
+      "cases": [
+        {
+          "id": "empty",
+          "args": [
+            []
+          ],
+          "kwargs": {},
+          "expected": {}
+        },
+        {
+          "id": "casefold-unicode",
+          "args": [
+            [
+              "Straße",
+              "STRASSE",
+              "雪",
+              "雪"
+            ]
+          ],
+          "kwargs": {},
+          "expected": {
+            "strasse": 2,
+            "雪": 2
+          }
+        },
+        {
+          "id": "mixed-order",
+          "args": [
+            [
+              "A",
+              "b",
+              "a",
+              "B",
+              "a"
+            ]
+          ],
+          "kwargs": {},
+          "expected": {
+            "a": 3,
+            "b": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "code-max-or-none",
+      "function": "max_or_none",
+      "buggy": "def max_or_none(values):\n    return max(values)\n",
+      "candidate": "def max_or_none(values):\n    return max(values) if values else None\n",
+      "cases": [
+        {
+          "id": "empty",
+          "args": [
+            []
+          ],
+          "kwargs": {},
+          "expected": null
+        },
+        {
+          "id": "single-boundary",
+          "args": [
+            [
+              -2147483648
+            ]
+          ],
+          "kwargs": {},
+          "expected": -2147483648
+        },
+        {
+          "id": "duplicates",
+          "args": [
+            [
+              5,
+              5,
+              2
+            ]
+          ],
+          "kwargs": {},
+          "expected": 5
+        },
+        {
+          "id": "large-integer",
+          "args": [
+            [
+              9007199254740993,
+              9007199254740992
+            ]
+          ],
+          "kwargs": {},
+          "expected": 9007199254740993
+        }
+      ]
+    }
+  ],
+  "structured_data_tasks": [
+    {
+      "id": "data-one-row-minimum",
+      "rows": [
+        {
+          "id": "r0",
+          "group": "only",
+          "bytes": 0
+        }
+      ],
+      "expected": {
+        "only": {
+          "count": 1,
+          "bytes": 0
+        }
+      }
+    },
+    {
+      "id": "data-maximum-byte-value",
+      "rows": [
+        {
+          "id": "large",
+          "group": "max",
+          "bytes": 1000000000
+        }
+      ],
+      "expected": {
+        "max": {
+          "count": 1,
+          "bytes": 1000000000
+        }
+      }
+    },
+    {
+      "id": "data-repeated-group",
+      "rows": [
+        {
+          "id": "a",
+          "group": "same",
+          "bytes": 4
+        },
+        {
+          "id": "b",
+          "group": "same",
+          "bytes": 7
+        },
+        {
+          "id": "c",
+          "group": "other",
+          "bytes": 2
+        }
+      ],
+      "expected": {
+        "other": {
+          "count": 1,
+          "bytes": 2
+        },
+        "same": {
+          "count": 2,
+          "bytes": 11
+        }
+      }
+    },
+    {
+      "id": "data-unicode-groups",
+      "rows": [
+        {
+          "id": "u1",
+          "group": "雪",
+          "bytes": 3
+        },
+        {
+          "id": "u2",
+          "group": "猫",
+          "bytes": 5
+        },
+        {
+          "id": "u3",
+          "group": "雪",
+          "bytes": 8
+        }
+      ],
+      "expected": {
+      "\u732b": {
+        "count": 1,
+        "bytes": 5
+      },
+      "\u96ea": {
+        "count": 2,
+        "bytes": 11
+        }
+      }
+    },
+    {
+      "id": "data-interleaved-groups",
+      "rows": [
+        {
+          "id": "x1",
+          "group": "z",
+          "bytes": 1
+        },
+        {
+          "id": "x2",
+          "group": "a",
+          "bytes": 2
+        },
+        {
+          "id": "x3",
+          "group": "z",
+          "bytes": 3
+        },
+        {
+          "id": "x4",
+          "group": "a",
+          "bytes": 4
+        }
+      ],
+      "expected": {
+        "a": {
+          "count": 2,
+          "bytes": 6
+        },
+        "z": {
+          "count": 2,
+          "bytes": 4
+        }
+      }
+    },
+    {
+      "id": "data-row-count-boundary-256",
+      "expected": {
+        "bulk": {
+          "count": 256,
+          "bytes": 256
+        }
+      },
+      "rows_generator": {
+        "count": 256,
+        "id_prefix": "row-",
+        "group": "bulk",
+        "bytes": 1
+      }
+    }
+  ]
+}

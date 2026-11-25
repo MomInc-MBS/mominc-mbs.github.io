@@ -1,0 +1,49 @@
+{
+  "version": "0.3.0.dev3",
+  "status": "INTEGRATED_PROTOTYPE_DEMONSTRATED",
+  "scope": "bounded development flow with valid rejected candidate",
+  "build": {
+    "version": "0.3.0.dev3",
+    "commit": "28239aba838fa7f6b2d04719ec75d629d1b14308",
+    "source_sha256": "c73866989d9c03253af8eb199b0c93509adbc50b92bcab7e0a29fde15db0d9d2"
+  },
+  "identity": {
+    "manifest_hash": "e918df44ecb45a2557702c2715fb21691527e8c3d13e7f9400ae4c6c2aa8e7d9",
+    "config_hash": "3cd99f424642fb7c87845e7d40456c5a57452e7c3b4a9213e531330424ed8022",
+    "source_sha256": "c73866989d9c03253af8eb199b0c93509adbc50b92bcab7e0a29fde15db0d9d2"
+  },
+  "tests": {
+    "passed": 249,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 2,
+    "duration_s": 148.633
+  },
+  "cli_journeys_passed": 4,
+  "independent_focused_checks_passed": 16,
+  "functional_missions_passed": true,
+  "candidate_decision": "REJECTED",
+  "candidate_hash": "3048d1ad59d20d043d13a8924326a5b87b19e07e095e6e3e6101591e10bacd1d",
+  "governing_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+  "budget": {
+    "cycles": 11,
+    "requests": 6,
+    "tokens_actual": 147,
+    "tokens_reserved": 768,
+    "wall_s": 18.57799999997951
+  },
+  "fresh_process_replays": 2,
+  "replay_model_calls": 0,
+  "independent_acceptance": "Terra bounded acceptance; review.md",
+  "production_policy_promoted": false,
+  "production_policy_rollback_demonstrated": false,
+  "adaptation_validated": false,
+  "level_a": "not_accepted",
+  "level_b": "not_accepted",
+  "frontier_model_gain": "not_tested",
+  "evidence_sha256": {
+    "experiments/results/integration-smoke/20261121-run/report.json": "96547679b27fca4bc2d5fcde57c863e9172d7330104f91338daf71653c6442d9",
+    "experiments/results/adaptation-demo/20261121-verification/verification.json": "63c5b6c2eb08378096ccace00c17b812925a0afa186f3da8f4c7dbec38973c1e",
+    "experiments/results/adaptation-demo/20261121-terra/review.md": "352e73ac4c3c0c506e530c70de17e490fac8a006f1bd67484bb3d2d50ce6ac42"
+  }
+}

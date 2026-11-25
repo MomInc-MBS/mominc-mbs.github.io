@@ -1,0 +1,17 @@
+
+ RUN  e2e v0.21.1 D:\Repos\hive-ai\build\prototype-v04\runtime
+      run 01a20242-f6f5-7df2-b712-bdb84545c69f · targets: cli
+
+ ✓ |cli| tests/e2e/adaptive.e2e.ts (1 test) 8.81s
+ ✓ |cli| tests/e2e/cli.e2e.ts (1 test) 1.70s
+ ✓ |cli| tests/e2e/integration.e2e.ts (1 test) 3.01s
+ ✓ |cli| tests/e2e/mission.e2e.ts (1 test) 11.55s
+ ✓ |cli| tests/e2e/pressure.e2e.ts (2 tests) 62.18s
+ ✓ |cli| tests/e2e/video.e2e.ts (1 test) 941ms
+
+ Test Files  6 passed (6)
+      Tests  7 passed (7)
+   Start at  23:57:53
+   Duration  88.53s (1m 29s)
+     Report  final-e2e\report.json
+

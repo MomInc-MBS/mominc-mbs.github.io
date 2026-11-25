@@ -54,3 +54,7 @@ hive/implementation/p2-dev6-*.json -text whitespace=cr-at-eol
 # Operational source and receipts preserve the exact measured bytes.
 hive/implementation/prototype-v04/** -text whitespace=space-before-tab,cr-at-eol,-blank-at-eol,-blank-at-eof
 hive/implementation/prototype-v04-*.json -text whitespace=cr-at-eol
+
+# Operator Prototype source export is bound to its snapshot manifest, including EOLs.
+hive/implementation/operator-prototype/** -text whitespace=space-before-tab,cr-at-eol,-blank-at-eol,-blank-at-eof
+hive/implementation/operator-prototype-*.json -text whitespace=cr-at-eol

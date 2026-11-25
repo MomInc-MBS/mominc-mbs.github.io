@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="e2e" tests="7" failures="1" errors="0" skipped="0" time="303.549">
+  <testsuite name="tests/e2e/adaptive.e2e.ts" tests="1" failures="1" errors="0" skipped="0" time="21.552">
+    <testcase name="adaptive CLI resumes after STOP and retains completed evidence without new work (synthetic) [cli]" classname="tests/e2e/adaptive.e2e.ts" time="21.552">
+      <failure message="spawnSync python ETIMEDOUT" type="ERROR">ERROR (body): spawnSync python ETIMEDOUT</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="tests/e2e/cli.e2e.ts" tests="1" failures="0" errors="0" skipped="0" time="2.676">
+    <testcase name="CLI queues, stops, resumes, verifies and restores a task [cli]" classname="tests/e2e/cli.e2e.ts" time="2.676"/>
+  </testsuite>
+  <testsuite name="tests/e2e/integration.e2e.ts" tests="1" failures="0" errors="0" skipped="0" time="7.427">
+    <testcase name="integrated tool CLI preserves candidate rejection, STOP, restart and experimental rollback [cli]" classname="tests/e2e/integration.e2e.ts" time="7.427"/>
+  </testsuite>
+  <testsuite name="tests/e2e/mission.e2e.ts" tests="1" failures="0" errors="0" skipped="0" time="21.720">
+    <testcase name="public mission CLI runs real isolated code and video in one DAG then replays [cli]" classname="tests/e2e/mission.e2e.ts" time="21.720"/>
+  </testsuite>
+  <testsuite name="tests/e2e/pressure.e2e.ts" tests="2" failures="0" errors="0" skipped="0" time="247.443">
+    <testcase name="all eleven pressure commands run, restart, compare and keep research untested [cli]" classname="tests/e2e/pressure.e2e.ts" time="246.898"/>
+    <testcase name="doctor distinguishes caps from authorization and real pressure requires approval [cli]" classname="tests/e2e/pressure.e2e.ts" time="0.545"/>
+  </testsuite>
+  <testsuite name="tests/e2e/video.e2e.ts" tests="1" failures="0" errors="0" skipped="0" time="2.731">
+    <testcase name="synthetic video mission replays in a fresh process without duplicate output [cli]" classname="tests/e2e/video.e2e.ts" time="2.731"/>
+  </testsuite>
+</testsuites>

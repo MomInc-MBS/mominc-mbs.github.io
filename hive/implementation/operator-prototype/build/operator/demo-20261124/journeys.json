@@ -1,0 +1,313 @@
+{
+ "crash_recovery": {
+  "download_status": 200,
+  "downloaded_sha256": "0576f63cd449c29abd58af6e0b0490b69a0026ddbe9202c7850460ba327a8529",
+  "executions_delta": 1,
+  "matches_powershell_reference": true,
+  "resubmitted_state": "VERIFIED",
+  "rows": 42,
+  "state_after_restart": "INTERRUPTED",
+  "state_when_killed": "RUNNING"
+ },
+ "final_counters": {
+  "container_runs": 7,
+  "executions": 6,
+  "model_calls": 0,
+  "proposal_calls": 0,
+  "refusals": 5,
+  "replays": 1
+ },
+ "fresh_conversion": {
+  "capability": "row-convert-v1",
+  "counters_after": {
+   "container_runs": 1,
+   "executions": 1,
+   "model_calls": 0,
+   "proposal_calls": 0,
+   "refusals": 0,
+   "replays": 0
+  },
+  "counters_before": {
+   "container_runs": 0,
+   "executions": 0,
+   "model_calls": 0,
+   "proposal_calls": 0,
+   "refusals": 0,
+   "replays": 0
+  },
+  "download_status": 200,
+  "downloaded_sha256": "d57b5d5c9d499a5d6c9fd6fc21c296d3d2811a55ca45247616f88d1c8a15fc0f",
+  "genome": "5ac1c9374e276bfc20f63038cde83cbdf13e82cd76544e528a5e0064eee2df52",
+  "http": 202,
+  "matches_powershell_reference": true,
+  "rows": 69,
+  "selected_by": "import",
+  "state": "VERIFIED",
+  "summary": {
+   "rows": 69,
+   "verdict": "Converted 69 rows to canonical JSON"
+  },
+  "task_id": "t-74a88300fd36335cf9f9",
+  "usage": {
+   "container_runs": 1,
+   "execution_wall_s": 2.437,
+   "model_calls": 0,
+   "proposal_calls": 0,
+   "verify_wall_s": 0.109
+  },
+  "verification": {
+   "evaluator": "evaluator/m2/oracle.py",
+   "expected_sha256": "c1c86f90399e2ea948b759860981f3751aa6f1616cf2694cd965909445beffcf",
+   "pin": "0c580b0eb1f541cf0ab99daac869c589503aa18fff84e32c2372cff09c377c7c",
+   "process": "separate python -I",
+   "verdict": "PASS",
+   "wall_s": 0.109
+  }
+ },
+ "mixed_batch": {
+  "groups_match_powershell_reference_over_accepted_files": true,
+  "quarantined_exactly_derived_file": true,
+  "state": "VERIFIED",
+  "summary": {
+   "accepted": 3,
+   "files": [
+    {
+     "file": "docs-inventory.csv",
+     "reason": null,
+     "sha256": "b5e6ef022f43a6671c71a71069cf4026c1d946f1d83ee53c8252f0171e18ca57",
+     "status": "accepted"
+    },
+    {
+     "file": "DERIVED-defect-configs-inventory.csv",
+     "reason": "bytes must be a canonical nonnegative decimal integer",
+     "sha256": "4bd60846d719c63c579eab437dad6f97ad73f5b14df5a0a5a5d6293f6f233d76",
+     "status": "quarantined"
+    },
+    {
+     "file": "scripts-inventory.json",
+     "reason": null,
+     "sha256": "2592d274e8f24e30393778eb347a41f3f02983b4cf33ec9c8e7bc666e0162fe0",
+     "status": "accepted"
+    },
+    {
+     "file": "evaluator-inventory.csv",
+     "reason": null,
+     "sha256": "aeb62b72e5f0c487b92913856424f5f6d50512e2188e2e91e629f04b9be87a9e",
+     "status": "accepted"
+    }
+   ],
+   "groups": 8,
+   "quarantined": 1,
+   "verdict": "Merged 3 of 4 files; quarantined 1"
+  },
+  "task_id": "t-092296d10e5bc3282fff",
+  "verification": {
+   "evaluator": "evaluator/m2/oracle.py",
+   "expected_sha256": "06ad387247c61b24a09f48bcc286ddf9b1621e0f272827d21552bdb5c52458a7",
+   "pin": "0c580b0eb1f541cf0ab99daac869c589503aa18fff84e32c2372cff09c377c7c",
+   "process": "separate python -I",
+   "verdict": "PASS",
+   "wall_s": 0.109
+  }
+ },
+ "readiness": {
+  "evaluator": {
+   "path": "evaluator/m2/oracle.py",
+   "pin": "0c580b0eb1f541cf0ab99daac869c589503aa18fff84e32c2372cff09c377c7c",
+   "ready": true
+  },
+  "executor": {
+   "backend": "docker",
+   "image": "python:3.11-slim@sha256:07d4824036af",
+   "ready": true
+  },
+  "model": {
+   "note": "retained deterministic workflows run with 0 model calls; no model is loaded",
+   "required": false
+  },
+  "resources": {
+   "disk_free_gb": 43.8
+  },
+  "runtime_commit": "7fca25e1e145e16afe91b3f230bedb9fce7090ea",
+  "stop": false,
+  "store": "D:\\Repos\\hive-ai\\.hive\\operator-demo"
+ },
+ "restart_distinct_input": {
+  "counters_after": {
+   "container_runs": 6,
+   "executions": 5,
+   "model_calls": 0,
+   "proposal_calls": 0,
+   "refusals": 3,
+   "replays": 0
+  },
+  "counters_before": {
+   "container_runs": 5,
+   "executions": 4,
+   "model_calls": 0,
+   "proposal_calls": 0,
+   "refusals": 3,
+   "replays": 0
+  },
+  "download_status": 200,
+  "downloaded_sha256": "1266fe1df94b66d0d665188309c50da24d3cd09f73ebfb99e173abd4ebaec0b0",
+  "executions_delta": 1,
+  "genome": "5ac1c9374e276bfc20f63038cde83cbdf13e82cd76544e528a5e0064eee2df52",
+  "matches_powershell_reference": true,
+  "mode": "retained_capability_reuse",
+  "new_server_pid": 44964,
+  "proposal_or_model_calls": 0,
+  "rows": 14,
+  "selected_by": "import",
+  "state": "VERIFIED",
+  "verification": "PASS"
+ },
+ "revoke": {
+  "container_runs_delta": 0,
+  "executions_delta": 0,
+  "mode": "retained_capability_reuse",
+  "prior_attempt_state": "VERIFIED",
+  "reason": "selected version a06169a55d9a is revoked",
+  "revoke_http": 200,
+  "same_task_as_mixed_batch": true,
+  "state": "NO_ELIGIBLE_CAPABILITY"
+ },
+ "rollback": {
+  "after_reselect": {
+   "state": "VERIFIED",
+   "verification": "PASS"
+  },
+  "after_rollback": {
+   "container_runs_delta": 0,
+   "reason": "selected version 214bf17e956c (parse_whole+aggregate) has no accepted evidence for convert; it cannot perform this operation (selected by rollback)",
+   "state": "NO_ELIGIBLE_CAPABILITY"
+  },
+  "registry_history": [
+   {
+    "target": "5ac1c9374e276bfc20f63038cde83cbdf13e82cd76544e528a5e0064eee2df52",
+    "type": "import"
+   },
+   {
+    "target": "214bf17e956c4d1bfb31d78b1900e593d0e57ceef53144fc7a3fd0b3f33081c7",
+    "type": "rollback"
+   },
+   {
+    "target": "5ac1c9374e276bfc20f63038cde83cbdf13e82cd76544e528a5e0064eee2df52",
+    "type": "select"
+   }
+  ],
+  "reselect_http": 200,
+  "rollback_http": 200
+ },
+ "saved_result_replay": {
+  "counters_after": {
+   "container_runs": 6,
+   "executions": 5,
+   "model_calls": 0,
+   "proposal_calls": 0,
+   "refusals": 3,
+   "replays": 1
+  },
+  "counters_before": {
+   "container_runs": 6,
+   "executions": 5,
+   "model_calls": 0,
+   "proposal_calls": 0,
+   "refusals": 3,
+   "replays": 0
+  },
+  "executions_unchanged": true,
+  "log_tail": {
+   "at": "2026-11-24T22:34:57+00:00",
+   "mode": "saved_result_replay",
+   "op": "convert",
+   "state": "VERIFIED",
+   "task_id": "t-74a88300fd36335cf9f9"
+  },
+  "replays_delta": 1,
+  "same_artifacts": true,
+  "same_task_as_fresh": true,
+  "task_id": "t-74a88300fd36335cf9f9"
+ },
+ "servers": [
+  {
+   "server_pid": 59608,
+   "startup": [
+    "{\"import\": {\"convert\": \"imported\", \"merge\": \"imported\"}}",
+    "HIVE console listening at http://127.0.0.1:8781/",
+    "Open this authenticated local URL: http://127.0.0.1:8781/#token=<redacted>"
+   ]
+  },
+  {
+   "server_pid": 44964,
+   "startup": [
+    "{\"import\": {\"convert\": \"already imported\", \"merge\": \"already imported\"}}",
+    "HIVE console listening at http://127.0.0.1:8781/",
+    "Open this authenticated local URL: http://127.0.0.1:8781/#token=<redacted>"
+   ]
+  }
+ ],
+ "stop_resume": {
+  "after_resume": {
+   "executions": 3,
+   "same_task_id": true,
+   "stages": [
+    "intake",
+    "selected",
+    "executing",
+    "executed",
+    "verified",
+    "done"
+   ],
+   "state": "VERIFIED"
+  },
+  "download_status": 200,
+  "downloaded_sha256": "d44da0914b5c4eb151e7654c092ad6b3a98c0ad6753f4629a1342ab918b86a3e",
+  "matches_powershell_reference": true,
+  "rows": 19,
+  "while_stopped": {
+   "executions": 2,
+   "state": "STOPPED"
+  }
+ },
+ "unsupported": {
+  "bom": [
+   400,
+   {
+    "error": "BOM-docs-inventory.csv: UTF-8 byte-order mark is not supported; save as UTF-8 without BOM"
+   }
+  ],
+  "counters": {
+   "container_runs": 2,
+   "executions": 2,
+   "model_calls": 0,
+   "proposal_calls": 0,
+   "refusals": 3,
+   "replays": 0
+  },
+  "merge_one_file": [
+   400,
+   {
+    "error": "merge needs 2 to 20 file(s), got 1"
+   }
+  ],
+  "outside_allowed_root": [
+   400,
+   {
+    "error": "path is outside the permitted source directory"
+   }
+  ],
+  "unknown_operation": [
+   400,
+   {
+    "error": "choose a supported operation"
+   }
+  ],
+  "unlisted_file_type": [
+   400,
+   {
+    "error": "select a listed permitted CSV/JSON file"
+   }
+  ]
+ }
+}

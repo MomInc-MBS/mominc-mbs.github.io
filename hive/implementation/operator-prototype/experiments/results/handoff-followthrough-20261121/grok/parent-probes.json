@@ -1,0 +1,86 @@
+{
+  "status": "passed",
+  "runtime": {
+    "version": "0.3.0.dev6",
+    "commit": "f3d7e556ea41076e1138761d72df06b5ce3e0f65",
+    "source_sha256": "0d97faae0caae31f3918296dccaa21be5ba0ba7a1cec0c8ca5f880001d17320e"
+  },
+  "hive_model_calls": 0,
+  "scope": "Three real governor decisions and three injected malformed tool-result cases; no model output or quality comparison.",
+  "cases": [
+    {
+      "case": "identity-0",
+      "configured_routes": [
+        "local_direct",
+        "tool"
+      ],
+      "selected": "local_direct",
+      "receipt_model_identity": {
+        "model": "myr5-hold-local:latest",
+        "digest": "test-adapter:__main__.NoInferenceAdapter",
+        "kind": "explicit-test-adapter"
+      },
+      "partition_recomputed": true,
+      "budget_unchanged": true,
+      "dispatches": 0
+    },
+    {
+      "case": "identity-1",
+      "configured_routes": [
+        "local_direct"
+      ],
+      "selected": "local_direct",
+      "receipt_model_identity": {
+        "model": "myr5-hold-local:latest",
+        "digest": "test-adapter:__main__.NoInferenceAdapter",
+        "kind": "explicit-test-adapter"
+      },
+      "partition_recomputed": true,
+      "budget_unchanged": true,
+      "dispatches": 0
+    },
+    {
+      "case": "identity-2",
+      "configured_routes": [
+        "tool",
+        "local_direct"
+      ],
+      "selected": "local_direct",
+      "receipt_model_identity": {
+        "model": "myr5-hold-local:latest",
+        "digest": "test-adapter:__main__.NoInferenceAdapter",
+        "kind": "explicit-test-adapter"
+      },
+      "partition_recomputed": true,
+      "budget_unchanged": true,
+      "dispatches": 0
+    },
+    {
+      "case": "tokens-missing",
+      "passed": false,
+      "valid": false,
+      "feedback_eligible": false,
+      "candidate_partitions": {},
+      "normalized_actual_tokens": 0,
+      "model_calls": 0
+    },
+    {
+      "case": "tokens-negative",
+      "passed": false,
+      "valid": false,
+      "feedback_eligible": false,
+      "candidate_partitions": {},
+      "normalized_actual_tokens": 0,
+      "model_calls": 0
+    },
+    {
+      "case": "tokens-noninteger",
+      "passed": false,
+      "valid": false,
+      "feedback_eligible": false,
+      "candidate_partitions": {},
+      "normalized_actual_tokens": 0,
+      "model_calls": 0
+    }
+  ]
+}

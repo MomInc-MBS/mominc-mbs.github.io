@@ -1,0 +1,26 @@
+{
+  "schema": "hive-m0-campaign-policy-v1",
+  "decision_vector": "D1=D D2=C D3=C D4=E D5=A D6=B D7=B D8=C D9=C D10=C D11=C",
+  "milestone": "M0",
+  "candidate_kind": "declarative_workflow",
+  "inventory_module": "hive.experiment_compare",
+  "inventory": ["identity", "scrub_lowercase", "scrub_delete"],
+  "inventory_pin": "sha256(inspect.getsource(fn)) per primitive, recorded in each genome",
+  "max_steps": 3,
+  "min_steps": 1,
+  "max_proposals": 20,
+  "max_concurrent_experiments": 1,
+  "max_repairs_per_packet": 2,
+  "operator_class": "generated",
+  "required_backend": "container",
+  "model_calls": 0,
+  "network_calls": 0,
+  "verification_class": "deterministic_exact_output",
+  "unknown_or_timeout": "FAIL",
+  "selection_scope": "experimental_campaign_only",
+  "production_writes": false,
+  "frozen_outside_surface": [
+    "evaluator/oracle", "expected outputs", "receipts", "usage ledger", "this policy file",
+    "src/hive/experiment_verify.py", "src/hive/experiment_tool.py", "P0 incumbent", "P2 quarantine"
+  ]
+}

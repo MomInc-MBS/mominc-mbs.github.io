@@ -1,0 +1,1962 @@
+{
+  "store": "comparison/strongest_tool",
+  "original_job_count": 6,
+  "jobs": [
+    {
+      "id": "15431b1d0e72440294623707881bc817",
+      "spec": {
+        "allow_retry": false,
+        "hypothesis": "Synthetic exact-tool protection comparison; no quality-gain inference",
+        "learn_feedback": false,
+        "retry_count": 0,
+        "route": "tool",
+        "task": {
+          "allowed_tools": [
+            "summarize_inventory"
+          ],
+          "category": "structured_data",
+          "critical": false,
+          "evaluator": "grouped_inventory_v1",
+          "expected": {
+            "groups": {
+              "only": {
+                "bytes": 0,
+                "count": 1
+              }
+            }
+          },
+          "id": "data-one-row-minimum",
+          "input": {
+            "allowed_tools": [
+              "summarize_inventory"
+            ],
+            "rows": [
+              {
+                "bytes": 0,
+                "group": "only",
+                "id": "r0"
+              }
+            ],
+            "tool_schemas": {
+              "summarize_inventory": {
+                "rows": "supplied rows"
+              }
+            }
+          },
+          "permissions": {
+            "routes": [
+              "tool"
+            ],
+            "version": 1
+          },
+          "prompt": "Compute exact inventory count and byte totals by supplied group.",
+          "source_group": "synthetic-data-one-row-minimum",
+          "split": "development",
+          "success_criteria": "Exact independent count and byte totals for every group.",
+          "tool_schemas": {
+            "summarize_inventory": {
+              "rows": "supplied rows"
+            }
+          }
+        }
+      },
+      "state": "BLOCKED",
+      "owner": "worker-58420",
+      "generation": 1,
+      "pid": 58420,
+      "result": {
+        "evidence_ref": "artifacts/8d934996ddd77a3ff801bd7067b2dc32b555031cc5cdd933cc3aa6e76fa2854e.json",
+        "failure": null,
+        "passed": true,
+        "report_ref": "artifacts/a2cfcb18da9a7b3483aa6ae1902bf7749f6bd36e0706c874523fc364f8619059.json",
+        "valid": true
+      }
+    },
+    {
+      "id": "c0fbe4f6ea824759bf4ff9c877c43db9",
+      "spec": {
+        "allow_retry": false,
+        "hypothesis": "Synthetic exact-tool protection comparison; no quality-gain inference",
+        "learn_feedback": false,
+        "retry_count": 0,
+        "route": "tool",
+        "task": {
+          "allowed_tools": [
+            "summarize_inventory"
+          ],
+          "category": "structured_data",
+          "critical": false,
+          "evaluator": "grouped_inventory_v1",
+          "expected": {
+            "groups": {
+              "max": {
+                "bytes": 1000000000,
+                "count": 1
+              }
+            }
+          },
+          "id": "data-maximum-byte-value",
+          "input": {
+            "allowed_tools": [
+              "summarize_inventory"
+            ],
+            "rows": [
+              {
+                "bytes": 1000000000,
+                "group": "max",
+                "id": "large"
+              }
+            ],
+            "tool_schemas": {
+              "summarize_inventory": {
+                "rows": "supplied rows"
+              }
+            }
+          },
+          "permissions": {
+            "routes": [
+              "tool"
+            ],
+            "version": 1
+          },
+          "prompt": "Compute exact inventory count and byte totals by supplied group.",
+          "source_group": "synthetic-data-maximum-byte-value",
+          "split": "development",
+          "success_criteria": "Exact independent count and byte totals for every group.",
+          "tool_schemas": {
+            "summarize_inventory": {
+              "rows": "supplied rows"
+            }
+          }
+        }
+      },
+      "state": "BLOCKED",
+      "owner": "worker-58420",
+      "generation": 1,
+      "pid": 58420,
+      "result": {
+        "evidence_ref": "artifacts/1ee4f1e61edb488d8e0f3f73fafda26b32cf6189187bc0b712990569fdf663d4.json",
+        "failure": null,
+        "passed": true,
+        "report_ref": "artifacts/f2a24d202d6c8da7e42bd2d827cdc9a06e46ca822957930fb5c6bc25acff5536.json",
+        "valid": true
+      }
+    },
+    {
+      "id": "91b4b72a344b4f859c1ff6cb81183cdc",
+      "spec": {
+        "allow_retry": false,
+        "hypothesis": "Synthetic exact-tool protection comparison; no quality-gain inference",
+        "learn_feedback": false,
+        "retry_count": 0,
+        "route": "tool",
+        "task": {
+          "allowed_tools": [
+            "summarize_inventory"
+          ],
+          "category": "structured_data",
+          "critical": false,
+          "evaluator": "grouped_inventory_v1",
+          "expected": {
+            "groups": {
+              "other": {
+                "bytes": 2,
+                "count": 1
+              },
+              "same": {
+                "bytes": 11,
+                "count": 2
+              }
+            }
+          },
+          "id": "data-repeated-group",
+          "input": {
+            "allowed_tools": [
+              "summarize_inventory"
+            ],
+            "rows": [
+              {
+                "bytes": 4,
+                "group": "same",
+                "id": "a"
+              },
+              {
+                "bytes": 7,
+                "group": "same",
+                "id": "b"
+              },
+              {
+                "bytes": 2,
+                "group": "other",
+                "id": "c"
+              }
+            ],
+            "tool_schemas": {
+              "summarize_inventory": {
+                "rows": "supplied rows"
+              }
+            }
+          },
+          "permissions": {
+            "routes": [
+              "tool"
+            ],
+            "version": 1
+          },
+          "prompt": "Compute exact inventory count and byte totals by supplied group.",
+          "source_group": "synthetic-data-repeated-group",
+          "split": "development",
+          "success_criteria": "Exact independent count and byte totals for every group.",
+          "tool_schemas": {
+            "summarize_inventory": {
+              "rows": "supplied rows"
+            }
+          }
+        }
+      },
+      "state": "BLOCKED",
+      "owner": "worker-58420",
+      "generation": 1,
+      "pid": 58420,
+      "result": {
+        "evidence_ref": "artifacts/a0a9509e32b6b4fbe1b9468a41cc44d7f2f1e7f4f9617179ea5fa0b47c0c2c91.json",
+        "failure": null,
+        "passed": true,
+        "report_ref": "artifacts/a7bb8db2bc9e0e307de8546cb7360b24e12a5a0920270a62c3940d383736e86a.json",
+        "valid": true
+      }
+    },
+    {
+      "id": "27aab0a959624316a8b1ce6818799aaf",
+      "spec": {
+        "allow_retry": false,
+        "hypothesis": "Synthetic exact-tool protection comparison; no quality-gain inference",
+        "learn_feedback": false,
+        "retry_count": 0,
+        "route": "tool",
+        "task": {
+          "allowed_tools": [
+            "summarize_inventory"
+          ],
+          "category": "structured_data",
+          "critical": false,
+          "evaluator": "grouped_inventory_v1",
+          "expected": {
+            "groups": {
+              "\u732b": {
+                "bytes": 5,
+                "count": 1
+              },
+              "\u96ea": {
+                "bytes": 11,
+                "count": 2
+              }
+            }
+          },
+          "id": "data-unicode-groups",
+          "input": {
+            "allowed_tools": [
+              "summarize_inventory"
+            ],
+            "rows": [
+              {
+                "bytes": 3,
+                "group": "\u96ea",
+                "id": "u1"
+              },
+              {
+                "bytes": 5,
+                "group": "\u732b",
+                "id": "u2"
+              },
+              {
+                "bytes": 8,
+                "group": "\u96ea",
+                "id": "u3"
+              }
+            ],
+            "tool_schemas": {
+              "summarize_inventory": {
+                "rows": "supplied rows"
+              }
+            }
+          },
+          "permissions": {
+            "routes": [
+              "tool"
+            ],
+            "version": 1
+          },
+          "prompt": "Compute exact inventory count and byte totals by supplied group.",
+          "source_group": "synthetic-data-unicode-groups",
+          "split": "development",
+          "success_criteria": "Exact independent count and byte totals for every group.",
+          "tool_schemas": {
+            "summarize_inventory": {
+              "rows": "supplied rows"
+            }
+          }
+        }
+      },
+      "state": "BLOCKED",
+      "owner": "worker-58420",
+      "generation": 1,
+      "pid": 58420,
+      "result": {
+        "evidence_ref": "artifacts/f9eb65356dd5c62c86edfd8d3b409f3638df56185e8c14da7e0dcfcc9a8db9a0.json",
+        "failure": null,
+        "passed": true,
+        "report_ref": "artifacts/ef2154de2c6c8e2d723f6ff84672ef0d1c15b5d446541abb77f8bf3ab1593146.json",
+        "valid": true
+      }
+    },
+    {
+      "id": "75273876c2a146549520384b59484ad2",
+      "spec": {
+        "allow_retry": false,
+        "hypothesis": "Synthetic exact-tool protection comparison; no quality-gain inference",
+        "learn_feedback": false,
+        "retry_count": 0,
+        "route": "tool",
+        "task": {
+          "allowed_tools": [
+            "summarize_inventory"
+          ],
+          "category": "structured_data",
+          "critical": false,
+          "evaluator": "grouped_inventory_v1",
+          "expected": {
+            "groups": {
+              "a": {
+                "bytes": 6,
+                "count": 2
+              },
+              "z": {
+                "bytes": 4,
+                "count": 2
+              }
+            }
+          },
+          "id": "data-interleaved-groups",
+          "input": {
+            "allowed_tools": [
+              "summarize_inventory"
+            ],
+            "rows": [
+              {
+                "bytes": 1,
+                "group": "z",
+                "id": "x1"
+              },
+              {
+                "bytes": 2,
+                "group": "a",
+                "id": "x2"
+              },
+              {
+                "bytes": 3,
+                "group": "z",
+                "id": "x3"
+              },
+              {
+                "bytes": 4,
+                "group": "a",
+                "id": "x4"
+              }
+            ],
+            "tool_schemas": {
+              "summarize_inventory": {
+                "rows": "supplied rows"
+              }
+            }
+          },
+          "permissions": {
+            "routes": [
+              "tool"
+            ],
+            "version": 1
+          },
+          "prompt": "Compute exact inventory count and byte totals by supplied group.",
+          "source_group": "synthetic-data-interleaved-groups",
+          "split": "development",
+          "success_criteria": "Exact independent count and byte totals for every group.",
+          "tool_schemas": {
+            "summarize_inventory": {
+              "rows": "supplied rows"
+            }
+          }
+        }
+      },
+      "state": "BLOCKED",
+      "owner": "worker-58420",
+      "generation": 1,
+      "pid": 58420,
+      "result": {
+        "evidence_ref": "artifacts/93b430a7c3451371b0fc3d46500ba0664a449b53e64b31c52f3f1e3ff428205d.json",
+        "failure": null,
+        "passed": true,
+        "report_ref": "artifacts/fd29d185b71652f98a539d7f8f0ebdc0b936879c917b3335f02ae29976c276dc.json",
+        "valid": true
+      }
+    },
+    {
+      "id": "dfc9c65822c34461a047e89d41d4841b",
+      "spec": {
+        "allow_retry": false,
+        "hypothesis": "Synthetic exact-tool protection comparison; no quality-gain inference",
+        "learn_feedback": false,
+        "retry_count": 0,
+        "route": "tool",
+        "task": {
+          "allowed_tools": [
+            "summarize_inventory"
+          ],
+          "category": "structured_data",
+          "critical": false,
+          "evaluator": "grouped_inventory_v1",
+          "expected": {
+            "groups": {
+              "bulk": {
+                "bytes": 256,
+                "count": 256
+              }
+            }
+          },
+          "id": "data-row-count-boundary-256",
+          "input": {
+            "allowed_tools": [
+              "summarize_inventory"
+            ],
+            "rows": [
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-000"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-001"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-002"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-003"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-004"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-005"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-006"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-007"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-008"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-009"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-010"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-011"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-012"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-013"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-014"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-015"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-016"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-017"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-018"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-019"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-020"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-021"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-022"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-023"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-024"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-025"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-026"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-027"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-028"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-029"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-030"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-031"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-032"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-033"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-034"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-035"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-036"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-037"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-038"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-039"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-040"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-041"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-042"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-043"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-044"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-045"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-046"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-047"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-048"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-049"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-050"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-051"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-052"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-053"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-054"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-055"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-056"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-057"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-058"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-059"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-060"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-061"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-062"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-063"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-064"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-065"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-066"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-067"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-068"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-069"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-070"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-071"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-072"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-073"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-074"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-075"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-076"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-077"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-078"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-079"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-080"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-081"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-082"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-083"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-084"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-085"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-086"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-087"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-088"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-089"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-090"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-091"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-092"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-093"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-094"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-095"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-096"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-097"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-098"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-099"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-100"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-101"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-102"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-103"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-104"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-105"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-106"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-107"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-108"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-109"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-110"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-111"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-112"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-113"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-114"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-115"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-116"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-117"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-118"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-119"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-120"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-121"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-122"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-123"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-124"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-125"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-126"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-127"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-128"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-129"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-130"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-131"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-132"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-133"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-134"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-135"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-136"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-137"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-138"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-139"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-140"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-141"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-142"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-143"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-144"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-145"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-146"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-147"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-148"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-149"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-150"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-151"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-152"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-153"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-154"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-155"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-156"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-157"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-158"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-159"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-160"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-161"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-162"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-163"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-164"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-165"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-166"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-167"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-168"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-169"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-170"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-171"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-172"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-173"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-174"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-175"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-176"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-177"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-178"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-179"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-180"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-181"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-182"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-183"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-184"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-185"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-186"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-187"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-188"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-189"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-190"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-191"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-192"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-193"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-194"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-195"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-196"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-197"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-198"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-199"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-200"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-201"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-202"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-203"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-204"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-205"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-206"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-207"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-208"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-209"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-210"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-211"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-212"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-213"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-214"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-215"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-216"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-217"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-218"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-219"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-220"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-221"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-222"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-223"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-224"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-225"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-226"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-227"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-228"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-229"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-230"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-231"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-232"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-233"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-234"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-235"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-236"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-237"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-238"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-239"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-240"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-241"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-242"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-243"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-244"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-245"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-246"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-247"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-248"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-249"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-250"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-251"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-252"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-253"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-254"
+              },
+              {
+                "bytes": 1,
+                "group": "bulk",
+                "id": "row-255"
+              }
+            ],
+            "tool_schemas": {
+              "summarize_inventory": {
+                "rows": "supplied rows"
+              }
+            }
+          },
+          "permissions": {
+            "routes": [
+              "tool"
+            ],
+            "version": 1
+          },
+          "prompt": "Compute exact inventory count and byte totals by supplied group.",
+          "source_group": "synthetic-data-row-count-boundary-256",
+          "split": "development",
+          "success_criteria": "Exact independent count and byte totals for every group.",
+          "tool_schemas": {
+            "summarize_inventory": {
+              "rows": "supplied rows"
+            }
+          }
+        }
+      },
+      "state": "BLOCKED",
+      "owner": "worker-58420",
+      "generation": 1,
+      "pid": 58420,
+      "result": {
+        "evidence_ref": "artifacts/e3648ec9865436a8a7557cf5b514f3c4cfd238062b4d2c577d051e24bf17896c.json",
+        "failure": null,
+        "passed": true,
+        "report_ref": "artifacts/b81b493f60dcc6f60d05ccdd37671c1c397a3d953219eb32def05a7d07739ba0.json",
+        "valid": true
+      }
+    }
+  ],
+  "events": [
+    {
+      "seq": 1,
+      "job_id": "15431b1d0e72440294623707881bc817",
+      "state": "QUEUED",
+      "detail": null
+    },
+    {
+      "seq": 2,
+      "job_id": "15431b1d0e72440294623707881bc817",
+      "state": "RUNNING",
+      "detail": {
+        "owner": "worker-58420"
+      }
+    },
+    {
+      "seq": 3,
+      "job_id": "15431b1d0e72440294623707881bc817",
+      "state": "VERIFYING",
+      "detail": null
+    },
+    {
+      "seq": 4,
+      "job_id": "15431b1d0e72440294623707881bc817",
+      "state": "REVIEWING",
+      "detail": {
+        "evidence_ref": "artifacts/8d934996ddd77a3ff801bd7067b2dc32b555031cc5cdd933cc3aa6e76fa2854e.json"
+      }
+    },
+    {
+      "seq": 5,
+      "job_id": "15431b1d0e72440294623707881bc817",
+      "state": "BLOCKED",
+      "detail": null
+    },
+    {
+      "seq": 6,
+      "job_id": "c0fbe4f6ea824759bf4ff9c877c43db9",
+      "state": "QUEUED",
+      "detail": null
+    },
+    {
+      "seq": 7,
+      "job_id": "c0fbe4f6ea824759bf4ff9c877c43db9",
+      "state": "RUNNING",
+      "detail": {
+        "owner": "worker-58420"
+      }
+    },
+    {
+      "seq": 8,
+      "job_id": "c0fbe4f6ea824759bf4ff9c877c43db9",
+      "state": "VERIFYING",
+      "detail": null
+    },
+    {
+      "seq": 9,
+      "job_id": "c0fbe4f6ea824759bf4ff9c877c43db9",
+      "state": "REVIEWING",
+      "detail": {
+        "evidence_ref": "artifacts/1ee4f1e61edb488d8e0f3f73fafda26b32cf6189187bc0b712990569fdf663d4.json"
+      }
+    },
+    {
+      "seq": 10,
+      "job_id": "c0fbe4f6ea824759bf4ff9c877c43db9",
+      "state": "BLOCKED",
+      "detail": null
+    },
+    {
+      "seq": 11,
+      "job_id": "91b4b72a344b4f859c1ff6cb81183cdc",
+      "state": "QUEUED",
+      "detail": null
+    },
+    {
+      "seq": 12,
+      "job_id": "91b4b72a344b4f859c1ff6cb81183cdc",
+      "state": "RUNNING",
+      "detail": {
+        "owner": "worker-58420"
+      }
+    },
+    {
+      "seq": 13,
+      "job_id": "91b4b72a344b4f859c1ff6cb81183cdc",
+      "state": "VERIFYING",
+      "detail": null
+    },
+    {
+      "seq": 14,
+      "job_id": "91b4b72a344b4f859c1ff6cb81183cdc",
+      "state": "REVIEWING",
+      "detail": {
+        "evidence_ref": "artifacts/a0a9509e32b6b4fbe1b9468a41cc44d7f2f1e7f4f9617179ea5fa0b47c0c2c91.json"
+      }
+    },
+    {
+      "seq": 15,
+      "job_id": "91b4b72a344b4f859c1ff6cb81183cdc",
+      "state": "BLOCKED",
+      "detail": null
+    },
+    {
+      "seq": 16,
+      "job_id": "27aab0a959624316a8b1ce6818799aaf",
+      "state": "QUEUED",
+      "detail": null
+    },
+    {
+      "seq": 17,
+      "job_id": "27aab0a959624316a8b1ce6818799aaf",
+      "state": "RUNNING",
+      "detail": {
+        "owner": "worker-58420"
+      }
+    },
+    {
+      "seq": 18,
+      "job_id": "27aab0a959624316a8b1ce6818799aaf",
+      "state": "VERIFYING",
+      "detail": null
+    },
+    {
+      "seq": 19,
+      "job_id": "27aab0a959624316a8b1ce6818799aaf",
+      "state": "REVIEWING",
+      "detail": {
+        "evidence_ref": "artifacts/f9eb65356dd5c62c86edfd8d3b409f3638df56185e8c14da7e0dcfcc9a8db9a0.json"
+      }
+    },
+    {
+      "seq": 20,
+      "job_id": "27aab0a959624316a8b1ce6818799aaf",
+      "state": "BLOCKED",
+      "detail": null
+    },
+    {
+      "seq": 21,
+      "job_id": "75273876c2a146549520384b59484ad2",
+      "state": "QUEUED",
+      "detail": null
+    },
+    {
+      "seq": 22,
+      "job_id": "75273876c2a146549520384b59484ad2",
+      "state": "RUNNING",
+      "detail": {
+        "owner": "worker-58420"
+      }
+    },
+    {
+      "seq": 23,
+      "job_id": "75273876c2a146549520384b59484ad2",
+      "state": "VERIFYING",
+      "detail": null
+    },
+    {
+      "seq": 24,
+      "job_id": "75273876c2a146549520384b59484ad2",
+      "state": "REVIEWING",
+      "detail": {
+        "evidence_ref": "artifacts/93b430a7c3451371b0fc3d46500ba0664a449b53e64b31c52f3f1e3ff428205d.json"
+      }
+    },
+    {
+      "seq": 25,
+      "job_id": "75273876c2a146549520384b59484ad2",
+      "state": "BLOCKED",
+      "detail": null
+    },
+    {
+      "seq": 26,
+      "job_id": "dfc9c65822c34461a047e89d41d4841b",
+      "state": "QUEUED",
+      "detail": null
+    },
+    {
+      "seq": 27,
+      "job_id": "dfc9c65822c34461a047e89d41d4841b",
+      "state": "RUNNING",
+      "detail": {
+        "owner": "worker-58420"
+      }
+    },
+    {
+      "seq": 28,
+      "job_id": "dfc9c65822c34461a047e89d41d4841b",
+      "state": "VERIFYING",
+      "detail": null
+    },
+    {
+      "seq": 29,
+      "job_id": "dfc9c65822c34461a047e89d41d4841b",
+      "state": "REVIEWING",
+      "detail": {
+        "evidence_ref": "artifacts/e3648ec9865436a8a7557cf5b514f3c4cfd238062b4d2c577d051e24bf17896c.json"
+      }
+    },
+    {
+      "seq": 30,
+      "job_id": "dfc9c65822c34461a047e89d41d4841b",
+      "state": "BLOCKED",
+      "detail": null
+    }
+  ],
+  "mission_config_hash": "4a9f9f94f19164ff3dda4cc8bf93afa128d5b1c336036d4a008ec9097f427259",
+  "budget": {
+    "cycles": 6,
+    "requests": 0,
+    "tokens_actual": 0,
+    "tokens_reserved": 0,
+    "wall_s": 1.2660000000614673
+  }
+}

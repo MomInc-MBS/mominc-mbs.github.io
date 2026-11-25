@@ -1,0 +1,249 @@
+{
+  "status": "PASS",
+  "scope": "First-party real-source engineering demonstration; no model inference",
+  "runtime": "D:\\Repos\\hive-ai\\build\\prototype-v04\\runtime-recovery",
+  "store": "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-recovery",
+  "commands": [
+    {
+      "name": "data",
+      "command": [
+        "C:\\Users\\ianmy\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-m",
+        "hive",
+        "--store",
+        "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-recovery",
+        "data",
+        "--manifest",
+        "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\inputs\\inventory-mission.json"
+      ],
+      "exit": 0,
+      "elapsed_s": 1.36
+    },
+    {
+      "name": "python",
+      "command": [
+        "C:\\Users\\ianmy\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-m",
+        "hive",
+        "--store",
+        "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-recovery",
+        "mission",
+        "run",
+        "--manifest",
+        "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\inputs\\python-standalone.json"
+      ],
+      "exit": 0,
+      "elapsed_s": 4.0
+    },
+    {
+      "name": "python-labels",
+      "command": [
+        "C:\\Users\\ianmy\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-m",
+        "hive",
+        "--store",
+        "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-recovery",
+        "mission",
+        "run",
+        "--manifest",
+        "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\inputs\\python-label-standalone.json"
+      ],
+      "exit": 0,
+      "elapsed_s": 4.437
+    },
+    {
+      "name": "combined",
+      "command": [
+        "C:\\Users\\ianmy\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-m",
+        "hive",
+        "--store",
+        "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-recovery",
+        "mission",
+        "run",
+        "--manifest",
+        "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\inputs\\combined-mission.json"
+      ],
+      "exit": 0,
+      "elapsed_s": 6.438
+    },
+    {
+      "name": "learning",
+      "command": [
+        "C:\\Users\\ianmy\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-m",
+        "hive",
+        "--store",
+        "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-recovery",
+        "learn",
+        "--plan",
+        "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\inventory-learning-plan.json"
+      ],
+      "exit": 0,
+      "elapsed_s": 4.468
+    },
+    {
+      "name": "status-before-replay",
+      "command": [
+        "C:\\Users\\ianmy\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-m",
+        "hive",
+        "--store",
+        "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-recovery",
+        "status"
+      ],
+      "exit": 0,
+      "elapsed_s": 0.157
+    },
+    {
+      "name": "data-replay",
+      "command": [
+        "C:\\Users\\ianmy\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-m",
+        "hive",
+        "--store",
+        "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-recovery",
+        "data",
+        "--manifest",
+        "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\inputs\\inventory-mission.json"
+      ],
+      "exit": 0,
+      "elapsed_s": 0.203
+    },
+    {
+      "name": "python-replay",
+      "command": [
+        "C:\\Users\\ianmy\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-m",
+        "hive",
+        "--store",
+        "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-recovery",
+        "mission",
+        "run",
+        "--manifest",
+        "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\inputs\\python-standalone.json"
+      ],
+      "exit": 0,
+      "elapsed_s": 0.859
+    },
+    {
+      "name": "python-labels-replay",
+      "command": [
+        "C:\\Users\\ianmy\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-m",
+        "hive",
+        "--store",
+        "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-recovery",
+        "mission",
+        "run",
+        "--manifest",
+        "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\inputs\\python-label-standalone.json"
+      ],
+      "exit": 0,
+      "elapsed_s": 1.125
+    },
+    {
+      "name": "combined-replay",
+      "command": [
+        "C:\\Users\\ianmy\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-m",
+        "hive",
+        "--store",
+        "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-recovery",
+        "mission",
+        "run",
+        "--manifest",
+        "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\inputs\\combined-mission.json"
+      ],
+      "exit": 0,
+      "elapsed_s": 1.047
+    },
+    {
+      "name": "learning-replay",
+      "command": [
+        "C:\\Users\\ianmy\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-m",
+        "hive",
+        "--store",
+        "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-recovery",
+        "learn",
+        "--plan",
+        "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\inventory-learning-plan.json"
+      ],
+      "exit": 0,
+      "elapsed_s": 1.172
+    },
+    {
+      "name": "status-after-replay",
+      "command": [
+        "C:\\Users\\ianmy\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-m",
+        "hive",
+        "--store",
+        "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-recovery",
+        "status"
+      ],
+      "exit": 0,
+      "elapsed_s": 0.156
+    }
+  ],
+  "results": {
+    "data": "VERIFIED",
+    "python": "COMPLETED",
+    "python-labels": "COMPLETED",
+    "combined": "COMPLETED",
+    "learning": "REJECTED"
+  },
+  "combined_stages": {
+    "data": "VERIFIED",
+    "python": "VERIFIED",
+    "report": "VERIFIED",
+    "review": "VERIFIED"
+  },
+  "subsequent_status": "VERIFIED",
+  "candidate_rejected": true,
+  "beneficial_learning": false,
+  "p2_promoted": false,
+  "budget_before_replay": {
+    "cycles": 9,
+    "requests": 0,
+    "tokens_actual": 0,
+    "tokens_reserved": 0,
+    "wall_s": 6.046000000089407
+  },
+  "budget_after_replay": {
+    "cycles": 9,
+    "requests": 0,
+    "tokens_actual": 0,
+    "tokens_reserved": 0,
+    "wall_s": 6.046000000089407
+  },
+  "original_inputs_unchanged": true,
+  "new_real_model_calls": 0,
+  "files": {
+    "combined-replay.json": "01543f530e47ee4b327ddd9dd33537bf1eafdb7ab9cac5a4723ab5c0091568e0",
+    "combined-replay.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "combined.json": "37f4d44bfd439f531beabdc749314b0bb76024e803f5cb2c37452e2764ac51da",
+    "combined.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "data-replay.json": "7a23f9b9711f12b07efbc18001de46d572f213593786f8125b48f37d7695586b",
+    "data-replay.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "data.json": "0692815a9eca3c850ae4847934ee8adcb97a8c54bd3998fd561cde458a99b17b",
+    "data.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "learning-replay.json": "637f591932df5c7bac6f418b129c12d02346ea4df8fac55ab66a22f06e247a4d",
+    "learning-replay.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "learning.json": "2502eaf4c799a7992d81375984acbff6b6c5e2bb8370db21add9453f3d840ff5",
+    "learning.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "python-labels-replay.json": "96c7c9348a8dc27a57bdf81e655cfbcb06200b8f0fcc0fe0539bc6f13365cf42",
+    "python-labels-replay.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "python-labels.json": "1b7bda29b581a40b6f0b16d56f542e3658d1d8baaa4e7937774ace3a1d1ff764",
+    "python-labels.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "python-replay.json": "800e63bf6149dec442c52ea249135b55de9d8734006e38f7b488e7cc132842fd",
+    "python-replay.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "python.json": "dca3de5356d66023b31b3118e992454ce61aa75bbbac14e10f7d09e64ea61483",
+    "python.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "status-after-replay.json": "bcb895ab80972cde210f4a2c9f9fa1a98f18be961f9411ea296879fe16bd3e7c",
+    "status-after-replay.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "status-before-replay.json": "bcb895ab80972cde210f4a2c9f9fa1a98f18be961f9411ea296879fe16bd3e7c",
+    "status-before-replay.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

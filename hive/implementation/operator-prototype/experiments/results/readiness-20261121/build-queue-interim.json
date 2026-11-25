@@ -1,0 +1,95 @@
+{
+  "items": [
+    {
+      "authorized": true,
+      "depends_on": [],
+      "history": [
+        "artifacts/feace94ddcd0f347cffa0f07996e1e51f6ac78dfaa53ec8cf5c5e64e2877e0ad.json"
+      ],
+      "hypothesis": "The actual dev3 checkout and spent ledgers can be reproduced without inference.",
+      "id": "audit",
+      "next_command": "python scripts/replay_integration_export.py",
+      "owner": "Astra",
+      "status": "COMPLETED"
+    },
+    {
+      "authorized": true,
+      "depends_on": [
+        "audit"
+      ],
+      "history": [
+        "artifacts/ba455a0d5f9746184f341be02451843d7bf3f1f69870ce4d7fbc59c711ea5fa0.json"
+      ],
+      "hypothesis": "Existing Executor and Store can support isolated code/video missions and eleven deterministic pressure paths.",
+      "id": "implementation",
+      "next_command": "python -m pytest -q",
+      "owner": "Luna/Sol",
+      "status": "PENDING"
+    },
+    {
+      "authorized": true,
+      "depends_on": [
+        "implementation"
+      ],
+      "history": [],
+      "hypothesis": "Objective negatives, interruption and replay reject false completion on the frozen source.",
+      "id": "independent-verification",
+      "next_command": "python -m pytest tests/adversarial tests/integration -q",
+      "owner": "Terra",
+      "status": "PENDING"
+    },
+    {
+      "authorized": true,
+      "depends_on": [
+        "independent-verification"
+      ],
+      "history": [],
+      "hypothesis": "One public CLI runs and replays both families with no model calls or original-source changes.",
+      "id": "operator-demo",
+      "next_command": "python scripts/readiness_demo.py --work .hive/operator-demo",
+      "owner": "Astra",
+      "status": "PENDING"
+    },
+    {
+      "authorized": true,
+      "depends_on": [
+        "operator-demo"
+      ],
+      "history": [],
+      "hypothesis": "The public allowlisted package reproduces fixture and historical evidence with no private stores.",
+      "id": "clean-package",
+      "next_command": "python scripts/export_snapshot.py --destination .hive/release-source --zip .hive/release-source.zip",
+      "owner": "Astra",
+      "status": "PENDING"
+    },
+    {
+      "authorized": true,
+      "depends_on": [
+        "audit"
+      ],
+      "history": [],
+      "hypothesis": "Six independent video sources and six independent code snapshots can be inventoried only after operator source scopes and resources are supplied.",
+      "id": "fresh-acceptance-inputs",
+      "next_command": "Inspect experiments/plans/readiness-level-a.json; no inference or source acquisition is authorized by this queue.",
+      "owner": "Astra",
+      "status": "PENDING"
+    },
+    {
+      "authorized": true,
+      "depends_on": [
+        "clean-package"
+      ],
+      "history": [],
+      "hypothesis": "The existing HIVE release path can publish an honest engineering milestone with verified downloads and preserved history.",
+      "id": "publish-evidence",
+      "next_command": "python tools/check_hive.py",
+      "owner": "Astra",
+      "status": "PENDING"
+    }
+  ],
+  "manifest_ref": "artifacts/ab0826d696e5188a3b668609be57c9085fa8e1c0af2739b9dc53cd5f52fc4673.json",
+  "manifest_sha256": "ab0826d696e5188a3b668609be57c9085fa8e1c0af2739b9dc53cd5f52fc4673",
+  "next_item": "implementation",
+  "mission_authority": false,
+  "note": "Engineering queue does not clear STOP, grant inference, reset budgets or approve policy."
+}

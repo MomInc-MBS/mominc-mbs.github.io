@@ -1,0 +1,70 @@
+{
+  "schema": "hive-m1-campaign-policy-v1",
+  "protocol": "m1-row-reconcile-v1",
+  "protocol_path": "docs/M1_PROTOCOL.md",
+  "decision_vector": "D1=D D2=C D3=C D4=E D5=A D6=B D7=B D8=C D9=C D10=C D11=C",
+  "milestone": "M1",
+  "candidate_kind": "declarative_workflow",
+  "inventory": [
+    "identity",
+    "parse_whole",
+    "split_rows",
+    "aggregate"
+  ],
+  "inventory_pin": "sha256(inspect.getsource(view)) + pins of wrapped base functions; fixed by M1-1A before search",
+  "input_type": "Source",
+  "output_type": "Report",
+  "min_steps": 1,
+  "max_steps": 3,
+  "max_proposals": 20,
+  "max_concurrent_experiments": 2,
+  "max_repairs_per_packet": 2,
+  "max_container_runs": 120,
+  "max_packet_wall_hours": 3,
+  "random_search_arm_seed": 20261123,
+  "nomination": {
+    "dev_min_pass_rate": 0.9,
+    "rank": "sel_pass_rate desc, steps asc, digest asc",
+    "nominees": 1
+  },
+  "decision": {
+    "delta_points": 20,
+    "test": "exact one-sided McNemar",
+    "alpha": 0.05,
+    "final_n": 60,
+    "reuse_n": 20,
+    "reuse_min_pass": 18
+  },
+  "final_infra_retries_per_case": 2,
+  "required_backend": "container",
+  "model_calls": 0,
+  "network_calls": 0,
+  "verification_class": "deterministic_exact_output",
+  "unknown_or_timeout": "FAIL",
+  "selection_scope": "experimental_campaign_only",
+  "rollback_target": "W_strict = [parse_whole, aggregate]",
+  "production_writes": false,
+  "reservations_usd": {
+    "M1-0": 5,
+    "M1-1E": 6,
+    "M1-1A": 4,
+    "M1-2": 3,
+    "M1-3+4": 6
+  },
+  "combinators": [
+    "each"
+  ],
+  "symbols": 8,
+  "legal_workflows_at_max_depth": 3,
+  "proposer": "native type-directed enumeration, length then lexicographic step names",
+  "random_search_arm": "20 uniform draws over all 584 symbol lists, seed random_search_arm_seed; counted separately from max_proposals; report-only",
+  "max_container_run_seconds": 120,
+  "output_schema": "reconciled_inventory_v1",
+  "types": {
+    "Rows": "List[Row]",
+    "identity": "Source->Source only"
+  },
+  "each_catch": "StructuredMissionError only; records (element_index, str(error)); other exceptions = whole-source failure; no nesting",
+  "error_channel": "each-captured errors written to quarantined in index order, identical for every workflow/arm; no each => quarantined []",
+  "output_canonical": "json.dumps(sort_keys=True, separators=(',',':'), ensure_ascii=True); whole-source failure => {\"error\":\"source_rejected\"}"
+}

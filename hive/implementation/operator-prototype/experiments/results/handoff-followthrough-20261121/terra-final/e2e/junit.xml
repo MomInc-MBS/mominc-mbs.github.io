@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="e2e" tests="7" failures="0" errors="0" skipped="0" time="208.731">
+  <testsuite name="tests/e2e/adaptive.e2e.ts" tests="1" failures="0" errors="0" skipped="0" time="19.179">
+    <testcase name="adaptive CLI resumes after STOP and retains completed evidence without new work (synthetic) [cli]" classname="tests/e2e/adaptive.e2e.ts" time="19.179"/>
+  </testsuite>
+  <testsuite name="tests/e2e/cli.e2e.ts" tests="1" failures="0" errors="0" skipped="0" time="2.195">
+    <testcase name="CLI queues, stops, resumes, verifies and restores a task [cli]" classname="tests/e2e/cli.e2e.ts" time="2.195"/>
+  </testsuite>
+  <testsuite name="tests/e2e/integration.e2e.ts" tests="1" failures="0" errors="0" skipped="0" time="5.053">
+    <testcase name="integrated tool CLI preserves candidate rejection, STOP, restart and experimental rollback [cli]" classname="tests/e2e/integration.e2e.ts" time="5.053"/>
+  </testsuite>
+  <testsuite name="tests/e2e/mission.e2e.ts" tests="1" failures="0" errors="0" skipped="0" time="16.709">
+    <testcase name="public mission CLI runs real isolated code and video in one DAG then replays [cli]" classname="tests/e2e/mission.e2e.ts" time="16.709"/>
+  </testsuite>
+  <testsuite name="tests/e2e/pressure.e2e.ts" tests="2" failures="0" errors="0" skipped="0" time="163.523">
+    <testcase name="all eleven pressure commands run, restart, compare and keep research untested [cli]" classname="tests/e2e/pressure.e2e.ts" time="162.950"/>
+    <testcase name="doctor distinguishes caps from authorization and real pressure requires approval [cli]" classname="tests/e2e/pressure.e2e.ts" time="0.573"/>
+  </testsuite>
+  <testsuite name="tests/e2e/video.e2e.ts" tests="1" failures="0" errors="0" skipped="0" time="2.072">
+    <testcase name="synthetic video mission replays in a fresh process without duplicate output [cli]" classname="tests/e2e/video.e2e.ts" time="2.072"/>
+  </testsuite>
+</testsuites>

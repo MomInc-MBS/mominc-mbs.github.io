@@ -1,0 +1,85 @@
+{
+  "mission_id": "prototype-python-standalone",
+  "status": "COMPLETED",
+  "stages": {
+    "code": {
+      "attempts": 1,
+      "finish_event_ref": "artifacts/3dc7be38b8543799caabe2b5fdc04609f65b88d42717b1c6ea15573dae9a292a.json",
+      "finished": 1795335273.5838459,
+      "result": {
+        "budget": {
+          "cycles": 2,
+          "requests": 0,
+          "tokens_actual": 0,
+          "tokens_reserved": 0,
+          "wall_s": 1.6880000000819564
+        },
+        "event_refs": [
+          "artifacts/ddc93b43ff6b318dbb6127bcde8676d66fc57d7f1c543a52223755901f403df1.json",
+          "artifacts/38a5e0116bddbd2b7f03a750238c4af68a2daf3dabc3212c9767b58d428cf6aa.json"
+        ],
+        "manifest_ref": "artifacts/34a1194ac8f344fe03bc114f1a604dae4f7c1870b59c2a88af8cb5f3dd7cdd8e.json",
+        "mission_id": "prototype-python",
+        "named_output_hashes": {
+          "tabular-output": {
+            "patch.diff": "f558440a3cd172109a990e30b790d31092728f6084fe71ada9193d341fa73cd7",
+            "test-report.json": "2d1b08f337e184d4a24da8daff8d73e267ac72f16ffd5477f810ac7573de7ceb",
+            "verdict.json": "39ca501ef21b6adad6a3383b40ca11a662e5fcd4403e09ce4096556714e9d297"
+          },
+          "trace.jsonl": "79ba54c7b6741424867fffd8c78b42971ec34f240f146701b50adf2ed22d9743"
+        },
+        "named_outputs": {
+          "tabular-output": {
+            "patch.diff": "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-recovery\\output\\code\\prototype-python\\tabular-output\\patch.diff",
+            "test-report.json": "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-recovery\\output\\code\\prototype-python\\tabular-output\\test-report.json",
+            "verdict.json": "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-recovery\\output\\code\\prototype-python\\tabular-output\\verdict.json"
+          },
+          "trace.jsonl": "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-recovery\\output\\code\\prototype-python\\trace.jsonl"
+        },
+        "patches": {
+          "tabular-output": {
+            "evidence_ref": "artifacts/9490043810a5cd51667f0cd2c38932d7846fb8cf73ee056e90052c0ef6ac1521.json",
+            "job_id": "47590115810e4dad86e12245d4530541",
+            "operation_key": "0c51fd18193fc55e22ec74cc19a395bd01be757a984a843fc2b2b9172d110d79",
+            "patch_sha256": "f2d5d350d5d5d1ec9a516de5319f30dda714eca670ff490683bddb09753263c1",
+            "state": "VERIFIED",
+            "verification": {
+              "cases_checked": 2,
+              "evaluator": "json-function-v1",
+              "passed": true,
+              "quality": 1,
+              "reason": "objective_cases_passed",
+              "suite_sha256": "119cfba4da1e7cdfbc357e01b8fbe1419e81acbd4ba154702e7000bdccc73bbd",
+              "synthetic": false,
+              "unsupported": 0,
+              "valid": true
+            }
+          }
+        },
+        "runtime": {
+          "commit": "unversioned",
+          "source_sha256": "ef4eb92509af5d5330e90632d178b3cdadc3c11e62f308f58f808be6be625055",
+          "version": "0.4.0.dev1"
+        },
+        "source_sha256": "fbe44ced80f6bbd93d078893416ffd74c2e54f34a23fee0b52e79e1dea080104",
+        "status": "VERIFIED",
+        "synthetic": false
+      },
+      "started": 1795335270.1703703,
+      "state": "VERIFIED"
+    }
+  },
+  "manifest_ref": "artifacts/fb3788be1c8a982b0680a17d3be5801dca74a503928bf008659b743b385489f4.json",
+  "event_refs": [
+    "artifacts/05a24a6f1f5c4592cfc7fc4b3efaf3b3110983e4eaa82143c1f7f5b969e59b34.json",
+    "artifacts/7256de2b91f36d86290c4acde6db989cf1ec7036f19fa9757b724e8af38f2370.json",
+    "artifacts/3dc7be38b8543799caabe2b5fdc04609f65b88d42717b1c6ea15573dae9a292a.json"
+  ],
+  "budget": {
+    "cycles": 2,
+    "requests": 0,
+    "tokens_actual": 0,
+    "tokens_reserved": 0,
+    "wall_s": 1.6880000000819564
+  }
+}

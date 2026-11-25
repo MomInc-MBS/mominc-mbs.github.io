@@ -1,0 +1,23 @@
+﻿{
+  "status": "passed",
+  "original_jobs": 18,
+  "hashed_files": 64,
+  "manifest_sha256": "73b84cc8c777de17db7f32ccb9511cbfda46224017a458d0bbf2bf35fd4f2478",
+  "policy_receipts": {
+    "legacy": 12,
+    "4": 6
+  },
+  "independently_verified_passes": {
+    "strongest_tool": 6,
+    "learning_disabled": 6,
+    "p2": 6
+  },
+  "new_model_calls": 0,
+  "scope": "offline saved-output/journal/contract/feedback replay; no fresh task execution or learning gain",
+  "limitations": [
+    "Only the eighteen successful known synthetic comparison jobs are supported.",
+    "Original database migration, interrupted/failed-state recovery and post-feedback crash recovery are not reproduced.",
+    "Comparison feedback is disabled; route-skill updates are unauthorized and rejected.",
+    "Manifest hashes prove internal integrity, not external authenticity or independent source freshness."
+  ]
+}

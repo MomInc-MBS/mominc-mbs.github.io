@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "approved": false,
+  "approved_by": null,
+  "budget_id": "prototype-v04-demo",
+  "store_root": "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\live-store",
+  "allowed_root": "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\inputs",
+  "model_digest": "a45646773d1ee8a6c1557c7de09a68e78a74f2990c4174a1408f65e777db150c",
+  "executor_config": {
+    "endpoint": "http://127.0.0.1:11434",
+    "model": "myr5-hold-local:latest",
+    "timeout_s": 120,
+    "max_tokens": 128,
+    "seed": 42,
+    "max_requests": 24,
+    "max_total_tokens": 3072,
+    "max_wall_s": 1800,
+    "max_storage_bytes": 67108864,
+    "max_cycles": 100,
+    "max_retries": 2,
+    "concurrency": 1,
+    "routes": [
+      "tool",
+      "local_direct"
+    ],
+    "allow_fixtures": false
+  },
+  "tasks": [
+    {
+      "id": "prototype-development",
+      "manifest_sha256": "93a917986df105b45b36c834d2a1788f410f9a207801a9ecaa7414baed72e830"
+    },
+    {
+      "id": "prototype-comparison",
+      "manifest_sha256": "3c85016f4a56bb8208276faedee5bcbe0146a124e5e17a1a90a47d5aaf34b19a"
+    },
+    {
+      "id": "prototype-comparison-extra",
+      "manifest_sha256": "b99eb0052b077dc64724d2b5f45039d0994bafc98952fa56205272e7fd224381"
+    },
+    {
+      "id": "prototype-subsequent",
+      "manifest_sha256": "90e236068d1b3a6db13c4df82405c5c922b81e6588bbb1289ce75112a6f13523"
+    },
+    {
+      "id": "prototype-comparison-r8ed6b978",
+      "manifest_sha256": "05fe0ead9029c9fd29a998e367e4ce009ff459f227ee0e3be6546b1ce8112dec"
+    },
+    {
+      "id": "prototype-comparison-extra-r70a1b404",
+      "manifest_sha256": "1fd580614494dabdc93cba15039feb5310947bee06482c2010ecb4f7dbe10a28"
+    },
+    {
+      "id": "prototype-subsequent-r7ab5a73a",
+      "manifest_sha256": "011d715a5c48f36aaf03a1455e84444f65b8111c3a63726c7348ce091439fccb"
+    },
+    {
+      "id": "prototype-model-combined-data",
+      "manifest_sha256": "8c7c5feab51646cf61854ab9679470e7dc82618f106c36a07e6c0af215f56d16"
+    }
+  ],
+  "scope": "Prototype development only. No Level A, Level B or policy promotion authorization."
+}

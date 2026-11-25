@@ -1,0 +1,86 @@
+{
+  "recorded_at": "2026-11-22T05:26:07.439768+00:00",
+  "classification": "release integrity; no task acceptance or inference",
+  "live_url": "https://mominc.online/hive/",
+  "canonical_pointer": {
+    "schema_version": 1,
+    "release_id": "READINESS",
+    "version": "0.3.0.dev4",
+    "status": "READY_FOR_PRESSURE_TESTS",
+    "publication_manifest": "implementation/readiness-dev4-publication.json",
+    "runtime_source_sha256": "e711d1c3e7eb4dbd23b95f3027f5d97627b1f6880a2c252e2cefea8c522e817b",
+    "download": "downloads/HIVE_Readiness_v0_3_0_dev4.zip",
+    "download_sha256": "c3cf3e4633391efeb6f8659821fc4bdb6b112fe6dc4f5ea31bc00b531f3102ce",
+    "level_a": "NOT_ACCEPTED",
+    "level_a_attempted": 0,
+    "level_a_accepted": 0,
+    "level_b": "UNTESTED",
+    "candidate_promotion": false,
+    "engineering_supplement": {
+      "note_id": "OBJECTIVE",
+      "publication_manifest": "implementation/objective-dev5-publication.json"
+    }
+  },
+  "releases": [
+    {
+      "manifest": "implementation/readiness-dev4-publication.json",
+      "manifest_sha256": "0bd57736c5f4400ae32a7ab68f27ab1794ace5c722f063d1f371e8f3f8fc4cb5",
+      "version": "0.3.0.dev4",
+      "source_commit": "1e1bf945bd605fa511c7ceed9ecae303f77e1c56",
+      "runtime_sha256": "e711d1c3e7eb4dbd23b95f3027f5d97627b1f6880a2c252e2cefea8c522e817b",
+      "download": "downloads/HIVE_Readiness_v0_3_0_dev4.zip",
+      "zip_sha256": "c3cf3e4633391efeb6f8659821fc4bdb6b112fe6dc4f5ea31bc00b531f3102ce",
+      "payload_files_verified": 487,
+      "committed_runtime_matches": true
+    },
+    {
+      "manifest": "implementation/objective-dev5-publication.json",
+      "manifest_sha256": "9883536e42c18a35bc54bf381549d3d28e324994fe9aed60f009c04da5661752",
+      "version": "0.3.0.dev5",
+      "source_commit": "a1b8fb6ee9a856be90bf0573f5af208438395c2a",
+      "runtime_sha256": "2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c",
+      "download": "downloads/HIVE_Objective_Testing_v0_3_0_dev5.zip",
+      "zip_sha256": "b6f9050c3aff751d5660cda2d23e8703cf67299e07f654c71300cf920eeb8e00",
+      "payload_files_verified": 720,
+      "committed_runtime_matches": true
+    }
+  ],
+  "unexplained_identity_differences": 0,
+  "spent_ledgers": {
+    "integration-20261121": {
+      "budget": {
+        "cycles": 11,
+        "requests": 6,
+        "tokens_actual": 147,
+        "tokens_reserved": 768,
+        "wall_s": 18.57799999997951
+      },
+      "STOP_present": false
+    },
+    "adaptive-v02-20261121": {
+      "budget": {
+        "cycles": 36,
+        "requests": 30,
+        "tokens_actual": 1013,
+        "tokens_reserved": 3840,
+        "wall_s": 23.450999999884516
+      },
+      "STOP_present": false
+    }
+  },
+  "docker": {
+    "requested_digest": "python@sha256:07d4824036af339fa1b6ef769cc99d9c10a141769538b52b3b597c84f7a7b535",
+    "image_id": "sha256:07d4824036af339fa1b6ef769cc99d9c10a141769538b52b3b597c84f7a7b535",
+    "repo_digests": [
+      "python@sha256:07d4824036af339fa1b6ef769cc99d9c10a141769538b52b3b597c84f7a7b535"
+    ]
+  },
+  "installed_models": [
+    {
+      "name": "myr5-hold-local:latest",
+      "digest": "a45646773d1ee8a6c1557c7de09a68e78a74f2990c4174a1408f65e777db150c"
+    }
+  ],
+  "hive_model_calls": 0,
+  "new_authorized_model_calls": 0
+}

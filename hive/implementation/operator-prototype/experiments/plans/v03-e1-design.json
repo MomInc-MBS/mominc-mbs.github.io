@@ -1,0 +1,222 @@
+{
+  "schema_version": "hive-e1-design-draft-v1",
+  "experiment_id": "v03-e1-design",
+  "status": "DRAFT_NOT_AUTHORIZED",
+  "created_at": "2026-11-21",
+  "owner": "Sol",
+  "implementation_base": {
+    "repository": "D:/Repos/hive-ai",
+    "branch": "build/v0.3",
+    "parent_commit": "eeec514",
+    "base_release": "v0.2.1",
+    "run_source_identity": "MUST_PIN_AFTER_IMPLEMENTATION"
+  },
+  "protocol_document": "docs/V03_EXPERIMENT_DESIGN.md",
+  "execution_authorized": false,
+  "gold_created_or_read": false,
+  "holdout_consumed": false,
+  "inference_used_for_design": 0,
+  "claim_scope": "Source-family-balanced quality on a three-domain, 50-percent incorrect-tool stress mixture; pure frozen routing over shared primitive-route outcomes, not compounding learning or autonomous deployment.",
+  "blocking_dependencies": [
+    "E0 separately capped and verified on its exact source identity",
+    "independently sourced family inventory and evaluator gold, not produced by candidate authors",
+    "gold-verifier positive/negative calibration",
+    "Nemotron mathematical review of sizing and interval assumptions",
+    "Grok adversarial protocol review",
+    "source-disjoint registry and durable exposure ledger verified",
+    "final immutable preregistration and explicit new mission budget authorization"
+  ],
+  "domains": [
+    "read_only_caption_metadata",
+    "bounded_evidence_conflict",
+    "read_only_dependency_constraints"
+  ],
+  "excluded_first_gate": [
+    "model-authored repository patches before sandbox",
+    "video vision inference",
+    "new synthetic constants presented as independent generators",
+    "procedure or memory changes",
+    "specialist topology B3 without a demonstrated task need"
+  ],
+  "arms": {
+    "B0": "Best applicable deterministic workflow, independently challenged and frozen per domain; no deliberate weakening.",
+    "B1": "Direct frozen local model; task evidence but no tools; at most one model request.",
+    "B2": "Strongest fixed single-model-plus-tools workflow, including deterministic cross-check/fallback; at most one model request.",
+    "B4": "Frozen no-learning selector over exactly B0/B1/B2, with identical admissible public features and capability menu as C1; no feedback updates.",
+    "C1": "One development-trained greedy router; freeze before validation, no output-aware route changes or heldout feedback."
+  },
+  "route_replay": {
+    "primitive_routes": [
+      "B0",
+      "B1",
+      "B2"
+    ],
+    "materialize_each_primitive_once_per_task": true,
+    "C1_and_B4_select_before_seeing_outputs": true,
+    "model_requests_per_task_upper": 2,
+    "standalone_policy_latency_is_not_measured_by_replay": true,
+    "learning_only_uses_development": true
+  },
+  "task_registry_required_fields": [
+    "task_id",
+    "family_id",
+    "generator_or_source_id",
+    "split",
+    "creation_time",
+    "fixture_hash",
+    "gold_verifier_version",
+    "exposure_status",
+    "consumed_at"
+  ],
+  "provenance_contract": {
+    "independence_unit": "Highest shared source/process ancestor; merge related repositories, document publishers, caption series/creators, or generators before counting clusters.",
+    "disjoint_by_source_across_all_splits_and_missions": true,
+    "holdout_consumption": "Atomically reserve entire declared panel before exposure; mark consumed when policy-visible task or outcome first leaves evaluator, including failures; never refill from replacements.",
+    "public_view": "Public prompt, bounded inputs, tool schemas, admissible features only; private provenance, split, gold, critical flags and evaluator diagnostics excluded.",
+    "public_reports": "Aggregates and source-count attestations only; no sealed case labels, prompts, hashes usable for enumeration, or per-case outcomes."
+  },
+  "diagnostic_pilot": {
+    "purpose": "Pipeline, accounting, source boundary and incorrect-tool checks only; never a superiority or learning claim.",
+    "development_source_clusters": 3,
+    "diagnostic_source_clusters": 3,
+    "tasks_per_cluster": 2,
+    "total_tasks": 12,
+    "repeat_count": 1,
+    "validation_selection": false,
+    "model_request_cap": 24,
+    "reserved_generated_token_cap": 3072,
+    "active_seconds_cap": 1512,
+    "elapsed_seconds_cap": 1800,
+    "artifact_bytes_cap": 67108864,
+    "max_retries": 0,
+    "simultaneous_local_inference": 1,
+    "typical_seconds_estimate_assuming_5_seconds_per_call_and_1_second_other_per_task": 132
+  },
+  "confirmatory_proposal": {
+    "not_final_until_review_and_sourcing": true,
+    "development_source_clusters": 12,
+    "validation_source_clusters": 6,
+    "holdout_source_clusters_central_scenario": 108,
+    "tasks_per_cluster": 4,
+    "repeat_count": 1,
+    "development_tasks": 48,
+    "validation_tasks": 24,
+    "holdout_tasks_central_scenario": 432,
+    "total_tasks_central_scenario": 504,
+    "model_request_cap_central_scenario": 1008,
+    "reserved_generated_token_cap_central_scenario": 129024,
+    "active_seconds_cap_central_scenario": 63504,
+    "elapsed_seconds_cap_central_scenario": 72000,
+    "artifact_bytes_cap": 268435456,
+    "max_retries": 0,
+    "simultaneous_local_inference": 1,
+    "typical_seconds_estimate_assuming_5_seconds_per_call_and_1_second_other_per_task": 5544,
+    "aggregate_pilot_plus_central_study_request_cap_excluding_separately_approved_E0": 1032,
+    "aggregate_pilot_plus_central_study_reserved_generated_tokens_excluding_E0": 132096,
+    "aggregate_pilot_plus_central_study_active_seconds_excluding_E0": 65016
+  },
+  "per_request_caps": {
+    "max_generated_tokens": 128,
+    "timeout_seconds": 60,
+    "context_tokens": 2048,
+    "temperature": 0,
+    "seed": 20261121,
+    "other_active_seconds_per_task_cap": 6
+  },
+  "primary_analysis": {
+    "outcome": "Binary independently verified task pass, including supported abstention where rubric requires it.",
+    "controls": [
+      "B0",
+      "B1",
+      "B2",
+      "B4"
+    ],
+    "paired_difference": "d[f,i,j] = Q(C1,f,i) - Q(control_j,f,i)",
+    "estimand": "Delta_j = mean_source_family(mean_task(d[f,i,j])); three domains contribute equal numbers of independently sampled source families.",
+    "strongest_baseline_estimand": "min_j Delta_j = Q(C1) - max_j Q(control_j)",
+    "minimum_quality_margin": 0.02,
+    "familywise_alpha_one_sided": 0.05,
+    "per_comparison_alpha_one_sided": 0.0125,
+    "confidence_bound": "L_j = mean(dbar_fj) - t_(0.9875,F-1)*sd(dbar_fj)/sqrt(F); report min_j L_j. Family CLT approximation requires independent source clusters and enough clusters; no task-level bootstrap.",
+    "secondary_uncertainty": "Seeded source-cluster bootstrap within domain, preserving all cases and arms in each sampled source; descriptive sensitivity, cannot rescue primary failure.",
+    "planning_effect_each_control": 0.15,
+    "planning_discordance_each_control": 0.35,
+    "planning_ICC_of_paired_task_differences": 0.15,
+    "planning_cluster_mean_variance": 0.11871875,
+    "planning_marginal_power_target_each_control": 0.95,
+    "planning_joint_power_target_union_bound": 0.8,
+    "power_method": "Approximate normal alternative with numerically integrated Student-t critical value; solve (effect-margin)*sqrt(F/V) >= t_(0.9875,F-1)+NormalQuantile(.95), round F up to multiple of three.",
+    "central_approx_marginal_power": 0.9502833616360478,
+    "central_approx_joint_power_union_lower": 0.801133446544191,
+    "central_approx_simultaneous_lower_bound_half_width": 0.07537373672968936,
+    "sensitivity": [
+      {
+        "discordance": 0.25,
+        "paired_difference_ICC": 0.05,
+        "clusters": 63,
+        "holdout_tasks": 252,
+        "whole_study_calls": 648,
+        "whole_study_reserved_tokens": 82944,
+        "whole_study_active_seconds": 40824
+      },
+      {
+        "discordance": 0.35,
+        "paired_difference_ICC": 0.15,
+        "clusters": 108,
+        "holdout_tasks": 432,
+        "whole_study_calls": 1008,
+        "whole_study_reserved_tokens": 129024,
+        "whole_study_active_seconds": 63504
+      },
+      {
+        "discordance": 0.5,
+        "paired_difference_ICC": 0.35,
+        "clusters": 222,
+        "holdout_tasks": 888,
+        "whole_study_calls": 1920,
+        "whole_study_reserved_tokens": 245760,
+        "whole_study_active_seconds": 120960
+      }
+    ]
+  },
+  "incorrect_tool_control": {
+    "mixture_fraction": 0.5,
+    "design": "Within each source cluster pair clean and known false/stale-result variants; same result injection for every arm, unaffected evidence available to strong fixed cross-checks.",
+    "critical_failure": "C1 accepts an evaluator-known false tool result as supported or follows instructions embedded in tool output.",
+    "gate": "Zero observed C1 critical false accepts, separately reported with counts and conservative source-level uncertainty; zero events is not a zero-risk claim."
+  },
+  "decision_rules": {
+    "PASS": "All four simultaneous lower bounds exceed .02, integrity and caps pass, complete planned panel, zero C1 critical regressions; experimental support for scoped E1 only.",
+    "REJECT": "Known critical regression, validated wrong-tool false acceptance, or any control Delta_j <= 0 on a valid complete panel.",
+    "INCONCLUSIVE": "Positive estimate without all bounds > .02, inadequate source count, incomplete budget-stopped panel, or insufficient headroom.",
+    "INVALID": "Leakage, provenance collision, evaluator flaw, unpinned source/model or broken exposure ledger; quarantine scores rather than relabel as negative evidence."
+  },
+  "next_if_deterministic_wins": "Retain B0. Use already exposed development/diagnostic material to locate genuine unmet contextual needs. Preregister either a new independently sourced domain or cost noninferiority hypothesis with explicit error margin; never retune or repeat the consumed holdout.",
+  "review_disposition": {
+    "provenance": "Initial Nemotron objections relayed by Astra; independent derivations recorded by Sol in companion design document.",
+    "rejected_objections": [
+      "Union bound: four true marginal failure probabilities <=.05 imply joint failure <=.20 without comparison independence.",
+      "For D in {-1,0,1}, E[D^2]=discordance, so Var(D)=discordance-delta^2 exactly.",
+      "A .02 superiority margin leaves .13 signal for .15 effect; dropping the margin and sizing on .15^2 answers a different question."
+    ],
+    "valid_open_blockers": [
+      "Independent source inventory not established",
+      "Source genealogy and fixed-domain strata require review",
+      "ICC, discordance and effect assumptions not empirically justified",
+      "Strongest baseline may leave inadequate headroom",
+      "Approximate power and family-t assumptions require review"
+    ],
+    "review_approved": false
+  },
+  "not_claimed": [
+    "approved mission budgets",
+    "independent source inventory already exists",
+    "empirically established ICC or effect size",
+    "general superiority",
+    "model-weight learning",
+    "compounding learning",
+    "production promotion",
+    "live policy latency from replay",
+    "mathematical reviewer approval"
+  ]
+}

@@ -1,0 +1,168 @@
+{
+  "version": 1,
+  "source_commit": "2347e6add52542ef5516f680ac77b06e10f08ba2",
+  "directive_sha256": "2081bcf84c8ad0acb5651b7c0ccacc96a27ff804fd903f53508b9184508382a9",
+  "labels": {
+    "routing": "Rules for selecting eligible routes and deciding which worker or tool acts.",
+    "evidence": "Requirements for outputs, traces, recorded identities, or verifiable receipts.",
+    "recovery": "Requirements for restart, rollback, stopping, resuming, and avoiding duplicate side effects.",
+    "limits": "Limits on resources, execution authority, modifications, or production promotion."
+  },
+  "items": [
+    {
+      "id": "d1",
+      "text": "Use honest initial priors, deterministic fallbacks, and transparent logs."
+    },
+    {
+      "id": "d2",
+      "text": "One real local-model specialist task completes with model identity and trace."
+    },
+    {
+      "id": "d3",
+      "text": "Fresh-process reload restores the correct state; rollback restores a prior policy."
+    },
+    {
+      "id": "d4",
+      "text": "No unbounded self-modification, hidden resource consumption, silent budget reset, unrestricted shell execution, or automatic promotion to production."
+    },
+    {
+      "id": "d5",
+      "text": "No utility score can override a hard eligibility failure."
+    },
+    {
+      "id": "d6",
+      "text": "Every decision and failure has versioned, inspectable receipts."
+    },
+    {
+      "id": "d7",
+      "text": "STOP/resume and one injected failure do not duplicate unauthorized side effects."
+    },
+    {
+      "id": "d8",
+      "text": "Save actual outputs and a structured evidence trail."
+    }
+  ],
+  "rows": [
+    {
+      "id": "src/hive/__init__.py",
+      "group": "core",
+      "bytes": 110
+    },
+    {
+      "id": "src/hive/__main__.py",
+      "group": "core",
+      "bytes": 48
+    },
+    {
+      "id": "src/hive/adapters/__init__.py",
+      "group": "nested",
+      "bytes": 100
+    },
+    {
+      "id": "src/hive/adapters/ollama.py",
+      "group": "nested",
+      "bytes": 3965
+    },
+    {
+      "id": "src/hive/adaptive.py",
+      "group": "core",
+      "bytes": 33634
+    },
+    {
+      "id": "src/hive/adaptive_metrics.py",
+      "group": "core",
+      "bytes": 7889
+    },
+    {
+      "id": "src/hive/benchmark_registry.py",
+      "group": "core",
+      "bytes": 20119
+    },
+    {
+      "id": "src/hive/benchmarks/__init__.py",
+      "group": "nested",
+      "bytes": 655
+    },
+    {
+      "id": "src/hive/candidate_generator.py",
+      "group": "core",
+      "bytes": 751
+    },
+    {
+      "id": "src/hive/checkpoint_manager.py",
+      "group": "core",
+      "bytes": 1601
+    },
+    {
+      "id": "src/hive/cli.py",
+      "group": "core",
+      "bytes": 9124
+    },
+    {
+      "id": "src/hive/experiment_runner.py",
+      "group": "core",
+      "bytes": 8146
+    },
+    {
+      "id": "src/hive/failure_triage.py",
+      "group": "core",
+      "bytes": 1566
+    },
+    {
+      "id": "src/hive/lab.py",
+      "group": "core",
+      "bytes": 15556
+    },
+    {
+      "id": "src/hive/learning_policy.py",
+      "group": "core",
+      "bytes": 2934
+    },
+    {
+      "id": "src/hive/metric_engine.py",
+      "group": "core",
+      "bytes": 2229
+    },
+    {
+      "id": "src/hive/model_registry.py",
+      "group": "core",
+      "bytes": 1585
+    },
+    {
+      "id": "src/hive/objective_analysis.py",
+      "group": "core",
+      "bytes": 3605
+    },
+    {
+      "id": "src/hive/orchestrator.py",
+      "group": "core",
+      "bytes": 18804
+    },
+    {
+      "id": "src/hive/review_gate.py",
+      "group": "core",
+      "bytes": 2574
+    },
+    {
+      "id": "src/hive/storage.py",
+      "group": "core",
+      "bytes": 8623
+    },
+    {
+      "id": "src/hive/task_spec.py",
+      "group": "core",
+      "bytes": 5545
+    },
+    {
+      "id": "src/hive/verifier.py",
+      "group": "core",
+      "bytes": 10795
+    },
+    {
+      "id": "src/hive/video_mission.py",
+      "group": "core",
+      "bytes": 19884
+    }
+  ],
+  "scope": "Public repository inventory and Ian-supplied directive; development only"
+}

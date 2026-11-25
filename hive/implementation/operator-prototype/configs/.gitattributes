@@ -1,0 +1,2 @@
+# Site-side: keep this exported file byte-exact (snapshot manifest hash), overriding the snapshot's configs rule.
+experiment_sources.allowlist.json -text

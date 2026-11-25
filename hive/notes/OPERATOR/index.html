@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Operator Prototype: retained capabilities on real inputs · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#29143f"><link rel="canonical" href="https://mominc.online/hive/notes/OPERATOR/">
+<meta property="og:title" content="Operator Prototype: retained capabilities on real inputs · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg?v=2" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=3"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=3"><link rel="stylesheet" href="/hive/assets/research.css?v=1">
+<script defer src="/hive/assets/hive.js?v=3"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg?v=2" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/OPERATOR/">Implementation</a><a href="/hive/notes/CODER/">Coder directions</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/OPERATOR/" aria-current=page>Latest engineering · operator-prototype c7683fe</a><a href="/hive/notes/READINESS/" >v0.3.0.dev4 readiness</a><a href="/hive/notes/INTEGRATION/" >Historical dev3 integration</a><a href="/hive/notes/WORKING/" >Video mission alpha</a><a href="/hive/notes/V03/" >v0.3 foundation</a><a href="/hive/notes/CONTROLLER/" >Adaptive controller - v0.2</a><a href="/hive/notes/PROTOTYPE/" >Local prototype - v0.1</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/LANDSCAPE/" >External landscape · 22 Nov</a><a href="/hive/notes/WHOLE/" >Integrated design map</a><a href="/hive/notes/DIRECTION/" >Owner decisions · 22 Nov</a><a href="/hive/notes/KERNELS/" >Kernel comparison</a><a href="/hive/notes/METABASE/" >Base for later self-improvement</a><a href="/hive/notes/LIVEDEMO/" >Live local-model demo · 22 Nov</a><a href="/hive/notes/UNIFIED/" >Unified integration · 22 Nov</a><a href="/hive/notes/V04X/" >Autonomous experiment checkpoint · 23 Nov</a><a href="/hive/notes/ISOLATION/" >Evaluator isolation + lineage · 23 Nov</a><a href="/hive/notes/M1/" >M1 accepted · 24 Nov</a><a href="/hive/notes/M2/" >M2 accepted · 24 Nov</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/OPERATOR/" aria-current=page>Latest engineering · operator-prototype c7683fe</a><a href="/hive/notes/READINESS/" >v0.3.0.dev4 readiness</a><a href="/hive/notes/INTEGRATION/" >Historical dev3 integration</a><a href="/hive/notes/WORKING/" >Video mission alpha</a><a href="/hive/notes/V03/" >v0.3 foundation</a><a href="/hive/notes/CONTROLLER/" >Adaptive controller - v0.2</a><a href="/hive/notes/PROTOTYPE/" >Local prototype - v0.1</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/LANDSCAPE/" >External landscape · 22 Nov</a><a href="/hive/notes/WHOLE/" >Integrated design map</a><a href="/hive/notes/DIRECTION/" >Owner decisions · 22 Nov</a><a href="/hive/notes/KERNELS/" >Kernel comparison</a><a href="/hive/notes/METABASE/" >Base for later self-improvement</a><a href="/hive/notes/LIVEDEMO/" >Live local-model demo · 22 Nov</a><a href="/hive/notes/UNIFIED/" >Unified integration · 22 Nov</a><a href="/hive/notes/V04X/" >Autonomous experiment checkpoint · 23 Nov</a><a href="/hive/notes/ISOLATION/" >Evaluator isolation + lineage · 23 Nov</a><a href="/hive/notes/M1/" >M1 accepted · 24 Nov</a><a href="/hive/notes/M2/" >M2 accepted · 24 Nov</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 318 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download original vault · 0.2</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=framework">Framework</a><span>/</span><span>OPERATOR</span></div>
+<div class="doc-meta"><span class="badge">Measured engineering result</span><span class="badge neutral">Implemented</span></div><div class="doc-tools"><button class="copy-link" data-title="Operator Prototype: retained capabilities on real inputs" data-id="OPERATOR" data-series="HIVE Operator Prototype (24 November 2026)">Copy reference</button><a href="/hive/updates/HIVE_Operator_Prototype_2026-11-24.md">Markdown source</a><a href="/hive/graph/?focus=OPERATOR">View connections</a><button class="print-page">Print</button></div>
+<article class="prose"><h1 id="operator-prototype-use-the-retained-m2-capabilities-on-your-own-files-24-nov-2026">Operator Prototype: use the retained M2 capabilities on your own files (24 Nov 2026)</h1>
+<p>This follows the <a href="/hive/notes/M2/">M2 note</a>. M2 showed that a local model could propose two workflows that HIVE then verified, kept and reused. This build puts those two kept workflows behind the ordinary HIVE operator path, so a person can launch HIVE, pick a file, run a task, get an independently checked result, restart, and run another file.</p>
+<p><strong>What this is:</strong> a usable local operator path with evidence. <strong>What it is not:</strong> a new held-out study, Level A or Level B, general CSV/JSON support, a search-skill result, or a production approval.</p>
+<h2 id="launch">Launch</h2>
+<p>From the runtime package root (Windows, Python 3.11+, Docker with the pinned <code>python:3.11-slim</code> image; no model server needed):</p>
+<pre><code>scripts\hive-operator.cmd D:\HIVE-operator-inputs
+</code></pre>
+<p>It imports the accepted capabilities (idempotent) and opens <code>http://127.0.0.1:8765/</code> with a local session token. The runbook is <code>docs/OPERATOR_RUNBOOK.md</code> in the package.</p>
+<h2 id="the-two-operations">The two operations</h2>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Capability (from M2)</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Convert a file to canonical JSON</td>
+<td><code>row-convert-v1</code>, steps <code>parse_whole -&gt; to_json</code></td>
+<td>Any bad row rejects the whole file, with the reason. No row salvage.</td>
+</tr>
+<tr>
+<td>Merge a batch with whole-file quarantine</td>
+<td><code>batch-merge-v1</code>, steps <code>each(parse_whole) -&gt; aggregate</code></td>
+<td>Valid files are merged into per-group count and bytes. Each invalid file is quarantined whole, with the reason of its first failing row.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Input contract</strong> (taken from the parser and the oracle, not broadened): UTF-8 without a BOM; at most 2 MiB; CSV header exactly <code>id,group,bytes</code>; JSON array of objects with exactly those keys; 1 to 256 rows; unique non-empty ids and non-empty groups up to 128 characters; <code>bytes</code> an integer from 0 to 1,000,000,000 (CSV: canonical decimal). Batches take 2 to 20 files. To make such a file from any folder there is an explicit preparation adapter, <code>inventory-snapshot-v1</code> (<code>hive operator snapshot-dir</code>). It is engineering preparation, not a learned capability.</p>
+<h2 id="how-a-task-runs">How a task runs</h2>
+<ol>
+<li><strong>Intake.</strong> The file is read from the permitted folder. An immutable copy and its SHA-256 go into the store. The task identity is the operation plus the ordered file names and hashes.</li>
+<li><strong>Selection.</strong> The operator registry (an append-only chain per operation) resolves the current version and re-checks its evidence every time: genome hash, receipt hash, current protocol/policy/manifest/inventory/prompt pins, the pinned accepted version, allowed scope, revocation and type fit. Anything stale, tampered, revoked, out of scope or incompatible is refused.</li>
+<li><strong>Execution.</strong> The stored genome body runs in the pinned container (no network, read-only, non-root). Zero model calls.</li>
+<li><strong>Independent check.</strong> <code>evaluator/m2/oracle.py</code>, written separately from the runtime, recomputes the expected output from the input bytes in a separate <code>python -I</code> process. Only PASS outputs are exported.</li>
+<li><strong>Result.</strong> You get the verdict, accepted and quarantined counts, the download, and an expandable trace (capability and genome, input and output digests, evaluator pin, timings, container runs).</li>
+</ol>
+<p>Same operation plus same files returns the saved result with no new execution, but only while the same capability is still eligible and the evaluator pin is unchanged. After a revoke or rollback it runs through selection again.</p>
+<h2 id="demonstration-on-real-inputs-24-nov">Demonstration on real inputs (24 Nov)</h2>
+<p>Inputs were real first-party folders of the HIVE repository (<code>docs</code>, <code>configs</code>, <code>scripts</code>, <code>evaluator</code>, <code>src/hive</code>), turned into inventory files by the preparation adapter. The independent reference was PowerShell's own recursive file listing of the same folders (a different tool, no HIVE code). One defective file was derived from a real one by setting one size to <code>-5</code>; it is labelled <code>DERIVED-</code>. No model saw any input. Every journey went through the real launch command and the console HTTP API, with a full process restart in the middle.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Journey</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fresh conversion (68-row docs inventory)</td>
+<td>VERIFIED; oracle PASS; downloaded JSON equals the PowerShell reference</td>
+</tr>
+<tr>
+<td>Mixed batch (4 files, 1 derived defect)</td>
+<td>VERIFIED; the derived file quarantined whole (&quot;bytes must be a canonical nonnegative decimal integer&quot;); merged group totals equal the PowerShell reference over the 3 accepted files</td>
+</tr>
+<tr>
+<td>Unsupported inputs</td>
+<td>BOM file, one-file merge, unknown operation, path outside the folder, <code>.txt</code> file: each refused with a precise reason, nothing executed</td>
+</tr>
+<tr>
+<td>STOP and resume</td>
+<td>Task submitted under STOP recorded STOPPED with 0 executions; after resume the same task ran once and verified</td>
+</tr>
+<tr>
+<td>Crash mid-task</td>
+<td>Server killed while RUNNING; after restart the task shows INTERRUPTED; resubmitting ran it once and verified</td>
+</tr>
+<tr>
+<td>Restart, different input</td>
+<td>New process; the retained capability was loaded from the store and executed (+1 execution, 0 model or proposal calls), oracle PASS, matches the reference</td>
+</tr>
+<tr>
+<td>Exact replay</td>
+<td>Same task id, same artifacts, execution and container counters unchanged, replay counter +1</td>
+</tr>
+<tr>
+<td>Rollback</td>
+<td>Rollback selected the previous permitted version, the M2 baseline, which cannot convert: the task was refused with 0 container runs. Re-select restored the accepted version and the next task verified. History kept all three events</td>
+</tr>
+<tr>
+<td>Revoke</td>
+<td>After revoking the merge capability, resubmitting the earlier verified batch was <strong>not</strong> replayed: refused, 0 executions</td>
+</tr>
+</tbody>
+</table></div>
+<p>Final counters: 7 container runs started, 6 completed executions (the 7th was the deliberately killed one), 0 model calls, 0 proposal calls, 1 replay. The same journeys were also checked in the browser UI, including a download.</p>
+<p>Stale-pin, tampered-receipt, tampered-bundle, wrong-scope and failed-verification refusals are covered by unit tests (<code>tests/test_operator_runtime.py</code>), not by the live journeys.</p>
+<h2 id="limits">Limits</h2>
+<ul>
+<li><strong>Trusted local scope only.</strong> The capabilities are marked <code>trusted_local_experiment</code> and <code>production_approved: false</code>. The SQ-1 store-writer weakness and the same-user holdout boundary from M2 are unchanged.</li>
+<li><strong>Narrow contract.</strong> Only the <code>id,group,bytes</code> inventory shape. Real files of other shapes need an explicit adapter.</li>
+<li><strong>Rollback here is a disable.</strong> The only earlier permitted version is the M2 baseline, which cannot perform these operations. No second accepted version exists yet.</li>
+<li><strong>Docker image check is bounded to 5 s.</strong> On a heavily loaded PC it can fail closed (EXECUTION_FAILED); resubmitting retries.</li>
+<li><strong>Usability, not research.</strong> These demonstrations do not satisfy Level A, Level B or a new held-out study. The independent oracle is the same M2 oracle; the PowerShell listing is the extra outside reference.</li>
+<li>Tested on one Windows 11 host with Docker Desktop.</li>
+</ul>
+<h2 id="review">Review</h2>
+<p>An independent read-only reviewer (Opus) returned ACCEPT WITH FIXES with no blockers. All should-fix items were fixed before packaging: replay now respects revocation and pin changes, failed checks are not cached, unverified output is never parsed or shown as a result, verifier timeouts are handled, registry writes are transactional, STOP during execution discards the output, and session tokens are redacted from the evidence.</p>
+<h2 id="identity">Identity</h2>
+<p>&lt;!-- identity:start --&gt;</p>
+<ul>
+<li>Runtime commit: <code>c7683fe82f5e7a5527b5bf70b93edcde3b7d5d40</code> (repository <code>hive-ai</code>, local). Evaluated revision for the regression gate: <code>f65d950ae3fd7dca3dbdbff9252b3567d083af87</code>.</li>
+<li>Regression gate on the evaluated revision: 1042 passed, 3 skipped, 0 failed on f65d950 (89 min); then a one-line readiness display fix with focused tests 39 passed, 1 skipped; clean-launch of the exported package VERIFIED/PASS.</li>
+<li>Package: <a href="/hive/downloads/HIVE_Operator_Prototype_c7683fe.zip"><code>HIVE_Operator_Prototype_c7683fe.zip</code></a>, SHA-256 <code>4fa79b889dae9c4e519f50b02f9dc3e959ed918b4420cd682cce60ffda227e6f</code>. Publication manifest: <a href="/hive/implementation/operator-prototype-publication.json"><code>operator-prototype-publication.json</code></a>.</li>
+<li>Capability bundle <code>build/operator/capabilities_m2.json</code>, SHA-256 <code>8d2a608e5678ef14581819a091eab17673f4133477f78911dc5a865be123a736</code>. Accepted genomes: convert <code>5ac1c937...</code>, merge <code>a06169a5...</code> (pinned in <code>configs/operator_policy.json</code>).</li>
+<li>Historical references: M2 runtime <code>1799c58</code>, protocol <code>d4b71d2</code>, M2 publication PR #69.
+&lt;!-- identity:end --&gt;</li>
+</ul>
+<h2 id="cost">Cost</h2>
+<p>Coding agents this build, list price: about $12 (conductor about $10.3, independent reviewer $1.5), so the cumulative estimate is about $97 of the $120 ceiling. That cumulative figure carries forward the M2 report's estimate (about $85); it is not a reconciled ledger. Runtime: 0 model calls, $0; local container runs only.</p>
+<h2 id="next">Next</h2>
+<p>The next pressure experiment is one bounded discovery problem chosen from real failure records, with a richer inventory where search actually matters. It is not authorised by this build.</p>
+</article><section class="backlinks"><h2>Referenced by <span>2</span></h2><div><a href="/hive/notes/HOME/"><span>HOME</span>HIVE framework and research vault<small>related to</small></a><a href="/hive/notes/STATUS/"><span>STATUS</span>Implementation Status<small>related to</small></a></div></section></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#launch">Launch</a><a class="toc-h2" href="#the-two-operations">The two operations</a><a class="toc-h2" href="#how-a-task-runs">How a task runs</a><a class="toc-h2" href="#demonstration-on-real-inputs-24-nov">Demonstration on real inputs (24 Nov)</a><a class="toc-h2" href="#limits">Limits</a><a class="toc-h2" href="#review">Review</a><a class="toc-h2" href="#identity">Identity</a><a class="toc-h2" href="#cost">Cost</a><a class="toc-h2" href="#next">Next</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework 0.2 · Coder directions 0.4</span></a><span>Prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/updates/HIVE_Research_Update_Adaptive_Organization_and_Self_Learning_2026-11-20.md" download>Research update</a><a href="/hive/updates/HIVE_Coder_Information_Packet_2026-11-20.md" download>Coder packet · 0.4</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Original vault · 0.2</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

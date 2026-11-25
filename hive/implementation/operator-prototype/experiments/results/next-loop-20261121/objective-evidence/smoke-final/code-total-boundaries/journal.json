@@ -1,0 +1,187 @@
+{
+  "store": "smoke-final/code-total-boundaries",
+  "original_job_count": 1,
+  "jobs": [
+    {
+      "id": "c8f4fd1dccea4da4a956a900fb325e71",
+      "spec": {
+        "allow_retry": false,
+        "learn_feedback": false,
+        "mission_id": "code-total-boundaries",
+        "operation_key": "e38295137a38b84486b37c14bcef0bb422261617640fba7f314418f40b805a7c",
+        "retry_count": 0,
+        "route": "tool",
+        "task": {
+          "allowed_tools": [
+            "isolated_code"
+          ],
+          "category": "code_mission",
+          "critical": false,
+          "evaluator": "code_mission_v1",
+          "expected": {},
+          "id": "code-code-total-boundaries-objective-candidate",
+          "input": {
+            "manifest": {
+              "allowlist": [
+                "app.py"
+              ],
+              "id": "code-total-boundaries",
+              "image": {
+                "digest": "sha256:07d4824036af339fa1b6ef769cc99d9c10a141769538b52b3b597c84f7a7b535",
+                "reference": "python:3.11-slim"
+              },
+              "limits": {
+                "cpu_count": 1,
+                "memory_mb": 128,
+                "output_bytes": 8192,
+                "pids": 32,
+                "timeout_s": 15
+              },
+              "mounts": "read_only_source_clean_copy",
+              "network": "none",
+              "patches": [
+                {
+                  "content": "def total(values):\n    return sum(values)\n",
+                  "id": "objective-candidate",
+                  "path": "app.py",
+                  "sha256": "3251dbf18617cd67c47707cb9bd1611dbac212ff0ee9814a75b8ce1f34b85aad"
+                }
+              ],
+              "repo": {
+                "path": "D:\\Repos\\hive-ai\\.hive\\objective-smoke-20261121-r2\\sources\\code-total-boundaries",
+                "revision": "cf313e3a5b24a715b92fbc8662bd34d35c21d451",
+                "source_sha256": "8da3547084a9dae064f28868d90525327ff185919c66b968e63d2a2c602ba9ec"
+              },
+              "schema_version": 1,
+              "verifier": {
+                "cases": [
+                  {
+                    "args": [
+                      []
+                    ],
+                    "expected": 0,
+                    "id": "empty",
+                    "kwargs": {}
+                  },
+                  {
+                    "args": [
+                      [
+                        7
+                      ]
+                    ],
+                    "expected": 7,
+                    "id": "one",
+                    "kwargs": {}
+                  },
+                  {
+                    "args": [
+                      [
+                        -9,
+                        2,
+                        -4
+                      ]
+                    ],
+                    "expected": -11,
+                    "id": "negative",
+                    "kwargs": {}
+                  },
+                  {
+                    "args": [
+                      [
+                        9007199254740993,
+                        100000000000000000000,
+                        -3
+                      ]
+                    ],
+                    "expected": 100009007199254740990,
+                    "id": "large-integers",
+                    "kwargs": {}
+                  }
+                ],
+                "function": "total",
+                "module": "app",
+                "path": "verifier.json",
+                "protocol": "json_function_v1",
+                "sha256": "bb2757778a7aaf56f0d726accaa8d8376e9262b18aa2d528c6677e5d3f74f5de"
+              },
+              "worker_files": [
+                "app.py"
+              ]
+            },
+            "operation_key": "e38295137a38b84486b37c14bcef0bb422261617640fba7f314418f40b805a7c",
+            "patch_id": "objective-candidate"
+          },
+          "permissions": {
+            "routes": [
+              "tool"
+            ],
+            "version": 1
+          },
+          "prompt": "Run the pinned isolated code function contract.",
+          "split": "development",
+          "tool_schemas": {
+            "isolated_code": {
+              "manifest_id": "string",
+              "patch_id": "string"
+            }
+          }
+        }
+      },
+      "state": "BLOCKED",
+      "owner": "worker-48428",
+      "generation": 1,
+      "pid": 48428,
+      "result": {
+        "evidence_ref": "artifacts/33ac2f1872233bda77500b6485f98fce5b8770d25609fec72ea9857cb2acdce6.json",
+        "failure": null,
+        "passed": true,
+        "report_ref": "artifacts/efe4381303addd9e754c4550c36795e558bfe3bbf1811581431645782444c7c9.json",
+        "valid": true
+      }
+    }
+  ],
+  "events": [
+    {
+      "seq": 1,
+      "job_id": "c8f4fd1dccea4da4a956a900fb325e71",
+      "state": "QUEUED",
+      "detail": null
+    },
+    {
+      "seq": 2,
+      "job_id": "c8f4fd1dccea4da4a956a900fb325e71",
+      "state": "RUNNING",
+      "detail": {
+        "owner": "worker-48428"
+      }
+    },
+    {
+      "seq": 3,
+      "job_id": "c8f4fd1dccea4da4a956a900fb325e71",
+      "state": "VERIFYING",
+      "detail": null
+    },
+    {
+      "seq": 4,
+      "job_id": "c8f4fd1dccea4da4a956a900fb325e71",
+      "state": "REVIEWING",
+      "detail": {
+        "evidence_ref": "artifacts/33ac2f1872233bda77500b6485f98fce5b8770d25609fec72ea9857cb2acdce6.json"
+      }
+    },
+    {
+      "seq": 5,
+      "job_id": "c8f4fd1dccea4da4a956a900fb325e71",
+      "state": "BLOCKED",
+      "detail": null
+    }
+  ],
+  "mission_config_hash": "17abb5470e515dfd317ad443df1f4d5d87f5cd1cfd3db5c1ca08be80f6741b36",
+  "budget": {
+    "cycles": 1,
+    "requests": 0,
+    "tokens_actual": 0,
+    "tokens_reserved": 0,
+    "wall_s": 1.6400000000139698
+  }
+}

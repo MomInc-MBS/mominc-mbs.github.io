@@ -1,0 +1,88 @@
+{
+  "items": [
+    {
+      "authorized": true,
+      "depends_on": [],
+      "history": [
+        "artifacts/ca01128f6d0119c478ee426b7800a8a872b0f31b2dcb6d9af61070d320bfab23.json",
+        "artifacts/bb642d912f9888a8facad1d504d418b1aa4683e316096a0b5218f027a2440ef3.json",
+        "artifacts/0601d1f134cc9b9e9bca6b33f2dde2e3b625075daa7dd3e0c344165476d11c31.json",
+        "artifacts/5db79e022eed648c62715652bffcd24321b1b8b622416ebb8ca95382328853ac.json"
+      ],
+      "hypothesis": "Frozen dev4 reproduces the published gates with absolute stores; the preserved parent-relative H11 counterexample requires a separate dev5 path repair.",
+      "id": "reproduce-dev4",
+      "next_command": "Run WP0 commands from the verified published ZIP.",
+      "owner": "Terra",
+      "status": "COMPLETED"
+    },
+    {
+      "authorized": true,
+      "depends_on": [],
+      "history": [
+        "artifacts/ee2884de32c2e139257f464b3d404f7743d8d90b389359459b129175f6807ea3.json"
+      ],
+      "hypothesis": "An honest twelve-position intake can be prepared without fabricating approved unused sources.",
+      "id": "level-a-intake",
+      "next_command": "Review docs/LEVEL_A_OPERATOR_INTAKE.md and non-executable intake template.",
+      "owner": "Astra",
+      "status": "COMPLETED"
+    },
+    {
+      "authorized": true,
+      "depends_on": [],
+      "history": [
+        "artifacts/b6dab831daf020068e8af2310cc6c6bfc1cb4d1a43a31dc7abbd242b79f5b333.json"
+      ],
+      "hypothesis": "A separately versioned policy protects eligible exact-tool tasks and preserves historical decisions.",
+      "id": "p2-development",
+      "next_command": "python -m pytest tests/unit/test_p2_exact_tool.py -q",
+      "owner": "Luna",
+      "status": "COMPLETED"
+    },
+    {
+      "authorized": true,
+      "depends_on": [
+        "p2-development"
+      ],
+      "history": [
+        "artifacts/428e7107441d2a787bd0ea014dbecc268327faf9f6a3df851f517a601babbe91.json"
+      ],
+      "hypothesis": "Independent counterexamples and full regression reject unsafe P2 routing while the default remains unchanged.",
+      "id": "p2-independent-review",
+      "next_command": "Review candidate diff; run focused P2 negatives and complete regression.",
+      "owner": "Terra",
+      "status": "COMPLETED"
+    },
+    {
+      "authorized": true,
+      "depends_on": [
+        "reproduce-dev4",
+        "level-a-intake",
+        "p2-independent-review"
+      ],
+      "history": [],
+      "hypothesis": "One canonical live release pointer and separate quarantined supplement preserve dev4 provenance and honest gates.",
+      "id": "publish-verified-loop",
+      "next_command": "python tools/check_hive.py; verify live manifest and ZIP hashes.",
+      "owner": "Astra",
+      "status": "PENDING"
+    },
+    {
+      "authorized": true,
+      "depends_on": [
+        "publish-verified-loop"
+      ],
+      "history": [],
+      "hypothesis": "Twelve approved unused independent tasks can pass frozen mechanical and editorial gates within a new finite allocation.",
+      "id": "fresh-level-a-execution",
+      "next_command": "BLOCKED: need approved sources, reviewers and new finite allocation; no inference dispatch.",
+      "owner": "Operator",
+      "status": "PENDING"
+    }
+  ],
+  "manifest_ref": "artifacts/53f6a7c764c3a5fbfd0d3541bbfa55744493e0e256d0384aa9264e0824b4fafa.json",
+  "manifest_sha256": "53f6a7c764c3a5fbfd0d3541bbfa55744493e0e256d0384aa9264e0824b4fafa",
+  "next_item": "publish-verified-loop",
+  "mission_authority": false,
+  "note": "Engineering queue does not clear STOP, grant inference, reset budgets or approve policy."
+}

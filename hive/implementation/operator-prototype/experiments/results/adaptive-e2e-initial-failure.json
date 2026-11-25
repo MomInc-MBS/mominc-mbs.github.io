@@ -1,0 +1,156 @@
+{
+  "schemaVersion": "report-1",
+  "run": {
+    "id": "01a1fd10-79f4-714e-a8b3-ae4a16c30f91",
+    "specVersion": "0.1",
+    "runner": {
+      "name": "e2e",
+      "version": "0.21.1"
+    },
+    "status": "failed",
+    "exitCode": 1,
+    "startedAt": "2026-11-21T07:44:38.095Z",
+    "finishedAt": "2026-11-21T07:44:40.683Z",
+    "project": {
+      "id": "hive-local",
+      "configDigest": "48d3cf02481507b7d460880e730c2f9a3c298110ec437aeb1d15605bad2d093a"
+    },
+    "environment": {
+      "ci": false,
+      "trustNoticeShown": false,
+      "os": "win32 10.0.26200",
+      "arch": "x64",
+      "runtime": "node v24.19.0"
+    },
+    "vcs": {
+      "commit": "8737869b8f4c6e33096ead5c13d1a435323ec5cd",
+      "branch": "build/autonomous-v0.1",
+      "dirty": true
+    },
+    "targets": [
+      {
+        "id": "cli",
+        "index": 0,
+        "platform": "tools",
+        "environment": "test",
+        "engine": {
+          "name": "none",
+          "version": "unversioned",
+          "spiVersion": 1
+        },
+        "capabilities": [],
+        "artifactCapabilities": [],
+        "stateCapability": false
+      }
+    ],
+    "serialGroups": [],
+    "results": [
+      {
+        "id": "7411f548b1290086181bccd7b7a06a6dc4ebefbe27db10dca010f3ce96c4b39a",
+        "testId": "tests/e2e/adaptive.e2e.ts::adaptive%20CLI%20resumes%20after%20STOP%20and%20retains%20completed%20evidence%20without%20new%20work%20%28synthetic%29",
+        "kind": "test",
+        "declarationIndex": 0,
+        "titlePath": [
+          "adaptive CLI resumes after STOP and retains completed evidence without new work (synthetic)"
+        ],
+        "file": "tests/e2e/adaptive.e2e.ts",
+        "source": {
+          "file": "tests/e2e/adaptive.e2e.ts",
+          "line": 28,
+          "column": 1
+        },
+        "targetId": "cli",
+        "platform": "tools",
+        "agent": "default",
+        "repeat": 0,
+        "tags": [],
+        "selected": true,
+        "status": "failed",
+        "attempts": [
+          {
+            "id": "01a1fd10-7bfb-73b1-af60-fee5af479aee",
+            "index": 0,
+            "status": "failed",
+            "startedAt": "2026-11-21T07:44:38.395Z",
+            "durationMs": 447,
+            "artifacts": [],
+            "error": {
+              "category": "test",
+              "code": "ERROR",
+              "message": "Command failed: python -c \nimport sys\nimport hive.orchestrator as runtime\nfrom hive.experiment_runner import execute\nfrom hive.cli import main\ndef synthetic(task, route, config):\n    result = execute(task, 'tool', config)\n    if route.startswith('local_'):\n        result.update(model=config['model'], model_digest='synthetic-e2e', backend='synthetic')\n    return result\nruntime.execute = synthetic\nraise SystemExit(main(sys.argv[1:]))\n --store C:\\Users\\ianmy\\AppData\\Local\\Temp\\hive-adaptive-e2e-V6wDEE adaptive --config C:\\Users\\ianmy\\AppData\\Local\\Temp\\hive-adaptive-e2e-V6wDEE\\config.json --rounds 3\n{\"error\": \"RuntimeError: kill switch\"}�\n",
+              "retryable": false,
+              "phase": "body"
+            },
+            "secondaryErrors": [],
+            "cleanup": "complete",
+            "steps": []
+          }
+        ]
+      },
+      {
+        "id": "4c90e4b0262f56e1d8bb470f710a86204826db27cae42b8fdf373af7eb643f4b",
+        "testId": "tests/e2e/cli.e2e.ts::CLI%20queues%2C%20stops%2C%20resumes%2C%20verifies%20and%20restores%20a%20task",
+        "kind": "test",
+        "declarationIndex": 0,
+        "titlePath": [
+          "CLI queues, stops, resumes, verifies and restores a task"
+        ],
+        "file": "tests/e2e/cli.e2e.ts",
+        "source": {
+          "file": "tests/e2e/cli.e2e.ts",
+          "line": 13,
+          "column": 1
+        },
+        "targetId": "cli",
+        "platform": "tools",
+        "agent": "default",
+        "repeat": 0,
+        "tags": [],
+        "selected": true,
+        "status": "passed",
+        "attempts": [
+          {
+            "id": "01a1fd10-7ede-7eb7-a07b-cb4faa08aba5",
+            "index": 0,
+            "status": "passed",
+            "startedAt": "2026-11-21T07:44:39.134Z",
+            "durationMs": 1536,
+            "artifacts": [],
+            "secondaryErrors": [],
+            "cleanup": "complete",
+            "steps": []
+          }
+        ]
+      }
+    ],
+    "errors": [],
+    "summary": {
+      "discovered": 2,
+      "selected": 2,
+      "executed": 2,
+      "passed": 1,
+      "failed": 1,
+      "flaky": 0,
+      "skipped": 0
+    },
+    "limits": {
+      "maxAgentContextBytes": 16384,
+      "maxLedgerBytes": 8192,
+      "maxObservationBytes": 262144,
+      "maxEventsPerStep": 1000,
+      "maxModelTokensPerCall": 64000
+    },
+    "usage": {
+      "discoveredResults": 2,
+      "maxAgentContextBytes": 0,
+      "maxLedgerBytes": 0,
+      "maxObservationBytes": 0,
+      "artifactBytes": 0,
+      "downloads": 0,
+      "events": 0,
+      "modelTokens": 0,
+      "maxModelCallsInStep": 0,
+      "maxActionStepsInStep": 0
+    }
+  }
+}

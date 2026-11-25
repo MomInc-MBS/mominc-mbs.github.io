@@ -1,0 +1,151 @@
+{
+  "date": "2026-11-21T21:41:51.689974+00:00",
+  "status": "objective_verified_editorial_pending",
+  "authorization": "Ian said: Any long form stream will do",
+  "source_group": "studio-nov03-2044",
+  "original_duration_s": 2353.75,
+  "original_sha256": "36693d47ba2be52c2af10e3ce7f2a3e2325c12627861b21f3ea20ca3318b67cc",
+  "transcript_sha256": "a056a75156a7dcba867aad0791c160dee16422a6468f676d0188d30ae62c3774",
+  "pairing": {
+    "sha256": "a74c9538903af2357b2c3ebdf64d2ea24c918f3af5b837e2a9909ba2b583ca58",
+    "historical_container": "mp4",
+    "current_container": "mkv",
+    "basis": "same basename and duration within 0.001s; audio alignment not independently verified"
+  },
+  "prior_exposure": "Existing VOD edit/transcription batch; prior HIVE use unknown; not an unused A2 task",
+  "unused_a2_tasks": 0,
+  "genuine_batches_executed": 1,
+  "objective_jobs_verified": 2,
+  "editorial_acceptances": 0,
+  "excerpt": {
+    "offset_ms": 8390,
+    "duration_ms": 28320,
+    "selection": "First seven complete transcript cues, before model execution",
+    "media_sha256": "5c2f4edd25c09b58b686583aa46b85ea1c2cfe7832c942efedc472b68aa34a00",
+    "srt_sha256": "5b7022661877ac229546fdf3f377551653927094e999dfb963462bcfd1065c57",
+    "transformation": "CPU H.264/AAC 640px preview; subtitle timestamps subtract offset; text preserved",
+    "cue_mapping": [
+      {
+        "excerpt_cue_id": "c0001",
+        "original_cue_id": "c0001",
+        "source_start_ms": 9390,
+        "source_end_ms": 11810
+      },
+      {
+        "excerpt_cue_id": "c0002",
+        "original_cue_id": "c0002",
+        "source_start_ms": 13450,
+        "source_end_ms": 13990
+      },
+      {
+        "excerpt_cue_id": "c0003",
+        "original_cue_id": "c0003",
+        "source_start_ms": 17640,
+        "source_end_ms": 18500
+      },
+      {
+        "excerpt_cue_id": "c0004",
+        "original_cue_id": "c0004",
+        "source_start_ms": 21380,
+        "source_end_ms": 22900
+      },
+      {
+        "excerpt_cue_id": "c0005",
+        "original_cue_id": "c0005",
+        "source_start_ms": 25390,
+        "source_end_ms": 26530
+      },
+      {
+        "excerpt_cue_id": "c0006",
+        "original_cue_id": "c0006",
+        "source_start_ms": 29600,
+        "source_end_ms": 30560
+      },
+      {
+        "excerpt_cue_id": "c0007",
+        "original_cue_id": "c0007",
+        "source_start_ms": 33230,
+        "source_end_ms": 35710
+      }
+    ]
+  },
+  "source": {
+    "media_sha256": "5c2f4edd25c09b58b686583aa46b85ea1c2cfe7832c942efedc472b68aa34a00",
+    "srt_sha256": "5b7022661877ac229546fdf3f377551653927094e999dfb963462bcfd1065c57",
+    "media_size": 7918134,
+    "srt_size": 379,
+    "model_digest": "a45646773d1ee8a6c1557c7de09a68e78a74f2990c4174a1408f65e777db150c",
+    "config_hash": "b13bdd53219beb89f93919006d2ce7e0b2402628ed2062f5a9d827fab7b32633",
+    "runtime": {
+      "version": "0.3.0.dev2",
+      "commit": "unversioned",
+      "source_sha256": "e8dc974bf4e71f44879bd0a5dfe4194f09d97cd29c9c19c77be11a6be0a6631c"
+    }
+  },
+  "source_commit": "7983ae045dacfdec18de18cb29dc46174c58ae30",
+  "verifier_sha256": "63499321b49c73d2a0af46b1d884880bffa20feee0ab92022869e7e763b2fc0a",
+  "request_utf8_bytes": 795,
+  "model": "myr5-hold-local:latest",
+  "resources": {
+    "cycles": 2,
+    "requests": 1,
+    "tokens_actual": 17,
+    "tokens_reserved": 128,
+    "wall_s": 7.641000000061467
+  },
+  "input_tokens": null,
+  "input_token_measurement": "unavailable from adapter",
+  "jobs": [
+    "a9c91e583cc7440694ad19fd50a7a07a",
+    "78a8289a47c34cdbbc2ac791658ae897"
+  ],
+  "selected_cues": [
+    {
+      "cue_id": "c0001",
+      "source_start_ms": 9390,
+      "source_end_ms": 11810
+    },
+    {
+      "cue_id": "c0004",
+      "source_start_ms": 21380,
+      "source_end_ms": 22900
+    }
+  ],
+  "learning": {
+    "clip_route_used": "local_direct",
+    "evidence_status": "experimental",
+    "next_proposed_route": "tool",
+    "next_proposed_route_executed": false,
+    "policy_after_sha256": "f504c496e824b8ec2ba9f83fee64c76a25a1eb57425682417bff41c31264c281",
+    "policy_before_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+    "source_split": "development"
+  },
+  "fresh_process_replay": {
+    "passed": true,
+    "new_requests": 0,
+    "unchanged_budget": true,
+    "identical_outputs_and_mtimes": true
+  },
+  "stop_resume": {
+    "blocked_while_stopped": true,
+    "resumed_same_result": true,
+    "new_requests": 0
+  },
+  "independent_original_cue_check": true,
+  "policy_reload_hash_verified": true,
+  "policy_deployed": false,
+  "restore_demo": "synthetic checkpoint controls only; no production approval claimed",
+  "output_sha256": {
+    "captions.srt": "5b7022661877ac229546fdf3f377551653927094e999dfb963462bcfd1065c57",
+    "clips.json": "b3aae0ba78bb3f4e219485a105e6d447210e26a7e29b6370afe28436ceb0aa72"
+  },
+  "events_sha256": "ad761ef56d070a66196f5d09b5f475660da93e7a70691bb8656c2cac95b5088e",
+  "storage_bytes": 59713,
+  "private_inputs": "Original recording, transcript, preview and raw model evidence retained locally; only hashes/counts/times published",
+  "limitations": [
+    "28.32-second excerpt from 39:13.75 previously edited stream; not full-stream processing",
+    "Audio alignment and editorial quality not independently accepted",
+    "One source group and two jobs do not satisfy the unused12-task/two-type gate",
+    "Next proposed tool route is not counted as executed"
+  ]
+}

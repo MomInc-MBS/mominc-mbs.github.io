@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "status": "UNTESTED",
+  "preregistration": "docs/V03_EXPERIMENT_DESIGN.md remains authoritative; no weakened gain or cost-only promotion gate",
+  "model_calls_authorized": 0,
+  "promotion_authorized": false,
+  "minimum_matched_holdout_tasks": 24,
+  "controls": ["strongest_applicable_deterministic_tool", "best_fixed_specialist", "best_fixed_team", "learning_disabled"],
+  "candidate": "development_only_learned_frozen_policy",
+  "holdout_requirements": ["source_disjoint", "answers_sealed_before_adaptation", "one_use_exposure_ledger", "independent_evaluator"],
+  "retention": "two chronological waves; revisit previous families and evaluate previously unseen families",
+  "analysis": "paired source-group quality and cost with preregistered uncertainty and practical gain; retain every scheduled failure/abstention",
+  "integrity_and_regression": "zero critical false acceptance, leakage, unauthorized action or duplicate irreversible effect",
+  "outcome_if_insufficient": "INCONCLUSIVE, never a positive research result",
+  "next_action": "Complete Level A and independently freeze the final source inventory, preregistration, sample size and bounded authorization before new inference or holdout exposure."
+}

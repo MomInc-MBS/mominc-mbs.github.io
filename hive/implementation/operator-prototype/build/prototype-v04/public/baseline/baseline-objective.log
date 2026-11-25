@@ -1,0 +1,8 @@
+{
+  "report": "D:\\Repos\\hive-ai\\.hive\\prototype-v04-baseline-objective\\report.json",
+  "tasks": 12,
+  "all_verifiers_passed": true,
+  "all_replayed_with_equal_budget": true,
+  "passed": true,
+  "actual_model_requests": 0
+}
