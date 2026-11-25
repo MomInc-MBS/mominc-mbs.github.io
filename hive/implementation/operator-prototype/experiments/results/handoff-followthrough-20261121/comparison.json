@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "runtime": {
+    "commit": "f3d7e556ea41076e1138761d72df06b5ce3e0f65",
+    "source_sha256": "0d97faae0caae31f3918296dccaa21be5ba0ba7a1cec0c8ca5f880001d17320e",
+    "version": "0.3.0.dev6"
+  },
+  "classification": "synthetic_development",
+  "decision": "QUARANTINE",
+  "model_calls": 0,
+  "quality_delta": 0,
+  "quality_gain": false,
+  "promotion_authorized": false,
+  "matched_outputs": {
+    "report": "output-comparison-final.json",
+    "tasks_per_arm": 6,
+    "executed_arms": 3,
+    "jobs": 18,
+    "assessment": {
+      "accepted": false,
+      "baseline_quality": 1.0,
+      "baseline_utility": 1.0,
+      "by_family": {
+        "structured_data": {
+          "baseline_quality": 1.0,
+          "baseline_utility": 1.0,
+          "candidate_quality": 1.0,
+          "candidate_utility": 1.0,
+          "latency_delta_s": 0.0,
+          "losses": 0,
+          "n": 6,
+          "quality_delta": 0.0,
+          "ties": 6,
+          "tokens_delta": 0.0,
+          "utility_delta": 0.0,
+          "utility_losses": 0,
+          "utility_ties": 6,
+          "utility_wins": 0,
+          "wins": 0
+        }
+      },
+      "candidate_quality": 1.0,
+      "candidate_utility": 1.0,
+      "comparison_baseline": "experimental_incumbent",
+      "critical_regression": false,
+      "critical_regressions": [],
+      "family_uncertainty": {
+        "interpretation": "Observed family means and range; no independent sampling, confidence interval, or significance claim. Overall deltas are task-weighted; family means weight categories equally.",
+        "method": "descriptive_family_dispersion",
+        "n_families": 1,
+        "quality_delta": {
+          "equal_family_mean": 0.0,
+          "max": 0.0,
+          "median": 0.0,
+          "min": 0.0
+        },
+        "utility_delta": {
+          "equal_family_mean": 0.0,
+          "max": 0.0,
+          "median": 0.0,
+          "min": 0.0
+        }
+      },
+      "latency_delta_s": 0.0,
+      "losses": 0,
+      "n": 6,
+      "promote_eligible": false,
+      "quality_delta": 0.0,
+      "reasons": [
+        "quality tied; utility-only changes cannot establish improvement",
+        "experimental incumbent comparison only; independent promotion gate required"
+      ],
+      "ties": 6,
+      "tokens_delta": 0.0,
+      "utility_delta": 0.0,
+      "utility_losses": 0,
+      "utility_ties": 6,
+      "utility_tolerance": 1e-12,
+      "utility_wins": 0,
+      "valid_n": 6,
+      "wins": 0
+    },
+    "costs": {
+      "learning_disabled": {
+        "charged": {
+          "cycles": 6,
+          "requests": 0,
+          "tokens_actual": 0,
+          "tokens_reserved": 0,
+          "wall_s": 1.5780000000959262
+        },
+        "observed_end_to_end_s": 4.125
+      },
+      "p2": {
+        "charged": {
+          "cycles": 6,
+          "requests": 0,
+          "tokens_actual": 0,
+          "tokens_reserved": 0,
+          "wall_s": 2.109000000054948
+        },
+        "observed_end_to_end_s": 4.76700000022538
+      },
+      "strongest_tool": {
+        "charged": {
+          "cycles": 6,
+          "requests": 0,
+          "tokens_actual": 0,
+          "tokens_reserved": 0,
+          "wall_s": 2.3730000000214204
+        },
+        "observed_end_to_end_s": 6.047000000020489
+      }
+    }
+  },
+  "negative_conditions": {
+    "report": "negative-comparison-final.json",
+    "cases": 10,
+    "decisions": 40,
+    "rejection_dispatches": 14,
+    "controller_time": "unmeasured"
+  },
+  "blocked_model_arms": {
+    "fixed_specialist": "No new inference allocation",
+    "fixed_two_component_team": "No new inference allocation; both components must be charged"
+  },
+  "source_independence": "not established; all inputs are exposed synthetic development",
+  "offline_replay": "p2-evidence-replay.json"
+}

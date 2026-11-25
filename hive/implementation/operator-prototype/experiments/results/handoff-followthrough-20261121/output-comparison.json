@@ -1,0 +1,720 @@
+{
+  "arms": {
+    "learning_disabled": {
+      "costs": {
+        "cycles": 6,
+        "requests": 0,
+        "tokens_actual": 0,
+        "tokens_reserved": 0,
+        "wall_s": 1.6419999999925494
+      },
+      "feedback_enabled": false,
+      "observed_end_to_end_s": 4.530999999959022,
+      "policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+      "rows": [
+        {
+          "category": "structured_data",
+          "critical": false,
+          "end_to_end_s": 0.9370000000344589,
+          "latency_s": 0.0,
+          "non_execution_overhead_s": 0.9370000000344589,
+          "passed": true,
+          "task_id": "data-one-row-minimum",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        },
+        {
+          "category": "structured_data",
+          "critical": false,
+          "end_to_end_s": 0.8439999999245629,
+          "latency_s": 0.0,
+          "non_execution_overhead_s": 0.8439999999245629,
+          "passed": true,
+          "task_id": "data-maximum-byte-value",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        },
+        {
+          "category": "structured_data",
+          "critical": false,
+          "end_to_end_s": 0.5779999999795109,
+          "latency_s": 0.0,
+          "non_execution_overhead_s": 0.5779999999795109,
+          "passed": true,
+          "task_id": "data-repeated-group",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        },
+        {
+          "category": "structured_data",
+          "critical": false,
+          "end_to_end_s": 0.765999999945052,
+          "latency_s": 0.0,
+          "non_execution_overhead_s": 0.765999999945052,
+          "passed": true,
+          "task_id": "data-unicode-groups",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        },
+        {
+          "category": "structured_data",
+          "critical": false,
+          "end_to_end_s": 0.6870000000344589,
+          "latency_s": 0.0,
+          "non_execution_overhead_s": 0.6870000000344589,
+          "passed": true,
+          "task_id": "data-interleaved-groups",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        },
+        {
+          "category": "structured_data",
+          "critical": false,
+          "end_to_end_s": 0.7190000000409782,
+          "latency_s": 0.0,
+          "non_execution_overhead_s": 0.7190000000409782,
+          "passed": true,
+          "task_id": "data-row-count-boundary-256",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        }
+      ],
+      "scheduled": 6,
+      "timing_scope": "Enqueue through execution, governance, verifier, evidence persistence and saved-output inspection; includes failed attempts in store costs"
+    },
+    "p2": {
+      "costs": {
+        "cycles": 6,
+        "requests": 0,
+        "tokens_actual": 0,
+        "tokens_reserved": 0,
+        "wall_s": 2.5799999999580905
+      },
+      "feedback_enabled": false,
+      "observed_end_to_end_s": 5.625000000232831,
+      "policy_hash": "9fc1973ae38cf2d70ede6453f035918dbecf7ddbc39bddf95b3044c959d0bf28",
+      "rows": [
+        {
+          "category": "structured_data",
+          "critical": false,
+          "end_to_end_s": 0.9529999999795109,
+          "latency_s": 0.0,
+          "non_execution_overhead_s": 0.9529999999795109,
+          "passed": true,
+          "task_id": "data-one-row-minimum",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        },
+        {
+          "category": "structured_data",
+          "critical": false,
+          "end_to_end_s": 0.9060000000754371,
+          "latency_s": 0.0,
+          "non_execution_overhead_s": 0.9060000000754371,
+          "passed": true,
+          "task_id": "data-maximum-byte-value",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        },
+        {
+          "category": "structured_data",
+          "critical": false,
+          "end_to_end_s": 0.9060000000754371,
+          "latency_s": 0.0,
+          "non_execution_overhead_s": 0.9060000000754371,
+          "passed": true,
+          "task_id": "data-repeated-group",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        },
+        {
+          "category": "structured_data",
+          "critical": false,
+          "end_to_end_s": 0.8440000000409782,
+          "latency_s": 0.0,
+          "non_execution_overhead_s": 0.8440000000409782,
+          "passed": true,
+          "task_id": "data-unicode-groups",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        },
+        {
+          "category": "structured_data",
+          "critical": false,
+          "end_to_end_s": 0.9220000000204891,
+          "latency_s": 0.0,
+          "non_execution_overhead_s": 0.9220000000204891,
+          "passed": true,
+          "task_id": "data-interleaved-groups",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        },
+        {
+          "category": "structured_data",
+          "critical": false,
+          "end_to_end_s": 1.0940000000409782,
+          "latency_s": 0.0,
+          "non_execution_overhead_s": 1.0940000000409782,
+          "passed": true,
+          "task_id": "data-row-count-boundary-256",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        }
+      ],
+      "scheduled": 6,
+      "timing_scope": "Enqueue through execution, governance, verifier, evidence persistence and saved-output inspection; includes failed attempts in store costs"
+    },
+    "strongest_tool": {
+      "costs": {
+        "cycles": 6,
+        "requests": 0,
+        "tokens_actual": 0,
+        "tokens_reserved": 0,
+        "wall_s": 1.9209999999729916
+      },
+      "feedback_enabled": false,
+      "observed_end_to_end_s": 4.734999999869615,
+      "policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+      "rows": [
+        {
+          "category": "structured_data",
+          "critical": false,
+          "end_to_end_s": 0.8439999999245629,
+          "latency_s": 0.0,
+          "non_execution_overhead_s": 0.8439999999245629,
+          "passed": true,
+          "task_id": "data-one-row-minimum",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        },
+        {
+          "category": "structured_data",
+          "critical": false,
+          "end_to_end_s": 0.7029999999795109,
+          "latency_s": 0.0,
+          "non_execution_overhead_s": 0.7029999999795109,
+          "passed": true,
+          "task_id": "data-maximum-byte-value",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        },
+        {
+          "category": "structured_data",
+          "critical": false,
+          "end_to_end_s": 0.734000000054948,
+          "latency_s": 0.0,
+          "non_execution_overhead_s": 0.734000000054948,
+          "passed": true,
+          "task_id": "data-repeated-group",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        },
+        {
+          "category": "structured_data",
+          "critical": false,
+          "end_to_end_s": 0.8279999999795109,
+          "latency_s": 0.0,
+          "non_execution_overhead_s": 0.8279999999795109,
+          "passed": true,
+          "task_id": "data-unicode-groups",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        },
+        {
+          "category": "structured_data",
+          "critical": false,
+          "end_to_end_s": 0.8129999999655411,
+          "latency_s": 0.0,
+          "non_execution_overhead_s": 0.8129999999655411,
+          "passed": true,
+          "task_id": "data-interleaved-groups",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        },
+        {
+          "category": "structured_data",
+          "critical": false,
+          "end_to_end_s": 0.8129999999655411,
+          "latency_s": 0.0,
+          "non_execution_overhead_s": 0.8129999999655411,
+          "passed": true,
+          "task_id": "data-row-count-boundary-256",
+          "tokens": 0,
+          "utility": 1.0,
+          "valid": true
+        }
+      ],
+      "scheduled": 6,
+      "timing_scope": "Enqueue through execution, governance, verifier, evidence persistence and saved-output inspection; includes failed attempts in store costs"
+    }
+  },
+  "assessment": {
+    "accepted": false,
+    "baseline_quality": 1.0,
+    "baseline_utility": 1.0,
+    "by_family": {
+      "structured_data": {
+        "baseline_quality": 1.0,
+        "baseline_utility": 1.0,
+        "candidate_quality": 1.0,
+        "candidate_utility": 1.0,
+        "latency_delta_s": 0.0,
+        "losses": 0,
+        "n": 6,
+        "quality_delta": 0.0,
+        "ties": 6,
+        "tokens_delta": 0.0,
+        "utility_delta": 0.0,
+        "utility_losses": 0,
+        "utility_ties": 6,
+        "utility_wins": 0,
+        "wins": 0
+      }
+    },
+    "candidate_quality": 1.0,
+    "candidate_utility": 1.0,
+    "comparison_baseline": "experimental_incumbent",
+    "critical_regression": false,
+    "critical_regressions": [],
+    "family_uncertainty": {
+      "interpretation": "Observed family means and range; no independent sampling, confidence interval, or significance claim. Overall deltas are task-weighted; family means weight categories equally.",
+      "method": "descriptive_family_dispersion",
+      "n_families": 1,
+      "quality_delta": {
+        "equal_family_mean": 0.0,
+        "max": 0.0,
+        "median": 0.0,
+        "min": 0.0
+      },
+      "utility_delta": {
+        "equal_family_mean": 0.0,
+        "max": 0.0,
+        "median": 0.0,
+        "min": 0.0
+      }
+    },
+    "latency_delta_s": 0.0,
+    "losses": 0,
+    "n": 6,
+    "promote_eligible": false,
+    "quality_delta": 0.0,
+    "reasons": [
+      "quality tied; utility-only changes cannot establish improvement",
+      "experimental incumbent comparison only; independent promotion gate required"
+    ],
+    "ties": 6,
+    "tokens_delta": 0.0,
+    "utility_delta": 0.0,
+    "utility_losses": 0,
+    "utility_ties": 6,
+    "utility_tolerance": 1e-12,
+    "utility_wins": 0,
+    "valid_n": 6,
+    "wins": 0
+  },
+  "blocked_arms": {
+    "fixed_specialist": "No new inference allocation",
+    "fixed_two_component_team": "No new inference allocation; both components must be charged"
+  },
+  "candidate_policy_version": 4,
+  "config_hash": "4a9f9f94f19164ff3dda4cc8bf93afa128d5b1c336036d4a008ec9097f427259",
+  "decision": "QUARANTINE",
+  "input_plan_hash": "d17f3563018557f90f039596602bcc63069c96c164b27bcefdb53e153835678f",
+  "model_calls": 0,
+  "promotion_authorized": false,
+  "quality_gain": false,
+  "runtime": {
+    "commit": "a1b8fb6ee9a856be90bf0573f5af208438395c2a",
+    "source_sha256": "3d6ba06fc1a54192aee211dbedcd590aed15eca83bbfd5c7376cca58bc1b754d",
+    "version": "0.3.0.dev5"
+  },
+  "scope": "Synthetic development tool-only comparison; no model/team quality measurement",
+  "source_groups": [
+    "synthetic-data-one-row-minimum",
+    "synthetic-data-maximum-byte-value",
+    "synthetic-data-repeated-group",
+    "synthetic-data-unicode-groups",
+    "synthetic-data-interleaved-groups",
+    "synthetic-data-row-count-boundary-256"
+  ],
+  "source_independence_established": false,
+  "trace": [
+    {
+      "arm": "strongest_tool",
+      "decision_ref": "artifacts/5eb99a43f01fd97ef27771e1fd4503acddf6f1011cdbfac967dd16d6c1fd4890.json",
+      "evidence_ref": "artifacts/3f9427b6205de3075a27ac6582ae922089696748c8302942e1c497a5a64f5739.json",
+      "input_hash": "6c4b6291032966e6f58748ff6264bbe479edd95680aabcd56528412a6e929293",
+      "job_id": "8f23caae34634f69880749fed352a09c",
+      "output_hash": "7936249fd4c2a981cb824d8b482a87bbfa68504caf2a58bf1bd7335adda5f89b",
+      "policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+      "route": "tool",
+      "source_group": "synthetic-data-one-row-minimum",
+      "task_hash": "366b9f21a33225a4beecba16f3d056e6d8d84c5f89b00c5d55b90c1e6ae3453f",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "strongest_tool",
+      "decision_ref": "artifacts/45c15bcb3062273afcdc84d6795795d7f35cd0cc26d0efa88980f1d99b31cef4.json",
+      "evidence_ref": "artifacts/bca93e3f6279e8f34db49175054abcb2acce338fea2d7044d7956fe5b2354dd7.json",
+      "input_hash": "124d53e603d3d0af8f56f225298acca76646d17945904101dfa021f74fa6fe52",
+      "job_id": "9eab1fbc6773498db41211a9856a9df0",
+      "output_hash": "850a5153bc7dbc606b51273127dc23b6f5c7951250c88ae04e0d7e6ca038afca",
+      "policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+      "route": "tool",
+      "source_group": "synthetic-data-maximum-byte-value",
+      "task_hash": "6db89d7bb452076879c9afafe55488303a8454e9e04b60ed67e992734ccb01f2",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "strongest_tool",
+      "decision_ref": "artifacts/6a57bbfb6ddce08eac40452d975f02874857628597ff01f23ffcaa59c266f1ac.json",
+      "evidence_ref": "artifacts/eca192a7e6ec63b4ccad55db6a5f15075ba3f807d5ebce38b2aaa9b3c630e9ff.json",
+      "input_hash": "438e8e4db6ba3162feeb250443fb0c787d42f09723fbdbd4c0b0267268d8e4c8",
+      "job_id": "9c1567d2fbf0420cb975fb56adf6f61b",
+      "output_hash": "3483ef12c4874358cf0a817bedaa8f9a1e666cc1660bd78b90787c18c8c6ac47",
+      "policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+      "route": "tool",
+      "source_group": "synthetic-data-repeated-group",
+      "task_hash": "2c3e85f0dd2c554ca9bfef2a6c772f3e9ce17458aeff0fa242e169e8edb9761e",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "strongest_tool",
+      "decision_ref": "artifacts/550c2c66e4375461ae47ee383a44cf4e7246f552634874a511e9fd27539870be.json",
+      "evidence_ref": "artifacts/3cf00896f69a2014f5bdfe9bcad8ab99f3e1a91c09e4265b14534c7029ce38c4.json",
+      "input_hash": "877e997f1e549298378b7fdd7f1f429bf6686cb801dd0c71ad4a6e87af3971b0",
+      "job_id": "723ded4676a74c83b7e37e20a85f746a",
+      "output_hash": "9010a45d726df5cfab076298fccde166b3df570deb0e3a45eb99ad7f83e485e7",
+      "policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+      "route": "tool",
+      "source_group": "synthetic-data-unicode-groups",
+      "task_hash": "267344641574d870f7a393184dc34dde05a267ae7d5c1dde3a977bfb08b7dc29",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "strongest_tool",
+      "decision_ref": "artifacts/45f2e844285a8a40652d3842740d2f324630035e0d367a0fbc68b7f3ee8f78ba.json",
+      "evidence_ref": "artifacts/abeac86c2294d375a2649e7123151ab6ce368662679b3d72aeacf309a8c4262f.json",
+      "input_hash": "f55a16a2dd2df74b6e8829c5c2a975271e3cb0e82b7a686ae8eae64afd8c96ce",
+      "job_id": "48819c164d7b47849becf3864e03bc33",
+      "output_hash": "7cc42aaa71c1a3c484516243969b294363b2ecd0872f242e2201cf74bdf4db47",
+      "policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+      "route": "tool",
+      "source_group": "synthetic-data-interleaved-groups",
+      "task_hash": "559fbcce2560fb1d805fe92372166a51b74e9ddc4175a01bd2335857832a9fef",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "strongest_tool",
+      "decision_ref": "artifacts/e557191308a38bb3956f9f9ab73ab298c28d84820fdca2b0c70e923005cbcfd6.json",
+      "evidence_ref": "artifacts/b54b4ef67a3a67e2b623788ffa298cb507212b158eca18fbe7fedcab88fb9dd9.json",
+      "input_hash": "cc1ad5d327759d5c810629c3cd2c3707f0a94b09d941d0689711ee5de006efa5",
+      "job_id": "e85bc56b84724613996bf8a54d9570c0",
+      "output_hash": "669d26cd403e23871bfc490eff64f4a6a180a8c1a4de0540eb3159db6cb365d1",
+      "policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+      "route": "tool",
+      "source_group": "synthetic-data-row-count-boundary-256",
+      "task_hash": "0f5674def31c4768abe95d8e0901ff34dcad56933a7e9868538cd6adc836b5be",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "learning_disabled",
+      "decision_ref": "artifacts/24e707dc5cba1f90460bda92d930218925b6a22a765c28587a53a84909233fa5.json",
+      "evidence_ref": "artifacts/67f8576fe5ddb3b52d37be9f32f714cab5eb19138ea09a39b79894d4c65cb18b.json",
+      "input_hash": "6c4b6291032966e6f58748ff6264bbe479edd95680aabcd56528412a6e929293",
+      "job_id": "5519d98cf43a472fa24a5c5ec088aff0",
+      "output_hash": "7936249fd4c2a981cb824d8b482a87bbfa68504caf2a58bf1bd7335adda5f89b",
+      "policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+      "route": "tool",
+      "source_group": "synthetic-data-one-row-minimum",
+      "task_hash": "366b9f21a33225a4beecba16f3d056e6d8d84c5f89b00c5d55b90c1e6ae3453f",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "learning_disabled",
+      "decision_ref": "artifacts/bcddec52434d2168f1e8d3762654c26fd2a7082a657ef28a7de71653cd5fe67f.json",
+      "evidence_ref": "artifacts/f28fee4c48c9261edcd25ed1e9a9916a4dc91d21e03e116c452e211cbe1613d5.json",
+      "input_hash": "124d53e603d3d0af8f56f225298acca76646d17945904101dfa021f74fa6fe52",
+      "job_id": "8a28d499cc184e9296075d809229a96d",
+      "output_hash": "850a5153bc7dbc606b51273127dc23b6f5c7951250c88ae04e0d7e6ca038afca",
+      "policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+      "route": "tool",
+      "source_group": "synthetic-data-maximum-byte-value",
+      "task_hash": "6db89d7bb452076879c9afafe55488303a8454e9e04b60ed67e992734ccb01f2",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "learning_disabled",
+      "decision_ref": "artifacts/9f68677b1c86d199f87c63ccc9e26b6ed4530bed205cd0e11eb02fd02f0cb670.json",
+      "evidence_ref": "artifacts/224ab3a656ad506bb6409c96f6977abde82722635b88b5f6ae9cfd1115d769a2.json",
+      "input_hash": "438e8e4db6ba3162feeb250443fb0c787d42f09723fbdbd4c0b0267268d8e4c8",
+      "job_id": "ed6708e4f02a4d618c088b254321b81a",
+      "output_hash": "3483ef12c4874358cf0a817bedaa8f9a1e666cc1660bd78b90787c18c8c6ac47",
+      "policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+      "route": "tool",
+      "source_group": "synthetic-data-repeated-group",
+      "task_hash": "2c3e85f0dd2c554ca9bfef2a6c772f3e9ce17458aeff0fa242e169e8edb9761e",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "learning_disabled",
+      "decision_ref": "artifacts/49c163386ddccfc5421f024ee2e38e4f4a6aa753767029ee5bdc6a9847f55cf4.json",
+      "evidence_ref": "artifacts/ada7a773efbafea12ebd9632f0ee7b990adaacb21939e7c69dd729eae4724f0a.json",
+      "input_hash": "877e997f1e549298378b7fdd7f1f429bf6686cb801dd0c71ad4a6e87af3971b0",
+      "job_id": "9236f718042049df9d0748a1691f79e9",
+      "output_hash": "9010a45d726df5cfab076298fccde166b3df570deb0e3a45eb99ad7f83e485e7",
+      "policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+      "route": "tool",
+      "source_group": "synthetic-data-unicode-groups",
+      "task_hash": "267344641574d870f7a393184dc34dde05a267ae7d5c1dde3a977bfb08b7dc29",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "learning_disabled",
+      "decision_ref": "artifacts/b05f440d80f0d495b9753d5924f73270802e1934b2e2cb56008bbdc3e70e27fe.json",
+      "evidence_ref": "artifacts/513c2821a4bc66cf4ce6b98791aaddae7c78c66f15a88a51e71a2914129ea35a.json",
+      "input_hash": "f55a16a2dd2df74b6e8829c5c2a975271e3cb0e82b7a686ae8eae64afd8c96ce",
+      "job_id": "e0cb330ceaa14d898e300e427ec2e12b",
+      "output_hash": "7cc42aaa71c1a3c484516243969b294363b2ecd0872f242e2201cf74bdf4db47",
+      "policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+      "route": "tool",
+      "source_group": "synthetic-data-interleaved-groups",
+      "task_hash": "559fbcce2560fb1d805fe92372166a51b74e9ddc4175a01bd2335857832a9fef",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "learning_disabled",
+      "decision_ref": "artifacts/a7f5f6e21ba923eec2ed1f1e61664da95fcc6d900625746a64d034b6315a70d8.json",
+      "evidence_ref": "artifacts/315ae518cb19fddc4153fc42c13f1fabc65ef09d8a21a4bfe683b03f9e3b4d9b.json",
+      "input_hash": "cc1ad5d327759d5c810629c3cd2c3707f0a94b09d941d0689711ee5de006efa5",
+      "job_id": "fb65c1b1044b4235ae1abf8a3e6c657d",
+      "output_hash": "669d26cd403e23871bfc490eff64f4a6a180a8c1a4de0540eb3159db6cb365d1",
+      "policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+      "route": "tool",
+      "source_group": "synthetic-data-row-count-boundary-256",
+      "task_hash": "0f5674def31c4768abe95d8e0901ff34dcad56933a7e9868538cd6adc836b5be",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "p2",
+      "decision_ref": "artifacts/16d8f34de67b27d5f70a4db6161193869256d254dee47af849c83dc0337c811f.json",
+      "evidence_ref": "artifacts/c03ff81de32f9728b3f53c784428d009618235cd3108379b4ab28eed131d0107.json",
+      "input_hash": "6c4b6291032966e6f58748ff6264bbe479edd95680aabcd56528412a6e929293",
+      "job_id": "1578bd5874684263a224e1f2d7ae4ab7",
+      "output_hash": "7936249fd4c2a981cb824d8b482a87bbfa68504caf2a58bf1bd7335adda5f89b",
+      "policy_hash": "9fc1973ae38cf2d70ede6453f035918dbecf7ddbc39bddf95b3044c959d0bf28",
+      "route": "tool",
+      "source_group": "synthetic-data-one-row-minimum",
+      "task_hash": "366b9f21a33225a4beecba16f3d056e6d8d84c5f89b00c5d55b90c1e6ae3453f",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "p2",
+      "decision_ref": "artifacts/e59bf581431e47364e7f2ad168b56234729dfb09395ef406486d208ddf4275c4.json",
+      "evidence_ref": "artifacts/2d0a7a251ef747b4e520ee07c17ecececacc7ab6851262db53aa88e8b60cfea7.json",
+      "input_hash": "124d53e603d3d0af8f56f225298acca76646d17945904101dfa021f74fa6fe52",
+      "job_id": "d30b899ec6664f0a9fea20dd9fd32d35",
+      "output_hash": "850a5153bc7dbc606b51273127dc23b6f5c7951250c88ae04e0d7e6ca038afca",
+      "policy_hash": "9fc1973ae38cf2d70ede6453f035918dbecf7ddbc39bddf95b3044c959d0bf28",
+      "route": "tool",
+      "source_group": "synthetic-data-maximum-byte-value",
+      "task_hash": "6db89d7bb452076879c9afafe55488303a8454e9e04b60ed67e992734ccb01f2",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "p2",
+      "decision_ref": "artifacts/d739ad61ac8a912bab220aa2ae945756655a1bfffe90188b7ab4cf90b1245d9a.json",
+      "evidence_ref": "artifacts/a9d55c7b1c581b8dc16ec72039055895f35b14e7a558f4e80e377d1afd72df27.json",
+      "input_hash": "438e8e4db6ba3162feeb250443fb0c787d42f09723fbdbd4c0b0267268d8e4c8",
+      "job_id": "99fa2b8130d343128d435a84733450cb",
+      "output_hash": "3483ef12c4874358cf0a817bedaa8f9a1e666cc1660bd78b90787c18c8c6ac47",
+      "policy_hash": "9fc1973ae38cf2d70ede6453f035918dbecf7ddbc39bddf95b3044c959d0bf28",
+      "route": "tool",
+      "source_group": "synthetic-data-repeated-group",
+      "task_hash": "2c3e85f0dd2c554ca9bfef2a6c772f3e9ce17458aeff0fa242e169e8edb9761e",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "p2",
+      "decision_ref": "artifacts/44f332fa685013b8cb5866a1fb68f709c1e87c7593c7d2d7196b03ff71fe96f2.json",
+      "evidence_ref": "artifacts/1d72646ec322d1c28cd4a609b164c2b58aab8bd476a6e29d9b569f5a54138975.json",
+      "input_hash": "877e997f1e549298378b7fdd7f1f429bf6686cb801dd0c71ad4a6e87af3971b0",
+      "job_id": "f9450058233d4d689de9d64551d4d78d",
+      "output_hash": "9010a45d726df5cfab076298fccde166b3df570deb0e3a45eb99ad7f83e485e7",
+      "policy_hash": "9fc1973ae38cf2d70ede6453f035918dbecf7ddbc39bddf95b3044c959d0bf28",
+      "route": "tool",
+      "source_group": "synthetic-data-unicode-groups",
+      "task_hash": "267344641574d870f7a393184dc34dde05a267ae7d5c1dde3a977bfb08b7dc29",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "p2",
+      "decision_ref": "artifacts/f25dda272c7c43c1825985f88a7fc908538743f63c58815d3352469e78bb83af.json",
+      "evidence_ref": "artifacts/0c8e25f3f80ba02b1c3753ae7adc355aadb8f823f4991192f2ee9cd17dcbeb69.json",
+      "input_hash": "f55a16a2dd2df74b6e8829c5c2a975271e3cb0e82b7a686ae8eae64afd8c96ce",
+      "job_id": "04370a6f67c74696abd8889f2b60e415",
+      "output_hash": "7cc42aaa71c1a3c484516243969b294363b2ecd0872f242e2201cf74bdf4db47",
+      "policy_hash": "9fc1973ae38cf2d70ede6453f035918dbecf7ddbc39bddf95b3044c959d0bf28",
+      "route": "tool",
+      "source_group": "synthetic-data-interleaved-groups",
+      "task_hash": "559fbcce2560fb1d805fe92372166a51b74e9ddc4175a01bd2335857832a9fef",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    },
+    {
+      "arm": "p2",
+      "decision_ref": "artifacts/accd96861f23c4dd41dc3e0188bbe63b09e3ebdb7666a2b42daa88b954e5c654.json",
+      "evidence_ref": "artifacts/ade344d4779ac078cf3443c863e9639c19b728b5b98b5640b97ed6c6d3ebaf6e.json",
+      "input_hash": "cc1ad5d327759d5c810629c3cd2c3707f0a94b09d941d0689711ee5de006efa5",
+      "job_id": "56fd9516a42e44f3a68ab314a0edbf71",
+      "output_hash": "669d26cd403e23871bfc490eff64f4a6a180a8c1a4de0540eb3159db6cb365d1",
+      "policy_hash": "9fc1973ae38cf2d70ede6453f035918dbecf7ddbc39bddf95b3044c959d0bf28",
+      "route": "tool",
+      "source_group": "synthetic-data-row-count-boundary-256",
+      "task_hash": "0f5674def31c4768abe95d8e0901ff34dcad56933a7e9868538cd6adc836b5be",
+      "verifier": {
+        "evaluator": "hive-evaluator-v1",
+        "passed": true,
+        "quality": 1,
+        "reason": "passed",
+        "unsupported": 0,
+        "valid": true
+      }
+    }
+  ]
+}

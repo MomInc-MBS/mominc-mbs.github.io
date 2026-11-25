@@ -3,6 +3,34 @@
   "coder_revision": "0.4",
   "latest_research_id": "ADAPTIVE",
   "latest_implementation_id": "READINESS",
+  "latest_implementation_id_meaning": "frozen engineering baseline named by CURRENT_RELEASE.json; see current_status for latest evidence and runtime",
+  "latest_accepted_evidence_id": "M2",
+  "latest_packaged_runtime_id": "OPERATOR",
+  "operational_readiness_id": "OPERATOR",
+  "current_status": {
+    "schema_version": 1,
+    "as_of": "2026-11-24",
+    "note": "Authoritative source for current pointers on the home page, STATUS, llms.txt and build-manifest.json. Older notes keep their original claims and dates.",
+    "latest_accepted_evidence": {
+      "note_id": "M2",
+      "title": "M2 accepted: a local model found two new effects",
+      "summary": "Protocol m2-local-model-two-effects-v1 accepted 24 Nov (runtime 1799c58, protocol d4b71d2): R 60/60 vs 0/60, C 60/60 vs 30/60, reuse 20/20; synthetic data, tiny search space, no search-skill claim."
+    },
+    "latest_packaged_runtime": {
+      "note_id": "OPERATOR",
+      "title": "Operator Prototype",
+      "summary": "Runtime c7683fe packaged 24 Nov as HIVE_Operator_Prototype_c7683fe.zip with a one-command launcher and runbook; retained M2 capabilities run through the console with an independent oracle; zero model calls.",
+      "download": "downloads/HIVE_Operator_Prototype_c7683fe.zip",
+      "download_sha256": "4fa79b889dae9c4e519f50b02f9dc3e959ed918b4420cd682cce60ffda227e6f",
+      "publication_manifest": "implementation/operator-prototype-publication.json"
+    },
+    "operational_readiness": {
+      "note_id": "OPERATOR",
+      "title": "Operator Prototype",
+      "status": "OPERATOR_PROTOTYPE_USABLE_TRUSTED_LOCAL",
+      "summary": "Usable locally on one Windows host for two operations (convert to canonical JSON; merge with whole-file quarantine) on the id,group,bytes contract; trusted local experiment scope, not production-approved; Level A not accepted, Level B untested."
+    }
+  },
   "current_release": {
     "schema_version": 1,
     "release_id": "READINESS",
@@ -22,8 +50,8 @@
       "publication_manifest": "implementation/objective-dev5-publication.json"
     },
     "latest_verified": {
-      "note_id": "OPERATIONAL",
-      "publication_manifest": "implementation/prototype-v04-publication.json"
+      "note_id": "OPERATOR",
+      "publication_manifest": "implementation/operator-prototype-publication.json"
     }
   },
   "updates": [
@@ -215,12 +243,18 @@
       "path": "updates/HIVE_M2_Accepted_2026-11-24.md",
       "date": "2026-11-24",
       "sha256": "748bf66f6bb0ef1a7537efc1ebe0f55e477a39dd6883334db2ab7e64407c915a"
+    },
+    {
+      "id": "OPERATOR",
+      "path": "updates/HIVE_Operator_Prototype_2026-11-24.md",
+      "date": "2026-11-24",
+      "sha256": "1f563f88d755d9c6a33ceb0554a69c7fdf0eedcb9fd8863ed9b9cee428c9125f"
     }
   ],
   "source_zip_sha256": "2b726d055a17a25495854890d8d0001cb791006273e0f8eb5515788b7e00c61a",
   "counts": {
-    "research_pages": 317,
-    "graph_edges": 2545,
+    "research_pages": 318,
+    "graph_edges": 2548,
     "originals": 19
   },
   "scope": "Static research reference plus executable local model/tool controller evidence. No production model runtime or compounding-learning claim."

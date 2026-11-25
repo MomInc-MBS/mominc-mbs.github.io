@@ -1,0 +1,1040 @@
+{
+  "classification": "synthetic development mechanical decision probe",
+  "runtime": {
+    "version": "0.3.0.dev5",
+    "commit": "a1b8fb6ee9a856be90bf0573f5af208438395c2a",
+    "source_sha256": "2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c"
+  },
+  "hive_model_calls": 0,
+  "dispatches": 0,
+  "cases": [
+    {
+      "name": "exact_tool_available",
+      "policy_version": 3,
+      "requested_route": null,
+      "decision": {
+        "eligible": [
+          "tool",
+          "local_direct"
+        ],
+        "selected": "tool",
+        "error": null,
+        "receipt": {
+          "version": "hive-governor-p0-v1",
+          "baseline_score_version": "fixed-prior-cost-v1",
+          "task_hash": "a0231882de7ef53e480feb5a4e6387da377589c9eeaa9c465aa112b972bf6b80",
+          "config_hash": "25bc4530e67c87713c6541bd1304aca2f27133185f1337d769991ea3ebfb6aa3",
+          "source_hash": "2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c",
+          "policy_hash": "00b7968c90858ea3c9cc3b8d0ef3ba16de579d8b5593fecfc8feebae8a04bbe9",
+          "requested_route": null,
+          "eligible_routes": [
+            "tool",
+            "local_direct"
+          ],
+          "selected_route": "tool",
+          "alternatives": [
+            {
+              "route": "tool",
+              "eligible": true,
+              "reasons": [],
+              "prior": {
+                "observations": 0,
+                "quality_rate": null,
+                "mean_utility": null
+              },
+              "baseline_score": {
+                "version": "fixed-prior-cost-v1",
+                "score": 0.5,
+                "success_prior": 0.5,
+                "reserved_tokens": 0,
+                "cost_penalty": 0.0,
+                "latency_prior": null,
+                "latency_status": "unmeasured"
+              }
+            },
+            {
+              "route": "local_direct",
+              "eligible": true,
+              "reasons": [],
+              "prior": {
+                "observations": 0,
+                "quality_rate": null,
+                "mean_utility": null
+              },
+              "baseline_score": {
+                "version": "fixed-prior-cost-v1",
+                "score": 0.25,
+                "success_prior": 0.5,
+                "reserved_tokens": 128,
+                "cost_penalty": 0.25,
+                "latency_prior": null,
+                "latency_status": "unmeasured"
+              }
+            }
+          ],
+          "policy_version": 3,
+          "route_source": "p2_exact_tool_preference",
+          "route_attribution": {
+            "source": "p2_exact_tool_preference",
+            "category": "math",
+            "eligible_routes": [
+              "tool",
+              "local_direct"
+            ],
+            "selected_route": "tool",
+            "task_hash": "a0231882de7ef53e480feb5a4e6387da377589c9eeaa9c465aa112b972bf6b80",
+            "source_hash": "2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c",
+            "config_hash": "25bc4530e67c87713c6541bd1304aca2f27133185f1337d769991ea3ebfb6aa3",
+            "policy_hash": "00b7968c90858ea3c9cc3b8d0ef3ba16de579d8b5593fecfc8feebae8a04bbe9",
+            "source_context": {
+              "declared_source_group": "synthetic-sol-decision-probe",
+              "input_sha256": "0504439aab3c04c26eeae19feb111b3363059e30ac28687ae01c14b0a1b4648d",
+              "evaluator": "math_exact",
+              "verifier_sha256": {
+                "verifier.py": "1ee3853546b98d31337be7aeb5d5d0af5bb565ad34ca1ee361a84965f0886bce",
+                "task_spec.py": "266f2532c826c1c95ac533d2931a1db50d27d097f5991f84c35a0be5fc314eaf"
+              }
+            }
+          }
+        }
+      },
+      "budget_before": {
+        "requests": 0,
+        "tokens_reserved": 0,
+        "tokens_actual": 0,
+        "wall_s": 0.0,
+        "cycles": 0
+      },
+      "budget_after": {
+        "requests": 0,
+        "tokens_reserved": 0,
+        "tokens_actual": 0,
+        "wall_s": 0.0,
+        "cycles": 0
+      }
+    },
+    {
+      "name": "exact_tool_permission_absent",
+      "policy_version": 3,
+      "requested_route": null,
+      "decision": {
+        "eligible": [
+          "local_direct"
+        ],
+        "selected": "local_direct",
+        "error": null,
+        "receipt": {
+          "version": "hive-governor-p0-v1",
+          "baseline_score_version": "fixed-prior-cost-v1",
+          "task_hash": "97b465f8f4345300d1fdfa177dc575b9807564934d9df1074fbd28f93f12acba",
+          "config_hash": "25bc4530e67c87713c6541bd1304aca2f27133185f1337d769991ea3ebfb6aa3",
+          "source_hash": "2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c",
+          "policy_hash": "00b7968c90858ea3c9cc3b8d0ef3ba16de579d8b5593fecfc8feebae8a04bbe9",
+          "requested_route": null,
+          "eligible_routes": [
+            "local_direct"
+          ],
+          "selected_route": "local_direct",
+          "alternatives": [
+            {
+              "route": "tool",
+              "eligible": false,
+              "reasons": [
+                "excluded by task permissions",
+                "excluded by task permissions"
+              ],
+              "prior": {
+                "observations": 0,
+                "quality_rate": null,
+                "mean_utility": null
+              },
+              "baseline_score": {
+                "version": "fixed-prior-cost-v1",
+                "score": 0.5,
+                "success_prior": 0.5,
+                "reserved_tokens": 0,
+                "cost_penalty": 0.0,
+                "latency_prior": null,
+                "latency_status": "unmeasured"
+              }
+            },
+            {
+              "route": "local_direct",
+              "eligible": true,
+              "reasons": [],
+              "prior": {
+                "observations": 0,
+                "quality_rate": null,
+                "mean_utility": null
+              },
+              "baseline_score": {
+                "version": "fixed-prior-cost-v1",
+                "score": 0.25,
+                "success_prior": 0.5,
+                "reserved_tokens": 128,
+                "cost_penalty": 0.25,
+                "latency_prior": null,
+                "latency_status": "unmeasured"
+              }
+            }
+          ],
+          "policy_version": 3,
+          "route_source": "policy_selection",
+          "route_attribution": {
+            "source": "policy_selection",
+            "category": "math",
+            "eligible_routes": [
+              "local_direct"
+            ],
+            "selected_route": "local_direct",
+            "task_hash": "97b465f8f4345300d1fdfa177dc575b9807564934d9df1074fbd28f93f12acba",
+            "source_hash": "2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c",
+            "config_hash": "25bc4530e67c87713c6541bd1304aca2f27133185f1337d769991ea3ebfb6aa3",
+            "policy_hash": "00b7968c90858ea3c9cc3b8d0ef3ba16de579d8b5593fecfc8feebae8a04bbe9",
+            "source_context": {
+              "declared_source_group": "synthetic-sol-decision-probe",
+              "input_sha256": "0504439aab3c04c26eeae19feb111b3363059e30ac28687ae01c14b0a1b4648d",
+              "evaluator": "math_exact",
+              "verifier_sha256": {
+                "verifier.py": "1ee3853546b98d31337be7aeb5d5d0af5bb565ad34ca1ee361a84965f0886bce",
+                "task_spec.py": "266f2532c826c1c95ac533d2931a1db50d27d097f5991f84c35a0be5fc314eaf"
+              }
+            }
+          },
+          "model_identity": {
+            "model": "myr5-hold-local:latest",
+            "digest": "test-adapter:__main__.NoInferenceAdapter",
+            "kind": "explicit-test-adapter"
+          }
+        }
+      },
+      "budget_before": {
+        "requests": 0,
+        "tokens_reserved": 0,
+        "tokens_actual": 0,
+        "wall_s": 0.0,
+        "cycles": 0
+      },
+      "budget_after": {
+        "requests": 0,
+        "tokens_reserved": 0,
+        "tokens_actual": 0,
+        "wall_s": 0.0,
+        "cycles": 0
+      }
+    },
+    {
+      "name": "exact_tool_scope_absent",
+      "policy_version": 3,
+      "requested_route": null,
+      "decision": {
+        "eligible": [
+          "local_direct"
+        ],
+        "selected": "local_direct",
+        "error": null,
+        "receipt": {
+          "version": "hive-governor-p0-v1",
+          "baseline_score_version": "fixed-prior-cost-v1",
+          "task_hash": "d353fb0505b58f5c7372dbcccdc104c41bf6fa9e0679295cf47410aec57c16d1",
+          "config_hash": "25bc4530e67c87713c6541bd1304aca2f27133185f1337d769991ea3ebfb6aa3",
+          "source_hash": "2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c",
+          "policy_hash": "00b7968c90858ea3c9cc3b8d0ef3ba16de579d8b5593fecfc8feebae8a04bbe9",
+          "requested_route": null,
+          "eligible_routes": [
+            "local_direct"
+          ],
+          "selected_route": "local_direct",
+          "alternatives": [
+            {
+              "route": "tool",
+              "eligible": false,
+              "reasons": [
+                "task scope does not grant required built-in tool multiply",
+                "task scope does not grant required built-in tool multiply"
+              ],
+              "prior": {
+                "observations": 0,
+                "quality_rate": null,
+                "mean_utility": null
+              },
+              "baseline_score": {
+                "version": "fixed-prior-cost-v1",
+                "score": 0.5,
+                "success_prior": 0.5,
+                "reserved_tokens": 0,
+                "cost_penalty": 0.0,
+                "latency_prior": null,
+                "latency_status": "unmeasured"
+              }
+            },
+            {
+              "route": "local_direct",
+              "eligible": true,
+              "reasons": [],
+              "prior": {
+                "observations": 0,
+                "quality_rate": null,
+                "mean_utility": null
+              },
+              "baseline_score": {
+                "version": "fixed-prior-cost-v1",
+                "score": 0.25,
+                "success_prior": 0.5,
+                "reserved_tokens": 128,
+                "cost_penalty": 0.25,
+                "latency_prior": null,
+                "latency_status": "unmeasured"
+              }
+            }
+          ],
+          "policy_version": 3,
+          "route_source": "policy_selection",
+          "route_attribution": {
+            "source": "policy_selection",
+            "category": "math",
+            "eligible_routes": [
+              "local_direct"
+            ],
+            "selected_route": "local_direct",
+            "task_hash": "d353fb0505b58f5c7372dbcccdc104c41bf6fa9e0679295cf47410aec57c16d1",
+            "source_hash": "2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c",
+            "config_hash": "25bc4530e67c87713c6541bd1304aca2f27133185f1337d769991ea3ebfb6aa3",
+            "policy_hash": "00b7968c90858ea3c9cc3b8d0ef3ba16de579d8b5593fecfc8feebae8a04bbe9",
+            "source_context": {
+              "declared_source_group": "synthetic-sol-decision-probe",
+              "input_sha256": "a6f4b807d8d6fa5ab76a81030e1e85d9b382f27e4cc2cb3fa81f9675652b601b",
+              "evaluator": "math_exact",
+              "verifier_sha256": {
+                "verifier.py": "1ee3853546b98d31337be7aeb5d5d0af5bb565ad34ca1ee361a84965f0886bce",
+                "task_spec.py": "266f2532c826c1c95ac533d2931a1db50d27d097f5991f84c35a0be5fc314eaf"
+              }
+            }
+          },
+          "model_identity": {
+            "model": "myr5-hold-local:latest",
+            "digest": "test-adapter:__main__.NoInferenceAdapter",
+            "kind": "explicit-test-adapter"
+          }
+        }
+      },
+      "budget_before": {
+        "requests": 0,
+        "tokens_reserved": 0,
+        "tokens_actual": 0,
+        "wall_s": 0.0,
+        "cycles": 0
+      },
+      "budget_after": {
+        "requests": 0,
+        "tokens_reserved": 0,
+        "tokens_actual": 0,
+        "wall_s": 0.0,
+        "cycles": 0
+      }
+    },
+    {
+      "name": "exact_tool_scope_absent_explicit_model",
+      "policy_version": 3,
+      "requested_route": "local_direct",
+      "decision": {
+        "eligible": [
+          "local_direct"
+        ],
+        "selected": "local_direct",
+        "error": null,
+        "receipt": {
+          "version": "hive-governor-p0-v1",
+          "baseline_score_version": "fixed-prior-cost-v1",
+          "task_hash": "d353fb0505b58f5c7372dbcccdc104c41bf6fa9e0679295cf47410aec57c16d1",
+          "config_hash": "25bc4530e67c87713c6541bd1304aca2f27133185f1337d769991ea3ebfb6aa3",
+          "source_hash": "2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c",
+          "policy_hash": "00b7968c90858ea3c9cc3b8d0ef3ba16de579d8b5593fecfc8feebae8a04bbe9",
+          "requested_route": "local_direct",
+          "eligible_routes": [
+            "local_direct"
+          ],
+          "selected_route": "local_direct",
+          "alternatives": [
+            {
+              "route": "tool",
+              "eligible": false,
+              "reasons": [
+                "task scope does not grant required built-in tool multiply",
+                "task scope does not grant required built-in tool multiply"
+              ],
+              "prior": {
+                "observations": 0,
+                "quality_rate": null,
+                "mean_utility": null
+              },
+              "baseline_score": {
+                "version": "fixed-prior-cost-v1",
+                "score": 0.5,
+                "success_prior": 0.5,
+                "reserved_tokens": 0,
+                "cost_penalty": 0.0,
+                "latency_prior": null,
+                "latency_status": "unmeasured"
+              }
+            },
+            {
+              "route": "local_direct",
+              "eligible": true,
+              "reasons": [],
+              "prior": {
+                "observations": 0,
+                "quality_rate": null,
+                "mean_utility": null
+              },
+              "baseline_score": {
+                "version": "fixed-prior-cost-v1",
+                "score": 0.25,
+                "success_prior": 0.5,
+                "reserved_tokens": 128,
+                "cost_penalty": 0.25,
+                "latency_prior": null,
+                "latency_status": "unmeasured"
+              }
+            }
+          ],
+          "policy_version": 3,
+          "route_source": "explicit_request",
+          "route_attribution": {
+            "source": "explicit_request",
+            "category": "math",
+            "eligible_routes": [
+              "local_direct"
+            ],
+            "selected_route": "local_direct",
+            "task_hash": "d353fb0505b58f5c7372dbcccdc104c41bf6fa9e0679295cf47410aec57c16d1",
+            "source_hash": "2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c",
+            "config_hash": "25bc4530e67c87713c6541bd1304aca2f27133185f1337d769991ea3ebfb6aa3",
+            "policy_hash": "00b7968c90858ea3c9cc3b8d0ef3ba16de579d8b5593fecfc8feebae8a04bbe9",
+            "source_context": {
+              "declared_source_group": "synthetic-sol-decision-probe",
+              "input_sha256": "a6f4b807d8d6fa5ab76a81030e1e85d9b382f27e4cc2cb3fa81f9675652b601b",
+              "evaluator": "math_exact",
+              "verifier_sha256": {
+                "verifier.py": "1ee3853546b98d31337be7aeb5d5d0af5bb565ad34ca1ee361a84965f0886bce",
+                "task_spec.py": "266f2532c826c1c95ac533d2931a1db50d27d097f5991f84c35a0be5fc314eaf"
+              }
+            }
+          },
+          "model_identity": {
+            "model": "myr5-hold-local:latest",
+            "digest": "test-adapter:__main__.NoInferenceAdapter",
+            "kind": "explicit-test-adapter"
+          }
+        }
+      },
+      "budget_before": {
+        "requests": 0,
+        "tokens_reserved": 0,
+        "tokens_actual": 0,
+        "wall_s": 0.0,
+        "cycles": 0
+      },
+      "budget_after": {
+        "requests": 0,
+        "tokens_reserved": 0,
+        "tokens_actual": 0,
+        "wall_s": 0.0,
+        "cycles": 0
+      }
+    },
+    {
+      "name": "missing_verifier",
+      "policy_version": 3,
+      "requested_route": null,
+      "decision": {
+        "eligible": [],
+        "selected": null,
+        "error": "no eligible route",
+        "receipt": {
+          "version": "hive-governor-p0-v1",
+          "baseline_score_version": "fixed-prior-cost-v1",
+          "task_hash": "a0231882de7ef53e480feb5a4e6387da377589c9eeaa9c465aa112b972bf6b80",
+          "config_hash": "25bc4530e67c87713c6541bd1304aca2f27133185f1337d769991ea3ebfb6aa3",
+          "source_hash": "2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c",
+          "policy_hash": "00b7968c90858ea3c9cc3b8d0ef3ba16de579d8b5593fecfc8feebae8a04bbe9",
+          "requested_route": null,
+          "eligible_routes": [],
+          "selected_route": null,
+          "alternatives": [
+            {
+              "route": "tool",
+              "eligible": false,
+              "reasons": [
+                "independent verifier unavailable: RuntimeError"
+              ],
+              "prior": {
+                "observations": 0,
+                "quality_rate": null,
+                "mean_utility": null
+              },
+              "baseline_score": {
+                "version": "fixed-prior-cost-v1",
+                "score": 0.5,
+                "success_prior": 0.5,
+                "reserved_tokens": 0,
+                "cost_penalty": 0.0,
+                "latency_prior": null,
+                "latency_status": "unmeasured"
+              }
+            },
+            {
+              "route": "local_direct",
+              "eligible": false,
+              "reasons": [
+                "independent verifier unavailable: RuntimeError"
+              ],
+              "prior": {
+                "observations": 0,
+                "quality_rate": null,
+                "mean_utility": null
+              },
+              "baseline_score": {
+                "version": "fixed-prior-cost-v1",
+                "score": 0.25,
+                "success_prior": 0.5,
+                "reserved_tokens": 128,
+                "cost_penalty": 0.25,
+                "latency_prior": null,
+                "latency_status": "unmeasured"
+              }
+            }
+          ],
+          "policy_version": 3,
+          "route_source": "abstention",
+          "route_attribution": {
+            "source": "abstention",
+            "category": "math",
+            "eligible_routes": [],
+            "selected_route": null,
+            "task_hash": "a0231882de7ef53e480feb5a4e6387da377589c9eeaa9c465aa112b972bf6b80",
+            "source_hash": "2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c",
+            "config_hash": "25bc4530e67c87713c6541bd1304aca2f27133185f1337d769991ea3ebfb6aa3",
+            "policy_hash": "00b7968c90858ea3c9cc3b8d0ef3ba16de579d8b5593fecfc8feebae8a04bbe9",
+            "source_context": {
+              "declared_source_group": "synthetic-sol-decision-probe",
+              "input_sha256": "0504439aab3c04c26eeae19feb111b3363059e30ac28687ae01c14b0a1b4648d",
+              "evaluator": "math_exact",
+              "verifier_sha256": {
+                "verifier.py": "1ee3853546b98d31337be7aeb5d5d0af5bb565ad34ca1ee361a84965f0886bce",
+                "task_spec.py": "266f2532c826c1c95ac533d2931a1db50d27d097f5991f84c35a0be5fc314eaf"
+              }
+            }
+          },
+          "error": "no eligible route"
+        }
+      },
+      "budget_before": {
+        "requests": 0,
+        "tokens_reserved": 0,
+        "tokens_actual": 0,
+        "wall_s": 0.0,
+        "cycles": 0
+      },
+      "budget_after": {
+        "requests": 0,
+        "tokens_reserved": 0,
+        "tokens_actual": 0,
+        "wall_s": 0.0,
+        "cycles": 0
+      }
+    },
+    {
+      "name": "model_budget_exhausted_exact_tool_available",
+      "policy_version": 3,
+      "requested_route": null,
+      "decision": {
+        "eligible": [
+          "tool"
+        ],
+        "selected": "tool",
+        "error": null,
+        "receipt": {
+          "version": "hive-governor-p0-v1",
+          "baseline_score_version": "fixed-prior-cost-v1",
+          "task_hash": "a0231882de7ef53e480feb5a4e6387da377589c9eeaa9c465aa112b972bf6b80",
+          "config_hash": "25bc4530e67c87713c6541bd1304aca2f27133185f1337d769991ea3ebfb6aa3",
+          "source_hash": "2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c",
+          "policy_hash": "00b7968c90858ea3c9cc3b8d0ef3ba16de579d8b5593fecfc8feebae8a04bbe9",
+          "requested_route": null,
+          "eligible_routes": [
+            "tool"
+          ],
+          "selected_route": "tool",
+          "alternatives": [
+            {
+              "route": "tool",
+              "eligible": true,
+              "reasons": [],
+              "prior": {
+                "observations": 0,
+                "quality_rate": null,
+                "mean_utility": null
+              },
+              "baseline_score": {
+                "version": "fixed-prior-cost-v1",
+                "score": 0.5,
+                "success_prior": 0.5,
+                "reserved_tokens": 0,
+                "cost_penalty": 0.0,
+                "latency_prior": null,
+                "latency_status": "unmeasured"
+              }
+            },
+            {
+              "route": "local_direct",
+              "eligible": false,
+              "reasons": [
+                "model request budget exhausted"
+              ],
+              "prior": {
+                "observations": 0,
+                "quality_rate": null,
+                "mean_utility": null
+              },
+              "baseline_score": {
+                "version": "fixed-prior-cost-v1",
+                "score": 0.25,
+                "success_prior": 0.5,
+                "reserved_tokens": 128,
+                "cost_penalty": 0.25,
+                "latency_prior": null,
+                "latency_status": "unmeasured"
+              }
+            }
+          ],
+          "policy_version": 3,
+          "route_source": "p2_exact_tool_preference",
+          "route_attribution": {
+            "source": "p2_exact_tool_preference",
+            "category": "math",
+            "eligible_routes": [
+              "tool"
+            ],
+            "selected_route": "tool",
+            "task_hash": "a0231882de7ef53e480feb5a4e6387da377589c9eeaa9c465aa112b972bf6b80",
+            "source_hash": "2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c",
+            "config_hash": "25bc4530e67c87713c6541bd1304aca2f27133185f1337d769991ea3ebfb6aa3",
+            "policy_hash": "00b7968c90858ea3c9cc3b8d0ef3ba16de579d8b5593fecfc8feebae8a04bbe9",
+            "source_context": {
+              "declared_source_group": "synthetic-sol-decision-probe",
+              "input_sha256": "0504439aab3c04c26eeae19feb111b3363059e30ac28687ae01c14b0a1b4648d",
+              "evaluator": "math_exact",
+              "verifier_sha256": {
+                "verifier.py": "1ee3853546b98d31337be7aeb5d5d0af5bb565ad34ca1ee361a84965f0886bce",
+                "task_spec.py": "266f2532c826c1c95ac533d2931a1db50d27d097f5991f84c35a0be5fc314eaf"
+              }
+            }
+          }
+        }
+      },
+      "budget_before": {
+        "cycles": 0,
+        "requests": 1,
+        "tokens_actual": 0,
+        "tokens_reserved": 128,
+        "wall_s": 0.0
+      },
+      "budget_after": {
+        "cycles": 0,
+        "requests": 1,
+        "tokens_actual": 0,
+        "tokens_reserved": 128,
+        "wall_s": 0.0
+      }
+    },
+    {
+      "name": "all_routes_budget_or_scope_blocked",
+      "policy_version": 3,
+      "requested_route": null,
+      "decision": {
+        "eligible": [],
+        "selected": null,
+        "error": "no eligible route",
+        "receipt": {
+          "version": "hive-governor-p0-v1",
+          "baseline_score_version": "fixed-prior-cost-v1",
+          "task_hash": "d353fb0505b58f5c7372dbcccdc104c41bf6fa9e0679295cf47410aec57c16d1",
+          "config_hash": "25bc4530e67c87713c6541bd1304aca2f27133185f1337d769991ea3ebfb6aa3",
+          "source_hash": "2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c",
+          "policy_hash": "00b7968c90858ea3c9cc3b8d0ef3ba16de579d8b5593fecfc8feebae8a04bbe9",
+          "requested_route": null,
+          "eligible_routes": [],
+          "selected_route": null,
+          "alternatives": [
+            {
+              "route": "tool",
+              "eligible": false,
+              "reasons": [
+                "task scope does not grant required built-in tool multiply",
+                "task scope does not grant required built-in tool multiply"
+              ],
+              "prior": {
+                "observations": 0,
+                "quality_rate": null,
+                "mean_utility": null
+              },
+              "baseline_score": {
+                "version": "fixed-prior-cost-v1",
+                "score": 0.5,
+                "success_prior": 0.5,
+                "reserved_tokens": 0,
+                "cost_penalty": 0.0,
+                "latency_prior": null,
+                "latency_status": "unmeasured"
+              }
+            },
+            {
+              "route": "local_direct",
+              "eligible": false,
+              "reasons": [
+                "model request budget exhausted"
+              ],
+              "prior": {
+                "observations": 0,
+                "quality_rate": null,
+                "mean_utility": null
+              },
+              "baseline_score": {
+                "version": "fixed-prior-cost-v1",
+                "score": 0.25,
+                "success_prior": 0.5,
+                "reserved_tokens": 128,
+                "cost_penalty": 0.25,
+                "latency_prior": null,
+                "latency_status": "unmeasured"
+              }
+            }
+          ],
+          "policy_version": 3,
+          "route_source": "abstention",
+          "route_attribution": {
+            "source": "abstention",
+            "category": "math",
+            "eligible_routes": [],
+            "selected_route": null,
+            "task_hash": "d353fb0505b58f5c7372dbcccdc104c41bf6fa9e0679295cf47410aec57c16d1",
+            "source_hash": "2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c",
+            "config_hash": "25bc4530e67c87713c6541bd1304aca2f27133185f1337d769991ea3ebfb6aa3",
+            "policy_hash": "00b7968c90858ea3c9cc3b8d0ef3ba16de579d8b5593fecfc8feebae8a04bbe9",
+            "source_context": {
+              "declared_source_group": "synthetic-sol-decision-probe",
+              "input_sha256": "a6f4b807d8d6fa5ab76a81030e1e85d9b382f27e4cc2cb3fa81f9675652b601b",
+              "evaluator": "math_exact",
+              "verifier_sha256": {
+                "verifier.py": "1ee3853546b98d31337be7aeb5d5d0af5bb565ad34ca1ee361a84965f0886bce",
+                "task_spec.py": "266f2532c826c1c95ac533d2931a1db50d27d097f5991f84c35a0be5fc314eaf"
+              }
+            }
+          },
+          "error": "no eligible route"
+        }
+      },
+      "budget_before": {
+        "cycles": 0,
+        "requests": 1,
+        "tokens_actual": 0,
+        "tokens_reserved": 128,
+        "wall_s": 0.0
+      },
+      "budget_after": {
+        "cycles": 0,
+        "requests": 1,
+        "tokens_actual": 0,
+        "tokens_reserved": 128,
+        "wall_s": 0.0
+      }
+    },
+    {
+      "name": "legacy_v1_exact_tool_scope_absent",
+      "policy_version": 1,
+      "requested_route": null,
+      "decision": {
+        "eligible": [
+          "local_direct"
+        ],
+        "selected": "local_direct",
+        "error": null,
+        "receipt": {
+          "version": "hive-governor-p0-v1",
+          "baseline_score_version": "fixed-prior-cost-v1",
+          "task_hash": "d353fb0505b58f5c7372dbcccdc104c41bf6fa9e0679295cf47410aec57c16d1",
+          "config_hash": "25bc4530e67c87713c6541bd1304aca2f27133185f1337d769991ea3ebfb6aa3",
+          "source_hash": "2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c",
+          "policy_hash": "4c52bbf808ac17c7873ecb0cc44f979d3e968ee23ff4ad6344bd2d186fac78a8",
+          "requested_route": null,
+          "eligible_routes": [
+            "local_direct"
+          ],
+          "selected_route": "local_direct",
+          "alternatives": [
+            {
+              "route": "tool",
+              "eligible": false,
+              "reasons": [
+                "task scope does not grant required built-in tool multiply",
+                "task scope does not grant required built-in tool multiply"
+              ],
+              "prior": {
+                "observations": 0,
+                "quality_rate": null,
+                "mean_utility": null
+              },
+              "baseline_score": {
+                "version": "fixed-prior-cost-v1",
+                "score": 0.5,
+                "success_prior": 0.5,
+                "reserved_tokens": 0,
+                "cost_penalty": 0.0,
+                "latency_prior": null,
+                "latency_status": "unmeasured"
+              }
+            },
+            {
+              "route": "local_direct",
+              "eligible": true,
+              "reasons": [],
+              "prior": {
+                "observations": 0,
+                "quality_rate": null,
+                "mean_utility": null
+              },
+              "baseline_score": {
+                "version": "fixed-prior-cost-v1",
+                "score": 0.25,
+                "success_prior": 0.5,
+                "reserved_tokens": 128,
+                "cost_penalty": 0.25,
+                "latency_prior": null,
+                "latency_status": "unmeasured"
+              }
+            }
+          ],
+          "model_identity": {
+            "model": "myr5-hold-local:latest",
+            "digest": "test-adapter:__main__.NoInferenceAdapter",
+            "kind": "explicit-test-adapter"
+          }
+        }
+      },
+      "budget_before": {
+        "requests": 0,
+        "tokens_reserved": 0,
+        "tokens_actual": 0,
+        "wall_s": 0.0,
+        "cycles": 0
+      },
+      "budget_after": {
+        "requests": 0,
+        "tokens_reserved": 0,
+        "tokens_actual": 0,
+        "wall_s": 0.0,
+        "cycles": 0
+      }
+    },
+    {
+      "name": "legacy_v2_exact_tool_scope_absent",
+      "policy_version": 2,
+      "requested_route": null,
+      "decision": {
+        "eligible": [
+          "local_direct"
+        ],
+        "selected": "local_direct",
+        "error": null,
+        "receipt": {
+          "version": "hive-governor-p0-v1",
+          "baseline_score_version": "fixed-prior-cost-v1",
+          "task_hash": "d353fb0505b58f5c7372dbcccdc104c41bf6fa9e0679295cf47410aec57c16d1",
+          "config_hash": "25bc4530e67c87713c6541bd1304aca2f27133185f1337d769991ea3ebfb6aa3",
+          "source_hash": "2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c",
+          "policy_hash": "2f5b7bebe9dff94cdcbdd6d8a5d677e6acd8ff7ff8954bff670e518ff658bb85",
+          "requested_route": null,
+          "eligible_routes": [
+            "local_direct"
+          ],
+          "selected_route": "local_direct",
+          "alternatives": [
+            {
+              "route": "tool",
+              "eligible": false,
+              "reasons": [
+                "task scope does not grant required built-in tool multiply",
+                "task scope does not grant required built-in tool multiply"
+              ],
+              "prior": {
+                "observations": 0,
+                "quality_rate": null,
+                "mean_utility": null
+              },
+              "baseline_score": {
+                "version": "fixed-prior-cost-v1",
+                "score": 0.5,
+                "success_prior": 0.5,
+                "reserved_tokens": 0,
+                "cost_penalty": 0.0,
+                "latency_prior": null,
+                "latency_status": "unmeasured"
+              }
+            },
+            {
+              "route": "local_direct",
+              "eligible": true,
+              "reasons": [],
+              "prior": {
+                "observations": 0,
+                "quality_rate": null,
+                "mean_utility": null
+              },
+              "baseline_score": {
+                "version": "fixed-prior-cost-v1",
+                "score": 0.25,
+                "success_prior": 0.5,
+                "reserved_tokens": 128,
+                "cost_penalty": 0.25,
+                "latency_prior": null,
+                "latency_status": "unmeasured"
+              }
+            }
+          ],
+          "model_identity": {
+            "model": "myr5-hold-local:latest",
+            "digest": "test-adapter:__main__.NoInferenceAdapter",
+            "kind": "explicit-test-adapter"
+          }
+        }
+      },
+      "budget_before": {
+        "requests": 0,
+        "tokens_reserved": 0,
+        "tokens_actual": 0,
+        "wall_s": 0.0,
+        "cycles": 0
+      },
+      "budget_after": {
+        "requests": 0,
+        "tokens_reserved": 0,
+        "tokens_actual": 0,
+        "wall_s": 0.0,
+        "cycles": 0
+      }
+    },
+    {
+      "name": "model_required_classification",
+      "policy_version": 3,
+      "requested_route": null,
+      "decision": {
+        "eligible": [
+          "local_direct"
+        ],
+        "selected": "local_direct",
+        "error": null,
+        "receipt": {
+          "version": "hive-governor-p0-v1",
+          "baseline_score_version": "fixed-prior-cost-v1",
+          "task_hash": "0bbbcf90504ae309b950a87724fa73fe75c9b93323b6275e31d9afb88b880914",
+          "config_hash": "25bc4530e67c87713c6541bd1304aca2f27133185f1337d769991ea3ebfb6aa3",
+          "source_hash": "2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c",
+          "policy_hash": "00b7968c90858ea3c9cc3b8d0ef3ba16de579d8b5593fecfc8feebae8a04bbe9",
+          "requested_route": null,
+          "eligible_routes": [
+            "local_direct"
+          ],
+          "selected_route": "local_direct",
+          "alternatives": [
+            {
+              "route": "tool",
+              "eligible": false,
+              "reasons": [
+                "excluded by task permissions",
+                "task has no deterministic built-in tool for this route",
+                "excluded by task permissions"
+              ],
+              "prior": {
+                "observations": 0,
+                "quality_rate": null,
+                "mean_utility": null
+              },
+              "baseline_score": {
+                "version": "fixed-prior-cost-v1",
+                "score": 0.5,
+                "success_prior": 0.5,
+                "reserved_tokens": 0,
+                "cost_penalty": 0.0,
+                "latency_prior": null,
+                "latency_status": "unmeasured"
+              }
+            },
+            {
+              "route": "local_direct",
+              "eligible": true,
+              "reasons": [],
+              "prior": {
+                "observations": 0,
+                "quality_rate": null,
+                "mean_utility": null
+              },
+              "baseline_score": {
+                "version": "fixed-prior-cost-v1",
+                "score": 0.25,
+                "success_prior": 0.5,
+                "reserved_tokens": 128,
+                "cost_penalty": 0.25,
+                "latency_prior": null,
+                "latency_status": "unmeasured"
+              }
+            }
+          ],
+          "policy_version": 3,
+          "route_source": "policy_selection",
+          "route_attribution": {
+            "source": "policy_selection",
+            "category": "text_classification",
+            "eligible_routes": [
+              "local_direct"
+            ],
+            "selected_route": "local_direct",
+            "task_hash": "0bbbcf90504ae309b950a87724fa73fe75c9b93323b6275e31d9afb88b880914",
+            "source_hash": "2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c",
+            "config_hash": "25bc4530e67c87713c6541bd1304aca2f27133185f1337d769991ea3ebfb6aa3",
+            "policy_hash": "00b7968c90858ea3c9cc3b8d0ef3ba16de579d8b5593fecfc8feebae8a04bbe9",
+            "source_context": {
+              "declared_source_group": null,
+              "input_sha256": "d1824c88eb8f173e9874416f39326b519b592e591a8e9c72c9937a8073b1e854",
+              "evaluator": "independent_labels_v1",
+              "verifier_sha256": {
+                "verifier.py": "1ee3853546b98d31337be7aeb5d5d0af5bb565ad34ca1ee361a84965f0886bce",
+                "task_spec.py": "266f2532c826c1c95ac533d2931a1db50d27d097f5991f84c35a0be5fc314eaf",
+                "data_tasks.py": "be78a31b3501ea1cb6cb243f79ccedffebd4d3684270edc7e5c1ef2fdebd0aff"
+              }
+            }
+          },
+          "model_identity": {
+            "model": "myr5-hold-local:latest",
+            "digest": "test-adapter:__main__.NoInferenceAdapter",
+            "kind": "explicit-test-adapter"
+          }
+        }
+      },
+      "budget_before": {
+        "requests": 0,
+        "tokens_reserved": 0,
+        "tokens_actual": 0,
+        "wall_s": 0.0,
+        "cycles": 0
+      },
+      "budget_after": {
+        "requests": 0,
+        "tokens_reserved": 0,
+        "tokens_actual": 0,
+        "wall_s": 0.0,
+        "cycles": 0
+      }
+    }
+  ]
+}

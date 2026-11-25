@@ -1,0 +1,1 @@
+This is a connectivity check, not a proposal. Reply with exactly this JSON object and nothing else: {"smoke":"ok"}

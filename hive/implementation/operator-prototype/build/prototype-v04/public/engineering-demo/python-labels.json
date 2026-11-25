@@ -1,0 +1,85 @@
+{
+  "mission_id": "prototype-label-python-standalone",
+  "status": "COMPLETED",
+  "stages": {
+    "code": {
+      "attempts": 1,
+      "finish_event_ref": "artifacts/33910c0952c2ef23a53c11e425ce228eaa42c281af82a98ac0205809cf1827e1.json",
+      "finished": 1795335278.0716548,
+      "result": {
+        "budget": {
+          "cycles": 3,
+          "requests": 0,
+          "tokens_actual": 0,
+          "tokens_reserved": 0,
+          "wall_s": 3.625
+        },
+        "event_refs": [
+          "artifacts/5ff878f90dc59095642020049dff42ef43ee4197eb60f6f0da22ec738f9d2136.json",
+          "artifacts/4b5c1e82494c4a33050681191d1929fcf534df102567f223985764e87212fae9.json"
+        ],
+        "manifest_ref": "artifacts/dd06b4140b2d71df50243c8aa3208697d1de688fcc9d9f9a94f451008c45a288.json",
+        "mission_id": "prototype-label-python",
+        "named_output_hashes": {
+          "sorted-label-counts": {
+            "patch.diff": "0acdf8c0d0266b7ce07424d0b273d759a928dc0bad93b0c161f26137dceb9bb2",
+            "test-report.json": "d0df03218de5d073a0f8e1069ed1c4ec1706bd23bf4fd296fb26a682ff1a8ac3",
+            "verdict.json": "a2243b825d59b00f864b52c35b1462bf84236780002a8c667eb9a8543d9b7eef"
+          },
+          "trace.jsonl": "76f01ea1a4a2a57ffe5cb85790ded3a33fb1ffeda3d9f147b386b764ac5f0f69"
+        },
+        "named_outputs": {
+          "sorted-label-counts": {
+            "patch.diff": "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-recovery\\output\\code\\prototype-label-python\\sorted-label-counts\\patch.diff",
+            "test-report.json": "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-recovery\\output\\code\\prototype-label-python\\sorted-label-counts\\test-report.json",
+            "verdict.json": "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-recovery\\output\\code\\prototype-label-python\\sorted-label-counts\\verdict.json"
+          },
+          "trace.jsonl": "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-recovery\\output\\code\\prototype-label-python\\trace.jsonl"
+        },
+        "patches": {
+          "sorted-label-counts": {
+            "evidence_ref": "artifacts/0626a7e47991eefcbf0da90b3e2577bd6e2d2ccc1d5a3ac4bded781581bc451c.json",
+            "job_id": "71cf48c3349a41ab81b84cddac650635",
+            "operation_key": "d0c740aaa6e2b4993aec0320c34635e081549423ec45f9f88661d82bba52e7d3",
+            "patch_sha256": "72ca64aaa7931d627faf5e24a1e2f279949deb309d22e80ff679ccd0882a8299",
+            "state": "VERIFIED",
+            "verification": {
+              "cases_checked": 3,
+              "evaluator": "json-function-v1",
+              "passed": true,
+              "quality": 1,
+              "reason": "objective_cases_passed",
+              "suite_sha256": "e9a166a36ae5dc707e0a1f2506fd0276faa56d0bcd5c69b76c1f5e8fb6b7c078",
+              "synthetic": false,
+              "unsupported": 0,
+              "valid": true
+            }
+          }
+        },
+        "runtime": {
+          "commit": "unversioned",
+          "source_sha256": "ef4eb92509af5d5330e90632d178b3cdadc3c11e62f308f58f808be6be625055",
+          "version": "0.4.0.dev1"
+        },
+        "source_sha256": "3d234a83491492fa9e2598c276a146b6a1b3b7690809fb3b64218293aca5f184",
+        "status": "VERIFIED",
+        "synthetic": false
+      },
+      "started": 1795335274.2031991,
+      "state": "VERIFIED"
+    }
+  },
+  "manifest_ref": "artifacts/a06724e7b17991f55798098131afdd1221ffdf0c913d754723cbd5f2011d7daf.json",
+  "event_refs": [
+    "artifacts/07bbed62cc68265616f54b87b2c99f22a40c4fe719cb470b7063686d12d31ad0.json",
+    "artifacts/7256de2b91f36d86290c4acde6db989cf1ec7036f19fa9757b724e8af38f2370.json",
+    "artifacts/33910c0952c2ef23a53c11e425ce228eaa42c281af82a98ac0205809cf1827e1.json"
+  ],
+  "budget": {
+    "cycles": 3,
+    "requests": 0,
+    "tokens_actual": 0,
+    "tokens_reserved": 0,
+    "wall_s": 3.625
+  }
+}

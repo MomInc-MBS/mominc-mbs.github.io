@@ -1,0 +1,48 @@
+{
+ "BOM-docs-inventory.csv": {
+  "change": "UTF-8 BOM prepended",
+  "derived_from": "docs-inventory.csv",
+  "label": "derived unsupported input"
+ },
+ "DERIVED-defect-configs-inventory.csv": {
+  "change": "row 2 bytes -> -5",
+  "derived_from": "configs-inventory.csv",
+  "label": "derived test input"
+ },
+ "configs-inventory.csv": {
+  "adapter": "inventory-snapshot-v1",
+  "format": "csv",
+  "group_by": "ext",
+  "kind": "first-party repository folder snapshot",
+  "prior_model_exposure": "none (no model used)",
+  "sha256": "830656b09838669baf9dc35450375b543d6129a6e32ecad52687cf09d500acca",
+  "source_folder": "configs"
+ },
+ "docs-inventory.csv": {
+  "adapter": "inventory-snapshot-v1",
+  "format": "csv",
+  "group_by": "ext",
+  "kind": "first-party repository folder snapshot",
+  "prior_model_exposure": "none (no model used)",
+  "sha256": "b5e6ef022f43a6671c71a71069cf4026c1d946f1d83ee53c8252f0171e18ca57",
+  "source_folder": "docs"
+ },
+ "evaluator-inventory.csv": {
+  "adapter": "inventory-snapshot-v1",
+  "format": "csv",
+  "group_by": "top",
+  "kind": "first-party repository folder snapshot",
+  "prior_model_exposure": "none (no model used)",
+  "sha256": "aeb62b72e5f0c487b92913856424f5f6d50512e2188e2e91e629f04b9be87a9e",
+  "source_folder": "evaluator"
+ },
+ "scripts-inventory.json": {
+  "adapter": "inventory-snapshot-v1",
+  "format": "json",
+  "group_by": "ext",
+  "kind": "first-party repository folder snapshot",
+  "prior_model_exposure": "none (no model used)",
+  "sha256": "2592d274e8f24e30393778eb347a41f3f02983b4cf33ec9c8e7bc666e0162fe0",
+  "source_folder": "scripts"
+ }
+}

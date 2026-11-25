@@ -1,0 +1,42 @@
+{
+ "files": [
+  {
+   "file": "configs-inventory.csv",
+   "reason": null,
+   "sha256": "830656b09838669baf9dc35450375b543d6129a6e32ecad52687cf09d500acca",
+   "status": "accepted"
+  },
+  {
+   "file": "src-hive-inventory.csv",
+   "reason": null,
+   "sha256": "9c9a53f9f6c94644d60f761ecae9ce3b869a9506171dfbd68ec66f665896f601",
+   "status": "accepted"
+  }
+ ],
+ "groups": {
+  ".html": {
+   "bytes": 24290,
+   "count": 1
+  },
+  ".json": {
+   "bytes": 10367,
+   "count": 11
+  },
+  ".py": {
+   "bytes": 903635,
+   "count": 71
+  },
+  ".pyc": {
+   "bytes": 1487461,
+   "count": 71
+  },
+  ".txt": {
+   "bytes": 9280,
+   "count": 6
+  },
+  ".yaml": {
+   "bytes": 4035,
+   "count": 2
+  }
+ }
+}

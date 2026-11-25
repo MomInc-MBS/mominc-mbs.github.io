@@ -1,0 +1,9 @@
+﻿# Independent objective smoke final review
+
+The second synthetic development run passed all 12 objective verifiers and reported 12 fresh-process replays with equal budgets. I independently checked every saved evidence artifact hash, task output, budget and runtime identity. Six Docker receipts report the pinned image, network disabled, read-only root and source, dropped capabilities, no new privileges and exit 0. All 22 code case outputs and six data aggregates match the audited expected results. The six generated source repositories remain clean and their pinned revision/archive hashes match. The receipts report zero model requests and one cycle per task. Each Executor job is `BLOCKED` in its review state; the six code missions separately report `VERIFIED`.
+
+There were two actual attempts, 24 scheduled task executions in total. The first failed its overall gate: all 12 objective verifiers passed, but six data fresh-process replays failed because the checker equated the original config with the timeout-clamped effective config. The failed report and stores are preserved. The second run used the corrected check. Replay results were examined from the saved report; this independent review did not rerun Docker or the replay, and Docker controls are assessed from recorded receipts and verifier checks.
+
+The separate 18-job matched tool comparison has six quality ties, zero quality delta, zero model calls and no promotion; its decision is QUARANTINE. These are public synthetic development tasks, not genuine Level A acceptance, independent sources, or evidence of useful learning.
+
+Plan SHA-256 `3b41734d702e39dcd6b318f321fb2f40edc0665399d285965a3f2953794e1b4e`; runner `cd2bc0798e86bd1ea35676033d53bc3c455c913262877b9487f113046bc8b0f5`; runtime `2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c`; final report self-hash `5d052dcd3f618ba964f992e882cbb30b253cab5ed431e162634e6bfeb1a74758`.

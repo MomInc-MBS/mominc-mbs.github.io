@@ -1,0 +1,24 @@
+﻿{
+  "status": "passed",
+  "original_jobs": 42,
+  "hashed_files": 160,
+  "attempt_reports": {
+    "smoke-attempt1": {
+      "passed": false,
+      "all_replayed_with_equal_budget": false
+    },
+    "smoke-final": {
+      "passed": true,
+      "all_replayed_with_equal_budget": true
+    }
+  },
+  "policy_receipts": {
+    "legacy": 36,
+    "3": 6
+  },
+  "runtime_source_hashes": [
+    "2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c"
+  ],
+  "new_model_calls": 0,
+  "scope": "artifact-level offline verifier and journal binding replay; no fresh execution, Store restart, or learning gain"
+}

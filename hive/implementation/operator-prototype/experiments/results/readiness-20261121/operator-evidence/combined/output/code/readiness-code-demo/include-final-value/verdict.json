@@ -1,0 +1,17 @@
+{
+  "evidence_ref": "artifacts/ce761a5eee465f226758363e179061af269e572aaad2ce65f789efdcbd9cbe1f.json",
+  "mission_id": "readiness-code-demo",
+  "patch_id": "include-final-value",
+  "status": "VERIFIED",
+  "verification": {
+    "cases_checked": 4,
+    "evaluator": "json-function-v1",
+    "passed": true,
+    "quality": 1,
+    "reason": "objective_cases_passed",
+    "suite_sha256": "2ecaa1149cb1704e986ea5af5bf64d23d54446febc3805ccb396e1fc01a0a234",
+    "synthetic": false,
+    "unsupported": 0,
+    "valid": true
+  }
+}

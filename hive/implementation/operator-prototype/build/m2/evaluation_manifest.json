@@ -1,0 +1,88 @@
+{
+ "counts": {
+  "legal": {
+   "C": 3,
+   "R": 7
+  },
+  "lists": 1110,
+  "symbols": 10
+ },
+ "evaluator": {
+  "fixtures.py": "539593446143d0233e482d68c2385163bec574f6bdeeceba2a4454521f4f6f4b",
+  "gen_private.py": "4cfab3663027728e85653b1e8f443d55b907176fc2839bdf99c777d637ae227b",
+  "gen_public.py": "9d0645eadbf19efc287b9efdc07d5c6db57a4081f5ef82f16da1025bd4567af0",
+  "oracle.py": "0c580b0eb1f541cf0ab99daac869c589503aa18fff84e32c2372cff09c377c7c"
+ },
+ "frozen": true,
+ "frozen_at": "2026-11-24T20:30:40Z",
+ "inventory": {
+  "aggregate": {
+   "pin": "d3ce1a7f9f54623fa33c32a30cad574a2d847a17df0ae05af7a617e7b156f100",
+   "wraps": {
+    "inventory_result": "627ce1119d37e5915ae0fec8cc08d54a31e204cb9ea342567fb6724f114788bf"
+   }
+  },
+  "each": {
+   "pin": "ca90cd257b4b841f8f9737b2394e2e184631a040547b47e0df8b50fcfe21dcc0",
+   "wraps": {}
+  },
+  "identity": {
+   "pin": "f5fd176abcffc85d5689deb723ff4310ae585995430af94bebb1bcdc690c85c1",
+   "wraps": {}
+  },
+  "parse_whole": {
+   "pin": "5fcfb16ef9569855b424c991467c653be32166cbd1886fe16740f9ea13e5cb24",
+   "wraps": {
+    "_csv_rows": "83c3dc576bc7868d32834e7208cd8b6503b2bb8563bbf59a15e42f914edf545f",
+    "_json_bytes": "f592fa059e07fea47b022269d80f975f7a542432b73e936e83207004837680bc",
+    "_unique_object": "3ce05e5b391277d876e45fa8fe3946f460d63aa2250fb06f9b418b3af5a066fa",
+    "parse_source": "2c62cd0e03f52e00d53c5cdf563dd4202c7b610e2e5d1ca06835e243fc252e11"
+   }
+  },
+  "split_rows": {
+   "pin": "bce9b3a410e6a3317d3f86f04313c2e602efd28bd80580afad925242cb3630b1",
+   "wraps": {
+    "_csv_rows": "83c3dc576bc7868d32834e7208cd8b6503b2bb8563bbf59a15e42f914edf545f",
+    "_json_bytes": "f592fa059e07fea47b022269d80f975f7a542432b73e936e83207004837680bc",
+    "_unique_object": "3ce05e5b391277d876e45fa8fe3946f460d63aa2250fb06f9b418b3af5a066fa"
+   }
+  },
+  "to_json": {
+   "pin": "2ec5e5f83649b1b948ccd54bfd24b4089059efecadec8d50b04f6d1b87108af2",
+   "wraps": {}
+  }
+ },
+ "model": {
+  "file_sha256": "65d06d31a3977d553cb3af137b5c26b5f1e9297a6aaa29ae7caa98788cde53ab",
+  "id": "openai/gpt-oss-20b"
+ },
+ "partitions": {
+  "f_dev_C.jsonl": "6854ac87c5a6794401a68ac7e08e68bbcb6b135adcd152f0c04628130777e17c",
+  "f_dev_R.jsonl": "ebe5f7f5cb22951dfb1aefb958d049a508521b718db4ea3c0bc1543bbb898594",
+  "f_final_C.jsonl": "e12035b47a9cd4705559ee2c5d2aecc5c31b17ced1809ff92d8202e92eea70f8",
+  "f_final_R.jsonl": "54f356f180484b6e041e5a6fc0ed4d4017eb7fdd83052dd7b4a1b07129632566",
+  "f_reuse_C.jsonl": "78daab9503a646a67546eab1aab227bf5cc6d25c585395d0e0ae03f3d8ef1159",
+  "f_reuse_R.jsonl": "36d3515b776e77237045228e69bc599fc8bc08464e187cf65fe09b0900ef2827",
+  "f_sel_C.jsonl": "eaf6979c55e5fb9ee4483cebbcb5b9ede6d5a027e950c60ea81b4e35b2da9c03",
+  "f_sel_R.jsonl": "b761c264a5d39895b27d51df17de3c76f1fe299b2526ea2cb8500c2f720f66f7"
+ },
+ "policy": {
+  "blob_sha256": "5501fb4ed6166d0cdbede696c218047b72b470e6787c34a2aa46de4b3e3f1c10",
+  "path": "configs/m2_campaign_policy.json"
+ },
+ "prompts": {
+  "contract.txt": "6af45ce58a7d2a3c4f588240e71bb8a5b9761c44dd8bfa6e5372a251fb8b1875",
+  "history.txt": "68c6161aad2cdf3726e53d4a2e7db5a9661c56ca30248e94ddac1df6ccb22717",
+  "propose_C.txt": "ac534df7ddb296089146ddc3cc2c82caefc7542935e04efaed9920cdc2e403dc",
+  "propose_R.txt": "bd608460832464b79935dab4455be4c214e91f607b03c83110aec48310c0bf3e",
+  "smoke.txt": "a806f07603225929d57c9c6705c2fb94a57ea45d4042c73a997058a490835835",
+  "system.txt": "96b8cb4ad174677d9d5a51347eca0aa8e22e758f5136085e3a091b5b6b4433fa"
+ },
+ "protocol": {
+  "blob_sha256": "9767b209264d7e871aa46ded4a2413b53d7be3c5c2f3f5aea25fcdf300ea1cf0",
+  "commit": "d4b71d2fb070786245d71666365c270bf8b651d7",
+  "id": "m2-local-model-two-effects-v1",
+  "path": "docs/M2_PROTOCOL.md"
+ },
+ "schema": "hive-m2-evaluation-manifest-v1"
+}

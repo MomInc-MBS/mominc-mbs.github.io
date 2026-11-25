@@ -1,0 +1,694 @@
+{
+  "schema_version": 1,
+  "status": "REJECTED",
+  "candidate_ref": "artifacts/57aeac3202be05dd9f6227941f04ea43b8d978a7117cc63b1a8af2d55aa2be49.json",
+  "prior_policy": "P0",
+  "prior_policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+  "candidate_procedure": "baseline_v1",
+  "selected_procedure": "baseline_v1",
+  "selected_procedure_for_future": "baseline_v1",
+  "executed_subsequent_procedure": "baseline_v1",
+  "hypothesis": "No verified schema-recovery intervention has been established; retain P0 behavior.",
+  "source_groups": [
+    "public-dev6-inventory-development",
+    "public-dev6-inventory-comparison",
+    "public-dev6-inventory-comparison-extra",
+    "public-dev6-inventory-subsequent"
+  ],
+  "comparison_arms": [
+    {
+      "name": "P0",
+      "status": "VERIFIED",
+      "quality": 1.0,
+      "aliases": [],
+      "planned": 2,
+      "outcomes": [
+        {
+          "status": "VERIFIED",
+          "quality": 1,
+          "source_group": "public-dev6-inventory-comparison",
+          "input_sha256": "99caab93acefe0e9496406dd8f36c9bbbace050f98eb555addccd06fb58fb439",
+          "reason": null
+        },
+        {
+          "status": "VERIFIED",
+          "quality": 1,
+          "source_group": "public-dev6-inventory-comparison-extra",
+          "input_sha256": "5aa3015e58d8b0b89929851f941840dc9c6023e5edf65df78af9768fac3fcb8d",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "name": "candidate",
+      "status": "VERIFIED",
+      "quality": 1.0,
+      "aliases": [
+        "P0",
+        "fixed_specialist",
+        "learning_disabled"
+      ],
+      "planned": 2,
+      "outcomes": [
+        {
+          "status": "VERIFIED",
+          "quality": 1,
+          "source_group": "public-dev6-inventory-comparison",
+          "input_sha256": "99caab93acefe0e9496406dd8f36c9bbbace050f98eb555addccd06fb58fb439",
+          "reason": null
+        },
+        {
+          "status": "VERIFIED",
+          "quality": 1,
+          "source_group": "public-dev6-inventory-comparison-extra",
+          "input_sha256": "5aa3015e58d8b0b89929851f941840dc9c6023e5edf65df78af9768fac3fcb8d",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "name": "strongest_tool",
+      "status": "VERIFIED",
+      "quality": 1.0,
+      "aliases": [
+        "P0",
+        "candidate",
+        "learning_disabled"
+      ],
+      "planned": 2,
+      "outcomes": [
+        {
+          "status": "VERIFIED",
+          "quality": 1,
+          "source_group": "public-dev6-inventory-comparison",
+          "input_sha256": "99caab93acefe0e9496406dd8f36c9bbbace050f98eb555addccd06fb58fb439",
+          "reason": null
+        },
+        {
+          "status": "VERIFIED",
+          "quality": 1,
+          "source_group": "public-dev6-inventory-comparison-extra",
+          "input_sha256": "5aa3015e58d8b0b89929851f941840dc9c6023e5edf65df78af9768fac3fcb8d",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "name": "fixed_specialist",
+      "status": "NOT_APPLICABLE",
+      "quality": 0.0,
+      "aliases": [],
+      "planned": 2,
+      "outcomes": [
+        {
+          "status": "NOT_APPLICABLE",
+          "quality": 0,
+          "source_group": null,
+          "input_sha256": null,
+          "reason": "exact inventory is pinned to the deterministic tool"
+        },
+        {
+          "status": "NOT_APPLICABLE",
+          "quality": 0,
+          "source_group": null,
+          "input_sha256": null,
+          "reason": "exact inventory is pinned to the deterministic tool"
+        }
+      ]
+    },
+    {
+      "name": "fixed_team",
+      "status": "VERIFIED",
+      "quality": 1.0,
+      "aliases": [
+        "P0",
+        "candidate",
+        "strongest_tool"
+      ],
+      "planned": 2,
+      "outcomes": [
+        {
+          "status": "VERIFIED",
+          "quality": 1,
+          "source_group": "public-dev6-inventory-comparison",
+          "input_sha256": "99caab93acefe0e9496406dd8f36c9bbbace050f98eb555addccd06fb58fb439",
+          "reason": null
+        },
+        {
+          "status": "VERIFIED",
+          "quality": 1,
+          "source_group": "public-dev6-inventory-comparison-extra",
+          "input_sha256": "5aa3015e58d8b0b89929851f941840dc9c6023e5edf65df78af9768fac3fcb8d",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "name": "learning_disabled",
+      "status": "VERIFIED",
+      "quality": 1.0,
+      "aliases": [
+        "P0"
+      ],
+      "planned": 2,
+      "outcomes": [
+        {
+          "status": "VERIFIED",
+          "quality": 1,
+          "source_group": "public-dev6-inventory-comparison",
+          "input_sha256": "99caab93acefe0e9496406dd8f36c9bbbace050f98eb555addccd06fb58fb439",
+          "reason": null
+        },
+        {
+          "status": "VERIFIED",
+          "quality": 1,
+          "source_group": "public-dev6-inventory-comparison-extra",
+          "input_sha256": "5aa3015e58d8b0b89929851f941840dc9c6023e5edf65df78af9768fac3fcb8d",
+          "reason": null
+        }
+      ]
+    }
+  ],
+  "comparison_detail": [
+    {
+      "input_sha256": "99caab93acefe0e9496406dd8f36c9bbbace050f98eb555addccd06fb58fb439",
+      "source_group": "public-dev6-inventory-comparison",
+      "P0": {
+        "status": "VERIFIED",
+        "quality": 1,
+        "source_group": "public-dev6-inventory-comparison",
+        "input_sha256": "99caab93acefe0e9496406dd8f36c9bbbace050f98eb555addccd06fb58fb439",
+        "job_ids": [
+          "f54deabf01364cc18daed2794b3f30b7"
+        ],
+        "failure_reason": null,
+        "synthetic": false,
+        "identity": {
+          "mission_id": "prototype-inventory-comparison",
+          "source_group": "public-dev6-inventory-comparison",
+          "source_sha256": "99caab93acefe0e9496406dd8f36c9bbbace050f98eb555addccd06fb58fb439",
+          "input_sha256": "99caab93acefe0e9496406dd8f36c9bbbace050f98eb555addccd06fb58fb439",
+          "oracle_sha256": null,
+          "model": null,
+          "model_digest": null,
+          "prompt_sha256": "e31235aab6f1976067c8c77b830f8bf0422792266bad926cd96a9186f99eec6c",
+          "verifier_sha256": "f9770abc7199e5f183f2a72117bc5f400fd6b4db8cb034e22e1eac9301817494",
+          "policy_sha256": "3d99749ef0c32be11a9b99fbbb4181c5c9eee232c5a79c2c4d114bda9fe0cb2c",
+          "runtime": {
+            "version": "0.4.0.dev1",
+            "commit": "unversioned",
+            "source_sha256": "ef4eb92509af5d5330e90632d178b3cdadc3c11e62f308f58f808be6be625055"
+          },
+          "task_hash": "8c1f2408f71460392a57f2ba5d48f7fd7d6eeaae425fcb05e8f516bb80faa1d3",
+          "config_hash": "d6487009de4a9256b7464bfad626a705788b8714755c17366708c76e6b3f8aac",
+          "mission_identity": "a46c2d4783716cb143e1db56f2d1ea8e8018455f62f912009dfa2dff14340176",
+          "evidence_ref": "artifacts/7fac43c26c1ba9269b3c11fe673a817469eec199af0019f728acff8f39495e5b.json"
+        },
+        "machine_verdict": {
+          "valid": true,
+          "passed": true,
+          "reason": "passed",
+          "evaluator": "hive-evaluator-v1",
+          "evidence_ref": "artifacts/7fac43c26c1ba9269b3c11fe673a817469eec199af0019f728acff8f39495e5b.json"
+        },
+        "schema_verdict": {
+          "valid_json_object": true,
+          "shape_valid": true,
+          "reason": "shape_valid"
+        }
+      },
+      "candidate": {
+        "status": "VERIFIED",
+        "quality": 1,
+        "source_group": "public-dev6-inventory-comparison",
+        "input_sha256": "99caab93acefe0e9496406dd8f36c9bbbace050f98eb555addccd06fb58fb439",
+        "job_ids": [
+          "f54deabf01364cc18daed2794b3f30b7"
+        ],
+        "failure_reason": null,
+        "synthetic": false,
+        "identity": {
+          "mission_id": "prototype-inventory-comparison",
+          "source_group": "public-dev6-inventory-comparison",
+          "source_sha256": "99caab93acefe0e9496406dd8f36c9bbbace050f98eb555addccd06fb58fb439",
+          "input_sha256": "99caab93acefe0e9496406dd8f36c9bbbace050f98eb555addccd06fb58fb439",
+          "oracle_sha256": null,
+          "model": null,
+          "model_digest": null,
+          "prompt_sha256": "e31235aab6f1976067c8c77b830f8bf0422792266bad926cd96a9186f99eec6c",
+          "verifier_sha256": "f9770abc7199e5f183f2a72117bc5f400fd6b4db8cb034e22e1eac9301817494",
+          "policy_sha256": "3d99749ef0c32be11a9b99fbbb4181c5c9eee232c5a79c2c4d114bda9fe0cb2c",
+          "runtime": {
+            "version": "0.4.0.dev1",
+            "commit": "unversioned",
+            "source_sha256": "ef4eb92509af5d5330e90632d178b3cdadc3c11e62f308f58f808be6be625055"
+          },
+          "task_hash": "8c1f2408f71460392a57f2ba5d48f7fd7d6eeaae425fcb05e8f516bb80faa1d3",
+          "config_hash": "d6487009de4a9256b7464bfad626a705788b8714755c17366708c76e6b3f8aac",
+          "mission_identity": "a46c2d4783716cb143e1db56f2d1ea8e8018455f62f912009dfa2dff14340176",
+          "evidence_ref": "artifacts/7fac43c26c1ba9269b3c11fe673a817469eec199af0019f728acff8f39495e5b.json"
+        },
+        "machine_verdict": {
+          "valid": true,
+          "passed": true,
+          "reason": "passed",
+          "evaluator": "hive-evaluator-v1",
+          "evidence_ref": "artifacts/7fac43c26c1ba9269b3c11fe673a817469eec199af0019f728acff8f39495e5b.json"
+        },
+        "schema_verdict": {
+          "valid_json_object": true,
+          "shape_valid": true,
+          "reason": "shape_valid"
+        }
+      },
+      "candidate_procedure": "baseline_v1",
+      "fixed_team": {
+        "status": "VERIFIED",
+        "quality": 1,
+        "source_group": "public-dev6-inventory-comparison",
+        "input_sha256": "99caab93acefe0e9496406dd8f36c9bbbace050f98eb555addccd06fb58fb439",
+        "job_ids": [
+          "f54deabf01364cc18daed2794b3f30b7"
+        ],
+        "failure_reason": null,
+        "synthetic": false,
+        "identity": {
+          "mission_id": "prototype-inventory-comparison",
+          "source_group": "public-dev6-inventory-comparison",
+          "source_sha256": "99caab93acefe0e9496406dd8f36c9bbbace050f98eb555addccd06fb58fb439",
+          "input_sha256": "99caab93acefe0e9496406dd8f36c9bbbace050f98eb555addccd06fb58fb439",
+          "oracle_sha256": null,
+          "model": null,
+          "model_digest": null,
+          "prompt_sha256": "e31235aab6f1976067c8c77b830f8bf0422792266bad926cd96a9186f99eec6c",
+          "verifier_sha256": "f9770abc7199e5f183f2a72117bc5f400fd6b4db8cb034e22e1eac9301817494",
+          "policy_sha256": "3d99749ef0c32be11a9b99fbbb4181c5c9eee232c5a79c2c4d114bda9fe0cb2c",
+          "runtime": {
+            "version": "0.4.0.dev1",
+            "commit": "unversioned",
+            "source_sha256": "ef4eb92509af5d5330e90632d178b3cdadc3c11e62f308f58f808be6be625055"
+          },
+          "task_hash": "8c1f2408f71460392a57f2ba5d48f7fd7d6eeaae425fcb05e8f516bb80faa1d3",
+          "config_hash": "d6487009de4a9256b7464bfad626a705788b8714755c17366708c76e6b3f8aac",
+          "mission_identity": "a46c2d4783716cb143e1db56f2d1ea8e8018455f62f912009dfa2dff14340176",
+          "evidence_ref": "artifacts/7fac43c26c1ba9269b3c11fe673a817469eec199af0019f728acff8f39495e5b.json"
+        },
+        "machine_verdict": {
+          "valid": true,
+          "passed": true,
+          "reason": "passed",
+          "evaluator": "hive-evaluator-v1",
+          "evidence_ref": "artifacts/7fac43c26c1ba9269b3c11fe673a817469eec199af0019f728acff8f39495e5b.json"
+        },
+        "schema_verdict": {
+          "valid_json_object": true,
+          "shape_valid": true,
+          "reason": "shape_valid"
+        }
+      }
+    },
+    {
+      "input_sha256": "5aa3015e58d8b0b89929851f941840dc9c6023e5edf65df78af9768fac3fcb8d",
+      "source_group": "public-dev6-inventory-comparison-extra",
+      "P0": {
+        "status": "VERIFIED",
+        "quality": 1,
+        "source_group": "public-dev6-inventory-comparison-extra",
+        "input_sha256": "5aa3015e58d8b0b89929851f941840dc9c6023e5edf65df78af9768fac3fcb8d",
+        "job_ids": [
+          "afca021fd8c94abeba58ee5e126748aa"
+        ],
+        "failure_reason": null,
+        "synthetic": false,
+        "identity": {
+          "mission_id": "prototype-inventory-comparison-extra",
+          "source_group": "public-dev6-inventory-comparison-extra",
+          "source_sha256": "5aa3015e58d8b0b89929851f941840dc9c6023e5edf65df78af9768fac3fcb8d",
+          "input_sha256": "5aa3015e58d8b0b89929851f941840dc9c6023e5edf65df78af9768fac3fcb8d",
+          "oracle_sha256": null,
+          "model": null,
+          "model_digest": null,
+          "prompt_sha256": "e31235aab6f1976067c8c77b830f8bf0422792266bad926cd96a9186f99eec6c",
+          "verifier_sha256": "f9770abc7199e5f183f2a72117bc5f400fd6b4db8cb034e22e1eac9301817494",
+          "policy_sha256": "854597638fa222a4fc3e45e9b54337b569f5d25514478fe4d3210ffced810094",
+          "runtime": {
+            "version": "0.4.0.dev1",
+            "commit": "unversioned",
+            "source_sha256": "ef4eb92509af5d5330e90632d178b3cdadc3c11e62f308f58f808be6be625055"
+          },
+          "task_hash": "337c3f9374868296e814317d6a833e0a2b79060e4dfe8c94b667eb3d2bcbcd22",
+          "config_hash": "d6487009de4a9256b7464bfad626a705788b8714755c17366708c76e6b3f8aac",
+          "mission_identity": "d27b958da27926c6ec20b618c984dde2d76ab9e99e4a83b57947480d1ad4383a",
+          "evidence_ref": "artifacts/ab696e1ab9b5a77cbdf9975c5fa3da58c798cd7d1914b5d48b74954f6c4627cb.json"
+        },
+        "machine_verdict": {
+          "valid": true,
+          "passed": true,
+          "reason": "passed",
+          "evaluator": "hive-evaluator-v1",
+          "evidence_ref": "artifacts/ab696e1ab9b5a77cbdf9975c5fa3da58c798cd7d1914b5d48b74954f6c4627cb.json"
+        },
+        "schema_verdict": {
+          "valid_json_object": true,
+          "shape_valid": true,
+          "reason": "shape_valid"
+        }
+      },
+      "candidate": {
+        "status": "VERIFIED",
+        "quality": 1,
+        "source_group": "public-dev6-inventory-comparison-extra",
+        "input_sha256": "5aa3015e58d8b0b89929851f941840dc9c6023e5edf65df78af9768fac3fcb8d",
+        "job_ids": [
+          "afca021fd8c94abeba58ee5e126748aa"
+        ],
+        "failure_reason": null,
+        "synthetic": false,
+        "identity": {
+          "mission_id": "prototype-inventory-comparison-extra",
+          "source_group": "public-dev6-inventory-comparison-extra",
+          "source_sha256": "5aa3015e58d8b0b89929851f941840dc9c6023e5edf65df78af9768fac3fcb8d",
+          "input_sha256": "5aa3015e58d8b0b89929851f941840dc9c6023e5edf65df78af9768fac3fcb8d",
+          "oracle_sha256": null,
+          "model": null,
+          "model_digest": null,
+          "prompt_sha256": "e31235aab6f1976067c8c77b830f8bf0422792266bad926cd96a9186f99eec6c",
+          "verifier_sha256": "f9770abc7199e5f183f2a72117bc5f400fd6b4db8cb034e22e1eac9301817494",
+          "policy_sha256": "854597638fa222a4fc3e45e9b54337b569f5d25514478fe4d3210ffced810094",
+          "runtime": {
+            "version": "0.4.0.dev1",
+            "commit": "unversioned",
+            "source_sha256": "ef4eb92509af5d5330e90632d178b3cdadc3c11e62f308f58f808be6be625055"
+          },
+          "task_hash": "337c3f9374868296e814317d6a833e0a2b79060e4dfe8c94b667eb3d2bcbcd22",
+          "config_hash": "d6487009de4a9256b7464bfad626a705788b8714755c17366708c76e6b3f8aac",
+          "mission_identity": "d27b958da27926c6ec20b618c984dde2d76ab9e99e4a83b57947480d1ad4383a",
+          "evidence_ref": "artifacts/ab696e1ab9b5a77cbdf9975c5fa3da58c798cd7d1914b5d48b74954f6c4627cb.json"
+        },
+        "machine_verdict": {
+          "valid": true,
+          "passed": true,
+          "reason": "passed",
+          "evaluator": "hive-evaluator-v1",
+          "evidence_ref": "artifacts/ab696e1ab9b5a77cbdf9975c5fa3da58c798cd7d1914b5d48b74954f6c4627cb.json"
+        },
+        "schema_verdict": {
+          "valid_json_object": true,
+          "shape_valid": true,
+          "reason": "shape_valid"
+        }
+      },
+      "candidate_procedure": "baseline_v1",
+      "fixed_team": {
+        "status": "VERIFIED",
+        "quality": 1,
+        "source_group": "public-dev6-inventory-comparison-extra",
+        "input_sha256": "5aa3015e58d8b0b89929851f941840dc9c6023e5edf65df78af9768fac3fcb8d",
+        "job_ids": [
+          "afca021fd8c94abeba58ee5e126748aa"
+        ],
+        "failure_reason": null,
+        "synthetic": false,
+        "identity": {
+          "mission_id": "prototype-inventory-comparison-extra",
+          "source_group": "public-dev6-inventory-comparison-extra",
+          "source_sha256": "5aa3015e58d8b0b89929851f941840dc9c6023e5edf65df78af9768fac3fcb8d",
+          "input_sha256": "5aa3015e58d8b0b89929851f941840dc9c6023e5edf65df78af9768fac3fcb8d",
+          "oracle_sha256": null,
+          "model": null,
+          "model_digest": null,
+          "prompt_sha256": "e31235aab6f1976067c8c77b830f8bf0422792266bad926cd96a9186f99eec6c",
+          "verifier_sha256": "f9770abc7199e5f183f2a72117bc5f400fd6b4db8cb034e22e1eac9301817494",
+          "policy_sha256": "854597638fa222a4fc3e45e9b54337b569f5d25514478fe4d3210ffced810094",
+          "runtime": {
+            "version": "0.4.0.dev1",
+            "commit": "unversioned",
+            "source_sha256": "ef4eb92509af5d5330e90632d178b3cdadc3c11e62f308f58f808be6be625055"
+          },
+          "task_hash": "337c3f9374868296e814317d6a833e0a2b79060e4dfe8c94b667eb3d2bcbcd22",
+          "config_hash": "d6487009de4a9256b7464bfad626a705788b8714755c17366708c76e6b3f8aac",
+          "mission_identity": "d27b958da27926c6ec20b618c984dde2d76ab9e99e4a83b57947480d1ad4383a",
+          "evidence_ref": "artifacts/ab696e1ab9b5a77cbdf9975c5fa3da58c798cd7d1914b5d48b74954f6c4627cb.json"
+        },
+        "machine_verdict": {
+          "valid": true,
+          "passed": true,
+          "reason": "passed",
+          "evaluator": "hive-evaluator-v1",
+          "evidence_ref": "artifacts/ab696e1ab9b5a77cbdf9975c5fa3da58c798cd7d1914b5d48b74954f6c4627cb.json"
+        },
+        "schema_verdict": {
+          "valid_json_object": true,
+          "shape_valid": true,
+          "reason": "shape_valid"
+        }
+      }
+    }
+  ],
+  "assessment": {
+    "P0": {
+      "n": 2,
+      "baseline_quality": 1.0,
+      "candidate_quality": 1.0,
+      "quality_delta": 0.0,
+      "baseline_utility": 1.0,
+      "candidate_utility": 1.0,
+      "utility_delta": 0.0,
+      "wins": 0,
+      "losses": 0,
+      "ties": 2,
+      "utility_wins": 0,
+      "utility_losses": 0,
+      "utility_ties": 2,
+      "latency_delta_s": 0.0,
+      "tokens_delta": 0.0,
+      "valid_n": 2,
+      "accepted": false,
+      "promote_eligible": false,
+      "reasons": [
+        "quality tied; utility-only changes cannot establish improvement",
+        "experimental incumbent comparison only; independent promotion gate required"
+      ],
+      "critical_regression": false,
+      "critical_regressions": [],
+      "by_family": {
+        "structured_data": {
+          "n": 2,
+          "baseline_quality": 1.0,
+          "candidate_quality": 1.0,
+          "quality_delta": 0.0,
+          "baseline_utility": 1.0,
+          "candidate_utility": 1.0,
+          "utility_delta": 0.0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 2,
+          "utility_wins": 0,
+          "utility_losses": 0,
+          "utility_ties": 2,
+          "latency_delta_s": 0.0,
+          "tokens_delta": 0.0
+        }
+      },
+      "utility_tolerance": 1e-12,
+      "comparison_baseline": "experimental_incumbent",
+      "family_uncertainty": {
+        "method": "descriptive_family_dispersion",
+        "n_families": 1,
+        "quality_delta": {
+          "min": 0.0,
+          "max": 0.0,
+          "equal_family_mean": 0.0,
+          "median": 0.0
+        },
+        "utility_delta": {
+          "min": 0.0,
+          "max": 0.0,
+          "equal_family_mean": 0.0,
+          "median": 0.0
+        },
+        "interpretation": "Observed family means and range; no independent sampling, confidence interval, or significance claim. Overall deltas are task-weighted; family means weight categories equally."
+      }
+    },
+    "fixed_team": {
+      "n": 2,
+      "baseline_quality": 1.0,
+      "candidate_quality": 1.0,
+      "quality_delta": 0.0,
+      "baseline_utility": 1.0,
+      "candidate_utility": 1.0,
+      "utility_delta": 0.0,
+      "wins": 0,
+      "losses": 0,
+      "ties": 2,
+      "utility_wins": 0,
+      "utility_losses": 0,
+      "utility_ties": 2,
+      "latency_delta_s": 0.0,
+      "tokens_delta": 0.0,
+      "valid_n": 2,
+      "accepted": false,
+      "promote_eligible": false,
+      "reasons": [
+        "quality tied; utility-only changes cannot establish improvement",
+        "experimental incumbent comparison only; independent promotion gate required"
+      ],
+      "critical_regression": false,
+      "critical_regressions": [],
+      "by_family": {
+        "structured_data": {
+          "n": 2,
+          "baseline_quality": 1.0,
+          "candidate_quality": 1.0,
+          "quality_delta": 0.0,
+          "baseline_utility": 1.0,
+          "candidate_utility": 1.0,
+          "utility_delta": 0.0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 2,
+          "utility_wins": 0,
+          "utility_losses": 0,
+          "utility_ties": 2,
+          "latency_delta_s": 0.0,
+          "tokens_delta": 0.0
+        }
+      },
+      "utility_tolerance": 1e-12,
+      "comparison_baseline": "experimental_incumbent",
+      "family_uncertainty": {
+        "method": "descriptive_family_dispersion",
+        "n_families": 1,
+        "quality_delta": {
+          "min": 0.0,
+          "max": 0.0,
+          "equal_family_mean": 0.0,
+          "median": 0.0
+        },
+        "utility_delta": {
+          "min": 0.0,
+          "max": 0.0,
+          "equal_family_mean": 0.0,
+          "median": 0.0
+        },
+        "interpretation": "Observed family means and range; no independent sampling, confidence interval, or significance claim. Overall deltas are task-weighted; family means weight categories equally."
+      }
+    }
+  },
+  "decision": {
+    "accepted": false,
+    "reasons": [
+      "candidate is behaviorally identical to P0",
+      "quality tied; utility-only changes cannot establish improvement",
+      "experimental incumbent comparison only; independent promotion gate required",
+      "candidate did not strictly beat the conditional fixed-team control"
+    ],
+    "p0_changed": false,
+    "promote_eligible": false
+  },
+  "development": {
+    "status": "VERIFIED",
+    "quality": 1,
+    "source_group": "public-dev6-inventory-development",
+    "input_sha256": "e6ddecb116db3005850dff6cf865f03df9ebfc6222b4d5439deb1546aef83bde",
+    "job_ids": [
+      "6d939821f0834c64859c3727b6a7d875"
+    ],
+    "failure_reason": null,
+    "synthetic": false,
+    "identity": {
+      "mission_id": "prototype-inventory-development",
+      "source_group": "public-dev6-inventory-development",
+      "source_sha256": "e6ddecb116db3005850dff6cf865f03df9ebfc6222b4d5439deb1546aef83bde",
+      "input_sha256": "e6ddecb116db3005850dff6cf865f03df9ebfc6222b4d5439deb1546aef83bde",
+      "oracle_sha256": null,
+      "model": null,
+      "model_digest": null,
+      "prompt_sha256": "e31235aab6f1976067c8c77b830f8bf0422792266bad926cd96a9186f99eec6c",
+      "verifier_sha256": "f9770abc7199e5f183f2a72117bc5f400fd6b4db8cb034e22e1eac9301817494",
+      "policy_sha256": "bf3b7e975fb9181ca50ed07c4818c42217300dd4aef5f1fc7985d2abf88f4122",
+      "runtime": {
+        "version": "0.4.0.dev1",
+        "commit": "unversioned",
+        "source_sha256": "ef4eb92509af5d5330e90632d178b3cdadc3c11e62f308f58f808be6be625055"
+      },
+      "task_hash": "031ad9c0b06f061b8f636bee6aa013367fef30ebf54196ec367cf1990a1c6211",
+      "config_hash": "d6487009de4a9256b7464bfad626a705788b8714755c17366708c76e6b3f8aac",
+      "mission_identity": "f761a54455376cda454fdd773f0fdc71c0bc76daa9f9b02a84272cabacd1bcc4",
+      "evidence_ref": "artifacts/0804020cfd975b8961cf15375473b10a9af486c7a35e8dc9c5b003436eea6336.json"
+    },
+    "machine_verdict": {
+      "valid": true,
+      "passed": true,
+      "reason": "passed",
+      "evaluator": "hive-evaluator-v1",
+      "evidence_ref": "artifacts/0804020cfd975b8961cf15375473b10a9af486c7a35e8dc9c5b003436eea6336.json"
+    },
+    "schema_verdict": {
+      "valid_json_object": true,
+      "shape_valid": true,
+      "reason": "shape_valid"
+    }
+  },
+  "subsequent_task_id": "prototype-inventory-subsequent",
+  "subsequent": {
+    "status": "VERIFIED",
+    "quality": 1,
+    "source_group": "public-dev6-inventory-subsequent",
+    "input_sha256": "90ab2013ba96dcc102b9d9cf6287c1b8899f1dc24774bbb819ef08a581e7d24b",
+    "job_ids": [
+      "deb8f66cfdfd47e59d5816c65490f13a"
+    ],
+    "failure_reason": null,
+    "synthetic": false,
+    "identity": {
+      "mission_id": "prototype-inventory-subsequent",
+      "source_group": "public-dev6-inventory-subsequent",
+      "source_sha256": "90ab2013ba96dcc102b9d9cf6287c1b8899f1dc24774bbb819ef08a581e7d24b",
+      "input_sha256": "90ab2013ba96dcc102b9d9cf6287c1b8899f1dc24774bbb819ef08a581e7d24b",
+      "oracle_sha256": null,
+      "model": null,
+      "model_digest": null,
+      "prompt_sha256": "e31235aab6f1976067c8c77b830f8bf0422792266bad926cd96a9186f99eec6c",
+      "verifier_sha256": "f9770abc7199e5f183f2a72117bc5f400fd6b4db8cb034e22e1eac9301817494",
+      "policy_sha256": "d7da9e4982c69341983fdf8369f8a33d94591ed4edc7f61362721c5b5ea7b789",
+      "runtime": {
+        "version": "0.4.0.dev1",
+        "commit": "unversioned",
+        "source_sha256": "ef4eb92509af5d5330e90632d178b3cdadc3c11e62f308f58f808be6be625055"
+      },
+      "task_hash": "6ae8e4c07e6b2967e2258af9d19c8bbe168572633edf3f09e403f6344551a3f2",
+      "config_hash": "d6487009de4a9256b7464bfad626a705788b8714755c17366708c76e6b3f8aac",
+      "mission_identity": "32cdc33aae17208bf0782e959b8fc84e0a8f3db0f8d7184c27910ac4453aa640",
+      "evidence_ref": "artifacts/fcdfdd1476ed0a9ac59a185115ca4b7064900c0d4cb478aecb76b9614a9963cf.json"
+    },
+    "machine_verdict": {
+      "valid": true,
+      "passed": true,
+      "reason": "passed",
+      "evaluator": "hive-evaluator-v1",
+      "evidence_ref": "artifacts/fcdfdd1476ed0a9ac59a185115ca4b7064900c0d4cb478aecb76b9614a9963cf.json"
+    },
+    "schema_verdict": {
+      "valid_json_object": true,
+      "shape_valid": true,
+      "reason": "shape_valid"
+    }
+  },
+  "budget": {
+    "cycles": 9,
+    "requests": 0,
+    "tokens_actual": 0,
+    "tokens_reserved": 0,
+    "wall_s": 6.046000000089407
+  },
+  "plan_sha256": "61c8bf4919e72be70f27522c4d050c30c83b86281ec2b105dfe851ad89117c52",
+  "config_hash": "cc36965ab0b8b0f8258fc5ddc7f0009d22650ab34dd816660650b1c3abfdcb25",
+  "current_policy_hash": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+  "provenance_limitations": [
+    "Source groups and content hashes are pairwise distinct as declared and pinned; this does not independently prove source provenance or statistical independence."
+  ],
+  "beneficial_learning": false,
+  "production_promoted": false,
+  "evidence_ref": "artifacts/80bf44c599f364d2f76bb3b072ac0d79929f0ffddc14fbe30a08f10b170bd101.json"
+}

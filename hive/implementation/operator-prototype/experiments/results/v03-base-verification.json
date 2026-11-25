@@ -1,0 +1,57 @@
+{
+  "source_commit": "eeec51497038ec34454d867f55ebe0fcadfffddf",
+  "runtime_source_sha256": "2f1ad5f919ec8918a6d699ee0c4328438e5b203294e4048717c0134c9e9bc37f",
+  "download_sha256": "cd0c782e476f52c75952c923abc5cf16ca6dcbcd3a188c6f4f3c60102f03c445",
+  "files_verified": 94,
+  "doctor": {
+    "runtime": {
+      "endpoint": "http://127.0.0.1:11434",
+      "available": true,
+      "models": [
+        {
+          "id": "myr5-hold-local:latest",
+          "digest": "a45646773d1ee8a6c1557c7de09a68e78a74f2990c4174a1408f65e777db150c",
+          "available": true
+        }
+      ],
+      "error": null
+    },
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "build": {
+      "version": "0.2.1",
+      "commit": "unversioned",
+      "source_sha256": "2f1ad5f919ec8918a6d699ee0c4328438e5b203294e4048717c0134c9e9bc37f"
+    },
+    "config_hash": "cca5daf08b55afdc33060edfff145db667d06591a33699f2d948030edd72f15c",
+    "budgets": {
+      "endpoint": "http://127.0.0.1:11434",
+      "model": "myr5-hold-local:latest",
+      "timeout_s": 60,
+      "max_tokens": 128,
+      "seed": 20261122,
+      "max_requests": 30,
+      "max_total_tokens": 3840,
+      "max_wall_s": 600,
+      "max_storage_bytes": 67108864,
+      "max_cycles": 50,
+      "max_retries": 0,
+      "concurrency": 1,
+      "routes": [
+        "local_direct",
+        "local_tool"
+      ],
+      "allow_fixtures": false
+    }
+  },
+  "plan_sha256": "1f09f2834036538c08e2112cc1b714004836ce9e6cf5a2a91a985a1f2a9a3b74",
+  "real_inference_calls": 0,
+  "baseline_tests": {
+    "passed": 136,
+    "skipped": 1,
+    "seconds": 80.17,
+    "command": "python -m pytest -q",
+    "runtime": "eeec514 v0.2.1"
+  },
+  "policy_deployed": false
+}

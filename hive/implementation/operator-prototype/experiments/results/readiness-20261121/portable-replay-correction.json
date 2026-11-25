@@ -1,0 +1,10 @@
+{
+  "status": "corrected",
+  "command": "python scripts/replay_readiness_exports.py",
+  "initial_error": "ValueError: operator route/config mismatch",
+  "cause": "config_record serializes adapter class identity differently from config_hash canonical input",
+  "fix": "JSON-only inverse mapping before canonical SHA-256; rejects collisions/non-string/unserialized adapters; imports or invokes no adapter",
+  "script_sha256": "435bc1d87bcdd797d4f7f40c7d42e51c8bedc545277dc20c0ee0bc40aba8e12f",
+  "runtime_source_changed": false,
+  "negative_controls_rejected": 3
+}

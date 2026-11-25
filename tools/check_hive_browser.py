@@ -30,9 +30,21 @@ with sync_playwright() as p:
     page.on('pageerror',lambda e:errors.append(str(e)))
     page.on('requestfailed',lambda r:failed.append(r.url+' '+str(r.failure)))
     assert page.goto(base+'/hive/').status==200
-    latest = page.locator('.implementation-update').filter(has_text='LATEST VERIFIED ENGINEERING / 0.4.0.dev1')
-    expect(latest).to_contain_text('READY_FOR_LIVE_DEMO')
+    # "Latest" expectations follow CURRENT_RELEASE.latest_verified (the pointer moves; historical pages stay).
+    pointer=json.loads(Path('hive/CURRENT_RELEASE.json').read_text())['latest_verified']
+    latest_pub=json.loads(Path('hive/'+pointer['publication_manifest']).read_text())
+    status_rec=json.loads(Path('hive/CURRENT_STATUS.json').read_text(encoding='utf-8'))
+    expect(page.locator('.release-pointer').first).to_contain_text('Latest packaged runtime')
+    latest = page.locator('.implementation-update').filter(has_text='LATEST VERIFIED ENGINEERING / '+latest_pub['runtime_version'])
+    expect(latest).to_contain_text(latest_pub.get('headline', latest_pub['status']))
     page.locator('.topnav').get_by_role('link', name='Implementation', exact=True).click()
+    expect(page).to_have_url(base+'/hive/notes/'+pointer['note_id']+'/')
+    latest_title=page.locator('.prose h1').inner_text()
+    downloaded_latest=ctx.request.get(base+'/hive/'+latest_pub['download'])
+    assert downloaded_latest.status==200 and hashlib.sha256(downloaded_latest.body()).hexdigest()==latest_pub['download_sha256']
+    status_json=ctx.request.get(base+'/hive/CURRENT_STATUS.json')
+    assert status_json.status==200 and status_json.json()==status_rec
+    page.goto(base+'/hive/notes/OPERATIONAL/')
     expect(page.locator('.prose h1')).to_have_text(views['OPERATIONAL'])
     publication_v04=json.loads(Path('hive/implementation/prototype-v04-publication.json').read_text())
     downloaded_v04=ctx.request.get(base+'/hive/'+publication_v04['download'])
@@ -135,9 +147,14 @@ with sync_playwright() as p:
     assert hashlib.sha256(instructions_response.body()).hexdigest()==publication['snapshot_files']['README.md']
     # Markdown may render inline or download depending on the server's MIME
     # headers. Verify the observed user action and exact content in either case.
+    # Wait for the download event instead of reading a list right after click (that raced).
     instruction_downloads=[]
-    page.on('download',lambda download:instruction_downloads.append(download))
-    page.get_by_role('link',name='Run instructions',exact=True).click()
+    try:
+        with page.expect_download(timeout=5000) as download_info:
+            page.get_by_role('link',name='Run instructions',exact=True).click()
+        instruction_downloads.append(download_info.value)
+    except Exception:
+        pass  # rendered inline instead: the navigation branch below verifies it
     if instruction_downloads:
         instructions=Path(instruction_downloads[0].path()).read_bytes()
         assert hashlib.sha256(instructions).hexdigest()==publication['snapshot_files']['README.md']
@@ -196,8 +213,8 @@ with sync_playwright() as p:
         if width==390:
             page.goto(base+'/hive/')
             page.get_by_role('button',name='Open navigation',exact=True).click()
-            page.locator('#mobile-nav').get_by_role('link',name='Latest engineering \u00b7 0.4.0.dev1',exact=True).click()
-            expect(page.locator('.prose h1')).to_have_text(views['OPERATIONAL'])
+            page.locator('#mobile-nav').get_by_role('link',name='Latest engineering \u00b7 '+latest_pub['runtime_version'],exact=True).click()
+            expect(page.locator('.prose h1')).to_have_text(latest_title)
             page.screenshot(path=str(out/'operational-mobile.png'))
             page.goto(base+'/hive/')
             page.get_by_role('button',name='Open navigation',exact=True).click()

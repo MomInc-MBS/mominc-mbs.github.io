@@ -1,0 +1,86 @@
+{
+  "mission_id": "prototype-label-python-standalone",
+  "status": "COMPLETED",
+  "stages": {
+    "code": {
+      "attempts": 1,
+      "finish_event_ref": "artifacts/892e53ddf81478baa5e34da552315006325f5765f4a0f2d9758a746d8b1e4511.json",
+      "finished": 1795334809.7284238,
+      "result": {
+        "budget": {
+          "cycles": 3,
+          "requests": 0,
+          "tokens_actual": 0,
+          "tokens_reserved": 0,
+          "wall_s": 3.2980000000679865
+        },
+        "event_refs": [
+          "artifacts/c3682618413fad7279006231491e14bb1a467e31b530f6c41e3b468c02a45567.json",
+          "artifacts/0b85fa263d60b1fa46535cbb174699ec13ba44367d1e3724807fd59e98953513.json"
+        ],
+        "manifest_ref": "artifacts/31810cfe7e74fb4b9b4498526901430e9815232f60fed873310bb0c2ad013678.json",
+        "mission_id": "prototype-label-python",
+        "named_output_hashes": {
+          "sorted-label-counts": {
+            "patch.diff": "0acdf8c0d0266b7ce07424d0b273d759a928dc0bad93b0c161f26137dceb9bb2",
+            "test-report.json": "f80e7089588a72429ee36fd39ba412d4bce110725d26080cd32e7b2511615e95",
+            "verdict.json": "9e975a4ffa3cc2d9c7e5e598878b244458fae8ade83442b18fe30537dc1a011e"
+          },
+          "trace.jsonl": "f7d51f9fc6a7abbafe5d1a879eef07bbee0ddd487bfe9f4b1072042082f4a4b4"
+        },
+        "named_outputs": {
+          "sorted-label-counts": {
+            "patch.diff": "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-fixed\\output\\code\\prototype-label-python\\sorted-label-counts\\patch.diff",
+            "test-report.json": "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-fixed\\output\\code\\prototype-label-python\\sorted-label-counts\\test-report.json",
+            "verdict.json": "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-fixed\\output\\code\\prototype-label-python\\sorted-label-counts\\verdict.json"
+          },
+          "trace.jsonl": "D:\\Repos\\hive-ai\\.hive\\prototype-v04-final-inputs\\tool-store-fixed\\output\\code\\prototype-label-python\\trace.jsonl"
+        },
+        "patches": {
+          "sorted-label-counts": {
+            "evidence_ref": "artifacts/c266fc41ca44096b4c7d8ab2b3acd956e5058ad29a6dfee59f4aebc77052d96b.json",
+            "job_id": "ab0cb0c8e1cd44b48dfbe727fc43bb33",
+            "operation_key": "84849669037422b1035787e4b30be3cf35df406ae83f0f817fdbb4b1d27def70",
+            "patch_sha256": "72ca64aaa7931d627faf5e24a1e2f279949deb309d22e80ff679ccd0882a8299",
+            "state": "VERIFIED",
+            "verification": {
+              "cases_checked": 3,
+              "evaluator": "json-function-v1",
+              "passed": true,
+              "quality": 1,
+              "reason": "objective_cases_passed",
+              "suite_sha256": "e9a166a36ae5dc707e0a1f2506fd0276faa56d0bcd5c69b76c1f5e8fb6b7c078",
+              "synthetic": false,
+              "unsupported": 0,
+              "valid": true
+            }
+          }
+        },
+        "runtime": {
+          "commit": "unversioned",
+          "source_sha256": "81cea878e5f17bb10a14dde77aab3fef6d8be370841294292e24a465b147724d",
+          "version": "0.4.0.dev1"
+        },
+        "source_sha256": "3d234a83491492fa9e2598c276a146b6a1b3b7690809fb3b64218293aca5f184",
+        "status": "VERIFIED",
+        "synthetic": false
+      },
+      "started": 1795334806.2206733,
+      "state": "VERIFIED"
+    }
+  },
+  "manifest_ref": "artifacts/330eb582b1506a070e7e2abc80f1f8c826bbed5b45d18e34f8cf81879ad02eaf.json",
+  "event_refs": [
+    "artifacts/90d8f98e1bc2d549c2ca0ba75af0dc910f0b201d0b02bce84ba390db52ae5af4.json",
+    "artifacts/7256de2b91f36d86290c4acde6db989cf1ec7036f19fa9757b724e8af38f2370.json",
+    "artifacts/892e53ddf81478baa5e34da552315006325f5765f4a0f2d9758a746d8b1e4511.json",
+    "artifacts/2bd6e33648a6cca45014c4d82ec0a7e4319cffb72ff1d341acb11eac7576fe1d.json"
+  ],
+  "budget": {
+    "cycles": 9,
+    "requests": 0,
+    "tokens_actual": 0,
+    "tokens_reserved": 0,
+    "wall_s": 5.9230000000679865
+  }
+}

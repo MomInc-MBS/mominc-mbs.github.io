@@ -1,0 +1,6 @@
+﻿Focused test failure log — P2 exact abstention v4
+
+Initial command:
+  python -m pytest -q tests/unit/test_p2_exact_abstention.py tests/unit/test_p2_exact_tool.py
+
+Initial result: 2 failed, 9 passed. Both failures were test-fixture defects: the scope case changed allowed_tools without synchronizing the embedded input/tool-schema contract; the classification case omitted the valid ambiguous-label fixture shape. No product-code failure was indicated by these assertions. The fixtures were corrected and the final focused run passed: 12 passed in 1.40s.

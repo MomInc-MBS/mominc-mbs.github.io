@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "test_id": "H11",
+  "name": "Real-Work Gauntlet",
+  "seed": 1011,
+  "split": "development",
+  "budget_id": "H11-fixture-v1",
+  "budget": {
+    "max_cycles": 64,
+    "max_requests": 0,
+    "max_tokens": 0
+  },
+  "arms": [
+    "fixed_strongest_tool",
+    "fixed_specialist",
+    "fixed_team",
+    "learning_disabled",
+    "adaptive"
+  ],
+  "metric": "independently_verified_quality",
+  "practical_margin": 0.05,
+  "analysis": "paired by source_group; fixture only, no scientific inference",
+  "approval": null,
+  "isolation": "deterministic_builtins_only",
+  "rollback_sha": "5ff3ca0193f27a45a77e3522c8f03ff1f183ebd704a476dff8f4dc78ceed63b8",
+  "research_status": "UNTESTED",
+  "hypothesis": "The named pressure mechanism is executable, independently checkable and fails closed on its negative control; beneficial learning is not tested.",
+  "permissions": {
+    "routes": [
+      "tool",
+      "fixture_bad"
+    ],
+    "actions": [
+      "deterministic_builtins",
+      "local_evidence_write"
+    ],
+    "network": false,
+    "inference": false
+  },
+  "model_digest": "not_applicable_zero_inference",
+  "verifier_id": "hive.verifier+independent_pressure_verifier-v1",
+  "reviewer": "independent verifier; no operator scientific approval implied",
+  "source_group_rule": "generator seed/test/instance lineage; fixture sources are synthetic",
+  "adverse_events": [
+    "unauthorized inference",
+    "budget overrun",
+    "false promotion",
+    "label exposure",
+    "corrupt replay",
+    "untrusted code execution"
+  ],
+  "solvability": "every positive deterministic tool output independently evaluated; deliberate wrong output rejected",
+  "analysis_plan": {
+    "pairing": "same tasks/source groups across all arms",
+    "uncertainty": "not estimated from synthetic smoke",
+    "missing": "retain blocked and failures",
+    "promotion": "forbidden"
+  },
+  "identity_rule": "exact runtime source, contract, config, output and verifier hashes bound by Executor evidence",
+  "budget_scope": "budget applies independently to each matched arm; aggregate_budget includes all auxiliary execution probes",
+  "aggregate_budget": {
+    "max_cycles": 128,
+    "max_requests": 0,
+    "max_total_tokens": 0,
+    "max_wall_s": 600,
+    "max_storage_bytes": 67108864
+  }
+}

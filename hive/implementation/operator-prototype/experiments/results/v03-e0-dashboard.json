@@ -1,0 +1,88 @@
+{
+  "baseline": {
+    "successes": 3,
+    "attempts": 6,
+    "calls": 6,
+    "tokens": 264,
+    "latency_s": 3.1090000001713634,
+    "families": {
+      "math": 1,
+      "code_repair": 0,
+      "tool_routing": 0,
+      "coordination": 1,
+      "hallucination": 0,
+      "adaptation": 1
+    }
+  },
+  "candidates": {
+    "learned_greedy": {
+      "successes": 5,
+      "attempts": 6,
+      "calls": 6,
+      "tokens": 170,
+      "latency_s": 2.219000000040978,
+      "families": {
+        "math": 1,
+        "code_repair": 1,
+        "tool_routing": 1,
+        "coordination": 1,
+        "hallucination": 0,
+        "adaptation": 1
+      },
+      "accepted_experimentally": true,
+      "production_eligible": false
+    },
+    "fixed_local_tool": {
+      "successes": 4,
+      "attempts": 6,
+      "calls": 6,
+      "tokens": 156,
+      "latency_s": 2.187999999965541,
+      "families": {
+        "math": 0,
+        "code_repair": 1,
+        "tool_routing": 1,
+        "coordination": 1,
+        "hallucination": 1,
+        "adaptation": 0
+      },
+      "accepted_experimentally": false,
+      "production_eligible": false
+    },
+    "fixed_tool": {
+      "successes": 6,
+      "attempts": 6,
+      "calls": 0,
+      "tokens": 0,
+      "latency_s": 0.0,
+      "families": {
+        "math": 1,
+        "code_repair": 1,
+        "tool_routing": 1,
+        "coordination": 1,
+        "hallucination": 1,
+        "adaptation": 1
+      },
+      "accepted_experimentally": true,
+      "production_eligible": false
+    }
+  },
+  "runtime": "0.2.1",
+  "source_sha256": "2f1ad5f919ec8918a6d699ee0c4328438e5b203294e4048717c0134c9e9bc37f",
+  "scope": "Historical synthetic families; fresh runtime reproduction only",
+  "observations": 36,
+  "independent_sources": 0,
+  "median_inference_latency_s": 0.3130000000819564,
+  "p95_inference_latency_s": 1.2030000000959262,
+  "p95_method": "nearest rank",
+  "generated_tokens": 1008,
+  "reserved_tokens": 3840,
+  "active_seconds": 23.124999999883585,
+  "local_calls": 30,
+  "replay_new_calls": 0,
+  "peak_vram_measured": false,
+  "critical_regression_arm": "fixed_local_tool",
+  "decision": "COMPLETED_WITH_STATUS_OBSERVABILITY_DEFECT",
+  "new_hypothesis": "Fix terminal status publication; next independently source and calibrate E1",
+  "policy_deployed": false
+}

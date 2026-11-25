@@ -134,6 +134,16 @@ def main():
                           f'<p><a href="{url(nodes[latest_pointer["note_id"]])}">Read the latest verified result</a> · '
                           f'<a href="{BASE}{latest["download"]}" download>Download {esc(latest["runtime_version"])}</a> · '
                           f'<a href="{BASE}{latest_pointer["publication_manifest"]}">Publication manifest</a></p></section>')
+    # One authoritative current-status record drives every "current" pointer (home, STATUS, llms.txt, manifest).
+    # It keeps three different things apart: accepted evidence, the packaged runtime, and operational readiness.
+    current_status = json.loads((OUT / 'CURRENT_STATUS.json').read_text(encoding='utf-8'))
+    cs_rows = ''.join(
+        f'<p><strong>{esc(label)}:</strong> <a href="{url(nodes[row["note_id"]])}">{esc(row["title"])}</a> · {esc(row["summary"])}</p>'
+        for label, row in (('Latest accepted evidence', current_status['latest_accepted_evidence']),
+                           ('Latest packaged runtime', current_status['latest_packaged_runtime']),
+                           ('Operational readiness', current_status['operational_readiness'])))
+    release_block = (f'<section class="release-pointer"><h2>Current status ({esc(current_status["as_of"])})</h2>{cs_rows}'
+                     f'<p><a href="{BASE}CURRENT_STATUS.json">Authoritative status record</a></p></section>') + release_block
     navigation = list(NAV)
     if latest_pointer and latest_pointer['note_id'] not in {key for key, _ in navigation}:
         navigation.insert(2, (latest_pointer['note_id'], f'Latest engineering · {latest["runtime_version"]}'))
@@ -347,7 +357,7 @@ def main():
                         f'<h2>{esc(latest.get("headline", "Exact tools. Bounded feedback."))}</h2>'
                         f'<p>{esc(latest.get("summary", "The opt-in P2 candidate abstains when its required exact tool cannot run. Its saved decisions and feedback are checked again on replay."))}</p>'
                         f'<a class="button dark" href="{url(nodes[latest_pointer["note_id"]])}">Read results and limits</a></div>'
-                        f'<div class="evidence-key"><div><span class="badge neutral">QUARANTINED CANDIDATE</span>'
+                        f'<div class="evidence-key"><div><span class="badge neutral">{esc(latest.get("badge", "QUARANTINED CANDIDATE"))}</span>'
                         f'<p>{esc(latest.get("limitations", "The six-task output comparison tied the strongest tool. No learning gain, genuine acceptance or policy promotion is claimed. The next acceptance scope remains six structured-data tasks and six Python tasks."))}</p></div></div></section>')
         home = home.replace('<section class="home-section evidence-section implementation-update">',
                             latest_intro + '<section class="home-section evidence-section implementation-update">', 1)
@@ -391,6 +401,12 @@ Graph: {ORIGIN}/hive/graph/
 Full-text machine index ({len(nodes)} pages): {ORIGIN}/hive/search-index.json
 Typed graph: {ORIGIN}/hive/graph.json
 Original package: {ORIGIN}/hive/downloads/HIVE_Framework_Research_Vault.zip
+
+## Current status (read first)
+
+Authoritative record: {ORIGIN}/hive/CURRENT_STATUS.json (as of {current_status['as_of']}).
+{''.join(f'- {label}: /hive/notes/' + row['note_id'] + '/. ' + row['summary'] + chr(10) for label, row in (('Latest accepted evidence', current_status['latest_accepted_evidence']), ('Latest packaged runtime', current_status['latest_packaged_runtime']), ('Operational readiness', current_status['operational_readiness'])))}
+Older notes below keep their original claims and dates; they are history, not current status.
 
 ## Reading rules
 
@@ -438,7 +454,7 @@ Original package: {ORIGIN}/hive/downloads/HIVE_Framework_Research_Vault.zip
     write(OUT / 'llms.txt', llms)
     all_pages = [BASE, BASE + 'explore/', BASE + 'search/', BASE + 'graph/'] + [url(n) for n in [*nodes.values(), *originals]]
     write(OUT / 'sitemap.xml', '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + '\n'.join(f'<url><loc>{ORIGIN}{p}</loc></url>' for p in all_pages) + '\n</urlset>\n')
-    manifest = dict(framework_revision='0.2', coder_revision=current_coder['revision'], latest_research_id=latest_research['id'], latest_implementation_id=latest_implementation['id'], current_release=release, updates=[{k: n[k] for k in ['id', 'path', 'revision', 'date', 'sha256'] if k in n} for n in updates['entries']], source_zip_sha256=hashlib.sha256(args.zip.read_bytes()).hexdigest(),
+    manifest = dict(framework_revision='0.2', coder_revision=current_coder['revision'], latest_research_id=latest_research['id'], latest_implementation_id=latest_implementation['id'], latest_implementation_id_meaning='frozen engineering baseline named by CURRENT_RELEASE.json; see current_status for latest evidence and runtime', latest_accepted_evidence_id=current_status['latest_accepted_evidence']['note_id'], latest_packaged_runtime_id=current_status['latest_packaged_runtime']['note_id'], operational_readiness_id=current_status['operational_readiness']['note_id'], current_status=current_status, current_release=release, updates=[{k: n[k] for k in ['id', 'path', 'revision', 'date', 'sha256'] if k in n} for n in updates['entries']], source_zip_sha256=hashlib.sha256(args.zip.read_bytes()).hexdigest(),
                     counts=dict(research_pages=len(nodes), graph_edges=len(graph['edges']), originals=19),
                     scope='Static research reference plus executable local model/tool controller evidence. No production model runtime or compounding-learning claim.')
     write(OUT / 'build-manifest.json', json.dumps(manifest, indent=2) + '\n')

@@ -1,0 +1,36 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+*.egg-info/
+.hive/
+experiments/private/
+.env
+.env.*
+!.env.example
+dist/
+coverage/
+node_modules/
+.e2e/
+/build/prototype-v04/baseline-src/
+/build/prototype-v04/baseline.tar
+/build/prototype-v04/baseline-dev6.tar
+/build/prototype-v04/runtime/
+/build/prototype-v04/runtime.tar
+/build/prototype-v04/runtime-final/
+/build/prototype-v04/runtime-final.tar
+/build/prototype-v04/runtime-recovery/
+/build/prototype-v04/runtime-recovery.tar
+/build/prototype-v04/baseline-run/
+/build/prototype-v04/private/
+# Local review stores are retained on disk, outside public evidence exports.
+/experiments/results/handoff-followthrough-20261121/sol/probe-stores/
+/experiments/results/handoff-followthrough-20261121/sol/pytest-temp/
+# Slice D experiment stores (bare repos, packs, sqlite) stay on disk, not in git. Already-committed D_run/D_run2 evidence stays tracked.
+/build/v04x/D_run*/store/
+
+# Slice E comparison store (bare repos, sqlite) stays on disk, not in git.
+/build/v04x/E_run/store/
+/build/v04x/E_run2/store/
+/build/m0/store/
+/build/m1/store/

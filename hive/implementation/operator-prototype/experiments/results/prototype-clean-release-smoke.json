@@ -1,0 +1,42 @@
+{
+  "date": "2026-11-21T21:34:59.872174+00:00",
+  "status": "passed",
+  "scope": "synthetic deterministic CLI on extracted ZIP; not genuine acceptance or inference",
+  "snapshot_source_commit": "7983ae045dacfdec18de18cb29dc46174c58ae30",
+  "zip_sha256": "78e59e5148accb05dc10318e7d83d06c1e04bbbaa5113e419b6ea7526b907e15",
+  "verified_manifest_files": 151,
+  "runtime": {
+    "version": "0.3.0.dev2",
+    "commit": "unversioned",
+    "source_sha256": "e8dc974bf4e71f44879bd0a5dfe4194f09d97cd29c9c19c77be11a6be0a6631c"
+  },
+  "checks": [
+    "all exported file hashes",
+    "fresh-process CLI execution and replay",
+    "STOP blocks completed output replay",
+    "resume keeps output bytes and mtimes",
+    "job identity stable",
+    "zero model requests",
+    "budget unchanged on replay"
+  ],
+  "model_requests": 0,
+  "genuine_tasks": 0,
+  "resource_use": {
+    "model_requests": 0,
+    "generated_tokens": 0,
+    "input_tokens": null,
+    "input_token_measurement": "unavailable from configured adapter",
+    "clip_generated_tokens": 0
+  },
+  "budget": {
+    "cycles": 2,
+    "requests": 0,
+    "tokens_actual": 0,
+    "tokens_reserved": 0,
+    "wall_s": 0.0940000000409782
+  },
+  "outputs": {
+    "captions.srt": "5f125496e79e88869ba377cf2bdd03ca2d93927f5b2e9e7a1011efa3a1f55192",
+    "clips.json": "55e88dfc5c39bd0fa0077d821fac2e50b3beebed99ca14f5c8ec68783f537d37"
+  }
+}

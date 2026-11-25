@@ -1,0 +1,68 @@
+{
+  "clips": [
+    {
+      "cue_id": "c0001",
+      "end": "00:00:01,000",
+      "end_ms": 1000,
+      "evidence": {
+        "cue_id": "c0001",
+        "subtitle_sha256": "fb59648514663cd336a02da7cfe00564906575fa06f97fbfe26b5f0ca1c7f2cc"
+      },
+      "start": "00:00:00,000",
+      "start_ms": 0,
+      "text": "First synthetic cue"
+    },
+    {
+      "cue_id": "c0002",
+      "end": "00:00:02,000",
+      "end_ms": 2000,
+      "evidence": {
+        "cue_id": "c0002",
+        "subtitle_sha256": "fb59648514663cd336a02da7cfe00564906575fa06f97fbfe26b5f0ca1c7f2cc"
+      },
+      "start": "00:00:01,100",
+      "start_ms": 1100,
+      "text": "Second synthetic cue"
+    }
+  ],
+  "editorial_status": "needs_operator_review",
+  "learning": {
+    "clip_route_used": "tool",
+    "evidence_status": "experimental",
+    "next_proposed_route": "tool",
+    "next_proposed_route_executed": false,
+    "policy_after_sha256": "6482cfb3555de1eeba8c179a1e32e1d9a5b4ecba5dfb4d9fe3e36e8dad369f63",
+    "policy_before_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+    "source_split": "development"
+  },
+  "objective_status": "objective_verified",
+  "quality_claim": null,
+  "resource_use": {
+    "clip_generated_tokens": 0,
+    "generated_tokens": 0,
+    "input_token_measurement": "unavailable from configured adapter",
+    "input_tokens": null,
+    "model_requests": 0
+  },
+  "source": {
+    "config_hash": "56543de0dc6516e26a305f3bf5a24b61c6d83b7cdb9b2ec8839afafe044640ec",
+    "media_sha256": "52097f1fe72b54314b10fcdc974f4233803c67849dee60e6154a73b2401cf21c",
+    "media_size": 1440,
+    "model_digest": null,
+    "runtime": {
+      "commit": "b66efb0ba074bf8c6f6a8c0f0bc4761aa3e65739",
+      "source_sha256": "e711d1c3e7eb4dbd23b95f3027f5d97627b1f6880a2c252e2cefea8c522e817b",
+      "version": "0.3.0.dev4"
+    },
+    "srt_sha256": "fb59648514663cd336a02da7cfe00564906575fa06f97fbfe26b5f0ca1c7f2cc",
+    "srt_size": 113
+  },
+  "verification": {
+    "evaluator": "hive-evaluator-v1",
+    "passed": true,
+    "quality": 1,
+    "reason": "passed",
+    "unsupported": 0,
+    "valid": true
+  }
+}

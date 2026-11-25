@@ -1,0 +1,700 @@
+[
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "doctor",
+      "--config",
+      "configs/local.json"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.469,
+    "stdout_sha256": "f91dccb6f12a765d31479edf5831927f828016adabc93c10d8af06e3bee414fd",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\doctor-final.json"
+  },
+  {
+    "command": [
+      "python",
+      "scripts/replay_integration_export.py"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.203,
+    "stdout_sha256": "9efe89a567dd58381eec6dad0e1c61a41f66671a9c88150b118b3e04e51ec4de",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\historical-replay-final.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "pressure",
+      "list"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.156,
+    "stdout_sha256": "15793f24ff36b5107436a3bcd775f29910c23855a1cf2e0b6684cb9554491d2e",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\pressure-list.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "pressure",
+      "validate",
+      "--manifest",
+      "experiments/pressure/contracts/H01.json"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.188,
+    "stdout_sha256": "c10b7ee145d3420fc1c1e315b3323c252978db697249a355b8c6dc06916cd83b",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H01-validation.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "--store",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-pressure-final",
+      "pressure",
+      "run",
+      "--test",
+      "H01",
+      "--mode",
+      "fixture"
+    ],
+    "exit_code": 0,
+    "duration_s": 35.14,
+    "stdout_sha256": "24180813098f6be0c4d16429a8ae4cf06a27dc0ae5705f202a8da8c331b75422",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H01.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "--store",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-pressure-final",
+      "pressure",
+      "run",
+      "--test",
+      "H01",
+      "--mode",
+      "fixture"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.515,
+    "stdout_sha256": "24180813098f6be0c4d16429a8ae4cf06a27dc0ae5705f202a8da8c331b75422",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H01-replay.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "pressure",
+      "validate",
+      "--manifest",
+      "experiments/pressure/contracts/H02.json"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.172,
+    "stdout_sha256": "1c83be287f3ca2552297612edbf324dd3215833000625adcaa4ed0b81830cb10",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H02-validation.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "--store",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-pressure-final",
+      "pressure",
+      "run",
+      "--test",
+      "H02",
+      "--mode",
+      "fixture"
+    ],
+    "exit_code": 0,
+    "duration_s": 13.953,
+    "stdout_sha256": "01a068b1c4d8de4763f3c88a197abea9fd2f5ff59a9cbf191caa493ef53161e9",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H02.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "--store",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-pressure-final",
+      "pressure",
+      "run",
+      "--test",
+      "H02",
+      "--mode",
+      "fixture"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.375,
+    "stdout_sha256": "01a068b1c4d8de4763f3c88a197abea9fd2f5ff59a9cbf191caa493ef53161e9",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H02-replay.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "pressure",
+      "validate",
+      "--manifest",
+      "experiments/pressure/contracts/H03.json"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.204,
+    "stdout_sha256": "e5e37c5222bacfa6ef0259b5e4477c06c2cadbe57fc60d9fc0d394bcad7003a4",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H03-validation.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "--store",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-pressure-final",
+      "pressure",
+      "run",
+      "--test",
+      "H03",
+      "--mode",
+      "fixture"
+    ],
+    "exit_code": 0,
+    "duration_s": 17.063,
+    "stdout_sha256": "0a375cb1b8e403da36b821f934e2844a10df902a5387059139afcce8cb5b2cf4",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H03.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "--store",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-pressure-final",
+      "pressure",
+      "run",
+      "--test",
+      "H03",
+      "--mode",
+      "fixture"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.469,
+    "stdout_sha256": "0a375cb1b8e403da36b821f934e2844a10df902a5387059139afcce8cb5b2cf4",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H03-replay.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "pressure",
+      "validate",
+      "--manifest",
+      "experiments/pressure/contracts/H04.json"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.141,
+    "stdout_sha256": "f51585988980f421e8394e0d0f9836677d0e2ff44f8d2a48a9cae2a1d5da0f72",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H04-validation.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "--store",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-pressure-final",
+      "pressure",
+      "run",
+      "--test",
+      "H04",
+      "--mode",
+      "fixture"
+    ],
+    "exit_code": 0,
+    "duration_s": 10.094,
+    "stdout_sha256": "8b14089e3fc1e5c5fa3249564aabb4011ced4fa864be7365d86d6ecd1001a033",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H04.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "--store",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-pressure-final",
+      "pressure",
+      "run",
+      "--test",
+      "H04",
+      "--mode",
+      "fixture"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.516,
+    "stdout_sha256": "8b14089e3fc1e5c5fa3249564aabb4011ced4fa864be7365d86d6ecd1001a033",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H04-replay.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "pressure",
+      "validate",
+      "--manifest",
+      "experiments/pressure/contracts/H05.json"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.187,
+    "stdout_sha256": "f0a52719da6d0250c47fba09e9cff09fff56519926e471c7922aeccede101833",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H05-validation.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "--store",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-pressure-final",
+      "pressure",
+      "run",
+      "--test",
+      "H05",
+      "--mode",
+      "fixture"
+    ],
+    "exit_code": 0,
+    "duration_s": 8.219,
+    "stdout_sha256": "e4b38d3646af66d8476aba766feac4edf4a99e8cfb8512bdccd827fb282531b8",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H05.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "--store",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-pressure-final",
+      "pressure",
+      "run",
+      "--test",
+      "H05",
+      "--mode",
+      "fixture"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.438,
+    "stdout_sha256": "e4b38d3646af66d8476aba766feac4edf4a99e8cfb8512bdccd827fb282531b8",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H05-replay.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "pressure",
+      "validate",
+      "--manifest",
+      "experiments/pressure/contracts/H06.json"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.188,
+    "stdout_sha256": "9e261ee2386d210a4f6a833026b27d90f8984c7df3640277cf1272a7ee69701b",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H06-validation.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "--store",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-pressure-final",
+      "pressure",
+      "run",
+      "--test",
+      "H06",
+      "--mode",
+      "fixture"
+    ],
+    "exit_code": 0,
+    "duration_s": 7.156,
+    "stdout_sha256": "1bd125acb9436b7bce74f6c4062f6e9f250052eea88cbb373a438c037d47d991",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H06.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "--store",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-pressure-final",
+      "pressure",
+      "run",
+      "--test",
+      "H06",
+      "--mode",
+      "fixture"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.406,
+    "stdout_sha256": "1bd125acb9436b7bce74f6c4062f6e9f250052eea88cbb373a438c037d47d991",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H06-replay.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "pressure",
+      "validate",
+      "--manifest",
+      "experiments/pressure/contracts/H07.json"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.156,
+    "stdout_sha256": "15966355d18f5e45a48978498234c6aef0b065af4606e00f7b02f1186807e42b",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H07-validation.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "--store",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-pressure-final",
+      "pressure",
+      "run",
+      "--test",
+      "H07",
+      "--mode",
+      "fixture"
+    ],
+    "exit_code": 0,
+    "duration_s": 8.125,
+    "stdout_sha256": "743d3fd97d77d0579bdd552758891bd1e072dcea9130d6ac21a59120082c7b7b",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H07.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "--store",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-pressure-final",
+      "pressure",
+      "run",
+      "--test",
+      "H07",
+      "--mode",
+      "fixture"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.297,
+    "stdout_sha256": "743d3fd97d77d0579bdd552758891bd1e072dcea9130d6ac21a59120082c7b7b",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H07-replay.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "pressure",
+      "validate",
+      "--manifest",
+      "experiments/pressure/contracts/H08.json"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.156,
+    "stdout_sha256": "a9748ae63133e3e93bbff7a4261c4ac1199184acf71b41fe2ff905d72e1a831e",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H08-validation.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "--store",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-pressure-final",
+      "pressure",
+      "run",
+      "--test",
+      "H08",
+      "--mode",
+      "fixture"
+    ],
+    "exit_code": 0,
+    "duration_s": 26.75,
+    "stdout_sha256": "96b6e5ae982f6e7c16746b253c07489348582a5edfa3a52dfe640508c6c5883a",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H08.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "--store",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-pressure-final",
+      "pressure",
+      "run",
+      "--test",
+      "H08",
+      "--mode",
+      "fixture"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.437,
+    "stdout_sha256": "96b6e5ae982f6e7c16746b253c07489348582a5edfa3a52dfe640508c6c5883a",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H08-replay.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "pressure",
+      "validate",
+      "--manifest",
+      "experiments/pressure/contracts/H09.json"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.141,
+    "stdout_sha256": "aee6aa5c61addcf28d3cb1a80361387db66d468503dab1b09fbecb443d4fb066",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H09-validation.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "--store",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-pressure-final",
+      "pressure",
+      "run",
+      "--test",
+      "H09",
+      "--mode",
+      "fixture"
+    ],
+    "exit_code": 0,
+    "duration_s": 11.187,
+    "stdout_sha256": "b80ee125fbc4dcdddd4cb1b856593e4c43847654c93f6bab50f373e7f618b4e9",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H09.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "--store",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-pressure-final",
+      "pressure",
+      "run",
+      "--test",
+      "H09",
+      "--mode",
+      "fixture"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.313,
+    "stdout_sha256": "b80ee125fbc4dcdddd4cb1b856593e4c43847654c93f6bab50f373e7f618b4e9",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H09-replay.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "pressure",
+      "validate",
+      "--manifest",
+      "experiments/pressure/contracts/H10.json"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.171,
+    "stdout_sha256": "d9a797579f99a5586e9ce8b29037695e10d179365b7967e3270e4fe74f15c94b",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H10-validation.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "--store",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-pressure-final",
+      "pressure",
+      "run",
+      "--test",
+      "H10",
+      "--mode",
+      "fixture"
+    ],
+    "exit_code": 0,
+    "duration_s": 7.375,
+    "stdout_sha256": "e06e177fd94a9dded40a7c7b83ea353047caf21e03701b3a557b8c7c8214c71f",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H10.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "--store",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-pressure-final",
+      "pressure",
+      "run",
+      "--test",
+      "H10",
+      "--mode",
+      "fixture"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.297,
+    "stdout_sha256": "e06e177fd94a9dded40a7c7b83ea353047caf21e03701b3a557b8c7c8214c71f",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H10-replay.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "pressure",
+      "validate",
+      "--manifest",
+      "experiments/pressure/contracts/H11.json"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.156,
+    "stdout_sha256": "d0e3689dbd4086833ef677e54010cb9dfcb07340e9a3f70c99191bdf0b928f7f",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H11-validation.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "--store",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-pressure-final",
+      "pressure",
+      "run",
+      "--test",
+      "H11",
+      "--mode",
+      "fixture"
+    ],
+    "exit_code": 0,
+    "duration_s": 32.25,
+    "stdout_sha256": "79e47d04c656c2a12ba5f8089afe8912eb9bcdab2e04a4fcdf56fe8bb467d907",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H11.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "--store",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-pressure-final",
+      "pressure",
+      "run",
+      "--test",
+      "H11",
+      "--mode",
+      "fixture"
+    ],
+    "exit_code": 0,
+    "duration_s": 1.266,
+    "stdout_sha256": "79e47d04c656c2a12ba5f8089afe8912eb9bcdab2e04a4fcdf56fe8bb467d907",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\H11-replay.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "pressure",
+      "compare",
+      "--reports",
+      "D:\\Repos\\hive-ai\\experiments\\results\\readiness-20261121\\H01.json",
+      "D:\\Repos\\hive-ai\\experiments\\results\\readiness-20261121\\H02.json",
+      "D:\\Repos\\hive-ai\\experiments\\results\\readiness-20261121\\H03.json",
+      "D:\\Repos\\hive-ai\\experiments\\results\\readiness-20261121\\H04.json",
+      "D:\\Repos\\hive-ai\\experiments\\results\\readiness-20261121\\H05.json",
+      "D:\\Repos\\hive-ai\\experiments\\results\\readiness-20261121\\H06.json",
+      "D:\\Repos\\hive-ai\\experiments\\results\\readiness-20261121\\H07.json",
+      "D:\\Repos\\hive-ai\\experiments\\results\\readiness-20261121\\H08.json",
+      "D:\\Repos\\hive-ai\\experiments\\results\\readiness-20261121\\H09.json",
+      "D:\\Repos\\hive-ai\\experiments\\results\\readiness-20261121\\H10.json",
+      "D:\\Repos\\hive-ai\\experiments\\results\\readiness-20261121\\H11.json"
+    ],
+    "exit_code": 0,
+    "duration_s": 0.234,
+    "stdout_sha256": "dbb528b48fff0aad68c590a1ffded7f97753ccf441411a22712925a226701fe8",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\pressure-comparison.json"
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "hive",
+      "--store",
+      "D:\\Repos\\hive-ai\\.hive\\readiness-pressure-final",
+      "pressure",
+      "report"
+    ],
+    "exit_code": 0,
+    "duration_s": 1.75,
+    "stdout_sha256": "dbb528b48fff0aad68c590a1ffded7f97753ccf441411a22712925a226701fe8",
+    "stderr": "",
+    "output": "experiments\\results\\readiness-20261121\\pressure-summary.json"
+  }
+]

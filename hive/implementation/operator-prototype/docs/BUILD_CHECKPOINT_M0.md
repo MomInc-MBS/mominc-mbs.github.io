@@ -1,0 +1,33 @@
+# HIVE CHECKPOINT: M0 (23 Nov 2026)
+
+- **Runtime commit / branch / dirty state:** this commit on `build/working-prototype`. The parents are fe06e4e (Gate A) and 6127776. The tree is clean except for the pre-existing untracked `build/prototype-v04/*` and `integrations/*`.
+- **Site publication commit:** unchanged (PR #58, e3fcce6). This checkpoint is not published yet.
+- **Master identity and D1–D11:** `HIVE_Master_Evolution_Build_Path_FINAL_Claude_Nemotron_2026-11-23.md` (v0, 85,231 B), imported via the supplement. Vector `D1=D D2=C D3=C D4=E D5=A D6=B D7=B D8=C D9=C D10=C D11=C` (`docs/DECISIONS_D1_D11.md`).
+- **Local phase ↔ named gate:** "P3" = Gate B + M0/M1. Local "P4 core proven" = M1 accepted. The sensory branch stays reference-only.
+- **Completed gates:**
+  - A: decisions, crosswalk, finding ledger, legal surface (`configs/m0_campaign_policy.json`).
+  - B: declarative workflow → generated source → container backend → independent oracle → bound receipt.
+  - C: **M0 DEMONSTRATED MECHANISM**. This is not discovery and not benefit.
+  - D: protocol **drafted** (`docs/M1_PROTOCOL_DRAFT.md`), not frozen.
+- **Candidates:** P0 `862f34e940f1` (identity root); valid `5e9a68911d72` = [scrub_delete, scrub_lowercase], ACCEPTED; failing `a4d572a70af1` = [scrub_lowercase], REJECTED and retained. Full hashes and inventory pins are in `build/m0/m0_receipt_bundle.json`.
+- **Protocol / evaluator:** `m0-exact-output-v1` / `m0-oracle-v1`, hand-written expected outputs (`src/hive/m0_oracle.py`). Verification class: deterministic exact output.
+- **Raw results:**
+  - valid candidate: T1 1/1, then T2 1/1 after restart;
+  - failing candidate: T1 0/1;
+  - P0 on T2 after rollback: identity output, as expected.
+  - Denominators are tiny by design. M0 is lifecycle proof only.
+- **Negative evidence retained:**
+  - 3 refused before execution (unknown primitive, 4 steps, duplicate digest);
+  - 1 oracle failure;
+  - tampered receipt and stale oracle sha rejected;
+  - selecting the failing candidate refused;
+  - **forged self-consistent receipt** (recomputed sha) refused by binding to the parent-written ACCEPTED evidence_refs. This was a conductor review fix; its test fails on the worker's code.
+- **Restart / reuse / rollback:** a new process reopened the store, lineage verified, pins intact, the selection resolved, then T2 (an input never used before) passed through the container. Rollback was appended; the selection resolves to P0; history = select, rollback.
+- **Suite:** 865 passed / 3 skipped / 0 failed in 36.6 min (`build/m0/full-suite.log`). Targeted M0/lineage/compare tests: 36 passed.
+- **Open findings:** SQ-1..5, SQ-7, SQ-8, BC-4..6, BC-8a/b/c, FR-3..7 (LOW/NIT). The A1 flake is not root-caused. New: the M0 receipt trust limit is the same as SQ-1 (an unkeyed store writer can forge everything).
+- **Cost:**
+  - **Engineering this session:** ~$2.55 list (Opus $1.99, Sonnet $0.56, measured from transcripts).
+  - **Cumulative:** ~$54.6 of the $120 owner ceiling.
+  - **HIVE runtime:** 0 model calls, 0 network, 4 Docker runs, $0.
+- **Reservations:** none outstanding.
+- **Next single action:** freeze the M1 protocol. Decide the §1 open condition (thin typed views of existing parse/aggregate functions, or a fallback family). Then have a separate evaluator worker author the F-final generator and oracles. Resume when the `M1_PROTOCOL` sha is committed.

@@ -1,0 +1,730 @@
+{
+ "configs-inventory.csv": [
+  {
+   "bytes": 376,
+   "group": ".json",
+   "id": "adaptive.json"
+  },
+  {
+   "bytes": 2320,
+   "group": ".yaml",
+   "id": "agent_context_policy.yaml"
+  },
+  {
+   "bytes": 770,
+   "group": ".json",
+   "id": "experiment_sources.allowlist.json"
+  },
+  {
+   "bytes": 361,
+   "group": ".json",
+   "id": "integration-20261121.json"
+  },
+  {
+   "bytes": 375,
+   "group": ".json",
+   "id": "local.json"
+  },
+  {
+   "bytes": 1024,
+   "group": ".json",
+   "id": "m0_campaign_policy.json"
+  },
+  {
+   "bytes": 2413,
+   "group": ".json",
+   "id": "m1_campaign_policy.json"
+  },
+  {
+   "bytes": 2900,
+   "group": ".json",
+   "id": "m2_campaign_policy.json"
+  },
+  {
+   "bytes": 556,
+   "group": ".txt",
+   "id": "m2_prompts/contract.txt"
+  },
+  {
+   "bytes": 65,
+   "group": ".txt",
+   "id": "m2_prompts/history.txt"
+  },
+  {
+   "bytes": 4437,
+   "group": ".txt",
+   "id": "m2_prompts/propose_C.txt"
+  },
+  {
+   "bytes": 3927,
+   "group": ".txt",
+   "id": "m2_prompts/propose_R.txt"
+  },
+  {
+   "bytes": 115,
+   "group": ".txt",
+   "id": "m2_prompts/smoke.txt"
+  },
+  {
+   "bytes": 180,
+   "group": ".txt",
+   "id": "m2_prompts/system.txt"
+  },
+  {
+   "bytes": 1305,
+   "group": ".json",
+   "id": "operator_policy.json"
+  },
+  {
+   "bytes": 108,
+   "group": ".json",
+   "id": "prototype-mission.example.json"
+  },
+  {
+   "bytes": 360,
+   "group": ".json",
+   "id": "prototype-video.json"
+  },
+  {
+   "bytes": 1715,
+   "group": ".yaml",
+   "id": "roles.yaml"
+  },
+  {
+   "bytes": 375,
+   "group": ".json",
+   "id": "v03-e0.json"
+  }
+ ],
+ "docs-inventory.csv": [
+  {
+   "bytes": 4487,
+   "group": ".md",
+   "id": "ADAPTIVE_V02.md"
+  },
+  {
+   "bytes": 1926,
+   "group": ".md",
+   "id": "ADAPTIVE_V021.md"
+  },
+  {
+   "bytes": 29647,
+   "group": ".md",
+   "id": "ANZELLAN_RESEARCH_20261121.md"
+  },
+  {
+   "bytes": 1732,
+   "group": ".md",
+   "id": "ARCHITECTURE.md"
+  },
+  {
+   "bytes": 32078,
+   "group": ".md",
+   "id": "AUTONOMOUS_BUILD_DIRECTIVE.md"
+  },
+  {
+   "bytes": 3397,
+   "group": ".md",
+   "id": "BUILD_CHECKPOINT_M0.md"
+  },
+  {
+   "bytes": 7258,
+   "group": ".md",
+   "id": "BUILD_CHECKPOINT_M1_0.md"
+  },
+  {
+   "bytes": 1832,
+   "group": ".md",
+   "id": "BUILD_CHECKPOINT_M2_0.md"
+  },
+  {
+   "bytes": 8809,
+   "group": ".md",
+   "id": "BUILD_CHECKPOINT_V04X.md"
+  },
+  {
+   "bytes": 11146,
+   "group": ".json",
+   "id": "BUILD_ISSUES.json"
+  },
+  {
+   "bytes": 5954,
+   "group": ".md",
+   "id": "COMPOUNDING_PROTOCOL.md"
+  },
+  {
+   "bytes": 4776,
+   "group": ".md",
+   "id": "CONTEXT_GOVERNANCE.md"
+  },
+  {
+   "bytes": 2490,
+   "group": ".md",
+   "id": "CONTEXT_GOVERNANCE_BASELINE_VS_AFTER.md"
+  },
+  {
+   "bytes": 32154,
+   "group": ".md",
+   "id": "CURRENT_STATE.md"
+  },
+  {
+   "bytes": 6055,
+   "group": ".md",
+   "id": "DECISIONS_D1_D11.md"
+  },
+  {
+   "bytes": 9201,
+   "group": ".md",
+   "id": "EXPERIMENT_LOG.md"
+  },
+  {
+   "bytes": 7371,
+   "group": ".md",
+   "id": "FAILURE_REGISTER.md"
+  },
+  {
+   "bytes": 43096,
+   "group": ".md",
+   "id": "HIVE_POST_M0_BUILD_PATH_20261123.md"
+  },
+  {
+   "bytes": 5086,
+   "group": ".md",
+   "id": "HIVE_RUNBOOK.md"
+  },
+  {
+   "bytes": 22392,
+   "group": ".md",
+   "id": "INTEGRATION_DIRECTIVE.md"
+  },
+  {
+   "bytes": 4862,
+   "group": ".md",
+   "id": "INTEGRATION_MAP.md"
+  },
+  {
+   "bytes": 5650,
+   "group": ".md",
+   "id": "INTEGRATION_REVIEW.md"
+  },
+  {
+   "bytes": 2273,
+   "group": ".md",
+   "id": "LEVEL_A_ACCEPTANCE.md"
+  },
+  {
+   "bytes": 5704,
+   "group": ".md",
+   "id": "LEVEL_A_OPERATOR_INTAKE.md"
+  },
+  {
+   "bytes": 6183,
+   "group": ".md",
+   "id": "LEVEL_A_SOURCE_APPROVAL.md"
+  },
+  {
+   "bytes": 2177,
+   "group": ".md",
+   "id": "LEVEL_B_LEARNING_STUDY.md"
+  },
+  {
+   "bytes": 21446,
+   "group": ".md",
+   "id": "M1_PROTOCOL.md"
+  },
+  {
+   "bytes": 5178,
+   "group": ".md",
+   "id": "M1_PROTOCOL_DRAFT.md"
+  },
+  {
+   "bytes": 6532,
+   "group": ".md",
+   "id": "M1_REPORT.md"
+  },
+  {
+   "bytes": 33440,
+   "group": ".md",
+   "id": "M2_PROTOCOL.md"
+  },
+  {
+   "bytes": 5969,
+   "group": ".md",
+   "id": "M2_REPORT.md"
+  },
+  {
+   "bytes": 22925,
+   "group": ".md",
+   "id": "MASTER_SEQUENCING_PATCH_20261123.md"
+  },
+  {
+   "bytes": 5414,
+   "group": ".md",
+   "id": "MATH_HYPOTHESES.md"
+  },
+  {
+   "bytes": 26833,
+   "group": ".md",
+   "id": "NEW_BUILD_PATH_20261121.md"
+  },
+  {
+   "bytes": 3374,
+   "group": ".md",
+   "id": "NEXT_ACTIONS.md"
+  },
+  {
+   "bytes": 20837,
+   "group": ".md",
+   "id": "NEXT_BUILD_LEARNING_LOOP_DIRECTIVE.md"
+  },
+  {
+   "bytes": 19611,
+   "group": ".md",
+   "id": "NEXT_BUILD_V04X_DIRECTIVE.md"
+  },
+  {
+   "bytes": 11902,
+   "group": ".md",
+   "id": "NEXT_WORK_ITEM.md"
+  },
+  {
+   "bytes": 2235,
+   "group": ".md",
+   "id": "OBJECTIVE_TESTING.md"
+  },
+  {
+   "bytes": 6881,
+   "group": ".md",
+   "id": "OPERATIONAL_PROTOTYPE.md"
+  },
+  {
+   "bytes": 3986,
+   "group": ".md",
+   "id": "OPERATOR_RUNBOOK.md"
+  },
+  {
+   "bytes": 7331,
+   "group": ".md",
+   "id": "P2_EXACT_TOOL.md"
+  },
+  {
+   "bytes": 5787,
+   "group": ".md",
+   "id": "P2_LINEAGE_DESIGN.md"
+  },
+  {
+   "bytes": 2810,
+   "group": ".md",
+   "id": "P2_VERIFICATION_MATRIX.md"
+  },
+  {
+   "bytes": 26962,
+   "group": ".md",
+   "id": "PRESSURE_RESEARCH.md"
+  },
+  {
+   "bytes": 9001,
+   "group": ".md",
+   "id": "PROTOTYPE_ACCEPTANCE.md"
+  },
+  {
+   "bytes": 10838,
+   "group": ".md",
+   "id": "PROTOTYPE_CONSOLE.md"
+  },
+  {
+   "bytes": 2570,
+   "group": ".md",
+   "id": "PROTOTYPE_CONTRACT.md"
+  },
+  {
+   "bytes": 4995,
+   "group": ".md",
+   "id": "PROTOTYPE_DEMO.md"
+  },
+  {
+   "bytes": 6433,
+   "group": ".md",
+   "id": "READINESS_FAILURE_REGISTER.md"
+  },
+  {
+   "bytes": 9374,
+   "group": ".md",
+   "id": "REVIEW_DECISIONS.md"
+  },
+  {
+   "bytes": 10212,
+   "group": ".md",
+   "id": "RUN_HIVE.md"
+  },
+  {
+   "bytes": 12833,
+   "group": ".md",
+   "id": "SECURITY_QUARANTINE.md"
+  },
+  {
+   "bytes": 37803,
+   "group": ".md",
+   "id": "TEST_READINESS_DIRECTIVE.md"
+  },
+  {
+   "bytes": 36284,
+   "group": ".md",
+   "id": "V03_BUILD_DIRECTIVE.md"
+  },
+  {
+   "bytes": 25493,
+   "group": ".md",
+   "id": "V03_EXPERIMENT_DESIGN.md"
+  },
+  {
+   "bytes": 8884,
+   "group": ".md",
+   "id": "V03_FOUNDATION.md"
+  },
+  {
+   "bytes": 38196,
+   "group": ".md",
+   "id": "WORKING_PROTOTYPE_BUILD_PLAN.md"
+  },
+  {
+   "bytes": 6495,
+   "group": ".md",
+   "id": "WORK_CONTRACT.md"
+  },
+  {
+   "bytes": 14424,
+   "group": ".md",
+   "id": "adr-hive-unified-integration.md"
+  },
+  {
+   "bytes": 3815,
+   "group": ".md",
+   "id": "brief.md"
+  },
+  {
+   "bytes": 4936,
+   "group": ".md",
+   "id": "first-milestone.md"
+  },
+  {
+   "bytes": 14099,
+   "group": ".md",
+   "id": "hive-improvement-loop.md"
+  },
+  {
+   "bytes": 6502,
+   "group": ".md",
+   "id": "hive-unified-audit.md"
+  },
+  {
+   "bytes": 15337,
+   "group": ".md",
+   "id": "research/HEXE_EMBODIED_EXPLORATION_HANDOFF_20261123.md"
+  },
+  {
+   "bytes": 66922,
+   "group": ".md",
+   "id": "research/SENSORY_GROUNDING_RESEARCH_PLAN_20261123.md"
+  },
+  {
+   "bytes": 6649,
+   "group": ".md",
+   "id": "reviews/integration-sol-final-20261121.md"
+  },
+  {
+   "bytes": 11928,
+   "group": ".md",
+   "id": "runbooks/hive-local-operator.md"
+  },
+  {
+   "bytes": 9213,
+   "group": ".md",
+   "id": "sequencing_reconciliation.md"
+  }
+ ],
+ "evaluator-inventory.csv": [
+  {
+   "bytes": 6728,
+   "group": "m1",
+   "id": "m1/__pycache__/fixtures.cpython-311.pyc"
+  },
+  {
+   "bytes": 14482,
+   "group": "m1",
+   "id": "m1/__pycache__/gen_public.cpython-311.pyc"
+  },
+  {
+   "bytes": 6747,
+   "group": "m1",
+   "id": "m1/__pycache__/oracle.cpython-311.pyc"
+  },
+  {
+   "bytes": 4557,
+   "group": "m1",
+   "id": "m1/fixtures.py"
+  },
+  {
+   "bytes": 7045,
+   "group": "m1",
+   "id": "m1/gen_public.py"
+  },
+  {
+   "bytes": 3705,
+   "group": "m1",
+   "id": "m1/oracle.py"
+  },
+  {
+   "bytes": 18003,
+   "group": "m2",
+   "id": "m2/__pycache__/fixtures.cpython-311.pyc"
+  },
+  {
+   "bytes": 5655,
+   "group": "m2",
+   "id": "m2/__pycache__/gen_private.cpython-311.pyc"
+  },
+  {
+   "bytes": 28316,
+   "group": "m2",
+   "id": "m2/__pycache__/gen_public.cpython-311.pyc"
+  },
+  {
+   "bytes": 17109,
+   "group": "m2",
+   "id": "m2/__pycache__/oracle.cpython-311.pyc"
+  },
+  {
+   "bytes": 13081,
+   "group": "m2",
+   "id": "m2/fixtures.py"
+  },
+  {
+   "bytes": 3171,
+   "group": "m2",
+   "id": "m2/gen_private.py"
+  },
+  {
+   "bytes": 15437,
+   "group": "m2",
+   "id": "m2/gen_public.py"
+  },
+  {
+   "bytes": 8014,
+   "group": "m2",
+   "id": "m2/oracle.py"
+  }
+ ],
+ "scripts-inventory.json": [
+  {
+   "bytes": 1217,
+   "group": ".ps1",
+   "id": "Start-HiveWorker.ps1"
+  },
+  {
+   "bytes": 5370,
+   "group": ".pyc",
+   "id": "__pycache__/agent_usage_tally.cpython-311.pyc"
+  },
+  {
+   "bytes": 13465,
+   "group": ".pyc",
+   "id": "__pycache__/export_objective_evidence.cpython-311.pyc"
+  },
+  {
+   "bytes": 21876,
+   "group": ".pyc",
+   "id": "__pycache__/export_p2_evidence.cpython-311.pyc"
+  },
+  {
+   "bytes": 13839,
+   "group": ".pyc",
+   "id": "__pycache__/export_snapshot.cpython-311.pyc"
+  },
+  {
+   "bytes": 38565,
+   "group": ".pyc",
+   "id": "__pycache__/m1_campaign.cpython-311.pyc"
+  },
+  {
+   "bytes": 79958,
+   "group": ".pyc",
+   "id": "__pycache__/m2_campaign.cpython-311.pyc"
+  },
+  {
+   "bytes": 8436,
+   "group": ".pyc",
+   "id": "__pycache__/m2_stub_server.cpython-311.pyc"
+  },
+  {
+   "bytes": 40537,
+   "group": ".pyc",
+   "id": "__pycache__/objective_smoke.cpython-311.pyc"
+  },
+  {
+   "bytes": 9520,
+   "group": ".pyc",
+   "id": "__pycache__/p2_tool_comparison.cpython-311.pyc"
+  },
+  {
+   "bytes": 26640,
+   "group": ".pyc",
+   "id": "__pycache__/prepare_operational_demo.cpython-311.pyc"
+  },
+  {
+   "bytes": 13245,
+   "group": ".pyc",
+   "id": "__pycache__/readiness_demo.cpython-311.pyc"
+  },
+  {
+   "bytes": 18188,
+   "group": ".pyc",
+   "id": "__pycache__/replay_objective_exports.cpython-311.pyc"
+  },
+  {
+   "bytes": 16922,
+   "group": ".pyc",
+   "id": "__pycache__/replay_p2_exports.cpython-311.pyc"
+  },
+  {
+   "bytes": 7259,
+   "group": ".pyc",
+   "id": "__pycache__/replay_readiness_exports.cpython-311.pyc"
+  },
+  {
+   "bytes": 22622,
+   "group": ".pyc",
+   "id": "__pycache__/v03_e0.cpython-311.pyc"
+  },
+  {
+   "bytes": 2571,
+   "group": ".py",
+   "id": "agent_usage_tally.py"
+  },
+  {
+   "bytes": 6946,
+   "group": ".py",
+   "id": "export_objective_evidence.py"
+  },
+  {
+   "bytes": 11445,
+   "group": ".py",
+   "id": "export_p2_evidence.py"
+  },
+  {
+   "bytes": 8520,
+   "group": ".py",
+   "id": "export_snapshot.py"
+  },
+  {
+   "bytes": 516,
+   "group": ".cmd",
+   "id": "hive-operator.cmd"
+  },
+  {
+   "bytes": 7103,
+   "group": ".py",
+   "id": "m0_campaign.py"
+  },
+  {
+   "bytes": 17782,
+   "group": ".py",
+   "id": "m1_campaign.py"
+  },
+  {
+   "bytes": 35551,
+   "group": ".py",
+   "id": "m2_campaign.py"
+  },
+  {
+   "bytes": 3885,
+   "group": ".py",
+   "id": "m2_stub_server.py"
+  },
+  {
+   "bytes": 25357,
+   "group": ".py",
+   "id": "objective_smoke.py"
+  },
+  {
+   "bytes": 17529,
+   "group": ".py",
+   "id": "operator_demo.py"
+  },
+  {
+   "bytes": 7293,
+   "group": ".py",
+   "id": "p2_abstention_comparison.py"
+  },
+  {
+   "bytes": 6103,
+   "group": ".py",
+   "id": "p2_tool_comparison.py"
+  },
+  {
+   "bytes": 6877,
+   "group": ".py",
+   "id": "prepare_integration.py"
+  },
+  {
+   "bytes": 21844,
+   "group": ".py",
+   "id": "prepare_operational_demo.py"
+  },
+  {
+   "bytes": 6983,
+   "group": ".py",
+   "id": "prototype_release_smoke.py"
+  },
+  {
+   "bytes": 5293,
+   "group": ".py",
+   "id": "prototype_wp0.py"
+  },
+  {
+   "bytes": 8369,
+   "group": ".py",
+   "id": "readiness_demo.py"
+  },
+  {
+   "bytes": 5062,
+   "group": ".py",
+   "id": "replay_integration_export.py"
+  },
+  {
+   "bytes": 10473,
+   "group": ".py",
+   "id": "replay_objective_exports.py"
+  },
+  {
+   "bytes": 10862,
+   "group": ".py",
+   "id": "replay_p2_exports.py"
+  },
+  {
+   "bytes": 4012,
+   "group": ".py",
+   "id": "replay_readiness_exports.py"
+  },
+  {
+   "bytes": 4720,
+   "group": ".py",
+   "id": "reproduce_candidate.py"
+  },
+  {
+   "bytes": 14888,
+   "group": ".py",
+   "id": "v03_e0.py"
+  },
+  {
+   "bytes": 3041,
+   "group": ".py",
+   "id": "verify_adaptive.py"
+  },
+  {
+   "bytes": 5056,
+   "group": ".py",
+   "id": "verify_integration.py"
+  }
+ ]
+}

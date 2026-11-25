@@ -1,0 +1,12 @@
+﻿{
+  "verdict": "PASS_SYNTHETIC_PIPELINE_WITH_RECORDED_PRIOR_FAILURE",
+  "scope": "Public synthetic development fixtures; no genuine Level A acceptance or learning gain",
+  "attempts": 2,
+  "scheduled_task_executions_across_attempts": 24,
+  "first_attempt": {"objective_verifiers_passed": 12, "fresh_replays_passed": 6, "fresh_data_replays_failed": 6, "overall_passed": false, "cause": "Checker compared effective timeout-clamped config hash with original mission config hash", "receipt": ".hive/objective-smoke-20261121/report.json"},
+  "second_attempt": {"objective_verifiers_passed": 12, "fresh_replays_reported_passed": 12, "overall_passed": true, "code_cases_independently_checked": 22, "data_tasks_independently_checked": 6, "model_requests": 0, "cycles_per_task": 1, "code_mission_status": "VERIFIED", "all_executor_job_states": "BLOCKED", "receipt": ".hive/objective-smoke-20261121-r2/report.json", "report_sha256": "5d052dcd3f618ba964f992e882cbb30b253cab5ed431e162634e6bfeb1a74758"},
+  "identity": {"plan_sha256": "3b41734d702e39dcd6b318f321fb2f40edc0665399d285965a3f2953794e1b4e", "runner_sha256": "cd2bc0798e86bd1ea35676033d53bc3c455c913262877b9487f113046bc8b0f5", "runtime_sha256": "2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c", "config_hash": "17abb5470e515dfd317ad443df1f4d5d87f5cd1cfd3db5c1ca08be80f6741b36"},
+  "docker": {"receipt_engine": "docker", "image_digest": "sha256:07d4824036af339fa1b6ef769cc99d9c10a141769538b52b3b597c84f7a7b535", "controls": ["network none", "read-only root and source", "drop capabilities", "no new privileges"], "all_six_exit_zero": true},
+  "comparison": {"jobs": 18, "matched_tasks_per_arm": 6, "quality_delta": 0, "ties": 6, "promote": false, "model_requests": 0, "decision": "QUARANTINE"},
+  "limitations": ["Replay pass was inspected from the saved fresh-process report; this audit did not rerun Docker or replay", "Docker controls are verified as recorded and checked by the existing verifier, not independently observed inside containers", "No source independence or transferable learning established"]
+}

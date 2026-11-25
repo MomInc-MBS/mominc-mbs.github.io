@@ -1,0 +1,41 @@
+{
+  "status": "INCOMPLETE_HARNESS_ATTEMPTS",
+  "runtime_sha256": "81cea878e5f17bb10a14dde77aab3fef6d8be370841294292e24a465b147724d",
+  "attempts": [
+    {
+      "number": 1,
+      "error": "Early assertion failed before response synchronization; generic browser failure message retained in tool execution log",
+      "outcome": "No completed journey report"
+    },
+    {
+      "number": 2,
+      "error": "Combined stages were not independently verified",
+      "cause": "Harness inspected a stale/in-progress console record before its asynchronous replay response settled; source store independently showed all four completed stage verdicts VERIFIED afterward"
+    },
+    {
+      "number": 3,
+      "error": "Connection badge wait timed out",
+      "cause": "An interrupted harness attempt left the existing STOP file set; initial-state wait incorrectly assumed connected idle"
+    }
+  ],
+  "observed_after_attempts": {
+    "kill_switch": true,
+    "budget": {
+      "cycles": 9,
+      "requests": 0,
+      "tokens_actual": 0,
+      "tokens_reserved": 0,
+      "wall_s": 5.9230000000679865
+    },
+    "console_mission_states": [
+      {
+        "id": "prototype-combined",
+        "state": "STOPPED"
+      }
+    ]
+  },
+  "new_model_calls": 0,
+  "new_cycles": 0,
+  "budget_requests_and_cycles_unchanged_from_engineering_demo": true,
+  "resolution": "Await actual POST responses, assert worker quiescence, resume through the existing control, replay same registered mission in the same original store. No runtime changes or budget refill."
+}

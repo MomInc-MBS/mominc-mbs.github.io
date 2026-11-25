@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mominc.online/hive/schemas/structured-task-v1.json",
+  "title": "HIVE structured-data mission v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "source_group",
+    "allowed_root",
+    "input_path",
+    "input_sha256",
+    "source_format",
+    "task_type",
+    "schema_id"
+  ],
+  "properties": {
+    "version": {"const": 1},
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"},
+    "mission_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"},
+    "source_group": {"type": "string", "minLength": 1, "maxLength": 128},
+    "allowed_root": {"type": "string", "minLength": 1},
+    "input_path": {"type": "string", "minLength": 1},
+    "input_sha256": {"$ref": "#/$defs/sha256"},
+    "source_format": {"enum": ["csv", "json"]},
+    "task_type": {"enum": ["inventory", "classification"]},
+    "schema_id": {"enum": ["grouped_inventory_v1", "independent_labels_v1"]},
+    "procedure": {"enum": ["baseline_v1", "labels_json_recovery_v1"]},
+    "labels": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 12,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1, "maxLength": 128}
+    },
+    "oracle_path": {"type": "string", "minLength": 1},
+    "oracle_sha256": {"$ref": "#/$defs/sha256"},
+    "synthetic_fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["synthetic"],
+      "properties": {
+        "synthetic": {"const": true},
+        "source_note": {"type": "string", "maxLength": 256}
+      }
+    }
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  },
+  "anyOf": [
+    {"required": ["id"]},
+    {"required": ["mission_id"]}
+  ],
+  "allOf": [
+    {
+      "if": {"properties": {"task_type": {"const": "inventory"}}, "required": ["task_type"]},
+      "then": {"properties": {"schema_id": {"const": "grouped_inventory_v1"}}}
+    },
+    {
+      "if": {"properties": {"task_type": {"const": "classification"}}, "required": ["task_type"]},
+      "then": {
+        "properties": {"schema_id": {"const": "independent_labels_v1"}},
+        "required": ["labels"]
+      }
+    },
+    {
+      "if": {"required": ["oracle_path"]},
+      "then": {"required": ["oracle_sha256"]},
+      "else": {"not": {"required": ["oracle_sha256"]}}
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "policy_promotion_authorized": false,
+  "default_policy_version": 1,
+  "candidate_policy_version": 4,
+  "candidate_disposition": "QUARANTINE",
+  "canonical_release_pointer": "https://mominc.online/hive/CURRENT_RELEASE.json",
+  "frozen_baseline": {
+    "runtime_version": "0.3.0.dev4",
+    "runtime_commit": "b66efb0ba074bf8c6f6a8c0f0bc4761aa3e65739",
+    "runtime_sha256": "e711d1c3e7eb4dbd23b95f3027f5d97627b1f6880a2c252e2cefea8c522e817b",
+    "zip_sha256": "c3cf3e4633391efeb6f8659821fc4bdb6b112fe6dc4f5ea31bc00b531f3102ce",
+    "publication_manifest": "https://mominc.online/hive/implementation/readiness-dev4-publication.json"
+  },
+  "previous_engineering_supplement": {
+    "runtime_version": "0.3.0.dev5",
+    "runtime_commit": "5719c4ace14a1c437bf8f935b8666773b0e37493",
+    "packaging_commit": "a1b8fb6ee9a856be90bf0573f5af208438395c2a",
+    "runtime_sha256": "2d05d4f2b541ae00cf2b6e281c75907a37036d2ed89da0e58726361050e9c38c",
+    "zip_sha256": "b6f9050c3aff751d5660cda2d23e8703cf67299e07f654c71300cf920eeb8e00",
+    "publication_manifest": "https://mominc.online/hive/implementation/objective-dev5-publication.json"
+  },
+  "rollback_rule": "Use the prior frozen package with its matching Store/config/source identity. Never clear STOP, reset a spent budget, force a changed-source resume or promote a candidate as part of rollback."
+}

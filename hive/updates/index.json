@@ -557,6 +557,24 @@
         "checkpoint",
         "evidence"
       ]
+    },
+    {
+      "id": "OPERATOR",
+      "source_id": "HIVE-OPERATOR-PROTOTYPE-2026-11-24",
+      "path": "updates/HIVE_Operator_Prototype_2026-11-24.md",
+      "title": "Operator Prototype: retained capabilities on real inputs",
+      "type": "framework",
+      "status": "measured",
+      "evidence_status": "measured_engineering_result",
+      "implementation_status": "implemented",
+      "date": "2026-11-24",
+      "citation_label": "HIVE Operator Prototype (24 November 2026)",
+      "sha256": "1f563f88d755d9c6a33ceb0554a69c7fdf0eedcb9fd8863ed9b9cee428c9125f",
+      "tags": [
+        "hive",
+        "operator",
+        "evidence"
+      ]
     }
   ],
   "edges": [
@@ -1378,6 +1396,21 @@
     {
       "source": "HOME",
       "target": "M2",
+      "relation": "related_to"
+    },
+    {
+      "source": "OPERATOR",
+      "target": "M2",
+      "relation": "derived_from"
+    },
+    {
+      "source": "HOME",
+      "target": "OPERATOR",
+      "relation": "related_to"
+    },
+    {
+      "source": "STATUS",
+      "target": "OPERATOR",
       "relation": "related_to"
     }
   ],
