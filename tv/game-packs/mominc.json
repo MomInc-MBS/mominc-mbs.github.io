@@ -734,8 +734,8 @@
     },
     {
       "url": "/tv/channels/mominc.html",
-      "revision": "161611169befe5cbf672e6676a89c43b34c15f93",
-      "bytes": 57188
+      "revision": "1b29f064bba503ff19fa6b9ba0f0fbbc9897000e",
+      "bytes": 57203
     },
     {
       "url": "/tv/channels/mominc.js",
@@ -901,5 +901,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "4766af22e3480163cba2"
+  "version": "6b79569ac37fa2312b5d"
 }
