@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import * as E from '../tv/channels/corgi-endless.mjs';
 
 
@@ -218,4 +219,96 @@ test('sight and reach stop at walls: a segment through a wall is blocked, one be
   assert.equal(E.segHitsRect(3.2, 0, 5.0, 0, wall), true);     // Quick Read / outlines through a wall: not sight, not reach
   assert.equal(E.segHitsRect(3.2, 3.5, 5.0, 3.5, wall), false);
   assert.equal(E.segHitsRect(3.2, 0, 3.9, 0, wall), false);
+});
+
+// ---------------------------------------------------------------- geometry v1 (frozen) and v2 (wider halls)
+const V1_PRINTS = {"17:1":"e9d80b93aa916057","2654435778:6":"2b2ee918541752db","1013904243:11":"efba0bf5bb57705c","3668340004:16":"b397edf674b9de4b","2027808469:21":"6e8ecfdba5652797","387276934:26":"f125fd0bd6e1eb4d","3041712695:31":"a72276c0cfe30099","1401181160:5":"d62fec96082b069e","4055616921:10":"9bddb9dd53271d9b","2415085386:15":"9a569e09c9902d5a","774553851:20":"ef33849e3ef78a13","3428989612:25":"872724d1654508e6","1788458077:30":"d0e2b9c46d0268dc","147926542:4":"81c6206854ad27b1","2802362303:9":"1956d97af24c3d60","1161830768:14":"ab2ce4ee92178531","3816266529:19":"992a5cbdd25b16ec","2175734994:24":"281ab104707310db","535203459:29":"6a056f2580a37c0a","3189639220:3":"ee6568d9df77a1ff","1549107685:8":"279e58d75d9209a7","4203543446:13":"66c2cebc062852fd","2563011911:18":"5960e51def7a9de7","922480376:23":"2da9eb4dda16addb"};
+const prints = (seed, section) => createHash('sha256').update(JSON.stringify((({ dark, ...rest }) => rest)(E.genEndlessSection(seed, section, 1)))).digest('hex').slice(0, 16);
+test('layout v1 is frozen: byte-identical to the shipped generator (everything but the now-always-on `dark`)', () => {
+  const keys = Object.keys(V1_PRINTS); assert.equal(keys.length, 24);
+  for (const k of keys) { const [seed, section] = k.split(':').map(Number); assert.equal(prints(seed, section), V1_PRINTS[k], 'v1 layout changed for ' + k); }
+  const L = E.genEndlessSection(31, 3, 1); assert.deepEqual([L.layoutVersion, L.dark, 'decor' in L, 'clear' in L], [1, true, false, false]);
+  assert.equal(E.hallClear(1), 2.4); assert.equal(E.CORRIDOR_HALF, 1.35);
+  assert.throws(() => E.genEndlessSection(1, 1, 9), /unknown layout version/);
+});
+
+const wallsOf = L => [...L.corridorWalls, ...L.areas.flatMap(a => a.walls)].map(([cx, cz, w, d]) => ({ x0: cx - w / 2, x1: cx + w / 2, z0: cz - d / 2, z1: cz + d / 2 }));
+// clear width through (x,z) between the nearest wall FACES (inner collision faces), measured along z or along x
+const gapZ = (walls, x, z) => { let lo = -Infinity, hi = Infinity; for (const w of walls) if (w.x0 < x && x < w.x1) { if (w.z1 <= z) lo = Math.max(lo, w.z1); if (w.z0 >= z) hi = Math.min(hi, w.z0); } return hi - lo; };
+const gapX = (walls, x, z) => { let lo = -Infinity, hi = Infinity; for (const w of walls) if (w.z0 < z && z < w.z1) { if (w.x1 <= x) lo = Math.max(lo, w.x1); if (w.x0 >= x) hi = Math.min(hi, w.x0); } return hi - lo; };
+const EPS = 1e-6;
+function measure(L) {
+  const walls = wallsOf(L), out = { hall: [], branch: [], leg: [], vest: [], top: [], mouth: [] };
+  for (let x = 1; x < L.corridorLength - 1; x += 0.5) { const g = gapZ(walls, x, 0); if (g < 4) out.hall.push(g); }
+  for (const a of L.areas) {
+    const n = a.nav, xm = (n.xw + n.xe) / 2, zm = (n.band + n.top) / 2;
+    out.branch.push(gapX(walls, n.bx, a.side * 3.5)); out.leg.push([gapX(walls, n.xw, zm), a.clear?.leg], [gapX(walls, n.xe, zm), a.clear?.leg]);
+    out.vest.push(gapZ(walls, xm, n.band)); out.top.push(gapZ(walls, xm, n.top)); for (const [lo, hi] of a.mouths) out.mouth.push(hi - lo);
+  }
+  return out;
+}
+test('layout v2 sweep, 200 seeds x sections 1-30: inner-face widths are v1 x 1.25, everyone reaches every objective and the exit, no fallbacks', { timeout: 600000 }, () => {
+  const C = E.CLEAR_V2; let halls = 0, fallbacks = 0, retried = 0, decor = 0, areas = 0;
+  assert.ok(Math.abs(E.hallClear(2) - 3.0) < EPS && Math.abs(E.CORRIDOR_HALF_V2 - 1.65) < EPS);                 // (3.0 + 0.3) / 2, not 1.35 * 1.25
+  for (let i = 0; i < 200; i++) for (let section = 1; section <= 30; section++) {
+    const L = E.genEndlessSection((i * 2654435761 + 7) >>> 0, section);
+    assert.equal(L.layoutVersion, 2); assert.equal(L.dark, true); fallbacks += L.fallback ? 1 : 0; retried += L.attempts > 1 ? 1 : 0; decor += L.decor.length; areas += L.areas.length;
+    const m = measure(L);
+    for (const g of m.hall) { assert.ok(g >= 3.0 - EPS && g <= 3.0 + EPS, 'hall ' + g); halls++; }
+    for (const g of m.branch) assert.ok(g >= C.branch - EPS, 'branch ' + g);
+    for (const [g, want] of m.leg) assert.ok(g >= C.legMin - EPS && Math.abs(g - want) < EPS, `leg ${g} vs ${want}`);
+    for (const g of m.vest) assert.ok(Math.abs(g - C.vestibule) < EPS, 'vestibule ' + g);
+    for (const g of m.top) assert.ok(Math.abs(g - C.top) < EPS, 'top ' + g);
+    for (const g of m.mouth) assert.ok(g >= C.mouth - EPS, 'mouth ' + g);
+    for (const from of [L.playerSpawn, L.chaserSpawn]) for (const to of [...L.objectives.map(o => o.approachPoint), [L.exit[0] - 1, 0]]) {   // player and boss reach three objectives + exit
+      const path = E.routePath(L, from[0], from[1], to[0], to[1]); assert.ok(path, `no route ${from} -> ${to} in ${L.runSeed}:${section}`);
+      for (let k = 1; k < path.length; k++) assert.ok(E.clearSeg(L.collisionRects, path[k - 1][0], path[k - 1][1], path[k][0], path[k][1], 0.32), 'route clips a wall or a solid prop');
+    }
+  }
+  assert.ok(halls > 100000, 'hall samples ' + halls); assert.equal(fallbacks, 0); assert.ok(retried < 60, 'retries ' + retried);
+  assert.ok(decor / areas >= 4.5, 'decor per area ' + decor / areas);                                         // v1 dressed <= 3 props/area; v2 is at least +50%
+});
+
+test('layout v2 measurement is honest: the same probe reads the shipped v1 widths (2.4 hall, 2.5 branch, 1.35 vestibule)', () => {
+  for (let i = 0; i < 20; i++) {
+    const L = E.genEndlessSection(i * 977 + 3, 1 + (i % 9), 1), m = measure(L);
+    assert.ok(m.hall.length && m.hall.every(g => Math.abs(g - 2.4) < EPS)); assert.ok(m.branch.every(g => Math.abs(g - 2.5) < EPS)); assert.ok(m.vest.every(g => Math.abs(g - 1.35) < EPS));
+  }
+});
+
+test('layout v2 fallback: valid, three areas, wider than v1, and the generator can still reach it', () => {
+  for (const seed of [1, 99, 123456, 4000000000]) {
+    const fb = E.fallbackSection(seed, 7); assert.deepEqual(E.validateLayout(fb), { ok: true, errors: [] }); assert.equal(fb.areaCount, 3); assert.equal(fb.layoutVersion, 2);
+    const m = measure(fb); assert.ok(m.hall.every(g => Math.abs(g - 3.0) < EPS) && m.branch.every(g => g >= E.CLEAR_V2.branch - EPS));
+    assert.deepEqual(E.validateLayout(E.fallbackSection(seed, 7, 1)), { ok: true, errors: [] });
+    const gone = JSON.parse(JSON.stringify(fb)); gone.collisionRects = gone.collisionRects.slice(0, 6); assert.equal(E.validateLayout(gone).ok, false);   // validation still has teeth on v2
+  }
+});
+
+test('layout v2 decor: in alcoves/perimeter only, never in the walking lane, solid pieces are in collision and routes', () => {
+  const kinds = new Set(); let solid = 0, flat = 0;
+  for (let i = 0; i < 120; i++) {
+    const L = E.genEndlessSection(i * 7001 + 5, 1 + (i % 30)), again = E.genEndlessSection(i * 7001 + 5, 1 + (i % 30));
+    assert.deepEqual(L.decor, again.decor);                                                                  // deterministic from decorSeed
+    const lane = []; for (const [a, b] of L.nav.edges) { const [ax, az] = L.nav.nodes[a], [bx, bz] = L.nav.nodes[b], n = Math.ceil(Math.hypot(bx - ax, bz - az) / 0.2); for (let k = 0; k <= n; k++) lane.push([ax + (bx - ax) * k / n, az + (bz - az) * k / n]); }
+    for (const d of L.decor) {
+      kinds.add(d.kind); d.solid ? solid++ : flat++;
+      assert.equal(L.collisionRects.some(r => r === d.rect || (r.x0 === d.rect.x0 && r.z0 === d.rect.z0 && r.x1 === d.rect.x1 && r.z1 === d.rect.z1)), d.solid, 'solid <=> in collision');
+      assert.ok(Math.min(Math.abs(d.rect.z0), Math.abs(d.rect.z1)) >= E.CORRIDOR_HALF_V2 + 0.15, 'decor in the main hall');
+      for (const [x, z] of lane) assert.ok(!E.circleHitsRect(x, z, E.LANE_R - 1e-9, d.rect), `${d.kind} in the walking lane`);
+      for (const o of L.objectives) assert.ok(!E.circleHitsRect(o.approachPoint[0], o.approachPoint[1], 0.99, d.rect), 'decor crowds a paper');
+      assert.ok(d.rect.x1 > d.rect.x0 && d.rect.z1 > d.rect.z0);
+    }
+    assert.deepEqual(E.validateLayout(L), { ok: true, errors: [] });
+  }
+  assert.ok(kinds.size >= 6 && solid > 200 && flat > 100, `kinds ${kinds.size} solid ${solid} flat ${flat}`);
+});
+
+test('saved v1 sections finish on v1, the next section and new runs are v2', () => {
+  const run = E.loadStore({ getItem: k => k === E.STORE_KEY_V1 ? JSON.stringify(V1_STORE) : null }).run;
+  assert.deepEqual([run.genVersion, run.nextGenVersion], [1, 2]);
+  assert.equal(E.genEndlessSection(run.seed, run.section, run.genVersion).layoutVersion, 1);
+  const next = E.nextSection(run, E.emptyStore()).run; assert.deepEqual([next.section, next.genVersion], [6, 2]);
+  assert.equal(E.genEndlessSection(next.seed, next.section, next.genVersion).layoutVersion, 2);
+  assert.equal(E.newRun(5).genVersion, 2);
 });

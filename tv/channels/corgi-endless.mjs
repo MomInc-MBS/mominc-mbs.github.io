@@ -3,7 +3,7 @@
 // dead-end branch plus one two-mouth loop around a solid pillar (same topology as corgi.js genArea),
 // parameterised in depth/width/side/mirror. Decoration randomness is NOT drawn here (see decorSeed).
 
-export const GEN_VERSION = 1;
+export const GEN_VERSION = 2;       // latest layout generator; 1 stays selectable for saved sections
 export const STORE_KEY = 'corgi-endless-v2';   // the v1 key (STORE_KEY_V1) is read for migration and never overwritten
 export const BASE_SPEED = 2.5;      // = corgi.js SPEED, the immutable dog walking speed
 export const ACTOR_R = 0.34;        // clearance used for routes: dog .28, chaser .32, plus margin
@@ -43,7 +43,7 @@ export function clearSeg(rects, ax, az, bx, bz, r = ACTOR_R) {
 }
 
 // ---------- one area, built in local coords u (along x from the spine) and zabs (distance from the corridor)
-function buildArea(i, p) {
+function buildAreaV1(i, p) {
   const { cx, s, m, bFar, lFar, lw, pw } = p;
   const X = u => cx + m * u, Z = a => s * a, nearZ = 1.35;
   const wall = (u, za, w, d) => [X(u), Z(za), w, d];            // axis-aligned, so mirroring only moves the centre
@@ -70,12 +70,12 @@ function buildArea(i, p) {
   };
 }
 
-function footprint(p) { const a = p.cx + p.m * -4.4, b = p.cx + p.m * (1.5 + p.lw); return [Math.min(a, b) - 0.15, Math.max(a, b) + 0.15]; }
+function footprintV1(p) { const a = p.cx + p.m * -4.4, b = p.cx + p.m * (1.5 + p.lw); return [Math.min(a, b) - 0.15, Math.max(a, b) + 0.15]; }
 
 // ---------- assemble a section from parameters
-function assemble(runSeed, section, version, specs, rng) {
-  const areas = specs.map((p, i) => buildArea(i, p));
-  const L = Math.max(34, Math.ceil(Math.max(...specs.map(p => footprint(p)[1])) + 3));
+function assembleV1(runSeed, section, version, specs, rng) {
+  const areas = specs.map((p, i) => buildAreaV1(i, p));
+  const L = Math.max(34, Math.ceil(Math.max(...specs.map(p => footprintV1(p)[1])) + 3));
   const corridor = [[-0.6, 0, 0.4, 3.0]];
   for (const s of [1, -1]) {
     const gaps = areas.filter(a => a.side === s).flatMap(a => a.mouths).sort((a, b) => a[0] - b[0]);
@@ -212,10 +212,9 @@ export function validateLayout(L) {
   return { ok: errors.length === 0, errors };
 }
 
-// ---------- generator with bounded retries and a known-good fallback
-const FALLBACK = [{ cx: 8, s: 1, m: 1, bFar: 8.5, lFar: 8.5, lw: 6, pw: 2.4 }, { cx: 22, s: -1, m: 1, bFar: 8.5, lFar: 8.5, lw: 6, pw: 2.4 }, { cx: 36, s: 1, m: 1, bFar: 8.5, lFar: 8.5, lw: 6, pw: 2.4 }];
-export const MAX_ATTEMPTS = 6;
-function drawSpecs(rng, section) {
+// ---------- layout v1: FROZEN (buildAreaV1 / footprintV1 / assembleV1 / drawSpecsV1 / FALLBACK_V1). Saved runs rebuild their current section from these.
+const FALLBACK_V1 = [{ cx: 8, s: 1, m: 1, bFar: 8.5, lFar: 8.5, lw: 6, pw: 2.4 }, { cx: 22, s: -1, m: 1, bFar: 8.5, lFar: 8.5, lw: 6, pw: 2.4 }, { cx: 36, s: 1, m: 1, bFar: 8.5, lFar: 8.5, lw: 6, pw: 2.4 }];
+function drawSpecsV1(rng, section) {
   const n = 3 + Math.floor(rng() * 3), mirror = rng() < 0.5 ? -1 : 1, specs = [], lastEnd = { 1: -Infinity, '-1': -Infinity };
   let prevCx = -2;
   for (let i = 0; i < n; i++) {
@@ -228,16 +227,161 @@ function drawSpecs(rng, section) {
   }
   return specs;
 }
+
+// ---------- layout v2 (25 Nov 2026): every clear width is v1 x 1.25. Wall thickness stays 0.3 and is added separately,
+// so the wall centre line is (clear + 0.3) / 2 and never 1.35 x 1.25. Same rng draw order as v1, so a seed keeps its area count, sides and depths.
+const WALL_T = 0.3, GROW = 1.25;
+export const hallClear = version => version === 1 ? 2.4 : 2.4 * GROW;                       // main hall, inner collision face to inner collision face: 3.0
+export const CORRIDOR_HALF_V2 = (2.4 * GROW + WALL_T) / 2;                                    // 1.65 (wall centre line)
+export const CLEAR_V2 = { hall: 2.4 * GROW, branch: 2.5 * GROW, vestibule: 1.35 * GROW, top: 1.5 * GROW, mouth: 1.2 * GROW, legMin: 1.45 * GROW };   // 3.0, 3.125, 1.6875, 1.875, 1.5, 1.8125
+const BRANCH_U = -3, LOOP_U = 1.5, GROW_Z = CORRIDOR_HALF_V2 - CORRIDOR_HALF;                // area-local u of the branch centre / loop's left wall; how far the walls moved outward (0.3)
+const legOf = (lw, pw) => (lw - WALL_T - pw) / 2;
+// p = {cx, s, m, bFar (cap wall centre), pl (pillar length), legW (clear), pw}; everything else derives from the explicit clear widths
+function buildAreaV2(i, p) {
+  const { cx, s, m, bFar, pl, legW, pw } = p, nearZ = CORRIDOR_HALF_V2, C = CLEAR_V2, lw = 2 * legW + WALL_T + pw;
+  const X = u => cx + m * u, Z = a => s * a, zc = (a, b) => (a + b) / 2, wall = (u, za, w, d) => [X(u), Z(za), w, d];
+  const out0 = nearZ + WALL_T / 2, pillarA = out0 + C.vestibule, pillarB = pillarA + pl, lFar = pillarB + C.top;       // out0 = outer face of the hall wall
+  const bL = BRANCH_U - C.branch / 2 - WALL_T / 2, bR = BRANCH_U + C.branch / 2 + WALL_T / 2, L1 = LOOP_U, L2 = LOOP_U + lw;
+  const walls = [
+    wall(bL, zc(nearZ, bFar), WALL_T, bFar - nearZ), wall(bR, zc(nearZ, bFar), WALL_T, bFar - nearZ), wall(BRANCH_U, bFar + WALL_T / 2, C.branch + 2 * WALL_T, WALL_T),    // branch + cap
+    wall(L1, zc(nearZ, lFar), WALL_T, lFar - nearZ), wall(L2, zc(nearZ, lFar), WALL_T, lFar - nearZ), wall(LOOP_U + lw / 2, lFar + WALL_T / 2, lw + WALL_T, WALL_T),     // loop + cap
+    wall(LOOP_U + lw / 2, zc(pillarA, pillarB), pw, pl)                                                                                                                      // pillar
+  ];
+  const c1 = L1 + WALL_T / 2 + legW / 2, c2 = L2 - WALL_T / 2 - legW / 2;
+  const iv = (a, b) => [Math.min(X(a), X(b)), Math.max(X(a), X(b))], mh = C.mouth / 2;
+  const mouths = [iv(BRANCH_U - C.branch / 2, BRANCH_U + C.branch / 2), iv(c1 - mh, c1 + mh), iv(c2 - mh, c2 + mh)];
+  const bx = X(BRANCH_U), xw = X(c1), xe = X(c2), band = Z(out0 + C.vestibule / 2), top = Z(lFar - C.top / 2);
+  const px = bx, pz = Z(bFar - 1.0), approach = [px, Z(bFar - 1.0 - 0.45 - 0.36)];
+  return {
+    id: i, name: `AREA ${i + 1}`, side: s, mirror: m, walls, mouths, deskYaw: s > 0 ? 0 : Math.PI,
+    pagePos: [px, 1.0, pz], approach, deskRect: rectOf([px, pz, 0.7, 0.9]),
+    lights: [[bx, Z(nearZ + 2.2)], [bx, Z(bFar - 1)], [zc(xw, xe), Z(nearZ + 1)], [zc(xw, xe), top]].map(([x, z]) => [x, z]),
+    anchors: [[bx, Z(nearZ - 0.35)], [bx, Z(3.5)], [bx, Z(bFar - 1.8)], [xw, band], [xe, band], [xw, top], [xe, top]],
+    bbox: { x0: Math.min(X(bL - 0.15), X(L2 + 0.15)), x1: Math.max(X(bL - 0.15), X(L2 + 0.15)), z0: Math.min(Z(nearZ), Z(lFar)) - 0.2, z1: Math.max(Z(nearZ), Z(lFar)) + 0.2 },
+    nav: { bx, xw, xe, band, top, approach }, clear: { branch: C.branch, vestibule: C.vestibule, top: C.top, mouth: C.mouth, leg: legW, pillar: pw }
+  };
+}
+const extentV2 = p => { const lw = 2 * p.legW + WALL_T + p.pw, a = -(CLEAR_V2.branch / 2 + WALL_T / 2), b = LOOP_U + lw; return p.m > 0 ? [BRANCH_U + a, b] : [-b, -(BRANCH_U + a)]; };   // u-extent (wall centres) relative to cx
+const footprintV2 = p => { const [lo, hi] = extentV2(p); return [p.cx + lo - WALL_T / 2, p.cx + hi + WALL_T / 2]; };
+
+function assembleV2(runSeed, section, version, specs, rng) {
+  const areas = specs.map((p, i) => buildAreaV2(i, p)), H = CORRIDOR_HALF_V2;
+  const L = Math.max(34, Math.ceil(Math.max(...specs.map(p => footprintV2(p)[1])) + 3));
+  const corridor = [[-0.6, 0, 0.4, 2 * (H + WALL_T / 2)]];
+  for (const s of [1, -1]) {
+    const gaps = areas.filter(a => a.side === s).flatMap(a => a.mouths).sort((a, b) => a[0] - b[0]);
+    let cur = -0.4;
+    for (const [lo, hi] of gaps) { if (lo > cur + 1e-6) corridor.push([(cur + lo) / 2, s * H, lo - cur, WALL_T]); cur = Math.max(cur, hi); }
+    corridor.push([(cur + L + 0.15) / 2, s * H, L + 0.15 - cur, WALL_T]);
+  }
+  const door = [L, 0, WALL_T, hallClear(2) + 0.2];
+  const order = areas.map((_, i) => i); for (let i = order.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; }
+  const objectives = order.slice(0, 3).sort((a, b) => a - b).map((ai, k) => ({
+    objectiveId: `${runSeed}:${section}:${k}`, areaId: ai, pagePos: areas[ai].pagePos, approachPoint: areas[ai].approach, deskYaw: areas[ai].deskYaw
+  }));
+  const nodes = [], edges = [], keyIdx = new Map();
+  const node = (x, z, tag) => { const k = x.toFixed(3) + ',' + z.toFixed(3); if (!keyIdx.has(k)) { keyIdx.set(k, nodes.length); nodes.push([x, z, tag || '']); } return keyIdx.get(k); };
+  const link = (a, b) => edges.push([a, b, Math.hypot(nodes[a][0] - nodes[b][0], nodes[a][1] - nodes[b][1])]);
+  const xs = new Set([1, L - 1]);
+  for (const a of areas) { xs.add(a.nav.bx); xs.add(a.nav.xw); xs.add(a.nav.xe); }
+  const sorted = [...xs].sort((a, b) => a - b), spine = [];
+  for (let i = 0; i < sorted.length; i++) { spine.push(sorted[i]); const nx = sorted[i + 1]; if (nx !== undefined) for (let x = sorted[i] + 4; x < nx - 2; x += 4) spine.push(x); }
+  const spineIdx = [...new Set(spine)].sort((a, b) => a - b).map(x => node(x, 0, 'corridor'));
+  for (let i = 1; i < spineIdx.length; i++) link(spineIdx[i - 1], spineIdx[i]);
+  const at = x => spineIdx[[...new Set(spine)].sort((a, b) => a - b).indexOf(x)];
+  for (const a of areas) {
+    const n = a.nav, s = a.side, c0 = at(n.bx), mid = node(n.bx, s * 2.6, 'mouth'), ap = node(n.approach[0], n.approach[1], 'paper' + a.id);
+    link(c0, mid); link(mid, ap);
+    const wb = node(n.xw, n.band, 'ring'), eb = node(n.xe, n.band, 'ring'), wt = node(n.xw, n.top, 'ring'), et = node(n.xe, n.top, 'ring');
+    link(at(n.xw), wb); link(at(n.xe), eb); link(wb, wt); link(eb, et); link(wb, eb); link(wt, et);
+  }
+  const playerSpawn = [1.0, 0], chaserSpawn = [L - 2, 0];
+  const recoveryPoints = [[1.0, 0], [Math.round(L / 3), 0], [Math.round(2 * L / 3), 0]];
+  const mainAnchors = []; for (let x = 2; x < L - 1; x += 5) mainAnchors.push([x, 1], [x, -1]);
+  const all = [...corridor.map(rectOf), ...areas.flatMap(a => a.walls.map(rectOf)), rectOf(door)];
+  const desks = areas.filter(a => objectives.some(o => o.areaId === a.id)).map(a => a.deskRect);
+  const layout = {
+    layoutVersion: version, runSeed, section, sectionSeed: sectionSeed(runSeed, section), bounds: { x0: -0.8, x1: L + 0.2, z0: -12, z1: 12 }, corridorLength: L,
+    mirrored: specs[0].s < 0, areaCount: areas.length, areas, corridorWalls: corridor, doorRect: rectOf(door), door, collisionRects: [...all, ...desks],
+    entry: playerSpawn, exit: [L, 0], doorSockets: [[L - 0.6, 0]], playerSpawn, playerYaw: -Math.PI / 2, chaserSpawn, recoveryPoints, mainAnchors,
+    objectives, anchors: mainAnchors, nav: { nodes, edges }, decorSeed: mixSeed(sectionSeed(runSeed, section), 0xDEC0), dark: true,
+    clear: { hall: hallClear(2), ...CLEAR_V2 }
+  };
+  placeDecor(layout);
+  return layout;
+}
+
+// ---------- v2 decoration: placed here (pure, from its own decorSeed stream) so solid pieces are in collision AND nav validation, never in the walking lane.
+// v1 dressed up to three props per area; v2 asks for five (+66%, comfortably the requested ~+50%). Pieces hug the inner faces of area walls (alcoves, perimeter) only.
+export const DECOR_PER_AREA = 5, LANE_R = 0.64;       // lane = every route edge swept at this radius (actor radius 0.34 + 0.30 of room to pass props)
+const DECOR_KINDS = [                                // w: along the wall, d: out from it. Solid pieces block the dog and the pursuer.
+  { kind: 'locker', w: 0.9, d: 0.5, solid: true }, { kind: 'cabinet', w: 0.8, d: 0.5, solid: true }, { kind: 'chair', w: 0.5, d: 0.5, solid: true }, { kind: 'bin', w: 0.4, d: 0.4, solid: true },
+  { kind: 'bag', w: 0.35, d: 0.25, solid: false }, { kind: 'papers', w: 0.6, d: 0.5, solid: false }, { kind: 'ball', w: 0.35, d: 0.35, solid: false }
+];
+const overlaps = (a, b, m = 0) => a.x0 < b.x1 + m && a.x1 > b.x0 - m && a.z0 < b.z1 + m && a.z1 > b.z0 - m;
+function placeDecor(L) {
+  const rng = mulberry32(L.decorSeed), hallOuter = CORRIDOR_HALF_V2 + WALL_T / 2, solids = L.collisionRects, out = [];
+  const lane = []; for (const [a, b] of L.nav.edges) { const [ax, az] = L.nav.nodes[a], [bx, bz] = L.nav.nodes[b], n = Math.max(1, Math.ceil(Math.hypot(bx - ax, bz - az) / 0.2));
+    for (let i = 0; i <= n; i++) lane.push([ax + (bx - ax) * i / n, az + (bz - az) * i / n]); }
+  const keep = [...L.objectives.flatMap(o => [o.approachPoint, [o.pagePos[0], o.pagePos[2]]]), L.playerSpawn, ...L.recoveryPoints];
+  for (const area of L.areas) {
+    const cands = [];
+    for (const w of area.walls.map(rectOf)) {
+      const alongZ = w.z1 - w.z0 > w.x1 - w.x0, len = alongZ ? w.z1 - w.z0 : w.x1 - w.x0;
+      for (let t = 0.7; t <= len - 0.7; t += 0.8) for (const side of [-1, 1]) cands.push({ w, alongZ, t, side });
+    }
+    for (let i = cands.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [cands[i], cands[j]] = [cands[j], cands[i]]; }
+    let placed = 0;
+    for (const c of cands) {
+      if (placed >= DECOR_PER_AREA) break;
+      const k = DECOR_KINDS[Math.floor(rng() * DECOR_KINDS.length)], gap = 0.04;
+      let rect, fx, fz;
+      if (c.alongZ) { const z = c.w.z0 + c.t, x = c.side < 0 ? c.w.x0 - gap - k.d / 2 : c.w.x1 + gap + k.d / 2; rect = { x0: x - k.d / 2, x1: x + k.d / 2, z0: z - k.w / 2, z1: z + k.w / 2 }; fx = c.side; fz = 0; }
+      else { const x = c.w.x0 + c.t, z = c.side < 0 ? c.w.z0 - gap - k.d / 2 : c.w.z1 + gap + k.d / 2; rect = { x0: x - k.w / 2, x1: x + k.w / 2, z0: z - k.d / 2, z1: z + k.d / 2 }; fx = 0; fz = c.side; }
+      if (Math.min(Math.abs(rect.z0), Math.abs(rect.z1)) < hallOuter || (rect.z0 < 0) !== (area.side < 0) || (rect.z1 < 0) !== (area.side < 0)) continue;   // inside this area's side, beyond the hall wall
+      const front = [(rect.x0 + rect.x1) / 2 + fx * (k.d / 2 + 0.05), (rect.z0 + rect.z1) / 2 + fz * (k.d / 2 + 0.05)];
+      if (!lane.some(([x, z]) => Math.hypot(x - front[0], z - front[1]) < 2.2 && clearSeg(solids, x, z, front[0], front[1], 0.05))) continue;   // inside the structure, on open floor
+      if (solids.some(w => overlaps(rect, w, 0.02)) || out.some(d => overlaps(rect, d.rect, 0.05))) continue;
+      if (lane.some(([x, z]) => circleHitsRect(x, z, LANE_R, rect))) continue;                                    // never in the walking lane
+      if (keep.some(([x, z]) => circleHitsRect(x, z, 1.0, rect))) continue;                                       // papers, approaches, spawns stay open
+      out.push({ kind: k.kind, areaId: area.id, x: (rect.x0 + rect.x1) / 2, z: (rect.z0 + rect.z1) / 2, yaw: Math.atan2(fx, fz), w: k.w, d: k.d, solid: k.solid, rect }); placed++;
+    }
+  }
+  L.decor = out;
+  for (const d of out) if (d.solid) L.collisionRects.push(d.rect);
+}
+
+// ---------- generator with bounded retries and a known-good fallback, dispatched by layout version.
+// v1 builders above are FROZEN: an old saved section is rebuilt exactly (do not "fix" them; add a v3 instead).
+function drawSpecsV2(rng, section) {                                         // same draws, same order as drawSpecsV1; only the extents (and so cx spacing) differ
+  const n = 3 + Math.floor(rng() * 3), mirror = rng() < 0.5 ? -1 : 1, specs = [], lastEnd = { 1: -Infinity, '-1': -Infinity };
+  let prevCx = -2;
+  for (let i = 0; i < n; i++) {
+    const s = (i % 2 ? -1 : 1) * mirror * (rng() < 0.2 ? -1 : 1), m = rng() < 0.5 ? 1 : -1;
+    const v1 = { s, m, bFar: 6 + rng() * 2.5, lFar: 7 + rng() * 2.5, lw: 5.6 + rng() * 1.0, pw: 1.8 + rng() * 0.6 };
+    const p = specV2(v1);
+    const [lo, hi] = extentV2({ ...p, cx: 0 });
+    let cx = Math.max(prevCx + 6 + rng() * 4, 2.6 - lo + 0.3, lastEnd[s] + 1.0 - lo);
+    cx = Math.round(cx * 4) / 4; p.cx = cx; lastEnd[s] = cx + hi + 0.15; prevCx = cx; specs.push(p);
+  }
+  return specs;
+}
+// a v1 spec ({bFar,lFar,lw,pw}, v1 wall-centre depths) widened into v2 terms: same pillar length and branch interior length, every clear width x 1.25
+const specV2 = v1 => ({ cx: v1.cx, s: v1.s, m: v1.m, bFar: v1.bFar + GROW_Z, pl: v1.lFar - (CORRIDOR_HALF + 1.5) - 1.5, legW: GROW * legOf(v1.lw, v1.pw), pw: v1.pw });
+const FALLBACK_V2 = FALLBACK_V1.map(specV2);
+const GENERATORS = { 1: { draw: drawSpecsV1, assemble: assembleV1, fallback: FALLBACK_V1 }, 2: { draw: drawSpecsV2, assemble: assembleV2, fallback: FALLBACK_V2 } };
+export const MAX_ATTEMPTS = 6;
 export function genEndlessSection(runSeed, section, version = GEN_VERSION) {
+  const G = GENERATORS[version]; if (!G) throw new RangeError('unknown layout version ' + version);
   const seed = sectionSeed(runSeed, section), rng = mulberry32(mixSeed(seed, 0x1A70F7));
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
-    const layout = assemble(runSeed, section, version, drawSpecs(rng, section), rng);
+    const layout = G.assemble(runSeed, section, version, G.draw(rng, section), rng);
     if (validateLayout(layout).ok) return Object.assign(layout, { attempts: attempt, fallback: false });
   }
   return Object.assign(fallbackSection(runSeed, section, version), { attempts: MAX_ATTEMPTS, fallback: true });
 }
 // the known-good template (three areas, original depths); validated by the test sweep
-export const fallbackSection = (runSeed, section = 1, version = GEN_VERSION) => assemble(runSeed, section, version, FALLBACK, mulberry32(sectionSeed(runSeed, section)));
+export const fallbackSection = (runSeed, section = 1, version = GEN_VERSION) => { const G = GENERATORS[version]; return G.assemble(runSeed, section, version, G.fallback, mulberry32(sectionSeed(runSeed, section))); };
 
 // ---------- chaser: one formula from immutable bases. Zoomies never enters it.
 export const chaserSpeed = section => 0.625 * 1.30 * Math.pow(1.03, count(section) < 1 ? 0 : count(section) - 1);
