@@ -261,7 +261,7 @@
       "type": "pwa",
       "name": "Cortisol Corgi Endless",
       "shortName": "Corgi Endless",
-      "description": "An endless school hall. Three papers a section, ten perks, two slots, one patient villain.",
+      "description": "An endless school hall. Three papers a section, ten traits that stack without limit, dark halls that need your flashlight, and the original drawings jumping out at corners.",
       "status": "ready",
       "mode": "module",
       "src": "/apps/corgi/app.mjs",

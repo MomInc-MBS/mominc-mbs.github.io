@@ -59,18 +59,18 @@
     },
     {
       "url": "/apps/apps.json",
-      "revision": "a8053b73d2378a579b4d80155101a8c9732838a3",
-      "bytes": 8964
+      "revision": "d964ac878ded6815bd88ef4db06b5b5d147ae41d",
+      "bytes": 9046
     },
     {
       "url": "/apps/corgi/app.css",
-      "revision": "c7851284bd3e1a53810cf5c0e0b0c136f15bab85",
-      "bytes": 3730
+      "revision": "5a9056d191745781b75a6aa9bde7e2c96d870972",
+      "bytes": 3906
     },
     {
       "url": "/apps/corgi/app.mjs",
-      "revision": "4afbbe2d2684000fc7c1f36ade70de177d388142",
-      "bytes": 6247
+      "revision": "6f2fc05cbc32660fe7e6842deb545ebc6dca5471",
+      "bytes": 6186
     },
     {
       "url": "/apps/hand/hand.css",
@@ -928,6 +928,21 @@
       "bytes": 163970
     },
     {
+      "url": "/tv/assets/school-drawing-1-scare.webp",
+      "revision": "e1dcc77977cd70baf663c4b7b6ce3f61ce58df59",
+      "bytes": 198118
+    },
+    {
+      "url": "/tv/assets/school-drawing-2-scare.webp",
+      "revision": "79802bc523f6655b0f2d1f388c9e47bdc525bbab",
+      "bytes": 184730
+    },
+    {
+      "url": "/tv/assets/school-drawing-3-scare.webp",
+      "revision": "dc9e7f43c737ac9e91f21f7cc4179d436c40ac65",
+      "bytes": 217586
+    },
+    {
       "url": "/tv/atmosphere.css",
       "revision": "4e30b039f69a64d100bb13c9beece08759ee5994",
       "bytes": 5778
@@ -994,8 +1009,8 @@
     },
     {
       "url": "/tv/channels/corgi-endless.mjs",
-      "revision": "fa13d97ba80389aba826a781c8bc5d6778e31968",
-      "bytes": 24008
+      "revision": "9692794e0dd4a430bd067fabfd1ab94b6264cafd",
+      "bytes": 44113
     },
     {
       "url": "/tv/channels/corgi-hearts.mjs",
@@ -1003,9 +1018,14 @@
       "bytes": 5555
     },
     {
+      "url": "/tv/channels/corgi-scare.mjs",
+      "revision": "3bfae4eaa53190850f1c521f74fe2d0e92ed4ed1",
+      "bytes": 16358
+    },
+    {
       "url": "/tv/channels/corgi.js",
-      "revision": "ca73641acacbcb9a7226d066b57491eaaa874478",
-      "bytes": 225325
+      "revision": "527858de01432508a4ac61efaba24e7543e5674e",
+      "bytes": 233525
     },
     {
       "url": "/tv/channels/girlfriend-roster.js",
@@ -1171,5 +1191,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "6e64c97378d7c0c74eb8"
+  "version": "172d8acdf1a79b148aae"
 }

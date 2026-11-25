@@ -63,6 +63,7 @@
 import { PAPER_HEARTS, restoreDream, losePaperHeart, restartDream, canOpenBackDoor, breakRoomPose } from "./corgi-dream.mjs";
 import { createPaperHearts, schoolCortisol, heartbeatBpm } from "./corgi-hearts.mjs";
 import * as EL from "./corgi-endless.mjs";
+import * as SC from "./corgi-scare.mjs";
 
 const THREE_URL = "/tv/assets/armie-intro/vendor/three.module.js";
 
@@ -289,16 +290,19 @@ export default {
     // below only carries per-section article text; geometry comes from corgi-endless.mjs.
     const ARTICLES = [...LEVELS_LIVE.flatMap(l => l.pages), ...LEVELS_PUBLIC[0].pages];
     // Endless lighting (plan A1 initial values). Darken the LIGHTS, never the image: no black overlay, so the flashlight and UI stay full strength. One knob set to tune on the phone.
-    const EN_LIGHT = { hemi: 0.10, mainI: 0.20, mainR: 3.5, areaI: 0.20, areaR: 4.0 };
+    const EN_LIGHT = { hemi: 0.0, mainI: 0.10, mainR: 3.5, areaI: 0.20, areaR: 4.0 };
     const ENDLESS_LEVEL = { name: "ENDLESS", doorLabel: "THE NEXT SECTION", furniture: "desk", handAuthored: true, crazy: 1, pages: ARTICLES.slice(0, 3) };
     const newSeed = () => { try { return crypto.getRandomValues(new Uint32Array(1))[0]; } catch { return (Date.now() ^ (Math.random() * 4294967296)) >>> 0; } };
-    let store = null, run = null, ES = null, overlayOpen = false, protectUntil = 0;
+    let store = null, run = null, ES = null, overlayOpen = false, protectUntil = 0, scare = null, scareShowing = false, scareGate = false;
     if (ENDLESS) {
       store = EL.loadStore(localStorage); run = store.run;
       if (!run) { run = EL.newRun(newSeed()); store.best.section = Math.max(store.best.section, 1); }
       store.run = run; EL.saveStore(localStorage, store);
+      // corner scares (corgi-scare.mjs): the saved scheduler restores armed/remaining/rng; it can only fire on a NEW threshold crossing after the first step
+      scare = SC.createCorgiScare({ seed: (run.seed ^ 0x5CA4E) >>> 0, state: run.scare, onStart: e => scareHook.start(e), onEnd: e => scareHook.end(e) });
     }
-    const persistRun = () => { if (!store) return; store.run = run; EL.saveStore(localStorage, store); };
+    const scareHook = { start() {}, end() {} };
+    const persistRun = () => { if (!store) return; if (scare && run) run.scare = scare.serialize(); store.run = run; EL.saveStore(localStorage, store); };
     const LEVELS = ENDLESS ? [ENDLESS_LEVEL] : MODE === "public" ? [LEVELS_PUBLIC[0], {...LEVELS_LIVE[0], doorLabel:"THE BACK OF THE SCHOOL", crazy:1, pages:LEVELS_PUBLIC[0].pages.map((p,i)=>({...p,door:LEVELS_LIVE[0].pages[i].door}))}] : LEVELS_LIVE;
     if (MODE === 'public' && (state.lives === 0 || state.dreamPhase === 'done')) {
       state.level = 0; state.found[0] = [true, true, true];
@@ -779,7 +783,7 @@ export default {
     let musicAudio=null,musicBeat=0,alarmAt=-10;
     function musicTone(hz,duration,level,type='sine'){if(!musicAudio)return;const t=musicAudio.currentTime,o=musicAudio.createOscillator(),g=musicAudio.createGain();o.type=type;o.frequency.value=hz;g.gain.setValueAtTime(level,t);g.gain.exponentialRampToValueAtTime(.0001,t+duration);o.connect(g).connect(musicAudio.destination);o.start();o.stop(t+duration);o.onended=()=>{o.disconnect();g.disconnect();};}
     function alarmSound(){if(!musicAudio||musicAudio.currentTime-alarmAt<3)return;alarmAt=musicAudio.currentTime;const o=musicAudio.createOscillator(),g=musicAudio.createGain(),t=musicAudio.currentTime;o.type='triangle';o.frequency.setValueAtTime(440,t);o.frequency.linearRampToValueAtTime(880,t+.6);o.frequency.linearRampToValueAtTime(440,t+1.2);g.gain.setValueAtTime(.05,t);g.gain.exponentialRampToValueAtTime(.0001,t+1.4);o.connect(g).connect(musicAudio.destination);o.start();o.stop(t+1.4);o.onended=()=>{o.disconnect();g.disconnect();};}
-    function startMusic(){if(musicAudio)return;if(ENDLESS&&!store.settings.sound)return;try{musicAudio=ctx.audio(new AudioContext());musicAudio.resume();}catch{return;}ctx.interval(()=>{if(!LEVELS[state.level].handAuthored){const notes=[261.63,329.63,392,493.88,440,349.23,293.66,392];musicTone(notes[musicBeat%8],.65,.018);if(musicBeat%4===0)musicTone(notes[musicBeat%8]/2,1.5,.012,'triangle');musicBeat++;}},450);}
+    function startMusic(){if(musicAudio)return;if(ENDLESS&&!store.settings.sound)return;try{musicAudio=ctx.audio(new AudioContext());musicAudio.resume();}catch{return;}if(scare){const sg=musicAudio.createGain();sg.gain.value=1;sg.connect(musicAudio.destination);scare.attachAudio({ctx:musicAudio,dest:sg});if(scareGate)scare.startAmbience();}ctx.interval(()=>{if(!LEVELS[state.level].handAuthored){const notes=[261.63,329.63,392,493.88,440,349.23,293.66,392];musicTone(notes[musicBeat%8],.65,.018);if(musicBeat%4===0)musicTone(notes[musicBeat%8]/2,1.5,.012,'triangle');musicBeat++;}},450);}
     ctx.on(viewport,'pointerdown',startMusic,{once:true});ctx.on(viewport,'keydown',startMusic,{once:true});
     // ---------------------------------------------------------------- 2026-10-03 dark-school sound, all synthesised
     // from musicAudio (the one context startMusic creates on the first gesture; ctx.audio closes it on unmount, so
@@ -1824,7 +1828,7 @@ export default {
             light.position.set(end - 1.6, 1.7, 0); levelGroup.add(light);
           }
           player.x = 1.0; player.z = 0; player.yaw = -Math.PI / 2; player.pitch = 0;
-          if (ENDLESS) protect();
+          if (ENDLESS) { protect(); scare.step(player.x, player.z, true); }
           // 2026-10-03: in the dark school this opener is the monster's ONLY introduction now (no ambient haunts follow
           // it), so if the dog is still on the wake screen when it fires it waits, rather than being skipped as before.
           (function () { const dx = DOOR_X, builtLevel = levelGroup, dark = !!LEVELS[idx].handAuthored; const opener = () => {
@@ -2037,12 +2041,20 @@ export default {
         let scentAt = 0, earsAt = 0, lastVibe = 0, wallRects = [];
         const applyFx = () => { fx = EL.perkEffects(run.traits); cc.dataset.catchRange = fx.catchRange.toFixed(2); };   // data-catch-range: the live hitbox, readable by probes
         const protect = () => { protectUntil = performance.now() + EL.BASE_GRACE_MS + fx.graceMs; };   // spawn, respawn, stand-down: finite, never renewed per frame
+        // corner scare host contract: freeze (the frame's pause branch also carries ghost/visibility/protection stamps), clear input, then shift the rest and give a recovery window
+        scareHook.start = () => { scareShowing = true; stopInput(); };
+        scareHook.end = ({ pausedMs, recoveryMs }) => {
+          scareShowing = false; chase.nextSniffAt += pausedMs; chase.sniffT0 += pausedMs; scentAt += pausedMs; earsAt += pausedMs; chAt += pausedMs;
+          protectUntil = Math.max(protectUntil, performance.now() + recoveryMs); stopInput(); persistRun();
+        };
+        ctx.on(document, "visibilitychange", () => { if (document.hidden) { scare.suspend(); scareGate = false; persistRun(); } });
+        gl.extra.push({ dispose() { scare.dispose(); } });
         function prepareSection() {
           ES = EL.genEndlessSection(run.seed, run.section, run.genVersion);
           wallRects = [...ES.corridorWalls, ...ES.areas.flatMap(a => a.walls), ES.door].map(([cx, cz, w, d]) => ({ x0: cx - w / 2, x1: cx + w / 2, z0: cz - d / 2, z1: cz + d / 2 }));
           LEVELS[0].pages = [0, 1, 2].map(k => ARTICLES[((run.section - 1) * 3 + k) % ARTICLES.length]);
           state.found[0] = ES.objectives.map(o => run.collected.includes(o.objectiveId));
-          state.level = 0; applyFx(); chPath = null;
+          state.level = 0; applyFx(); chPath = null; scare.setLayout(ES);
         }
         // one wall-only line of sight: x-ray outlines never count as sight, and pickups cannot reach through walls
         const sightClear = (x, z) => { for (const w of wallRects) if (EL.segHitsRect(player.x, player.z, x, z, w)) return false; return true; };
@@ -2214,7 +2226,7 @@ export default {
         function openOver() {
           const el = overlay("Run over"), pg = paperPage("THE RUN IS OVER");
           pg.append(node("p", "ce-stat", "You reached section " + run.section + ". Your best is section " + store.best.section + ". Traits and hearts go with the run; your bests stay."),
-            btn("ce-keep ce-go", () => { run = EL.newRun(newSeed()); persistRun(); closeOverlay(); endlessRebuild(); }, "New run")); el.append(pg); pg.querySelector("button")?.focus();
+            btn("ce-keep ce-go", () => { run = EL.newRun(newSeed()); scare.reset((run.seed ^ 0x5CA4E) >>> 0); persistRun(); closeOverlay(); endlessRebuild(); }, "New run")); el.append(pg); pg.querySelector("button")?.focus();
         }
         function endlessCollect(i) {
           const o = ES.objectives[i]; if (run.collected.includes(o.objectiveId)) return;
@@ -2229,7 +2241,7 @@ export default {
           announce("Caught. " + heartText(run.quarters) + " hearts left. The papers you took stay taken.");
           ctx.timeout(() => {
             const r = EL.chooseRecovery(ES, monster.position.x, monster.position.z);
-            player.x = r[0]; player.z = r[1]; player.yaw = -Math.PI / 2; player.pitch = 0;
+            player.x = r[0]; player.z = r[1]; player.yaw = -Math.PI / 2; player.pitch = 0; scare.step(r[0], r[1], true);
             caught = false; monster.visible = false; monsterWasVisible = false; chPath = null; respawnChaser(performance.now()); protect();
           }, 700);
         }
@@ -2253,7 +2265,8 @@ export default {
             grant(id, n) { const tr = { ...run.traits, [id]: n }, nm = EL.perkEffects(tr).maxQuarters; run = { ...run, traits: tr, quarters: Math.min(run.quarters + Math.max(0, nm - fx.maxQuarters), nm) }; applyFx(); persistRun(); paintEndHud(); },
             setSection(n) { run = { ...run, section: n, collected: [] }; persistRun(); endlessRebuild(); },
             info() { const r = renderer.info; return { geometries: r.memory.geometries, textures: r.memory.textures, programs: r.programs ? r.programs.length : 0, calls: r.render.calls, lights: levelGroup.children.filter(o => o.isLight).length, children: levelGroup.children.length }; },
-            teleport(x, z) { player.x = x; player.z = z; }, protectUntil: () => protectUntil,
+            teleport(x, z) { player.x = x; player.z = z; scare.step(x, z, true); }, protectUntil: () => protectUntil,
+            scare: { armNow: () => scare.armNow(), get phase() { return scare.phase; }, get showing() { return scare.showing; }, ready: scare.ready, serialize: () => scare.serialize(), get audio() { return scare.audioDebug; } },   // tests only
             collectNow(i) { startDeskRead(i); }, openOffer, capture: () => endlessCapture(),
             chaseFrom(x, z) { monster.position.set(x, 0, z); monster.visible = true; chPath = null; startChase(performance.now()); }   // probe: seat the pursuer and start the hunt
           };
@@ -2325,6 +2338,7 @@ export default {
         // ---- flashlight: drains while on, recharges while off, never a consumable
         const flash = new THREE.SpotLight(0xfff3d0, 0, 8, Math.PI / 6.5, 0.45, 1.4);
         camera.add(flash); camera.add(flash.target); flash.target.position.set(0, 0, -1);
+        if (ENDLESS) flash.target.position.set(0, 0.62, -7);   // Endless: beam aimed 7 ahead at ~1 unit height (camera is 0.38) so it washes walls, doors and props down the hall, not just the floor
         let battery = 100, flashOn = false;
         function setFlash(on) { flashOn = !!(on && LEVELS[state.level].handAuthored && battery > 3); flash.intensity = flashOn ? 2.6 : 0; flashBtn.setAttribute("aria-pressed", String(flashOn)); }
         ctx.on(flashBtn, "click", () => setFlash(!flashOn));
@@ -2548,6 +2562,7 @@ export default {
           if (!gl || session !== mine) return;
           const dt = Math.min(50, now - last) / 1000; last = now;
           heartVisual?.render(now, state.lives, heartCortisol);
+          if (ENDLESS) { const g = !document.hidden && hunting() && !caught && !transitioning; if (g !== scareGate) { scareGate = g; if (g) scare.resume(); else scare.suspend(); } }
           if(tickBreakRoom(now)){ctx.frame(frame);return;}
           levelGroup.children.forEach(l=>{if(l.userData.deskLamp)l.intensity=REDUCED?.3:((now*.001+l.position.x)%5.3<.25?.015:.48);});
           if(!REDUCED) levelGroup.children.forEach(l=>{if(l.userData.schoolLamp)l.intensity=((now*.001+l.position.x*.17)%4.7<.22)?0:.006;});
@@ -2561,7 +2576,7 @@ export default {
           // flight when the book went up would snap straight to its endpoint the moment it came down, and
           // monsterVisibleAt is the 600ms no-spawn-kill grace, which reading the paper must not burn through.
           // This is the same freeze the watched-dead-on branch below already performs on ghost.t0.
-          if (!hunting() || caught) {
+          if (!hunting() || caught || scareShowing) {
             if (!useBtn.hidden) useBtn.hidden = true;
             if (ghost.active) ghost.t0 += dt * 1000;
             if (monster.visible) monsterVisibleAt += dt * 1000;
@@ -2595,6 +2610,7 @@ export default {
             const nz = z0 + dz; if (!blocked(x0, nz)) player.z = nz;
           }
           if (blocked(player.x, player.z)) { const r = depenetrate(player.x, player.z); player.x = r.x; player.z = r.z; }
+          if (ENDLESS && !transitioning && run.status === "active" && deskRead.phase === "idle" && !cc.hasAttribute("data-reading")) { scare.tick(dt); scare.step(player.x, player.z); }   // only real play ticks the scare clock
 
           let camY = EYE_H + (mlen > 0.05 && !REDUCED ? Math.abs(Math.sin(now / 130)) * 0.02 : 0), camPitch = player.pitch, camYaw = player.yaw;
           if (deskRead.phase === "rising" || deskRead.phase === "standing") {

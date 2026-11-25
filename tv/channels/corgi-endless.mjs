@@ -521,6 +521,8 @@ function cleanRun(r) {
     quarters: over ? 0 : Math.min(max, Math.max(1, count(r.quarters))), traits, collected: Array.isArray(r.collected) ? r.collected.slice(0, 64) : [], papers: count(r.papers), offerIdx: count(r.offerIdx),
     pendingOffer: null, picked: Array.isArray(r.picked) ? r.picked.filter(x => typeof x === 'string').slice(0, 8) : [] };
   if (!over) run.pendingOffer = cleanOffer(r.pendingOffer, run);
+  const sc = r.scare;   // corner-scare scheduler state: copied field by field, validated again by corgi-scare.mjs on restore
+  if (!over && sc && typeof sc === 'object') run.scare = { v: sc.v, phase: sc.phase, remaining: sc.remaining, rng: sc.rng, last: sc.last };
   return run;
 }
 // v2 first; otherwise a v1 record is migrated (the v1 key is never overwritten, so a rollback still finds its save)

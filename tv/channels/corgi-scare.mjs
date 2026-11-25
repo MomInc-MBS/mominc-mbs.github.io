@@ -183,15 +183,17 @@ export function createAudio(ctx, dest, { rand = Math.random, setTimeout: st = gl
       n.onended = () => { [n, f, g, th, tg].forEach(x => x.disconnect()); if (sting === me) sting = null; };
     },
     dispose() { disposed = true; halt(); if (fixed) { fixed.slice(0, 4).forEach(n => { try { n.stop(); } catch (e) {} }); fixed.forEach(n => n.disconnect()); fixed = null; } if (sting) sting.stop(ctx.currentTime); [ambBus, stBus, out].forEach(n => n.disconnect()); },
-    _debug: () => ({ live: { ...live }, timers: timers.length })
+    _debug: () => ({ live: { ...live }, timers: timers.length, fixed: fixed ? fixed.length : 0, on })
   };
 }
 
 // ---------- controller: scheduler + detector + overlay + audio behind the host contract above
 export function createCorgiScare({ seed = 1, state, audio, reducedMotion, onStart = () => {}, onEnd = () => {}, document: doc = globalThis.document } = {}) {
-  const sch = createScheduler({ seed, state }), det = createCrossingDetector([]);
+  let sch = createScheduler({ seed, state }), au = null;
+  const det = createCrossingDetector([]);
   const rm = reducedMotion ?? !!(globalThis.matchMedia && globalThis.matchMedia('(prefers-reduced-motion: reduce)').matches);
-  const ov = createOverlay({ document: doc, reducedMotion: rm }), au = audio ? createAudio(audio.ctx, audio.dest) : null;
+  const ov = createOverlay({ document: doc, reducedMotion: rm });
+  if (audio) au = createAudio(audio.ctx, audio.dest);
   let ready = false, showing = false;
   const readyP = ov.preload().then(ok => (ready = ok));
   return {
@@ -206,7 +208,11 @@ export function createCorgiScare({ seed = 1, state, audio, reducedMotion, onStar
       ov.show(page).then(() => { showing = false; sch.finish(); det.reset(); onEnd({ pausedMs: Date.now() - t0, recoveryMs: RECOVERY_MS }); });
       return hit;
     },
+    attachAudio(a) { if (!au && a) au = createAudio(a.ctx, a.dest); },    // the host's AudioContext only exists after the first gesture
     startAmbience() { au && au.start(); },
+    reset(newSeed) { sch = createScheduler({ seed: newSeed }); det.reset(); },  // a brand-new run: fresh delay, no carried scare
+    armNow() { sch.tick(MAX_DELAY_S + 1); },                              // tests only
+    get showing() { return showing; }, get audioDebug() { return au ? au._debug() : null; },
     suspend() { au && au.suspend(); }, resume() { au && au.resume(); },
     serialize: () => sch.serialize(),
     dispose() { ov.dispose(); au && au.dispose(); }
