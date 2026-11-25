@@ -8,3 +8,6 @@
 @media(max-width:540px){.gala-player{width:142px;right:4px;top:auto;bottom:8px}.gala-player a{font-size:11px;padding:4px 7px;max-width:132px}}
 @media(max-height:430px){.gala-player{width:132px;top:auto;bottom:6px}.gala-player a{font-size:11px}}
 @media(prefers-reduced-motion:reduce){.gala-player canvas{filter:none}}
+
+/* the ending / scam cards cover the whole frame: keep the guest sprite and badge off their buttons */
+body:has(.gala-ending-card) .gala-player{display:none}

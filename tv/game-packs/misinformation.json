@@ -4,13 +4,13 @@
   "assets": [
     {
       "url": "/apps/alarm/app.css",
-      "revision": "d533178597080c4cfa92d0df4e3d97816119b822",
-      "bytes": 2668
+      "revision": "c69ed7ecbdd9207d979c0552157a972984a41cd4",
+      "bytes": 2708
     },
     {
       "url": "/apps/alarm/app.mjs",
-      "revision": "b865bddaa59672ceb9bc395f4599a3fb40907a7e",
-      "bytes": 4035
+      "revision": "85f1d0f9e4e8d8537f816046c2ea71b7007dbdf8",
+      "bytes": 4085
     },
     {
       "url": "/apps/alarm/board.js",
@@ -19,8 +19,8 @@
     },
     {
       "url": "/apps/alarm/computer.js",
-      "revision": "ee4cb382c28d8f0394bb37ddd105f50a77504728",
-      "bytes": 9924
+      "revision": "61456c9f8a50c3a8ae8790445a1fd3ea65327401",
+      "bytes": 9914
     },
     {
       "url": "/apps/alarm/icon-192.png",
@@ -59,8 +59,8 @@
     },
     {
       "url": "/apps/apps.json",
-      "revision": "db06b6ce6958331967a92045fd2354fd9a4234f4",
-      "bytes": 8810
+      "revision": "5fc4897cd479ca791ef97b2aa3ed69311bb588f5",
+      "bytes": 8846
     },
     {
       "url": "/apps/corgi/app.css",
@@ -664,8 +664,8 @@
     },
     {
       "url": "/tv/game-loader.js",
-      "revision": "38711f0b66657306cad822ac49270fc5df3e9a56",
-      "bytes": 14646
+      "revision": "030fdfcb33be366788c78d3dfb482d31b0e7c5aa",
+      "bytes": 14636
     },
     {
       "url": "/tv/identity.css",
@@ -709,8 +709,8 @@
     },
     {
       "url": "/tv/mom-tour.js",
-      "revision": "8b804658e69a23405992e0ca1525e16897950c5b",
-      "bytes": 26470
+      "revision": "7c52fac654450cbed7d465b078c81e589680a890",
+      "bytes": 26868
     },
     {
       "url": "/tv/mount.js",
@@ -774,8 +774,8 @@
     },
     {
       "url": "/tv/state.js",
-      "revision": "d9e7f260dad1f5fe27ecd5469f1d20ef8539c230",
-      "bytes": 27491
+      "revision": "7f3144a96df88641bfcdb0e034c31b2c89adcbee",
+      "bytes": 27521
     },
     {
       "url": "/tv/touch-controls.js",
@@ -802,5 +802,5 @@
     "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "9b78e1c3f07cdd113e63"
+  "version": "61d49fbe5250a1024dd7"
 }

@@ -4,3 +4,10 @@
 .gramophone-volume{display:flex;align-items:center;gap:6px;font-size:12px}.gramophone-volume input{width:80px;accent-color:#d8b676;min-height:28px}
 .gramophone-credit{display:block;color:#c9b19b;font-size:11px;text-decoration:underline}.gala-gramophone :focus-visible{outline:2px solid #e5b9ff;outline-offset:3px}
 @media(max-width:540px){.gala-gramophone{max-width:156px;padding:4px 6px}.gala-gramophone.is-inline{max-width:none;width:100%}.gala-gramophone button{min-height:34px}.gala-gramophone.is-inline .gramophone-credit{flex-basis:100%}}
+/* floating variant: collapsed chip; tap opens the controls */
+.gala-gramophone.is-chip,.gala-gramophone.is-chip:has(.gramophone-chip[open]){padding:0;background:none;border:0;box-shadow:none;max-width:none}
+.gramophone-chip summary{list-style:none;width:40px;height:40px;display:grid;place-items:center;font:22px Georgia,serif;color:#ffe4a9;background:#221725ed;border:1px solid #be965c;box-shadow:0 3px 9px #0005;cursor:pointer}
+.gramophone-chip summary::-webkit-details-marker{display:none}
+.gramophone-chip[open]{width:190px;max-width:calc(100vw - 16px);background:#221725f5;border:1px solid #be965c;box-shadow:0 3px 9px #0005}
+.gramophone-chip[open]>:not(summary){margin:6px 8px}
+.gramophone-chip[open] summary{width:100%;border:0;box-shadow:none;background:none}

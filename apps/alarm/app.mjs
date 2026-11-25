@@ -1,4 +1,4 @@
-// MOM 2048 Alarm, web edition. Free-play 2048 on the 3D mini-computer. Daily alarms are Android-only (see the APK).
+// ADHD, web edition. Free-play 2048 on the 3D mini-computer. Daily alarms are Android-only (see the APK).
 // Port of the Android WebView app.js: the native bridge is gone; the board is kept in localStorage.
 import {newGame, move, encode, decode} from './board.js';
 import {mountComputer} from './computer.js';
@@ -6,7 +6,7 @@ import {mountComputer} from './computer.js';
 const KEY = 'mom-alarm-2048-web-v1', BEST = 'mom-alarm-2048-web-best-v1'; // BEST = apps.json web.bestKey
 const HTML = `<div class="al"><div class="al-stage"><canvas aria-hidden="true"></canvas></div>
 <div class="al-screen" aria-live="polite"><section class="al-menu">
-<h1>MOM 2048 ALARM</h1>
+<h1>ADHD</h1><p class="dim">Alarm for the Distracted, Hungry &amp; Disorganized</p>
 <p class="dim">Free play. Merge your way to $2048.</p>
 <button class="al-start" type="button">Start</button>
 <p class="dim"><a href="/download/alarm/">Daily alarm needs the Android app</a></p></section>
