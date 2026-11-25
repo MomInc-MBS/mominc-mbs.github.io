@@ -866,10 +866,12 @@ export default {
     // The probe, fixed. The original asked a throwaway canvas for a context and walked away from it: a real
     // live context, on a detached canvas, spent out of the same small budget the renderer below needs, once
     // per mount. WEBGL_lose_context gives it back on purpose.
+    let glWhy = "";   // the browser's own reason when it refuses WebGL, shown on the map so a phone screenshot names the cause
     const glOK = (() => {
       try {
         if (!window.WebGLRenderingContext) return false;
         const c = document.createElement("canvas");
+        c.addEventListener("webglcontextcreationerror", ev => { glWhy = ev.statusMessage || glWhy; });
         const probe = c.getContext("webgl2") || c.getContext("webgl");
         if (!probe) return false;
         const lose = probe.getExtension("WEBGL_lose_context");
@@ -891,6 +893,8 @@ export default {
       byId("ccPrompt").remove();
       byId("ccBurst").remove();
       const fb = byId("ccFallback"); fb.hidden = false;
+      const intro = fb.querySelector(".cc-fb-intro");
+      if (intro && !glOK) intro.textContent += " 3D is switched off in this browser" + (glWhy ? " (" + glWhy + ")" : "") + ". Fully close the browser and reopen it to get the hall back.";
       const map = byId("ccFbMap"), read = byId("ccFbRead");
       let reflected = false;
       // 3.2/3.6: level-aware now -- rooms are built from whichever LEVELS[state.level] is current, so the

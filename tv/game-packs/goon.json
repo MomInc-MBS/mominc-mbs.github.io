@@ -519,8 +519,8 @@
     },
     {
       "url": "/tv/channels/corgi.js",
-      "revision": "2d180324bcca8206797acdad24ad1475c54938a8",
-      "bytes": 224852
+      "revision": "ca73641acacbcb9a7226d066b57491eaaa874478",
+      "bytes": 225325
     },
     {
       "url": "/tv/channels/girlfriend-roster.js",
@@ -559,8 +559,8 @@
     },
     {
       "url": "/tv/games/goon/assets/index-gala-classic.js",
-      "revision": "0fdd6e7aa64b3968dac5efce87eda39b2ad4031e",
-      "bytes": 2044574
+      "revision": "44e4f7195e1879b31f2293a3def5fb85b6a5feb4",
+      "bytes": 2044496
     },
     {
       "url": "/tv/games/goon/assets/index-vg_3atLR.css",
@@ -569,8 +569,8 @@
     },
     {
       "url": "/tv/games/goon/index.html",
-      "revision": "be545119e2fc00cffb9a2b754eddf90e99caf1a0",
-      "bytes": 2973
+      "revision": "827bcc47f72c6503037886ec17362644731dc8ef",
+      "bytes": 3673
     },
     {
       "url": "/tv/identity.css",
@@ -707,5 +707,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "7b48df5402358aaad0c4"
+  "version": "a8486ef8379a12e08df6"
 }

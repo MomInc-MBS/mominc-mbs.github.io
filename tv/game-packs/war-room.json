@@ -554,8 +554,8 @@
     },
     {
       "url": "/tv/channels/corgi.js",
-      "revision": "2d180324bcca8206797acdad24ad1475c54938a8",
-      "bytes": 224852
+      "revision": "ca73641acacbcb9a7226d066b57491eaaa874478",
+      "bytes": 225325
     },
     {
       "url": "/tv/channels/girlfriend-roster.js",
@@ -594,8 +594,8 @@
     },
     {
       "url": "/tv/games/goon/assets/index-W2w8AfON.js",
-      "revision": "5c9d7a7d5f0a4d605148d81e094cd8d11a2bf2a3",
-      "bytes": 2042412
+      "revision": "3b026ed785e897c3bb053a4d49e07718e4963849",
+      "bytes": 2042334
     },
     {
       "url": "/tv/games/goon/assets/index-vg_3atLR.css",
@@ -741,5 +741,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "7c68a1787cc026e89ad0"
+  "version": "4e9a564043ed609f3c71"
 }
