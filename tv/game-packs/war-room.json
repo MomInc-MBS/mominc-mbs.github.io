@@ -614,8 +614,8 @@
     },
     {
       "url": "/tv/channels/corgi.js",
-      "revision": "527858de01432508a4ac61efaba24e7543e5674e",
-      "bytes": 233525
+      "revision": "714a20e1330506b20c4bdcd02866a1e28c32d68a",
+      "bytes": 233550
     },
     {
       "url": "/tv/channels/girlfriend-roster.js",
@@ -801,5 +801,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "66f18f57f01e6135864d"
+  "version": "79bffaa392c6dc3c936d"
 }

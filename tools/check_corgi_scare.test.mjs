@@ -120,3 +120,14 @@ test('audio: fixed node count, ≤1 creak and ≤1 breath alive, ambience 18-24 
   au.suspend(); assert.equal(au._debug().timers, 0);
   au.dispose(); assert.ok(ctx.made.slice(0, base).every(n => n.dc));
 });
+
+test('run.scare survives the store round trip and junk is rejected by the scheduler', async () => {
+  const EL = await import('../tv/channels/corgi-endless.mjs');
+  const run = EL.newRun(42), sc = createScheduler({ seed: 9 }); sc.tick(5); run.scare = sc.serialize();
+  const mem = {}, st = { getItem: k => mem[k] ?? null, setItem: (k, v) => { mem[k] = v; } };
+  const store = EL.emptyStore(); store.run = run; EL.saveStore(st, store);
+  const back = EL.loadStore(st).run;
+  assert.deepEqual(back.scare, run.scare);
+  assert.equal(createScheduler({ state: back.scare }).remaining, sc.remaining);
+  assert.equal(createScheduler({ seed: 1, state: { ...back.scare, remaining: 'x' } }).phase, 'cooldown');
+});

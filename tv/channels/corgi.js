@@ -2338,7 +2338,7 @@ export default {
         // ---- flashlight: drains while on, recharges while off, never a consumable
         const flash = new THREE.SpotLight(0xfff3d0, 0, 8, Math.PI / 6.5, 0.45, 1.4);
         camera.add(flash); camera.add(flash.target); flash.target.position.set(0, 0, -1);
-        if (ENDLESS) flash.target.position.set(0, 0.62, -7);   // Endless: beam aimed 7 ahead at ~1 unit height (camera is 0.38) so it washes walls, doors and props down the hall, not just the floor
+        if (ENDLESS) { flash.target.position.set(0, 0.62, -7); flash.distance = 10; }   // Endless: beam aimed 7 ahead at ~1 unit height (camera is 0.38) so it washes walls, doors and props down the hall, not just the floor
         let battery = 100, flashOn = false;
         function setFlash(on) { flashOn = !!(on && LEVELS[state.level].handAuthored && battery > 3); flash.intensity = flashOn ? 2.6 : 0; flashBtn.setAttribute("aria-pressed", String(flashOn)); }
         ctx.on(flashBtn, "click", () => setFlash(!flashOn));
