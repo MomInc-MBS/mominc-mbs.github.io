@@ -57,7 +57,7 @@ export async function sendPush(sub, payload, vapid, {ttl = 120, urgency = 'high'
     TTL: String(ttl), Urgency: urgency};
   if (topic) headers.Topic = topic;
   try {
-    const r = await fetchImpl(sub.endpoint, {method: 'POST', headers, body, redirect: 'error'});
+    const r = await fetchImpl(sub.endpoint, {method: 'POST', headers, body, redirect: 'manual'});
     return {status: r.status, retryAfter: Number(r.headers.get('retry-after')) || 0};
   } catch { return {status: 0, retryAfter: 0}; }
 }
