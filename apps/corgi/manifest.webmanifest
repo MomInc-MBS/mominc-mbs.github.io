@@ -2,7 +2,7 @@
   "id": "/apps/corgi/",
   "name": "Cortisol Corgi Endless",
   "short_name": "Corgi Endless",
-  "description": "An endless school hall. Three papers a section, ten stacking traits, one patient villain.",
+  "description": "An endless school hall. Three papers a section, ten perks, two slots, one patient villain.",
   "start_url": "/apps/corgi/",
   "scope": "/apps/corgi/",
   "display": "standalone",
