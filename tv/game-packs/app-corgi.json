@@ -29,13 +29,13 @@
     },
     {
       "url": "/apps/corgi/index.html",
-      "revision": "66dc3cb7ee75cfeef6cacd4c3a5d2645ca23ffec",
-      "bytes": 3258
+      "revision": "f54933d38ff805c47abc0bb23cece80c2a579946",
+      "bytes": 3261
     },
     {
       "url": "/apps/corgi/manifest.webmanifest",
-      "revision": "93688e74020eda786a209d062093fbb572d7ff83",
-      "bytes": 797
+      "revision": "6f9e4fa9342592b6122609ff0f8a7272356dca26",
+      "bytes": 798
     },
     {
       "url": "/apps/install.mjs",
@@ -109,5 +109,5 @@
     }
   ],
   "fontStyles": [],
-  "version": "0228361e1ca526434521"
+  "version": "65445d00728ab2cd94ed"
 }
