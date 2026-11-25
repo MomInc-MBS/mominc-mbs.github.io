@@ -412,6 +412,22 @@ export const cleanTraits = t => { const out = emptyTraits(); if (t && typeof t =
 // the next real improvement for a card (owned n -> n+1), not the total
 export const nextLine = (id, n) => { const p = perkById(id); return n > 0 ? `${p.line(n)}  →  ${p.line(n + 1)}` : p.line(1); };
 
+// ---------- one small inline SVG per trait (24x24, same stroke style, `currentColor`); markup is constant data, never user text
+const PLUS = '<path d="M19 3v4M17 5h4"/>';
+const ICON_PATHS = {
+  heart: '<path d="M11 19s-7-4.4-7-9.3A3.9 3.9 0 0 1 11 7.5a3.9 3.9 0 0 1 7 2.2C18 14.6 11 19 11 19z"/>' + PLUS,
+  zoomies: '<path d="M8 18c0-2 1.8-4 3.5-4s3.5 2 3.5 4c0 1.5-1.4 2-3.5 2S8 19.5 8 18z"/><circle cx="5.5" cy="12" r="1.3"/><circle cx="9" cy="8.5" r="1.3"/><circle cx="14" cy="8.5" r="1.3"/><circle cx="17.5" cy="12" r="1.3"/>' + PLUS,
+  wind: '<path d="M3 9h9a2.5 2.5 0 1 0-2.5-2.500M3 14h13a2.5 2.5 0 1 1-2.5 2.500M3 19h5"/>' + PLUS,
+  vision: '<path d="M2 13s3.5-6 9-6 9 6 9 6-3.5 6-9 6-9-6-9-6z"/><circle cx="11" cy="13" r="2.5"/>' + PLUS,
+  scent: '<path d="M4 20h.01M8 17h.01M12 14h.01"/><path d="M15 12c-1.5 0-2.5-1-2.5-2.500S13.5 6 16 6s3.5 1.5 3.5 3.500S17 12 15 12z"/>' + PLUS,
+  danger: '<path d="M2 10s3-5 8-5 8 5 8 5-3 5-8 5-8-5-8-5z"/><circle cx="10" cy="10" r="2"/><path d="M14 22v-3.500a2.5 2.5 0 0 1 5 0V22"/>',
+  ears: '<path d="M6 15a6 6 0 1 1 12 0c0 3-3 3-3 6"/><path d="M9 14a3 3 0 0 1 6 0"/>' + PLUS,
+  hackles: '<path d="M3 19l3-9 3 6 3-10 3 10 3-6 3 9"/><path d="M12 21h.01"/>',
+  slippery: '<path d="M4 9c4-5 11-5 15 0m0 0h-4m4 0v4"/><path d="M9 20c0-1.5 1-3 2.5-3s2.5 1.5 2.5 3c0 1-1 1.5-2.5 1.500S9 21 9 20z"/>',
+  quick: '<path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 12h7M9 16h5"/>'
+};
+export const traitIcon = (id, size = 18) => `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${ICON_PATHS[id] || ''}</svg>`;
+
 export function perkEffects(traits) {
   const T = cleanTraits(traits), n = id => T[id];
   return {
