@@ -599,8 +599,8 @@
     },
     {
       "url": "/tv/games/goon/assets/index-gala-classic.js",
-      "revision": "a306483b3248dcfd19d56d188bceba61971e15b1",
-      "bytes": 2044650
+      "revision": "38fb2ece431baab7c7b687dd1caea8039c2872bf",
+      "bytes": 2044927
     },
     {
       "url": "/tv/games/goon/assets/index-vg_3atLR.css",
@@ -747,5 +747,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "3821e86732a021e8fa29"
+  "version": "e1c8d400d188a142573b"
 }
