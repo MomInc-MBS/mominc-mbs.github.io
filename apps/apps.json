@@ -277,7 +277,7 @@
       "icons": ["icon-192.png", "icon-512.png", "icon-maskable-512.png"],
       "settings": ["sound", "look", "reset-run", "wall"],
       "pack": "app-corgi",
-      "packFiles": ["tv/channels/corgi.html"],
+      "packFiles": ["tv/channels/corgi.html", "tv/channels/corgi-scare.mjs", "tv/assets/school-drawing-1-scare.webp", "tv/assets/school-drawing-2-scare.webp", "tv/assets/school-drawing-3-scare.webp"],
       "packSkip": ["tv/assets/cortisol-corgi-badge.png", "tv/assets/corgi-preview.webm", "tv/assets/corgi-game-still.png", "tv/assets/school-drawing-1.png", "tv/assets/school-drawing-2.png", "tv/assets/school-drawing-3.png"],
       "browserPlay": false
     }

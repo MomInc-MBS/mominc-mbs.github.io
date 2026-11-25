@@ -68,6 +68,21 @@
       "bytes": 181293
     },
     {
+      "url": "/tv/assets/school-drawing-1-scare.webp",
+      "revision": "e1dcc77977cd70baf663c4b7b6ce3f61ce58df59",
+      "bytes": 198118
+    },
+    {
+      "url": "/tv/assets/school-drawing-2-scare.webp",
+      "revision": "79802bc523f6655b0f2d1f388c9e47bdc525bbab",
+      "bytes": 184730
+    },
+    {
+      "url": "/tv/assets/school-drawing-3-scare.webp",
+      "revision": "dc9e7f43c737ac9e91f21f7cc4179d436c40ac65",
+      "bytes": 217586
+    },
+    {
       "url": "/tv/channel-runtime.js",
       "revision": "3bff45f8943e11197725b65f7da0a4bfe1025958",
       "bytes": 13515
@@ -86,6 +101,11 @@
       "url": "/tv/channels/corgi-hearts.mjs",
       "revision": "d5f65e89899995ebb8ed28a45b5121116e45b5e9",
       "bytes": 5555
+    },
+    {
+      "url": "/tv/channels/corgi-scare.mjs",
+      "revision": "87b544e254c21a99151f84ffd3ed837ed78026f2",
+      "bytes": 15858
     },
     {
       "url": "/tv/channels/corgi.html",
@@ -109,5 +129,5 @@
     }
   ],
   "fontStyles": [],
-  "version": "059603ede25a4d6c1537"
+  "version": "27741ff0a0907d296321"
 }
