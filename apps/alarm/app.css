@@ -22,7 +22,7 @@
 .al.flat .al-screen{position:relative;left:auto;top:auto;width:auto;height:100%;transform:none!important;border-radius:0;clip-path:none}
 
 /* ADHD reminders panel + alarm bar (web edition). Everything stays scoped under .al. */
-.al-bar{position:absolute;left:8%;top:63%;width:84%;z-index:3;display:flex;gap:8px}
+.al-bar{position:absolute;left:8%;top:65%;width:84%;z-index:3;display:flex;gap:8px}
 .al-bar button{flex:1;min-height:44px}
 .al-bar button:disabled{opacity:.5}
 .al.flat .al-bar{left:0;top:auto;bottom:0;width:100%}

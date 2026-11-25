@@ -4,7 +4,7 @@
   "assets": [
     {
       "url": "/apps/alarm/app.css",
-      "revision": "95f76fb46120dcb222880df746ca58724539398e",
+      "revision": "ba16ae1b5b6a7289f94420a2a8893c0d457899f1",
       "bytes": 5371
     },
     {
@@ -642,5 +642,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "41cb130b7ab21191dab6"
+  "version": "1876aa978053ab26da9a"
 }

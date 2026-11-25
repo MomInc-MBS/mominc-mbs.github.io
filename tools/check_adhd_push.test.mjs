@@ -7,7 +7,7 @@ import {DatabaseSync} from 'node:sqlite';
 import {handle} from '../backend/adhd-push/src/api.mjs';
 import {runCron, nextDue, finish, MAX_SENDS} from '../backend/adhd-push/src/core.mjs';
 
-const schema = readFileSync(new URL('../backend/adhd-push/schema.sql', import.meta.url), 'utf8');
+const schema = readFileSync(new URL('../backend/adhd-push/migrations/0001_init.sql', import.meta.url), 'utf8');
 function d1() {
   const s = new DatabaseSync(':memory:'); s.exec(schema);
   return {raw: s, prepare: sql => {
