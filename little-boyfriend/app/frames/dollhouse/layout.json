@@ -1,0 +1,21 @@
+{
+ "id": "dollhouse",
+ "srcFile": "7324.png",
+ "srcW": 941,
+ "srcH": 1672,
+ "cropBottom": 1372,
+ "w": 941,
+ "h": 1372,
+ "aperture": {
+  "cx": 0.4915,
+  "cy": 0.54155,
+  "rx": 0.39798,
+  "ry": 0.38703
+ },
+ "neutral": {
+  "u0": 0.1057,
+  "u1": 0.8943
+ },
+ "reserveX": 0.1057,
+ "notes": "straight alpha, aperture alpha 0; blur sigma=15.1px premultiplied; vertical reserve=(1-1/1.04)/2; mask R=sharp material, G=blurred"
+}

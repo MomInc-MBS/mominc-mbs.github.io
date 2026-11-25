@@ -1,0 +1,21 @@
+{
+ "id": "cardboard_box",
+ "srcFile": "7338.png",
+ "srcW": 941,
+ "srcH": 1672,
+ "cropBottom": 1338,
+ "w": 941,
+ "h": 1338,
+ "aperture": {
+  "cx": 0.5,
+  "cy": 0.55568,
+  "rx": 0.43199,
+  "ry": 0.3068
+ },
+ "neutral": {
+  "u0": 0.11547,
+  "u1": 0.88453
+ },
+ "reserveX": 0.11547,
+ "notes": "straight alpha, aperture alpha 0; blur sigma=15.1px premultiplied; vertical reserve=(1-1/1.04)/2; mask R=sharp material, G=blurred"
+}

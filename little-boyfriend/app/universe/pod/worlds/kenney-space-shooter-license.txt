@@ -1,0 +1,8 @@
+Meteor sprites: meteorGrey_tiny1.png and meteorBrown_tiny1.png from
+Kenney, Space Shooter Remastered (2014).
+Source: https://kenney.nl/assets/space-shooter-remastered
+License: Creative Commons CC0 1.0
+https://creativecommons.org/publicdomain/zero/1.0/
+
+The two files in this directory named kenney-meteor-*-tiny1.png are
+unaltered extracts from Kenney's Space Shooter Remastered ZIP.

@@ -1,0 +1,36 @@
+/* Subset of the Coach "XP Flight" page (battle-pass-page.css, R118 16618a6): .pass-map-shell, -viewport, -route, -area, -sky,
+   -planet, -route-lines, -world-title, -scene (l.22-26, 31, 32, 75-87; values kept). Panels replace .pass-level. */
+:root{color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#030916;color:#d7eaff;font:14px system-ui,sans-serif;overflow:hidden;-webkit-tap-highlight-color:transparent}
+button{font:inherit;cursor:pointer}
+button:focus-visible,.mu-viewport:focus-visible{outline:3px solid #f8db83;outline-offset:2px}
+.mu-shell{position:relative;width:100%;height:100%;isolation:isolate;background:#071326;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
+.mu-viewport{position:relative;width:100%;height:100%;overflow:auto;scrollbar-width:none;overscroll-behavior:contain;touch-action:none}
+.mu-viewport::-webkit-scrollbar{display:none}
+.mu-route{position:relative;isolation:isolate;background:#030916;padding-top:56px}
+.mu-area{position:relative;height:1700px;isolation:isolate;overflow:hidden;border:0;
+ background:radial-gradient(ellipse at var(--object-x) var(--object-y),hsl(calc(205 + var(--world-intensity)*280) 80% 42% / .14),transparent 28%),radial-gradient(ellipse at 22% 69%,hsl(calc(245 + var(--world-intensity)*190) 65% 35% / .12),transparent 36%),linear-gradient(180deg,#030916,#070e22 52%,#030916)}
+.mu-area:before{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 53% 44%,#40659a22,transparent 48%);filter:hue-rotate(var(--world-hue));opacity:calc(.2 + var(--world-intensity)*.8)}
+.mu-sky{position:absolute;inset:0;pointer-events:none;opacity:calc(.52 + var(--world-intensity)*.48);background-image:radial-gradient(1px 1px at 15% 12%,#fff 90%,transparent),radial-gradient(2px 2px at 75% 20%,#bde7ff 90%,transparent),radial-gradient(1px 1px at 45% 36%,#fff 90%,transparent),radial-gradient(2px 2px at 85% 63%,#fff 90%,transparent),radial-gradient(1px 1px at 28% 78%,#fff 90%,transparent);background-size:157px 190px,281px 260px,231px 251px,307px 280px,201px 330px}
+.mu-planet{position:absolute;top:var(--object-y);left:var(--object-x);width:clamp(28px,4vw,55px);aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;opacity:calc(.5 + var(--world-intensity)*.5);
+ background:radial-gradient(circle at 30% 27%,#fff6df 1%,#c3d8eb 12%,#638fbd 37%,#1e406b 66%,#08172d 84%);box-shadow:inset -5px -5px 7px #020715,0 0 14px #9ebdff7a;filter:hue-rotate(var(--world-hue))}
+.mu-area:nth-child(5n+2) .mu-planet:after,.mu-area:nth-child(5n+3) .mu-planet:after{content:'';position:absolute;inset:36% -30%;border:2px solid #d2d5e899;border-radius:50%;transform:rotate(-24deg)}
+.mu-route-lines{position:absolute;inset:0;z-index:1;width:100%;height:100%;overflow:visible;pointer-events:none}
+.mu-route-main{fill:none;stroke:#77d9ed;stroke-width:1.5;stroke-opacity:.55;vector-effect:non-scaling-stroke}
+.mu-world-title{position:absolute;top:18px;left:5%;z-index:5;display:grid;gap:2px;max-width:90%;text-transform:uppercase;letter-spacing:.12em;text-shadow:0 1px 7px #010511,0 0 14px #79c3ea88;pointer-events:none}
+.mu-world-title small{font-size:.65rem;color:#efc98c}.mu-world-title b{font-size:1.05rem;color:#d7eaff}.mu-world-title span{font-size:.65rem;color:#a9ccd7}
+.mu-slot{position:absolute;z-index:3;left:var(--node-x);top:var(--node-y)}
+.mu-star{display:block;width:8px;height:8px;background:#9fb8d8;opacity:.4;transform:translate(-50%,-50%) rotate(45deg);box-shadow:0 0 8px 2px #7aa0ff55}
+.mu-panel{position:absolute;left:var(--node-x);top:var(--node-y);transform:translate(-50%,-50%);z-index:3;display:block;padding:3px;margin:0;
+ width:min(38%,calc(150px * var(--a)));aspect-ratio:var(--a);border:1px solid #4d7ea0;border-radius:6px;background:#050d1c;color:inherit;
+ box-shadow:0 0 14px #4fb4e63d,0 4px 12px #0009}
+.mu-panel img{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none;border-radius:3px;background:#0a1830}
+.mu-badge{position:absolute;right:6px;bottom:6px;padding:1px 6px;border-radius:9px;background:#000b;color:#fff;font-size:.62rem;pointer-events:none}
+.mu-scene{position:absolute;z-index:4;inset:0;width:100%;height:100%;pointer-events:none;image-rendering:pixelated}
+.mu-hud{position:absolute;z-index:7;top:0;left:0;right:0;display:flex;align-items:center;gap:8px;padding:6px 8px;background:linear-gradient(#030916f2,#030916b0 70%,#0300);touch-action:manipulation}
+.mu-hud button,.mu-empty button{min-width:48px;min-height:44px;padding:0 12px;border:1px solid #6ca9c0;border-radius:6px;background:#0b2236e6;color:#d7f3ff}
+.mu-album{flex:1;min-width:0;display:grid;line-height:1.2}.mu-album b{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:.95rem}.mu-album small{color:#9fc2d2;font-size:.7rem}
+.mu-empty{position:absolute;z-index:8;inset:0;display:grid;place-content:center;gap:16px;padding:24px;text-align:center;background:#030916;font-size:1.05rem}
+.mu-empty[hidden]{display:none}
+@media(prefers-reduced-motion:reduce){.mu-sky,.mu-planet{animation:none!important;transition:none!important}}

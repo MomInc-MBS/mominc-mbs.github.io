@@ -1,0 +1,388 @@
+{
+ "schema": 1,
+ "version": "m1",
+ "materials": [
+  {
+   "id": "original",
+   "name": "Original",
+   "status": "ship",
+   "passes": [],
+   "textures": []
+  },
+  {
+   "id": "anime_cel",
+   "name": "Anime",
+   "status": "ship",
+   "passes": [
+    {
+     "frag": "base_h.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "base_v.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "anime_cel.glsl",
+     "scale": 1.0
+    }
+   ],
+   "textures": []
+  },
+  {
+   "id": "graphite",
+   "name": "Pencil",
+   "status": "ship",
+   "passes": [
+    {
+     "frag": "base_h.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "base_v.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "graphite_blur2.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "graphite.glsl",
+     "scale": 1.0
+    }
+   ],
+   "textures": [
+    "textures/hatch_a.png",
+    "textures/hatch_b.png",
+    "textures/paper_tooth.png"
+   ]
+  },
+  {
+   "id": "soft_pixel",
+   "name": "Soft Pixel",
+   "status": "ship",
+   "passes": [
+    {
+     "frag": "soft_pixel.glsl",
+     "scale": 1.0
+    }
+   ],
+   "textures": []
+  },
+  {
+   "id": "clay",
+   "name": "Claymation",
+   "status": "ship",
+   "passes": [
+    {
+     "frag": "base_h.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "base_v.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "strong_h.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "strong_v.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "clay.glsl",
+     "scale": 1.0
+    }
+   ],
+   "textures": [
+    "textures/clay_micro.png"
+   ]
+  },
+  {
+   "id": "felt",
+   "name": "Wool Felt",
+   "status": "ship",
+   "passes": [
+    {
+     "frag": "base_h.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "base_v.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "strong_h.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "strong_v.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "felt.glsl",
+     "scale": 1.0
+    }
+   ],
+   "textures": [
+    "textures/felt_fiber.png",
+    "textures/felt_wool.png"
+   ]
+  },
+  {
+   "id": "paper_cutout",
+   "name": "Paper Cutout",
+   "status": "ship",
+   "passes": [
+    {
+     "frag": "base_h.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "base_v.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "paper_cutout.glsl",
+     "scale": 1.0
+    }
+   ],
+   "textures": [
+    "textures/paper_tooth.png"
+   ]
+  },
+  {
+   "id": "printed_comic",
+   "name": "Printed Comic",
+   "status": "ship",
+   "passes": [
+    {
+     "frag": "base_h.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "base_v.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "printed_comic.glsl",
+     "scale": 1.0
+    }
+   ],
+   "textures": [
+    "textures/paper_tooth.png"
+   ]
+  },
+  {
+   "id": "gouache",
+   "name": "Painted World",
+   "status": "ship",
+   "passes": [
+    {
+     "frag": "base_h.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "base_v.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "gouache.glsl",
+     "scale": 1.0
+    }
+   ],
+   "textures": [
+    "textures/brush.png"
+   ]
+  },
+  {
+   "id": "crosshatch_ink",
+   "name": "Crosshatch Ink",
+   "status": "ship",
+   "passes": [
+    {
+     "frag": "base_h.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "base_v.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "graphite_blur2.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "crosshatch_ink.glsl",
+     "scale": 1.0
+    }
+   ],
+   "textures": [
+    "textures/hatch_a.png",
+    "textures/hatch_b.png",
+    "textures/paper_tooth.png"
+   ]
+  },
+  {
+   "id": "watercolor",
+   "name": "Watercolor",
+   "status": "ship",
+   "passes": [
+    {
+     "frag": "base_h.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "base_v.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "strong_h.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "strong_v.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "watercolor.glsl",
+     "scale": 1.0
+    }
+   ],
+   "textures": [
+    "textures/paper_tooth.png"
+   ]
+  },
+  {
+   "id": "kuwahara_oil",
+   "name": "Kuwahara Oil",
+   "status": "candidate",
+   "passes": [
+    {
+     "frag": "kuwahara.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "kuwahara_oil.glsl",
+     "scale": 1.0
+    }
+   ],
+   "textures": [
+    "textures/paper_tooth.png"
+   ]
+  },
+  {
+   "id": "stained_glass",
+   "name": "Stained Glass",
+   "status": "ship",
+   "passes": [
+    {
+     "frag": "base_h.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "base_v.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "stained_glass.glsl",
+     "scale": 1.0
+    }
+   ],
+   "textures": []
+  },
+  {
+   "id": "mosaic_tiles",
+   "name": "Mosaic",
+   "status": "candidate",
+   "passes": [
+    {
+     "frag": "mosaic_tiles.glsl",
+     "scale": 1.0
+    }
+   ],
+   "textures": []
+  },
+  {
+   "id": "cross_stitch",
+   "name": "Cross-Stitch",
+   "status": "ship",
+   "passes": [
+    {
+     "frag": "cross_stitch.glsl",
+     "scale": 1.0
+    }
+   ],
+   "textures": []
+  },
+  {
+   "id": "knit",
+   "name": "Knitted",
+   "status": "ship",
+   "passes": [
+    {
+     "frag": "knit.glsl",
+     "scale": 1.0
+    }
+   ],
+   "textures": []
+  },
+  {
+   "id": "toy_bricks",
+   "name": "Toy Bricks",
+   "status": "ship",
+   "passes": [
+    {
+     "frag": "toy_bricks.glsl",
+     "scale": 1.0
+    }
+   ],
+   "textures": []
+  },
+  {
+   "id": "wax_crayon",
+   "name": "Crayon",
+   "status": "ship",
+   "passes": [
+    {
+     "frag": "base_h.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "base_v.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "wax_crayon.glsl",
+     "scale": 1.0
+    }
+   ],
+   "textures": [
+    "textures/paper_tooth.png"
+   ]
+  },
+  {
+   "id": "linocut",
+   "name": "Linocut",
+   "status": "candidate",
+   "passes": [
+    {
+     "frag": "base_h.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "base_v.glsl",
+     "scale": 0.5
+    },
+    {
+     "frag": "linocut.glsl",
+     "scale": 1.0
+    }
+   ],
+   "textures": [
+    "textures/paper_tooth.png"
+   ]
+  }
+ ]
+}

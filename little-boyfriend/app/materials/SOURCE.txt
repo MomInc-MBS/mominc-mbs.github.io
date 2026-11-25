@@ -1,0 +1,2 @@
+Source: branch w/materials-lab @ 93218dd (round 2: +stained_glass, cross_stitch, knit, toy_bricks, wax_crayon; clay, felt, printed_comic, gouache, crosshatch_ink, watercolor promoted)
+Path:   app/src/main/assets/shaders/material/ (copied byte-identical; check: node tools/web/check_parity.mjs)
