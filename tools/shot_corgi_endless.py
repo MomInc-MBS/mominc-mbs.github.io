@@ -74,7 +74,7 @@ with sync_playwright() as p:
     check('reload reopens the same offer (no reroll)', page.locator('.ce-card b').all_inner_texts() == titles)
     check('reload does not duplicate the paper', page.evaluate("JSON.parse(localStorage.getItem('corgi-endless-v2')).run.collected.length") == 1)
     page.locator('.ce-card').nth(0).click(); page.wait_for_timeout(600)
-    check('pick commits once', page.evaluate("JSON.parse(localStorage.getItem('corgi-endless-v2')).Object.values(JSON.parse(localStorage.getItem('corgi-endless-v2')).run.traits).reduce((a,b)=>a+b,0)") == 1)
+    check('pick commits once', page.evaluate("Object.values(JSON.parse(localStorage.getItem('corgi-endless-v2')).run.traits).reduce((a,b)=>a+b,0)") == 1)
 
     # ---- v2: traits stack without limit, there is no slot/replace screen; second paper offers three cards, picking one commits
     ES('e.teleport(e.layout.objectives[1].approachPoint[0], e.layout.objectives[1].approachPoint[1])')
