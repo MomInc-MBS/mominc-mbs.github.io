@@ -15,6 +15,17 @@
 
 /* face + chrome */
 .ms-face{position:absolute;z-index:0;left:50%;top:calc(env(safe-area-inset-top) + 2px);width:var(--fw);aspect-ratio:400/460;transform:translateX(-50%);pointer-events:none}
+/* ===== MOM3 hero: three-head ASCII bust collapses to a pinned eye strip (vars set by settings.js layout(); --p = scroll progress 0..1) ===== */
+.ms-bg{position:absolute;z-index:0;left:0;right:0;top:0;height:calc(var(--hero-top,60px) + var(--hexp,0px) - var(--p,1) * var(--d,0px));background:#07030d;border-bottom:1px solid rgba(149,121,201,.5);pointer-events:none}
+.ms-probe{position:absolute;visibility:hidden;pointer-events:none;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+.ms-face{top:var(--hero-top,60px);width:var(--fw2,var(--fw));height:calc(var(--hexp,0px) - var(--p,1) * var(--d,0px));aspect-ratio:auto;overflow:hidden;z-index:1}
+.ms-face>canvas{transform:translateY(calc(var(--p,1) * var(--ey,0px) * -1));will-change:transform}
+.ms-hero-sp{height:calc(var(--d,0px) - 4px);flex:none;pointer-events:none}
+.ms-panel::after{content:"";flex:none;height:var(--tail,0px)}
+.ms-hero .ms-panel{background:none;border:0;border-radius:0;padding-top:0}
+.ms-hero .ms-panel .card{background:#140923}
+.ms-stop{top:calc(env(safe-area-inset-top) + 2px);transform:scale(.64);transform-origin:100% 0}
+/* ===== end MOM3 hero ===== */
 .ms-top{position:absolute;z-index:3;top:calc(env(safe-area-inset-top) + 8px);left:8px;right:8px;display:flex;gap:8px;align-items:center;pointer-events:none}
 .ms-top>*{pointer-events:auto}
 .chip{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:4px 12px;border-radius:999px;background:rgba(18,8,31,.92);border:1px solid var(--line);color:var(--ink)}
@@ -148,6 +159,7 @@
 .tl-gap .g{width:14px;height:14px}
 .snd{display:grid;grid-template-columns:84px 1fr;gap:8px;align-items:center}
 .mini{width:84px;aspect-ratio:400/460;grid-row:span 2}
+.mini3{position:relative;overflow:hidden;background:#07030d;border-radius:12px} .mini3>div{position:absolute;width:260%;left:-80%;top:-31%}
 .snd-g{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .snd-b{flex-direction:column;min-height:66px;gap:4px}
 .snd .ib.big{grid-column:2;width:100%}
@@ -232,3 +244,22 @@
 
 /* demo page */
 html.ms-doc,html.ms-doc body{margin:0;height:100%;background:#12081f}
+
+/* ---- help: MOM typed subtitles + short icon labels (help.js; MOM has no voice) ---- */
+.ms{--sub-fs:.8125rem;--sub-h:calc(var(--sub-fs) * 4.05 + 16px)}
+.ms-panel{bottom:calc(66px + var(--sub-h) + 4px + env(safe-area-inset-bottom))}
+.ms-sub{position:absolute;z-index:3;left:max(6px,calc(50% - 262px));right:max(6px,calc(50% - 262px));bottom:calc(66px + env(safe-area-inset-bottom) + 2px);height:var(--sub-h);overflow:hidden;padding:7px 10px;
+  background:#0b0414;border:1px solid var(--line);border-radius:10px;color:#f6ecff;font:700 var(--sub-fs)/1.35 ui-monospace,"SF Mono",Menlo,Consolas,monospace;cursor:pointer;-webkit-user-select:none;user-select:none}
+.ms-sub-l{color:var(--acc)}
+.ms-sub-c{display:inline-block;width:.6em;height:1.05em;margin-left:2px;vertical-align:text-bottom;background:var(--acc);animation:msblink 1s steps(1) infinite}
+.ms-rm .ms-sub-c{animation:none}
+@keyframes msblink{50%{opacity:0}}
+.cp{display:block;font:700 12px/1.1 ui-monospace,"SF Mono",Menlo,Consolas,monospace;color:inherit;text-align:center;white-space:nowrap;margin-top:1px}
+.sw.lb{flex-wrap:wrap;justify-content:center}
+.sw.lb>.cp{flex-basis:100%}
+.sg.lb{flex-direction:column;gap:1px}
+.lead>.cp{color:var(--dim)}
+.sv-ic>.cp{text-align:left;color:var(--dim)}
+.sv-ok{align-content:center}
+.ms .sv-ok>.cp{color:#0c2a07}
+.ms .sv-ok[aria-disabled=true]>.cp{color:var(--dim)}

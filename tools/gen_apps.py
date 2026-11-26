@@ -170,11 +170,11 @@ li{{margin:.4em 0}}
 </div>
 <h2>How it works</h2>
 <ul>
-<li>Settings are pictures and numbers, with MOM's face behind them: happy at the first alert, upset at the second, furious after that.</li>
+<li>MOM has three heads now, drawn entirely in ASCII. She sits above your reminders and sinks to a strip of glasses as you scroll: violet at the first alert, amber at the second, red after that. She has no voice. Tap a button and she types what it does, usually with an opinion.</li>
 <li>Add as many reminders as you like. Each one can repeat daily, on chosen weekdays, on set dates or every few days, skip the next one, and follow your phone's time zone or a fixed one.</li>
 <li>Pick one of four intense sounds for each stage (tap &#9654; to hear it), plus volume ramp, vibration pattern, spoken title, torch and screen flash. Nothing is armed until you tap the check.</li>
 <li>The first alert comes at the due time, then after 5 minutes, 3 minutes and 1 minute, then every 30 seconds until you finish the game (a win or no moves left) or use Settings to turn it off or change the time. Settings unlocks once the 30-second phase starts.</li>
-<li>Finish by playing the 2048 board to the end: a real loss (no moves left) or a win dismisses the alarm. You do not need a 2048 tile. A full board that can still move does not count. You can also add a QR code, NFC tag, shake or quick puzzle as another way out.</li>
+<li>Finish by playing the 2048 board to the end: a real loss (no moves left) or a win dismisses the alarm. You do not need a 2048 tile. A full board that can still move does not count. Touching the board or moving tiles never silences the alarm. You can also add a QR code, NFC tag, shake or quick puzzle as another way out.</li>
 <li>An emergency <strong>hold-to-stop</strong> always works, at any time. It ends that alarm as not done; the next one stays set.</li>
 <li>It rings over the lock screen, works after a reboot before you unlock, and has a home-screen widget, a Quick Settings tile and shortcuts. It asks for each permission only when you turn on the thing that needs it.</li>
 <li>No account. It goes online only to check for updates and, if you set one, to call your own smart-home link. Force Stop or uninstall switches it off, because Android says so.</li>
