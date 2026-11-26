@@ -15,15 +15,16 @@
 <link rel="apple-touch-icon" href="/apps/alarm/icon-192.png">
 <link rel="stylesheet" href="/apps/shell.css">
 <link rel="stylesheet" href="/apps/alarm/app.css">
+<style>.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}</style>
 </head>
 <body>
 <main id="menu">
 <img class="mark" src="/apps/alarm/icon-192.png" alt="" width="170" height="170">
-<h1>MOM&#x27;s: 2048 Reminder</h1>
-<p class="tag">2048 on the Coach Reminders mini-computer, plus reminders: a horn alarm while the app is open, and push reminders once installed to your Home Screen. Locked-phone horns need the Android app.</p>
-<p class="tag">Best score: <strong id="best">0</strong></p>
-<button id="start" type="button">Start</button>
-<button id="open-settings" class="alt" type="button">Settings</button>
+<h1 class="vh">MOM&#x27;s: 2048 Reminder</h1>
+<p class="tag vh">2048 on the Coach Reminders mini-computer, plus reminders: a horn alarm while the app is open, and push reminders once installed to your Home Screen. Locked-phone horns need the Android app.</p>
+<p class="tag num">&#9733; <strong id="best">0</strong></p>
+<button id="start" type="button" aria-label="Start"><svg class="g" viewBox="0 0 24 24" aria-hidden="true" focusable="false" style="width:36px;height:36px;fill:currentColor"><path d="M7 4l13 8-13 8z"/></svg></button>
+<button id="open-settings" class="alt" type="button" aria-label="Settings"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" style="width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg></button>
 <p id="offline" role="status">Saving for offline play…</p>
 </main>
 <main id="settings" hidden>
@@ -42,7 +43,7 @@
 </section>
 <button id="close-settings" class="alt" type="button">Back</button>
 </main>
-<section id="stage" hidden aria-label="MOM&#x27;s: 2048 Reminder"><button id="back" class="alt" type="button">← Menu</button><div id="host"></div></section>
+<section id="stage" hidden aria-label="MOM&#x27;s: 2048 Reminder"><button id="back" class="alt" type="button" aria-label="Menu">&#8592;</button><div id="host"></div></section>
 <script type="application/json" id="app-config">{"bestKey": "mom-alarm-2048-web-best-v1", "mount": "mountAlarm", "name": "MOM's: 2048 Reminder", "options": {"autostart": "occ"}, "src": "/apps/alarm/app.mjs"}</script>
 <script type="application/mbs-script" data-mbs-type="module" data-mbs-src="/apps/shell.mjs"></script>
 </body>

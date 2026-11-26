@@ -109,7 +109,8 @@ export function saveReminder(state, input, now, opts = {}) {
   const changed = !old || cfgKey(old) !== cfgKey(r);
   const rev = old ? old.rev + (changed ? 1 : 0) : 1;
   const keep = old && !changed && old.confirmed?.rev === old.rev;
-  const ok = soundPicked(r) && (keep || r.confirmed?.rev === rev || (opts.trust && r.confirmed?.at > 0));   // opts.trust: an import of this app's own export keeps its confirmations
+  const claimed = r.confirmed?.rev, callerRev = input.rev | 0;   // the settings UI sends rev: old+1 with confirmed.rev: old+1: honoured as ONE bump even when nothing changed (then rev stays, no double bump)
+  const ok = soundPicked(r) && (keep || claimed === rev || (claimed === callerRev && callerRev === (old ? old.rev : 0) + 1) || (opts.trust && r.confirmed?.at > 0));   // opts.trust: an import of this app's own export keeps its confirmations
   const s = copy(state); r.rev = rev; r.confirmed = ok ? {rev, at: keep ? old.confirmed.at : r.confirmed?.at || now} : null;
   const i = s.reminders.findIndex(x => x.id === r.id);
   if (i < 0) s.reminders.push(r); else s.reminders[i] = r;
@@ -289,7 +290,7 @@ export function snapshot(state, now) {
   const top = ranked(state)[0] || null, locks = liveRuns(state).filter(r => r.occ.escalate && r.occ.due + OFF_LOCK_MS > now).map(r => r.occ.due + OFF_LOCK_MS);
   const nexts = state.reminders.filter(isArmed).map(r => state.runs[r.id]?.next?.due).filter(Boolean);
   const [emotion, intensity] = top ? FACE[top.face] : ['happy', 0.3];
-  return {occId: top?.occId ?? null, rev: top ? findRun(state, top.occId).occ.rev : 0, stage: top?.stage ?? null, emotion, intensity, iconId: 'stage' + (top?.stage ?? 1),
+  return {occId: top?.occId ?? null, reminderId: top?.reminderId ?? null, dueAt: top?.due ?? null, rev: top ? findRun(state, top.occId).occ.rev : 0, stage: top?.stage ?? null, emotion, intensity, iconId: 'stage' + (top?.stage ?? 1),
     offAllowed: locks.length === 0, unlockAt: locks.length ? Math.min(...locks) : null, nextDue: nexts.length ? Math.min(...nexts) : null,
     capabilities: {}, saveState: 'idle', reducedMotion: false, highContrast: false, pendingSync: pendingSync(state)};
 }

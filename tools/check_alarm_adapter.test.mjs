@@ -25,7 +25,7 @@ test('adapter surface is exactly the contract', async () => {
     assert.equal(typeof a[k], 'function', k);
   assert.equal(a.platform, 'web');
   const s = a.snapshot();
-  assert.deepEqual(Object.keys(s).sort(), ['capabilities', 'emotion', 'highContrast', 'iconId', 'intensity', 'nextDue', 'occId', 'offAllowed', 'pendingSync', 'reducedMotion', 'rev', 'saveState', 'stage', 'unlockAt'].sort());
+  assert.deepEqual(Object.keys(s).sort(), ['capabilities', 'dueAt', 'reminderId', 'emotion', 'highContrast', 'iconId', 'intensity', 'nextDue', 'occId', 'offAllowed', 'pendingSync', 'reducedMotion', 'rev', 'saveState', 'stage', 'unlockAt'].sort());
   assert.deepEqual([s.occId, s.stage, s.emotion, s.intensity, s.iconId, s.offAllowed, s.saveState], [null, null, 'happy', 0.3, 'stage1', true, 'idle']);
   assert.deepEqual(Object.keys(await a.capabilities()).sort(), [...CAP_IDS].sort());
   for (const c of Object.values(await a.capabilities())) assert.ok(['available', 'permission', 'active', 'unsupported', 'foreground', 'disconnected', 'error'].includes(c.state) && typeof c.reason === 'string');
@@ -161,4 +161,20 @@ test('the old single-schedule state migrates on first adapter load and the list 
   const {a} = make({storage}); const l = await a.list();
   assert.deepEqual([l.length, l[0].id, l[0].title, l[0].confirmed.rev], [1, 'abcdefghijkl', 'Pills', 1]); assert.equal(a.snapshot().nextDue, T0 + 300_000);
   assert.ok(storage.d['adhd-alarm-state-v1']);                                                          // v1 stays for rollback
+});
+
+test('settings UI save shape (rev: old+1, confirmed: {rev: old+1}) arms end to end with no double bump; snapshot names the active reminder', async () => {
+  const {a, clock} = make(), ui = (r, at = T0) => ({...r, rev: (r.rev | 0) + 1, confirmed: {rev: (r.rev | 0) + 1, at}});
+  const base = rem(); delete base.confirmed;
+  const one = await a.save(ui({...base, rev: 0}));                                                   // brand-new: rev 0 -> 1
+  assert.deepEqual([one.ok, one.reminder.rev, one.reminder.confirmed.rev], [true, 1, 1]); assert.equal(a.snapshot().nextDue, Date.UTC(2026, 11, 1, 12, 5));
+  const edited = await a.save(ui({...one.reminder, time: '12:30'}));                                // changed: ONE bump, still armed
+  assert.deepEqual([edited.reminder.rev, edited.reminder.confirmed.rev], [2, 2]); assert.equal(a.snapshot().nextDue, Date.UTC(2026, 11, 1, 12, 30));
+  const same = await a.save(ui(edited.reminder));                                                    // nothing changed: rev stays, stays armed
+  assert.deepEqual([same.reminder.rev, same.reminder.confirmed.rev], [2, 2]); assert.ok(a.snapshot().nextDue);
+  const bad = await a.save({...edited.reminder, rev: 3, time: '13:00', confirmed: {rev: 9, at: 1}});  // a confirmation that names another rev never arms
+  assert.equal(bad.reminder.confirmed, null);
+  await a.save(ui({...bad.reminder, time: '12:30'}));
+  clock.t = Date.UTC(2026, 11, 1, 12, 30, 1); a.tick(); const s = a.snapshot();
+  assert.deepEqual([s.reminderId, s.dueAt, s.stage], ['r_one00000001', Date.UTC(2026, 11, 1, 12, 30), 1]);
 });

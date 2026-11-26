@@ -4,18 +4,28 @@
   "assets": [
     {
       "url": "/apps/alarm/app.css",
-      "revision": "698c17de8b1308765c06b8b951ad48d772b38c74",
-      "bytes": 6103
+      "revision": "abf4f1837efdfda421c0c386c802cfa2cece1bee",
+      "bytes": 4576
     },
     {
       "url": "/apps/alarm/app.mjs",
-      "revision": "825a452761431ede27d84d9bd9398852ab860919",
-      "bytes": 24368
+      "revision": "1e594c3da7aad70073934738c7d0c367a8560050",
+      "bytes": 12018
     },
     {
       "url": "/apps/alarm/board.js",
       "revision": "5cc490b3caebf24a889a35eab9b69fe335b53ce8",
       "bytes": 4375
+    },
+    {
+      "url": "/apps/alarm/capabilities.js",
+      "revision": "e52ede7ba5106abfef2215d8e727a5c7c3103f08",
+      "bytes": 5231
+    },
+    {
+      "url": "/apps/alarm/checkin.js",
+      "revision": "069c20dd5eb44908d8081691717b75bc5ef50a1b",
+      "bytes": 4569
     },
     {
       "url": "/apps/alarm/computer.js",
@@ -43,19 +53,64 @@
       "bytes": 9885132
     },
     {
+      "url": "/apps/alarm/outputs.js",
+      "revision": "cb2a53bad741425efb2908948c6044ba5fe4f8fe",
+      "bytes": 13348
+    },
+    {
       "url": "/apps/alarm/push.js",
-      "revision": "991965ee9812ea2c8666360f6ff0a3d1bac9a1e5",
-      "bytes": 6617
+      "revision": "5892c64db1241189bab21052a21958030fdf91a2",
+      "bytes": 7041
+    },
+    {
+      "url": "/apps/alarm/recurrence.js",
+      "revision": "d3cd32576d6babea69c58ca0e6acf4b068ee65d8",
+      "bytes": 5446
     },
     {
       "url": "/apps/alarm/remind.js",
-      "revision": "42bed84b012da8a9ffa40137cdd1ffa947755dd4",
-      "bytes": 12270
+      "revision": "8c583d4a63fa707b5eeaab60b9daea74096681f0",
+      "bytes": 24652
     },
     {
       "url": "/apps/alarm/stages.js",
       "revision": "e89df36a84a6b3392a279ec7781ab581ee55e430",
       "bytes": 2940
+    },
+    {
+      "url": "/apps/alarm/ui/challenges.js",
+      "revision": "161de0cc6c5f2e7669161776021ee4f136b621e2",
+      "bytes": 3043
+    },
+    {
+      "url": "/apps/alarm/ui/glyphs.js",
+      "revision": "ef23285df1ae92239c296a97ff3a4dfbf6fd3d83",
+      "bytes": 12315
+    },
+    {
+      "url": "/apps/alarm/ui/mom-face.js",
+      "revision": "ee010781e8f4dcb26f81885b130e249f8a43838a",
+      "bytes": 18738
+    },
+    {
+      "url": "/apps/alarm/ui/names.js",
+      "revision": "20f713b44bbf0c3c2979c3f634c2a7bea0698dd8",
+      "bytes": 5140
+    },
+    {
+      "url": "/apps/alarm/ui/settings.css",
+      "revision": "9e690a70501fe15bbd5ba9f6ec262685ecf4c9e6",
+      "bytes": 18848
+    },
+    {
+      "url": "/apps/alarm/ui/settings.js",
+      "revision": "d67853304644d329d59e28056f2fbaa9b9a1922d",
+      "bytes": 50599
+    },
+    {
+      "url": "/apps/alarm/ui/time.js",
+      "revision": "c548c530285a8f3c7f722e901eb2481ccf8861b5",
+      "bytes": 6365
     },
     {
       "url": "/apps/alarm/vendor/loaders/GLTFLoader.js",
@@ -71,6 +126,11 @@
       "url": "/apps/alarm/vendor/utils/BufferGeometryUtils.js",
       "revision": "60f90c92686de023b9790edf98c71be3e93624b3",
       "bytes": 31785
+    },
+    {
+      "url": "/apps/alarm/web-adapter.js",
+      "revision": "ea9ef2ae0688173e25626d87835abc906345f91b",
+      "bytes": 15385
     },
     {
       "url": "/apps/apps.json",
@@ -837,5 +897,5 @@
     "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "d81e4b224896061c0f9b"
+  "version": "a001c326bb1ec0e4951f"
 }
