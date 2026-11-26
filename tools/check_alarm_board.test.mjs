@@ -18,7 +18,7 @@ test('a full board with a merge available is NOT a loss (horizontal or vertical)
 
 test('move(): the game is over only after the move that leaves a full dead board', () => {
   const g = {board: [[3, 1, 2, 3], [1, 2, 3, 1], [2, 3, 1, 2], [3, 1, 0, 2]], score: 0, moves: 0, over: false};
-  const m = move(g, 'right', () => 0.99);                                       // 2 slides right, then a tier-6 tile spawns in the one gap
+  const m = move(g, 'right', () => 0.99);                                       // 2 slides right, then a tier-2 or 3 tile spawns in the one gap
   assert.equal(m.changed, true); assert.equal(m.game.board.flat().includes(0), false);
   assert.equal(m.game.over, !hasLegalMove(m.game.board));
   const mergeLeft = {board: [[1, 1, 3, 4], [4, 3, 2, 1], [1, 2, 3, 4], [4, 3, 2, 0]], score: 0, moves: 0, over: false};

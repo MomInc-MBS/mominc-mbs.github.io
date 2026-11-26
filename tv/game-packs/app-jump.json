@@ -79,8 +79,8 @@
     },
     {
       "url": "/apps/jump/run.mjs",
-      "revision": "3c188fc5e97c2e0919d80af84459344059b95963",
-      "bytes": 10189
+      "revision": "cf35f36dd6549cf13a945f2d0fc19fcefffd8434",
+      "bytes": 10654
     },
     {
       "url": "/apps/jump/selector.mjs",
@@ -89,8 +89,8 @@
     },
     {
       "url": "/apps/jump/soundtrack.mjs",
-      "revision": "5f413dc8b3b6c8378a0a05a0b0d6c4ffd8f40d0d",
-      "bytes": 4882
+      "revision": "be15b49467125c712c250ed7793632834e725ace",
+      "bytes": 5080
     },
     {
       "url": "/apps/jump/style.css",
@@ -149,8 +149,8 @@
     },
     {
       "url": "/arcade/pyramid-jump/tilt.mjs",
-      "revision": "2452cb7eb29a5cfabd6204b121fb5726bc1ec9d1",
-      "bytes": 1693
+      "revision": "5dee3ba005b67b4670aed40c7f7ce53aa6a8da9d",
+      "bytes": 2092
     },
     {
       "url": "/tv/assets/drgf-paper-character.svg",
@@ -174,5 +174,5 @@
     }
   ],
   "fontStyles": [],
-  "version": "30527ba7c8ea96904b5d"
+  "version": "4f6534559eefa834e228"
 }

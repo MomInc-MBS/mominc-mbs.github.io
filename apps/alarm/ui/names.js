@@ -23,7 +23,8 @@ export const N = {
   next: 'Next reminder', active: 'Active alarm stage', sync: 'Not synced yet',
   export: 'Export reminders to a file', import: 'Import reminders from a file', exported: 'Exported', imported: 'Imported', importFailed: 'Import failed',
   update: 'Check for update', applyUpdate: 'Install update', updReady: 'Update ready', updNone: 'Up to date', updDownloading: 'Downloading update',
-  reducedMotion: 'Reduce motion', highContrast: 'High contrast', history: 'Past alarms', historyEmpty: 'No past alarms',
+  freePlay: 'Free play with the 2048 board', keyUp: 'Console key: scroll up', keyDown: 'Console key: scroll down', keyPrev: 'Console key: previous section', keyNext: 'Console key: next section',
+  back2: 'Back to the reminders', reducedMotion: 'Reduce motion', highContrast: 'High contrast', history: 'Past alarms', historyEmpty: 'No past alarms',
 };
 export const CAP = {notify: 'Notifications', push: 'Background push reminders', exactAlarm: 'Exact alarms', fullScreen: 'Full-screen alarm', lockScreen: 'Lock-screen alarm',
   dnd: 'Do Not Disturb access', overlay: 'Draw over other apps', torch: 'Flashlight', vibrate: 'Vibration', sound: 'Sound', speak: 'Speech', wakeLock: 'Keep screen awake',

@@ -1,45 +1,39 @@
 // Mini-computer stage for the ADHD app.
 // SOURCE (verbatim copies, marked below): D:/myr5-work/coach-run-hud-1029 @ 16618a6109a6aefb48bf3fae1441f436c431d279
 //   modules/rooms/reminders-computer.mjs  (Coach Reminders mini-computer; asset pod/rooms/console.glb, 9885132 bytes)
-// Reused unchanged: SCREEN/MODEL_* constants, screenProjection, prepareCabinet, makeCords, releaseObject and the camera/screen
+// Reused: MODEL_* constants, prepareCabinet (+ mirrored lower arrow, dimmable endpoints), makeCords, releaseObject. screenProjection/matrix3d dropped: the camera now looks straight at the glass.
 // projection maths. NOT imported: Coach sign-in, reminder form, power toggle, key overlays, rotation (D04: alarm time is the only setting).
 import * as THREE from './vendor/three.module.min.js';
 import {GLTFLoader} from './vendor/loaders/GLTFLoader.js';
 // WEB PORT: bare imports -> vendored relative paths; model URL relative to this file; context-restore + visibility redraw (the scene is static: no render loop).
 
 // ---- verbatim from reminders-computer.mjs ----
-const SCREEN={left:-.185,right:.185,bottom:.39,top:.66,z:.115};
 const MODEL_CENTER=new THREE.Vector3(0,.515,.10668);
 const MODEL_SIZE=new THREE.Vector3(.527069,.9804382,.481444);
-export function screenProjection(points,width=600,height=440){
- const [[x0,y0],[x1,y1],[x2,y2],[x3,y3]]=points;
- const dx1=x1-x2,dx2=x3-x2,dx3=x0-x1+x2-x3;
- const dy1=y1-y2,dy2=y3-y2,dy3=y0-y1+y2-y3,det=dx1*dy2-dx2*dy1;
- if(!Number.isFinite(det)||Math.abs(det)<1e-8)throw new Error('Degenerate TV aperture');
- const g=(dx3*dy2-dx2*dy3)/det,h=(dx1*dy3-dx3*dy1)/det;
- const a=x1-x0+g*x1,b=x3-x0+h*x3,d=y1-y0+g*y1,e=y3-y0+h*y3;
- return [a/width,d/width,0,g/width,b/height,e/height,0,h/height,0,0,1,0,x0,y0,0,1];
-}
 
+const keyLive={prev:{value:1},next:{value:1}};
 function prepareCabinet(root){
  root.traverse(node=>{if(!node.isMesh)return;for(const mat of [].concat(node.material||[])){
   mat.onBeforeCompile=shader=>{
+   shader.uniforms.uPrev=keyLive.prev;shader.uniforms.uNext=keyLive.next;
    shader.vertexShader='varying vec3 vCabinetPoint;\n'+shader.vertexShader.replace('#include <begin_vertex>','#include <begin_vertex>\nvCabinetPoint=position;');
-   shader.fragmentShader='varying vec3 vCabinetPoint;\nfloat cabinetLine(vec2 p,vec2 a,vec2 b){vec2 d=b-a;return length(p-a-d*clamp(dot(p-a,d)/dot(d,d),0.,1.));}\n'+shader.fragmentShader.replace('#include <map_fragment>',`#include <map_fragment>
+   shader.fragmentShader='varying vec3 vCabinetPoint;\nuniform float uPrev;uniform float uNext;\nfloat cabinetLine(vec2 p,vec2 a,vec2 b){vec2 d=b-a;return length(p-a-d*clamp(dot(p-a,d)/dot(d,d),0.,1.));}\n'+shader.fragmentShader.replace('#include <map_fragment>',`#include <map_fragment>
     if(vCabinetPoint.x>.015&&vCabinetPoint.x<.245&&vCabinetPoint.y>.17&&vCabinetPoint.y<.37&&vCabinetPoint.z>.055){
      vec2 p=vCabinetPoint.xy;float d=1.;
-     for(int i=0;i<2;i++){float y=.225+float(i)*.05;
-      d=min(d,cabinetLine(p,vec2(.145,y+.016),vec2(.145,y)));
-      d=min(d,cabinetLine(p,vec2(.145,y),vec2(.107,y)));
-      d=min(d,cabinetLine(p,vec2(.107,y),vec2(.119,y+.012)));
-      d=min(d,cabinetLine(p,vec2(.107,y),vec2(.119,y-.012)));
+     for(int i=0;i<2;i++){float y=.225+float(i)*.05;float m=i==0?1.:0.; // lower arrow (i=0) is mirrored: it bends down and ends pointing right
+      float xa=mix(.145,.107,m),xb=mix(.107,.145,m),xh=mix(.119,.133,m);
+      d=min(d,cabinetLine(p,vec2(xa,y+.016),vec2(xa,y)));
+      d=min(d,cabinetLine(p,vec2(xa,y),vec2(xb,y)));
+      d=min(d,cabinetLine(p,vec2(xb,y),vec2(xh,y+.012)));
+      d=min(d,cabinetLine(p,vec2(xb,y),vec2(xh,y-.012)));
      }
      float ink=1.-smoothstep(.001,.0025,d);float grain=.0015*sin(p.y*5800.);
      float printMask=step(.075,p.x)*step(p.x,.235)*(step(.205,p.y)*step(p.y,.245)+step(.255,p.y)*step(p.y,.295));
+     float live=p.y<.25?uNext:uPrev; // first/last tab: that key's arrow is visibly dimmed
      diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.012,.009,.015)+grain,printMask);
-     diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.66,.51,.27),ink);
+     diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.66,.51,.27)*mix(.3,1.,live),ink);
     }`);
-  };mat.customProgramCacheKey=()=>'reminders-icon-keycaps-v1';mat.needsUpdate=true;
+  };mat.customProgramCacheKey=()=>'reminders-icon-keycaps-v2';mat.needsUpdate=true;
  }});
 }
 
@@ -83,10 +77,31 @@ function makeCords(scene){
 
 // ---- end verbatim ----
 
-/** Mounts the console model and projects `screen` onto its glass. Returns {dispose, ok}. Falls back to a flat screen if WebGL fails. */
-export async function mountComputer(stage, screen, glass, onSize) {
+
+// ---- CRT mount: straight-on camera, plain rects (no matrix3d) ----
+// Model-space rects, measured from a straight-on render of console.glb (see tools notes in the lead's report).
+export const GLASS = {x0: -.192, x1: .192, y0: .368, y1: .698, z: .115};   // inner edge of the black bezel
+export const KEYS = {                                                      // hit rects on the keycap faces
+ up:   {x: -.044, y: .270, w: .060, h: .044, z: .065},
+ down: {x: -.044, y: .214, w: .060, h: .044, z: .065},
+ prev: {x: .150,  y: .256, w: .160, h: .044, z: .065},
+ next: {x: .150,  y: .198, w: .160, h: .044, z: .065},
+};
+const KEY_BOTTOM = .17, MIN_HIT = 44;
+
+/** Pure: camera plan for a stage of W x H px. Returns px-per-model-unit s and the model y at the vertical centre of the view. */
+export function framePlan(W, H) {
+ const gw = GLASS.x1 - GLASS.x0, need = GLASS.y1 - KEY_BOTTOM + .05;
+ let s = W * .985 / gw;                                  // glass spans (nearly) the full stage width
+ if (H / s < need) s = H / need;                         // too short: shrink the whole scene, never crop the keys
+ const spare = Math.max(0, H / s - need), above = Math.min(spare * .5, .28);   // crop antenna/dish space first
+ return {s, yc: GLASS.y1 + .02 + above - H / s / 2};
+}
+
+/** Mounts the console. `els` = {crt, up, down, prev, next} (all absolutely positioned in `stage`'s parent). Returns {ok, dispose, setKeys(prevOk,nextOk)}. */
+export async function mountComputer(stage, els, onLayout) {
  const canvas = stage.querySelector('canvas');
- let renderer, raf = 0, disposed = false, ro;
+ let renderer, disposed = false, ro;
  try {
   const bytes = await (await fetch(new URL('./model/console.glb', import.meta.url))).arrayBuffer();
   const manager = new THREE.LoadingManager();
@@ -100,29 +115,36 @@ export async function mountComputer(stage, screen, glass, onSize) {
   scene.add(new THREE.HemisphereLight(0xe8f8ff, 0x241532, 2.1));
   const key = new THREE.DirectionalLight(0xffedcf, 2.5); key.position.set(-1.5, 2, 2.5); scene.add(key);
   const camera = new THREE.PerspectiveCamera(31, 1, .05, 12);
+  const place = (el, x0, y0, x1, y1, minW = 0, minH = 0) => {
+   let cx = (x0 + x1) / 2, cy = (y0 + y1) / 2, w = Math.max(x1 - x0, minW), h = Math.max(y1 - y0, minH);
+   const W = stage.clientWidth; if (cx + w / 2 > W) { w = Math.max(minW, W - (cx - w / 2)); cx = W - w / 2; }   // a hit area must never widen the page (sideways scroll)
+   Object.assign(el.style, {left: (cx - w / 2).toFixed(1) + 'px', top: (cy - h / 2).toFixed(1) + 'px', width: w.toFixed(1) + 'px', height: h.toFixed(1) + 'px'});
+  };
   const layout = () => {
    const width = stage.clientWidth, height = stage.clientHeight; if (!width || !height) return;
    renderer.setSize(width, height, false); camera.aspect = width / height;
-   const vfov = THREE.MathUtils.degToRad(camera.fov), distance = Math.max(MODEL_SIZE.y * .53 / Math.tan(vfov / 2), MODEL_SIZE.x * .53 / Math.tan(vfov / 2) / camera.aspect) * 1.08;
-   camera.position.set(0, .515, .10668 + distance); camera.lookAt(MODEL_CENTER); camera.zoom = 1.5; camera.updateProjectionMatrix();
+   const {s, yc} = framePlan(width, height), dist = height / (2 * s * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2));
+   camera.position.set(0, yc, GLASS.z + dist); camera.lookAt(0, yc, 0); camera.zoom = 1; camera.updateProjectionMatrix(); camera.updateMatrixWorld();
    renderer.render(scene, camera);
    const project = (x, y, z) => { const p = new THREE.Vector3(x, y, z).project(camera); return [(p.x + 1) * width / 2, (1 - p.y) * height / 2]; };
-   const pts = [[SCREEN.left, SCREEN.top], [SCREEN.right, SCREEN.top], [SCREEN.right, SCREEN.bottom], [SCREEN.left, SCREEN.bottom]].map(([x, y]) => project(x, y, SCREEN.z));
-   const lw = Math.max(160, Math.round(Math.hypot(pts[1][0] - pts[0][0], pts[1][1] - pts[0][1]) / 8) * 8);
-   const lh = Math.max(120, Math.round(Math.hypot(pts[3][0] - pts[0][0], pts[3][1] - pts[0][1]) / 8) * 8);
-   const m = screenProjection(pts.map(([x, y]) => [x - pts[0][0], y - pts[0][1]]), lw, lh);
-   Object.assign(screen.style, {left: pts[0][0] + 'px', top: pts[0][1] + 'px', width: lw + 'px', height: lh + 'px', transformOrigin: '0 0', transform: `matrix3d(${m.join(',')})`});
-   glass.style.cssText = screen.style.cssText;
-   onSize(lw, lh);
+   const a = project(GLASS.x0, GLASS.y1, GLASS.z), b = project(GLASS.x1, GLASS.y0, GLASS.z);
+   place(els.crt, a[0], a[1], b[0], b[1]);
+   for (const k of ['up', 'down', 'prev', 'next']) {
+    const r = KEYS[k], p0 = project(r.x - r.w / 2, r.y + r.h / 2, r.z), p1 = project(r.x + r.w / 2, r.y - r.h / 2, r.z);
+    place(els[k], p0[0], p0[1], p1[0], p1[1], MIN_HIT, MIN_HIT);
+   }
+   onLayout?.({width, height, crt: {w: b[0] - a[0], h: b[1] - a[1]}, project});
   };
   ro = new ResizeObserver(layout); ro.observe(stage); layout();
   canvas.addEventListener('webglcontextlost', e => e.preventDefault());
   canvas.addEventListener('webglcontextrestored', layout);
-  const onVis = () => { if (!document.hidden) layout(); }; // nothing animates while hidden; redraw once on return in case the GPU dropped the buffer
+  const onVis = () => { if (!document.hidden) layout(); };   // static scene: redraw once on return in case the GPU dropped the buffer
   document.addEventListener('visibilitychange', onVis);
-  return {ok: true, dispose() { disposed = true; document.removeEventListener('visibilitychange', onVis); ro.disconnect(); cancelAnimationFrame(raf); releaseObject(scene); renderer.dispose(); renderer.forceContextLoss(); }};
+  return {ok: true,
+   setKeys(prevOk, nextOk) { keyLive.prev.value = prevOk ? 1 : 0; keyLive.next.value = nextOk ? 1 : 0; if (!disposed) layout(); },
+   dispose() { disposed = true; document.removeEventListener('visibilitychange', onVis); ro.disconnect(); releaseObject(scene); renderer.dispose(); renderer.forceContextLoss(); }};
  } catch (error) {
   console.warn('3D computer unavailable', error);
-  return {ok: false, dispose() {}};
+  return {ok: false, setKeys() {}, dispose() {}};
  }
 }

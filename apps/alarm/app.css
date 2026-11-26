@@ -1,9 +1,18 @@
 /* MOM's: 2048 Reminder web edition: the Android app's style.css, scoped under .al so it cannot touch the shell. */
-.al{position:relative;margin:0 auto;width:min(620px,100%);height:calc(100dvh - 76px - env(safe-area-inset-top));min-height:420px;color:#e3b3ff;font:14px/1.3 ui-monospace,Consolas,monospace;text-align:left}
+.al{position:relative;margin:0 auto;width:min(620px,100%);height:calc(100dvh - 76px - env(safe-area-inset-top));min-height:420px;color:#e3b3ff;font:14px/1.3 Consolas,"Cascadia Mono","SF Mono",Menlo,"Roboto Mono","Droid Sans Mono",monospace;text-align:left}
 .al-stage{position:absolute;inset:0;pointer-events:none}
 .al-stage canvas{display:block;width:100%;height:100%}
-.al-screen{position:absolute;box-sizing:border-box;overflow:hidden;padding:14px;border-radius:16px;clip-path:inset(0 round 16px);background:#17252d;backface-visibility:hidden;box-shadow:inset 0 0 0 8px #080d12,inset 0 10px 18px #000c;touch-action:none;z-index:1;left:8%;top:30%;width:84%;height:30%}
-.al-glass{position:absolute;box-sizing:border-box;pointer-events:none;z-index:2;border:9px solid #070c11;border-radius:16px;background:linear-gradient(120deg,#defaff14,transparent 35%,#91d6ff08);box-shadow:inset 0 5px 12px #0009,0 1px 1px #9baebc66;backface-visibility:hidden}
+/* The CRT: a plain rect over the glass (computer.js sets left/top/width/height). Everything the app shows lives in here. */
+.al-crt{position:absolute;box-sizing:border-box;overflow:hidden;border-radius:20px;clip-path:inset(0 round 20px);background:#0f0619;z-index:1;left:4%;top:10%;width:92%;height:46%}
+.al-set{position:absolute;inset:0}.al-set[hidden]{display:none}
+.al .ms{position:absolute}
+.al-fx{position:absolute;inset:0;z-index:30;pointer-events:none;border-radius:inherit;
+  background:repeating-linear-gradient(0deg,rgba(214,170,255,.05) 0 1px,transparent 1px 3px),radial-gradient(ellipse at 50% 50%,transparent 62%,rgba(0,0,0,.34) 100%);
+  box-shadow:inset 0 0 14px rgba(0,0,0,.55)}
+/* console keys: transparent hit areas placed by computer.js over the keycaps */
+.al button.al-k{position:absolute;z-index:2;margin:0;padding:0;border:0;border-radius:10px;background:transparent;box-shadow:none;min-height:0;touch-action:none;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+.al button.al-k:focus-visible{outline:3px solid #ffd36e;outline-offset:-3px}
+.al button.al-k:active{background:rgba(255,211,110,.14)}
 .al section{height:100%;display:flex;flex-direction:column;gap:6px;padding:6px 8px;box-sizing:border-box}
 .al h1{margin:0;font:700 17px/1.3 ui-monospace,Consolas,monospace;letter-spacing:.14em;color:#fff;text-shadow:none;text-transform:none}
 .al p{margin:0}.al .dim{font-size:11px;opacity:.8}.al a{color:#ffd36e}
@@ -18,26 +27,16 @@
 .al .cell[data-t="11"],.al .cell[data-t="12"]{font-size:calc(var(--bs,150px)/18)}
 .al .cell[data-t="12"]{background:#ffd36e;color:#2a0a44}
 .al-msg{min-height:16px;font-size:11px;text-align:center}
-.al.flat .al-stage,.al.flat .al-glass{display:none}
-.al.flat .al-screen{position:relative;left:auto;top:auto;width:auto;height:100%;transform:none!important;border-radius:0;clip-path:none}
 
 /* Reminders panel + alarm bar (web edition). Everything stays scoped under .al. */
-.al-bar{position:absolute;left:8%;top:65%;width:84%;z-index:3;display:flex;gap:8px}
 .al-bar button{flex:1;min-height:44px}
 .al-bar button:disabled{opacity:.5}
-.al.flat .al-bar{left:0;top:auto;bottom:0;width:100%}
-.al.flat.has-bar .al-screen{height:calc(100% - 56px)}
 
 /* stage face (app-wide in the menu, per-occurrence in the alert) + the held emergency stop */
-.al-face{align-self:center;width:84px;height:84px;object-fit:contain;border-radius:14px}
 .al button[data-hold]{position:relative;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 .al button[data-hold]::after{content:"";position:absolute;left:0;bottom:0;height:4px;width:0;background:#ff7b7b}
 .al button.hold-on::after{width:100%;transition:width 3s linear}
 
-.al-rem{position:fixed;inset:0;z-index:50}.al-rem[hidden]{display:none}.al-set{position:absolute;inset:0}
-.al-x{position:fixed;top:calc(env(safe-area-inset-top) + 8px);right:8px;z-index:70;width:48px;height:48px;min-height:48px;padding:0;display:grid;place-items:center;border-radius:50%;background:rgba(18,8,31,.94);border:1px solid #9579c9;color:#f6ecff}
-.al-x svg{width:26px;height:26px}
-.al-menurow{display:flex;gap:14px;justify-content:center;margin-top:6px}.al-menurow button{width:72px;height:64px;min-height:64px;padding:0;display:grid;place-items:center}.al-menurow svg{width:34px;height:34px}
 .al-play header button{width:48px;min-height:48px;display:grid;place-items:center}.al-play header svg{width:22px;height:22px}.al-mode svg{width:22px;height:22px;vertical-align:middle}
 .al-bar button{display:grid;place-items:center;min-height:56px}.al-bar svg{width:34px;height:34px}
 .vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
@@ -46,5 +45,19 @@
 :where(.ms) button{background:none;border:0;box-shadow:none;border-radius:0;padding:0;min-height:0;text-transform:none;font-weight:inherit;line-height:inherit;letter-spacing:normal}
 :where(.ms) button:active{transform:none;box-shadow:none}
 :where(.ms) button:focus-visible{outline:3px solid #ffd36e;outline-offset:2px}
-.ms-top{right:64px!important}
 #stage #back{min-width:48px;min-height:48px;display:grid;place-items:center;padding:0}#stage #back svg{width:24px;height:24px}
+
+/* CRT layout: game view and the emergency-stop bar live inside the glass */
+.al-set.playing{z-index:7;pointer-events:none}
+.al-crt .al-play{position:absolute;inset:0;padding:0 0 46px;background:radial-gradient(120% 80% at 50% 25%,#2e1250 0%,#190a2c 60%,#0f0619 100%)}
+.al-crt .al-play[hidden]{display:none}
+.al-crt .al-play header{height:44px;flex:none;padding:0 4px}
+.al-bar{position:absolute;top:0;right:56px;width:104px;height:44px;z-index:5;display:flex}   /* emergency stop rides in the header row: costs the board no height */
+.al-bar[hidden]{display:none}
+.al-bar button{flex:1;min-height:44px;display:grid;place-items:center}.al-bar svg{width:28px;height:28px}
+.al-bar button:disabled{opacity:.5}
+.al.flat .al-stage{display:none}
+.al.flat .al-crt{position:relative;left:auto;top:auto;width:auto;height:100%;border-radius:0;clip-path:none}
+.al.flat .al-k{display:none}
+/* colour drawer stays between the play header (emergency stop must stay reachable) and the MOM subtitle dock */
+.al-crt .gc-root{inset:44px 0 48px}
