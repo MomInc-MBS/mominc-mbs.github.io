@@ -1,9 +1,12 @@
 // HTTP API. handle(request, env, db, now) -> Response. No accounts: an install id + secret made by the browser identify one device.
 import {validEndpoint} from './webpush.mjs';
-import {hit, nextDue, validTz, finish, receiptToken} from './core.mjs';
+import {hit, nextOf, recurOf, tzOf, finish, receiptToken} from './core.mjs';
+import {validHookUrl, validToken} from './webhook.mjs';
+import {recurError, recurFromLegacy, validZone, isTime} from '../../../apps/alarm/recurrence.js';
 import {OFF_LOCK_MS, MAX_LABEL} from '../../../apps/alarm/stages.js';
 
-const MUTATIONS_PER_MIN = 30, INSTALLS_PER_HOUR_IP = 10, MAX_SCHEDULES = 3, MAX_COACH = 16, MAX_BODY = 4096;
+// MAX_SCHEDULES is an abuse bound for one anonymous install, not a product limit (the app has none).
+const MUTATIONS_PER_MIN = 30, INSTALLS_PER_HOUR_IP = 10, MAX_SCHEDULES = 200, MAX_COACH = 16, MAX_BODY = 8192, MAX_SNOOZE_S = 3600;
 const hex = b => [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join('');
 const sha256 = async s => hex(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s)));
 const rand = n => hex(crypto.getRandomValues(new Uint8Array(n)));
@@ -78,36 +81,56 @@ export async function handle(request, env, db, now = Date.now()) {
 
     if (path === '/v1/schedule' && m === 'PUT') {
       const b = await body(request);
-      if (typeof b.id !== 'string' || !/^[a-z0-9]{8,32}$/.test(b.id) || typeof b.time !== 'string' || !/^([01]\d|2[0-3]):[0-5]\d$/.test(b.time)
-          || !validTz(b.tz) || !['once', 'daily', 'weekdays'].includes(b.recur) || typeof (b.label ?? '') !== 'string' || (b.label ?? '').length > MAX_LABEL) throw new Err(400, 'bad schedule');
+      const title = b.title ?? b.label ?? '', esc = b.escalate ?? b.followups;
+      const recur = typeof b.recur === 'string' ? (['once', 'daily', 'weekdays'].includes(b.recur) ? recurFromLegacy(b.recur) : null) : b.recur;      // legacy strings still work
+      const tz = typeof b.tz === 'string' ? {mode: 'device', zone: b.tz} : b.tz;
+      if (typeof b.id !== 'string' || !/^[A-Za-z0-9_-]{8,40}$/.test(b.id) || !isTime(b.time) || !tz || !['device', 'fixed'].includes(tz.mode) || !validZone(tz.zone) || !recur || recurError(recur)
+          || typeof title !== 'string' || title.length > MAX_LABEL) throw new Err(400, 'bad schedule');
+      const snooze = b.snooze == null ? 0 : Math.floor(+b.snooze);
+      if (!(snooze >= 0 && snooze <= MAX_SNOOZE_S)) throw new Err(400, 'bad schedule');
+      let hook = null;
+      if (b.webhook != null) {
+        if (!validHookUrl(b.webhook.url) || !validToken(b.webhook.token)) throw new Err(400, 'bad webhook');          // SSRF guard: https only, no private/IP-literal hosts
+        hook = JSON.stringify({url: validHookUrl(b.webhook.url), token: b.webhook.token || null});
+      }
       const cur = await one(db, 'SELECT * FROM schedules WHERE id=?', b.id);
       const app = b.app ?? 'adhd';   // 'coach' = MOM's: Coach MYR5 plain reminders: one notice per occurrence, never any follow-ups
       if (!['adhd', 'coach'].includes(app)) throw new Err(400, 'bad schedule');
       if (cur && (cur.install_id !== inst.id || cur.app !== app)) throw new Err(403, 'not yours');
       if (!cur && (await one(db, 'SELECT COUNT(*) n FROM schedules WHERE install_id=? AND enabled=1 AND app=?', inst.id, app)).n >= (app === 'coach' ? MAX_COACH : MAX_SCHEDULES)) throw new Err(409, 'too many schedules');
-      const timeChange = !!cur && cur.enabled && b.enabled !== false && (cur.time !== b.time || cur.tz !== b.tz);
+      const revIn = Math.floor(+(b.revision ?? b.rev)) || 1;
+      if (cur && revIn < cur.revision) throw new Err(409, 'stale', {revision: cur.revision});                            // an older offline edit never overwrites a newer one
+      const sameTz = cur && JSON.stringify(tzOf(cur)) === JSON.stringify(tz);
+      const timeChange = !!cur && cur.enabled && b.enabled !== false && (cur.time !== b.time || !sameTz);
       if ((b.enabled === false || timeChange) && cur) await assertOffAllowed(db, b.id, now);     // changing the time is locked like Turn off
-      const enabled = b.enabled === false ? 0 : 1, fu = b.followups && app === 'adhd' ? 1 : 0, td = 0;   // tandem notices are retired
-      const next = enabled ? nextDue(b.time, b.tz, b.recur, now) : null;
-      await run(db, `INSERT INTO schedules(id,install_id,time,tz,recur,label,followups,tandem,revision,enabled,next_due,created_at,updated_at,app) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+      const enabled = b.enabled === false ? 0 : 1, fu = esc && app === 'adhd' ? 1 : 0, td = 0;   // tandem notices are retired
+      const x = enabled ? nextOf({time: b.time, recur, tz}, now) : {due: null, skipNext: !!recur.skipNext};
+      const next = x.due, rc = {...recur, skipNext: x.skipNext};
+      await run(db, `INSERT INTO schedules(id,install_id,time,tz,recur,label,followups,tandem,revision,enabled,next_due,created_at,updated_at,app,recur_json,tz_json,webhook,snooze) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
         ON CONFLICT(id) DO UPDATE SET time=excluded.time,tz=excluded.tz,recur=excluded.recur,label=excluded.label,followups=excluded.followups,tandem=excluded.tandem,
-        revision=excluded.revision,enabled=excluded.enabled,next_due=excluded.next_due,updated_at=excluded.updated_at`,
-        b.id, inst.id, b.time, b.tz, b.recur, b.label ?? '', fu, td, Math.max(1, Math.floor(+b.revision) || 1, timeChange ? cur.revision + 1 : 0), enabled, next, now, now, app);
+        revision=excluded.revision,enabled=excluded.enabled,next_due=excluded.next_due,updated_at=excluded.updated_at,recur_json=excluded.recur_json,tz_json=excluded.tz_json,webhook=excluded.webhook,snooze=excluded.snooze`,
+        b.id, inst.id, b.time, tz.zone, rc.kind, title, fu, td, Math.max(1, revIn, timeChange ? cur.revision + 1 : 0), enabled, next, now, now, app, JSON.stringify(rc), JSON.stringify(tz), hook, snooze);
       if (timeChange) for (const o of (await db.prepare("SELECT id FROM occurrences WHERE schedule_id=? AND status='ACTIVE'").bind(b.id).all()).results) await finish(db, o.id, 'CANCELLED', 'rescheduled', now);   // past the lock: the old occurrence ends, no stale push
       if (!enabled) for (const o of (await db.prepare("SELECT id FROM occurrences WHERE schedule_id=? AND status='ACTIVE'").bind(b.id).all()).results) await finish(db, o.id, 'CANCELLED', 'disabled', now);
       return json(env, {ok: true, nextDue: next});
     }
-    let mm = /^\/v1\/schedule\/([a-z0-9]{8,32})$/.exec(path);
-    if (mm && m === 'DELETE') {                                    // disable
+    if (path === '/v1/state' && m === 'GET') {                       // read current state: this install's reminders (no secrets) and recent occurrences
+      const rows = (await db.prepare('SELECT id,time,tz,recur,label,followups,revision,enabled,next_due,snooze,recur_json,tz_json,webhook IS NOT NULL AS hook FROM schedules WHERE install_id=?').bind(inst.id).all()).results;
+      const occs = (await db.prepare('SELECT * FROM occurrences WHERE install_id=? ORDER BY due DESC LIMIT 30').bind(inst.id).all()).results;
+      return json(env, {schedules: rows.map(r => ({id: r.id, rev: r.revision, enabled: !!r.enabled, title: r.label, time: r.time, recur: recurOf(r), tz: tzOf(r), escalate: !!r.followups, snooze: r.snooze, webhook: !!r.hook, nextDue: r.next_due})), occurrences: occs.map(occView)});
+    }
+    let mm = /^\/v1\/schedule\/([A-Za-z0-9_-]{8,40})$/.exec(path);
+    if (mm && m === 'DELETE') {                                    // disable (or, with ?remove=1, delete the reminder; occurrence history stays)
       const s = await one(db, 'SELECT * FROM schedules WHERE id=? AND install_id=?', mm[1], inst.id);
       if (!s) throw new Err(404, 'no such schedule');
       await assertOffAllowed(db, s.id, now);
-      await run(db, 'UPDATE schedules SET enabled=0, next_due=NULL, updated_at=? WHERE id=?', now, s.id);
+      if (url.searchParams.get('remove') === '1') await run(db, 'DELETE FROM schedules WHERE id=?', s.id);
+      else await run(db, 'UPDATE schedules SET enabled=0, next_due=NULL, updated_at=? WHERE id=?', now, s.id);
       for (const o of (await db.prepare("SELECT id FROM occurrences WHERE schedule_id=? AND status='ACTIVE'").bind(s.id).all()).results) await finish(db, o.id, 'CANCELLED', 'disabled', now);
       return json(env, {ok: true});
     }
 
-    mm = /^\/v1\/occurrence\/([^/]{1,80})(?:\/(ack|complete|cancel))?$/.exec(path);
+    mm = /^\/v1\/occurrence\/([^/]{1,80})(?:\/(ack|complete|cancel|snooze))?$/.exec(path);
     if (mm) {
       const id = decodeURIComponent(mm[1]), act = mm[2];
       const occ = await one(db, 'SELECT * FROM occurrences WHERE id=? AND install_id=?', id, inst.id);
@@ -116,7 +139,12 @@ export async function handle(request, env, db, now = Date.now()) {
       if (act && m === 'POST') {
         // Terminal states are final: a late/duplicate call just reports the current state (a stale notice can never reactivate anything).
         if (occ.status === 'ACTIVE') {
-          if (act === 'ack') await run(db, "UPDATE occurrences SET acked_at=COALESCE(acked_at,?) WHERE id=? AND status='ACTIVE'", now, id);   // opens/acknowledges: recorded only, never completes, pauses or stops anything
+          if (act === 'snooze') {                                   // output pause ONLY: due time, stage, generation and the Turn-off lock are untouched
+            const sc = await one(db, 'SELECT snooze FROM schedules WHERE id=?', occ.schedule_id), b = await body(request);
+            if (!sc?.snooze) throw new Err(409, 'snooze is off for this reminder');
+            const until = Math.min(Math.max(Math.floor(+b.until) || 0, now), now + sc.snooze * 1000);
+            await run(db, "UPDATE occurrences SET paused_until=? WHERE id=? AND status='ACTIVE'", until, id);
+          } else if (act === 'ack') await run(db, "UPDATE occurrences SET acked_at=COALESCE(acked_at,?) WHERE id=? AND status='ACTIVE'", now, id);   // opens/acknowledges: recorded only, never completes, pauses or stops anything
           else await finish(db, id, act === 'complete' ? 'COMPLETED' : 'CANCELLED', act === 'complete' ? 'client-reported' : 'stopped', now);
         }
         return json(env, occView(await one(db, 'SELECT * FROM occurrences WHERE id=?', id)));

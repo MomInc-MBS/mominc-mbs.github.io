@@ -7,7 +7,7 @@ import {DatabaseSync} from 'node:sqlite';
 import {handle} from '../backend/adhd-push/src/api.mjs';
 import {runCron, nextDue} from '../backend/adhd-push/src/core.mjs';
 
-const schema = ['0001_init', '0002_revision', '0003_app'].map(m => readFileSync(new URL('../backend/adhd-push/migrations/' + m + '.sql', import.meta.url), 'utf8')).join(';');
+const schema = ['0001_init', '0002_revision', '0003_app', '0004_multi'].map(m => readFileSync(new URL('../backend/adhd-push/migrations/' + m + '.sql', import.meta.url), 'utf8')).join(';');
 function d1() {
   const s = new DatabaseSync(':memory:'); s.exec(schema);
   return {raw: s, prepare: sql => {
@@ -84,7 +84,7 @@ test('editing the time: the old occurrence sends nothing, the new time sends onc
   assert.equal(sent.length, 1);
 });
 
-test('2048 reminders are untouched: same install, followups still escalate, caps are separate (3 adhd, 16 coach)', async () => {
+test('2048 reminders are untouched: same install, followups still escalate, coach is capped at 16; 2048 reminders have no product cap', async () => {
   const db = d1(), inst = await install(db);
   const adhd = {id: 'adhd0001', time: '12:05', tz: 'UTC', recur: 'daily', label: 'pills', followups: true, revision: 1};
   assert.equal((await call(db, 'PUT', '/v1/schedule', {inst, body: adhd})).status, 200);
@@ -93,7 +93,7 @@ test('2048 reminders are untouched: same install, followups still escalate, caps
   for (const sec of [0, 301, 481, 541]) await runCron(db, due + sec * 1000, deps);
   assert.deepEqual(sent.map(x => [x.payload.appId, x.payload.stage]), [['adhd', 0], ['adhd', 1], ['adhd', 2], ['adhd', 3]]);
   for (let i = 1; i < 3; i++) assert.equal((await call(db, 'PUT', '/v1/schedule', {inst, body: {...adhd, id: 'adhd000' + (i + 1)}})).status, 200);
-  assert.equal((await call(db, 'PUT', '/v1/schedule', {inst, body: {...adhd, id: 'adhd0009'}})).status, 409, '4th 2048 reminder refused');
+  for (let i = 3; i < 12; i++) assert.equal((await call(db, 'PUT', '/v1/schedule', {inst, body: {...adhd, id: 'adhd00' + String(i + 10)}})).status, 200, 'reminder ' + i);   // many per install
   for (let i = 0; i < 16; i++) assert.equal((await call(db, 'PUT', '/v1/schedule', {inst, now: T0 + i * 120_000, body: coach({id: 'coach' + String(i).padStart(4, '0')})})).status, 200, 'coach ' + i);
   assert.equal((await call(db, 'PUT', '/v1/schedule', {inst, now: T0 + 40 * 120_000, body: coach({id: 'coach9999'})})).status, 409, '17th coach reminder refused');
 });

@@ -1,13 +1,13 @@
-// ADHD push backend: scheduling, idempotency, cancellation generation, 8/10 min bound, retry/retire, API auth + validation.
+// ADHD push backend: scheduling, idempotency, cancellation generation, no send cap, retry/retire, API auth + validation.
 // Runs the real SQL from schema.sql on node:sqlite behind a tiny D1-shaped shim.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {DatabaseSync} from 'node:sqlite';
 import {handle} from '../backend/adhd-push/src/api.mjs';
-import {runCron, nextDue, finish, MAX_SENDS} from '../backend/adhd-push/src/core.mjs';
+import {runCron, nextDue, finish} from '../backend/adhd-push/src/core.mjs';
 
-const schema = ['0001_init', '0002_revision', '0003_app'].map(m => readFileSync(new URL('../backend/adhd-push/migrations/' + m + '.sql', import.meta.url), 'utf8')).join(';');
+const schema = ['0001_init', '0002_revision', '0003_app', '0004_multi'].map(m => readFileSync(new URL('../backend/adhd-push/migrations/' + m + '.sql', import.meta.url), 'utf8')).join(';');
 function d1() {
   const s = new DatabaseSync(':memory:'); s.exec(schema);
   return {raw: s, prepare: sql => {
@@ -259,13 +259,14 @@ test('no follow-ups opted in: stage 0 only', async () => {
   assert.equal(sent.length, 1);
 });
 
-test('24 sends per occurrence per rolling 10 min (stage 4 needs 20)', async () => {
+test('NO per-occurrence send cap: every 30 s alert is sent (24+ in a row); intended vs effective times are logged', async () => {
   const db = d1(), {occ} = await setup(db), {sent, deps} = sender(), due = dueOf(occ);
-  const iid = db.raw.prepare('SELECT id FROM installs').get().id;
-  for (let i = 0; i < MAX_SENDS; i++)
-    db.raw.prepare("INSERT INTO attempts(id,occ_id,install_id,gen,stage,kind,status,planned_at,sent_at) VALUES(?,?,?,0,0,'main','sent',?,?)").run('old' + i, occ, iid, due, due + 1000 * i);
-  await runCron(db, due + 30_000, deps); assert.equal(sent.length, 0);          // 24 sends already inside the window
-  await runCron(db, due + 11 * 60_000, deps); assert.equal(sent.length, 1);     // window rolled over
+  let last = [];
+  for (let i = 0; i < 40; i++) last = await runCron(db, due + 540_000 + i * 30_000 + 400, deps);
+  assert.ok(sent.length >= 40, 'sent ' + sent.length);                                            // stage 3 at 540 s then 39 repeats, nothing withheld
+  assert.deepEqual(last.map(x => x.lateMs), [400]);                                                // effective - intended, per attempt
+  const row = db.raw.prepare('SELECT intended_at, sent_at FROM attempts WHERE stage=5').get();
+  assert.equal(row.intended_at, due + 600_000); assert.equal(row.sent_at, due + 600_400);
 });
 
 test('provider errors: 429 backs off (Retry-After), 410 retires the subscription, 403 is not retried', async () => {
