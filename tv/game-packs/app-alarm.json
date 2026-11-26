@@ -4,13 +4,13 @@
   "assets": [
     {
       "url": "/apps/alarm/app.css",
-      "revision": "abf4f1837efdfda421c0c386c802cfa2cece1bee",
-      "bytes": 4576
+      "revision": "eeb682fcbdebb08067ad9074da9056daf367993e",
+      "bytes": 5230
     },
     {
       "url": "/apps/alarm/app.mjs",
-      "revision": "1e594c3da7aad70073934738c7d0c367a8560050",
-      "bytes": 12018
+      "revision": "3dbb603ae7b3487a94e62771d5f9ffbbd6723146",
+      "bytes": 12082
     },
     {
       "url": "/apps/alarm/board.js",
@@ -49,8 +49,8 @@
     },
     {
       "url": "/apps/alarm/index.html",
-      "revision": "4f865cf73c534add2c26cc88d283eb308c6dc9a1",
-      "bytes": 3310
+      "revision": "34c0cf51027a0ae979de3e6e85ea034c78bed28f",
+      "bytes": 3503
     },
     {
       "url": "/apps/alarm/manifest.webmanifest",
@@ -224,5 +224,5 @@
     }
   ],
   "fontStyles": [],
-  "version": "3c2027ce83d59ebc8bce"
+  "version": "a385697bf6bd3a785fbc"
 }

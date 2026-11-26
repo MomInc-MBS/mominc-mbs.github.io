@@ -124,6 +124,7 @@ export async function mountAlarm(host) {
   root.querySelector('.al-x').onclick = closeSet;
   const offPlay = A.on('playChallenge', e => startAlarm(e?.occId));
   const faceNow = () => { const u = faceUrl((R.snapshot(S, now()).stage || 1) - 1), i = $('face'); if (i.getAttribute('src') !== u) i.src = u; };
+  const offSnap = A.on('snapshot', () => faceNow());
 
   // ---- emergency stop on the game screen: a deliberate ~3 s hold (pointer or Enter/Space), at every stage ---------------------------
   const stopOcc = async id => { if (!id) return; await A.emergencyStop(id); bar(); faceNow(); if (mode === 'alarm' && boundOcc === id) endAlarmBoard(); };
@@ -178,7 +179,7 @@ export async function mountAlarm(host) {
   if (disposed) comp.dispose();
   else if (!comp.ok) { root.classList.add('flat'); size(300, 260); }
   return {dispose() {
-    disposed = true; clearInterval(timer); removeEventListener('keydown', onKey); removeEventListener('pointerdown', unlock); removeEventListener('pointerup', onUp); removeEventListener('pointercancel', onUp); clearTimeout(holdT); offPlay();
+    disposed = true; clearInterval(timer); removeEventListener('keydown', onKey); removeEventListener('pointerdown', unlock); removeEventListener('pointerup', onUp); removeEventListener('pointercancel', onUp); clearTimeout(holdT); offPlay(); offSnap();
     document.removeEventListener('visibilitychange', onVis); navigator.serviceWorker?.removeEventListener('message', onSW);
     ui?.destroy(); link.remove(); A.dispose(); comp?.dispose(); host.replaceChildren();
   }};

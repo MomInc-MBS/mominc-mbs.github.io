@@ -38,7 +38,13 @@
 .al-x{position:fixed;top:calc(env(safe-area-inset-top) + 8px);right:8px;z-index:70;width:48px;height:48px;min-height:48px;padding:0;display:grid;place-items:center;border-radius:50%;background:rgba(18,8,31,.94);border:1px solid #9579c9;color:#f6ecff}
 .al-x svg{width:26px;height:26px}
 .al-menurow{display:flex;gap:14px;justify-content:center;margin-top:6px}.al-menurow button{width:72px;height:64px;min-height:64px;padding:0;display:grid;place-items:center}.al-menurow svg{width:34px;height:34px}
-.al-play header button{width:48px;min-height:40px;display:grid;place-items:center}.al-play header svg{width:22px;height:22px}.al-mode svg{width:22px;height:22px;vertical-align:middle}
+.al-play header button{width:48px;min-height:48px;display:grid;place-items:center}.al-play header svg{width:22px;height:22px}.al-mode svg{width:22px;height:22px;vertical-align:middle}
 .al-bar button{display:grid;place-items:center;min-height:56px}.al-bar svg{width:34px;height:34px}
 .vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
 .al-hold{position:relative}
+/* the shell's global button look (lime blocks, thick borders) must not leak into the wordless settings: reset at the lowest specificity so ui/settings.css classes still win */
+:where(.ms) button{background:none;border:0;box-shadow:none;border-radius:0;padding:0;min-height:0;text-transform:none;font-weight:inherit;line-height:inherit;letter-spacing:normal}
+:where(.ms) button:active{transform:none;box-shadow:none}
+:where(.ms) button:focus-visible{outline:3px solid #ffd36e;outline-offset:2px}
+.ms-top{right:64px!important}
+#stage #back{min-width:48px;min-height:48px;display:grid;place-items:center;padding:0}#stage #back svg{width:24px;height:24px}
