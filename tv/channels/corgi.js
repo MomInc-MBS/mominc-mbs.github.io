@@ -96,6 +96,7 @@ export default {
     // and deliberately NOT ctx.mode, whose own default would swallow the documentElement fallback below.
     // Endless is selected ONLY by the installed-app host handing in ctx.endless; no query string or story mode can reach it.
     const ENDLESS = !!(ctx && ctx.endless);
+    const APP_OFFER = "MOM'S: CORGI ENDLESS UNLOCKED — INSTALL THE APP";
     const MODE = ENDLESS ? "live" : ((((ctx.mbs && ctx.mbs.mode) || document.documentElement.dataset.mode ||
         (document.documentElement.classList.contains("mbs-live") ? "live" : "public")) === "live") ? "live" : "public");
     cc.dataset.mode = MODE;
@@ -976,6 +977,7 @@ export default {
           byId('ccTally').textContent = 'PAGES 3/3';
           read.textContent = 'You lift your head. You leave the break room. You are back in the office. Your file is open.';
           markLevelComplete(LEVELS.length - 1);
+          const app = document.createElement('a'); app.className = 'cc-app'; app.href = '/apps/corgi/'; app.textContent = APP_OFFER; map.prepend(app);
         });
         map.append(leave); leave.focus();
       }
@@ -2408,9 +2410,9 @@ export default {
         const cut = document.createElement('section'); cut.id = 'ccTransition'; cut.hidden = true;
         cut.style.cssText = 'position:absolute;inset:0;z-index:100;display:none;place-content:center;text-align:center;color:#f3e4c7;padding:25px;font:18px Georgia';
         cut.setAttribute('role', 'dialog'); cut.setAttribute('aria-label', 'Break room');
-        cut.innerHTML = '<h2></h2><p aria-live="polite"></p><button type="button" hidden>TURN ON THE FLASHLIGHT</button>';
+        cut.innerHTML = '<h2></h2><p aria-live="polite"></p><button type="button" hidden>TURN ON THE FLASHLIGHT</button><a class="cc-app" href="/apps/corgi/" hidden>' + APP_OFFER + '</a>';
         viewport.append(cut);
-        const cutTitle = cut.querySelector('h2'), cutText = cut.querySelector('p'), cutButton = cut.querySelector('button');
+        const cutTitle = cut.querySelector('h2'), cutText = cut.querySelector('p'), cutButton = cut.querySelector('button'), cutApp = cut.querySelector('.cc-app');
         ctx.on(cut, 'pointerdown', e => e.stopPropagation());
         ctx.on(cut, 'keydown', e => { if (e.key.toLowerCase() === 'f' && roomCut?.stage === 'wake') leaveCut(); e.stopPropagation(); });
 
@@ -2465,7 +2467,7 @@ export default {
         function openCut(stage) {
           transitioning = true; cc.dataset.transition = 'true'; setFlash(false); stopInput();
           monster.visible = false; ghost.active = false; creep.active = false;
-          cut.hidden = false; cut.style.display = 'grid'; cut.style.background = 'transparent'; cutButton.hidden = true;
+          cut.hidden = false; cut.style.display = 'grid'; cut.style.background = 'transparent'; cutButton.hidden = true; cutApp.hidden = true;
           promptEl.classList.remove('show');
           roomCut = {stage,start:performance.now(),...getBreakRoomSet()};
         }
@@ -2543,6 +2545,7 @@ export default {
               q.stage = 'done'; cutTitle.textContent = 'BREAK TIME IS OVER.';
               cutText.textContent = 'You made it out. The pages are safe. Your file is open.';
               cutButton.textContent = 'BACK TO THE OFFICE'; cutButton.hidden = false; cutButton.focus();
+              cutApp.hidden = false;   // every finish re-offers the download; the tour's reward card only fires the first time
               markLevelComplete(LEVELS.length - 1);
             }
           } else if (q.stage === 'done') { renderer.render(scene,camera); }
