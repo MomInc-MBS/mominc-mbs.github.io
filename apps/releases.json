@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "updated": "2026-11-26T06:32:57Z",
+  "updated": "2026-11-26T07:24:06Z",
   "apps": [
     {
       "id": "alarm",
@@ -21,14 +21,14 @@
       "platform": "android",
       "channel": "stable",
       "package": "com.mominc.littleboyfriend",
-      "versionCode": 16,
-      "versionName": "0.15.0",
+      "versionCode": 17,
+      "versionName": "0.16.0",
       "minSdk": 29,
-      "url": "https://mominc.online/download/lilboyfriend/moms-little-boyfriend-live-0.15.0.apk",
-      "sha256": "abac44f0d539ec641a7b2dd3c91d856af9b9d357fc03932102e608255f27ddc8",
+      "url": "https://mominc.online/download/lilboyfriend/moms-little-boyfriend-live-0.16.0.apk",
+      "sha256": "9ffc0fc7f41642a50ebdc9fb40032bf6c9cf1ab78f951fc9b7dd084345fde189",
       "signerSha256": "8cd664e6f34dbb8bf0560552a40f2eab661ea65c497a9ee970810acaeaefa753",
-      "size": 96705411,
-      "notes": "MOM's: Little Boyfriend LIVE. Version 0.15.0."
+      "size": 96783857,
+      "notes": "MOM's: Little Boyfriend LIVE. Version 0.16.0."
     },
     {
       "id": "fuel",
