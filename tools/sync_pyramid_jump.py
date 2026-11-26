@@ -22,6 +22,8 @@ ME_START = "ctx.shadowColor=flat?'transparent':'#49334b88';ctx.shadowOffsetX=3*s
 ME_END = "ctx.fillStyle='#2a1838';ctx.beginPath();ctx.arc(ex+er*.5,ey,er*.8,0,7);ctx.fill();"
 BEST = "const s=Math.floor(maxY/10);if(s>best){best=s;try{localStorage.setItem(BEST_KEY,String(best));}catch{/* ignore */}}"
 
+P11_NOTE = 'P11 hold: option `hold` (Promise); until it settles the loop draws but never steps, keys and tilt are ignored, phase is paused'
+
 # game.mjs patches: (id, anchor, replacement). Keep each one small; they are the whole local adapter diff.
 PATCHES = [
     ('P1 shell-phase import', "'../shell-phase.mjs'", "'./shell-phase.mjs'"),
@@ -40,6 +42,14 @@ PATCHES = [
     ('P9 MOM site: steer by arrow keys and leaning only (Ian 24 Nov), no touch/mouse halves',
      "canvas.addEventListener('pointerdown',pd);addEventListener('pointerup',pu);addEventListener('pointercancel',pu);", ""),
     ('P10 label matches the controls', "Tilt or touch the left and right sides to steer.", "Lean your phone or use the left and right arrow keys to steer."),
+    # P11 hold (Coach Jump pyramid menu): option `hold` (a Promise). Until it settles the loop keeps drawing but never steps (no physics,
+    # timer or score), keys and tilt are ignored and the shell phase reads 'paused'. Without `hold` every line behaves as before.
+    ('P11 hold: option', "paperImg=null,onEnd=null}={}", "paperImg=null,onEnd=null,hold=null}={}"),
+    ('P11 hold: gate tilt', " const unsub=subscribeMotion?.(sample=>{tilt=",
+     " let holding=!!hold;hold?.then(()=>{holding=false},()=>{holding=false});\n const unsub=subscribeMotion?.(sample=>{if(holding)return;tilt="),
+    ('P11 hold: gate keys', "const key=down=>e=>{const k=e.key;", "const key=down=>e=>{if(holding)return;const k=e.key;"),
+    ('P11 hold: gate phase', "shell.phase(!dead&&!won&&!document.hidden?'active':'paused')", "shell.phase(!dead&&!won&&!holding&&!document.hidden?'active':'paused')"),
+    ('P11 hold: gate step', "if(!document.hidden){step(dt);draw();}", "if(!document.hidden){if(!holding)step(dt);draw();}"),
 ]
 
 
@@ -53,7 +63,7 @@ def main():
     source = ap.parse_args().source
     commit = git(source, 'rev-parse', 'HEAD')
     OUT.mkdir(parents=True, exist_ok=True)
-    record = {'origin': 'MYR5 Coach repo (local worktree ' + source + ')', 'commit': commit, 'files': {}, 'patches': [p[0] for p in PATCHES]}
+    record = {'origin': 'MYR5 Coach repo (local worktree ' + source + ')', 'commit': commit, 'files': {}, 'patches': list(dict.fromkeys(P11_NOTE if p[0].startswith('P11') else p[0] for p in PATCHES))}
     for src, name in FILES:
         text = subprocess.check_output(['git', '-C', source, 'show', f'{commit}:{src}']).decode('utf-8').replace('\r\n', '\n')
         record['files'][name] = {'from': src, 'blob': git(source, 'rev-parse', f'{commit}:{src}')}

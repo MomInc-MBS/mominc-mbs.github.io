@@ -15,7 +15,7 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 EXT = {'.html', '.js', '.mjs', '.css', '.json', '.png', '.jpg', '.jpeg', '.webp',
-       '.svg', '.gif', '.mp4', '.webm', '.mp3', '.wav', '.glb', '.obj', '.mtl',
+       '.svg', '.gif', '.mp4', '.webm', '.mp3', '.m4a', '.wav', '.glb', '.obj', '.mtl',
        '.ttf', '.woff', '.woff2', '.webmanifest'}
 TEXT = {'.html', '.js', '.mjs', '.css', '.json', '.mtl', '.webmanifest'}
 SLUGS = ['mominc', 'girlfriend', 'lilboyfriend', 'corgi', 'djscratch', 'fuel', 'goon', 'war-room', 'armie', 'handborne', 'misinformation']

@@ -39,8 +39,8 @@
     },
     {
       "url": "/apps/shell.mjs",
-      "revision": "772bc89901827e4198cb4b39cb8b046cd6f484d1",
-      "bytes": 5811
+      "revision": "c57a83a2eae3cd6d8ebdde1ca91a6f7b943566df",
+      "bytes": 5958
     },
     {
       "url": "/apps/update.mjs",
@@ -291,5 +291,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap"
   ],
-  "version": "039e101c4484f1a2d9e2"
+  "version": "c79b6969a70a2a5401cb"
 }

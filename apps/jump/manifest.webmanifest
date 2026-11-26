@@ -2,7 +2,7 @@
   "id": "/apps/jump/",
   "name": "MOM's: Coach Jump",
   "short_name": "MOM's: Coach Jump",
-  "description": "Jump a random paper Coach up the pyramid. A new Coach every round.",
+  "description": "Pick your paper Coach, colors and song, then jump up the pyramid.",
   "start_url": "/apps/jump/",
   "scope": "/apps/jump/",
   "display": "standalone",

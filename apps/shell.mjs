@@ -75,9 +75,10 @@ function boot(cfg) {
   if (editor && $('models')) import(cfg.models).then(m => { refreshModels = m.renderModels($('models'), cfg.optional); });
   if (cfg.settingsModule) import(cfg.settingsModule).then(m => m.setupSettings?.({root: settings, refresh}));
   refresh(); show(menu);
-  watchUpdates({busy: () => !stage.hidden});   // a game, the editor or the alarm computer on screen = not a safe moment to reload
+  watchUpdates({busy: () => cfg.options?.autostart === true ? false : !stage.hidden});   // autostart:true apps (Coach Jump) report a run themselves via window.MOM_APP_BUSY
+  // a game, the editor or the alarm computer on screen = not a safe moment to reload
   // Opt-in (apps.json web.options.autostart = query name): a notification tap lands inside the app, not on the menu.
   const auto = cfg.options?.autostart;
-  if (auto && new URLSearchParams(location.search).has(auto)) $('start').click();
+  if (auto === true || (auto && new URLSearchParams(location.search).has(auto))) $('start').click();
 }
 boot(JSON.parse($('app-config').textContent));
