@@ -170,15 +170,16 @@ li{{margin:.4em 0}}
 </div>
 <h2>How it works</h2>
 <ul>
-<li><strong>Start</strong> is free play on the 2048 board. It never touches your alarm.</li>
-<li><strong>Set alarm</strong>: pick a time, an optional task (like "Eat breakfast") and one of four intense sounds. Tap &#9654; to hear one first. Nothing is armed until you confirm <strong>Arm this alarm</strong>, and every change asks again.</li>
+<li>Settings are pictures and numbers, with MOM's face behind them: happy at the first alert, upset at the second, furious after that.</li>
+<li>Add as many reminders as you like. Each one can repeat daily, on chosen weekdays, on set dates or every few days, skip the next one, and follow your phone's time zone or a fixed one.</li>
+<li>Pick one of four intense sounds for each stage (tap &#9654; to hear it), plus volume ramp, vibration pattern, spoken title, torch and screen flash. Nothing is armed until you tap the check.</li>
 <li>The first alert comes at the due time, then after 5 minutes, 3 minutes and 1 minute, then every 30 seconds until you finish the game (a win or no moves left) or use Settings to turn it off or change the time. Settings unlocks once the 30-second phase starts.</li>
-<li>Finish by playing the 2048 board to the end: a real loss (no moves left) or a win dismisses the alarm. You do not need a 2048 tile. A full board that can still move does not count.</li>
-<li>An emergency <strong>hold-to-stop</strong> always works, at any time. It ends today's alarm as not done; tomorrow's stays set.</li>
-<li>It asks for notification access and, on some Android versions, exact alarms and full-screen alarms. Without them it tells you it is not armed.</li>
-<li>No account, no internet permission, nothing leaves the phone. Force Stop or uninstall switches it off, because Android says so.</li>
+<li>Finish by playing the 2048 board to the end: a real loss (no moves left) or a win dismisses the alarm. You do not need a 2048 tile. A full board that can still move does not count. You can also add a QR code, NFC tag, shake or quick puzzle as another way out.</li>
+<li>An emergency <strong>hold-to-stop</strong> always works, at any time. It ends that alarm as not done; the next one stays set.</li>
+<li>It rings over the lock screen, works after a reboot before you unlock, and has a home-screen widget, a Quick Settings tile and shortcuts. It asks for each permission only when you turn on the thing that needs it.</li>
+<li>No account. It goes online only to check for updates and, if you set one, to call your own smart-home link. Force Stop or uninstall switches it off, because Android says so.</li>
 </ul>
-<p><small>Install: open the downloaded file and allow installs from this source when Android asks. Already have 0.1.0? This installs over it and keeps your alarm time; open Set alarm once to pick a sound. This is a development build signed with a debug key, so it cannot update a future release build.</small></p>
+<p><small>Install: open the downloaded file and allow installs from this source when Android asks. Already have an older version? This installs over it and keeps your alarms. This is a development build signed with a debug key, so it cannot update a future release build.</small></p>
 </main>
 </body>
 </html>
@@ -206,6 +207,25 @@ def apk_records():
         size = apk.stat().st_size
         out.append(dict(a, sha=digest, file=apk.name, size=f'{size / 1048576:.1f} MB'))
     return out
+
+
+PLAY = '<svg class="g" viewBox="0 0 24 24" aria-hidden="true" focusable="false" style="width:36px;height:36px;fill:currentColor"><path d="M7 4l13 8-13 8z"/></svg>'
+GEAR = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" style="width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>'
+BACK = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" style="fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>'
+
+
+def wordless(ui):
+    """apps.json "wordless": true -> icon/digit-only menu (names move to aria-label / visually hidden; .vh lives in the app's CSS)."""
+    swaps = [('<h1>', '<h1 class="vh">'), ('<p class="tag">', '<p class="tag vh">', 1),
+             (re.compile(r'<p class="tag">[^<]*: <strong id="best">'), '<p class="tag num">&#9733; <strong id="best">'),
+             ('<button id="start" type="button">Start</button>', f'<button id="start" type="button" aria-label="Start">{PLAY}</button>'),
+             ('<button id="open-settings" class="alt" type="button">Settings</button>', f'<button id="open-settings" class="alt" type="button" aria-label="Settings">{GEAR}</button>'),
+             ('<button id="back" class="alt" type="button">← Menu</button>', f'<button id="back" class="alt" type="button" aria-label="Menu">{BACK}</button>')]
+    for old, new, *n in swaps:
+        out = old.sub(new, ui, count=1) if hasattr(old, 'sub') else ui.replace(old, new, *(n or [1]))
+        assert out != ui, f'wordless: no match for {old}'
+        ui = out
+    return ui
 
 
 def write_apk(a):
@@ -262,6 +282,8 @@ def main():
                        reset_panel=panels, tilt_panel=TILT if 'tilt' in a['settings'] else '',
                        saved='saved hand' if editor else 'saved best',
                        host='<div id="host"><div id="root"></div></div>' if editor else '<div id="host"></div>')
+        if a.get('wordless'):
+            ui = wordless(ui)
         gate = ''
         if a.get('browserPlay') is False:
             # Download-only: a plain browser sees install steps and the finite story link; the play UI sits in an inert template

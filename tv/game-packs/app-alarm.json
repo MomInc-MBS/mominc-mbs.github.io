@@ -49,8 +49,8 @@
     },
     {
       "url": "/apps/alarm/index.html",
-      "revision": "34c0cf51027a0ae979de3e6e85ea034c78bed28f",
-      "bytes": 3503
+      "revision": "d7a3ac52509fd8e60f4fed4b8d94ddf5455e793a",
+      "bytes": 3380
     },
     {
       "url": "/apps/alarm/manifest.webmanifest",
@@ -224,5 +224,5 @@
     }
   ],
   "fontStyles": [],
-  "version": "c216fdba97aeaf20530c"
+  "version": "700646d1283e19361ccd"
 }

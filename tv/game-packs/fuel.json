@@ -134,8 +134,8 @@
     },
     {
       "url": "/apps/apps.json",
-      "revision": "3d5d068992d70b27095fecfcc6e62732dbdcd58b",
-      "bytes": 9902
+      "revision": "5e3eca563f45e566cee48756db619ab9363e0203",
+      "bytes": 9928
     },
     {
       "url": "/apps/corgi/app.css",
@@ -703,5 +703,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "51bfed1bf212be0800cd"
+  "version": "fe7804ea41b6125cebd7"
 }

@@ -234,10 +234,10 @@
       "shortName": "MOM's: 2048",
       "description": "An alarm with four horrible horns (Air Horn, Train Horn, Industrial Buzzer, Crash Alarm) that keeps after you until you finish a real game of 2048, inside the Coach Reminders mini-computer.",
       "status": "ready",
-      "version": "0.3.0",
+      "version": "0.4.0",
       "build": "QA debug build (debug-signed)",
       "package": "com.mominc.alarm2048",
-      "apk": "download/alarm/moms-2048-reminder-0.3.0.apk",
+      "apk": "download/alarm/moms-2048-reminder-0.4.0.apk",
       "href": "/download/alarm/",
       "card": "games/goon/index.html",
       "minAndroid": "10",
@@ -255,7 +255,8 @@
         "icons": ["icon-192.png", "icon-512.png", "icon-maskable-512.png"],
         "settings": ["reset-best"],
         "pack": "app-alarm",
-        "browserPlay": true
+        "browserPlay": true,
+        "wordless": true
       }
     },
     {
