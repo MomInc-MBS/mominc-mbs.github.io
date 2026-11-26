@@ -15,6 +15,17 @@
 
 /* face + chrome */
 .ms-face{position:absolute;z-index:0;left:50%;top:calc(env(safe-area-inset-top) + 2px);width:var(--fw);aspect-ratio:400/460;transform:translateX(-50%);pointer-events:none}
+/* ===== MOM3 hero: three-head ASCII bust collapses to a pinned eye strip (vars set by settings.js layout(); --p = scroll progress 0..1) ===== */
+.ms-bg{position:absolute;z-index:0;left:0;right:0;top:0;height:calc(var(--hero-top,60px) + var(--hexp,0px) - var(--p,1) * var(--d,0px));background:#07030d;border-bottom:1px solid rgba(149,121,201,.5);pointer-events:none}
+.ms-probe{position:absolute;visibility:hidden;pointer-events:none;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+.ms-face{top:var(--hero-top,60px);width:var(--fw2,var(--fw));height:calc(var(--hexp,0px) - var(--p,1) * var(--d,0px));aspect-ratio:auto;overflow:hidden;z-index:1}
+.ms-face>canvas{transform:translateY(calc(var(--p,1) * var(--ey,0px) * -1));will-change:transform}
+.ms-hero-sp{height:calc(var(--d,0px) - 4px);flex:none;pointer-events:none}
+.ms-panel::after{content:"";flex:none;height:var(--tail,0px)}
+.ms-hero .ms-panel{background:none;border:0;border-radius:0;padding-top:0}
+.ms-hero .ms-panel .card{background:#140923}
+.ms-stop{top:calc(env(safe-area-inset-top) + 2px);transform:scale(.64);transform-origin:100% 0}
+/* ===== end MOM3 hero ===== */
 .ms-top{position:absolute;z-index:3;top:calc(env(safe-area-inset-top) + 8px);left:8px;right:8px;display:flex;gap:8px;align-items:center;pointer-events:none}
 .ms-top>*{pointer-events:auto}
 .chip{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:4px 12px;border-radius:999px;background:rgba(18,8,31,.92);border:1px solid var(--line);color:var(--ink)}
