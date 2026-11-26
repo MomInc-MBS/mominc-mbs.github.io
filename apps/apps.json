@@ -64,12 +64,12 @@
       "type": "apk",
       "name": "MOM's: Little Boyfriend LIVE",
       "shortName": "MOM's: Lil Boyfriend",
-      "description": "The Little Boyfriend LIVE camera for Android, version 0.15.0: tilt-shift miniature looks, memory universe, everything stays on your phone.",
+      "description": "The Little Boyfriend LIVE camera for Android, version 0.16.0: tilt-shift miniature looks, top-down shots, slow motion, memory universe, everything stays on your phone.",
       "status": "ready",
-      "version": "0.15.0",
+      "version": "0.16.0",
       "package": "com.mominc.littleboyfriend",
-      "href": "/download/lilboyfriend/moms-little-boyfriend-live-0.15.0.apk",
-      "sha256": "/download/lilboyfriend/moms-little-boyfriend-live-0.15.0.apk.sha256",
+      "href": "/download/lilboyfriend/moms-little-boyfriend-live-0.16.0.apk",
+      "sha256": "/download/lilboyfriend/moms-little-boyfriend-live-0.16.0.apk.sha256",
       "landing": "/games/lilboyfriend/"
     },
     {
