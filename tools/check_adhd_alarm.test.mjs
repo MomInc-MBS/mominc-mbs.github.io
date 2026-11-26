@@ -334,6 +334,10 @@ test('app-wide face URLs and stage mapping', () => {
 test('a phone time-zone change re-plans a device-zone reminder; a live occurrence is never moved', () => {
   const s = armed({time: '12:05'});                                                                    // device zone UTC
   assert.equal(R.reconcile(s, T0, {deviceZone: 'Asia/Tokyo'}).runs[A].next.due, Date.UTC(2026, 10, 26, 3, 5));   // 12:05 Tokyo = 03:05Z, already past today
+  const moved = R.reconcile(s, T0, {deviceZone: 'Asia/Tokyo'});
+  assert.equal(reminderOf(moved, A).tz.zone, 'Asia/Tokyo'); assert.ok(moved.outbox.some(o => o.k === 'schedule' && o.id === A));   // the server is told the new zone
+  const fx = saveReminder(emptyState(), rec({confirmed: {rev: 1, at: 1}}), T0).state, kept = R.reconcile(fx, T0, {deviceZone: 'Asia/Tokyo'});
+  assert.equal(reminderOf(kept, A).tz.zone, 'UTC'); assert.equal(kept.runs[A].next.due, fx.runs[A].next.due);                              // fixed zone never follows the phone
   const r = ring().s, still = R.reconcile(r, occ(r).due + 5000, {deviceZone: 'Asia/Tokyo'});
   assert.equal(still.runs[A].occ.due, occ(r).due); assert.equal(still.runs[A].occ.status, 'ACTIVE');
 });

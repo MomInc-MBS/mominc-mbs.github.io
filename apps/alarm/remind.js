@@ -142,7 +142,11 @@ export function removeReminder(state, id, now) {
 /** Recompute pending occurrences (after load, import, or a phone time-zone change). Never touches a live occurrence. */
 export function reconcile(state, now, opts) {
   const s = copy(state);
-  for (const r of s.reminders) { const run = runOf(s, r.id), z = zoneNow(opts); if (isArmed(r) && (!run.next || (r.tz.mode === 'device' && run.next.zone !== z))) plan(s, r, now, opts); }
+  for (const r of s.reminders) {
+    const run = runOf(s, r.id), z = zoneNow(opts);
+    if (r.tz.mode === 'device' && r.tz.zone !== z) { r.tz = {...r.tz, zone: z}; s.outbox = queue(s.outbox, {k: 'schedule', id: r.id}); }   // the server follows the phone's last reported zone
+    if (isArmed(r) && (!run.next || (r.tz.mode === 'device' && run.next.zone !== z))) plan(s, r, now, opts);
+  }
   for (const id of Object.keys(s.runs)) if (!reminderOf(s, id)) delete s.runs[id];
   return s;
 }
