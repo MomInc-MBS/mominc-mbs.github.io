@@ -1,0 +1,3626 @@
+{
+ "attempts": [
+  {
+   "adapter_sha256": null,
+   "admission": null,
+   "card_sha256": "a5bd6f9edbb7f2e4a6e2c15a50d4a263cd3e50277c19b6af197f744be4b0b9c0",
+   "environment": null,
+   "exp_id": null,
+   "license": "MIT",
+   "n": 0,
+   "refunded": true,
+   "rejection": "WHEELHOUSE_TOO_LARGE: WHEELHOUSE_TOO_LARGE: download directory passed 157286400 bytes; the container was removed",
+   "repo": "fazliddindehkanoff/face-match",
+   "results": null,
+   "retry_of": null,
+   "revision": "b58468a9c45bdee0725c0f1acd11599f9d9eb6c8",
+   "state": "REJECTED"
+  },
+  {
+   "adapter_sha256": null,
+   "admission": null,
+   "card_sha256": "da793a660ed2e239a586904c3bee8d41071282ed62989acd7d5721331e62801f",
+   "environment": {
+    "id": "sha256:c3b522d253acff18d055389835d24ba926b8480cc82b20fc7a5b1764dbca9452",
+    "image_tar_sha256": "3e39fd697ad074c8dc78fe171e68841b5dbd1825e408e377146abad7e6d558c0",
+    "lock_sha256": "b60d0131db87dbce9706d28721f5acd19917e4545fb096d9e9c1af5f45c945d5",
+    "optional": [],
+    "optional_skipped": [],
+    "packages": [
+     "PIL",
+     "imha"
+    ],
+    "vendored_tree_sha256": "f384b945be27fd3d70f1ba79718e6d674f66aadd5955f8aa9016b18b62f5eece"
+   },
+   "exp_id": "d-8a53d5b33dda6d7f9991",
+   "license": "BSD-2-Clause",
+   "n": 1,
+   "refunded": false,
+   "rejection": "NO_QUALIFYING_CANDIDATE: 3 distinct proposals evaluated, none passed",
+   "repo": "ericbn/imha",
+   "results": {
+    "baselines": {
+     "scripted": {
+      "candidate_sha256": "240b7f1e02a70696ff674905b988793d3aa07485ace177185d5cb408c9e08cab",
+      "label": "hand-written",
+      "n": 24,
+      "pass_count": 1,
+      "receipt_path": "receipt-scripted_baseline-240b7f1e02a7.json",
+      "receipt_sha256": "d069644ea1bbaa324a413c1ee02456644131e4d5d99ab66fb908900a4c2c6859",
+      "verdict": "FAIL"
+     },
+     "unchanged_hive": {
+      "basis": "planner returned 0 steps for the gap",
+      "n": 24,
+      "pass_count": 0
+     }
+    },
+    "ledger": {
+     "calls": 3,
+     "container_runs": 4,
+     "estimated_tokens": false,
+     "in_tokens": 9747,
+     "out_tokens": 1640,
+     "proposals": 3,
+     "wall_s": 40.125
+    },
+    "proposals": [
+     {
+      "acceptance": null,
+      "dev": {
+       "n": 6,
+       "pass_count": 1
+      },
+      "feedback": "case two-copies-and-one-other: expected {\"groups\":[{\"id\":\"g001\",\"keeper\":\"IMG_4862.PNG\",\"members\":[\"DSC_8774-final.jpeg\",\"IMG_4862.PNG\",\"Logo final_4995-final.png\",\"holiday_1959-final.png\"]},{\"id\":\"g002\",\"keeper\":\"asset_4524-final.png\",\"members\":[\"asset_4524-final.png\",\"photo_1278.png\"]}],\"schema\":\"image-match-manifest-v1\",\"singletons\":[] got {\"groups\":[{\"id\":\"g001\",\"keeper\":\"IMG_4862.PNG\",\"member",
+      "files": {
+       "cand": "cand-8ca8fb400f8816bb986bf24b2691938d085e35f0fce9bde17857f12aeb85914f.py",
+       "reply": "reply-1.txt"
+      },
+      "n": 1,
+      "sha256": "8ca8fb400f8816bb986bf24b2691938d085e35f0fce9bde17857f12aeb85914f",
+      "static": []
+     },
+     {
+      "acceptance": null,
+      "dev": {
+       "n": 6,
+       "pass_count": 1
+      },
+      "feedback": "case two-copies-and-one-other: expected {\"groups\":[{\"id\":\"g001\",\"keeper\":\"IMG_4862.PNG\",\"members\":[\"DSC_8774-final.jpeg\",\"IMG_4862.PNG\",\"Logo final_4995-final.png\",\"holiday_1959-final.png\"]},{\"id\":\"g002\",\"keeper\":\"asset_4524-final.png\",\"members\":[\"asset_4524-final.png\",\"photo_1278.png\"]}],\"schema\":\"image-match-manifest-v1\",\"singletons\":[] got {\"groups\":[{\"id\":\"g001\",\"keeper\":\"IMG_4862.PNG\",\"member",
+      "files": {
+       "cand": "cand-21b3ff1f277604cae7852161b1b751c6f4dd65a012a6051ecb58bca910903bcb.py",
+       "reply": "reply-2.txt"
+      },
+      "n": 2,
+      "sha256": "21b3ff1f277604cae7852161b1b751c6f4dd65a012a6051ecb58bca910903bcb",
+      "static": []
+     },
+     {
+      "acceptance": null,
+      "dev": {
+       "n": 6,
+       "pass_count": 1
+      },
+      "feedback": "case two-copies-and-one-other: expected {\"groups\":[{\"id\":\"g001\",\"keeper\":\"IMG_4862.PNG\",\"members\":[\"DSC_8774-final.jpeg\",\"IMG_4862.PNG\",\"Logo final_4995-final.png\",\"holiday_1959-final.png\"]},{\"id\":\"g002\",\"keeper\":\"asset_4524-final.png\",\"members\":[\"asset_4524-final.png\",\"photo_1278.png\"]}],\"schema\":\"image-match-manifest-v1\",\"singletons\":[] got {\"groups\":[{\"id\":\"g001\",\"keeper\":\"IMG_4862.PNG\",\"member",
+      "files": {
+       "cand": "cand-57f9c6ef9fef79d593409a348f655282cc6994784b4a0e793629dcb768e63a26.py",
+       "reply": "reply-3.txt"
+      },
+      "n": 3,
+      "sha256": "57f9c6ef9fef79d593409a348f655282cc6994784b4a0e793629dcb768e63a26",
+      "static": []
+     }
+    ],
+    "reason": "3 distinct proposals evaluated, none passed",
+    "receipt": null,
+    "state": "NO_QUALIFYING_CANDIDATE"
+   },
+   "retry_of": null,
+   "revision": "b9f3890418058022943d7d11abf93cc671e115e0",
+   "state": "FAILED"
+  },
+  {
+   "adapter_sha256": null,
+   "admission": null,
+   "card_sha256": "da793a660ed2e239a586904c3bee8d41071282ed62989acd7d5721331e62801f",
+   "environment": {
+    "id": "sha256:c3b522d253acff18d055389835d24ba926b8480cc82b20fc7a5b1764dbca9452",
+    "image_tar_sha256": "3e39fd697ad074c8dc78fe171e68841b5dbd1825e408e377146abad7e6d558c0",
+    "lock_sha256": "b60d0131db87dbce9706d28721f5acd19917e4545fb096d9e9c1af5f45c945d5",
+    "optional": [],
+    "optional_skipped": [],
+    "packages": [
+     "PIL",
+     "imha"
+    ],
+    "vendored_tree_sha256": "f384b945be27fd3d70f1ba79718e6d674f66aadd5955f8aa9016b18b62f5eece"
+   },
+   "exp_id": "d-6e64efe8d6321768beed",
+   "license": "BSD-2-Clause",
+   "n": 2,
+   "refunded": false,
+   "rejection": "NO_QUALIFYING_CANDIDATE: 3 distinct proposals evaluated, none passed",
+   "repo": "ericbn/imha",
+   "results": {
+    "baselines": {
+     "scripted": {
+      "candidate_sha256": "240b7f1e02a70696ff674905b988793d3aa07485ace177185d5cb408c9e08cab",
+      "label": "hand-written",
+      "n": 24,
+      "pass_count": 0,
+      "receipt_path": "receipt-scripted_baseline-240b7f1e02a7.json",
+      "receipt_sha256": "1dacadc3500987e0a7b28f883a3cd4ab084920dc6108683dfb5a84a34053ce43",
+      "verdict": "FAIL"
+     },
+     "unchanged_hive": {
+      "basis": "planner returned 0 steps for the gap",
+      "n": 24,
+      "pass_count": 0
+     }
+    },
+    "ledger": {
+     "calls": 3,
+     "container_runs": 5,
+     "estimated_tokens": false,
+     "in_tokens": 10981,
+     "out_tokens": 2734,
+     "proposals": 3,
+     "wall_s": 46.875
+    },
+    "proposals": [
+     {
+      "acceptance": null,
+      "dev": {
+       "n": 6,
+       "pass_count": 1
+      },
+      "feedback": "case two-copies-and-one-other: expected {\"groups\":[{\"id\":\"g001\",\"keeper\":\"IMG_4862.PNG\",\"members\":[\"DSC_8774-final.jpeg\",\"IMG_4862.PNG\",\"Logo final_4995-final.png\",\"holiday_1959-final.png\"]},{\"id\":\"g002\",\"keeper\":\"asset_4524-final.png\",\"members\":[\"asset_4524-final.png\",\"photo_1278.png\"]}],\"schema\":\"image-match-manifest-v1\",\"singletons\":[] got {\"groups\":[{\"id\":\"g001\",\"keeper\":\"IMG_4862.PNG\",\"member",
+      "files": {
+       "cand": "cand-27a91de7634f5b9072299297ecf9cab4400a76f34da5b0ca04eaf1b63b425dc4.py",
+       "reply": "reply-1.txt"
+      },
+      "n": 1,
+      "sha256": "27a91de7634f5b9072299297ecf9cab4400a76f34da5b0ca04eaf1b63b425dc4",
+      "static": []
+     },
+     {
+      "acceptance": null,
+      "dev": {
+       "n": 6,
+       "pass_count": 5
+      },
+      "feedback": "case three-pictures: expected {\"groups\":[{\"id\":\"g001\",\"keeper\":\"asset_9237.png\",\"members\":[\"IMG_1922 copy.jpg\",\"asset_9237.png\"]},{\"id\":\"g002\",\"keeper\":\"screenshot_7385.png\",\"members\":[\"banner_2941-final.PNG\",\"screenshot_7385.png\"]}],\"schema\":\"image-match-manifest-v1\",\"singletons\":[\"screenshot_8282-final.PNG\"]} got {\"groups\":[{\"id\":\"g001\",\"keeper\":\"asset_9237.png\",\"members\":[\"IMG_1922 copy.jpg\",\"a",
+      "files": {
+       "cand": "cand-80cf4b21d84fe2fb04b3da2e4502ca01e3e130dd5f75df006414e28bcb5391c1.py",
+       "reply": "reply-2.txt"
+      },
+      "n": 2,
+      "sha256": "80cf4b21d84fe2fb04b3da2e4502ca01e3e130dd5f75df006414e28bcb5391c1",
+      "static": []
+     },
+     {
+      "acceptance": {
+       "candidate_sha256": "42f711268c1d839e6bcd08a647ed05ccb5a5431c7018952a0eba63df8e469f7f",
+       "n": 24,
+       "pass_count": 20,
+       "receipt_sha256": "7223e97ebb2b3015f0259d8d1a65058732c44751d8e7c03a4dc4191a4b17547c",
+       "verdict": "FAIL"
+      },
+      "dev": {
+       "n": 6,
+       "pass_count": 6
+      },
+      "feedback": "it passed all dev cases but failed 4 of 24 hidden acceptance cases (details withheld)",
+      "files": {
+       "cand": "cand-42f711268c1d839e6bcd08a647ed05ccb5a5431c7018952a0eba63df8e469f7f.py",
+       "reply": "reply-3.txt"
+      },
+      "n": 3,
+      "sha256": "42f711268c1d839e6bcd08a647ed05ccb5a5431c7018952a0eba63df8e469f7f",
+      "static": []
+     }
+    ],
+    "reason": "3 distinct proposals evaluated, none passed",
+    "receipt": null,
+    "state": "NO_QUALIFYING_CANDIDATE"
+   },
+   "retry_of": 1,
+   "revision": "b9f3890418058022943d7d11abf93cc671e115e0",
+   "state": "FAILED"
+  },
+  {
+   "adapter_sha256": "5d5a6fbd3fc356dd1d8519940097d6c06bbd8e083d4512429d59763cea3f2bb8",
+   "admission": {
+    "cap_id": "image.asset-match",
+    "rerun_receipt_sha256": "22493c69a2ab1fb042856a366f31a64bca20a47638cc7b524fac0913b3304e6a",
+    "statement_sha": "e1cf727225bb49ebac77450cbd7e3a824cf35f24e32f4d55a422d1eee7bdb283",
+    "version": 1
+   },
+   "card_sha256": "da793a660ed2e239a586904c3bee8d41071282ed62989acd7d5721331e62801f",
+   "environment": {
+    "id": "sha256:c3b522d253acff18d055389835d24ba926b8480cc82b20fc7a5b1764dbca9452",
+    "image_tar_sha256": "3e39fd697ad074c8dc78fe171e68841b5dbd1825e408e377146abad7e6d558c0",
+    "lock_sha256": "b60d0131db87dbce9706d28721f5acd19917e4545fb096d9e9c1af5f45c945d5",
+    "optional": [],
+    "optional_skipped": [],
+    "packages": [
+     "PIL",
+     "imha"
+    ],
+    "vendored_tree_sha256": "f384b945be27fd3d70f1ba79718e6d674f66aadd5955f8aa9016b18b62f5eece"
+   },
+   "exp_id": "d-fb99ae68c014e81647db",
+   "license": "BSD-2-Clause",
+   "n": 3,
+   "refunded": false,
+   "rejection": null,
+   "repo": "ericbn/imha",
+   "results": {
+    "baselines": {
+     "scripted": {
+      "candidate_sha256": "240b7f1e02a70696ff674905b988793d3aa07485ace177185d5cb408c9e08cab",
+      "label": "hand-written",
+      "n": 24,
+      "pass_count": 1,
+      "receipt_path": "receipt-scripted_baseline-240b7f1e02a7.json",
+      "receipt_sha256": "9b862481380a6b02d8fe729e5cad873fa9720c8c82a0ed58d0d27b7e0a94ff4b",
+      "verdict": "FAIL"
+     },
+     "unchanged_hive": {
+      "basis": "planner returned 0 steps for the gap",
+      "n": 24,
+      "pass_count": 0
+     }
+    },
+    "ledger": {
+     "calls": 2,
+     "container_runs": 5,
+     "estimated_tokens": false,
+     "in_tokens": 6741,
+     "out_tokens": 1721,
+     "proposals": 2,
+     "wall_s": 36.17200000000594
+    },
+    "proposals": [
+     {
+      "acceptance": {
+       "candidate_sha256": "186b458985fbe580cd5eee96bbb5edae3ed5f262b3f8b9cbdbbaddacdfacd0f0",
+       "n": 24,
+       "pass_count": 23,
+       "receipt_sha256": "ba55cfababf40f98908870d8074ad306cdf008a00c427ee672e2fe03e9b4f506",
+       "verdict": "FAIL"
+      },
+      "dev": {
+       "n": 6,
+       "pass_count": 6
+      },
+      "feedback": "it passed all dev cases but failed 1 of 24 hidden acceptance cases (details withheld)",
+      "files": {
+       "cand": "cand-186b458985fbe580cd5eee96bbb5edae3ed5f262b3f8b9cbdbbaddacdfacd0f0.py",
+       "reply": "reply-1.txt"
+      },
+      "n": 1,
+      "sha256": "186b458985fbe580cd5eee96bbb5edae3ed5f262b3f8b9cbdbbaddacdfacd0f0",
+      "static": []
+     },
+     {
+      "acceptance": {
+       "candidate_sha256": "5d5a6fbd3fc356dd1d8519940097d6c06bbd8e083d4512429d59763cea3f2bb8",
+       "n": 24,
+       "pass_count": 24,
+       "receipt_sha256": "bd1f40083ff4a72ce31163d896d2f0843286ba861715f5dce78fdf06d06c764a",
+       "verdict": "PASS"
+      },
+      "dev": {
+       "n": 6,
+       "pass_count": 6
+      },
+      "feedback": "it passed all dev cases but failed 0 of 24 hidden acceptance cases (details withheld)",
+      "files": {
+       "cand": "cand-5d5a6fbd3fc356dd1d8519940097d6c06bbd8e083d4512429d59763cea3f2bb8.py",
+       "reply": "reply-2.txt"
+      },
+      "n": 2,
+      "sha256": "5d5a6fbd3fc356dd1d8519940097d6c06bbd8e083d4512429d59763cea3f2bb8",
+      "static": []
+     }
+    ],
+    "reason": "independent evaluator PASS; awaiting admission",
+    "receipt": {
+     "candidate_sha256": "5d5a6fbd3fc356dd1d8519940097d6c06bbd8e083d4512429d59763cea3f2bb8",
+     "n": 24,
+     "pass_count": 24,
+     "path": "receipt-candidate-5d5a6fbd3fc3.json",
+     "receipt_sha256": "bd1f40083ff4a72ce31163d896d2f0843286ba861715f5dce78fdf06d06c764a",
+     "verdict": "PASS"
+    },
+    "state": "CANDIDATE_PASSED"
+   },
+   "retry_of": 2,
+   "revision": "b9f3890418058022943d7d11abf93cc671e115e0",
+   "state": "PASSED"
+  }
+ ],
+ "budget": {
+  "attempts": 3,
+  "builds": 3,
+  "container_runs": 24,
+  "github_requests": 30,
+  "inspect": 8,
+  "max_out_tokens": 4096,
+  "max_prompt_tokens": 8000,
+  "model_calls": 16,
+  "stage_rejects": 3,
+  "wall_s": 2400
+ },
+ "completed_at": "2026-11-26T16:42:49+00:00",
+ "contract": {
+  "capability_id": "image.asset-match",
+  "sha256": "88c9f5b707e8ed9a51552bb0b595357e240705179f198a319bfba53bb1f42919"
+ },
+ "cost_note": "local model, no paid calls",
+ "cost_usd": 0.0,
+ "executed_models": [
+  "openai/gpt-oss-20b"
+ ],
+ "fixture_author": "conductor-side agent, not the owner (independent of any adapter and of every candidate tool)",
+ "gap_key": "operator/gap/6c3f99834d9f7881",
+ "inspected": [
+  {
+   "card_sha256": "6130ae69a6c25bc0f5e6753d8e8c6bb47a1444b43ffaf7029479914b999a2aeb",
+   "license": "MIT",
+   "meta": {
+    "license_spdx": "MIT",
+    "pushed_at": "2025-10-03T16:36:39Z",
+    "size_kb": 7,
+    "stars": 2
+   },
+   "pre_score": {
+    "best_pos": {
+     "perceptual hash image matching": 0
+    },
+    "license_spdx": "MIT",
+    "n_queries": 1,
+    "overlap": 7,
+    "overlap_terms": [
+     "image",
+     "match",
+     "images",
+     "tool",
+     "tell",
+     "they",
+     "matching"
+    ],
+    "pos_score": 1.0,
+    "pushed_at": "2025-10-03T16:36:39Z",
+    "queries": [
+     "perceptual hash image matching"
+    ],
+    "rank": 0,
+    "relevance": 6.5,
+    "score": 6.4921,
+    "size_kb": 7,
+    "size_penalty": 0.0079,
+    "stars": 2
+   },
+   "rejection": "NO_IMPORTABLE_PACKAGE",
+   "repo": "Imranch4/image-similarity-checker",
+   "revision": "189504a23d911bee1e375837ebea73c6375db0b0"
+  },
+  {
+   "card_sha256": "a5bd6f9edbb7f2e4a6e2c15a50d4a263cd3e50277c19b6af197f744be4b0b9c0",
+   "license": "MIT",
+   "meta": {
+    "license_spdx": "MIT",
+    "pushed_at": "2025-01-14T22:14:07Z",
+    "size_kb": 12,
+    "stars": 2
+   },
+   "pre_score": {
+    "best_pos": {
+     "image similarity python library": 7
+    },
+    "license_spdx": "MIT",
+    "n_queries": 1,
+    "overlap": 6,
+    "overlap_terms": [
+     "image",
+     "match",
+     "images",
+     "tool",
+     "matching",
+     "matches"
+    ],
+    "pos_score": 0.125,
+    "pushed_at": "2025-01-14T22:14:07Z",
+    "queries": [
+     "image similarity python library"
+    ],
+    "rank": 1,
+    "relevance": 5.125,
+    "score": 5.1116,
+    "size_kb": 12,
+    "size_penalty": 0.0134,
+    "stars": 2
+   },
+   "rejection": null,
+   "repo": "fazliddindehkanoff/face-match",
+   "revision": "b58468a9c45bdee0725c0f1acd11599f9d9eb6c8"
+  },
+  {
+   "card_sha256": "0dbf900e396424e1e36670227ef48d95cc8cea5afd2cce175b97f22c74063a89",
+   "license": "MIT",
+   "meta": {
+    "license_spdx": "MIT",
+    "pushed_at": "2023-05-15T09:30:50Z",
+    "size_kb": 134,
+    "stars": 423
+   },
+   "pre_score": {
+    "best_pos": {
+     "near-duplicate": 0
+    },
+    "license_spdx": "MIT",
+    "n_queries": 1,
+    "overlap": 2,
+    "overlap_terms": [
+     "duplicate",
+     "near"
+    ],
+    "pos_score": 1.0,
+    "pushed_at": "2023-05-15T09:30:50Z",
+    "queries": [
+     "near-duplicate"
+    ],
+    "rank": 2,
+    "relevance": 4.0,
+    "score": 3.8581,
+    "size_kb": 134,
+    "size_penalty": 0.1419,
+    "stars": 423
+   },
+   "rejection": "COMPILED_OR_SDIST_ONLY: needs a build step, wheels-only staging cannot install it",
+   "repo": "seomoz/simhash-py",
+   "revision": "cb966253b5ad7a056b3bc9a5d24a4c9ca8153fb8"
+  },
+  {
+   "card_sha256": "5fb6c93bbe09e1622fb1d1f873261738fa0cb607f59f7de440dce8fceab40a58",
+   "license": "MIT",
+   "meta": {
+    "license_spdx": "MIT",
+    "pushed_at": "2024-01-25T06:46:08Z",
+    "size_kb": 26,
+    "stars": 1
+   },
+   "pre_score": {
+    "best_pos": {
+     "imagehash python package": 2
+    },
+    "license_spdx": "MIT",
+    "n_queries": 1,
+    "overlap": 3,
+    "overlap_terms": [
+     "image",
+     "images",
+     "duplicate"
+    ],
+    "pos_score": 0.3333,
+    "pushed_at": "2024-01-25T06:46:08Z",
+    "queries": [
+     "imagehash python package"
+    ],
+    "rank": 3,
+    "relevance": 3.8333,
+    "score": 3.8044,
+    "size_kb": 26,
+    "size_penalty": 0.0289,
+    "stars": 1
+   },
+   "rejection": "NO_IMPORTABLE_PACKAGE",
+   "repo": "error201/SimilarImages",
+   "revision": "459239febc73cfa6d41c6fbd9160c08fad2c0f39"
+  },
+  {
+   "card_sha256": "2862dacc0ae6509e63f2e04958eb16c35da140c27a0fd7ba0526f6d18b0634c7",
+   "license": "MIT",
+   "meta": {
+    "license_spdx": "MIT",
+    "pushed_at": "2024-01-21T15:29:45Z",
+    "size_kb": 63,
+    "stars": 49
+   },
+   "pre_score": {
+    "best_pos": {
+     "image similarity python library": 1
+    },
+    "license_spdx": "MIT",
+    "n_queries": 1,
+    "overlap": 2,
+    "overlap_terms": [
+     "image",
+     "images"
+    ],
+    "pos_score": 0.5,
+    "pushed_at": "2024-01-21T15:29:45Z",
+    "queries": [
+     "image similarity python library"
+    ],
+    "rank": 4,
+    "relevance": 3.5,
+    "score": 3.4311,
+    "size_kb": 63,
+    "size_penalty": 0.0689,
+    "stars": 49
+   },
+   "rejection": "COMPILED_OR_SDIST_ONLY: needs a build step, wheels-only staging cannot install it",
+   "repo": "ChsHub/SSIM-PIL",
+   "revision": "7f1b3eba4144b8ada5ac63585ce324610f5b025c"
+  },
+  {
+   "card_sha256": "da793a660ed2e239a586904c3bee8d41071282ed62989acd7d5721331e62801f",
+   "license": "BSD-2-Clause",
+   "meta": {
+    "license_spdx": "BSD-2-Clause",
+    "pushed_at": "2026-10-20T23:00:30Z",
+    "size_kb": 579,
+    "stars": 0
+   },
+   "pre_score": {
+    "best_pos": {
+     "imagehash python package": 1
+    },
+    "license_spdx": "BSD-2-Clause",
+    "n_queries": 1,
+    "overlap": 2,
+    "overlap_terms": [
+     "image",
+     "images"
+    ],
+    "pos_score": 0.5,
+    "pushed_at": "2026-10-20T23:00:30Z",
+    "queries": [
+     "imagehash python package"
+    ],
+    "rank": 5,
+    "relevance": 3.5,
+    "score": 2.9828,
+    "size_kb": 579,
+    "size_penalty": 0.5172,
+    "stars": 0
+   },
+   "rejection": null,
+   "repo": "ericbn/imha",
+   "revision": "b9f3890418058022943d7d11abf93cc671e115e0"
+  },
+  {
+   "card_sha256": "06835278a280bf39bbaa05839af1c28549d9b494b25f4f9d6ac7236737881272",
+   "license": "MIT",
+   "meta": {
+    "license_spdx": "MIT",
+    "pushed_at": "2015-03-11T22:27:28Z",
+    "size_kb": 154,
+    "stars": 32
+   },
+   "pre_score": {
+    "best_pos": {
+     "near-duplicate": 9
+    },
+    "license_spdx": "MIT",
+    "n_queries": 1,
+    "overlap": 2,
+    "overlap_terms": [
+     "duplicate",
+     "near"
+    ],
+    "pos_score": 0.1,
+    "pushed_at": "2015-03-11T22:27:28Z",
+    "queries": [
+     "near-duplicate"
+    ],
+    "rank": 6,
+    "relevance": 3.1,
+    "score": 2.9383,
+    "size_kb": 154,
+    "size_penalty": 0.1617,
+    "stars": 32
+   },
+   "rejection": null,
+   "repo": "seomoz/simhash-cluster",
+   "revision": "729baafb9942cd53acc6ac430f7d5388ca5f4f63"
+  },
+  {
+   "card_sha256": "451dc175e6397975ec364b63452aa827f6b9e71cd2b531b1515aa559cab02877",
+   "license": "MIT",
+   "meta": {
+    "license_spdx": "MIT",
+    "pushed_at": "2021-07-23T16:30:50Z",
+    "size_kb": 196,
+    "stars": 24
+   },
+   "pre_score": {
+    "best_pos": {
+     "near-duplicate": 7
+    },
+    "license_spdx": "MIT",
+    "n_queries": 1,
+    "overlap": 2,
+    "overlap_terms": [
+     "duplicate",
+     "near"
+    ],
+    "pos_score": 0.125,
+    "pushed_at": "2021-07-23T16:30:50Z",
+    "queries": [
+     "near-duplicate"
+    ],
+    "rank": 7,
+    "relevance": 3.125,
+    "score": 2.9229,
+    "size_kb": 196,
+    "size_penalty": 0.2021,
+    "stars": 24
+   },
+   "rejection": null,
+   "repo": "parkr/near-dup-detection",
+   "revision": "92ecfba04300cdf6fafcbf7072247ad03b7710c7"
+  }
+ ],
+ "ledger": {
+  "attempts": 1,
+  "builds": 1,
+  "container_runs": 14,
+  "cost_usd": 0.0,
+  "github_requests": 0,
+  "in_tokens": 28049,
+  "model_calls": 9,
+  "out_tokens": 6129,
+  "wall_s": 335.5310000000027
+ },
+ "model": "openai/gpt-oss-20b",
+ "network_error": null,
+ "opened_at": "2026-11-26T16:37:13+00:00",
+ "outcome": {
+  "executed": true,
+  "exp_id": "d-fb99ae68c014e81647db",
+  "goal_state": "STEP_FAILED",
+  "repo": "ericbn/imha",
+  "revision": "b9f3890418058022943d7d11abf93cc671e115e0",
+  "tier": "github"
+ },
+ "persistence": {
+  "d-6e64efe8d6321768beed": {
+   "dir": "discovery/d-6e64efe8d6321768beed",
+   "expected": 6,
+   "missing": []
+  },
+  "d-8a53d5b33dda6d7f9991": {
+   "dir": "discovery/d-8a53d5b33dda6d7f9991",
+   "expected": 6,
+   "missing": []
+  },
+  "d-fb99ae68c014e81647db": {
+   "dir": "discovery/d-fb99ae68c014e81647db",
+   "expected": 4,
+   "missing": []
+  }
+ },
+ "reason": "goal ended STEP_FAILED: step s1 (image.asset-match): VERIFICATION_FAILED - Independent check FAIL; output withheld",
+ "require_new_external": true,
+ "run_id": "a-50fd79e8e8351702f895",
+ "schema": "hive-g2-run-v1",
+ "search": {
+  "candidates": [
+   {
+    "archived": false,
+    "description": ":crystal_ball: Scalable reverse image search built on Kubernetes and Elasticsearch",
+    "fork": false,
+    "full_name": "dsys/match",
+    "hits": [
+     {
+      "pos": 0,
+      "q": "match images"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": null,
+    "open_issues": 17,
+    "pushed_at": "2020-07-25T18:01:58Z",
+    "queries": [
+     "match images"
+    ],
+    "size_kb": 628,
+    "stars": 1263,
+    "topics": [
+     "elasticsearch",
+     "image-signatures",
+     "kubernetes-cluster"
+    ],
+    "url": "https://github.com/dsys/match"
+   },
+   {
+    "archived": false,
+    "description": "\ud83c\udf87 Quickly search over billions of images",
+    "fork": false,
+    "full_name": "rhsimplex/image-match",
+    "hits": [
+     {
+      "pos": 1,
+      "q": "match images"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": null,
+    "open_issues": 64,
+    "pushed_at": "2022-12-06T11:29:04Z",
+    "queries": [
+     "match images"
+    ],
+    "size_kb": 1574,
+    "stars": 2976,
+    "topics": [
+     "image-analysis",
+     "image-signatures",
+     "python",
+     "search"
+    ],
+    "url": "https://github.com/rhsimplex/image-match"
+   },
+   {
+    "archived": false,
+    "description": "\ud83e\udd17 image matching webui",
+    "fork": false,
+    "full_name": "Vincentqyw/image-matching-webui",
+    "hits": [
+     {
+      "pos": 2,
+      "q": "match images"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": "Apache-2.0",
+    "open_issues": 7,
+    "pushed_at": "2026-11-23T17:17:45Z",
+    "queries": [
+     "match images"
+    ],
+    "size_kb": 255867,
+    "stars": 1314,
+    "topics": [
+     "aspanformer",
+     "deep-learning",
+     "feature-matching",
+     "gradio",
+     "image-matching",
+     "keypoint-matching",
+     "kornia",
+     "lightglue",
+     "loftr",
+     "pose-estimation",
+     "sift",
+     "superglue",
+     "superpoint",
+     "topicfm",
+     "visual-localization"
+    ],
+    "url": "https://github.com/Vincentqyw/image-matching-webui"
+   },
+   {
+    "archived": false,
+    "description": "A PyTorch library for implementing flow matching algorithms, featuring continuous and discrete flow matching implementations. It includes practical examples for both text and image modalities.",
+    "fork": false,
+    "full_name": "facebookresearch/flow_matching",
+    "hits": [
+     {
+      "pos": 3,
+      "q": "match images"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": null,
+    "open_issues": 30,
+    "pushed_at": "2026-01-05T21:56:33Z",
+    "queries": [
+     "match images"
+    ],
+    "size_kb": 7629,
+    "stars": 4863,
+    "topics": [],
+    "url": "https://github.com/facebookresearch/flow_matching"
+   },
+   {
+    "archived": false,
+    "description": "automatic color-grading and image data augmentation",
+    "fork": false,
+    "full_name": "hahnec/color-matcher",
+    "hits": [
+     {
+      "pos": 4,
+      "q": "match images"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": "GPL-3.0",
+    "open_issues": 7,
+    "pushed_at": "2026-02-24T20:43:21Z",
+    "queries": [
+     "match images"
+    ],
+    "size_kb": 124542,
+    "stars": 715,
+    "topics": [
+     "augmentation",
+     "automatic",
+     "color",
+     "color-grading",
+     "colour",
+     "histogram",
+     "histogram-equalization",
+     "image",
+     "image-augmentation",
+     "kantorovich",
+     "match",
+     "matching",
+     "mkl",
+     "monge",
+     "photography",
+     "reinhard",
+     "stopmotion",
+     "transfer"
+    ],
+    "url": "https://github.com/hahnec/color-matcher"
+   },
+   {
+    "archived": false,
+    "description": "Multiview matching with deep-learning and hand-crafted local features for COLMAP and other SfM software. Supports high-resolution formats and images with rotations. Both CLI and GUI are supported.",
+    "fork": false,
+    "full_name": "3DOM-FBK/deep-image-matching",
+    "hits": [
+     {
+      "pos": 5,
+      "q": "match images"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": null,
+    "open_issues": 14,
+    "pushed_at": "2026-02-19T11:43:30Z",
+    "queries": [
+     "match images"
+    ],
+    "size_kb": 566871,
+    "stars": 559,
+    "topics": [
+     "aerial-photogrammetry",
+     "colmap",
+     "deep-learning",
+     "high-resolution-image",
+     "historical-images",
+     "image-matching",
+     "image-retrieval",
+     "keypoint-matching",
+     "keypoints",
+     "lightglue",
+     "local-feature-matching",
+     "loftr",
+     "multiview",
+     "photogrammetry",
+     "rotations",
+     "slam",
+     "structure-from-motion",
+     "superglue",
+     "terrestrial-photogrammetry"
+    ],
+    "url": "https://github.com/3DOM-FBK/deep-image-matching"
+   },
+   {
+    "archived": false,
+    "description": "Source code and datadset for \"Deep learning algorithm for feature matching of cross modality remote sensing images\"",
+    "fork": false,
+    "full_name": "lan-cz/cnn-matching",
+    "hits": [
+     {
+      "pos": 6,
+      "q": "match images"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": null,
+    "open_issues": 9,
+    "pushed_at": "2022-01-01T04:15:38Z",
+    "queries": [
+     "match images"
+    ],
+    "size_kb": 6616,
+    "stars": 202,
+    "topics": [],
+    "url": "https://github.com/lan-cz/cnn-matching"
+   },
+   {
+    "archived": false,
+    "description": "GIM: Learning Generalizable Image Matcher From Internet Videos (ICLR 2024 Spotlight)",
+    "fork": false,
+    "full_name": "xuelunshen/gim",
+    "hits": [
+     {
+      "pos": 7,
+      "q": "match images"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": "MIT",
+    "open_issues": 8,
+    "pushed_at": "2025-08-03T08:22:53Z",
+    "queries": [
+     "match images"
+    ],
+    "size_kb": 378288,
+    "stars": 914,
+    "topics": [
+     "camera-pose-estimation",
+     "image-matching"
+    ],
+    "url": "https://github.com/xuelunshen/gim"
+   },
+   {
+    "archived": false,
+    "description": "Face Detection,Template Matching , SURF , SIFT to detect features and keypoints in images .",
+    "fork": false,
+    "full_name": "vishalgolcha/ImageMatching",
+    "hits": [
+     {
+      "pos": 8,
+      "q": "match images"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": null,
+    "open_issues": 0,
+    "pushed_at": "2017-01-18T17:52:52Z",
+    "queries": [
+     "match images"
+    ],
+    "size_kb": 26098,
+    "stars": 64,
+    "topics": [],
+    "url": "https://github.com/vishalgolcha/ImageMatching"
+   },
+   {
+    "archived": false,
+    "description": "Using Deep learning to locate the Synthetic Aperture Radar(SAR) images to the counterpart of Optical images.",
+    "fork": false,
+    "full_name": "LiaoYun0x0/Feature-Matching-and-Position-Matching-between-Optical-and-SAR",
+    "hits": [
+     {
+      "pos": 9,
+      "q": "match images"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": "Apache-2.0",
+    "open_issues": 14,
+    "pushed_at": "2021-07-21T02:29:15Z",
+    "queries": [
+     "match images"
+    ],
+    "size_kb": 7350,
+    "stars": 59,
+    "topics": [],
+    "url": "https://github.com/LiaoYun0x0/Feature-Matching-and-Position-Matching-between-Optical-and-SAR"
+   },
+   {
+    "archived": false,
+    "description": "\ud83d\ude0e Finding duplicate images made easy!",
+    "fork": false,
+    "full_name": "idealo/imagededup",
+    "hits": [
+     {
+      "pos": 0,
+      "q": "duplicate images"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": "Apache-2.0",
+    "open_issues": 39,
+    "pushed_at": "2025-08-15T15:19:22Z",
+    "queries": [
+     "duplicate images"
+    ],
+    "size_kb": 23040,
+    "stars": 5688,
+    "topics": [
+     "computer-vision",
+     "e-commerce",
+     "hashing",
+     "idealo",
+     "image-deduplication",
+     "image-preprocessing",
+     "neural-network",
+     "python",
+     "pytorch"
+    ],
+    "url": "https://github.com/idealo/imagededup"
+   },
+   {
+    "archived": false,
+    "description": "A script to find and delete duplicate images using pHash.",
+    "fork": false,
+    "full_name": "philipbl/duplicate-images",
+    "hits": [
+     {
+      "pos": 1,
+      "q": "duplicate images"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": null,
+    "open_issues": 37,
+    "pushed_at": "2023-12-26T14:57:26Z",
+    "queries": [
+     "duplicate images"
+    ],
+    "size_kb": 11013,
+    "stars": 522,
+    "topics": [],
+    "url": "https://github.com/philipbl/duplicate-images"
+   },
+   {
+    "archived": false,
+    "description": "difPy - Python package for finding duplicate and similar images",
+    "fork": false,
+    "full_name": "elisemercury/Duplicate-Image-Finder",
+    "hits": [
+     {
+      "pos": 2,
+      "q": "duplicate images"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": "MIT",
+    "open_issues": 4,
+    "pushed_at": "2025-11-17T18:07:26Z",
+    "queries": [
+     "duplicate images"
+    ],
+    "size_kb": 29310,
+    "stars": 550,
+    "topics": [
+     "difpy",
+     "duplicate",
+     "find",
+     "images",
+     "pictures",
+     "python",
+     "similarity"
+    ],
+    "url": "https://github.com/elisemercury/Duplicate-Image-Finder"
+   },
+   {
+    "archived": false,
+    "description": "Repository to find Duplicate Images and Similar Images with the help of Python.",
+    "fork": false,
+    "full_name": "somil98/Duplicate-Remover",
+    "hits": [
+     {
+      "pos": 3,
+      "q": "duplicate images"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": null,
+    "open_issues": 5,
+    "pushed_at": "2024-05-13T21:32:48Z",
+    "queries": [
+     "duplicate images"
+    ],
+    "size_kb": 2,
+    "stars": 48,
+    "topics": [],
+    "url": "https://github.com/somil98/Duplicate-Remover"
+   },
+   {
+    "archived": false,
+    "description": "\ud83c\udfde\ud83c\udf09 Find and Delete Duplicate Images / Photos",
+    "fork": false,
+    "full_name": "magamig/duplicate-images-finder",
+    "hits": [
+     {
+      "pos": 4,
+      "q": "duplicate images"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": "MIT",
+    "open_issues": 3,
+    "pushed_at": "2024-08-30T23:53:06Z",
+    "queries": [
+     "duplicate images"
+    ],
+    "size_kb": 12461,
+    "stars": 92,
+    "topics": [
+     "computer-vision",
+     "duplicate-images",
+     "image-recognition",
+     "lowe",
+     "sift"
+    ],
+    "url": "https://github.com/magamig/duplicate-images-finder"
+   },
+   {
+    "archived": false,
+    "description": "duplicate photo finder for Immich - find and remove similar images",
+    "fork": false,
+    "full_name": "RazgrizHsu/immich-deduper",
+    "hits": [
+     {
+      "pos": 5,
+      "q": "duplicate images"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": "GPL-3.0",
+    "open_issues": 4,
+    "pushed_at": "2026-11-09T22:50:18Z",
+    "queries": [
+     "duplicate images"
+    ],
+    "size_kb": 34552,
+    "stars": 693,
+    "topics": [
+     "duplicate",
+     "duplicate-detection",
+     "duplicate-finder",
+     "immich",
+     "photo-deduplication",
+     "similar-images"
+    ],
+    "url": "https://github.com/RazgrizHsu/immich-deduper"
+   },
+   {
+    "archived": false,
+    "description": "Identifying and removing near-duplicate images using perceptual hashing.",
+    "fork": false,
+    "full_name": "knjcode/imgdupes",
+    "hits": [
+     {
+      "pos": 6,
+      "q": "duplicate images"
+     },
+     {
+      "pos": 2,
+      "q": "near-duplicate"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": null,
+    "open_issues": 13,
+    "pushed_at": "2026-07-21T12:35:40Z",
+    "queries": [
+     "duplicate images",
+     "near-duplicate"
+    ],
+    "size_kb": 948,
+    "stars": 395,
+    "topics": [
+     "dedupe",
+     "deduplicate",
+     "image",
+     "perceptual-hashes",
+     "perceptual-hashing"
+    ],
+    "url": "https://github.com/knjcode/imgdupes"
+   },
+   {
+    "archived": false,
+    "description": "Find equal or similar images in a directory containing (many) image files",
+    "fork": false,
+    "full_name": "lene/DuplicateImages",
+    "hits": [
+     {
+      "pos": 7,
+      "q": "duplicate images"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": null,
+    "open_issues": 1,
+    "pushed_at": "2026-11-21T08:09:27Z",
+    "queries": [
+     "duplicate images"
+    ],
+    "size_kb": 33003,
+    "stars": 52,
+    "topics": [],
+    "url": "https://github.com/lene/DuplicateImages"
+   },
+   {
+    "archived": false,
+    "description": "Fast Near-Duplicate Image Search and Delete using pHash, t-SNE and KDTree.",
+    "fork": false,
+    "full_name": "umbertogriffo/fast-near-duplicate-image-search",
+    "hits": [
+     {
+      "pos": 8,
+      "q": "duplicate images"
+     },
+     {
+      "pos": 1,
+      "q": "near-duplicate"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": "Apache-2.0",
+    "open_issues": 5,
+    "pushed_at": "2022-11-22T05:07:01Z",
+    "queries": [
+     "duplicate images",
+     "near-duplicate"
+    ],
+    "size_kb": 29862,
+    "stars": 163,
+    "topics": [
+     "computer-vision",
+     "duplicate-detection",
+     "duplicates-removed",
+     "hashing",
+     "image-deduplication",
+     "image-processing",
+     "kd-tree",
+     "kdtree",
+     "near-duplicate",
+     "nearest-neighbor-search",
+     "nearest-neighbors",
+     "perceptual-hashing",
+     "phash",
+     "t-sne"
+    ],
+    "url": "https://github.com/umbertogriffo/fast-near-duplicate-image-search"
+   },
+   {
+    "archived": false,
+    "description": "\u56fe\u7247\u67e5\u91cd\u3001\u56fe\u7247\u53bb\u91cd\u3001Find/Delete duplicated images",
+    "fork": false,
+    "full_name": "chinalu/imagedups",
+    "hits": [
+     {
+      "pos": 9,
+      "q": "duplicate images"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": "GPL-3.0",
+    "open_issues": 0,
+    "pushed_at": "2020-10-22T08:20:16Z",
+    "queries": [
+     "duplicate images"
+    ],
+    "size_kb": 25,
+    "stars": 110,
+    "topics": [
+     "deduplication",
+     "duplicate",
+     "duplicated-files",
+     "fdupes"
+    ],
+    "url": "https://github.com/chinalu/imagedups"
+   },
+   {
+    "archived": false,
+    "description": "Simhash and near-duplicate detection",
+    "fork": false,
+    "full_name": "seomoz/simhash-py",
+    "hits": [
+     {
+      "pos": 0,
+      "q": "near-duplicate"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": "MIT",
+    "open_issues": 11,
+    "pushed_at": "2023-05-15T09:30:50Z",
+    "queries": [
+     "near-duplicate"
+    ],
+    "size_kb": 134,
+    "stars": 423,
+    "topics": [],
+    "url": "https://github.com/seomoz/simhash-py"
+   },
+   {
+    "archived": true,
+    "description": "Locality Sensitive Hashing using MinHash in Python/Cython to detect near duplicate text documents",
+    "fork": false,
+    "full_name": "mattilyra/LSH",
+    "hits": [
+     {
+      "pos": 3,
+      "q": "near-duplicate"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": "MIT",
+    "open_issues": 14,
+    "pushed_at": "2023-06-11T08:03:23Z",
+    "queries": [
+     "near-duplicate"
+    ],
+    "size_kb": 525,
+    "stars": 290,
+    "topics": [
+     "cython",
+     "deduplication",
+     "duplicate-documents",
+     "lsh",
+     "minhash"
+    ],
+    "url": "https://github.com/mattilyra/LSH"
+   },
+   {
+    "archived": true,
+    "description": "Code for CVPR 2022 paper '3D Moments from Near-Duplicate Photos'",
+    "fork": false,
+    "full_name": "google-research/3d-moments",
+    "hits": [
+     {
+      "pos": 4,
+      "q": "near-duplicate"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": "Apache-2.0",
+    "open_issues": 4,
+    "pushed_at": "2022-08-30T03:06:08Z",
+    "queries": [
+     "near-duplicate"
+    ],
+    "size_kb": 24041,
+    "stars": 251,
+    "topics": [],
+    "url": "https://github.com/google-research/3d-moments"
+   },
+   {
+    "archived": false,
+    "description": "Near Duplicate Video Detection (Perceptual Video Hashing) - Get a 64-bit comparable hash-value for any video. ",
+    "fork": false,
+    "full_name": "akamhy/videohash",
+    "hits": [
+     {
+      "pos": 5,
+      "q": "near-duplicate"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": "MIT",
+    "open_issues": 21,
+    "pushed_at": "2024-07-12T22:43:13Z",
+    "queries": [
+     "near-duplicate"
+    ],
+    "size_kb": 5688,
+    "stars": 388,
+    "topics": [
+     "duplicate-detection",
+     "duplicate-video-finder",
+     "duplicate-videos",
+     "ffmpeg",
+     "find-similar-videos-by-content",
+     "ndvd",
+     "ndvr",
+     "near-duplicate-video",
+     "near-duplicate-video-clip-detection",
+     "python",
+     "video",
+     "video-deduplication",
+     "video-similarity-search",
+     "visual-claim"
+    ],
+    "url": "https://github.com/akamhy/videohash"
+   },
+   {
+    "archived": false,
+    "description": "Near-duplicate image detection using Locality Sensitive Hashing",
+    "fork": false,
+    "full_name": "mendesk/image-ndd-lsh",
+    "hits": [
+     {
+      "pos": 6,
+      "q": "near-duplicate"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": null,
+    "open_issues": 0,
+    "pushed_at": "2026-08-25T20:53:55Z",
+    "queries": [
+     "near-duplicate"
+    ],
+    "size_kb": 16840,
+    "stars": 75,
+    "topics": [
+     "detection",
+     "duplicate",
+     "image",
+     "locality-sensitive-hashing",
+     "lsh"
+    ],
+    "url": "https://github.com/mendesk/image-ndd-lsh"
+   },
+   {
+    "archived": false,
+    "description": "Near-Duplicate Detection in Python.",
+    "fork": false,
+    "full_name": "parkr/near-dup-detection",
+    "hits": [
+     {
+      "pos": 7,
+      "q": "near-duplicate"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": "MIT",
+    "open_issues": 3,
+    "pushed_at": "2021-07-23T16:30:50Z",
+    "queries": [
+     "near-duplicate"
+    ],
+    "size_kb": 196,
+    "stars": 24,
+    "topics": [],
+    "url": "https://github.com/parkr/near-dup-detection"
+   },
+   {
+    "archived": false,
+    "description": "CLI utility to find near duplicate images and remove all but the best copy.",
+    "fork": false,
+    "full_name": "markusressel/py-image-dedup",
+    "hits": [
+     {
+      "pos": 8,
+      "q": "near-duplicate"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": "AGPL-3.0",
+    "open_issues": 5,
+    "pushed_at": "2026-11-25T20:49:36Z",
+    "queries": [
+     "near-duplicate"
+    ],
+    "size_kb": 19690,
+    "stars": 172,
+    "topics": [
+     "dedup",
+     "deduplication",
+     "duplicate-detection",
+     "duplicate-images",
+     "find-duplicates",
+     "hacktoberfest",
+     "image-analysis",
+     "image-comparison",
+     "python",
+     "python-3",
+     "python3"
+    ],
+    "url": "https://github.com/markusressel/py-image-dedup"
+   },
+   {
+    "archived": false,
+    "description": "A cluster implementation of simhash near-duplicate detection",
+    "fork": false,
+    "full_name": "seomoz/simhash-cluster",
+    "hits": [
+     {
+      "pos": 9,
+      "q": "near-duplicate"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": "MIT",
+    "open_issues": 1,
+    "pushed_at": "2015-03-11T22:27:28Z",
+    "queries": [
+     "near-duplicate"
+    ],
+    "size_kb": 154,
+    "stars": 32,
+    "topics": [],
+    "url": "https://github.com/seomoz/simhash-cluster"
+   },
+   {
+    "archived": false,
+    "description": "Same old webscraper. The package is available on PyPi. Go ahead and try it out!",
+    "fork": false,
+    "full_name": "debdutgoswami/instagram-profile-picture",
+    "hits": [
+     {
+      "pos": 0,
+      "q": "same picture"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": "MIT",
+    "open_issues": 4,
+    "pushed_at": "2023-05-23T00:22:18Z",
+    "queries": [
+     "same picture"
+    ],
+    "size_kb": 7522,
+    "stars": 11,
+    "topics": [
+     "hacktoberfest",
+     "hacktoberfest2020",
+     "instagram",
+     "pypi",
+     "webscraping"
+    ],
+    "url": "https://github.com/debdutgoswami/instagram-profile-picture"
+   },
+   {
+    "archived": false,
+    "description": "Nicely crop photos with same photo as blurred background to fit the max 2048 x 2048 Instagram picture.",
+    "fork": false,
+    "full_name": "princefishthrower/instagramize",
+    "hits": [
+     {
+      "pos": 1,
+      "q": "same picture"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": null,
+    "open_issues": 0,
+    "pushed_at": "2025-07-01T04:58:17Z",
+    "queries": [
+     "same picture"
+    ],
+    "size_kb": 42229,
+    "stars": 4,
+    "topics": [],
+    "url": "https://github.com/princefishthrower/instagramize"
+   },
+   {
+    "archived": true,
+    "description": "A script to generate a profile picture and a banner that show the same image on Discord.",
+    "fork": false,
+    "full_name": "marie-bnl/discord-pfp-banner-generator",
+    "hits": [
+     {
+      "pos": 2,
+      "q": "same picture"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": "MIT",
+    "open_issues": 0,
+    "pushed_at": "2023-09-20T13:20:00Z",
+    "queries": [
+     "same picture"
+    ],
+    "size_kb": 375,
+    "stars": 10,
+    "topics": [],
+    "url": "https://github.com/marie-bnl/discord-pfp-banner-generator"
+   },
+   {
+    "archived": false,
+    "description": "Renames photos to the EXIF date in the same format as phones do",
+    "fork": false,
+    "full_name": "bentster/picture-renamer",
+    "hits": [
+     {
+      "pos": 3,
+      "q": "same picture"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": null,
+    "open_issues": 0,
+    "pushed_at": "2019-04-21T14:12:33Z",
+    "queries": [
+     "same picture"
+    ],
+    "size_kb": 3,
+    "stars": 2,
+    "topics": [],
+    "url": "https://github.com/bentster/picture-renamer"
+   },
+   {
+    "archived": false,
+    "description": "Super simple script that creates a post of a picture in a subreddit",
+    "fork": false,
+    "full_name": "MoritzFuchshofer/SameRedditPictureEveryDay",
+    "hits": [
+     {
+      "pos": 4,
+      "q": "same picture"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": null,
+    "open_issues": 0,
+    "pushed_at": "2019-06-21T12:49:22Z",
+    "queries": [
+     "same picture"
+    ],
+    "size_kb": 7,
+    "stars": 0,
+    "topics": [],
+    "url": "https://github.com/MoritzFuchshofer/SameRedditPictureEveryDay"
+   },
+   {
+    "archived": false,
+    "description": "Turn one hidden activation of Qwen3-VL into a picture with FLUX.2 [klein], no text in the image path, read back directly by the same model",
+    "fork": false,
+    "full_name": "SauersML/vlens",
+    "hits": [
+     {
+      "pos": 5,
+      "q": "same picture"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": "MIT",
+    "open_issues": 0,
+    "pushed_at": "2026-11-02T22:27:14Z",
+    "queries": [
+     "same picture"
+    ],
+    "size_kb": 34217,
+    "stars": 18,
+    "topics": [],
+    "url": "https://github.com/SauersML/vlens"
+   },
+   {
+    "archived": false,
+    "description": "",
+    "fork": false,
+    "full_name": "seoyoung1011/FindSamePicture",
+    "hits": [
+     {
+      "pos": 6,
+      "q": "same picture"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": null,
+    "open_issues": 0,
+    "pushed_at": "2020-12-01T10:23:08Z",
+    "queries": [
+     "same picture"
+    ],
+    "size_kb": 196,
+    "stars": 0,
+    "topics": [],
+    "url": "https://github.com/seoyoung1011/FindSamePicture"
+   },
+   {
+    "archived": false,
+    "description": "AI generated tool to find similar pictures in a directory and to rename them to form sequences",
+    "fork": false,
+    "full_name": "piotrcurious/same_picture_finder",
+    "hits": [
+     {
+      "pos": 7,
+      "q": "same picture"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": null,
+    "open_issues": 0,
+    "pushed_at": "2026-03-21T10:24:54Z",
+    "queries": [
+     "same picture"
+    ],
+    "size_kb": 12,
+    "stars": 0,
+    "topics": [],
+    "url": "https://github.com/piotrcurious/same_picture_finder"
+   },
+   {
+    "archived": true,
+    "description": "check if picture already saved in your dir",
+    "fork": false,
+    "full_name": "guan4tou2/check-same-picture",
+    "hits": [
+     {
+      "pos": 8,
+      "q": "same picture"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": null,
+    "open_issues": 0,
+    "pushed_at": "2021-09-11T11:27:09Z",
+    "queries": [
+     "same picture"
+    ],
+    "size_kb": 3,
+    "stars": 0,
+    "topics": [],
+    "url": "https://github.com/guan4tou2/check-same-picture"
+   },
+   {
+    "archived": false,
+    "description": "This project helps to detect the mathematical formula from the given picture and the same formula is extracted and converted into the latex code",
+    "fork": false,
+    "full_name": "Mukalingam/Mathematical_formula_Extractor",
+    "hits": [
+     {
+      "pos": 9,
+      "q": "same picture"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": "MIT",
+    "open_issues": 2,
+    "pushed_at": "2021-10-13T09:04:00Z",
+    "queries": [
+     "same picture"
+    ],
+    "size_kb": 18857,
+    "stars": 12,
+    "topics": [],
+    "url": "https://github.com/Mukalingam/Mathematical_formula_Extractor"
+   },
+   {
+    "archived": false,
+    "description": "This repository is mainly about comparing two images. The technique used is SSIM. i.e. Structural Similarity Index Measure  We use some of the inbuilt functions available in python's skimage library to measure the SSIM value. Along with SSIM we also measure the MSE ( Mean Square Error )  To know mor",
+    "fork": false,
+    "full_name": "aravindiiitb/python-compare-images",
+    "hits": [
+     {
+      "pos": 0,
+      "q": "image similarity python library"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": null,
+    "open_issues": 0,
+    "pushed_at": "2017-10-16T18:25:31Z",
+    "queries": [
+     "image similarity python library"
+    ],
+    "size_kb": 569,
+    "stars": 38,
+    "topics": [
+     "image-processing",
+     "images",
+     "python",
+     "scikit-image",
+     "ssim"
+    ],
+    "url": "https://github.com/aravindiiitb/python-compare-images"
+   },
+   {
+    "archived": false,
+    "description": "Structural similarity image comparison with compatibility to the python image library PIL.",
+    "fork": false,
+    "full_name": "ChsHub/SSIM-PIL",
+    "hits": [
+     {
+      "pos": 1,
+      "q": "image similarity python library"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": "MIT",
+    "open_issues": 4,
+    "pushed_at": "2024-01-21T15:29:45Z",
+    "queries": [
+     "image similarity python library"
+    ],
+    "size_kb": 63,
+    "stars": 49,
+    "topics": [],
+    "url": "https://github.com/ChsHub/SSIM-PIL"
+   },
+   {
+    "archived": false,
+    "description": "Compare images with the image-similarity-measure Python library",
+    "fork": false,
+    "full_name": "kirshiyin89/imagesimilarities",
+    "hits": [
+     {
+      "pos": 2,
+      "q": "image similarity python library"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": null,
+    "open_issues": 1,
+    "pushed_at": "2021-12-11T15:01:53Z",
+    "queries": [
+     "image similarity python library"
+    ],
+    "size_kb": 4,
+    "stars": 5,
+    "topics": [],
+    "url": "https://github.com/kirshiyin89/imagesimilarities"
+   },
+   {
+    "archived": false,
+    "description": "Image Similarity library for Python",
+    "fork": false,
+    "full_name": "doda-zz/similus",
+    "hits": [
+     {
+      "pos": 3,
+      "q": "image similarity python library"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": null,
+    "open_issues": 0,
+    "pushed_at": "2016-06-24T15:24:35Z",
+    "queries": [
+     "image similarity python library"
+    ],
+    "size_kb": 9,
+    "stars": 11,
+    "topics": [],
+    "url": "https://github.com/doda-zz/similus"
+   },
+   {
+    "archived": false,
+    "description": "A Python console application that calculates the similarity rate between 3 images. Using OpenCV and Matplotlib libraries.",
+    "fork": false,
+    "full_name": "jabrimehdi/image-similarity",
+    "hits": [
+     {
+      "pos": 4,
+      "q": "image similarity python library"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": null,
+    "open_issues": 0,
+    "pushed_at": "2021-10-16T13:45:59Z",
+    "queries": [
+     "image similarity python library"
+    ],
+    "size_kb": 23,
+    "stars": 3,
+    "topics": [
+     "histogram",
+     "matplotlib",
+     "matplotlib-pyplot",
+     "opencv",
+     "python",
+     "similarity",
+     "similarity-measures",
+     "similarity-score"
+    ],
+    "url": "https://github.com/jabrimehdi/image-similarity"
+   },
+   {
+    "archived": false,
+    "description": "find similar face from image dataset using python and facerecognition library",
+    "fork": false,
+    "full_name": "ntshvicky/face-similarity",
+    "hits": [
+     {
+      "pos": 5,
+      "q": "image similarity python library"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": null,
+    "open_issues": 0,
+    "pushed_at": "2020-06-16T19:35:10Z",
+    "queries": [
+     "image similarity python library"
+    ],
+    "size_kb": 31698,
+    "stars": 3,
+    "topics": [
+     "face-detection",
+     "face-recognition",
+     "face-similarity",
+     "image-s",
+     "python"
+    ],
+    "url": "https://github.com/ntshvicky/face-similarity"
+   },
+   {
+    "archived": false,
+    "description": "A project implemented with use of OpenCV (Python Library) and Django (Python Web Framework) to find the percentage similarity of a set of morphed images with the original Image.",
+    "fork": false,
+    "full_name": "abhishekmali/ImageAnalyzer",
+    "hits": [
+     {
+      "pos": 6,
+      "q": "image similarity python library"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": null,
+    "open_issues": 0,
+    "pushed_at": "2020-04-01T11:05:55Z",
+    "queries": [
+     "image similarity python library"
+    ],
+    "size_kb": 43,
+    "stars": 2,
+    "topics": [],
+    "url": "https://github.com/abhishekmali/ImageAnalyzer"
+   },
+   {
+    "archived": false,
+    "description": "FaceMatch: An AI-powered tool for finding facial similarity using the DeepFace library by comparing image embeddings",
+    "fork": false,
+    "full_name": "fazliddindehkanoff/face-match",
+    "hits": [
+     {
+      "pos": 7,
+      "q": "image similarity python library"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": "MIT",
+    "open_issues": 1,
+    "pushed_at": "2025-01-14T22:14:07Z",
+    "queries": [
+     "image similarity python library"
+    ],
+    "size_kb": 12,
+    "stars": 2,
+    "topics": [
+     "django",
+     "face-compare",
+     "face-recognition",
+     "face-similarity",
+     "python"
+    ],
+    "url": "https://github.com/fazliddindehkanoff/face-match"
+   },
+   {
+    "archived": false,
+    "description": "Python bindings for the Czkawka Rust library, a fast image similarity engine",
+    "fork": false,
+    "full_name": "lmmx/czkawka",
+    "hits": [
+     {
+      "pos": 8,
+      "q": "image similarity python library"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": "MIT",
+    "open_issues": 3,
+    "pushed_at": "2026-11-23T18:30:12Z",
+    "queries": [
+     "image similarity python library"
+    ],
+    "size_kb": 222,
+    "stars": 1,
+    "topics": [
+     "czkawka",
+     "image-processing",
+     "image-similarity",
+     "perceptual-hashing"
+    ],
+    "url": "https://github.com/lmmx/czkawka"
+   },
+   {
+    "archived": false,
+    "description": "A project implemented with use of OpenCV (Python Library) and Django (Python Web Framework) to find the percentage similarity of a set of morphed images with the original Image.",
+    "fork": false,
+    "full_name": "aayushjoshi1813/ImageAnalyzer",
+    "hits": [
+     {
+      "pos": 9,
+      "q": "image similarity python library"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": null,
+    "open_issues": 0,
+    "pushed_at": "2020-09-11T06:19:39Z",
+    "queries": [
+     "image similarity python library"
+    ],
+    "size_kb": 43,
+    "stars": 0,
+    "topics": [],
+    "url": "https://github.com/aayushjoshi1813/ImageAnalyzer"
+   },
+   {
+    "archived": false,
+    "description": "A Python tool to compare two images and tell how similar they are using three methods : Perceptual Hash ( pHash ) , Structural Similarity Index ( SSIM ) , and ORB Feature Matching .",
+    "fork": false,
+    "full_name": "Imranch4/image-similarity-checker",
+    "hits": [
+     {
+      "pos": 0,
+      "q": "perceptual hash image matching"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": "MIT",
+    "open_issues": 0,
+    "pushed_at": "2025-10-03T16:36:39Z",
+    "queries": [
+     "perceptual hash image matching"
+    ],
+    "size_kb": 7,
+    "stars": 2,
+    "topics": [],
+    "url": "https://github.com/Imranch4/image-similarity-checker"
+   },
+   {
+    "archived": false,
+    "description": "Finds duplicate files by content - perceptual image hashing, audio fingerprinting and semantic text matching.",
+    "fork": false,
+    "full_name": "Namans12/duplicate-app",
+    "hits": [
+     {
+      "pos": 1,
+      "q": "perceptual hash image matching"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": null,
+    "open_issues": 0,
+    "pushed_at": "2026-07-27T15:07:21Z",
+    "queries": [
+     "perceptual hash image matching"
+    ],
+    "size_kb": 159,
+    "stars": 0,
+    "topics": [],
+    "url": "https://github.com/Namans12/duplicate-app"
+   },
+   {
+    "archived": false,
+    "description": "MSc Dissertation: A cascading image deduplication pipeline using SHA-256 byte matching, perceptual hashing (pHash), and SSIM.",
+    "fork": false,
+    "full_name": "joeaoregan/TUS-26-Dissertation-Cloud-Native-Image-Deduplication",
+    "hits": [
+     {
+      "pos": 2,
+      "q": "perceptual hash image matching"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": null,
+    "open_issues": 0,
+    "pushed_at": "2026-08-28T22:04:24Z",
+    "queries": [
+     "perceptual hash image matching"
+    ],
+    "size_kb": 9935,
+    "stars": 1,
+    "topics": [],
+    "url": "https://github.com/joeaoregan/TUS-26-Dissertation-Cloud-Native-Image-Deduplication"
+   },
+   {
+    "archived": false,
+    "description": "Python image organizer for sorting landscape and portrait photos, finding duplicates and matching visually similar images using perceptual hashing.",
+    "fork": false,
+    "full_name": "AmerAlreyahi/Image-Modifier-",
+    "hits": [
+     {
+      "pos": 3,
+      "q": "perceptual hash image matching"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": null,
+    "open_issues": 0,
+    "pushed_at": "2026-03-01T01:40:09Z",
+    "queries": [
+     "perceptual hash image matching"
+    ],
+    "size_kb": 4,
+    "stars": 1,
+    "topics": [
+     "duplicate-finder",
+     "image-organizer",
+     "image-processing",
+     "imagehash",
+     "perceptual-hashing",
+     "pillow",
+     "python",
+     "tkinter"
+    ],
+    "url": "https://github.com/AmerAlreyahi/Image-Modifier-"
+   },
+   {
+    "archived": false,
+    "description": "Computer vision suite for detecting duplicate, near-duplicate, transformed, and manipulated images using feature matching, perceptual hashing, and structural similarity analysis.",
+    "fork": false,
+    "full_name": "alifiyaslatewala/duplicate-vision",
+    "hits": [
+     {
+      "pos": 4,
+      "q": "perceptual hash image matching"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": null,
+    "open_issues": 0,
+    "pushed_at": "2026-10-07T11:09:13Z",
+    "queries": [
+     "perceptual hash image matching"
+    ],
+    "size_kb": 38,
+    "stars": 0,
+    "topics": [],
+    "url": "https://github.com/alifiyaslatewala/duplicate-vision"
+   },
+   {
+    "archived": false,
+    "description": "An automated computer vision pipeline and Streamlit-based web application designed to compare e-commerce video and image assets against a reference baseline using perceptual hashing (pHash) for automated content matching and quality sorting",
+    "fork": false,
+    "full_name": "itxahmadtariq01-cmd/ecomradar-production",
+    "hits": [
+     {
+      "pos": 5,
+      "q": "perceptual hash image matching"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": null,
+    "open_issues": 0,
+    "pushed_at": "2026-08-22T15:02:34Z",
+    "queries": [
+     "perceptual hash image matching"
+    ],
+    "size_kb": 71659,
+    "stars": 0,
+    "topics": [],
+    "url": "https://github.com/itxahmadtariq01-cmd/ecomradar-production"
+   },
+   {
+    "archived": false,
+    "description": "This project implements an image similarity search bot for Telegram using Python. It scrapes images from public Telegram channels via Telethon, computes perceptual hashes for each image, and stores them in a local database. Users can submit an image to the bot, which compares it against the dataset ",
+    "fork": false,
+    "full_name": "VivekGrovr/telegram-reverse-search-bot",
+    "hits": [
+     {
+      "pos": 6,
+      "q": "perceptual hash image matching"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": null,
+    "open_issues": 0,
+    "pushed_at": "2026-01-28T09:34:15Z",
+    "queries": [
+     "perceptual hash image matching"
+    ],
+    "size_kb": 13,
+    "stars": 0,
+    "topics": [],
+    "url": "https://github.com/VivekGrovr/telegram-reverse-search-bot"
+   },
+   {
+    "archived": false,
+    "description": "test program to use imagehash package to generate phash hashes",
+    "fork": false,
+    "full_name": "val-ms/python_phash",
+    "hits": [
+     {
+      "pos": 0,
+      "q": "imagehash python package"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": null,
+    "open_issues": 0,
+    "pushed_at": "2025-10-13T17:17:41Z",
+    "queries": [
+     "imagehash python package"
+    ],
+    "size_kb": 2,
+    "stars": 0,
+    "topics": [],
+    "url": "https://github.com/val-ms/python_phash"
+   },
+   {
+    "archived": false,
+    "description": "A more constrained and friendlier fork of the ImageHash Python image hashing package.",
+    "fork": false,
+    "full_name": "ericbn/imha",
+    "hits": [
+     {
+      "pos": 1,
+      "q": "imagehash python package"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": "BSD-2-Clause",
+    "open_issues": 0,
+    "pushed_at": "2026-10-20T23:00:30Z",
+    "queries": [
+     "imagehash python package"
+    ],
+    "size_kb": 579,
+    "stars": 0,
+    "topics": [
+     "average-hash",
+     "average-hash-algorithm",
+     "dhash",
+     "image-hashing",
+     "image-hashing-algorithms",
+     "imagehash",
+     "python"
+    ],
+    "url": "https://github.com/ericbn/imha"
+   },
+   {
+    "archived": false,
+    "description": "A Python package for detecting and removing (or not) duplicate image files.",
+    "fork": false,
+    "full_name": "error201/SimilarImages",
+    "hits": [
+     {
+      "pos": 2,
+      "q": "imagehash python package"
+     }
+    ],
+    "language": "Python",
+    "license_spdx": "MIT",
+    "open_issues": 0,
+    "pushed_at": "2024-01-25T06:46:08Z",
+    "queries": [
+     "imagehash python package"
+    ],
+    "size_kb": 26,
+    "stars": 1,
+    "topics": [
+     "imagehash",
+     "mysql",
+     "pil",
+     "python3"
+    ],
+    "url": "https://github.com/error201/SimilarImages"
+   }
+  ],
+  "queries": [
+   "match images",
+   "duplicate images",
+   "near-duplicate",
+   "same picture",
+   "image similarity python library",
+   "perceptual hash image matching",
+   "imagehash python package"
+  ],
+  "query_sources": {
+   "keywords": [
+    "match images",
+    "duplicate images",
+    "near-duplicate",
+    "same picture"
+   ],
+   "model": [
+    "image similarity python library",
+    "perceptual hash image matching",
+    "imagehash python package"
+   ],
+   "model_params": {
+    "max_tokens": 200,
+    "model": "openai/gpt-oss-20b",
+    "seed": 2026400001,
+    "temperature": 0
+   },
+   "model_status": "ok"
+  },
+  "retained": [],
+  "tiers": [
+   {
+    "digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "found": 0,
+    "selectable": false,
+    "tier": "retained"
+   },
+   {
+    "digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "found": 0,
+    "selectable": false,
+    "tier": "installed"
+   },
+   {
+    "digest": "9a32657ac4d44a94c2f45394f6a4dbeb44ad7ca057383c7a8905f311b9436668",
+    "found": 58,
+    "selectable": true,
+    "tier": "github"
+   }
+  ]
+ },
+ "skipped_before_inspection": [
+  {
+   "pre_score": {
+    "best_pos": {
+     "match images": 0
+    },
+    "license_spdx": null,
+    "n_queries": 1,
+    "overlap": 6,
+    "overlap_terms": [
+     "image",
+     "match",
+     "images",
+     "built",
+     "matching",
+     "matches"
+    ],
+    "pos_score": 1.0,
+    "pushed_at": "2020-07-25T18:01:58Z",
+    "queries": [
+     "match images"
+    ],
+    "relevance": 6.0,
+    "score": 5.448,
+    "size_kb": 628,
+    "size_penalty": 0.552,
+    "stars": 1263
+   },
+   "reason": "SKIPPED_LICENSE_METADATA: search metadata says no licence",
+   "repo": "dsys/match"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "match images": 1
+    },
+    "license_spdx": null,
+    "n_queries": 1,
+    "overlap": 5,
+    "overlap_terms": [
+     "image",
+     "match",
+     "images",
+     "matching",
+     "matches"
+    ],
+    "pos_score": 0.5,
+    "pushed_at": "2022-12-06T11:29:04Z",
+    "queries": [
+     "match images"
+    ],
+    "relevance": 5.0,
+    "score": 3.9255,
+    "size_kb": 1574,
+    "size_penalty": 1.0745,
+    "stars": 2976
+   },
+   "reason": "SKIPPED_LICENSE_METADATA: search metadata says no licence",
+   "repo": "rhsimplex/image-match"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "match images": 2
+    },
+    "license_spdx": "Apache-2.0",
+    "n_queries": 1,
+    "overlap": 4,
+    "overlap_terms": [
+     "image",
+     "match",
+     "images",
+     "matching"
+    ],
+    "pos_score": 0.3333,
+    "pushed_at": "2026-11-23T17:17:45Z",
+    "queries": [
+     "match images"
+    ],
+    "relevance": 4.3333,
+    "score": -2.0433,
+    "size_kb": 255867,
+    "size_penalty": 6.3766,
+    "stars": 1314
+   },
+   "reason": "REPO_TOO_LARGE: 255867 KB reported by GitHub (limit 51200)",
+   "repo": "Vincentqyw/image-matching-webui"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "match images": 3
+    },
+    "license_spdx": null,
+    "n_queries": 1,
+    "overlap": 4,
+    "overlap_terms": [
+     "image",
+     "match",
+     "images",
+     "matching"
+    ],
+    "pos_score": 0.25,
+    "pushed_at": "2026-01-05T21:56:33Z",
+    "queries": [
+     "match images"
+    ],
+    "relevance": 4.25,
+    "score": 1.7868,
+    "size_kb": 7629,
+    "size_penalty": 2.4632,
+    "stars": 4863
+   },
+   "reason": "SKIPPED_LICENSE_METADATA: search metadata says no licence",
+   "repo": "facebookresearch/flow_matching"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "match images": 4
+    },
+    "license_spdx": "GPL-3.0",
+    "n_queries": 1,
+    "overlap": 6,
+    "overlap_terms": [
+     "image",
+     "match",
+     "images",
+     "colours",
+     "matching",
+     "matches"
+    ],
+    "pos_score": 0.2,
+    "pushed_at": "2026-02-24T20:43:21Z",
+    "queries": [
+     "match images"
+    ],
+    "relevance": 5.2,
+    "score": -0.3505,
+    "size_kb": 124542,
+    "size_penalty": 5.5505,
+    "stars": 715
+   },
+   "reason": "REPO_TOO_LARGE: 124542 KB reported by GitHub (limit 51200)",
+   "repo": "hahnec/color-matcher"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "match images": 5
+    },
+    "license_spdx": null,
+    "n_queries": 1,
+    "overlap": 5,
+    "overlap_terms": [
+     "image",
+     "match",
+     "images",
+     "formats",
+     "matching"
+    ],
+    "pos_score": 0.1667,
+    "pushed_at": "2026-02-19T11:43:30Z",
+    "queries": [
+     "match images"
+    ],
+    "relevance": 4.6667,
+    "score": -2.6255,
+    "size_kb": 566871,
+    "size_penalty": 7.2922,
+    "stars": 559
+   },
+   "reason": "REPO_TOO_LARGE: 566871 KB reported by GitHub (limit 51200)",
+   "repo": "3DOM-FBK/deep-image-matching"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "match images": 6
+    },
+    "license_spdx": null,
+    "n_queries": 1,
+    "overlap": 4,
+    "overlap_terms": [
+     "image",
+     "match",
+     "images",
+     "matching"
+    ],
+    "pos_score": 0.1429,
+    "pushed_at": "2022-01-01T04:15:38Z",
+    "queries": [
+     "match images"
+    ],
+    "relevance": 4.1429,
+    "score": 1.8234,
+    "size_kb": 6616,
+    "size_penalty": 2.3195,
+    "stars": 202
+   },
+   "reason": "SKIPPED_LICENSE_METADATA: search metadata says no licence",
+   "repo": "lan-cz/cnn-matching"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "match images": 7
+    },
+    "license_spdx": "MIT",
+    "n_queries": 1,
+    "overlap": 4,
+    "overlap_terms": [
+     "image",
+     "match",
+     "images",
+     "matching"
+    ],
+    "pos_score": 0.125,
+    "pushed_at": "2025-08-03T08:22:53Z",
+    "queries": [
+     "match images"
+    ],
+    "relevance": 4.125,
+    "score": -2.7014,
+    "size_kb": 378288,
+    "size_penalty": 6.8264,
+    "stars": 914
+   },
+   "reason": "REPO_TOO_LARGE: 378288 KB reported by GitHub (limit 51200)",
+   "repo": "xuelunshen/gim"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "match images": 8
+    },
+    "license_spdx": null,
+    "n_queries": 1,
+    "overlap": 4,
+    "overlap_terms": [
+     "image",
+     "match",
+     "images",
+     "matching"
+    ],
+    "pos_score": 0.1111,
+    "pushed_at": "2017-01-18T17:52:52Z",
+    "queries": [
+     "match images"
+    ],
+    "relevance": 4.1111,
+    "score": 0.3294,
+    "size_kb": 26098,
+    "size_penalty": 3.7817,
+    "stars": 64
+   },
+   "reason": "SKIPPED_LICENSE_METADATA: search metadata says no licence",
+   "repo": "vishalgolcha/ImageMatching"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "duplicate images": 1
+    },
+    "license_spdx": null,
+    "n_queries": 1,
+    "overlap": 3,
+    "overlap_terms": [
+     "image",
+     "images",
+     "duplicate"
+    ],
+    "pos_score": 0.5,
+    "pushed_at": "2023-12-26T14:57:26Z",
+    "queries": [
+     "duplicate images"
+    ],
+    "relevance": 4.0,
+    "score": 1.1558,
+    "size_kb": 11013,
+    "size_penalty": 2.8442,
+    "stars": 522
+   },
+   "reason": "SKIPPED_LICENSE_METADATA: search metadata says no licence",
+   "repo": "philipbl/duplicate-images"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "duplicate images": 3
+    },
+    "license_spdx": null,
+    "n_queries": 1,
+    "overlap": 3,
+    "overlap_terms": [
+     "image",
+     "images",
+     "duplicate"
+    ],
+    "pos_score": 0.25,
+    "pushed_at": "2024-05-13T21:32:48Z",
+    "queries": [
+     "duplicate images"
+    ],
+    "relevance": 3.75,
+    "score": 3.7477,
+    "size_kb": 2,
+    "size_penalty": 0.0023,
+    "stars": 48
+   },
+   "reason": "SKIPPED_LICENSE_METADATA: search metadata says no licence",
+   "repo": "somil98/Duplicate-Remover"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "duplicate images": 5
+    },
+    "license_spdx": "GPL-3.0",
+    "n_queries": 1,
+    "overlap": 3,
+    "overlap_terms": [
+     "image",
+     "images",
+     "duplicate"
+    ],
+    "pos_score": 0.1667,
+    "pushed_at": "2026-11-09T22:50:18Z",
+    "queries": [
+     "duplicate images"
+    ],
+    "relevance": 3.6667,
+    "score": -0.4282,
+    "size_kb": 34552,
+    "size_penalty": 4.0949,
+    "stars": 693
+   },
+   "reason": "SKIPPED_LICENSE_METADATA: search metadata says GPL-3.0",
+   "repo": "RazgrizHsu/immich-deduper"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "duplicate images": 6,
+     "near-duplicate": 2
+    },
+    "license_spdx": null,
+    "n_queries": 2,
+    "overlap": 4,
+    "overlap_terms": [
+     "image",
+     "images",
+     "duplicate",
+     "near"
+    ],
+    "pos_score": 0.4762,
+    "pushed_at": "2026-07-21T12:35:40Z",
+    "queries": [
+     "duplicate images",
+     "near-duplicate"
+    ],
+    "relevance": 6.4762,
+    "score": 5.7198,
+    "size_kb": 948,
+    "size_penalty": 0.7564,
+    "stars": 395
+   },
+   "reason": "SKIPPED_LICENSE_METADATA: search metadata says no licence",
+   "repo": "knjcode/imgdupes"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "duplicate images": 7
+    },
+    "license_spdx": null,
+    "n_queries": 1,
+    "overlap": 3,
+    "overlap_terms": [
+     "image",
+     "images",
+     "duplicate"
+    ],
+    "pos_score": 0.125,
+    "pushed_at": "2026-11-21T08:09:27Z",
+    "queries": [
+     "duplicate images"
+    ],
+    "relevance": 3.625,
+    "score": -0.4185,
+    "size_kb": 33003,
+    "size_penalty": 4.0435,
+    "stars": 52
+   },
+   "reason": "SKIPPED_LICENSE_METADATA: search metadata says no licence",
+   "repo": "lene/DuplicateImages"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "duplicate images": 9
+    },
+    "license_spdx": "GPL-3.0",
+    "n_queries": 1,
+    "overlap": 3,
+    "overlap_terms": [
+     "image",
+     "images",
+     "duplicate"
+    ],
+    "pos_score": 0.1,
+    "pushed_at": "2020-10-22T08:20:16Z",
+    "queries": [
+     "duplicate images"
+    ],
+    "relevance": 3.6,
+    "score": 3.5722,
+    "size_kb": 25,
+    "size_penalty": 0.0278,
+    "stars": 110
+   },
+   "reason": "SKIPPED_LICENSE_METADATA: search metadata says GPL-3.0",
+   "repo": "chinalu/imagedups"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "near-duplicate": 3
+    },
+    "license_spdx": "MIT",
+    "n_queries": 1,
+    "overlap": 2,
+    "overlap_terms": [
+     "duplicate",
+     "near"
+    ],
+    "pos_score": 0.25,
+    "pushed_at": "2023-06-11T08:03:23Z",
+    "queries": [
+     "near-duplicate"
+    ],
+    "relevance": 3.25,
+    "score": 2.7723,
+    "size_kb": 525,
+    "size_penalty": 0.4777,
+    "stars": 290
+   },
+   "reason": "ARCHIVED",
+   "repo": "mattilyra/LSH"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "near-duplicate": 4
+    },
+    "license_spdx": "Apache-2.0",
+    "n_queries": 1,
+    "overlap": 2,
+    "overlap_terms": [
+     "duplicate",
+     "near"
+    ],
+    "pos_score": 0.2,
+    "pushed_at": "2022-08-30T03:06:08Z",
+    "queries": [
+     "near-duplicate"
+    ],
+    "relevance": 3.2,
+    "score": -0.4907,
+    "size_kb": 24041,
+    "size_penalty": 3.6907,
+    "stars": 251
+   },
+   "reason": "ARCHIVED",
+   "repo": "google-research/3d-moments"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "near-duplicate": 6
+    },
+    "license_spdx": null,
+    "n_queries": 1,
+    "overlap": 4,
+    "overlap_terms": [
+     "image",
+     "images",
+     "duplicate",
+     "near"
+    ],
+    "pos_score": 0.1429,
+    "pushed_at": "2026-08-25T20:53:55Z",
+    "queries": [
+     "near-duplicate"
+    ],
+    "relevance": 4.1429,
+    "score": 0.8431,
+    "size_kb": 16840,
+    "size_penalty": 3.2998,
+    "stars": 75
+   },
+   "reason": "SKIPPED_LICENSE_METADATA: search metadata says no licence",
+   "repo": "mendesk/image-ndd-lsh"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "near-duplicate": 8
+    },
+    "license_spdx": "AGPL-3.0",
+    "n_queries": 1,
+    "overlap": 4,
+    "overlap_terms": [
+     "image",
+     "images",
+     "duplicate",
+     "near"
+    ],
+    "pos_score": 0.1111,
+    "pushed_at": "2026-11-25T20:49:36Z",
+    "queries": [
+     "near-duplicate"
+    ],
+    "relevance": 4.1111,
+    "score": 0.6404,
+    "size_kb": 19690,
+    "size_penalty": 3.4707,
+    "stars": 172
+   },
+   "reason": "SKIPPED_LICENSE_METADATA: search metadata says AGPL-3.0",
+   "repo": "markusressel/py-image-dedup"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "same picture": 1
+    },
+    "license_spdx": null,
+    "n_queries": 1,
+    "overlap": 4,
+    "overlap_terms": [
+     "picture",
+     "crops",
+     "crop",
+     "pictures"
+    ],
+    "pos_score": 0.5,
+    "pushed_at": "2025-07-01T04:58:17Z",
+    "queries": [
+     "same picture"
+    ],
+    "relevance": 4.5,
+    "score": 0.1796,
+    "size_kb": 42229,
+    "size_penalty": 4.3204,
+    "stars": 4
+   },
+   "reason": "SKIPPED_LICENSE_METADATA: search metadata says no licence",
+   "repo": "princefishthrower/instagramize"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "same picture": 2
+    },
+    "license_spdx": "MIT",
+    "n_queries": 1,
+    "overlap": 4,
+    "overlap_terms": [
+     "image",
+     "picture",
+     "images",
+     "pictures"
+    ],
+    "pos_score": 0.3333,
+    "pushed_at": "2023-09-20T13:20:00Z",
+    "queries": [
+     "same picture"
+    ],
+    "relevance": 4.3333,
+    "score": 3.9732,
+    "size_kb": 375,
+    "size_penalty": 0.3601,
+    "stars": 10
+   },
+   "reason": "ARCHIVED",
+   "repo": "marie-bnl/discord-pfp-banner-generator"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "same picture": 3
+    },
+    "license_spdx": null,
+    "n_queries": 1,
+    "overlap": 5,
+    "overlap_terms": [
+     "picture",
+     "renames",
+     "formats",
+     "rename",
+     "pictures"
+    ],
+    "pos_score": 0.25,
+    "pushed_at": "2019-04-21T14:12:33Z",
+    "queries": [
+     "same picture"
+    ],
+    "relevance": 4.75,
+    "score": 4.7466,
+    "size_kb": 3,
+    "size_penalty": 0.0034,
+    "stars": 2
+   },
+   "reason": "SKIPPED_LICENSE_METADATA: search metadata says no licence",
+   "repo": "bentster/picture-renamer"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "same picture": 4
+    },
+    "license_spdx": null,
+    "n_queries": 1,
+    "overlap": 2,
+    "overlap_terms": [
+     "picture",
+     "pictures"
+    ],
+    "pos_score": 0.2,
+    "pushed_at": "2019-06-21T12:49:22Z",
+    "queries": [
+     "same picture"
+    ],
+    "relevance": 3.2,
+    "score": 3.1921,
+    "size_kb": 7,
+    "size_penalty": 0.0079,
+    "stars": 0
+   },
+   "reason": "SKIPPED_LICENSE_METADATA: search metadata says no licence",
+   "repo": "MoritzFuchshofer/SameRedditPictureEveryDay"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "same picture": 6
+    },
+    "license_spdx": null,
+    "n_queries": 1,
+    "overlap": 0,
+    "overlap_terms": [],
+    "pos_score": 0.1429,
+    "pushed_at": "2020-12-01T10:23:08Z",
+    "queries": [
+     "same picture"
+    ],
+    "relevance": 2.1429,
+    "score": 1.9408,
+    "size_kb": 196,
+    "size_penalty": 0.2021,
+    "stars": 0
+   },
+   "reason": "SKIPPED_LICENSE_METADATA: search metadata says no licence",
+   "repo": "seoyoung1011/FindSamePicture"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "same picture": 7
+    },
+    "license_spdx": null,
+    "n_queries": 1,
+    "overlap": 7,
+    "overlap_terms": [
+     "picture",
+     "renames",
+     "renamed",
+     "tool",
+     "formats",
+     "rename",
+     "pictures"
+    ],
+    "pos_score": 0.125,
+    "pushed_at": "2026-03-21T10:24:54Z",
+    "queries": [
+     "same picture"
+    ],
+    "relevance": 5.625,
+    "score": 5.6116,
+    "size_kb": 12,
+    "size_penalty": 0.0134,
+    "stars": 0
+   },
+   "reason": "SKIPPED_LICENSE_METADATA: search metadata says no licence",
+   "repo": "piotrcurious/same_picture_finder"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "same picture": 8
+    },
+    "license_spdx": null,
+    "n_queries": 1,
+    "overlap": 2,
+    "overlap_terms": [
+     "picture",
+     "pictures"
+    ],
+    "pos_score": 0.1111,
+    "pushed_at": "2021-09-11T11:27:09Z",
+    "queries": [
+     "same picture"
+    ],
+    "relevance": 3.1111,
+    "score": 3.1077,
+    "size_kb": 3,
+    "size_penalty": 0.0034,
+    "stars": 0
+   },
+   "reason": "ARCHIVED",
+   "repo": "guan4tou2/check-same-picture"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "image similarity python library": 0
+    },
+    "license_spdx": null,
+    "n_queries": 1,
+    "overlap": 2,
+    "overlap_terms": [
+     "image",
+     "images"
+    ],
+    "pos_score": 1.0,
+    "pushed_at": "2017-10-16T18:25:31Z",
+    "queries": [
+     "image similarity python library"
+    ],
+    "relevance": 4.0,
+    "score": 3.49,
+    "size_kb": 569,
+    "size_penalty": 0.51,
+    "stars": 38
+   },
+   "reason": "SKIPPED_LICENSE_METADATA: search metadata says no licence",
+   "repo": "aravindiiitb/python-compare-images"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "image similarity python library": 2
+    },
+    "license_spdx": null,
+    "n_queries": 1,
+    "overlap": 2,
+    "overlap_terms": [
+     "image",
+     "images"
+    ],
+    "pos_score": 0.3333,
+    "pushed_at": "2021-12-11T15:01:53Z",
+    "queries": [
+     "image similarity python library"
+    ],
+    "relevance": 3.3333,
+    "score": 3.3288,
+    "size_kb": 4,
+    "size_penalty": 0.0045,
+    "stars": 5
+   },
+   "reason": "SKIPPED_LICENSE_METADATA: search metadata says no licence",
+   "repo": "kirshiyin89/imagesimilarities"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "image similarity python library": 3
+    },
+    "license_spdx": null,
+    "n_queries": 1,
+    "overlap": 2,
+    "overlap_terms": [
+     "image",
+     "images"
+    ],
+    "pos_score": 0.25,
+    "pushed_at": "2016-06-24T15:24:35Z",
+    "queries": [
+     "image similarity python library"
+    ],
+    "relevance": 3.25,
+    "score": 3.2399,
+    "size_kb": 9,
+    "size_penalty": 0.0101,
+    "stars": 11
+   },
+   "reason": "SKIPPED_LICENSE_METADATA: search metadata says no licence",
+   "repo": "doda-zz/similus"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "image similarity python library": 4
+    },
+    "license_spdx": null,
+    "n_queries": 1,
+    "overlap": 4,
+    "overlap_terms": [
+     "image",
+     "application",
+     "images",
+     "libraries"
+    ],
+    "pos_score": 0.2,
+    "pushed_at": "2021-10-16T13:45:59Z",
+    "queries": [
+     "image similarity python library"
+    ],
+    "relevance": 4.2,
+    "score": 4.1744,
+    "size_kb": 23,
+    "size_penalty": 0.0256,
+    "stars": 3
+   },
+   "reason": "SKIPPED_LICENSE_METADATA: search metadata says no licence",
+   "repo": "jabrimehdi/image-similarity"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "image similarity python library": 5
+    },
+    "license_spdx": null,
+    "n_queries": 1,
+    "overlap": 2,
+    "overlap_terms": [
+     "image",
+     "images"
+    ],
+    "pos_score": 0.1667,
+    "pushed_at": "2020-06-16T19:35:10Z",
+    "queries": [
+     "image similarity python library"
+    ],
+    "relevance": 3.1667,
+    "score": -0.8317,
+    "size_kb": 31698,
+    "size_penalty": 3.9984,
+    "stars": 3
+   },
+   "reason": "SKIPPED_LICENSE_METADATA: search metadata says no licence",
+   "repo": "ntshvicky/face-similarity"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "image similarity python library": 6
+    },
+    "license_spdx": null,
+    "n_queries": 1,
+    "overlap": 3,
+    "overlap_terms": [
+     "image",
+     "images",
+     "percent"
+    ],
+    "pos_score": 0.1429,
+    "pushed_at": "2020-04-01T11:05:55Z",
+    "queries": [
+     "image similarity python library"
+    ],
+    "relevance": 3.6429,
+    "score": 3.5954,
+    "size_kb": 43,
+    "size_penalty": 0.0475,
+    "stars": 2
+   },
+   "reason": "SKIPPED_LICENSE_METADATA: search metadata says no licence",
+   "repo": "abhishekmali/ImageAnalyzer"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "image similarity python library": 9
+    },
+    "license_spdx": null,
+    "n_queries": 1,
+    "overlap": 3,
+    "overlap_terms": [
+     "image",
+     "images",
+     "percent"
+    ],
+    "pos_score": 0.1,
+    "pushed_at": "2020-09-11T06:19:39Z",
+    "queries": [
+     "image similarity python library"
+    ],
+    "relevance": 3.6,
+    "score": 3.5525,
+    "size_kb": 43,
+    "size_penalty": 0.0475,
+    "stars": 0
+   },
+   "reason": "SKIPPED_LICENSE_METADATA: search metadata says no licence",
+   "repo": "aayushjoshi1813/ImageAnalyzer"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "perceptual hash image matching": 1
+    },
+    "license_spdx": null,
+    "n_queries": 1,
+    "overlap": 5,
+    "overlap_terms": [
+     "image",
+     "match",
+     "images",
+     "duplicate",
+     "matching"
+    ],
+    "pos_score": 0.5,
+    "pushed_at": "2026-07-27T15:07:21Z",
+    "queries": [
+     "perceptual hash image matching"
+    ],
+    "relevance": 5.0,
+    "score": 4.8334,
+    "size_kb": 159,
+    "size_penalty": 0.1666,
+    "stars": 0
+   },
+   "reason": "SKIPPED_LICENSE_METADATA: search metadata says no licence",
+   "repo": "Namans12/duplicate-app"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "perceptual hash image matching": 2
+    },
+    "license_spdx": null,
+    "n_queries": 1,
+    "overlap": 5,
+    "overlap_terms": [
+     "image",
+     "match",
+     "images",
+     "bytes",
+     "matching"
+    ],
+    "pos_score": 0.3333,
+    "pushed_at": "2026-08-28T22:04:24Z",
+    "queries": [
+     "perceptual hash image matching"
+    ],
+    "relevance": 4.8333,
+    "score": 2.0974,
+    "size_kb": 9935,
+    "size_penalty": 2.7359,
+    "stars": 1
+   },
+   "reason": "SKIPPED_LICENSE_METADATA: search metadata says no licence",
+   "repo": "joeaoregan/TUS-26-Dissertation-Cloud-Native-Image-Deduplication"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "perceptual hash image matching": 3
+    },
+    "license_spdx": null,
+    "n_queries": 1,
+    "overlap": 6,
+    "overlap_terms": [
+     "image",
+     "match",
+     "images",
+     "duplicate",
+     "matching",
+     "sort"
+    ],
+    "pos_score": 0.25,
+    "pushed_at": "2026-03-01T01:40:09Z",
+    "queries": [
+     "perceptual hash image matching"
+    ],
+    "relevance": 5.25,
+    "score": 5.2455,
+    "size_kb": 4,
+    "size_penalty": 0.0045,
+    "stars": 1
+   },
+   "reason": "SKIPPED_LICENSE_METADATA: search metadata says no licence",
+   "repo": "AmerAlreyahi/Image-Modifier-"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "perceptual hash image matching": 4
+    },
+    "license_spdx": null,
+    "n_queries": 1,
+    "overlap": 7,
+    "overlap_terms": [
+     "image",
+     "match",
+     "images",
+     "duplicate",
+     "near",
+     "suite",
+     "matching"
+    ],
+    "pos_score": 0.2,
+    "pushed_at": "2026-10-07T11:09:13Z",
+    "queries": [
+     "perceptual hash image matching"
+    ],
+    "relevance": 5.7,
+    "score": 5.6579,
+    "size_kb": 38,
+    "size_penalty": 0.0421,
+    "stars": 0
+   },
+   "reason": "SKIPPED_LICENSE_METADATA: search metadata says no licence",
+   "repo": "alifiyaslatewala/duplicate-vision"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "perceptual hash image matching": 5
+    },
+    "license_spdx": null,
+    "n_queries": 1,
+    "overlap": 8,
+    "overlap_terms": [
+     "image",
+     "match",
+     "application",
+     "images",
+     "base",
+     "quality",
+     "matching",
+     "sort"
+    ],
+    "pos_score": 0.1667,
+    "pushed_at": "2026-08-22T15:02:34Z",
+    "queries": [
+     "perceptual hash image matching"
+    ],
+    "relevance": 6.1667,
+    "score": 1.2472,
+    "size_kb": 71659,
+    "size_penalty": 4.9195,
+    "stars": 0
+   },
+   "reason": "REPO_TOO_LARGE: 71659 KB reported by GitHub (limit 51200)",
+   "repo": "itxahmadtariq01-cmd/ecomradar-production"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "perceptual hash image matching": 6
+    },
+    "license_spdx": null,
+    "n_queries": 1,
+    "overlap": 2,
+    "overlap_terms": [
+     "image",
+     "images"
+    ],
+    "pos_score": 0.1429,
+    "pushed_at": "2026-01-28T09:34:15Z",
+    "queries": [
+     "perceptual hash image matching"
+    ],
+    "relevance": 3.1429,
+    "score": 3.1283,
+    "size_kb": 13,
+    "size_penalty": 0.0146,
+    "stars": 0
+   },
+   "reason": "SKIPPED_LICENSE_METADATA: search metadata says no licence",
+   "repo": "VivekGrovr/telegram-reverse-search-bot"
+  },
+  {
+   "pre_score": {
+    "best_pos": {
+     "imagehash python package": 0
+    },
+    "license_spdx": null,
+    "n_queries": 1,
+    "overlap": 1,
+    "overlap_terms": [
+     "image"
+    ],
+    "pos_score": 1.0,
+    "pushed_at": "2025-10-13T17:17:41Z",
+    "queries": [
+     "imagehash python package"
+    ],
+    "relevance": 3.5,
+    "score": 3.4977,
+    "size_kb": 2,
+    "size_penalty": 0.0023,
+    "stars": 0
+   },
+   "reason": "SKIPPED_LICENSE_METADATA: search metadata says no licence",
+   "repo": "val-ms/python_phash"
+  }
+ ],
+ "stages": [
+  {
+   "stage": "opened"
+  },
+  {
+   "stage": "start"
+  },
+  {
+   "queries": [
+    "match images",
+    "duplicate images",
+    "near-duplicate",
+    "same picture",
+    "image similarity python library",
+    "perceptual hash image matching",
+    "imagehash python package"
+   ],
+   "requests": 0,
+   "stage": "search"
+  },
+  {
+   "ranked": [
+    "Imranch4/image-similarity-checker",
+    "fazliddindehkanoff/face-match",
+    "seomoz/simhash-py",
+    "error201/SimilarImages",
+    "ChsHub/SSIM-PIL",
+    "ericbn/imha",
+    "seomoz/simhash-cluster",
+    "parkr/near-dup-detection",
+    "lmmx/czkawka",
+    "umbertogriffo/fast-near-duplicate-image-search",
+    "LiaoYun0x0/Feature-Matching-and-Position-Matching-between-Optical-and-SAR",
+    "SauersML/vlens",
+    "debdutgoswami/instagram-profile-picture",
+    "akamhy/videohash",
+    "elisemercury/Duplicate-Image-Finder",
+    "idealo/imagededup",
+    "magamig/duplicate-images-finder",
+    "Mukalingam/Mathematical_formula_Extractor"
+   ],
+   "skipped": 40,
+   "stage": "rank"
+  },
+  {
+   "rejection": "NO_IMPORTABLE_PACKAGE",
+   "repo": "Imranch4/image-similarity-checker",
+   "stage": "inspect"
+  },
+  {
+   "rejection": null,
+   "repo": "fazliddindehkanoff/face-match",
+   "stage": "inspect"
+  },
+  {
+   "rejection": "COMPILED_OR_SDIST_ONLY: needs a build step, wheels-only staging cannot install it",
+   "repo": "seomoz/simhash-py",
+   "stage": "inspect"
+  },
+  {
+   "rejection": "NO_IMPORTABLE_PACKAGE",
+   "repo": "error201/SimilarImages",
+   "stage": "inspect"
+  },
+  {
+   "rejection": "COMPILED_OR_SDIST_ONLY: needs a build step, wheels-only staging cannot install it",
+   "repo": "ChsHub/SSIM-PIL",
+   "stage": "inspect"
+  },
+  {
+   "rejection": null,
+   "repo": "ericbn/imha",
+   "stage": "inspect"
+  },
+  {
+   "rejection": null,
+   "repo": "seomoz/simhash-cluster",
+   "stage": "inspect"
+  },
+  {
+   "rejection": null,
+   "repo": "parkr/near-dup-detection",
+   "stage": "inspect"
+  },
+  {
+   "queue": [
+    "fazliddindehkanoff/face-match",
+    "ericbn/imha",
+    "parkr/near-dup-detection"
+   ],
+   "stage": "select"
+  },
+  {
+   "n": 0,
+   "repo": "fazliddindehkanoff/face-match",
+   "stage": "attempt"
+  },
+  {
+   "code": "WHEELHOUSE_TOO_LARGE",
+   "n": 0,
+   "stage": "stage_rejected"
+  },
+  {
+   "n": 1,
+   "repo": "ericbn/imha",
+   "stage": "attempt"
+  },
+  {
+   "image": "sha256:c3b522d253acff18d055389835d24ba926b8480cc82b20fc7a5b1764dbca9452",
+   "n": 1,
+   "stage": "stage",
+   "tar_sha256": "3e39fd697ad074c8dc78fe171e68841b5dbd1825e408e377146abad7e6d558c0"
+  },
+  {
+   "exp_id": "d-8a53d5b33dda6d7f9991",
+   "n": 1,
+   "stage": "adapt"
+  },
+  {
+   "n": 1,
+   "stage": "verify_failed",
+   "state": "NO_QUALIFYING_CANDIDATE"
+  },
+  {
+   "n": 1,
+   "repo": "ericbn/imha",
+   "stage": "retry_queued"
+  },
+  {
+   "n": 2,
+   "repo": "ericbn/imha",
+   "stage": "attempt"
+  },
+  {
+   "exp_id": "d-6e64efe8d6321768beed",
+   "n": 2,
+   "stage": "adapt"
+  },
+  {
+   "n": 2,
+   "stage": "verify_failed",
+   "state": "NO_QUALIFYING_CANDIDATE"
+  },
+  {
+   "n": 2,
+   "repo": "ericbn/imha",
+   "stage": "retry_queued"
+  },
+  {
+   "n": 3,
+   "repo": "ericbn/imha",
+   "stage": "attempt"
+  },
+  {
+   "exp_id": "d-fb99ae68c014e81647db",
+   "n": 3,
+   "stage": "adapt"
+  },
+  {
+   "adapter_sha256": "5d5a6fbd3fc356dd1d8519940097d6c06bbd8e083d4512429d59763cea3f2bb8",
+   "exp_id": "d-fb99ae68c014e81647db",
+   "n": 3,
+   "stage": "verify"
+  },
+  {
+   "cap_id": "image.asset-match",
+   "stage": "admit",
+   "version": 1
+  },
+  {
+   "stage": "execute",
+   "state": "STEP_FAILED"
+  },
+  {
+   "stage": "failed_execute"
+  },
+  {
+   "manifest_sha256": "a4fddf753e8ef13f58a6c0fc97473e3242c6779cf43a0afd513f4d34f724061a",
+   "stage": "record_outcome"
+  }
+ ],
+ "state": "FAILED_EXECUTE"
+}

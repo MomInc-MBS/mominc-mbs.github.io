@@ -1,0 +1,10 @@
+Full suite on build/prototype 73515df, real Docker on (local build tree; summary only, the 2 MB log is not published)
+=========================== short test summary info ===========================
+SKIPPED [1] tests\adversarial\test_video_integrity.py:57: OS does not allow creating symlinks
+SKIPPED [1] tests\test_console.py:215: symlinks require Windows developer privileges
+SKIPPED [1] tests\test_g2_stage.py:336: opt-in: set HIVE_LIVE_NET=1 (real network in the pip-download container)
+SKIPPED [1] tests\test_p_hosted_backend.py:403: opt-in: NVIDIA_API_KEY set and HIVE_LIVE_NIM=1 (real, billed calls)
+SKIPPED [1] tests\test_p_model.py:194: opt-in: HIVE_LIVE_MODEL=1 and qwen listed by LM Studio (one real call)
+SKIPPED [1] tests\unit\test_export_snapshot.py:184: creating symlinks is unavailable in this Windows session
+1855 passed, 6 skipped in 4360.15s (1:12:40)
+EXIT 0 

@@ -1,0 +1,41 @@
+{
+ "at": "2026-11-26T08:27:37-0800",
+ "baseline_commit": "0e9e0d3",
+ "cached_input_tokens": null,
+ "candidate_commit": "73515df0bd5fadb246e48d0165944025ab8dd27d",
+ "cost_usd": 0.0,
+ "details": {
+  "blocked": {
+   "blocked": {
+    "site.ref-extract": "skipped: not learnable by available models (evidence: local-demo/o3/evidence/learn-a, local-demo/o4/evidence/learn-a, local-demo/o5/evidence/learn-a, local-demo/o6/evidence/learn-a, local-demo/o7/evidence/learn-a)",
+    "site.ref-resolve": "skipped: not learnable by available models (evidence: local-demo/o3/evidence/learn-a, local-demo/o4/evidence/learn-a, local-demo/o5/evidence/learn-a, local-demo/o6/evidence/learn-a, local-demo/o7/evidence/learn-a)"
+   },
+   "evidence": [
+    "evidence/negative/o3-evidence-learn-a",
+    "evidence/negative/o4-evidence-learn-a",
+    "evidence/negative/o5-evidence-learn-a",
+    "evidence/negative/o6-evidence-learn-a",
+    "evidence/negative/o7-evidence-learn-a"
+   ],
+   "evidence_sources": [
+    "local-demo/o3/evidence/learn-a",
+    "local-demo/o4/evidence/learn-a",
+    "local-demo/o5/evidence/learn-a",
+    "local-demo/o6/evidence/learn-a",
+    "local-demo/o7/evidence/learn-a"
+   ]
+  }
+ },
+ "elapsed_ms": 0,
+ "evidence_path": "evidence/negative/o3-evidence-learn-a; evidence/negative/o4-evidence-learn-a; evidence/negative/o5-evidence-learn-a; evidence/negative/o6-evidence-learn-a; evidence/negative/o7-evidence-learn-a",
+ "expected": "VERIFIED chain of three admitted capabilities",
+ "fixture_id": "H1 3-step chain extract -> resolve -> check on 2633d9b",
+ "input_tokens": 0,
+ "model_calls": 0,
+ "observed": "not run: site.ref-extract and site.ref-resolve are not admitted ({'site.ref-extract': 'skipped: not learnable by available models (evidence: local-demo/o3/evidence/learn-a, local-demo/o4/evidence/learn-a, local-demo/o5/evidence/learn-a, local-demo/o6/evidence/learn-a, local-demo/o7/evidence/learn-a)', 'site.ref-resolve': 'skipped: not learnable by available models (evidence: local-demo/o3/evidence/learn-a, local-demo/o4/evidence/learn-a, local-demo/o5/evidence/learn-a, local-demo/o6/evidence/learn-a, local-demo/o7/evidence/learn-a)'})",
+ "output_tokens": 0,
+ "phase": "goal-a",
+ "registry_snapshot": "e91266be47d433b834e5d77d157f1d6a943fc96b7d5566802e94f56562a6b52f",
+ "status": "blocked",
+ "test_id": "H1"
+}

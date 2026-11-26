@@ -1,0 +1,444 @@
+{
+ "at": "2026-11-26T08:42:49-0800",
+ "baseline_commit": "0e9e0d3",
+ "cached_input_tokens": null,
+ "candidate_commit": "73515df0bd5fadb246e48d0165944025ab8dd27d",
+ "cost_usd": 0.0,
+ "details": {
+  "attempts": [
+   {
+    "admission": null,
+    "exp_id": null,
+    "license": "MIT",
+    "n": 0,
+    "rejection": "WHEELHOUSE_TOO_LARGE: WHEELHOUSE_TOO_LARGE: download directory passed 157286400 bytes; the container was removed",
+    "repo": "fazliddindehkanoff/face-match",
+    "results": null,
+    "revision": "b58468a9c45bdee0725c0f1acd11599f9d9eb6c8",
+    "state": "REJECTED"
+   },
+   {
+    "admission": null,
+    "exp_id": "d-8a53d5b33dda6d7f9991",
+    "license": "BSD-2-Clause",
+    "n": 1,
+    "rejection": "NO_QUALIFYING_CANDIDATE: 3 distinct proposals evaluated, none passed",
+    "repo": "ericbn/imha",
+    "results": {
+     "baselines": {
+      "scripted": {
+       "candidate_sha256": "240b7f1e02a70696ff674905b988793d3aa07485ace177185d5cb408c9e08cab",
+       "label": "hand-written",
+       "n": 24,
+       "pass_count": 1,
+       "receipt_path": "receipt-scripted_baseline-240b7f1e02a7.json",
+       "receipt_sha256": "d069644ea1bbaa324a413c1ee02456644131e4d5d99ab66fb908900a4c2c6859",
+       "verdict": "FAIL"
+      },
+      "unchanged_hive": {
+       "basis": "planner returned 0 steps for the gap",
+       "n": 24,
+       "pass_count": 0
+      }
+     },
+     "ledger": {
+      "calls": 3,
+      "container_runs": 4,
+      "estimated_tokens": false,
+      "in_tokens": 9747,
+      "out_tokens": 1640,
+      "proposals": 3,
+      "wall_s": 40.125
+     },
+     "proposals": [
+      {
+       "acceptance": null,
+       "dev": {
+        "n": 6,
+        "pass_count": 1
+       },
+       "feedback": "case two-copies-and-one-other: expected {\"groups\":[{\"id\":\"g001\",\"keeper\":\"IMG_4862.PNG\",\"members\":[\"DSC_8774-final.jpeg\",\"IMG_4862.PNG\",\"Logo final_4995-final.png\",\"holiday_1959-final.png\"]},{\"id\":\"g002\",\"keeper\":\"asset_4524-final.png\",\"members\":[\"asset_4524-final.png\",\"photo_1278.png\"]}],\"schema\":\"image-match-manifest-v1\",\"singletons\":[] got {\"groups\":[{\"id\":\"g001\",\"keeper\":\"IMG_4862.PNG\",\"member",
+       "files": {
+        "cand": "cand-8ca8fb400f8816bb986bf24b2691938d085e35f0fce9bde17857f12aeb85914f.py",
+        "reply": "reply-1.txt"
+       },
+       "n": 1,
+       "sha256": "8ca8fb400f8816bb986bf24b2691938d085e35f0fce9bde17857f12aeb85914f",
+       "static": []
+      },
+      {
+       "acceptance": null,
+       "dev": {
+        "n": 6,
+        "pass_count": 1
+       },
+       "feedback": "case two-copies-and-one-other: expected {\"groups\":[{\"id\":\"g001\",\"keeper\":\"IMG_4862.PNG\",\"members\":[\"DSC_8774-final.jpeg\",\"IMG_4862.PNG\",\"Logo final_4995-final.png\",\"holiday_1959-final.png\"]},{\"id\":\"g002\",\"keeper\":\"asset_4524-final.png\",\"members\":[\"asset_4524-final.png\",\"photo_1278.png\"]}],\"schema\":\"image-match-manifest-v1\",\"singletons\":[] got {\"groups\":[{\"id\":\"g001\",\"keeper\":\"IMG_4862.PNG\",\"member",
+       "files": {
+        "cand": "cand-21b3ff1f277604cae7852161b1b751c6f4dd65a012a6051ecb58bca910903bcb.py",
+        "reply": "reply-2.txt"
+       },
+       "n": 2,
+       "sha256": "21b3ff1f277604cae7852161b1b751c6f4dd65a012a6051ecb58bca910903bcb",
+       "static": []
+      },
+      {
+       "acceptance": null,
+       "dev": {
+        "n": 6,
+        "pass_count": 1
+       },
+       "feedback": "case two-copies-and-one-other: expected {\"groups\":[{\"id\":\"g001\",\"keeper\":\"IMG_4862.PNG\",\"members\":[\"DSC_8774-final.jpeg\",\"IMG_4862.PNG\",\"Logo final_4995-final.png\",\"holiday_1959-final.png\"]},{\"id\":\"g002\",\"keeper\":\"asset_4524-final.png\",\"members\":[\"asset_4524-final.png\",\"photo_1278.png\"]}],\"schema\":\"image-match-manifest-v1\",\"singletons\":[] got {\"groups\":[{\"id\":\"g001\",\"keeper\":\"IMG_4862.PNG\",\"member",
+       "files": {
+        "cand": "cand-57f9c6ef9fef79d593409a348f655282cc6994784b4a0e793629dcb768e63a26.py",
+        "reply": "reply-3.txt"
+       },
+       "n": 3,
+       "sha256": "57f9c6ef9fef79d593409a348f655282cc6994784b4a0e793629dcb768e63a26",
+       "static": []
+      }
+     ],
+     "reason": "3 distinct proposals evaluated, none passed",
+     "receipt": null,
+     "state": "NO_QUALIFYING_CANDIDATE"
+    },
+    "revision": "b9f3890418058022943d7d11abf93cc671e115e0",
+    "state": "FAILED"
+   },
+   {
+    "admission": null,
+    "exp_id": "d-6e64efe8d6321768beed",
+    "license": "BSD-2-Clause",
+    "n": 2,
+    "rejection": "NO_QUALIFYING_CANDIDATE: 3 distinct proposals evaluated, none passed",
+    "repo": "ericbn/imha",
+    "results": {
+     "baselines": {
+      "scripted": {
+       "candidate_sha256": "240b7f1e02a70696ff674905b988793d3aa07485ace177185d5cb408c9e08cab",
+       "label": "hand-written",
+       "n": 24,
+       "pass_count": 0,
+       "receipt_path": "receipt-scripted_baseline-240b7f1e02a7.json",
+       "receipt_sha256": "1dacadc3500987e0a7b28f883a3cd4ab084920dc6108683dfb5a84a34053ce43",
+       "verdict": "FAIL"
+      },
+      "unchanged_hive": {
+       "basis": "planner returned 0 steps for the gap",
+       "n": 24,
+       "pass_count": 0
+      }
+     },
+     "ledger": {
+      "calls": 3,
+      "container_runs": 5,
+      "estimated_tokens": false,
+      "in_tokens": 10981,
+      "out_tokens": 2734,
+      "proposals": 3,
+      "wall_s": 46.875
+     },
+     "proposals": [
+      {
+       "acceptance": null,
+       "dev": {
+        "n": 6,
+        "pass_count": 1
+       },
+       "feedback": "case two-copies-and-one-other: expected {\"groups\":[{\"id\":\"g001\",\"keeper\":\"IMG_4862.PNG\",\"members\":[\"DSC_8774-final.jpeg\",\"IMG_4862.PNG\",\"Logo final_4995-final.png\",\"holiday_1959-final.png\"]},{\"id\":\"g002\",\"keeper\":\"asset_4524-final.png\",\"members\":[\"asset_4524-final.png\",\"photo_1278.png\"]}],\"schema\":\"image-match-manifest-v1\",\"singletons\":[] got {\"groups\":[{\"id\":\"g001\",\"keeper\":\"IMG_4862.PNG\",\"member",
+       "files": {
+        "cand": "cand-27a91de7634f5b9072299297ecf9cab4400a76f34da5b0ca04eaf1b63b425dc4.py",
+        "reply": "reply-1.txt"
+       },
+       "n": 1,
+       "sha256": "27a91de7634f5b9072299297ecf9cab4400a76f34da5b0ca04eaf1b63b425dc4",
+       "static": []
+      },
+      {
+       "acceptance": null,
+       "dev": {
+        "n": 6,
+        "pass_count": 5
+       },
+       "feedback": "case three-pictures: expected {\"groups\":[{\"id\":\"g001\",\"keeper\":\"asset_9237.png\",\"members\":[\"IMG_1922 copy.jpg\",\"asset_9237.png\"]},{\"id\":\"g002\",\"keeper\":\"screenshot_7385.png\",\"members\":[\"banner_2941-final.PNG\",\"screenshot_7385.png\"]}],\"schema\":\"image-match-manifest-v1\",\"singletons\":[\"screenshot_8282-final.PNG\"]} got {\"groups\":[{\"id\":\"g001\",\"keeper\":\"asset_9237.png\",\"members\":[\"IMG_1922 copy.jpg\",\"a",
+       "files": {
+        "cand": "cand-80cf4b21d84fe2fb04b3da2e4502ca01e3e130dd5f75df006414e28bcb5391c1.py",
+        "reply": "reply-2.txt"
+       },
+       "n": 2,
+       "sha256": "80cf4b21d84fe2fb04b3da2e4502ca01e3e130dd5f75df006414e28bcb5391c1",
+       "static": []
+      },
+      {
+       "acceptance": {
+        "candidate_sha256": "42f711268c1d839e6bcd08a647ed05ccb5a5431c7018952a0eba63df8e469f7f",
+        "n": 24,
+        "pass_count": 20,
+        "receipt_sha256": "7223e97ebb2b3015f0259d8d1a65058732c44751d8e7c03a4dc4191a4b17547c",
+        "verdict": "FAIL"
+       },
+       "dev": {
+        "n": 6,
+        "pass_count": 6
+       },
+       "feedback": "it passed all dev cases but failed 4 of 24 hidden acceptance cases (details withheld)",
+       "files": {
+        "cand": "cand-42f711268c1d839e6bcd08a647ed05ccb5a5431c7018952a0eba63df8e469f7f.py",
+        "reply": "reply-3.txt"
+       },
+       "n": 3,
+       "sha256": "42f711268c1d839e6bcd08a647ed05ccb5a5431c7018952a0eba63df8e469f7f",
+       "static": []
+      }
+     ],
+     "reason": "3 distinct proposals evaluated, none passed",
+     "receipt": null,
+     "state": "NO_QUALIFYING_CANDIDATE"
+    },
+    "revision": "b9f3890418058022943d7d11abf93cc671e115e0",
+    "state": "FAILED"
+   },
+   {
+    "admission": {
+     "cap_id": "image.asset-match",
+     "rerun_receipt_sha256": "22493c69a2ab1fb042856a366f31a64bca20a47638cc7b524fac0913b3304e6a",
+     "statement_sha": "e1cf727225bb49ebac77450cbd7e3a824cf35f24e32f4d55a422d1eee7bdb283",
+     "version": 1
+    },
+    "exp_id": "d-fb99ae68c014e81647db",
+    "license": "BSD-2-Clause",
+    "n": 3,
+    "rejection": null,
+    "repo": "ericbn/imha",
+    "results": {
+     "baselines": {
+      "scripted": {
+       "candidate_sha256": "240b7f1e02a70696ff674905b988793d3aa07485ace177185d5cb408c9e08cab",
+       "label": "hand-written",
+       "n": 24,
+       "pass_count": 1,
+       "receipt_path": "receipt-scripted_baseline-240b7f1e02a7.json",
+       "receipt_sha256": "9b862481380a6b02d8fe729e5cad873fa9720c8c82a0ed58d0d27b7e0a94ff4b",
+       "verdict": "FAIL"
+      },
+      "unchanged_hive": {
+       "basis": "planner returned 0 steps for the gap",
+       "n": 24,
+       "pass_count": 0
+      }
+     },
+     "ledger": {
+      "calls": 2,
+      "container_runs": 5,
+      "estimated_tokens": false,
+      "in_tokens": 6741,
+      "out_tokens": 1721,
+      "proposals": 2,
+      "wall_s": 36.17200000000594
+     },
+     "proposals": [
+      {
+       "acceptance": {
+        "candidate_sha256": "186b458985fbe580cd5eee96bbb5edae3ed5f262b3f8b9cbdbbaddacdfacd0f0",
+        "n": 24,
+        "pass_count": 23,
+        "receipt_sha256": "ba55cfababf40f98908870d8074ad306cdf008a00c427ee672e2fe03e9b4f506",
+        "verdict": "FAIL"
+       },
+       "dev": {
+        "n": 6,
+        "pass_count": 6
+       },
+       "feedback": "it passed all dev cases but failed 1 of 24 hidden acceptance cases (details withheld)",
+       "files": {
+        "cand": "cand-186b458985fbe580cd5eee96bbb5edae3ed5f262b3f8b9cbdbbaddacdfacd0f0.py",
+        "reply": "reply-1.txt"
+       },
+       "n": 1,
+       "sha256": "186b458985fbe580cd5eee96bbb5edae3ed5f262b3f8b9cbdbbaddacdfacd0f0",
+       "static": []
+      },
+      {
+       "acceptance": {
+        "candidate_sha256": "5d5a6fbd3fc356dd1d8519940097d6c06bbd8e083d4512429d59763cea3f2bb8",
+        "n": 24,
+        "pass_count": 24,
+        "receipt_sha256": "bd1f40083ff4a72ce31163d896d2f0843286ba861715f5dce78fdf06d06c764a",
+        "verdict": "PASS"
+       },
+       "dev": {
+        "n": 6,
+        "pass_count": 6
+       },
+       "feedback": "it passed all dev cases but failed 0 of 24 hidden acceptance cases (details withheld)",
+       "files": {
+        "cand": "cand-5d5a6fbd3fc356dd1d8519940097d6c06bbd8e083d4512429d59763cea3f2bb8.py",
+        "reply": "reply-2.txt"
+       },
+       "n": 2,
+       "sha256": "5d5a6fbd3fc356dd1d8519940097d6c06bbd8e083d4512429d59763cea3f2bb8",
+       "static": []
+      }
+     ],
+     "reason": "independent evaluator PASS; awaiting admission",
+     "receipt": {
+      "candidate_sha256": "5d5a6fbd3fc356dd1d8519940097d6c06bbd8e083d4512429d59763cea3f2bb8",
+      "n": 24,
+      "pass_count": 24,
+      "path": "receipt-candidate-5d5a6fbd3fc3.json",
+      "receipt_sha256": "bd1f40083ff4a72ce31163d896d2f0843286ba861715f5dce78fdf06d06c764a",
+      "verdict": "PASS"
+     },
+     "state": "CANDIDATE_PASSED"
+    },
+    "revision": "b9f3890418058022943d7d11abf93cc671e115e0",
+    "state": "PASSED"
+   }
+  ],
+  "capability": "image.asset-match",
+  "cost_usd": 0.0,
+  "gap_ref": "operator/gap/6c3f99834d9f7881",
+  "goal_state": "ACQUISITION_QUEUED",
+  "inputs": [
+   {
+    "bytes": 48562,
+    "path": "images/apps-alarm-icon-192.png",
+    "sha256": "278f744a0fda3ec95d3e62acfeeda512408070849d2427d58750d23a1df9ee5f"
+   },
+   {
+    "bytes": 230070,
+    "path": "images/apps-alarm-icon-512.png",
+    "sha256": "3ccfb13a1d5256951e056cb081ddc3ab0863ee08c05be93502e4f3dc605d9133"
+   },
+   {
+    "bytes": 24971,
+    "path": "images/apps-coach-icons-coach-2d-192.png",
+    "sha256": "f5b2e5f78474173c862d137fc9d5c60639ecc3f4c086221471b40661a0fc1843"
+   },
+   {
+    "bytes": 108719,
+    "path": "images/apps-coach-icons-coach-2d-512.png",
+    "sha256": "8f0b20c6a110fa2e021aad3e2fd691a1312bcbfd5be791d7c1d92b79cafe8981"
+   },
+   {
+    "bytes": 25244,
+    "path": "images/apps-coach-icons-coach-2d-apple.png",
+    "sha256": "a6a239beeb621ed6faa6ad08b0b3c3f6428b7909a96b5a610178d273d53e14ef"
+   },
+   {
+    "bytes": 30262,
+    "path": "images/apps-coach-models-previews-high-incline-pushup.png",
+    "sha256": "e477fa97b7dd659c6cb4eca62c254cd06bba01804ffcf05817aaa4c9aa74ce4f"
+   },
+   {
+    "bytes": 30262,
+    "path": "images/apps-coach-models-previews-low-incline-pushup.png",
+    "sha256": "e477fa97b7dd659c6cb4eca62c254cd06bba01804ffcf05817aaa4c9aa74ce4f"
+   },
+   {
+    "bytes": 38192,
+    "path": "images/apps-coach-models-previews-pause-squat.png",
+    "sha256": "cf464db9ba767af35b8970d3712de813c60fb0f5dfc917ce78a3f535d48aac5f"
+   },
+   {
+    "bytes": 38192,
+    "path": "images/apps-coach-models-previews-slow-squat.png",
+    "sha256": "cf464db9ba767af35b8970d3712de813c60fb0f5dfc917ce78a3f535d48aac5f"
+   },
+   {
+    "bytes": 26534,
+    "path": "images/apps-corgi-icon-192.png",
+    "sha256": "b0b2701845bedff953b04e6571c074ad01b80b6df0a66a865e025eb418524534"
+   },
+   {
+    "bytes": 136407,
+    "path": "images/apps-corgi-icon-512.png",
+    "sha256": "8a307f2384077e21a69321b746c5accf817c12fc067641f92088270a9a89bef3"
+   },
+   {
+    "bytes": 23936,
+    "path": "images/apps-fuel-icon-192.png",
+    "sha256": "2588c6915ceceb9b2928cbcee581dc882c02a372b36c51f609c627b650080cfe"
+   },
+   {
+    "bytes": 128293,
+    "path": "images/apps-fuel-icon-512.png",
+    "sha256": "fd4e59d42046ee6f5ad3f0c89369f1e31e841e1f748213aa07620af0f3d666e6"
+   },
+   {
+    "bytes": 14144,
+    "path": "images/apps-misinformation-icon-192.png",
+    "sha256": "1bd9a97e44aefdabee2742ef767eee4db7df90425d4b32c005432677e2438937"
+   },
+   {
+    "bytes": 82522,
+    "path": "images/apps-misinformation-icon-512.png",
+    "sha256": "07e0e3813ee270daa2e8d840a2e10071623a945db23119e8f0cc9dcbf17a3189"
+   },
+   {
+    "bytes": 24971,
+    "path": "images/docs-moms-suite-coach-myr5-icons-icon-192.png",
+    "sha256": "f5b2e5f78474173c862d137fc9d5c60639ecc3f4c086221471b40661a0fc1843"
+   },
+   {
+    "bytes": 108719,
+    "path": "images/docs-moms-suite-coach-myr5-icons-icon-512.png",
+    "sha256": "8f0b20c6a110fa2e021aad3e2fd691a1312bcbfd5be791d7c1d92b79cafe8981"
+   },
+   {
+    "bytes": 33114,
+    "path": "images/little-boyfriend-app-icons-apple-touch-icon-180.png",
+    "sha256": "a63484989ccfe7ddb91fdd1ff176e3817b2608ff1c2f1c3e467bfe704f5bc463"
+   },
+   {
+    "bytes": 36571,
+    "path": "images/little-boyfriend-app-icons-icon-192.png",
+    "sha256": "91a4a0a3de262cfacaae819f881ab53b6d3cb0090146b7bb20e4cb7cab2bc9eb"
+   },
+   {
+    "bytes": 185165,
+    "path": "images/little-boyfriend-app-icons-icon-512.png",
+    "sha256": "a7bd1646faee66a353ec6e2df79b76c0b3be98d09716878ed48337746ae789b0"
+   }
+  ],
+  "ledger": {
+   "attempts": 1,
+   "builds": 1,
+   "container_runs": 14,
+   "cost_usd": 0.0,
+   "github_requests": 0,
+   "in_tokens": 28049,
+   "model_calls": 9,
+   "out_tokens": 6129,
+   "wall_s": 335.5310000000027
+  },
+  "missing_step": {
+   "arity": 20,
+   "in": "image_file",
+   "ordered": true,
+   "out": "image_match_manifest"
+  },
+  "outcome": {
+   "executed": true,
+   "exp_id": "d-fb99ae68c014e81647db",
+   "goal_state": "STEP_FAILED",
+   "repo": "ericbn/imha",
+   "revision": "b9f3890418058022943d7d11abf93cc671e115e0",
+   "tier": "github"
+  },
+  "reason": "goal ended STEP_FAILED: step s1 (image.asset-match): VERIFICATION_FAILED - Independent check FAIL; output withheld",
+  "run_id": "a-50fd79e8e8351702f895",
+  "state": "FAILED_EXECUTE"
+ },
+ "elapsed_ms": 335921,
+ "evidence_path": "evidence/learn-c/acquisition-manifest.json",
+ "expected": "an approved open-source repo, pinned revision + licence + hash, adapter, independent verification, admitted",
+ "fixture_id": "image.asset-match from live GitHub search on the 20 real pictures",
+ "input_tokens": 28049,
+ "model_calls": 9,
+ "observed": "FAILED_EXECUTE: goal ended STEP_FAILED: step s1 (image.asset-match): VERIFICATION_FAILED - Independent check FAIL; output withheld; repo=ericbn/imha@b9f3890418; license=BSD-2-Clause",
+ "output_tokens": 6129,
+ "phase": "learn-c",
+ "registry_snapshot": "462504ff676b7f95638a4877509adf07a226d329059bd492ce80b9683282a4e7",
+ "status": "fail",
+ "test_id": "T06"
+}

@@ -1,0 +1,472 @@
+{
+ "at": "2026-11-26T08:27:37-0800",
+ "baseline_commit": "0e9e0d3",
+ "cached_input_tokens": null,
+ "candidate_commit": "73515df0bd5fadb246e48d0165944025ab8dd27d",
+ "cost_usd": 0.0,
+ "details": {
+  "broken": [
+   {
+    "kind": "href",
+    "page": "play/corgi/index.html",
+    "raw": "atmosphere.css",
+    "reason": "missing",
+    "target": "play/corgi/atmosphere.css"
+   },
+   {
+    "kind": "src",
+    "page": "play/corgi/index.html",
+    "raw": "atmosphere.js",
+    "reason": "missing",
+    "target": "play/corgi/atmosphere.js"
+   },
+   {
+    "kind": "src",
+    "page": "play/corgi/index.html",
+    "raw": "channel-runtime.js?v=game-name-2",
+    "reason": "missing",
+    "target": "play/corgi/channel-runtime.js"
+   },
+   {
+    "kind": "src",
+    "page": "play/corgi/index.html",
+    "raw": "mbs-runtime.js",
+    "reason": "missing",
+    "target": "play/corgi/mbs-runtime.js"
+   },
+   {
+    "kind": "src",
+    "page": "play/corgi/index.html",
+    "raw": "mbs-shim.js",
+    "reason": "missing",
+    "target": "play/corgi/mbs-shim.js"
+   },
+   {
+    "kind": "src",
+    "page": "play/corgi/index.html",
+    "raw": "mount.js",
+    "reason": "missing",
+    "target": "play/corgi/mount.js"
+   },
+   {
+    "kind": "href",
+    "page": "play/corgi/index.html",
+    "raw": "network-flow.css",
+    "reason": "missing",
+    "target": "play/corgi/network-flow.css"
+   },
+   {
+    "kind": "src",
+    "page": "play/corgi/index.html",
+    "raw": "network-flow.js?v=neon-tv-2",
+    "reason": "missing",
+    "target": "play/corgi/network-flow.js"
+   },
+   {
+    "kind": "href",
+    "page": "play/corgi/index.html",
+    "raw": "play.css",
+    "reason": "missing",
+    "target": "play/corgi/play.css"
+   },
+   {
+    "kind": "href",
+    "page": "play/djscratch/index.html",
+    "raw": "atmosphere.css",
+    "reason": "missing",
+    "target": "play/djscratch/atmosphere.css"
+   },
+   {
+    "kind": "src",
+    "page": "play/djscratch/index.html",
+    "raw": "atmosphere.js",
+    "reason": "missing",
+    "target": "play/djscratch/atmosphere.js"
+   },
+   {
+    "kind": "src",
+    "page": "play/djscratch/index.html",
+    "raw": "channel-runtime.js?v=game-name-2",
+    "reason": "missing",
+    "target": "play/djscratch/channel-runtime.js"
+   },
+   {
+    "kind": "href",
+    "page": "play/djscratch/index.html",
+    "raw": "dj-booth.css",
+    "reason": "missing",
+    "target": "play/djscratch/dj-booth.css"
+   },
+   {
+    "kind": "src",
+    "page": "play/djscratch/index.html",
+    "raw": "mbs-runtime.js",
+    "reason": "missing",
+    "target": "play/djscratch/mbs-runtime.js"
+   },
+   {
+    "kind": "src",
+    "page": "play/djscratch/index.html",
+    "raw": "mbs-shim.js",
+    "reason": "missing",
+    "target": "play/djscratch/mbs-shim.js"
+   },
+   {
+    "kind": "src",
+    "page": "play/djscratch/index.html",
+    "raw": "mount.js",
+    "reason": "missing",
+    "target": "play/djscratch/mount.js"
+   },
+   {
+    "kind": "href",
+    "page": "play/djscratch/index.html",
+    "raw": "network-flow.css",
+    "reason": "missing",
+    "target": "play/djscratch/network-flow.css"
+   },
+   {
+    "kind": "src",
+    "page": "play/djscratch/index.html",
+    "raw": "network-flow.js?v=neon-tv-2",
+    "reason": "missing",
+    "target": "play/djscratch/network-flow.js"
+   },
+   {
+    "kind": "href",
+    "page": "play/djscratch/index.html",
+    "raw": "play.css",
+    "reason": "missing",
+    "target": "play/djscratch/play.css"
+   },
+   {
+    "kind": "href",
+    "page": "play/fuel/index.html",
+    "raw": "atmosphere.css",
+    "reason": "missing",
+    "target": "play/fuel/atmosphere.css"
+   },
+   {
+    "kind": "src",
+    "page": "play/fuel/index.html",
+    "raw": "atmosphere.js",
+    "reason": "missing",
+    "target": "play/fuel/atmosphere.js"
+   },
+   {
+    "kind": "src",
+    "page": "play/fuel/index.html",
+    "raw": "channel-runtime.js?v=game-name-2",
+    "reason": "missing",
+    "target": "play/fuel/channel-runtime.js"
+   },
+   {
+    "kind": "src",
+    "page": "play/fuel/index.html",
+    "raw": "mbs-runtime.js",
+    "reason": "missing",
+    "target": "play/fuel/mbs-runtime.js"
+   },
+   {
+    "kind": "src",
+    "page": "play/fuel/index.html",
+    "raw": "mbs-shim.js",
+    "reason": "missing",
+    "target": "play/fuel/mbs-shim.js"
+   },
+   {
+    "kind": "src",
+    "page": "play/fuel/index.html",
+    "raw": "mount.js",
+    "reason": "missing",
+    "target": "play/fuel/mount.js"
+   },
+   {
+    "kind": "href",
+    "page": "play/fuel/index.html",
+    "raw": "network-flow.css",
+    "reason": "missing",
+    "target": "play/fuel/network-flow.css"
+   },
+   {
+    "kind": "src",
+    "page": "play/fuel/index.html",
+    "raw": "network-flow.js?v=neon-tv-2",
+    "reason": "missing",
+    "target": "play/fuel/network-flow.js"
+   },
+   {
+    "kind": "href",
+    "page": "play/fuel/index.html",
+    "raw": "play.css",
+    "reason": "missing",
+    "target": "play/fuel/play.css"
+   },
+   {
+    "kind": "href",
+    "page": "play/fuel/index.html",
+    "raw": "../games/fuel/",
+    "reason": "missing",
+    "target": "play/games/fuel/"
+   },
+   {
+    "kind": "href",
+    "page": "play/girlfriend/index.html",
+    "raw": "../games/girlfriend/",
+    "reason": "missing",
+    "target": "play/games/girlfriend/"
+   },
+   {
+    "kind": "href",
+    "page": "play/girlfriend/index.html",
+    "raw": "../games/girlfriend/",
+    "reason": "missing",
+    "target": "play/games/girlfriend/"
+   },
+   {
+    "kind": "href",
+    "page": "play/girlfriend/index.html",
+    "raw": "atmosphere.css",
+    "reason": "missing",
+    "target": "play/girlfriend/atmosphere.css"
+   },
+   {
+    "kind": "src",
+    "page": "play/girlfriend/index.html",
+    "raw": "atmosphere.js",
+    "reason": "missing",
+    "target": "play/girlfriend/atmosphere.js"
+   },
+   {
+    "kind": "src",
+    "page": "play/girlfriend/index.html",
+    "raw": "channel-runtime.js?v=game-name-2",
+    "reason": "missing",
+    "target": "play/girlfriend/channel-runtime.js"
+   },
+   {
+    "kind": "src",
+    "page": "play/girlfriend/index.html",
+    "raw": "mbs-runtime.js",
+    "reason": "missing",
+    "target": "play/girlfriend/mbs-runtime.js"
+   },
+   {
+    "kind": "src",
+    "page": "play/girlfriend/index.html",
+    "raw": "mbs-shim.js",
+    "reason": "missing",
+    "target": "play/girlfriend/mbs-shim.js"
+   },
+   {
+    "kind": "src",
+    "page": "play/girlfriend/index.html",
+    "raw": "mount.js",
+    "reason": "missing",
+    "target": "play/girlfriend/mount.js"
+   },
+   {
+    "kind": "href",
+    "page": "play/girlfriend/index.html",
+    "raw": "network-flow.css",
+    "reason": "missing",
+    "target": "play/girlfriend/network-flow.css"
+   },
+   {
+    "kind": "src",
+    "page": "play/girlfriend/index.html",
+    "raw": "network-flow.js?v=neon-tv-2",
+    "reason": "missing",
+    "target": "play/girlfriend/network-flow.js"
+   },
+   {
+    "kind": "href",
+    "page": "play/girlfriend/index.html",
+    "raw": "play.css",
+    "reason": "missing",
+    "target": "play/girlfriend/play.css"
+   },
+   {
+    "kind": "href",
+    "page": "play/goon/index.html",
+    "raw": "atmosphere.css",
+    "reason": "missing",
+    "target": "play/goon/atmosphere.css"
+   },
+   {
+    "kind": "src",
+    "page": "play/goon/index.html",
+    "raw": "atmosphere.js",
+    "reason": "missing",
+    "target": "play/goon/atmosphere.js"
+   },
+   {
+    "kind": "src",
+    "page": "play/goon/index.html",
+    "raw": "channel-runtime.js?v=game-name-2",
+    "reason": "missing",
+    "target": "play/goon/channel-runtime.js"
+   },
+   {
+    "kind": "src",
+    "page": "play/goon/index.html",
+    "raw": "mbs-runtime.js",
+    "reason": "missing",
+    "target": "play/goon/mbs-runtime.js"
+   },
+   {
+    "kind": "src",
+    "page": "play/goon/index.html",
+    "raw": "mbs-shim.js",
+    "reason": "missing",
+    "target": "play/goon/mbs-shim.js"
+   },
+   {
+    "kind": "src",
+    "page": "play/goon/index.html",
+    "raw": "mount.js",
+    "reason": "missing",
+    "target": "play/goon/mount.js"
+   },
+   {
+    "kind": "href",
+    "page": "play/goon/index.html",
+    "raw": "network-flow.css?v=separate1",
+    "reason": "missing",
+    "target": "play/goon/network-flow.css"
+   },
+   {
+    "kind": "src",
+    "page": "play/goon/index.html",
+    "raw": "network-flow.js?v=separate1",
+    "reason": "missing",
+    "target": "play/goon/network-flow.js"
+   },
+   {
+    "kind": "href",
+    "page": "play/goon/index.html",
+    "raw": "play.css",
+    "reason": "missing",
+    "target": "play/goon/play.css"
+   },
+   {
+    "kind": "href",
+    "page": "play/war-room/index.html",
+    "raw": "atmosphere.css",
+    "reason": "missing",
+    "target": "play/war-room/atmosphere.css"
+   },
+   {
+    "kind": "src",
+    "page": "play/war-room/index.html",
+    "raw": "atmosphere.js",
+    "reason": "missing",
+    "target": "play/war-room/atmosphere.js"
+   },
+   {
+    "kind": "src",
+    "page": "play/war-room/index.html",
+    "raw": "channel-runtime.js?v=game-name-2",
+    "reason": "missing",
+    "target": "play/war-room/channel-runtime.js"
+   },
+   {
+    "kind": "src",
+    "page": "play/war-room/index.html",
+    "raw": "mbs-runtime.js",
+    "reason": "missing",
+    "target": "play/war-room/mbs-runtime.js"
+   },
+   {
+    "kind": "src",
+    "page": "play/war-room/index.html",
+    "raw": "mbs-shim.js",
+    "reason": "missing",
+    "target": "play/war-room/mbs-shim.js"
+   },
+   {
+    "kind": "href",
+    "page": "play/war-room/index.html",
+    "raw": "network-flow.css?v=separate1",
+    "reason": "missing",
+    "target": "play/war-room/network-flow.css"
+   },
+   {
+    "kind": "src",
+    "page": "play/war-room/index.html",
+    "raw": "network-flow.js?v=separate1",
+    "reason": "missing",
+    "target": "play/war-room/network-flow.js"
+   },
+   {
+    "kind": "href",
+    "page": "play/war-room/index.html",
+    "raw": "play.css",
+    "reason": "missing",
+    "target": "play/war-room/play.css"
+   }
+  ],
+  "broken_count": 57,
+  "delta": {
+   "container_runs": 1,
+   "in_tokens": 0,
+   "model_calls": 0,
+   "new_acquisition_runs": 0,
+   "new_experiments": 0,
+   "out_tokens": 0,
+   "proposal_calls": 0,
+   "replays": 0
+  },
+  "goal": {
+   "evidence": "evidence/goal-a/04-BL-2633d9b.stdout.json",
+   "fallbacks": [],
+   "gap_ref": null,
+   "goal_id": "g-a84fc43075a903d154a8",
+   "missing_step": null,
+   "output": {
+    "name": "broken-refs.json",
+    "ref": "output/goal/g-a84fc43075a903d154a8/broken-refs.json",
+    "sha256": "514f45800d4ba4cfa43317d23119fcfcbf38761c8e24a6e3decafe50e5d64c99"
+   },
+   "plan": [
+    "site.ref-check(input:0,input:1)"
+   ],
+   "plan_ops": [
+    "site.ref-check"
+   ],
+   "ranking": [],
+   "reason": null,
+   "state": "VERIFIED",
+   "steps": [
+    {
+     "kind": "discovered",
+     "mode": "retained_capability_execution",
+     "op": "site.ref-check",
+     "state": "VERIFIED",
+     "verdict": "PASS",
+     "version": 1
+    }
+   ],
+   "stored_plan": null,
+   "usage": {
+    "container_runs": 1,
+    "model_calls": 0,
+    "proposal_calls": 0
+   },
+   "wall_ms": 1265
+  },
+  "input_note": "The reference table is a deterministic evaluator-side export of the real pages (scripts/export_site_inputs.py plus the ref-extract oracle), because HIVE could not learn the extract and resolve steps."
+ },
+ "elapsed_ms": 1265,
+ "evidence_path": "evidence/goal-a/04-BL-2633d9b.stdout.json",
+ "expected": "VERIFIED by retained execution of site.ref-check, 0 model calls, 0 new experiments",
+ "fixture_id": "Goal A: broken links on 2633d9b reference table + manifest (evaluator-side export)",
+ "input_tokens": 0,
+ "model_calls": 0,
+ "observed": "VERIFIED plan=['site.ref-check(input:0,input:1)'] steps=[('site.ref-check', 'retained_capability_execution', 'PASS')] {'model_calls': 0, 'proposal_calls': 0, 'in_tokens': 0, 'out_tokens': 0, 'container_runs': 1, 'replays': 0, 'new_experiments': 0, 'new_acquisition_runs': 0}; broken links: 57; The reference table is a deterministic evaluator-side export of the real pages (scripts/export_site_inputs.py plus the ref-extract oracle), because HIVE could not learn the extract and resolve steps.",
+ "output_tokens": 0,
+ "phase": "goal-a",
+ "registry_snapshot": "e91266be47d433b834e5d77d157f1d6a943fc96b7d5566802e94f56562a6b52f",
+ "status": "pass",
+ "test_id": "T20"
+}

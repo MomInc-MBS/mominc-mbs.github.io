@@ -1,0 +1,95 @@
+{
+ "at": "2026-11-26T08:27:34-0800",
+ "baseline_commit": "0e9e0d3",
+ "cached_input_tokens": null,
+ "candidate_commit": "73515df0bd5fadb246e48d0165944025ab8dd27d",
+ "cost_usd": 0.0,
+ "details": {
+  "acquisitions": [
+   {
+    "admission": {
+     "cap_id": "site.ref-check",
+     "event_ref": "artifacts/ae463dd84798585d3b532203d15727f348014efdfe406846f62a94f2683af326.json",
+     "rerun_receipt_sha256": "6a7a26348f0d614dcb93272f4463fd6cdfe9920ca672ff6038897b1f570746f5",
+     "statement_sha": "8a96095ae8d6cab767be3ec6c174f52b4a0de4635dfcfc516f4ac8e1edf99dbe",
+     "version": 1
+    },
+    "attempts": [
+     {
+      "best_dev_pass": 6,
+      "exp_id": "d-003ccb4211faa6708da5",
+      "ledger": {
+       "calls": 1,
+       "container_runs": 3,
+       "estimated_tokens": false,
+       "in_tokens": 3698,
+       "out_tokens": 1101,
+       "proposals": 1,
+       "wall_s": 23.75
+      },
+      "reason": "independent evaluator PASS; awaiting admission",
+      "receipt": {
+       "n": 24,
+       "pass_count": 24,
+       "receipt_sha256": "bb9dd64de9157535097c4594398053f63c60f1d5eb1516a71a5c372813949bb2",
+       "verdict": "PASS"
+      },
+      "seeded_with_best": false,
+      "state": "CANDIDATE_PASSED",
+      "wall_s": 23.8
+     }
+    ],
+    "capability": "site.ref-check",
+    "cost": {
+     "calls": 1,
+     "container_runs": 3,
+     "in_tokens": 3698,
+     "out_tokens": 1101,
+     "proposals": 1,
+     "wall_s": 23.8
+    },
+    "goal_state": "UNRESOLVED",
+    "label": "L2",
+    "missing_step": {
+     "arity": 2,
+     "in": "reference_table",
+     "ins": [
+      "reference_table",
+      "site_manifest"
+     ],
+     "out": "broken_ref_report"
+    },
+    "reason": "no typed plan from the eligible capabilities",
+    "state": "ADMITTED",
+    "wall_s_total": 25.3
+   }
+  ],
+  "admitted": [
+   "site.ref-check"
+  ],
+  "blocked": [
+   {
+    "capability": "site.ref-extract",
+    "label": "L1",
+    "reason": "skipped: not learnable by available models (evidence: local-demo/o3/evidence/learn-a, local-demo/o4/evidence/learn-a, local-demo/o5/evidence/learn-a, local-demo/o6/evidence/learn-a, local-demo/o7/evidence/learn-a)"
+   },
+   {
+    "capability": "site.ref-resolve",
+    "label": "L1b",
+    "reason": "skipped: not learnable by available models (evidence: local-demo/o3/evidence/learn-a, local-demo/o4/evidence/learn-a, local-demo/o5/evidence/learn-a, local-demo/o6/evidence/learn-a, local-demo/o7/evidence/learn-a)"
+   }
+  ]
+ },
+ "elapsed_ms": 23800,
+ "evidence_path": "evidence/learn-a/",
+ "expected": "L1 and L1b acquired, evaluated, admitted (signed) or blocked; L2 admitted or reused; T02 passes only if nothing is blocked or failed",
+ "fixture_id": "L1 site.ref-extract + L1b site.ref-resolve acquired unless skipped as unlearnable, L2 site.ref-check reused if admitted (release 2633d9b)",
+ "input_tokens": 3698,
+ "model_calls": 1,
+ "observed": "L2 site.ref-check: ADMITTED; L1 site.ref-extract: BLOCKED (skipped: not learnable by available models (evidence: local-demo/o3/evidence/learn-a, local-demo/o4/evidence/learn-a, local-demo/o5/evidence/learn-a, local-demo/o6/evidence/learn-a, local-demo/o7/evidence/learn-a)); L1b site.ref-resolve: BLOCKED (skipped: not learnable by available models (evidence: local-demo/o3/evidence/learn-a, local-demo/o4/evidence/learn-a, local-demo/o5/evidence/learn-a, local-demo/o6/evidence/learn-a, local-demo/o7/evidence/learn-a))",
+ "output_tokens": 1101,
+ "phase": "learn-a",
+ "registry_snapshot": "e91266be47d433b834e5d77d157f1d6a943fc96b7d5566802e94f56562a6b52f",
+ "status": "blocked",
+ "test_id": "T02"
+}
