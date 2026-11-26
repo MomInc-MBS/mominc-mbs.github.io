@@ -5,7 +5,7 @@ import {MANIFEST as M} from './mom3-manifest.js';
 export {baseForStage} from './mom-face.js';
 
 const CB = M.content, SRC = M.source, GLYPHS = ".,':-=+10/|*8B#@", NONE = 255, TIERS = 16;
-const FONT = "Consolas,'Cascadia Mono','SF Mono',Menlo,'Courier New',monospace";
+const FONT = "Consolas,'Cascadia Mono','SF Mono',Menlo,'Roboto Mono','Droid Sans Mono',monospace";   // never 'Courier New': Android maps it to hairline Cutive Mono
 const COLS = 136, FLOOR = .06, REF_COLS = 154; // the OBS renderer uses ~154 cols; mouth travel scales by cols/REF_COLS
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, +v || 0));
 const GI = c => GLYPHS.indexOf(c);
