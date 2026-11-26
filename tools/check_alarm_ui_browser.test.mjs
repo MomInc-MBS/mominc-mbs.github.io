@@ -30,7 +30,7 @@ function audit() {
   for (let n; (n = w.nextNode());) {
     const t = n.nodeValue.trim(), p = n.parentElement; if (!t || !p || p.closest('script,style,option,select,textarea,title')) continue;
     const hu = hiddenUp(p); if (hu || !shown(p)) continue;
-    if (!OK.test(t)) out.prose.push(t.slice(0, 40));
+    if (!OK.test(t) && !p.closest('[data-copy]')) out.prose.push(t.slice(0, 40));   // Ian's labels/subtitles (data-copy) are the only prose allowed
     if (p.closest('[disabled],[aria-disabled=true]')) continue;
     const cs = getComputedStyle(p), fg = rgb(cs.color), bg = bgOf(p), o = opac(p), mix = fg.slice(0, 3).map((c, i) => c * o + bg[i] * (1 - o));
     const big = parseFloat(cs.fontSize) >= 24 || (parseFloat(cs.fontSize) >= 18.6 && +cs.fontWeight >= 700), r = ratio(mix, bg);
