@@ -22,7 +22,7 @@ async function environment(t,{done=[],power='on',standalone=false,delayGame=fals
  w.loadArcade=()=>delayGame?new Promise(resolve=>{resolveGame=resolve;}):Promise.resolve(module);
  w.MBS_STATE={completedPages:()=>[...finished],completePage(name){if(finished.has(name))return;finished.add(name);w.dispatchEvent(new w.Event('mbs:page-complete'));}};
  w.eval(flow);d.dispatchEvent(new w.Event('DOMContentLoaded'));
- w.eval(ads.replace("import('/arcade/tub-flight/game.mjs?v=neon-tv-2')",'window.loadArcade()'));await flush();
+ w.eval(ads.replace("import('/arcade/tub-flight/game.mjs?v=fuel-overload-1')",'window.loadArcade()'));await flush();
  t.after(async()=>{w.dispatchEvent(new w.Event('pagehide'));await flush();dom.window.close();});
  return {w,d,timers,get now(){return now;},get ad(){return d.querySelector('.retro-sponsor');},get layer(){return d.querySelector('.tv-ad-layer');},get game(){return d.querySelector('.sponsor-arcade');},get mounts(){return mounts;},get pauses(){return pauses;},get disposals(){return disposals;},
   async advance(ms){const end=now+ms;let limit=0;for(;;){const entry=[...timers].filter(([,v])=>v.at<=end).sort((a,b)=>a[1].at-b[1].at)[0];if(!entry)break;assert.ok(++limit<2000,'timer loop settles');now=entry[1].at;if(entry[1].interval)entry[1].at+=entry[1].interval;else timers.delete(entry[0]);entry[1].fn();await flush();}now=end;await flush();},

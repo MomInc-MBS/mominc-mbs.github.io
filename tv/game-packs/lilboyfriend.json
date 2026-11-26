@@ -154,8 +154,8 @@
     },
     {
       "url": "/apps/apps.json",
-      "revision": "5a5154a1332084663f47f8129cad4130a975dd66",
-      "bytes": 9957
+      "revision": "2ef20737bbe38091c8c84a6de9643d2f321bfd8a",
+      "bytes": 10106
     },
     {
       "url": "/apps/corgi/app.css",
@@ -166,6 +166,21 @@
       "url": "/apps/corgi/app.mjs",
       "revision": "6f2fc05cbc32660fe7e6842deb545ebc6dca5471",
       "bytes": 6186
+    },
+    {
+      "url": "/apps/fuel/icon-192.png",
+      "revision": "975c9ee2dd21061e9edb59f3b74698eaba3f9199",
+      "bytes": 23936
+    },
+    {
+      "url": "/apps/fuel/settings.mjs",
+      "revision": "b98ec870366bbe4042d7f034c945128c87e468c2",
+      "bytes": 1571
+    },
+    {
+      "url": "/apps/fuel/win95.css",
+      "revision": "95d2d682c8fddae9185b22aa51f828c598591dee",
+      "bytes": 2783
     },
     {
       "url": "/apps/hand/hand.css",
@@ -719,13 +734,13 @@
     },
     {
       "url": "/tv/retro-ads.css",
-      "revision": "2e1db784698106c012eac36a4a11d77a4528e55e",
-      "bytes": 12021
+      "revision": "651be3d3a25e8af027a6edc7437b1ecece39d6b0",
+      "bytes": 11927
     },
     {
       "url": "/tv/retro-ads.js",
-      "revision": "d75c21820bed7579a09d793d5936dea02552c6a7",
-      "bytes": 10129
+      "revision": "876134565122dcc6c0012a1d18e7842348475556",
+      "bytes": 10135
     },
     {
       "url": "/tv/retro-pointer.js",
@@ -768,5 +783,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap",
     "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
   ],
-  "version": "a95ad625141bb474a94a"
+  "version": "186245b7a866f056d620"
 }
