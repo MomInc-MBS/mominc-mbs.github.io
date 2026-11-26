@@ -76,7 +76,9 @@ export async function mountAlarm(host) {
   const endAlarmBoard = () => { mode = 'free'; boundOcc = null; show(false); bar(); openSet(); };
   const finishAlarm = won => {                             // bound to the occurrence this board was started for: a stale board never clears another alarm
     const att = R.attemptId(S, boundOcc);
-    commit((won ? R.win : R.lose)(S, boundOcc, now())); if (att) putBoard(att, null); endAlarmBoard();
+    const ns = (won ? R.win : R.lose)(S, boundOcc, now()), accepted = won && ns !== S;
+    commit(ns); if (att) putBoard(att, null); endAlarmBoard();
+    if (accepted) ui?.say?.('gameDone');                    // MOM's typed completion line, only after a real accepted win
   };
   const step = dir => {
     if (!game || $('play').hidden) return;
