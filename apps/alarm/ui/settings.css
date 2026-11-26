@@ -159,6 +159,7 @@
 .tl-gap .g{width:14px;height:14px}
 .snd{display:grid;grid-template-columns:84px 1fr;gap:8px;align-items:center}
 .mini{width:84px;aspect-ratio:400/460;grid-row:span 2}
+.mini3{position:relative;overflow:hidden;background:#07030d;border-radius:12px} .mini3>div{position:absolute;width:260%;left:-80%;top:-31%}
 .snd-g{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .snd-b{flex-direction:column;min-height:66px;gap:4px}
 .snd .ib.big{grid-column:2;width:100%}

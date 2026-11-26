@@ -1,6 +1,8 @@
 // Wordless settings (§5): icons, digits, dates, times, %, math symbols and tile values only; names live in names.js (aria only).
 // mountSettings(host, adapter, {face}) consumes ONLY the contract adapter. Base emotion comes only from adapter.snapshot().
-import {createMomFace as createMini, baseForStage} from './mom-face.js';
+import {baseForStage} from './mom-face.js';
+// Stage minis: the same three-head ASCII MOM, cropped to the centre head (three heads at 84 px read as a blob).
+const createMini = (host, o) => { host.classList.add('mini3'); const inner = document.createElement('div'); host.appendChild(inner); return createMomFace(inner, o); };
 import {createMomFace, bustGeometry} from './mom3-face.js';
 import {icon, strip, capIcon, SOUND_WAVE, VIB_WAVE, PATTERN_WAVE, SOUNDS, SOUND_GLYPH, CAP_GLYPH, OUTCOME_GLYPH} from './glyphs.js';
 import {N, CAP, STATE, SOUND, VIB, OUTCOME} from './names.js';
