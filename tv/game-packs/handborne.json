@@ -4,8 +4,8 @@
   "assets": [
     {
       "url": "/apps/alarm/app.css",
-      "revision": "eeb682fcbdebb08067ad9074da9056daf367993e",
-      "bytes": 5230
+      "revision": "12f8b7ea897186653ddf61e4bd0f66c08cb90c32",
+      "bytes": 5268
     },
     {
       "url": "/apps/alarm/app.mjs",
@@ -946,5 +946,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "edf0bc3071ef5a49bc74"
+  "version": "c3fb0d90e60512b9a13c"
 }

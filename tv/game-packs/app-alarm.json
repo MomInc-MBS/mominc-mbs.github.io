@@ -4,8 +4,8 @@
   "assets": [
     {
       "url": "/apps/alarm/app.css",
-      "revision": "eeb682fcbdebb08067ad9074da9056daf367993e",
-      "bytes": 5230
+      "revision": "12f8b7ea897186653ddf61e4bd0f66c08cb90c32",
+      "bytes": 5268
     },
     {
       "url": "/apps/alarm/app.mjs",
@@ -224,5 +224,5 @@
     }
   ],
   "fontStyles": [],
-  "version": "a385697bf6bd3a785fbc"
+  "version": "368629258e97773eb945"
 }
