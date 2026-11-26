@@ -1,7 +1,8 @@
 // The Goon 2048 board model, isolated from the Gala/Phaser scene (no rendering, no site story effects).
 // SOURCE: site repo MomInc-MBS/mominc-mbs.github.io @ 83fd46a1187175d6e135db535f69738d0765238b (tv/games/goon/assets/index-gala-classic.js,
 // last changed in 627e88ec7875da23c01b046852eff028bbe3c75c). Class GalaScene: resetBoard, slide, mergeRow, spawnTile, hasLegalMove,
-// simulateSlide; constants Ce=4, wr (tier index -> value), winTier=12, spawn tier 5 (80%) / 6 (20%). Logic is a 1:1 port of that code;
+// simulateSlide; constants Ce=4, wr (tier index -> value), winTier=12. Logic is a 1:1 port of that code, EXCEPT spawns:
+// MOM's 2048 spawns tier 2 ($2, 90%) / tier 3 ($4, 10%), the classic opening (the Goon tier 5/6 spawn was a port leftover);
 // the board stores TIER INDICES (wr[12] === 2048), never raw values. Rendering here is a flat DOM grid, not the 3D Gala board.
 export const SIZE = 4;
 export const WIN_TIER = 12; // build constant, D08: literal 2048, never lowered
@@ -46,7 +47,7 @@ export function spawn(board, rnd = Math.random) {
   for (let r = 0; r < SIZE; r++) for (let c = 0; c < SIZE; c++) if (board[r][c] === 0) cells.push([r, c]);
   if (!cells.length) return board;
   const [r, c] = cells[Math.floor(rnd() * cells.length)], b = board.map(x => [...x]);
-  b[r][c] = rnd() < .8 ? 5 : 6;
+  b[r][c] = rnd() < .9 ? 2 : 3;
   return b;
 }
 

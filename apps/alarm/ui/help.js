@@ -1,5 +1,6 @@
 // MOM has no voice: every response is a typed subtitle. No audio, no TTS, no network. The registry only DESCRIBES existing handlers (keyed by their data-k); it never replaces or calls them.
 import {N, SOUND, VIB, CAP, STATE} from './names.js';
+import {GAME_COLOR_HELP} from './game-colors.js';
 
 // ---------- pure logic (unit-tested in tools/check_alarm_help.test.mjs) ----------
 export const TAGS = [
@@ -95,6 +96,7 @@ const R = {
   'snz:': (c, a) => ({t: +a ? `Snooze: ${a / 60} minutes. Ready to arm.` : 'Snooze off. Ready to arm.'}),
   time: ({S}) => ({t: `${S.draft?.time} is the selected time. Ready to arm.`, j: 'A bold alternative to remembering.'}),
   gameDone: () => ({t: 'Finished. A small victory for remembering what you were doing.', plain: true}),
+  ...Object.fromEntries(Object.entries(GAME_COLOR_HELP).map(([k, t]) => [k, () => ({t})])),   // the game colour panel's data-k controls (said by the shell: app.mjs / app.js)
 };
 const FAM = ['kind:', 'tz:', 'snd:', 'pat:', 'rs:', 'vib:', 'torch:', 'extra:', 'snz:'];
 const STAGE_KEY = /^st([0-3])$/;
@@ -135,11 +137,12 @@ export function helpFor(key, {S, el}) {
 export function createHelp({root, rail, S, face, announce, rm}) {
   const view = document.createElement('div');
   view.className = 'ms-sub'; view.setAttribute('data-copy', ''); view.setAttribute('aria-hidden', 'true');
-  view.innerHTML = '<span class="ms-sub-l">MOM &gt;</span> <span class="ms-sub-t"></span><span class="ms-sub-c"></span>';
-  const txt = view.querySelector('.ms-sub-t');
+  // .ms-sub-a is what you see (typed so far); .ms-sub-z is the invisible FULL line in the same grid cell, so the dock is as tall as the finished text from the first character.
+  view.innerHTML = '<div class="ms-sub-a"><span class="ms-sub-l">MOM &gt;</span> <span class="ms-sub-t"></span><span class="ms-sub-c"></span></div><div class="ms-sub-z" aria-hidden="true">MOM &gt; <span class="ms-sub-zt"></span></div>';
+  const txt = view.querySelector('.ms-sub-t'), zt = view.querySelector('.ms-sub-zt');
   root.insertBefore(view, rail);
   const gate = createJokeGate();
-  const typer = createTyper({render: s => { txt.textContent = s; }, talk: b => { face?.talk?.(b); }, announce, instant: () => rm()});
+  const typer = createTyper({render: (s, full) => { txt.textContent = s; zt.textContent = full || ''; }, talk: b => { face?.talk?.(b); }, announce, instant: () => rm()});
   view.addEventListener('click', e => { e.stopPropagation(); typer.skip(); });   // reveal only; nothing underneath fires
   let pend = 0, lastPtr = 0, dead = false;
   const show = r => {

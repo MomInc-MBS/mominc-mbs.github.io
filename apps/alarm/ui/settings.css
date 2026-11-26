@@ -263,3 +263,49 @@ html.ms-doc,html.ms-doc body{margin:0;height:100%;background:#12081f}
 .sv-ok{align-content:center}
 .ms .sv-ok>.cp{color:#0c2a07}
 .ms .sv-ok[aria-disabled=true]>.cp{color:var(--dim)}
+
+/* ---- subtitle dock: sized by its own FULL text (see help.js .ms-sub-z) ---- */
+.ms-sub{display:grid}
+.ms-sub-a,.ms-sub-z{grid-area:1/1;min-width:0;overflow-wrap:anywhere}
+.ms-sub-z{visibility:hidden;pointer-events:none}
+
+/* ---- embedded in the console CRT (mountSettings(..., {embedded:true})): neon terminal, header row / panel / dock / rail, all inside the glass ---- */
+.ms-emb{position:absolute;--rail-h:46px;--dock:42px;--sub-min:42px;--sub-fs:.8125rem;
+  font:15px/1.3 Consolas,"Cascadia Mono","SF Mono",Menlo,"Roboto Mono","Droid Sans Mono",monospace;
+  background:radial-gradient(120% 80% at 50% 25%,#2e1250 0%,#190a2c 60%,#0f0619 100%)}
+.ms-emb .txt,.ms-emb .sel,.ms-emb .cp,.ms-emb button{font-family:inherit}
+.ms-emb .probe,.ms-emb .ms-probe{padding:0}
+.ms-emb .ms-top{top:2px;left:4px;right:4px;height:44px;gap:6px;align-items:flex-start}
+.ms-emb .chip{min-height:36px;padding:2px 8px;gap:4px;background:rgba(18,8,31,.74)}
+.ms-emb .chip .dim{display:none}   /* compact pill: bell + time only, so the corners never reach a face */
+.ms-emb .chip.stg{min-height:44px;padding:1px 8px 1px 1px}
+.ms-emb .chip.stg img{width:34px;height:34px}
+.ms-emb .chip.warnc{padding:2px 4px;gap:0}.ms-emb .chip.warnc .g,.ms-emb .chip.warnc .spin{width:20px;height:20px}
+.ms-emb .chip.gm{min-width:44px;min-height:44px;justify-content:center;padding:2px;border-radius:12px;color:var(--acc)}
+.ms-emb .chip.gm .g{width:26px;height:26px}
+.ms-emb .ms-bg{min-height:var(--pt)}
+.ms-emb .ms-face{top:var(--hero-top,44px)}
+.ms-emb .ms-stop{top:50px;right:2px;transform:scale(.55);transform-origin:100% 0}
+.ms-emb .ms-panel{top:var(--pt);bottom:calc(var(--rail-h) + var(--dock) + 6px);left:4px;right:4px;padding:6px 6px 10px;gap:6px}
+.ms-emb.ms-hero .ms-panel{padding-top:0}
+.ms-emb .ms-hero-sp{height:var(--sp,0px)}
+.ms-emb .ms-sub{left:4px;right:4px;bottom:calc(var(--rail-h) + 2px);height:auto;min-height:var(--sub-min);max-height:100px;overflow-y:auto;padding:4px 8px;font-size:var(--sub-fs);line-height:1.3;
+  text-shadow:0 0 5px rgba(227,179,255,.35)}
+.ms-emb .ms-rail{padding:1px 2px 0;height:var(--rail-h);align-items:center;justify-content:flex-start;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;overscroll-behavior:contain;touch-action:pan-x}
+.ms-emb .ms-rail::-webkit-scrollbar{display:none}
+.ms-emb .rl{flex:1 0 44px;width:auto;min-width:44px;height:44px;border-radius:12px}
+.ms-emb .rl .g{width:26px;height:26px}
+.ms-emb .rem-time{font-size:26px}
+.ms-emb .rem-date,.ms-emb .rem-title{font-size:14px}
+.ms-emb .rem-open{min-height:56px}
+.ms-emb .rem-title,.ms-emb .rem-date,.ms-emb .ms-sub-l{text-shadow:0 0 5px rgba(227,179,255,.3)}   /* restrained glow on words only; times and $ values stay crisp */
+.ms-emb .num{text-shadow:none}
+.ms-emb .ms-panel::-webkit-scrollbar{width:4px}
+.ms-emb .ms-panel::-webkit-scrollbar-thumb{background:#6b5890;border-radius:2px}
+
+/* 2048 board on top of the reminders app: only MOM's subtitle dock stays, at the bottom of the glass */
+.ms-emb.ms-playing{background:none;pointer-events:none}
+.ms-emb.ms-playing>:not(.ms-sub):not(.vh){display:none}
+.ms-emb.ms-playing .ms-sub{pointer-events:auto;bottom:4px}
+.ms-emb .tl{display:flex;flex-direction:column;align-items:flex-start;gap:2px;pointer-events:none}.ms-emb .tl>*{pointer-events:auto}
+.ms-emb .chip.lk{min-height:30px;padding:1px 7px;gap:3px}.ms-emb .chip.lk .g{width:18px;height:18px}.ms-emb .cd{font-size:13px}

@@ -85,3 +85,10 @@ export const dayOf = k => fromKey(k).d;
 export const weekdayName = (k, locale) => new Intl.DateTimeFormat(locale, {weekday: 'long', timeZone: 'UTC'}).format(new Date(Date.UTC(...(([y, m, d]) => [y, m - 1, d, 12])(k.split('-').map(Number)))));
 /** "+HH:MM" / "−HH:MM" UTC offset of a zone right now (digits + sign only). */
 export const offsetLabel = (tz, now = Date.now()) => { const o = Math.round(offset(now, tz) / 60000), a = Math.abs(o); return `${o < 0 ? '−' : '+'}${p2(Math.floor(a / 60))}:${p2(a % 60)}`; };
+
+/** Bounded tab stepping for the console keys: nearest enabled tab in `delta`'s direction, or null at the end (no wrap). */
+export function stepTab(order, cur, delta, disabled = () => false) {
+  const d = delta < 0 ? -1 : 1;
+  for (let i = order.indexOf(cur) + d; i >= 0 && i < order.length; i += d) if (!disabled(order[i])) return order[i];
+  return null;
+}
