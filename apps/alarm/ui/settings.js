@@ -5,6 +5,7 @@ import {icon, strip, capIcon, SOUND_WAVE, VIB_WAVE, PATTERN_WAVE, SOUNDS, SOUND_
 import {N, CAP, STATE, SOUND, VIB, OUTCOME} from './names.js';
 import {hms, countdown, upcoming, nextDue, weekColumns, monthCells, fmtDate, fmtTime, dayOf, weekdayName, todayKey, zoneOf, deviceZone, offsetLabel, validZone} from './time.js';
 import {createChallenge} from './challenges.js';
+import {createHelp} from './help.js';
 import {STAGE_AT, REPEAT_S, HOLD_MS} from '../stages.js';
 
 const RAIL = [['clock', 'railClock'], ['sound', 'railSound'], ['screen', 'railScreen'], ['challenge', 'railChallenge'], ['devices', 'railDevices'], ['history', 'railHistory'], ['prefs', 'railPrefs']];
@@ -47,6 +48,7 @@ export function mountSettings(host, adapter, opts = {}) {
   const ownFace = !opts.face; let mini = null, chal = null, pvTimer = 0;
   const F = (fn, ...a) => { try { face[fn](...a); } catch (e) {} };
   const announce = t => { live.textContent = ''; setTimeout(() => { live.textContent = t; }, 30); };
+  const help = createHelp({root, rail, S, face, announce, rm: () => root.classList.contains('ms-rm') || !!S.snap.reducedMotion || rm0});   // typed MOM subtitles; describes existing handlers, never replaces them
 
   function safeSnap() { try { return adapter.snapshot() || {}; } catch (e) { return {}; } }
   const toward = el => { try { const r = el.getBoundingClientRect(), f = faceHost.getBoundingClientRect(); return {x: clamp((r.left + r.width / 2 - (f.left + f.width / 2)) / (innerWidth / 2)), y: clamp((r.top + r.height / 2 - (f.top + f.height * .5)) / (innerHeight / 2))}; } catch (e) { return {x: 0, y: .6}; } };
@@ -56,23 +58,25 @@ export function mountSettings(host, adapter, opts = {}) {
   const applyPrefs = s => { root.classList.toggle('ms-rm', !!s.reducedMotion || rm0); root.classList.toggle('ms-hc', !!s.highContrast); F('setReducedMotion', !!s.reducedMotion || rm0); };
 
   // ---------- small controls ----------
+  const lab = t => t ? `<span class="cp" data-copy>${t}</span>` : '';
   const ib = (label, glyph, on, a = {}) => h('button', {type: 'button', class: 'ib ' + (a.cls || ''), 'aria-label': label, 'data-k': a.k, 'aria-pressed': a.pressed, on: {click: on}, html: a.html || icon(glyph)});
-  function sw(label, on, set, glyph, k, extra = '') {
-    return h('button', {type: 'button', role: 'switch', class: 'sw', 'aria-checked': String(!!on), 'aria-label': label, 'data-k': k, on: {click: () => set(!on)},
-      html: `<span class="sw-ic">${icon(glyph)}${on ? '' : icon('slash', 'sl')}${extra}</span><span class="sw-tr"><span class="sw-kn">${on ? icon('check') : icon('minus')}</span></span>`});
+  function sw(label, on, set, glyph, k, extra = '', cp = '') {
+    return h('button', {type: 'button', role: 'switch', class: 'sw' + (cp ? ' lb' : ''), 'aria-checked': String(!!on), 'aria-label': label, 'data-k': k, on: {click: () => set(!on)},
+      html: `<span class="sw-ic">${icon(glyph)}${on ? '' : icon('slash', 'sl')}${extra}</span><span class="sw-tr"><span class="sw-kn">${on ? icon('check') : icon('minus')}</span></span>${lab(cp)}`});
   }
   function seg(label, opts, cur, pick, k) {
     return h('div', {class: 'seg', role: 'radiogroup', 'aria-label': label},
-      opts.map(o => h('button', {type: 'button', role: 'radio', class: 'sg ' + (o.cls || ''), 'aria-checked': String(o.v === cur), 'aria-label': o.label, 'data-k': k + ':' + o.v,
-        'aria-disabled': o.dis ? 'true' : null, on: {click: e => { if (!o.dis) pick(o.v, e.currentTarget); }}, html: o.html || icon(o.glyph)})));
+      opts.map(o => h('button', {type: 'button', role: 'radio', class: 'sg ' + (o.cls || '') + (o.cp ? ' lb' : ''), 'aria-checked': String(o.v === cur), 'aria-label': o.label, 'data-k': k + ':' + o.v,
+        'aria-disabled': o.dis ? 'true' : null, on: {click: e => { if (!o.dis) pick(o.v, e.currentTarget); }}, html: (o.html || icon(o.glyph)) + lab(o.cp)})));
   }
   const row = (glyph, ...kids) => h('div', {class: 'card row'}, glyph && h('span', {class: 'lead', html: icon(glyph)}), kids);
-  function slider(label, glyph, v, min, max, step, set, k, unit = '%') {
+  function slider(label, glyph, v, min, max, step, set, k, unit = '%', cp = '') {
     const out = h('span', {class: 'num', text: v + unit});
     const inp = h('input', {type: 'range', min, max, step, value: String(v), 'aria-label': label, 'aria-valuetext': v + unit, 'data-k': k,
       on: {input: e => { const x = +e.target.value; out.textContent = x + unit; e.target.setAttribute('aria-valuetext', x + unit); set(x, false); F('look', ((x - min) / (max - min)) * 2 - 1, toward(e.target).y); },
         change: e => { set(+e.target.value, true); F('settle'); F('react', 'blink'); }}});
-    return row(glyph, inp, out);
+    const r = row(glyph, inp, out); if (cp) r.querySelector('.lead')?.insertAdjacentHTML('beforeend', lab(cp));
+    return r;
   }
   function wheel(label, max, value, pick, k) {
     let cur = value, t = 0;
@@ -338,15 +342,15 @@ export function mountSettings(host, adapter, opts = {}) {
       ib(S.aud === 'sound' ? N.stopAudition : N.audition, S.aud === 'sound' ? 'stop' : 'play', () => audition('sound', cur), {cls: 'big' + (cur ? '' : ' off'), k: 'aud'}));
     const ramp = s.ramp;
     return [tl, snd,
-      h('div', {class: 'card row'}, sw(N.rotate, s.rotate, v => { s.rotate = v; render(); }, 'shuffle', 'rotate'),
-        seg(N.burst, [{v: 'burst', html: icon('burst') + strip(PATTERN_WAVE.burst), label: N.burst}, {v: 'continuous', html: icon('continuous') + strip(PATTERN_WAVE.continuous), label: N.continuous}], s.pattern, v => { s.pattern = v; render(); }, 'pat')),
-      slider(N.volume, 'speaker', s.volume, 0, 100, 5, v => { s.volume = v; }, 'vol'),
-      h('div', {class: 'card row'}, sw(N.ramp, !!ramp, v => { s.ramp = v ? {from: 40, to: 100, secs: 20} : null; render(); F('react', 'glance', {x: .5, y: .4}); }, 'ramp', 'ramp'),
+      h('div', {class: 'card row'}, sw(N.rotate, s.rotate, v => { s.rotate = v; render(); }, 'shuffle', 'rotate', '', 'Shuffle'),
+        seg(N.burst, [{v: 'burst', html: icon('burst') + strip(PATTERN_WAVE.burst), label: N.burst, cp: 'Bursts'}, {v: 'continuous', html: icon('continuous') + strip(PATTERN_WAVE.continuous), label: N.continuous, cp: 'Steady'}], s.pattern, v => { s.pattern = v; render(); }, 'pat')),
+      slider(N.volume, 'speaker', s.volume, 0, 100, 5, v => { s.volume = v; }, 'vol', '%', 'Volume'),
+      h('div', {class: 'card row'}, sw(N.ramp, !!ramp, v => { s.ramp = v ? {from: 40, to: 100, secs: 20} : null; render(); F('react', 'glance', {x: .5, y: .4}); }, 'ramp', 'ramp', '', 'Ramp'),
         ramp && seg(N.rampSecs, [10, 20, 30, 60].map(v => ({v, label: `${N.rampSecs} ${v}`, html: `<span class="num">${hms(v)}</span>`})), ramp.secs, v => { ramp.secs = v; render(); }, 'rs')),
-      ramp && slider(N.rampFrom, 'ramp', ramp.from, 0, 100, 5, v => { ramp.from = v; }, 'rf'),
-      ramp && slider(N.rampTo, 'ramp', ramp.to, 0, 100, 5, v => { ramp.to = v; }, 'rt'),
-      h('div', {class: 'card row'}, sw(N.boost, s.streamBoost, v => { s.streamBoost = v; render(); }, 'boost', 'boost'),
-        capSwitch('speak', N.speak, d.speak === 'title', v => { d.speak = v ? 'title' : 'off'; render(); }, 'speak')),
+      ramp && slider(N.rampFrom, 'ramp', ramp.from, 0, 100, 5, v => { ramp.from = v; }, 'rf', '%', 'From'),
+      ramp && slider(N.rampTo, 'ramp', ramp.to, 0, 100, 5, v => { ramp.to = v; }, 'rt', '%', 'To'),
+      h('div', {class: 'card row'}, sw(N.boost, s.streamBoost, v => { s.streamBoost = v; render(); }, 'boost', 'boost', '', 'Boost'),
+        capSwitch('speak', N.speak, d.speak === 'title', v => { d.speak = v ? 'title' : 'off'; render(); }, 'speak', 'Say title')),
       h('div', {class: 'card vib'}, seg(N.vibrate, Object.keys(VIB_WAVE).map(v => ({v, label: VIB[v], html: v === 'off' ? icon('vibrate') + icon('slash', 'sl') : strip(VIB_WAVE[v])})), d.vibrate.pattern,
         v => { d.vibrate.pattern = v; render(); }, 'vib'),
         h('div', {class: 'row'}, h('span', {class: 'lead jig', html: capIcon('vibrate', capState('vibrate'))}),
@@ -370,12 +374,12 @@ export function mountSettings(host, adapter, opts = {}) {
   function stopAud() { if (!S.aud) return; S.aud = null; try { adapter.stopAudition(); } catch (e) {} if (S.draft) render(); }
 
   // capability-aware switch: unsupported = slashed in a patterned boundary, no toggle; permission = key that requests only that grant.
-  function capSwitch(capId, label, on, set, glyph) {
+  function capSwitch(capId, label, on, set, glyph, cp = '') {
     const st = capState(capId);
-    if (st === 'unsupported') return h('span', {class: 'capx', role: 'img', 'aria-label': `${label}: ${STATE.unsupported}`, html: capIcon(glyph, 'unsupported')});
+    if (st === 'unsupported') return h('span', {class: 'capx', role: 'img', 'aria-label': `${label}: ${STATE.unsupported}`, html: capIcon(glyph, 'unsupported') + lab(cp)});
     const req = (st === 'permission' || st === 'disconnected' || st === 'error') && ib(`${CAP[capId]}: ${STATE[st]}`, null, e => request(capId, e.currentTarget), {html: capIcon('key', st === 'permission' ? 'available' : st), cls: 'req', k: 'req:' + capId});
     const extra = st === 'foreground' ? `<span class="bd bd-fg">${icon('phoneOpen')}</span>` : '';
-    return h('span', {class: 'capsw'}, sw(`${label}${st === 'foreground' ? ': ' + STATE.foreground : ''}`, on, set, glyph, 'cap:' + capId, extra), req);
+    return h('span', {class: 'capsw'}, sw(`${label}${st === 'foreground' ? ': ' + STATE.foreground : ''}`, on, set, glyph, 'cap:' + capId, extra, cp), req);
   }
   async function request(capId, el) {
     let v; try { v = await adapter.request(capId); } catch (e) { v = {state: 'error', reason: 'throw'}; }
@@ -464,9 +468,9 @@ export function mountSettings(host, adapter, opts = {}) {
     if (d.snooze) ic.push(icon('hourglass'));
     if (d.webhook?.url) add('webhook', 'house');
     return h('div', {class: 'savebar', 'data-sec': 'save'},
-      h('div', {class: 'sv-ic', 'aria-hidden': 'true', html: (picked ? '' : `<span class="need">${icon('speaker')}${icon('warn', 'w')}</span>`) + ic.join('')}),
+      h('div', {class: 'sv-ic', 'aria-hidden': 'true', html: lab('Effects') + (picked ? '' : `<span class="need">${icon('speaker')}${icon('warn', 'w')}</span>`) + ic.join('')}),
       h('button', {type: 'button', class: 'sv-ok', 'data-k': 'save', 'aria-label': picked ? N.save : N.needSound, 'aria-disabled': picked && !S.saving ? null : 'true', on: {click: save},
-        html: S.saving ? ring() : icon('check')}));
+        html: (S.saving ? ring() : icon('check')) + lab('Arm')}));
   }
   async function save() {
     const d = D(); if (!d || S.saving) return;
@@ -589,9 +593,10 @@ export function mountSettings(host, adapter, opts = {}) {
 
   return {
     face,
+    say: help.say,
     refresh: () => { S.snap = safeSnap(); loadList(); },
     destroy() {
-      clearInterval(tick); stopPreviewTimer(); timers.forEach(clearTimeout); offs.forEach(f => { try { f?.(); } catch (e) {} }); stopAud();
+      clearInterval(tick); help.destroy(); stopPreviewTimer(); timers.forEach(clearTimeout); offs.forEach(f => { try { f?.(); } catch (e) {} }); stopAud();
       try { mini?.destroy(); } catch (e) {} try { chal?.destroy(); } catch (e) {} if (ownFace) F('destroy'); root.remove();
     },
   };

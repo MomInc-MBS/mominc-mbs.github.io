@@ -232,3 +232,22 @@
 
 /* demo page */
 html.ms-doc,html.ms-doc body{margin:0;height:100%;background:#12081f}
+
+/* ---- help: MOM typed subtitles + short icon labels (help.js; MOM has no voice) ---- */
+.ms{--sub-fs:.8125rem;--sub-h:calc(var(--sub-fs) * 4.05 + 16px)}
+.ms-panel{bottom:calc(66px + var(--sub-h) + 4px + env(safe-area-inset-bottom))}
+.ms-sub{position:absolute;z-index:3;left:max(6px,calc(50% - 262px));right:max(6px,calc(50% - 262px));bottom:calc(66px + env(safe-area-inset-bottom) + 2px);height:var(--sub-h);overflow:hidden;padding:7px 10px;
+  background:#0b0414;border:1px solid var(--line);border-radius:10px;color:#f6ecff;font:700 var(--sub-fs)/1.35 ui-monospace,"SF Mono",Menlo,Consolas,monospace;cursor:pointer;-webkit-user-select:none;user-select:none}
+.ms-sub-l{color:var(--acc)}
+.ms-sub-c{display:inline-block;width:.6em;height:1.05em;margin-left:2px;vertical-align:text-bottom;background:var(--acc);animation:msblink 1s steps(1) infinite}
+.ms-rm .ms-sub-c{animation:none}
+@keyframes msblink{50%{opacity:0}}
+.cp{display:block;font:700 12px/1.1 ui-monospace,"SF Mono",Menlo,Consolas,monospace;color:inherit;text-align:center;white-space:nowrap;margin-top:1px}
+.sw.lb{flex-wrap:wrap;justify-content:center}
+.sw.lb>.cp{flex-basis:100%}
+.sg.lb{flex-direction:column;gap:1px}
+.lead>.cp{color:var(--dim)}
+.sv-ic>.cp{text-align:left;color:var(--dim)}
+.sv-ok{align-content:center}
+.ms .sv-ok>.cp{color:#0c2a07}
+.ms .sv-ok[aria-disabled=true]>.cp{color:var(--dim)}
