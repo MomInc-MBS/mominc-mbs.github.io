@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en" class="ms-doc">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1a0b2e">
+<title>MOM's: 2048 Reminder settings demo</title>
+<link rel="stylesheet" href="settings.css">
+</head>
+<body>
+<div id="app"></div>
+<script type="module">
+// Demo: ?stage=1..4 active occurrence, ?locked=1, ?rm=1 reduced motion, ?hc=1 high contrast, ?fail=1 failing saves, ?sync=1 pending sync.
+import {createFakeAdapter} from './fake-adapter.js';
+import {mountSettings} from './settings.js';
+const q = new URLSearchParams(location.search);
+const adapter = createFakeAdapter({stage: +q.get('stage') || null, locked: q.get('locked') === '1', rm: q.get('rm') === '1', hc: q.get('hc') === '1', failSave: q.get('fail') === '1', pendingSync: q.get('sync') === '1'});
+window.__adapter = adapter;
+window.__ui = mountSettings(document.getElementById('app'), adapter, {});
+</script>
+</body>
+</html>

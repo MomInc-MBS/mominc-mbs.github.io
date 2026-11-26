@@ -208,11 +208,22 @@ const adhdReport = (p, event) => {
   if (!r || typeof r.url !== 'string' || !r.url.startsWith('https://') || typeof r.token !== 'string') return Promise.resolve();
   return fetch(r.url, {method: 'POST', keepalive: true, headers: {'content-type': 'application/json'}, body: JSON.stringify({attemptId: p.attemptId, event, token: r.token})}).catch(() => {});
 };
+// The page records every terminal occurrence here (Cache API: shared by page and worker); a late push for one of them becomes a plain notice.
+const adhdEnded = async id => { try { return !!(await (await caches.open('adhd-terminal-v1')).match('/__adhd_terminal/' + encodeURIComponent(id))); } catch (_) { return false; } };
 self.addEventListener('push', event => {
   let p = null;
   try { p = event.data && event.data.json(); } catch (_) {}
   if (!p || p.appId !== 'adhd' || typeof p.occurrenceId !== 'string' || typeof p.tag !== 'string' || typeof p.url !== 'string' || !p.url.startsWith(ADHD_SCOPE)) return;
   event.waitUntil((async () => {
+    // A push for an occurrence the app already ended (tombstone written by the page), or one that outlived its own expiry, must not look like a live alarm.
+    // Safari requires every push to show SOMETHING, so show a truthful, non-reactivating notice under the same tag (it replaces the old one). It has no actions.
+    const ended = await adhdEnded(p.occurrenceId), expired = Number(p.expiresAt) > 0 && Date.now() > Number(p.expiresAt);
+    if (ended || expired) {
+      await self.registration.showNotification(String(p.title || "MOM's: 2048 Reminder").slice(0, 60), {body: ended ? 'This reminder has already ended.' : 'A late alert arrived. Open the app to see where this reminder stands.',
+        tag: p.tag, renotify: false, silent: true, icon: ADHD_SCOPE + 'stages/stage1.webp', data: {appId: 'adhd', occurrenceId: p.occurrenceId, attemptId: p.attemptId, url: p.url, receipt: p.receipt, notice: true}});
+      await adhdReport(p, 'received');
+      return;
+    }
     const face = Math.min(4, Math.max(1, Math.floor(Number(p.face)) || 1));      // stage 1..4 artwork; Android shows it as the large icon, iOS ignores it
     await self.registration.showNotification(String(p.title || "MOM's: 2048 Reminder").slice(0, 60), {body: String(p.body || '').slice(0, 300), tag: p.tag, renotify: true,
       icon: ADHD_SCOPE + 'stages/stage' + face + '.webp',
