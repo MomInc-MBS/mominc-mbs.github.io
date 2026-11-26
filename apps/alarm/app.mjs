@@ -7,28 +7,29 @@ import * as P from './push.js';
 import {createWebAdapter} from './web-adapter.js';
 import {mountSettings} from './ui/settings.js';
 import {icon} from './ui/glyphs.js';
-import {faceUrl, HOLD_MS} from './stages.js';
+import {N} from './ui/names.js';
+import {mountGameColors} from './ui/game-colors.js';
+import {HOLD_MS} from './stages.js';
 
 const KEY = 'mom-alarm-2048-web-v1', BEST = 'mom-alarm-2048-web-best-v1'; // BEST = apps.json web.bestKey
 const AKEY = 'adhd-alarm-board-v1';                                       // live alarm boards, one per occurrence attempt ({attempt: encoded board}; the old single {attempt, enc} is still read)
 // The shell is wordless: icons, digits and the user's own title text. Accessible names live in aria-label only (the installed name stays in metadata and notifications).
 const HTML = `<div class="al"><div class="al-stage"><canvas aria-hidden="true"></canvas></div>
-<div class="al-screen"><section class="al-menu">
-<img class="al-face" alt="" width="96" height="96">
-<div class="al-menurow"><button class="al-rems" type="button" aria-label="Reminders">${icon('bell')}</button><button class="al-start alt" type="button" aria-label="Free play">${icon('board2048')}</button></div></section>
-<section class="al-play" hidden><header><strong class="al-mode" aria-hidden="true"></strong><span class="al-score num"></span><button class="al-back alt" type="button" aria-label="Menu">${icon('back')}</button></header>
-<div class="al-board" role="application" aria-label="2048 board. Swipe or use arrow keys."></div><p class="al-msg vh" role="status"></p></section></div>
-<div class="al-glass" aria-hidden="true"></div>
+<div class="al-crt"><div class="al-set"></div>
+<section class="al-play" hidden><header><strong class="al-mode" aria-hidden="true"></strong><span class="al-score num"></span><button class="al-back alt" type="button" aria-label="${N.back2}">${icon('back')}</button></header>
+<div class="al-board" role="application" aria-label="2048 board. Swipe or use arrow keys."></div><p class="al-msg vh" role="status"></p></section>
 <div class="al-bar" hidden><button class="al-stop alt" type="button" data-hold="stop" aria-label="Emergency stop (hold 3 s)">${icon('octagon')}</button></div>
-<div class="al-rem" hidden><button class="al-x" type="button" aria-label="Back to the computer">${icon('back')}</button><div class="al-set"></div></div></div>`;
+<div class="al-fx" aria-hidden="true"></div></div>
+<button class="al-k" data-key="up" type="button" aria-label="${N.keyUp}"></button><button class="al-k" data-key="down" type="button" aria-label="${N.keyDown}"></button>
+<button class="al-k" data-key="prev" type="button" aria-label="${N.keyPrev}"></button><button class="al-k" data-key="next" type="button" aria-label="${N.keyNext}"></button></div>`;
 
 export async function mountAlarm(host) {
   host.innerHTML = HTML;
   const root = host.firstElementChild, $ = c => root.querySelector('.al-' + c);
-  let game = null, down = null, disposed = false, comp = null, mode = 'free', boundOcc = null, holdT = 0;
+  let game = null, down = null, disposed = false, mode = 'free', boundOcc = null, holdT = 0;
   let S = R.load();
   const now = () => Date.now();
-  const link = document.createElement('link'); link.rel = 'stylesheet'; link.href = '/apps/alarm/ui/settings.css'; document.head.appendChild(link);
+  const links = ['settings', 'game-colors'].map(n => { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = `/apps/alarm/ui/${n}.css`; document.head.appendChild(l); return l; });
   // The adapter owns persistence, the outbox, foreground outputs and the clock; it shares this module's state variable.
   const A = createWebAdapter({bind: {get: () => S, set: v => { S = v; }}});
   A.commit(R.reconcile(S, now()), true);                  // migrated / imported reminders get their next occurrence
@@ -53,12 +54,12 @@ export async function mountAlarm(host) {
     }));
     $('score').textContent = '$' + game.score.toLocaleString();
   };
-  const show = playing => { $('menu').hidden = playing; $('play').hidden = !playing; };
+  const show = playing => { $('play').hidden = !playing; setHost.classList.toggle('playing', playing); ui?.setPlaying(playing); syncKeys(); if (!playing) gc?.close(); size({}); };   // one CRT: the reminders app, or the 2048 board over it
   const startFree = () => {
     mode = 'free'; boundOcc = null; $('mode').innerHTML = icon('board2048'); bar();
     let saved = null; try { saved = localStorage.getItem(KEY); } catch {}
     game = (saved && decode(saved)) || newGame();
-    show(true); draw(); closeSet();
+    show(true); draw();
   };
   const startAlarm = occId => {
     const id = occId || R.ranked(S)[0]?.occId, attempt = id && R.attemptId(S, id);
@@ -67,13 +68,13 @@ export async function mountAlarm(host) {
     mode = 'alarm'; boundOcc = id; $('mode').innerHTML = icon('bell');
     const saved = boards()[attempt];
     game = (saved && decode(saved)) || newGame();
-    show(true); draw(); closeSet(); bar();
+    show(true); draw(); bar();
   };
   const bar = () => {
     const alarm = mode === 'alarm' && !!boundOcc && R.attemptId(S, boundOcc) !== null;
-    $('bar').hidden = !alarm; root.classList.toggle('has-bar', alarm);
+    $('bar').hidden = !alarm; root.classList.toggle('has-bar', alarm); size({});   // the stop row costs board height only while shown
   };
-  const endAlarmBoard = () => { mode = 'free'; boundOcc = null; show(false); bar(); openSet(); };
+  const endAlarmBoard = () => { mode = 'free'; boundOcc = null; show(false); bar(); ui.refresh(); };
   const finishAlarm = won => {                             // bound to the occurrence this board was started for: a stale board never clears another alarm
     const att = R.attemptId(S, boundOcc);
     const ns = (won ? R.win : R.lose)(S, boundOcc, now()), accepted = won && ns !== S;
@@ -110,22 +111,24 @@ export async function mountAlarm(host) {
   });
   board.addEventListener('pointercancel', () => { down = null; });
   addEventListener('keydown', onKey);
-  $('start').onclick = startFree;
-  $('back').onclick = () => { show(false); bar(); };
+  $('back').onclick = () => { show(false); bar(); ui.refresh(); };
 
   // ---- foreground sound: the adapter's outputs (Web Audio, one voice, visible tab only). It starts only after an intentional tap on the page. ----------
   const unlock = () => { if (A.outputs.facts().audio !== 'running') A.unlock(); };
   addEventListener('pointerdown', unlock);
 
   // ---- wordless settings + the MOM face (one head, driven by adapter.snapshot()) --------------------------------------
-  const rem = $('rem'), setHost = root.querySelector('.al-set');
-  let ui = null;
-  const openSet = () => { rem.hidden = false; ui ||= mountSettings(setHost, A, {}); ui.refresh(); };
-  const closeSet = () => { rem.hidden = true; };
-  $('rems').onclick = openSet;
-  root.querySelector('.al-x').onclick = closeSet;
+  const setHost = root.querySelector('.al-set'), crt = $('crt');
+  const DOCK = 46;   // MOM's subtitle dock stays visible under the board
+  let comp = null, ui = null, gc = null, repT = 0, repI = 0, crtBox = {w: 300, h: 260}, size = () => {};
+  const stopRepeat = () => { clearTimeout(repT); clearInterval(repI); repT = repI = 0; };
+  const syncKeys = () => comp?.setKeys?.(!$('play').hidden ? false : !!ui?.canTab(-1), !$('play').hidden ? false : !!ui?.canTab(1));
+  ui = mountSettings(setHost, A, {embedded: true, onGame: startFree, onState: () => { stopRepeat(); syncKeys(); }});
+  gc = mountGameColors($('play'));   // game-only colour panel: rail/handle + drawer inside the glass
+  $('play').addEventListener('click', e => { const k = e.target.closest?.('.gc-root [data-k]')?.dataset.k; if (k) ui.say(k); }, true);   // MOM's subtitle for each colour control
+  const openSet = () => { show(false); ui.refresh(); };   // the reminders app IS the default view; this returns to it from the board
   const offPlay = A.on('playChallenge', e => startAlarm(e?.occId));
-  const faceNow = () => { const u = faceUrl((R.snapshot(S, now()).stage || 1) - 1), i = $('face'); if (i.getAttribute('src') !== u) i.src = u; };
+  const faceNow = () => {};   // the stage face now lives in the MOM bust and header chips of the reminders app
   const offSnap = A.on('snapshot', () => faceNow());
 
   // ---- emergency stop on the game screen: a deliberate ~3 s hold (pointer or Enter/Space), at every stage ---------------------------
@@ -173,16 +176,36 @@ export async function mountAlarm(host) {
     if (occ) { q.delete('occ'); q.delete('view'); history.replaceState(null, '', location.pathname + (q.toString() ? '?' + q : '')); openOccurrence(occ); }
   } catch {}
   tick(); A.sync();
-  if (R.ranked(S).length && rem.hidden) openSet();          // reopened while ringing
 
-  const size = (lw, lh) => root.style.setProperty('--bs', Math.max(96, Math.min(lw - 44 - 16, lh - 44 - 66)) + 'px');
+  // ---- console keys: up/down scroll the active scroller (tap 64 px, hold repeats after 350 ms); the right keys step tabs. Never while the board is showing. ----
+  const keyEl = k => root.querySelector(`[data-key="${k}"]`);
+  for (const [k, dir] of [['up', -1], ['down', 1]]) {
+    const b = keyEl(k);
+    b.addEventListener('pointerdown', e => {
+      e.preventDefault(); if (!$('play').hidden) return; stopRepeat();
+      try { b.setPointerCapture(e.pointerId); } catch {}
+      ui.scrollStep(dir); repT = setTimeout(() => { repI = setInterval(() => { if (!ui.scrollStep(dir)) stopRepeat(); }, 90); }, 350);
+    });
+    for (const ev of ['pointerup', 'pointercancel', 'lostpointercapture', 'pointerleave']) b.addEventListener(ev, stopRepeat);
+    b.addEventListener('contextmenu', e => e.preventDefault());
+    b.addEventListener('click', e => { if (e.detail === 0 && $('play').hidden) ui.scrollStep(dir); });   // keyboard / assistive activation: one step
+  }
+  for (const [k, d] of [['prev', -1], ['next', 1]]) {
+    const b = keyEl(k);
+    b.addEventListener('pointerdown', e => e.preventDefault());
+    b.addEventListener('click', () => { if ($('play').hidden) ui.tab(d); });
+  }
+  addEventListener('blur', stopRepeat);
+
+  size = ({crt: c}) => { if (c) crtBox = c; root.style.setProperty('--bs', Math.max(96, Math.min(crtBox.w - 16, crtBox.h - 44 - 10 - DOCK)) + 'px'); };
   root.style.setProperty('--bs', '150px');
-  comp = await mountComputer($('stage'), $('screen'), $('glass'), size);
+  comp = await mountComputer($('stage'), {crt, up: keyEl('up'), down: keyEl('down'), prev: keyEl('prev'), next: keyEl('next')}, size);
   if (disposed) comp.dispose();
-  else if (!comp.ok) { root.classList.add('flat'); size(300, 260); }
+  else if (!comp.ok) { root.classList.add('flat'); root.style.setProperty('--bs', '220px'); }
+  syncKeys();
   return {dispose() {
-    disposed = true; clearInterval(timer); removeEventListener('keydown', onKey); removeEventListener('pointerdown', unlock); removeEventListener('pointerup', onUp); removeEventListener('pointercancel', onUp); clearTimeout(holdT); offPlay(); offSnap();
+    disposed = true; clearInterval(timer); removeEventListener('keydown', onKey); removeEventListener('pointerdown', unlock); removeEventListener('blur', stopRepeat); stopRepeat(); removeEventListener('pointerup', onUp); removeEventListener('pointercancel', onUp); clearTimeout(holdT); offPlay(); offSnap();
     document.removeEventListener('visibilitychange', onVis); navigator.serviceWorker?.removeEventListener('message', onSW);
-    ui?.destroy(); link.remove(); A.dispose(); comp?.dispose(); host.replaceChildren();
+    gc?.destroy(); ui?.destroy(); links.forEach(l => l.remove()); A.dispose(); comp?.dispose(); host.replaceChildren();
   }};
 }

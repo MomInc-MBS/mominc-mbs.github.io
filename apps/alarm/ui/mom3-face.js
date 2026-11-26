@@ -156,7 +156,7 @@ export function createMomFace(host, opts = {}) {
   function layout() {
     if (S.dead || !S.img) return;
     const w = host.clientWidth; if (!(w > 0)) return;
-    const dpr = Math.min(3, Math.max(1, globalThis.devicePixelRatio || 1)), Wd = Math.round(w * dpr), Hd = Math.round(Wd * CB.h / CB.w);
+    const dpr = Math.min(3, Math.max(1, globalThis.devicePixelRatio || 1)), Wd = Math.max(Math.round(w * dpr), opts.minPx || 0), Hd = Math.round(Wd * CB.h / CB.w);
     if (Wd === S.W && Hd === S.H) return;
     S.W = Wd; S.H = Hd; cv.width = Wd; cv.height = Hd;
     S.cw = Math.max(3, Math.floor(Wd / COLS)); S.ch = Math.round(S.cw * 9 / 7);

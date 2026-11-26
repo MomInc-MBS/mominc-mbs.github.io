@@ -6,7 +6,7 @@ const createMini = (host, o) => { host.classList.add('mini3'); const inner = doc
 import {createMomFace, bustGeometry} from './mom3-face.js';
 import {icon, strip, capIcon, SOUND_WAVE, VIB_WAVE, PATTERN_WAVE, SOUNDS, SOUND_GLYPH, CAP_GLYPH, OUTCOME_GLYPH} from './glyphs.js';
 import {N, CAP, STATE, SOUND, VIB, OUTCOME} from './names.js';
-import {hms, countdown, upcoming, nextDue, weekColumns, monthCells, fmtDate, fmtTime, dayOf, weekdayName, todayKey, zoneOf, deviceZone, offsetLabel, validZone} from './time.js';
+import {stepTab, hms, countdown, upcoming, nextDue, weekColumns, monthCells, fmtDate, fmtTime, dayOf, weekdayName, todayKey, zoneOf, deviceZone, offsetLabel, validZone} from './time.js';
 import {createChallenge} from './challenges.js';
 import {createHelp} from './help.js';
 import {STAGE_AT, REPEAT_S, HOLD_MS} from '../stages.js';
@@ -37,7 +37,7 @@ export function mountSettings(host, adapter, opts = {}) {
   const S = {tab: 'clock', list: [], caps: {}, snap: safeSnap(), draft: null, isNew: false, picked: true, stageSel: 0, hist: null, upd: null, err: null,
     confirmDel: false, preview: false, pv: 0, aud: null, month: null, locked: {}, saving: false, saveUi: null, io: null, chal: null};
   const offs = [], timers = [];
-  const root = h('div', {class: 'ms'});
+  const emb = !!opts.embedded, root = h('div', {class: emb ? 'ms ms-emb' : 'ms'});
   const bg = h('div', {class: 'ms-bg', 'aria-hidden': 'true'}), probe = h('div', {class: 'ms-probe', 'aria-hidden': 'true'});
   const faceHost = h('div', {class: 'ms-face', 'aria-hidden': 'true'});
   const top = h('div', {class: 'ms-top'});
@@ -48,15 +48,31 @@ export function mountSettings(host, adapter, opts = {}) {
   root.append(bg, faceHost, top, panel, stop, rail, live, probe);
   host.appendChild(root);
   const rm0 = !!(S.snap.reducedMotion || globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches);
-  const face = opts.face || createMomFace(faceHost, {reducedMotion: rm0, highContrast: !!S.snap.highContrast});
+  const face = opts.face || createMomFace(faceHost, {reducedMotion: rm0, highContrast: !!S.snap.highContrast, minPx: emb ? 408 : 0});
   // collapsing hero: bust (list at scroll 0) -> pinned eye strip. p = clamp(scrollTop / hD); CSS does the rest from --p (see settings.css hero block).
   let hD = 0, hero = false, raf = 0;
   const setP = () => { raf = 0; root.style.setProperty('--p', hero && hD > 0 ? clamp01(panel.scrollTop / hD).toFixed(4) : '1'); };
   const clamp01 = v => Math.min(1, Math.max(0, v));
   const onScroll = () => { if (!raf) raf = requestAnimationFrame(setP); };
   panel.addEventListener('scroll', onScroll, {passive: true});
+  // Embedded (inside the console's CRT): the bust starts at the very top and is contain-fit to 96-144 px; the header controls FLOAT over its corners;
+  // the panel starts under the 44 px header row (the hero spacer --sp bridges the rest); MOM's subtitle dock + rail sit under the panel.
+  // Sized from the dock's MINIMUM height so typing a long subtitle never resizes MOM; the panel just gets shorter.
+  function layoutEmb(H, Wr) {
+    const HDR = 44, st = root.style, cs = getComputedStyle(root), railH = parseFloat(cs.getPropertyValue('--rail-h')) || 46;
+    const subMin = parseFloat(cs.getPropertyValue('--sub-min')) || 42, sub = root.querySelector('.ms-sub'), dock = Math.max(subMin, sub ? sub.offsetHeight : 0);
+    const card = panel.querySelector('.card'), cardH = card ? card.offsetHeight : 66;
+    const bh = Math.min(144, Math.max(96, H - railH - subMin - 6 - 4 - cardH));
+    const w = Math.min(Wr - 8, bh / bustGeometry(1).h), g = bustGeometry(w); hD = Math.max(0, g.h - HDR - 2);   // scroll extent of the collapse = the spacer
+    st.setProperty('--hero-top', '0px'); st.setProperty('--fw2', w.toFixed(1) + 'px'); st.setProperty('--hexp', g.h.toFixed(1) + 'px');
+    st.setProperty('--d', (g.h - g.strip).toFixed(1) + 'px'); st.setProperty('--ey', g.eyeTop.toFixed(1) + 'px'); st.setProperty('--pt', HDR + 'px'); st.setProperty('--sp', hD.toFixed(1) + 'px');
+    st.setProperty('--dock', dock + 'px'); st.setProperty('--tail', '0px');
+    if (hero && hD > 0) st.setProperty('--tail', Math.max(0, panel.clientHeight + hD - panel.scrollHeight).toFixed(1) + 'px');
+    setP();
+  }
   function layout() {
     const H = root.clientHeight, Wr = root.clientWidth; if (!H || !Wr) return;
+    if (emb) return layoutEmb(H, Wr);
     const cs = getComputedStyle(probe), safeT = parseFloat(cs.paddingTop) || 0, safeB = parseFloat(cs.paddingBottom) || 0;
     const heroTop = safeT + 58, card = panel.querySelector('.card'), reserve = (card ? card.offsetHeight : 76) + 14;
     const below = Math.max(66 + safeB, H - panel.offsetTop - panel.offsetHeight);   // rail + MOM's subtitle box (whatever sits under the panel)
@@ -74,6 +90,8 @@ export function mountSettings(host, adapter, opts = {}) {
   const F = (fn, ...a) => { try { face[fn](...a); } catch (e) {} };
   const announce = t => { live.textContent = ''; setTimeout(() => { live.textContent = t; }, 30); };
   const help = createHelp({root, rail, S, face, announce, rm: () => root.classList.contains('ms-rm') || !!S.snap.reducedMotion || rm0});   // typed MOM subtitles; describes existing handlers, never replaces them
+
+  if (emb && typeof ResizeObserver === 'function') { const sub = root.querySelector('.ms-sub'); if (sub) { const ro = new ResizeObserver(() => layout()); ro.observe(sub); offs.push(() => ro.disconnect()); } }
 
   function safeSnap() { try { return adapter.snapshot() || {}; } catch (e) { return {}; } }
   const toward = el => { try { const r = el.getBoundingClientRect(), f = faceHost.getBoundingClientRect(); return {x: clamp((r.left + r.width / 2 - (f.left + f.width / 2)) / (innerWidth / 2)), y: clamp((r.top + r.height / 2 - (f.top + f.height * .5)) / (innerHeight / 2))}; } catch (e) { return {x: 0, y: .6}; } };
@@ -121,8 +139,11 @@ export function mountSettings(host, adapter, opts = {}) {
   const lockFor = id => { const s = S.snap; if (s.occId && !s.offAllowed && s.unlockAt && s.reminderId === id) return s.unlockAt; return S.locked[id] > now() ? S.locked[id] : 0; };
 
   // ---------- top strip, emergency stop, rail ----------
+  let topSig = '';
   function renderTop() {
     const s = S.snap, kids = [];
+    // unchanged header = keep the same elements: a re-render between pointerdown and click (the audio unlock fires a snapshot) swallowed the tap on the stage chip
+    const sig = [s.occId, s.stage, s.offAllowed, s.unlockAt, s.nextDue, s.pendingSync, S.saveUi, !!opts.onGame].join('|'); if (sig === topSig && top.firstChild) return; topSig = sig;
     if (s.occId) {
       kids.push(h('button', {type: 'button', class: 'chip stg', 'aria-label': `${N.game}. ${N.active} ${s.stage || 1}`, on: {click: () => { try { adapter.playChallenge(s.occId); } catch (e) {} }}},
         h('img', {src: STAGE_IMG(s.stage || 1), alt: '', width: '40', height: '40'}), h('span', {class: 'num', text: String(s.stage || 1)})));
@@ -132,7 +153,9 @@ export function mountSettings(host, adapter, opts = {}) {
       kids.push(h('span', {class: 'chip', role: 'img', 'aria-label': `${N.next} ${fmtTime(s.nextDue)} ${longDate(new Date(s.nextDue).toISOString().slice(0, 10))}`},
         h('span', {html: icon('bell')}), h('span', {class: 'num', text: fmtTime(s.nextDue)}), h('span', {class: 'num dim', text: fmtDate(s.nextDue)})));
     } else kids.push(h('span', {class: 'chip', role: 'img', 'aria-label': N.off, html: icon('bellOff')}));
+    if (emb && kids.length > 1) kids.splice(0, kids.length, h('div', {class: 'tl'}, ...kids));   // ringing: stage chip over the lock timer, a narrow column left of the bust
     kids.push(h('span', {class: 'sp'}));
+    if (opts.onGame) kids.push(h('button', {type: 'button', class: 'chip gm', 'data-k': 'free', 'aria-label': N.freePlay, on: {click: () => opts.onGame()}, html: icon('board2048')}));
     if (s.pendingSync) kids.push(h('span', {class: 'chip warnc', role: 'img', 'aria-label': N.sync, html: icon('cloudBroken') + ring()}));
     if (S.saveUi) kids.push(h('span', {class: 'chip sv-' + S.saveUi, role: 'img', 'aria-label': N[S.saveUi], html: S.saveUi === 'saving' ? ring() : icon(S.saveUi === 'saved' ? 'check' : 'warn')}));
     top.replaceChildren(...kids);
@@ -163,6 +186,9 @@ export function mountSettings(host, adapter, opts = {}) {
         on: {click: () => { if (dis) return; S.tab = id; S.preview = false; render(); panel.scrollTop = 0; if (id === 'history') loadHistory(); if (id === 'prefs' && !S.upd) checkUpd(); }},
         html: icon('rail' + id[0].toUpperCase() + id.slice(1))});
     }));
+    const sel = rail.querySelector('[aria-selected=true]');   // rail-only scroll (scrollIntoView could move the page behind the CRT)
+    if (sel && rail.scrollWidth > rail.clientWidth) rail.scrollLeft = Math.max(0, sel.offsetLeft + sel.offsetWidth / 2 - rail.clientWidth / 2);
+    try { opts.onState?.(); } catch (e) {}
   }
 
   // ---------- panel ----------
@@ -174,7 +200,7 @@ export function mountSettings(host, adapter, opts = {}) {
     const nh = S.tab === 'clock' && !S.draft && !S.preview, st2 = nh === hero ? st : 0;
     hero = nh; root.classList.toggle('ms-hero', hero);
     panel.replaceChildren(...(hero ? [h('div', {class: 'ms-hero-sp', 'aria-hidden': 'true'})] : []), ...build().flat(9).filter(Boolean));
-    layout(); panel.scrollTop = st2; setP();
+    panel.scrollTop = st2; layout(); panel.scrollTop = st2; setP();   // restore BEFORE layout() reads scrollTop (a stale offset from the previous tab gave a stale --p), and again after --tail changed the scroll extent
     if (fk) { const el = panel.querySelector(`[data-k="${CSS.escape(fk)}"]`) || rail.querySelector(`[data-k="${CSS.escape(fk)}"]`); el?.focus({preventScroll: true}); }
     if (S.err) markError(S.err);
     renderTop(); renderRail(); stop.hidden = !S.snap.occId;
@@ -618,9 +644,21 @@ export function mountSettings(host, adapter, opts = {}) {
   render();
   (async () => { try { S.caps = await adapter.capabilities() || {}; } catch (e) {} await loadList(); F('react', 'glance', {x: 0, y: .9}); })();
 
+  const tabDis = id => DRAFT_TABS.has(id) && !S.draft;
+  const tabIds = RAIL.map(r => r[0]);
+  const scroller = () => root.querySelector('[role=dialog]:not([hidden]) [data-scroll]') || panel;   // an open contained drawer/modal body wins over the panel
   return {
     face,
     say: help.say,
+    setPlaying: on => root.classList.toggle('ms-playing', !!on),   // the 2048 board is on top: only MOM's subtitle dock stays
+    canTab: delta => stepTab(tabIds, S.tab, delta, tabDis) != null,
+    tab(delta) {                                           // exactly the rail icon's own click handler (same help line, same draft-tab rules)
+      const id = stepTab(tabIds, S.tab, delta, tabDis); if (!id) return false;
+      rail.querySelector(`[data-k="tab:${id}"]`)?.click(); return true;
+    },
+    scrollStep(dir, px = 64) {
+      const el = scroller(), before = el.scrollTop; el.scrollTop = before + (dir < 0 ? -px : px); return el.scrollTop !== before;
+    },
     refresh: () => { S.snap = safeSnap(); loadList(); },
     destroy() {
       clearInterval(tick); help.destroy(); stopPreviewTimer(); timers.forEach(clearTimeout); offs.forEach(f => { try { f?.(); } catch (e) {} }); stopAud();

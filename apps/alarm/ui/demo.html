@@ -6,17 +6,24 @@
 <meta name="theme-color" content="#1a0b2e">
 <title>MOM's: 2048 Reminder settings demo</title>
 <link rel="stylesheet" href="settings.css">
+<link rel="stylesheet" href="../app.css">
+<link rel="stylesheet" href="game-colors.css">
+<style>html.ms-doc,html.ms-doc body{margin:0}.al-crt.demo{position:relative;left:auto;top:auto;margin:12px auto;width:min(var(--cw,361px),calc(100vw - 29px));height:var(--ch,310px)}body.full .al-crt.demo{position:fixed;inset:0;width:auto;height:auto;margin:0;border-radius:0;clip-path:none}</style>
 </head>
 <body>
-<div id="app"></div>
+<div class="al"><div class="al-crt demo"><div class="al-set" id="app"></div><div class="al-fx" aria-hidden="true"></div></div></div>
 <script type="module">
-// Demo: ?stage=1..4 active occurrence, ?locked=1, ?rm=1 reduced motion, ?hc=1 high contrast, ?fail=1 failing saves, ?sync=1 pending sync.
+// Demo: the reminders app INSIDE the console CRT structure (same app.css + embedded settings as the live shell; the 3D console itself is not loaded).
+// ?w=361&h=310 resizes the glass, ?full=1 = the old full-screen layout. ?stage=1..4 active occurrence, ?locked=1, ?rm=1 reduced motion, ?hc=1 high contrast, ?fail=1 failing saves, ?sync=1 pending sync.
 import {createFakeAdapter} from './fake-adapter.js';
 import {mountSettings} from './settings.js';
 const q = new URLSearchParams(location.search);
 const adapter = createFakeAdapter({stage: +q.get('stage') || null, locked: q.get('locked') === '1', rm: q.get('rm') === '1', hc: q.get('hc') === '1', failSave: q.get('fail') === '1', pendingSync: q.get('sync') === '1'});
 window.__adapter = adapter;
-window.__ui = mountSettings(document.getElementById('app'), adapter, {});
+const full = q.get('full') === '1', root = document.querySelector('.al-crt');
+if (q.get('w')) root.style.setProperty('--cw', q.get('w') + 'px'); if (q.get('h')) root.style.setProperty('--ch', q.get('h') + 'px');
+if (full) document.body.classList.add('full');
+window.__ui = mountSettings(document.getElementById('app'), adapter, full ? {} : {embedded: true, onGame: () => { window.__games = (window.__games || 0) + 1; }});
 </script>
 </body>
 </html>

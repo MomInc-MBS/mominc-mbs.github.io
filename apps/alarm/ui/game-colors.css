@@ -1,0 +1,38 @@
+/* Game-only colour panel. Every rule is scoped to .gc-* or to the play section's data-gc-* attributes; the default look is untouched until a colour is picked. */
+.gc-host{position:relative}
+.gc-root{position:absolute;inset:0;pointer-events:none;z-index:6;--gc-sw:36px}
+.gc-root>*{pointer-events:auto}
+.gc-root button{min-height:0;box-sizing:border-box;padding:0;margin:0;border-radius:8px;font:inherit;text-transform:none;display:grid;place-items:center;cursor:pointer}
+
+/* panel look */
+.gc-panel{position:absolute;top:0;bottom:0;right:0;display:flex;flex-direction:column;gap:6px;padding:8px;box-sizing:border-box;width:calc(var(--gc-sw)*2 + 4px + 16px);overflow-y:auto;overflow-x:hidden;scrollbar-width:none;overscroll-behavior:contain;background:rgba(20,9,35,.94);border-left:1px solid #9579c9;color:#f6ecff}
+.gc-tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.gc-grid{display:grid;grid-template-columns:repeat(2,var(--gc-sw));gap:4px;grid-auto-flow:row}
+.gc-root .gc-tab,.gc-root .gc-reset,.gc-root .gc-close{height:var(--gc-sw);width:100%;background:#24123c;color:#f6ecff;border:2px solid #6b5890}
+.gc-root .gc-tab svg,.gc-root .gc-reset svg,.gc-root .gc-close svg{width:22px;height:22px}
+.gc-root .gc-tab[aria-pressed="true"]{border-color:#ffd36e;color:#ffd36e;box-shadow:inset 0 -4px 0 #ffd36e}
+.gc-close{display:none!important}
+.gc-root .gc-sw{width:var(--gc-sw);height:var(--gc-sw);background:var(--sw);color:var(--ck);border:2px solid #ffffff55;position:relative}
+.gc-root .gc-sw svg{width:60%;height:60%;opacity:0}
+.gc-root .gc-sw[aria-pressed="true"]{border:3px solid #ffd36e;outline:2px solid #12081f;outline-offset:-5px}
+.gc-root .gc-sw[aria-pressed="true"] svg{opacity:1}
+.gc-root button:focus-visible{outline:3px solid #fff;outline-offset:1px}
+
+/* narrow: side handle + contained drawer */
+.gc-handle{display:none!important}
+.gc-scrim{position:absolute;inset:0;background:rgba(10,4,20,.45);touch-action:none}
+.gc-scrim[hidden]{display:none}
+[data-mode="drawer"] .gc-handle{display:grid!important;position:absolute;right:0;top:50%;transform:translateY(-50%);width:32px;height:56px;min-height:56px;border-radius:10px 0 0 10px;background:rgba(20,9,35,.94);color:#ffd36e;border:2px solid #9579c9;border-right:0}
+[data-mode="drawer"] .gc-handle svg{width:22px;height:22px}
+[data-mode="drawer"] .gc-panel{transform:translateX(105%);transition:transform .18s ease;visibility:hidden;border:1px solid #9579c9;border-right:0;border-radius:12px 0 0 12px}
+[data-mode="drawer"][data-open="1"] .gc-panel{transform:none;visibility:visible}
+[data-mode="drawer"][data-open="1"] .gc-handle{display:none!important}
+[data-mode="drawer"] .gc-close{display:grid!important}
+[data-mode="drawer"] .gc-tabs{grid-template-columns:1fr 1fr}
+@media (prefers-reduced-motion:reduce){[data-mode="drawer"] .gc-panel{transition:none}}
+
+/* applied colours: only when a selection exists */
+.al-play[data-gc-bg]{background:var(--game-background)}
+.al-play[data-gc-board] .al-board{background:var(--game-board-fill);box-shadow:0 0 0 1px var(--game-board-edge)}
+.al-play[data-gc-board] .cell:not([data-t]){background:var(--game-cell-empty)}
+.al-play[data-gc-tiles] .cell[data-t]{background:var(--game-tile-fill);color:var(--game-tile-text);box-shadow:inset 0 0 0 2px var(--game-tile-edge),0 0 0 1px var(--game-tile-halo);text-shadow:0 0 2px var(--game-tile-halo),0 0 1px var(--game-tile-halo)}

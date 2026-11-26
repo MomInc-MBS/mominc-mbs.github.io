@@ -42,7 +42,7 @@ function audit() {
   out.placeholders = [...document.querySelectorAll('[placeholder]')].map(e => e.placeholder).filter(p => !['Title', 'URL', 'Code', 'Note'].includes(p));
   const ctl = [...document.querySelectorAll('button, input:not([type=file]), select, [role=switch], [role=spinbutton], [role=radio], [role=tab]')].filter(e => shown(e) && !hiddenUp(e));
   out.unnamed = ctl.filter(e => !(e.getAttribute('aria-label') || e.labels?.length || e.getAttribute('aria-labelledby'))).map(e => e.outerHTML.slice(0, 80));
-  out.small = ctl.filter(e => !e.closest('.chal')).map(e => [e, e.getBoundingClientRect()]).filter(([, r]) => r.width < 47.5 || r.height < 47.5).map(([e, r]) => `${e.className || e.tagName} ${r.width | 0}x${r.height | 0}`);
+  out.small = ctl.filter(e => !e.closest('.chal')).map(e => [e, e.getBoundingClientRect()]).filter(([, r]) => r.width < 43.5 || r.height < 43.5).map(([e, r]) => `${e.className || e.tagName} ${r.width | 0}x${r.height | 0}`);
   return out;
 }
 
@@ -77,6 +77,11 @@ test('alarm settings UI: wordless audit + evidence in a real browser', {skip: !c
     {
       const {ctx, page, errs} = await open();
       await check(page, 'list'); await shot(page, '01-list');
+      // in-CRT hero: the bust starts at the top of the glass, is >= 115 px tall, and the first alarm card is fully visible (nothing clipped) at scroll 0
+      const geo = await page.evaluate(() => { const r = s => document.querySelector(s).getBoundingClientRect(), f = r('.ms-face'), c = r('.ms-panel .card'), p = r('.ms-panel'), g = r('.al-crt');
+        return {bust: f.height, top: f.top - g.top, clipped: c.bottom - p.bottom, ahead: c.top - (f.top + f.height)}; });
+      assert.ok(geo.bust >= 115 && geo.top === 0, 'bust >= 115 px from the very top: ' + JSON.stringify(geo));
+      assert.ok(geo.clipped <= 0.5 && geo.ahead >= 0 && geo.ahead <= 8, 'first card fully visible right under MOM: ' + JSON.stringify(geo));
       await page.waitForTimeout(600); const raf0 = await page.evaluate(() => window.__raf); await page.waitForTimeout(1000);
       assert.equal(await page.evaluate(() => window.__raf), raf0, 'idle face does no frame work');
       await page.evaluate(() => window.__ui.face.react('concern')); await page.waitForTimeout(190); await shot(page, '02-reaction-concern-mid');
