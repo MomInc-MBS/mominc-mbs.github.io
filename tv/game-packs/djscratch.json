@@ -9,8 +9,8 @@
     },
     {
       "url": "/apps/alarm/app.mjs",
-      "revision": "2326998a4a7663e68cb834fc7b6013871262f605",
-      "bytes": 12076
+      "revision": "2de61b7166e522889216edff399830ad4088651a",
+      "bytes": 12246
     },
     {
       "url": "/apps/alarm/board.js",
@@ -88,9 +88,29 @@
       "bytes": 12315
     },
     {
+      "url": "/apps/alarm/ui/help.js",
+      "revision": "35f66a5d251a4b4ce54c0c667cb8ff90bd1a70e1",
+      "bytes": 14021
+    },
+    {
       "url": "/apps/alarm/ui/mom-face.js",
       "revision": "ee010781e8f4dcb26f81885b130e249f8a43838a",
       "bytes": 18738
+    },
+    {
+      "url": "/apps/alarm/ui/mom3-face.js",
+      "revision": "adff331160d6d44ea3324b7a05821af8e3410cf8",
+      "bytes": 13766
+    },
+    {
+      "url": "/apps/alarm/ui/mom3-manifest.js",
+      "revision": "b920c7e14e8abf49eb23670e606270923efa1e7b",
+      "bytes": 814
+    },
+    {
+      "url": "/apps/alarm/ui/mom3.webp",
+      "revision": "ecfe6ea35504d830c274f055b2b92de60f4825f0",
+      "bytes": 127088
     },
     {
       "url": "/apps/alarm/ui/names.js",
@@ -99,13 +119,13 @@
     },
     {
       "url": "/apps/alarm/ui/settings.css",
-      "revision": "9e690a70501fe15bbd5ba9f6ec262685ecf4c9e6",
-      "bytes": 18848
+      "revision": "4dc149cd1c2c32a43a4e7b6e40032ce831017259",
+      "bytes": 21499
     },
     {
       "url": "/apps/alarm/ui/settings.js",
-      "revision": "d67853304644d329d59e28056f2fbaa9b9a1922d",
-      "bytes": 50599
+      "revision": "56e5dd09354f13eed5f9e043f0883b0b449932ad",
+      "bytes": 54003
     },
     {
       "url": "/apps/alarm/ui/time.js",
@@ -134,7 +154,7 @@
     },
     {
       "url": "/apps/apps.json",
-      "revision": "639f08dc12b8a3143df3011230802bce7192ef2e",
+      "revision": "5a5154a1332084663f47f8129cad4130a975dd66",
       "bytes": 9957
     },
     {
@@ -722,5 +742,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "11a9d6345e102064689a"
+  "version": "8de6b2f8d56de1df1425"
 }
