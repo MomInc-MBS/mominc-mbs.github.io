@@ -1,20 +1,20 @@
 {
   "schema": 1,
-  "updated": "2026-11-26T03:44:07Z",
+  "updated": "2026-11-26T06:32:57Z",
   "apps": [
     {
       "id": "alarm",
       "platform": "android",
       "channel": "stable",
       "package": "com.mominc.alarm2048",
-      "versionCode": 3,
-      "versionName": "0.3.0",
+      "versionCode": 4,
+      "versionName": "0.4.0",
       "minSdk": 29,
-      "url": "https://mominc.online/download/alarm/moms-2048-reminder-0.3.0.apk",
-      "sha256": "e5738358dd4dd02543647eec382f4e4b778edad9f8f867df102a01882baad9e6",
+      "url": "https://mominc.online/download/alarm/moms-2048-reminder-0.4.0.apk",
+      "sha256": "b03f2a28aa1d4aa95ae1cc5e46e49b4eb0798747e2cf2e6bb284b04a1be9703c",
       "signerSha256": "8cd664e6f34dbb8bf0560552a40f2eab661ea65c497a9ee970810acaeaefa753",
-      "size": 11132030,
-      "notes": "MOM's: 2048 Reminder. Version 0.3.0."
+      "size": 20414669,
+      "notes": "MOM's: 2048 Reminder. Version 0.4.0."
     },
     {
       "id": "lilboyfriend",
@@ -66,7 +66,7 @@
       "id": "alarm",
       "platform": "pwa",
       "channel": "stable",
-      "version": "aa844cbe75d8",
+      "version": "888836c657f2",
       "url": "https://mominc.online/apps/alarm/",
       "notes": "Content version = the app pack hash; installed copies update themselves."
     },
