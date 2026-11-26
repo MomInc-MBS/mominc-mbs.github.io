@@ -24,6 +24,7 @@ export const N = {
   export: 'Export reminders to a file', import: 'Import reminders from a file', exported: 'Exported', imported: 'Imported', importFailed: 'Import failed',
   update: 'Check for update', applyUpdate: 'Install update', updReady: 'Update ready', updNone: 'Up to date', updDownloading: 'Downloading update',
   freePlay: 'Free play with the 2048 board', keyUp: 'Console key: scroll up', keyDown: 'Console key: scroll down', keyPrev: 'Console key: previous section', keyNext: 'Console key: next section',
+  pickGame: 'Default alarm game', switchGame: 'Switch game', game_2048: '2048', game_brick: 'Brick breaker', game_pong: 'Pong', game_match3: 'Match three', game_blocks: 'Falling blocks', game_memory: 'Memory pairs', game_odd: 'Odd one out',
   back2: 'Back to the reminders', reducedMotion: 'Reduce motion', highContrast: 'High contrast', history: 'Past alarms', historyEmpty: 'No past alarms',
 };
 export const CAP = {notify: 'Notifications', push: 'Background push reminders', exactAlarm: 'Exact alarms', fullScreen: 'Full-screen alarm', lockScreen: 'Lock-screen alarm',

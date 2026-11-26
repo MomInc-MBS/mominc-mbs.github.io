@@ -9,6 +9,7 @@ import {N, CAP, STATE, SOUND, VIB, OUTCOME} from './names.js';
 import {stepTab, hms, countdown, upcoming, nextDue, weekColumns, monthCells, fmtDate, fmtTime, dayOf, weekdayName, todayKey, zoneOf, deviceZone, offsetLabel, validZone} from './time.js';
 import {createChallenge} from './challenges.js';
 import {createHelp} from './help.js';
+import {CHOICES, getChoice, setChoice} from '../games/choice.js';
 import {STAGE_AT, REPEAT_S, HOLD_MS} from '../stages.js';
 
 const RAIL = [['clock', 'railClock'], ['sound', 'railSound'], ['screen', 'railScreen'], ['challenge', 'railChallenge'], ['devices', 'railDevices'], ['history', 'railHistory'], ['prefs', 'railPrefs']];
@@ -473,6 +474,8 @@ export function mountSettings(host, adapter, opts = {}) {
     const out = [
       h('div', {class: 'card row'}, S.snap.occId ? h('button', {type: 'button', class: 'mbb', 'aria-label': N.playBoard, 'data-k': 'board', on: {click: () => { try { adapter.playChallenge(S.snap.occId); } catch (e) {} }}}, board)
         : h('span', {class: 'mbb', role: 'img', 'aria-label': N.board}, board), h('span', {class: 'lead ok', html: icon('lock') + icon('check')}), h('span', {class: 'sp'})),
+      h('div', {class: 'card row'}, seg(N.pickGame, CHOICES.map(g => ({v: g, label: N['game_' + g], glyph: g === '2048' ? 'board2048' : 'g' + g[0].toUpperCase() + g.slice(1)})), getChoice(),
+        (v, el) => { setChoice(v); render(); F('react', 'glance', toward(el)); }, 'gm')),
       h('div', {class: 'card row'}, seg(N.extra, ex.map(([v, g]) => ({v, label: ['qr', 'nfc', 'motion'].includes(v) ? `${N[v]}: ${STATE[capState(v)]}` : N[v], dis: capState(v) === 'unsupported' && v !== 'none', html: ['qr', 'nfc', 'motion'].includes(v) ? capIcon(g, capState(v)) : icon(g)})), c.extra || 'none',
         (v, el) => { c.extra = v === 'none' ? null : v; render(); F('react', 'glance', toward(el)); }, 'extra')),
     ];

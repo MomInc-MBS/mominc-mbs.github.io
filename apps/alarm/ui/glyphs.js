@@ -16,6 +16,14 @@ export const G = {
   railDevices: '<rect x="2" y="3" width="10" height="17" rx="2"/>' + '<rect x="15" y="8" width="7" height="9" rx="2"/>' + P('M17 8V5h3v3M17 17v3h3v-3M6 17h2'),
   railHistory: P('M3 12a9 9 0 1 0 3-6.7') + P('M3 3v5h5M12 7v5l3 2'),
   railPrefs: P('M4 6h16M4 12h16M4 18h16') + F('M7 4h4v4H7zM13 10h4v4h-4zM6 16h4v4H6z'),
+  // alarm games (picker + in-play switch)
+  gBrick: '<rect x="3" y="4" width="5" height="3"/><rect x="9.5" y="4" width="5" height="3"/><rect x="16" y="4" width="5" height="3"/>' + P('M4 20h8') + '<circle cx="15" cy="15" r="1.8" class="bg"/>',
+  gPong: P('M4 6v8M20 10v8') + '<circle cx="12" cy="12" r="1.8" class="bg"/>' + P('M12 4v2M12 9v2M12 13v2M12 18v2'),
+  gMatch3: '<circle cx="6" cy="12" r="2.6"/><circle cx="12" cy="12" r="2.6"/><circle cx="18" cy="12" r="2.6"/>' + P('M3 18h18'),
+  gBlocks: F('M10 3h4v4h-4zM6 7h4v4H6zM10 7h4v4h-4zM14 7h4v4h-4z') + P('M3 21h18'),
+  gMemory: '<rect x="3" y="5" width="8" height="14" rx="1.5"/><rect x="13" y="5" width="8" height="14" rx="1.5"/>' + F('M5.5 10h3v4h-3z'),
+  gOdd: '<circle cx="7" cy="8" r="2.4"/><circle cx="17" cy="8" r="2.4"/><circle cx="7" cy="16" r="2.4"/>' + F('M14.6 13.6h4.8v4.8h-4.8z'),
+  gSwap: P('M4 8h14M14 4l4 4-4 4M20 16H6M10 12l-4 4 4 4'),
   // schedule
   clock: CLOCK, calendar: CAL, pencil: P('M4 20l1-5L16 4l4 4L9 19zM14 6l4 4'),
   once: CAL + F('M10 13h4v4h-4z'), daily: P('M4 11a8 8 0 0 1 14-5M18 2v4h-4M20 13a8 8 0 0 1-14 5M6 22v-4h4'),
