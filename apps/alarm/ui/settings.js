@@ -1,6 +1,7 @@
 // Wordless settings (§5): icons, digits, dates, times, %, math symbols and tile values only; names live in names.js (aria only).
 // mountSettings(host, adapter, {face}) consumes ONLY the contract adapter. Base emotion comes only from adapter.snapshot().
-import {createMomFace, baseForStage} from './mom-face.js';
+import {createMomFace as createMini, baseForStage} from './mom-face.js';
+import {createMomFace, bustGeometry} from './mom3-face.js';
 import {icon, strip, capIcon, SOUND_WAVE, VIB_WAVE, PATTERN_WAVE, SOUNDS, SOUND_GLYPH, CAP_GLYPH, OUTCOME_GLYPH} from './glyphs.js';
 import {N, CAP, STATE, SOUND, VIB, OUTCOME} from './names.js';
 import {hms, countdown, upcoming, nextDue, weekColumns, monthCells, fmtDate, fmtTime, dayOf, weekdayName, todayKey, zoneOf, deviceZone, offsetLabel, validZone} from './time.js';
@@ -34,16 +35,37 @@ export function mountSettings(host, adapter, opts = {}) {
     confirmDel: false, preview: false, pv: 0, aud: null, month: null, locked: {}, saving: false, saveUi: null, io: null, chal: null};
   const offs = [], timers = [];
   const root = h('div', {class: 'ms'});
+  const bg = h('div', {class: 'ms-bg', 'aria-hidden': 'true'}), probe = h('div', {class: 'ms-probe', 'aria-hidden': 'true'});
   const faceHost = h('div', {class: 'ms-face', 'aria-hidden': 'true'});
   const top = h('div', {class: 'ms-top'});
   const panel = h('div', {class: 'ms-panel', role: 'tabpanel', tabindex: '-1'});
   const rail = h('nav', {class: 'ms-rail', role: 'tablist', 'aria-label': N.rail});
   const live = h('div', {class: 'vh', role: 'status', 'aria-live': 'polite'});
   const stop = stopButton();
-  root.append(faceHost, top, panel, stop, rail, live);
+  root.append(bg, faceHost, top, panel, stop, rail, live, probe);
   host.appendChild(root);
   const rm0 = !!(S.snap.reducedMotion || globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches);
   const face = opts.face || createMomFace(faceHost, {reducedMotion: rm0, highContrast: !!S.snap.highContrast});
+  // collapsing hero: bust (list at scroll 0) -> pinned eye strip. p = clamp(scrollTop / hD); CSS does the rest from --p (see settings.css hero block).
+  let hD = 0, hero = false, raf = 0;
+  const setP = () => { raf = 0; root.style.setProperty('--p', hero && hD > 0 ? clamp01(panel.scrollTop / hD).toFixed(4) : '1'); };
+  const clamp01 = v => Math.min(1, Math.max(0, v));
+  const onScroll = () => { if (!raf) raf = requestAnimationFrame(setP); };
+  panel.addEventListener('scroll', onScroll, {passive: true});
+  function layout() {
+    const H = root.clientHeight, Wr = root.clientWidth; if (!H || !Wr) return;
+    const cs = getComputedStyle(probe), safeT = parseFloat(cs.paddingTop) || 0, safeB = parseFloat(cs.paddingBottom) || 0;
+    const heroTop = safeT + 58, card = panel.querySelector('.card'), reserve = (card ? card.offsetHeight : 76) + 14;
+    const avail = H - heroTop - (66 + safeB) - reserve, maxW = Math.min(Wr, 540);
+    let w = maxW; const g0 = bustGeometry(w); if (g0.h > avail) w = Math.max(150, w * avail / g0.h); // short screens: scale the whole bust, never crop a head
+    const g = bustGeometry(w); hD = Math.max(0, g.h - g.strip);
+    const st = root.style; st.setProperty('--hero-top', heroTop + 'px'); st.setProperty('--fw2', w.toFixed(1) + 'px'); st.setProperty('--hexp', g.h.toFixed(1) + 'px');
+    st.setProperty('--d', hD.toFixed(1) + 'px'); st.setProperty('--ey', g.eyeTop.toFixed(1) + 'px'); st.setProperty('--pt', (heroTop + g.strip).toFixed(1) + 'px');
+    st.setProperty('--tail', '0px');
+    if (hero && hD > 0) st.setProperty('--tail', Math.max(0, panel.clientHeight + hD - panel.scrollHeight).toFixed(1) + 'px'); // short lists still get the full collapse extent
+    setP();
+  }
+  if (typeof ResizeObserver === 'function') { const ro = new ResizeObserver(() => layout()); ro.observe(root); offs.push(() => ro.disconnect()); }
   const ownFace = !opts.face; let mini = null, chal = null, pvTimer = 0;
   const F = (fn, ...a) => { try { face[fn](...a); } catch (e) {} };
   const announce = t => { live.textContent = ''; setTimeout(() => { live.textContent = t; }, 30); };
@@ -142,8 +164,10 @@ export function mountSettings(host, adapter, opts = {}) {
     try { mini?.destroy(); } catch (e) {} mini = null; try { chal?.destroy(); } catch (e) {} chal = null;
     const st = panel.scrollTop, fk = document.activeElement?.dataset?.k;
     panel.setAttribute('aria-label', N[RAIL.find(r => r[0] === S.tab)[1]]);
-    panel.replaceChildren(...build().flat(9).filter(Boolean));
-    panel.scrollTop = st;
+    const nh = S.tab === 'clock' && !S.draft && !S.preview, st2 = nh === hero ? st : 0;
+    hero = nh; root.classList.toggle('ms-hero', hero);
+    panel.replaceChildren(...(hero ? [h('div', {class: 'ms-hero-sp', 'aria-hidden': 'true'})] : []), ...build().flat(9).filter(Boolean));
+    layout(); panel.scrollTop = st2; setP();
     if (fk) { const el = panel.querySelector(`[data-k="${CSS.escape(fk)}"]`) || rail.querySelector(`[data-k="${CSS.escape(fk)}"]`); el?.focus({preventScroll: true}); }
     if (S.err) markError(S.err);
     renderTop(); renderRail(); stop.hidden = !S.snap.occId;
@@ -331,7 +355,7 @@ export function mountSettings(host, adapter, opts = {}) {
         h('span', {class: 'tl-snd', html: s.stage[i] ? icon(SOUND_GLYPH[s.stage[i]]) : icon('warn')})),
         h('span', {class: 'tl-gap num' + (i < 3 ? '' : ' rep'), style: i < 3 ? `grid-column:${i + 1}` : null, 'aria-hidden': 'true'}, i < 3 ? '+' + hms(STAGE_AT[i + 1] - STAGE_AT[i]) : h('span', {html: icon('daily')}), i < 3 ? null : hms(REPEAT_S))]));
     const miniHost = h('div', {class: 'mini', 'aria-hidden': 'true'});
-    queueMicrotask(() => { try { mini = createMomFace(miniHost, {reducedMotion: true}); mini.setBase(...baseForStage(S.stageSel + 1)); } catch (e) {} });
+    queueMicrotask(() => { try { mini = createMini(miniHost, {reducedMotion: true}); mini.setBase(...baseForStage(S.stageSel + 1)); } catch (e) {} });
     const snd = h('div', {class: 'card snd', 'data-field': 'sound'}, miniHost,
       h('div', {class: 'snd-g', role: 'radiogroup', 'aria-label': N.sound}, SOUNDS.map(id => h('button', {type: 'button', role: 'radio', class: 'sg snd-b', 'aria-checked': String(cur === id), 'aria-label': SOUND[id], 'data-k': 'snd:' + id,
         on: {click: () => pickSound(id)}, html: icon(SOUND_GLYPH[id]) + strip(SOUND_WAVE[id])}))),
@@ -501,7 +525,7 @@ export function mountSettings(host, adapter, opts = {}) {
     const fx = [snd ? icon(SOUND_GLYPH[snd]) + strip(SOUND_WAVE[snd]) : icon('warn'), d.vibrate.pattern !== 'off' && icon('vibrate') + strip(VIB_WAVE[d.vibrate.pattern]),
       d.torch !== 'off' && icon(d.torch === 'pulse' ? 'torchPulse' : 'torchSteady'), d.speak === 'title' && icon('speak'), d.present.fullScreen && icon('fullScreen'), d.present.lockScreen && icon('lockScreen')].filter(Boolean);
     const fh = h('div', {class: 'pv-face', 'aria-hidden': 'true'});
-    queueMicrotask(() => { try { mini = createMomFace(fh, {reducedMotion: true}); mini.setBase(...baseForStage(i + 1)); } catch (e) {} });
+    queueMicrotask(() => { try { mini = createMini(fh, {reducedMotion: true}); mini.setBase(...baseForStage(i + 1)); } catch (e) {} });
     const step = () => { S.pv = (S.pv + 1) % 4; render(); };
     if (!root.classList.contains('ms-rm')) later(() => { if (S.preview && !pvTimer) pvTimer = setInterval(step, 1600); }, 0);
     return h('div', {class: 'pv', role: 'region', 'aria-label': N.preview},
