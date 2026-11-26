@@ -167,7 +167,7 @@ export function createOutputs({env = globalThis, base = BASE, fetchImpl, onChang
     else if (kind === 'speak') speak(value);
     else if (kind === 'screen') onChange('screen-audition');   // purely visual: the settings UI draws it; nothing to start here
   }
-  return {unlock, sync, stop: () => { cur = null; stopAll(); holdWake(false); }, audition, stopAudition: () => { if (!cur) stopAll(); }, probeCamera, speak, vibrate, badge,
+  return {unlock, replay: () => { cur = null; }, sync, stop: () => { cur = null; stopAll(); holdWake(false); }, audition, stopAudition: () => { if (!cur) stopAll(); }, probeCamera, speak, vibrate, badge,
     needTap: () => needTap, facts: () => ({...facts, torch: torchOk, needTap, audio: ctx ? (ctx.state === 'running' ? 'running' : 'suspended') : 'locked'}), ctx: () => ctx,
     destroy() { destroyed = true; cur = null; stopAll(); holdWake(false); try { ctx?.close?.(); } catch {} }};
 }

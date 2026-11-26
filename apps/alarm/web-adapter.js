@@ -180,6 +180,8 @@ export function createWebAdapter(opts = {}) {
       return fn(env, rem.challenge, signal).then(async r => r.ok && (await adapter.checkIn(occId, kind, r.proof)) ? r : {ok: false, reason: r.reason || 'rejected'});
     },
     needsTap: () => outputs.needTap(),
+    /** The 'Tap to start the sound' button: unlock inside the gesture, then start the current alert again. */
+    async startSound() { await outputs.unlock(); outputs.replay(); drive(); },
     dispose() { disposed = true; env.removeEventListener?.('online', onOnline); env.document?.removeEventListener?.('visibilitychange', onVis); owner.close?.(); outputs.destroy(); clearTimeout(saveTimer); },
   };
   return adapter;

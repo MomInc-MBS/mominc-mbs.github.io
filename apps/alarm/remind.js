@@ -151,16 +151,17 @@ export function reconcile(state, now, opts) {
 const reviewed = new WeakSet();                           // only review() mints an armable object, so arm() cannot be reached without the review step
 export function reminderFromDraft(draft, base) {
   const b = base ? normalize(base) : blank(), sound = draft.sound;
-  return normalize({...b, title: draft.label ?? draft.title ?? b.title, time: draft.time, recur: {...b.recur, ...recurFromLegacy(draft.recur)},
-    escalate: draft.followups ?? draft.escalate, sound: {...b.sound, stage: [sound, sound, sound, sound]}});
+  // 'keep' = leave a recurrence this simple form cannot show (weekly days, interval, dates); an unchanged first sound keeps every per-stage pick, volume and ramp
+  return normalize({...b, title: draft.label ?? draft.title ?? b.title, time: draft.time, recur: draft.recur === 'keep' ? b.recur : {...b.recur, ...recurFromLegacy(draft.recur)},
+    escalate: draft.followups ?? draft.escalate, sound: base && sound === base.sound?.stage?.[0] ? b.sound : {...b.sound, stage: [sound, sound, sound, sound]}});
 }
 export function review(draft, base) {
   const r = reminderFromDraft(draft, base);
   if (!isTime(r.time)) throw Error('Pick a time.');
-  if (!RECURS.includes(draft.recur)) throw Error('Pick how often.');
+  if (![...RECURS, 'keep'].includes(draft.recur)) throw Error('Pick how often.');
   const sound = SOUNDS.find(s => s.id === draft.sound);
   if (!sound) throw Error('Choose a sound. None is chosen for you.');
-  const summary = [`Time: ${r.time}`, `Repeats: ${{once: 'once', daily: 'every day', weekdays: 'weekdays'}[draft.recur]}`,
+  const summary = [`Time: ${r.time}`, `Repeats: ${{once: 'once', daily: 'every day', weekdays: 'weekdays'}[draft.recur] || 'your custom schedule'}`,
     r.title ? `Reminder text: ${r.title}` : 'Reminder text: none (it will say "Your reminder")',
     `Sound while the app is open: ${sound.name}`,
     r.escalate ? 'Escalation: ON (first alert at the due time, then 5 min, 3 min, 1 min, then every 30 s. It stops when you finish a 2048 game, win or lose, or hold Emergency stop. Turning the alarm off or changing its time in Settings unlocks 9 minutes after the due time.)'
