@@ -6,7 +6,8 @@
   'use strict';
   const KEY = 'mom-tour-v1';
   const FILM_SLACK = 0.5;                      // seconds of total uncovered time allowed
-  const APPS = ['misinformation', 'fuel', 'jump', 'lilboyfriend', 'alarm', 'corgi', 'hand'];
+  const APPS = ['misinformation', 'fuel', 'jump', 'lilboyfriend', 'alarm', 'corgi', 'hand', 'coach'];
+  const FINALE = 'coach';                       // 8th reward: the other seven unlocked = the full Mother's Tour
 
   /* ---------- durable record ---------- */
   const blank = () => ({v: 1, step: 'mominc', missions: {}, unlocked: {}, announced: {}, pendingRewards: [],
@@ -148,6 +149,9 @@
     if (r.missions.djscratch && !r.unlocked.hand && env.pagesReady() && (r.missions.handOffer || env.handOffer())) {
       store.mission('handOffer'); if (store.unlock('hand', 'djscratch')) done.push('hand');
     }
+    // Coach MYR5: derived, never a new trigger. Seven earned = full tour, so earlier finishers get it here without replay.
+    const u = store.read().unlocked;
+    if (!u[FINALE] && APPS.every(a => a === FINALE || u[a]) && store.unlock(FINALE, 'tour')) done.push(FINALE);
     return done;
   }
 
@@ -205,10 +209,11 @@
   function appAction(app, rec) {
     if (!rec || rec.status !== 'ready') return null;
     if (rec.type === 'apk') return {href: rec.href, label: 'DOWNLOAD THE APK', download: /\.apk$/.test(rec.href || '')};
+    if (rec.type === 'external') return {href: rec.href, label: (rec.href.startsWith('/') ? 'OPEN ' : 'INSTALL ') + rec.name.toUpperCase()};   // a self-contained PWA with its own sw.js (Coach MYR5 at /apps/coach/)
     if (rec.type === 'pwa' && rec.browserPlay !== false) return {href: '/apps/' + app + '/', label: 'OPEN ' + rec.name.toUpperCase()};
     return rec.type === 'pwa' ? {href: '/apps/' + app + '/', label: 'INSTALL ' + rec.name.toUpperCase()} : null;
   }
-  const NAMES = {misinformation: 'Misinformation Machine', fuel: 'Nitro Fuel', jump: 'Coach Jump', lilboyfriend: 'Little Boyfriend Camera', alarm: 'ADHD', corgi: 'Cortisol Corgi Endless', hand: 'Hand Customizer'};
+  const NAMES = {misinformation: "MOM's: Misinformation Machine", fuel: "MOM's: Nitro Fuel", jump: "MOM's: Coach Jump", lilboyfriend: "MOM's: Little Boyfriend LIVE", alarm: "MOM's: 2048 Reminder", corgi: "MOM's: Corgi Endless", hand: "MOM's: Hand Customizer", coach: "MOM's: Coach MYR5"};
 
   /* ---- focus: gameplay, cutscenes, reveals and offers keep it; rewards wait ---- */
   let holds = 0;
@@ -269,7 +274,7 @@
     ui.root.dataset.level = lv;
     ui.order.textContent = (comeback || step.order) + (LINES[lv] ? ' ' + LINES[lv] : '');
     const n = earned(r), ob = Math.min(99, 14 + n * 11 + Math.min(r.returnStreak || 0, 5));
-    ui.meta.textContent = n + '/7 DOWNLOADS EARNED · OBEDIENCE ' + ob + '% (MOM MADE THAT UP)';
+    ui.meta.textContent = n + '/8 DOWNLOADS EARNED · OBEDIENCE ' + ob + '% (MOM MADE THAT UP)';
     ui.go.hidden = here; ui.go.setAttribute('href', step.url);
     place(target, [2, 3, 4, 6][lv]);
     fillLandingCards(r);
@@ -308,7 +313,7 @@
     const rec = (await loadCatalogue())[app], act = appAction(app, rec), n = earned(r);
     const c = el('section', 'mt-reward'); c.id = 'mom-reward'; c.setAttribute('role', 'dialog'); c.setAttribute('aria-labelledby', 'mt-rw-h');
     c.innerHTML = '<div class="mt-card"><p class="mt-stamp">UNLOCKED</p><h2 id="mt-rw-h">' + esc(rec?.name || NAMES[app] || app) + '</h2><p>' + esc(rec?.description || 'MOM says you earned this.') + '</p>'
-      + '<p class="mt-count">' + n + '/7 DOWNLOADS EARNED</p>'
+      + '<p class="mt-count">' + n + '/8 DOWNLOADS EARNED</p>'
       + (act ? '<a class="mt-cta" href="' + esc(act.href) + '"' + (act.download ? ' download' : '') + '>' + act.label + '</a>' : '<p class="mt-cta soon">COMING SOON &mdash; MOM IS STILL MAKING IT.</p>')
       + '<p class="mt-claim"></p><button class="mt-continue" type="button">Continue</button></div>';
     d.body.append(c); card = c;
@@ -333,7 +338,7 @@
       const act = r.unlocked[a] && appAction(a, cat[a]);
       return '<li class="' + (r.unlocked[a] ? 'on' : '') + '"><b>' + esc(NAMES[a]) + '</b> ' + (act ? '<a href="' + esc(act.href) + '"' + (act.download ? ' download' : '') + '>' + act.label + '</a>' : r.unlocked[a] ? '<span>COMING SOON &mdash; MOM IS STILL MAKING IT.</span>' : '<span>LOCKED</span>') + '</li>';
     }).join('');
-    const html = '<h2>MOM DOWNLOADS ' + earned(r) + '/7 EARNED</h2><ul>' + rows + '</ul>' + (r.off ? '<button type="button" class="mt-on">Turn tour back on</button>' : '');
+    const html = '<h2>MOM DOWNLOADS ' + earned(r) + '/8 EARNED</h2><ul>' + rows + '</ul>' + (r.off ? '<button type="button" class="mt-on">Turn tour back on</button>' : '');
     if (cards.dataset.sig !== html) { cards.innerHTML = html; cards.dataset.sig = html; cards.querySelector('.mt-on')?.addEventListener('click', () => { store.update(x => { x.off = false; }); render(); }); }
   }
 

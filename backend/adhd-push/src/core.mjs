@@ -1,11 +1,14 @@
 // Scheduling core: plain SQL over a D1-shaped `db` (prepare().bind().run()/first()/all()). The cron calls runCron().
-import {stageFor, MISS_MS, TANDEM_FROM, TANDEM_GAP_MS, copyFor, companionFor} from '../../../apps/alarm/stages.js';
+import {stageFor, faceFor, MISS_MS, copyFor, APP_NAME} from '../../../apps/alarm/stages.js';
 
-export const MAX_SENDS = 8, WINDOW_MS = 10 * 60_000;   // our bound: 8 sends per occurrence per rolling 10 min (not Apple's number)
+export const MAX_SENDS = 24, WINDOW_MS = 10 * 60_000;  // our bound: 24 sends per occurrence per rolling 10 min (stage 4 needs 20; not Apple's number)
+export const HALF_MS = 30_000, AHEAD_MS = 45_000;         // alert deadlines sit on 30 s boundaries; a cron run also serves the next boundary if it is within 45 s
 export const MAX_LATE_MS = 15 * 60_000;                 // a due time the cron missed by more than this is recorded MISSED, never sent
-const STALE_MS = 2 * 60_000;                            // a planned send older than this is coalesced away, not delivered late
+const STALE_MS = 45_000;                                // a planned send older than this is coalesced away, not delivered late (the next alert is never more than 30 s away)
 const MAX_TRIES = 4;
 
+const COACH_NAME = "MOM's: Coach MYR5";
+const coachBody = l => [...String(l ?? '').replace(/\s+/g, ' ').trim()].slice(0, 120).join('') || 'Time for your reminder.';
 const one = (db, sql, ...a) => db.prepare(sql).bind(...a).first();
 const many = async (db, sql, ...a) => (await db.prepare(sql).bind(...a).all()).results;
 const run = async (db, sql, ...a) => (await db.prepare(sql).bind(...a).run()).meta?.changes ?? 0;
@@ -49,22 +52,20 @@ export async function finish(db, occId, status, reason, now) {
 export async function materialize(db, now) {
   for (const s of await many(db, 'SELECT * FROM schedules WHERE enabled=1 AND next_due IS NOT NULL AND next_due<=?', now)) {
     const id = `${s.id}:${s.next_due}`, late = now - s.next_due > MAX_LATE_MS;
-    await run(db, 'INSERT OR IGNORE INTO occurrences(id,schedule_id,install_id,due,status,reason,label,followups,tandem,updated_at) VALUES(?,?,?,?,?,?,?,?,?,?)',
-      id, s.id, s.install_id, s.next_due, late ? 'MISSED' : 'ACTIVE', late ? 'cron-late' : null, s.label, s.followups, s.tandem, now);
+    await run(db, 'INSERT OR IGNORE INTO occurrences(id,schedule_id,install_id,due,status,reason,label,followups,tandem,rev,updated_at,app) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)',
+      id, s.id, s.install_id, s.next_due, late ? 'MISSED' : 'ACTIVE', late ? 'cron-late' : null, s.label, s.followups, 0, s.revision, now, s.app);
     const next = s.recur === 'once' ? null : nextDue(s.time, s.tz, s.recur, Math.max(now, s.next_due));
     await run(db, 'UPDATE schedules SET next_due=?, enabled=?, updated_at=? WHERE id=? AND next_due=?', next, next === null ? 0 : 1, now, s.id, s.next_due);
   }
   for (const o of await many(db, "SELECT id FROM occurrences WHERE status='ACTIVE' AND due<?", now - MISS_MS)) await finish(db, o.id, 'MISSED', 'expired', now);
 }
 
-/** Plan the one attempt each active occurrence currently needs. Older stages are skipped (coalesced), never replayed. */
+/** Plan the one attempt each active occurrence currently needs: the CURRENT alert only. Older ones are skipped (coalesced), never replayed. */
 export async function plan(db, now) {
   const ins = "INSERT OR IGNORE INTO attempts(id,occ_id,install_id,gen,stage,kind,status,planned_at) VALUES(?,?,?,?,?,?,'planned',?)";
   for (const o of await many(db, "SELECT * FROM occurrences WHERE status='ACTIVE' AND due<=?", now)) {
-    const stage = o.followups ? stageFor((now - o.due) / 1000) : 0;
-    if (stage > 0 && o.paused_until > now) continue;                               // user engaged: follow-ups wait
+    const stage = o.followups ? stageFor((now - o.due) / 1000) : 0;               // alert index: 0,1,2,3 then 4,5,6... every 30 s on stage 4
     await run(db, ins, `${o.id}:${stage}:main`, o.id, o.install_id, o.gen, stage, 'main', now);
-    if (o.tandem && stage >= TANDEM_FROM) await run(db, ins, `${o.id}:${stage}:companion`, o.id, o.install_id, o.gen, stage, 'companion', now);
   }
 }
 
@@ -73,16 +74,16 @@ export const receiptToken = async (secretHash, attemptId) => hex(await crypto.su
   await crypto.subtle.importKey('raw', new TextEncoder().encode(secretHash), {name: 'HMAC', hash: 'SHA-256'}, false, ['sign']), new TextEncoder().encode(attemptId)));
 const backoff = (tries, retryAfter) => Math.max(retryAfter * 1000, 30_000 * 2 ** tries);
 
-/** Send due attempts. deps = {send(sub, payload, {ttl, topic}) -> {status, retryAfter}, sleep(ms), publicOrigin}. */
+/** Send due attempts. deps = {send(sub, payload, {ttl, topic}) -> {status, retryAfter}, publicOrigin}. */
 export async function dispatch(db, now, deps) {
   const out = [];
-  // main before companion within a run: kind DESC ('main' > 'companion')
-  for (const a of await many(db, "SELECT * FROM attempts WHERE status='planned' AND planned_at<=? ORDER BY planned_at, kind DESC LIMIT 200", now)) {
+  for (const a of await many(db, "SELECT * FROM attempts WHERE status='planned' AND planned_at<=? ORDER BY planned_at LIMIT 200", now)) {
     const occ = await one(db, 'SELECT * FROM occurrences WHERE id=?', a.occ_id);
     if (!occ || occ.status !== 'ACTIVE' || occ.gen !== a.gen) { await run(db, "UPDATE attempts SET status='cancelled' WHERE id=? AND status='planned'", a.id); continue; }
     const newer = await one(db, "SELECT 1 x FROM attempts WHERE occ_id=? AND kind=? AND stage>? AND status!='cancelled'", a.occ_id, a.kind, a.stage);
     if (newer || a.planned_at < now - STALE_MS) { await run(db, "UPDATE attempts SET status='coalesced' WHERE id=? AND status='planned'", a.id); continue; }
-    if (a.stage > 0 && occ.paused_until > now) continue;                                // engaged since planning: leave it, it may go stale
+    const sch = await one(db, 'SELECT * FROM schedules WHERE id=?', occ.schedule_id);   // the reminder must still exist, still be on (a fired once-alarm is switched off by design) and not be older than the occurrence
+    if (!sch || (!sch.enabled && sch.recur !== 'once') || sch.revision < occ.rev) { await run(db, "UPDATE attempts SET status='cancelled' WHERE id=? AND status='planned'", a.id); continue; }
     const recent = await one(db, 'SELECT COUNT(*) n FROM attempts WHERE occ_id=? AND sent_at>?', a.occ_id, now - WINDOW_MS);
     if (recent.n >= MAX_SENDS) continue;                                                // over our bound: wait; goes stale and coalesces
     const sub = await one(db, 'SELECT s.*, i.secret_hash FROM subs s JOIN installs i ON i.id=s.install_id WHERE s.install_id=? AND s.retired_at IS NULL', a.install_id);
@@ -90,11 +91,11 @@ export async function dispatch(db, now, deps) {
     // Claim. The EXISTS re-checks status + generation in the same statement, so a completion that lands first wins.
     const claimed = await run(db, "UPDATE attempts SET status='sending', sent_at=?, tries=tries+1 WHERE id=? AND status='planned' AND EXISTS(SELECT 1 FROM occurrences o WHERE o.id=attempts.occ_id AND o.status='ACTIVE' AND o.gen=attempts.gen)", now, a.id);
     if (!claimed) continue;
-    if (a.kind === 'companion') await deps.sleep?.(TANDEM_GAP_MS);
-    const payload = {appId: 'adhd', occurrenceId: occ.id, attemptId: a.id, stage: a.stage, kind: a.kind, url: `/apps/alarm/?occ=${encodeURIComponent(occ.id)}`,
-      tag: a.kind === 'main' ? `adhd-${occ.id}` : `adhd-${occ.id}-c`, title: 'ADHD', body: a.kind === 'main' ? copyFor(a.stage, occ.label) : companionFor(),
+    const payload = {appId: 'adhd', occurrenceId: occ.id, attemptId: a.id, stage: a.stage, face: faceFor(a.stage) + 1, kind: a.kind, url: `/apps/alarm/?occ=${encodeURIComponent(occ.id)}`,
+      tag: `adhd-${occ.id}`, title: APP_NAME, body: copyFor(a.stage, occ.label, true),
       receipt: {url: deps.publicOrigin + '/v1/receipt', token: await receiptToken(sub.secret_hash, a.id)}};
-    const r = await deps.send(sub, payload, {ttl: a.stage === 0 ? 120 : 60, topic: a.kind === 'main' ? occ.id.slice(-16).replace(/[^A-Za-z0-9_-]/g, '_') : undefined});
+    if (occ.app === 'coach') Object.assign(payload, {appId: 'coach', face: 0, url: '/apps/coach/?panel=reminders', tag: `coach-${occ.id}`, title: COACH_NAME, body: coachBody(occ.label)});   // plain text, stage 0 only: followups is always 0 for coach
+    const r = await deps.send(sub, payload, {ttl: a.stage === 0 ? 120 : a.stage >= 4 ? 30 : 60, topic: occ.id.slice(-16).replace(/[^A-Za-z0-9_-]/g, '_')});
     if (r.status >= 200 && r.status < 300) await run(db, "UPDATE attempts SET status='sent', http_status=? WHERE id=?", r.status, a.id);
     else if (r.status === 404 || r.status === 410) {                                    // the push service says this subscription is gone
       await run(db, 'UPDATE subs SET retired_at=? WHERE install_id=?', now, a.install_id);
@@ -107,10 +108,20 @@ export async function dispatch(db, now, deps) {
   return out;
 }
 
+/** One cron run (every minute). Sends what is due now; then, because Workers cron cannot go finer than a minute, it also serves the stage-4
+ *  half-minute: all deadlines sit on 30 s boundaries (due times are whole minutes), so it sleeps to the next boundary (if within AHEAD_MS)
+ *  and re-plans from the DATABASE, which means a stop, a win/loss or a disable that lands during the wait is honoured. deps.sleep/deps.clock are injectable. */
 export async function runCron(db, now, deps) {
   await materialize(db, now);
   await plan(db, now);
   const sent = await dispatch(db, now, deps);
+  const next = Math.floor(now / HALF_MS) * HALF_MS + HALF_MS;
+  if (deps.sleep && next - now <= AHEAD_MS) {
+    await deps.sleep(next - now);
+    const t = Math.max(next, deps.clock?.() ?? next);
+    await plan(db, t);
+    sent.push(...await dispatch(db, t, deps));
+  }
   await run(db, 'DELETE FROM rate WHERE bucket<?', Math.floor(now / 60_000) - 60);
   await run(db, 'DELETE FROM attempts WHERE COALESCE(sent_at, planned_at)<?', now - 14 * 86400_000);
   return sent;

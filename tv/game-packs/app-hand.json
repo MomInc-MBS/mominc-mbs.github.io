@@ -14,28 +14,28 @@
     },
     {
       "url": "/apps/hand/icon-192.png",
-      "revision": "1063f7942f947eb7ad6b231acbb0f506d96a8a4b",
-      "bytes": 42733
+      "revision": "8b89f7d2c2d92038a98087d1ae0511775034b21f",
+      "bytes": 36530
     },
     {
       "url": "/apps/hand/icon-512.png",
-      "revision": "bee3a31699aca116cff6492c484f850002a8e877",
-      "bytes": 232472
+      "revision": "49b89664660e3bbc543eb4883b374fc6b61e803d",
+      "bytes": 194258
     },
     {
       "url": "/apps/hand/icon-maskable-512.png",
-      "revision": "14aa56e28303904199f19b3fede8cfdd203afb3e",
-      "bytes": 126348
+      "revision": "e998e0669a70dfbfee153385a9aadbe2fd8277c3",
+      "bytes": 90047
     },
     {
       "url": "/apps/hand/index.html",
-      "revision": "c66e9a927904bb6c1f5539facd24d4c384baa391",
-      "bytes": 3781
+      "revision": "978ef0c223d7be36e50a0a0e3de6956fee0d20e8",
+      "bytes": 3836
     },
     {
       "url": "/apps/hand/manifest.webmanifest",
-      "revision": "b6d87d70c5273b227fec493185728cd09beb531c",
-      "bytes": 777
+      "revision": "abf112d115b38b54623211a32b656abf962d579e",
+      "bytes": 791
     },
     {
       "url": "/apps/hand/models.mjs",
@@ -54,8 +54,13 @@
     },
     {
       "url": "/apps/shell.mjs",
-      "revision": "cb9640fbd4cd94350d4b63c7d7f7978c5d539c58",
-      "bytes": 5633
+      "revision": "772bc89901827e4198cb4b39cb8b046cd6f484d1",
+      "bytes": 5811
+    },
+    {
+      "url": "/apps/update.mjs",
+      "revision": "8dbc92e88e1ebc52d3ec23ccb3f86e759f0b8a5a",
+      "bytes": 3721
     },
     {
       "url": "/handborne/assets/GLTFExporter-Bjf-hL3X.js",
@@ -159,10 +164,10 @@
     },
     {
       "url": "/tv/game-loader.js",
-      "revision": "030fdfcb33be366788c78d3dfb482d31b0e7c5aa",
-      "bytes": 14636
+      "revision": "363279c0a6a391db8e7bae8282fc8fb6a8f811bc",
+      "bytes": 14678
     }
   ],
   "fontStyles": [],
-  "version": "28e7004f096808f84343"
+  "version": "8872bc6ccc3b1120aea3"
 }

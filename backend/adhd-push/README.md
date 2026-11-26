@@ -12,7 +12,7 @@ no dependency, no MPL-2.0 notice to carry, and it runs on plain Workers without 
 ```
 node scripts/gen-vapid.mjs                           # prints VAPID_PUBLIC and VAPID_PRIVATE_KEY (P-256, WebCrypto)
 npx wrangler d1 create adhd-push                     # copy the printed database_id into wrangler.toml
-npx wrangler d1 migrations apply adhd-push --remote  # applies migrations/0001_init.sql
+npx wrangler d1 migrations apply adhd-push --remote  # applies 0001_init.sql and 0002_revision.sql (adds occurrences.rev; existing reminders are kept)
 npx wrangler secret put VAPID_PRIVATE_KEY            # paste the private key; never commit it
 ```
 Edit the placeholders in `wrangler.toml`: `database_id`, `VAPID_PUBLIC` (public half from the script), `VAPID_SUBJECT` (`mailto:` address),
@@ -39,13 +39,18 @@ Local try-out once wrangler exists: `npx wrangler dev --local --test-scheduled`,
 Mutations: 30 per minute per install. Occurrence id = `<scheduleId>:<dueMs>`, attempt id = `<occurrenceId>:<stage>:<main|companion>` (unique, so a rerun sends nothing twice).
 
 ## Behaviour
-- Stages 0/30/90/180/300 s then every 5 min (`apps/alarm/stages.js`, shared with the app). Cron granularity is one minute, so 30 s and 90 s stages arrive within about a minute.
-- At most 8 sends per occurrence per rolling 10 minutes (our bound, not Apple's). Stale planned sends are coalesced, never replayed late. TTL 120 s (stage 0) / 60 s.
+- Alerts from the due time T0 at 0, 300, 480 and 540 s, then every 30 s on stage 4 (`apps/alarm/stages.js`, shared with the app). Stage (face) = min(alert index, 3) + 1. Escalation is per-reminder opt-in; without it only the first alert is sent.
+- Workers cron cannot run finer than a minute, so each run sends what is due now, then sleeps to the next :00/:30 boundary (all deadlines sit on 30 s boundaries because due times are whole minutes; only when that is within 45 s) and re-plans **from the database**, so a stop, win/loss or disable that lands during the wait is honoured.
+- Delayed cron: only the CURRENT alert is planned and sent (one push, no catch-up burst). Planned sends older than 45 s and older stages are coalesced.
+- Before every send: the occurrence is ACTIVE with the same generation, the schedule still exists, is enabled (a fired once-alarm is switched off by design and still rings its live occurrence) and is not older than the occurrence's revision.
+- At most 24 sends per occurrence per rolling 10 minutes (our bound; stage 4 needs 20). TTL 120 s (first alert), 60 s, 30 s for the repeats; the push topic collapses an undelivered older alert.
 - 429/5xx/network: back off (honours Retry-After), 4 tries, same attempt id. 404/410: subscription retired. 400/401/403: not retried.
 - Cancellation generation: complete/cancel/disable bumps `occurrences.gen` and cancels unsent attempts; the send claim re-checks status + generation in one statement.
+- Turning a reminder off or changing its time (PUT enabled=false, PUT with a new time, or DELETE) answers **423 locked** with `remainingMs` while its escalating occurrence is younger than T0 + 540 s. From 540 s a new time cancels the live occurrence (reason rescheduled), bumps the revision and reschedules the still-enabled reminder. Complete (genuine win/loss) and cancel (held emergency stop) end ONE occurrence and keep the recurrence. Ack only records an open; it never pauses anything.
+- Payload: title `MOM's: 2048 Reminder`, per-stage wording, `face` 1-4 (the service worker maps it to /apps/alarm/stages/stageN.webp). Label: whitespace normalised, empty becomes "Your reminder", only the preview is cut to 60 characters. Tandem notices are retired.
 - A cron run that finds a due time more than 15 min old records it MISSED and sends nothing.
 - No silent pushes: every push shows a notice. A tap opens `/apps/alarm/?occ=...` into the CURRENT state.
 
 ## Tests
-`node --test tools/check_adhd_webpush.test.mjs tools/check_adhd_push.test.mjs tools/check_adhd_sw.test.mjs tools/check_adhd_alarm.test.mjs`
+`node --test tools/check_adhd_webpush.test.mjs tools/check_adhd_push.test.mjs tools/check_adhd_sw.test.mjs tools/check_adhd_alarm.test.mjs tools/check_alarm_board.test.mjs`
 (the push tests run the real migration SQL on `node:sqlite` behind a small D1-shaped shim).

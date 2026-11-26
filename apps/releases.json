@@ -1,0 +1,98 @@
+{
+  "schema": 1,
+  "updated": "2026-11-26T03:44:07Z",
+  "apps": [
+    {
+      "id": "alarm",
+      "platform": "android",
+      "channel": "stable",
+      "package": "com.mominc.alarm2048",
+      "versionCode": 3,
+      "versionName": "0.3.0",
+      "minSdk": 29,
+      "url": "https://mominc.online/download/alarm/moms-2048-reminder-0.3.0.apk",
+      "sha256": "e5738358dd4dd02543647eec382f4e4b778edad9f8f867df102a01882baad9e6",
+      "signerSha256": "8cd664e6f34dbb8bf0560552a40f2eab661ea65c497a9ee970810acaeaefa753",
+      "size": 11132030,
+      "notes": "MOM's: 2048 Reminder. Version 0.3.0."
+    },
+    {
+      "id": "lilboyfriend",
+      "platform": "android",
+      "channel": "stable",
+      "package": "com.mominc.littleboyfriend",
+      "versionCode": 16,
+      "versionName": "0.15.0",
+      "minSdk": 29,
+      "url": "https://mominc.online/download/lilboyfriend/moms-little-boyfriend-live-0.15.0.apk",
+      "sha256": "abac44f0d539ec641a7b2dd3c91d856af9b9d357fc03932102e608255f27ddc8",
+      "signerSha256": "8cd664e6f34dbb8bf0560552a40f2eab661ea65c497a9ee970810acaeaefa753",
+      "size": 96705411,
+      "notes": "MOM's: Little Boyfriend LIVE. Version 0.15.0."
+    },
+    {
+      "id": "fuel",
+      "platform": "pwa",
+      "channel": "stable",
+      "version": "65bd080b2687",
+      "url": "https://mominc.online/apps/fuel/",
+      "notes": "Content version = the app pack hash; installed copies update themselves."
+    },
+    {
+      "id": "jump",
+      "platform": "pwa",
+      "channel": "stable",
+      "version": "32c571993a38",
+      "url": "https://mominc.online/apps/jump/",
+      "notes": "Content version = the app pack hash; installed copies update themselves."
+    },
+    {
+      "id": "misinformation",
+      "platform": "pwa",
+      "channel": "stable",
+      "version": "6e0776e15f18",
+      "url": "https://mominc.online/apps/misinformation/",
+      "notes": "Content version = the app pack hash; installed copies update themselves."
+    },
+    {
+      "id": "hand",
+      "platform": "pwa",
+      "channel": "stable",
+      "version": "7d35b4276daf",
+      "url": "https://mominc.online/apps/hand/",
+      "notes": "Content version = the app pack hash; installed copies update themselves."
+    },
+    {
+      "id": "alarm",
+      "platform": "pwa",
+      "channel": "stable",
+      "version": "aa844cbe75d8",
+      "url": "https://mominc.online/apps/alarm/",
+      "notes": "Content version = the app pack hash; installed copies update themselves."
+    },
+    {
+      "id": "corgi",
+      "platform": "pwa",
+      "channel": "stable",
+      "version": "8902aac0f584",
+      "url": "https://mominc.online/apps/corgi/",
+      "notes": "Content version = the app pack hash; installed copies update themselves."
+    },
+    {
+      "id": "lilboyfriend",
+      "platform": "pwa",
+      "channel": "stable",
+      "version": "d80bfa31cf45",
+      "url": "https://mominc.online/little-boyfriend/app/",
+      "notes": "Content version = the service worker stamp."
+    },
+    {
+      "id": "coach",
+      "platform": "pwa",
+      "channel": "stable",
+      "version": "fcee35ea5b3e5409b3df",
+      "url": "https://mominc.online/apps/coach/",
+      "notes": "Content version = the service worker stamp."
+    }
+  ]
+}

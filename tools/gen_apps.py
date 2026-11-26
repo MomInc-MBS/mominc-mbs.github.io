@@ -110,6 +110,9 @@ def load():
     ids = [a['id'] for a in catalogue['apps']]
     if len(set(ids)) != len(ids):
         raise SystemExit('duplicate app id in apps.json')
+    for a in catalogue['apps']:   # external PWAs (e.g. Coach MYR5) live on another origin: listed, never given a local shell
+        if a['type'] == 'external' and a['status'] == 'ready' and not a.get('href', '').startswith(('https://', '/')):
+            raise SystemExit(f"{a['id']}: a ready external app needs an https or site-relative href")
     for a in apps:
         if not re.fullmatch(r'[a-z0-9-]+', a['id']) or a['pack'] != 'app-' + a['id']:
             raise SystemExit(f"bad id/pack for {a['id']}")
@@ -169,9 +172,9 @@ li{{margin:.4em 0}}
 <ul>
 <li><strong>Start</strong> is free play on the 2048 board. It never touches your alarm.</li>
 <li><strong>Set alarm</strong>: pick a time, an optional task (like "Eat breakfast") and one of four intense sounds. Tap &#9654; to hear one first. Nothing is armed until you confirm <strong>Arm this alarm</strong>, and every change asks again.</li>
-<li>At that time the phone rings with your sound on the alarm channel until you merge a genuine 2048 tile. With a task you also tap <strong>Task done</strong>. Losing deals a fresh board for the same alarm.</li>
-<li>Opt in to follow-ups and they escalate at 30 s, 90 s, 3 min and 5 min: &ldquo;Still waiting for your check-off.&rdquo; Swiping a notice away never counts as done.</li>
-<li><strong>Stop alarm</strong> always works. It ends today's alarm as not done; tomorrow's stays set.</li>
+<li>The first alert comes at the due time, then after 5 minutes, 3 minutes and 1 minute, then every 30 seconds until you finish the game (a win or no moves left) or use Settings to turn it off or change the time. Settings unlocks once the 30-second phase starts.</li>
+<li>Finish by playing the 2048 board to the end: a real loss (no moves left) or a win dismisses the alarm. You do not need a 2048 tile. A full board that can still move does not count.</li>
+<li>An emergency <strong>hold-to-stop</strong> always works, at any time. It ends today's alarm as not done; tomorrow's stays set.</li>
 <li>It asks for notification access and, on some Android versions, exact alarms and full-screen alarms. Without them it tells you it is not armed.</li>
 <li>No account, no internet permission, nothing leaves the phone. Force Stop or uninstall switches it off, because Android says so.</li>
 </ul>

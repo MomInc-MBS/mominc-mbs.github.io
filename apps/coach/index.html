@@ -1,0 +1,44 @@
+<!doctype html>
+<!-- MOM's: Coach MYR5: reminders, workout tracking, food tracking, progress, goals.
+     Barehands copyright (c) 2026 Jared Rhodenizer; AGPL-3.0-or-later.
+     Source and license: /pose.html and /LICENSE. -->
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MOM's: Coach MYR5</title>
+<meta name="theme-color" content="#21172f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MOM's: MYR5">
+<script>window.MYR5_STATIC=true;</script><link rel="stylesheet" href="app.css?v=fcee35ea5b3e5409b3df"><link rel="manifest" href="manifest.webmanifest?v=fcee35ea5b3e5409b3df">
+<link rel="modulepreload" href="./launch-runtime.mjs?v=fcee35ea5b3e5409b3df">
+<link rel="icon" type="image/png" href="./icons/coach-2d-192.png"><link rel="apple-touch-icon" href="./icons/coach-2d-apple.png">
+
+
+
+
+
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}</script>
+<div class="device-bezel" aria-hidden="true"><i class="case-screw case-tl"></i><i class="case-screw case-tr"></i><i class="case-screw case-bl"></i><i class="case-screw case-br"></i></div>
+<header class="ship-header"><a class="mom-brand" href="#" aria-label="MOM's: Coach MYR5"><img src="./icons/mom-inc-mark-96.webp" width="36" height="36" alt=""><span>MOM<span>INC.</span></span></a><div class="ship-location">MOM's: Coach MYR5</div><div class="deck-readout"><span><i class="status-light"></i> <span id="streakReadout">🔥 0 DAY STREAK</span></span></div><button id="openSettings" class="icon-button" data-panel="goals" aria-label="Open goals">☷</button></header>
+<main id="homeScreen" class="pod-page">
+ <a id="homeSignIn" class="main-action action-link" href="./signin.html?return_to=%2Fpose.html" target="_top" hidden>Sign in</a>
+ <section id="todayCard" class="today-card" aria-label="Today" hidden>
+  <div class="today-meter">
+   <div class="meter-head"><span>Protein</span><span id="proteinReadout">0 / 0 g</span></div>
+   <progress id="proteinMeter" max="1" value="0"></progress>
+  </div>
+  <div class="today-meter">
+   <div class="meter-head"><span>Water</span><span id="waterReadout">0 / 0 oz</span></div>
+   <progress id="waterMeter" max="1" value="0"></progress>
+   <button id="logWater" type="button">+8 oz</button>
+  </div>
+  <div class="today-meter">
+   <div class="meter-head"><span>Workout</span><span id="workoutReadout">0 / 0 min</span></div>
+   <progress id="workoutMeter" max="1" value="0"></progress>
+   <div class="actions"><button id="openTraining" type="button" class="main-action">Train</button><button id="openLogWorkout" type="button" data-panel="logWorkout">Log minutes</button></div>
+  </div>
+ </section>
+ <section id="todayList" class="today-list" aria-label="Today's activity"></section>
+</main>
+<script type="module" src="./launch-bootstrap.mjs?v=fcee35ea5b3e5409b3df"></script>
+</html>

@@ -10,7 +10,8 @@ export default {
     ctx.waitUntil(runCron(env.DB, Date.now(), {
       publicOrigin: env.PUBLIC_ORIGIN,
       send: (sub, payload, opts) => sendPush(sub, payload, vapid, opts),
-      sleep: ms => new Promise(r => setTimeout(r, ms)),
+      sleep: ms => new Promise(r => setTimeout(r, ms)),    // the ~30 s wait for the stage-4 half-minute alert
+      clock: Date.now,
     }));
   },
 };

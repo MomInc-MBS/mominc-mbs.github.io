@@ -146,3 +146,39 @@ test('hourly story reset removes story keys but keeps mom-tour-v1 and the Fuel r
   assert.notEqual(w.localStorage.getItem('mbs-fuel-flight-v1'), null);
   w.close();   // state.js leaves a one-hour timer running
 });
+
+/* ---------- Coach MYR5: the 8th reward, derived from the full tour ---------- */
+const SEVEN = ['misinformation', 'fuel', 'jump', 'lilboyfriend', 'alarm', 'corgi', 'hand'];
+const seed = (storage, apps) => { const s = C.createStore(storage); apps.forEach(a => s.unlock(a, 'seed')); s.announce('x'); return s; };
+
+test('coach: six unlocked is not enough, seven unlocks it', () => {
+  const s = seed(memory(), SEVEN.slice(0, 6));
+  assert.deepEqual(C.reconcile(envOf(), s), []);
+  assert.equal(s.read().unlocked.coach, undefined);
+  s.unlock('hand', 'djscratch');
+  assert.deepEqual(C.reconcile(envOf(), s), ['coach']);
+  assert.equal(s.read().unlocked.coach.evidence, 'tour');
+  assert.equal(C.APPS.length, 8);
+});
+
+test('coach: an existing 7/7 record migrates on reconcile and is queued exactly once', () => {
+  const storage = memory();
+  const old = {v: 1, unlocked: Object.fromEntries(SEVEN.map(a => [a, {at: 1, evidence: 'old'}])), announced: Object.fromEntries(SEVEN.map(a => [a, 1])), pendingRewards: []};
+  storage.setItem(C.KEY, JSON.stringify(old));                         // a record written before Coach existed
+  const s = C.createStore(storage);
+  assert.deepEqual(C.reconcile(envOf(), s), ['coach']);
+  assert.deepEqual(s.read().pendingRewards, ['coach']);
+  assert.deepEqual(C.reconcile(envOf(), s), []);                       // the tour tick runs every second
+  assert.deepEqual(s.read().pendingRewards, ['coach']);
+  s.announce('coach'); C.reconcile(envOf(), s);
+  assert.deepEqual(s.read().pendingRewards, []);                       // an announced reward never comes back
+  for (const a of SEVEN) assert.equal(s.read().unlocked[a].evidence, 'old');   // nothing earlier is rewritten
+});
+
+test('coach: Goon / alarm trigger is untouched and Coach never unlocks from it', () => {
+  const run = o => { const s = C.createStore(memory()); C.reconcile(envOf(o), s); return Object.keys(s.read().unlocked).sort(); };
+  assert.deepEqual(run({done: ['goon'], ls: {'mbs-gala-character-created-v1': '1'}}), []);
+  assert.deepEqual(run({ls: {'goon-result-menu-reached-v2': JSON.stringify({at: 9, result: 'NO_LEGAL_MOVES'})}}), ['alarm']);
+  assert.equal(C.REWARD_OF.goon, 'alarm'); assert.equal(C.REWARD_OF.girlfriend, 'jump');
+  assert.ok(!Object.values(C.REWARD_OF).includes('coach'));
+});

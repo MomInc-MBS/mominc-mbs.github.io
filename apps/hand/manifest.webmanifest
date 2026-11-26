@@ -1,7 +1,7 @@
 {
   "id": "/apps/hand/",
-  "name": "Hand Customizer",
-  "short_name": "Hand",
+  "name": "MOM's: Hand Customizer",
+  "short_name": "MOM's: Hand",
   "description": "Build your own Helping Hand and export it. Extra models download when you choose them.",
   "start_url": "/apps/hand/",
   "scope": "/apps/hand/",

@@ -2,9 +2,10 @@
 process.env.TZ = 'UTC';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {review, arm, setLabel, disable, tick, acknowledge, stop, win, taskDone, taskReady, noMoves, attemptId, current, lookup, applyRemote,
+import * as R from '../apps/alarm/remind.js';
+import {review, arm, setLabel, disable, tick, acknowledge, stop, win, lose, offLockLeft, attemptId, current, lookup, applyRemote,
   emptyState, load, save, nextDue, SOUNDS} from '../apps/alarm/remind.js';
-import {stageFor, stageStart, STAGE_AT, FRICTION_MS, MISS_MS} from '../apps/alarm/stages.js';
+import {stageFor, stageStart, faceFor, faceUrl, topFace, labelText, copyFor, APP_NAME, MISS_MS} from '../apps/alarm/stages.js';
 import {capability} from '../apps/alarm/push.js';
 
 const T0 = Date.UTC(2026, 10, 25, 12, 0, 0);
@@ -28,7 +29,6 @@ test('setup: no sound is preselected, only the four intense sounds exist, review
   const s2 = arm(s1, edited, T0 + 1000);
   assert.equal(s2.schedule.revision, 2); assert.equal(s2.schedule.sound, 'buzzer');
   assert.equal(arm(s2, review(draft({sound: 'buzzer'})), T0 + 2000).schedule.revision, 2);          // same config re-confirmed: same revision
-  assert.match(review(draft({tandem: true})).summary.join('\n'), /Tandem notices: ON/);
   assert.equal(review(draft({followups: false, tandem: true})).draft.tandem, false);               // tandem needs follow-ups
   assert.equal(setLabel(s2, 'pills').schedule.revision, 2);                                         // label-only edit: no new confirmation, no new revision
 });
@@ -39,91 +39,127 @@ test('arming creates a PENDING occurrence at the next local time', () => {
   assert.equal(tick(s, T0 + 60_000).events.length, 0);
 });
 
-test('closing / opening / tapping a notice never completes the occurrence', () => {
+test('opening / tapping a notice / opening Settings never stops, pauses or resets the escalation', () => {
   let {s, due} = ring();
   assert.equal(s.occ.status, 'ACTIVE');
-  s = acknowledge(s, due + 5000);                                  // app opened / notice tapped
-  assert.equal(s.occ.status, 'ACTIVE'); assert.equal(s.session.state, 'ACKNOWLEDGED');
-  for (const t of [10, 40, 70, 200, 400]) s = tick(s, due + t * 1000).state;
-  assert.equal(s.occ.status, 'ACTIVE');                            // nothing but a win / Task done / Stop changes it
-  assert.equal(lookup(s, s.occ.id).status, 'ACTIVE');
-});
-
-test('escalation: start at 0, stages at 30/90/180/300 s then every 5 min; one event per stage', () => {
-  let {s, due} = ring();
+  s = acknowledge(s, due + 5000);                                  // app opened / notice tapped / Play 2048
+  assert.equal(s.occ.status, 'ACTIVE'); assert.equal(s.session.state, 'ALERTING'); assert.equal(s.occ.ackedAt, due + 5000);
+  assert.equal(acknowledge(s, due + 9000), s);                     // a repeat tap changes nothing
   const seen = [];
-  for (let t = 2; t <= 1300; t++) { const r = tick(s, due + t * 1000); s = r.state; for (const e of r.events) seen.push([t, e.type, e.stage]); }
-  assert.deepEqual(seen, [[30, 'stage', 1], [90, 'stage', 2], [180, 'stage', 3], [300, 'stage', 4], [600, 'stage', 5], [900, 'stage', 6], [1200, 'stage', 7]]);
-  assert.deepEqual([0, 29, 30, 89, 90, 179, 180, 299, 300].map(stageFor), [0, 0, 1, 1, 2, 2, 3, 3, 4]);
-  assert.deepEqual(STAGE_AT.map((_, i) => stageStart(i)), STAGE_AT);
+  for (let t = 6; t <= 700; t++) { const r = tick(s, due + t * 1000); s = r.state; for (const e of r.events) seen.push([t, e.stage]); }
+  assert.deepEqual(seen.map(x => x[0]), [300, 480, 540, 570, 600, 630, 660, 690]);   // the opening did not pause or shift anything
+  assert.equal(s.occ.status, 'ACTIVE'); assert.equal(lookup(s, s.occ.id).status, 'ACTIVE');
 });
 
-test('start event fires exactly at due time with the satirical copy', () => {
+test('escalation timing from T0: 0, 300, 480, 540 s, then every 30 s; one alert per boundary, repeats stay on stage 4', () => {
+  let {s, due} = ring({label: 'Call Alex'});
+  assert.equal(s.session.stage, 0);                                // ring() ticked at +1 s: the start alert
+  const seen = [];
+  for (let t = 2; t <= 640; t++) { const r = tick(s, due + t * 1000); s = r.state; for (const e of r.events) seen.push([t, e.type, e.stage, faceFor(e.stage), e.text]); }
+  assert.deepEqual(seen.map(e => e.slice(0, 4)), [[300, 'stage', 1, 1], [480, 'stage', 2, 2], [540, 'stage', 3, 3], [570, 'stage', 4, 3], [600, 'stage', 5, 3], [630, 'stage', 6, 3]]);
+  assert.match(seen[0][4], /^Still waiting: “Call Alex”\.$/); assert.match(seen[3][4], /^Still pending: “Call Alex”\. Finish the game or open Settings/);
+  assert.deepEqual([0, 299, 300, 479, 480, 539, 540, 569, 570, 599, 600, 629, 630].map(stageFor), [0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6]);
+  assert.deepEqual([0, 1, 2, 3, 4, 5, 6].map(stageStart), [0, 300, 480, 540, 570, 600, 630]);
+  assert.deepEqual([0, 1, 2, 3, 4, 9].map(faceFor), [0, 1, 2, 3, 3, 3]);
+});
+
+test('start event fires exactly at due time', () => {
   const s = armed({label: 'take pills'}), due = dueOf(s);
   assert.equal(tick(s, due - 1).events.length, 0);
-  const r = tick(s, due); assert.equal(r.events[0].type, 'start'); assert.match(r.events[0].text, /take pills/);
+  const r = tick(s, due); assert.equal(r.events[0].type, 'start'); assert.match(r.events[0].text, /^Reminder: “take pills”\.$/);
   assert.equal(tick(r.state, due + 1).events.length, 0);           // no second start
 });
 
-test('follow-ups off: only the first alert, ever', () => {
-  let {s, due} = ring({followups: false});
-  const evs = []; for (const t of [40, 100, 200, 400, 1000]) evs.push(...tick(s, due + t * 1000).events);
+test('a delayed tick reconciles to the current alert: ONE event, no catch-up burst; a late open starts at the current alert', () => {
+  const {s, due} = ring({label: 'Laundry'});
+  const r = tick(s, due + 612_000);                                // the page slept through 300/480/540/570/600
+  assert.deepEqual(r.events.map(e => e.stage), [5]);
+  assert.equal(tick(r.state, due + 613_000).events.length, 0);
+  const a = armed({label: 'Laundry'}), late = tick(a, dueOf(a) + 575_000);
+  assert.deepEqual(late.events.map(e => [e.type, e.stage]), [['start', 4]]);
+});
+
+test('escalation is opt-in: without it there is only the first alert, ever', () => {
+  const {s, due} = ring({followups: false});
+  const evs = []; for (const t of [40, 301, 481, 541, 600, 1000]) evs.push(...tick(s, due + t * 1000).events);
   assert.equal(evs.length, 0);
 });
 
-test('tandem companion: from the 180 s stage, once per stage, about 3 s after the main message', () => {
-  let {s, due} = ring({tandem: true});
-  const seen = [];
-  for (let t = 2; t <= 700; t++) { const r = tick(s, due + t * 1000); s = r.state; for (const e of r.events) seen.push([t, e.type, e.stage]); }
-  assert.deepEqual(seen.filter(e => e[1] === 'companion'), [[183, 'companion', 3], [303, 'companion', 4], [603, 'companion', 5]]);
-});
-
-test('acknowledging pauses follow-ups for 60 s, then they resume', () => {
-  let {s, due} = ring();
-  s = tick(s, due + 25_000).state; s = acknowledge(s, due + 25_000);
-  assert.equal(tick(s, due + 50_000).events.length, 0);            // stage 1 (30 s) is due but paused until 85 s
-  const r = tick(s, due + 86_000); assert.deepEqual(r.events.map(e => e.stage), [1]); assert.equal(r.state.session.state, 'ALERTING');
-});
-
-test('Stop / cancel is incomplete and never restarts; later recurrences stay', () => {
+test('Stop (emergency hold) ends THIS occurrence only: incomplete, never restarts, later recurrences stay, reminder stays on', () => {
   let {s, due} = ring({label: 'x'});
   const gen = s.session.gen, id = s.occ.id;
   assert.ok(current(s, id, gen));
   s = stop(s, due + 20_000);
-  assert.equal(s.occ.status, 'CANCELLED'); assert.equal(s.occ.reason, 'stopped'); assert.equal(s.session.state, 'SILENCED');
+  assert.equal(s.occ.status, 'CANCELLED'); assert.equal(s.occ.reason, 'stopped'); assert.equal(s.session.state, 'SILENCED'); assert.equal(s.schedule.enabled, true);
   assert.ok(!current(s, id, gen));                                  // audio/timer callbacks captured earlier must not act
-  const evs = []; for (const t of [30, 90, 200, 400, 900, 3600]) { const r = tick(s, due + t * 1000); s = r.state; evs.push(...r.events); }
+  const evs = []; for (const t of [300, 540, 600, 3600]) { const r = tick(s, due + t * 1000); s = r.state; evs.push(...r.events); }
   assert.deepEqual(evs, []);                                        // no restart, no stage events
   assert.equal(s.occ.status, 'CANCELLED'); assert.equal(s.next.status, 'PENDING'); assert.equal(s.next.due, due + 86_400_000);
   assert.ok(s.outbox.some(o => o.k === 'occ' && o.act === 'cancel'));
-  assert.equal(win(s, id, due + 30_000), s);                        // a late win cannot revive or complete a stopped occurrence
-  assert.equal(taskDone(s, due + 99_999), s);
+  assert.equal(win(s, id, due + 30_000), s); assert.equal(lose(s, id, due + 30_000), s);   // a late result cannot revive a stopped occurrence
 });
 
-test('free-play and stale wins never complete an alarm; a win on the live occurrence without a task completes it', () => {
-  const {s, due} = ring();
-  assert.equal(win(s, null, due + 5000), s);                        // free play passes no occurrence id
-  assert.equal(win(s, 'some-other-occurrence', due + 5000), s);
-  const done = win(s, s.occ.id, due + 5000);
-  assert.equal(done.occ.status, 'COMPLETED'); assert.equal(done.occ.reason, 'puzzle'); assert.equal(done.session.state, 'SILENCED');
-  assert.equal(win(done, s.occ.id, due + 6000), done);              // already finished: a second win does nothing
-  assert.equal(tick(done, due + 400_000).events.length, 0);         // completed: no follow-ups
+test('a win or a loss on THIS occurrence dismisses it at EVERY stage; the recurrence stays; stale / other / free-play results are ignored', () => {
+  for (const [name, fn, reason] of [['win', win, 'win'], ['loss', lose, 'loss']])
+    for (const at of [1, 299, 300, 479, 480, 539, 540, 569, 570, 631]) {
+      let {s, due} = ring({label: 'Go to the store'});
+      s = tick(s, due + at * 1000).state;
+      const id = s.occ.id;
+      assert.equal(fn(s, null, due + at * 1000), s, name + ' free play');
+      assert.equal(fn(s, 'other-reminder:1', due + at * 1000), s, name + ' other occurrence');
+      const done = fn(s, id, due + at * 1000);
+      assert.equal(done.occ.status, 'COMPLETED', `${name} at ${at}`); assert.equal(done.occ.reason, reason); assert.equal(done.session.state, 'SILENCED');
+      assert.equal(done.schedule.enabled, true); assert.equal(done.next.due, due + 86_400_000);        // future recurrences kept
+      assert.ok(done.outbox.some(o => o.act === 'complete' && o.id === id));
+      assert.equal(tick(done, due + (at + 60) * 1000).events.length, 0);                              // nothing rings afterwards
+      assert.equal(fn(done, id, due + 9e5), done);                                                    // a second result does nothing
+    }
 });
 
-test('task label: the puzzle win is not the task; Task done needs a separate tap after the friction window', () => {
-  const {s, due} = ring({label: 'take pills'});
-  const w = win(s, s.occ.id, due + 10_000);
-  assert.equal(w.occ.status, 'ACTIVE'); assert.equal(w.occ.puzzleDone, true);
-  assert.ok(!taskReady(w, due + 10_000 + FRICTION_MS - 1));
-  assert.equal(taskDone(w, due + 10_000 + 1000), w);                // too early: unchanged
-  assert.equal(taskDone(s, due + 99_000), s);                       // no puzzle yet: unchanged
-  const t = taskDone(w, due + 10_000 + FRICTION_MS);
-  assert.equal(t.occ.status, 'COMPLETED'); assert.equal(t.occ.reason, 'task');
+test('no tile requirement: a win without a label, with a label, and a loss all dismiss with no extra step', () => {
+  for (const label of ['', 'take pills']) { const {s} = ring({label}); assert.equal(win(s, s.occ.id, s.occ.due + 5000).occ.status, 'COMPLETED'); }
+  assert.equal('taskDone' in R, false); assert.equal('noMoves' in R, false);
 });
 
-test('no legal moves: a new board attempt on the same occurrence', () => {
-  const {s} = ring(), a1 = attemptId(s), n = noMoves(s, s.occ.id);
-  assert.equal(n.occ.id, s.occ.id); assert.equal(n.occ.status, 'ACTIVE'); assert.notEqual(attemptId(n), a1); assert.equal(noMoves(s, 'other'), s);
+test('Settings "Turn off alarm": rejected before T0+540 s, accepted at 540 s; ordinary management is not locked outside an active occurrence', () => {
+  const {s, due} = ring({label: 'Call Alex'});
+  for (const t of [1, 300, 539.999]) { assert.equal(disable(s, due + t * 1000), s, 'rejected at ' + t); assert.equal(offLockLeft(s, due + t * 1000) > 0, true); }
+  assert.equal(offLockLeft(s, due + 539_000), 1000);
+  assert.equal(offLockLeft(s, due + 540_000), 0);
+  const off = disable(s, due + 540_000);
+  assert.equal(off.schedule.enabled, false); assert.equal(off.next, null); assert.equal(off.occ.status, 'CANCELLED');
+  assert.equal(off.schedule.label, 'Call Alex'); assert.equal(off.history[0].label, 'Call Alex');            // text and history are kept
+  assert.ok(off.outbox.some(o => o.k === 'schedule'));
+  assert.equal(offLockLeft(tick(s, due + 545_000).state, due + 545_000), 0);                                 // the lock counts from T0, so late delivery never extends it
+  const one = ring({followups: false}); assert.equal(offLockLeft(one.s, one.due + 1000), 0); assert.equal(disable(one.s, one.due + 1000).schedule.enabled, false);   // not escalating
+  const idle = armed(); assert.equal(offLockLeft(idle, T0), 0); assert.equal(disable(idle, T0).schedule.enabled, false);                                    // nothing active
+});
+
+test('app-wide face with several reminders: highest unresolved stage wins, ties go to the earliest due, none -> stage 1', () => {
+  assert.equal(topFace([]), 0);
+  assert.equal(topFace([{face: 0, due: 5}, {face: 2, due: 9}, {face: 1, due: 1}]), 2);
+  assert.equal(topFace([{face: 3, due: 9}, {face: 3, due: 1}]), 3);
+  assert.equal(faceUrl(3), '/apps/alarm/stages/stage4.webp'); assert.equal(faceUrl(99), '/apps/alarm/stages/stage4.webp'); assert.equal(faceUrl(0), '/apps/alarm/stages/stage1.webp');
+});
+
+test('wording: title, bodies for every stage, label rules (empty, whitespace, emoji, long preview, quotes) and no placeholders', () => {
+  assert.equal(APP_NAME, "MOM's: 2048 Reminder");
+  for (const l of ['Get up', 'Go to the store', 'Call Alex', 'Laundry', 'Leave at 4', '🔥🔥', '“quoted” <b>x</b> & more']) {
+    assert.equal(copyFor(0, l), `Reminder: “${l}”.`); assert.equal(copyFor(1, l), `Still waiting: “${l}”.`); assert.equal(copyFor(2, l), `Did you forget about “${l}”?`);
+    assert.equal(copyFor(3, l), `Still pending: “${l}”. Finish the game or open Settings to turn this alarm off.`); assert.equal(copyFor(9, l), copyFor(3, l));
+  }
+  for (const empty of ['', '   ', undefined, null, '\n\t ']) assert.equal(copyFor(0, empty), 'Reminder: “Your reminder”.');
+  assert.equal(copyFor(2, '  Leave   at\n4  '), 'Did you forget about “Leave at 4”?');         // whitespace normalised
+  const long = 'x'.repeat(150);
+  assert.equal(copyFor(0, long), `Reminder: “${long}”.`);                                      // the app keeps the full text
+  assert.equal(labelText(long, true), 'x'.repeat(59) + '…'); assert.equal([...labelText('😀'.repeat(100), true)].length, 60);   // preview cut by code point, no broken emoji
+  for (let n = 0; n < 8; n++) assert.doesNotMatch(copyFor(n, 'a'), /\{label\}|undefined|null/);
+  assert.equal(review(draft({label: 'y'.repeat(300)})).draft.label.length, 200);
+});
+
+test('tandem notices are retired; the review states the escalation honestly', () => {
+  const rev = review(draft({tandem: true})); assert.equal(rev.draft.tandem, false); assert.doesNotMatch(rev.summary.join('\n'), /Tandem/);
+  assert.match(review(draft()).summary.join('\n'), /Escalation: ON/); assert.match(review(draft({followups: false})).summary.join('\n'), /Escalation: off/);
 });
 
 test('app closed at due time: MISSED, never rung late; an unfinished occurrence expires', () => {
@@ -139,7 +175,7 @@ test('app closed at due time: MISSED, never rung late; an unfinished occurrence 
 test('a once-alarm turns itself off after it fires; disable cancels a live occurrence and clears the next', () => {
   let {s, due} = ring({recur: 'once'});
   assert.equal(s.next, null); assert.equal(s.schedule.enabled, false);
-  ({s} = ring()); s = disable(s, due + 5000);
+  ({s} = ring()); s = disable(s, due + 541_000);
   assert.equal(s.occ.status, 'CANCELLED'); assert.equal(s.next, null); assert.equal(s.schedule.enabled, false);
 });
 
@@ -176,4 +212,25 @@ test('capability card is truthful', () => {
   assert.equal(on.status, 'Reminders enabled'); assert.match(on.reason, /not an offline wake-up alarm/i);
   assert.equal(capability({...base, permission: 'granted', subscribed: false, error: 'boom'}).status, 'Unavailable');
   for (const c of [tab, on, capability(base)]) { assert.match(c.notes.join(' '), /Android app/); assert.match(c.notes.join(' '), /native iPhone app that is not shipped yet/); }
+});
+
+test('changing the time during an escalating occurrence is locked like Turn off: rejected at 539 s, accepted at 540 s, then reschedules without a stale chain', () => {
+  const {s, due} = ring({label: 'Call Alex'});
+  const edit = (st, now, time = '15:30') => arm(st, review(draft({time, label: 'Call Alex'})), now);
+  assert.throws(() => edit(s, due + 539_000), /unlocks in 1 s/);
+  assert.throws(() => edit(s, due + 1_000), /locked/);
+  const same = edit(s, due + 539_000, '12:05'); assert.equal(same.occ.status, 'ACTIVE');                  // not a time change: allowed, occurrence untouched
+  const oldId = s.occ.id, gen = s.session.gen;
+  const n = edit(s, due + 540_000);
+  assert.equal(n.occ.status, 'CANCELLED'); assert.equal(n.occ.reason, 'rescheduled'); assert.equal(n.schedule.enabled, true);
+  assert.equal(n.schedule.revision, s.schedule.revision + 1); assert.equal(n.schedule.time, '15:30');
+  assert.equal(n.next.due, Date.UTC(2026, 10, 25, 15, 30)); assert.equal(n.next.rev, n.schedule.revision);
+  assert.ok(n.outbox.some(o => o.k === 'occ' && o.id === oldId && o.act === 'cancel') && n.outbox.some(o => o.k === 'schedule'));
+  assert.ok(!current(n, oldId, gen));
+  const evs = []; let st = n; for (const t of [570, 600, 900]) { const r = tick(st, due + t * 1000); st = r.state; evs.push(...r.events); }
+  assert.deepEqual(evs, []);                                                                            // the old chain never rings again
+  const r = tick(st, n.next.due); assert.deepEqual(r.events.map(e => e.type), ['start']);              // exactly one new chain
+  assert.equal(tick(r.state, n.next.due + 1000).events.length, 0);
+  const idle = armed(); assert.equal(arm(idle, review(draft({time: '18:00'})), T0).schedule.time, '18:00');   // outside an active occurrence: normal
+  const one = ring({followups: false}); assert.equal(arm(one.s, review(draft({time: '18:00', followups: false})), one.due + 1000).schedule.time, '18:00');   // not escalating: no lock
 });

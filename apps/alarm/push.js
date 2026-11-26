@@ -1,8 +1,8 @@
-// ADHD web push client: capability card + install/subscribe/sync against backend/adhd-push. NOT connected until ADHD_PUSH_ORIGIN is set.
+// MOM's: 2048 Reminder web push client: capability card + install/subscribe/sync against backend/adhd-push. NOT connected until ADHD_PUSH_ORIGIN is set.
 export const ADHD_PUSH_ORIGIN = 'https://adhd-push.mominc-coach.workers.dev';        // e.g. 'https://adhd-push.<account>.workers.dev' after Ian deploys backend/adhd-push. Empty = reminders server not connected.
 
 const NOTES = [
-  'ADHD on the web is a reminder, not an offline wake-up alarm: it needs a connection and the phone\'s own notification settings (Focus, Silent) still apply.',
+  `MOM's: 2048 Reminder on the web is a reminder, not an offline wake-up alarm: it needs a connection and the phone\'s own notification settings (Focus, Silent) still apply.`,
   'For an alarm that rings with the phone locked, use the Android app (/download/alarm/).',
   'A custom horn on a locked iPhone needs a native iPhone app that is not shipped yet.',
 ];
@@ -10,15 +10,15 @@ const NOTES = [
 /** Pure: what the status card says. env = {origin, hasSW, hasPush, permission, standalone, ios, subscribed, error}. */
 export function capability(env) {
   const out = (status, reason, action) => ({status, reason, ...(action ? {action} : {}), notes: NOTES});
-  if (!env.origin) return out('Unavailable', 'The reminders server not connected yet, so no reminder can reach a closed app. The alarm still rings while ADHD is open.');
+  if (!env.origin) return out('Unavailable', 'The reminders server not connected yet, so no reminder can reach a closed app. The alarm still rings while this app is open.');
   if (!env.hasSW || !env.hasPush) return out('Unavailable', env.ios && !env.standalone
-    ? 'On iPhone, web reminders need ADHD on your Home Screen (iOS 16.4 or later): tap Share, then Add to Home Screen, and open it from there.'
+    ? `On iPhone, web reminders need MOM's: 2048 Reminder on your Home Screen (iOS 16.4 or later): tap Share, then Add to Home Screen, and open it from there.`
     : 'This browser cannot receive web push reminders.');
-  if (env.permission === 'denied') return out('Permission needed', 'Notifications are blocked for ADHD. Turn them on in your phone\'s settings, then reopen the app.');
-  if (env.permission !== 'granted') return out('Permission needed', 'Allow notifications so reminders can reach you when ADHD is closed.', 'request');
+  if (env.permission === 'denied') return out('Permission needed', `Notifications are blocked for MOM's: 2048 Reminder. Turn them on in your phone\'s settings, then reopen the app.`);
+  if (env.permission !== 'granted') return out('Permission needed', 'Allow notifications so reminders can reach you when the app is closed.', 'request');
   if (env.error) return out('Unavailable', env.error);
   if (!env.subscribed) return out('Unavailable', 'Notifications are allowed, but this phone is not registered with the reminders server yet.', 'retry');
-  return out('Reminders enabled', 'Reminders can arrive when ADHD is closed. This is not an offline wake-up alarm: it needs a connection, and Focus and notification settings still apply.');
+  return out('Reminders enabled', 'Reminders can arrive when the app is closed. This is not an offline wake-up alarm: it needs a connection, and Focus and notification settings still apply.');
 }
 
 export function detect(subscribed = false, error = '') {
@@ -81,7 +81,7 @@ export async function sync(state) {
       const r = o.k === 'schedule'
         ? (sc ? await call('PUT', '/v1/schedule', {id: sc.id, time: sc.time, tz: sc.tz, recur: sc.recur, label: sc.label, followups: sc.followups, tandem: sc.tandem, revision: sc.revision, enabled: sc.enabled}, c) : {status: 200})
         : await call('POST', '/v1/occurrence/' + encodeURIComponent(o.id) + '/' + o.act, null, c);
-      if (r.status === 429 || r.status >= 500) left.push(o);          // a 4xx (e.g. the server never knew this occurrence) is final
+      if (r.status === 429 || r.status === 423 || r.status >= 500) left.push(o);   // 423 = Turn off still locked by the server's clock: retry. Any other 4xx (e.g. the server never knew this occurrence) is final
     } catch { left.push(o); }
   }
   return left;

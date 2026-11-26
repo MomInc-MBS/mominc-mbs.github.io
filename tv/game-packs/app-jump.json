@@ -9,28 +9,28 @@
     },
     {
       "url": "/apps/jump/icon-192.png",
-      "revision": "bdc7e77ec9aec1cad6a7e5e79716b446df11b20b",
-      "bytes": 24971
+      "revision": "719f743eb8a078b6a05591a0ce61afa9084870e7",
+      "bytes": 36704
     },
     {
       "url": "/apps/jump/icon-512.png",
-      "revision": "a0f5a2bbce66b5d467eaf9e235db1db463809014",
-      "bytes": 108719
+      "revision": "016a39b413a10f3492b56793da1fd493d835fb72",
+      "bytes": 172372
     },
     {
       "url": "/apps/jump/icon-maskable-512.png",
-      "revision": "aa5d9ca5d5926a5b0d532aa26a36fe29fd1af27a",
-      "bytes": 109579
+      "revision": "da00af77359b7bef53b5315e11e3880f66692a94",
+      "bytes": 90204
     },
     {
       "url": "/apps/jump/index.html",
-      "revision": "c725892a000af911aa814b2f79d35cad6be0ee46",
-      "bytes": 2359
+      "revision": "bf6df738ebafed0a4de9aae76e8540aee3592fe5",
+      "bytes": 2414
     },
     {
       "url": "/apps/jump/manifest.webmanifest",
-      "revision": "3ef7c6f47bc5921ddd53147509e1d5fa843ed60e",
-      "bytes": 758
+      "revision": "02bbeef92d01eed72b4fd99510a264b18971ddae",
+      "bytes": 772
     },
     {
       "url": "/apps/jump/run.mjs",
@@ -49,8 +49,13 @@
     },
     {
       "url": "/apps/shell.mjs",
-      "revision": "cb9640fbd4cd94350d4b63c7d7f7978c5d539c58",
-      "bytes": 5633
+      "revision": "772bc89901827e4198cb4b39cb8b046cd6f484d1",
+      "bytes": 5811
+    },
+    {
+      "url": "/apps/update.mjs",
+      "revision": "8dbc92e88e1ebc52d3ec23ccb3f86e759f0b8a5a",
+      "bytes": 3721
     },
     {
       "url": "/arcade/pyramid-jump/data.mjs",
@@ -104,10 +109,10 @@
     },
     {
       "url": "/tv/game-loader.js",
-      "revision": "030fdfcb33be366788c78d3dfb482d31b0e7c5aa",
-      "bytes": 14636
+      "revision": "363279c0a6a391db8e7bae8282fc8fb6a8f811bc",
+      "bytes": 14678
     }
   ],
   "fontStyles": [],
-  "version": "7d908f6fe4a243dde556"
+  "version": "f918a1461a50e30a6b26"
 }
