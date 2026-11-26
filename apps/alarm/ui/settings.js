@@ -92,6 +92,7 @@ export function mountSettings(host, adapter, opts = {}) {
   const announce = t => { live.textContent = ''; setTimeout(() => { live.textContent = t; }, 30); };
   const help = createHelp({root, rail, S, face, announce, rm: () => root.classList.contains('ms-rm') || !!S.snap.reducedMotion || rm0});   // typed MOM subtitles; describes existing handlers, never replaces them
 
+  if (emb) root.addEventListener('click', e => { if (S.draft && e.target.closest?.('.ms-sub')) root.classList.toggle('ms-sub-open'); });   // editor open: dock is one line, tap to expand over the panel
   if (emb && typeof ResizeObserver === 'function') { const sub = root.querySelector('.ms-sub'); if (sub) { const ro = new ResizeObserver(() => layout()); ro.observe(sub); offs.push(() => ro.disconnect()); } }
 
   function safeSnap() { try { return adapter.snapshot() || {}; } catch (e) { return {}; } }
@@ -123,17 +124,18 @@ export function mountSettings(host, adapter, opts = {}) {
     return r;
   }
   function wheel(label, max, value, pick, k) {
+    const IH = emb ? 36 : 48;   // item height; the CSS wheel in the CRT uses the same 36 (.ms-emb .wh-i)
     let cur = value, t = 0;
     const list = h('div', {class: 'wh-l', 'aria-hidden': 'true'}, Array.from({length: max + 1}, (_, i) => h('div', {class: 'wh-i', text: p2(i)})));
     const el = h('div', {class: 'wh', role: 'spinbutton', tabindex: '0', 'aria-label': label, 'aria-valuemin': '0', 'aria-valuemax': String(max), 'aria-valuenow': String(value), 'aria-valuetext': p2(value), 'data-k': k}, list);
     const commit = v => { v = (v + max + 1) % (max + 1); if (v === cur) return; cur = v; el.setAttribute('aria-valuenow', v); el.setAttribute('aria-valuetext', p2(v)); pick(v); F('react', 'blink'); };
-    list.addEventListener('scroll', () => { clearTimeout(t); t = setTimeout(() => commit(Math.round(list.scrollTop / 48)), 140); }, {passive: true});
+    list.addEventListener('scroll', () => { clearTimeout(t); t = setTimeout(() => commit(Math.round(list.scrollTop / IH)), 140); }, {passive: true});
     el.addEventListener('keydown', e => {
       const d = {ArrowUp: 1, ArrowDown: -1, PageUp: 5, PageDown: -5}[e.key]; if (!d) return;
-      e.preventDefault(); commit(cur + d); list.scrollTop = cur * 48;
+      e.preventDefault(); commit(cur + d); list.scrollTop = cur * IH;
     });
-    list.addEventListener('click', e => { const i = [...list.children].indexOf(e.target); if (i >= 0) { list.scrollTop = i * 48; commit(i); } });
-    requestAnimationFrame(() => { list.scrollTop = value * 48; });
+    list.addEventListener('click', e => { const i = [...list.children].indexOf(e.target); if (i >= 0) { list.scrollTop = i * IH; commit(i); } });
+    requestAnimationFrame(() => { list.scrollTop = value * IH; });
     return el;
   }
   const cd = until => h('span', {class: 'num cd', 'data-cd': String(until), text: countdown(until, now())});
@@ -199,7 +201,7 @@ export function mountSettings(host, adapter, opts = {}) {
     const st = panel.scrollTop, fk = document.activeElement?.dataset?.k;
     panel.setAttribute('aria-label', N[RAIL.find(r => r[0] === S.tab)[1]]);
     const nh = S.tab === 'clock' && !S.draft && !S.preview, st2 = nh === hero ? st : 0;
-    hero = nh; root.classList.toggle('ms-hero', hero);
+    hero = nh; root.classList.toggle('ms-hero', hero); root.classList.toggle('ms-edit', !!S.draft); root.classList.toggle('ms-ed-clock', !!S.draft && S.tab === 'clock' && !S.preview); if (!S.draft) root.classList.remove('ms-sub-open');
     panel.replaceChildren(...(hero ? [h('div', {class: 'ms-hero-sp', 'aria-hidden': 'true'})] : []), ...build().flat(9).filter(Boolean));
     panel.scrollTop = st2; layout(); panel.scrollTop = st2; setP();   // restore BEFORE layout() reads scrollTop (a stale offset from the previous tab gave a stale --p), and again after --tail changed the scroll extent
     if (fk) { const el = panel.querySelector(`[data-k="${CSS.escape(fk)}"]`) || rail.querySelector(`[data-k="${CSS.escape(fk)}"]`); el?.focus({preventScroll: true}); }

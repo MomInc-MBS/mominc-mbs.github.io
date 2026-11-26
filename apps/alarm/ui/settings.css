@@ -309,3 +309,26 @@ html.ms-doc,html.ms-doc body{margin:0;height:100%;background:#12081f}
 .ms-emb.ms-playing .ms-sub{pointer-events:auto;bottom:4px}
 .ms-emb .tl{display:flex;flex-direction:column;align-items:flex-start;gap:2px;pointer-events:none}.ms-emb .tl>*{pointer-events:auto}
 .ms-emb .chip.lk{min-height:30px;padding:1px 7px;gap:3px}.ms-emb .chip.lk .g{width:18px;height:18px}.ms-emb .cd{font-size:13px}
+
+/* ---- editor open inside the CRT: no header / MOM strip, one-line dock, one-row save bar (every control stays) ---- */
+.ms-emb.ms-edit{--sub-min:26px}
+.ms-emb.ms-edit :is(.ms-top,.ms-face,.ms-bg){display:none}
+.ms-emb.ms-edit .ms-panel{top:0;bottom:calc(var(--rail-h) + 32px)}
+.ms-emb.ms-edit .ms-sub{min-height:26px;max-height:26px;overflow:hidden;background:#12081f;z-index:4}
+.ms-emb.ms-edit .ms-sub-a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ms-emb.ms-edit.ms-sub-open .ms-sub{max-height:100px;overflow-y:auto}
+.ms-emb.ms-edit.ms-sub-open .ms-sub-a{white-space:normal}
+.ms-emb .savebar{bottom:-10px;margin:2px -6px -10px;padding:1px 8px;gap:6px;min-height:46px}
+.ms-emb .sv-ic{flex-wrap:nowrap;overflow:hidden;gap:6px}
+.ms-emb .sv-ic>.cp,.ms-emb .sv-ok>.cp{display:none}
+.ms-emb .sv-ic>.g,.ms-emb .sv-ic>.cap>.g{width:20px;height:20px;flex:none}
+.ms-emb .sv-ok{width:56px;height:44px;border-radius:14px}
+.ms-emb .sv-ok .g{width:28px;height:28px}
+.ms-emb.ms-edit .ms-panel{padding-top:4px;gap:4px}
+.ms-emb .wh{height:108px}.ms-emb .wh::after{top:36px;height:36px}.ms-emb .wh-l{padding:36px 0}.ms-emb .wh-i{height:36px;font-size:26px}
+.ms-emb .card.time{padding-top:3px;padding-bottom:3px;min-height:0}
+/* clock tab: back/eye/bin share a row with the title so the wheels fit the glass */
+.ms-emb.ms-ed-clock .ms-panel{flex-flow:row wrap;align-content:flex-start}
+.ms-emb.ms-ed-clock .ms-panel>*{flex:1 0 100%}
+.ms-emb.ms-ed-clock .ms-panel>.head{flex:0 0 auto;min-height:50px;padding:2px 6px}
+.ms-emb.ms-ed-clock .ms-panel>[data-field=title]{flex:1 1 0;min-width:0;min-height:50px;padding:2px 6px}
