@@ -69,6 +69,6 @@ test('vendored Pyramid Jump is pinned to its Coach origin and only carries the l
   }
   const game = read('arcade/pyramid-jump/game.mjs');
   assert.ok(game.includes('paperImg=null,onEnd=null') && game.includes('ctx.drawImage(paperImg,0,0,200,240)'));
-  assert.equal(sync.patches.length, 10);
+  assert.equal(sync.patches.length, 11); // P1-P10 + P11 hold (Coach Jump pyramid menu)
   assert.ok(!game.includes('../../performance-progress.mjs') && !game.includes('quest-progress-reporter'));
 });

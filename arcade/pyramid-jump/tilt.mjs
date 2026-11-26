@@ -9,9 +9,18 @@ export function subscribeTilt(cb) {
   return () => removeEventListener('deviceorientation', on);
 }
 
+let asking = null;
+// Call synchronously inside a tap (e.g. a GO button): asks iPhone for motion right away, so tiltReady needs no card.
+export function askTilt() {
+  if (granted || asking) return asking;
+  try { asking = DeviceOrientationEvent.requestPermission().then(r => { granted = r === 'granted'; }, () => {}).finally(() => { asking = null; }); } catch {}
+  return asking;
+}
+
 // iPhone only grants motion from a tap, so show one tap-to-allow card before the round; resolves at once elsewhere.
-export function tiltReady(host) {
-  if (granted) return Promise.resolve();
+export async function tiltReady(host) {
+  if (asking) await asking;
+  if (granted) return;
   return new Promise(resolve => {
     const card = document.createElement('div');
     card.style.cssText = 'position:absolute;inset:0;z-index:5;display:grid;place-content:center;gap:12px;padding:24px;text-align:center;background:#171329;color:#fff4dc;font:700 16px system-ui,sans-serif';

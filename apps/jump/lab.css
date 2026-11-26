@@ -1,0 +1,51 @@
+/* Coach Jump pyramid menu: Dr Girlfriend's lab bench with the paper food pyramid on it.
+   Scene layer rules (.jl-*) are copied from tv/channels/girlfriend.html (.dg-paper-wall, -trim, .paper-poster, -chair,
+   -doctor, .dg-bench-back, -front), keeping only what the PORTRAIT cascade resolves to there. Left out on purpose: tubes, belt,
+   mixer, goggles, and .paper-note (display:none in portrait in the source). Pyramid geometry = pyramidDesk() in
+   arcade/pyramid-jump/game.mjs, in game units (1 unit = var(--u) = 1% of the play-area width). */
+.jm-lab{position:absolute;inset:0;z-index:2;container-type:inline-size;transform-origin:0 0}
+.jm-lab[hidden]{display:none}
+.jl-scene{position:absolute;inset:0;overflow:hidden;isolation:isolate;background:#bba16e}
+.jl-wall{position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 139px,#604c4133 140px 142px),repeating-linear-gradient(0deg,#b8a477 0 79px,#c3b181 80px 82px);border:14px solid #665044}
+.jl-wall:after{content:'';position:absolute;inset:0;opacity:.22;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23fff' filter='url(%23p)' opacity='.7' d='M0 0h180v180H0z'/%3E%3C/svg%3E")}
+.jl-trim{position:absolute;inset:0 auto 0 67%;width:4%;background:#6d4783;box-shadow:4px 0 #513857}
+.jl-poster{position:absolute;top:23%;left:5%;width:30%;padding:9px;background:#e5d4a2;border:2px solid #ad9769;box-shadow:5px 5px #76614955;text-align:center;transform:rotate(-3deg);color:#4c3255;font:700 11px/1.25 Georgia,serif}
+.jl-poster:before{content:'';position:absolute;width:45%;height:15px;left:27%;top:-9px;background:#e2c388bb;transform:rotate(3deg)}
+.jl-chair{position:absolute;right:-5%;top:8%;bottom:26%;width:65%;z-index:1;background:repeating-linear-gradient(90deg,#70447b 0 13px,#7a4a8422 14px 16px),#674274;border:7px solid #4b3158;border-radius:22% 22% 8px 8px;box-shadow:5px 5px #3b294633}
+.jl-doctor{position:absolute;z-index:2;height:95%;width:auto;max-width:none;top:auto;bottom:25%;right:-30%;object-fit:contain;filter:drop-shadow(4px 4px 0 #48314d55);pointer-events:none}
+.jl-bench-back{position:absolute;z-index:3;left:0;right:0;bottom:25%;height:13%;background:#775287;border-top:8px solid #bca36b;box-shadow:0 5px #4c3555}
+.jl-bench-front{position:absolute;z-index:3;left:0;right:0;bottom:0;height:28%;background:#52375f;border-top:5px solid #37253e}
+
+/* The pyramid: a physical object standing on the bench. */
+.jm-pyr{--u:1cqw;position:absolute;z-index:4;left:50%;bottom:30%;width:calc(150*var(--u));height:calc(109*var(--u));margin-left:calc(-75*var(--u))}
+.jm-sheet{position:absolute;overflow:visible;pointer-events:none}
+.jm-sheet svg{display:block;width:100%;height:100%;overflow:visible}
+.jm-tier{position:absolute;pointer-events:none}
+.jm-tile{position:absolute;left:0;top:0;margin:0;padding:0;border:0;background:none;color:#2d2a4e;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+  box-shadow:none;border-radius:0;text-transform:none;font:inherit;min-height:0;
+  transform:translate(calc(var(--x)*var(--u) + var(--p,0px)),calc(var(--y)*var(--u) + var(--p,0px)));transition:transform .25s cubic-bezier(.4,0,.2,1)}
+.jm-tile:active{--p:1px;transform:translate(calc(var(--x)*var(--u) + 1px),calc(var(--y)*var(--u) + 1px))}
+.jm-tile.is-go{--p:0px}
+.jm-tile:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.jm-tile.is-pressed{transform:translate(calc(var(--x)*var(--u) + 3px),calc(var(--y)*var(--u) + 3px))}
+.jm-face{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;transition:opacity .3s}
+.jm-face svg.ico{width:calc(11*var(--u));height:calc(11*var(--u));overflow:visible}
+.jm-face .ico *{stroke:#2d2a4e;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round}
+.jm-face .ico .fillnone{fill:none}
+.jm-go{font:800 calc(8.5*var(--u))/1 monospace;letter-spacing:.04em;color:#f4e7a0;white-space:nowrap}
+.jm-preview{position:absolute;left:50%;bottom:calc(1.5*var(--u));height:calc(26*var(--u));width:calc(22*var(--u));transform:translateX(-50%);overflow:visible}
+.jm-preview svg{display:block;width:100%;height:100%;overflow:visible}
+.jm-title{position:absolute;left:calc(1.2*var(--u));right:calc(1.2*var(--u));bottom:calc(.6*var(--u));font:800 calc(2.9*var(--u))/1.05 monospace;text-align:center;overflow:hidden;max-height:calc(5.8*var(--u))}
+.jm-tile.is-center.is-music .ico{transform:translateY(calc(-2.4*var(--u)));width:calc(8.5*var(--u));height:calc(8.5*var(--u))}
+.jm-tile.is-off .jm-title{opacity:.5}
+.jm-lab.is-go .jm-tile .jm-face{opacity:0}
+.jm-lab.is-go .jm-tile.is-go .jm-face{opacity:1}
+.jm-lab.is-zoom{transition:transform .85s cubic-bezier(.45,0,.2,1)}
+.jm-lab.is-zoom .jl-scene{opacity:0;transition:opacity .5s linear .1s}
+.jm-lab.is-zoom .jm-pyr{opacity:0;transition:opacity .12s linear .8s}
+.jm-lab.is-fade{opacity:0;transition:opacity .2s linear}
+.jm-call{position:absolute;inset:0;z-index:4;display:grid;place-content:center;pointer-events:none;text-align:center;font:800 40px/1.2 system-ui,sans-serif;letter-spacing:.05em;color:#fff4dc;text-shadow:0 3px 0 #000b,0 0 14px #000a}
+.jm-call.pop{animation:jm-pop .3s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes jm-pop{from{transform:scale(.6);opacity:0}to{transform:none;opacity:1}}
+@media(prefers-reduced-motion:reduce){.jm-call.pop{animation:none}.jm-tile{transition:none}}
+.jump-root canvas.jm-game{transition:opacity .5s linear}

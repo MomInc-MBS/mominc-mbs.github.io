@@ -154,8 +154,8 @@
     },
     {
       "url": "/apps/apps.json",
-      "revision": "5a5154a1332084663f47f8129cad4130a975dd66",
-      "bytes": 9957
+      "revision": "7505c9d3b2aa5a05b4471ef190619f3681f57fdf",
+      "bytes": 9973
     },
     {
       "url": "/apps/corgi/app.css",
@@ -173,14 +173,39 @@
       "bytes": 936
     },
     {
+      "url": "/apps/jump/lab.css",
+      "revision": "1d0e9b145d6aaedcabd5b01df2b34aac19bae54b",
+      "bytes": 5568
+    },
+    {
+      "url": "/apps/jump/menu.mjs",
+      "revision": "ae448ae44681f8b051c5a686597a822a19a050d0",
+      "bytes": 7757
+    },
+    {
+      "url": "/apps/jump/music/manifest.json",
+      "revision": "549cacaf0a87a17e25b34be5a1574281eb965fc4",
+      "bytes": 1917
+    },
+    {
       "url": "/apps/jump/run.mjs",
-      "revision": "ceb79de03ee1f142a99837db93a55ef7755b3b1f",
-      "bytes": 2372
+      "revision": "3c188fc5e97c2e0919d80af84459344059b95963",
+      "bytes": 10189
+    },
+    {
+      "url": "/apps/jump/selector.mjs",
+      "revision": "a85d64634616ed1255776782672dfaf598920335",
+      "bytes": 3271
+    },
+    {
+      "url": "/apps/jump/soundtrack.mjs",
+      "revision": "5f413dc8b3b6c8378a0a05a0b0d6c4ffd8f40d0d",
+      "bytes": 4882
     },
     {
       "url": "/apps/jump/style.css",
-      "revision": "79eaa47e0b6ed3e1bdc6e794c28f5b0d79667e51",
-      "bytes": 443
+      "revision": "43ae67d125ab85a6925c2bfed2b92dfa372e60d6",
+      "bytes": 478
     },
     {
       "url": "/arcade/pyramid-jump/data.mjs",
@@ -189,8 +214,8 @@
     },
     {
       "url": "/arcade/pyramid-jump/game.mjs",
-      "revision": "93bd4928b0e3dffb2fedd9bf2e9a971752855832",
-      "bytes": 31505
+      "revision": "25bc7e4b1c3fbcacef23572e6180372962b7a460",
+      "bytes": 31646
     },
     {
       "url": "/arcade/pyramid-jump/logic.mjs",
@@ -1286,5 +1311,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "a5712f51308c8251cf4f"
+  "version": "48a8eb56c422744d1f52"
 }

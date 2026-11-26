@@ -49,8 +49,8 @@
     },
     {
       "url": "/apps/shell.mjs",
-      "revision": "772bc89901827e4198cb4b39cb8b046cd6f484d1",
-      "bytes": 5811
+      "revision": "c57a83a2eae3cd6d8ebdde1ca91a6f7b943566df",
+      "bytes": 5958
     },
     {
       "url": "/apps/update.mjs",
@@ -134,5 +134,5 @@
     }
   ],
   "fontStyles": [],
-  "version": "f1845a2b8817ba3e4544"
+  "version": "2ea9909ae918bb805e01"
 }
