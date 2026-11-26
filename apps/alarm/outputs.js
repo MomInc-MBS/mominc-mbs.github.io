@@ -127,9 +127,11 @@ export function createOutputs({env = globalThis, base = BASE, fetchImpl, onChang
       torchOk = !!t?.getCapabilities?.().torch; cameraOk = true; stream.getTracks().forEach(x => x.stop()); emit(); return {camera: 'granted', torch: torchOk};
     } catch (e) { cameraOk = false; return {camera: /NotAllowed|Permission/i.test(e?.name || '') ? 'denied' : 'error', torch: null}; }
   }
+  let wakeBusy = false, wakeRetry = 0;
   async function holdWake(on) {
-    if (on && !wake && n.wakeLock?.request && (env.document?.visibilityState ?? 'visible') === 'visible') {
-      try { wake = await n.wakeLock.request('screen'); facts.wake = true; wake.addEventListener?.('release', () => { wake = null; facts.wake = false; emit(); }); emit(); } catch { wake = null; }
+    if (on && !wake && !wakeBusy && Date.now() >= wakeRetry && n.wakeLock?.request && (env.document?.visibilityState ?? 'visible') === 'visible') {
+      wakeBusy = true;
+      try { wake = await n.wakeLock.request('screen'); facts.wake = true; wake.addEventListener?.('release', () => { wake = null; facts.wake = false; emit(); }); emit(); } catch { wake = null; wakeRetry = Date.now() + 30_000; } finally { wakeBusy = false; }
     } else if (!on && wake) { const x = wake; wake = null; facts.wake = false; try { await x.release(); } catch {} emit(); }
   }
   async function badge(count) {
