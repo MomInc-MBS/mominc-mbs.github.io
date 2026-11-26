@@ -307,7 +307,7 @@ html.ms-doc,html.ms-doc body{margin:0;height:100%;background:#12081f}
 .ms-emb.ms-playing{background:none;pointer-events:none}
 .ms-emb.ms-playing>:not(.ms-sub):not(.vh){display:none}
 .ms-emb.ms-playing .ms-sub{pointer-events:auto;bottom:4px}
-.ms-emb .tl{display:flex;flex-direction:column;align-items:flex-start;gap:2px;pointer-events:none}.ms-emb .tl>*{pointer-events:auto}
+.ms-emb .ms-top .tl{display:flex;flex-direction:column;align-items:flex-start;gap:2px;pointer-events:none}.ms-emb .ms-top .tl>*{pointer-events:auto}
 .ms-emb .chip.lk{min-height:30px;padding:1px 7px;gap:3px}.ms-emb .chip.lk .g{width:18px;height:18px}.ms-emb .cd{font-size:13px}
 
 /* ---- editor open inside the CRT: no header / MOM strip, one-line dock, one-row save bar (every control stays) ---- */
@@ -332,3 +332,17 @@ html.ms-doc,html.ms-doc body{margin:0;height:100%;background:#12081f}
 .ms-emb.ms-ed-clock .ms-panel>*{flex:1 0 100%}
 .ms-emb.ms-ed-clock .ms-panel>.head{flex:0 0 auto;min-height:50px;padding:2px 6px}
 .ms-emb.ms-ed-clock .ms-panel>[data-field=title]{flex:1 1 0;min-width:0;min-height:50px;padding:2px 6px}
+
+/* sound tab in the glass: stage cards in ONE row of small cards, sound radios in one row under them (the header's .tl column rule above is scoped to .ms-top) */
+.ms-emb .ms-panel{touch-action:pan-y}
+.ms-emb .card.tl{grid-template-columns:repeat(4,1fr);gap:0 4px;padding:4px}
+.ms-emb .tl-s{height:68px;padding:2px;gap:0;border-radius:10px;justify-content:center}
+.ms-emb .tl-s img{width:40px;height:40px;border-radius:8px}
+.ms-emb .tl-s .num{font-size:13px;line-height:1}
+.ms-emb .tl-snd{padding:1px}.ms-emb .tl-snd .g{width:14px;height:14px}
+.ms-emb .tl-gap{font-size:11px;transform:translateX(50%)}.ms-emb .tl-gap.rep{display:none}
+.ms-emb .card.snd{grid-template-columns:1fr;gap:4px}
+.ms-emb .snd .mini{display:none}
+.ms-emb .snd-g{grid-template-columns:repeat(4,1fr);gap:4px}
+.ms-emb .snd-b{min-height:56px;padding:2px}
+.ms-emb .snd .ib.big{grid-column:1;min-height:44px}
