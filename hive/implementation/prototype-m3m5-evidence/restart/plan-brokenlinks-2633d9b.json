@@ -1,0 +1,84 @@
+{
+  "goal_id": "g-a84fc43075a903d154a8",
+  "contract_ref": "artifacts/a292e58004bf7ae1f7ce1e90a054799b37f99a7e391f72bf53a49368c8562cbf.json",
+  "state": "PLANNED",
+  "plan": {
+    "schema": "hive-typed-plan-v1",
+    "steps": [
+      {
+        "step_id": "s1",
+        "op": "site.ref-check",
+        "kind": "discovered",
+        "capability": "site.ref-check",
+        "inputs": [
+          "input:0",
+          "input:1"
+        ],
+        "expected_output": "broken_ref_report",
+        "verifier": "capabilities/site.ref-check/suite/oracle.py",
+        "allowance": {
+          "container_runs": 1,
+          "timeout_s": 60
+        },
+        "after": [],
+        "report_name": "report.json",
+        "genome": "8a96095ae8d6cab767be3ec6c174f52b4a0de4635dfcfc516f4ac8e1edf99dbe",
+        "version": 1,
+        "statement_sha": "8a96095ae8d6cab767be3ec6c174f52b4a0de4635dfcfc516f4ac8e1edf99dbe"
+      }
+    ],
+    "excluded": [
+      {
+        "op": "convert",
+        "reason": "no retained capability imported for this operation (run: hive operator import)"
+      },
+      {
+        "op": "merge",
+        "reason": "no retained capability imported for this operation (run: hive operator import)"
+      }
+    ],
+    "dag": true,
+    "estimate": {
+      "steps": 1,
+      "container_runs": 1,
+      "worst_wall_s": 60,
+      "worst_cpu_s": 60
+    },
+    "ranking": {
+      "considered": 1,
+      "expansions": 1,
+      "chosen": 0,
+      "by": "steps, estimated cost, op names",
+      "alternatives": [
+        {
+          "ops": [
+            "site.ref-check"
+          ],
+          "cost": 60,
+          "expression": "site.ref-check(input:0,input:1)"
+        }
+      ]
+    }
+  },
+  "steps": [],
+  "reason": null,
+  "stages": [
+    {
+      "stage": "planned_only",
+      "at": "2026-11-26T16:44:35+00:00",
+      "steps": [
+        "site.ref-check"
+      ]
+    }
+  ],
+  "submitted_at": "2026-11-26T16:44:35+00:00",
+  "pid": 25312,
+  "prior_attempts": [],
+  "gap_ref": null,
+  "replayed_steps": 0,
+  "sources": [
+    "2633d9b/reference-table-2633d9b.json",
+    "2633d9b/site-manifest-2633d9b.json"
+  ],
+  "fallbacks": []
+}

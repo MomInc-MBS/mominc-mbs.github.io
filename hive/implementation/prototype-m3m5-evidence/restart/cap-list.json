@@ -1,0 +1,47 @@
+[
+  {
+    "id": "convert",
+    "kind": "m2",
+    "version": null,
+    "lifecycle": "inactive",
+    "provenance": "no retained capability imported for this operation (run: hive operator import)",
+    "receipt": null,
+    "admitted_at": null
+  },
+  {
+    "id": "merge",
+    "kind": "m2",
+    "version": null,
+    "lifecycle": "inactive",
+    "provenance": "no retained capability imported for this operation (run: hive operator import)",
+    "receipt": null,
+    "admitted_at": null
+  },
+  {
+    "id": "image.asset-match",
+    "kind": "discovered",
+    "version": 1,
+    "lifecycle": "active",
+    "provenance": "model openai/gpt-oss-20b",
+    "receipt": "bd1f40083ff4",
+    "admitted_at": "2026-11-26T16:42:47+00:00"
+  },
+  {
+    "id": "site.ref-check",
+    "kind": "discovered",
+    "version": 1,
+    "lifecycle": "active",
+    "provenance": "model openai/gpt-oss-20b",
+    "receipt": "bb9dd64de915",
+    "admitted_at": "2026-11-26T16:27:34+00:00"
+  },
+  {
+    "id": "site.release-diff",
+    "kind": "discovered",
+    "version": 1,
+    "lifecycle": "active",
+    "provenance": "model openai/gpt-oss-20b",
+    "receipt": "d9e82001f588",
+    "admitted_at": "2026-11-26T16:28:06+00:00"
+  }
+]

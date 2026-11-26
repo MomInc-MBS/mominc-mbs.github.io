@@ -1,0 +1,149 @@
+{
+  "goal_id": "g-f6d5c450b58feda9d216",
+  "contract_ref": "artifacts/212fdfa4eb5f587b63c281e23d077f4ba216d14cc00185a8ac1e2df98697851f.json",
+  "state": "VERIFIED",
+  "plan": {
+    "schema": "hive-typed-plan-v1",
+    "steps": [
+      {
+        "step_id": "s1",
+        "op": "site.release-diff",
+        "kind": "discovered",
+        "capability": "site.release-diff",
+        "inputs": [
+          "input:0",
+          "input:1"
+        ],
+        "expected_output": "release_change_report",
+        "verifier": "capabilities/site.release-diff/suite/oracle.py",
+        "allowance": {
+          "container_runs": 1,
+          "timeout_s": 60
+        },
+        "after": [],
+        "genome": "0b2ee14f1330367b6caa778c089f9566c4981b80d42e6d6729832530e88eeb8c",
+        "version": 1,
+        "statement_sha": "0b2ee14f1330367b6caa778c089f9566c4981b80d42e6d6729832530e88eeb8c"
+      }
+    ],
+    "excluded": [
+      {
+        "op": "convert",
+        "reason": "no retained capability imported for this operation (run: hive operator import)"
+      },
+      {
+        "op": "merge",
+        "reason": "no retained capability imported for this operation (run: hive operator import)"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "step_id": "s1",
+      "op": "site.release-diff",
+      "kind": "discovered",
+      "task_id": "u-415b799993c65fa7ab24",
+      "mode": "saved_result_replay",
+      "genome": "0b2ee14f1330367b6caa778c089f9566c4981b80d42e6d6729832530e88eeb8c",
+      "adapter": null,
+      "state": "VERIFIED",
+      "verdict": "PASS",
+      "reason": null,
+      "artifacts": [
+        {
+          "name": "release-changes.json",
+          "ref": "output/goal/g-f6d5c450b58feda9d216/release-changes.json",
+          "sha256": "70105219b126c342e1045a6345a02ca3fde742b626421a9ae4f7d8f5779680ea"
+        },
+        {
+          "name": "report.json",
+          "ref": "output/goal/g-f6d5c450b58feda9d216/report.json",
+          "sha256": "a0605be0c46995568893bbf3d5969db172bf8cc793071cefc1eec4c7d8d93497"
+        }
+      ],
+      "capability": {
+        "cap_id": "site.release-diff",
+        "version": 1,
+        "statement_sha": "0b2ee14f1330367b6caa778c089f9566c4981b80d42e6d6729832530e88eeb8c"
+      },
+      "verification": {
+        "evaluator": "capabilities/site.release-diff/suite/oracle.py",
+        "pin": "66d92def98bca10b7f2547b4107e74bd13c1cbe6b9c9a25c132a8a31b4373d18",
+        "process": "separate python -I",
+        "verdict": "PASS",
+        "expected_sha256": "70105219b126c342e1045a6345a02ca3fde742b626421a9ae4f7d8f5779680ea"
+      }
+    }
+  ],
+  "reason": null,
+  "stages": [
+    {
+      "stage": "contract_persisted",
+      "at": "2026-11-26T16:44:34+00:00",
+      "contract_ref": "artifacts/212fdfa4eb5f587b63c281e23d077f4ba216d14cc00185a8ac1e2df98697851f.json"
+    },
+    {
+      "stage": "planned",
+      "at": "2026-11-26T16:44:34+00:00",
+      "steps": [
+        "site.release-diff"
+      ]
+    },
+    {
+      "stage": "step_start",
+      "at": "2026-11-26T16:44:34+00:00",
+      "step": "s1"
+    },
+    {
+      "stage": "step_done",
+      "at": "2026-11-26T16:44:34+00:00",
+      "step": "s1",
+      "state": "VERIFIED"
+    },
+    {
+      "stage": "done",
+      "at": "2026-11-26T16:44:34+00:00",
+      "state": "VERIFIED"
+    }
+  ],
+  "submitted_at": "2026-11-26T16:44:34+00:00",
+  "pid": 34660,
+  "prior_attempts": [
+    {
+      "state": "PLANNED",
+      "submitted_at": "2026-11-26T16:44:33+00:00",
+      "reason": null
+    }
+  ],
+  "gap_ref": null,
+  "replayed_steps": 1,
+  "fallbacks": [],
+  "sources": [
+    "2633d9b/site-manifest-2633d9b.json",
+    "0b3854a/site-manifest-0b3854a.json"
+  ],
+  "stored_plan": {
+    "replanned": false,
+    "substitutions": 0,
+    "model_calls": 0
+  },
+  "deliverable": [
+    {
+      "name": "release-changes.json",
+      "ref": "output/goal/g-f6d5c450b58feda9d216/release-changes.json",
+      "sha256": "70105219b126c342e1045a6345a02ca3fde742b626421a9ae4f7d8f5779680ea"
+    },
+    {
+      "name": "report.json",
+      "ref": "output/goal/g-f6d5c450b58feda9d216/report.json",
+      "sha256": "a0605be0c46995568893bbf3d5969db172bf8cc793071cefc1eec4c7d8d93497"
+    }
+  ],
+  "mode": "saved_result_replay",
+  "usage": {
+    "container_runs": 0,
+    "model_calls": 0,
+    "proposal_calls": 0
+  },
+  "completed_at": "2026-11-26T16:44:34+00:00"
+}

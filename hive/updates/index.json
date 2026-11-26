@@ -593,6 +593,24 @@
         "connected-runner",
         "evidence"
       ]
+    },
+    {
+      "id": "M3M5",
+      "source_id": "HIVE-PROTOTYPE-M3-M5-2026-11-26",
+      "path": "updates/HIVE_Prototype_Checkpoint_M3_M5_2026-11-26.md",
+      "title": "Prototype checkpoint M3-M5 (incomplete): learn, check, admit, reuse on real inputs",
+      "type": "framework",
+      "status": "measured",
+      "evidence_status": "measured_engineering_result",
+      "implementation_status": "partial",
+      "date": "2026-11-26",
+      "citation_label": "HIVE prototype checkpoint M3-M5 (26 November 2026)",
+      "sha256": "7e8196dd86bd114244c4db5afa79956723cf4d2a63c95f1d70bec88755d395ff",
+      "tags": [
+        "hive",
+        "prototype-m3-m5",
+        "evidence"
+      ]
     }
   ],
   "edges": [
@@ -1439,6 +1457,16 @@
     {
       "source": "OPERATOR",
       "target": "CONNECTED",
+      "relation": "related_to"
+    },
+    {
+      "source": "STATUS",
+      "target": "M3M5",
+      "relation": "related_to"
+    },
+    {
+      "source": "CONNECTED",
+      "target": "M3M5",
       "relation": "related_to"
     }
   ],

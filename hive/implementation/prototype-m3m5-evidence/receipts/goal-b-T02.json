@@ -1,0 +1,81 @@
+{
+ "at": "2026-11-26T08:28:07-0800",
+ "baseline_commit": "0e9e0d3",
+ "cached_input_tokens": null,
+ "candidate_commit": "73515df0bd5fadb246e48d0165944025ab8dd27d",
+ "cost_usd": 0.0,
+ "details": {
+  "acquisitions": [
+   {
+    "admission": {
+     "cap_id": "site.release-diff",
+     "event_ref": "artifacts/e92052d7cb5b832e82f2d1774165cdefea0c22e94baac1b4c6eb70ee821d2e1f.json",
+     "rerun_receipt_sha256": "9dc2856700466f352adf053a2ff3f335305b4eb78d9f4ae9c84dcd333ec6d625",
+     "statement_sha": "0b2ee14f1330367b6caa778c089f9566c4981b80d42e6d6729832530e88eeb8c",
+     "version": 1
+    },
+    "attempts": [
+     {
+      "best_dev_pass": 6,
+      "exp_id": "d-52f27c024c4efb6cba0b",
+      "ledger": {
+       "calls": 1,
+       "container_runs": 3,
+       "estimated_tokens": false,
+       "in_tokens": 2312,
+       "out_tokens": 1129,
+       "proposals": 1,
+       "wall_s": 24.562999999994645
+      },
+      "reason": "independent evaluator PASS; awaiting admission",
+      "receipt": {
+       "n": 24,
+       "pass_count": 24,
+       "receipt_sha256": "d9e82001f5881d390fdc3fa10ffb982488130743ca2e43e35bf66f70e4745ad8",
+       "verdict": "PASS"
+      },
+      "seeded_with_best": false,
+      "state": "CANDIDATE_PASSED",
+      "wall_s": 24.6
+     }
+    ],
+    "capability": "site.release-diff",
+    "cost": {
+     "calls": 1,
+     "container_runs": 3,
+     "in_tokens": 2312,
+     "out_tokens": 1129,
+     "proposals": 1,
+     "wall_s": 24.6
+    },
+    "goal_state": "UNRESOLVED",
+    "label": "L3",
+    "missing_step": {
+     "arity": 2,
+     "in": "site_manifest",
+     "ordered": true,
+     "out": "release_change_report"
+    },
+    "reason": "no typed plan from the eligible capabilities",
+    "state": "ADMITTED",
+    "wall_s_total": 26.0
+   }
+  ],
+  "admitted": [
+   "site.release-diff"
+  ],
+  "blocked": []
+ },
+ "elapsed_ms": 24600,
+ "evidence_path": "evidence/goal-b/",
+ "expected": "release-diff acquired (genuine gap), evaluated, admitted",
+ "fixture_id": "L3 site.release-diff on the two manifests",
+ "input_tokens": 2312,
+ "model_calls": 1,
+ "observed": "L3 site.release-diff: ADMITTED",
+ "output_tokens": 1129,
+ "phase": "goal-b",
+ "registry_snapshot": "8a0c5c41717ddc218501704eba7f297f920a510d58a4fd2c9a5e2470d13d92a2",
+ "status": "pass",
+ "test_id": "T02"
+}

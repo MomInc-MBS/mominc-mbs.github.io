@@ -1,0 +1,80 @@
+{
+ "at": "2026-11-26T08:27:08-0800",
+ "baseline_commit": "0e9e0d3",
+ "cached_input_tokens": null,
+ "candidate_commit": "73515df0bd5fadb246e48d0165944025ab8dd27d",
+ "cost_usd": 0.0,
+ "details": {
+  "admission_key": "<local path>",
+  "backends": [
+   "openai/gpt-oss-20b",
+   "qwen/qwen3.8-27b",
+   "nvidia/nemotron-3.5-super-vl-120b-a12b",
+   "moonshotai/kimi-k3.1-pro"
+  ],
+  "baseline_commit": "0e9e0d3",
+  "branch": "build/prototype",
+  "commit": "73515df0bd5fadb246e48d0165944025ab8dd27d",
+  "inputs": {
+   "copy": "local-demo/o8\\inputs",
+   "files": 31,
+   "read_only_source_verified": true,
+   "source": "operator-inputs/mom-site/exports"
+  },
+  "model": {
+   "endpoint": "http://local-endpoint/v1",
+   "endpoint_lists": [
+    "openai/gpt-oss-20b",
+    "qwen35-9b-antidoom",
+    "ornith-1.0-9b",
+    "qwen/qwen3.8-27b",
+    "text-embedding-nomic-embed-text-v1.5"
+   ],
+   "id": "openai/gpt-oss-20b",
+   "weights_bytes": 12109565632,
+   "weights_file": "<local path>",
+   "weights_rehashed_at": "each experiment (m2_model.check_weights, see discovery/<exp>/model/weight_checks.jsonl)",
+   "weights_sha256_pinned": "65d06d31a3977d553cb3af137b5c26b5f1e9297a6aaa29ae7caa98788cde53ab"
+  },
+  "python": "3.11.9",
+  "readiness": {
+   "evaluator": {
+    "path": "evaluator/m2/oracle.py",
+    "pin": "0c580b0eb1f541cf0ab99daac869c589503aa18fff84e32c2372cff09c377c7c",
+    "ready": true
+   },
+   "executor": {
+    "backend": "docker",
+    "image": "python:3.11-slim@sha256:07d4824036af",
+    "ready": true
+   },
+   "model": {
+    "note": "retained deterministic workflows run with 0 model calls; no model is loaded",
+    "required": false
+   },
+   "resources": {
+    "disk_free_gb": 26.8
+   },
+   "runtime_commit": "73515df0bd5fadb246e48d0165944025ab8dd27d",
+   "stop": false,
+   "store": "local-demo/s8"
+  },
+  "registry_initial": {
+   "file": "registry-initial.json",
+   "rows": 2,
+   "sha256": "d29d352f1f7b798d553c478131677c1b70668545bf694bfe0046eff0207db220"
+  }
+ },
+ "elapsed_ms": 763,
+ "evidence_path": "init.json",
+ "expected": "no admitted capability; H1 goal UNRESOLVED (a genuine gap)",
+ "fixture_id": "init: declared clean registry",
+ "input_tokens": 0,
+ "model_calls": 0,
+ "observed": "2 registry rows, discovered=False; H1 plan UNRESOLVED: no typed plan from the eligible capabilities",
+ "output_tokens": 0,
+ "phase": "init",
+ "registry_snapshot": "d29d352f1f7b798d553c478131677c1b70668545bf694bfe0046eff0207db220",
+ "status": "pass",
+ "test_id": "T20"
+}

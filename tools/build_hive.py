@@ -141,7 +141,9 @@ def main():
         f'<p><strong>{esc(label)}:</strong> <a href="{url(nodes[row["note_id"]])}">{esc(row["title"])}</a> · {esc(row["summary"])}</p>'
         for label, row in (('Latest accepted evidence', current_status['latest_accepted_evidence']),
                            ('Latest packaged runtime', current_status['latest_packaged_runtime']),
-                           ('Operational readiness', current_status['operational_readiness'])))
+                           ('Operational readiness', current_status['operational_readiness']),
+                           *((('Latest engineering checkpoint (not packaged)', current_status['latest_engineering_checkpoint']),)
+                             if 'latest_engineering_checkpoint' in current_status else ())))
     release_block = (f'<section class="release-pointer"><h2>Current status ({esc(current_status["as_of"])})</h2>{cs_rows}'
                      f'<p><a href="{BASE}CURRENT_STATUS.json">Authoritative status record</a></p></section>') + release_block
     navigation = list(NAV)

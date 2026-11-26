@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prototype checkpoint M3-M5 (incomplete): learn, check, admit, reuse on real inputs · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#050403"><link rel="canonical" href="https://mominc.online/hive/notes/M3M5/">
+<meta property="og:title" content="Prototype checkpoint M3-M5 (incomplete): learn, check, admit, reuse on real inputs · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg?v=3" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=4"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=4"><link rel="stylesheet" href="/hive/assets/research.css?v=2">
+<script defer src="/hive/assets/hive.js?v=4"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg?v=3" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/CONNECTED/">Implementation</a><a href="/hive/notes/CODER/">Coder directions</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/CONNECTED/" >Latest engineering · connected-goal-runner 033089b</a><a href="/hive/notes/READINESS/" >v0.3.0.dev4 readiness</a><a href="/hive/notes/INTEGRATION/" >Historical dev3 integration</a><a href="/hive/notes/WORKING/" >Video mission alpha</a><a href="/hive/notes/V03/" >v0.3 foundation</a><a href="/hive/notes/CONTROLLER/" >Adaptive controller - v0.2</a><a href="/hive/notes/PROTOTYPE/" >Local prototype - v0.1</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/LANDSCAPE/" >External landscape · 22 Nov</a><a href="/hive/notes/WHOLE/" >Integrated design map</a><a href="/hive/notes/DIRECTION/" >Owner decisions · 22 Nov</a><a href="/hive/notes/KERNELS/" >Kernel comparison</a><a href="/hive/notes/METABASE/" >Base for later self-improvement</a><a href="/hive/notes/LIVEDEMO/" >Live local-model demo · 22 Nov</a><a href="/hive/notes/UNIFIED/" >Unified integration · 22 Nov</a><a href="/hive/notes/V04X/" >Autonomous experiment checkpoint · 23 Nov</a><a href="/hive/notes/ISOLATION/" >Evaluator isolation + lineage · 23 Nov</a><a href="/hive/notes/M1/" >M1 accepted · 24 Nov</a><a href="/hive/notes/M2/" >M2 accepted · 24 Nov</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/CONNECTED/" >Latest engineering · connected-goal-runner 033089b</a><a href="/hive/notes/READINESS/" >v0.3.0.dev4 readiness</a><a href="/hive/notes/INTEGRATION/" >Historical dev3 integration</a><a href="/hive/notes/WORKING/" >Video mission alpha</a><a href="/hive/notes/V03/" >v0.3 foundation</a><a href="/hive/notes/CONTROLLER/" >Adaptive controller - v0.2</a><a href="/hive/notes/PROTOTYPE/" >Local prototype - v0.1</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/LANDSCAPE/" >External landscape · 22 Nov</a><a href="/hive/notes/WHOLE/" >Integrated design map</a><a href="/hive/notes/DIRECTION/" >Owner decisions · 22 Nov</a><a href="/hive/notes/KERNELS/" >Kernel comparison</a><a href="/hive/notes/METABASE/" >Base for later self-improvement</a><a href="/hive/notes/LIVEDEMO/" >Live local-model demo · 22 Nov</a><a href="/hive/notes/UNIFIED/" >Unified integration · 22 Nov</a><a href="/hive/notes/V04X/" >Autonomous experiment checkpoint · 23 Nov</a><a href="/hive/notes/ISOLATION/" >Evaluator isolation + lineage · 23 Nov</a><a href="/hive/notes/M1/" >M1 accepted · 24 Nov</a><a href="/hive/notes/M2/" >M2 accepted · 24 Nov</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 320 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download original vault · 0.2</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=framework">Framework</a><span>/</span><span>M3M5</span></div>
+<div class="doc-meta"><span class="badge">Measured engineering result</span><span class="badge neutral">Partial</span></div><div class="doc-tools"><button class="copy-link" data-title="Prototype checkpoint M3-M5 (incomplete): learn, check, admit, reuse on real inputs" data-id="M3M5" data-series="HIVE prototype checkpoint M3-M5 (26 November 2026)">Copy reference</button><a href="/hive/updates/HIVE_Prototype_Checkpoint_M3_M5_2026-11-26.md">Markdown source</a><a href="/hive/graph/?focus=M3M5">View connections</a><button class="print-page">Print</button></div>
+<article class="prose"><h1 id="prototype-checkpoint-m3-m5-the-core-loop-runs-on-real-data-the-prototype-is-incomplete-26-nov-2026">Prototype checkpoint M3-M5: the core loop runs on real data, the prototype is INCOMPLETE (26 Nov 2026)</h1>
+<p>This follows the <a href="/hive/notes/CONNECTED/">Connected Goal Runner</a>. That build showed one learned step on one workload. This campaign asked for more: start from an <strong>empty capability registry</strong>, learn what is missing, check it independently, admit it with a signature, execute it, reuse it after a restart with <strong>zero model calls</strong>, and extend with a second capability. It ran on real inputs, two releases of the public MOM Inc. website.</p>
+<h2 id="verdict-incomplete">Verdict: INCOMPLETE</h2>
+<p>The core loop works on real data. Two mandatory release gates are <strong>blocked</strong>, and the plan says a blocked mandatory gate makes the release incomplete:</p>
+<ul>
+<li><strong>Composition on real data (T12, T13) is blocked.</strong> The real-data chain depends on two site capabilities that no available model could learn, and on an image matcher that failed the independent check on real pictures.</li>
+<li><strong>Five capabilities in one clean registry (T02, T10) is partial.</strong> The clean demo registry holds three, not five.</li>
+</ul>
+<p>Nothing below is claimed beyond that.</p>
+<p><strong>Where the code is.</strong> The code lives on a local branch, <code>build/prototype</code>, in a private build tree. It has <strong>no public git remote</strong>. It is not pushed and not packaged, so <strong>there is no runtime download for this checkpoint</strong> and no package hash. The latest packaged runtime remains the <a href="/hive/notes/CONNECTED/">Connected Goal Runner</a> (<code>033089b</code>). Rollback for the build tree is <code>git checkout 195d13d</code> (the G3 baseline) or the published <code>033089b</code> package. Nothing was published to any user.</p>
+<h2 id="live-demonstration">Live demonstration</h2>
+<p>Real inputs are read-only copies of two releases of the public MOM Inc. site (commits <code>2633d9b</code> and <code>0b3854a</code>; heavy sections excluded, scope recorded beside each copy). The copies are not published here, only counts and public URLs.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Goal</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Start</td>
+<td>Empty registry (two inactive M2 rows). The broken-links goal is UNRESOLVED, a genuine gap.</td>
+</tr>
+<tr>
+<td>A, learn</td>
+<td><code>site.ref-check</code> was acquired from local gpt-oss-20b: 1 call, dev 6/6, hidden suite PASS, signed as v1. It ran on release <code>2633d9b</code> and was <strong>VERIFIED: 57 broken local links</strong>.</td>
+</tr>
+<tr>
+<td>B, reuse</td>
+<td>The same goal on release <code>0b3854a</code> was <strong>VERIFIED: 58 broken links, 0 model calls, 0 acquisitions</strong>.</td>
+</tr>
+<tr>
+<td>B, extend</td>
+<td><code>site.release-diff</code> was acquired (1 call, signed) and run on both real manifests: <strong>VERIFIED, 111 added / 0 removed / 45 modified</strong>.</td>
+</tr>
+<tr>
+<td>C, compose</td>
+<td><strong>Blocked.</strong> Live GitHub search found the open-source matcher <code>ericbn/imha</code> at <code>b9f38904</code> (BSD-2-Clause). It was pinned, staged offline and adapted by gpt-oss. After two carry-best retries it passed the hidden 24-case suite and was signed and admitted as <code>image.asset-match</code> v1. On the 20 <strong>real</strong> site pictures the <strong>independent check FAILED</strong>, so HIVE withheld the output and the goal ended STEP_FAILED. The composite goal (properties, match, reconcile) does not finish on real data.</td>
+</tr>
+<tr>
+<td>Restart</td>
+<td>In fresh processes, the stored plans for both broken-links goals and for the release diff ran through <code>hive operator run-plan</code>: <strong>VERIFIED, 0 model calls</strong>.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Synthetic versus real.</strong> Goals A and B ran on real site releases. The reference table they read is a deterministic <strong>evaluator-side export</strong> of the real pages, because HIVE could not learn that extraction step (next section). So the learned and reused capability is the checker, not the page scan. In Goal C the matcher passed on synthetic hidden cases and failed on real pictures, which is exactly the gap the independent check is there to expose.</p>
+<h2 id="what-could-not-be-learned">What could not be learned</h2>
+<p><code>site.ref-extract</code> (HTML and CSS reference scan) and <code>site.ref-resolve</code> (URL classification and path resolution) failed across seven clean stores. They are kept as negative results.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Proposer</th>
+<th>Outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>gpt-oss-20b (local)</td>
+<td>extract: best dev 4/6. resolve: dev 6/6 twice, but hidden <strong>22/24 and 23/24</strong>, correctly rejected.</td>
+</tr>
+<tr>
+<td>qwen3.8-27b (local)</td>
+<td>Over 10 minutes per answer on this GPU, because it does not fit the 16 GB card. Not qualified.</td>
+</tr>
+<tr>
+<td>moonshotai/kimi-k3.1-pro (hosted NVIDIA NIM)</td>
+<td>Every call timed out at 240 s.</td>
+</tr>
+<tr>
+<td>nvidia/nemotron-3.5-super (hosted NIM, thinking off)</td>
+<td>About 10 s per call. ref-check 4/6, extract 3/6; resolve candidates were refused before running.</td>
+</tr>
+</tbody>
+</table></div>
+<p>The conductor chose these backends by hand. The owner's note on 26 November: <strong>model choosing should be a HIVE capability</strong>, so HIVE does not depend on a person picking backends. It is recorded as the next gap (<a href="/hive/implementation/prototype-m3m5-evidence/GAP_MODEL_CHOICE.md">GAP_MODEL_CHOICE</a>).</p>
+<h2 id="core-defects-the-live-runs-found-now-fixed">Core defects the live runs found, now fixed</h2>
+<p>Each fix is generic and has a regression test.</p>
+<ul>
+<li><code>e95b7a4</code>: every carry-best retry replayed the same proposer seeds, so one bad reply repeated across all retries. Later attempts now sample fresh seeds; attempt 1 is unchanged.</li>
+<li><code>9006051</code>: the g2 evaluator harness <code>%</code>-formatted candidate source, so any <code>%</code> in a candidate crashed every dev case. <strong>This changes the g2 evaluator pin:</strong> capabilities admitted under the old harness, including the G2 and G3 stores, now fail recheck (fail closed) until re-admitted.</li>
+<li><code>b8ebc24</code>, <code>c97e0d0</code>: gpt-oss reasoning used 1,200 to 2,000 of a 2,000-token answer cap, so code was truncated. The per-call cap is now 4,096. The per-experiment output stays at the owner-signed 6,000.</li>
+<li><code>97503b1</code>: body revocation is scoped per capability.</li>
+<li><code>e678c1e</code>: hosted reply-model aliases come from configuration only; local backends stay exact.</li>
+</ul>
+<h2 id="what-was-built">What was built</h2>
+<ul>
+<li><strong>Planner:</strong> same-contract alternatives ranked by evaluation record, history, latency and cost; bounded runtime fallback (never on integrity failures); per-capability history (numbers and enums only); stored plans (<code>hive operator plan</code>, <code>run-plan</code>); duplicate detection.</li>
+<li><strong>Lifecycle commands:</strong> <code>hive operator cap list|show|revoke|rollback|improve</code>, <code>acquisitions</code>, <code>receipt</code>, <code>overview</code>. The improve path admits v2 only on a verdict recomputed from hash-bound receipts. An owner-side revocation list sits beside the signers.</li>
+<li><strong>Security:</strong> a hostile-source end-to-end fixture, an approved-source allowlist, real-Docker isolation tests (environment canary, host paths, memory, CPU) and a spend gate on the proposer path.</li>
+<li><strong>Model backends:</strong> selectable and approval-bound. Local gpt-oss is the default. Hosted NVIDIA NIM is an allowlisted host: the key comes only from the environment, a hash-chained spend ledger outside the store caps it at $5, and thinking is switched off by a configuration-only, allowlisted field.</li>
+<li><strong>Domain:</strong> three <code>site.*</code> contracts with independent suites, plus <code>site.ref-resolve</code> and <code>site.ref-check-alt</code>.</li>
+</ul>
+<h2 id="release-gates-t01-to-t20">Release gates T01 to T20</h2>
+<p>&quot;Test&quot; means the automated suite (temporary stores, stub proposers where a live model is not the point). &quot;Live&quot; means the demonstration on real inputs.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Status</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T01 regression</td>
+<td><strong>PASS</strong></td>
+<td>Full suite on <code>73515df</code>, real Docker on: <strong>1855 passed, 6 skipped, 0 failed</strong> in 1 h 13 min (G3 baseline 1563/9/0). The six skips are three Windows symlink-privilege tests, two opt-in live-model smokes (qwen and hosted NIM; these make real calls) and one opt-in live-network pip download.</td>
+</tr>
+<tr>
+<td>T02 five capabilities</td>
+<td><strong>PARTIAL</strong></td>
+<td>Three in the clean demo registry (ref-check, release-diff, image.asset-match). Two site capabilities could not be learned. Older G-series stores hold four more, but under the old harness pin.</td>
+</tr>
+<tr>
+<td>T03 multi-match planner</td>
+<td>PASS (test)</td>
+<td>The live <code>alt</code> phase was not run.</td>
+</tr>
+<tr>
+<td>T04 invalid contracts</td>
+<td>PASS (test)</td>
+<td>Includes duplicate detection.</td>
+</tr>
+<tr>
+<td>T05 independent evaluation</td>
+<td>PASS (live and test)</td>
+<td>resolve dev 6/6 rejected at hidden 22/24 and 23/24. The imha adapter passed hidden cases but failed the check on real data; output withheld.</td>
+</tr>
+<tr>
+<td>T06 real open-source import</td>
+<td><strong>PARTIAL</strong></td>
+<td><code>ericbn/imha</code> at <code>b9f3890</code>, BSD-2, pinned, hidden PASS, signed. It fails the independent check on the real goal.</td>
+</tr>
+<tr>
+<td>T07 source attack</td>
+<td>PASS (test)</td>
+<td>Hostile-source fixture.</td>
+</tr>
+<tr>
+<td>T08 isolation</td>
+<td>PASS (test, real Docker)</td>
+<td></td>
+</tr>
+<tr>
+<td>T09 runtime exhaustion</td>
+<td>PASS (test, real Docker)</td>
+<td></td>
+</tr>
+<tr>
+<td>T10 cold restart</td>
+<td><strong>PARTIAL</strong></td>
+<td>Three capabilities listed and stored plans VERIFIED in fresh processes; not five.</td>
+</tr>
+<tr>
+<td>T11 inference-free reuse</td>
+<td>PASS (live)</td>
+<td>Goal B reuse plus three <code>run-plan</code> runs, 0 model calls.</td>
+</tr>
+<tr>
+<td>T12 composition</td>
+<td><strong>BLOCKED (live)</strong> / PASS (test)</td>
+<td>The real-data chain is blocked. The G3 composite passes on synthetic data.</td>
+</tr>
+<tr>
+<td>T13 novel compositions (3)</td>
+<td><strong>BLOCKED</strong></td>
+<td>0 of 3 live on real data.</td>
+</tr>
+<tr>
+<td>T14 version repair</td>
+<td>PASS (test)</td>
+<td>The live improve was not run.</td>
+</tr>
+<tr>
+<td>T15 rollback and revocation</td>
+<td>PASS (test)</td>
+<td>Live not run.</td>
+</tr>
+<tr>
+<td>T16 tampering</td>
+<td>PASS (test)</td>
+<td></td>
+</tr>
+<tr>
+<td>T17 crash and recovery</td>
+<td>PASS (test)</td>
+<td></td>
+</tr>
+<tr>
+<td>T18 model portability</td>
+<td><strong>PARTIAL</strong></td>
+<td>Hosted calls ran live against the same registries (spend gated), but no capability was admitted through the second backend.</td>
+</tr>
+<tr>
+<td>T19 budget enforcement</td>
+<td>PASS (test and live)</td>
+<td>Live worst-case reservations are in the hosted spend ledger, which stays in the private build tree.</td>
+</tr>
+<tr>
+<td>T20 three live demos</td>
+<td><strong>PARTIAL</strong></td>
+<td>A and B pass on real data. C fails on real images; verification withheld the output.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="independent-reviews">Independent reviews</h2>
+<p>Reviews were read-only and written by a separate model (Opus). The reports are published with the reviewer's proof-of-concept scripts removed (they were never committed).</p>
+<ul>
+<li><strong>P1:</strong> BLOCK. Two high findings (a store writer could write files outside the goal output folder, through stored plans and through a pre-existing path) and five medium.</li>
+<li><strong>P2:</strong> BLOCK on one new high: a forged registry task replay was VERIFIED without any check. Fixed.</li>
+<li><strong>P3:</strong> ACCEPT.</li>
+<li><strong>P4 (hosted backend):</strong> ACCEPT WITH FIXES (a store writer could lift the hosted spend cap; the store record could pick the hosted backend).</li>
+<li><strong>P5 re-check:</strong> F1 to F5 fixed, F6 partial.</li>
+</ul>
+<p>Open low items: rewinding the chain head past a never-revoked later version restores an older signed version; <code>raw_output.json</code> is written even on failed checks (never served); the hosted port is not restricted; stored feedback text can reach an operator-chosen hosted run; nits N5 to N8.</p>
+<h2 id="cost">Cost</h2>
+<ul>
+<li>Coding agents this session: <strong>$83.86</strong> at list price (conductor plus subagents).</li>
+<li>Hosted NVIDIA NIM: <strong>$1.75</strong> booked in the hosted ledger. These are worst-case estimates at a conservative price table; actual billing may be free-tier. About ten diagnostic hosted calls are not in the ledger, under $1 at the same table.</li>
+<li>Local inference: $0.</li>
+<li>The build tree's checkpoint puts cumulative project spend at about <strong>$286 of a $400 ceiling</strong>. That ceiling differs from the $120 final ceiling published on 25 November on the <a href="/hive/notes/CONNECTED/">Connected Goal Runner</a> page. This page does not reconcile the two figures, and it does not publish a ceiling change as an owner decision. The cumulative figure carries forward earlier estimates and is not a reconciled ledger.</li>
+</ul>
+<h2 id="limits">Limits</h2>
+<ul>
+<li>Incomplete: composition on real data and a five-capability clean registry are not met.</li>
+<li>One host, one operator, local models first; hosted backends only under a spend cap.</li>
+<li>The reference table for Goals A and B is an evaluator-side export, not a learned step.</li>
+<li>Several live paths (improve, rollback, alternative-plan phase) were proven by tests only.</li>
+<li>Not Level A, not Level B, not neural learning, not a production approval.</li>
+</ul>
+<h2 id="next-milestone-recommended-not-authorised">Next milestone (recommended, not authorised)</h2>
+<ol>
+<li><strong>HIVE chooses its proposer model from measured outcomes</strong>, as the owner asked. Rank qualified backends per contract class from success rates, dev and hidden pass rates, latency, timeouts, cost per admitted capability and remaining budget; escalate within the owner's approvals; record the choice and reason in the experiment's frozen protocol; keep the spend gate and caps unchanged.</li>
+<li><strong>Open-source discovery stability.</strong> Search results moved between runs and a previously good source dropped out. Keep a pinned catalogue of inspected-and-good sources so a capability can be re-acquired from a known source.</li>
+<li><strong>Real-data validation inside the acquisition gate.</strong> The imha adapter passed synthetic hidden cases and failed real images. Add an owner-approved real-sample check before admission.</li>
+</ol>
+<h2 id="evidence">Evidence</h2>
+<p><a href="/hive/implementation/prototype-m3m5-evidence/CHECKPOINT_PROTOTYPE.md">Checkpoint report</a> · <a href="/hive/implementation/prototype-m3m5-evidence/GAP_MODEL_CHOICE.md">model-choice gap</a> · reviews <a href="/hive/implementation/prototype-m3m5-evidence/REVIEW_P1.md">P1</a>, <a href="/hive/implementation/prototype-m3m5-evidence/REVIEW_P2.md">P2</a>, <a href="/hive/implementation/prototype-m3m5-evidence/REVIEW_P4.md">P4</a> · <a href="/hive/implementation/prototype-m3m5-evidence/full-suite-summary.txt">full-suite summary</a> · demo receipts in <code>receipts/</code> (init, learn A, goal A, goal B, learn C), restart runs in <code>restart/</code> and the <a href="/hive/implementation/prototype-m3m5-evidence/learn-c/acquisition-manifest.json">acquisition manifest for Goal C</a>, all under <code>/hive/implementation/prototype-m3m5-evidence/</code>. The <a href="/hive/implementation/prototype-m3m5-publication.json">publication manifest</a> lists every file with its digest. Paths inside the receipts were rewritten to relative names, local endpoint addresses and the owner's name were replaced, and one provider key-prefix mention was generalised; no other content was changed.</p>
+<h2 id="identity">Identity</h2>
+<p>&lt;!-- identity:start --&gt;</p>
+<ul>
+<li>Code: local branch <code>build/prototype</code> in a private build tree, <strong>no public remote</strong>. Baseline <code>195d13d</code> (G3). Tested code <code>73515df</code>. Checkpoint documents <code>4c0afa5</code>.</li>
+<li>Package: <strong>none published</strong>. Latest packaged runtime stays <a href="/hive/downloads/HIVE_Connected_Runner_033089b.zip"><code>HIVE_Connected_Runner_033089b.zip</code></a>.</li>
+<li>Models: local <code>openai/gpt-oss-20b</code> (default); hosted NVIDIA NIM under an allowlist and a $5 spend cap for diagnosis. Qualified-model approvals and the signing key are not published.
+&lt;!-- identity:end --&gt;</li>
+</ul>
+</article><section class="backlinks"><h2>Referenced by <span>2</span></h2><div><a href="/hive/notes/CONNECTED/"><span>CONNECTED</span>Connected Goal Runner: goal to discovery to admission to reuse<small>related to</small></a><a href="/hive/notes/STATUS/"><span>STATUS</span>Implementation Status<small>related to</small></a></div></section></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#verdict-incomplete">Verdict: INCOMPLETE</a><a class="toc-h2" href="#live-demonstration">Live demonstration</a><a class="toc-h2" href="#what-could-not-be-learned">What could not be learned</a><a class="toc-h2" href="#core-defects-the-live-runs-found-now-fixed">Core defects the live runs found, now fixed</a><a class="toc-h2" href="#what-was-built">What was built</a><a class="toc-h2" href="#release-gates-t01-to-t20">Release gates T01 to T20</a><a class="toc-h2" href="#independent-reviews">Independent reviews</a><a class="toc-h2" href="#cost">Cost</a><a class="toc-h2" href="#limits">Limits</a><a class="toc-h2" href="#next-milestone-recommended-not-authorised">Next milestone (recommended, not authorised)</a><a class="toc-h2" href="#evidence">Evidence</a><a class="toc-h2" href="#identity">Identity</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework 0.2 · Coder directions 0.4</span></a><span>Prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/updates/HIVE_Research_Update_Adaptive_Organization_and_Self_Learning_2026-11-20.md" download>Research update</a><a href="/hive/updates/HIVE_Coder_Information_Packet_2026-11-20.md" download>Coder packet · 0.4</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Original vault · 0.2</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

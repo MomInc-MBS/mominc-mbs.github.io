@@ -1,0 +1,157 @@
+{
+  "goal_id": "g-81271eec1ccb9b8e1b47",
+  "contract_ref": "artifacts/37a6510d54c3068b82d78f7561dfffdaa33b3d8680fb93fcf028acfc0d60b9e0.json",
+  "state": "VERIFIED",
+  "plan": {
+    "schema": "hive-typed-plan-v1",
+    "steps": [
+      {
+        "step_id": "s1",
+        "op": "site.ref-check",
+        "kind": "discovered",
+        "capability": "site.ref-check",
+        "inputs": [
+          "input:0",
+          "input:1"
+        ],
+        "expected_output": "broken_ref_report",
+        "verifier": "capabilities/site.ref-check/suite/oracle.py",
+        "allowance": {
+          "container_runs": 1,
+          "timeout_s": 60
+        },
+        "after": [],
+        "report_name": "report.json",
+        "genome": "8a96095ae8d6cab767be3ec6c174f52b4a0de4635dfcfc516f4ac8e1edf99dbe",
+        "version": 1,
+        "statement_sha": "8a96095ae8d6cab767be3ec6c174f52b4a0de4635dfcfc516f4ac8e1edf99dbe"
+      }
+    ],
+    "excluded": [
+      {
+        "op": "convert",
+        "reason": "no retained capability imported for this operation (run: hive operator import)"
+      },
+      {
+        "op": "merge",
+        "reason": "no retained capability imported for this operation (run: hive operator import)"
+      }
+    ],
+    "dag": true,
+    "estimate": {
+      "steps": 1,
+      "container_runs": 1,
+      "worst_cpu_s": 60,
+      "worst_wall_s": 60
+    }
+  },
+  "steps": [
+    {
+      "step_id": "s1",
+      "op": "site.ref-check",
+      "kind": "discovered",
+      "task_id": "u-6d2eb7ad2b45e4cede91",
+      "mode": "saved_result_replay",
+      "genome": "8a96095ae8d6cab767be3ec6c174f52b4a0de4635dfcfc516f4ac8e1edf99dbe",
+      "adapter": null,
+      "state": "VERIFIED",
+      "verdict": "PASS",
+      "reason": null,
+      "artifacts": [
+        {
+          "name": "broken-refs.json",
+          "ref": "output/goal/g-81271eec1ccb9b8e1b47/broken-refs.json",
+          "sha256": "68b9edf4338ab9a6a1f01ad0be319e96c2917bd67cbc4cccd96f9c7481e5d2d0"
+        },
+        {
+          "name": "report.json",
+          "ref": "output/goal/g-81271eec1ccb9b8e1b47/report.json",
+          "sha256": "99a3964ada473e1544fd3762bb607b8ba848204daf91fdc2ffe925c9a7b0f36a"
+        }
+      ],
+      "capability": {
+        "cap_id": "site.ref-check",
+        "version": 1,
+        "statement_sha": "8a96095ae8d6cab767be3ec6c174f52b4a0de4635dfcfc516f4ac8e1edf99dbe"
+      },
+      "verification": {
+        "evaluator": "capabilities/site.ref-check/suite/oracle.py",
+        "pin": "553c9ccd42df2c5b77a2f3668017299d4123ce171f95e6edd061d2334d5ef63c",
+        "process": "separate python -I",
+        "verdict": "PASS",
+        "expected_sha256": "68b9edf4338ab9a6a1f01ad0be319e96c2917bd67cbc4cccd96f9c7481e5d2d0"
+      }
+    }
+  ],
+  "reason": null,
+  "stages": [
+    {
+      "stage": "contract_persisted",
+      "at": "2026-11-26T16:44:32+00:00",
+      "contract_ref": "artifacts/37a6510d54c3068b82d78f7561dfffdaa33b3d8680fb93fcf028acfc0d60b9e0.json"
+    },
+    {
+      "stage": "planned",
+      "at": "2026-11-26T16:44:33+00:00",
+      "steps": [
+        "site.ref-check"
+      ]
+    },
+    {
+      "stage": "step_start",
+      "at": "2026-11-26T16:44:33+00:00",
+      "step": "s1"
+    },
+    {
+      "stage": "step_done",
+      "at": "2026-11-26T16:44:33+00:00",
+      "step": "s1",
+      "state": "VERIFIED"
+    },
+    {
+      "stage": "done",
+      "at": "2026-11-26T16:44:33+00:00",
+      "state": "VERIFIED"
+    }
+  ],
+  "submitted_at": "2026-11-26T16:44:32+00:00",
+  "pid": 30124,
+  "prior_attempts": [
+    {
+      "state": "PLANNED",
+      "submitted_at": "2026-11-26T16:44:31+00:00",
+      "reason": null
+    }
+  ],
+  "gap_ref": null,
+  "replayed_steps": 1,
+  "fallbacks": [],
+  "sources": [
+    "0b3854a/reference-table-0b3854a.json",
+    "0b3854a/site-manifest-0b3854a.json"
+  ],
+  "stored_plan": {
+    "replanned": false,
+    "substitutions": 0,
+    "model_calls": 0
+  },
+  "deliverable": [
+    {
+      "name": "broken-refs.json",
+      "ref": "output/goal/g-81271eec1ccb9b8e1b47/broken-refs.json",
+      "sha256": "68b9edf4338ab9a6a1f01ad0be319e96c2917bd67cbc4cccd96f9c7481e5d2d0"
+    },
+    {
+      "name": "report.json",
+      "ref": "output/goal/g-81271eec1ccb9b8e1b47/report.json",
+      "sha256": "99a3964ada473e1544fd3762bb607b8ba848204daf91fdc2ffe925c9a7b0f36a"
+    }
+  ],
+  "mode": "saved_result_replay",
+  "usage": {
+    "container_runs": 0,
+    "model_calls": 0,
+    "proposal_calls": 0
+  },
+  "completed_at": "2026-11-26T16:44:33+00:00"
+}

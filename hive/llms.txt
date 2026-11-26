@@ -6,13 +6,13 @@ Canonical home: https://mominc.online/hive/
 Search: https://mominc.online/hive/search/?q=your-query
 Browse: https://mominc.online/hive/explore/
 Graph: https://mominc.online/hive/graph/
-Full-text machine index (319 pages): https://mominc.online/hive/search-index.json
+Full-text machine index (320 pages): https://mominc.online/hive/search-index.json
 Typed graph: https://mominc.online/hive/graph.json
 Original package: https://mominc.online/hive/downloads/HIVE_Framework_Research_Vault.zip
 
 ## Current status (read first)
 
-Authoritative record: https://mominc.online/hive/CURRENT_STATUS.json (as of 2026-11-25).
+Authoritative record: https://mominc.online/hive/CURRENT_STATUS.json (as of 2026-11-26).
 - Latest accepted evidence: /hive/notes/M2/. Protocol m2-local-model-two-effects-v1 accepted 24 Nov (runtime 1799c58, protocol d4b71d2): R 60/60 vs 0/60, C 60/60 vs 30/60, reuse 20/20; synthetic data, tiny search space, no search-skill claim.
 - Latest packaged runtime: /hive/notes/CONNECTED/. Runtime 033089b packaged 25 Nov as HIVE_Connected_Runner_033089b.zip: type a goal, HIVE plans with typed capabilities, finds a missing step, gets one local-model proposal checked 24/24 by an independent evaluator, admits it with a signature and reuses it after restart with zero model calls.
 - Operational readiness: /hive/notes/CONNECTED/. Usable locally on one Windows host: goals for convert, merge and inventory-diff through the console; the learning loop ran once on one real workload and ties a scripted baseline (mechanism, not advantage); trusted local scope, not production-approved; Level A not accepted, Level B untested; $120 is the final project spending ceiling.

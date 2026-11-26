@@ -1,0 +1,163 @@
+{
+  "date": "2026-11-26",
+  "status": "PROTOTYPE_M3_M5_INCOMPLETE_LOCAL_ONLY",
+  "runtime_version": "build/prototype 73515df (local branch, not packaged)",
+  "evidence_scope": "Real inputs from two releases of the public MOM Inc. site; local gpt-oss-20b plus diagnostic hosted NVIDIA NIM calls under a spend cap; Goals A and B pass on real data, Goal C and composition blocked; INCOMPLETE",
+  "source_commit": "73515df",
+  "source_commit_meaning": "tested code commit; the full suite ran on it. Short id only: the build tree has no public remote and the full id is not published",
+  "checkpoint_commit": "4c0afa5",
+  "baseline_commit": "195d13d",
+  "code_published": false,
+  "branch": "build/prototype",
+  "branch_status": "local only, no public git remote, not pushed",
+  "runtime_source_sha256": null,
+  "runtime_source_sha256_meaning": "not computed: no package or snapshot is published for this checkpoint",
+  "measured_runtime_source_sha256": null,
+  "download": null,
+  "download_sha256": null,
+  "download_bytes": null,
+  "snapshot_file_count": null,
+  "snapshot_manifest": null,
+  "snapshot_manifest_sha256": null,
+  "package_published": false,
+  "latest_packaged_runtime_unchanged": "downloads/HIVE_Connected_Runner_033089b.zip",
+  "supported_environment": "Windows 11, Python 3.11+, Docker Desktop, LM Studio with openai/gpt-oss-20b; one 16 GB GPU host",
+  "launch": null,
+  "regression_gate": "1855 passed, 6 skipped, 0 failed on 73515df (1h13m, real Docker on); summary only is published",
+  "acceptance": {
+    "checkpoint": "implementation/prototype-m3m5-evidence/CHECKPOINT_PROTOTYPE.md",
+    "full_suite_summary": "implementation/prototype-m3m5-evidence/full-suite-summary.txt",
+    "reviews": [
+      "implementation/prototype-m3m5-evidence/REVIEW_P1.md",
+      "implementation/prototype-m3m5-evidence/REVIEW_P2.md",
+      "implementation/prototype-m3m5-evidence/REVIEW_P4.md"
+    ],
+    "gap_model_choice": "implementation/prototype-m3m5-evidence/GAP_MODEL_CHOICE.md",
+    "demo_receipts": "implementation/prototype-m3m5-evidence/receipts/",
+    "restart_runs": "implementation/prototype-m3m5-evidence/restart/",
+    "goal_c_acquisition_manifest": "implementation/prototype-m3m5-evidence/learn-c/acquisition-manifest.json"
+  },
+  "gates": {
+    "PASS": "T01 T03 T04 T05 T07 T08 T09 T11 T14 T15 T16 T17 T19",
+    "PARTIAL": "T02 T06 T10 T18 T20",
+    "BLOCKED": "T12 T13"
+  },
+  "live_demo": {
+    "goal_a_learn": "site.ref-check acquired, 1 model call, VERIFIED 57 broken links on release 2633d9b",
+    "goal_b_reuse": "VERIFIED 58 broken links on release 0b3854a, 0 model calls",
+    "goal_b_extend": "site.release-diff acquired, VERIFIED 111 added / 0 removed / 45 modified",
+    "goal_c": "BLOCKED: ericbn/imha admitted but failed the independent check on 20 real pictures; output withheld",
+    "restart_run_plan": "stored plans VERIFIED with 0 model calls",
+    "reference_table_note": "Goals A and B read an evaluator-side export of the real pages; site.ref-extract and site.ref-resolve could not be learned"
+  },
+  "baselines": "not measured in this checkpoint",
+  "excluded": "code and snapshot (local only), full 2 MB suite log, private input copies, reviewer proof-of-concept appendices, plan and preflight documents, signing keys, qualified-model approvals, spend ledger",
+  "sanitised": "local absolute paths rewritten to relative names, local endpoint addresses and owner name removed; no other content changed",
+  "policy_deployed": false,
+  "quality_gain": false,
+  "new_real_model_calls": null,
+  "new_real_model_calls_meaning": "not totalled for the campaign; Goal A 1 and release-diff 1 local call in the live demo; additional local and hosted calls in the seven failed learning stores are recorded in the receipts",
+  "production_approved": false,
+  "spending": {
+    "coding_agents_list_usd": 83.86,
+    "hosted_nim_booked_worst_case_usd": 1.75,
+    "local_usd": 0,
+    "cumulative_estimate_usd": 286,
+    "ceiling_recorded_in_build_checkpoint_usd": 400,
+    "note": "Differs from the 120 USD final ceiling published on 2026-11-25 (CONNECTED). Not reconciled here; no ceiling change is published as an owner decision. Estimates, not a reconciled ledger."
+  },
+  "headline": "INCOMPLETE: the learn, check, admit, reuse loop runs on real site data; composition on real data is blocked.",
+  "summary": "Local branch only, nothing packaged. From an empty registry HIVE learned a broken-link checker (57 broken links on one site release), reused it on the next release with 0 model calls (58), learned a release diff (111/0/45), and re-ran stored plans after restart with 0 calls. An open-source image matcher was admitted on hidden cases but failed the independent check on real pictures, so the composite goal is blocked.",
+  "badge": "INCOMPLETE \u00b7 LOCAL ONLY \u00b7 NOT PRODUCTION",
+  "limitations": "Composition on real data and a five-capability clean registry not met; reference table for Goals A and B is an evaluator-side export; several live paths proven by tests only; model choice is still done by hand.",
+  "evidence_files": {
+    "prototype-m3m5-evidence/CHECKPOINT_PROTOTYPE.md": {
+      "bytes": 10721,
+      "sha256": "964ddd271ccb9b11d91ab3c154c9c9c90d133c129c1b89004040d9d5f5512dea"
+    },
+    "prototype-m3m5-evidence/full-suite-summary.txt": {
+      "bytes": 878,
+      "sha256": "38755f792d6a5828341c38ba58116a890a89963b6797516c9c9f400e4117bfd6"
+    },
+    "prototype-m3m5-evidence/GAP_MODEL_CHOICE.md": {
+      "bytes": 1694,
+      "sha256": "79ce6201112980ffff7d944c21f66fad3c82d469cc22d195f90bc3ecc327a24e"
+    },
+    "prototype-m3m5-evidence/learn-c/acquisition-manifest.json": {
+      "bytes": 88107,
+      "sha256": "ff68677daf80c1f57e1b3957c2c70af9faea25f0f9357cd65fcb4393e494aa3e"
+    },
+    "prototype-m3m5-evidence/receipts/goal-a-H1.json": {
+      "bytes": 2322,
+      "sha256": "3242451a07540d6b73fa20766b867a074ba7571803db2576c2e1f4d8e07bc7d6"
+    },
+    "prototype-m3m5-evidence/receipts/goal-a-T20.json": {
+      "bytes": 12117,
+      "sha256": "92015ba2ab499f2fc42f0d6a577d984737962b6da845b55715ffb6e9fbb75504"
+    },
+    "prototype-m3m5-evidence/receipts/goal-b-L3.json": {
+      "bytes": 1691,
+      "sha256": "4a0b3b9aee0215b450ea14d6c22380f8c7c62af5cac7ca41f91fba9f05e817fa"
+    },
+    "prototype-m3m5-evidence/receipts/goal-b-T02.json": {
+      "bytes": 2273,
+      "sha256": "8e1a12bac1f8a24427cf22dcc841624896c27ac67e442a955b1160f66c75efb2"
+    },
+    "prototype-m3m5-evidence/receipts/goal-b-T20.json": {
+      "bytes": 11899,
+      "sha256": "58be6cf1a5297285b10db06513e4a68ebdde060348f1ccb7a17f702f9d1e28cc"
+    },
+    "prototype-m3m5-evidence/receipts/init-T20.json": {
+      "bytes": 2464,
+      "sha256": "a96cc774f64438d220fc28169d2a5f0c016925e8fc145743e395220f4135e2c5"
+    },
+    "prototype-m3m5-evidence/receipts/learn-a-T02.json": {
+      "bytes": 3562,
+      "sha256": "cb0df86c99b0cff6cc20c1a44bcfbb6490b63e2dd5e95b16f730f6f9e2772f7a"
+    },
+    "prototype-m3m5-evidence/receipts/learn-c-T06.json": {
+      "bytes": 16337,
+      "sha256": "42d9f45334118611b4d256bec4c53cbea0d543d97bccf7d447e91c4740ca741a"
+    },
+    "prototype-m3m5-evidence/restart/cap-list.json": {
+      "bytes": 1189,
+      "sha256": "15d282d38d058e019addfba0f687184385c5c876ed18d025725f64e293cdac5a"
+    },
+    "prototype-m3m5-evidence/restart/plan-brokenlinks-0b3854a.json": {
+      "bytes": 2128,
+      "sha256": "a3754a03e2e4f5b5d3eafb7dd2ea138fb36f4e52494d2654e03097b5b2449bf4"
+    },
+    "prototype-m3m5-evidence/restart/plan-brokenlinks-2633d9b.json": {
+      "bytes": 2128,
+      "sha256": "3ddf25ed3e4523ec860f1527feb3389caa67ae63be5e4d409556ca9c0fce648e"
+    },
+    "prototype-m3m5-evidence/restart/plan-releasediff.json": {
+      "bytes": 1639,
+      "sha256": "5a0897912a4fa3cd65ae62b554be604c275026cea27e5706ef32924997f27840"
+    },
+    "prototype-m3m5-evidence/restart/run-plan-brokenlinks-0b3854a.json": {
+      "bytes": 4445,
+      "sha256": "4e9cf0177c903a6f0f4896577f686e60d6b961b27b60d6955282d9d4746538f8"
+    },
+    "prototype-m3m5-evidence/restart/run-plan-brokenlinks-2633d9b.json": {
+      "bytes": 4444,
+      "sha256": "fe51f5e2b9c8d3627a3c756f2a21a2c1cfb86c7515ba08291edcc6a3d9aedd65"
+    },
+    "prototype-m3m5-evidence/restart/run-plan-releasediff.json": {
+      "bytes": 4309,
+      "sha256": "8b972e3a073d500e093a41b702d948ef5948d9e57cc89448e689d7d72f1993ea"
+    },
+    "prototype-m3m5-evidence/REVIEW_P1.md": {
+      "bytes": 19054,
+      "sha256": "017f9885a6773047af4f91696957110855bcbfa206294d9e5e48c49f077814ee"
+    },
+    "prototype-m3m5-evidence/REVIEW_P2.md": {
+      "bytes": 16198,
+      "sha256": "deeb7b01a57871eea91868179f1c07f6b0b2721235b33416dbf3c8782fb0fc14"
+    },
+    "prototype-m3m5-evidence/REVIEW_P4.md": {
+      "bytes": 19577,
+      "sha256": "8938479f14242c99eee94f8747cec622383572effdc5e1437638caf20b75636e"
+    }
+  }
+}

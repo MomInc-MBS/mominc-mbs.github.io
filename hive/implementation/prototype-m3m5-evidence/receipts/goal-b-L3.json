@@ -1,0 +1,66 @@
+{
+ "at": "2026-11-26T08:28:08-0800",
+ "baseline_commit": "0e9e0d3",
+ "cached_input_tokens": null,
+ "candidate_commit": "73515df0bd5fadb246e48d0165944025ab8dd27d",
+ "cost_usd": 0.0,
+ "details": {
+  "goal": {
+   "evidence": "evidence/goal-b/08-L3-run.stdout.json",
+   "fallbacks": [],
+   "gap_ref": null,
+   "goal_id": "g-f6d5c450b58feda9d216",
+   "missing_step": null,
+   "output": {
+    "name": "release-changes.json",
+    "ref": "output/goal/g-f6d5c450b58feda9d216/release-changes.json",
+    "sha256": "70105219b126c342e1045a6345a02ca3fde742b626421a9ae4f7d8f5779680ea"
+   },
+   "plan": [
+    "site.release-diff(input:0,input:1)"
+   ],
+   "plan_ops": [
+    "site.release-diff"
+   ],
+   "ranking": [],
+   "reason": null,
+   "state": "VERIFIED",
+   "steps": [
+    {
+     "kind": "discovered",
+     "mode": "retained_capability_execution",
+     "op": "site.release-diff",
+     "state": "VERIFIED",
+     "verdict": "PASS",
+     "version": 1
+    }
+   ],
+   "stored_plan": null,
+   "usage": {
+    "container_runs": 1,
+    "model_calls": 0,
+    "proposal_calls": 0
+   },
+   "wall_ms": 1297
+  },
+  "totals": {
+   "added": 111,
+   "bytes_delta": 10528859,
+   "modified": 45,
+   "removed": 0,
+   "unchanged": 345
+  }
+ },
+ "elapsed_ms": 1297,
+ "evidence_path": "evidence/goal-b/08-L3-run.stdout.json",
+ "expected": "VERIFIED run, counts reported",
+ "fixture_id": "site.release-diff on the two real manifests 2633d9b -> 0b3854a",
+ "input_tokens": null,
+ "model_calls": 0,
+ "observed": "VERIFIED; added/removed/modified = 111/0/45",
+ "output_tokens": null,
+ "phase": "goal-b",
+ "registry_snapshot": "8a0c5c41717ddc218501704eba7f297f920a510d58a4fd2c9a5e2470d13d92a2",
+ "status": "pass",
+ "test_id": "L3"
+}

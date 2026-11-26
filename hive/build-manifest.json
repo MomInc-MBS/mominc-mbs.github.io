@@ -9,7 +9,7 @@
   "operational_readiness_id": "CONNECTED",
   "current_status": {
     "schema_version": 1,
-    "as_of": "2026-11-25",
+    "as_of": "2026-11-26",
     "note": "Authoritative source for current pointers on the home page, STATUS, llms.txt and build-manifest.json. Older notes keep their original claims and dates.",
     "latest_accepted_evidence": {
       "note_id": "M2",
@@ -29,6 +29,13 @@
       "title": "Connected Goal Runner",
       "status": "CONNECTED_LEARNING_MECHANISM_DEMONSTRATED_TRUSTED_LOCAL",
       "summary": "Usable locally on one Windows host: goals for convert, merge and inventory-diff through the console; the learning loop ran once on one real workload and ties a scripted baseline (mechanism, not advantage); trusted local scope, not production-approved; Level A not accepted, Level B untested; $120 is the final project spending ceiling."
+    },
+    "latest_engineering_checkpoint": {
+      "note_id": "M3M5",
+      "title": "Prototype checkpoint M3-M5 (incomplete)",
+      "status": "PROTOTYPE_M3_M5_INCOMPLETE_LOCAL_ONLY",
+      "summary": "26 Nov: from an empty registry HIVE learned a link checker (57 broken links), reused it on the next site release with 0 model calls (58), learned a release diff (111/0/45) and re-ran stored plans after restart with 0 calls; suite 1855/6/0 on 73515df. INCOMPLETE: composition on real data blocked (open-source image matcher failed the independent check on real pictures). Code on a local branch with no public remote; nothing packaged.",
+      "publication_manifest": "implementation/prototype-m3m5-publication.json"
     }
   },
   "current_release": {
@@ -255,12 +262,18 @@
       "path": "updates/HIVE_Connected_Runner_2026-11-25.md",
       "date": "2026-11-25",
       "sha256": "59fcd933b275b5416d1722c02e308df1c5a173d5510a8e60b181a9aad899bd3f"
+    },
+    {
+      "id": "M3M5",
+      "path": "updates/HIVE_Prototype_Checkpoint_M3_M5_2026-11-26.md",
+      "date": "2026-11-26",
+      "sha256": "7e8196dd86bd114244c4db5afa79956723cf4d2a63c95f1d70bec88755d395ff"
     }
   ],
   "source_zip_sha256": "2b726d055a17a25495854890d8d0001cb791006273e0f8eb5515788b7e00c61a",
   "counts": {
-    "research_pages": 319,
-    "graph_edges": 2550,
+    "research_pages": 320,
+    "graph_edges": 2552,
     "originals": 19
   },
   "scope": "Static research reference plus executable local model/tool controller evidence. No production model runtime or compounding-learning claim."
