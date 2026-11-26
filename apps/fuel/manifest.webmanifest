@@ -1,7 +1,7 @@
 {
   "id": "/apps/fuel/",
-  "name": "Nitro Fuel",
-  "short_name": "Nitro Fuel",
+  "name": "MOM's: Nitro Fuel",
+  "short_name": "MOM's: Nitro Fuel",
   "description": "Endless tub flying. Keep the Fuel tub afloat, beat your best.",
   "start_url": "/apps/fuel/",
   "scope": "/apps/fuel/",

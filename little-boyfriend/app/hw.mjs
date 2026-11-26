@@ -37,8 +37,8 @@ export function cameraErrorKind(e) {
 export function cameraHelp(kind) {
   const os = isIOS ? 'ios' : isAndroid ? 'android' : 'desktop';
   const how = {
-    ios: 'iPhone: Settings > Safari > Camera > Allow (or Settings > Little Boyfriend if installed), then tap Retry. In Safari, tap aA in the address bar > Website Settings > Camera.',
-    android: 'Android: tap the lock icon in the address bar > Permissions > Camera > Allow (or Settings > Apps > Little Boyfriend > Permissions), then tap Retry.',
+    ios: 'iPhone: Settings > Safari > Camera > Allow (or Settings > MOM\'s: Lil Boyfriend if installed), then tap Retry. In Safari, tap aA in the address bar > Website Settings > Camera.',
+    android: 'Android: tap the lock icon in the address bar > Permissions > Camera > Allow (or Settings > Apps > MOM\'s: Lil Boyfriend > Permissions), then tap Retry.',
     desktop: 'Click the camera icon in the address bar, allow the camera, then tap Retry.',
   }[os];
   if (kind === 'denied') return 'Camera is blocked. ' + how;

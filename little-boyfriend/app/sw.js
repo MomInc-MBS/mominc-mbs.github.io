@@ -1,7 +1,7 @@
 // Little Boyfriend service worker. Scope: /little-boyfriend/app/ only (this file's directory). VERSION + PRECACHE are stamped by
 // tools/web/stamp_version.mjs (hash of every file in web/). Unstamped (dev) = empty precache: everything goes to the network.
 /*LBF_STAMP_START*/
-const VERSION = '3e7a1a6712b3';
+const VERSION = 'd80bfa31cf45';
 const PRECACHE = [
  "app.css",
  "app.mjs",

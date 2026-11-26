@@ -327,7 +327,7 @@ if (standalone) $('install-link').hidden = true;
 $('install-link').onclick = () => {
   const t = $('install-text'); $('install-go').hidden = true;
   if (hw.isIOS) t.textContent = 'On iPhone/iPad: tap the Share button in Safari, then "Add to Home Screen". It then opens full screen like an app.';
-  else if (deferredInstall) { t.textContent = 'Install Little Boyfriend on this device.'; $('install-go').hidden = false; }
+  else if (deferredInstall) { t.textContent = "Install MOM's: Little Boyfriend LIVE on this device."; $('install-go').hidden = false; }
   else if (hw.isAndroid) t.textContent = 'On Android: open the browser menu (three dots) and tap "Install app" (or "Add to Home screen"). Or use the APK link below.';
   else t.textContent = 'Use the install icon in the address bar (or the browser menu > Install). On Android you can also get the APK.';
   $('install').hidden = false;
@@ -339,21 +339,35 @@ $('install-x').onclick = () => { $('install').hidden = true; };
 let swVersion = '', reloading = false;
 function showUpdate(worker) {
   $('update').hidden = false;
-  $('update-btn').onclick = () => worker.postMessage('SKIP_WAITING');
+  const apply = () => worker.postMessage('SKIP_WAITING');
+  $('update-btn').onclick = apply;
+  // Auto-update: the new version is already installed in the background; switch (one reload) at the first safe moment:
+  // not while recording, not while a field has focus. The banner button stays as the manual path.
+  const timer = setInterval(() => {
+    if (rec || /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName || '')) return;
+    clearInterval(timer); apply();
+  }, 2000);
 }
 async function initSW() {
   if (!('serviceWorker' in navigator) || Q.has('nosw')) return;
-  navigator.serviceWorker.addEventListener('controllerchange', () => { if (reloading) return; reloading = true; if (!window.__lbfNoReload) location.reload(); });
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (reloading) return; reloading = true;
+    let recent = false; try { recent = Date.now() - Number(sessionStorage.getItem('lbf-reloaded') || 0) < 60000; sessionStorage.setItem('lbf-reloaded', String(Date.now())); } catch {}
+    if (!window.__lbfNoReload && !recent) location.reload();   // recent = loop guard
+  });
   navigator.serviceWorker.addEventListener('message', e => { if (e.data?.version) swVersion = e.data.version; });
   try {
-    const reg = await navigator.serviceWorker.register('sw.js', { scope: './' });
+    const reg = await navigator.serviceWorker.register('sw.js', { scope: './', updateViaCache: 'none' });
     const ask = () => (reg.active || navigator.serviceWorker.controller)?.postMessage('GET_VERSION');
     const watch = w => w.addEventListener('statechange', () => { if (w.state === 'installed' && navigator.serviceWorker.controller) showUpdate(w); });
     if (reg.waiting && navigator.serviceWorker.controller) showUpdate(reg.waiting);
     reg.addEventListener('updatefound', () => reg.installing && watch(reg.installing));
     navigator.serviceWorker.ready.then(ask);
     if (TEST) Object.assign(window.__lbf, { checkUpdate: () => reg.update(), swVersion: () => { ask(); return swVersion; } });
-    document.addEventListener('visibilitychange', () => { if (!document.hidden) reg.update().catch(() => {}); });
+    const upd = () => reg.update().catch(() => {});   // launch (register), visible, online, and at most every 30 min while visible
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) upd(); });
+    addEventListener('online', upd);
+    setInterval(() => { if (!document.hidden) upd(); }, 30 * 60000);
   } catch (e) { console.warn('sw', e); }
 }
 

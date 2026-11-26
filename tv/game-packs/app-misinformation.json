@@ -24,13 +24,13 @@
     },
     {
       "url": "/apps/misinformation/index.html",
-      "revision": "31cbeb8e6a5fbea6cf0a4052bd43966f9b6cd28b",
-      "bytes": 2311
+      "revision": "47cb40affa45971cdaeb513a4160840f4b6ccbd9",
+      "bytes": 2358
     },
     {
       "url": "/apps/misinformation/manifest.webmanifest",
-      "revision": "0dbb931c36a56ff9db179a5479607d1ca7a1db79",
-      "bytes": 871
+      "revision": "131aadf500ddf42d7c38fc9120e9928b6e8ef8f9",
+      "bytes": 877
     },
     {
       "url": "/apps/shell.css",
@@ -39,8 +39,13 @@
     },
     {
       "url": "/apps/shell.mjs",
-      "revision": "cb9640fbd4cd94350d4b63c7d7f7978c5d539c58",
-      "bytes": 5633
+      "revision": "772bc89901827e4198cb4b39cb8b046cd6f484d1",
+      "bytes": 5811
+    },
+    {
+      "url": "/apps/update.mjs",
+      "revision": "8dbc92e88e1ebc52d3ec23ccb3f86e759f0b8a5a",
+      "bytes": 3721
     },
     {
       "url": "/play/misinformation/app.js",
@@ -279,12 +284,12 @@
     },
     {
       "url": "/tv/game-loader.js",
-      "revision": "030fdfcb33be366788c78d3dfb482d31b0e7c5aa",
-      "bytes": 14636
+      "revision": "363279c0a6a391db8e7bae8282fc8fb6a8f811bc",
+      "bytes": 14678
     }
   ],
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap"
   ],
-  "version": "f2b5408c6b074fe33180"
+  "version": "039e101c4484f1a2d9e2"
 }

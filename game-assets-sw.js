@@ -213,8 +213,11 @@ self.addEventListener('push', event => {
   try { p = event.data && event.data.json(); } catch (_) {}
   if (!p || p.appId !== 'adhd' || typeof p.occurrenceId !== 'string' || typeof p.tag !== 'string' || typeof p.url !== 'string' || !p.url.startsWith(ADHD_SCOPE)) return;
   event.waitUntil((async () => {
-    await self.registration.showNotification(String(p.title || 'ADHD').slice(0, 60), {body: String(p.body || '').slice(0, 200), tag: p.tag, renotify: true,
-      icon: ADHD_SCOPE + 'icon-192.png', data: {appId: 'adhd', occurrenceId: p.occurrenceId, attemptId: p.attemptId, url: p.url, receipt: p.receipt}});
+    const face = Math.min(4, Math.max(1, Math.floor(Number(p.face)) || 1));      // stage 1..4 artwork; Android shows it as the large icon, iOS ignores it
+    await self.registration.showNotification(String(p.title || "MOM's: 2048 Reminder").slice(0, 60), {body: String(p.body || '').slice(0, 300), tag: p.tag, renotify: true,
+      icon: ADHD_SCOPE + 'stages/stage' + face + '.webp',
+      actions: face === 4 ? [{action: 'game', title: 'Play 2048'}, {action: 'settings', title: 'Reminder settings'}] : [],
+      data: {appId: 'adhd', occurrenceId: p.occurrenceId, attemptId: p.attemptId, url: p.url, receipt: p.receipt}});
     await adhdReport(p, 'received');
   })());
 });
@@ -224,10 +227,12 @@ self.addEventListener('notificationclick', event => {
   event.notification.close();
   const target = new URL(typeof d.url === 'string' ? d.url : ADHD_SCOPE, ORIGIN);
   if (target.origin !== ORIGIN || !target.pathname.startsWith(ADHD_SCOPE)) return;
+  const view = event.action === 'settings' ? 'settings' : undefined;      // a tap or an action only OPENS the app: nothing here stops, pauses or completes the alarm
+  if (view) target.searchParams.set('view', view);
   event.waitUntil((async () => {
     const windows = await self.clients.matchAll({type: 'window', includeUncontrolled: true});
     const open = windows.find(c => new URL(c.url).pathname.startsWith(ADHD_SCOPE));
-    if (open) { open.postMessage({type: 'ADHD_OPEN', occurrenceId: d.occurrenceId}); await open.focus(); }
+    if (open) { open.postMessage({type: 'ADHD_OPEN', occurrenceId: d.occurrenceId, view}); await open.focus(); }
     else await self.clients.openWindow(target.href);
     await adhdReport(d, 'opened');
   })());

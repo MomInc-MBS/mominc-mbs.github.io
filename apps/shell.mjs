@@ -1,5 +1,6 @@
 // Shared app shell runtime: opening menu, settings, full-screen game, offline status.
 import {setupInstall, isStandalone} from '/apps/install.mjs';
+import {watchUpdates} from '/apps/update.mjs';
 const $ = id => document.getElementById(id);
 // The game loader runs this module once the app's offline pack is verified; config sits in #app-config.
 function boot(cfg) {
@@ -74,6 +75,7 @@ function boot(cfg) {
   if (editor && $('models')) import(cfg.models).then(m => { refreshModels = m.renderModels($('models'), cfg.optional); });
   if (cfg.settingsModule) import(cfg.settingsModule).then(m => m.setupSettings?.({root: settings, refresh}));
   refresh(); show(menu);
+  watchUpdates({busy: () => !stage.hidden});   // a game, the editor or the alarm computer on screen = not a safe moment to reload
   // Opt-in (apps.json web.options.autostart = query name): a notification tap lands inside the app, not on the menu.
   const auto = cfg.options?.autostart;
   if (auto && new URLSearchParams(location.search).has(auto)) $('start').click();

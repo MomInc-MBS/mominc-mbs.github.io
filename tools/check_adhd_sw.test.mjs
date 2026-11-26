@@ -68,3 +68,25 @@ test('click: other apps\' notifications and out-of-scope targets do nothing', as
   await w.run('notificationclick', {notification: {data: {appId: 'adhd', url: '/tv/'}, close: () => closed++}});
   assert.equal(w.opened.length, 0); assert.equal(w.posted.length, 0);
 });
+
+test('push: the notice uses the stage face as its icon, the product title, and stage 4 offers Play 2048 + Reminder settings', async () => {
+  const w = sw();
+  for (const [face, want] of [[1, 1], [2, 2], [3, 3], [4, 4], [9, 4], [0, 1], [undefined, 1], ['x', 1]]) await w.run('push', push(payload({face, title: "MOM's: 2048 Reminder", body: 'Reminder: “Get up”.'})));
+  assert.deepEqual(w.shown.map(n => n.opts.icon), [1, 2, 3, 4, 4, 1, 1, 1].map(n => `/apps/alarm/stages/stage${n}.webp`));
+  assert.equal(w.shown[0].title, "MOM's: 2048 Reminder"); assert.equal(w.shown[0].opts.body, 'Reminder: “Get up”.');
+  assert.equal(w.shown.map(n => n.opts.actions.length).join(), '0,0,0,2,2,0,0,0');
+  assert.equal(w.shown[3].opts.actions.map(a => a.action).join(), 'game,settings');
+  const d = sw(); await d.run('push', push(payload({title: undefined}))); assert.equal(d.shown[0].title, "MOM's: 2048 Reminder");
+});
+
+test('click: the Settings action opens the Reminder settings view; a plain tap or the Play action just opens; nothing stops the alarm', async () => {
+  const data = {appId: 'adhd', occurrenceId: 'sched0001:1000', attemptId: 'a', url: '/apps/alarm/?occ=sched0001%3A1000', receipt: payload().receipt};
+  const win = {url: 'https://mominc.online/apps/alarm/'}, w = sw([win]);
+  await w.run('notificationclick', {action: 'settings', notification: {data, close() {}}});
+  await w.run('notificationclick', {action: 'game', notification: {data, close() {}}});
+  await w.run('notificationclick', {notification: {data, close() {}}});
+  assert.deepEqual(w.posted.map(m => m.view), ['settings', undefined, undefined]);
+  const w2 = sw([]); await w2.run('notificationclick', {action: 'settings', notification: {data, close() {}}});
+  assert.deepEqual(w2.opened, ['https://mominc.online/apps/alarm/?occ=sched0001%3A1000&view=settings']);
+  assert.ok(w.fetched.every(f => JSON.parse(f.o.body).event === 'opened'));                 // only "opened" is ever reported: no complete/cancel call from a notice
+});

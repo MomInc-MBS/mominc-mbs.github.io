@@ -137,7 +137,7 @@ def build(refresh=False):
         if slug in APPS:
             for prefix in APPS[slug].get('include', []):   # an iframe app's reused page
                 selected |= under(prefix)
-            selected |= under(f"apps/{APPS[slug]['id']}/") | {'apps/install.mjs', 'apps/shell.css', 'apps/shell.mjs', 'tv/game-loader.js'}
+            selected |= under(f"apps/{APPS[slug]['id']}/") | {'apps/install.mjs', 'apps/update.mjs', 'apps/shell.css', 'apps/shell.mjs', 'tv/game-loader.js'}
             selected |= {p for p in APPS[slug].get('packFiles', []) if p in files}
         selected |= {p for p in files if p in {f'tv/channels/{slug}.html', f'tv/channels/{slug}.js',
                                               f'games/{slug}/index.html', f'play/{slug}/index.html', f'tv/assets/marks/{slug}.png'}}
@@ -205,6 +205,7 @@ def build(refresh=False):
         if slug in APPS:
             selected.discard('tv/assets/helping-hand-badge.png')  # only Helping Hand's loader uses it
         selected -= set(APPS.get(slug, {}).get('packSkip', []))  # story-only art an app never shows
+        selected.discard('apps/releases.json')  # always fetched live; its PWA versions are hashes of these packs (circular otherwise)
         write(slug, selected, fonts)
 
 
