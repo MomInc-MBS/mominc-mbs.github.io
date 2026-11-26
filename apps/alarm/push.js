@@ -71,17 +71,21 @@ export async function unregister() {
   try { await (await (await navigator.serviceWorker.ready).pushManager.getSubscription())?.unsubscribe(); await call('DELETE', '/v1/subscription', null, c); } catch {}
 }
 
-/** Send queued schedule/occurrence changes. Returns the items still waiting (offline or server trouble keep them queued). */
+/** Send queued reminder/occurrence changes. Returns the items still waiting (offline or server trouble keep them queued). */
 export async function sync(state) {
   const c = get(); if (!ADHD_PUSH_ORIGIN || !c) return state.outbox;
   const left = [];
   for (const o of state.outbox) {
     try {
-      const sc = state.schedule;
+      const sc = o.k === 'schedule' ? state.reminders.find(r => r.id === o.id) : null;
+      const q = encodeURIComponent(o.id || '');
       const r = o.k === 'schedule'
-        ? (sc ? await call('PUT', '/v1/schedule', {id: sc.id, time: sc.time, tz: sc.tz, recur: sc.recur, label: sc.label, followups: sc.followups, tandem: sc.tandem, revision: sc.revision, enabled: sc.enabled}, c) : {status: 200})
-        : await call('POST', '/v1/occurrence/' + encodeURIComponent(o.id) + '/' + o.act, null, c);
-      if (r.status === 429 || r.status === 423 || r.status >= 500) left.push(o);   // 423 = Turn off still locked by the server's clock: retry. Any other 4xx (e.g. the server never knew this occurrence) is final
+        ? (sc ? await call('PUT', '/v1/schedule', {id: sc.id, rev: sc.rev, revision: sc.rev, enabled: !!sc.enabled && sc.confirmed?.rev === sc.rev, title: sc.title, time: sc.time, tz: sc.tz, recur: sc.recur,
+            escalate: sc.escalate, snooze: sc.snooze | 0, webhook: sc.webhook ? {url: sc.webhook.url, token: sc.webhook.token || null} : null}, c) : {status: 200})
+        : o.k === 'remove' ? await call('DELETE', '/v1/schedule/' + q + '?remove=1', null, c)
+        : o.act === 'snooze' ? await call('POST', '/v1/occurrence/' + q + '/snooze', {until: o.until}, c)
+        : await call('POST', '/v1/occurrence/' + q + '/' + o.act, null, c);
+      if (r.status === 429 || r.status === 423 || r.status >= 500) left.push(o);   // 423 = Turn off still locked by the server's clock: retry. Any other 4xx (stale revision, unknown occurrence, snooze off) is final
     } catch { left.push(o); }
   }
   return left;

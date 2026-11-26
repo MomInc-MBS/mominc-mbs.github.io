@@ -102,14 +102,14 @@ export function offLockLeft(state, now, id) {
 const locked = (state, id, now) => ({ok: false, error: 'locked', remainingMs: offLockLeft(state, now, id)});
 
 /** Save a reminder. Returns {ok, state, reminder} or {ok:false, error:'invalid'|'locked', field?, remainingMs?}. The caller's `confirmed` is honoured only when it names the NEW revision. */
-export function saveReminder(state, input, now, opts) {
+export function saveReminder(state, input, now, opts = {}) {
   const r = normalize(input), err = check(r); if (err) return err;
   const old = reminderOf(state, r.id), timeChanged = !!old && (old.time !== r.time || JSON.stringify(old.tz) !== JSON.stringify(r.tz));
   if (old && offLockLeft(state, now, r.id) > 0 && (timeChanged || (old.enabled && !r.enabled))) return locked(state, r.id, now);   // same lock as Turn off
   const changed = !old || cfgKey(old) !== cfgKey(r);
   const rev = old ? old.rev + (changed ? 1 : 0) : 1;
   const keep = old && !changed && old.confirmed?.rev === old.rev;
-  const ok = soundPicked(r) && (keep || r.confirmed?.rev === rev);
+  const ok = soundPicked(r) && (keep || r.confirmed?.rev === rev || (opts.trust && r.confirmed?.at > 0));   // opts.trust: an import of this app's own export keeps its confirmations
   const s = copy(state); r.rev = rev; r.confirmed = ok ? {rev, at: keep ? old.confirmed.at : r.confirmed?.at || now} : null;
   const i = s.reminders.findIndex(x => x.id === r.id);
   if (i < 0) s.reminders.push(r); else s.reminders[i] = r;
