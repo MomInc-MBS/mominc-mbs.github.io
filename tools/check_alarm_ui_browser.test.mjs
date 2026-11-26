@@ -60,6 +60,7 @@ test('alarm settings UI: wordless audit + evidence in a real browser', {skip: !c
   const ctxOpts = {viewport: {width: 390, height: 844}, deviceScaleFactor: 2, hasTouch: false, locale: 'en-US', timezoneId: 'America/Los_Angeles'};
   const open = async (q = '') => {
     const ctx = await browser.newContext(ctxOpts), page = await ctx.newPage(), errs = [];
+    await page.addInitScript(() => { window.__raf = 0; const r = window.requestAnimationFrame.bind(window); window.requestAnimationFrame = cb => { window.__raf++; return r(cb); }; });
     page.on('pageerror', e => errs.push(String(e))); page.on('dialog', d => { fails.push('dialog: ' + d.message()); d.dismiss(); });
     await page.goto(base + q); await page.waitForSelector('.rem'); await page.waitForTimeout(500);
     return {ctx, page, errs};
@@ -76,6 +77,8 @@ test('alarm settings UI: wordless audit + evidence in a real browser', {skip: !c
     {
       const {ctx, page, errs} = await open();
       await check(page, 'list'); await shot(page, '01-list');
+      await page.waitForTimeout(600); const raf0 = await page.evaluate(() => window.__raf); await page.waitForTimeout(1000);
+      assert.equal(await page.evaluate(() => window.__raf), raf0, 'idle face does no frame work');
       await page.evaluate(() => window.__ui.face.react('concern')); await page.waitForTimeout(190); await shot(page, '02-reaction-concern-mid');
       await k(page, 'open:r_laundry').click(); await page.waitForTimeout(300);
       await check(page, 'edit-weekly'); await shot(page, '03-edit-clock-weekly');
@@ -127,6 +130,13 @@ test('alarm settings UI: wordless audit + evidence in a real browser', {skip: !c
       await k(page, 'snd:train-horn').click(); await k(page, 'tab:clock').click(); await k(page, 'title').fill('Trash night');
       await k(page, 'save').click(); await page.waitForTimeout(500);
       assert.equal(await page.locator('.rem').count(), 4, 'new reminder armed');
+      // invalid value: outlined field + warning triangle, concern reaction, no fake success
+      await k(page, 'open:r_pills').click(); await k(page, 'tab:devices').click(); await k(page, 'url').fill('http://lamp.local/hook');
+      await k(page, 'save').click(); await page.waitForTimeout(450);
+      assert.equal(await page.locator('[data-field="webhook"].bad .errw').count(), 1, 'invalid URL marked');
+      assert.equal(await k(page, 'url').getAttribute('aria-invalid'), 'true');
+      await check(page, 'invalid'); await shot(page, '31-invalid-field');
+      await k(page, 'url').fill(''); await k(page, 'back').click();
       await k(page, 'tab:history').click(); await page.waitForSelector('.hist'); await check(page, 'history'); await shot(page, '18-panel-history');
       await k(page, 'tab:prefs').click(); await page.waitForTimeout(500); await check(page, 'prefs'); await shot(page, '19-panel-prefs');
       await k(page, 'upd').click(); await page.waitForTimeout(300); await shot(page, '20-update-ring'); await page.waitForTimeout(1500); await check(page, 'update');
@@ -166,7 +176,7 @@ test('alarm settings UI: wordless audit + evidence in a real browser', {skip: !c
       await ctx.close();
     }
     // ---- reduced motion + high contrast ----
-    for (const [q, name] of [['?rm=1&stage=3', '29-reduced-motion'], ['?hc=1&stage=2', '30-high-contrast']]) {
+    for (const [q, name] of [['?rm=1&stage=3&sync=1', '29-reduced-motion'], ['?hc=1&stage=2', '30-high-contrast']]) {
       const {ctx, page} = await open(q);
       await check(page, name); await shot(page, name);
       await k(page, 'open:r_pills').click(); await page.waitForTimeout(200); await check(page, name + '-edit'); await shot(page, name + '-edit');
