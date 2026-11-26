@@ -114,7 +114,7 @@ Open low items: rewinding the chain head past a never-revoked later version rest
 - Coding agents this session: **$83.86** at list price (conductor plus subagents).
 - Hosted NVIDIA NIM: **$1.75** booked in the hosted ledger. These are worst-case estimates at a conservative price table; actual billing may be free-tier. About ten diagnostic hosted calls are not in the ledger, under $1 at the same table.
 - Local inference: $0.
-- The build tree's checkpoint puts cumulative project spend at about **$286 of a $400 ceiling**. That ceiling differs from the $120 final ceiling published on 25 November on the [Connected Goal Runner](/hive/notes/CONNECTED/) page. This page does not reconcile the two figures, and it does not publish a ceiling change as an owner decision. The cumulative figure carries forward earlier estimates and is not a reconciled ledger.
+- Cumulative project spend is about **$286 of a $400 ceiling**. The owner raised the ceiling after the $120 "final" ceiling shown on the [Connected Goal Runner](/hive/notes/CONNECTED/) page: to $220 on 25 November (for the compounding build plan) and to $400 on 26 November ("up to a full $200 extra on top of what is done"). The cumulative figure adds per-session list-price estimates; it is not a billed ledger.
 
 ## Limits
 

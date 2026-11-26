@@ -28,7 +28,7 @@
       "note_id": "CONNECTED",
       "title": "Connected Goal Runner",
       "status": "CONNECTED_LEARNING_MECHANISM_DEMONSTRATED_TRUSTED_LOCAL",
-      "summary": "Usable locally on one Windows host: goals for convert, merge and inventory-diff through the console; the learning loop ran once on one real workload and ties a scripted baseline (mechanism, not advantage); trusted local scope, not production-approved; Level A not accepted, Level B untested; $120 is the final project spending ceiling."
+      "summary": "Usable locally on one Windows host: goals for convert, merge and inventory-diff through the console; the learning loop ran once on one real workload and ties a scripted baseline (mechanism, not advantage); trusted local scope, not production-approved; Level A not accepted, Level B untested; the owner later raised the project spending ceiling from $120 to $220 (25 Nov) and $400 (26 Nov)."
     },
     "latest_engineering_checkpoint": {
       "note_id": "M3M5",
@@ -267,7 +267,7 @@
       "id": "M3M5",
       "path": "updates/HIVE_Prototype_Checkpoint_M3_M5_2026-11-26.md",
       "date": "2026-11-26",
-      "sha256": "7e8196dd86bd114244c4db5afa79956723cf4d2a63c95f1d70bec88755d395ff"
+      "sha256": "a7bed7567770184898a34e24e2ee07f1aceac5c3251b91b080e316607745c52a"
     }
   ],
   "source_zip_sha256": "2b726d055a17a25495854890d8d0001cb791006273e0f8eb5515788b7e00c61a",

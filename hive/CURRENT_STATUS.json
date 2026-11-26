@@ -19,7 +19,7 @@
     "note_id": "CONNECTED",
     "title": "Connected Goal Runner",
     "status": "CONNECTED_LEARNING_MECHANISM_DEMONSTRATED_TRUSTED_LOCAL",
-    "summary": "Usable locally on one Windows host: goals for convert, merge and inventory-diff through the console; the learning loop ran once on one real workload and ties a scripted baseline (mechanism, not advantage); trusted local scope, not production-approved; Level A not accepted, Level B untested; $120 is the final project spending ceiling."
+    "summary": "Usable locally on one Windows host: goals for convert, merge and inventory-diff through the console; the learning loop ran once on one real workload and ties a scripted baseline (mechanism, not advantage); trusted local scope, not production-approved; Level A not accepted, Level B untested; the owner later raised the project spending ceiling from $120 to $220 (25 Nov) and $400 (26 Nov)."
   },
   "latest_engineering_checkpoint": {
     "note_id": "M3M5",
