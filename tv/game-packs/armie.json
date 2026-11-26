@@ -189,13 +189,13 @@
     },
     {
       "url": "/apps/jump/lab.css",
-      "revision": "1d0e9b145d6aaedcabd5b01df2b34aac19bae54b",
-      "bytes": 5568
+      "revision": "fb1eb540cd2fe4203d496358bcfd0896b1d5295e",
+      "bytes": 6113
     },
     {
       "url": "/apps/jump/menu.mjs",
-      "revision": "ae448ae44681f8b051c5a686597a822a19a050d0",
-      "bytes": 7757
+      "revision": "7add22a0afe7dccbef12c6af1ae6593be604cac1",
+      "bytes": 7948
     },
     {
       "url": "/apps/jump/music/manifest.json",
@@ -1341,5 +1341,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "2ee6fbb925a9e233dfd8"
+  "version": "6c269e4ad338b69214d2"
 }

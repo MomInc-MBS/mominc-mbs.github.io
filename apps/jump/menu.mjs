@@ -6,7 +6,7 @@ import {layout} from '/apps/jump/selector.mjs';
 const EDGE = '#624848', SHADOW = '#49334b66';
 const hash = n => { const x = Math.sin(n * 127.1) * 43758.5453; return x - Math.floor(x); };
 /** Port of cut() in game.mjs: a slightly uneven scissor-cut rectangle, in game units, deterministic per seed. */
-function cutPoints(w, h, seed, j = 1.3) {
+function cutPoints(w, h, seed, j = .5) {
   const n = Math.max(2, Math.round(w / 20)), J = i => (hash(seed * 7 + i) - .5) * 2 * j, pts = [];
   for (let i = 0; i <= n; i++) pts.push([-w / 2 + w * i / n + J(i), -h / 2 + J(i + 50)]);
   pts.push([w / 2 + J(90), J(91)]);
@@ -14,23 +14,24 @@ function cutPoints(w, h, seed, j = 1.3) {
   pts.push([-w / 2 + J(190), J(191)]);
   return pts.map(([x, y]) => `${(x + w / 2).toFixed(2)},${(y + h / 2).toFixed(2)}`).join(' ');
 }
-const sheet = (w, h, seed, fill, shadow = 3) => {
+const sheet = (w, h, seed, fill, shadow = 1) => {
   const pts = cutPoints(w, h, seed);
-  return `<svg viewBox="0 0 ${w} ${h}" aria-hidden="true" focusable="false"><polygon points="${pts}" fill="${SHADOW}" transform="translate(${shadow} ${shadow})"/><polygon points="${pts}" fill="${fill}" stroke="${EDGE}" stroke-width="1.6"/></svg>`;
+  return `<svg viewBox="0 0 ${w} ${h}" aria-hidden="true" focusable="false"><polygon points="${pts}" fill="${SHADOW}" transform="translate(${shadow} ${shadow})"/><polygon points="${pts}" fill="${fill}" stroke="${EDGE}" stroke-width=".5"/></svg>`;
 };
 
-// All numbers below are pyramidDesk() geometry (game units): tiers, 3+2 squares, label. Origin = top-left of the 150 x 109 box.
+// Free-standing stepped pyramid in the game's 150 : 105 : 60 tier ratio, each tier hugging its tiles. Unit = var(--u) = 1% of the play-area
+// width (base tier 88 units). Origin = top-left of the 88 x 72 box. Cut-paper look = cut() of game.mjs, colours/edge/shadow as pyramidDesk().
 // [left, top, w, h, seed, fill]
-const TIERS = [[0, 75, 150, 34, 20, '#cdbb8a'], [22.5, 43, 105, 34, 21, '#d9c590'], [45, 11, 60, 34, 22, '#e8d28a']];
-const SLOT = {go: [55, 0], ml: [50, 52], mr: [78, 52], bl: [34, 84], bc: [64, 84], br: [94, 84]};
+const TIERS = [[0, 45, 88, 26, 20, '#cdbb8a'], [13.2, 22, 61.6, 25, 21, '#d9c590'], [26.4, 5, 35.2, 19, 22, '#e8d28a']];
+const SLOT = {go: [30, 1.5], ml: [19, 25.5], mr: [45, 25.5], bl: [6, 49], bc: [32, 49], br: [58, 49]};
 // Each tile keeps its own colour and cut shape; only its slot changes.
 const TILES = {
-  go: {w: 40, h: 18, seed: 8, fill: '#2d2a4e', shadow: 3},
-  color: {w: 22, h: 18, seed: -62, fill: '#f4978e'},
-  coach: {w: 22, h: 18, seed: -34, fill: '#c9a7eb'},
-  music: {w: 22, h: 18, seed: -16, fill: '#f4d35e'},
-  prev: {w: 22, h: 18, seed: -46, fill: '#7fcf5a'},
-  next: {w: 22, h: 18, seed: 14, fill: '#4fd1c5'},
+  go: {w: 28, h: 17.5, seed: 8, fill: '#2d2a4e', shadow: 1},
+  color: {w: 24, h: 18, seed: -62, fill: '#f4978e'},
+  coach: {w: 24, h: 18, seed: -34, fill: '#c9a7eb'},
+  music: {w: 24, h: 18, seed: -16, fill: '#f4d35e'},
+  prev: {w: 24, h: 18, seed: -46, fill: '#7fcf5a'},
+  next: {w: 24, h: 18, seed: 14, fill: '#4fd1c5'},
 };
 const ICON = {
   color: '<circle cx="8.5" cy="9" r="5.5" fill="#e0455d"/><circle cx="15.5" cy="9" r="5.5" fill="#3d8be0"/><circle cx="12" cy="15" r="5.5" fill="#f6df4a"/>',
@@ -49,7 +50,7 @@ export function createMenu(parent, {onGo, onPick, onStep, onToggle}) {
   lab.className = 'jm-lab';
   lab.innerHTML = `<div class="jl-scene" aria-hidden="true"><div class="jl-wall"></div><div class="jl-trim"></div>
 <div class="jl-poster">CARED FOR.<br>CORRECTED.<br>PROVIDED FOR.</div><div class="jl-chair"></div>
-<img class="jl-doctor" src="/tv/assets/drgf-paper-character.svg" alt="" decoding="async"><div class="jl-bench-back"></div><div class="jl-bench-front"></div></div>
+<img class="jl-doctor" src="/tv/assets/drgf-paper-character.svg" alt="" decoding="async"><div class="jl-bench-back"></div><div class="jl-belt"></div><div class="jl-bench-front"></div></div>
 <div class="jm-pyr" role="group" aria-label="Coach Jump menu"></div>`;
   const pyr = lab.querySelector('.jm-pyr');
   const tiers = [];
@@ -65,7 +66,7 @@ export function createMenu(parent, {onGo, onPick, onStep, onToggle}) {
     const b = document.createElement('button');
     b.type = 'button'; b.className = `jm-tile is-${id}`; b.dataset.id = id;
     b.style.width = `calc(${t.w}*var(--u))`; b.style.height = `calc(${t.h}*var(--u))`;
-    b.innerHTML = `<span class="jm-sheet" style="inset:0">${sheet(t.w, t.h, t.seed, t.fill, t.shadow ?? 1)}</span><span class="jm-face"></span>`;
+    b.innerHTML = `<span class="jm-sheet" style="inset:0">${sheet(t.w, t.h, t.seed, t.fill, t.shadow ?? .7)}</span><span class="jm-face"></span>`;
     pyr.append(b); tiles[id] = {el: b, face: b.querySelector('.jm-face'), key: ''};
   }
   // Delegated and registered once for the life of the menu.
