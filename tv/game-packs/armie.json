@@ -9,8 +9,8 @@
     },
     {
       "url": "/apps/alarm/app.mjs",
-      "revision": "3dbb603ae7b3487a94e62771d5f9ffbbd6723146",
-      "bytes": 12082
+      "revision": "2326998a4a7663e68cb834fc7b6013871262f605",
+      "bytes": 12076
     },
     {
       "url": "/apps/alarm/board.js",
@@ -1266,5 +1266,5 @@
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "7559b3f2bda534fc529d"
+  "version": "3a288ce9ca9978fc183f"
 }

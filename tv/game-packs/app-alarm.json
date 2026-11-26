@@ -9,8 +9,8 @@
     },
     {
       "url": "/apps/alarm/app.mjs",
-      "revision": "3dbb603ae7b3487a94e62771d5f9ffbbd6723146",
-      "bytes": 12082
+      "revision": "2326998a4a7663e68cb834fc7b6013871262f605",
+      "bytes": 12076
     },
     {
       "url": "/apps/alarm/board.js",
@@ -224,5 +224,5 @@
     }
   ],
   "fontStyles": [],
-  "version": "368629258e97773eb945"
+  "version": "c216fdba97aeaf20530c"
 }

@@ -32,7 +32,7 @@ export async function mountAlarm(host) {
   // The adapter owns persistence, the outbox, foreground outputs and the clock; it shares this module's state variable.
   const A = createWebAdapter({bind: {get: () => S, set: v => { S = v; }}});
   A.commit(R.reconcile(S, now()), true);                  // migrated / imported reminders get their next occurrence
-  const commit = ns => A.commit(ns, true);
+  const commit = ns => A.commit(ns);
   const say = t => { $('msg').textContent = ''; setTimeout(() => { $('msg').textContent = t; }, 30); };   // screen-reader only (.vh)
 
   // ---- 2048 board (free play and alarm share it). Alarm boards are kept per occurrence attempt, so two ringing reminders never share one. ---------------
