@@ -188,7 +188,7 @@ export function createMomFace(host, opts = {}) {
       S.blinkT = setTimeout(() => { if (S.dead) return; g.clearRect(0, ey0, S.W, ey1 - ey0); g.drawImage(S.base, 0, ey0, S.W, ey1 - ey0, 0, ey0, S.W, ey1 - ey0); }, 150);
     },
     look() {}, settle() {},
-    talk(on) { S.talking = !!on; if (!on) { S.pose = 0; applyMouth(0); } sync(); },
+    talk(on) { if (!!on === S.talking) return; S.talking = !!on; if (!on) { S.pose = 0; applyMouth(0); } sync(); },   // repeat calls must not restart the pose timer
     setReducedMotion(b) { S.rm = !!b; if (S.rm) { S.pose = 0; applyMouth(0); } sync(); },
     pause() { S.paused = true; sync(); }, resume() { S.paused = false; sync(); },
     destroy() { S.dead = true; clearInterval(S.timer); clearTimeout(S.blinkT); ro?.disconnect(); document.removeEventListener('visibilitychange', onVis); cv.remove(); },

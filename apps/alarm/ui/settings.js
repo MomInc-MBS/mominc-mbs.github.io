@@ -57,7 +57,8 @@ export function mountSettings(host, adapter, opts = {}) {
     const H = root.clientHeight, Wr = root.clientWidth; if (!H || !Wr) return;
     const cs = getComputedStyle(probe), safeT = parseFloat(cs.paddingTop) || 0, safeB = parseFloat(cs.paddingBottom) || 0;
     const heroTop = safeT + 58, card = panel.querySelector('.card'), reserve = (card ? card.offsetHeight : 76) + 14;
-    const avail = H - heroTop - (66 + safeB) - reserve, maxW = Math.min(Wr, 540);
+    const below = Math.max(66 + safeB, H - panel.offsetTop - panel.offsetHeight);   // rail + MOM's subtitle box (whatever sits under the panel)
+    const avail = H - heroTop - below - reserve, maxW = Math.min(Wr, 540);
     let w = maxW; const g0 = bustGeometry(w); if (g0.h > avail) w = Math.max(150, w * avail / g0.h); // short screens: scale the whole bust, never crop a head
     const g = bustGeometry(w); hD = Math.max(0, g.h - g.strip);
     const st = root.style; st.setProperty('--hero-top', heroTop + 'px'); st.setProperty('--fw2', w.toFixed(1) + 'px'); st.setProperty('--hexp', g.h.toFixed(1) + 'px');
