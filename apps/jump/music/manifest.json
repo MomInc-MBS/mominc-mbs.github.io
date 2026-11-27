@@ -1,0 +1,72 @@
+{
+ "version": 1,
+ "source": "MYR5 Coach R118 audio/music (loops cut from Ian's original MP3s by scripts/music-loops.py)",
+ "tracks": [
+  {
+   "id": "main-theme-one",
+   "title": "Main Theme One",
+   "url": "/apps/jump/music/main-theme-one.m4a",
+   "loopStart": 0,
+   "loopEnd": 16,
+   "duration": 16,
+   "bpm": 120,
+   "bytes": 240960,
+   "sha256": "6db67c76249a59b9b3aaf8854c6c2975b51b78b8dc9d55caf6460823f83ca8f0"
+  },
+  {
+   "id": "laboratory-violence",
+   "title": "Laboratory Violence",
+   "url": "/apps/jump/music/laboratory-violence.m4a",
+   "loopStart": 0,
+   "loopEnd": 16,
+   "duration": 16,
+   "bpm": 120,
+   "bytes": 229213,
+   "sha256": "da8ed1730982d9bcf1de4ced230264447550e823c21974b36d99bae70a24dd8f"
+  },
+  {
+   "id": "sick-with-science",
+   "title": "Sick With Science",
+   "url": "/apps/jump/music/sick-with-science.m4a",
+   "loopStart": 0,
+   "loopEnd": 13.665488,
+   "duration": 13.665488,
+   "bpm": 140.5,
+   "bytes": 194523,
+   "sha256": "724f855402a9c1dbae6e6c2e18f314fd6d9655ec81704bbecc2139cd1f74a3ab"
+  },
+  {
+   "id": "daemon-time",
+   "title": "Daemon Time",
+   "url": "/apps/jump/music/daemon-time.m4a",
+   "loopStart": 0,
+   "loopEnd": 21.295692,
+   "duration": 21.295692,
+   "bpm": 90.16,
+   "bytes": 310247,
+   "sha256": "e261474a3b0adc31b463b59b30e5fa18a2c6849cc4f9d8bdfb0e2cb257aaf74a"
+  },
+  {
+   "id": "guarded-gate",
+   "title": "Guarded Gate",
+   "url": "/apps/jump/music/guarded-gate.m4a",
+   "loopStart": 0,
+   "loopEnd": 15.82839,
+   "duration": 15.82839,
+   "bpm": 121.3,
+   "bytes": 226826,
+   "sha256": "e3dc771d952a05c2781325d1e89d51fcf7ae25ec4d86e644db8c25f4e39ec368"
+  },
+  {
+   "id": "hey-man-idk",
+   "title": "Hey Man IDK",
+   "url": "/apps/jump/music/hey-man-idk.m4a",
+   "loopStart": 0,
+   "loopEnd": 10.189297,
+   "duration": 10.189297,
+   "bpm": 188.43,
+   "bytes": 145363,
+   "sha256": "d398e8f54bd9e2f926b38f1bb4489861453f12675e648746d01cb0011cf4b69c"
+  }
+ ]
+}

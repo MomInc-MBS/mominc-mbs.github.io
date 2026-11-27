@@ -11,7 +11,7 @@ const SHADOW='#49334b66',EDGE='#624848';
 const SLOGANS=[['CARED FOR.','CORRECTED.','PROVIDED FOR.'],['SMILE.','REP.','REPEAT.'],['READ THE','SOURCE.'],['ASK MOM.'],['KEEP THE','LABEL.'],['MOM IS','PROUD.'],['EAT. LIFT.','REPORT.'],['FITNESS IS','A FAMILY.']];
 const POSTER=['#e5d4a2','#e0c3ea','#f2c6a0','#bfdcc6','#f0e08a'],QUILT=['#c8587a','#e0a050','#5a9ac8','#7ab86a','#a070c0','#e8d070'],ORIGAMI=['#f4a0b4','#a0d4f4','#f4e090','#b0e0a8','#d0b0f0'];
 
-export function startGame(root,{recipe=null,meals=null,subscribeMotion=null,onExit=()=>{},seed=Date.now(),startLevel=0,auto=false,paperImg=null,onEnd=null}={}){
+export function startGame(root,{recipe=null,meals=null,subscribeMotion=null,onExit=()=>{},seed=Date.now(),startLevel=0,auto=false,paperImg=null,onEnd=null,hold=null}={}){
  const shell=gameShellPhase('pyramid-jump',root);
  const canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');canvas.style.cssText='position:absolute;inset:0;width:100%;height:100%;touch-action:none;display:block';
  canvas.setAttribute('role','img');canvas.setAttribute('aria-label','Pyramid Jump. Lean your phone or use the left and right arrow keys to steer.');
@@ -34,8 +34,9 @@ export function startGame(root,{recipe=null,meals=null,subscribeMotion=null,onEx
  function resize(){const r=canvas.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);canvas.width=Math.max(1,r.width*d);canvas.height=Math.max(1,r.height*d);scale=canvas.width/W;viewH=canvas.height/scale;}
  const ro=new ResizeObserver(resize);ro.observe(canvas);resize();
  if(startLevel)begin(startLevel);else if(auto)begin(Math.max(1,highestLevel()));else if(highestLevel()>1)showOver(`PYRAMID JUMP\nREACHED LEVEL ${highestLevel()} OF ${LEVEL_COUNT}`,...menu());else begin(1);
- const unsub=subscribeMotion?.(sample=>{tilt=steeringForMotion(sample);tiltAt=t;});
- const key=down=>e=>{const k=e.key;if(k==='ArrowLeft'||k==='a')dir=down?-1:dir<0?0:dir;else if(k==='ArrowRight'||k==='d')dir=down?1:dir>0?0:dir;};
+ let holding=!!hold;hold?.then(()=>{holding=false},()=>{holding=false});
+ const unsub=subscribeMotion?.(sample=>{if(holding)return;tilt=steeringForMotion(sample);tiltAt=t;});
+ const key=down=>e=>{if(holding)return;const k=e.key;if(k==='ArrowLeft'||k==='a')dir=down?-1:dir<0?0:dir;else if(k==='ArrowRight'||k==='d')dir=down?1:dir>0?0:dir;};
  const kd=key(true),ku=key(false);addEventListener('keydown',kd);addEventListener('keyup',ku);
  const pd=e=>{if(e.target!==canvas)return;const r=canvas.getBoundingClientRect();dir=e.clientX<r.left+r.width/2?-1:1;},pu=()=>{dir=0;};
  
@@ -228,7 +229,7 @@ export function startGame(root,{recipe=null,meals=null,subscribeMotion=null,onEx
   const past=tags.filter((_,i)=>markerHeight(i,tags.length)<=p.y);if(tags.length){const m=past.at(-1)||tags[0];ctx.textAlign='right';ctx.font=`700 ${10*scale}px monospace`;ctx.fillStyle='#ead9a6';ctx.strokeText(m.date,sx(W-6),sx(120));ctx.fillText(m.date,sx(W-6),sx(120));ctx.font=`${8*scale}px monospace`;ctx.fillText('YOU ATE',sx(W-6),sx(108));}
   if(banner&&t-banner.t<2.8){ctx.save();ctx.globalAlpha=Math.min(1,(2.8-(t-banner.t))*2);sheet(sx(W/2),sx(86),sx(250),sx(40),'#ead9a6',-.02,7,()=>{text(banner.text,0,sx(5),13,'#463149');tape(-sx(112),-sx(16),-.4);tape(sx(112),-sx(16),.4);});ctx.restore();}
  }
- function tick(now){raf=requestAnimationFrame(tick);if(disposed)return;shell.phase(!dead&&!won&&!document.hidden?'active':'paused');const dt=Math.min(.033,last?(now-last)/1000:0);last=now;if(!document.hidden){step(dt);draw();}}
+ function tick(now){raf=requestAnimationFrame(tick);if(disposed)return;shell.phase(!dead&&!won&&!holding&&!document.hidden?'active':'paused');const dt=Math.min(.033,last?(now-last)/1000:0);last=now;if(!document.hidden){if(!holding)step(dt);draw();}}
  raf=requestAnimationFrame(tick);
  return {
   state:()=>({p,camY,maxY,dead,won,cur,items:lvl.items}),

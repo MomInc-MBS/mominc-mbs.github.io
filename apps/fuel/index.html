@@ -15,35 +15,64 @@
 <link rel="apple-touch-icon" href="/apps/fuel/icon-192.png">
 <link rel="stylesheet" href="/apps/shell.css">
 <link rel="stylesheet" href="/arcade/tub-flight/style.css">
+<link rel="stylesheet" href="/apps/fuel/win95.css">
 </head>
 <body>
-<main id="menu">
-<img class="mark" src="/apps/fuel/icon-192.png" alt="" width="170" height="170">
+<main id="menu" class="w95">
+<div class="w95-win">
+<div class="w95-bar"><img src="/apps/fuel/icon-192.png" alt="" width="16" height="16"><span>NITRO FUEL.EXE</span></div>
+<div class="w95-body">
 <h1>MOM&#x27;s: Nitro Fuel</h1>
-<p class="tag">Endless tub flying. Keep the Fuel tub afloat, beat your best.</p>
-<p class="tag">Best: <strong id="best">0</strong></p>
-<button id="start" type="button">Start</button>
-<button id="open-settings" class="alt" type="button">Settings</button>
-<p id="offline" role="status">Saving for offline play…</p>
+<p>Endless tub flying. Keep the Fuel tub afloat, beat your best.</p>
+<p class="w95-best">Best pipes: <strong id="best">0</strong></p>
+<button id="start" type="button">Start Game</button>
+<button id="open-settings" type="button">Settings</button>
+<p class="w95-tag">SPONSORED SOFTWARE &middot; 1995</p>
+</div>
+<p id="offline" class="w95-status" role="status">Saving for offline play…</p>
+</div>
 </main>
-<main id="settings" hidden>
-<h2>Settings</h2>
-<section class="panel">
-<p><strong>Best score</strong></p>
-<button id="reset" class="alt" type="button">Reset best</button>
+<main id="settings" class="w95" hidden>
+<div class="w95-win">
+<div class="w95-bar"><img src="/apps/fuel/icon-192.png" alt="" width="16" height="16"><span>NITRO FUEL.EXE &middot; Settings</span></div>
+<div class="w95-body">
+<fieldset><legend>Sound</legend>
+<label><input type="checkbox" id="set-sfx"> Sound effects</label>
+<label>Effects volume <input type="range" id="set-sfx-vol" min="0" max="100"></label>
+<label><input type="checkbox" id="set-music"> Music</label>
+<label>Music volume <input type="range" id="set-music-vol" min="0" max="100"></label>
+</fieldset>
+<fieldset><legend>Intensity</legend>
+<label><input type="radio" name="set-fx" value="classic"> Classic</label>
+<label><input type="radio" name="set-fx" value="reduced"> Reduced Effects</label>
+<p class="w95-hint">Reduced Effects removes decorative motion and strong colour tints. The game plays exactly the same.</p>
+</fieldset>
+<fieldset><legend>Best score</legend>
+<button id="reset" type="button">Reset best</button>
 <p id="reset-note" role="status"></p>
-</section>
-<section class="panel">
-<p><strong>Install</strong></p>
+</fieldset>
+<fieldset><legend>Install</legend>
 <button id="install" type="button">Install app</button>
 <p id="install-status" role="status"></p>
 <ol id="install-steps"></ol>
 <p id="ios-help" hidden>On iPhone use Safari. Home Screen apps keep their own saved best and offline files.</p>
-</section>
-<button id="close-settings" class="alt" type="button">Back</button>
+</fieldset>
+</div>
+<div class="w95-foot"><button id="close-settings" type="button">OK</button></div>
+</div>
 </main>
-<section id="stage" hidden aria-label="MOM&#x27;s: Nitro Fuel"><button id="back" class="alt" type="button">← Menu</button><div id="host"></div></section>
-<script type="application/json" id="app-config">{"bestKey": "nitro-fuel-best-v1", "mount": "mountTubFlight", "name": "MOM's: Nitro Fuel", "options": {"endless": true, "title": "NITRO FUEL"}, "src": "/arcade/tub-flight/game.mjs"}</script>
+<div id="fx-notice" class="w95-modal" role="dialog" aria-modal="true" aria-labelledby="fx-title" hidden>
+<div class="w95-win">
+<div class="w95-bar"><img src="/apps/fuel/icon-192.png" alt="" width="16" height="16"><span id="fx-title">NITRO FUEL.EXE &middot; Notice</span></div>
+<div class="w95-body">
+<p>This game gets more colourful and animated the further you fly. There is no flashing at any level. Pick how intense you want it. You can change it later in Settings.</p>
+<button id="fx-classic" type="button">Classic</button>
+<button id="fx-reduced" type="button">Reduced Effects</button>
+</div>
+</div>
+</div>
+<section id="stage" hidden aria-label="MOM&#x27;s: Nitro Fuel"><button id="back" class="alt" type="button">&larr; Menu</button><div id="host"></div></section>
+<script type="application/json" id="app-config">{"bestKey": "nitro-fuel-best-v1", "mount": "mountTubFlight", "name": "MOM's: Nitro Fuel", "options": {"endless": true, "icon": "/apps/fuel/icon-192.png", "title": "NITRO FUEL"}, "settingsModule": "/apps/fuel/settings.mjs", "src": "/arcade/tub-flight/game.mjs"}</script>
 <script type="application/mbs-script" data-mbs-type="module" data-mbs-src="/apps/shell.mjs"></script>
 </body>
 </html>

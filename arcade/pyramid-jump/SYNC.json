@@ -29,6 +29,7 @@
     "P7 draw the pre-rendered paper Coach (exact batch look) instead of the roster path",
     "P8 close the paper branch",
     "P9 MOM site: steer by arrow keys and leaning only (Ian 24 Nov), no touch/mouse halves",
-    "P10 label matches the controls"
+    "P10 label matches the controls",
+    "P11 hold: option `hold` (Promise); until it settles the loop draws but never steps, keys and tilt are ignored, phase is paused"
   ]
 }

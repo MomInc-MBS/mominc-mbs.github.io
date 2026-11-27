@@ -4,6 +4,7 @@
 // A notice being closed, tapped or opened, the app being opened, or a game being started/restarted/abandoned NEVER stops it. Free-play never reaches this module.
 import {stageFor, faceFor, OFF_LOCK_MS, MISS_MS, MAX_LABEL, copyFor} from './stages.js';
 import {advance, recurFromLegacy, defaultRecur, recurError, isTime, validZone, deviceZone} from './recurrence.js';
+import {judge} from './games/rules.js';
 export {MAX_LABEL};
 
 export const SOUNDS = [
@@ -245,6 +246,14 @@ export const stop = (state, occId, now) => finish(state, occId, 'CANCELLED', 'st
 export const win = (state, occId, now) => finish(state, occId, 'COMPLETED', 'win', now);
 /** A genuine loss (full board and no legal move; see board.js) on THIS occurrence's board dismisses it the same way. */
 export const lose = (state, occId, now) => finish(state, occId, 'COMPLETED', 'loss', now);
+/** An extra game's terminal result. Accepted ONLY for the active occurrence's current attempt (roundId = `<attemptId>:<n>`), and only when judge() re-derives the claimed
+ * outcome from finalState. Same win/lose transition as 2048, so stage, escalation and sound behave identically. Anything else returns `state` itself (compare !==). */
+export function finishGame(state, occId, r, now) {
+  const att = attemptId(state, occId);
+  if (!att || typeof r?.roundId !== 'string' || !r.roundId.startsWith(att + ':')) return state;
+  const v = judge(r.gameId, r.rulesVersion, r.finalState);
+  return v && v === r.outcome ? (v === 'won' ? win : lose)(state, occId, now) : state;
+}
 /** An alternative exit: accepted only if this occurrence's reminder selected that check-in. The 2048 win/loss and emergency stop always remain. */
 export function checkin(state, occId, kind, now) { const run = findRun(state, occId); return run?.occ.status === 'ACTIVE' && run.occ.extra === kind ? finish(state, occId, 'COMPLETED', 'checkin', now) : state; }
 

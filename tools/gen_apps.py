@@ -111,6 +111,64 @@ UI_PAPER = """<main id="menu" class="np" aria-label="{name}">
 <section id="stage" hidden aria-label="{name}"><button id="back" class="alt" type="button">&#8592; Menu</button><div id="host"></div></section>
 """
 
+# apps.json "win95": true -> the Fuel app's own Windows 95 program window (menu, settings, first-run notice). Same element ids as UI,
+# so the shared shell wiring is untouched; the look lives in the app's own stylesheet (appStyle).
+UI_W95 = """<main id="menu" class="w95">
+<div class="w95-win">
+<div class="w95-bar"><img src="{icon192}" alt="" width="16" height="16"><span>NITRO FUEL.EXE</span></div>
+<div class="w95-body">
+<h1>{name}</h1>
+<p>{description}</p>
+<p class="w95-best">Best pipes: <strong id="best">0</strong></p>
+<button id="start" type="button">Start Game</button>
+<button id="open-settings" type="button">Settings</button>
+<p class="w95-tag">SPONSORED SOFTWARE &middot; 1995</p>
+</div>
+<p id="offline" class="w95-status" role="status">Saving for offline play…</p>
+</div>
+</main>
+<main id="settings" class="w95" hidden>
+<div class="w95-win">
+<div class="w95-bar"><img src="{icon192}" alt="" width="16" height="16"><span>NITRO FUEL.EXE &middot; Settings</span></div>
+<div class="w95-body">
+<fieldset><legend>Sound</legend>
+<label><input type="checkbox" id="set-sfx"> Sound effects</label>
+<label>Effects volume <input type="range" id="set-sfx-vol" min="0" max="100"></label>
+<label><input type="checkbox" id="set-music"> Music</label>
+<label>Music volume <input type="range" id="set-music-vol" min="0" max="100"></label>
+</fieldset>
+<fieldset><legend>Intensity</legend>
+<label><input type="radio" name="set-fx" value="classic"> Classic</label>
+<label><input type="radio" name="set-fx" value="reduced"> Reduced Effects</label>
+<p class="w95-hint">Reduced Effects removes decorative motion and strong colour tints. The game plays exactly the same.</p>
+</fieldset>
+<fieldset><legend>Best score</legend>
+<button id="reset" type="button">Reset best</button>
+<p id="reset-note" role="status"></p>
+</fieldset>
+<fieldset><legend>Install</legend>
+<button id="install" type="button">Install app</button>
+<p id="install-status" role="status"></p>
+<ol id="install-steps"></ol>
+<p id="ios-help" hidden>On iPhone use Safari. Home Screen apps keep their own {saved} and offline files.</p>
+</fieldset>
+</div>
+<div class="w95-foot"><button id="close-settings" type="button">OK</button></div>
+</div>
+</main>
+<div id="fx-notice" class="w95-modal" role="dialog" aria-modal="true" aria-labelledby="fx-title" hidden>
+<div class="w95-win">
+<div class="w95-bar"><img src="{icon192}" alt="" width="16" height="16"><span id="fx-title">NITRO FUEL.EXE &middot; Notice</span></div>
+<div class="w95-body">
+<p>This game gets more colourful and animated the further you fly. There is no flashing at any level. Pick how intense you want it. You can change it later in Settings.</p>
+<button id="fx-classic" type="button">Classic</button>
+<button id="fx-reduced" type="button">Reduced Effects</button>
+</div>
+</div>
+</div>
+<section id="stage" hidden aria-label="{name}"><button id="back" class="alt" type="button">&larr; Menu</button>{host}</section>
+"""
+
 GATE = """<main id="gate">
 <img class="mark" src="{icon192}" alt="" width="170" height="170">
 <h1>{name}</h1>
@@ -325,6 +383,8 @@ def main():
             cfg = {'name': a['name'], 'src': a['src'], 'mode': 'iframe'}
         else:
             cfg = {'name': a['name'], 'src': a['src'], 'mount': a['mount'], 'options': a['options'], 'bestKey': a['bestKey']}
+            if a.get('win95') and not a.get('settingsModule'):
+                raise SystemExit(f"{a['id']}: win95 needs a settingsModule")
             if a.get('settingsModule'):
                 cfg['settingsModule'] = a['settingsModule']
             if a.get('keepGame'):   # "← Menu" pauses the mounted game instead of disposing it (apps/shell.mjs)
@@ -333,15 +393,16 @@ def main():
         panels = (RESET if 'reset-best' in a['settings'] else '') + (RESET_HAND if 'reset-hand' in a['settings'] else '') \
             + (MODELS if 'extra-models' in a['settings'] else '')
         icon = f"/apps/{a['id']}/{a['icons'][0]}"
-        if a.get('paper'):
-            ui = UI_PAPER.format(name=escape(a['name']), description=escape(a['description']), icon192=f"/apps/{a['id']}/{a['icons'][0]}")
-        else:
-          ui = UI.format(name=escape(a['name']), description=escape(a['description']), icon192=icon,
-                         best_line='' if editor or frame else f'<p class="tag">{escape(a.get("bestLabel", "Best"))}: <strong id="best">0</strong></p>\n',
-                         note_line=f'<p class="tag note">{escape(a["note"])}</p>\n' if a.get('note') else '',
-                         reset_panel=panels, tilt_panel=TILT if 'tilt' in a['settings'] else '',
-                         saved='saved hand' if editor else 'saved best',
-                         host='<div id="host"><div id="root"></div></div>' if editor else '<div id="host"></div>')
+        ui = UI.format(name=escape(a['name']), description=escape(a['description']), icon192=icon,
+                       best_line='' if editor or frame else f'<p class="tag">{escape(a.get("bestLabel", "Best"))}: <strong id="best">0</strong></p>\n',
+                       note_line=f'<p class="tag note">{escape(a["note"])}</p>\n' if a.get('note') else '',
+                       reset_panel=panels, tilt_panel=TILT if 'tilt' in a['settings'] else '',
+                       saved='saved hand' if editor else 'saved best',
+                       host='<div id="host"><div id="root"></div></div>' if editor else '<div id="host"></div>')
+        if a.get('win95'):
+            ui = UI_W95.format(name=escape(a['name']), description=escape(a['description']), icon192=icon, saved='saved best', host='<div id="host"></div>')
+        if a.get('paper'):   # the corgi folding newspaper menu (apps/corgi/app.mjs fills it)
+            ui = UI_PAPER.format(name=escape(a['name']), description=escape(a['description']), icon192=icon)
         if a.get('wordless'):
             ui = wordless(ui)
         gate = ''
