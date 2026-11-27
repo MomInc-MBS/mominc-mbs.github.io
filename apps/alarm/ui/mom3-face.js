@@ -24,8 +24,8 @@ function glyphFor(t, c, r) {
 /** Layout of the bust at a CSS width: height, and the combined eye-and-glasses band (all three heads) in CSS px. */
 export function bustGeometry(w) {
   const k = w / CB.w, h = CB.h * k, eyeTop = (M.eye.y0 - CB.y) * k, eyeBot = (M.eye.y1 - CB.y) * k;
-  // face window (centre head): a little hair above the glasses down to the chin, with room for the open jaw (embedded CRT collapse stops here)
-  const m = M.mouths.center, jaw = (m.jaw * SRC.h - CB.y) * k, drop = m.maxDrop * (w / REF_COLS) * 9 / 7, faceTop = Math.max(0, eyeTop - .025 * h), faceBot = Math.min(h, jaw + drop + .07 * h);
+  // face window: the WHOLE heads, top of the hair down to the chin, with room for the open jaw (embedded CRT collapse stops here; never slice through MOM)
+  const m = M.mouths.center, jaw = (m.jaw * SRC.h - CB.y) * k, drop = m.maxDrop * (w / REF_COLS) * 9 / 7, faceTop = 0, faceBot = Math.min(h, jaw + drop + .07 * h);
   return {w, h, eyeTop, eyeBot, strip: Math.min(eyeBot - eyeTop, h), faceTop, faceBot};
 }
 

@@ -49,13 +49,13 @@
     },
     {
       "url": "/apps/shell.mjs",
-      "revision": "3ab2a6de27ad69696a36c7dd52dee5bfc69e0e08",
-      "bytes": 6336
+      "revision": "01a55b2a99b321c8ae9770e16135a773161c4664",
+      "bytes": 6398
     },
     {
       "url": "/apps/update.mjs",
-      "revision": "8dbc92e88e1ebc52d3ec23ccb3f86e759f0b8a5a",
-      "bytes": 3721
+      "revision": "33efc36c3cd7e88fee57dee7210c10167616c1c3",
+      "bytes": 4144
     },
     {
       "url": "/arcade/tub-flight/audio.mjs",
@@ -99,5 +99,5 @@
     }
   ],
   "fontStyles": [],
-  "version": "805f55661237d925f04b"
+  "version": "b66a5f68884fc97e4b1b"
 }

@@ -52,7 +52,7 @@ export function mountSettings(host, adapter, opts = {}) {
   const face = opts.face || createMomFace(faceHost, {reducedMotion: rm0, highContrast: !!S.snap.highContrast, minPx: emb ? 408 : 0});
   // collapsing hero: bust (list at scroll 0) -> pinned eye strip. p = clamp(scrollTop / hD); CSS does the rest from --p (see settings.css hero block).
   let hD = 0, hero = false, raf = 0;
-  const setP = () => { raf = 0; root.style.setProperty('--p', hero && hD > 0 ? clamp01(panel.scrollTop / hD).toFixed(4) : '1'); };
+  const setP = () => { raf = 0; root.style.setProperty('--p', hero && hD > 0 ? clamp01(panel.scrollTop / hD).toFixed(4) : '1'); panel.classList.toggle('more', panel.scrollHeight - panel.clientHeight - panel.scrollTop > 2); };   // .more: content continues below -> the bottom fades instead of a hard cut
   const clamp01 = v => Math.min(1, Math.max(0, v));
   const onScroll = () => { if (!raf) raf = requestAnimationFrame(setP); };
   panel.addEventListener('scroll', onScroll, {passive: true});
@@ -636,7 +636,13 @@ export function mountSettings(host, adapter, opts = {}) {
     else renderTop();
     if (!S.saving && S.snap.saveState === 'error' && !S.saveUi) { S.saveUi = 'error'; renderTop(); }
   };
-  try { offs.push(adapter.on('snapshot', onSnap)); offs.push(adapter.on('change', () => { if (!S.draft) loadList(); })); offs.push(adapter.on('capability', c => { Object.assign(S.caps, c); if (S.tab !== 'history') render(); })); } catch (e) {}
+  // The first tap unlocks audio, which reports a capability change. Re-rendering between that pointerdown and its click replaced the tapped
+  // button and lost the tap (the first tab tap after opening did nothing), so capability re-renders wait until the tap is over.
+  let held = false, pend = false;
+  const hold = () => { held = true; }, release = () => later(() => { held = false; if (pend) { pend = false; if (S.tab !== 'history') render(); } }, 350);
+  root.addEventListener('pointerdown', hold, true); addEventListener('pointerup', release, true); addEventListener('pointercancel', release, true);
+  offs.push(() => { root.removeEventListener('pointerdown', hold, true); removeEventListener('pointerup', release, true); removeEventListener('pointercancel', release, true); });
+  try { offs.push(adapter.on('snapshot', onSnap)); offs.push(adapter.on('change', () => { if (!S.draft) loadList(); })); offs.push(adapter.on('capability', c => { Object.assign(S.caps, c); if (S.tab === 'history') return; if (held) pend = true; else render(); })); } catch (e) {}
   const tick = setInterval(() => {
     if (document.hidden) return; let expired = false;
     root.querySelectorAll('[data-cd]').forEach(el => { const u = +el.dataset.cd; el.textContent = countdown(u, now()); if (u <= now()) expired = true; });

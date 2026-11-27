@@ -195,7 +195,7 @@ export function mountGameColors(gameRoot, opts = {}) {
   // While the drawer is open nothing underneath may react: swallow gestures that did not start inside the panel/handle.
   const BLOCK = ['pointerdown', 'pointermove', 'pointerup', 'pointercancel', 'touchstart', 'touchmove', 'touchend', 'mousedown', 'mouseup', 'wheel', 'click'];
   const inside = t => panel.contains(t) || handle.contains(t) || scrim === t;
-  const block = e => { if (open && mode === 'drawer' && !inside(e.target) && (e.type !== 'click' || e.target.closest?.('.al-gbox, .al-board'))) { e.stopPropagation(); if (e.cancelable) e.preventDefault(); } };   // a click is only swallowed over the game itself: back / switch / stop stay reachable
+  const block = e => { if (open && mode === 'drawer' && !inside(e.target) && e.target.closest?.('.al-gbox, .al-board')) { e.stopPropagation(); if (e.cancelable) e.preventDefault(); } };   // only input over the game itself is swallowed: a cancelled touchstart also kills the tap, so back / switch / stop must never see this
   BLOCK.forEach(t => gameRoot.addEventListener(t, block, {capture: true, passive: false}));
   const onKey = e => {
     if (!open) return;

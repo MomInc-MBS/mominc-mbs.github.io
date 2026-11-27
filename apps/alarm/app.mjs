@@ -226,7 +226,10 @@ export async function mountAlarm(host) {
   if (disposed) comp.dispose();
   else if (!comp.ok) { root.classList.add('flat'); root.style.setProperty('--bs', '220px'); }
   syncKeys();
+  // The CRT is the whole app, so being on it is not busy. Update reloads wait only for a ringing alarm, a game on screen or an open editor.
+  window.MOM_APP_BUSY = () => !$('play').hidden || !!setHost.querySelector('.ms-edit') || Object.values(S.runs).some(r => r.occ?.status === 'ACTIVE');
   return {dispose() {
+    delete window.MOM_APP_BUSY;
     disposed = true; clearInterval(timer); removeEventListener('keydown', onKey); removeEventListener('pointerdown', unlock); removeEventListener('blur', stopRepeat); stopRepeat(); removeEventListener('pointerup', onUp); removeEventListener('pointercancel', onUp); clearTimeout(holdT); offPlay(); offSnap();
     document.removeEventListener('visibilitychange', onVis); navigator.serviceWorker?.removeEventListener('message', onSW);
     gc?.destroy(); ui?.destroy(); links.forEach(l => l.remove()); A.dispose(); comp?.dispose(); host.replaceChildren();
