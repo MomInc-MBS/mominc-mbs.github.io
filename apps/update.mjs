@@ -47,6 +47,9 @@ export function watchUpdates({busy = () => false} = {}) {
     // old note, so the first online check sees the difference and updates.
     if (launch || running === null) { running = entry.version; adopted = true; ls.set(VER, running); return; }
     if (entry.version === running || entry.version === ready) return;
+    // Nothing on screen to lose (just reopened, idle): reload now. The page's own loader downloads the new pack behind the centre battery,
+    // so the update is seen, and the running page never mixes old modules with new lazily-imported ones. Busy: install quietly, reload later.
+    if (safe() && ss.get(GUARD) !== entry.version) { ss.set(GUARD, entry.version); ls.set(VER, entry.version); location.reload(); return; }
     installing = true;
     try { await install('app-' + id); ready = entry.version; } catch { /* retried on the next check */ }
     installing = false;

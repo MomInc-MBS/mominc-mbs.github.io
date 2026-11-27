@@ -288,6 +288,7 @@ html.ms-doc,html.ms-doc body{margin:0;height:100%;background:#12081f}
 .ms-emb .ms-stop{top:50px;right:2px;transform:scale(.55);transform-origin:100% 0}
 .ms-emb .ms-panel{top:var(--pt);bottom:calc(var(--rail-h) + var(--dock) + 6px);left:4px;right:4px;padding:6px 6px 10px;gap:6px}
 .ms-emb.ms-hero .ms-panel{padding-top:0}
+.ms-emb .ms-panel.more{-webkit-mask-image:linear-gradient(#000 calc(100% - 28px),transparent);mask-image:linear-gradient(#000 calc(100% - 28px),transparent)}   /* more below: fade out, never a hard cut */
 .ms-emb .ms-hero-sp{height:var(--sp,0px)}
 .ms-emb .ms-sub{left:4px;right:4px;bottom:calc(var(--rail-h) + 2px);height:auto;min-height:var(--sub-min);max-height:100px;overflow-y:auto;padding:4px 8px;font-size:var(--sub-fs);line-height:1.3;
   text-shadow:0 0 5px rgba(227,179,255,.35)}

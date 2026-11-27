@@ -77,7 +77,7 @@ function boot(cfg) {
   if (editor && $('models')) import(cfg.models).then(m => { refreshModels = m.renderModels($('models'), cfg.optional); });
   if (cfg.settingsModule) import(cfg.settingsModule).then(m => m.setupSettings?.({root: settings, refresh}));
   refresh(); show(menu);
-  watchUpdates({busy: () => cfg.options?.autostart === true ? false : (!stage.hidden || (cfg.keepGame && !!game))});   // autostart:true apps (Coach Jump) report a run themselves via window.MOM_APP_BUSY; keepGame (corgi): a paused run sits behind the menu
+  watchUpdates({busy: () => cfg.options?.autostart === true || window.MOM_APP_BUSY ? false : (!stage.hidden || (cfg.keepGame && !!game))});   // apps that report busy themselves via window.MOM_APP_BUSY (Coach Jump, the alarm: its stage IS the app) own the decision; keepGame (corgi): a paused run sits behind the menu
   // a game, the editor or the alarm computer on screen = not a safe moment to reload
   // Opt-in (apps.json web.options.autostart = query name): a notification tap lands inside the app, not on the menu.
   const auto = cfg.options?.autostart;

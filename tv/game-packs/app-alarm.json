@@ -9,8 +9,8 @@
     },
     {
       "url": "/apps/alarm/app.mjs",
-      "revision": "d4edc07c2e79d41aa0f5426f28b09efb18ea4e65",
-      "bytes": 17074
+      "revision": "d9570ef54358ab0ed13ce3acde023f24a6570d79",
+      "bytes": 17398
     },
     {
       "url": "/apps/alarm/board.js",
@@ -209,8 +209,8 @@
     },
     {
       "url": "/apps/alarm/ui/game-colors.js",
-      "revision": "1c4a85aab5537e30ea8c0a385de0e9b5ecfc6491",
-      "bytes": 16466
+      "revision": "6fda50bf415cfe291492cce53b019bfc31536488",
+      "bytes": 16491
     },
     {
       "url": "/apps/alarm/ui/glyphs.js",
@@ -229,8 +229,8 @@
     },
     {
       "url": "/apps/alarm/ui/mom3-face.js",
-      "revision": "2ac7d624c389b40118eb20653e15c90e874b1f08",
-      "bytes": 14148
+      "revision": "b41120d959e9009e98dc35f9e0a9c3215a6b3d6e",
+      "bytes": 14131
     },
     {
       "url": "/apps/alarm/ui/mom3-manifest.js",
@@ -249,13 +249,13 @@
     },
     {
       "url": "/apps/alarm/ui/settings.css",
-      "revision": "7d5b0f234e955051c4585b95797ebdcb6572517c",
-      "bytes": 27423
+      "revision": "fb50b683b5dbf81c7c3c4231f0d9f51acf92cc0c",
+      "bytes": 27628
     },
     {
       "url": "/apps/alarm/ui/settings.js",
-      "revision": "49dd681ba2b47d0ca882400fc50212e492a22443",
-      "bytes": 59134
+      "revision": "23da1f3a1ce8e363831ad0b67795c919c93f6f6d",
+      "bytes": 60129
     },
     {
       "url": "/apps/alarm/ui/time.js",
@@ -294,13 +294,13 @@
     },
     {
       "url": "/apps/shell.mjs",
-      "revision": "3ab2a6de27ad69696a36c7dd52dee5bfc69e0e08",
-      "bytes": 6336
+      "revision": "01a55b2a99b321c8ae9770e16135a773161c4664",
+      "bytes": 6398
     },
     {
       "url": "/apps/update.mjs",
-      "revision": "8dbc92e88e1ebc52d3ec23ccb3f86e759f0b8a5a",
-      "bytes": 3721
+      "revision": "33efc36c3cd7e88fee57dee7210c10167616c1c3",
+      "bytes": 4144
     },
     {
       "url": "/tv/assets/mom-inc-mark.png",
@@ -314,5 +314,5 @@
     }
   ],
   "fontStyles": [],
-  "version": "8dfd181499cdcc0ede6d"
+  "version": "540d6a1a657ecd898372"
 }
