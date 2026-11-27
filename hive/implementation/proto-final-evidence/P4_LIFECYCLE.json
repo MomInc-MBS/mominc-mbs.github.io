@@ -1,0 +1,67 @@
+{
+ "author": {
+  "_exit": 0,
+  "_stderr": "",
+  "cap_id": "site.release-diff",
+  "event_ref": "artifacts/19ff36c365802d673bc434bb889fe65d9aa886adfe388151aaca15cf4ebf6c46.json",
+  "rerun_receipt_sha256": "07bb423605f445a02de71b1e72d2724189857cfd266cb93cef4ef5b80613d585",
+  "route": "operator-authored",
+  "statement_sha": "79bd1454f6ac0988c0bfc20c465d17cc4c0284ebf2a77bb5be03194276102eff",
+  "version": 1
+ },
+ "plans": [
+  {
+   "_exit": 0,
+   "goal_id": "g-b806d6e37612f2376811",
+   "state": "PLANNED"
+  },
+  {
+   "_exit": 0,
+   "goal_id": "g-007e8c56bc78650e19bd",
+   "state": "PLANNED"
+  }
+ ],
+ "proto1_after_revoke": {
+  "_exit": 0,
+  "reason": null,
+  "state": "VERIFIED",
+  "usage": {
+   "container_runs": 0,
+   "model_calls": 0,
+   "proposal_calls": 0
+  }
+ },
+ "revoke": {
+  "err": "",
+  "exit": 0,
+  "out": "{\n \"cap_id\": \"site.release-diff\",\n \"type\": \"revoke\",\n \"event_ref\": \"artifacts/29399cb0e82a9377899e6762f3d861c5c31d13caf9c92275d28dd310ab22f0da.json\",\n \"version\": 1,\n \"reason\": \"P4 lifecycle demo: store-scoped revoke\"\n}\n"
+ },
+ "run_plan_1_before_revoke": {
+  "_exit": 2,
+  "error": null,
+  "reason": null,
+  "state": "VERIFIED",
+  "usage": null
+ },
+ "run_plan_2_after_revoke": {
+  "_exit": 0,
+  "error": null,
+  "reason": "stored plan refused: s3: unknown capability 'site.release-diff'",
+  "state": "PLAN_INVALID",
+  "stdout": null,
+  "usage": {
+   "container_runs": 0,
+   "model_calls": 0,
+   "proposal_calls": 0
+  }
+ },
+ "stores": {
+  "lc": "C:/hive-work/demo/lc1",
+  "proto": "C:/hive-work/demo/proto1"
+ },
+ "uuids": {
+  "lc": "7753e5e69da04fada92609919e35396f",
+  "proto": "f6ad0e8c39bf447ab1c03850c8e1717e"
+ },
+ "verdict": "PASS"
+}

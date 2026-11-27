@@ -6,15 +6,15 @@ Canonical home: https://mominc.online/hive/
 Search: https://mominc.online/hive/search/?q=your-query
 Browse: https://mominc.online/hive/explore/
 Graph: https://mominc.online/hive/graph/
-Full-text machine index (321 pages): https://mominc.online/hive/search-index.json
+Full-text machine index (322 pages): https://mominc.online/hive/search-index.json
 Typed graph: https://mominc.online/hive/graph.json
 Original package: https://mominc.online/hive/downloads/HIVE_Framework_Research_Vault.zip
 
 ## Current status (read first)
 
-Authoritative record: https://mominc.online/hive/CURRENT_STATUS.json (as of 2026-11-26).
+Authoritative record: https://mominc.online/hive/CURRENT_STATUS.json (as of 2026-11-27).
 - Latest accepted evidence: /hive/notes/M2/. Protocol m2-local-model-two-effects-v1 accepted 24 Nov (runtime 1799c58, protocol d4b71d2): R 60/60 vs 0/60, C 60/60 vs 30/60, reuse 20/20; synthetic data, tiny search space, no search-skill claim.
-- Latest packaged runtime: /hive/notes/CONNECTED/. Runtime 033089b packaged 25 Nov as HIVE_Connected_Runner_033089b.zip: type a goal, HIVE plans with typed capabilities, finds a missing step, gets one local-model proposal checked 24/24 by an independent evaluator, admits it with a signature and reuses it after restart with zero model calls.
+- Latest packaged runtime: /hive/notes/PROTOFINAL/. 27 Nov: packaged HIVE_Prototype_ee175b5.zip. 7 of 12 real goals accepted (site link checks 3/4 and release diffs 4/4, all with 0 model calls); image workflow blocked (no open-source matcher passed the transparency-aware contract); improvement and rollback not shown. Product gate NOT met. Auto model choice is now the default, with one bounded fallback and store-scoped revocation.
 - Operational readiness: /hive/notes/CONNECTED/. Usable locally on one Windows host: goals for convert, merge and inventory-diff through the console; the learning loop ran once on one real workload and ties a scripted baseline (mechanism, not advantage); trusted local scope, not production-approved; Level A not accepted, Level B untested; the owner later raised the project spending ceiling from $120 to $220 (25 Nov) and $400 (26 Nov).
 
 Older notes below keep their original claims and dates; they are history, not current status.

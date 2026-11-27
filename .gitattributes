@@ -67,3 +67,6 @@ hive/implementation/prototype-m3m5-evidence/** -text
 
 # Cooperative inference C4/G3 evidence: sanitised copies bound to the publication manifest digests.
 hive/implementation/coop-c4g3-evidence/** -text
+
+# Prototype continuation evidence: copies bound to the publication manifest digests.
+hive/implementation/proto-final-evidence/** -text

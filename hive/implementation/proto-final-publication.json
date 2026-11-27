@@ -1,0 +1,43 @@
+{
+ "acceptance": "7/12 accepted (A1-A3, B1-B4); A4 STEP_FAILED; C1-C4 blocked (no image.asset-match 2.0.0)",
+ "branch": "build/prototype",
+ "branch_status": "local only, no public git remote",
+ "code_published": true,
+ "date": "2026-11-27",
+ "download": "downloads/HIVE_Prototype_ee175b5.zip",
+ "download_bytes": 6498869,
+ "download_sha256": "ce13bb46baff0d8d8dfd7bf5dc287608a160b1af479916fb5e9547775327a0f0",
+ "evidence_scope": "Real MOM site releases and pictures; one Windows 11 PC; trusted local scope",
+ "excluded": "stores, ledgers, signing keys, the sealed real-image answer key and every private evaluator dataset stay in the private build tree",
+ "files": {
+  "implementation/proto-final-evidence/ACCEPTANCE_MANIFEST.json": "8c56e0efd93ebe41450258c405acfa019ef9e81364f949b4c96fd1fe03e46076",
+  "implementation/proto-final-evidence/HIVE_Prototype_ee175b5.json": "9a20d8b7811532e0897a78d1c51b92f4dbd0d25b7cd2e7bdd67bccfaaa16a008",
+  "implementation/proto-final-evidence/LAUNCH.md": "7d6350edba117d743e230eb5e3e45d9a03ca17f74b4b0fa0bd9f2147cf5ca2b3",
+  "implementation/proto-final-evidence/P0_LEDGER.md": "ee04edff9b912abdf47d0259e8be19a25b89502eda431a56a4c2bb721272c030",
+  "implementation/proto-final-evidence/P1_REVOCATION.md": "0b70aba9279c5d37da521d803268b7b1da6fc2f0f94ad2620862c06844d025d3",
+  "implementation/proto-final-evidence/P1_ROUTING.md": "fc412c978bff733c296e5f68b23ae2096287152f0685159837d6b462b1112ead",
+  "implementation/proto-final-evidence/P3_CONTRACT.md": "f39eb9e9478c70b3752edd9722bdebb48c510b8829e494b7f8ee9be23a82b384",
+  "implementation/proto-final-evidence/P4_LIFECYCLE.json": "eb3efd64074ab86cae6204917c760b9eff0256d39a6c9489b78a17b0e7ea1f1c",
+  "implementation/proto-final-evidence/PROTOTYPE_FINAL_REPORT.md": "a698493810b60c052e4560a6298830401b1cb938a5d92179216028ca3572d251"
+ },
+ "launch": "implementation/proto-final-evidence/LAUNCH.md",
+ "package_contents": "git archive of the tracked tree at ee175b5, excluding every hive.sqlite3 store; no signing keys, no private evaluation data, no ledgers",
+ "package_published": true,
+ "regression_gate": "full suite 94558c2: 2055 passed, 1 failed (test timing, fixed ee175b5; targeted 28/28 x3), 7 skipped; 2:00:28, real Docker",
+ "runtime_version": "build/prototype ee175b5 (packaged)",
+ "source_commit": "ee175b5",
+ "source_commit_meaning": "short id only: the build tree has no public remote",
+ "spending": {
+  "coding_usd": "about 385 of 400",
+  "hive_calls": "537 -> 557 of 576",
+  "nim_usd": "2.64 -> 2.768 of 5"
+ },
+ "status": "PROTOTYPE_PACKAGED_GATE_NOT_MET",
+ "supported_environment": "Windows 11, Python 3.11 + Pillow, Docker Desktop; LM Studio with openai/gpt-oss-20b only for new acquisitions",
+ "unmet": [
+  "five capabilities (4/5)",
+  "three compositions (2/3)",
+  "improvement + rollback",
+  "product gate 10/12"
+ ]
+}

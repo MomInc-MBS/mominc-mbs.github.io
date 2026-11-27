@@ -1,0 +1,25 @@
+{
+ "bytes": 6498869,
+ "clean_dir": "C:\\hive-work\\pkg-clean\\ee175b5\\HIVE_Prototype_ee175b5",
+ "commit": "ee175b5",
+ "files": 2423,
+ "fresh_store_cap_list_exit": 0,
+ "fresh_store_cap_list_head": "id       kind  route  version  lifecycle  receipt  admitted_at  provenance\nconvert  m2    -      -        inactive   -        -            no retained capability imported for this operation (run: hive operator import)\nmerge    m2    -      -        inactive   -        -            no retained capabi",
+ "packaged_runtime_goal_e3fcce6": {
+  "evaluator_byte_match": true,
+  "exit": 0,
+  "state": "VERIFIED",
+  "usage": {
+   "container_runs": 0,
+   "model_calls": 0,
+   "proposal_calls": 0
+  }
+ },
+ "secret_screen_hits": [
+  "HIVE_Prototype_ee175b5/build/prototype/REVIEW_P4.md (secret-looking content)",
+  "HIVE_Prototype_ee175b5/src/hive/code_verifier.py (secret-looking content)",
+  "HIVE_Prototype_ee175b5/tests/test_p_hosted_backend.py (secret-looking content)"
+ ],
+ "sha256": "ce13bb46baff0d8d8dfd7bf5dc287608a160b1af479916fb5e9547775327a0f0",
+ "zip": "C:\\hive-work\\cmp\\build\\prototype-final\\package\\HIVE_Prototype_ee175b5.zip"
+}
