@@ -39,9 +39,10 @@ export function createGamePlay({box, store = globalThis.localStorage, isLive = (
     host.start(); return true;
   }
   const close = () => { seq++; host.destroy(); };
+  const refresh = () => host.resize();                                   // repaint the mounted game (a colour was picked while it is paused)
   /** Remember the attempt's game as 2048 (the player switched back to the board). */
   const setGame = (k, id) => { key = k; cur = id; edit(e => { e.game = id; }); };
-  return {gameFor, open, close, setGame, pause: host.pause, resume: host.resume, get game() { return cur; }};
+  return {gameFor, open, close, setGame, pause: host.pause, resume: host.resume, refresh, get game() { return cur; }};
 }
 
 const GL = {'2048': 'board2048', brick: 'gBrick', pong: 'gPong', match3: 'gMatch3', blocks: 'gBlocks', memory: 'gMemory', odd: 'gOdd'};

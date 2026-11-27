@@ -1,6 +1,7 @@
-// MOM has no voice: every response is a typed subtitle. No audio, no TTS, no network. The registry only DESCRIBES existing handlers (keyed by their data-k); it never replaces or calls them.
+// MOM has no voice: every response is a typed subtitle. The only sound is soft keyboard clacks while she types (ui/clack.js, synthesised). No voice, no TTS, no network. The registry only DESCRIBES existing handlers (keyed by their data-k); it never replaces or calls them.
 import {N, SOUND, VIB, CAP, STATE} from './names.js';
 import {GAME_COLOR_HELP} from './game-colors.js';
+import {clack} from './clack.js';
 
 // ---------- pure logic (unit-tested in tools/check_alarm_help.test.mjs) ----------
 export const TAGS = [
@@ -23,14 +24,15 @@ export function createJokeGate({now = Date.now, cooldown = 15000, memory = 5, rn
 export const kindOf = el => el.matches?.('input[type=range],select') ? 'commit' : el.matches?.('input,textarea') ? null : 'tap';
 export const wanted = (type, kind) => kind === 'commit' ? type === 'change' : kind === 'tap' ? type === 'click' : false;
 
-/** One active line, no queue. render(shown, full, typing); talk(bool) drives the silent mouth. */
-export function createTyper({render, talk = () => {}, announce = () => {}, instant = () => false, setT = setTimeout, clearT = clearTimeout, cps = 30}) {
+/** One active line, no queue. render(shown, full, typing); talk(bool) drives the silent mouth; key(ch) fires once per typed character (not on skip / instant reveal). */
+export function createTyper({render, talk = () => {}, announce = () => {}, key = () => {}, instant = () => false, setT = setTimeout, clearT = clearTimeout, cps = 30}) {
   let full = '', n = 0, tm = 0;
   const T = b => { try { talk(b); } catch (e) {} };
   const stop = () => { clearT(tm); tm = 0; };
   const finish = () => { n = full.length; render(full, full, false); T(false); };
   const tick = () => {
     n++; render(full.slice(0, n), full, n < full.length);
+    try { if (full[n - 1] !== '\n') key(full[n - 1]); } catch (e) {}
     if (n >= full.length) { tm = 0; return T(false); }
     const c = full[n - 1], pause = '.!?'.includes(c) ? 260 : c === ',' ? 120 : 0;
     T(!pause); tm = setT(tick, 1000 / cps + pause);
@@ -143,7 +145,7 @@ export function createHelp({root, rail, S, face, announce, rm}) {
   const txt = view.querySelector('.ms-sub-t'), zt = view.querySelector('.ms-sub-zt');
   root.insertBefore(view, rail);
   const gate = createJokeGate();
-  const typer = createTyper({render: (s, full) => { txt.textContent = s; zt.textContent = full || ''; }, talk: b => { face?.talk?.(b); }, announce, instant: () => rm()});
+  const typer = createTyper({render: (s, full) => { txt.textContent = s; zt.textContent = full || ''; }, talk: b => { face?.talk?.(b); }, announce, key: clack, instant: () => rm()});
   view.addEventListener('click', e => { e.stopPropagation(); typer.skip(); });   // reveal only; nothing underneath fires
   let pend = 0, lastPtr = 0, dead = false;
   const show = r => {

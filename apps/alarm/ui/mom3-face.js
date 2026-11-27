@@ -24,7 +24,9 @@ function glyphFor(t, c, r) {
 /** Layout of the bust at a CSS width: height, and the combined eye-and-glasses band (all three heads) in CSS px. */
 export function bustGeometry(w) {
   const k = w / CB.w, h = CB.h * k, eyeTop = (M.eye.y0 - CB.y) * k, eyeBot = (M.eye.y1 - CB.y) * k;
-  return {w, h, eyeTop, eyeBot, strip: Math.min(eyeBot - eyeTop, h)};
+  // face window (centre head): a little hair above the glasses down to the chin, with room for the open jaw (embedded CRT collapse stops here)
+  const m = M.mouths.center, jaw = (m.jaw * SRC.h - CB.y) * k, drop = m.maxDrop * (w / REF_COLS) * 9 / 7, faceTop = Math.max(0, eyeTop - .025 * h), faceBot = Math.min(h, jaw + drop + .07 * h);
+  return {w, h, eyeTop, eyeBot, strip: Math.min(eyeBot - eyeTop, h), faceTop, faceBot};
 }
 
 /** stage emotion -> palette shift (tint colour + amount); stage 4 (furious, intensity 1) adds the red rim. Identity is untouched. */

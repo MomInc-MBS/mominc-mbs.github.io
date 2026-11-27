@@ -2,7 +2,7 @@
 // 10x16 well, 7 pieces. Goal: clear 3 lines. Budget: 30 pieces (a piece counts when it LOCKS). Top-out (a new piece cannot appear) = loss. Win is checked first, then the budget, then top-out.
 // Rotation is clockwise with NO wall kicks: a rotation that would collide is simply rejected. "drop" is a hard drop. Gravity runs only while the game is running (pause on hidden, no catch-up).
 // State (serialisable, seeded bag): {grid, piece:{k,r,x,y}, next, rng, lines, pieces, toppedOut}. finalState for the host: {lines, pieces, toppedOut}. Digits and shapes only on screen.
-import {MONO, rand, freshSeed} from './common.js';
+import {MONO, rand, freshSeed, themed} from './common.js';
 export const COLS = 10, ROWS = 16, GOAL = 3, BUDGET = 30;
 const COLORS = ['#22D3EE', '#FFD60A', '#7B2FF7', '#A3E635', '#F97316', '#F472B6', '#38BDF8'], BG = '#1A0B30', CELL = '#241046';
 // each piece as a matrix in its spawn orientation (1 = filled)
@@ -80,9 +80,11 @@ function create() {
   function cell(x, y, c, k, a = 1) { g.globalAlpha = a; g.fillStyle = COLORS[k]; g.fillRect(x + 1, y + 1, c - 2, c - 2); g.strokeStyle = '#12081F'; g.lineWidth = 1.5; g.strokeRect(x + 1.5, y + 1.5, c - 3, c - 3); g.fillStyle = 'rgba(255,255,255,.35)'; g.fillRect(x + 3, y + 3, c - 6, 2); g.globalAlpha = 1; }
   function draw() {
     if (!g || !W) return;
-    const p = geo(); g.setTransform(dpr, 0, 0, dpr, 0, 0);
-    g.fillStyle = BG; g.fillRect(0, 0, W, H);
-    g.fillStyle = CELL; g.fillRect(p.x, p.y, p.c * COLS, p.c * ROWS);
+    const p = geo(), T = n => themed(cv, n, null);   // colour drawer: --gc-1 background, --gc-2 well, --gc-3 the button row (CSS vars); piece colours never change
+    const bg = T('--gc-1') || BG, ink = T('--gc-1-ink') || '#FFF', well = T('--gc-2') || CELL;
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    g.fillStyle = bg; g.fillRect(0, 0, W, H);
+    g.fillStyle = well; g.fillRect(p.x, p.y, p.c * COLS, p.c * ROWS);
     for (let i = 0; i < COLS * ROWS; i++) if (st.grid[i]) cell(p.x + (i % COLS) * p.c, p.y + Math.floor(i / COLS) * p.c, p.c, st.grid[i] - 1);
     if (!done) {
       let gh = st.piece; for (let q; (q = tryMove(st.grid, gh, 0, 1)); ) gh = q;               // landing shadow
@@ -90,10 +92,10 @@ function create() {
       for (const [x, y] of cellsOf(st.piece)) if (y >= 0) cell(p.x + x * p.c, p.y + y * p.c, p.c, st.piece.k);
     }
     const sx = p.x + p.c * COLS + 10;                                                          // side panel: next piece, lines n/3, pieces left
-    g.fillStyle = '#FFF'; g.font = `bold 16px ${MONO}`; g.textBaseline = 'middle'; g.textAlign = 'left';
+    g.fillStyle = ink; g.font = `bold 16px ${MONO}`; g.textBaseline = 'middle'; g.textAlign = 'left';
     const m = SHAPES[st.next], q = Math.min(10, p.c * 0.7); m.forEach((row, j) => row.forEach((v, i) => { if (v) cell(sx + i * q, p.y + 4 + j * q, q, st.next); }));
-    g.fillText(`${Math.min(st.lines, 9)}/${GOAL}`, sx, p.y + 64); g.fillStyle = '#FFD60A'; g.fillRect(sx + 40, p.y + 59, 12, 3); g.fillRect(sx + 40, p.y + 65, 12, 3);   // lines icon: two bars
-    g.fillStyle = '#FFF'; g.fillText(String(Math.max(0, BUDGET - st.pieces)).padStart(2, '0'), sx, p.y + 90); cell(sx + 28, p.y + 83, 12, 2);                      // pieces left + piece icon
+    g.fillText(`${Math.min(st.lines, 9)}/${GOAL}`, sx, p.y + 64); g.fillStyle = T('--gc-1-ink') || '#FFD60A'; g.fillRect(sx + 40, p.y + 59, 12, 3); g.fillRect(sx + 40, p.y + 65, 12, 3);   // lines icon: two bars
+    g.fillStyle = ink; g.fillText(String(Math.max(0, BUDGET - st.pieces)).padStart(2, '0'), sx, p.y + 90); cell(sx + 28, p.y + 83, 12, 2);                      // pieces left + piece icon
   }
   const frame = t => {
     if (!running) return;
@@ -102,8 +104,8 @@ function create() {
     if (running) { draw(); raf = requestAnimationFrame(frame); }
   };
   const btn = (name, label) => { const b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-label', label);
-    b.style.cssText = 'flex:1;min-height:48px;margin:2px;border:2px solid #7B2FF7;border-radius:10px;background:#2A1050;display:grid;place-items:center;touch-action:manipulation;padding:0';
-    b.innerHTML = `<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#FFD60A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">${ICON[name]}</svg>`;
+    b.style.cssText = 'flex:1;min-height:48px;margin:2px;border:2px solid var(--gc-3-edge,#7B2FF7);border-radius:10px;background:var(--gc-3,#2A1050);display:grid;place-items:center;touch-action:manipulation;padding:0;color:var(--gc-3-ink,#FFD60A)';
+    b.innerHTML = `<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">${ICON[name]}</svg>`;
     b.addEventListener('pointerdown', e => { e.preventDefault(); act(name); }); return b; };
   return {
     mount(host, c) {

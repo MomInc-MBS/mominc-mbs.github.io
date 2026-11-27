@@ -3,7 +3,7 @@
 // The whole cascade is resolved in logic first; the screen then replays it. The saved state is therefore always a stable board: {grid, rng, swaps, progress, target, kind}.
 // Win is checked before the swap budget. A dead board is reshuffled deterministically (seeded) keeping the swaps left; the result always has a legal move and no ready-made runs.
 // finalState for the host: {target, progress, swaps}. Digits and shapes only on screen.
-import {MONO, rand, freshSeed} from './common.js';
+import {MONO, rand, freshSeed, themed} from './common.js';
 export const SIZE = 7, KINDS = 5, BUDGET = 20, TARGET = 12;
 const COLORS = ['#FFD60A', '#7B2FF7', '#22D3EE', '#F472B6', '#A3E635'], BG = '#1A0B30', CELL = '#2A1050';
 
@@ -124,24 +124,26 @@ function create() {
   const onUp = () => { down = -1; };
   function draw() {
     if (!g || !W) return;
-    const p = geo(), b = view || st.grid; g.setTransform(dpr, 0, 0, dpr, 0, 0);
-    g.fillStyle = BG; g.fillRect(0, 0, W, H);
+    const p = geo(), b = view || st.grid, T = n => themed(cv, n, null);   // colour drawer: --gc-1 background, --gc-2 cells, --gc-3 highlights (select ring, hint, swap arrows); piece colours never change
+    const bg = T('--gc-1') || BG, ink = T('--gc-1-ink') || '#FFF', cell = T('--gc-2') || CELL, hl = T('--gc-3') || '#FFD60A';
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    g.fillStyle = bg; g.fillRect(0, 0, W, H);
     g.font = `bold 16px ${MONO}`; g.textBaseline = 'middle'; g.textAlign = 'left';
     shape(g, st.kind, 18, 15, 9); g.fillStyle = COLORS[st.kind]; g.fill();                               // target: the piece to collect, then progress / target
-    g.fillStyle = '#FFF'; g.fillText(`${Math.min(st.progress, 99)}/${st.target}`, 34, 15);
+    g.fillStyle = ink; g.fillText(`${Math.min(st.progress, 99)}/${st.target}`, 34, 15);
     g.textAlign = 'right'; g.fillText(String(Math.max(0, BUDGET - st.swaps)).padStart(2, '0'), W - 30, 15);   // swaps left, with a swap-arrows icon
-    g.strokeStyle = '#FFD60A'; g.lineWidth = 2; g.beginPath(); g.moveTo(W - 24, 11); g.lineTo(W - 10, 11); g.lineTo(W - 14, 7); g.moveTo(W - 10, 19); g.lineTo(W - 24, 19); g.lineTo(W - 20, 23); g.stroke();
+    g.strokeStyle = T('--gc-1-ink') || hl; g.lineWidth = 2; g.beginPath(); g.moveTo(W - 24, 11); g.lineTo(W - 10, 11); g.lineTo(W - 14, 7); g.moveTo(W - 10, 19); g.lineTo(W - 24, 19); g.lineTo(W - 20, 23); g.stroke();
     for (let i = 0; i < SIZE * SIZE; i++) {
       const x = p.x + (i % SIZE) * p.c, y = p.y + Math.floor(i / SIZE) * p.c, k = b[i];
-      g.fillStyle = CELL; g.fillRect(x + 1, y + 1, p.c - 2, p.c - 2);
+      g.fillStyle = cell; g.fillRect(x + 1, y + 1, p.c - 2, p.c - 2);
       if (k < 0) continue;
       const hit = flash.includes(i); shape(g, k, x + p.c / 2, y + p.c / 2, p.c * (hit ? 0.5 : 0.34));
       g.fillStyle = hit ? '#FFF' : COLORS[k]; g.fill(); g.strokeStyle = '#12081F'; g.lineWidth = 1.5; g.stroke();
       if (k === st.kind && !hit) { g.fillStyle = '#12081F'; g.beginPath(); g.arc(x + p.c / 2, y + p.c / 2, 1.8, 0, 7); g.fill(); }   // collected kind carries a dot
     }
-    if (sel >= 0) { g.strokeStyle = '#FFF'; g.lineWidth = 3; g.strokeRect(p.x + (sel % SIZE) * p.c + 2, p.y + Math.floor(sel / SIZE) * p.c + 2, p.c - 4, p.c - 4); }
+    if (sel >= 0) { g.strokeStyle = T('--gc-3') || '#FFF'; g.lineWidth = 3; g.strokeRect(p.x + (sel % SIZE) * p.c + 2, p.y + Math.floor(sel / SIZE) * p.c + 2, p.c - 4, p.c - 4); }
     if (!locked && !done && st.swaps === 0 && sel < 0) {             // first-move hint: pulsing ring on one legal piece
-      const m = findMove(st.grid)?.[0]; if (m != null) { g.strokeStyle = '#FFD60A'; g.lineWidth = 2.5; g.beginPath(); g.arc(p.x + (m % SIZE + 0.5) * p.c, p.y + (Math.floor(m / SIZE) + 0.5) * p.c, p.c * 0.42 + Math.sin(performance.now() / 160) * 2, 0, 7); g.stroke(); }
+      const m = findMove(st.grid)?.[0]; if (m != null) { g.strokeStyle = hl; g.lineWidth = 2.5; g.beginPath(); g.arc(p.x + (m % SIZE + 0.5) * p.c, p.y + (Math.floor(m / SIZE) + 0.5) * p.c, p.c * 0.42 + Math.sin(performance.now() / 160) * 2, 0, 7); g.stroke(); }
     }
   }
   let hintRaf = 0; const hintLoop = () => { if (done) return; if (st.swaps === 0 && !locked) draw(); hintRaf = requestAnimationFrame(hintLoop); };

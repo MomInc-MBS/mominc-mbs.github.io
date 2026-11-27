@@ -7,3 +7,5 @@ export function rand(st) {
   return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
 }
 export const freshSeed = () => ((Math.random() * 2 ** 31) >>> 0) || 1;
+/** Colour picked in the game-colour drawer: a CSS custom property inherited from the game's element (--gc-1..3, -ink, -edge), else the game's own constant. */
+export const themed = (el, name, fb) => { try { return (el && getComputedStyle(el).getPropertyValue(name).trim()) || fb; } catch { return fb; } };

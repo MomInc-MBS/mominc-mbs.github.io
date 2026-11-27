@@ -14,6 +14,7 @@ import {createGamePlay, mountSwitch} from './games/play.js';
 import {getChoice} from './games/choice.js';
 
 const KEY = 'mom-alarm-2048-web-v1', BEST = 'mom-alarm-2048-web-best-v1'; // BEST = apps.json web.bestKey
+const FREE = 'free';                                                      // the rounds key of free play (never an alarm attempt)
 const AKEY = 'adhd-alarm-board-v1';                                       // live alarm boards, one per occurrence attempt ({attempt: encoded board}; the old single {attempt, enc} is still read)
 // The shell is wordless: icons, digits and the user's own title text. Accessible names live in aria-label only (the installed name stays in metadata and notifications).
 const HTML = `<div class="al"><div class="al-stage"><canvas aria-hidden="true"></canvas></div>
@@ -58,8 +59,9 @@ export async function mountAlarm(host) {
   };
   // ---- extra alarm games: the attempt's game is fixed when its challenge first opens; 2048 stays the default and the fallback ---------------------------------
   let gid = '2048', swc = null;
-  const view = g => { gid = g; $('board').hidden = g !== '2048'; $('gbox').hidden = g === '2048'; $('play').classList.toggle('gm', g !== '2048'); if (g !== '2048') { gc?.close(); $('score').textContent = ''; } swc?.hide(mode !== 'alarm'); };
-  const play2048 = att => { gp.close(); const saved = att && boards()[att]; game = (saved && decode(saved)) || newGame(); view('2048'); draw(); };   // its own saved board, never a fake loss
+  const view = g => { gid = g; $('board').hidden = g !== '2048'; $('gbox').hidden = g === '2048'; $('play').classList.toggle('gm', g !== '2048'); gc?.close(); gc?.setGame(g); if (g !== '2048') $('score').textContent = ''; };   // the colour drawer follows the game on show
+  const freeBoard = () => { let saved = null; try { saved = localStorage.getItem(KEY); } catch {} return (saved && decode(saved)) || newGame(); };
+  const play2048 = att => { gp.close(); const saved = att !== FREE && att && boards()[att]; game = att === FREE ? freeBoard() : (saved && decode(saved)) || newGame(); view('2048'); draw(); };   // its own saved board (free play: the free board), never a fake loss
   const playGame = (att, g) => { view(g); gp.open(att, g); };
   const finishPlayed = async r => {                          // a game's terminal result: re-judged by R.finishGame; only the active occurrence's current attempt is accepted
     if (mode !== 'alarm' || !boundOcc) return false;
@@ -69,12 +71,11 @@ export async function mountAlarm(host) {
     if (r.outcome === 'won') ui?.say?.('gameDone');
     return true;
   };
-  const gp = createGamePlay({box: $('gbox'), isLive: live, onResult: finishPlayed, onFallback: () => { if (mode === 'alarm') play2048(R.attemptId(S, boundOcc)); }});
+  const gp = createGamePlay({box: $('gbox'), isLive: k => k === FREE || live(k), onResult: finishPlayed, onFallback: () => play2048(mode === 'alarm' ? R.attemptId(S, boundOcc) : FREE)});
   const show = playing => { $('play').hidden = !playing; setHost.classList.toggle('playing', playing); ui?.setPlaying(playing); syncKeys(); if (!playing) { gc?.close(); gp.close(); } size({}); };   // one CRT: the reminders app, or the 2048 board over it
   const startFree = () => {
     mode = 'free'; boundOcc = null; $('mode').innerHTML = icon('board2048'); bar(); gp.close();
-    let saved = null; try { saved = localStorage.getItem(KEY); } catch {}
-    game = (saved && decode(saved)) || newGame();
+    game = freeBoard();
     show(true); draw(); view('2048');
   };
   const startAlarm = occId => {
@@ -140,12 +141,13 @@ export async function mountAlarm(host) {
   const stopRepeat = () => { clearTimeout(repT); clearInterval(repI); repT = repI = 0; };
   const syncKeys = () => comp?.setKeys?.(!$('play').hidden ? false : !!ui?.canTab(-1), !$('play').hidden ? false : !!ui?.canTab(1));
   ui = mountSettings(setHost, A, {embedded: true, onGame: startFree, onState: () => { stopRepeat(); syncKeys(); }});
-  gc = mountGameColors($('play'));
+  gc = mountGameColors($('play'), {onToggle: o => { if (gid !== '2048') o ? gp.pause() : gp.resume(); }});   // real-time games hold still while the drawer is open
+  $('play').addEventListener('gc-change', () => gp.refresh());                                           // a swatch repaints a paused / idle game at once
   swc = mountSwitch($('play').querySelector('header'), {current: () => gid, onPick: g => {   // in-play switch: stage, deadline and ringing are untouched; the old round is destroyed (its callbacks go stale)
-    const att = mode === 'alarm' && boundOcc && R.attemptId(S, boundOcc);
+    const att = mode === 'alarm' ? boundOcc && R.attemptId(S, boundOcc) : FREE;   // free play: a fixed key, never an alarm
     if (!att || g === gid) return;
     if (g === '2048') { gp.setGame(att, '2048'); play2048(att); } else playGame(att, g);
-  }}); swc.hide(true);   // game-only colour panel: rail/handle + drawer inside the glass
+  }});   // game-only colour panel: rail/handle + drawer inside the glass
   $('play').addEventListener('click', e => { const k = e.target.closest?.('.gc-root [data-k]')?.dataset.k; if (k) ui.say(k); }, true);   // MOM's subtitle for each colour control
   const openSet = () => { show(false); ui.refresh(); };   // the reminders app IS the default view; this returns to it from the board
   const offPlay = A.on('playChallenge', e => startAlarm(e?.occId));

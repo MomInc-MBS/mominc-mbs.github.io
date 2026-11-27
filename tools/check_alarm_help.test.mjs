@@ -49,3 +49,15 @@ test('draft wording says selected / ready to arm, and saved only when saveUi is 
   assert.match(helpFor('save', {S: {...S, saveUi: 'saved', draft: null}, el: null}).t, /^Saved and armed/);
   assert.match(helpFor('save', {S: {...S, picked: false}, el: null}).t, /Nothing is saved/);
 });
+
+test('typer: key() fires once per typed non-newline character; skip and instant never burst', () => {
+  const tm = fakeTimers(), keys = [];
+  const t = createTyper({render: () => {}, key: c => keys.push(c), setT: tm.setT, clearT: tm.clearT});
+  t.say('Hi, you.\nOk'); while (tm.run());
+  assert.equal(keys.join(''), 'Hi, you.Ok', 'every char, no newline');
+  keys.length = 0; t.say('A long line to skip.'); tm.run(); tm.run(); const typed = keys.length; t.skip();
+  assert.equal(keys.length, typed, 'skip adds no clacks');
+  const r = createTyper({render: () => {}, key: c => keys.push(c), instant: () => true, setT: tm.setT, clearT: tm.clearT}); keys.length = 0; r.say('Instant line.');
+  assert.ok(keys.length <= 1, 'instant reveal is at most one click');
+  const bad = createTyper({render: () => {}, key: () => { throw new Error('x'); }, setT: tm.setT, clearT: tm.clearT}); assert.doesNotThrow(() => { bad.say('Fine.'); while (tm.run()); });
+});
