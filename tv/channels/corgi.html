@@ -132,6 +132,25 @@ more than one reflective surface.
      joystick in the prior build (measured live: 15% clipped it at 18%), just taller to carry the taper. */
   .cc-nose{position:absolute; left:50%; bottom:-6%; height:19%; max-height:120px; width:auto; aspect-ratio:1.3; transform:translateX(-50%); z-index:6; pointer-events:none; opacity:.92}
   .cc-nose svg{width:100%; height:100%; display:block; filter:drop-shadow(0 -2px 3px rgba(0,0,0,.4))}
+  /* Looks (apps/corgi + corgi-looks.mjs): --look-scale is 1 in the story, so nothing moves there. Claws sit above the toe tips (the app's paw SVGs carry overflow:visible themselves). */
+  .cc-nose,.cc-paw{scale:var(--look-scale,1); transform-origin:50% 100%}
+  /* the locker grip paw: the right paw, underside toward the camera, rising from the bottom edge. The game adds .on to show it and .pull to shut the door. */
+  .cc-grip{position:absolute; right:12%; bottom:-6%; width:23%; aspect-ratio:.5; z-index:7; pointer-events:none; opacity:0; transform:translate(10%,112%) rotate(-8deg);
+      transition:transform .42s cubic-bezier(.3,.7,.3,1), opacity .2s ease; transform-origin:50% 100%}
+  .cc-grip svg{width:100%; height:100%; display:block; filter:drop-shadow(0 -3px 4px rgba(0,0,0,.45))}
+  .cc-grip.on{opacity:1; transform:translate(0,10%) rotate(-8deg)}
+  .cc-grip.pull{opacity:1; transform:translate(-125%,16%) rotate(-18deg); transition-duration:.34s}
+  @media (prefers-reduced-motion:reduce){.cc-grip{transition-duration:.01s}}
+  /* Endless locker UI (#ccHide exists only in the app): a paper dog-tag with a paw stamp, and a printed-stamp prompt. Ids beat the engine's injected .cc-use pill. */
+  #cc #ccHide{right:8px; bottom:112px; min-width:92px; min-height:48px; padding:6px 12px 6px 22px; font:700 13px/1.1 "Special Elite","Courier New",monospace; letter-spacing:.08em; text-transform:uppercase;
+      color:#211d17; background:#e9dfc4; border:2px solid #211d17; border-radius:4px 16px 16px 4px; box-shadow:2px 2px 0 #211d17,0 0 0 2px rgba(233,223,196,.35); position:absolute}
+  #cc #ccHide::before{content:""; position:absolute; left:6px; top:50%; width:8px; height:8px; margin-top:-4px; border-radius:50%; border:2px solid #211d17; background:#1a130d}
+  #cc #ccHide svg{width:16px; height:16px; color:#643d83}
+  #cc #ccHide[data-state="exit"]{background:#643d83; color:#f6efdc; box-shadow:inset 0 0 0 2px #f6efdc,2px 2px 0 #211d17} #cc #ccHide[data-state="exit"] svg{color:#f6efdc}
+  #cc #ccHide[data-state="wait"]{opacity:.7; border-style:dashed; box-shadow:none; cursor:default; color:#665a43} #cc #ccHide[data-state="clear"]{background:#d9cba3}
+  #cc #ccHide:active:not([data-state="wait"]){transform:translate(2px,2px); box-shadow:0 0 0 #211d17}
+  #cc #ccHide:focus-visible{outline:3px solid #972f40; outline-offset:2px}
+  #cc:has(#ccHide) .cc-prompt{font:700 12px/1.2 "Special Elite","Courier New",monospace; letter-spacing:.1em; color:#211d17; background:#e9dfc4; border:2px solid #972f40; outline:1px solid #e9dfc4; outline-offset:2px; padding:5px 12px; transform:translateX(-50%) rotate(-1.5deg); box-shadow:2px 2px 0 rgba(0,0,0,.6)}
 
   /* left/top set every frame in JS to the trophy case's own projected screen position -- a surface in the
      world, not a HUD panel -- so this only carries size/look. Small: it's a pane of glass in a case, not a
@@ -427,6 +446,7 @@ more than one reflective surface.
           <path d="M33 30 C38 24 46 25 49 32 C45 29 39 29 35 34 Z" fill="rgba(255,255,255,.22)"/><path d="M67 30 C62 24 54 25 51 32 C55 29 61 29 65 34 Z" fill="rgba(255,255,255,.22)"/>
           <path d="M24 30 C30 14 40 8 50 7 C42 11 33 18 28 34 Z" fill="rgba(255,255,255,.18)"/></svg>
       </div>
+      <div class="cc-grip" aria-hidden="true"></div>
       <div class="cc-vhs-vig" aria-hidden="true"></div>
       <div class="cc-burst" id="ccBurst" aria-hidden="true"></div>
       <div class="cc-prompt" id="ccPrompt" aria-hidden="true"></div>

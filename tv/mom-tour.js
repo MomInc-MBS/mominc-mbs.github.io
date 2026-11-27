@@ -213,7 +213,7 @@
     if (rec.type === 'pwa' && rec.browserPlay !== false) return {href: '/apps/' + app + '/', label: 'OPEN ' + rec.name.toUpperCase()};
     return rec.type === 'pwa' ? {href: '/apps/' + app + '/', label: 'INSTALL ' + rec.name.toUpperCase()} : null;
   }
-  const NAMES = {misinformation: "MOM's: Misinformation Machine", fuel: "MOM's: Nitro Fuel", jump: "MOM's: Coach Jump", lilboyfriend: "MOM's: Little Boyfriend LIVE", alarm: "MOM's: 2048 Reminder", corgi: "MOM's: Corgi Endless", hand: "MOM's: Hand Customizer", coach: "MOM's: Coach MYR5"};
+  const NAMES = {misinformation: "MOM's: Misinformation Machine", fuel: "MOM's: Nitro Fuel", jump: "MOM's: Coach Jump", lilboyfriend: "MOM's: Little Boyfriend LIVE", alarm: "MOM's: 2048 Reminder", corgi: "Mom's Endless Corgi Workday", hand: "MOM's: Hand Customizer", coach: "MOM's: Coach MYR5"};
 
   /* ---- focus: gameplay, cutscenes, reveals and offers keep it; rewards wait ---- */
   let holds = 0;

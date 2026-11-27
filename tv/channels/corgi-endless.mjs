@@ -444,11 +444,11 @@ export function perkEffects(traits) {
 
 // ---------- run state + offers. A run is a plain object; every function returns a new one.
 export const STORE_V = 2, STORE_KEY_V1 = 'corgi-endless-v1';
-export const emptyStore = () => ({ v: STORE_V, best: { section: 0, traits: emptyTraits() }, run: null, settings: { sound: true, look: 1 }, legacy: null });
+export const emptyStore = () => ({ v: STORE_V, best: { section: 0, traits: emptyTraits() }, run: null, settings: { sound: true, look: 1, appearance: 'animal_001', ambience: 0.5 }, legacy: null });
 // genVersion = layout generator of the CURRENT section; nextGenVersion = what the next section (and a new run) uses.
 export function newRun(seed) {
   return { v: STORE_V, seed: seed >>> 0, genVersion: GEN_VERSION, nextGenVersion: GEN_VERSION, section: 1, status: 'active', quarters: BASE_QUARTERS, traits: emptyTraits(),
-    collected: [], papers: 0, offerIdx: 0, pendingOffer: null, picked: [] };
+    collected: [], papers: 0, offerIdx: 0, pendingOffer: null, picked: [], healed: [] };
 }
 export const maxQuarters = run => perkEffects(run.traits).maxQuarters;
 const discovered = (run, id) => count(run.traits && run.traits[id]) > 0;
@@ -467,11 +467,20 @@ export function pickOffer(run, index, store) {
   if ((run.picked || []).includes(offer.objectiveId)) return { error: 'already picked' };
   const owned = count(run.traits[c.perk]); if (owned + 1 > MAX_STACK) return { error: 'stack limit' };
   const before = cleanTraits(run.traits), traits = { ...before, [c.perk]: owned + 1 }, max = perkEffects(traits).maxQuarters;
-  const quarters = Math.min(max, run.quarters + (c.perk === 'heart' ? 1 : 0));        // +1 quarter only on a committed new Heart stack
+  let next = { ...run, traits, quarters: Math.min(max, run.quarters) };
+  if (c.perk === 'heart') next = awardHealing(next, 'pick:' + offer.objectiveId).run;  // +1 quarter only on a committed new Heart stack
   const best = store ? { ...store.best, traits: cleanTraits(store.best.traits) } : null;
   if (best) best.traits[c.perk] = Math.max(best.traits[c.perk], traits[c.perk]);
   const allTen = TRAIT_IDS.every(id => traits[id] > 0) && !TRAIT_IDS.every(id => before[id] > 0);   // true once, on the pick that completes the set
-  return { run: { ...run, traits, quarters, pendingOffer: null, picked: [...(run.picked || []), offer.objectiveId] }, best, allTen };
+  return { run: { ...next, pendingOffer: null, picked: [...(run.picked || []), offer.objectiveId] }, best, allTen };
+}
+// THE healing award: every heal path routes here. One id = one award, ever (recorded even at full health); +1 quarter, clamped; never a multiplier.
+export const HEAL_QUARTERS = 1, HEALED_KEEP = 32;
+export function awardHealing(run, awardId) {
+  const healed = Array.isArray(run.healed) ? run.healed : [];
+  if (run.status !== 'active' || typeof awardId !== 'string' || healed.includes(awardId)) return { run, delta: 0 };
+  const delta = Math.max(0, Math.min(HEAL_QUARTERS, maxQuarters(run) - run.quarters));
+  return { run: { ...run, quarters: run.quarters + delta, healed: [...healed, awardId].slice(-HEALED_KEEP) }, delta };
 }
 // capture: four quarter-hearts; at zero the run ends and run powers clear (bests live in the store)
 export function capture(run) {
@@ -488,7 +497,9 @@ export function nextSection(run, store) {
 // v1 run: {hearts, slots:[{id,rank}|null x2], pendingOffer:{choices:[{perk,kind}]}, pendingMilestone, ms}; v1 best: {section, perks:{id:rank}}.
 // Each old rank becomes four stacks (old additive investments were four times the new ones). Health becomes quarters, clamped to the computed max, no bonus heal.
 const RANK_TO_STACKS = 4;
-const cleanSettings = s => ({ sound: !s || s.sound !== false, look: Math.min(2, Math.max(0.5, Number(s && s.look) || 1)) });
+const amb = v => (typeof v === 'number' && Number.isFinite(v)) ? Math.min(1, Math.max(0, v)) : 0.5;
+export const cleanSettings = s => ({ sound: !s || s.sound !== false, look: Math.min(2, Math.max(0.5, Number(s && s.look) || 1)),
+  appearance: s && typeof s.appearance === 'string' && /^animal_\d{3}$/.test(s.appearance) ? s.appearance : 'animal_001', ambience: amb(s && s.ambience) });
 const cleanOffer = (po, run) => {
   if (!po || typeof po.objectiveId !== 'string' || !Array.isArray(po.choices)) return null;
   const ids = [...new Set(po.choices.map(c => c && c.perk).filter(id => TRAIT_IDS.includes(id)))].slice(0, 3);
@@ -519,7 +530,8 @@ function cleanRun(r) {
   const traits = cleanTraits(r.traits), max = perkEffects(traits).maxQuarters, over = r.status === 'over';
   const run = { v: STORE_V, seed: r.seed >>> 0, genVersion: r.genVersion === 1 ? 1 : GEN_VERSION, nextGenVersion: GEN_VERSION, section: Math.max(1, count(r.section)), status: over ? 'over' : 'active',
     quarters: over ? 0 : Math.min(max, Math.max(1, count(r.quarters))), traits, collected: Array.isArray(r.collected) ? r.collected.slice(0, 64) : [], papers: count(r.papers), offerIdx: count(r.offerIdx),
-    pendingOffer: null, picked: Array.isArray(r.picked) ? r.picked.filter(x => typeof x === 'string').slice(0, 8) : [] };
+    pendingOffer: null, picked: Array.isArray(r.picked) ? r.picked.filter(x => typeof x === 'string').slice(0, 8) : [],
+    healed: Array.isArray(r.healed) ? r.healed.filter(x => typeof x === 'string').slice(-HEALED_KEEP) : [] };
   if (!over) run.pendingOffer = cleanOffer(r.pendingOffer, run);
   const sc = r.scare;   // corner-scare scheduler state: copied field by field, validated again by corgi-scare.mjs on restore
   if (!over && sc && typeof sc === 'object') run.scare = { v: sc.v, phase: sc.phase, remaining: sc.remaining, rng: sc.rng, last: sc.last };

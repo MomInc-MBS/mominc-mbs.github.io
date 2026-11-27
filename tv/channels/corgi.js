@@ -64,6 +64,7 @@ import { PAPER_HEARTS, restoreDream, losePaperHeart, restartDream, canOpenBackDo
 import { createPaperHearts, schoolCortisol, heartbeatBpm } from "./corgi-hearts.mjs";
 import * as EL from "./corgi-endless.mjs";
 import * as SC from "./corgi-scare.mjs";
+import * as LK from "./corgi-locker.mjs";
 
 const THREE_URL = "/tv/assets/armie-intro/vendor/three.module.js";
 
@@ -96,7 +97,7 @@ export default {
     // and deliberately NOT ctx.mode, whose own default would swallow the documentElement fallback below.
     // Endless is selected ONLY by the installed-app host handing in ctx.endless; no query string or story mode can reach it.
     const ENDLESS = !!(ctx && ctx.endless);
-    const APP_OFFER = "MOM'S: CORGI ENDLESS UNLOCKED — INSTALL THE APP";
+    const APP_OFFER = "MOM'S ENDLESS CORGI WORKDAY UNLOCKED — INSTALL THE APP";
     const MODE = ENDLESS ? "live" : ((((ctx.mbs && ctx.mbs.mode) || document.documentElement.dataset.mode ||
         (document.documentElement.classList.contains("mbs-live") ? "live" : "public")) === "live") ? "live" : "public");
     cc.dataset.mode = MODE;
@@ -303,7 +304,9 @@ export default {
       scare = SC.createCorgiScare({ seed: (run.seed ^ 0x5CA4E) >>> 0, state: run.scare, onStart: e => scareHook.start(e), onEnd: e => scareHook.end(e) });
     }
     const scareHook = { start() {}, end() {} };
-    const persistRun = () => { if (!store) return; if (scare && run) run.scare = scare.serialize(); store.run = run; EL.saveStore(localStorage, store); };
+    const persistRun = () => { if (!store) return; if (scare && run) run.scare = scare.serialize(); store.run = run;
+      const disk = EL.loadStore(localStorage); if (disk.best.section) store.settings = disk.settings;   // the app's menu writes settings to the same record: never write a stale copy back
+      EL.saveStore(localStorage, store); };
     const LEVELS = ENDLESS ? [ENDLESS_LEVEL] : MODE === "public" ? [LEVELS_PUBLIC[0], {...LEVELS_LIVE[0], doorLabel:"THE BACK OF THE SCHOOL", crazy:1, pages:LEVELS_PUBLIC[0].pages.map((p,i)=>({...p,door:LEVELS_LIVE[0].pages[i].door}))}] : LEVELS_LIVE;
     if (MODE === 'public' && (state.lives === 0 || state.dreamPhase === 'done')) {
       state.level = 0; state.found[0] = [true, true, true];
@@ -608,7 +611,8 @@ export default {
     // the newspaper up the world kept walking, kept draining stamina, kept burning the flashlight and kept
     // letting the suited figure close the distance. Only the KEYBOARD was muted, and only for keys pressed
     // after the book went up: a key already held stayed held.
-    const hunting = () => cc.dataset.view === "hunt" && !overlayOpen;
+    let appPaused = false, audioHeld = false;   // ENDLESS only: the app's cc:pause / a hidden tab hold the whole hall (loop, chase, timers, sound)
+    const hunting = () => cc.dataset.view === "hunt" && !overlayOpen && !appPaused;
     function showHunt() { cc.dataset.view = "hunt"; huntStage.hidden = false; bookStage.hidden = true; deskStage.hidden = true; announce("Back in the hallway."); }
     function showBook() { cc.dataset.view = "book"; huntStage.hidden = true; bookStage.hidden = false; deskStage.hidden = true; renderBook(); }
     function showDesk() { cc.dataset.view = "desk"; huntStage.hidden = true; bookStage.hidden = true; deskStage.hidden = false; announce("At the big boss's desk. It wants a code."); }
@@ -782,15 +786,18 @@ export default {
     }
     if (MODE === "public") setupOfficeAmbience();
     let musicAudio=null,musicBeat=0,alarmAt=-10;
-    function musicTone(hz,duration,level,type='sine'){if(!musicAudio)return;const t=musicAudio.currentTime,o=musicAudio.createOscillator(),g=musicAudio.createGain();o.type=type;o.frequency.value=hz;g.gain.setValueAtTime(level,t);g.gain.exponentialRampToValueAtTime(.0001,t+duration);o.connect(g).connect(musicAudio.destination);o.start();o.stop(t+duration);o.onended=()=>{o.disconnect();g.disconnect();};}
-    function alarmSound(){if(!musicAudio||musicAudio.currentTime-alarmAt<3)return;alarmAt=musicAudio.currentTime;const o=musicAudio.createOscillator(),g=musicAudio.createGain(),t=musicAudio.currentTime;o.type='triangle';o.frequency.setValueAtTime(440,t);o.frequency.linearRampToValueAtTime(880,t+.6);o.frequency.linearRampToValueAtTime(440,t+1.2);g.gain.setValueAtTime(.05,t);g.gain.exponentialRampToValueAtTime(.0001,t+1.4);o.connect(g).connect(musicAudio.destination);o.start();o.stop(t+1.4);o.onended=()=>{o.disconnect();g.disconnect();};}
-    function startMusic(){if(musicAudio)return;if(ENDLESS&&!store.settings.sound)return;try{musicAudio=ctx.audio(new AudioContext());musicAudio.resume();}catch{return;}if(scare){const sg=musicAudio.createGain();sg.gain.value=1;sg.connect(musicAudio.destination);scare.attachAudio({ctx:musicAudio,dest:sg});if(scareGate)scare.startAmbience();}ctx.interval(()=>{if(!LEVELS[state.level].handAuthored){const notes=[261.63,329.63,392,493.88,440,349.23,293.66,392];musicTone(notes[musicBeat%8],.65,.018);if(musicBeat%4===0)musicTone(notes[musicBeat%8]/2,1.5,.012,'triangle');musicBeat++;}},450);}
+    const quiet=()=>!musicAudio||audioHeld;   // audioHeld: an ENDLESS pause; nothing may queue on a held context
+    function musicTone(hz,duration,level,type='sine'){if(quiet())return;const t=musicAudio.currentTime,o=musicAudio.createOscillator(),g=musicAudio.createGain();o.type=type;o.frequency.value=hz;g.gain.setValueAtTime(level,t);g.gain.exponentialRampToValueAtTime(.0001,t+duration);o.connect(g).connect(musicAudio.destination);o.start();o.stop(t+duration);o.onended=()=>{o.disconnect();g.disconnect();};}
+    function alarmSound(){if(quiet()||musicAudio.currentTime-alarmAt<3)return;alarmAt=musicAudio.currentTime;const o=musicAudio.createOscillator(),g=musicAudio.createGain(),t=musicAudio.currentTime;o.type='triangle';o.frequency.setValueAtTime(440,t);o.frequency.linearRampToValueAtTime(880,t+.6);o.frequency.linearRampToValueAtTime(440,t+1.2);g.gain.setValueAtTime(.05,t);g.gain.exponentialRampToValueAtTime(.0001,t+1.4);o.connect(g).connect(musicAudio.destination);o.start();o.stop(t+1.4);o.onended=()=>{o.disconnect();g.disconnect();};}
+    function startMusic(){if(musicAudio)return;if(ENDLESS&&!store.settings.sound)return;try{musicAudio=ctx.audio(new AudioContext());musicAudio.resume();}catch{return;}if(scare){const sg=musicAudio.createGain();sg.gain.value=1;sg.connect(musicAudio.destination);scare.attachAudio({ctx:musicAudio,dest:sg,rand:EL.mulberry32((run.seed^0xA3B1E)>>>0)});scare.setAmbience(store.settings.ambience);if(scareGate)scare.startAmbience();}ctx.interval(()=>{if(!LEVELS[state.level].handAuthored){const notes=[261.63,329.63,392,493.88,440,349.23,293.66,392];musicTone(notes[musicBeat%8],.65,.018);if(musicBeat%4===0)musicTone(notes[musicBeat%8]/2,1.5,.012,'triangle');musicBeat++;}},450);}
     ctx.on(viewport,'pointerdown',startMusic,{once:true});ctx.on(viewport,'keydown',startMusic,{once:true});
     // ---------------------------------------------------------------- 2026-10-03 dark-school sound, all synthesised
     // from musicAudio (the one context startMusic creates on the first gesture; ctx.audio closes it on unmount, so
     // every node below dies with it). Ian: "we need haunting children laughter in the dark version." childLaugh() is a
     // far-off giggle in a big empty hall; sniffSound() is the crawler's nose; doorCreak() is the break-room door.
-    let hallVerb = null, noiseBuf = null;
+    let hallVerb = null, noiseBuf = null, hallLP = null;
+    // ENDLESS: general hall sound (laughter + its reverb) runs through one lowpass, so a locker can muffle the hall while the pursuer stays clear
+    const hallOut = () => { if (!ENDLESS) return musicAudio.destination; if (!hallLP) { hallLP = musicAudio.createBiquadFilter(); hallLP.type = 'lowpass'; hallLP.frequency.value = 18000; hallLP.connect(musicAudio.destination); } return hallLP; };
     function noiseBuffer() {
       if (noiseBuf) return noiseBuf;
       const n = musicAudio.sampleRate; noiseBuf = musicAudio.createBuffer(1, n, n);
@@ -811,16 +818,16 @@ export default {
       const conv = a.createConvolver(); conv.buffer = ir;
       const lp = a.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 2600;
       const wet = a.createGain(); wet.gain.value = 0.6;
-      conv.connect(lp); lp.connect(wet); wet.connect(a.destination);
+      conv.connect(lp); lp.connect(wet); wet.connect(hallOut());
       return hallVerb = conv;
     }
     function childLaugh(layer, t0) {
-      if (!musicAudio) return;
+      if (quiet()) return;
       const a = musicAudio, t = t0 || a.currentTime + 0.03;
       const bus = a.createGain(); bus.gain.value = layer ? 0.55 : 1;
       const pan = a.createStereoPanner(), p0 = rnd() * 1.6 - 0.8; pan.pan.setValueAtTime(p0, t);
       const dry = a.createGain(); dry.gain.value = 0.5;
-      bus.connect(pan); pan.connect(dry); dry.connect(a.destination); pan.connect(hallReverb());
+      bus.connect(pan); pan.connect(dry); dry.connect(hallOut()); pan.connect(hallReverb());
       const n = 4 + Math.floor(rnd() * 4), shift = layer ? Math.pow(2, -3 / 12) : 1;   // second child a minor third lower
       let f = (320 + rnd() * 140) * shift, at = t, lastOsc = null;
       for (let i = 0; i < n; i++) {
@@ -842,7 +849,7 @@ export default {
     }
     // the crawler's nose: two or three quick in-breaths and one longer exhale, panned to his side, quieter far away
     function sniffSound(pan, dist) {
-      if (!musicAudio) return;
+      if (quiet()) return;
       const a = musicAudio, prox = Math.max(0.25, Math.min(1, 1 - (dist - 2) / 8 * 0.75));
       const sp = a.createStereoPanner(); sp.pan.value = Math.max(-1, Math.min(1, pan || 0)); sp.connect(a.destination);
       let t = a.currentTime + 0.02; const puffs = 2 + Math.floor(rnd() * 2);
@@ -854,10 +861,21 @@ export default {
       noiseBurst(t, 0.22, 'lowpass', 600, 0.7, 0.02 * prox, sp);
       ctx.timeout(() => { try { sp.disconnect(); } catch {} }, 1500);
     }
+    // ENDLESS creature cues (never muffled, never from rnd(): sound must not move the game's random stream): a tooth gnash, and a padded hand/knee step
+    function teethSound(dist) {
+      if (quiet()) return;
+      const a = musicAudio, prox = Math.max(0.3, Math.min(1, 1.3 - dist / 4)); let t = a.currentTime + 0.02;
+      for (let i = 0, n = 3 + (Math.random() < 0.5 ? 1 : 0); i < n; i++) { noiseBurst(t, 0.03, 'bandpass', 3000 + Math.random() * 800, 2.5, 0.06 * prox, a.destination); noiseBurst(t + 0.004, 0.05, 'lowpass', 520, 0.7, 0.035 * prox, a.destination); t += 0.085 + Math.random() * 0.05; }
+    }
+    function creatureStep(dist) {
+      if (quiet() || dist > 7) return;
+      const a = musicAudio, prox = Math.max(0, 1 - dist / 7), t = a.currentTime + 0.01;
+      noiseBurst(t, 0.06, 'lowpass', 260, 0.8, 0.05 * prox, a.destination); noiseBurst(t + 0.02, 0.09, 'bandpass', 1300, 1.5, 0.008 * prox, a.destination);   // pad thud + a little drag
+    }
     // the break-room door: a slow sawtooth groan sweeping 180 -> 95 Hz through a bandpass that rides at 3x the
     // pitch, 11 Hz tremolo, then a soft wooden clack as the leaf reaches the stop
     function doorCreak() {
-      if (!musicAudio) return;
+      if (quiet()) return;
       const a = musicAudio, t = a.currentTime + 0.02, o = a.createOscillator(), bp = a.createBiquadFilter(), g = a.createGain();
       o.type = 'sawtooth'; o.frequency.setValueAtTime(180, t); o.frequency.linearRampToValueAtTime(95, t + 0.9);
       bp.type = 'bandpass'; bp.Q.value = 4; bp.frequency.setValueAtTime(540, t); bp.frequency.linearRampToValueAtTime(285, t + 0.9);
@@ -1657,7 +1675,7 @@ export default {
             v.set(0.27, SPINE - 0.06, 0).applyEuler(torso.rotation); armR.upper.position.set(v.x, HIP_Y + v.y, HIP_Z + v.z);
           }
           layout(0);
-          g.userData.rig = { head, neck, torso, armL, armR, legL, legR, hands };
+          g.userData.rig = { head, neck, torso, armL, armR, legL, legR, hands, jaw };
           g.userData.rest = rest; g.userData.layout = layout;
 
           // the briefcase is the OFFICE boss's: hung from his right hand there, absent in the dark school.
@@ -1723,6 +1741,7 @@ export default {
         // Capture is guarded once for both monster contact and static overload.
         function doCapture() {
           if (caught || transitioning) return;
+          if (ENDLESS && !damageOk(performance.now())) return;   // the one eligibility check, at application time (locker states, protection)
           caught = true;
           burstEl.classList.remove('go'); void burstEl.offsetWidth; burstEl.classList.add('go');
           monster.visible = false; ghost.active = false; creep.active = false;
@@ -1835,7 +1854,7 @@ export default {
           // it), so if the dog is still on the wake screen when it fires it waits, rather than being skipped as before.
           (function () { const dx = DOOR_X, builtLevel = levelGroup, dark = !!LEVELS[idx].handAuthored; const opener = () => {
             if (builtLevel !== levelGroup || caught || state.dreamPhase === 'done') return;
-            if (transitioning) { if (dark) ctx.timeout(opener, 500); return; }
+            if (transitioning || appPaused) { if (dark) ctx.timeout(opener, 500); return; }
             haunt(new THREE.Vector3(dx - 2, 0, 0), new THREE.Vector3(dx - 8, 0, 0), 6000);
           }; ctx.timeout(opener, 3200); })();
           scheduleAmbient();
@@ -1878,19 +1897,22 @@ export default {
         }
         function tickChase(now, dt, centered, onscreen) {
           const c = chase, mp = monster.position;
+          const goal = ENDLESS ? lockerGoal() : null;   // a locker encounter (or a hidden dog) steers him; the dog is not a target then
+          if (goal) centered = false;                   // watching through the slit never freezes a committed inspection/pass
+          if (goal && goal.hold) { if (!goal.patrol) lockerInspect(now, dt); else c.sniffing = false; return; }
           if (centered) {   // watched dead-on: he freezes and stares (pose is held by poseCrawl)
             c.sniffing = false; if (c.nextSniffAt < now + 600) c.nextSniffAt = now + 600; return;
           }
           if (c.sniffing) { if (now - c.sniffT0 >= c.sniffDur) { c.sniffing = false; c.nextSniffAt = now + 2500 + rnd() * 2500; } return; }
-          if (now >= c.nextSniffAt) {
+          if (!goal && now >= c.nextSniffAt) {
             c.sniffing = true; c.sniffT0 = now; c.sniffDur = 700 + rnd() * 400;
             sniffSound(Math.max(-1, Math.min(1, monsterVec.x)), Math.hypot(mp.x - player.x, mp.z - player.z));
             return;
           }
-          const cdx = player.x - mp.x, cdz = player.z - mp.z, cd = Math.hypot(cdx, cdz) || 1;
-          if (cd < 0.45) return;
+          const cdx = (goal ? goal.x : player.x) - mp.x, cdz = (goal ? goal.z : player.z) - mp.z, cd = Math.hypot(cdx, cdz) || 1;
+          if (!goal && cd < 0.45) return;
           const step = c.speed * dt, x0 = mp.x, z0 = mp.z;
-          if (ENDLESS) endlessMove(mp, step);
+          if (ENDLESS) { endlessMove(mp, step, goal); if (goal) lockerStep([x0, z0], [mp.x, mp.z], dt); }
           else {
           // same per-axis slide as the player: each axis tested against the frame-START position, never chained
           const nx = x0 + cdx / cd * step; if (!monsterBlocked(nx, z0)) mp.x = nx;
@@ -1904,7 +1926,7 @@ export default {
           c.winT += dt; c.winMoved += moved;
           if (c.winT >= 2.5) {
             const stuck = c.winMoved < 0.15; c.stuckFor = stuck ? c.stuckFor + c.winT : 0;
-            if (stuck && cd > 4 && !onscreen) relocateMonster(3, 8);
+            if (stuck && cd > 4 && !onscreen && !goal) relocateMonster(3, 8);   // an encounter never teleports him (its own watchdog re-plans)
             c.winT = 0; c.winMoved = 0;
           }
         }
@@ -1917,7 +1939,9 @@ export default {
           const mv = Math.hypot(monster.position.x - c.px, monster.position.z - c.pz); c.px = monster.position.x; c.pz = monster.position.z;
           const moved = mv < 0.6 ? mv : 0;   // a relocation teleport is not a stride
           if (moved > 1e-5 && !centered) {
+            const half0 = Math.floor(c.phase / Math.PI);
             c.phase += moved / 0.9 * Math.PI * 2;
+            if (ENDLESS && Math.floor(c.phase / Math.PI) !== half0) creatureStep(Math.hypot(monster.position.x - player.x, monster.position.z - player.z));   // one padded step per half stride
             const s = Math.sin(c.phase), k = Math.cos(c.phase);
             R.armL.upper.rotation.x = rest.armU - 0.35 * s; R.armR.upper.rotation.x = rest.armU + 0.35 * s;
             R.legR.upper.rotation.x = rest.legU - 0.35 * s; R.legL.upper.rotation.x = rest.legU + 0.35 * s;
@@ -1926,8 +1950,10 @@ export default {
             c.sway = Math.sin(c.phase) * 0.04;
           }
           const pdx = player.x - monster.position.x, pdz = player.z - monster.position.z, pd = Math.hypot(pdx, pdz);
-          c.dip += ((c.sniffing ? 1 : 0) - c.dip) * (1 - Math.pow(0.8, dt * 60));
-          if (c.sniffing) {   // two side-to-side swings inside the pause
+          const insp = ENDLESS && inspectSince > 0;   // the locker inspection pose: head up at the slit, nosing side to side, short dips
+          c.dip += ((insp ? (Math.sin((now - inspectSince) / 190) > 0.55 ? 0.2 : 0.08) : c.sniffing ? 1 : 0) - c.dip) * (1 - Math.pow(0.8, dt * 60));
+          if (insp) { const u = (now - inspectSince) / 1000; c.hy = 0.28 * Math.sin(u * 2.7); c.hp = rest.headP - 0.22 + 0.06 * Math.sin(u * 5.1); }
+          else if (c.sniffing) {   // two side-to-side swings inside the pause
             const u = Math.min(1, (now - c.sniffT0) / c.sniffDur);
             c.hy = 0.3 * Math.sin(u * Math.PI * 4); c.hp = rest.headP;
           } else {
@@ -1936,6 +1962,7 @@ export default {
             c.hy += (Math.max(-1, Math.min(1, rel)) - c.hy) * k; c.hp += (tp - c.hp) * k;
           }
           R.head.rotation.y = c.hy; R.head.rotation.x = c.hp + 0.6 * c.dip;
+          if (ENDLESS) R.jaw.position.y = -0.14 - (now < gnashUntil ? 0.035 * Math.abs(Math.sin(now / 42)) : 0);   // the locker gnash: teeth chatter where the slit can see them
           R.torso.rotation.z = c.sway;
           monster.userData.layout(c.dip);
         }
@@ -2039,7 +2066,7 @@ export default {
         // public/live story never reaches it. Pure rules live in corgi-endless.mjs (EL).
         // ======================================================================================================
         const DARK_PAL = [0x6b3a8a, 0x1c6b5a, 0x8a5a1c, 0xb0203a, 0x203ab0], BRIGHT_PAL = [0xd8dde6, 0xdfe6df, 0xe9e3c8, 0xe3d8e6, 0xd9e6e8];
-        let fx = EL.perkEffects(null), visionDots = [], trail = null, dangerRing = null, chPath = null, chAt = 0, chIdx = 1;
+        let fx = EL.perkEffects(null), visionDots = [], trail = null, dangerRing = null, chPath = null, chAt = 0, chIdx = 1, chKey = "";
         let scentAt = 0, earsAt = 0, lastVibe = 0, wallRects = [];
         const applyFx = () => { fx = EL.perkEffects(run.traits); cc.dataset.catchRange = fx.catchRange.toFixed(2); };   // data-catch-range: the live hitbox, readable by probes
         const protect = () => { protectUntil = performance.now() + EL.BASE_GRACE_MS + fx.graceMs; };   // spawn, respawn, stand-down: finite, never renewed per frame
@@ -2049,14 +2076,221 @@ export default {
           scareShowing = false; chase.nextSniffAt += pausedMs; chase.sniffT0 += pausedMs; scentAt += pausedMs; earsAt += pausedMs; chAt += pausedMs;
           protectUntil = Math.max(protectUntil, performance.now() + recoveryMs); stopInput(); persistRun();
         };
-        ctx.on(document, "visibilitychange", () => { if (document.hidden) { scare.suspend(); scareGate = false; persistRun(); } });
-        gl.extra.push({ dispose() { scare.dispose(); } });
+        // ---- pause (contract: cc:pause / cc:resume on #cc from the app; a hidden tab too). One hold for loop, chase, scare clock,
+        // encounter and ambience together: the frame skips the hall, the AudioContext is suspended (nothing can queue on it), and on
+        // release every absolute deadline moves by exactly the held time, so nothing fires as a backlog.
+        const holds = new Set(); let heldAt = 0;
+        function holdGame(why) {
+          if (!ENDLESS || holds.has(why)) return; holds.add(why); if (holds.size > 1) return;
+          heldAt = performance.now(); appPaused = true; audioHeld = true; stopInput(); scare.suspend(); scareGate = false;
+          try { musicAudio?.suspend(); } catch { /* closed */ } persistRun();
+        }
+        function releaseGame(why) {
+          if (!ENDLESS || !holds.delete(why) || holds.size) return;
+          const ms = performance.now() - heldAt; appPaused = false;
+          chase.nextSniffAt += ms; chase.sniffT0 += ms; scentAt += ms; earsAt += ms; chAt += ms; monsterVisibleAt += ms; protectUntil += ms; deskRead.t0 += ms; gnashUntil += ms; if (inspectSince) inspectSince += ms;
+          if (ghost.active) ghost.t0 += ms; if (laughAt) laughAt += ms;
+          const disk = EL.loadStore(localStorage); if (disk.best.section) store.settings = disk.settings;   // the menu may have changed sound / ambience / look
+          applySound();
+        }
+        function applySound() {   // master toggle first; the ambience slider scales only the ambience bus
+          audioHeld = !store.settings.sound;
+          if (!store.settings.sound) { try { musicAudio?.suspend(); } catch { /* closed */ } return; }
+          if (!musicAudio) startMusic(); else try { musicAudio.resume(); } catch { /* closed */ }
+          scare.setAmbience(store.settings.ambience);
+        }
+        if (ENDLESS) {
+          ctx.on(cc, "cc:pause", () => holdGame("app")); ctx.on(cc, "cc:resume", () => releaseGame("app"));
+          ctx.on(document, "visibilitychange", () => { if (document.hidden) holdGame("hidden"); else releaseGame("hidden"); });
+        }
+        gl.extra.push({ dispose() { scare?.dispose(); } });
+
+        // ---- LOCKERS (section 3 on, v2 hall). Rules in corgi-locker.mjs (LK); this draws, animates, routes and plays them.
+        // The dog is never a target while she is in one; every endless health loss asks damageOk() at the moment it applies.
+        let lockers = [], lockerObjs = new Map(), lk = LK.newPlayerLock(), enc = null, encN = 0, patrol = null, lockerNavFail = false;
+        let curLocker = null, lockerFrom = null, inspectBeat = 0, gnashN = 0, gnashUntil = 0, clearCued = null, lockerSeqPh = "", slitLight = null, inspectSince = 0;
+        let lookId = ENDLESS ? store.settings.appearance : EL.emptyStore().settings.appearance;
+        if (ENDLESS) ctx.on(cc, "cc:look", e => { if (e.detail && typeof e.detail.id === "string") lookId = e.detail.id; });
+        const lockerById = id => lockers.find(l => l.id === id) || null;
+        const damageOk = now => now >= protectUntil && LK.damageEligible(lk);
+        const hideBtn = document.createElement("button"); hideBtn.type = "button"; hideBtn.className = "cc-use cc-hide"; hideBtn.id = "ccHide"; hideBtn.hidden = true;   // styled by corgi.html (#ccHide, data-state)
+        const slitEl = document.createElement("div"); slitEl.className = "cc-slit"; slitEl.setAttribute("aria-hidden", "true"); slitEl.hidden = true;
+        slitEl.style.cssText = "position:absolute;inset:0;z-index:5;pointer-events:none";   // the real hall, framed by the dark door: one louvred slit centred on the hidden eye's horizon (LK.EYE_Y)
+        slitEl.innerHTML = '<i style="position:absolute;left:8%;right:8%;top:37%;height:26%;border-radius:3px;box-shadow:0 0 0 100vmax rgba(9,8,6,.97),inset 0 0 16px 6px rgba(9,8,6,.8);background:repeating-linear-gradient(180deg,transparent 0 29%,rgba(9,8,6,.9) 29% 35%)"></i>';
+        const PAW_SVG = '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="vertical-align:-2px;margin-right:4px"><g fill="currentColor"><ellipse cx="12" cy="16" rx="5" ry="4"/><circle cx="6" cy="10" r="2"/><circle cx="10" cy="6.5" r="2"/><circle cx="14" cy="6.5" r="2"/><circle cx="18" cy="10" r="2"/></g></svg>';
+        if (ENDLESS) {
+          viewport.append(slitEl, hideBtn);
+          ctx.on(hideBtn, "pointerdown", e => e.stopPropagation());   // not a look drag
+          ctx.on(hideBtn, "click", e => { e.stopPropagation(); lockerAct(); });
+        }
+        const setBtn = (label, state) => { const k = label + "|" + state; if (hideBtn.dataset.k === k) return; hideBtn.dataset.k = k; hideBtn.innerHTML = PAW_SVG + label; hideBtn.dataset.state = state; hideBtn.setAttribute("aria-disabled", String(state === "wait")); };
+        function setLockerFlag(v) {
+          if (v) { if (cc.dataset.locker !== v) cc.dataset.locker = v; return; }
+          if (cc.dataset.locker) { delete cc.dataset.locker; cc.dispatchEvent(new CustomEvent("cc:locker-idle")); }
+        }
+        function gripPose(on, pull) { const g = cc.querySelector(".cc-grip"); if (!g) return; g.classList.toggle("on", on); g.classList.toggle("pull", pull); }
+        function setMuffle(on) { scare?.setMuffle(on); if (hallLP) hallLP.frequency.setTargetAtTime(on ? 700 : 18000, musicAudio.currentTime, 0.12); }
+        function lockerSound(kind) {   // paper/interaction: the handle, a short hinge groan, the latch
+          if (quiet()) return;
+          const a = musicAudio, t = a.currentTime + 0.01;
+          if (kind === "open") { noiseBurst(t, 0.05, "bandpass", 2400, 3, 0.03, a.destination); noiseBurst(t + 0.05, 0.22, "bandpass", 700, 6, 0.02, a.destination); }
+          else { noiseBurst(t, 0.04, "highpass", 1800, 0.8, 0.045, a.destination); noiseBurst(t + 0.03, 0.07, "lowpass", 380, 0.7, 0.05, a.destination); }
+        }
+        function resetLocker() {
+          lk = LK.newPlayerLock(); enc = null; patrol = null; curLocker = null; lockerFrom = null; clearCued = null; gnashUntil = 0; lockerSeqPh = ""; inspectSince = 0;
+          slitEl.hidden = true; hideBtn.hidden = true; gripPose(false, false); setLockerFlag(null); setMuffle(false); slitLight = null;
+        }
+        // Hide / Exit: one latched action. Entry only from free play, alive, near a usable locker; exit only onto a clear spot.
+        function lockerAct() {
+          if (!ENDLESS || !lockers.length || caught || transitioning || !hunting()) return;
+          if (lk.mode === "HIDDEN") {
+            const l = curLocker, at = monster && monster.visible ? [monster.position.x, monster.position.z] : null;
+            if (!LK.canExit(enc, l, at, ES.collisionRects)) { announce("Not yet. He is right outside the door."); return; }
+            lk = LK.exit(lk, enc ? enc.id : "idle:" + run.section + ":" + l.id);
+            slitEl.hidden = true; setMuffle(false); setLockerFlag("exiting"); lockerSound("open"); return;
+          }
+          const l = LK.lockerNear(lockers, player.x, player.z);
+          if (!LK.canEnter(lk, { alive: run.status === "active" && !caught, section: run.section, locker: l, x: player.x, z: player.z, rects: ES.collisionRects })) return;
+          lockerFrom = { x: player.x, z: player.z, yaw: player.yaw, pitch: player.pitch }; curLocker = l; clearCued = null;
+          lk = LK.enter(lk, l, lookId); stopInput(); player.x = l.entry[0]; player.z = l.entry[1];   // the dog's body is at the door from here on; the camera follows the sequence
+          setLockerFlag("entering"); lockerSound("open"); hideBtn.hidden = true;
+        }
+        // per hunting frame, before the camera and the pursuer: advance the sequence, own the encounter, keep the slit and the button honest
+        function lockerTick(now, dt) {
+          if (!lockers.length) return;
+          const before = lk.mode, l = curLocker; lk = LK.tickPlayer(lk, dt);
+          const mp = monster && monster.visible ? [monster.position.x, monster.position.z] : null;
+          if (before === "ENTERING" && lk.mode === "HIDDEN") {
+            const o = lockerObjs.get(l.id); if (o) o.pivot.visible = false;
+            slitEl.hidden = false; gripPose(false, false); setLockerFlag("hidden"); lockerSound("latch");
+            player.yaw = l.yawOut; player.pitch = 0;
+          }
+          if (before === "EXITING" && lk.mode !== "EXITING") {
+            if (!LK.exitClear(l, mp, ES.collisionRects)) {   // he stepped onto the exit spot during the sequence: back inside, still safe
+              lk = { ...lk, mode: "HIDDEN", t: 0, lockerId: l.id }; slitEl.hidden = false; setMuffle(true); setLockerFlag("hidden");
+              const o = lockerObjs.get(l.id); if (o) { o.pivot.visible = false; o.pivot.rotation.y = 0; }
+            } else {
+              player.x = l.entry[0]; player.z = l.entry[1]; player.yaw = l.yawOut; player.pitch = 0;
+              const o = lockerObjs.get(l.id); if (o) o.pivot.rotation.y = 0;
+              lockerSound("latch"); setLockerFlag(null); curLocker = null; scare.step(player.x, player.z, true);
+            }
+          }
+          if (lk.mode === "ENTERING" || lk.mode === "EXITING") {
+            const seq = lk.mode === "ENTERING" ? LK.ENTRY : LK.EXIT_SEQ, p = LK.phaseAt(seq, lk.t), e = p.u * p.u * (3 - 2 * p.u), o = lockerObjs.get(l.id), OPEN = -1.65;
+            const ang = p.name === "open" ? OPEN * e : p.name === "close" ? OPEN * (1 - e) : OPEN;
+            if (o) { o.pivot.visible = true; o.pivot.rotation.y = ang; }
+            if (lk.mode === "ENTERING") {
+              gripPose((p.name === "back" && p.u > 0.55) || p.name === "close", p.name === "close" && p.u > 0.15);   // the paw reaches, then pulls the door shut
+              if (p.name === "close" && lockerSeqPh !== "close") setMuffle(true);
+            } else if (p.name === "close" && lockerSeqPh !== "close") lockerSound("latch");
+            lockerSeqPh = p.name;
+          } else lockerSeqPh = "";
+          if (slitLight) { const on = lk.mode === "HIDDEN" && l; slitLight.intensity = on ? 0.8 : 0; if (on) slitLight.position.set(l.slit[0], 0.95, l.slit[1] - l.side * 0.12); }   // just outside the door, above the slit: keys his face, not his back
+          if (lk.mode === "HIDDEN") {   // limited look: the slit, never the walls
+            let d = player.yaw - l.yawOut; d = Math.atan2(Math.sin(d), Math.cos(d));
+            player.yaw = l.yawOut + Math.max(-0.45, Math.min(0.45, d)); player.pitch = Math.max(-0.22, Math.min(0.18, player.pitch));
+          }
+          // encounter ownership: one live encounter; a new one only after the old one finished and the dog came out and away
+          const lockerNow = curLocker || l;
+          if (enc && enc.stage === "DONE" && !enc.rearm && LK.rearmed(enc, lk, lockerById(enc.lockerId), player.x, player.z)) enc = { ...enc, rearm: true };
+          if ((lk.mode === "ENTERING" || lk.mode === "HIDDEN") && chase.active && mp && (!enc || enc.rearm)) { enc = LK.newEncounter("enc:" + run.section + ":" + (++encN), lockerNow, mp); patrol = null; chPath = null; }
+          if (enc && enc.stage === "APPROACH" && !LK.inLocker(lk)) lockerStep(mp || [0, 0], mp || [0, 0], 0);   // out before he arrived: ordinary pursuit again
+          // the button: HIDE near a usable locker in free play; EXIT / WAIT inside
+          if (lk.mode === "HIDDEN") {
+            const ok = LK.canExit(enc, lockerNow, mp, ES.collisionRects), passed = ok && enc && enc.stage === "DONE" && !enc.cancelled;
+            setBtn(ok ? "EXIT" : "WAIT", passed ? "clear" : ok ? "exit" : "wait"); hideBtn.hidden = false;
+          } else if (lk.mode === "PLAYING" || lk.mode === "EXIT_GRACE") {
+            const near = LK.lockerNear(lockers, player.x, player.z), can = !!near && LK.canEnter(lk, { alive: run.status === "active" && !caught, section: run.section, locker: near, x: player.x, z: player.z, rects: ES.collisionRects });
+            if (can) setBtn("HIDE", "hide"); if (hideBtn.hidden === can) hideBtn.hidden = !can;
+          } else hideBtn.hidden = true;
+        }
+        // prompt line for the frame's prompt slot: the quiet clear-to-exit cue, or the hide offer
+        function lockerPrompt() {
+          if (!lockers.length) return false;
+          if (lk.mode === "HIDDEN" && enc && enc.stage === "DONE" && !enc.cancelled) {
+            if (clearCued !== enc.id) { clearCued = enc.id; announce("He has passed. Leave when you are ready."); }
+            promptEl.textContent = "HE PASSED. LEAVE WHEN READY."; promptEl.dataset.locker = "clear"; return true;
+          }
+          if (!hideBtn.hidden && hideBtn.dataset.state === "hide") { promptEl.textContent = "A LOCKER. HIDE?"; promptEl.dataset.locker = "hide"; return true; }
+          if (promptEl.dataset.locker) delete promptEl.dataset.locker;   // #ccPrompt[data-locker] marks the locker lines for corgi.html
+          return false;
+        }
+        function lockerCam() {   // null = the ordinary camera
+          const l = curLocker; if (!l || lk.mode === "PLAYING" || lk.mode === "EXIT_GRACE") return null;
+          const yIn = l.yawOut + Math.PI, E = l.entry, I = l.interior, lerp = (a, b, u) => a + (b - a) * u, ease = u => u * u * (3 - 2 * u);
+          const ang = (a, b, u) => a + Math.atan2(Math.sin(b - a), Math.cos(b - a)) * u;
+          const Y = l.eyeY;   // inside she sits up a little: the slit is framed from this eye height
+          if (lk.mode === "HIDDEN") return { x: I[0], y: Y, z: I[1], yaw: player.yaw, pitch: player.pitch };
+          if (lk.mode === "ENTERING") {
+            const f = lockerFrom, p = LK.phaseAt(LK.ENTRY, lk.t), u = ease(p.u);
+            if (p.name === "open") return { x: lerp(f.x, E[0], u), y: EYE_H, z: lerp(f.z, E[1], u), yaw: ang(f.yaw, yIn, u), pitch: lerp(f.pitch, 0, u) };
+            if (p.name === "turn") return { x: E[0], y: EYE_H, z: E[1], yaw: ang(yIn, l.yawOut + 1e-3, u), pitch: 0 };   // turn round so she backs in
+            if (p.name === "back") return { x: lerp(E[0], I[0], u), y: lerp(EYE_H, Y, u), z: lerp(E[1], I[1], u), yaw: l.yawOut, pitch: 0 };
+            return { x: I[0], y: Y, z: I[1], yaw: l.yawOut, pitch: 0 };
+          }
+          const p = LK.phaseAt(LK.EXIT_SEQ, lk.t), u = ease(p.u);
+          if (p.name === "open") return { x: I[0], y: Y, z: I[1], yaw: ang(player.yaw, l.yawOut, u), pitch: lerp(player.pitch, 0, u) };
+          if (p.name === "step") return { x: lerp(I[0], E[0], u), y: lerp(Y, EYE_H, u), z: lerp(I[1], E[1], u), yaw: l.yawOut, pitch: 0 };
+          return { x: E[0], y: EYE_H, z: E[1], yaw: l.yawOut, pitch: 0 };
+        }
+        // what the encounter (or a hidden dog) wants the pursuer to do this tick; null = ordinary pursuit of the dog
+        function lockerGoal() {
+          if (!lockers.length) return null;
+          const g = enc && LK.encounterGoal(enc, lockerById(enc.lockerId));
+          if (g) return g;
+          if (!LK.inLocker(lk)) return null;
+          if (!patrol) patrol = LK.patrolPoint(ES, enc);   // already inspected: he ignores the occupied locker and keeps going down the hall
+          return { x: patrol[0], z: patrol[1], hold: Math.hypot(patrol[0] - monster.position.x, patrol[1] - monster.position.z) < 0.3, patrol: true };
+        }
+        function lockerStep(prev, cur, dt) {
+          if (!enc || enc.stage === "DONE") { lockerNavFail = false; return; }
+          const was = enc.stage;
+          enc = LK.stepEncounter(enc, { locker: lockerById(enc.lockerId), L: ES, prev, cur, dt, navFailed: lockerNavFail, playerOut: !LK.inLocker(lk) });
+          lockerNavFail = false;
+          if (enc.stage !== was) { chPath = null; if (enc.stage === "INSPECT") { inspectSince = performance.now(); inspectBeat = 0; chase.sniffing = false; } else { gnashUntil = 0; inspectSince = 0; } }
+        }
+        // INSPECT: he stands at the door, turns to the slit, and alternates sniffs and tooth gnashes until his one inspection clock runs out
+        function lockerInspect(now, dt) {
+          const c = chase, mp = monster.position, l = lockerById(enc.lockerId);
+          let dy = Math.atan2(l.slit[0] - mp.x, l.slit[1] - mp.z) - c.yaw; dy = Math.atan2(Math.sin(dy), Math.cos(dy));
+          c.yaw += dy * (1 - Math.pow(1 - 0.12, dt * 60)); monster.rotation.set(0, c.yaw, 0);
+          inspectBeat -= dt;
+          if (inspectBeat <= 0) {
+            const sniff = gnashN++ % 2 === 0, dist = Math.hypot(mp.x - player.x, mp.z - player.z);
+            inspectBeat = 0.95; if (!inspectSince) inspectSince = now;   // (set on arrival; this covers a restored INSPECT)
+            if (sniff) { sniffSound(0, dist); gnashUntil = 0; } else { teethSound(dist); gnashUntil = now + 650; }
+          }
+          lockerStep([mp.x, mp.z], [mp.x, mp.z], dt);
+        }
+        function buildLockers() {
+          lockerObjs = new Map(); if (!lockers.length) return;
+          const c = document.createElement("canvas"); c.width = 128; c.height = 384; const x = c.getContext("2d");   // one shared door face: vents, a clipped notice, a paw stamp
+          x.fillStyle = "#3b5866"; x.fillRect(0, 0, 128, 384); x.fillStyle = "#2a3f49"; for (let i = 0; i < 6; i++) x.fillRect(22, 40 + i * 13, 84, 6);
+          x.save(); x.translate(64, 205); x.rotate(-0.06); x.fillStyle = "#e6dcc2"; x.fillRect(-42, -46, 84, 92); x.fillStyle = "#2b241a"; x.font = "bold 13px Georgia"; x.textAlign = "center";
+          x.fillText("THE NAUSEOUS", 0, -28); x.fillText("TIMES", 0, -14); x.fillRect(-34, -8, 68, 2); x.font = "9px Georgia";
+          ["HALL MONITOR", "SEEKS GOOD DOG.", "NO QUESTIONS.", "ASK FOR MOM."].forEach((t, i) => x.fillText(t, 0, 6 + i * 11)); x.fillStyle = "#9a9a9a"; x.fillRect(-6, -50, 12, 8); x.restore();
+          x.fillStyle = "rgba(160,24,40,.78)"; x.beginPath(); x.ellipse(70, 318, 15, 12, 0, 0, 7); x.fill(); for (const [px, py] of [[50, 300], [62, 291], [78, 291], [90, 300]]) { x.beginPath(); x.arc(px, py, 5, 0, 7); x.fill(); }
+          x.fillStyle = "#1c2a31"; x.fillRect(104, 170, 8, 34);   // handle
+          const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
+          const bodyM = new THREE.MeshStandardMaterial({ color: 0x34505c, roughness: 0.7, metalness: 0.35 }), doorM = new THREE.MeshStandardMaterial({ map: tex, roughness: 0.72, metalness: 0.25, emissive: 0x333333, emissiveMap: tex });   // the notice and paw stamp glow faintly, so a bank reads in the dark at arm's length
+          const bodyG = new THREE.BoxGeometry(LK.LK_W - 0.02, LK.LK_H, LK.LK_D - 0.03), doorG = new THREE.BoxGeometry(LK.DOOR_W, LK.LK_H - 0.12, 0.025); doorG.translate(LK.DOOR_W / 2, 0, 0);   // pivots on its hinge edge
+          const half = ES.clear.hall / 2;
+          for (const l of lockers) {
+            const g = new THREE.Group(); g.name = "locker"; g.position.set(l.x, 0, l.side * (half - LK.LK_D / 2)); g.rotation.y = l.side > 0 ? Math.PI : 0; levelGroup.add(g);   // local +z faces the hall
+            const b = new THREE.Mesh(bodyG, bodyM); b.position.set(0, LK.LK_H / 2, -0.015); g.add(b);
+            const pivot = new THREE.Group(); pivot.position.set(-LK.DOOR_W / 2, LK.LK_H / 2, LK.LK_D / 2 + 0.0125); g.add(pivot); pivot.add(new THREE.Mesh(doorG, doorM));
+            lockerObjs.set(l.id, { pivot });
+            collideRects.push({ ...l.rect });
+          }
+          slitLight = new THREE.PointLight(0x9aa6c4, 0, 2.6, 2); slitLight.name = "locker-slit-light"; levelGroup.add(slitLight);   // restrained edge light so the creature reads through the slit; one per section, lit only while hidden
+        }
         function prepareSection() {
           ES = EL.genEndlessSection(run.seed, run.section, run.genVersion);
           wallRects = [...ES.corridorWalls, ...ES.areas.flatMap(a => a.walls), ES.door].map(([cx, cz, w, d]) => ({ x0: cx - w / 2, x1: cx + w / 2, z0: cz - d / 2, z1: cz + d / 2 }));
           LEVELS[0].pages = [0, 1, 2].map(k => ARTICLES[((run.section - 1) * 3 + k) % ARTICLES.length]);
           state.found[0] = ES.objectives.map(o => run.collected.includes(o.objectiveId));
           state.level = 0; applyFx(); chPath = null; scare.setLayout(ES);
+          const LKR = LK.lockersFor(ES); lockers = LKR.lockers; ES.collisionRects.push(...LKR.rects); wallRects.push(...LKR.rects); resetLocker();   // post-pass: the section itself is unchanged
         }
         // one wall-only line of sight: x-ray outlines never count as sight, and pickups cannot reach through walls
         const sightClear = (x, z) => { for (const w of wallRects) if (EL.segHitsRect(player.x, player.z, x, z, w)) return false; return true; };
@@ -2064,14 +2298,14 @@ export default {
         // (a corner is never overshot) and is taken whole only if the capsule sweep is clear; otherwise 0.15 substeps with a per-axis slide.
         // Speed is never capped: a faster boss just takes more chunks this frame (bounded by the route length). Contact is tested per chunk, with a clear line.
         const segPointDist = (ax, az, bx, bz, px, pz) => { const dx = bx - ax, dz = bz - az, l2 = dx * dx + dz * dz, t = l2 > 0 ? Math.max(0, Math.min(1, ((px - ax) * dx + (pz - az) * dz) / l2)) : 0; return Math.hypot(ax + dx * t - px, az + dz * t - pz); };
-        function endlessMove(mp, budget) {
+        function endlessMove(mp, budget, goal) {
           chase.contact = false;
           for (let guard = 0; budget > 1e-9 && guard < 600; guard++) {
-            if (Math.hypot(player.x - mp.x, player.z - mp.z) < 0.45) break;
-            const w = chaseTarget(mp), dx = w[0] - mp.x, dz = w[1] - mp.z, d = Math.hypot(dx, dz);
+            if (!goal && Math.hypot(player.x - mp.x, player.z - mp.z) < 0.45) break;
+            const w = chaseTarget(mp, goal), dx = w[0] - mp.x, dz = w[1] - mp.z, d = Math.hypot(dx, dz);
             if (d < 1e-6) { if (chIdx < chPath.length - 1) { chIdx++; continue; } break; }
             const last = chIdx >= chPath.length - 1;
-            let len = Math.min(budget, last ? Math.max(0, d - 0.45) : d); if (len <= 1e-9) break;
+            let len = Math.min(budget, last ? Math.max(0, d - (goal ? 0 : 0.45)) : d); if (len <= 1e-9) break;   // a waypoint is reached exactly, never overshot
             let nx = mp.x + dx / d * len, nz = mp.z + dz / d * len;
             if (!EL.clearSeg(ES.collisionRects, mp.x, mp.z, nx, nz, 0.32)) {
               len = Math.min(len, 0.15); nx = mp.x + dx / d * len; nz = mp.z + dz / d * len;
@@ -2081,9 +2315,12 @@ export default {
             if (segPointDist(px, pz, nx, nz, player.x, player.z) < fx.catchRange && sightClear(nx, nz)) chase.contact = true;
           }
         }
-        function chaseTarget(mp) {
-          const now = performance.now();
-          if (!chPath || now - chAt > 300) { chPath = EL.routePath(ES, mp.x, mp.z, player.x, player.z) || [[mp.x, mp.z], [player.x, player.z]]; chAt = now; chIdx = 1; }
+        function chaseTarget(mp, goal) {
+          const now = performance.now(), tx = goal ? goal.x : player.x, tz = goal ? goal.z : player.z, key = goal ? tx + "," + tz : "";
+          if (!chPath || now - chAt > 300 || key !== chKey) {
+            const p = EL.routePath(ES, mp.x, mp.z, tx, tz); if (!p && goal) lockerNavFail = true;
+            chPath = p || [[mp.x, mp.z], [tx, tz]]; chAt = now; chIdx = 1; chKey = key;
+          }
           while (chIdx < chPath.length - 1 && Math.hypot(chPath[chIdx][0] - mp.x, chPath[chIdx][1] - mp.z) < 0.03) chIdx++;
           return chPath[chIdx];
         }
@@ -2114,6 +2351,7 @@ export default {
           AREAS = ES.areas.map((a, i) => ({ ...a, mat: areaMat(pal[(i + (ES.decorSeed & 7)) % pal.length]), furniture: dark ? "desk" : "cubicle", noSolid: true }));
           AREAS.forEach(a => { a.walls.forEach(w => wallBox(w[0], w[1], w[2], w[3], a.mat)); const [lx, lz] = a.lights[2]; lamp(lx, lz, 0xfff3d0, dark ? EN_LIGHT.areaI : 0.3, dark ? EN_LIGHT.areaR : 8); });
           if (ES.decor) buildDecor(ES.decor); else AREAS.forEach(a => dressArea(a, dark));   // v2: pieces come from the validated layout (outside the walking lane); a saved v1 section keeps its old props
+          buildLockers();
           const pages = LEVELS[idx].pages;
           if (dark) ES.objectives.forEach(o => { const l = new THREE.PointLight(0xc4b79b, 0.48, 1.8, 2); l.name = "school-desk-pool"; l.position.set(o.pagePos[0], 1.45, o.pagePos[2]); l.userData.deskLamp = true; levelGroup.add(l); });   // a small local pool at each paper desk
           DESKS = ES.objectives.map((o, i) => {
@@ -2180,9 +2418,13 @@ export default {
         const heartText = q => String(+(q / 4).toFixed(2));
         const svgNode = markup => { const t = document.createElement("template"); t.innerHTML = markup; return t.content.firstChild; };
         const traitIcon = id => svgNode(EL.traitIcon(id));
-        // bounded: at most six heart icons (each four quarters), plus the exact number
-        const heartIcon = (frac, i) => { const id = "ceh" + i, p = Math.round(frac * 100);
-          return svgNode(`<svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><defs><linearGradient id="${id}"><stop offset="${p}%" stop-color="#ff5a7a"/><stop offset="${p}%" stop-color="#3a1620"/></linearGradient></defs><path d="M12 21s-8-5.2-8-11.2A4.6 4.6 0 0 1 12 7a4.6 4.6 0 0 1 8 2.8C20 15.8 12 21 12 21z" fill="url(#${id})" stroke="#ff5a7a" stroke-width="1.6" stroke-linejoin="round"/></svg>`); };
+        // bounded: at most six heart icons, each drawn as four quarter regions (clockwise from top-left), plus the exact number.
+        // Up to six hearts one region IS one quarter, so a heal advances exactly one region; colours are vars with today's values as fallback.
+        const HEART_D = "M12 21s-8-5.2-8-11.2A4.6 4.6 0 0 1 12 7a4.6 4.6 0 0 1 8 2.8C20 15.8 12 21 12 21z", QUAD = [[0, 0], [12, 0], [12, 13], [0, 13]];
+        const heartIcon = (n, cap, i) => { const id = "ceh" + i;
+          const quads = QUAD.map(([x, y], k) => `<rect data-q="${i * 4 + k}" x="${x}" y="${y}" width="12" height="${k < 2 ? 13 : 11}" style="fill:${k < n ? "var(--ce-heart,#ff5a7a)" : k < cap ? "var(--ce-heart-empty,#3a1620)" : "transparent"}"/>`).join("");
+          return svgNode(`<svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><defs><clipPath id="${id}"><path d="${HEART_D}"/></clipPath></defs><g clip-path="url(#${id})">${quads}<path d="M12 3v19M2 13h20" style="stroke:var(--ce-heart-rule,#1a0a0e)" stroke-width="1" opacity=".75"/></g><path d="${HEART_D}" fill="none" style="stroke:var(--ce-heart,#ff5a7a)" stroke-width="1.6" stroke-linejoin="round"/></svg>`); };
+        let healFx = null;   // the region a just-applied award filled; painted once, then cleared
         function paintEndHud() {
           if (!ENDLESS) return;
           const got = state.found[0].filter(Boolean).length, q = run.quarters, maxQ = fx.maxQuarters;
@@ -2190,9 +2432,17 @@ export default {
           endHud.textContent = "";
           const mk = (cls, text) => { const e = document.createElement("span"); e.className = cls; if (text !== undefined) e.textContent = text; endHud.append(e); return e; };
           const hr = mk("ce-hearts"); hr.setAttribute("role", "img"); hr.setAttribute("aria-label", heartText(q) + " of " + heartText(maxQ) + " hearts");
-          const icons = Math.min(6, Math.ceil(maxQ / 4)), filled = Math.round(q / maxQ * icons * 4);
-          for (let i = 0; i < icons; i++) hr.append(heartIcon(Math.max(0, Math.min(4, filled - i * 4)) / 4, i));
+          // ponytail: past six hearts the regions are scaled (the number stays exact); per-quarter regions there would need more icons
+          const exact = maxQ <= 24, icons = exact ? Math.ceil(maxQ / 4) : 6, filled = exact ? q : Math.round(q / maxQ * 24), capQ = exact ? maxQ : 24;
+          for (let i = 0; i < icons; i++) hr.append(heartIcon(Math.max(0, Math.min(4, filled - i * 4)), Math.max(0, Math.min(4, capQ - i * 4)), i));
           const num = document.createElement("b"); num.className = "ce-num"; num.textContent = heartText(q); hr.append(num);
+          if (healFx !== null) {
+            const at = healFx; healFx = null;
+            const cell = hr.querySelector(`[data-q="${exact ? at : Math.round(at / maxQ * 24)}"]`);
+            if (cell && !REDUCED) cell.animate([{ opacity: .15 }, { opacity: 1, offset: .35 }, { opacity: .55, offset: .6 }, { opacity: 1 }], { duration: 650 });
+            const plus = document.createElement("b"); plus.className = "ce-heal"; plus.textContent = "+¼"; plus.style.cssText = "margin-left:4px;font-size:13px;color:var(--ce-heart,#ff5a7a)"; hr.append(plus);
+            plus.animate(REDUCED ? [{ opacity: 1 }, { opacity: 1, offset: .8 }, { opacity: 0 }] : [{ opacity: 0, transform: "translateY(4px)" }, { opacity: 1, transform: "none", offset: .2 }, { opacity: 1, offset: .75 }, { opacity: 0, transform: "translateY(-6px)" }], { duration: 1100, fill: "forwards" });
+          }
           for (const id of EL.TRAIT_IDS) { const n = run.traits[id]; if (n > 0) { const c = mk("ce-chip"); c.title = EL.perkById(id).name; const t = document.createElement("span"); t.textContent = "×" + n; c.append(traitIcon(id), t); } }
           bankedVal = Math.max(bankedVal, 4 + got * 20); paintMeter();
         }
@@ -2221,6 +2471,7 @@ export default {
         function commitPick(i) {
           const r = EL.pickOffer(run, i, store);
           if (r.error) { if (r.error === "stack limit") announce("That trait cannot stack any further."); return; }   // a second tap or a replayed offer is simply refused
+          if (r.run.quarters > run.quarters) healFx = run.quarters;   // the award paid one quarter: pulse that one region
           run = r.run; store.best = r.best; persistRun(); applyFx(); paintEndHud();
           if (r.allTen) announce("All ten traits found. The hall keeps going.");
           afterFlow();
@@ -2238,6 +2489,7 @@ export default {
           state.found[0][i] = true; persistRun(); paintEndHud(); openOffer();       // paper + offer land in one write, before anything is shown
         }
         function endlessCapture() {
+          if (!caught && !damageOk(performance.now())) return;   // the probe path asks the same question doCapture already asked
           run = EL.capture(run); persistRun(); paintEndHud(); stopInput();
           if (run.status === "over") { cc.dataset.caught = "true"; openOver(); return; }
           announce("Caught. " + heartText(run.quarters) + " hearts left. The papers you took stay taken.");
@@ -2261,15 +2513,25 @@ export default {
           paintEndHud();
           if (run.status === "over") { cc.dataset.caught = "true"; openOver(); } else if (run.pendingOffer) openOffer();
         }
+        let grants = 0;
         function endlessApi() {   // dev hook on window.__corgi.endless, like the other probes; the ordinary UI has no way to grant perks
           return {
             get run() { return run; }, get layout() { return ES; }, get fx() { return fx; }, get catchRange() { return fx.catchRange; }, get chaseSpeed() { return chase.speed; },
-            grant(id, n) { const tr = { ...run.traits, [id]: n }, nm = EL.perkEffects(tr).maxQuarters; run = { ...run, traits: tr, quarters: Math.min(run.quarters + Math.max(0, nm - fx.maxQuarters), nm) }; applyFx(); persistRun(); paintEndHud(); },
+            grant(id, n) {   // raising the max is not a refill: at most one award per grant, through the one healing function
+              const grew = EL.perkEffects({ ...run.traits, [id]: n }).maxQuarters > fx.maxQuarters; run = { ...run, traits: { ...run.traits, [id]: n } }; run.quarters = Math.min(run.quarters, EL.maxQuarters(run));
+              if (grew) { const a = EL.awardHealing(run, "grant:" + run.seed + ":" + run.section + ":" + (++grants)); if (a.delta) healFx = run.quarters; run = a.run; }
+              applyFx(); persistRun(); paintEndHud(); },
+            heal(awardId) { const a = EL.awardHealing(run, String(awardId)); if (a.delta) healFx = run.quarters; run = a.run; persistRun(); paintEndHud(); return a.delta; },
             setSection(n) { run = { ...run, section: n, collected: [] }; persistRun(); endlessRebuild(); },
             info() { const r = renderer.info; return { geometries: r.memory.geometries, textures: r.memory.textures, programs: r.programs ? r.programs.length : 0, calls: r.render.calls, lights: levelGroup.children.filter(o => o.isLight).length, children: levelGroup.children.length }; },
             teleport(x, z) { player.x = x; player.z = z; scare.step(x, z, true); }, protectUntil: () => protectUntil,
             scare: { armNow: () => scare.armNow(), get phase() { return scare.phase; }, get showing() { return scare.showing; }, ready: scare.ready, serialize: () => scare.serialize(), get audio() { return scare.audioDebug; } },   // tests only
             collectNow(i) { startDeskRead(i); }, openOffer, capture: () => endlessCapture(),
+            locker: {   // probes only: the ordinary UI reaches lockers through the HIDE button
+              get list() { return lockers; }, get state() { return lk; }, get encounter() { return enc; }, get look() { return lk.look; }, damageOk: () => damageOk(performance.now()),
+              act: () => lockerAct(), near: i => { const l = lockers[i]; player.x = l.entry[0] - l.side * 0.0; player.z = l.entry[1] - l.side * 0.3; player.yaw = l.yawOut + Math.PI; scare.step(player.x, player.z, true); return l; },
+              pause: () => cc.dispatchEvent(new CustomEvent("cc:pause")), resume: () => cc.dispatchEvent(new CustomEvent("cc:resume"))
+            },
             chaseFrom(x, z) { monster.position.set(x, 0, z); monster.visible = true; chPath = null; startChase(performance.now()); }   // probe: seat the pursuer and start the hunt
           };
         }
@@ -2393,7 +2655,7 @@ export default {
         ctx.on(window, "keydown", e => { if (!hunting() || caught) return;
           if (roomCut) { if (e.key.toLowerCase() === 'f' && roomCut.stage === 'wake') leaveCut(); return; }
           keys[e.key.toLowerCase()] = true;
-          if (e.key.toLowerCase() === "f") {if(roomCut?.stage==='wake')leaveCut();else setFlash(!flashOn);} if (e.key.toLowerCase() === "r" && !ENDLESS) showBook(); if (e.key.toLowerCase() === "e") lobbyUse(); });
+          if (e.key.toLowerCase() === "f") {if(roomCut?.stage==='wake')leaveCut();else setFlash(!flashOn);} if (e.key.toLowerCase() === "r" && !ENDLESS) showBook(); if (e.key.toLowerCase() === "e") { lobbyUse(); if (ENDLESS) lockerAct(); } });
         ctx.on(window, "keyup", e => keys[e.key.toLowerCase()] = false);
 
         function resize() {
@@ -2565,7 +2827,7 @@ export default {
           if (!gl || session !== mine) return;
           const dt = Math.min(50, now - last) / 1000; last = now;
           heartVisual?.render(now, state.lives, heartCortisol);
-          if (ENDLESS) { const g = !document.hidden && hunting() && !caught && !transitioning; if (g !== scareGate) { scareGate = g; if (g) scare.resume(); else scare.suspend(); } }
+          if (ENDLESS) { const g = !document.hidden && hunting() && !caught && !transitioning && !audioHeld; if (g !== scareGate) { scareGate = g; if (g) scare.resume(); else scare.suspend(); } }
           if(tickBreakRoom(now)){ctx.frame(frame);return;}
           levelGroup.children.forEach(l=>{if(l.userData.deskLamp)l.intensity=REDUCED?.3:((now*.001+l.position.x)%5.3<.25?.015:.48);});
           if(!REDUCED) levelGroup.children.forEach(l=>{if(l.userData.schoolLamp)l.intensity=((now*.001+l.position.x*.17)%4.7<.22)?0:.006;});
@@ -2579,6 +2841,7 @@ export default {
           // flight when the book went up would snap straight to its endpoint the moment it came down, and
           // monsterVisibleAt is the 600ms no-spawn-kill grace, which reading the paper must not burn through.
           // This is the same freeze the watched-dead-on branch below already performs on ghost.t0.
+          if (appPaused) { ctx.frame(frame); return; }   // ENDLESS hold: nothing in the hall moves; releaseGame() shifts every deadline by the held time
           if (!hunting() || caught || scareShowing) {
             if (!useBtn.hidden) useBtn.hidden = true;
             if (ghost.active) ghost.t0 += dt * 1000;
@@ -2597,7 +2860,9 @@ export default {
           const wantSprint = (keys.shift || sprintHeld) && stamina > 2 && mlen > 0.05;
           if (wantSprint) stamina = Math.max(0, stamina - dt * 26 * (ENDLESS ? fx.drainMul : 1)); else stamina = Math.min(100, stamina + dt * 15 * (ENDLESS ? fx.regainMul : 1));
           stamFill.style.setProperty("--stam", stamina.toFixed(0));
-          if (mlen > 0.05 && deskRead.phase === "idle") {   // Round 2: movement ignored while rising, held or standing down
+          if (ENDLESS) lockerTick(now, dt);
+          const lockerHeld = ENDLESS && LK.inLocker(lk);   // scripted entry/exit and the hidden view own the camera; no walking
+          if (mlen > 0.05 && deskRead.phase === "idle" && !lockerHeld) {   // Round 2: movement ignored while rising, held or standing down
             mx /= Math.max(mlen, 1); mz /= Math.max(mlen, 1);
             const fwdX = -Math.sin(player.yaw), fwdZ = -Math.cos(player.yaw);   // not fx: that name is the Endless perk table read just below
             const rx = Math.cos(player.yaw), rz = -Math.sin(player.yaw);
@@ -2625,8 +2890,9 @@ export default {
             camY = y0 + (y1 - y0) * e; camPitch = pitch0 + (pitch1 - pitch0) * e; camYaw = yaw0 + (yaw1 - yaw0) * e;
             if (p >= 1) { if (rising) finishRise(); else finishStandDown(); }
           } else if (deskRead.phase === "held") { camY = 0.95; camPitch = 0.44; camYaw = deskRead.faceYaw; }
-          camera.position.set(player.x, camY, player.z);
-          camera.rotation.set(camPitch, camYaw, 0, "YXZ");
+          const lv = lockerHeld ? lockerCam() : null;
+          if (lv) { camera.position.set(lv.x, lv.y, lv.z); camera.rotation.set(lv.pitch, lv.yaw, 0, "YXZ"); }
+          else { camera.position.set(player.x, camY, player.z); camera.rotation.set(camPitch, camYaw, 0, "YXZ"); }
           const lookFx = -Math.sin(player.yaw), lookFz = -Math.cos(player.yaw);   // forward, needed even when not moving (the reflection's facing check below)
 
           // flashlight battery
@@ -2656,6 +2922,8 @@ export default {
               promptEl.classList.add("show");
             }
           });
+
+          if (ENDLESS && lockerPrompt()) { anyPrompt = true; promptEl.classList.add("show"); }
 
           // trophy case reflection: pinned to the glass's own projected screen position every frame, like the
           // page sprites, so it sits ON the case rather than parked in a screen corner. Shows only when near it
@@ -2771,7 +3039,7 @@ export default {
             // touch-range kill: visible at least 600ms (no spawn-kills), close enough -- he can take you from
             // behind, whether or not you're facing him. Static-maxout kill is the other path, below. LIVE ONLY --
             // "the suited figure does NOT kill you" in public mode is the one behaviour difference the mode makes.
-            if (LEVELS[state.level].handAuthored && !caught && !cc.hasAttribute("data-reading") && (now - monsterVisibleAt) >= 600 && (!ENDLESS || now >= protectUntil) && (ENDLESS ? (monsterDist < fx.catchRange || chase.contact) && sightClear(monster.position.x, monster.position.z) : monsterDist < 1.1)) doCapture();   // Endless: an unobstructed line, never through a wall or corner
+            if (LEVELS[state.level].handAuthored && !caught && !cc.hasAttribute("data-reading") && (now - monsterVisibleAt) >= 600 && (!ENDLESS || damageOk(now)) && (ENDLESS ? (monsterDist < fx.catchRange || chase.contact) && sightClear(monster.position.x, monster.position.z) : monsterDist < 1.1)) doCapture();   // Endless: an unobstructed line, never through a wall or corner
           }
           monsterWasVisible = monster.visible;
 
@@ -2794,6 +3062,7 @@ export default {
             let target = 0;
             if (monster.visible && monsterOnscreen) { const prox = Math.max(0, 1 - monsterDist / 9); target = prox * (monsterCentered ? 1 : 0.45); }
             else if (monster.visible && monsterDist < 3.5) target = (1 - monsterDist / 3.5) * 0.25;
+            if (ENDLESS && lockerHeld) target = Math.min(target, 0.06);   // inside a locker the slit must show the real creature, not a wall of static
             const rate = (target > staticIntensity ? 0.55 : 0.4) * escal;
             staticIntensity = target > staticIntensity ? Math.min(1, staticIntensity + rate * dt) : Math.max(0, staticIntensity - rate * dt);
             const effectCap=LEVELS[state.level].handAuthored?1:.5;staticIntensity=Math.min(effectCap,staticIntensity);cc.dataset.haze=String(staticIntensity);

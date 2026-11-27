@@ -17,6 +17,7 @@ function boot(cfg) {
   const refresh = () => { if ($('best')) $('best').textContent = best(); };
   addEventListener('mbs-game-ready', () => { offline.textContent = 'Ready offline ✓'; offline.dataset.state = 'ready'; });
   $('start').onclick = async () => {
+    if (cfg.keepGame && game) { show(stage); game.resume?.(); return; }   // opt-in (corgi): "← Menu" paused this run; resume it, never re-mount
     show(stage);
     if (editor) {
       // The editor styles are only active while it is on screen, so they never restyle this menu.
@@ -39,6 +40,7 @@ function boot(cfg) {
   };
   $('back').onclick = () => {
     if (editor) { if (sheet) sheet.disabled = true; show(menu); return; }  // keep the editor and its hand alive
+    if (cfg.keepGame && game) { game.pause?.(); refresh(); show(menu); return; }   // opt-in (corgi): the menu is a pause surface over the live run
     game?.dispose?.(); game = null; host.replaceChildren(); refresh(); show(menu); };
   $('open-settings').onclick = () => { show(settings); refreshModels?.(); };
   $('close-settings').onclick = () => { refresh(); show(menu); };
@@ -75,7 +77,7 @@ function boot(cfg) {
   if (editor && $('models')) import(cfg.models).then(m => { refreshModels = m.renderModels($('models'), cfg.optional); });
   if (cfg.settingsModule) import(cfg.settingsModule).then(m => m.setupSettings?.({root: settings, refresh}));
   refresh(); show(menu);
-  watchUpdates({busy: () => cfg.options?.autostart === true ? false : !stage.hidden});   // autostart:true apps (Coach Jump) report a run themselves via window.MOM_APP_BUSY
+  watchUpdates({busy: () => cfg.options?.autostart === true ? false : (!stage.hidden || (cfg.keepGame && !!game))});   // autostart:true apps (Coach Jump) report a run themselves via window.MOM_APP_BUSY; keepGame (corgi): a paused run sits behind the menu
   // a game, the editor or the alarm computer on screen = not a safe moment to reload
   // Opt-in (apps.json web.options.autostart = query name): a notification tap lands inside the app, not on the menu.
   const auto = cfg.options?.autostart;
