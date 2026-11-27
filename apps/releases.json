@@ -1,20 +1,20 @@
 {
   "schema": 1,
-  "updated": "2026-11-26T22:54:22Z",
+  "updated": "2026-11-27T00:15:24Z",
   "apps": [
     {
       "id": "alarm",
       "platform": "android",
       "channel": "stable",
       "package": "com.mominc.alarm2048",
-      "versionCode": 5,
-      "versionName": "0.5.0",
+      "versionCode": 7,
+      "versionName": "0.7.0",
       "minSdk": 29,
-      "url": "https://mominc.online/download/alarm/moms-2048-reminder-0.5.0.apk",
-      "sha256": "9e45653be6a0412155ebfb285ed2fd1ae2c776191d7a80a4c068844e0cbd6fb6",
+      "url": "https://mominc.online/download/alarm/moms-2048-reminder-0.7.0.apk",
+      "sha256": "c0abc755c4cbbead4406bff955d7fd063f84304075a3eef56b69e6db9b1b9085",
       "signerSha256": "8cd664e6f34dbb8bf0560552a40f2eab661ea65c497a9ee970810acaeaefa753",
-      "size": 18132128,
-      "notes": "MOM's: 2048 Reminder. Version 0.5.0."
+      "size": 18540079,
+      "notes": "MOM's: 2048 Reminder. Version 0.7.0."
     },
     {
       "id": "lilboyfriend",
@@ -34,7 +34,7 @@
       "id": "fuel",
       "platform": "pwa",
       "channel": "stable",
-      "version": "65bd080b2687",
+      "version": "0226347f0062",
       "url": "https://mominc.online/apps/fuel/",
       "notes": "Content version = the app pack hash; installed copies update themselves."
     },
@@ -42,7 +42,7 @@
       "id": "jump",
       "platform": "pwa",
       "channel": "stable",
-      "version": "32c571993a38",
+      "version": "fc3ac84ec696",
       "url": "https://mominc.online/apps/jump/",
       "notes": "Content version = the app pack hash; installed copies update themselves."
     },
@@ -50,7 +50,7 @@
       "id": "misinformation",
       "platform": "pwa",
       "channel": "stable",
-      "version": "6e0776e15f18",
+      "version": "0b8f6ea8c221",
       "url": "https://mominc.online/apps/misinformation/",
       "notes": "Content version = the app pack hash; installed copies update themselves."
     },
@@ -58,7 +58,7 @@
       "id": "hand",
       "platform": "pwa",
       "channel": "stable",
-      "version": "7d35b4276daf",
+      "version": "b0d83f738548",
       "url": "https://mominc.online/apps/hand/",
       "notes": "Content version = the app pack hash; installed copies update themselves."
     },
@@ -66,7 +66,7 @@
       "id": "alarm",
       "platform": "pwa",
       "channel": "stable",
-      "version": "da4527b4eb6e",
+      "version": "90ebcc55c05a",
       "url": "https://mominc.online/apps/alarm/",
       "notes": "Content version = the app pack hash; installed copies update themselves."
     },
@@ -74,7 +74,7 @@
       "id": "corgi",
       "platform": "pwa",
       "channel": "stable",
-      "version": "f36984ee9053",
+      "version": "738a823b68c0",
       "url": "https://mominc.online/apps/corgi/",
       "notes": "Content version = the app pack hash; installed copies update themselves."
     },
