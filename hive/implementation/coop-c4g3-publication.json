@@ -1,0 +1,107 @@
+{
+  "date": "2026-11-26",
+  "status": "G3_HOSTED_BACKEND_LEAD_LOCAL_ONLY",
+  "runtime_version": "build/prototype 6b561fd (local branch, not packaged)",
+  "evidence_scope": "Development screen: C0-C3 pilot (63 runs, local gpt-oss-20b), contract audit, offline selector replay, sealed-final backend screen (hosted Nemotron vs local gpt-oss-20b, 2 campaigns per cell, two capability families), admission and C5 reuse in a test store",
+  "source_commit": "6b561fd",
+  "source_commit_meaning": "commit of the code and evidence this note reports. Short id only: the build tree has no public remote and the full id is not published",
+  "baseline_commit": "7a6cd17",
+  "branch": "build/prototype",
+  "branch_status": "local only, no public git remote, not pushed",
+  "code_published": false,
+  "runtime_source_sha256": null,
+  "runtime_source_sha256_meaning": "not computed: no package or snapshot is published for this note",
+  "measured_runtime_source_sha256": null,
+  "download": null,
+  "download_sha256": null,
+  "download_bytes": null,
+  "snapshot_file_count": null,
+  "snapshot_manifest": null,
+  "snapshot_manifest_sha256": null,
+  "package_published": false,
+  "latest_packaged_runtime_unchanged": "downloads/HIVE_Connected_Runner_033089b.zip",
+  "supported_environment": "Windows 11, Python 3.11+, Docker Desktop, LM Studio with openai/gpt-oss-20b; one 16 GB GPU host",
+  "launch": null,
+  "regression_gate": "1961 passed, 5 failed, 7 skipped on 8829dc7 (4 v2-related failures fixed, 1 load flake passes alone); affected files re-run 98 passed, 1 skipped; full suite not re-run after the fixes",
+  "acceptance": {
+    "screen_report": "implementation/coop-c4g3-evidence/COOP_C4_G3_REPORT.md",
+    "pilot_report": "implementation/coop-c4g3-evidence/COOP_PILOT_REPORT.md",
+    "contract_audit": "implementation/coop-c4g3-evidence/P1_CONTRACT_AUDIT.md",
+    "replay_report": "implementation/coop-c4g3-evidence/REPLAY_REPORT.md",
+    "c5_report": "implementation/coop-c4g3-evidence/C5_REPORT.md",
+    "c5_learned_report": "implementation/coop-c4g3-evidence/C5_LEARNED_REPORT.json"
+  },
+  "results": {
+    "pilot": "63 development runs; no cooperative recipe beat the incumbent; coverage was the limit; spec masking negative",
+    "replay": "0 model calls; no selector repair met the gate; existing selector kept",
+    "screen": "hosted Nemotron 4/4 sealed finals, local gpt-oss-20b 2/4 (resolve only); 42 calls",
+    "recording": "OBS 3-camera recording: 0 of 32,521 output frames skipped",
+    "admission": "hosted finals passed a second fresh hidden set 24/24; admitted in a test store only; fresh-process reuse on unseen release 0b3854a VERIFIED, byte-identical to the authored body and the release exports; signed revoke removed them; learned v2 over authored v1 refused by the improvement-only chain rule"
+  },
+  "spending": {
+    "hive_model_calls": "537 of 576",
+    "hosted_nim_usd": 2.64,
+    "hosted_nim_approval_usd": 5,
+    "coding_agents_estimate_usd": 336,
+    "ceiling_usd": 400,
+    "note": "Estimates, not a reconciled ledger."
+  },
+  "excluded": "hidden test cases, private labels, candidate source code, signing keys, stores and ledgers stay in the private build tree",
+  "sanitised": "One Windows interpreter path in C5_LEARNED_REPORT.json shortened to 'python' (it contained the operator's account name); no other change. Files are LF.",
+  "policy_deployed": false,
+  "production_approved": false,
+  "headline": "Hosted Nemotron passed 4/4 sealed finals on the two capabilities local gpt-oss-20b could not learn; a G3 routing lead, nothing routed by default.",
+  "summary": "Development screen, local branch only, nothing packaged. No cooperative recipe beat the incumbent in 63 pilot runs; contract v2 fixed spec defects; selector replay kept the existing selector; hosted Nemotron 4/4 sealed finals vs local 2/4; hosted finals admitted in a test store only, reuse on an unseen release VERIFIED with 0 model calls and revocable.",
+  "badge": "DEVELOPMENT SCREEN · LOCAL ONLY · NOT ROUTED · NOT PRODUCTION",
+  "limitations": "2 campaigns per cell, two capability families; nothing routed by default; admission in a test store only; no learned v2 rollback demonstrated; code on a local branch with no public remote; nothing packaged.",
+  "evidence_files": {
+    "coop-c4g3-evidence/admission-profile-v1.json": {
+      "bytes": 1498,
+      "sha256": "5debf2a08bcc02db7e388323b532e9ba90d77ca5e47a6ca6ed9a0f17d88e109b"
+    },
+    "coop-c4g3-evidence/C5_LEARNED_REPORT.json": {
+      "bytes": 12029,
+      "sha256": "5e6838f3e646334bf9979fca0f7a9e26bd69496f44e8f3673042eb662a60f341"
+    },
+    "coop-c4g3-evidence/C5_REPORT.md": {
+      "bytes": 5571,
+      "sha256": "b542df052accc4f9ec1dd41a0574a73eb3d30b1c3baa5c6b8749c903aa05b665"
+    },
+    "coop-c4g3-evidence/continuation_manifest.json": {
+      "bytes": 3023,
+      "sha256": "3d801378036129670b36a29cf28e7c874f2f11a0d158c4bdd3db5294e8e7a213"
+    },
+    "coop-c4g3-evidence/COOP_C4_G3_REPORT.md": {
+      "bytes": 13760,
+      "sha256": "c43172c5505ed2694e07bbdb5be5c7787a771b657b0282beee81c334afec4023"
+    },
+    "coop-c4g3-evidence/COOP_PILOT_REPORT.md": {
+      "bytes": 8587,
+      "sha256": "f71b9014d8b8abd05344ab0c607d6f92fd827b2b0a891900761cc45408c6df50"
+    },
+    "coop-c4g3-evidence/P1_CONTRACT_AUDIT.md": {
+      "bytes": 4024,
+      "sha256": "d23e7b4f72080b1a0ea468d20456824c2500fc2c9e5cb830206d273c4c57a39d"
+    },
+    "coop-c4g3-evidence/probe-report.json": {
+      "bytes": 6410,
+      "sha256": "a124f897642959cbcfaa4c4304ee0ffd3762ba70ea02c3ac275894990a787466"
+    },
+    "coop-c4g3-evidence/public-score.json": {
+      "bytes": 1210,
+      "sha256": "83c82d9d1e2ac954bdb297b458c60247610538b7a6e38954dde41409194bba20"
+    },
+    "coop-c4g3-evidence/REPLAY_REPORT.md": {
+      "bytes": 1413,
+      "sha256": "c9d6a1c03aa4520c31e968aebf86c15caf4ddc4e0996029a4f94ba80c482cb38"
+    },
+    "coop-c4g3-evidence/screen-manifest.json": {
+      "bytes": 2607,
+      "sha256": "25e9d837b65bcae35302854a6a6be72b3320a729bb524367c85d7820baafb2ed"
+    },
+    "coop-c4g3-evidence/screen-summary.json": {
+      "bytes": 2377,
+      "sha256": "151a932640fe1f064e3122e37ccfd8a15df56073e81b91c1901fdc87af710a4c"
+    }
+  }
+}

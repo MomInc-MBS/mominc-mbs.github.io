@@ -1,0 +1,67 @@
+{
+ "calls": 42,
+ "campaigns": 8,
+ "manifest_sha256": "5d9d32ff0a9a5b9ec2624142c2f35b0d763323ba9ee746b355c36498c2fa30e0",
+ "max_calls": 72,
+ "mode": "live",
+ "rows": {
+  "site.ref-extract.r1.hosted": {
+   "backend": "hosted",
+   "block_id": "site.ref-extract.r1",
+   "receipt_sha256": "16901d5604b5a2ed6da8914ae7db64a66214344031ea78d54ec52fb4b5196b50",
+   "state": "PUBLIC_CANDIDATE_FROZEN",
+   "status": "final"
+  },
+  "site.ref-extract.r1.local": {
+   "backend": "local",
+   "block_id": "site.ref-extract.r1",
+   "receipt_sha256": "85f2ae047957fabe4024cfa57eb1e3d05e30309ecee53fca39709fab5de02861",
+   "state": "FINAL_FROZEN",
+   "status": "final"
+  },
+  "site.ref-extract.r2.hosted": {
+   "backend": "hosted",
+   "block_id": "site.ref-extract.r2",
+   "receipt_sha256": "80fae222e3ca6f40f49804e141cdd16a43afa2a7e3d88b340c3f243420c67ae3",
+   "state": "PUBLIC_CANDIDATE_FROZEN",
+   "status": "final"
+  },
+  "site.ref-extract.r2.local": {
+   "backend": "local",
+   "block_id": "site.ref-extract.r2",
+   "receipt_sha256": "a5956a5c16e0f2ccdc7e1e0d38ecb667f6bdce88d266f3dcaec4a037e8c2fea1",
+   "state": "FINAL_FROZEN",
+   "status": "final"
+  },
+  "site.ref-resolve.r1.hosted": {
+   "backend": "hosted",
+   "block_id": "site.ref-resolve.r1",
+   "receipt_sha256": "4461f7803856afacf7501aa4281df28180ce0f015654f843c0384111698b69c9",
+   "state": "PUBLIC_CANDIDATE_FROZEN",
+   "status": "final"
+  },
+  "site.ref-resolve.r1.local": {
+   "backend": "local",
+   "block_id": "site.ref-resolve.r1",
+   "receipt_sha256": "ee46573ac955524c2728a3d3d23443f77ab1140f2ca866e5ec97737cc0e8df28",
+   "state": "PUBLIC_CANDIDATE_FROZEN",
+   "status": "final"
+  },
+  "site.ref-resolve.r2.hosted": {
+   "backend": "hosted",
+   "block_id": "site.ref-resolve.r2",
+   "receipt_sha256": "b04cb7f3c88252cca9828f7c532225d7b27ccdd980d23ea13f3631d8e64f403a",
+   "state": "PUBLIC_CANDIDATE_FROZEN",
+   "status": "final"
+  },
+  "site.ref-resolve.r2.local": {
+   "backend": "local",
+   "block_id": "site.ref-resolve.r2",
+   "receipt_sha256": "149de2dbf5dd5d2f6b9e2767e479d19a2f1cb12616e959898e353becddfe2200",
+   "state": "PUBLIC_CANDIDATE_FROZEN",
+   "status": "final"
+  }
+ },
+ "score": "python -I evaluator/coop/sealed_final.py score --batch C:\\hive-work\\demo\\backend-screen-12b1ba4\\batch.json --private C:\\hive-work\\eval-private\\backend-screen-12b1ba4 --public-out <file outside both>",
+ "stopped": null
+}

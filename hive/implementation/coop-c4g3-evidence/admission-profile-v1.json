@@ -1,0 +1,10 @@
+{
+ "schema": "hive-admission-profile-v1",
+ "frozen_at": "2026-11-26",
+ "basis": "measured A preview / B NVENC 6000k 1080p30 recording / C recording + 3 local gpt-oss probe calls / D recording + 3 hosted probe calls; OBS 'Full shot' (face cam, c922 + chroma key, SplitCam feed, MOM Three browser overlay); gpt-oss-20b resident in LM Studio",
+ "measured": {"vram_used_mib_peak": 13414, "vram_free_mib_min": 2889, "render_skip_pct": 0.0, "output_skip_pct": 0.0, "obs_cpu_pct_max": 5.38, "ram_avail_mib_min": 8130, "encoder_latency_us_max": 1486, "gpu_util_pct_peak_local_inference": 93},
+ "admission": {"min_free_vram_mib": 2048, "max_vram_used_mib": 14250, "max_render_skip_pct": 0.5, "max_output_skip_pct": 0.5, "max_obs_cpu_pct": 15, "min_ram_available_mib": 4096, "max_encoder_latency_us": 5000},
+ "executor_static_limits": {"per_container": {"memory_mb": 256, "cpus": 1, "pids": 32, "tmpfs_mb": 16, "network": "none (pinned Docker sandbox, FR-8)"}, "concurrency": "one active experiment, one container at a time, one resident local model, one GPU generation slot", "aggregate_executor_ram_mb": 256, "tool_wall": "experiment wall_s 900; differential/dev run 60 s", "sandbox_disk": "tmpfs 16 MB + /out scratch per run"},
+ "gpu_measurement_method": "nvidia-smi memory.used / utilization.gpu / encoder.stats sampled every 2 s (device-level, not per process; GPU-seconds not measured)",
+ "not_measured": ["per-process GPU-seconds", "streaming (only local recording measured; no stream was started)"]
+}
