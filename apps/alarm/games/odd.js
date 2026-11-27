@@ -55,7 +55,7 @@ function svg(shape, color) {
     default:
       path = '';
   }
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${view}" fill="${color}">${path}</svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${view}" fill="${color}" style="stroke:var(--gc-2-ink,none);stroke-width:5;stroke-linejoin:round">${path}</svg>`;   // outline only once the slot colour is changed, so a shape never vanishes into its slot
 }
 
 function checkIcon() {
@@ -98,9 +98,9 @@ function create() {
   function renderHeader() {
     const left = 12 - answered;
     header.innerHTML = `
-      <span style="font-size:16px;font-family:${MONO};color:#FFD60A;">${left}</span>
+      <span style="font-size:16px;font-family:${MONO};color:var(--gc-1-ink,#FFD60A);">${left}</span>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="18" height="18"><rect x="20" y="30" width="60" height="40" fill="#7B2FF7"/><rect x="25" y="35" width="50" height="30" fill="#FFD60A"/></svg>
-      <span style="font-size:16px;font-family:${MONO};color:#FFD60A;margin-left:8px;">${correct}</span>
+      <span style="font-size:16px;font-family:${MONO};color:var(--gc-1-ink,#FFD60A);margin-left:8px;">${correct}</span>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="18" height="18"><circle cx="50" cy="50" r="45" fill="#22C55E"/><polyline points="30,55 45,70 70,35" stroke="#fff" stroke-width="10" fill="none"/></svg>
     `;
   }
@@ -125,9 +125,9 @@ function create() {
       btn.style.minWidth = btn.style.minHeight = '44px';
       btn.style.margin = '4px';
       btn.style.padding = '0';
-      btn.style.border = '2px solid #7B2FF7';
+      btn.style.border = '2px solid var(--gc-3,#7B2FF7)';
       btn.style.borderRadius = '10px';
-      btn.style.background = '#1A0B30';
+      btn.style.background = 'var(--gc-2,#1A0B30)';
       btn.style.cursor = 'pointer';
       btn.style.touchAction = 'manipulation';
       btn.setAttribute('aria-label', `tile ${i + 1}, ${SHAPES[shapes[i]]}`);

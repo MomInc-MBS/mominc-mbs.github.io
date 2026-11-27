@@ -56,19 +56,20 @@ export function mountSettings(host, adapter, opts = {}) {
   const clamp01 = v => Math.min(1, Math.max(0, v));
   const onScroll = () => { if (!raf) raf = requestAnimationFrame(setP); };
   panel.addEventListener('scroll', onScroll, {passive: true});
-  // Embedded (inside the console's CRT): the bust starts at the very top and is contain-fit to 96-144 px; the header controls FLOAT over its corners;
-  // the panel starts under the 44 px header row (the hero spacer --sp bridges the rest); MOM's subtitle dock + rail sit under the panel.
+  // Embedded (inside the console's CRT): the bust starts at the very top and is contain-fit to 96-144 px; the header controls FLOAT over its corners (never over the centre face).
+  // Scrolling collapses the bust only down to the FACE WINDOW (bustGeometry faceTop..faceBot: glasses, nose, mouth, chin); the panel sits right under that window and the list scrolls inside it.
+  // The hero spacer --sp bridges the rest. No tail spacer: the end of the list ends the scroll (a short list just collapses less). MOM's subtitle dock + rail sit under the panel.
   // Sized from the dock's MINIMUM height so typing a long subtitle never resizes MOM; the panel just gets shorter.
   function layoutEmb(H, Wr) {
-    const HDR = 44, st = root.style, cs = getComputedStyle(root), railH = parseFloat(cs.getPropertyValue('--rail-h')) || 46;
+    const st = root.style, cs = getComputedStyle(root), railH = parseFloat(cs.getPropertyValue('--rail-h')) || 46;
     const subMin = parseFloat(cs.getPropertyValue('--sub-min')) || 42, sub = root.querySelector('.ms-sub'), dock = Math.max(subMin, sub ? sub.offsetHeight : 0);
     const card = panel.querySelector('.card'), cardH = card ? card.offsetHeight : 66;
     const bh = Math.min(144, Math.max(96, H - railH - subMin - 6 - 4 - cardH));
-    const w = Math.min(Wr - 8, bh / bustGeometry(1).h), g = bustGeometry(w); hD = Math.max(0, g.h - HDR - 2);   // scroll extent of the collapse = the spacer
+    const w = Math.min(Wr - 8, bh / bustGeometry(1).h), g = bustGeometry(w), win = g.faceBot - g.faceTop, d = g.h - win;
+    hD = Math.max(0, d - 4);   // scroll extent of the collapse = the spacer (the panel's 6 px gap keeps the first card just under the shrinking bust)
     st.setProperty('--hero-top', '0px'); st.setProperty('--fw2', w.toFixed(1) + 'px'); st.setProperty('--hexp', g.h.toFixed(1) + 'px');
-    st.setProperty('--d', (g.h - g.strip).toFixed(1) + 'px'); st.setProperty('--ey', g.eyeTop.toFixed(1) + 'px'); st.setProperty('--pt', HDR + 'px'); st.setProperty('--sp', hD.toFixed(1) + 'px');
+    st.setProperty('--d', d.toFixed(1) + 'px'); st.setProperty('--ey', g.faceTop.toFixed(1) + 'px'); st.setProperty('--pt', win.toFixed(1) + 'px'); st.setProperty('--sp', hD.toFixed(1) + 'px');
     st.setProperty('--dock', dock + 'px'); st.setProperty('--tail', '0px');
-    if (hero && hD > 0) st.setProperty('--tail', Math.max(0, panel.clientHeight + hD - panel.scrollHeight).toFixed(1) + 'px');
     setP();
   }
   function layout() {

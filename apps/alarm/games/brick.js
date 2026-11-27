@@ -2,7 +2,7 @@
 // Rules: ONE ball, 4 total lives (a miss spends one; the next ball waits for a tap), 24 bricks, win = no bricks left, loss = no lives left. serialize() keeps bricks+lives so returning never refills them.
 // Real-time: stepped only between start()/resume() and pause(); resume() resets the clock (no catch-up), and a restored round always re-waits for a serve.
 export const LIVES = 4, COLS = 6, ROWS = 4, N = COLS * ROWS;
-import {MONO} from './common.js';
+import {MONO, themed} from './common.js';
 const PURPLE = '#7B2FF7', PURPLE_D = '#3A1478', YELLOW = '#FFD60A', YELLOW_D = '#8A6B00', INK = '#12081F', BG = '#1A0B30';
 
 function create() {
@@ -60,29 +60,31 @@ function create() {
   }
   function draw() {
     if (!g || !W) return;
-    const l = L(), px = s.px * W;
+    const l = L(), px = s.px * W, T = n => themed(cv, n, null);      // colour drawer: --gc-1 background, --gc-2 bricks, --gc-3 paddle (+ lives); unset = the original look
+    const bg = T('--gc-1') || BG, ink = T('--gc-1-ink'), brk = T('--gc-2'), pad = T('--gc-3') || YELLOW;
     g.setTransform(dpr, 0, 0, dpr, 0, 0);
-    g.fillStyle = BG; g.fillRect(0, 0, W, H);
+    g.fillStyle = bg; g.fillRect(0, 0, W, H);
     for (let i = 0; i < N; i++) if (s.bricks[i]) {                 // shapes as well as colour: purple rows carry a diamond, yellow rows a dot
       const b = brickRect(i, l), yel = Math.floor(i / COLS) % 2 === 1, cx = b.x + b.w / 2, cy = b.y + b.h / 2, q = Math.min(b.h * 0.28, 5);
-      g.fillStyle = yel ? YELLOW : PURPLE; g.fillRect(b.x, b.y, b.w, b.h);
-      g.strokeStyle = yel ? YELLOW_D : PURPLE_D; g.lineWidth = 2; g.strokeRect(b.x + 1, b.y + 1, b.w - 2, b.h - 2);
-      g.fillStyle = yel ? INK : '#FFF'; g.beginPath();
+      g.fillStyle = brk || (yel ? YELLOW : PURPLE); g.fillRect(b.x, b.y, b.w, b.h);
+      g.strokeStyle = brk ? T('--gc-2-edge') : yel ? YELLOW_D : PURPLE_D; g.lineWidth = 2; g.strokeRect(b.x + 1, b.y + 1, b.w - 2, b.h - 2);
+      g.fillStyle = brk ? T('--gc-2-ink') : yel ? INK : '#FFF'; g.beginPath();
       if (yel) g.arc(cx, cy, q, 0, 7); else { g.moveTo(cx, cy - q); g.lineTo(cx + q, cy); g.lineTo(cx, cy + q); g.lineTo(cx - q, cy); g.closePath(); }
       g.fill();
     }
-    g.fillStyle = YELLOW; g.strokeStyle = INK; g.lineWidth = 2; g.beginPath(); g.rect(px - l.pw / 2, l.py, l.pw, l.ph); g.fill(); g.stroke();
+    g.fillStyle = pad; g.strokeStyle = INK; g.lineWidth = 2; g.beginPath(); g.rect(px - l.pw / 2, l.py, l.pw, l.ph); g.fill(); g.stroke();
     g.fillStyle = '#FFF'; g.strokeStyle = PURPLE; g.beginPath(); g.arc(s.bx * W, s.by * H, l.r, 0, 7); g.fill(); g.stroke();
-    g.font = `bold 14px ${MONO}`; g.textBaseline = 'middle'; g.fillStyle = '#FFF'; g.textAlign = 'left';
+    const txt = ink || '#FFF', acc = ink || pad;
+    g.font = `bold 14px ${MONO}`; g.textBaseline = 'middle'; g.fillStyle = txt; g.textAlign = 'left';
     for (let i = 0; i < LIVES; i++) {                              // four slots: filled square per life left, hollow per life spent; digit beside them
       g.beginPath(); g.rect(10 + i * 16, 7, 11, 11);
-      if (i < s.lives) { g.fillStyle = YELLOW; g.fill(); } else { g.strokeStyle = YELLOW_D; g.lineWidth = 1.5; g.stroke(); }
+      if (i < s.lives) { g.fillStyle = acc; g.fill(); } else { g.strokeStyle = ink ? acc : YELLOW_D; g.lineWidth = 1.5; g.stroke(); }
     }
-    g.fillStyle = '#FFF'; g.fillText(String(s.lives), 78, 13);
+    g.fillStyle = txt; g.fillText(String(s.lives), 78, 13);
     g.textAlign = 'right'; g.fillText(String(left()), W - 24, 13);   // bricks left, with a small purple brick icon
-    g.fillStyle = PURPLE; g.fillRect(W - 20, 8, 12, 9); g.strokeStyle = PURPLE_D; g.lineWidth = 1.5; g.strokeRect(W - 20, 8, 12, 9);
+    g.fillStyle = brk || PURPLE; g.fillRect(W - 20, 8, 12, 9); g.strokeStyle = brk ? T('--gc-2-edge') : PURPLE_D; g.lineWidth = 1.5; g.strokeRect(W - 20, 8, 12, 9);
     if (s.phase === 'wait' && !done) {                              // serve hint: a pulsing ring round the ball (no words)
-      g.beginPath(); g.arc(s.bx * W, s.by * H, l.r + 5 + Math.sin(performance.now() / 160) * 3, 0, 7); g.strokeStyle = YELLOW; g.lineWidth = 2.5; g.stroke();
+      g.beginPath(); g.arc(s.bx * W, s.by * H, l.r + 5 + Math.sin(performance.now() / 160) * 3, 0, 7); g.strokeStyle = pad; g.lineWidth = 2.5; g.stroke();
     }
   }
   const frame = t => {

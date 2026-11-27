@@ -21,13 +21,14 @@ const SHAPES = [
 ];
 
 const NAMES = ['triangle', 'square', 'circle', 'diamond', 'hexagon', 'star'];
-const face = id => `<svg viewBox="0 0 24 24" fill="${COLORS[id]}">${SHAPES[id]}</svg>`;
+const face = id => `<svg viewBox="0 0 24 24" style="display:block;width:100%;height:100%" fill="${COLORS[id]}">${SHAPES[id]}</svg>`;
 const BACK_COLOR = '#3A1478';
-const BACK_SVG = `<svg viewBox="0 0 24 24"><rect width="24" height="24" fill="${BACK_COLOR}" rx="4"/><circle cx="12" cy="12" r="5" fill="#FFD60A"/></svg>`;
+// colour drawer vars (set on the play section): --gc-1 background, --gc-2 card backs, --gc-3 frame; each with a fallback = the original look
+const BACK_SVG = `<svg viewBox="0 0 24 24" style="display:block;width:100%;height:100%"><rect width="24" height="24" style="fill:var(--gc-2,${BACK_COLOR})" rx="4"/><circle cx="12" cy="12" r="5" style="fill:var(--gc-2-ink,#FFD60A)"/></svg>`;
 
 function makeCard(idx, faceId) {
   const btn = document.createElement('button');
-  btn.style.touchAction = 'manipulation';
+  btn.style.touchAction = 'manipulation'; btn.style.overflow = 'hidden';   // the svg fills the grid cell; it never sets the row height
   btn.style.margin = '3px';
   btn.style.padding = '0';
   btn.dataset.idx = idx;
@@ -57,17 +58,17 @@ function create() {
     const a = document.createElement('span');
     a.style.fontFamily = MONO;
     a.style.fontWeight = 'bold';
-    a.style.color = '#FFD60A';
+    a.style.color = 'var(--gc-1-ink,#FFD60A)';
     a.style.display = 'flex';
     a.style.alignItems = 'center';
-    a.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 2 L12 22 M12 22 L8 18 M12 22 L16 18" stroke="#FFD60A" fill="none"/></svg> <span>${String(18 - attempts).padStart(2, '0')}</span>`;
+    a.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 2 L12 22 M12 22 L8 18 M12 22 L16 18" stroke="currentColor" fill="none"/></svg> <span>${String(18 - attempts).padStart(2, '0')}</span>`;
     const p = document.createElement('span');
     p.style.fontFamily = MONO;
     p.style.fontWeight = 'bold';
-    p.style.color = '#FFD60A';
+    p.style.color = 'var(--gc-1-ink,#FFD60A)';
     p.style.display = 'flex';
     p.style.alignItems = 'center';
-    p.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 12 L10 16 L18 8" stroke="#FFD60A" fill="none"/></svg> <span>${String(pairs).padStart(2, '0')}</span>`;
+    p.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 12 L10 16 L18 8" stroke="currentColor" fill="none"/></svg> <span>${String(pairs).padStart(2, '0')}</span>`;
     statusBar.append(a, p);
   }
 
@@ -163,8 +164,10 @@ function create() {
     statusBar.style.padding = '4px';
     grid.style.display = 'grid';
     grid.style.gridGap = '6px';
-    grid.style.backgroundColor = '#1A0B30';
-    host.append(statusBar, grid);
+    grid.style.backgroundColor = 'var(--gc-1,#1A0B30)';
+    const wrap = document.createElement('div'); wrap.style.cssText = 'display:flex;flex-direction:column;width:100%;height:100%';   // the grid takes what the status row leaves (a fixed height overflowed the box)
+    grid.style.flex = '1'; grid.style.minHeight = '0';
+    wrap.append(statusBar, grid); host.append(wrap);
 
     // create buttons
     for (let i = 0; i < 12; i++) {
@@ -173,7 +176,7 @@ function create() {
         btn.innerHTML = face(deck[i]);
         btn.setAttribute('aria-label', `card ${i + 1}, ${NAMES[deck[i]]}`);
       }
-      btn.style.border = '2px solid #7B2FF7';
+      btn.style.border = '2px solid var(--gc-3,#7B2FF7)';
       btn.style.borderRadius = '8px';
       btn.style.backgroundColor = '#1A0B30';
       if (matched[i]) btn.style.borderColor = '#FFD60A';
@@ -191,8 +194,6 @@ function create() {
     const rows = Math.ceil(12 / cols);
     grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
     grid.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
-    grid.style.width = `${w}px`;
-    grid.style.height = `${h - statusBar.offsetHeight}px`;
     Array.from(grid.children).forEach(btn => {
       btn.style.minWidth = '44px';
       btn.style.minHeight = '44px';

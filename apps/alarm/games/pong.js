@@ -2,7 +2,7 @@
 // Player paddle at the bottom (broad, dragged in the lower area), CPU at the top. While waiting, the ball rides the player paddle; tap to serve.
 // The CPU is beatable on purpose: it sees the ball with a short lag, picks a per-rally aim error, and its speed is capped below the ball's top speed.
 // Real-time: stepped only between start()/resume() and pause(); resume() resets the clock. A restored terminal score finishes on start().
-import {MONO} from './common.js';
+import {MONO, themed} from './common.js';
 const BG = '#1A0B30', DASH = '#3A1478', YEL = '#FFD60A', PUR = '#7B2FF7', INK = '#12081F', WIN = 5, VMAX = 1.4;
 
 function create() {
@@ -53,16 +53,17 @@ function create() {
   }
   function draw() {
     if (!g || !W) return;
-    const l = L(), px = s.px * W, cx = s.cpuPx * W;
+    const l = L(), px = s.px * W, cx = s.cpuPx * W, T = n => themed(cv, n, null);       // colour drawer: --gc-1 background, --gc-2 paddles, --gc-3 ball; unset = the original look
+    const bg = T('--gc-1') || BG, ink = T('--gc-1-ink'), pad = T('--gc-2'), ball = T('--gc-3');
     g.setTransform(dpr, 0, 0, dpr, 0, 0);
-    g.fillStyle = BG; g.fillRect(0, 0, W, H);
-    g.strokeStyle = DASH; g.lineWidth = 2; g.setLineDash([10, 6]); g.beginPath(); g.moveTo(0, H / 2); g.lineTo(W, H / 2); g.stroke(); g.setLineDash([]);
-    g.fillStyle = PUR; g.strokeStyle = INK; g.lineWidth = 2; g.beginPath(); g.rect(cx - l.hw, l.cy, l.hw * 2, l.ph); g.fill(); g.stroke();
-    g.fillStyle = YEL; g.beginPath(); g.rect(px - l.hw, l.py, l.hw * 2, l.ph); g.fill(); g.stroke();
-    g.fillStyle = '#FFF'; g.strokeStyle = PUR; g.beginPath(); g.arc(s.bx * W, s.by * H, l.r, 0, 7); g.fill(); g.stroke();
-    g.font = `bold 40px ${MONO}`; g.textBaseline = 'middle'; g.textAlign = 'left'; g.fillStyle = PUR; g.fillText(String(s.cpu), 14, H * 0.3);
-    g.textAlign = 'right'; g.fillStyle = YEL; g.fillText(String(s.player), W - 14, H * 0.7);
-    if (s.phase === 'wait' && !done) { g.beginPath(); g.arc(s.bx * W, s.by * H, l.r + 5 + Math.sin(performance.now() / 160) * 3, 0, 7); g.strokeStyle = YEL; g.lineWidth = 2.5; g.stroke(); }   // serve hint
+    g.fillStyle = bg; g.fillRect(0, 0, W, H);
+    g.strokeStyle = T('--gc-1-edge') || DASH; g.lineWidth = 2; g.setLineDash([10, 6]); g.beginPath(); g.moveTo(0, H / 2); g.lineTo(W, H / 2); g.stroke(); g.setLineDash([]);
+    g.fillStyle = pad || PUR; g.strokeStyle = INK; g.lineWidth = 2; g.beginPath(); g.rect(cx - l.hw, l.cy, l.hw * 2, l.ph); g.fill(); g.stroke();
+    g.fillStyle = pad || YEL; g.beginPath(); g.rect(px - l.hw, l.py, l.hw * 2, l.ph); g.fill(); g.stroke();
+    g.fillStyle = ball || '#FFF'; g.strokeStyle = PUR; g.beginPath(); g.arc(s.bx * W, s.by * H, l.r, 0, 7); g.fill(); g.stroke();
+    g.font = `bold 40px ${MONO}`; g.textBaseline = 'middle'; g.textAlign = 'left'; g.fillStyle = ink || pad || PUR; g.fillText(String(s.cpu), 14, H * 0.3);
+    g.textAlign = 'right'; g.fillStyle = ink || pad || YEL; g.fillText(String(s.player), W - 14, H * 0.7);
+    if (s.phase === 'wait' && !done) { g.beginPath(); g.arc(s.bx * W, s.by * H, l.r + 5 + Math.sin(performance.now() / 160) * 3, 0, 7); g.strokeStyle = ball || YEL; g.lineWidth = 2.5; g.stroke(); }   // serve hint
   }
   const frame = t => { if (!running) return; step(Math.min(0.033, Math.max(0, (t - last) / 1000))); last = t; if (running) { draw(); raf = requestAnimationFrame(frame); } };
   return {
