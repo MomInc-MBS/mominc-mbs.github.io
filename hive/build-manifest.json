@@ -5,11 +5,11 @@
   "latest_implementation_id": "READINESS",
   "latest_implementation_id_meaning": "frozen engineering baseline named by CURRENT_RELEASE.json; see current_status for latest evidence and runtime",
   "latest_accepted_evidence_id": "M2",
-  "latest_packaged_runtime_id": "CONNECTED",
+  "latest_packaged_runtime_id": "PROTOFINAL",
   "operational_readiness_id": "CONNECTED",
   "current_status": {
     "schema_version": 1,
-    "as_of": "2026-11-26",
+    "as_of": "2026-11-27",
     "note": "Authoritative source for current pointers on the home page, STATUS, llms.txt and build-manifest.json. Older notes keep their original claims and dates.",
     "latest_accepted_evidence": {
       "note_id": "M2",
@@ -17,12 +17,12 @@
       "summary": "Protocol m2-local-model-two-effects-v1 accepted 24 Nov (runtime 1799c58, protocol d4b71d2): R 60/60 vs 0/60, C 60/60 vs 30/60, reuse 20/20; synthetic data, tiny search space, no search-skill claim."
     },
     "latest_packaged_runtime": {
-      "note_id": "CONNECTED",
-      "title": "Connected Goal Runner",
-      "summary": "Runtime 033089b packaged 25 Nov as HIVE_Connected_Runner_033089b.zip: type a goal, HIVE plans with typed capabilities, finds a missing step, gets one local-model proposal checked 24/24 by an independent evaluator, admits it with a signature and reuses it after restart with zero model calls.",
-      "download": "downloads/HIVE_Connected_Runner_033089b.zip",
-      "download_sha256": "4dcc31a5fc91706d4e9a4183c6168b0cbca063dfb6e43069204ae0aa5ebd69ee",
-      "publication_manifest": "implementation/connected-runner-publication.json"
+      "note_id": "PROTOFINAL",
+      "title": "HIVE prototype ee175b5",
+      "summary": "27 Nov: packaged HIVE_Prototype_ee175b5.zip. 7 of 12 real goals accepted (site link checks 3/4 and release diffs 4/4, all with 0 model calls); image workflow blocked (no open-source matcher passed the transparency-aware contract); improvement and rollback not shown. Product gate NOT met. Auto model choice is now the default, with one bounded fallback and store-scoped revocation.",
+      "download": "downloads/HIVE_Prototype_ee175b5.zip",
+      "download_sha256": "ce13bb46baff0d8d8dfd7bf5dc287608a160b1af479916fb5e9547775327a0f0",
+      "publication_manifest": "implementation/proto-final-publication.json"
     },
     "operational_readiness": {
       "note_id": "CONNECTED",
@@ -31,11 +31,11 @@
       "summary": "Usable locally on one Windows host: goals for convert, merge and inventory-diff through the console; the learning loop ran once on one real workload and ties a scripted baseline (mechanism, not advantage); trusted local scope, not production-approved; Level A not accepted, Level B untested; the owner later raised the project spending ceiling from $120 to $220 (25 Nov) and $400 (26 Nov)."
     },
     "latest_engineering_checkpoint": {
-      "note_id": "C4G3",
-      "title": "Cooperative inference and G3 routing: hosted backend screen",
-      "status": "G3_HOSTED_BACKEND_LEAD_LOCAL_ONLY",
-      "summary": "26 Nov: development screen. No cooperative recipe beat the incumbent in 63 pilot runs; contract v2 fixed spec defects; hosted Nemotron passed 4/4 sealed finals on the two capabilities local gpt-oss-20b could not learn (local 2/4); hosted finals admitted in a test store only, reuse on an unseen release VERIFIED with 0 model calls. Nothing routed by default; code on a local branch with no public remote; nothing packaged.",
-      "publication_manifest": "implementation/coop-c4g3-publication.json"
+      "note_id": "PROTOFINAL",
+      "title": "Prototype continuation (packaged, gate not met)",
+      "status": "PROTOTYPE_PACKAGED_GATE_NOT_MET",
+      "summary": "27 Nov: packaged HIVE_Prototype_ee175b5.zip. 7 of 12 real goals accepted (site link checks 3/4 and release diffs 4/4, all with 0 model calls); image workflow blocked (no open-source matcher passed the transparency-aware contract); improvement and rollback not shown. Product gate NOT met. Auto model choice is now the default, with one bounded fallback and store-scoped revocation.",
+      "publication_manifest": "implementation/proto-final-publication.json"
     }
   },
   "current_release": {
@@ -274,12 +274,18 @@
       "path": "updates/HIVE_Cooperative_Inference_C4_G3_2026-11-26.md",
       "date": "2026-11-26",
       "sha256": "471a6c1895914499f30eb0ede15a36af04f08c57aabe4d4f3da753c35ca10981"
+    },
+    {
+      "id": "PROTOFINAL",
+      "path": "updates/HIVE_Prototype_Continuation_2026-11-27.md",
+      "date": "2026-11-27",
+      "sha256": "59bee14e3646e700eb9cf4b73e43e58623b44459bc81a81e14e2beab4ca105c0"
     }
   ],
   "source_zip_sha256": "2b726d055a17a25495854890d8d0001cb791006273e0f8eb5515788b7e00c61a",
   "counts": {
-    "research_pages": 321,
-    "graph_edges": 2554,
+    "research_pages": 322,
+    "graph_edges": 2556,
     "originals": 19
   },
   "scope": "Static research reference plus executable local model/tool controller evidence. No production model runtime or compounding-learning claim."

@@ -1,1505 +1,1533 @@
 {
-  "current_coder_id": "CODER",
-  "entries": [
-    {
-      "id": "CODER",
-      "path": "updates/HIVE_Coder_Information_Packet_2026-11-20.md",
-      "title": "Coder directions — revision 0.4",
-      "type": "build",
-      "status": "proposed",
-      "evidence_status": "proposed_implementation",
-      "implementation_status": "not_implemented",
-      "revision": "0.4",
-      "sha256": "0fb0686f8357a6ba0a7d53c8a5bb6e330fcbc166edffa999e6d61749427ed03d",
-      "tags": [
-        "hive",
-        "hive/coder-directions",
-        "revision/0.4"
-      ]
-    },
-    {
-      "id": "ADAPTIVE",
-      "source_id": "HIVE-RESEARCH-UPDATE-2026-11-20-ADAPTIVE-ORGANIZATION",
-      "path": "updates/HIVE_Research_Update_Adaptive_Organization_and_Self_Learning_2026-11-20.md",
-      "title": "Adaptive organization and self-learning",
-      "type": "framework",
-      "status": "provisional",
-      "evidence_status": "research_synthesis_and_provisional_decision",
-      "implementation_status": "not_implemented",
-      "date": "2026-11-20",
-      "citation_label": "HIVE research update (20 November 2026)",
-      "sha256": "f76e7b724ef6305ce0add7279da547e5a213f71c62298706ed9594a48661d3df",
-      "tags": [
-        "hive",
-        "hive/research-update",
-        "adaptive-organization",
-        "self-learning",
-        "formula-registry",
-        "promotion-governor"
-      ]
-    },
-    {
-      "id": "STATUS",
-      "path": "implementation/CURRENT_STATE.md",
-      "title": "Implementation Status",
-      "type": "build",
-      "status": "measured",
-      "evidence_status": "measured",
-      "implementation_status": "ready_for_pressure_tests",
-      "date": "2026-11-21",
-      "citation_label": "HIVE integration (21 November 2026 Las Vegas)",
-      "sha256": "2414ef1b5475ce3673d77680f0df0320584f1493b2721bf018172c8eeda9a1cd",
-      "tags": [
-        "hive",
-        "empirical-pilot",
-        "measured"
-      ]
-    },
-    {
-      "id": "CAPABILITIES",
-      "path": "implementation/CAPABILITY_INVENTORY.md",
-      "title": "Capability Registry",
-      "type": "build",
-      "status": "measured",
-      "evidence_status": "measured",
-      "implementation_status": "implemented_scoped_pilot",
-      "date": "2026-11-21",
-      "citation_label": "HIVE empirical pilot (21 November 2026 UTC)",
-      "sha256": "2f8190b5e42a82ccbf27b8d47fa38d9a7ae93a98b8f44e04337c1d9623bf087b",
-      "tags": [
-        "hive",
-        "empirical-pilot",
-        "measured"
-      ]
-    },
-    {
-      "id": "RUNS",
-      "path": "implementation/EXPERIMENT_REGISTRY.md",
-      "title": "Experiment Registry",
-      "type": "build",
-      "status": "measured",
-      "evidence_status": "measured",
-      "implementation_status": "implemented_scoped_pilot",
-      "date": "2026-11-21",
-      "citation_label": "HIVE empirical pilot (21 November 2026 UTC)",
-      "sha256": "cdea30d35259723614d705fdb7df01ff0d249f8fb2520aa4cde76f3fd25bf559",
-      "tags": [
-        "hive",
-        "empirical-pilot",
-        "measured"
-      ]
-    },
-    {
-      "id": "LEARNING",
-      "path": "implementation/LEARNING_LOOP_REPORT.md",
-      "title": "Learning Progress",
-      "type": "build",
-      "status": "measured",
-      "evidence_status": "measured",
-      "implementation_status": "implemented_scoped_pilot",
-      "date": "2026-11-21",
-      "citation_label": "HIVE empirical pilot (21 November 2026 UTC)",
-      "sha256": "53bb4962fa854f8f775ae9d418fd68e035703fb6bc6ae0132ff66e03744fbaac",
-      "tags": [
-        "hive",
-        "empirical-pilot",
-        "measured"
-      ]
-    },
-    {
-      "id": "GAPS",
-      "path": "implementation/GAP_IMPLEMENTATION_MAP.md",
-      "title": "Known Gaps",
-      "type": "build",
-      "status": "specified",
-      "evidence_status": "specified",
-      "implementation_status": "partial",
-      "date": "2026-11-21",
-      "citation_label": "HIVE empirical pilot (21 November 2026 UTC)",
-      "sha256": "57dcae2b73cd2ed0db50399db603da18c3d1b638020e8158333d3174b0604bae",
-      "tags": [
-        "hive",
-        "empirical-pilot",
-        "specified"
-      ]
-    },
-    {
-      "id": "LEDGER",
-      "path": "implementation/ARCHITECTURE_DECISIONS.md",
-      "title": "Decision Ledger",
-      "type": "build",
-      "status": "specified",
-      "evidence_status": "specified",
-      "implementation_status": "partial",
-      "date": "2026-11-21",
-      "citation_label": "HIVE empirical pilot (21 November 2026 UTC)",
-      "sha256": "0fdab79faf6334e45d95ef92fc6da22102b1752e7f9599bbfd5d3b397f61b146",
-      "tags": [
-        "hive",
-        "empirical-pilot",
-        "specified"
-      ]
-    },
-    {
-      "id": "RELEASES",
-      "path": "implementation/CHANGELOG.md",
-      "title": "Change / Release History",
-      "type": "build",
-      "status": "measured",
-      "evidence_status": "measured",
-      "implementation_status": "implemented_scoped_pilot",
-      "date": "2026-11-21",
-      "citation_label": "HIVE empirical pilot (21 November 2026 UTC)",
-      "sha256": "8811edcf575022a132f39187c9033729bce39c06cff7c76e7fdc0f36aaa6ae96",
-      "tags": [
-        "hive",
-        "empirical-pilot",
-        "measured"
-      ]
-    },
-    {
-      "id": "BASELINE",
-      "path": "implementation/BASELINE_RESULTS.md",
-      "title": "Baseline Results",
-      "type": "build",
-      "status": "measured",
-      "evidence_status": "measured",
-      "implementation_status": "implemented_scoped_pilot",
-      "date": "2026-11-21",
-      "citation_label": "HIVE empirical pilot (21 November 2026 UTC)",
-      "sha256": "9b533085215efedf62f236c69dafec7d7adf9549d819f512f3db7ccdbd7bc2ae",
-      "tags": [
-        "hive",
-        "empirical-pilot",
-        "measured"
-      ]
-    },
-    {
-      "id": "GAPPLAN",
-      "path": "updates/HIVE_Architecture_Gaps_and_Agent_Change_Plan.md",
-      "title": "Architecture gaps and agent change plan",
-      "type": "build",
-      "status": "specified",
-      "evidence_status": "specified",
-      "implementation_status": "partially_implemented",
-      "date": "2026-11-20",
-      "citation_label": "HIVE architecture change plan (20 November 2026)",
-      "sha256": "09c079a5d136dc15186f8e7bf6b2b95c2ac99d90d6657810b7115345226bc1ad",
-      "tags": [
-        "hive",
-        "architecture",
-        "empirical-learning"
-      ]
-    },
-    {
-      "id": "PROTOTYPE",
-      "path": "implementation/AUTONOMOUS_V01.md",
-      "title": "Autonomous local prototype — v0.1",
-      "type": "build",
-      "status": "measured",
-      "evidence_status": "measured",
-      "implementation_status": "experimental_quarantined",
-      "date": "2026-11-21",
-      "citation_label": "HIVE autonomous local prototype v0.1 (21 November 2026 UTC)",
-      "sha256": "f2d48721de41e565b288e5e43cef862fa89ed1796ca21b02a527d5e00a8ab429",
-      "tags": [
-        "hive",
-        "local-model",
-        "routing-learning",
-        "quarantined",
-        "autonomous-prototype"
-      ]
-    },
-    {
-      "id": "CONTROLLER",
-      "path": "implementation/ADAPTIVE_V02.md",
-      "title": "Adaptive verified controller — v0.2",
-      "type": "build",
-      "status": "measured",
-      "evidence_status": "measured",
-      "implementation_status": "implemented_scoped_pilot",
-      "date": "2026-11-21",
-      "revision": "0.2.1",
-      "citation_label": "HIVE adaptive controller (21 November 2026 UTC)",
-      "tags": [
-        "hive",
-        "adaptive-controller",
-        "verified-routing",
-        "measured"
-      ],
-      "sha256": "a5d760c97a9db7dca9ac4d6281c86fd32c0abd7ba4b9cf1426fdf3fb8b9ee8b6"
-    },
-    {
-      "id": "V03",
-      "path": "implementation/V03_FOUNDATION.md",
-      "title": "v0.3 foundation and next experiment",
-      "type": "build",
-      "status": "experimental",
-      "evidence_status": "real_v021_reproduction_and_v03_synthetic_tests",
-      "implementation_status": "partial_foundation_E1_draft",
-      "date": "2026-11-21",
-      "citation_label": "HIVE v0.3 foundation (21 November 2026 UTC)",
-      "tags": [
-        "hive",
-        "v0.3",
-        "benchmark-integrity",
-        "experimental"
-      ],
-      "sha256": "8dd69dabf7084a5d30bf6f7a15c4cdc75f88a7aa41bf2b3c0862ed18636f7d9a"
-    },
-    {
-      "id": "WORKING",
-      "path": "implementation/WORKING_PROTOTYPE.md",
-      "title": "Video mission engineering alpha",
-      "type": "build",
-      "status": "experimental",
-      "evidence_status": "measured",
-      "implementation_status": "engineering_alpha",
-      "date": "2026-11-21",
-      "citation_label": "HIVE video engineering alpha (21 November 2026 UTC)",
-      "sha256": "811074031c481433ca275a2b75e2be59a64d1044db976d50444e6e9483634094",
-      "tags": [
-        "hive",
-        "video-mission",
-        "engineering-alpha",
-        "working-prototype"
-      ]
-    },
-    {
-      "id": "INTEGRATION",
-      "path": "implementation/INTEGRATION.md",
-      "title": "HIVE v0.3.0.dev3 integration report",
-      "type": "build",
-      "status": "experimental",
-      "evidence_status": "measured",
-      "implementation_status": "integrated_prototype_demonstrated",
-      "revision": "0.3.0.dev3",
-      "date": "2026-11-21",
-      "sha256": "6feec6f2aace334c29970adc4922d9de98b09b480256fbad20cf02e480b4f98d",
-      "citation_label": "HIVE v0.3.0.dev3 integrated demonstration (21 November 2026 Las Vegas)",
-      "tags": [
-        "hive",
-        "integration",
-        "governor",
-        "dev3"
-      ]
-    },
-    {
-      "id": "READINESS",
-      "path": "updates/HIVE_Readiness_2026-11-21.md",
-      "title": "HIVE v0.3.0.dev4 readiness report",
-      "type": "build",
-      "status": "measured",
-      "evidence_status": "measured",
-      "implementation_status": "ready_for_pressure_tests",
-      "date": "2026-11-21",
-      "citation_label": "HIVE readiness (21 November 2026 Las Vegas)",
-      "sha256": "1a0e3309b4cc3cf4fe57b27d1b8de4ef4584974d1b1318cbedc81aeda34c6e60",
-      "tags": [
-        "hive",
-        "readiness",
-        "v0.3.0.dev4",
-        "engineering-evidence"
-      ]
-    },
-    {
-      "id": "OBJECTIVE",
-      "path": "updates/HIVE_Objective_Testing_2026-11-21.md",
-      "title": "Objective testing and P2 repair - dev5",
-      "type": "build",
-      "status": "measured",
-      "evidence_status": "measured",
-      "implementation_status": "objective_pipeline_verified_p2_quarantined",
-      "date": "2026-11-21",
-      "citation_label": "HIVE objective engineering checks (21 November 2026 Las Vegas)",
-      "sha256": "c802f7fff9e9ea3ce2c335d98aada34f2d10223c37878297a9acd19a8d2ec463",
-      "tags": [
-        "hive",
-        "objective-testing",
-        "quarantined-policy",
-        "measured"
-      ]
-    },
-    {
-      "id": "P2SAFETY",
-      "path": "updates/HIVE_P2_Safety_2026-11-21.md",
-      "title": "P2 Safety and Objective Campaign - dev6",
-      "type": "build",
-      "status": "measured",
-      "evidence_status": "measured",
-      "implementation_status": "implemented_scoped_pilot",
-      "date": "2026-11-21",
-      "citation_label": "HIVE P2 safety follow-through (21 November 2026 Pacific)",
-      "tags": [
-        "hive",
-        "objective-testing",
-        "p2-safety",
-        "measured"
-      ],
-      "sha256": "b1fc8faa7b8d231abda7c0507a3cc211cd8d760ab33d72923c7b230a4389b051"
-    },
-    {
-      "id": "OPERATIONAL",
-      "path": "updates/HIVE_Operational_Prototype_2026-11-22.md",
-      "title": "Operational Workflow — 0.4.0.dev1",
-      "type": "build",
-      "status": "measured",
-      "evidence_status": "measured",
-      "implementation_status": "ready_for_live_demo",
-      "revision": "0.4.0.dev1",
-      "date": "2026-11-22",
-      "citation_label": "HIVE operational workflow (22 November 2026 UTC)",
-      "tags": [
-        "hive",
-        "operational-prototype",
-        "local-console",
-        "measured"
-      ],
-      "sha256": "34be7663873f212c81028ea63c22d752a417287a0d873276b690709c01ef7068"
-    },
-    {
-      "id": "LANDSCAPE",
-      "source_id": "HIVE-RESEARCH-UPDATE-2026-11-22-EXTERNAL-LANDSCAPE",
-      "path": "updates/HIVE_Research_Update_External_Landscape_2026-11-22.md",
-      "title": "External landscape of similar systems",
-      "type": "framework",
-      "status": "provisional",
-      "evidence_status": "external_research_synthesis_not_reproduced",
-      "implementation_status": "not_implemented",
-      "date": "2026-11-22",
-      "citation_label": "HIVE external landscape (22 November 2026)",
-      "sha256": "39cad31377d65e6844c6a1aa29a0a546be2d90da3edf347811f2f412367a423b",
-      "tags": [
-        "hive",
-        "hive/research-update",
-        "external-landscape",
-        "harness-self-improvement",
-        "promotion-governor",
-        "compounding-learning"
-      ]
-    },
-    {
-      "id": "WHOLE",
-      "source_id": "HIVE-DESIGN-MAP-2026-11-22-INTEGRATED",
-      "path": "updates/HIVE_Integrated_Design_Map_2026-11-22.md",
-      "title": "Integrated design map",
-      "type": "framework",
-      "status": "proposed",
-      "evidence_status": "design_proposal",
-      "implementation_status": "not_implemented",
-      "date": "2026-11-22",
-      "citation_label": "HIVE integrated design map (22 November 2026)",
-      "sha256": "42c7eddafc839da35ab70ca95670dd7335adf6c05d11845e433e46f44745819a",
-      "tags": [
-        "hive",
-        "hive/design-map",
-        "integrated-design",
-        "build-order"
-      ]
-    },
-    {
-      "id": "DIRECTION",
-      "source_id": "HIVE-OWNER-DECISIONS-2026-11-22",
-      "path": "updates/HIVE_Owner_Decisions_2026-11-22.md",
-      "title": "Owner decisions — 22 November 2026",
-      "type": "framework",
-      "status": "decided",
-      "evidence_status": "owner_decision_record",
-      "implementation_status": "not_implemented",
-      "date": "2026-11-22",
-      "citation_label": "HIVE owner decisions (22 November 2026)",
-      "sha256": "16fe23b361e7033cc1e8c722415959b1016081dc77010439ddafb52dc57fd89a",
-      "tags": [
-        "hive",
-        "owner-decisions"
-      ]
-    },
-    {
-      "id": "KERNELS",
-      "source_id": "HIVE-KERNEL-COMPARISON-2026-11-22",
-      "path": "updates/HIVE_Execution_Kernel_Comparison_2026-11-22.md",
-      "title": "Execution kernel comparison",
-      "type": "framework",
-      "status": "provisional",
-      "evidence_status": "source_inspection_not_executed",
-      "implementation_status": "not_implemented",
-      "date": "2026-11-22",
-      "citation_label": "HIVE kernel comparison (22 November 2026)",
-      "sha256": "d138ea9677f95e1ffdaf3b5e60f81e5c825f85b903fb92586ae1eb9df35bcd37",
-      "tags": [
-        "hive",
-        "execution-kernel",
-        "external-landscape"
-      ]
-    },
-    {
-      "id": "METABASE",
-      "source_id": "HIVE-METABASE-2026-11-22",
-      "path": "updates/HIVE_Base_For_Later_Self_Improvement_2026-11-22.md",
-      "title": "Base for later self-improvement",
-      "type": "framework",
-      "status": "proposed",
-      "evidence_status": "design_proposal",
-      "implementation_status": "not_implemented",
-      "date": "2026-11-22",
-      "citation_label": "HIVE base for later self-improvement (22 November 2026)",
-      "sha256": "43c66c3137e3db648452dfb9ef2146bd58e6605d4a394c56ba7265eef40a9086",
-      "tags": [
-        "hive",
-        "self-improvement",
-        "mutability"
-      ]
-    },
-    {
-      "id": "LIVEDEMO",
-      "source_id": "HIVE-LIVE-DEMO-2026-11-22",
-      "path": "updates/HIVE_Live_Local_Demo_2026-11-22.md",
-      "title": "First live local-model demo",
-      "type": "framework",
-      "status": "measured",
-      "evidence_status": "measured_engineering_result",
-      "implementation_status": "implemented",
-      "date": "2026-11-22",
-      "citation_label": "HIVE first live local-model demo (22 November 2026)",
-      "sha256": "f35bd41ae0a899fa5e0fd615f48c8a8a13b7cf9842b18ac68e5e15e9a60dda38",
-      "tags": [
-        "hive",
-        "live-demo",
-        "evidence"
-      ]
-    },
-    {
-      "id": "UNIFIED",
-      "source_id": "HIVE-UNIFIED-INTEGRATION-2026-11-22",
-      "path": "updates/HIVE_Unified_Integration_2026-11-22.md",
-      "title": "Unified integration campaign",
-      "type": "framework",
-      "status": "measured",
-      "evidence_status": "measured_engineering_result",
-      "implementation_status": "implemented",
-      "date": "2026-11-22",
-      "citation_label": "HIVE unified integration campaign (22 November 2026)",
-      "sha256": "55321f73714a0cc5569f7d0f22c89548f0baee3caea54c3415c9d0b886b86785",
-      "tags": [
-        "hive",
-        "integration",
-        "evidence"
-      ]
-    },
-    {
-      "id": "V04X",
-      "source_id": "HIVE-V04X-CHECKPOINT-2026-11-23",
-      "path": "updates/HIVE_V04X_Checkpoint_2026-11-23.md",
-      "title": "Autonomous experiment checkpoint",
-      "type": "framework",
-      "status": "measured",
-      "evidence_status": "measured_engineering_result",
-      "implementation_status": "implemented",
-      "date": "2026-11-23",
-      "citation_label": "HIVE v0.4.x autonomous experiment checkpoint (23 November 2026)",
-      "sha256": "dabf1a32b8b2a7601ef870504ab8a5970d2296464792c8f27a501f9c70806774",
-      "tags": [
-        "hive",
-        "checkpoint",
-        "evidence"
-      ]
-    },
-    {
-      "id": "ISOLATION",
-      "source_id": "HIVE-ISOLATION-LINEAGE-2026-11-23",
-      "path": "updates/HIVE_Isolation_Lineage_2026-11-23.md",
-      "title": "Evaluator isolation and lineage start",
-      "type": "framework",
-      "status": "measured",
-      "evidence_status": "measured_engineering_result",
-      "implementation_status": "implemented",
-      "date": "2026-11-23",
-      "citation_label": "HIVE evaluator isolation and lineage start (23 November 2026)",
-      "sha256": "84c26d38e9253a1b3bd2de2845062b343d1effe6fe9d4c86fd0f314abd76e263",
-      "tags": [
-        "hive",
-        "checkpoint",
-        "evidence"
-      ]
-    },
-    {
-      "id": "M1",
-      "source_id": "HIVE-M1-ACCEPTED-2026-11-24",
-      "path": "updates/HIVE_M1_Accepted_2026-11-24.md",
-      "title": "M1 accepted: first verified evolutionary benefit",
-      "type": "framework",
-      "status": "measured",
-      "evidence_status": "measured_engineering_result",
-      "implementation_status": "implemented",
-      "date": "2026-11-24",
-      "citation_label": "HIVE M1 accepted: first verified evolutionary benefit (24 November 2026)",
-      "sha256": "eaeaf6310146772535fcfffcba1148b1c46b741afb168e0b146f89ba798cbc78",
-      "tags": [
-        "hive",
-        "checkpoint",
-        "evidence"
-      ]
-    },
-    {
-      "id": "M2",
-      "source_id": "HIVE-M2-ACCEPTED-2026-11-24",
-      "path": "updates/HIVE_M2_Accepted_2026-11-24.md",
-      "title": "M2 accepted: a local model found two new effects",
-      "type": "framework",
-      "status": "measured",
-      "evidence_status": "measured_engineering_result",
-      "implementation_status": "implemented",
-      "date": "2026-11-24",
-      "citation_label": "HIVE M2 accepted: a local model found two new effects (24 November 2026)",
-      "sha256": "748bf66f6bb0ef1a7537efc1ebe0f55e477a39dd6883334db2ab7e64407c915a",
-      "tags": [
-        "hive",
-        "checkpoint",
-        "evidence"
-      ]
-    },
-    {
-      "id": "OPERATOR",
-      "source_id": "HIVE-OPERATOR-PROTOTYPE-2026-11-24",
-      "path": "updates/HIVE_Operator_Prototype_2026-11-24.md",
-      "title": "Operator Prototype: retained capabilities on real inputs",
-      "type": "framework",
-      "status": "measured",
-      "evidence_status": "measured_engineering_result",
-      "implementation_status": "implemented",
-      "date": "2026-11-24",
-      "citation_label": "HIVE Operator Prototype (24 November 2026)",
-      "sha256": "1f563f88d755d9c6a33ceb0554a69c7fdf0eedcb9fd8863ed9b9cee428c9125f",
-      "tags": [
-        "hive",
-        "operator",
-        "evidence"
-      ]
-    },
-    {
-      "id": "CONNECTED",
-      "source_id": "HIVE-CONNECTED-RUNNER-2026-11-25",
-      "path": "updates/HIVE_Connected_Runner_2026-11-25.md",
-      "title": "Connected Goal Runner: goal to discovery to admission to reuse",
-      "type": "framework",
-      "status": "measured",
-      "evidence_status": "measured_engineering_result",
-      "implementation_status": "implemented",
-      "date": "2026-11-25",
-      "citation_label": "HIVE Connected Goal Runner (25 November 2026)",
-      "sha256": "59fcd933b275b5416d1722c02e308df1c5a173d5510a8e60b181a9aad899bd3f",
-      "tags": [
-        "hive",
-        "connected-runner",
-        "evidence"
-      ]
-    },
-    {
-      "id": "M3M5",
-      "source_id": "HIVE-PROTOTYPE-M3-M5-2026-11-26",
-      "path": "updates/HIVE_Prototype_Checkpoint_M3_M5_2026-11-26.md",
-      "title": "Prototype checkpoint M3-M5 (incomplete): learn, check, admit, reuse on real inputs",
-      "type": "framework",
-      "status": "measured",
-      "evidence_status": "measured_engineering_result",
-      "implementation_status": "partial",
-      "date": "2026-11-26",
-      "citation_label": "HIVE prototype checkpoint M3-M5 (26 November 2026)",
-      "sha256": "a7bed7567770184898a34e24e2ee07f1aceac5c3251b91b080e316607745c52a",
-      "tags": [
-        "hive",
-        "prototype-m3-m5",
-        "evidence"
-      ]
-    },
-    {
-      "id": "C4G3",
-      "source_id": "HIVE-COOP-C4-G3-2026-11-26",
-      "path": "updates/HIVE_Cooperative_Inference_C4_G3_2026-11-26.md",
-      "title": "Cooperative inference and G3 routing: hosted backend screen",
-      "type": "framework",
-      "status": "measured",
-      "evidence_status": "measured_engineering_result",
-      "implementation_status": "partial",
-      "date": "2026-11-26",
-      "citation_label": "HIVE cooperative inference and G3 routing (26 November 2026)",
-      "sha256": "471a6c1895914499f30eb0ede15a36af04f08c57aabe4d4f3da753c35ca10981",
-      "tags": [
-        "hive",
-        "cooperative-inference",
-        "evidence"
-      ]
-    }
-  ],
-  "edges": [
-    {
-      "source": "CODER",
-      "target": "FRAMEWORK",
-      "relation": "derived_from"
-    },
-    {
-      "source": "CODER",
-      "target": "HANDOFF",
-      "relation": "supersedes"
-    },
-    {
-      "source": "CODER",
-      "target": "ROADMAP",
-      "relation": "informs"
-    },
-    {
-      "source": "CODER",
-      "target": "P09",
-      "relation": "related_to"
-    },
-    {
-      "source": "CODER",
-      "target": "P12",
-      "relation": "related_to"
-    },
-    {
-      "source": "CODER",
-      "target": "P13",
-      "relation": "related_to"
-    },
-    {
-      "source": "CODER",
-      "target": "P16",
-      "relation": "related_to"
-    },
-    {
-      "source": "CODER",
-      "target": "P19",
-      "relation": "related_to"
-    },
-    {
-      "source": "HOME",
-      "target": "CODER",
-      "relation": "related_to"
-    },
-    {
-      "source": "ROADMAP",
-      "target": "CODER",
-      "relation": "related_to"
-    },
-    {
-      "source": "ADAPTIVE",
-      "target": "FRAMEWORK",
-      "relation": "informs"
-    },
-    {
-      "source": "ADAPTIVE",
-      "target": "CODER",
-      "relation": "informs"
-    },
-    {
-      "source": "ADAPTIVE",
-      "target": "ROADMAP",
-      "relation": "informs"
-    },
-    {
-      "source": "ADAPTIVE",
-      "target": "D02",
-      "relation": "related_to"
-    },
-    {
-      "source": "ADAPTIVE",
-      "target": "D05",
-      "relation": "related_to"
-    },
-    {
-      "source": "ADAPTIVE",
-      "target": "D06",
-      "relation": "related_to"
-    },
-    {
-      "source": "ADAPTIVE",
-      "target": "D07",
-      "relation": "related_to"
-    },
-    {
-      "source": "ADAPTIVE",
-      "target": "D09",
-      "relation": "related_to"
-    },
-    {
-      "source": "ADAPTIVE",
-      "target": "D12",
-      "relation": "related_to"
-    },
-    {
-      "source": "ADAPTIVE",
-      "target": "P09",
-      "relation": "related_to"
-    },
-    {
-      "source": "ADAPTIVE",
-      "target": "P11",
-      "relation": "related_to"
-    },
-    {
-      "source": "ADAPTIVE",
-      "target": "P16",
-      "relation": "related_to"
-    },
-    {
-      "source": "ADAPTIVE",
-      "target": "P17",
-      "relation": "related_to"
-    },
-    {
-      "source": "ADAPTIVE",
-      "target": "P19",
-      "relation": "related_to"
-    },
-    {
-      "source": "ADAPTIVE",
-      "target": "P21",
-      "relation": "related_to"
-    },
-    {
-      "source": "ADAPTIVE",
-      "target": "P24",
-      "relation": "related_to"
-    },
-    {
-      "source": "ADAPTIVE",
-      "target": "E03",
-      "relation": "related_to"
-    },
-    {
-      "source": "ADAPTIVE",
-      "target": "E06",
-      "relation": "related_to"
-    },
-    {
-      "source": "ADAPTIVE",
-      "target": "E08",
-      "relation": "related_to"
-    },
-    {
-      "source": "ADAPTIVE",
-      "target": "B07",
-      "relation": "related_to"
-    },
-    {
-      "source": "CODER",
-      "target": "ADAPTIVE",
-      "relation": "related_to"
-    },
-    {
-      "source": "HOME",
-      "target": "ADAPTIVE",
-      "relation": "related_to"
-    },
-    {
-      "source": "STATUS",
-      "target": "CAPABILITIES",
-      "relation": "related_to"
-    },
-    {
-      "source": "STATUS",
-      "target": "RUNS",
-      "relation": "related_to"
-    },
-    {
-      "source": "STATUS",
-      "target": "LEARNING",
-      "relation": "related_to"
-    },
-    {
-      "source": "STATUS",
-      "target": "GAPS",
-      "relation": "related_to"
-    },
-    {
-      "source": "STATUS",
-      "target": "LEDGER",
-      "relation": "related_to"
-    },
-    {
-      "source": "STATUS",
-      "target": "RELEASES",
-      "relation": "related_to"
-    },
-    {
-      "source": "STATUS",
-      "target": "BASELINE",
-      "relation": "related_to"
-    },
-    {
-      "source": "STATUS",
-      "target": "FRAMEWORK",
-      "relation": "informs"
-    },
-    {
-      "source": "STATUS",
-      "target": "ROADMAP",
-      "relation": "informs"
-    },
-    {
-      "source": "STATUS",
-      "target": "ADAPTIVE",
-      "relation": "informs"
-    },
-    {
-      "source": "STATUS",
-      "target": "HISTORY",
-      "relation": "informs"
-    },
-    {
-      "source": "STATUS",
-      "target": "B04",
-      "relation": "informs"
-    },
-    {
-      "source": "STATUS",
-      "target": "B06",
-      "relation": "informs"
-    },
-    {
-      "source": "STATUS",
-      "target": "CODER",
-      "relation": "informs"
-    },
-    {
-      "source": "GAPPLAN",
-      "target": "STATUS",
-      "relation": "tested_by"
-    },
-    {
-      "source": "RUNS",
-      "target": "LEARNING",
-      "relation": "informs"
-    },
-    {
-      "source": "STATUS",
-      "target": "PROTOTYPE",
-      "relation": "related_to"
-    },
-    {
-      "source": "RUNS",
-      "target": "PROTOTYPE",
-      "relation": "related_to"
-    },
-    {
-      "source": "CAPABILITIES",
-      "target": "PROTOTYPE",
-      "relation": "related_to"
-    },
-    {
-      "source": "LEARNING",
-      "target": "PROTOTYPE",
-      "relation": "related_to"
-    },
-    {
-      "source": "GAPS",
-      "target": "PROTOTYPE",
-      "relation": "related_to"
-    },
-    {
-      "source": "LEDGER",
-      "target": "PROTOTYPE",
-      "relation": "related_to"
-    },
-    {
-      "source": "RELEASES",
-      "target": "PROTOTYPE",
-      "relation": "related_to"
-    },
-    {
-      "source": "CODER",
-      "target": "PROTOTYPE",
-      "relation": "related_to"
-    },
-    {
-      "source": "ADAPTIVE",
-      "target": "PROTOTYPE",
-      "relation": "related_to"
-    },
-    {
-      "source": "STATUS",
-      "target": "CONTROLLER",
-      "relation": "related_to"
-    },
-    {
-      "source": "RUNS",
-      "target": "CONTROLLER",
-      "relation": "related_to"
-    },
-    {
-      "source": "CAPABILITIES",
-      "target": "CONTROLLER",
-      "relation": "related_to"
-    },
-    {
-      "source": "LEARNING",
-      "target": "CONTROLLER",
-      "relation": "related_to"
-    },
-    {
-      "source": "GAPS",
-      "target": "CONTROLLER",
-      "relation": "related_to"
-    },
-    {
-      "source": "LEDGER",
-      "target": "CONTROLLER",
-      "relation": "related_to"
-    },
-    {
-      "source": "RELEASES",
-      "target": "CONTROLLER",
-      "relation": "related_to"
-    },
-    {
-      "source": "PROTOTYPE",
-      "target": "CONTROLLER",
-      "relation": "related_to"
-    },
-    {
-      "source": "ADAPTIVE",
-      "target": "CONTROLLER",
-      "relation": "related_to"
-    },
-    {
-      "source": "STATUS",
-      "target": "V03",
-      "relation": "related_to"
-    },
-    {
-      "source": "CONTROLLER",
-      "target": "V03",
-      "relation": "related_to"
-    },
-    {
-      "source": "RUNS",
-      "target": "V03",
-      "relation": "related_to"
-    },
-    {
-      "source": "GAPS",
-      "target": "V03",
-      "relation": "related_to"
-    },
-    {
-      "source": "LEDGER",
-      "target": "V03",
-      "relation": "related_to"
-    },
-    {
-      "source": "RELEASES",
-      "target": "V03",
-      "relation": "related_to"
-    },
-    {
-      "source": "STATUS",
-      "target": "WORKING",
-      "relation": "related_to"
-    },
-    {
-      "source": "RUNS",
-      "target": "WORKING",
-      "relation": "related_to"
-    },
-    {
-      "source": "GAPS",
-      "target": "WORKING",
-      "relation": "related_to"
-    },
-    {
-      "source": "V03",
-      "target": "WORKING",
-      "relation": "related_to"
-    },
-    {
-      "source": "RELEASES",
-      "target": "WORKING",
-      "relation": "related_to"
-    },
-    {
-      "source": "CAPABILITIES",
-      "target": "WORKING",
-      "relation": "related_to"
-    },
-    {
-      "source": "LEARNING",
-      "target": "WORKING",
-      "relation": "related_to"
-    },
-    {
-      "source": "HOME",
-      "target": "INTEGRATION",
-      "relation": "related_to"
-    },
-    {
-      "source": "STATUS",
-      "target": "INTEGRATION",
-      "relation": "informs"
-    },
-    {
-      "source": "RUNS",
-      "target": "INTEGRATION",
-      "relation": "related_to"
-    },
-    {
-      "source": "CAPABILITIES",
-      "target": "INTEGRATION",
-      "relation": "related_to"
-    },
-    {
-      "source": "LEARNING",
-      "target": "INTEGRATION",
-      "relation": "related_to"
-    },
-    {
-      "source": "GAPS",
-      "target": "INTEGRATION",
-      "relation": "related_to"
-    },
-    {
-      "source": "LEDGER",
-      "target": "INTEGRATION",
-      "relation": "related_to"
-    },
-    {
-      "source": "RELEASES",
-      "target": "INTEGRATION",
-      "relation": "related_to"
-    },
-    {
-      "source": "V03",
-      "target": "INTEGRATION",
-      "relation": "informs"
-    },
-    {
-      "source": "WORKING",
-      "target": "INTEGRATION",
-      "relation": "related_to"
-    },
-    {
-      "source": "HOME",
-      "target": "READINESS",
-      "relation": "related_to"
-    },
-    {
-      "source": "STATUS",
-      "target": "READINESS",
-      "relation": "related_to"
-    },
-    {
-      "source": "RUNS",
-      "target": "READINESS",
-      "relation": "related_to"
-    },
-    {
-      "source": "CAPABILITIES",
-      "target": "READINESS",
-      "relation": "related_to"
-    },
-    {
-      "source": "LEARNING",
-      "target": "READINESS",
-      "relation": "related_to"
-    },
-    {
-      "source": "LEDGER",
-      "target": "READINESS",
-      "relation": "related_to"
-    },
-    {
-      "source": "GAPS",
-      "target": "READINESS",
-      "relation": "related_to"
-    },
-    {
-      "source": "RELEASES",
-      "target": "READINESS",
-      "relation": "related_to"
-    },
-    {
-      "source": "INTEGRATION",
-      "target": "READINESS",
-      "relation": "related_to"
-    },
-    {
-      "source": "HOME",
-      "target": "OBJECTIVE",
-      "relation": "related_to"
-    },
-    {
-      "source": "STATUS",
-      "target": "OBJECTIVE",
-      "relation": "related_to"
-    },
-    {
-      "source": "RELEASES",
-      "target": "OBJECTIVE",
-      "relation": "related_to"
-    },
-    {
-      "source": "READINESS",
-      "target": "OBJECTIVE",
-      "relation": "related_to"
-    },
-    {
-      "source": "HOME",
-      "target": "P2SAFETY",
-      "relation": "related_to"
-    },
-    {
-      "source": "STATUS",
-      "target": "P2SAFETY",
-      "relation": "related_to"
-    },
-    {
-      "source": "RELEASES",
-      "target": "P2SAFETY",
-      "relation": "related_to"
-    },
-    {
-      "source": "OBJECTIVE",
-      "target": "P2SAFETY",
-      "relation": "related_to"
-    },
-    {
-      "source": "HOME",
-      "target": "OPERATIONAL",
-      "relation": "related_to"
-    },
-    {
-      "source": "STATUS",
-      "target": "OPERATIONAL",
-      "relation": "related_to"
-    },
-    {
-      "source": "RELEASES",
-      "target": "OPERATIONAL",
-      "relation": "related_to"
-    },
-    {
-      "source": "P2SAFETY",
-      "target": "OPERATIONAL",
-      "relation": "related_to"
-    },
-    {
-      "source": "LANDSCAPE",
-      "target": "WHOLE",
-      "relation": "informs"
-    },
-    {
-      "source": "LANDSCAPE",
-      "target": "CATALOG",
-      "relation": "related_to"
-    },
-    {
-      "source": "LANDSCAPE",
-      "target": "GAPS",
-      "relation": "informs"
-    },
-    {
-      "source": "LANDSCAPE",
-      "target": "ADAPTIVE",
-      "relation": "related_to"
-    },
-    {
-      "source": "LANDSCAPE",
-      "target": "FRAMEWORK",
-      "relation": "informs"
-    },
-    {
-      "source": "LANDSCAPE",
-      "target": "D09",
-      "relation": "related_to"
-    },
-    {
-      "source": "LANDSCAPE",
-      "target": "P34",
-      "relation": "related_to"
-    },
-    {
-      "source": "LANDSCAPE",
-      "target": "P26",
-      "relation": "related_to"
-    },
-    {
-      "source": "WHOLE",
-      "target": "FRAMEWORK",
-      "relation": "informs"
-    },
-    {
-      "source": "WHOLE",
-      "target": "ADAPTIVE",
-      "relation": "derived_from"
-    },
-    {
-      "source": "WHOLE",
-      "target": "GAPPLAN",
-      "relation": "derived_from"
-    },
-    {
-      "source": "WHOLE",
-      "target": "GAPS",
-      "relation": "informs"
-    },
-    {
-      "source": "WHOLE",
-      "target": "ROADMAP",
-      "relation": "informs"
-    },
-    {
-      "source": "WHOLE",
-      "target": "CODER",
-      "relation": "related_to"
-    },
-    {
-      "source": "WHOLE",
-      "target": "D02",
-      "relation": "related_to"
-    },
-    {
-      "source": "WHOLE",
-      "target": "D03",
-      "relation": "related_to"
-    },
-    {
-      "source": "WHOLE",
-      "target": "D09",
-      "relation": "related_to"
-    },
-    {
-      "source": "WHOLE",
-      "target": "D11",
-      "relation": "related_to"
-    },
-    {
-      "source": "WHOLE",
-      "target": "STATUS",
-      "relation": "related_to"
-    },
-    {
-      "source": "HOME",
-      "target": "LANDSCAPE",
-      "relation": "related_to"
-    },
-    {
-      "source": "HOME",
-      "target": "WHOLE",
-      "relation": "related_to"
-    },
-    {
-      "source": "CATALOG",
-      "target": "LANDSCAPE",
-      "relation": "related_to"
-    },
-    {
-      "source": "DIRECTION",
-      "target": "WHOLE",
-      "relation": "informs"
-    },
-    {
-      "source": "DIRECTION",
-      "target": "KERNELS",
-      "relation": "related_to"
-    },
-    {
-      "source": "DIRECTION",
-      "target": "METABASE",
-      "relation": "related_to"
-    },
-    {
-      "source": "DIRECTION",
-      "target": "GAPS",
-      "relation": "informs"
-    },
-    {
-      "source": "DIRECTION",
-      "target": "ROADMAP",
-      "relation": "informs"
-    },
-    {
-      "source": "DIRECTION",
-      "target": "CODER",
-      "relation": "informs"
-    },
-    {
-      "source": "DIRECTION",
-      "target": "D02",
-      "relation": "related_to"
-    },
-    {
-      "source": "DIRECTION",
-      "target": "D09",
-      "relation": "related_to"
-    },
-    {
-      "source": "DIRECTION",
-      "target": "STATUS",
-      "relation": "related_to"
-    },
-    {
-      "source": "KERNELS",
-      "target": "LANDSCAPE",
-      "relation": "derived_from"
-    },
-    {
-      "source": "KERNELS",
-      "target": "FRAMEWORK",
-      "relation": "informs"
-    },
-    {
-      "source": "KERNELS",
-      "target": "D05",
-      "relation": "related_to"
-    },
-    {
-      "source": "KERNELS",
-      "target": "WHOLE",
-      "relation": "informs"
-    },
-    {
-      "source": "METABASE",
-      "target": "D09",
-      "relation": "informs"
-    },
-    {
-      "source": "METABASE",
-      "target": "LANDSCAPE",
-      "relation": "derived_from"
-    },
-    {
-      "source": "METABASE",
-      "target": "WHOLE",
-      "relation": "related_to"
-    },
-    {
-      "source": "METABASE",
-      "target": "P34",
-      "relation": "related_to"
-    },
-    {
-      "source": "HOME",
-      "target": "DIRECTION",
-      "relation": "related_to"
-    },
-    {
-      "source": "WHOLE",
-      "target": "DIRECTION",
-      "relation": "related_to"
-    },
-    {
-      "source": "LIVEDEMO",
-      "target": "OPERATIONAL",
-      "relation": "derived_from"
-    },
-    {
-      "source": "LIVEDEMO",
-      "target": "DIRECTION",
-      "relation": "related_to"
-    },
-    {
-      "source": "UNIFIED",
-      "target": "LIVEDEMO",
-      "relation": "derived_from"
-    },
-    {
-      "source": "UNIFIED",
-      "target": "OPERATIONAL",
-      "relation": "related_to"
-    },
-    {
-      "source": "HOME",
-      "target": "UNIFIED",
-      "relation": "related_to"
-    },
-    {
-      "source": "V04X",
-      "target": "UNIFIED",
-      "relation": "derived_from"
-    },
-    {
-      "source": "HOME",
-      "target": "V04X",
-      "relation": "related_to"
-    },
-    {
-      "source": "ISOLATION",
-      "target": "V04X",
-      "relation": "derived_from"
-    },
-    {
-      "source": "HOME",
-      "target": "ISOLATION",
-      "relation": "related_to"
-    },
-    {
-      "source": "M1",
-      "target": "ISOLATION",
-      "relation": "derived_from"
-    },
-    {
-      "source": "HOME",
-      "target": "M1",
-      "relation": "related_to"
-    },
-    {
-      "source": "M2",
-      "target": "M1",
-      "relation": "derived_from"
-    },
-    {
-      "source": "HOME",
-      "target": "M2",
-      "relation": "related_to"
-    },
-    {
-      "source": "OPERATOR",
-      "target": "M2",
-      "relation": "derived_from"
-    },
-    {
-      "source": "HOME",
-      "target": "OPERATOR",
-      "relation": "related_to"
-    },
-    {
-      "source": "STATUS",
-      "target": "OPERATOR",
-      "relation": "related_to"
-    },
-    {
-      "source": "STATUS",
-      "target": "CONNECTED",
-      "relation": "related_to"
-    },
-    {
-      "source": "OPERATOR",
-      "target": "CONNECTED",
-      "relation": "related_to"
-    },
-    {
-      "source": "STATUS",
-      "target": "M3M5",
-      "relation": "related_to"
-    },
-    {
-      "source": "CONNECTED",
-      "target": "M3M5",
-      "relation": "related_to"
-    },
-    {
-      "source": "STATUS",
-      "target": "C4G3",
-      "relation": "related_to"
-    },
-    {
-      "source": "M3M5",
-      "target": "C4G3",
-      "relation": "related_to"
-    }
-  ],
-  "scope": "The supplied coder packet remains revision 0.4. The adaptive-organization research handoff is a dated addendum with provisional decisions and untested proposals. Editorial links provide navigation; original source and evidence records are preserved.",
-  "latest_research_id": "ADAPTIVE",
-  "implementation_status_id": "STATUS",
-  "latest_implementation_id": "READINESS"
+ "current_coder_id": "CODER",
+ "entries": [
+  {
+   "id": "CODER",
+   "path": "updates/HIVE_Coder_Information_Packet_2026-11-20.md",
+   "title": "Coder directions — revision 0.4",
+   "type": "build",
+   "status": "proposed",
+   "evidence_status": "proposed_implementation",
+   "implementation_status": "not_implemented",
+   "revision": "0.4",
+   "sha256": "0fb0686f8357a6ba0a7d53c8a5bb6e330fcbc166edffa999e6d61749427ed03d",
+   "tags": [
+    "hive",
+    "hive/coder-directions",
+    "revision/0.4"
+   ]
+  },
+  {
+   "id": "ADAPTIVE",
+   "source_id": "HIVE-RESEARCH-UPDATE-2026-11-20-ADAPTIVE-ORGANIZATION",
+   "path": "updates/HIVE_Research_Update_Adaptive_Organization_and_Self_Learning_2026-11-20.md",
+   "title": "Adaptive organization and self-learning",
+   "type": "framework",
+   "status": "provisional",
+   "evidence_status": "research_synthesis_and_provisional_decision",
+   "implementation_status": "not_implemented",
+   "date": "2026-11-20",
+   "citation_label": "HIVE research update (20 November 2026)",
+   "sha256": "f76e7b724ef6305ce0add7279da547e5a213f71c62298706ed9594a48661d3df",
+   "tags": [
+    "hive",
+    "hive/research-update",
+    "adaptive-organization",
+    "self-learning",
+    "formula-registry",
+    "promotion-governor"
+   ]
+  },
+  {
+   "id": "STATUS",
+   "path": "implementation/CURRENT_STATE.md",
+   "title": "Implementation Status",
+   "type": "build",
+   "status": "measured",
+   "evidence_status": "measured",
+   "implementation_status": "ready_for_pressure_tests",
+   "date": "2026-11-21",
+   "citation_label": "HIVE integration (21 November 2026 Las Vegas)",
+   "sha256": "2414ef1b5475ce3673d77680f0df0320584f1493b2721bf018172c8eeda9a1cd",
+   "tags": [
+    "hive",
+    "empirical-pilot",
+    "measured"
+   ]
+  },
+  {
+   "id": "CAPABILITIES",
+   "path": "implementation/CAPABILITY_INVENTORY.md",
+   "title": "Capability Registry",
+   "type": "build",
+   "status": "measured",
+   "evidence_status": "measured",
+   "implementation_status": "implemented_scoped_pilot",
+   "date": "2026-11-21",
+   "citation_label": "HIVE empirical pilot (21 November 2026 UTC)",
+   "sha256": "2f8190b5e42a82ccbf27b8d47fa38d9a7ae93a98b8f44e04337c1d9623bf087b",
+   "tags": [
+    "hive",
+    "empirical-pilot",
+    "measured"
+   ]
+  },
+  {
+   "id": "RUNS",
+   "path": "implementation/EXPERIMENT_REGISTRY.md",
+   "title": "Experiment Registry",
+   "type": "build",
+   "status": "measured",
+   "evidence_status": "measured",
+   "implementation_status": "implemented_scoped_pilot",
+   "date": "2026-11-21",
+   "citation_label": "HIVE empirical pilot (21 November 2026 UTC)",
+   "sha256": "cdea30d35259723614d705fdb7df01ff0d249f8fb2520aa4cde76f3fd25bf559",
+   "tags": [
+    "hive",
+    "empirical-pilot",
+    "measured"
+   ]
+  },
+  {
+   "id": "LEARNING",
+   "path": "implementation/LEARNING_LOOP_REPORT.md",
+   "title": "Learning Progress",
+   "type": "build",
+   "status": "measured",
+   "evidence_status": "measured",
+   "implementation_status": "implemented_scoped_pilot",
+   "date": "2026-11-21",
+   "citation_label": "HIVE empirical pilot (21 November 2026 UTC)",
+   "sha256": "53bb4962fa854f8f775ae9d418fd68e035703fb6bc6ae0132ff66e03744fbaac",
+   "tags": [
+    "hive",
+    "empirical-pilot",
+    "measured"
+   ]
+  },
+  {
+   "id": "GAPS",
+   "path": "implementation/GAP_IMPLEMENTATION_MAP.md",
+   "title": "Known Gaps",
+   "type": "build",
+   "status": "specified",
+   "evidence_status": "specified",
+   "implementation_status": "partial",
+   "date": "2026-11-21",
+   "citation_label": "HIVE empirical pilot (21 November 2026 UTC)",
+   "sha256": "57dcae2b73cd2ed0db50399db603da18c3d1b638020e8158333d3174b0604bae",
+   "tags": [
+    "hive",
+    "empirical-pilot",
+    "specified"
+   ]
+  },
+  {
+   "id": "LEDGER",
+   "path": "implementation/ARCHITECTURE_DECISIONS.md",
+   "title": "Decision Ledger",
+   "type": "build",
+   "status": "specified",
+   "evidence_status": "specified",
+   "implementation_status": "partial",
+   "date": "2026-11-21",
+   "citation_label": "HIVE empirical pilot (21 November 2026 UTC)",
+   "sha256": "0fdab79faf6334e45d95ef92fc6da22102b1752e7f9599bbfd5d3b397f61b146",
+   "tags": [
+    "hive",
+    "empirical-pilot",
+    "specified"
+   ]
+  },
+  {
+   "id": "RELEASES",
+   "path": "implementation/CHANGELOG.md",
+   "title": "Change / Release History",
+   "type": "build",
+   "status": "measured",
+   "evidence_status": "measured",
+   "implementation_status": "implemented_scoped_pilot",
+   "date": "2026-11-21",
+   "citation_label": "HIVE empirical pilot (21 November 2026 UTC)",
+   "sha256": "8811edcf575022a132f39187c9033729bce39c06cff7c76e7fdc0f36aaa6ae96",
+   "tags": [
+    "hive",
+    "empirical-pilot",
+    "measured"
+   ]
+  },
+  {
+   "id": "BASELINE",
+   "path": "implementation/BASELINE_RESULTS.md",
+   "title": "Baseline Results",
+   "type": "build",
+   "status": "measured",
+   "evidence_status": "measured",
+   "implementation_status": "implemented_scoped_pilot",
+   "date": "2026-11-21",
+   "citation_label": "HIVE empirical pilot (21 November 2026 UTC)",
+   "sha256": "9b533085215efedf62f236c69dafec7d7adf9549d819f512f3db7ccdbd7bc2ae",
+   "tags": [
+    "hive",
+    "empirical-pilot",
+    "measured"
+   ]
+  },
+  {
+   "id": "GAPPLAN",
+   "path": "updates/HIVE_Architecture_Gaps_and_Agent_Change_Plan.md",
+   "title": "Architecture gaps and agent change plan",
+   "type": "build",
+   "status": "specified",
+   "evidence_status": "specified",
+   "implementation_status": "partially_implemented",
+   "date": "2026-11-20",
+   "citation_label": "HIVE architecture change plan (20 November 2026)",
+   "sha256": "09c079a5d136dc15186f8e7bf6b2b95c2ac99d90d6657810b7115345226bc1ad",
+   "tags": [
+    "hive",
+    "architecture",
+    "empirical-learning"
+   ]
+  },
+  {
+   "id": "PROTOTYPE",
+   "path": "implementation/AUTONOMOUS_V01.md",
+   "title": "Autonomous local prototype — v0.1",
+   "type": "build",
+   "status": "measured",
+   "evidence_status": "measured",
+   "implementation_status": "experimental_quarantined",
+   "date": "2026-11-21",
+   "citation_label": "HIVE autonomous local prototype v0.1 (21 November 2026 UTC)",
+   "sha256": "f2d48721de41e565b288e5e43cef862fa89ed1796ca21b02a527d5e00a8ab429",
+   "tags": [
+    "hive",
+    "local-model",
+    "routing-learning",
+    "quarantined",
+    "autonomous-prototype"
+   ]
+  },
+  {
+   "id": "CONTROLLER",
+   "path": "implementation/ADAPTIVE_V02.md",
+   "title": "Adaptive verified controller — v0.2",
+   "type": "build",
+   "status": "measured",
+   "evidence_status": "measured",
+   "implementation_status": "implemented_scoped_pilot",
+   "date": "2026-11-21",
+   "revision": "0.2.1",
+   "citation_label": "HIVE adaptive controller (21 November 2026 UTC)",
+   "tags": [
+    "hive",
+    "adaptive-controller",
+    "verified-routing",
+    "measured"
+   ],
+   "sha256": "a5d760c97a9db7dca9ac4d6281c86fd32c0abd7ba4b9cf1426fdf3fb8b9ee8b6"
+  },
+  {
+   "id": "V03",
+   "path": "implementation/V03_FOUNDATION.md",
+   "title": "v0.3 foundation and next experiment",
+   "type": "build",
+   "status": "experimental",
+   "evidence_status": "real_v021_reproduction_and_v03_synthetic_tests",
+   "implementation_status": "partial_foundation_E1_draft",
+   "date": "2026-11-21",
+   "citation_label": "HIVE v0.3 foundation (21 November 2026 UTC)",
+   "tags": [
+    "hive",
+    "v0.3",
+    "benchmark-integrity",
+    "experimental"
+   ],
+   "sha256": "8dd69dabf7084a5d30bf6f7a15c4cdc75f88a7aa41bf2b3c0862ed18636f7d9a"
+  },
+  {
+   "id": "WORKING",
+   "path": "implementation/WORKING_PROTOTYPE.md",
+   "title": "Video mission engineering alpha",
+   "type": "build",
+   "status": "experimental",
+   "evidence_status": "measured",
+   "implementation_status": "engineering_alpha",
+   "date": "2026-11-21",
+   "citation_label": "HIVE video engineering alpha (21 November 2026 UTC)",
+   "sha256": "811074031c481433ca275a2b75e2be59a64d1044db976d50444e6e9483634094",
+   "tags": [
+    "hive",
+    "video-mission",
+    "engineering-alpha",
+    "working-prototype"
+   ]
+  },
+  {
+   "id": "INTEGRATION",
+   "path": "implementation/INTEGRATION.md",
+   "title": "HIVE v0.3.0.dev3 integration report",
+   "type": "build",
+   "status": "experimental",
+   "evidence_status": "measured",
+   "implementation_status": "integrated_prototype_demonstrated",
+   "revision": "0.3.0.dev3",
+   "date": "2026-11-21",
+   "sha256": "6feec6f2aace334c29970adc4922d9de98b09b480256fbad20cf02e480b4f98d",
+   "citation_label": "HIVE v0.3.0.dev3 integrated demonstration (21 November 2026 Las Vegas)",
+   "tags": [
+    "hive",
+    "integration",
+    "governor",
+    "dev3"
+   ]
+  },
+  {
+   "id": "READINESS",
+   "path": "updates/HIVE_Readiness_2026-11-21.md",
+   "title": "HIVE v0.3.0.dev4 readiness report",
+   "type": "build",
+   "status": "measured",
+   "evidence_status": "measured",
+   "implementation_status": "ready_for_pressure_tests",
+   "date": "2026-11-21",
+   "citation_label": "HIVE readiness (21 November 2026 Las Vegas)",
+   "sha256": "1a0e3309b4cc3cf4fe57b27d1b8de4ef4584974d1b1318cbedc81aeda34c6e60",
+   "tags": [
+    "hive",
+    "readiness",
+    "v0.3.0.dev4",
+    "engineering-evidence"
+   ]
+  },
+  {
+   "id": "OBJECTIVE",
+   "path": "updates/HIVE_Objective_Testing_2026-11-21.md",
+   "title": "Objective testing and P2 repair - dev5",
+   "type": "build",
+   "status": "measured",
+   "evidence_status": "measured",
+   "implementation_status": "objective_pipeline_verified_p2_quarantined",
+   "date": "2026-11-21",
+   "citation_label": "HIVE objective engineering checks (21 November 2026 Las Vegas)",
+   "sha256": "c802f7fff9e9ea3ce2c335d98aada34f2d10223c37878297a9acd19a8d2ec463",
+   "tags": [
+    "hive",
+    "objective-testing",
+    "quarantined-policy",
+    "measured"
+   ]
+  },
+  {
+   "id": "P2SAFETY",
+   "path": "updates/HIVE_P2_Safety_2026-11-21.md",
+   "title": "P2 Safety and Objective Campaign - dev6",
+   "type": "build",
+   "status": "measured",
+   "evidence_status": "measured",
+   "implementation_status": "implemented_scoped_pilot",
+   "date": "2026-11-21",
+   "citation_label": "HIVE P2 safety follow-through (21 November 2026 Pacific)",
+   "tags": [
+    "hive",
+    "objective-testing",
+    "p2-safety",
+    "measured"
+   ],
+   "sha256": "b1fc8faa7b8d231abda7c0507a3cc211cd8d760ab33d72923c7b230a4389b051"
+  },
+  {
+   "id": "OPERATIONAL",
+   "path": "updates/HIVE_Operational_Prototype_2026-11-22.md",
+   "title": "Operational Workflow — 0.4.0.dev1",
+   "type": "build",
+   "status": "measured",
+   "evidence_status": "measured",
+   "implementation_status": "ready_for_live_demo",
+   "revision": "0.4.0.dev1",
+   "date": "2026-11-22",
+   "citation_label": "HIVE operational workflow (22 November 2026 UTC)",
+   "tags": [
+    "hive",
+    "operational-prototype",
+    "local-console",
+    "measured"
+   ],
+   "sha256": "34be7663873f212c81028ea63c22d752a417287a0d873276b690709c01ef7068"
+  },
+  {
+   "id": "LANDSCAPE",
+   "source_id": "HIVE-RESEARCH-UPDATE-2026-11-22-EXTERNAL-LANDSCAPE",
+   "path": "updates/HIVE_Research_Update_External_Landscape_2026-11-22.md",
+   "title": "External landscape of similar systems",
+   "type": "framework",
+   "status": "provisional",
+   "evidence_status": "external_research_synthesis_not_reproduced",
+   "implementation_status": "not_implemented",
+   "date": "2026-11-22",
+   "citation_label": "HIVE external landscape (22 November 2026)",
+   "sha256": "39cad31377d65e6844c6a1aa29a0a546be2d90da3edf347811f2f412367a423b",
+   "tags": [
+    "hive",
+    "hive/research-update",
+    "external-landscape",
+    "harness-self-improvement",
+    "promotion-governor",
+    "compounding-learning"
+   ]
+  },
+  {
+   "id": "WHOLE",
+   "source_id": "HIVE-DESIGN-MAP-2026-11-22-INTEGRATED",
+   "path": "updates/HIVE_Integrated_Design_Map_2026-11-22.md",
+   "title": "Integrated design map",
+   "type": "framework",
+   "status": "proposed",
+   "evidence_status": "design_proposal",
+   "implementation_status": "not_implemented",
+   "date": "2026-11-22",
+   "citation_label": "HIVE integrated design map (22 November 2026)",
+   "sha256": "42c7eddafc839da35ab70ca95670dd7335adf6c05d11845e433e46f44745819a",
+   "tags": [
+    "hive",
+    "hive/design-map",
+    "integrated-design",
+    "build-order"
+   ]
+  },
+  {
+   "id": "DIRECTION",
+   "source_id": "HIVE-OWNER-DECISIONS-2026-11-22",
+   "path": "updates/HIVE_Owner_Decisions_2026-11-22.md",
+   "title": "Owner decisions — 22 November 2026",
+   "type": "framework",
+   "status": "decided",
+   "evidence_status": "owner_decision_record",
+   "implementation_status": "not_implemented",
+   "date": "2026-11-22",
+   "citation_label": "HIVE owner decisions (22 November 2026)",
+   "sha256": "16fe23b361e7033cc1e8c722415959b1016081dc77010439ddafb52dc57fd89a",
+   "tags": [
+    "hive",
+    "owner-decisions"
+   ]
+  },
+  {
+   "id": "KERNELS",
+   "source_id": "HIVE-KERNEL-COMPARISON-2026-11-22",
+   "path": "updates/HIVE_Execution_Kernel_Comparison_2026-11-22.md",
+   "title": "Execution kernel comparison",
+   "type": "framework",
+   "status": "provisional",
+   "evidence_status": "source_inspection_not_executed",
+   "implementation_status": "not_implemented",
+   "date": "2026-11-22",
+   "citation_label": "HIVE kernel comparison (22 November 2026)",
+   "sha256": "d138ea9677f95e1ffdaf3b5e60f81e5c825f85b903fb92586ae1eb9df35bcd37",
+   "tags": [
+    "hive",
+    "execution-kernel",
+    "external-landscape"
+   ]
+  },
+  {
+   "id": "METABASE",
+   "source_id": "HIVE-METABASE-2026-11-22",
+   "path": "updates/HIVE_Base_For_Later_Self_Improvement_2026-11-22.md",
+   "title": "Base for later self-improvement",
+   "type": "framework",
+   "status": "proposed",
+   "evidence_status": "design_proposal",
+   "implementation_status": "not_implemented",
+   "date": "2026-11-22",
+   "citation_label": "HIVE base for later self-improvement (22 November 2026)",
+   "sha256": "43c66c3137e3db648452dfb9ef2146bd58e6605d4a394c56ba7265eef40a9086",
+   "tags": [
+    "hive",
+    "self-improvement",
+    "mutability"
+   ]
+  },
+  {
+   "id": "LIVEDEMO",
+   "source_id": "HIVE-LIVE-DEMO-2026-11-22",
+   "path": "updates/HIVE_Live_Local_Demo_2026-11-22.md",
+   "title": "First live local-model demo",
+   "type": "framework",
+   "status": "measured",
+   "evidence_status": "measured_engineering_result",
+   "implementation_status": "implemented",
+   "date": "2026-11-22",
+   "citation_label": "HIVE first live local-model demo (22 November 2026)",
+   "sha256": "f35bd41ae0a899fa5e0fd615f48c8a8a13b7cf9842b18ac68e5e15e9a60dda38",
+   "tags": [
+    "hive",
+    "live-demo",
+    "evidence"
+   ]
+  },
+  {
+   "id": "UNIFIED",
+   "source_id": "HIVE-UNIFIED-INTEGRATION-2026-11-22",
+   "path": "updates/HIVE_Unified_Integration_2026-11-22.md",
+   "title": "Unified integration campaign",
+   "type": "framework",
+   "status": "measured",
+   "evidence_status": "measured_engineering_result",
+   "implementation_status": "implemented",
+   "date": "2026-11-22",
+   "citation_label": "HIVE unified integration campaign (22 November 2026)",
+   "sha256": "55321f73714a0cc5569f7d0f22c89548f0baee3caea54c3415c9d0b886b86785",
+   "tags": [
+    "hive",
+    "integration",
+    "evidence"
+   ]
+  },
+  {
+   "id": "V04X",
+   "source_id": "HIVE-V04X-CHECKPOINT-2026-11-23",
+   "path": "updates/HIVE_V04X_Checkpoint_2026-11-23.md",
+   "title": "Autonomous experiment checkpoint",
+   "type": "framework",
+   "status": "measured",
+   "evidence_status": "measured_engineering_result",
+   "implementation_status": "implemented",
+   "date": "2026-11-23",
+   "citation_label": "HIVE v0.4.x autonomous experiment checkpoint (23 November 2026)",
+   "sha256": "dabf1a32b8b2a7601ef870504ab8a5970d2296464792c8f27a501f9c70806774",
+   "tags": [
+    "hive",
+    "checkpoint",
+    "evidence"
+   ]
+  },
+  {
+   "id": "ISOLATION",
+   "source_id": "HIVE-ISOLATION-LINEAGE-2026-11-23",
+   "path": "updates/HIVE_Isolation_Lineage_2026-11-23.md",
+   "title": "Evaluator isolation and lineage start",
+   "type": "framework",
+   "status": "measured",
+   "evidence_status": "measured_engineering_result",
+   "implementation_status": "implemented",
+   "date": "2026-11-23",
+   "citation_label": "HIVE evaluator isolation and lineage start (23 November 2026)",
+   "sha256": "84c26d38e9253a1b3bd2de2845062b343d1effe6fe9d4c86fd0f314abd76e263",
+   "tags": [
+    "hive",
+    "checkpoint",
+    "evidence"
+   ]
+  },
+  {
+   "id": "M1",
+   "source_id": "HIVE-M1-ACCEPTED-2026-11-24",
+   "path": "updates/HIVE_M1_Accepted_2026-11-24.md",
+   "title": "M1 accepted: first verified evolutionary benefit",
+   "type": "framework",
+   "status": "measured",
+   "evidence_status": "measured_engineering_result",
+   "implementation_status": "implemented",
+   "date": "2026-11-24",
+   "citation_label": "HIVE M1 accepted: first verified evolutionary benefit (24 November 2026)",
+   "sha256": "eaeaf6310146772535fcfffcba1148b1c46b741afb168e0b146f89ba798cbc78",
+   "tags": [
+    "hive",
+    "checkpoint",
+    "evidence"
+   ]
+  },
+  {
+   "id": "M2",
+   "source_id": "HIVE-M2-ACCEPTED-2026-11-24",
+   "path": "updates/HIVE_M2_Accepted_2026-11-24.md",
+   "title": "M2 accepted: a local model found two new effects",
+   "type": "framework",
+   "status": "measured",
+   "evidence_status": "measured_engineering_result",
+   "implementation_status": "implemented",
+   "date": "2026-11-24",
+   "citation_label": "HIVE M2 accepted: a local model found two new effects (24 November 2026)",
+   "sha256": "748bf66f6bb0ef1a7537efc1ebe0f55e477a39dd6883334db2ab7e64407c915a",
+   "tags": [
+    "hive",
+    "checkpoint",
+    "evidence"
+   ]
+  },
+  {
+   "id": "OPERATOR",
+   "source_id": "HIVE-OPERATOR-PROTOTYPE-2026-11-24",
+   "path": "updates/HIVE_Operator_Prototype_2026-11-24.md",
+   "title": "Operator Prototype: retained capabilities on real inputs",
+   "type": "framework",
+   "status": "measured",
+   "evidence_status": "measured_engineering_result",
+   "implementation_status": "implemented",
+   "date": "2026-11-24",
+   "citation_label": "HIVE Operator Prototype (24 November 2026)",
+   "sha256": "1f563f88d755d9c6a33ceb0554a69c7fdf0eedcb9fd8863ed9b9cee428c9125f",
+   "tags": [
+    "hive",
+    "operator",
+    "evidence"
+   ]
+  },
+  {
+   "id": "CONNECTED",
+   "source_id": "HIVE-CONNECTED-RUNNER-2026-11-25",
+   "path": "updates/HIVE_Connected_Runner_2026-11-25.md",
+   "title": "Connected Goal Runner: goal to discovery to admission to reuse",
+   "type": "framework",
+   "status": "measured",
+   "evidence_status": "measured_engineering_result",
+   "implementation_status": "implemented",
+   "date": "2026-11-25",
+   "citation_label": "HIVE Connected Goal Runner (25 November 2026)",
+   "sha256": "59fcd933b275b5416d1722c02e308df1c5a173d5510a8e60b181a9aad899bd3f",
+   "tags": [
+    "hive",
+    "connected-runner",
+    "evidence"
+   ]
+  },
+  {
+   "id": "M3M5",
+   "source_id": "HIVE-PROTOTYPE-M3-M5-2026-11-26",
+   "path": "updates/HIVE_Prototype_Checkpoint_M3_M5_2026-11-26.md",
+   "title": "Prototype checkpoint M3-M5 (incomplete): learn, check, admit, reuse on real inputs",
+   "type": "framework",
+   "status": "measured",
+   "evidence_status": "measured_engineering_result",
+   "implementation_status": "partial",
+   "date": "2026-11-26",
+   "citation_label": "HIVE prototype checkpoint M3-M5 (26 November 2026)",
+   "sha256": "a7bed7567770184898a34e24e2ee07f1aceac5c3251b91b080e316607745c52a",
+   "tags": [
+    "hive",
+    "prototype-m3-m5",
+    "evidence"
+   ]
+  },
+  {
+   "id": "C4G3",
+   "source_id": "HIVE-COOP-C4-G3-2026-11-26",
+   "path": "updates/HIVE_Cooperative_Inference_C4_G3_2026-11-26.md",
+   "title": "Cooperative inference and G3 routing: hosted backend screen",
+   "type": "framework",
+   "status": "measured",
+   "evidence_status": "measured_engineering_result",
+   "implementation_status": "partial",
+   "date": "2026-11-26",
+   "citation_label": "HIVE cooperative inference and G3 routing (26 November 2026)",
+   "sha256": "471a6c1895914499f30eb0ede15a36af04f08c57aabe4d4f3da753c35ca10981",
+   "tags": [
+    "hive",
+    "cooperative-inference",
+    "evidence"
+   ]
+  },
+  {
+   "id": "PROTOFINAL",
+   "source_id": "HIVE-PROTOTYPE-CONTINUATION-2026-11-27",
+   "path": "updates/HIVE_Prototype_Continuation_2026-11-27.md",
+   "title": "Prototype continuation: routing, revocation scope, real-image gate and package",
+   "type": "framework",
+   "status": "measured",
+   "evidence_status": "measured_engineering_result",
+   "implementation_status": "partial",
+   "date": "2026-11-27",
+   "citation_label": "HIVE prototype continuation (27 November 2026)",
+   "sha256": "59bee14e3646e700eb9cf4b73e43e58623b44459bc81a81e14e2beab4ca105c0",
+   "tags": [
+    "hive",
+    "prototype",
+    "evidence"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "source": "CODER",
+   "target": "FRAMEWORK",
+   "relation": "derived_from"
+  },
+  {
+   "source": "CODER",
+   "target": "HANDOFF",
+   "relation": "supersedes"
+  },
+  {
+   "source": "CODER",
+   "target": "ROADMAP",
+   "relation": "informs"
+  },
+  {
+   "source": "CODER",
+   "target": "P09",
+   "relation": "related_to"
+  },
+  {
+   "source": "CODER",
+   "target": "P12",
+   "relation": "related_to"
+  },
+  {
+   "source": "CODER",
+   "target": "P13",
+   "relation": "related_to"
+  },
+  {
+   "source": "CODER",
+   "target": "P16",
+   "relation": "related_to"
+  },
+  {
+   "source": "CODER",
+   "target": "P19",
+   "relation": "related_to"
+  },
+  {
+   "source": "HOME",
+   "target": "CODER",
+   "relation": "related_to"
+  },
+  {
+   "source": "ROADMAP",
+   "target": "CODER",
+   "relation": "related_to"
+  },
+  {
+   "source": "ADAPTIVE",
+   "target": "FRAMEWORK",
+   "relation": "informs"
+  },
+  {
+   "source": "ADAPTIVE",
+   "target": "CODER",
+   "relation": "informs"
+  },
+  {
+   "source": "ADAPTIVE",
+   "target": "ROADMAP",
+   "relation": "informs"
+  },
+  {
+   "source": "ADAPTIVE",
+   "target": "D02",
+   "relation": "related_to"
+  },
+  {
+   "source": "ADAPTIVE",
+   "target": "D05",
+   "relation": "related_to"
+  },
+  {
+   "source": "ADAPTIVE",
+   "target": "D06",
+   "relation": "related_to"
+  },
+  {
+   "source": "ADAPTIVE",
+   "target": "D07",
+   "relation": "related_to"
+  },
+  {
+   "source": "ADAPTIVE",
+   "target": "D09",
+   "relation": "related_to"
+  },
+  {
+   "source": "ADAPTIVE",
+   "target": "D12",
+   "relation": "related_to"
+  },
+  {
+   "source": "ADAPTIVE",
+   "target": "P09",
+   "relation": "related_to"
+  },
+  {
+   "source": "ADAPTIVE",
+   "target": "P11",
+   "relation": "related_to"
+  },
+  {
+   "source": "ADAPTIVE",
+   "target": "P16",
+   "relation": "related_to"
+  },
+  {
+   "source": "ADAPTIVE",
+   "target": "P17",
+   "relation": "related_to"
+  },
+  {
+   "source": "ADAPTIVE",
+   "target": "P19",
+   "relation": "related_to"
+  },
+  {
+   "source": "ADAPTIVE",
+   "target": "P21",
+   "relation": "related_to"
+  },
+  {
+   "source": "ADAPTIVE",
+   "target": "P24",
+   "relation": "related_to"
+  },
+  {
+   "source": "ADAPTIVE",
+   "target": "E03",
+   "relation": "related_to"
+  },
+  {
+   "source": "ADAPTIVE",
+   "target": "E06",
+   "relation": "related_to"
+  },
+  {
+   "source": "ADAPTIVE",
+   "target": "E08",
+   "relation": "related_to"
+  },
+  {
+   "source": "ADAPTIVE",
+   "target": "B07",
+   "relation": "related_to"
+  },
+  {
+   "source": "CODER",
+   "target": "ADAPTIVE",
+   "relation": "related_to"
+  },
+  {
+   "source": "HOME",
+   "target": "ADAPTIVE",
+   "relation": "related_to"
+  },
+  {
+   "source": "STATUS",
+   "target": "CAPABILITIES",
+   "relation": "related_to"
+  },
+  {
+   "source": "STATUS",
+   "target": "RUNS",
+   "relation": "related_to"
+  },
+  {
+   "source": "STATUS",
+   "target": "LEARNING",
+   "relation": "related_to"
+  },
+  {
+   "source": "STATUS",
+   "target": "GAPS",
+   "relation": "related_to"
+  },
+  {
+   "source": "STATUS",
+   "target": "LEDGER",
+   "relation": "related_to"
+  },
+  {
+   "source": "STATUS",
+   "target": "RELEASES",
+   "relation": "related_to"
+  },
+  {
+   "source": "STATUS",
+   "target": "BASELINE",
+   "relation": "related_to"
+  },
+  {
+   "source": "STATUS",
+   "target": "FRAMEWORK",
+   "relation": "informs"
+  },
+  {
+   "source": "STATUS",
+   "target": "ROADMAP",
+   "relation": "informs"
+  },
+  {
+   "source": "STATUS",
+   "target": "ADAPTIVE",
+   "relation": "informs"
+  },
+  {
+   "source": "STATUS",
+   "target": "HISTORY",
+   "relation": "informs"
+  },
+  {
+   "source": "STATUS",
+   "target": "B04",
+   "relation": "informs"
+  },
+  {
+   "source": "STATUS",
+   "target": "B06",
+   "relation": "informs"
+  },
+  {
+   "source": "STATUS",
+   "target": "CODER",
+   "relation": "informs"
+  },
+  {
+   "source": "GAPPLAN",
+   "target": "STATUS",
+   "relation": "tested_by"
+  },
+  {
+   "source": "RUNS",
+   "target": "LEARNING",
+   "relation": "informs"
+  },
+  {
+   "source": "STATUS",
+   "target": "PROTOTYPE",
+   "relation": "related_to"
+  },
+  {
+   "source": "RUNS",
+   "target": "PROTOTYPE",
+   "relation": "related_to"
+  },
+  {
+   "source": "CAPABILITIES",
+   "target": "PROTOTYPE",
+   "relation": "related_to"
+  },
+  {
+   "source": "LEARNING",
+   "target": "PROTOTYPE",
+   "relation": "related_to"
+  },
+  {
+   "source": "GAPS",
+   "target": "PROTOTYPE",
+   "relation": "related_to"
+  },
+  {
+   "source": "LEDGER",
+   "target": "PROTOTYPE",
+   "relation": "related_to"
+  },
+  {
+   "source": "RELEASES",
+   "target": "PROTOTYPE",
+   "relation": "related_to"
+  },
+  {
+   "source": "CODER",
+   "target": "PROTOTYPE",
+   "relation": "related_to"
+  },
+  {
+   "source": "ADAPTIVE",
+   "target": "PROTOTYPE",
+   "relation": "related_to"
+  },
+  {
+   "source": "STATUS",
+   "target": "CONTROLLER",
+   "relation": "related_to"
+  },
+  {
+   "source": "RUNS",
+   "target": "CONTROLLER",
+   "relation": "related_to"
+  },
+  {
+   "source": "CAPABILITIES",
+   "target": "CONTROLLER",
+   "relation": "related_to"
+  },
+  {
+   "source": "LEARNING",
+   "target": "CONTROLLER",
+   "relation": "related_to"
+  },
+  {
+   "source": "GAPS",
+   "target": "CONTROLLER",
+   "relation": "related_to"
+  },
+  {
+   "source": "LEDGER",
+   "target": "CONTROLLER",
+   "relation": "related_to"
+  },
+  {
+   "source": "RELEASES",
+   "target": "CONTROLLER",
+   "relation": "related_to"
+  },
+  {
+   "source": "PROTOTYPE",
+   "target": "CONTROLLER",
+   "relation": "related_to"
+  },
+  {
+   "source": "ADAPTIVE",
+   "target": "CONTROLLER",
+   "relation": "related_to"
+  },
+  {
+   "source": "STATUS",
+   "target": "V03",
+   "relation": "related_to"
+  },
+  {
+   "source": "CONTROLLER",
+   "target": "V03",
+   "relation": "related_to"
+  },
+  {
+   "source": "RUNS",
+   "target": "V03",
+   "relation": "related_to"
+  },
+  {
+   "source": "GAPS",
+   "target": "V03",
+   "relation": "related_to"
+  },
+  {
+   "source": "LEDGER",
+   "target": "V03",
+   "relation": "related_to"
+  },
+  {
+   "source": "RELEASES",
+   "target": "V03",
+   "relation": "related_to"
+  },
+  {
+   "source": "STATUS",
+   "target": "WORKING",
+   "relation": "related_to"
+  },
+  {
+   "source": "RUNS",
+   "target": "WORKING",
+   "relation": "related_to"
+  },
+  {
+   "source": "GAPS",
+   "target": "WORKING",
+   "relation": "related_to"
+  },
+  {
+   "source": "V03",
+   "target": "WORKING",
+   "relation": "related_to"
+  },
+  {
+   "source": "RELEASES",
+   "target": "WORKING",
+   "relation": "related_to"
+  },
+  {
+   "source": "CAPABILITIES",
+   "target": "WORKING",
+   "relation": "related_to"
+  },
+  {
+   "source": "LEARNING",
+   "target": "WORKING",
+   "relation": "related_to"
+  },
+  {
+   "source": "HOME",
+   "target": "INTEGRATION",
+   "relation": "related_to"
+  },
+  {
+   "source": "STATUS",
+   "target": "INTEGRATION",
+   "relation": "informs"
+  },
+  {
+   "source": "RUNS",
+   "target": "INTEGRATION",
+   "relation": "related_to"
+  },
+  {
+   "source": "CAPABILITIES",
+   "target": "INTEGRATION",
+   "relation": "related_to"
+  },
+  {
+   "source": "LEARNING",
+   "target": "INTEGRATION",
+   "relation": "related_to"
+  },
+  {
+   "source": "GAPS",
+   "target": "INTEGRATION",
+   "relation": "related_to"
+  },
+  {
+   "source": "LEDGER",
+   "target": "INTEGRATION",
+   "relation": "related_to"
+  },
+  {
+   "source": "RELEASES",
+   "target": "INTEGRATION",
+   "relation": "related_to"
+  },
+  {
+   "source": "V03",
+   "target": "INTEGRATION",
+   "relation": "informs"
+  },
+  {
+   "source": "WORKING",
+   "target": "INTEGRATION",
+   "relation": "related_to"
+  },
+  {
+   "source": "HOME",
+   "target": "READINESS",
+   "relation": "related_to"
+  },
+  {
+   "source": "STATUS",
+   "target": "READINESS",
+   "relation": "related_to"
+  },
+  {
+   "source": "RUNS",
+   "target": "READINESS",
+   "relation": "related_to"
+  },
+  {
+   "source": "CAPABILITIES",
+   "target": "READINESS",
+   "relation": "related_to"
+  },
+  {
+   "source": "LEARNING",
+   "target": "READINESS",
+   "relation": "related_to"
+  },
+  {
+   "source": "LEDGER",
+   "target": "READINESS",
+   "relation": "related_to"
+  },
+  {
+   "source": "GAPS",
+   "target": "READINESS",
+   "relation": "related_to"
+  },
+  {
+   "source": "RELEASES",
+   "target": "READINESS",
+   "relation": "related_to"
+  },
+  {
+   "source": "INTEGRATION",
+   "target": "READINESS",
+   "relation": "related_to"
+  },
+  {
+   "source": "HOME",
+   "target": "OBJECTIVE",
+   "relation": "related_to"
+  },
+  {
+   "source": "STATUS",
+   "target": "OBJECTIVE",
+   "relation": "related_to"
+  },
+  {
+   "source": "RELEASES",
+   "target": "OBJECTIVE",
+   "relation": "related_to"
+  },
+  {
+   "source": "READINESS",
+   "target": "OBJECTIVE",
+   "relation": "related_to"
+  },
+  {
+   "source": "HOME",
+   "target": "P2SAFETY",
+   "relation": "related_to"
+  },
+  {
+   "source": "STATUS",
+   "target": "P2SAFETY",
+   "relation": "related_to"
+  },
+  {
+   "source": "RELEASES",
+   "target": "P2SAFETY",
+   "relation": "related_to"
+  },
+  {
+   "source": "OBJECTIVE",
+   "target": "P2SAFETY",
+   "relation": "related_to"
+  },
+  {
+   "source": "HOME",
+   "target": "OPERATIONAL",
+   "relation": "related_to"
+  },
+  {
+   "source": "STATUS",
+   "target": "OPERATIONAL",
+   "relation": "related_to"
+  },
+  {
+   "source": "RELEASES",
+   "target": "OPERATIONAL",
+   "relation": "related_to"
+  },
+  {
+   "source": "P2SAFETY",
+   "target": "OPERATIONAL",
+   "relation": "related_to"
+  },
+  {
+   "source": "LANDSCAPE",
+   "target": "WHOLE",
+   "relation": "informs"
+  },
+  {
+   "source": "LANDSCAPE",
+   "target": "CATALOG",
+   "relation": "related_to"
+  },
+  {
+   "source": "LANDSCAPE",
+   "target": "GAPS",
+   "relation": "informs"
+  },
+  {
+   "source": "LANDSCAPE",
+   "target": "ADAPTIVE",
+   "relation": "related_to"
+  },
+  {
+   "source": "LANDSCAPE",
+   "target": "FRAMEWORK",
+   "relation": "informs"
+  },
+  {
+   "source": "LANDSCAPE",
+   "target": "D09",
+   "relation": "related_to"
+  },
+  {
+   "source": "LANDSCAPE",
+   "target": "P34",
+   "relation": "related_to"
+  },
+  {
+   "source": "LANDSCAPE",
+   "target": "P26",
+   "relation": "related_to"
+  },
+  {
+   "source": "WHOLE",
+   "target": "FRAMEWORK",
+   "relation": "informs"
+  },
+  {
+   "source": "WHOLE",
+   "target": "ADAPTIVE",
+   "relation": "derived_from"
+  },
+  {
+   "source": "WHOLE",
+   "target": "GAPPLAN",
+   "relation": "derived_from"
+  },
+  {
+   "source": "WHOLE",
+   "target": "GAPS",
+   "relation": "informs"
+  },
+  {
+   "source": "WHOLE",
+   "target": "ROADMAP",
+   "relation": "informs"
+  },
+  {
+   "source": "WHOLE",
+   "target": "CODER",
+   "relation": "related_to"
+  },
+  {
+   "source": "WHOLE",
+   "target": "D02",
+   "relation": "related_to"
+  },
+  {
+   "source": "WHOLE",
+   "target": "D03",
+   "relation": "related_to"
+  },
+  {
+   "source": "WHOLE",
+   "target": "D09",
+   "relation": "related_to"
+  },
+  {
+   "source": "WHOLE",
+   "target": "D11",
+   "relation": "related_to"
+  },
+  {
+   "source": "WHOLE",
+   "target": "STATUS",
+   "relation": "related_to"
+  },
+  {
+   "source": "HOME",
+   "target": "LANDSCAPE",
+   "relation": "related_to"
+  },
+  {
+   "source": "HOME",
+   "target": "WHOLE",
+   "relation": "related_to"
+  },
+  {
+   "source": "CATALOG",
+   "target": "LANDSCAPE",
+   "relation": "related_to"
+  },
+  {
+   "source": "DIRECTION",
+   "target": "WHOLE",
+   "relation": "informs"
+  },
+  {
+   "source": "DIRECTION",
+   "target": "KERNELS",
+   "relation": "related_to"
+  },
+  {
+   "source": "DIRECTION",
+   "target": "METABASE",
+   "relation": "related_to"
+  },
+  {
+   "source": "DIRECTION",
+   "target": "GAPS",
+   "relation": "informs"
+  },
+  {
+   "source": "DIRECTION",
+   "target": "ROADMAP",
+   "relation": "informs"
+  },
+  {
+   "source": "DIRECTION",
+   "target": "CODER",
+   "relation": "informs"
+  },
+  {
+   "source": "DIRECTION",
+   "target": "D02",
+   "relation": "related_to"
+  },
+  {
+   "source": "DIRECTION",
+   "target": "D09",
+   "relation": "related_to"
+  },
+  {
+   "source": "DIRECTION",
+   "target": "STATUS",
+   "relation": "related_to"
+  },
+  {
+   "source": "KERNELS",
+   "target": "LANDSCAPE",
+   "relation": "derived_from"
+  },
+  {
+   "source": "KERNELS",
+   "target": "FRAMEWORK",
+   "relation": "informs"
+  },
+  {
+   "source": "KERNELS",
+   "target": "D05",
+   "relation": "related_to"
+  },
+  {
+   "source": "KERNELS",
+   "target": "WHOLE",
+   "relation": "informs"
+  },
+  {
+   "source": "METABASE",
+   "target": "D09",
+   "relation": "informs"
+  },
+  {
+   "source": "METABASE",
+   "target": "LANDSCAPE",
+   "relation": "derived_from"
+  },
+  {
+   "source": "METABASE",
+   "target": "WHOLE",
+   "relation": "related_to"
+  },
+  {
+   "source": "METABASE",
+   "target": "P34",
+   "relation": "related_to"
+  },
+  {
+   "source": "HOME",
+   "target": "DIRECTION",
+   "relation": "related_to"
+  },
+  {
+   "source": "WHOLE",
+   "target": "DIRECTION",
+   "relation": "related_to"
+  },
+  {
+   "source": "LIVEDEMO",
+   "target": "OPERATIONAL",
+   "relation": "derived_from"
+  },
+  {
+   "source": "LIVEDEMO",
+   "target": "DIRECTION",
+   "relation": "related_to"
+  },
+  {
+   "source": "UNIFIED",
+   "target": "LIVEDEMO",
+   "relation": "derived_from"
+  },
+  {
+   "source": "UNIFIED",
+   "target": "OPERATIONAL",
+   "relation": "related_to"
+  },
+  {
+   "source": "HOME",
+   "target": "UNIFIED",
+   "relation": "related_to"
+  },
+  {
+   "source": "V04X",
+   "target": "UNIFIED",
+   "relation": "derived_from"
+  },
+  {
+   "source": "HOME",
+   "target": "V04X",
+   "relation": "related_to"
+  },
+  {
+   "source": "ISOLATION",
+   "target": "V04X",
+   "relation": "derived_from"
+  },
+  {
+   "source": "HOME",
+   "target": "ISOLATION",
+   "relation": "related_to"
+  },
+  {
+   "source": "M1",
+   "target": "ISOLATION",
+   "relation": "derived_from"
+  },
+  {
+   "source": "HOME",
+   "target": "M1",
+   "relation": "related_to"
+  },
+  {
+   "source": "M2",
+   "target": "M1",
+   "relation": "derived_from"
+  },
+  {
+   "source": "HOME",
+   "target": "M2",
+   "relation": "related_to"
+  },
+  {
+   "source": "OPERATOR",
+   "target": "M2",
+   "relation": "derived_from"
+  },
+  {
+   "source": "HOME",
+   "target": "OPERATOR",
+   "relation": "related_to"
+  },
+  {
+   "source": "STATUS",
+   "target": "OPERATOR",
+   "relation": "related_to"
+  },
+  {
+   "source": "STATUS",
+   "target": "CONNECTED",
+   "relation": "related_to"
+  },
+  {
+   "source": "OPERATOR",
+   "target": "CONNECTED",
+   "relation": "related_to"
+  },
+  {
+   "source": "STATUS",
+   "target": "M3M5",
+   "relation": "related_to"
+  },
+  {
+   "source": "CONNECTED",
+   "target": "M3M5",
+   "relation": "related_to"
+  },
+  {
+   "source": "STATUS",
+   "target": "C4G3",
+   "relation": "related_to"
+  },
+  {
+   "source": "M3M5",
+   "target": "C4G3",
+   "relation": "related_to"
+  },
+  {
+   "source": "STATUS",
+   "target": "PROTOFINAL",
+   "relation": "related_to"
+  },
+  {
+   "source": "C4G3",
+   "target": "PROTOFINAL",
+   "relation": "related_to"
+  }
+ ],
+ "scope": "The supplied coder packet remains revision 0.4. The adaptive-organization research handoff is a dated addendum with provisional decisions and untested proposals. Editorial links provide navigation; original source and evidence records are preserved.",
+ "latest_research_id": "ADAPTIVE",
+ "implementation_status_id": "STATUS",
+ "latest_implementation_id": "READINESS"
 }

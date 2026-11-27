@@ -1,0 +1,149 @@
+{
+ "acceptance": {
+  "goal_accept": "runtime independent check VERIFIED for every step and, where an evaluator-side answer exists (A/B releases with eval-private exports), byte-identical outputs",
+  "product_gate": ">= 10 of 12 accepted; every workflow has >= 1 fresh-process success; all mandatory lifecycle/accounting/5-capability/3-composition gates pass; failures kept, never substituted",
+  "provider_policy": "auto route (model-route-v1); retained capabilities first with 0 calls"
+ },
+ "base_commit": "17602de",
+ "campaigns": [
+  {
+   "for_goal": "C1",
+   "id": "camp-1",
+   "what": "image.asset-match v2 acquisition under contract 2.0.0 (g2_qualify, live GitHub + local model, <=3 experiments x <=3 calls)"
+  },
+  {
+   "for_goal": "C1",
+   "id": "camp-2",
+   "what": "asset.properties + report.reconcile acquisition (g3_qualify --phase acquire) if not retained; else an improvement attempt on a valid capability"
+  }
+ ],
+ "frozen_at": "2026-11-27T12:45:45-08:00",
+ "goals": [
+  {
+   "goal": "Check the references in this site snapshot against its files and list the broken links.",
+   "id": "A1",
+   "inputs": [
+    "D:/HIVE-operator-inputs/mom-site/2633d9b"
+   ],
+   "kind": "initial",
+   "workflow": "A"
+  },
+  {
+   "goal": "Check the references in this site snapshot against its files and list the broken links.",
+   "id": "A2",
+   "inputs": [
+    "D:/HIVE-operator-inputs/mom-site/0b3854a"
+   ],
+   "kind": "changed_inputs",
+   "workflow": "A"
+  },
+  {
+   "fresh_process": true,
+   "goal": "Check the references in this site snapshot against its files and list the broken links.",
+   "id": "A3",
+   "inputs": [
+    "D:/HIVE-operator-inputs/mom-site/e3fcce6"
+   ],
+   "kind": "restart_reuse",
+   "workflow": "A"
+  },
+  {
+   "fresh_process": true,
+   "goal": "Check the references in this site snapshot against its files and list the broken links.",
+   "id": "A4",
+   "inputs": [
+    "fd6d09b raw folder, made by git archive with the same scope rules"
+   ],
+   "kind": "transfer_unseen_release",
+   "workflow": "A"
+  },
+  {
+   "goal": "Compare these two site releases: list the changed files and the broken references they affect.",
+   "id": "B1",
+   "inputs": [
+    "D:/HIVE-operator-inputs/mom-site/2633d9b",
+    "D:/HIVE-operator-inputs/mom-site/0b3854a"
+   ],
+   "kind": "initial",
+   "workflow": "B"
+  },
+  {
+   "goal": "Compare these two site releases: list the changed files and the broken references they affect.",
+   "id": "B2",
+   "inputs": [
+    "D:/HIVE-operator-inputs/mom-site/0b3854a",
+    "D:/HIVE-operator-inputs/mom-site/e3fcce6"
+   ],
+   "kind": "changed_inputs",
+   "workflow": "B"
+  },
+  {
+   "fresh_process": true,
+   "goal": "Compare these two site releases: list the changed files and the broken references they affect.",
+   "id": "B3",
+   "inputs": [
+    "D:/HIVE-operator-inputs/mom-site/e3fcce6",
+    "fd6d09b raw folder"
+   ],
+   "kind": "restart_reuse",
+   "workflow": "B"
+  },
+  {
+   "fresh_process": true,
+   "goal": "Compare these two site releases: list the changed files and the broken references they affect.",
+   "id": "B4",
+   "inputs": [
+    "D:/HIVE-operator-inputs/mom-site/2633d9b",
+    "fd6d09b raw folder"
+   ],
+   "kind": "transfer_unseen_pair",
+   "workflow": "B"
+  },
+  {
+   "goal": "Audit these image assets: list each file's properties, the duplicate groups, and a reconciled report.",
+   "id": "C1",
+   "inputs": [
+    "C:/hive-work/demo/o7/inputs/images (20 real site pictures, development material)"
+   ],
+   "kind": "initial",
+   "workflow": "C"
+  },
+  {
+   "goal": "Audit these image assets: list each file's properties, the duplicate groups, and a reconciled report.",
+   "id": "C2",
+   "inputs": [
+    "same 20 minus little-boyfriend-app-icons-icon-512.png (19 pictures)"
+   ],
+   "kind": "changed_inputs",
+   "workflow": "C"
+  },
+  {
+   "fresh_process": true,
+   "goal": "Audit these image assets: list each file's properties, the duplicate groups, and a reconciled report.",
+   "id": "C3",
+   "inputs": [
+    "fresh real site pictures from fd6d09b, not in the 20 and not in the sealed key (picked by sha before any run)"
+   ],
+   "kind": "restart_reuse_fresh_group",
+   "workflow": "C"
+  },
+  {
+   "fresh_process": true,
+   "goal": "Audit these image assets: list each file's properties, the duplicate groups, and a reconciled report.",
+   "id": "C4",
+   "inputs": [
+    "a second disjoint fresh group from fd6d09b, same exclusions"
+   ],
+   "kind": "transfer_fresh_group",
+   "workflow": "C"
+  }
+ ],
+ "interface": "PYTHONPATH=src python -m hive --store STORE operator goal|plan|run-plan (ordinary operator CLI)",
+ "lifecycle_schedule": [
+  "after A3: signed rollback demo on a capability with a valid predecessor, rerun within v1 scope, restore",
+  "after C4: store-scoped revoke + dependent-plan invalidation, other store unaffected"
+ ],
+ "schema": "hive-acceptance-manifest-v1",
+ "store": "C:/hive-work/demo/proto1",
+ "timing_disclosure": "frozen a few minutes AFTER the image.asset-match v2 acquisition campaign process started and BEFORE any of its results were read; no goal below was chosen from a campaign outcome"
+}
