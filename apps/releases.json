@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "updated": "2026-11-27T01:35:56Z",
+  "updated": "2026-11-27T01:57:05Z",
   "apps": [
     {
       "id": "alarm",
@@ -34,7 +34,7 @@
       "id": "fuel",
       "platform": "pwa",
       "channel": "stable",
-      "version": "d87564cc6f2e",
+      "version": "02340e25da5a",
       "url": "https://mominc.online/apps/fuel/",
       "notes": "Content version = the app pack hash; installed copies update themselves."
     },
@@ -42,7 +42,7 @@
       "id": "jump",
       "platform": "pwa",
       "channel": "stable",
-      "version": "32749c0d6009",
+      "version": "9926a8e35a07",
       "url": "https://mominc.online/apps/jump/",
       "notes": "Content version = the app pack hash; installed copies update themselves."
     },
@@ -50,7 +50,7 @@
       "id": "misinformation",
       "platform": "pwa",
       "channel": "stable",
-      "version": "e0b5d7b03114",
+      "version": "f3a436323d35",
       "url": "https://mominc.online/apps/misinformation/",
       "notes": "Content version = the app pack hash; installed copies update themselves."
     },
@@ -58,7 +58,7 @@
       "id": "hand",
       "platform": "pwa",
       "channel": "stable",
-      "version": "aa76b35e73af",
+      "version": "38e25cb3a557",
       "url": "https://mominc.online/apps/hand/",
       "notes": "Content version = the app pack hash; installed copies update themselves."
     },
@@ -66,7 +66,7 @@
       "id": "alarm",
       "platform": "pwa",
       "channel": "stable",
-      "version": "8219e17b95d1",
+      "version": "88d533cee357",
       "url": "https://mominc.online/apps/alarm/",
       "notes": "Content version = the app pack hash; installed copies update themselves."
     },
@@ -74,7 +74,7 @@
       "id": "corgi",
       "platform": "pwa",
       "channel": "stable",
-      "version": "7fc5b49eb2de",
+      "version": "d767f02ece36",
       "url": "https://mominc.online/apps/corgi/",
       "notes": "Content version = the app pack hash; installed copies update themselves."
     },
