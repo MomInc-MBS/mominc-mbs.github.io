@@ -4,13 +4,13 @@
   "assets": [
     {
       "url": "/apps/alarm/app.css",
-      "revision": "459aaf39536ceeb0a9f7c28bbb01acb6fda48edb",
-      "bytes": 6479
+      "revision": "f30fcee096595628c4a1ca1f8ad5ec503eaf7cd8",
+      "bytes": 6549
     },
     {
       "url": "/apps/alarm/app.mjs",
-      "revision": "8d08392666c5d20d1aae50aa3cdf2f62cde1a61f",
-      "bytes": 16454
+      "revision": "d4edc07c2e79d41aa0f5426f28b09efb18ea4e65",
+      "bytes": 17074
     },
     {
       "url": "/apps/alarm/board.js",
@@ -34,13 +34,13 @@
     },
     {
       "url": "/apps/alarm/games/blocks.js",
-      "revision": "9415eea5a8413d445fbb3a3bee8f6e0257fa4a02",
-      "bytes": 11744
+      "revision": "24c1352799d897f74e475b0bb8c92b5b22d0b61a",
+      "bytes": 12071
     },
     {
       "url": "/apps/alarm/games/brick.js",
-      "revision": "7ff384c9e827087623c99e16b119f88957f67ea8",
-      "bytes": 9242
+      "revision": "847638b121d1a8c1d8ecb1d979ab1ac56f689048",
+      "bytes": 9629
     },
     {
       "url": "/apps/alarm/games/choice.js",
@@ -49,8 +49,8 @@
     },
     {
       "url": "/apps/alarm/games/common.js",
-      "revision": "bd73f91210247eae9a308e20d1db19fc7dddf126",
-      "bytes": 605
+      "revision": "b953057a9c242d837cbd21499c04a4647067308b",
+      "bytes": 912
     },
     {
       "url": "/apps/alarm/games/host.js",
@@ -59,28 +59,28 @@
     },
     {
       "url": "/apps/alarm/games/match3.js",
-      "revision": "6d99338733a8fdb83ba0e06cfebcaf82a4961731",
-      "bytes": 12648
+      "revision": "7b88d2dda4ddca51c3f706bd64612d818a82f45b",
+      "bytes": 12965
     },
     {
       "url": "/apps/alarm/games/memory.js",
-      "revision": "cb0f6f573fe4f31b41fd8caca6d0f48e969bcc00",
-      "bytes": 8276
+      "revision": "fc25646f478876fc51e6b2ce7daa863c513cf7f9",
+      "bytes": 8903
     },
     {
       "url": "/apps/alarm/games/odd.js",
-      "revision": "6e2ccf47c9e9579c49546800f06b485c03d9b4ee",
-      "bytes": 8868
+      "revision": "2ca11362a1246e4ffd7f6c29f686cf041e8a872b",
+      "bytes": 9088
     },
     {
       "url": "/apps/alarm/games/play.js",
-      "revision": "49f42d950cc328af92a179d1b7832877224e72dd",
-      "bytes": 4941
+      "revision": "57a9dd8ddcc3b468a8b28813ff5aa32bfe903a9a",
+      "bytes": 5092
     },
     {
       "url": "/apps/alarm/games/pong.js",
-      "revision": "64b13daa2d7b5216c9091841ff83c2d0be99d385",
-      "bytes": 7783
+      "revision": "a4846e9de16be8da5a44dc691bf31c923b46bb07",
+      "bytes": 8093
     },
     {
       "url": "/apps/alarm/games/rules.js",
@@ -188,6 +188,11 @@
       "bytes": 3043
     },
     {
+      "url": "/apps/alarm/ui/clack.js",
+      "revision": "1a584f87a53f796c6e9aa14c8dcfffe2ca95bb6d",
+      "bytes": 2995
+    },
+    {
       "url": "/apps/alarm/ui/demo.html",
       "revision": "579ad7c2af8141bec6b2c1e5c654cef8cad994dc",
       "bytes": 2059
@@ -204,8 +209,8 @@
     },
     {
       "url": "/apps/alarm/ui/game-colors.js",
-      "revision": "435968452762a1c88b44a06a3fdfa32005eeb1e5",
-      "bytes": 10229
+      "revision": "1c4a85aab5537e30ea8c0a385de0e9b5ecfc6491",
+      "bytes": 16466
     },
     {
       "url": "/apps/alarm/ui/glyphs.js",
@@ -214,8 +219,8 @@
     },
     {
       "url": "/apps/alarm/ui/help.js",
-      "revision": "368af768a964af6dd56d0e3c30537430a9511aed",
-      "bytes": 15112
+      "revision": "db27d5ab01757575bbfe89c9286bc155aa19d777",
+      "bytes": 15397
     },
     {
       "url": "/apps/alarm/ui/mom-face.js",
@@ -224,8 +229,8 @@
     },
     {
       "url": "/apps/alarm/ui/mom3-face.js",
-      "revision": "ab17fa4496d970629948c148eb96e4041974ac86",
-      "bytes": 13793
+      "revision": "2ac7d624c389b40118eb20653e15c90e874b1f08",
+      "bytes": 14148
     },
     {
       "url": "/apps/alarm/ui/mom3-manifest.js",
@@ -249,8 +254,8 @@
     },
     {
       "url": "/apps/alarm/ui/settings.js",
-      "revision": "4a40fdd2e125abebc693dd3e0ffb894ca5a138f9",
-      "bytes": 58893
+      "revision": "49dd681ba2b47d0ca882400fc50212e492a22443",
+      "bytes": 59134
     },
     {
       "url": "/apps/alarm/ui/time.js",
@@ -309,5 +314,5 @@
     }
   ],
   "fontStyles": [],
-  "version": "30670d5bc560b300e0b1"
+  "version": "64e8f18570b766f64e87"
 }

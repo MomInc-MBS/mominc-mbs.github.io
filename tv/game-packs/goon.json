@@ -4,13 +4,13 @@
   "assets": [
     {
       "url": "/apps/alarm/app.css",
-      "revision": "459aaf39536ceeb0a9f7c28bbb01acb6fda48edb",
-      "bytes": 6479
+      "revision": "f30fcee096595628c4a1ca1f8ad5ec503eaf7cd8",
+      "bytes": 6549
     },
     {
       "url": "/apps/alarm/app.mjs",
-      "revision": "8d08392666c5d20d1aae50aa3cdf2f62cde1a61f",
-      "bytes": 16454
+      "revision": "d4edc07c2e79d41aa0f5426f28b09efb18ea4e65",
+      "bytes": 17074
     },
     {
       "url": "/apps/alarm/board.js",
@@ -44,8 +44,8 @@
     },
     {
       "url": "/apps/alarm/games/play.js",
-      "revision": "49f42d950cc328af92a179d1b7832877224e72dd",
-      "bytes": 4941
+      "revision": "57a9dd8ddcc3b468a8b28813ff5aa32bfe903a9a",
+      "bytes": 5092
     },
     {
       "url": "/apps/alarm/games/rules.js",
@@ -103,9 +103,14 @@
       "bytes": 3043
     },
     {
+      "url": "/apps/alarm/ui/clack.js",
+      "revision": "1a584f87a53f796c6e9aa14c8dcfffe2ca95bb6d",
+      "bytes": 2995
+    },
+    {
       "url": "/apps/alarm/ui/game-colors.js",
-      "revision": "435968452762a1c88b44a06a3fdfa32005eeb1e5",
-      "bytes": 10229
+      "revision": "1c4a85aab5537e30ea8c0a385de0e9b5ecfc6491",
+      "bytes": 16466
     },
     {
       "url": "/apps/alarm/ui/glyphs.js",
@@ -114,8 +119,8 @@
     },
     {
       "url": "/apps/alarm/ui/help.js",
-      "revision": "368af768a964af6dd56d0e3c30537430a9511aed",
-      "bytes": 15112
+      "revision": "db27d5ab01757575bbfe89c9286bc155aa19d777",
+      "bytes": 15397
     },
     {
       "url": "/apps/alarm/ui/mom-face.js",
@@ -124,8 +129,8 @@
     },
     {
       "url": "/apps/alarm/ui/mom3-face.js",
-      "revision": "ab17fa4496d970629948c148eb96e4041974ac86",
-      "bytes": 13793
+      "revision": "2ac7d624c389b40118eb20653e15c90e874b1f08",
+      "bytes": 14148
     },
     {
       "url": "/apps/alarm/ui/mom3-manifest.js",
@@ -144,8 +149,8 @@
     },
     {
       "url": "/apps/alarm/ui/settings.js",
-      "revision": "4a40fdd2e125abebc693dd3e0ffb894ca5a138f9",
-      "bytes": 58893
+      "revision": "49dd681ba2b47d0ca882400fc50212e492a22443",
+      "bytes": 59134
     },
     {
       "url": "/apps/alarm/ui/time.js",
@@ -947,5 +952,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "8b98c4999755c00c99b6"
+  "version": "cf0a277dd0c31c932551"
 }
