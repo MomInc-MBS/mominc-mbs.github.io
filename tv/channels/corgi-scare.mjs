@@ -124,10 +124,11 @@ export function createOverlay({ document: doc = globalThis.document, reducedMoti
 
 // ---------- audio: bounded, quiet bed (~-21 dB under the stinger) + one-at-a-time boom/crash
 export function createAudio(ctx, dest, { rand = Math.random, setTimeout: st = globalThis.setTimeout.bind(globalThis), clearTimeout: ct = globalThis.clearTimeout.bind(globalThis) } = {}) {
-  const STING = 0.9, AMB = 0.08;                                  // 20*log10(.9/.08) = 21 dB
+  const STING = 0.9, AMB = 0.08;                                  // 20*log10(.9/.08) = 21 dB at the default ambience level (0.5)
   const out = ctx.createDynamicsCompressor();
   out.threshold.value = -8; out.knee.value = 4; out.ratio.value = 12; out.attack.value = 0.002; out.release.value = 0.12; out.connect(dest);
-  const ambBus = ctx.createGain(); ambBus.gain.value = 0; ambBus.connect(out);
+  const ambBus = ctx.createGain(); ambBus.gain.value = 0;
+  const muffle = ctx.createBiquadFilter(); muffle.type = 'lowpass'; muffle.frequency.value = 18000; ambBus.connect(muffle); muffle.connect(out);   // a locker closes over the hall
   const stBus = ctx.createGain(); stBus.gain.value = STING; stBus.connect(out);
   // one shared 2 s noise buffer, created once (brown-ish: leaky integrator, no DC, no sub-20 Hz content after the filters)
   const buf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate), d = buf.getChannelData(0);
@@ -135,7 +136,10 @@ export function createAudio(ctx, dest, { rand = Math.random, setTimeout: st = gl
   const src = loop => { const s = ctx.createBufferSource(); s.buffer = buf; s.loop = loop; return s; };
   const fx = (type, f, q) => { const n = ctx.createBiquadFilter(); n.type = type; n.frequency.value = f; if (q) n.Q.value = q; return n; };
   const env = (g, t, peak, a, r) => { g.gain.cancelScheduledValues(t); g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(peak, t + a); g.gain.exponentialRampToValueAtTime(0.0001, t + a + r); };
-  let fixed = null, timers = [], live = { creak: false, breath: false }, sting = null, on = false, disposed = false;
+  let fixed = null, timers = [], live = { creak: false, breath: false, steps: false, tick: false, rattle: false }, sting = null, on = false, disposed = false, level = 0.5;
+  const ambGain = () => AMB * 2 * level;                          // the slider: 0 silent, 0.5 = the shipped mix, 1 = +6 dB
+  const busy = () => Object.values(live).filter(Boolean).length;
+  const pan = (n, g) => { if (!ctx.createStereoPanner) { n.connect(g); return [] ; } const p = ctx.createStereoPanner(); p.pan.value = rand() * 1.6 - 0.8; n.connect(p); p.connect(g); return [p]; };
 
   const startFixed = () => {
     const bed = src(true), bf = fx('lowpass', 420), bg = ctx.createGain(); bg.gain.value = 0.9; bed.connect(bf); bf.connect(bg); bg.connect(ambBus);
@@ -147,8 +151,16 @@ export function createAudio(ctx, dest, { rand = Math.random, setTimeout: st = gl
     [bed, o1, o2, lfo].forEach(n => n.start());
     fixed = [bed, o1, o2, lfo, bf, bg, hf, hg, ld];
   };
-  const sched = (key, lo, hi, fire) => {
-    const go = () => { timers = timers.filter(x => x !== h); if (!on) return; if (!live[key]) fire(); arm(); };
+  // decorative events: one irregular clock (8-22 s), a shuffle bag so no kind repeats back to back, at most two sounding at once.
+  // Halting clears the clock; starting draws a fresh delay, so a pause or a background tab never releases a backlog.
+  const KINDS = ['creak', 'steps', 'tick', 'rattle', 'breath'];
+  let bag = [], lastKind = null;
+  const draw = () => {
+    if (!bag.length) { bag = KINDS.slice(); for (let i = bag.length - 1; i > 0; i--) { const j = Math.floor(rand() * (i + 1)); [bag[i], bag[j]] = [bag[j], bag[i]]; } if (bag[bag.length - 1] === lastKind) [bag[0], bag[bag.length - 1]] = [bag[bag.length - 1], bag[0]]; }
+    return (lastKind = bag.pop());
+  };
+  const sched = (lo, hi) => {
+    const go = () => { timers = timers.filter(x => x !== h); if (!on) return; const k = draw(); if (!live[k] && busy() < 2) EVENTS[k](); arm(); };
     const arm = () => { h = st(go, (lo + rand() * (hi - lo)) * 1000); timers.push(h); };
     let h; arm();
   };
@@ -163,14 +175,35 @@ export function createAudio(ctx, dest, { rand = Math.random, setTimeout: st = gl
     s.connect(f); f.connect(g); g.connect(ambBus); env(g, t, 0.28, 0.7, 0.7);
     s.onended = () => { live.breath = false; [s, f, g].forEach(n => n.disconnect()); }; s.start(t); s.stop(t + 1.5);
   };
+  // distant footsteps: slow, heavy, heel-first and lowpassed far away (the pursuer's own steps are soft padded thuds, close and dry)
+  const steps = () => {
+    live.steps = true; const g = ctx.createGain(), f = fx('lowpass', 340, 0.7), n = 3 + Math.floor(rand() * 3), extra = pan(f, g); g.gain.value = 0.55; g.connect(ambBus);
+    let t = ctx.currentTime + 0.05, left = n;
+    for (let i = 0; i < n; i++) { const s = src(false), e = ctx.createGain(); s.connect(e); e.connect(f); env(e, t, 0.6, 0.01, 0.16); s.onended = () => { s.disconnect(); e.disconnect(); if (--left === 0) { live.steps = false; [f, g, ...extra].forEach(x => x.disconnect()); } }; s.start(t); s.stop(t + 0.25); t += 0.62 + rand() * 0.35; }
+  };
+  const tick = () => {                                            // a locker door settling: one dry metal tick
+    live.tick = true; const t = ctx.currentTime, o = ctx.createOscillator(), g = ctx.createGain(), extra = pan(o, g); o.type = 'triangle'; o.frequency.setValueAtTime(1900 + rand() * 900, t);
+    g.connect(ambBus); env(g, t, 0.22, 0.002, 0.05);
+    o.onended = () => { live.tick = false; [o, g, ...extra].forEach(n => n.disconnect()); }; o.start(t); o.stop(t + 0.1);
+  };
+  const rattle = () => {                                          // a faint far rattle: a few loose taps through a bandpass
+    live.rattle = true; const t = ctx.currentTime, s = src(false), f = fx('bandpass', 1500 + rand() * 600, 4), g = ctx.createGain();
+    s.connect(f); f.connect(g); g.connect(ambBus); g.gain.setValueAtTime(0.0001, t);
+    for (let i = 0, at = t; i < 5; i++, at += 0.06 + rand() * 0.05) { g.gain.setValueAtTime(0.18, at); g.gain.exponentialRampToValueAtTime(0.0001, at + 0.04); }
+    s.onended = () => { live.rattle = false; [s, f, g].forEach(n => n.disconnect()); }; s.start(t); s.stop(t + 0.5);
+  };
+  const EVENTS = { creak: () => creak(), breath: () => breath(), steps, tick, rattle };
   const begin = () => {
     if (disposed) return; on = true; if (!fixed) startFixed();
-    ambBus.gain.cancelScheduledValues(ctx.currentTime); ambBus.gain.setTargetAtTime(AMB, ctx.currentTime, 0.4);
-    sched('creak', 5, 16, creak); sched('breath', 14, 34, breath);
+    timers.forEach(ct); timers = [];                              // never two clocks
+    ambBus.gain.cancelScheduledValues(ctx.currentTime); ambBus.gain.setTargetAtTime(ambGain(), ctx.currentTime, 0.4);
+    sched(8, 22);
   };
   const halt = () => { on = false; timers.forEach(ct); timers = []; ambBus.gain.cancelScheduledValues(ctx.currentTime); ambBus.gain.setTargetAtTime(0, ctx.currentTime, 0.08); };
   return {
     start: begin, suspend: halt, resume: begin,
+    setLevel(v) { level = Math.min(1, Math.max(0, Number(v) || 0)); if (on) { ambBus.gain.cancelScheduledValues(ctx.currentTime); ambBus.gain.setTargetAtTime(ambGain(), ctx.currentTime, 0.2); } },
+    setMuffle(m) { muffle.frequency.cancelScheduledValues(ctx.currentTime); muffle.frequency.setTargetAtTime(m ? 650 : 18000, ctx.currentTime, 0.15); },   // crossfade, not a cut
     stinger() {                                                   // ~0.55 s: noise crash through a falling lowpass + a 90->50 Hz thump
       if (disposed) return; const t = ctx.currentTime;
       if (sting) { try { sting.g.gain.cancelScheduledValues(t); sting.g.gain.setTargetAtTime(0, t, 0.005); sting.stop(t + 0.03); } catch (e) {} }
@@ -182,8 +215,8 @@ export function createAudio(ctx, dest, { rand = Math.random, setTimeout: st = gl
       const me = { g, stop(tt) { try { n.stop(tt); th.stop(tt); } catch (e) {} } }; sting = me;
       n.onended = () => { [n, f, g, th, tg].forEach(x => x.disconnect()); if (sting === me) sting = null; };
     },
-    dispose() { disposed = true; halt(); if (fixed) { fixed.slice(0, 4).forEach(n => { try { n.stop(); } catch (e) {} }); fixed.forEach(n => n.disconnect()); fixed = null; } if (sting) sting.stop(ctx.currentTime); [ambBus, stBus, out].forEach(n => n.disconnect()); },
-    _debug: () => ({ live: { ...live }, timers: timers.length, fixed: fixed ? fixed.length : 0, on })
+    dispose() { disposed = true; halt(); if (fixed) { fixed.slice(0, 4).forEach(n => { try { n.stop(); } catch (e) {} }); fixed.forEach(n => n.disconnect()); fixed = null; } if (sting) sting.stop(ctx.currentTime); [ambBus, muffle, stBus, out].forEach(n => n.disconnect()); },
+    _debug: () => ({ live: { ...live }, timers: timers.length, fixed: fixed ? fixed.length : 0, on, level, busy: busy() })
   };
 }
 
@@ -193,7 +226,7 @@ export function createCorgiScare({ seed = 1, state, audio, reducedMotion, onStar
   const det = createCrossingDetector([]);
   const rm = reducedMotion ?? !!(globalThis.matchMedia && globalThis.matchMedia('(prefers-reduced-motion: reduce)').matches);
   const ov = createOverlay({ document: doc, reducedMotion: rm });
-  if (audio) au = createAudio(audio.ctx, audio.dest);
+  if (audio) au = createAudio(audio.ctx, audio.dest, { rand: audio.rand });
   let ready = false, showing = false;
   const readyP = ov.preload().then(ok => (ready = ok));
   return {
@@ -208,7 +241,8 @@ export function createCorgiScare({ seed = 1, state, audio, reducedMotion, onStar
       ov.show(page).then(() => { showing = false; sch.finish(); det.reset(); onEnd({ pausedMs: Date.now() - t0, recoveryMs: RECOVERY_MS }); });
       return hit;
     },
-    attachAudio(a) { if (!au && a) au = createAudio(a.ctx, a.dest); },    // the host's AudioContext only exists after the first gesture
+    attachAudio(a) { if (!au && a) au = createAudio(a.ctx, a.dest, { rand: a.rand }); },    // the host's AudioContext only exists after the first gesture; rand = its own seeded stream
+    setAmbience(v) { au && au.setLevel(v); }, setMuffle(m) { au && au.setMuffle(m); },
     startAmbience() { au && au.start(); },
     reset(newSeed) { sch = createScheduler({ seed: newSeed }); det.reset(); },  // a brand-new run: fresh delay, no carried scare
     armNow() { sch.tick(MAX_DELAY_S + 1); },                              // tests only

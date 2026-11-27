@@ -4,12 +4,12 @@
 <script src="/tv/game-loader.js?v=1"></script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>MOM&#x27;s: Corgi Endless · MOM Inc</title>
-<meta name="theme-color" content="#4a2a7a">
+<title>Mom&#x27;s Endless Corgi Workday · MOM Inc</title>
+<meta name="theme-color" content="#2a1e12">
 <meta name="description" content="An endless school hall. Three papers a section, ten traits that stack without limit, dark halls that need your flashlight, and the original drawings jumping out at corners.">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="MOM&#x27;s: Corgi">
+<meta name="apple-mobile-web-app-title" content="Corgi Workday">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="/apps/corgi/icon-192.png">
 <link rel="apple-touch-icon" href="/apps/corgi/icon-192.png">
@@ -19,7 +19,7 @@
 <body>
 <main id="gate">
 <img class="mark" src="/apps/corgi/icon-192.png" alt="" width="170" height="170">
-<h1>MOM&#x27;s: Corgi Endless</h1>
+<h1>Mom&#x27;s Endless Corgi Workday</h1>
 <p class="tag">An endless school hall. Three papers a section, ten traits that stack without limit, dark halls that need your flashlight, and the original drawings jumping out at corners.</p>
 <p class="tag">This one is played from your home screen. Add it, then open it from there.</p>
 <section class="panel">
@@ -32,17 +32,15 @@
 <a class="btn" href="/play/corgi/">Play the finite story in your browser</a>
 </main>
 <template id="app-ui">
-<main id="menu">
-<img class="mark" src="/apps/corgi/icon-192.png" alt="" width="170" height="170">
-<h1>MOM&#x27;s: Corgi Endless</h1>
-<p class="tag">An endless school hall. Three papers a section, ten traits that stack without limit, dark halls that need your flashlight, and the original drawings jumping out at corners.</p>
-<p class="tag">Best section: <strong id="best">0</strong></p>
-<button id="start" type="button">Start</button>
-<button id="open-settings" class="alt" type="button">Settings</button>
-<p id="offline" role="status">Saving for offline play…</p>
-</main>
-<main id="settings" hidden>
-<h2>Settings</h2>
+<main id="menu" class="np" aria-label="Mom&#x27;s Endless Corgi Workday">
+<div class="np-sheet" data-at="1">
+<section class="np-leaf np-settings" data-i="0" aria-label="Settings">
+<div class="np-page">
+<p class="np-meta"><span>Left leaf</span><span>Page A2</span></p>
+<button class="np-tab np-tab-top r" type="button" data-go="1" data-first>Front page &#9656;</button>
+<h2 class="np-head">Settings</h2>
+<p class="np-lede">Notices from the back office. Everything saves the moment you touch it.</p>
+<div id="np-settings-slot"></div>
 <section class="panel">
 <p><strong>Install</strong></p>
 <button id="install" type="button">Install app</button>
@@ -50,11 +48,43 @@
 <ol id="install-steps"></ol>
 <p id="ios-help" hidden>On iPhone use Safari. Home Screen apps keep their own saved best and offline files.</p>
 </section>
-<button id="close-settings" class="alt" type="button">Back</button>
+</div>
+</section>
+<section class="np-leaf np-front" data-i="1" aria-label="Front page">
+<div class="np-page">
+<p class="np-meta"><span id="np-date">TODAY</span><span>Price: one (1) cortisol</span></p>
+<div class="np-tabs"><button class="np-tab l" type="button" data-go="0">&#9666; Settings</button><button class="np-tab r" type="button" data-go="2">New looks &#9656;</button></div>
+<header class="np-mast"><p class="np-ears">The Nauseous Times &middot; Workday Edition</p><h1>Mom&#x27;s Endless Corgi Workday</h1></header>
+<figure class="np-fig"><img src="/apps/corgi/icon-192.png" alt="" width="170" height="170"><figcaption>Fig. 1. Cortisol Corgi, clocked in. Photographed by his own head.</figcaption></figure>
+<h2 class="np-head">The halls do not clock out</h2>
+<p class="np-lede">An endless school hall. Three papers a section, ten traits that stack without limit, dark halls that need your flashlight, and the original drawings jumping out at corners.</p>
+<section class="np-best"><p>Best section</p><strong id="best">0</strong></section>
+<section class="np-ad"><p class="np-adtag">Advertisement</p><button id="start" type="button" data-first>Start</button><p id="np-ad-note" class="np-adnote">A new school day begins.</p></section>
+<p id="offline" role="status">Saving for offline play…</p>
+</div>
+</section>
+<section class="np-leaf np-custom" data-i="2" aria-label="Customization">
+<div class="np-page">
+<p class="np-meta"><span>Right leaf</span><span>Classifieds</span></p>
+<button class="np-tab np-tab-top l" type="button" data-go="1" data-first>&#9666; Front page</button>
+<h2 class="np-head">Looks wanted</h2>
+<p class="np-lede">One hundred complete animals. Nose, paws, coat and nails always come as a set.</p>
+<div class="lk-prev" id="lk-prev" role="img" aria-label="Live first-person preview of the chosen look"><div class="lk-door" aria-hidden="true"></div><div class="cc-nose"></div><div class="lk-paws"><div class="cc-paw l"></div><div class="cc-paw r"></div></div><div class="cc-grip"></div></div>
+<div class="lk-card"><p class="lk-pos"><span id="lk-pos">1 / 100</span><span id="lk-id">No. 001</span></p><p class="lk-name" id="lk-name" aria-live="polite">Original corgi</p>
+<p class="lk-sw"><span><i id="lk-sw-fur"></i>Coat</span><span><i id="lk-sw-skin"></i>Skin</span><span><i id="lk-sw-claw"></i>Nails</span></p></div>
+<div class="lk-row"><button id="lk-prev-btn" class="alt" type="button" aria-label="Previous look">&#9666; Prev</button><button id="lk-next-btn" class="alt" type="button" aria-label="Next look">Next &#9656;</button></div>
+<div class="lk-row"><button id="lk-shuffle" class="alt" type="button">Shuffle</button><label class="lk-filter">Kind<select id="lk-group"><option value="">All 100</option></select></label></div>
+<button id="lk-use" type="button">Use this look</button>
+<p id="lk-note" class="np-note" role="status"></p>
+<button id="lk-pull" class="alt lk-small" type="button">Preview door pull</button>
+</div>
+</section>
+</div>
 </main>
-<section id="stage" hidden aria-label="MOM&#x27;s: Corgi Endless"><button id="back" class="alt" type="button">← Menu</button><div id="host"></div></section>
+<main id="settings" hidden><button id="open-settings" type="button" hidden>Settings</button><button id="close-settings" class="alt" type="button">Back</button></main>
+<section id="stage" hidden aria-label="Mom&#x27;s Endless Corgi Workday"><button id="back" class="alt" type="button">&#8592; Menu</button><div id="host"></div></section>
 </template>
-<script type="application/json" id="app-config">{"bestKey": "corgi-endless-best-v1", "mount": "mountCorgi", "name": "MOM's: Corgi Endless", "options": {"endless": true}, "settingsModule": "/apps/corgi/app.mjs", "src": "/apps/corgi/app.mjs"}</script>
+<script type="application/json" id="app-config">{"bestKey": "corgi-endless-best-v1", "keepGame": true, "mount": "mountCorgi", "name": "Mom's Endless Corgi Workday", "options": {"endless": true}, "settingsModule": "/apps/corgi/app.mjs", "src": "/apps/corgi/app.mjs"}</script>
 <script type="application/mbs-script" data-mbs-type="module" data-mbs-src="/apps/shell.mjs"></script>
 </body>
 </html>

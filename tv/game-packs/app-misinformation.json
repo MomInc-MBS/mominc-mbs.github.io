@@ -39,8 +39,8 @@
     },
     {
       "url": "/apps/shell.mjs",
-      "revision": "772bc89901827e4198cb4b39cb8b046cd6f484d1",
-      "bytes": 5811
+      "revision": "e6de159343e68464f0e84bab7e5288d4e7c8b9a4",
+      "bytes": 6134
     },
     {
       "url": "/apps/update.mjs",
@@ -284,12 +284,12 @@
     },
     {
       "url": "/tv/game-loader.js",
-      "revision": "363279c0a6a391db8e7bae8282fc8fb6a8f811bc",
-      "bytes": 14678
+      "revision": "d3628ea892fd6cb6a24f0f6690e6fe5af676d293",
+      "bytes": 14685
     }
   ],
   "fontStyles": [
     "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap"
   ],
-  "version": "039e101c4484f1a2d9e2"
+  "version": "3df9f3ac0edf9ada5dce"
 }

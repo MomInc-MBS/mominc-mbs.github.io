@@ -312,3 +312,51 @@ test('saved v1 sections finish on v1, the next section and new runs are v2', () 
   assert.equal(E.genEndlessSection(next.seed, next.section, next.genVersion).layoutVersion, 2);
   assert.equal(E.newRun(5).genVersion, 2);
 });
+
+test('settings: appearance id and ambience level are sanitised, defaults fill missing fields, sound/look untouched', () => {
+  const mem = new Map(), st = { getItem: k => mem.get(k) ?? null, setItem: (k, v) => mem.set(k, String(v)) };
+  assert.deepEqual(E.emptyStore().settings, { sound: true, look: 1, appearance: 'animal_001', ambience: 0.5 });
+  const c = E.cleanSettings;
+  assert.deepEqual(c(undefined), E.emptyStore().settings);
+  assert.deepEqual([c({ appearance: 'animal_042' }).appearance, c({ appearance: 'animal_999' }).appearance], ['animal_042', 'animal_999']);   // well-formed ids kept (lookById falls back)
+  for (const bad of ['animal_1', 'ANIMAL_001', 'animal_0012', ' animal_001', 7, null, {}, 'corgi']) assert.equal(c({ appearance: bad }).appearance, 'animal_001');
+  assert.deepEqual([0, 0.3, 1, 2, -1, NaN, '0.7', null, Infinity].map(a => c({ ambience: a }).ambience), [0, 0.3, 1, 1, 0, 0.5, 0.5, 0.5, 0.5]);
+  mem.set(E.STORE_KEY, JSON.stringify({ v: 2, best: { section: 1 }, run: null, settings: { sound: false, look: 1.5 } }));   // an old v2 save without the new fields
+  assert.deepEqual(E.loadStore(st).settings, { sound: false, look: 1.5, appearance: 'animal_001', ambience: 0.5 });
+  const s = E.emptyStore(); s.settings.appearance = 'animal_017'; s.settings.ambience = 0.2; E.saveStore(st, s);
+  assert.deepEqual([E.loadStore(st).settings.appearance, E.loadStore(st).settings.ambience], ['animal_017', 0.2]);
+});
+
+test('A05 healing: four distinct awards restore exactly one heart, each at most a quarter, clamped at max, zero at full', () => {
+  let r = { ...E.newRun(7), quarters: 4 };
+  for (let i = 0; i < 4; i++) { const a = E.awardHealing(r, 'h' + i); assert.equal(a.delta, 1); r = a.run; }
+  assert.equal(r.quarters, 8);
+  r = { ...r, quarters: E.maxQuarters(r) - 1 };
+  const last = E.awardHealing(r, 'top'); assert.deepEqual([last.delta, last.run.quarters], [1, E.maxQuarters(r)]);
+  const full = E.awardHealing(last.run, 'over-top'); assert.deepEqual([full.delta, full.run.quarters], [0, E.maxQuarters(r)]);   // full health: nothing, no feedback
+  assert.ok(full.run.healed.includes('over-top'));                                                                               // ...but the award is spent
+  assert.equal(E.awardHealing({ ...r, status: 'over', quarters: 0 }, 'dead').delta, 0);                                          // a finished run never heals
+  for (let i = 0; i < 100; i++) r = E.awardHealing(r, 'many' + i).run;
+  assert.ok(r.healed.length <= E.HEALED_KEEP && r.quarters === E.maxQuarters(r));
+});
+
+test('A06 healing: repeated callbacks cannot duplicate an award, traits cannot multiply it, new runs start at base, the record survives a reload', () => {
+  let r = { ...E.newRun(8), quarters: 5 };
+  const once = E.awardHealing(r, 'pickup:1');
+  const again = E.awardHealing(once.run, 'pickup:1'); assert.deepEqual([again.delta, again.run.quarters], [0, 6]);           // same pickup, many collision callbacks
+  assert.strictEqual(again.run, once.run);
+  // every trait at a huge stack: one award is still one quarter
+  const big = { ...r, traits: Object.fromEntries(E.TRAIT_IDS.map(id => [id, 500])) };
+  assert.equal(E.awardHealing(big, 'x').delta, 1);
+  // Heart pick: +1 max and one quarter; a replayed offer heals nothing (both the pick record and the award record refuse it)
+  const offer = { objectiveId: 's:3:1', article: 0, choices: [{ perk: 'heart', kind: 'new' }, { perk: 'quick', kind: 'new' }, { perk: 'scent', kind: 'new' }] };
+  const p = E.pickOffer({ ...r, pendingOffer: offer }, 0, E.emptyStore()).run;
+  assert.deepEqual([p.quarters, p.healed], [6, ['pick:s:3:1']]);
+  assert.equal(E.awardHealing(p, 'pick:s:3:1').delta, 0);
+  // new run is initialisation, not a reward
+  assert.deepEqual([E.newRun(1).quarters, E.newRun(1).healed], [E.BASE_QUARTERS, []]);
+  // a reload keeps the record, so a restored pending award cannot pay twice
+  const mem = new Map(), st = { getItem: k => mem.get(k) ?? null, setItem: (k, v) => mem.set(k, String(v)) };
+  const s = E.emptyStore(); s.run = once.run; E.saveStore(st, s);
+  const back = E.loadStore(st).run; assert.deepEqual(back.healed, ['pickup:1']); assert.equal(E.awardHealing(back, 'pickup:1').delta, 0);
+});

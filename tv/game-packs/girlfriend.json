@@ -154,18 +154,18 @@
     },
     {
       "url": "/apps/apps.json",
-      "revision": "5a5154a1332084663f47f8129cad4130a975dd66",
-      "bytes": 9957
+      "revision": "2efedb0a2d58fabca9bc2bdad22fd9f08c47be2f",
+      "bytes": 10010
     },
     {
       "url": "/apps/corgi/app.css",
-      "revision": "5a9056d191745781b75a6aa9bde7e2c96d870972",
-      "bytes": 3906
+      "revision": "fd205d79d6983e0f61ed469204a1ec3d13ef7f19",
+      "bytes": 23047
     },
     {
       "url": "/apps/corgi/app.mjs",
-      "revision": "6f2fc05cbc32660fe7e6842deb545ebc6dca5471",
-      "bytes": 6186
+      "revision": "7184f73661ba4c86263116cad8119fdfa0cc5d43",
+      "bytes": 14331
     },
     {
       "url": "/apps/hand/hand.css",
@@ -549,8 +549,8 @@
     },
     {
       "url": "/tv/channels/corgi-endless.mjs",
-      "revision": "9692794e0dd4a430bd067fabfd1ab94b6264cafd",
-      "bytes": 44113
+      "revision": "7c44095b523310acb6dcf87994735f4b361916e1",
+      "bytes": 45221
     },
     {
       "url": "/tv/channels/corgi-hearts.mjs",
@@ -558,14 +558,24 @@
       "bytes": 5555
     },
     {
+      "url": "/tv/channels/corgi-locker.mjs",
+      "revision": "6056dfa9aee54a24e9cacdcc3848c873c97db85f",
+      "bytes": 15532
+    },
+    {
+      "url": "/tv/channels/corgi-looks.mjs",
+      "revision": "da658d8460329bfea6356784b068fc2f32b17695",
+      "bytes": 23682
+    },
+    {
       "url": "/tv/channels/corgi-scare.mjs",
-      "revision": "3bfae4eaa53190850f1c521f74fe2d0e92ed4ed1",
-      "bytes": 16358
+      "revision": "eca24e1a1fa6b812593c97e8fc46a0fd90127c3e",
+      "bytes": 20216
     },
     {
       "url": "/tv/channels/corgi.js",
-      "revision": "4db0976488cb75311d28384eae8b31eca80db6f2",
-      "bytes": 234153
+      "revision": "8f580aac63460e624c51307c4db1e9425dadb3a2",
+      "bytes": 261412
     },
     {
       "url": "/tv/channels/girlfriend-roster.js",
@@ -604,8 +614,8 @@
     },
     {
       "url": "/tv/game-loader.js",
-      "revision": "363279c0a6a391db8e7bae8282fc8fb6a8f811bc",
-      "bytes": 14678
+      "revision": "d3628ea892fd6cb6a24f0f6690e6fe5af676d293",
+      "bytes": 14685
     },
     {
       "url": "/tv/identity.css",
@@ -649,8 +659,8 @@
     },
     {
       "url": "/tv/mom-tour.js",
-      "revision": "e3ed33a6eeca303b957e0c13052e8f74a221f5af",
-      "bytes": 27553
+      "revision": "e0ba35630c45816b4de3895ceff0d89f3116d271",
+      "bytes": 27560
     },
     {
       "url": "/tv/mount.js",
@@ -742,5 +752,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "9d1342683e303fa6eb0f"
+  "version": "839d2101a7f3b8310ec0"
 }

@@ -56,6 +56,61 @@ UI = """<main id="menu">
 <section id="stage" hidden aria-label="{name}"><button id="back" class="alt" type="button">← Menu</button>{host}</section>
 """
 
+# apps.json "paper": true -> the folding newspaper menu (Settings leaf | Front page | Customization leaf), written into by apps/corgi/app.mjs.
+# #open-settings/#close-settings stay (hidden) because the shared shell wires them; #start, #best, #offline and the Install ids are real.
+UI_PAPER = """<main id="menu" class="np" aria-label="{name}">
+<div class="np-sheet" data-at="1">
+<section class="np-leaf np-settings" data-i="0" aria-label="Settings">
+<div class="np-page">
+<p class="np-meta"><span>Left leaf</span><span>Page A2</span></p>
+<button class="np-tab np-tab-top r" type="button" data-go="1" data-first>Front page &#9656;</button>
+<h2 class="np-head">Settings</h2>
+<p class="np-lede">Notices from the back office. Everything saves the moment you touch it.</p>
+<div id="np-settings-slot"></div>
+<section class="panel">
+<p><strong>Install</strong></p>
+<button id="install" type="button">Install app</button>
+<p id="install-status" role="status"></p>
+<ol id="install-steps"></ol>
+<p id="ios-help" hidden>On iPhone use Safari. Home Screen apps keep their own saved best and offline files.</p>
+</section>
+</div>
+</section>
+<section class="np-leaf np-front" data-i="1" aria-label="Front page">
+<div class="np-page">
+<p class="np-meta"><span id="np-date">TODAY</span><span>Price: one (1) cortisol</span></p>
+<div class="np-tabs"><button class="np-tab l" type="button" data-go="0">&#9666; Settings</button><button class="np-tab r" type="button" data-go="2">New looks &#9656;</button></div>
+<header class="np-mast"><p class="np-ears">The Nauseous Times &middot; Workday Edition</p><h1>{name}</h1></header>
+<figure class="np-fig"><img src="{icon192}" alt="" width="170" height="170"><figcaption>Fig. 1. Cortisol Corgi, clocked in. Photographed by his own head.</figcaption></figure>
+<h2 class="np-head">The halls do not clock out</h2>
+<p class="np-lede">{description}</p>
+<section class="np-best"><p>Best section</p><strong id="best">0</strong></section>
+<section class="np-ad"><p class="np-adtag">Advertisement</p><button id="start" type="button" data-first>Start</button><p id="np-ad-note" class="np-adnote">A new school day begins.</p></section>
+<p id="offline" role="status">Saving for offline play…</p>
+</div>
+</section>
+<section class="np-leaf np-custom" data-i="2" aria-label="Customization">
+<div class="np-page">
+<p class="np-meta"><span>Right leaf</span><span>Classifieds</span></p>
+<button class="np-tab np-tab-top l" type="button" data-go="1" data-first>&#9666; Front page</button>
+<h2 class="np-head">Looks wanted</h2>
+<p class="np-lede">One hundred complete animals. Nose, paws, coat and nails always come as a set.</p>
+<div class="lk-prev" id="lk-prev" role="img" aria-label="Live first-person preview of the chosen look"><div class="lk-door" aria-hidden="true"></div><div class="cc-nose"></div><div class="lk-paws"><div class="cc-paw l"></div><div class="cc-paw r"></div></div><div class="cc-grip"></div></div>
+<div class="lk-card"><p class="lk-pos"><span id="lk-pos">1 / 100</span><span id="lk-id">No. 001</span></p><p class="lk-name" id="lk-name" aria-live="polite">Original corgi</p>
+<p class="lk-sw"><span><i id="lk-sw-fur"></i>Coat</span><span><i id="lk-sw-skin"></i>Skin</span><span><i id="lk-sw-claw"></i>Nails</span></p></div>
+<div class="lk-row"><button id="lk-prev-btn" class="alt" type="button" aria-label="Previous look">&#9666; Prev</button><button id="lk-next-btn" class="alt" type="button" aria-label="Next look">Next &#9656;</button></div>
+<div class="lk-row"><button id="lk-shuffle" class="alt" type="button">Shuffle</button><label class="lk-filter">Kind<select id="lk-group"><option value="">All 100</option></select></label></div>
+<button id="lk-use" type="button">Use this look</button>
+<p id="lk-note" class="np-note" role="status"></p>
+<button id="lk-pull" class="alt lk-small" type="button">Preview door pull</button>
+</div>
+</section>
+</div>
+</main>
+<main id="settings" hidden><button id="open-settings" type="button" hidden>Settings</button><button id="close-settings" class="alt" type="button">Back</button></main>
+<section id="stage" hidden aria-label="{name}"><button id="back" class="alt" type="button">&#8592; Menu</button><div id="host"></div></section>
+"""
+
 GATE = """<main id="gate">
 <img class="mark" src="{icon192}" alt="" width="170" height="170">
 <h1>{name}</h1>
@@ -272,16 +327,21 @@ def main():
             cfg = {'name': a['name'], 'src': a['src'], 'mount': a['mount'], 'options': a['options'], 'bestKey': a['bestKey']}
             if a.get('settingsModule'):
                 cfg['settingsModule'] = a['settingsModule']
+            if a.get('keepGame'):   # "← Menu" pauses the mounted game instead of disposing it (apps/shell.mjs)
+                cfg['keepGame'] = True
         config = json.dumps(cfg, sort_keys=True).replace('</', '<\/')
         panels = (RESET if 'reset-best' in a['settings'] else '') + (RESET_HAND if 'reset-hand' in a['settings'] else '') \
             + (MODELS if 'extra-models' in a['settings'] else '')
         icon = f"/apps/{a['id']}/{a['icons'][0]}"
-        ui = UI.format(name=escape(a['name']), description=escape(a['description']), icon192=icon,
-                       best_line='' if editor or frame else f'<p class="tag">{escape(a.get("bestLabel", "Best"))}: <strong id="best">0</strong></p>\n',
-                       note_line=f'<p class="tag note">{escape(a["note"])}</p>\n' if a.get('note') else '',
-                       reset_panel=panels, tilt_panel=TILT if 'tilt' in a['settings'] else '',
-                       saved='saved hand' if editor else 'saved best',
-                       host='<div id="host"><div id="root"></div></div>' if editor else '<div id="host"></div>')
+        if a.get('paper'):
+            ui = UI_PAPER.format(name=escape(a['name']), description=escape(a['description']), icon192=f"/apps/{a['id']}/{a['icons'][0]}")
+        else:
+          ui = UI.format(name=escape(a['name']), description=escape(a['description']), icon192=icon,
+                         best_line='' if editor or frame else f'<p class="tag">{escape(a.get("bestLabel", "Best"))}: <strong id="best">0</strong></p>\n',
+                         note_line=f'<p class="tag note">{escape(a["note"])}</p>\n' if a.get('note') else '',
+                         reset_panel=panels, tilt_panel=TILT if 'tilt' in a['settings'] else '',
+                         saved='saved hand' if editor else 'saved best',
+                         host='<div id="host"><div id="root"></div></div>' if editor else '<div id="host"></div>')
         if a.get('wordless'):
             ui = wordless(ui)
         gate = ''

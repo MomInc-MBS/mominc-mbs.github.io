@@ -234,8 +234,8 @@
     },
     {
       "url": "/apps/shell.mjs",
-      "revision": "772bc89901827e4198cb4b39cb8b046cd6f484d1",
-      "bytes": 5811
+      "revision": "e6de159343e68464f0e84bab7e5288d4e7c8b9a4",
+      "bytes": 6134
     },
     {
       "url": "/apps/update.mjs",
@@ -249,10 +249,10 @@
     },
     {
       "url": "/tv/game-loader.js",
-      "revision": "363279c0a6a391db8e7bae8282fc8fb6a8f811bc",
-      "bytes": 14678
+      "revision": "d3628ea892fd6cb6a24f0f6690e6fe5af676d293",
+      "bytes": 14685
     }
   ],
   "fontStyles": [],
-  "version": "c41c04eda1574bb5c4a9"
+  "version": "c893f481ad8c8d7c7b07"
 }
