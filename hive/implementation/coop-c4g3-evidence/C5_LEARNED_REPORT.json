@@ -1,0 +1,330 @@
+{
+ "caps": {
+  "site.ref-extract": {
+   "chain": [
+    {
+     "exp_id": "d-415178c9c6e6ed30c683",
+     "ref": "artifacts/18eb085e6e9063e741bb713375f7e2228dcfb8c181a7095e65feb2bf6e50b91e.json",
+     "statement_sha": "21d2c66b0365e08fc7b873c35d363d1d4ce0afec1be617c96e689c1635c603fa",
+     "type": "admit"
+    },
+    {
+     "exp_id": null,
+     "ref": "artifacts/be6c02fa3f80253ab2ccab73e15ee5c8443ce4db4ea516fc46dc23b05d78ff1c.json",
+     "statement_sha": null,
+     "type": "revoke"
+    }
+   ],
+   "comparison": {
+    "a_authored_body_separate_run_identical": true,
+    "authored_sha256": "fafea1c9b99e08eaead20ed0e71982b12b40ccfdf722cfbcf664a9cac689f5bc",
+    "b_shipped_export": "raw-reference-table-0b3854a.json",
+    "b_shipped_identical": true,
+    "goal_output_sha256": "fafea1c9b99e08eaead20ed0e71982b12b40ccfdf722cfbcf664a9cac689f5bc",
+    "shipped_sha256": "fafea1c9b99e08eaead20ed0e71982b12b40ccfdf722cfbcf664a9cac689f5bc"
+   },
+   "not_a_cache": {
+    "after": {
+     "container_runs": 2,
+     "discovery_ledger_calls": 0,
+     "experiments": 1,
+     "model_calls": 0,
+     "proposal_calls": 0
+    },
+    "before": {
+     "container_runs": 1,
+     "discovery_ledger_calls": 0,
+     "experiments": 1,
+     "model_calls": 0,
+     "proposal_calls": 0
+    },
+    "capability": {
+     "cap_id": "site.ref-extract",
+     "statement_sha": "21d2c66b0365e08fc7b873c35d363d1d4ce0afec1be617c96e689c1635c603fa",
+     "version": 1
+    },
+    "command": "python -I C:\\hive-work\\cmp\\scripts\\c5_lifecycle.py --phase goal --store C:\\hive-work\\demo\\c5l-c9681d6 --cap site.ref-extract --release 2633d9b --out C:\\hive-work\\cmp\\build\\coop\\c5\\goal-site.ref-extract-l-old.json --signers D:\\tmp\\c5l-signers\\admission_signers",
+    "mode": "retained_capability_execution",
+    "new_experiments": 0,
+    "new_model_calls": 0,
+    "output_differs": true,
+    "output_sha256": "7285dceda4a765faa82b5f7432f4eb31bdec849940376f3cbe8f813d5c9e8eb9",
+    "reason": null,
+    "returncode": 0,
+    "state": "VERIFIED",
+    "verdict": "PASS",
+    "verified": true
+   },
+   "post_revoke_goal": {
+    "after": {
+     "container_runs": 2,
+     "discovery_ledger_calls": 0,
+     "experiments": 1,
+     "model_calls": 0,
+     "proposal_calls": 0
+    },
+    "before": {
+     "container_runs": 2,
+     "discovery_ledger_calls": 0,
+     "experiments": 1,
+     "model_calls": 0,
+     "proposal_calls": 0
+    },
+    "capability": null,
+    "command": "python -I C:\\hive-work\\cmp\\scripts\\c5_lifecycle.py --phase goal --store C:\\hive-work\\demo\\c5l-c9681d6 --cap site.ref-extract --release 0b3854a --out C:\\hive-work\\cmp\\build\\coop\\c5\\goal-site.ref-extract-l-revoked.json --signers D:\\tmp\\c5l-signers\\admission_signers",
+    "mode": null,
+    "new_experiments": 0,
+    "new_model_calls": 0,
+    "output_sha256": null,
+    "reason": "no typed plan from the eligible capabilities",
+    "returncode": 0,
+    "state": "UNRESOLVED",
+    "verdict": null
+   },
+   "reuse": {
+    "after": {
+     "container_runs": 1,
+     "discovery_ledger_calls": 0,
+     "experiments": 1,
+     "model_calls": 0,
+     "proposal_calls": 0
+    },
+    "before": {
+     "container_runs": 0,
+     "discovery_ledger_calls": 0,
+     "experiments": 1,
+     "model_calls": 0,
+     "proposal_calls": 0
+    },
+    "capability": {
+     "cap_id": "site.ref-extract",
+     "statement_sha": "21d2c66b0365e08fc7b873c35d363d1d4ce0afec1be617c96e689c1635c603fa",
+     "version": 1
+    },
+    "command": "python -I C:\\hive-work\\cmp\\scripts\\c5_lifecycle.py --phase goal --store C:\\hive-work\\demo\\c5l-c9681d6 --cap site.ref-extract --release 0b3854a --out C:\\hive-work\\cmp\\build\\coop\\c5\\goal-site.ref-extract-l-new.json --signers D:\\tmp\\c5l-signers\\admission_signers",
+    "mode": "retained_capability_execution",
+    "new_experiments": 0,
+    "new_model_calls": 0,
+    "output_sha256": "fafea1c9b99e08eaead20ed0e71982b12b40ccfdf722cfbcf664a9cac689f5bc",
+    "reason": null,
+    "returncode": 0,
+    "state": "VERIFIED",
+    "verdict": "PASS",
+    "verified": true
+   },
+   "revoke": {
+    "cap_id": "site.ref-extract",
+    "event_ref": "artifacts/be6c02fa3f80253ab2ccab73e15ee5c8443ce4db4ea516fc46dc23b05d78ff1c.json",
+    "reason": "C5 revocation test",
+    "type": "revoke",
+    "version": 1
+   },
+   "statement": {
+    "proposer_model": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+    "route": "learned",
+    "sealed_final": {
+     "body_sha256": "c37ca70bf5da19e70ff26370fe45dc4d8b75084173a10743ca02d6762f7f5e48",
+     "campaign_exp_id": "d-bd3b207fd6571a0e43bf",
+     "campaign_frozen_sha": "bd3b207fd6571a0e43bf1251673824dce1b7be6a24727755ef4aeed381315899",
+     "proposer_model": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+     "receipt_sha256": "16901d5604b5a2ed6da8914ae7db64a66214344031ea78d54ec52fb4b5196b50",
+     "screen": "backend_screen_v1"
+    },
+    "version": 1
+   },
+   "v1": {
+    "admission": {
+     "cap_id": "site.ref-extract",
+     "event_ref": "artifacts/18eb085e6e9063e741bb713375f7e2228dcfb8c181a7095e65feb2bf6e50b91e.json",
+     "rerun_receipt_sha256": "dea2cb9084226e9fe27dba5a159238e0f242cd6b9b432bd5c8d6748d90c8e27c",
+     "route": "learned",
+     "statement_sha": "21d2c66b0365e08fc7b873c35d363d1d4ce0afec1be617c96e689c1635c603fa",
+     "version": 1
+    },
+    "admission_refused": null,
+    "campaign": "site.ref-extract.r1.hosted",
+    "exp_id": "d-415178c9c6e6ed30c683",
+    "fresh_hidden": "24/24",
+    "model_calls": 0,
+    "proposals": 0,
+    "reason": "independent evaluator PASS; awaiting admission",
+    "receipt": "C:\\hive-work\\demo\\backend-screen-12b1ba4\\stores\\site.ref-extract.r1.hosted\\campaign\\site.ref-extract\\final-receipt.json",
+    "receipt_sha256": "16901d5604b5a2ed6da8914ae7db64a66214344031ea78d54ec52fb4b5196b50",
+    "state": "ADMITTED"
+   }
+  },
+  "site.ref-resolve": {
+   "chain": [
+    {
+     "exp_id": "d-c0b85c5c90a4ea1d8e47",
+     "ref": "artifacts/07d660cd29108ab9d60ab3b7c278f9ccf75262c8cbcc19f23265128bff66cc42.json",
+     "statement_sha": "360bfa17599f6ba96b8a7be2fb7f2df17ca0d6791c76f15af9d7c38bff7f1de2",
+     "type": "admit"
+    },
+    {
+     "exp_id": null,
+     "ref": "artifacts/03da754718507e0470c2e5700ad45d971925a3915146a5b1ffa8077ac72c5f96.json",
+     "statement_sha": null,
+     "type": "revoke"
+    }
+   ],
+   "comparison": {
+    "a_authored_body_separate_run_identical": true,
+    "authored_sha256": "0cb3548174f5165c4cfb83c146b68fbd1fdaeafb7b4f335c40b240e5692df932",
+    "b_shipped_export": "reference-table-0b3854a.json",
+    "b_shipped_identical": true,
+    "goal_output_sha256": "0cb3548174f5165c4cfb83c146b68fbd1fdaeafb7b4f335c40b240e5692df932",
+    "shipped_sha256": "0cb3548174f5165c4cfb83c146b68fbd1fdaeafb7b4f335c40b240e5692df932"
+   },
+   "not_a_cache": {
+    "after": {
+     "container_runs": 4,
+     "discovery_ledger_calls": 0,
+     "experiments": 2,
+     "model_calls": 0,
+     "proposal_calls": 0
+    },
+    "before": {
+     "container_runs": 3,
+     "discovery_ledger_calls": 0,
+     "experiments": 2,
+     "model_calls": 0,
+     "proposal_calls": 0
+    },
+    "capability": {
+     "cap_id": "site.ref-resolve",
+     "statement_sha": "360bfa17599f6ba96b8a7be2fb7f2df17ca0d6791c76f15af9d7c38bff7f1de2",
+     "version": 1
+    },
+    "command": "python -I C:\\hive-work\\cmp\\scripts\\c5_lifecycle.py --phase goal --store C:\\hive-work\\demo\\c5l-c9681d6 --cap site.ref-resolve --release 2633d9b --out C:\\hive-work\\cmp\\build\\coop\\c5\\goal-site.ref-resolve-l-old.json --signers D:\\tmp\\c5l-signers\\admission_signers",
+    "mode": "retained_capability_execution",
+    "new_experiments": 0,
+    "new_model_calls": 0,
+    "output_differs": true,
+    "output_sha256": "ddf48e86dedd4ad3920bac58d23587e02f1f1cb662b218dd519a8d488aec2262",
+    "reason": null,
+    "returncode": 0,
+    "state": "VERIFIED",
+    "verdict": "PASS",
+    "verified": true
+   },
+   "post_revoke_goal": {
+    "after": {
+     "container_runs": 4,
+     "discovery_ledger_calls": 0,
+     "experiments": 2,
+     "model_calls": 0,
+     "proposal_calls": 0
+    },
+    "before": {
+     "container_runs": 4,
+     "discovery_ledger_calls": 0,
+     "experiments": 2,
+     "model_calls": 0,
+     "proposal_calls": 0
+    },
+    "capability": null,
+    "command": "python -I C:\\hive-work\\cmp\\scripts\\c5_lifecycle.py --phase goal --store C:\\hive-work\\demo\\c5l-c9681d6 --cap site.ref-resolve --release 0b3854a --out C:\\hive-work\\cmp\\build\\coop\\c5\\goal-site.ref-resolve-l-revoked.json --signers D:\\tmp\\c5l-signers\\admission_signers",
+    "mode": null,
+    "new_experiments": 0,
+    "new_model_calls": 0,
+    "output_sha256": null,
+    "reason": "no typed plan from the eligible capabilities",
+    "returncode": 0,
+    "state": "UNRESOLVED",
+    "verdict": null
+   },
+   "reuse": {
+    "after": {
+     "container_runs": 3,
+     "discovery_ledger_calls": 0,
+     "experiments": 2,
+     "model_calls": 0,
+     "proposal_calls": 0
+    },
+    "before": {
+     "container_runs": 2,
+     "discovery_ledger_calls": 0,
+     "experiments": 2,
+     "model_calls": 0,
+     "proposal_calls": 0
+    },
+    "capability": {
+     "cap_id": "site.ref-resolve",
+     "statement_sha": "360bfa17599f6ba96b8a7be2fb7f2df17ca0d6791c76f15af9d7c38bff7f1de2",
+     "version": 1
+    },
+    "command": "python -I C:\\hive-work\\cmp\\scripts\\c5_lifecycle.py --phase goal --store C:\\hive-work\\demo\\c5l-c9681d6 --cap site.ref-resolve --release 0b3854a --out C:\\hive-work\\cmp\\build\\coop\\c5\\goal-site.ref-resolve-l-new.json --signers D:\\tmp\\c5l-signers\\admission_signers",
+    "mode": "retained_capability_execution",
+    "new_experiments": 0,
+    "new_model_calls": 0,
+    "output_sha256": "0cb3548174f5165c4cfb83c146b68fbd1fdaeafb7b4f335c40b240e5692df932",
+    "reason": null,
+    "returncode": 0,
+    "state": "VERIFIED",
+    "verdict": "PASS",
+    "verified": true
+   },
+   "revoke": {
+    "cap_id": "site.ref-resolve",
+    "event_ref": "artifacts/03da754718507e0470c2e5700ad45d971925a3915146a5b1ffa8077ac72c5f96.json",
+    "reason": "C5 revocation test",
+    "type": "revoke",
+    "version": 1
+   },
+   "statement": {
+    "proposer_model": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+    "route": "learned",
+    "sealed_final": {
+     "body_sha256": "3afae2449e296cad54e6b3b527ce6df2702b54a2adf598171eb6b1e4221ce24a",
+     "campaign_exp_id": "d-7be3aff27902c1a17300",
+     "campaign_frozen_sha": "7be3aff27902c1a1730073066430dc7dc5c6dc735ba3c4618ba3437ae2908e29",
+     "proposer_model": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+     "receipt_sha256": "4461f7803856afacf7501aa4281df28180ce0f015654f843c0384111698b69c9",
+     "screen": "backend_screen_v1"
+    },
+    "version": 1
+   },
+   "v1": {
+    "admission": {
+     "cap_id": "site.ref-resolve",
+     "event_ref": "artifacts/07d660cd29108ab9d60ab3b7c278f9ccf75262c8cbcc19f23265128bff66cc42.json",
+     "rerun_receipt_sha256": "0ae3152f08801a9920f4975240094faa92d0dbc5b50d5e95be4a532b88849633",
+     "route": "learned",
+     "statement_sha": "360bfa17599f6ba96b8a7be2fb7f2df17ca0d6791c76f15af9d7c38bff7f1de2",
+     "version": 1
+    },
+    "admission_refused": null,
+    "campaign": "site.ref-resolve.r1.hosted",
+    "exp_id": "d-c0b85c5c90a4ea1d8e47",
+    "fresh_hidden": "24/24",
+    "model_calls": 0,
+    "proposals": 0,
+    "reason": "independent evaluator PASS; awaiting admission",
+    "receipt": "C:\\hive-work\\demo\\backend-screen-12b1ba4\\stores\\site.ref-resolve.r1.hosted\\campaign\\site.ref-resolve\\final-receipt.json",
+    "receipt_sha256": "4461f7803856afacf7501aa4281df28180ce0f015654f843c0384111698b69c9",
+    "state": "ADMITTED"
+   }
+  }
+ },
+ "commands": {
+  "run": "python scripts/c5_lifecycle.py --phase learned"
+ },
+ "counters_end": {
+  "container_runs": 4,
+  "discovery_ledger_calls": 0,
+  "experiments": 2,
+  "model_calls": 0,
+  "proposal_calls": 0
+ },
+ "counters_start": {
+  "container_runs": 0,
+  "discovery_ledger_calls": 0,
+  "experiments": 0,
+  "model_calls": 0,
+  "proposal_calls": 0
+ },
+ "schema": "hive-c5-learned-v1",
+ "scratch_signers": "D:\\tmp\\c5l-signers\\admission_signers",
+ "store": "C:\\hive-work\\demo\\c5l-c9681d6"
+}

@@ -1,0 +1,306 @@
+{
+ "hosted": {
+  "calls": [
+   {
+    "request_sha256": "15e6224028352b1e9caccab18b8d788b2d5db0a8dd5393c339e107aef9149e00",
+    "response_model": "private/nvidia/nemotron-3.5-super-120b-a12b",
+    "seed": 2035300001,
+    "status": "ok",
+    "ts": "2026-11-27T03:41:56Z"
+   },
+   {
+    "request_sha256": "ca9d67e6f4d56dbd9703e2fc77178a5e6c1b9ab788a812fe1b45a74307629618",
+    "response_model": "private/nvidia/nemotron-3.5-super-120b-a12b",
+    "seed": 2035300101,
+    "status": "ok",
+    "ts": "2026-11-27T03:42:06Z"
+   },
+   {
+    "request_sha256": "4805065b7fd192ee850055bfee7f2d6c8672f6649195a8e0d0b5a7ee5633d9f7",
+    "response_model": "private/nvidia/nemotron-3.5-super-120b-a12b",
+    "seed": 2035300201,
+    "status": "ok",
+    "ts": "2026-11-27T03:42:15Z"
+   }
+  ],
+  "cost": {
+   "calls": 3,
+   "container_runs": 3,
+   "in_tokens": 22090,
+   "out_tokens": 2952,
+   "proposals": 3,
+   "wall_s": 26.9
+  },
+  "dev_n": 6,
+  "final_dev_pass": 2,
+  "hosted_usd_delta": 0.1474,
+  "model": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+  "resources": {
+   "fields": {
+    "activeFps": {
+     "max": 30.000000300000007,
+     "mean": 30.0,
+     "min": 30.000000300000007
+    },
+    "averageFrameRenderTime": {
+     "max": 2.797838,
+     "mean": 2.356,
+     "min": 2.026235
+    },
+    "cpuUsage": {
+     "max": 4.678698330619747,
+     "mean": 4.006,
+     "min": 3.4459053073601984
+    },
+    "enc_fps": {
+     "max": 63.0,
+     "mean": 28.077,
+     "min": 0.0
+    },
+    "enc_latency_us": {
+     "max": 1412.0,
+     "mean": 564.308,
+     "min": 0.0
+    },
+    "enc_sessions": {
+     "max": 1.0,
+     "mean": 1.0,
+     "min": 1.0
+    },
+    "gpu_mem_total_mib": {
+     "max": 16303.0,
+     "mean": 16303.0,
+     "min": 16303.0
+    },
+    "gpu_mem_used_mib": {
+     "max": 13405.0,
+     "mean": 13405.0,
+     "min": 13405.0
+    },
+    "gpu_util_pct": {
+     "max": 28.0,
+     "mean": 25.308,
+     "min": 24.0
+    },
+    "memoryUsage": {
+     "max": 2330.2578125,
+     "mean": 2325.304,
+     "min": 2317.41796875
+    },
+    "outputSkippedFrames": {
+     "max": 0,
+     "mean": 0.0,
+     "min": 0
+    },
+    "outputTotalFrames": {
+     "max": 8054,
+     "mean": 7644.846,
+     "min": 7236
+    },
+    "ram_avail_mib": {
+     "max": 8194,
+     "mean": 8162.308,
+     "min": 8135
+    },
+    "ram_total_mib": {
+     "max": 65438,
+     "mean": 65438.0,
+     "min": 65438
+    },
+    "record_bytes": {
+     "max": 201974834,
+     "mean": 191406616.538,
+     "min": 180926962
+    },
+    "record_duration_ms": {
+     "max": 267999,
+     "mean": 254330.077,
+     "min": 240699
+    },
+    "renderSkippedFrames": {
+     "max": 5,
+     "mean": 5.0,
+     "min": 5
+    },
+    "renderTotalFrames": {
+     "max": 16347,
+     "mean": 15936.923,
+     "min": 15528
+    },
+    "sys_cpu_pct": {
+     "max": 65.9,
+     "mean": 30.046,
+     "min": 15.2
+    }
+   },
+   "max_encoder_latency_us": 1412.0,
+   "min_free_vram_mib": 2898.0,
+   "output_frames": 818,
+   "output_skip_pct": 0.0,
+   "output_skipped": 0,
+   "peak_gpu_util_pct": 28.0,
+   "peak_vram_used_mib": 13405.0,
+   "render_frames": 819,
+   "render_skip_pct": 0.0,
+   "render_skipped": 0,
+   "samples": 13
+  },
+  "returned_models": [
+   "private/nvidia/nemotron-3.5-super-120b-a12b"
+  ],
+  "state": "FINAL_FROZEN",
+  "wall_s": 28.9
+ },
+ "local": {
+  "calls": [
+   {
+    "request_sha256": "1492dd346ab12ff0dddb5c4a6d34ec4ad6441011974208e1716d7ef9214c655d",
+    "response_model": "openai/gpt-oss-20b",
+    "seed": 2035300001,
+    "status": "ok",
+    "ts": "2026-11-27T03:40:33Z"
+   },
+   {
+    "request_sha256": "bc457fcabb9dba6b1cab6fd09a0d9c7d854f21442a07c0e9882f2e3895651072",
+    "response_model": "openai/gpt-oss-20b",
+    "seed": 2035300101,
+    "status": "ok",
+    "ts": "2026-11-27T03:41:09Z"
+   },
+   {
+    "request_sha256": "640100a8402f40b8951cabcddc92519ed7ff2a9720440683444385792ff70803",
+    "response_model": "openai/gpt-oss-20b",
+    "seed": 2035300201,
+    "status": "ok",
+    "ts": "2026-11-27T03:41:45Z"
+   }
+  ],
+  "cost": {
+   "calls": 3,
+   "container_runs": 3,
+   "in_tokens": 19854,
+   "out_tokens": 5749,
+   "proposals": 3,
+   "wall_s": 105.6
+  },
+  "dev_n": 6,
+  "final_dev_pass": 6,
+  "hosted_usd_delta": -0.0,
+  "model": "openai/gpt-oss-20b",
+  "resources": {
+   "fields": {
+    "activeFps": {
+     "max": 30.000000300000007,
+     "mean": 30.0,
+     "min": 30.000000300000007
+    },
+    "averageFrameRenderTime": {
+     "max": 3.79417,
+     "mean": 2.722,
+     "min": 2.060358
+    },
+    "cpuUsage": {
+     "max": 5.377606030903424,
+     "mean": 4.28,
+     "min": 3.4191084167390353
+    },
+    "enc_fps": {
+     "max": 63.0,
+     "mean": 20.396,
+     "min": 0.0
+    },
+    "enc_latency_us": {
+     "max": 1349.0,
+     "mean": 405.479,
+     "min": 0.0
+    },
+    "enc_sessions": {
+     "max": 1.0,
+     "mean": 1.0,
+     "min": 1.0
+    },
+    "gpu_mem_total_mib": {
+     "max": 16303.0,
+     "mean": 16303.0,
+     "min": 16303.0
+    },
+    "gpu_mem_used_mib": {
+     "max": 13414.0,
+     "mean": 13405.188,
+     "min": 13405.0
+    },
+    "gpu_util_pct": {
+     "max": 93.0,
+     "mean": 48.917,
+     "min": 23.0
+    },
+    "memoryUsage": {
+     "max": 2330.890625,
+     "mean": 2320.187,
+     "min": 2306.796875
+    },
+    "outputSkippedFrames": {
+     "max": 0,
+     "mean": 0.0,
+     "min": 0
+    },
+    "outputTotalFrames": {
+     "max": 7193,
+     "mean": 5588.458,
+     "min": 3984
+    },
+    "ram_avail_mib": {
+     "max": 8472,
+     "mean": 8257.542,
+     "min": 8130
+    },
+    "ram_total_mib": {
+     "max": 65438,
+     "mean": 65438.0,
+     "min": 65438
+    },
+    "record_bytes": {
+     "max": 179817972,
+     "mean": 139582692.125,
+     "min": 99355779
+    },
+    "record_duration_ms": {
+     "max": 239266,
+     "mean": 185785.438,
+     "min": 132299
+    },
+    "renderSkippedFrames": {
+     "max": 5,
+     "mean": 5.0,
+     "min": 5
+    },
+    "renderTotalFrames": {
+     "max": 15485,
+     "mean": 13880.542,
+     "min": 12276
+    },
+    "sys_cpu_pct": {
+     "max": 76.0,
+     "mean": 33.792,
+     "min": 19.1
+    }
+   },
+   "max_encoder_latency_us": 1349.0,
+   "min_free_vram_mib": 2889.0,
+   "output_frames": 3209,
+   "output_skip_pct": 0.0,
+   "output_skipped": 0,
+   "peak_gpu_util_pct": 93.0,
+   "peak_vram_used_mib": 13414.0,
+   "render_frames": 3209,
+   "render_skip_pct": 0.0,
+   "render_skipped": 0,
+   "samples": 48
+  },
+  "returned_models": [
+   "openai/gpt-oss-20b"
+  ],
+  "state": "PUBLIC_CANDIDATE_FROZEN",
+  "wall_s": 107.4
+ }
+}

@@ -31,11 +31,11 @@
       "summary": "Usable locally on one Windows host: goals for convert, merge and inventory-diff through the console; the learning loop ran once on one real workload and ties a scripted baseline (mechanism, not advantage); trusted local scope, not production-approved; Level A not accepted, Level B untested; the owner later raised the project spending ceiling from $120 to $220 (25 Nov) and $400 (26 Nov)."
     },
     "latest_engineering_checkpoint": {
-      "note_id": "M3M5",
-      "title": "Prototype checkpoint M3-M5 (incomplete)",
-      "status": "PROTOTYPE_M3_M5_INCOMPLETE_LOCAL_ONLY",
-      "summary": "26 Nov: from an empty registry HIVE learned a link checker (57 broken links), reused it on the next site release with 0 model calls (58), learned a release diff (111/0/45) and re-ran stored plans after restart with 0 calls; suite 1855/6/0 on 73515df. INCOMPLETE: composition on real data blocked (open-source image matcher failed the independent check on real pictures). Code on a local branch with no public remote; nothing packaged.",
-      "publication_manifest": "implementation/prototype-m3m5-publication.json"
+      "note_id": "C4G3",
+      "title": "Cooperative inference and G3 routing: hosted backend screen",
+      "status": "G3_HOSTED_BACKEND_LEAD_LOCAL_ONLY",
+      "summary": "26 Nov: development screen. No cooperative recipe beat the incumbent in 63 pilot runs; contract v2 fixed spec defects; hosted Nemotron passed 4/4 sealed finals on the two capabilities local gpt-oss-20b could not learn (local 2/4); hosted finals admitted in a test store only, reuse on an unseen release VERIFIED with 0 model calls. Nothing routed by default; code on a local branch with no public remote; nothing packaged.",
+      "publication_manifest": "implementation/coop-c4g3-publication.json"
     }
   },
   "current_release": {
@@ -268,12 +268,18 @@
       "path": "updates/HIVE_Prototype_Checkpoint_M3_M5_2026-11-26.md",
       "date": "2026-11-26",
       "sha256": "a7bed7567770184898a34e24e2ee07f1aceac5c3251b91b080e316607745c52a"
+    },
+    {
+      "id": "C4G3",
+      "path": "updates/HIVE_Cooperative_Inference_C4_G3_2026-11-26.md",
+      "date": "2026-11-26",
+      "sha256": "471a6c1895914499f30eb0ede15a36af04f08c57aabe4d4f3da753c35ca10981"
     }
   ],
   "source_zip_sha256": "2b726d055a17a25495854890d8d0001cb791006273e0f8eb5515788b7e00c61a",
   "counts": {
-    "research_pages": 320,
-    "graph_edges": 2552,
+    "research_pages": 321,
+    "graph_edges": 2554,
     "originals": 19
   },
   "scope": "Static research reference plus executable local model/tool controller evidence. No production model runtime or compounding-learning claim."

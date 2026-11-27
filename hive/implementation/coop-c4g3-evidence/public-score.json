@@ -1,0 +1,55 @@
+{
+ "batch_id": "8a75a51fde60fb56",
+ "blocks": [
+  {
+   "block_id": "site.ref-extract.r1",
+   "cap": "site.ref-extract",
+   "manifest_sha256": "0110e4531018403ccfb5aa106adf9685ffa02d6cefd7d31317b7fc638b06e866",
+   "results": {
+    "hosted": "PASS",
+    "local": "FAIL"
+   }
+  },
+  {
+   "block_id": "site.ref-extract.r2",
+   "cap": "site.ref-extract",
+   "manifest_sha256": "80b67406427fa4b2f131280e2dc7e56dcdcb012aa8ce7c5ec6a508db6c5b4ab7",
+   "results": {
+    "hosted": "PASS",
+    "local": "FAIL"
+   }
+  },
+  {
+   "block_id": "site.ref-resolve.r1",
+   "cap": "site.ref-resolve",
+   "manifest_sha256": "216d65b3add96c93deae42b72b0ce42152af20b9d8d125f20dccf47895970e4c",
+   "results": {
+    "hosted": "PASS",
+    "local": "PASS"
+   }
+  },
+  {
+   "block_id": "site.ref-resolve.r2",
+   "cap": "site.ref-resolve",
+   "manifest_sha256": "c0e602f802e6cf7ff9de3b7c24d911fd485e2ff63bf1b3ac3a8e13c50f1f3076",
+   "results": {
+    "hosted": "PASS",
+    "local": "PASS"
+   }
+  }
+ ],
+ "by_backend": {
+  "hosted": {
+   "fail": 0,
+   "incomplete": 0,
+   "pass": 4
+  },
+  "local": {
+   "fail": 2,
+   "incomplete": 0,
+   "pass": 2
+  }
+ },
+ "policy": "public_feedback_sealed_final_v1",
+ "schema": "hive-sealed-final-public-v1"
+}

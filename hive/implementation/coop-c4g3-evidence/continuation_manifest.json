@@ -1,0 +1,131 @@
+{
+ "allowance": {
+  "recorded": 489,
+  "remaining": 87,
+  "total": 576
+ },
+ "batches": {
+  "04fe137": {
+   "by_recipe_calls_nocode_refusal": {
+    "maskpos3": [
+     81,
+     27,
+     25
+    ],
+    "maskrand3": [
+     81,
+     32,
+     32
+    ]
+   },
+   "calls": 162,
+   "calls_missing_input_usage": 0,
+   "calls_refusal_text": 57,
+   "calls_without_code_block": 59,
+   "campaigns": 18,
+   "first_call_utc": "2026-11-26T23:55:30Z",
+   "first_refusal_utc": "2026-11-26T23:56:24Z",
+   "in_tokens": 677421,
+   "in_tokens_recorded_sum": 677421,
+   "last_call_utc": "2026-11-27T00:36:39Z",
+   "last_refusal_utc": "2026-11-27T00:36:39Z",
+   "out_tokens": 84790
+  },
+  "57f6a94": {
+   "by_recipe_calls_nocode_refusal": {
+    "diverse3": [
+     69,
+     0,
+     0
+    ],
+    "incumbent": [
+     64,
+     14,
+     8
+    ],
+    "sample3": [
+     63,
+     6,
+     6
+    ]
+   },
+   "calls": 196,
+   "calls_missing_input_usage": 0,
+   "calls_refusal_text": 14,
+   "calls_without_code_block": 20,
+   "campaigns": 27,
+   "first_call_utc": "2026-11-26T22:51:30Z",
+   "first_refusal_utc": "2026-11-26T22:55:16Z",
+   "in_tokens": 876545,
+   "in_tokens_recorded_sum": 876545,
+   "last_call_utc": "2026-11-26T23:54:35Z",
+   "last_refusal_utc": "2026-11-26T23:47:34Z",
+   "out_tokens": 243107
+  },
+  "c3x-fbc2ddb": {
+   "by_recipe_calls_nocode_refusal": {
+    "maskpos3": [
+     45,
+     5,
+     5
+    ],
+    "maskrand3": [
+     48,
+     9,
+     9
+    ],
+    "sample3": [
+     38,
+     1,
+     1
+    ]
+   },
+   "calls": 131,
+   "calls_missing_input_usage": 0,
+   "calls_refusal_text": 15,
+   "calls_without_code_block": 15,
+   "campaigns": 18,
+   "first_call_utc": "2026-11-27T00:46:38Z",
+   "first_refusal_utc": "2026-11-27T00:52:05Z",
+   "in_tokens": 667231,
+   "in_tokens_recorded_sum": 667231,
+   "last_call_utc": "2026-11-27T01:21:23Z",
+   "last_refusal_utc": "2026-11-27T01:12:28Z",
+   "out_tokens": 125215
+  }
+ },
+ "campaign_labels": "all campaigns: development evidence",
+ "code_commit": "7a6cd17",
+ "evidence_label": "development evidence",
+ "gen_public_sha256": {
+  "site.ref-check": "0400a497018d3427e88baf2bddaf2fe085ad446972ecac321f92b83686dac837",
+  "site.ref-extract": "12bba02a5d093801d4dc41498525b8e34d4e7571726022ed8c898cf69c40b883",
+  "site.ref-resolve": "5fb6b367122fba7b3fef13ba7de419a0f80e693d00aa2693e00adf2af1b46784"
+ },
+ "gpu_seconds": "not instrumented",
+ "models_seen": [
+  "openai/gpt-oss-20b"
+ ],
+ "peak_vram": "not instrumented",
+ "problems": [],
+ "refusal_surge": {
+  "batch": "04fe137",
+  "claim": "observed period association, cause unknown",
+  "note": "share of calls whose reply has no code block / refusal text per batch above; no recorded field identifies a cause"
+ },
+ "select": "dev>agree>dev_ms>sha",
+ "totals": {
+  "calls": 489,
+  "campaigns": 63,
+  "expected_calls": 489,
+  "expected_campaigns": 63,
+  "in_tokens": 2221197,
+  "out_tokens": 453112
+ },
+ "tree_dirty_tracked_files": [
+  "src/hive/coop.py",
+  "src/hive/m2_model.py",
+  "tests/test_p_fix_hosted.py"
+ ],
+ "version": "coop-continuation-v1"
+}

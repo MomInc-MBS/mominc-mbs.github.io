@@ -64,3 +64,6 @@ hive/implementation/connected-runner-*.json -text whitespace=cr-at-eol
 
 # Prototype M3-M5 evidence: sanitised copies bound to the publication manifest digests.
 hive/implementation/prototype-m3m5-evidence/** -text
+
+# Cooperative inference C4/G3 evidence: sanitised copies bound to the publication manifest digests.
+hive/implementation/coop-c4g3-evidence/** -text

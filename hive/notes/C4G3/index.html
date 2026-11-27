@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cooperative inference and G3 routing: hosted backend screen · HIVE</title><meta name="description" content="The HIVE framework research vault: topics, evidence, experiments, decisions, and preserved source history.">
+<meta name="theme-color" content="#050403"><link rel="canonical" href="https://mominc.online/hive/notes/C4G3/">
+<meta property="og:title" content="Cooperative inference and G3 routing: hosted backend screen · HIVE"><meta property="og:description" content="A framework for specialists that learn. An inspectable record of the research behind it.">
+<link rel="icon" href="/hive/assets/hive.svg?v=3" type="image/svg+xml"><link rel="stylesheet" href="/hive/assets/hive.css?v=4"><link rel="stylesheet" href="/hive/assets/diagrams.css?v=4"><link rel="stylesheet" href="/hive/assets/research.css?v=2">
+<script defer src="/hive/assets/hive.js?v=4"></script></head>
+<body class=""><a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="brand" href="/hive/" aria-label="HIVE home"><img src="/hive/assets/hive.svg?v=3" width="35" height="35" alt=""><span>HIVE<span class="brand-sub">RESEARCH VAULT</span></span></a>
+<nav class="topnav" aria-label="Primary"><a href="/hive/notes/FRAMEWORK/">Framework</a><a href="/hive/explore/">Explore</a><a href="/hive/graph/">Graph</a><a href="/hive/notes/CONNECTED/">Implementation</a><a href="/hive/notes/CODER/">Coder directions</a></nav>
+<a class="search-trigger" href="/hive/search/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>Search the vault</span><kbd>/</kbd></a>
+<button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button></header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/CONNECTED/" >Latest engineering · connected-goal-runner 033089b</a><a href="/hive/notes/READINESS/" >v0.3.0.dev4 readiness</a><a href="/hive/notes/INTEGRATION/" >Historical dev3 integration</a><a href="/hive/notes/WORKING/" >Video mission alpha</a><a href="/hive/notes/V03/" >v0.3 foundation</a><a href="/hive/notes/CONTROLLER/" >Adaptive controller - v0.2</a><a href="/hive/notes/PROTOTYPE/" >Local prototype - v0.1</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/LANDSCAPE/" >External landscape · 22 Nov</a><a href="/hive/notes/WHOLE/" >Integrated design map</a><a href="/hive/notes/DIRECTION/" >Owner decisions · 22 Nov</a><a href="/hive/notes/KERNELS/" >Kernel comparison</a><a href="/hive/notes/METABASE/" >Base for later self-improvement</a><a href="/hive/notes/LIVEDEMO/" >Live local-model demo · 22 Nov</a><a href="/hive/notes/UNIFIED/" >Unified integration · 22 Nov</a><a href="/hive/notes/V04X/" >Autonomous experiment checkpoint · 23 Nov</a><a href="/hive/notes/ISOLATION/" >Evaluator isolation + lineage · 23 Nov</a><a href="/hive/notes/M1/" >M1 accepted · 24 Nov</a><a href="/hive/notes/M2/" >M2 accepted · 24 Nov</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><a href="/hive/explore/">Browse all pages</a><a href="/hive/graph/">Interactive graph</a></nav>
+<div class="doc-layout"><aside class="sidebar"><p class="eyebrow">THE RESEARCH</p><a href="/hive/notes/HOME/" >Start here</a><a href="/hive/notes/STATUS/" >Implementation status</a><a href="/hive/notes/CONNECTED/" >Latest engineering · connected-goal-runner 033089b</a><a href="/hive/notes/READINESS/" >v0.3.0.dev4 readiness</a><a href="/hive/notes/INTEGRATION/" >Historical dev3 integration</a><a href="/hive/notes/WORKING/" >Video mission alpha</a><a href="/hive/notes/V03/" >v0.3 foundation</a><a href="/hive/notes/CONTROLLER/" >Adaptive controller - v0.2</a><a href="/hive/notes/PROTOTYPE/" >Local prototype - v0.1</a><a href="/hive/notes/ADAPTIVE/" >Latest research update</a><a href="/hive/notes/LANDSCAPE/" >External landscape · 22 Nov</a><a href="/hive/notes/WHOLE/" >Integrated design map</a><a href="/hive/notes/DIRECTION/" >Owner decisions · 22 Nov</a><a href="/hive/notes/KERNELS/" >Kernel comparison</a><a href="/hive/notes/METABASE/" >Base for later self-improvement</a><a href="/hive/notes/LIVEDEMO/" >Live local-model demo · 22 Nov</a><a href="/hive/notes/UNIFIED/" >Unified integration · 22 Nov</a><a href="/hive/notes/V04X/" >Autonomous experiment checkpoint · 23 Nov</a><a href="/hive/notes/ISOLATION/" >Evaluator isolation + lineage · 23 Nov</a><a href="/hive/notes/M1/" >M1 accepted · 24 Nov</a><a href="/hive/notes/M2/" >M2 accepted · 24 Nov</a><a href="/hive/notes/CODER/" >Coder directions · 0.4</a><a href="/hive/notes/FRAMEWORK/" >The framework</a><a href="/hive/notes/MAP/" >Research map</a><a href="/hive/notes/DECISIONS/" >Open decisions</a><a href="/hive/notes/EVIDENCE/" >Evidence &amp; disagreement</a><a href="/hive/notes/HISTORY/" >Previous work</a><a href="/hive/notes/ROADMAP/" >Build roadmap</a><a href="/hive/notes/ARCHIVE/" >Original documents</a><div class="sidebar-rule"></div><a href="/hive/explore/">Browse all 321 pages</a><a href="/hive/explore/?type=experiment">Experiments</a><a href="/hive/explore/?type=source">Primary sources</a><a href="/hive/explore/?type=legacy_catalog_entry">100-project catalog</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Download original vault · 0.2</a><p class="sidebar-note">A proposal is a starting point.<br>Evidence decides what stays.</p></aside>
+<main id="main" class="doc-main"><div class="breadcrumb"><a href="/hive/">HIVE</a><span>/</span><a href="/hive/explore/?type=framework">Framework</a><span>/</span><span>C4G3</span></div>
+<div class="doc-meta"><span class="badge">Measured engineering result</span><span class="badge neutral">Partial</span></div><div class="doc-tools"><button class="copy-link" data-title="Cooperative inference and G3 routing: hosted backend screen" data-id="C4G3" data-series="HIVE cooperative inference and G3 routing (26 November 2026)">Copy reference</button><a href="/hive/updates/HIVE_Cooperative_Inference_C4_G3_2026-11-26.md">Markdown source</a><a href="/hive/graph/?focus=C4G3">View connections</a><button class="print-page">Print</button></div>
+<article class="prose"><h1 id="cooperative-inference-and-g3-routing-hosted-backend-screen-26-nov-2026">Cooperative inference and G3 routing: hosted backend screen (26 Nov 2026)</h1>
+<p>This follows the <a href="/hive/notes/M3M5/">prototype checkpoint M3-M5</a>, which left two site capabilities, <code>site.ref-extract</code> and <code>site.ref-resolve</code>, unlearned by any model the conductor tried. This campaign asked why, whether several cooperating samples from one model help, and whether a second backend does. It is a <strong>development screen</strong>, not a powered accuracy study.</p>
+<h2 id="verdict">Verdict</h2>
+<ul>
+<li><strong>No cooperative recipe beat the incumbent.</strong> The C0-C3 pilot was 63 development runs with local gpt-oss-20b. Coverage (whether any generated candidate was correct) was the limit, not selection. Masking part of the spec text was negative.</li>
+<li><strong>The specs had defects.</strong> A contract audit found the <code>site.ref-extract</code> and <code>site.ref-resolve</code> specs omitted rules the hidden checks relied on. Contract v2 states them and was applied to both backends.</li>
+<li><strong>Selector repair was not met.</strong> An offline replay (0 model calls) of four selector variants found no repair that recovered the lost candidates with no regressions. The existing selector is kept.</li>
+<li><strong>A hosted backend produced the first correct <code>site.ref-extract</code> artifacts.</strong> Under a sealed-final, public-feedback-only policy, hosted Nemotron passed 4 of 4 sealed finals and local gpt-oss-20b passed 2 of 4 (resolve only).</li>
+<li><strong>Admission and a fresh-process reuse test passed in a test store.</strong> Nothing is routed by default and nothing is packaged.</li>
+</ul>
+<h2 id="c0-c3-pilot">C0-C3 pilot</h2>
+<p>Three task families, one local model, up to six repeats per cell. No recipe beat the incumbent sequential loop. Of 63 runs, the selector lost a correct generated candidate twice; everywhere else coverage equalled selected success, and <code>site.ref-extract</code> produced no correct candidate in any recipe. Two-voter agreement cannot break a tie. Masking nouns and verbs, or random words, cut dev-perfect candidates and did not help. Seeds did not make the local server reproducible. Full detail: <a href="/hive/implementation/coop-c4g3-evidence/COOP_PILOT_REPORT.md">pilot report</a>.</p>
+<h2 id="contract-audit-and-selector-replay">Contract audit and selector replay</h2>
+<p>All 123 hidden-case failures of 37 dev-perfect resolve candidates were one kind of defect the spec never stated; extract showed inputs only as a length placeholder and had an ambiguous ordering rule. Contract v2 fixes both and adds one public case per kind. This fix was informed by development hidden failures, which is disclosed; the screen used fresh hidden sets. See the <a href="/hive/implementation/coop-c4g3-evidence/P1_CONTRACT_AUDIT.md">contract audit</a>.</p>
+<p>The replay re-ran the stored pilot candidates through four selector variants with 0 model calls. The best variant recovered 1 of the 3 lost pools with no regressions; the gate required both named losses, so the <strong>existing selector is kept</strong>. See the <a href="/hive/implementation/coop-c4g3-evidence/REPLAY_REPORT.md">replay report</a>.</p>
+<h2 id="backend-screen">Backend screen</h2>
+<p>Policy: sealed final, public feedback only. The recipe is the existing sequential loop at temperature 0.2 on both backends, 2 repeats per capability, four paired blocks, order alternating.</p>
+<div class="table-wrap" tabindex="0"><table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>Repeat</th>
+<th>Hosted Nemotron</th>
+<th>Local gpt-oss-20b</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ref-extract</td>
+<td>1</td>
+<td>PASS</td>
+<td>FAIL (9 of 9 replies short refusals or stubs)</td>
+</tr>
+<tr>
+<td>ref-extract</td>
+<td>2</td>
+<td>PASS</td>
+<td>FAIL (4 of 9)</td>
+</tr>
+<tr>
+<td>ref-resolve</td>
+<td>1</td>
+<td>PASS</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>ref-resolve</td>
+<td>2</td>
+<td>PASS</td>
+<td>PASS</td>
+</tr>
+</tbody>
+</table></div>
+<p>Hosted 4 of 4 sealed finals in 12 calls; local 2 of 4 in 30 calls. Local <code>ref-extract</code> was dominated by refusals; whether the decoded-input view raises refusals is an open, untested hypothesis. The pilot and screen are not comparable before and after, because contract v2 changed for both backends at once.</p>
+<p><strong>Recording headroom.</strong> The screen ran while an OBS three-camera recording was measured (local NVENC recording, no stream). Over the whole session: 0 of 32,521 output frames skipped. Every block passed the frozen admission thresholds. See the <a href="/hive/implementation/coop-c4g3-evidence/admission-profile-v1.json">resource profile</a> and <a href="/hive/implementation/coop-c4g3-evidence/probe-report.json">probe report</a>.</p>
+<h2 id="admission-and-c5-0-model-calls">Admission and C5 (0 model calls)</h2>
+<ul>
+<li>The hosted sealed finals passed a <strong>second, fresh hidden set 24 of 24</strong> (extract and resolve), through a new sealed-final acceptance route that verifies the frozen campaign receipt and then applies the standard authored-route gates.</li>
+<li>Both were <strong>admitted as learned capabilities in a test store only</strong>.</li>
+<li>A fresh-process ordinary operator goal on the unseen release <code>0b3854a</code> was <strong>VERIFIED</strong>, with 0 new experiments and 0 model calls. The output is <strong>byte-identical</strong> to the authored body run separately and to the release's own exports. It is not a cache: a different release gives a different, VERIFIED output.</li>
+<li>A signed revoke removed both: the next goal was UNRESOLVED with 0 capability runs.</li>
+<li>In a second store with the authored v1 first, admitting the learned body as v2 was <strong>refused by the existing improvement-only chain rule</strong>. The rule is kept, so signed rollback to a previous version is not demonstrated.</li>
+<li>Finding, not changed: revocation is one global list keyed by capability and version number, so a revoke in one store would also hit the same version in another. The test used a scratch copy. A store-scoped list is the fix if it matters.</li>
+</ul>
+<p>See the <a href="/hive/implementation/coop-c4g3-evidence/C5_REPORT.md">C5 report</a> and <a href="/hive/implementation/coop-c4g3-evidence/C5_LEARNED_REPORT.json">learned-store report</a>.</p>
+<h2 id="limits">Limits</h2>
+<ul>
+<li>Development screen: 2 campaigns per cell and two capability families. Not a powered accuracy study.</li>
+<li>Hosted Nemotron is qualified as an explicit route only. <strong>Nothing is routed by default</strong>; the local incumbent stays the default.</li>
+<li>Admission was in a test store; the operator and demo stores are unchanged.</li>
+<li>The code is on a local branch with no public remote. <strong>Nothing is packaged</strong>; the latest packaged runtime stays the <a href="/hive/notes/CONNECTED/">Connected Goal Runner</a>.</li>
+<li>Not Level A, not Level B, not a production approval. No claim that mixing backends helps.</li>
+</ul>
+<h2 id="budget">Budget</h2>
+<p>HIVE model calls 537 of 576. Hosted NVIDIA NIM $2.64 of the $5 approval. Coding agents about $336 of the $400 ceiling (list-price estimate, not a billed ledger).</p>
+<h2 id="evidence">Evidence</h2>
+<p><a href="/hive/implementation/coop-c4g3-evidence/COOP_C4_G3_REPORT.md">Screen report</a> · <a href="/hive/implementation/coop-c4g3-evidence/COOP_PILOT_REPORT.md">pilot report</a> · <a href="/hive/implementation/coop-c4g3-evidence/P1_CONTRACT_AUDIT.md">contract audit</a> · <a href="/hive/implementation/coop-c4g3-evidence/REPLAY_REPORT.md">replay report</a> · <a href="/hive/implementation/coop-c4g3-evidence/C5_REPORT.md">C5 report</a>. The <a href="/hive/implementation/coop-c4g3-publication.json">publication manifest</a> lists every file with its digest. One interpreter path containing the operator's account name was shortened in the copies; no other content was changed.</p>
+<h2 id="identity">Identity</h2>
+<p>&lt;!-- identity:start --&gt;</p>
+<ul>
+<li>Code: local branch <code>build/prototype</code> in a private build tree, <strong>no public remote</strong>. Source commit <code>6b561fd</code>.</li>
+<li>Package: <strong>none published</strong>. Latest packaged runtime stays <a href="/hive/downloads/HIVE_Connected_Runner_033089b.zip"><code>HIVE_Connected_Runner_033089b.zip</code></a>.</li>
+<li>Models: local <code>openai/gpt-oss-20b</code>; hosted NVIDIA NIM Nemotron under an allowlist and a $5 spend cap. Approvals and signing keys are not published.
+&lt;!-- identity:end --&gt;</li>
+</ul>
+</article><section class="backlinks"><h2>Referenced by <span>2</span></h2><div><a href="/hive/notes/STATUS/"><span>STATUS</span>Implementation Status<small>related to</small></a><a href="/hive/notes/M3M5/"><span>M3M5</span>Prototype checkpoint M3-M5 (incomplete): learn, check, admit, reuse on real inputs<small>related to</small></a></div></section></main>
+<aside class="toc"><p class="eyebrow">ON THIS PAGE</p><a class="toc-h2" href="#verdict">Verdict</a><a class="toc-h2" href="#c0-c3-pilot">C0-C3 pilot</a><a class="toc-h2" href="#contract-audit-and-selector-replay">Contract audit and selector replay</a><a class="toc-h2" href="#backend-screen">Backend screen</a><a class="toc-h2" href="#admission-and-c5-0-model-calls">Admission and C5 (0 model calls)</a><a class="toc-h2" href="#limits">Limits</a><a class="toc-h2" href="#budget">Budget</a><a class="toc-h2" href="#evidence">Evidence</a><a class="toc-h2" href="#identity">Identity</a><a class="back-top" href="#main">Back to top</a></aside></div>
+<footer class="footer"><a class="footer-brand" href="/hive/">HIVE <span>/ Framework 0.2 · Coder directions 0.4</span></a><span>Prepared for Ian Myers · 20 Nov 2026</span><div><a href="/hive/updates/HIVE_Research_Update_Adaptive_Organization_and_Self_Learning_2026-11-20.md" download>Research update</a><a href="/hive/updates/HIVE_Coder_Information_Packet_2026-11-20.md" download>Coder packet · 0.4</a><a href="/hive/downloads/HIVE_Framework_Research_Vault.zip" download>Original vault · 0.2</a><a href="/hive/llms.txt">Agent reference</a><a href="https://mominc.online/tv/">MOM Inc.</a></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

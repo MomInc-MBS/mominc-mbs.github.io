@@ -1,0 +1,111 @@
+{
+ "backends": {
+  "hosted": {
+   "approval_file_sha256": "de39d9ac3d40c09acbc8117aab00c8ed64a2b98bc03a4c78e816a35d883675eb",
+   "approval_path": "build/prototype/approvals/nim-nemotron-3.5-super.approval.json",
+   "hosted": true,
+   "model": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+   "temperature": 0.2
+  },
+  "local": {
+   "approval_file_sha256": "ffdc5ccd771ca76d1375c3cbab23dfcacb82231b3956ada0e4b4a6c3268b5bf9",
+   "approval_path": "build/c-series/c3_inference_approval.json",
+   "hosted": false,
+   "model": "openai/gpt-oss-20b",
+   "temperature": 0.2
+  }
+ },
+ "blocks": [
+  {
+   "block_id": "site.ref-extract.r1",
+   "cap": "site.ref-extract",
+   "manifest": {
+    "id": "m-0110e4531018403c",
+    "sha256": "0110e4531018403ccfb5aa106adf9685ffa02d6cefd7d31317b7fc638b06e866"
+   },
+   "order": [
+    "local",
+    "hosted"
+   ],
+   "repeat": 1,
+   "seed_base": 500000
+  },
+  {
+   "block_id": "site.ref-extract.r2",
+   "cap": "site.ref-extract",
+   "manifest": {
+    "id": "m-80b67406427fa4b2",
+    "sha256": "80b67406427fa4b2f131280e2dc7e56dcdcb012aa8ce7c5ec6a508db6c5b4ab7"
+   },
+   "order": [
+    "hosted",
+    "local"
+   ],
+   "repeat": 2,
+   "seed_base": 1000000
+  },
+  {
+   "block_id": "site.ref-resolve.r1",
+   "cap": "site.ref-resolve",
+   "manifest": {
+    "id": "m-216d65b3add96c93",
+    "sha256": "216d65b3add96c93deae42b72b0ce42152af20b9d8d125f20dccf47895970e4c"
+   },
+   "order": [
+    "local",
+    "hosted"
+   ],
+   "repeat": 1,
+   "seed_base": 1500000
+  },
+  {
+   "block_id": "site.ref-resolve.r2",
+   "cap": "site.ref-resolve",
+   "manifest": {
+    "id": "m-c0e602f802e6cf7f",
+    "sha256": "c0e602f802e6cf7ff9de3b7c24d911fd485e2ff63bf1b3ac3a8e13c50f1f3076"
+   },
+   "order": [
+    "hosted",
+    "local"
+   ],
+   "repeat": 2,
+   "seed_base": 2000000
+  }
+ ],
+ "caps": [
+  "site.ref-extract",
+  "site.ref-resolve"
+ ],
+ "exp_budget": {
+  "calls": 3,
+  "container_runs": 10,
+  "in_tokens": 24000,
+  "max_prompt_tokens": 8000,
+  "max_tokens_per_call": 4096,
+  "out_tokens": 6000,
+  "proposals": 3,
+  "wall_s": 900
+ },
+ "hosted_worst_case_usd_per_block": 1.93536,
+ "limits": {
+  "calls": 72,
+  "campaigns": 8,
+  "container_runs": 240,
+  "experiments": 24,
+  "out_tokens": 144000
+ },
+ "manifest_sha256": "5d9d32ff0a9a5b9ec2624142c2f35b0d763323ba9ee746b355c36498c2fa30e0",
+ "per_block": {
+  "calls": 18,
+  "campaigns": 2,
+  "container_runs": 60,
+  "experiments": 6,
+  "out_tokens": 36000
+ },
+ "policy": "public_feedback_sealed_final_v1",
+ "prompt_version": "8e1d87d5e1d65800a428e8b08bedc1681946b2fedabceed5b9bd8e44510f379f",
+ "repeats": 2,
+ "schema": "backend_screen_v1",
+ "temperature": 0.2
+}

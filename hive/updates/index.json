@@ -4,7 +4,7 @@
     {
       "id": "CODER",
       "path": "updates/HIVE_Coder_Information_Packet_2026-11-20.md",
-      "title": "Coder directions \u2014 revision 0.4",
+      "title": "Coder directions — revision 0.4",
       "type": "build",
       "status": "proposed",
       "evidence_status": "proposed_implementation",
@@ -194,7 +194,7 @@
     {
       "id": "PROTOTYPE",
       "path": "implementation/AUTONOMOUS_V01.md",
-      "title": "Autonomous local prototype \u2014 v0.1",
+      "title": "Autonomous local prototype — v0.1",
       "type": "build",
       "status": "measured",
       "evidence_status": "measured",
@@ -213,7 +213,7 @@
     {
       "id": "CONTROLLER",
       "path": "implementation/ADAPTIVE_V02.md",
-      "title": "Adaptive verified controller \u2014 v0.2",
+      "title": "Adaptive verified controller — v0.2",
       "type": "build",
       "status": "measured",
       "evidence_status": "measured",
@@ -341,7 +341,7 @@
     {
       "id": "OPERATIONAL",
       "path": "updates/HIVE_Operational_Prototype_2026-11-22.md",
-      "title": "Operational Workflow \u2014 0.4.0.dev1",
+      "title": "Operational Workflow — 0.4.0.dev1",
       "type": "build",
       "status": "measured",
       "evidence_status": "measured",
@@ -401,7 +401,7 @@
       "id": "DIRECTION",
       "source_id": "HIVE-OWNER-DECISIONS-2026-11-22",
       "path": "updates/HIVE_Owner_Decisions_2026-11-22.md",
-      "title": "Owner decisions \u2014 22 November 2026",
+      "title": "Owner decisions — 22 November 2026",
       "type": "framework",
       "status": "decided",
       "evidence_status": "owner_decision_record",
@@ -609,6 +609,24 @@
       "tags": [
         "hive",
         "prototype-m3-m5",
+        "evidence"
+      ]
+    },
+    {
+      "id": "C4G3",
+      "source_id": "HIVE-COOP-C4-G3-2026-11-26",
+      "path": "updates/HIVE_Cooperative_Inference_C4_G3_2026-11-26.md",
+      "title": "Cooperative inference and G3 routing: hosted backend screen",
+      "type": "framework",
+      "status": "measured",
+      "evidence_status": "measured_engineering_result",
+      "implementation_status": "partial",
+      "date": "2026-11-26",
+      "citation_label": "HIVE cooperative inference and G3 routing (26 November 2026)",
+      "sha256": "471a6c1895914499f30eb0ede15a36af04f08c57aabe4d4f3da753c35ca10981",
+      "tags": [
+        "hive",
+        "cooperative-inference",
         "evidence"
       ]
     }
@@ -1467,6 +1485,16 @@
     {
       "source": "CONNECTED",
       "target": "M3M5",
+      "relation": "related_to"
+    },
+    {
+      "source": "STATUS",
+      "target": "C4G3",
+      "relation": "related_to"
+    },
+    {
+      "source": "M3M5",
+      "target": "C4G3",
       "relation": "related_to"
     }
   ],
