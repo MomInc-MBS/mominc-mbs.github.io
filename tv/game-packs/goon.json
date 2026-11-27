@@ -4,13 +4,13 @@
   "assets": [
     {
       "url": "/apps/alarm/app.css",
-      "revision": "28d98eb6f050d3b1c3db8d52ed43de34bce9a336",
-      "bytes": 5820
+      "revision": "459aaf39536ceeb0a9f7c28bbb01acb6fda48edb",
+      "bytes": 6479
     },
     {
       "url": "/apps/alarm/app.mjs",
-      "revision": "6e4b9a25e60f66fabd008c034fb7ea35bae13edb",
-      "bytes": 14469
+      "revision": "8d08392666c5d20d1aae50aa3cdf2f62cde1a61f",
+      "bytes": 16454
     },
     {
       "url": "/apps/alarm/board.js",
@@ -31,6 +31,26 @@
       "url": "/apps/alarm/computer.js",
       "revision": "d8d3a2a4040f563889950d7ce4c394e90401639a",
       "bytes": 11412
+    },
+    {
+      "url": "/apps/alarm/games/choice.js",
+      "revision": "7fb1b0da6e6aaacf9c50e8fadbf7d9d8207c4eb1",
+      "bytes": 584
+    },
+    {
+      "url": "/apps/alarm/games/host.js",
+      "revision": "e512e781b4297406043a6c8547dd7bfa4a944d8e",
+      "bytes": 5310
+    },
+    {
+      "url": "/apps/alarm/games/play.js",
+      "revision": "49f42d950cc328af92a179d1b7832877224e72dd",
+      "bytes": 4941
+    },
+    {
+      "url": "/apps/alarm/games/rules.js",
+      "revision": "a861d4b5ad44dd84ad12a6928c79ff0603a26407",
+      "bytes": 2056
     },
     {
       "url": "/apps/alarm/icon-192.png",
@@ -69,8 +89,8 @@
     },
     {
       "url": "/apps/alarm/remind.js",
-      "revision": "8c583d4a63fa707b5eeaab60b9daea74096681f0",
-      "bytes": 24652
+      "revision": "89aebba0e52a4c6d5c199c861248aa937f296fd7",
+      "bytes": 25365
     },
     {
       "url": "/apps/alarm/stages.js",
@@ -89,13 +109,13 @@
     },
     {
       "url": "/apps/alarm/ui/glyphs.js",
-      "revision": "ef23285df1ae92239c296a97ff3a4dfbf6fd3d83",
-      "bytes": 12315
+      "revision": "0f2e7fa3364d114a3ddec97e549ce3d47f25524c",
+      "bytes": 13226
     },
     {
       "url": "/apps/alarm/ui/help.js",
-      "revision": "4cebd4cd380ae4555239134d6b52678af61ebebb",
-      "bytes": 14614
+      "revision": "368af768a964af6dd56d0e3c30537430a9511aed",
+      "bytes": 15112
     },
     {
       "url": "/apps/alarm/ui/mom-face.js",
@@ -119,13 +139,13 @@
     },
     {
       "url": "/apps/alarm/ui/names.js",
-      "revision": "06b700efda2b36ec03fb63ad412c5b9ca406cf64",
-      "bytes": 5367
+      "revision": "d5f87dafdb50cba9860948912c680c14a8167f74",
+      "bytes": 5608
     },
     {
       "url": "/apps/alarm/ui/settings.js",
-      "revision": "e44e167423405dd5db0c959d7c4081bb25256914",
-      "bytes": 58057
+      "revision": "4a40fdd2e125abebc693dd3e0ffb894ca5a138f9",
+      "bytes": 58893
     },
     {
       "url": "/apps/alarm/ui/time.js",
@@ -154,8 +174,8 @@
     },
     {
       "url": "/apps/apps.json",
-      "revision": "e62f79dea6a01c650e97c4bc19388d2f1469b19f",
-      "bytes": 10122
+      "revision": "35e53346b5dba6086f50078dc474afc85be6af30",
+      "bytes": 10196
     },
     {
       "url": "/apps/corgi/app.css",
@@ -409,7 +429,7 @@
     },
     {
       "url": "/games/goon/index.html",
-      "revision": "5e32db5f228eba87311f5e50b66a1783d7bcf3c0",
+      "revision": "101bc504c85e21e0cb5c3ad2af94e6b25d822844",
       "bytes": 7075
     },
     {
@@ -917,5 +937,5 @@
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Pacifico&family=Special+Elite&display=swap",
     "https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Zilla+Slab:wght@700&family=Barlow+Condensed:wght@500;600&family=VT323&family=Anton&family=Rubik+Dirt&family=Rock+Salt&family=Special+Elite&family=Archivo+Black&family=Pacifico&family=Nunito:wght@600;800&display=swap"
   ],
-  "version": "2e2fe7e8df5286a7ebf9"
+  "version": "2aeae0a9062c6ba240d8"
 }

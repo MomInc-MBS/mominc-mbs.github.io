@@ -93,12 +93,13 @@ const R = {
   'cap:speak': ({S}) => ({t: S.draft?.speak === 'title' ? "Speak title on: the phone's own voice reads the reminder title aloud when it rings. That is not MOM." : 'Speak title off: the alarm stays silent about the title.'}),
   board: () => ({t: 'Opening the 2048 board for this alarm.'}),
   'extra:': (c, a) => ({t: `Extra challenge: ${a === 'none' ? 'none' : N[a]}. Selected, ready to arm. The 2048 board always counts.`}),
+  'gm:': (c, a) => ({t: ({'2048': '2048: slide and merge to the top tile. The default.', brick: 'Brick breaker: clear every brick before the four balls run out.', pong: 'Pong: first to five points beats the computer.', match3: 'Match three: reach the score in twenty swaps.', blocks: 'Falling blocks: clear three lines in thirty pieces.', memory: 'Memory pairs: find all six pairs in eighteen tries.', odd: 'Odd one out: twelve rounds, eight right to win.'})[a] + ' Used for new alarms.'}),
   'snz:': (c, a) => ({t: +a ? `Snooze: ${a / 60} minutes. Ready to arm.` : 'Snooze off. Ready to arm.'}),
   time: ({S}) => ({t: `${S.draft?.time} is the selected time. Ready to arm.`, j: 'A bold alternative to remembering.'}),
   gameDone: () => ({t: 'Finished. A small victory for remembering what you were doing.', plain: true}),
   ...Object.fromEntries(Object.entries(GAME_COLOR_HELP).map(([k, t]) => [k, () => ({t})])),   // the game colour panel's data-k controls (said by the shell: app.mjs / app.js)
 };
-const FAM = ['kind:', 'tz:', 'snd:', 'pat:', 'rs:', 'vib:', 'torch:', 'extra:', 'snz:'];
+const FAM = ['kind:', 'tz:', 'snd:', 'pat:', 'rs:', 'vib:', 'torch:', 'extra:', 'gm:', 'snz:'];
 const STAGE_KEY = /^st([0-3])$/;
 
 function saveHelp(S) {
